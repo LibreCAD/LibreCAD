@@ -46,11 +46,6 @@ protected slots:
 private:
     Ui::LC_LineJoinOptionsWidget *ui;
     LC_ActionModifyLineJoin *m_action = nullptr;
-    void setEdgeModeLine1ToActionAndView(int index) const;
-    void setEdgeModeLine2ToActionAndView(int index) const;
-    void setUsePolylineToActionAndView(bool value) const;
-    void setAttributesSourceToActionAndView(int index) const;
-    void setRemoveOriginalsToActionAndView(bool value) const;
 };
 
 #endif

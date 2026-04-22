@@ -24,12 +24,12 @@
 #ifndef LC_RADIANTLINEOPTIONSFILLER_H
 #define LC_RADIANTLINEOPTIONSFILLER_H
 
-#include "lc_action_options_properties_filler.h"
+#include "lc_action_options_properties_filler_base.h"
 
 class LC_ActionDrawLineRadiant;
 class LC_PropertyContainer;
 
-class LC_LineRadiantOptionsFiller: public LC_ActionOptionsPropertiesFiller{
+class LC_LineRadiantOptionsFiller: public LC_ActionOptionsPropertiesFillerBase{
     Q_OBJECT
 public:
     LC_LineRadiantOptionsFiller() = default;

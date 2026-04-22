@@ -93,7 +93,7 @@ std::unique_ptr<RS_Settings::GroupGuard> RS_Settings::beginGroupGuard(QString gr
     return guard;
 }
 
-bool RS_Settings::write(const QString& key, QVariant variant) {
+bool RS_Settings::write(const QString& key, const QVariant& variant) {
     return writeEntrySingle(m_group, key, variant);
 }
 

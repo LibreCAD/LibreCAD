@@ -244,7 +244,7 @@ bool LC_IconColorsOptions::isIconOverridesChanged() const {
 void LC_IconColorsOptions::getAvailableStyles(QStringList& list) const {
     const QDir dir(m_iconOverridesDir);
     QStringList files = dir.entryList(QStringList("*.lcis"));
-    for (const QString& file : files) {
+    for (const QString& file : std::as_const(files)) {
         QString styleName = loadStyleNameFromFile(file);
         if (!styleName.isEmpty()) {
             list << styleName;

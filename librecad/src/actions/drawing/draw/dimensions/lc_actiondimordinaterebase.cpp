@@ -51,7 +51,7 @@ bool LC_ActionDimOrdinateRebase::doTriggerModifications(LC_DocumentModificationB
     RS_Vector origin{false};
     m_viewport->fillCurrentUCSInfo(origin, horizontalDirection);
 
-    for (const auto e : m_selectedEntities) {
+    for (const auto e : std::as_const(m_selectedEntities)) {
         const auto* dimOrdinate = dynamic_cast<LC_DimOrdinate*>(e);
         if (dimOrdinate != nullptr) {
             const auto clone = static_cast<LC_DimOrdinate*>(dimOrdinate->clone());

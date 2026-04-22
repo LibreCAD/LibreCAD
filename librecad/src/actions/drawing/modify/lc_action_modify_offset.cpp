@@ -27,8 +27,8 @@
 #include "lc_action_modify_offset.h"
 
 #include "lc_actioninfomessagebuilder.h"
-#include "lc_offset_options_widget.h"
 #include "lc_offset_options_filler.h"
+#include "lc_offset_options_widget.h"
 #include "rs_document.h"
 #include "rs_modification.h"
 

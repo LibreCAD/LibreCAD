@@ -46,12 +46,12 @@ void LC_SplineExplodeOptionsWidget::doUpdateByAction(RS_ActionInterface* a) {
     m_action = static_cast<LC_ActionSplineExplode*>(a);
     m_segmentsCountFromDrawing = m_action->getSegmentsCountFromDrawing();
 
-    bool toPolyline = m_action->isToPolyline();
-    bool useCurrentAttributes = m_action->isUseCurrentAttributes();
-    bool useCurrentLayer = m_action->isUseCurrentLayer();
-    bool keepOriginal = m_action->isKeepOriginals();
-    bool useCustomSegmentsCount = m_action->isUseCustomSegmentsCount();
-    int customSegmentsCount = m_action->getCustomSegmentsCount();
+    const bool toPolyline = m_action->isToPolyline();
+    const bool useCurrentAttributes = m_action->isUseCurrentAttributes();
+    const bool useCurrentLayer = m_action->isUseCurrentLayer();
+    const bool keepOriginal = m_action->isKeepOriginals();
+    const bool useCustomSegmentsCount = m_action->isUseCustomSegmentsCount();
+    const int customSegmentsCount = m_action->getCustomSegmentsCount();
 
     LC_GuardedSignalsBlocker({
         ui->cbPolyline,

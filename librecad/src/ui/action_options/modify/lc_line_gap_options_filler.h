@@ -24,9 +24,9 @@
 #ifndef LC_LINEGAPOPTIONSWIDGET_H
 #define LC_LINEGAPOPTIONSWIDGET_H
 
-#include "lc_action_options_properties_filler.h"
+#include "lc_action_options_properties_filler_base.h"
 
-class LC_LineGapOptionsFiller : public LC_ActionOptionsPropertiesFiller {
+class LC_LineGapOptionsFiller : public LC_ActionOptionsPropertiesFillerBase {
     Q_OBJECT public:
     LC_LineGapOptionsFiller() = default;
     ~LC_LineGapOptionsFiller() override = default;

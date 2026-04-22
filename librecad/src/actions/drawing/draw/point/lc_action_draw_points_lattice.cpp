@@ -24,7 +24,6 @@
 #include "lc_linemath.h"
 #include "lc_points_lattice_options_filler.h"
 #include "lc_points_lattice_options_widget.h"
-
 #include "rs_graphic.h"
 #include "rs_point.h"
 
@@ -227,7 +226,7 @@ void LC_ActionDrawPointsLattice::onCoordinateEvent(const int status, [[maybe_unu
 }
 
 bool LC_ActionDrawPointsLattice::doProcessCommand(const int status, const QString &command) {
-    bool accept;
+    bool accept = false;
     if (checkCommand("cols", command)){
         m_majorStatus = status;
         setStatus(SetNumXPoints);

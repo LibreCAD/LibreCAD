@@ -31,7 +31,7 @@ struct LC_PropertySheetWidgetOptions {
     bool noSelectionUCS = true;
     bool noSelectionGrid = true;
     bool noSelectionDrawingUnits = true;
-    bool noSelectionPrintPaper = true;
+    bool noSelectionPrintPaper = false;
     bool noSelectionWorkspace = true;
     bool noSelectionGraphicView = true;
     bool showLinks = true;
@@ -39,10 +39,11 @@ struct LC_PropertySheetWidgetOptions {
     bool duplicateSelectionAction = true;
     bool showSingleEntityCommands = true;
     bool showMultiEntityCommands = true;
+    bool showToolOptions = true;
 
     int fontSize = 9;
 
-    void save();
+    void save() const;
     void load();
 };
 

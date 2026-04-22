@@ -39,11 +39,11 @@
 class LayerTreeGridDelegate:public QStyledItemDelegate {
 public:
     explicit LayerTreeGridDelegate(LC_LayerTreeView *parent = nullptr, LC_LayerTreeModel* tm = nullptr):QStyledItemDelegate(parent){
-        if (parent){
+        if (parent != nullptr) {
             m_treeView = parent;
             m_treeModel = tm;
             m_options = tm->getOptions();
-            auto palette = parent->palette();
+            const auto palette = parent->palette();
             m_gridColor = palette.color(QPalette::Button);
             m_customHoverTextColor = palette.color(QPalette::WindowText);
             m_hoverBackgrounColor = palette.color(QPalette::Button);
@@ -76,7 +76,7 @@ public:
     QColor calculateTextColor(const QColor &background) const
     {
         // Calculate perceived brightness
-        double brightness = (0.299 * background.red() +
+        const double brightness = (0.299 * background.red() +
                             0.587 * background.green() +
                             0.114 * background.blue()) / 255.0;
 

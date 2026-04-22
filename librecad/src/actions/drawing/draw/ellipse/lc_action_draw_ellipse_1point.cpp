@@ -70,18 +70,18 @@ void LC_ActionDrawEllipse1Point::doSaveOptions() {
 }
 
 void LC_ActionDrawEllipse1Point::doLoadOptions() {
-    double majorRadius = loadDouble("MajorRadius", 10.0);
+    const double majorRadius = loadDouble("MajorRadius", 10.0);
     setMajorRadius(majorRadius);
-    double minorRadius = loadDouble("MinorRadius", 10.0);
+    const double minorRadius = loadDouble("MinorRadius", 10.0);
     setMinorRadius(minorRadius);
-    bool useAngle = loadBool("UseAngle", false);
+    const bool useAngle = loadBool("UseAngle", false);
     setHasAngle(useAngle);
-    double angle = loadDouble("Angle", 0.0);
+    const double angle = loadDouble("Angle", 0.0);
     setUcsMajorAngleDegrees(angle);
-    bool freeAngle = loadBool("FreeAngle", false);
+    const bool freeAngle = loadBool("FreeAngle", false);
     setAngleFree(freeAngle);
     if (rtti() == RS2::ActionDrawEllipseArc1Point){
-        bool reversed = loadBool("ArcReversed", false);
+        const bool reversed = loadBool("ArcReversed", false);
         setReversed(reversed);
     }
 }
@@ -384,7 +384,7 @@ bool LC_ActionDrawEllipse1Point::doProcessCommand(const int status, const QStrin
                 break;
             }
             case SetAngle1: {
-                bool ok;
+                bool ok = false;
                 const double ucsAngleDegrees = RS_Math::eval(command, &ok);
                 if (ok) {
                     accept = true;
@@ -397,7 +397,7 @@ bool LC_ActionDrawEllipse1Point::doProcessCommand(const int status, const QStrin
                 break;
             }
             case SetAngle2: {
-                bool ok;
+                bool ok = false;
                 const double ucsAngleDegrees = RS_Math::eval(command, &ok);
                 if (ok) {
                     accept = true;

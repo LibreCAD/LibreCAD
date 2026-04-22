@@ -104,7 +104,7 @@ std::unique_ptr<RS_Pattern> RS_PatternList::requestPattern(const QString& name) 
 }
 
 bool RS_PatternList::contains(const QString& name) const {
-    return m_patterns.count(name.toLower());
+    return m_patterns.count(name.toLower()) != 0u;
 }
 
 /**

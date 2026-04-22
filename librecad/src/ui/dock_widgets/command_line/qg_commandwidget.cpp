@@ -108,7 +108,7 @@ bool QG_CommandWidget::eventFilter(QObject*/*obj*/, QEvent* event) {
         switch (key) {
             case Qt::Key_Return:
             case Qt::Key_Enter: {
-                if (!leCommand->text().size()) {
+                if (leCommand->text().size() == 0) {
                     return false;
                 }
                 break;
@@ -202,7 +202,7 @@ void QG_CommandWidget::handleCommand(QString cmd) const {
         appendHistory(cmd);
     }
 
-    if (m_actionHandler) {
+    if (m_actionHandler != nullptr) {
         isAction = m_actionHandler->command(cmd);
     }
 
@@ -214,7 +214,7 @@ void QG_CommandWidget::handleCommand(QString cmd) const {
 }
 
 void QG_CommandWidget::spacePressed() const {
-    if (m_actionHandler) {
+    if (m_actionHandler != nullptr) {
         m_actionHandler->command({});
     }
 }
@@ -223,7 +223,7 @@ void QG_CommandWidget::spacePressed() const {
 //fixme - add generic help command (as TAB for empy)
 
 void QG_CommandWidget::tabPressed() const {
-    if (m_actionHandler) {
+    if (m_actionHandler != nullptr) {
         QString typed = leCommand->text();
 
         // check current command:
@@ -256,7 +256,7 @@ void QG_CommandWidget::tabPressed() const {
 
 void QG_CommandWidget::escape() const {
     //leCommand->clearFocus();
-    if (m_actionHandler) {
+    if (m_actionHandler != nullptr) {
         m_actionHandler->command(QString(tr("escape", "escape, go back from action steps")));
     }
 }

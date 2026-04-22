@@ -38,7 +38,7 @@ bool LC_FileNameSelectionService::doObtainFileName(QWidget* parent, QString& fil
 
     const bool useQtFileDialog = LC_GET_ONE_BOOL("Defaults","UseQtFileOpenDialog");
 
-    const QString defaultExtension{extensionStr};
+    const QString& defaultExtension{extensionStr};
 
     const auto defaultFilter = fileNameFilter.arg(defaultExtension);
     QFileDialog fileDlg(parent, forRead ? captionForImport  : captionForExport);

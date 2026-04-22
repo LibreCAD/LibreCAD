@@ -22,7 +22,7 @@
 ** http://www.gnu.org/licenses/gpl-2.0.html
 **
 **********************************************************************************
-*/
+ */
 
 #include "colorwizard.h"
 
@@ -81,14 +81,14 @@ ColorWizard::~ColorWizard() {
 
 void ColorWizard::requestColorChange() {
     const auto i = ui->fav_list->currentItem();
-    if (i) {
+    if (i != nullptr) {
         emit requestingColorChange(QColor(i->text()));
     }
 }
 
 void ColorWizard::requestSelection() {
     const auto i = ui->fav_list->currentItem();
-    if (i) {
+    if (i != nullptr) {
         emit requestingSelection(QColor(i->text()));
     }
 }

@@ -55,7 +55,7 @@ void LC_ActionModifyStretch::doSaveOptions() {
 }
 
 void LC_ActionModifyStretch::doLoadOptions() {
-    bool removeOriginals = loadBool("RemoveOriginals", true);
+    const bool removeOriginals = loadBool("RemoveOriginals", true);
     setRemoveOriginals(removeOriginals);
 }
 

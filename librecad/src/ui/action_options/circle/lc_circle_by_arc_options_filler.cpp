@@ -24,6 +24,7 @@
 #include "lc_circle_by_arc_options_filler.h"
 
 #include "lc_action_draw_circle_by_arc.h"
+#include "lc_enum_descriptor.h"
 
 void LC_CircleByArcOptionsFiller::fillToolOptionsContainer(LC_PropertyContainer* container) {
     auto action = static_cast<LC_ActionDrawCircleByArc*>(m_action);

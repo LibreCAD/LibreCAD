@@ -148,7 +148,8 @@ class RS_Snapper : public QObject {
     RS_SnapMode* getSnapMode();
 
     /** Sets a new snap restriction. */
-    [[deprecated]] void setSnapRestriction(RS2::SnapRestriction /*snapRes*/) {
+    [[deprecated]]  // fixme - sand - review this logic, it seems it's commented for a long time. Most probably should be removed, yet check first!
+    void setSnapRestriction(RS2::SnapRestriction /*snapRes*/) {
         //this->snapRes = snapRes;
     }
 
@@ -188,10 +189,12 @@ class RS_Snapper : public QObject {
     int getSnapMiddlePoints() const;
     double getSnapDistance() const;
 
-    bool hasVisualSnap();
+    bool hasVisualSnap() const;
     void stopVisualSnap() const;
     void removePrevioustVisualSnapAddition();
-    double getAngleStep() {return m_snapToAngleStep;}
+    double getAngleStep() const {
+        return m_snapToAngleStep;
+    }
     const RS_Vector& getRelativeZero() const;
     virtual void refreshBySettings();
     void lockVisualSnap(bool performLock) const;
@@ -314,26 +317,22 @@ protected:
     void updateSnapAngleStep();
     virtual void initFromGraphic(RS_Graphic* graphic);
     virtual bool isInVisualSnapStatus(int status);
-    bool isClearVisualSnapByRMB();
+    bool isClearVisualSnapByRMB() const;
 
-    virtual void onVisualSnapPointRegistered([[maybe_unused]]LC_VisualSnapVertex* point, [[maybe_unused]]bool remove) {
-    };
-
+    virtual void onVisualSnapPointRegistered([[maybe_unused]]LC_VisualSnapVertex* point, [[maybe_unused]]bool remove) {}
     virtual void onVisualSnapEntityRegistered([[maybe_unused]]RS_Entity* point);
-
-    virtual void onVisualSnapSolutionRefresh() {
-    };
+    virtual void onVisualSnapSolutionRefresh() {}
     virtual bool isVisualSnapApplicable();
     virtual void clearVisualSnap() const;
 
     void snapEndpoint(const RS_Vector& mouseCoord, double& ds2Min) const;
     void snapCenter(const RS_Vector& mouseCoord, double& ds2Min) const;
     void snapMiddle(const RS_Vector& mouseCoord, double& ds2Min);
-    void snapDistance(RS_Vector mouseCoord, double& ds2Min);
+    void snapDistance(const RS_Vector& mouseCoord, double& ds2Min);
     void snapIntersection(const RS_Vector& mouseCoord, double& ds2Min) const;
     void snapOnEntity(const RS_Vector& mouseCoord, double& ds2Min);
     void snapGrid(const RS_Vector& mouseCoord, double ds2Min) const;
-    RS_Vector snapVisualRayOrLine(const RS_Vector& mouseCoord, RS_Entity* entity, double& dist);
+    RS_Vector snapVisualRayOrLine(const RS_Vector& mouseCoord, const RS_Entity* entity, double& dist) const;
     bool snapVisual(const RS_Vector& mouseCoord, RS_Entity** restrictingEntity, RS2::VisualSnapGuideEntityType& restrictingType);
     RS_Vector snapFree(const RS_Vector& coord);
     RS_Vector snapGrid(const RS_Vector& coord) const;
@@ -346,8 +345,8 @@ protected:
     RS_Vector snapDist(const RS_Vector& coord) const;
     RS_Vector snapIntersection(const RS_Vector& coord, RS_Entity** entity, RS_Entity** otherEntity) const;
     RS_Vector snapToAngle(const RS_Vector& currentCoord, const RS_Vector& referenceCoord, double angularResolution = 15.);
-    RS_Vector obtainEndPointForAngleSnap(const RS_Vector& currentCoord, const RS_Vector& referenceCoord, const double angularResolution,
-                                         double& wcsAngleSnapped, double& ucsAngleSnapped);
+    RS_Vector obtainEndPointForAngleSnap(const RS_Vector& currentCoord, const RS_Vector& referenceCoord, double angularResolution,
+                                         double& wcsAngleSnapped, double& ucsAngleSnapped) const;
     RS_Vector snapToRelativeAngle(double baseAngle, const RS_Vector& currentCoord, const RS_Vector& referenceCoord,
                                   double angularResolution = 15.);
 
@@ -369,8 +368,8 @@ protected:
     RS_Entity* catchEntity(const QMouseEvent* e, const EntityTypeList& enTypeList, RS2::ResolveLevel level = RS2::ResolveNone) const;
     RS_Entity* catchEntity(const RS_Vector& pos, const EntityTypeList& enTypeList, RS2::ResolveLevel level = RS2::ResolveNone) const;
 
-    virtual void resumeRelativeInputWidget() {};
-    virtual void suspendRelativeInputWidget() {};
+    virtual void resumeRelativeInputWidget() {}
+    virtual void suspendRelativeInputWidget() {}
     friend LC_VisualSnapManager;
 };
 #endif

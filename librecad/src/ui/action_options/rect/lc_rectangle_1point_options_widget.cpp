@@ -65,21 +65,13 @@ void LC_Rectangle1PointOptionsWidget::languageChange() {
 void LC_Rectangle1PointOptionsWidget::doUpdateByAction(RS_ActionInterface* a) {
     m_action = static_cast<LC_ActionDrawRectangle1Point*>(a);
 
-    QString width;
-    QString height;
-    QString angle;
-    QString radius;
-    QString lenX;
-    QString lenY;
-
-    int cornersMode;
-    int snapMode;
-    bool usePolyline;
-    bool snapRadiusCenter;
-    bool sizeIsInner;
-    int edges;
-    bool hasBaseAngle;
-    bool baseAngleIsFree;
+    int cornersMode = 0;
+    int snapMode = 0;
+    bool usePolyline = false;
+    bool snapRadiusCenter = false;
+    bool sizeIsInner = false;
+    int edges = 0;
+    bool hasBaseAngle = false;
 
     cornersMode = m_action->getCornersMode();
     snapMode = m_action->getInsertionPointSnapMode();
@@ -93,16 +85,16 @@ void LC_Rectangle1PointOptionsWidget::doUpdateByAction(RS_ActionInterface* a) {
     const double lX = m_action->getCornerBevelLengthX();
     const double lY = m_action->getCornerBevelLengthY();
 
-    width = fromDouble(w);
-    height = fromDouble(h);
-    angle = fromDouble(an);
-    radius = fromDouble(r);
-    lenX = fromDouble(lX);
-    lenY = fromDouble(lY);
+    const QString width = fromDouble(w);
+    const QString height = fromDouble(h);
+    const QString angle = fromDouble(an);
+    const QString radius = fromDouble(r);
+    const QString lenX = fromDouble(lX);
+    const QString lenY = fromDouble(lY);
     snapRadiusCenter = m_action->isSnapToCornerArcCenter();
     sizeIsInner = m_action->isSizeInner();
     hasBaseAngle = m_action->hasBaseAngle();
-    baseAngleIsFree = m_action->isBaseAngleFree();
+    const bool baseAngleIsFree = m_action->isBaseAngleFree();
 
     LC_GuardedSignalsBlocker({
         ui->leWidth,

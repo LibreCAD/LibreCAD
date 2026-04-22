@@ -208,7 +208,7 @@ public:
 
     void setText(const QString& t);
 
-    QString getText() {
+    QString getText() const {
         return m_data.text;
     }
 
@@ -216,7 +216,7 @@ public:
         m_data.style = s;
     }
 
-    QString getStyle() {
+    QString getStyle() const {
         return m_data.style;
     }
 

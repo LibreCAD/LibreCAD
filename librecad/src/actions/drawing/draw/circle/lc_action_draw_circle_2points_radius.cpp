@@ -183,7 +183,7 @@ void LC_ActionDrawCircle2PointsRadius::onCoordinateEvent(const int status, [[may
         case SelectCenter: {
             RS_Vector altCenter;
             const bool showPreview = preparePreview(coord, altCenter);
-            bool circleValid = m_center.valid && m_radius < RS_TOLERANCE;
+            const bool circleValid = m_center.valid && m_radius < RS_TOLERANCE;
             if (showPreview || circleValid) {
                 trigger();
             }

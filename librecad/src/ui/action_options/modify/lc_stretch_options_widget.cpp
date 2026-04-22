@@ -39,7 +39,7 @@ LC_StretchOptionsWidget::~LC_StretchOptionsWidget(){
 
 void LC_StretchOptionsWidget::doUpdateByAction(RS_ActionInterface *a) {
     m_action = static_cast<LC_ActionModifyStretch *>(a);
-    bool keepOriginals = !m_action->isRemoveOriginals();
+    const bool keepOriginals = !m_action->isRemoveOriginals();
 
     LC_GuardedSignalsBlocker({ui->cbKeepOriginals});
     ui->cbKeepOriginals->setChecked(keepOriginals);

@@ -23,8 +23,6 @@
 
 #ifndef LC_DIMARROWREGISTRY_H
 #define LC_DIMARROWREGISTRY_H
-#include <QObject>
-#include <QString>
 
 #include "rs_graphic.h"
 

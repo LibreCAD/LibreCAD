@@ -329,7 +329,7 @@ public:
     static LC_RoundResult round(const RS_Vector& coord, const RS_Vector& coord1, RS_AtomicEntity* entity1, const RS_Vector& coord2,
                                 RS_AtomicEntity* entity2, RS_RoundData& data, LC_DocumentModificationBatch& ctx);
 
-    static bool explode(const QList<RS_Entity*>& entitiesList, bool remove, LC_DocumentModificationBatch& ctx);
+    static bool explode(const QList<RS_Entity*>& entitiesList, LC_DocumentModificationBatch& ctx);
 
     static bool explodeTextIntoLetters(const QList<RS_Entity*>& selectedEntitiesList, LC_DocumentModificationBatch& ctx);
 

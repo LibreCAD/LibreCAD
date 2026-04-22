@@ -65,7 +65,7 @@ public:
 
     int getWidth() const override;
     int getHeight() const override;
-    void redraw(RS2::RedrawMethod method=RS2::RedrawAll) override;
+    void redraw(RS2::RedrawMethod method=RS2::RedrawAll, bool immediately = false) override;
     void adjustOffsetControls() override;
     void adjustZoomControls() override;
     void setMouseCursor(RS2::CursorType cursorType) override;
@@ -112,6 +112,8 @@ public:
     const QList<QAction*>& getRecentActions() const {return m_recentActions;}
     LC_ActionContext* getActionContext() const {return m_actionContext;}
     void launchEditProperty(RS_Entity *entity) const;
+    void keyPressEvent(QKeyEvent* e) override;
+    void highlightUCSLocation(LC_UCS *ucs) override;
 protected slots:
     void slotHScrolled(int value);
     void slotVScrolled(int value);
@@ -130,7 +132,6 @@ protected:
     void focusInEvent(QFocusEvent*) override;
     void focusOutEvent(QFocusEvent*) override;
     void wheelEvent(QWheelEvent* e) override;
-    void keyPressEvent(QKeyEvent* e) override;
     void keyReleaseEvent(QKeyEvent* e) override;
     bool event(QEvent * event) override;
     void doZoom(RS2::ZoomDirection direction, const RS_Vector& center, double zoomFactor) const;
@@ -139,7 +140,6 @@ protected:
     void switchToAction(RS2::ActionType actionType, void* data = nullptr) const;
     RS_Entity* catchContextEntity(const QMouseEvent* event, RS_Vector& clickPos) const;
     void autoPanStep() const;
-    void highlightUCSLocation(LC_UCS *ucs) override;
     void ucsHighlightStep();
 
     virtual void createViewRenderer();

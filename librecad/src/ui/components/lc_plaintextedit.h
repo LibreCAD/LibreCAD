@@ -1,7 +1,7 @@
 /****************************************************************************
-*
+ *
 * Extended QSTextBrowser with
-*
+ *
 Copyright (C) 2024 LibreCAD.org
 Copyright (C) 2024 sand1024
 

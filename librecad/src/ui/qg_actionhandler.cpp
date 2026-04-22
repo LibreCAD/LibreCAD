@@ -27,8 +27,6 @@
 
 #include "qg_actionhandler.h"
 
-#include <QStatusBar>
-
 #include "lc_action.h"
 #include "lc_actionhandlerfactory.h"
 #include "lc_defaultactioncontext.h"
@@ -69,8 +67,8 @@ RS_ActionInterface* QG_ActionHandler::getCurrentAction() const {
 
 // fixme - sand - initial implementation of command promotion. ADD: 1) support of command aliases 2) notification type? 3) Stats for future displaying the user?
 void QG_ActionHandler::promoteCommandIfNeeded(const RS2::ActionType id) const {
-    auto sndr = sender();
-    auto action = dynamic_cast<LC_Action*>(sndr);
+    const auto sndr = sender();
+    const auto action = dynamic_cast<LC_Action*>(sndr);
     if (action != nullptr) {
         const bool actionInvokedViaShortcut = action->isInvokedViaShortcut();
         if (actionInvokedViaShortcut) {
@@ -78,7 +76,7 @@ void QG_ActionHandler::promoteCommandIfNeeded(const RS2::ActionType id) const {
         }
         else{
             // unefficient way, invocation from UI. Promote command, if it is allowed
-            bool promoteCommands = LC_GET_ONE_BOOL("CommandsPromotion", "PromoteCommands", true);
+            const bool promoteCommands = LC_GET_ONE_BOOL("CommandsPromotion", "PromoteCommands", true);
             if (promoteCommands) {
                 // fixme - sand - more details are needed (like aliases)
                 const QString command = RS_COMMANDS->getCommandForAction(id);

@@ -24,7 +24,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 #include "lc_action_draw_slice_divide.h"
 
-#include "lc_action_options_editor_typed.h"
 #include "lc_linemath.h"
 #include "lc_slice_divide_options_filler.h"
 #include "lc_slice_divide_options_widget.h"
@@ -345,9 +344,9 @@ void LC_ActionDrawSliceDivide::createLineSegments(const RS_Line *line, QList<RS_
             const TickData* endTick = m_ticksData.at(i);
             RS_Vector startPoint = startTick->snapPoint;
             RS_Vector endPoint = endTick->snapPoint;
-            auto *line = createLine(startPoint, endPoint,list);
-            line->setLayer(originalLayer);
-            line->setPen(originalPen);
+            auto *createdLine = createLine(startPoint, endPoint,list);
+            createdLine->setLayer(originalLayer);
+            createdLine->setPen(originalPen);
         }
     }
 }

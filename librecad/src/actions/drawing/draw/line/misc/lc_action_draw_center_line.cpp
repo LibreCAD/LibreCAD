@@ -23,8 +23,8 @@
 #include "lc_action_draw_center_line.h"
 
 #include "lc_center_line_options_filler.h"
-#include "lc_linemath.h"
 #include "lc_center_line_options_widget.h"
+#include "lc_linemath.h"
 #include "rs_document.h"
 #include "rs_information.h"
 #include "rs_line.h"
@@ -263,7 +263,7 @@ bool LC_ActionDrawCenterLine::doProcessCommand(const int status, const QString &
         setStatus(SetOffset);
     }
     else{
-        bool ok;
+        bool ok = false;
         double a = RS_Math::eval(command, &ok);
         if (LC_LineMath::isNotMeaningful(a)){
             a = 0.0;
@@ -326,5 +326,5 @@ LC_ActionOptionsWidget *LC_ActionDrawCenterLine::createOptionsWidget() {
 }
 
 LC_ActionOptionsPropertiesFiller* LC_ActionDrawCenterLine::createOptionsFiller() {
-    return new LC_CenterLineOptionsFiller();;
+    return new LC_CenterLineOptionsFiller();
 }

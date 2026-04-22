@@ -21,7 +21,7 @@
 ** Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 **
 **********************************************************************************
-*/
+ */
 // File: lc_pathbuilder.cpp
 
 #include "lc_pathbuilder.h"
@@ -48,7 +48,7 @@ PathBuilder::PathBuilder(RS_Painter* painter)
 void PathBuilder::append(RS_Entity* entity) {
   if (!entity || entity->isDeleted()) return;
 
-  RS_Vector startp = entity->getStartpoint();
+  const RS_Vector startp = entity->getStartpoint();
   if (m_hasLastPoint)
     lineTo(startp);
   else
@@ -60,7 +60,7 @@ void PathBuilder::append(RS_Entity* entity) {
   if (!m_hasLastPoint)
     m_firstPoint = startp;
 
-  RS2::EntityType type = entity->rtti();
+  const RS2::EntityType type = entity->rtti();
 
   switch (type) {
   case RS2::EntityLine:
@@ -91,14 +91,14 @@ void PathBuilder::append(RS_Entity* entity) {
 }
 
 void PathBuilder::moveTo(const RS_Vector& pos) {
-  QPointF uiPos = toGuiPoint(pos);
+  const QPointF uiPos = toGuiPoint(pos);
   m_path.moveTo(uiPos);
   m_lastPoint = pos;
   m_hasLastPoint = true;
 }
 
 void PathBuilder::lineTo(const RS_Vector& pos) {
-  QPointF uiPos = toGuiPoint(pos);
+  const QPointF uiPos = toGuiPoint(pos);
   m_path.lineTo(uiPos);
   m_lastPoint = pos;
   m_hasLastPoint = true;
@@ -152,8 +152,8 @@ void PathBuilder::appendSplinePoints(LC_SplinePoints* spline) {
   const auto& points = spline->getPoints();
   if (points.empty()) return;
 
-  size_t n_points = points.size();
-  size_t num_segs = spline->isClosed() ? n_points : n_points - 1;
+  const size_t n_points = points.size();
+  const size_t num_segs = spline->isClosed() ? n_points : n_points - 1;
   if (num_segs == 0) {
     lineTo(spline->getEndpoint());
     return;

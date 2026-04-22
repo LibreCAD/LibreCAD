@@ -41,11 +41,11 @@
 #include "lc_property_qstring_font_combobox_view.h"
 #include "lc_property_qstring_list_arrows_combobox_view.h"
 #include "lc_property_qstring_list_combobox_view.h"
+#include "lc_property_rect.h"
+#include "lc_property_rect_view.h"
 #include "lc_property_rscolor_combobox_view.h"
 #include "lc_property_rsvector_view.h"
 #include "lc_property_view_multiple.h"
-#include "lc_property_rect.h"
-#include "lc_property_rect_view.h"
 
 class LC_PropertyQStringListArrowsComboboxView;
 class LC_PropertyQStringLineEditView;

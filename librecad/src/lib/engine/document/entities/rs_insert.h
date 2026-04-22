@@ -188,7 +188,7 @@ public:
     friend std::ostream& operator <<(std::ostream& os, const RS_Insert& i);
 
 protected:
-    RS_InsertData m_data{};
+    RS_InsertData m_data;
     mutable RS_Block* m_block = nullptr;
 
     RS_Vector doGetNearestRef(const RS_Vector& coord, double* dist = nullptr) const override;

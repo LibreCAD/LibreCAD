@@ -24,6 +24,7 @@
 #include "lc_duplicate_options_filler.h"
 
 #include "lc_action_modify_duplicate.h"
+#include "lc_enum_descriptor.h"
 
 void LC_DuplicateOptionsFiller::fillToolOptionsContainer(LC_PropertyContainer* container) {
     auto action = static_cast<LC_ActionModifyDuplicate*>(m_action);

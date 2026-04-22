@@ -1,17 +1,39 @@
+/*
+ * ********************************************************************************
+ * This file is part of the LibreCAD project, a 2D CAD program
+ *
+ * Copyright (C) 2026 LibreCAD.org
+ * Copyright (C) 2026 sand1024
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 2
+ * of the License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ * ********************************************************************************
+ */
+
 #include "lc_relative_position_editing_widget.h"
 
 #include <QKeyEvent>
 
 #include "lc_actioncontext.h"
-#include "lc_actioncontext.h"
 #include "lc_convert.h"
 #include "lc_graphicviewport.h"
 #include "lc_linemath.h"
-#include "rs_math.h"
-#include "ui_lc_relative_position_editing_widget.h"
 #include "lc_relative_point_input_widget.h"
+#include "rs_math.h"
 #include "rs_previewactioninterface.h"
 #include "rs_settings.h"
+#include "ui_lc_relative_position_editing_widget.h"
 
 namespace {
     void activateParamUI(QStackedWidget* stacked, QLineEdit* edit) {
@@ -21,7 +43,7 @@ namespace {
     }
 
     void setupIconLabel(const char* iconName, QLabel* label) {
-        const int iconSize = 22;
+        constexpr int iconSize = 22;
         const auto iconLength = QIcon(iconName);
         const auto pixmapLength = iconLength.pixmap(iconSize, iconSize);
         label->setPixmap(pixmapLength);
@@ -45,7 +67,7 @@ LC_RelativePositionEditingWidget::LC_RelativePositionEditingWidget(LC_RelativePo
     setupLabelAndEditor(ui->lblValueY, ui->leValueEditY, RS2::RelativePointParam::REL_POINT_Y);
 
     auto editors = findChildren<QLineEdit*>();
-    for (const auto e : editors) {
+    for (const auto e : std::as_const(editors)) {
         e->installEventFilter(this);
     }
 
@@ -163,28 +185,30 @@ void LC_RelativePositionEditingWidget::onByOffsetToggled(const bool checked) {
     changeParamVisibility(RS2::RelativePointParam::REL_POINT_Y, !checked);
     changeParamVisibility(RS2::RelativePointParam::REL_POINT_DX, checked);
     changeParamVisibility(RS2::RelativePointParam::REL_POINT_DY, checked);
-    switch (m_currentParam) {
-        case RS2::REL_POINT_LENGTH:
-        case RS2::REL_POINT_ANGLE: {
-            break;
+    if (!m_inParamActivation) {
+        switch (m_currentParam) {
+            case RS2::REL_POINT_LENGTH:
+            case RS2::REL_POINT_ANGLE: {
+                break;
+            }
+            case RS2::REL_POINT_DX: {
+                activateParamEditor(RS2::REL_POINT_X);
+                break;
+            }
+            case RS2::REL_POINT_DY: {
+                activateParamEditor(RS2::REL_POINT_Y);
+                break;
+            }
+            case RS2::REL_POINT_X: {
+                activateParamEditor(RS2::REL_POINT_DX);
+                break;
+            }
+            case RS2::REL_POINT_Y: {
+                activateParamEditor(RS2::REL_POINT_DY);
+            }
+            default:
+                break;
         }
-        case RS2::REL_POINT_DX: {
-            activateParamEditor(RS2::REL_POINT_X);
-            break;
-        }
-        case RS2::REL_POINT_DY: {
-            activateParamEditor(RS2::REL_POINT_Y);
-            break;
-        }
-        case RS2::REL_POINT_X: {
-            activateParamEditor(RS2::REL_POINT_DX);
-            break;
-        }
-        case RS2::REL_POINT_Y: {
-            activateParamEditor(RS2::REL_POINT_DY);
-        }
-        default:
-            break;
     }
     LC_SET_ONE("RelativePositionAssistant", "LastInvocationOffsetMode", checked);
 }
@@ -376,12 +400,18 @@ void LC_RelativePositionEditingWidget::refreshPreview() {
     }
 }
 
+void LC_RelativePositionEditingWidget::switchToggleMode(bool value) {
+    m_inParamActivation = true;
+    ui->cbByOffset->setChecked(value);
+    m_inParamActivation = false;
+}
+
 void LC_RelativePositionEditingWidget::activateParamEditor(const RS2::RelativePointParam param, bool forceParam) {
     updateByEditedValue();
     refreshPreview();
 
     auto stackedList = findChildren<QStackedWidget*>();
-    for (QStackedWidget* sw : stackedList) {
+    for (QStackedWidget* sw : std::as_const(stackedList)) {
         sw->setCurrentIndex(1);
     }
 
@@ -396,28 +426,28 @@ void LC_RelativePositionEditingWidget::activateParamEditor(const RS2::RelativePo
         }
         case RS2::REL_POINT_DX: {
             if (forceParam && !ui->cbByOffset->isChecked()) {
-                ui->cbByOffset->setChecked(true);
+                switchToggleMode(true);
             }
             activateParamUI(ui->swDX, ui->leValueEditDX);
             break;
         }
         case RS2::REL_POINT_DY: {
             if (forceParam && !ui->cbByOffset->isChecked()) {
-                ui->cbByOffset->setChecked(true);
+                switchToggleMode(true);
             }
             activateParamUI(ui->swDY, ui->leValueEditDY);
             break;
         }
         case RS2::REL_POINT_X: {
             if (forceParam && ui->cbByOffset->isChecked()) {
-                ui->cbByOffset->setChecked(false);
+                switchToggleMode(false);
             }
             activateParamUI(ui->swX, ui->leValueEditX);
             break;
         }
         case RS2::REL_POINT_Y: {
             if (forceParam && ui->cbByOffset->isChecked()) {
-                ui->cbByOffset->setChecked(false);
+                switchToggleMode(false);
             }
             activateParamUI(ui->swY, ui->leValueEditY);
             break;
@@ -483,7 +513,7 @@ bool LC_RelativePositionEditingWidget::eventFilter(QObject* watched, QEvent* eve
             if (lbl != nullptr) {
                 const QVariant data = lbl->property("_propType");
                 if (data.isValid()) {
-                    bool ok;
+                    bool ok = false;
                     int intValue = data.toInt(&ok);
                     if (ok) {
                         const auto paramType = static_cast<RS2::RelativePointParam>(intValue);
@@ -512,7 +542,7 @@ void LC_RelativePositionEditingWidget::focusCurrentParam() {
     activateParamEditor(m_currentParam);
 }
 
-void LC_RelativePositionEditingWidget::updateByInteractiveInput(const RS2::RelativePointParam paramType, const double value) {    
+void LC_RelativePositionEditingWidget::updateByInteractiveInput(const RS2::RelativePointParam paramType, const double value) {
     RS2::RelativePointParam paramTypeToSet;
     switch (paramType) {
         case RS2::REL_POINT_LENGTH: {
@@ -542,7 +572,7 @@ void LC_RelativePositionEditingWidget::updateByInteractiveInput(const RS2::Relat
         default: Q_ASSERT_X(false, "LC_RelativePositionEditingWidget::updateByInteractiveInput", "Unexpected type");
             break;
     }
-    m_relativePositionEvaluator.setPositionParam(paramTypeToSet, value, true);
+    m_relativePositionEvaluator.setPositionParam(paramTypeToSet, value);
     updateUIByData(m_baseIsRelativePoint, paramTypeToSet);
     refreshPreview();
 }
@@ -639,7 +669,7 @@ void LC_RelativePositionEditingWidget::updateByEditedValue() {
         default: Q_ASSERT_X(false, "LC_RelativePositionEditingWidget::updateByInteractiveInput", "Unexpected type");
     }
     if (hasValue) {
-        m_relativePositionEvaluator.setPositionParam(paramTypeToSet, valueToSet, false);
+        m_relativePositionEvaluator.setPositionParam(paramTypeToSet, valueToSet);
     }
 }
 

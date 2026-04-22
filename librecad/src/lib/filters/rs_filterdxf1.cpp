@@ -128,7 +128,7 @@ bool RS_FilterDXF1::readFromBuffer() {
 
     resetBufP();
 
-    if (fBuf) {
+    if (fBuf != nullptr) {
         RS_DEBUG->print("\nBuffer OK");
         RS_DEBUG->print("\nBuffer: ");
         RS_DEBUG->print(fBuf);
@@ -1518,7 +1518,7 @@ void RS_FilterDXF1::dos2unix() {
 //          -String which is the next line in buffer
 //
 QString RS_FilterDXF1::getBufLine() {
-    int size = static_cast<int>(fSize);
+    const int size = static_cast<int>(fSize);
     if (fBufP >= size) {
         return QString();
     }

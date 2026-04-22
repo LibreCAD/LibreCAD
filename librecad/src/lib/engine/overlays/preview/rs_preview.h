@@ -42,7 +42,7 @@ public:
     RS_BlockList* getBlockList() override {return nullptr;}
     LC_DimStylesList* getDimStyleList() override {return nullptr;}
     LC_TextStyleList* getTextStyleList() override {return nullptr;}
-    void newDoc() override {}
+    void initForNewDocument() override {}
 };
 
 /**

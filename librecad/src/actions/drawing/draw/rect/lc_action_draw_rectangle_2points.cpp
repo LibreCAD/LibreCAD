@@ -24,7 +24,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "lc_action_draw_rectangle_2points.h"
 
 #include "lc_linemath.h"
-
 #include "lc_rectangle_2points_options_filler.h"
 #include "lc_rectangle_2points_options_widget.h"
 #include "rs_polyline.h"

@@ -1,5 +1,5 @@
 /*******************************************************************************
-*
+ *
  This file is part of the LibreCAD project, a 2D CAD program
 
  Copyright (C) 2025 LibreCAD.org
@@ -66,7 +66,7 @@ void LC_WorkspacesInvoker::applyWorkspaceById(const int id) const {
 void LC_WorkspacesInvoker::removeWorkspace([[maybe_unused]]bool on) const {
     QList<QPair<int, QString>> options;
     m_workspacesManager->getWorkspaces(options);
-    bool ok;
+    bool ok = false;
     const int workspaceId = LC_InputTextDialog::selectId(m_appWin, tr("Remove Workspace"), tr("Select workspace to remove:"), options, &ok);
     if (ok) {
         m_workspacesManager->deleteWorkspace(workspaceId);

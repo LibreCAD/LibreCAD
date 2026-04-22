@@ -412,10 +412,10 @@ RS_Vector LC_Parabola::prepareTrim(const RS_Vector& trimCoord, const RS_VectorSo
     //searching for intersection in the direction of the closer end point
     const auto dvp1 = vp1 - trimCoord;
     RS_VectorSolutions sol1;
-    for (size_t i = 0; i < trimSol.size(); i++) {
-        auto dvp2 = trimSol.at(i) - trimCoord;
+    for (const auto& i : trimSol) {
+        auto dvp2 = i - trimCoord;
         if (RS_Vector::dotP(dvp1, dvp2) > RS_TOLERANCE) {
-            sol1.push_back(trimSol.at(i));
+            sol1.push_back(i);
         }
     }
     //if found intersection in direction, return the closest to trimCoord from it
@@ -541,7 +541,7 @@ RS_Vector LC_Parabola::getNearestOrthTan([[maybe_unused]] const RS_Vector& coord
     if (std::abs(line.y) < RS_TOLERANCE) {
         return RS_Vector{false};
     }
-    double axisLen = m_data.m_axis.magnitude();
+    const double axisLen = m_data.m_axis.magnitude();
     const double x = -2. * axisLen * line.x / line.y;
     return RS_Vector{x, x * x / (4. * axisLen)}.rotate(m_data.m_axis.angle() - M_PI / 2) + m_data.m_vertex;
 }

@@ -136,9 +136,9 @@ void LC_ShortcutsTreeView::expandChildren(const QModelIndex &index){
 void LC_ShortcutsTreeView::applyExpandState(
     QStringList &expandedItems, const QModelIndex& startIndex){
     const LC_ShortcutsTreeModel* treeModel = getTreeModel();
-        for (QString item: expandedItems) {
+        for (const QString &item: expandedItems) {
             QModelIndexList matches = treeModel->match(startIndex, Qt::UserRole, item);
-                for (QModelIndex index: matches) {
+                for (QModelIndex index: std::as_const(matches)) {
                     this->setExpanded(index, true);
                     applyExpandState(expandedItems, treeModel->index(0, 0, index));
                 }

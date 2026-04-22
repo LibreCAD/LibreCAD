@@ -24,7 +24,6 @@
 #ifndef LC_PROPERTIESPROVIDERSPLINE_H
 #define LC_PROPERTIESPROVIDERSPLINE_H
 
-#include "lc_entity_type_propertiesprovider.h"
 #include "lc_indexed_propertiesprovider_base.h"
 
 class LC_PropertiesProviderSpline : public LC_IndexedPropertiesProviderBase {
@@ -34,7 +33,6 @@ public:
     LC_PropertiesProviderSpline(LC_ActionContext* actionContext, LC_PropertySheetWidget* widget)
         : LC_IndexedPropertiesProviderBase(RS2::EntitySpline, actionContext, widget) {
     }
-
 protected:
     void doCreateEntitySpecificProperties(LC_PropertyContainer* container, const QList<RS_Entity*>& list) override;
     void doCreateCalculatedProperties(LC_PropertyContainer* container, const QList<RS_Entity*>& list) override;

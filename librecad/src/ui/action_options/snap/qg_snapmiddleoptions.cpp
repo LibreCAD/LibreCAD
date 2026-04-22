@@ -70,7 +70,7 @@ void QG_SnapMiddleOptions::useMiddlePointsValue(int* i) {
 }
 
 void QG_SnapMiddleOptions::on_sbMiddlePoints_valueChanged(const int i) {
-    if (m_middlePoints) {
+    if (m_middlePoints != nullptr) {
         *m_middlePoints = i;
         saveSettings();
     }

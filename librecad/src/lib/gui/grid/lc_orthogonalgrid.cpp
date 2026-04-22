@@ -22,10 +22,9 @@
 
 #include "lc_orthogonalgrid.h"
 
-#include "drw_base.h"
+
 #include "lc_lattice.h"
 #include "lc_linemath.h"
-#include "rs_debug.h"
 #include "rs_math.h"
 
 LC_OrthogonalGrid::LC_OrthogonalGrid(LC_GridOptions* options) : LC_GridSystem(options) {
@@ -328,8 +327,8 @@ int LC_OrthogonalGrid::determineTotalPointsAmount(const bool drawGridWithoutGaps
         m_numPointsYTotal = RS_Math::round((m_gridMax.y - m_gridMin.y) / m_gridCellSize.y) + 1;
     }
     else {
-        m_numPointsXTotal = m_numPointsXLeft + m_numPointsInMetagridX * m_numMetaX + m_numPointsXRight;
-        m_numPointsYTotal = m_numPointsYTop + m_numPointsInMetagridY * m_numMetaY + m_numPointsYBottom;
+        m_numPointsXTotal = m_numPointsXLeft + (m_numPointsInMetagridX * m_numMetaX) + m_numPointsXRight;
+        m_numPointsYTotal = m_numPointsYTop + (m_numPointsInMetagridY * m_numMetaY) + m_numPointsYBottom;
     }
     const int result = m_numPointsYTotal * m_numPointsXTotal;
     return result;
@@ -401,7 +400,7 @@ void LC_OrthogonalGrid::ensureAllMetaGridLinesInView(const RS_Vector& viewZero, 
         m_metaGridMin.x += metaWidthX;
     }
     // check that rightmost line is visible
-    const double lastGridX = m_metaGridMin.x + metaWidthX * (m_numMetaX - 1);
+    const double lastGridX = m_metaGridMin.x + (metaWidthX * (m_numMetaX - 1));
     if (lastGridX > viewSize.x) {
         m_numMetaX--;
         m_metaGridMax.x -= metaWidthX;
@@ -423,8 +422,8 @@ void LC_OrthogonalGrid::ensureAllMetaGridLinesInView(const RS_Vector& viewZero, 
 }
 
 void LC_OrthogonalGrid::fillMetaGridCoordinates() {
-    m_metaGridMax.x = m_metaGridMin.x + (m_numMetaX - 1) * m_metaGridCellSize.x;
-    m_metaGridMax.y = m_metaGridMin.y + (m_numMetaY - 1) * m_metaGridCellSize.y;
+    m_metaGridMax.x = m_metaGridMin.x + ((m_numMetaX - 1) * m_metaGridCellSize.x);
+    m_metaGridMax.y = m_metaGridMin.y + ((m_numMetaY - 1) * m_metaGridCellSize.y);
 }
 
 void LC_OrthogonalGrid::createMetaGridLines(const RS_Vector& min, const RS_Vector& max) {
@@ -590,8 +589,8 @@ void LC_OrthogonalGrid::createGridLinesWithGaps(const RS_Vector& min, const RS_V
     const double sizeDeltaX = lineOffset.x;
     const double sizeDeltaY = lineOffset.y;
 
-    const double lastMY = firstMY + (m_numMetaY - 1) * metaWidthY;
-    const double lastMX = firstMX + (m_numMetaX - 1) * metaWidthX;
+    const double lastMY = firstMY + ((m_numMetaY - 1) * metaWidthY);
+    const double lastMX = firstMX + ((m_numMetaX - 1) * metaWidthX);
 
     double vStart, vEnd, hStart, hEnd;
 

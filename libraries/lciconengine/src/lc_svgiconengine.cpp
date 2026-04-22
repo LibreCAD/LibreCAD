@@ -549,8 +549,7 @@ QIconEngine *LC_SVGIconEngine::clone() const{
     return new LC_SVGIconEngine(*this);
 }
 
-void LC_SVGIconEngine::virtual_hook(const int id, void *data)
-{
+void LC_SVGIconEngine::virtual_hook(const int id, void *data){
     if (id == IsNullHook) {
         *reinterpret_cast<bool*>(data) = d->svgFiles.isEmpty() && !d->addedPixmaps;
     }

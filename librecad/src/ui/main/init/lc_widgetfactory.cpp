@@ -22,7 +22,6 @@
 
 #include "lc_widgetfactory.h"
 
-#include <QMainWindow>
 #include <QStatusBar>
 #include <QToolBar>
 
@@ -349,7 +348,7 @@ void LC_WidgetFactory::modifyCommandTitleBar(const Qt::DockWidgetArea area) cons
 
 void LC_WidgetFactory::updateDockWidgetsTitleBarType(const QC_ApplicationWindow* mainWin, const bool verticalTitle) {
     QList<QDockWidget*> dockwidgetsList = mainWin->findChildren<QDockWidget*>();
-    for (QDockWidget* dw: dockwidgetsList) {
+    for (QDockWidget* dw : std::as_const(dockwidgetsList)) {
         if (dw->property("_lc_doc_widget").isValid()) {
             setDockWidgetTitleType(dw, verticalTitle);
         }
@@ -388,8 +387,7 @@ void LC_WidgetFactory::createRightSidebar(QG_ActionHandler* actionHandler){
     initializeRightDockWidgets();
 }
 
-void LC_WidgetFactory::initializeRightDockWidgets()
-{
+void LC_WidgetFactory::initializeRightDockWidgets() const {
     LC_GROUP_GUARD("Geometry");
     if (!LC_GET_STR("WindowGeometry").isEmpty()) {
         // No-op, if previous Window geometry is found

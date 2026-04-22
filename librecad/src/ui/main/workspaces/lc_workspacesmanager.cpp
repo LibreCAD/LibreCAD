@@ -40,13 +40,13 @@ LC_WorkspacesManager::~LC_WorkspacesManager() {
 }
 
 void LC_WorkspacesManager::getWorkspaces(QList<QPair<int, QString>> &workspacesList){
-    for(const auto p: m_workspacesList){
+    for(const auto p: std::as_const(m_workspacesList)){
         workspacesList << QPair<int, QString>(p->id, p->name);
     }
 }
 
 void LC_WorkspacesManager::getWorkspaceNames(QStringList &workspacesList){
-    for(const auto p: m_workspacesList){
+    for(const auto p: std::as_const(m_workspacesList)){
         workspacesList << p->name;
     }
 }
@@ -334,7 +334,7 @@ void LC_WorkspacesManager::loadWorkspaces(){
                     LC_ERR << "Unexpected error during workspaces parsing. Message:" + parseError.errorString();
                 }
                 else {
-                    bool canParse;
+                    bool canParse = false;
                     QJsonObject obj;
                     if (doc.isObject()) {
                         obj = doc.object();
@@ -349,7 +349,7 @@ void LC_WorkspacesManager::loadWorkspaces(){
                         m_lastActivatedId = obj.value("lastActivatedId").toInt(0);
                         QJsonArray jsonArray = obj.value("workspaces").toArray();
                         m_workspacesList.clear();
-                            for(const auto& value: jsonArray) {
+                            for(const auto& value: std::as_const(jsonArray)) {
                                 QJsonObject wsObj = value.toObject();
 
                                 auto* p = new LC_Workspace;
@@ -426,7 +426,7 @@ void LC_WorkspacesManager::saveWorkspaces(QWidget* parent){
 
             QJsonArray perspectivesArray;
 
-            for (const auto p: m_workspacesList) {
+            for (const auto p: std::as_const(m_workspacesList)) {
                 QJsonObject wsObj;
 
                 wsObj.insert("name", QJsonValue::fromVariant(p->name));

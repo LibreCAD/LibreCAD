@@ -143,7 +143,7 @@ void LC_ActionPolylineAdd::onMouseLeftButtonRelease(const int status, const LC_M
                 } else {
                     m_addSegment = nullptr;
                     m_addSegment = catchEntity(newCoord, RS2::ResolveAll);
-                    if (!m_addSegment){
+                    if (m_addSegment == nullptr){
                         commandMessage(tr("Adding point is not on entity."));
                         break;
                     }

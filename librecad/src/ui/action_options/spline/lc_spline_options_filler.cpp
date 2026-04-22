@@ -28,7 +28,7 @@
 void LC_SplineOptionsFiller::fillToolOptionsContainer(LC_PropertyContainer* container) {
     auto action = static_cast<LC_ActionDrawSpline*>(m_action);
 
-    bool drawSplineAction = action->rtti() == RS2::ActionDrawSpline;
+    const bool drawSplineAction = action->rtti() == RS2::ActionDrawSpline;
     if (drawSplineAction) {
         addIntSpinbox({"a_splineDegree", tr("Spline degree"), tr("Defines degree of the spline")}, [action]() {
                       return action->getDegree();

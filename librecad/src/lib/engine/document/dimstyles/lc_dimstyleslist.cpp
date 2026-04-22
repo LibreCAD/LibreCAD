@@ -134,7 +134,7 @@ void LC_DimStylesList::mergeStyles() {
 
     QMap<QString, LC_DimStyle*> baseStyles;
     QList<LC_DimStyle*> entityTypeStyles;
-    for (const auto ds: m_stylesList) {
+    for (const auto ds : std::as_const(m_stylesList)) {
         QString baseName;
         RS2::EntityType entityType;
         LC_DimStyle::parseStyleName(ds->getName(), baseName, entityType);

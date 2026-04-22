@@ -71,7 +71,7 @@ void QG_BlockDialog::validate() {
     const QString name = leName->text();
 
     if (!name.isEmpty()) {
-        if (m_blockList && !m_blockList->find(name)) {
+        if ((m_blockList != nullptr) && (m_blockList->find(name) == nullptr)) {
             accept();
         } else {
             QMessageBox::warning( this, tr("Renaming Block"),

@@ -24,6 +24,7 @@
 #include "lc_line_angle_rel_options_filler.h"
 
 #include "lc_action_draw_line_angle_rel.h"
+#include "lc_enum_descriptor.h"
 
 void LC_LineAngleRelOptionsFiller::fillToolOptionsContainer(LC_PropertyContainer* container) {
     auto action = static_cast<LC_ActionDrawLineAngleRel*>(m_action);

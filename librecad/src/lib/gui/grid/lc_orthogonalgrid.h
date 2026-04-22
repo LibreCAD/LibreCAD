@@ -32,7 +32,7 @@ public:
     explicit LC_OrthogonalGrid(LC_GridOptions *options);
     ~LC_OrthogonalGrid() override;
     RS_Vector snapGrid(const RS_Vector &coord) const override;
-    RS_Vector snapGrid(const RS_Vector& coord, const RS_Vector& rayStart, const RS_Vector& rayEnd);
+    RS_Vector snapGrid(const RS_Vector& coord, const RS_Vector& rayStart, const RS_Vector& rayEnd) override;
 
 protected:
 

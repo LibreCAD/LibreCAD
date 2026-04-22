@@ -55,7 +55,6 @@ public:
         return RS_Graphic::getResolvedDimStyle(m_currentStyleBaseName, dimType);
     }
 private:
-    RS2::EntityType m_dimType {RS2::EntityUnknown};
     QString m_currentStyleBaseName;
 };
 
@@ -129,7 +128,7 @@ void LC_DimStylePreviewGraphicView::copyBlocks(RS_Graphic* originalGraphic, LC_P
 
 LC_DimStylePreviewGraphicView* LC_DimStylePreviewGraphicView::init(QWidget* parent,RS_Graphic* originalGraphic, const RS2::EntityType dimensionType) {
     const auto graphic = new LC_PreviewGraphic();
-    graphic->newDoc();
+    graphic->initForNewDocument();
     copyBlocks(originalGraphic, graphic);
 
     const bool loaded = RS_FileIO::instance()->fileImport(*graphic, ":/dxf/dim_sample.dxf", RS2::FormatUnknown);
@@ -144,7 +143,7 @@ LC_DimStylePreviewGraphicView* LC_DimStylePreviewGraphicView::init(QWidget* pare
 
 LC_DimStylePreviewGraphicView* LC_DimStylePreviewGraphicView::init(QWidget* parent, RS_Graphic* originalGraphic, const RS_Dimension* dimension) {
     const auto graphic = new LC_PreviewGraphic();
-    graphic->newDoc();
+    graphic->initForNewDocument();
 
     const auto clone = dimension->clone();
     graphic->getDocument()->addEntity(clone);

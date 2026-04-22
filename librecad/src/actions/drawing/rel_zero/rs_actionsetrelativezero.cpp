@@ -28,7 +28,6 @@
 
 #include "lc_graphicviewport.h"
 #include "lc_undosection.h"
-#include "rs_document.h"
 
 RS_ActionSetRelativeZero::RS_ActionSetRelativeZero(LC_ActionContext *actionContext)
     : RS_PreviewActionInterface("Set the relative Zero",actionContext, RS2::ActionSetRelativeZero)

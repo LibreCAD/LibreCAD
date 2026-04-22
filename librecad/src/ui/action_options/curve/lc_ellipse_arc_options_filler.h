@@ -24,9 +24,9 @@
 #ifndef LC_ELLIPSEARCOPTIONSFILLER_H
 #define LC_ELLIPSEARCOPTIONSFILLER_H
 
-#include "lc_action_options_properties_filler.h"
+#include "lc_action_options_properties_filler_base.h"
 
-class LC_EllipseArcOptionsFiller : public LC_ActionOptionsPropertiesFiller{
+class LC_EllipseArcOptionsFiller : public LC_ActionOptionsPropertiesFillerBase{
     Q_OBJECT
 public:
     LC_EllipseArcOptionsFiller() = default;

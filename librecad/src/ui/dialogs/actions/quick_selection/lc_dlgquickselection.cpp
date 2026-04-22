@@ -97,7 +97,7 @@ LC_DlgQuickSelection::~LC_DlgQuickSelection() {
     delete ui;
 }
 
-RS_Selection::ConditionalSelectionOptions LC_DlgQuickSelection::getSelectionOptions(RS_Selection::ConditionalSelectionOptions& result) {
+RS_Selection::ConditionalSelectionOptions LC_DlgQuickSelection::getSelectionOptions(RS_Selection::ConditionalSelectionOptions& result) const {
     saveState();
 
     result.applyArea = ui->cbApplyTo->currentIndex() == 0
@@ -546,7 +546,7 @@ void LC_DlgQuickSelection::setPropertyValueInput(LC_PropertyMatchDescriptor* pro
                 ui->cbValue->clear();
                 QList<QPair<QString, QVariant>> choiceValues;
                 propertyDescriptor->getChoiceValues(choiceValues);
-                for (const auto& [text, userData] : choiceValues) {
+                for (const auto& [text, userData] : std::as_const(choiceValues)) {
                     ui->cbValue->addItem(text, userData);
                 }
                 ui->cbValue->setCurrentIndex(0);

@@ -61,9 +61,9 @@ namespace lc::geo {
          */
         bool isEmpty(double tolerance) const;
 
-	/**
-                  * Return the smallest corner
-                  */
+        /**
+                      * Return the smallest corner
+                      */
         const Coordinate& minP() const;
 
         /**
@@ -211,8 +211,8 @@ namespace lc::geo {
         static Coordinate Vector(const Coordinate& p, const Coordinate& q);
         friend std::ostream& operator<<(std::ostream& os, const Area& area);
 
-        Coordinate m_minP{};
-        Coordinate m_maxP{};
+        Coordinate m_minP;
+        Coordinate m_maxP;
     };
 }
 

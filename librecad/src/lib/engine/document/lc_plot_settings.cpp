@@ -37,7 +37,7 @@ namespace {
  */
 RS_Vector LC_PlotSettings::getPrintAreaSize(const bool total) const {
     RS_Vector printArea = getPaperSize();
-    RS2::Unit dest = getUnit();
+    const RS2::Unit dest = getUnit();
     printArea.x -= RS_Units::convert(m_marginLeft_mm + m_marginRight_mm, RS2::Millimeter, dest);
     printArea.y -= RS_Units::convert(m_marginTop_mm + m_marginBottom_mm, RS2::Millimeter, dest);
     if (total) {
@@ -55,7 +55,7 @@ RS_Vector LC_PlotSettings::getPrintAreaSize(const bool total) const {
  */
 RS2::PaperFormat LC_PlotSettings::getPaperFormat(bool* landscape) const {
     const RS_Vector size = RS_Units::convert(getPaperSize(), getUnit(), RS2::Millimeter);
-    if (landscape) {
+    if (landscape != nullptr) {
         *landscape = size.x > size.y;
     }
     return RS_Units::paperSizeToFormat(size);
@@ -64,8 +64,8 @@ RS2::PaperFormat LC_PlotSettings::getPaperFormat(bool* landscape) const {
 /**
  * Sets the paper format to the given format.
  */
-void LC_PlotSettings::setPaperFormat(const RS2::PaperFormat f, const bool landscape) {
-    RS_Vector size = RS_Units::paperFormatToSize(f);
+void LC_PlotSettings::setPaperFormat(const RS2::PaperFormat format, const bool landscape) {
+    RS_Vector size = RS_Units::paperFormatToSize(format);
 
     if (landscape != (size.x > size.y)) {
         std::swap(size.x, size.y);
@@ -90,8 +90,8 @@ double LC_PlotSettings::getPaperScale() const {
 /**
  * Sets a new scale factor for the paper space.
  */
-void LC_PlotSettings::setPaperScale(const double s) {
-    if (m_paperScaleFixed == false) {
+void LC_PlotSettings::setPaperScale(const double s) const {
+    if (!m_paperScaleFixed) {
         m_graphic->addVariable("$PSVPSCALE", s, 40);
     }
     // fixme - rework, store there
@@ -117,7 +117,7 @@ void LC_PlotSettings::setMarginsInMm(const double left, const double top, const 
 /**
  * Sets a new paper size.
  */
-void LC_PlotSettings::setPaperSize(const RS_Vector& s) {
+void LC_PlotSettings::setPaperSize(const RS_Vector& s) const {
     m_graphic->addVariable("$PLIMMIN", RS_Vector(0.0, 0.0), 10);
     m_graphic->addVariable("$PLIMMAX", s, 10);
     //set default paper size
@@ -310,7 +310,7 @@ QString LC_PlotSettings::getCurrentStyleName() {
     return m_currentStyleName;
 }
 
-void LC_PlotSettings::setCurrentStyleName(QString name) {
+void LC_PlotSettings::setCurrentStyleName(const QString& name) {
     m_currentStyleName = name;
 }
 
@@ -344,14 +344,14 @@ RS_Vector LC_PlotSettings::getPaperSize() const {
  * Paper margins in graphic units
  */
 void LC_PlotSettings::setMarginsInUnits(const double left, const double top, const double right, const double bottom) {
-    RS2::Unit unit = getUnit();
+    const RS2::Unit unit = getUnit();
     setMarginsInMm(RS_Units::convert(left, unit, RS2::Millimeter), RS_Units::convert(top, unit, RS2::Millimeter),
                RS_Units::convert(right, unit, RS2::Millimeter), RS_Units::convert(bottom, unit, RS2::Millimeter));
 }
 
 LC_MarginsRect LC_PlotSettings::getMarginsInUnits() const {
     LC_MarginsRect res;
-    RS2::Unit unit = getUnit();
+    const RS2::Unit unit = getUnit();
     res.left = RS_Units::convert(m_marginLeft_mm, RS2::Millimeter, unit);
     res.right = RS_Units::convert(m_marginRight_mm, RS2::Millimeter, unit);
     res.top = RS_Units::convert(m_marginTop_mm, RS2::Millimeter, unit);
@@ -360,22 +360,22 @@ LC_MarginsRect LC_PlotSettings::getMarginsInUnits() const {
 }
 
 double LC_PlotSettings::getMarginLeftInUnits() const {
-    RS2::Unit unit = getUnit();
+    const RS2::Unit unit = getUnit();
     return RS_Units::convert(m_marginLeft_mm, RS2::Millimeter, unit);
 }
 
 double LC_PlotSettings::getMarginTopInUnits() const {
-    RS2::Unit unit = getUnit();
+    const RS2::Unit unit = getUnit();
     return RS_Units::convert(m_marginTop_mm, RS2::Millimeter, unit);
 }
 
 double LC_PlotSettings::getMarginRightInUnits() const {
-    RS2::Unit unit = getUnit();
+    const RS2::Unit unit = getUnit();
     return RS_Units::convert(m_marginRight_mm, RS2::Millimeter, unit);
 }
 
 double LC_PlotSettings::getMarginBottomInUnits() const {
-    RS2::Unit unit = getUnit();
+    const RS2::Unit unit = getUnit();
     return RS_Units::convert(m_marginBottom_mm, RS2::Millimeter, unit);
 }
 
@@ -390,8 +390,8 @@ void LC_PlotSettings::setPagesNum(const int horiz, const int vert) {
 }
 
 bool LC_PlotSettings::isBiggerThanPaper(const RS_Vector& size) const {
-    RS2::Unit unit = getUnit();
-    const RS_Vector ps = getPrintAreaSize(unit);
+    const RS2::Unit unit = getUnit();
+    const RS_Vector ps = getPrintAreaSize(unit != 0u);
     const RS_Vector s = size * getPaperScale();
     return !s.isInWindow(RS_Vector(0.0, 0.0), ps);
 }

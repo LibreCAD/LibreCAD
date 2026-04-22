@@ -26,7 +26,6 @@
 #ifndef QG_COMMANDWIDGET_H
 #define QG_COMMANDWIDGET_H
 
-#include <QWidget>
 
 #include "lc_graphicviewawarewidget.h"
 #include "ui_qg_commandwidget.h"
@@ -45,7 +44,7 @@ public:
         return m_docking;
     }
     void setInput(const QString &cmd) const;
-    void setGraphicView([[maybe_unused]]RS_GraphicView* gview) override {};
+    void setGraphicView([[maybe_unused]]RS_GraphicView* gview) override {}
 protected:
     QLayout* getTopLevelLayout() const override {return layout();}
 public slots:

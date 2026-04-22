@@ -56,8 +56,8 @@ void LC_MTextOptionsWidget::languageChange() {
 void LC_MTextOptionsWidget::doUpdateByAction(RS_ActionInterface* a) {
     m_action = static_cast<LC_ActionDrawMText*>(a);
 
-    QString text = m_action->getText();
-    QString angle = fromDouble(m_action->getUcsAngleDegrees());
+    const QString text = m_action->getText();
+    const QString angle = fromDouble(m_action->getUcsAngleDegrees());
 
     LC_GuardedSignalsBlocker({ ui->teText,ui->leAngle });
 

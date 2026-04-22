@@ -213,7 +213,7 @@ bool RS_FileIO::fileExport(RS_Graphic& graphic, const QString& file, RS2::Format
 
 RS_FileIO* RS_FileIO::instance() {
     static RS_FileIO* uniqueInstance = nullptr;
-    if (!uniqueInstance) {
+    if (uniqueInstance == nullptr) {
         uniqueInstance = new RS_FileIO();
     }
     return uniqueInstance;
@@ -223,7 +223,7 @@ RS_FileIO* RS_FileIO::instance() {
  * @return Filter which can import the given file type.
  */
 std::unique_ptr<RS_FilterInterface> RS_FileIO::getImportFilter(const QString& fileName, const RS2::FormatType t) const {
-    for (auto f : getFilters()) {
+    for (const auto& f : getFilters()) {
         std::unique_ptr<RS_FilterInterface> filter(f());
         if (filter && filter->canImport(fileName, t)) {
             return filter;
@@ -236,7 +236,7 @@ std::unique_ptr<RS_FilterInterface> RS_FileIO::getImportFilter(const QString& fi
  * @return Filter which can export the given file type.
  */
 std::unique_ptr<RS_FilterInterface> RS_FileIO::getExportFilter(const QString& fileName, const RS2::FormatType t) const {
-    for (auto f : getFilters()) {
+    for (const auto& f : getFilters()) {
         std::unique_ptr<RS_FilterInterface> filter(f());
         if (filter && filter->canExport(fileName, t)) {
             return filter;

@@ -23,7 +23,6 @@
 
 #include "lc_entity_type_propertiesprovider.h"
 
-#include "lc_property_double_interactivepick_view.h"
 #include "lc_property_layer.h"
 #include "lc_property_linetype.h"
 #include "lc_property_linewidth.h"
@@ -33,7 +32,6 @@
 #include "lc_propertyprovider_utils.h"
 #include "rs_document.h"
 #include "rs_graphic.h"
-#include "rs_graphicview.h"
 #include "rs_selection.h"
 #include "rs_settings.h"
 
@@ -184,8 +182,8 @@ void LC_EntityTypePropertiesProvider::fillGenericAttributes(LC_PropertyContainer
               }, list, containerGeneric);
 
     if (isShowLinks() && list.size() == 1) {
-        auto layerClickHandler = [this]([[maybe_unused]] RS_Entity* entity, const int linkIndex) {
-            bool select;
+        auto layerClickHandler = [this]([[maybe_unused]] const RS_Entity* entity, const int linkIndex) {
+            bool select = false;
             switch (linkIndex) {
                 case 0: {
                     select = true;

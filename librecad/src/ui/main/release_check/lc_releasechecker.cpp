@@ -129,7 +129,7 @@ LC_TagInfo LC_ReleaseChecker::parseTagInfo(const QString& tagName) const {
                 other = remaining.split("-");
             }
             if (other.size() == 1) {
-                bool ok;
+                bool ok = false;
                 revision = remaining.toInt(&ok);
                 if (!ok) {
                     label = remaining;
@@ -148,7 +148,7 @@ LC_TagInfo LC_ReleaseChecker::parseTagInfo(const QString& tagName) const {
                 other = remaining.split("-");
             }
             if (other.size() == 1) {
-                bool ok;
+                bool ok = false;
                 bugfix = remaining.toInt(&ok);
                 if (!ok) {
                     label = remaining;
@@ -188,7 +188,7 @@ void LC_ReleaseChecker::processReleasesJSON(const QByteArray& responseContent) {
                 ignorePreReleases = false;
             }
 
-            for (const QJsonValue& value : array) {
+            for (const QJsonValue& value : std::as_const(array)) {
                 const QString& tagName = value["tag_name"].toString();
                 const bool draft = value["draft"].toBool();
                 const bool prerelease = value["prerelease"].toBool();

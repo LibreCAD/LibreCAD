@@ -47,7 +47,7 @@ LC_SnapOptionsWidgetsHolder *LC_OptionsWidgetsHolder::getSnapOptionsHolder() con
 
 #define DEBUG_WIDGETS_COUNT_
 
-void LC_OptionsWidgetsHolder::addOptionsWidget(QWidget *optionsWidget) {
+void LC_OptionsWidgetsHolder::addOptionsWidget(QWidget *optionsWidget) const {
     if (optionsWidget != nullptr) {
         if (m_hasActionIcon) {
             ui->vCurrentActionLine->setVisible(true);
@@ -63,7 +63,7 @@ void LC_OptionsWidgetsHolder::addOptionsWidget(QWidget *optionsWidget) {
     }
 }
 
-void LC_OptionsWidgetsHolder::removeOptionsWidget(QWidget *optionsWidget) {
+void LC_OptionsWidgetsHolder::removeOptionsWidget(QWidget *optionsWidget) const {
     ui->vCurrentActionLine->setVisible(false);
     if (optionsWidget != nullptr) {
 #ifdef DEBUG_WIDGETS_COUNT

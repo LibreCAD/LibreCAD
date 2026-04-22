@@ -116,7 +116,7 @@ private:
     int m_initialLanguageGUIIdx{0};
     void init();
     void initComboBox(QComboBox* cb, const QString& text);
-    void initReferencePoints();
+    void initReferencePoints() const;
     void updateLPtSzUnits() const;
     void saveReferencePoints() const;
     QString selectFolder(const QString& title);

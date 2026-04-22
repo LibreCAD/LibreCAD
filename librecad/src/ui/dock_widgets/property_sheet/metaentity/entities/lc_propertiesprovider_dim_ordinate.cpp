@@ -75,17 +75,17 @@ void LC_PropertiesProviderDimOrdinate::doCreateSingleEntityCommands(LC_PropertyC
     const auto dim = static_cast<LC_DimOrdinate*>(entity);
     auto viewport = m_actionContext->getViewport();
    auto doc = m_actionContext->getDocument();
-    auto clickHandler = [this, viewport, doc]([[maybe_unused]] LC_DimOrdinate* entity, const int linkIndex) {
+    auto clickHandler = [this, viewport, doc]([[maybe_unused]] LC_DimOrdinate* ent, const int linkIndex) {
         switch (linkIndex) {
             case 0: {
-                m_actionContext->saveContextMenuActionContext(entity, entity->getMiddlePoint(), false);
+                m_actionContext->saveContextMenuActionContext(ent, ent->getMiddlePoint(), false);
                 m_actionContext->setCurrentAction(RS2::ActionDimStyleApply, nullptr);
                 break;
             }
             case 1: {
                 if (viewport != nullptr) {
                     const QList<RS_Entity*> ordinateDims =
-                        LC_ActionSelectDimOrdinateSameOrigin::collectOrdinateDimensionsWithSameBase(entity, doc);
+                        LC_ActionSelectDimOrdinateSameOrigin::collectOrdinateDimensionsWithSameBase(ent, doc);
                     if (!ordinateDims.isEmpty()) {
                         RS_Selection::selectEntitiesList(doc, viewport, ordinateDims, true);
                     }

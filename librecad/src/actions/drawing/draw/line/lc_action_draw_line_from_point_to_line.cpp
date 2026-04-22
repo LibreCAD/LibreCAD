@@ -218,7 +218,7 @@ void LC_ActionDrawLineFromPointToLine::doPreparePreviewEntities([[maybe_unused]]
     else if (status == SelectLine) {
         deleteSnapper();
         RS_Entity* en = catchModifiableAndDescribe(e, RS2::EntityLine);
-        RS_Line* line;
+        RS_Line* line = nullptr;
         if (en != nullptr) {
             const auto potentialLine = dynamic_cast<RS_Line*>(en);
             highlightHover(potentialLine);

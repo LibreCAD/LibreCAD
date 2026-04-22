@@ -45,14 +45,14 @@ public:
             QString tooltip;
 
             LinkPartInfo(){title = "";actionType = RS2::ActionNone, tooltip = "";}
-            LinkPartInfo(RS2::ActionType type, const QString& titl, const QString ttip):actionType{type}, title{titl}, tooltip{ttip} {}
+            LinkPartInfo(RS2::ActionType type, const QString& title, const QString tooltip):actionType{type}, title{title}, tooltip{tooltip} {}
         };
         QString description;
         LinkPartInfo leftLink;
         LinkPartInfo rightLink;
 
-        CommandLinkInfo(const QString &desc, const LinkPartInfo &left, const LinkPartInfo &right): description{desc}, leftLink{left}, rightLink{right} {};
-        CommandLinkInfo(const QString &desc, const LinkPartInfo &left): description{desc}, leftLink{left}, rightLink{LinkPartInfo()} {};
+        CommandLinkInfo(const QString &desc, const LinkPartInfo &left, const LinkPartInfo &right): description{desc}, leftLink{left}, rightLink{right} {}
+        CommandLinkInfo(const QString &desc, const LinkPartInfo &left): description{desc}, leftLink{left}, rightLink{LinkPartInfo()} {}
     };
 
     LC_PropertyContainerBuilder(LC_ActionContext* actionContext, LC_PropertySheetWidget* widget)

@@ -23,7 +23,6 @@
 
 #ifndef LC_MENUACTIVATOR_H
 #define LC_MENUACTIVATOR_H
-#include <QString>
 
 #include "lc_dlg_dimension.h"
 

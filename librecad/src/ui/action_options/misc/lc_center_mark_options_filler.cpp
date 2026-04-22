@@ -24,6 +24,7 @@
 #include "lc_center_mark_options_filler.h"
 
 #include "lc_action_draw_center_mark.h"
+#include "lc_enum_descriptor.h"
 
 class LC_ActionDrawCenterMark;
 

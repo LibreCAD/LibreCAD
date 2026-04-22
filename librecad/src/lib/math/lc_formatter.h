@@ -26,7 +26,6 @@
 
 #include <QString>
 
-#include "lc_graphicviewaware.h"
 #include "rs.h"
 
 class RS_Graphic;
@@ -63,7 +62,7 @@ public:
     bool isAnglesCounterClockWise() const;
 
     static std::string toStdStr(const QString& str) {
-        QByteArray utf8ByteArray = str.toUtf8();
+        const QByteArray utf8ByteArray = str.toUtf8();
         const auto result = std::string(utf8ByteArray.constData(), utf8ByteArray.size());
         return result;
     }

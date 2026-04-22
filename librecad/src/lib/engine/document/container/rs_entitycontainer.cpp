@@ -99,9 +99,9 @@ RS_EntityContainer::RS_EntityContainer(const RS_EntityContainer& other) : RS_Ent
                                                                           m_entIdx{other.m_entIdx}, m_autoDelete{other.m_autoDelete} {
     if (m_autoDelete) {
         // fixme - sand - check this logic, looks suspicious!
-        for (auto it = begin(); it != end(); ++it) {
-            if ((*it)->isContainer()) {
-                *it = (*it)->clone();
+        for (auto& it : *this) {
+            if (it->isContainer()) {
+                it = it->clone();
             }
         }
     }
@@ -116,9 +116,9 @@ RS_EntityContainer::RS_EntityContainer(const RS_EntityContainer& other, const bo
         m_entities = other.m_entities;
         if (m_autoDelete) {
             // fixme - sand - check this logic, looks suspicious!
-            for (auto it = begin(); it != end(); ++it) {
-                if ((*it)->isContainer()) {
-                    *it = (*it)->clone();
+            for (auto& it : *this) {
+                if (it->isContainer()) {
+                    it = it->clone();
                 }
             }
         }
@@ -133,9 +133,9 @@ RS_EntityContainer& RS_EntityContainer::operator =(const RS_EntityContainer& oth
     m_entIdx = other.m_entIdx;
     m_autoDelete = other.m_autoDelete;
     if (m_autoDelete) {
-        for (auto it = begin(); it != end(); ++it) {
-            if ((*it)->isContainer()) {
-                *it = (*it)->clone();
+        for (auto& it : *this) {
+            if (it->isContainer()) {
+                it = it->clone();
             }
         }
     }
@@ -1073,7 +1073,7 @@ RS_Entity* RS_EntityContainer::entityAt(const int index) const {
 }
 
 void RS_EntityContainer::setEntityAt(const int index, RS_Entity* en) {
-    if (m_autoDelete && m_entities.at(index)) {
+    if (m_autoDelete && (m_entities.at(index) != nullptr)) {
         delete m_entities.at(index);
     }
     debugEntityAlreadyPresentExists(en);
@@ -1116,7 +1116,7 @@ RS_Vector RS_EntityContainer::doGetNearestEndpoint(const RS_Vector& coord, doubl
             }
             if (checkForEndpoint) {
                 //no end point for Insert, text, Dim
-                RS_Entity* closestCandidate;
+                RS_Entity* closestCandidate = nullptr;
                 const RS_Vector point = en->getNearestEndpoint(coord, &closestCandidate, &curDist);
                 if (point.valid && curDist < minDist) {
                     closestPoint = point;
@@ -1155,7 +1155,7 @@ RS_Vector RS_EntityContainer::obtainNearestEndpoint(const RS_Vector& coord, doub
                 if (dist != nullptr) {
                     *dist = minDist;
                 }
-                if (pEntity) {
+                if (pEntity != nullptr) {
                     *pEntity = en;
                 }
             }
@@ -1173,7 +1173,7 @@ RS_Vector RS_EntityContainer::doGetNearestPointOnEntity(const RS_Vector& coord, 
     return point;
 }
 
-RS_Vector RS_EntityContainer::doGetNearestCenter(const RS_Vector& coord, double* dist, RS_Entity** entity) const {
+RS_Vector RS_EntityContainer::doGetNearestCenter(const RS_Vector& coord, double* dist, RS_Entity** centerEntity) const {
     double minDist = RS_MAXDOUBLE; // minimum measured distance
     double curDist = RS_MAXDOUBLE; // currently measured distance
     RS_Vector closestPoint(false); // closest found endpoint
@@ -1182,11 +1182,11 @@ RS_Vector RS_EntityContainer::doGetNearestCenter(const RS_Vector& coord, double*
     for (const auto en : m_entities) {
         if (en != nullptr && en->getId() != 0 && en->isVisible() && !en->getParent()->ignoredSnap()) {
             //no center point for spline, text, Dim
-            RS_Entity* centerEntity;
-            const RS_Vector point = en->getNearestCenter(coord, &curDist, &centerEntity);
+            RS_Entity* centerEnt;
+            const RS_Vector point = en->getNearestCenter(coord, &curDist, &centerEnt);
             if (point.valid && curDist < minDist) {
                 closestPoint = point;
-                closestCenterEntity = centerEntity;
+                closestCenterEntity = centerEnt;
                 minDist = curDist;
             }
         }
@@ -1194,8 +1194,8 @@ RS_Vector RS_EntityContainer::doGetNearestCenter(const RS_Vector& coord, double*
     if (dist != nullptr) {
         *dist = minDist;
     }
-    if (entity != nullptr) {
-        *entity = closestCenterEntity;
+    if (centerEntity != nullptr) {
+        *centerEntity = closestCenterEntity;
     }
     return closestPoint;
 }
@@ -1238,7 +1238,7 @@ RS_Vector RS_EntityContainer::getNearestIntersection(const RS_Vector& coord, dou
 
     if (closestEntity != nullptr) {
         // fixme - sand - why not via traverser?
-        for (const RS_Entity* en = firstEntity(RS2::ResolveAllButTextImage); en; en = nextEntity(RS2::ResolveAllButTextImage)) {
+        for (const RS_Entity* en = firstEntity(RS2::ResolveAllButTextImage); en != nullptr; en = nextEntity(RS2::ResolveAllButTextImage)) {
             const auto parent = en->getParent();
             bool ignoredSnap = false;
             if (parent != nullptr) {
@@ -1264,7 +1264,7 @@ RS_Vector RS_EntityContainer::getNearestIntersection(const RS_Vector& coord, dou
             }
         }
     }
-    if (dist && closestPoint.valid) {
+    if ((dist != nullptr) && closestPoint.valid) {
         *dist = minDist;
     }
     return closestPoint;
@@ -1484,7 +1484,7 @@ bool RS_EntityContainer::optimizeContours() {
     //    std::cout<<"RS_EntityContainer::optimizeContours: 3"<<std::endl;
     RS_Vector vpStart;
     RS_Vector vpEnd;
-    if (current) {
+    if (current != nullptr) {
         vpStart = current->getStartpoint();
         vpEnd = current->getEndpoint();
     }
@@ -1511,13 +1511,13 @@ bool RS_EntityContainer::optimizeContours() {
             closed = false;
             break;
         }
-        if (!next) {
+        if (next == nullptr) {
             //workaround if next is nullptr
             //      	    std::cout<<"RS_EntityContainer::optimizeContours: next is nullptr" <<std::endl;
             RS_DEBUG->print("RS_EntityContainer::optimizeContours: next is nullptr");
             //			closed=false;	//workaround if next is nullptr
             break; //workaround if next is nullptr
-        } //workaround if next is nullptr
+        } // workaround if next is nullptr
         if (closed) {
             next->setProcessed(true);
             RS_Entity* eTmp = next->clone();
@@ -1755,7 +1755,7 @@ bool RS_EntityContainer::ignoredOnModification() const {
 bool RS_EntityContainer::ignoredSnap() const {
     // issue #652 , disable snap for hatch
     // TODO, should snapping on hatch be a feature enabled by settings?
-    if (getParent() && getParent()->rtti() == RS2::EntityHatch) {
+    if ((getParent() != nullptr) && getParent()->rtti() == RS2::EntityHatch) {
         return true;
     }
     return ignoredOnModification();
@@ -1804,7 +1804,7 @@ std::ostream& operator<<(std::ostream& os, RS_EntityContainer& ec) {
     const unsigned long int id = ec.getId();
     os << tab << "EntityContainer[" << id << "]: \n";
     os << tab << "Borders[" << id << "]: " << ec.m_minV << " - " << ec.m_maxV << "\n";
-    if (ec.getLayer()) {
+    if (ec.getLayer() != nullptr) {
         os << tab << "Layer[" << id << "]: " << ec.getLayer()->getName().toLatin1().data() << "\n";
     }
     else {

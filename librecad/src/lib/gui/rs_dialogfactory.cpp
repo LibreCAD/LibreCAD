@@ -65,13 +65,13 @@ void RS_DialogFactory::setFactoryObject(RS_DialogFactoryInterface* fo) {
  * object was set, the default adapter will be returned.
  */
 RS_DialogFactoryInterface* RS_DialogFactory::getFactoryObject() const {
-    return m_factoryObject ? m_factoryObject : m_factoryAdapter;
+    return (m_factoryObject != nullptr) ? m_factoryObject : m_factoryAdapter;
 }
 
 void RS_DialogFactory::commandMessage(const QString& m) const {
     RS_DEBUG->print("RS_DialogFactory::commandMessage");
 
-    if (m_factoryObject) {
+    if (m_factoryObject != nullptr) {
         m_factoryObject->commandMessage(m);
     }
 }

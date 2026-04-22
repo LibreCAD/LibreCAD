@@ -249,7 +249,7 @@ void RS_Creation::createParallelArc(const RS_Vector& coord, double distance, con
         // calculate parallel:
         bool ok = true;
         RS_Arc parallel1(nullptr, e->getData());
-        parallel1.setRadius(e->getRadius() + distance * num);
+        parallel1.setRadius(e->getRadius() + (distance * num));
         if (parallel1.getRadius() < 0.0) {
             parallel1.setRadius(RS_MAXDOUBLE);
             ok = false;
@@ -305,7 +305,7 @@ void RS_Creation::createParallelCircle(const RS_Vector& coord, double distance, 
         // calculate parallel:
         bool ok = true;
         RS_Circle parallel1(nullptr, e->getData());
-        parallel1.setRadius(e->getRadius() + distance * num);
+        parallel1.setRadius(e->getRadius() + (distance * num));
         if (parallel1.getRadius() < 0.0) {
             parallel1.setRadius(RS_MAXDOUBLE);
             ok = false;
@@ -381,10 +381,10 @@ void RS_Creation::createParallelSplinePoints(const RS_Vector& coord, const doubl
 bool RS_Creation::createBisector(const RS_Vector& coord1, const RS_Vector& coord2, const double length, const int num, const RS_Line* l1,
                                  const RS_Line* l2, QList<RS_Entity*>& createdLines) {
     // check given entities:
-    if (!(l1 != nullptr && l2 != nullptr)) {
+    if (l1 == nullptr || l2 == nullptr) {
         return false;
     }
-    if (!(l1->rtti() == RS2::EntityLine && l2->rtti() == RS2::EntityLine)) {
+    if (l1->rtti() != RS2::EntityLine || l2->rtti() != RS2::EntityLine) {
         return false;
     }
 
@@ -399,10 +399,10 @@ bool RS_Creation::createBisector(const RS_Vector& coord1, const RS_Vector& coord
     const double angle2 = inters.angleTo(l2->getNearestPointOnEntity(coord2));
     double angleDiff = RS_Math::getAngleDifference(angle1, angle2);
     if (angleDiff > M_PI) {
-        angleDiff = angleDiff - 2. * M_PI;
+        angleDiff = angleDiff - (2. * M_PI);
     }
     for (int n = 1; n <= num; ++n) {
-        const double angle = angle1 + angleDiff / (num + 1) * n;
+        const double angle = angle1 + (angleDiff / (num + 1) * n);
         const RS_Vector& v = RS_Vector::polar(length, angle);
         auto* newLine = new RS_Line{nullptr, inters, inters + v};
         createdLines.push_back(newLine);
@@ -472,7 +472,7 @@ std::unique_ptr<RS_Line> RS_Creation::createLineOrthTan(const RS_Vector& coord, 
             bool onEntity = false;
             for (int i = 0; i <= 1; i++) {
                 if (!onEntity || RS_Math::isAngleBetween(angle, cir->getAngle1(), cir->getAngle2(), cir->isReversed())) {
-                    if (i) {
+                    if (i != 0) {
                         sol.push_back(-vp);
                     }
                     else {
@@ -514,7 +514,7 @@ std::unique_ptr<RS_Line> RS_Creation::createLineOrthTan(const RS_Vector& coord, 
             bool onEntity = false; // fixme - always false? what for this flag?
             for (int i = 0; i < 2; i++) {
                 if (!onEntity || RS_Math::isAngleBetween(angle, cir->getAngle1(), cir->getAngle2(), cir->isReversed())) {
-                    if (i) {
+                    if (i != 0) {
                         sol.push_back(-direction);
                     }
                     else {
@@ -523,7 +523,7 @@ std::unique_ptr<RS_Line> RS_Creation::createLineOrthTan(const RS_Vector& coord, 
                 }
                 angle = RS_Math::correctAngle(angle + M_PI);
             }
-            if (sol.size() < 1) {
+            if (sol.empty()) {
                 tangentPoint0 = RS_Vector(false);
             }
             else {
@@ -588,8 +588,8 @@ RS_Line* RS_Creation::createTangent1(const RS_Vector& coord, const RS_Vector& po
       // Find tangent lines through dual curves
 
       // the dual line of the given point
-      LC_Quadratic dualLine{{point.x, point.y, 1.}};
-      LC_Quadratic dualCircle = circle->getQuadratic().getDualCurve();
+      const LC_Quadratic dualLine{{point.x, point.y, 1.}};
+      const LC_Quadratic dualCircle = circle->getQuadratic().getDualCurve();
       // tangent lines by intersection of dual curves
       RS_VectorSolutions dualSol = LC_Quadratic::getIntersection(dualLine, dualCircle);
 
@@ -720,7 +720,7 @@ std::vector<std::unique_ptr<RS_Line>> RS_Creation::createTangent2(const RS_Entit
      */
 RS_Line* RS_Creation::createLineRelAngle(const RS_Vector& coord, const RS_Entity* entity, const double angle, const double length) {
     // check given entity / coord:
-    if (!(entity && coord)) {
+    if (!((entity != nullptr) && coord)) {
         return {};
     }
 

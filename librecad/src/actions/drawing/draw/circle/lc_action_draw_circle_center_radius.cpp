@@ -36,11 +36,11 @@
  * Constructor.
  */
 LC_ActionDrawCircleCenterRadius::LC_ActionDrawCircleCenterRadius(LC_ActionContext* actionContext)
-    : LC_ActionDrawCircleBase("ActionDrawCircleCenterRadius", actionContext, RS2::ActionDrawCircleCenterRadius), m_radius{1.0} {
+    : LC_ActionDrawCircleBase("ActionDrawCircleCenterRadius", actionContext, RS2::ActionDrawCircleCenterRadius) {
 }
 
 LC_ActionDrawCircleCenterRadius::LC_ActionDrawCircleCenterRadius(const QString& name, LC_ActionContext* actionContext, const RS2::ActionType type)
-    : LC_ActionDrawCircleBase(name, actionContext, type), m_radius{1.0} {
+    : LC_ActionDrawCircleBase(name, actionContext, type) {
 }
 
 LC_ActionDrawCircleCenterRadius::~LC_ActionDrawCircleCenterRadius() = default;

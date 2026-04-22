@@ -105,7 +105,7 @@ protected:
     RS_Vector doGetNearestMiddle(const RS_Vector& coord, double* dist, int middlePoints) const override;
     RS_Vector doGetNearestDist(double distance, const RS_Vector& coord, double* dist) const override;
 private:
-    RS_ConstructionLineData m_data{};
+    RS_ConstructionLineData m_data;
 };
 
 #endif

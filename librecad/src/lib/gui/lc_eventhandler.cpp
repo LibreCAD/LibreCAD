@@ -222,7 +222,7 @@ bool LC_EventHandler::checkLastActionFinishedAndUncheckQAction() {
         }
         const auto predecessor = m_currentAction->getPredecessor();
         if (predecessor != nullptr) {
-            RS2::ActionType prevActionRtti = predecessor->rtti();
+            const RS2::ActionType prevActionRtti = predecessor->rtti();
             m_currentAction = predecessor;
             m_graphicView->notifyCurrentActionChanged(prevActionRtti);
             m_graphicView->onSwitchToDefaultAction(m_currentAction == m_defaultAction, m_currentAction->rtti(), prevActionRtti);
@@ -245,7 +245,7 @@ void LC_EventHandler::switchToDefaultAction() {
     }
 
     if (m_defaultAction != nullptr) {
-        RS2::ActionType defaultActionRtti = m_defaultAction->rtti();
+        const RS2::ActionType defaultActionRtti = m_defaultAction->rtti();
         m_graphicView->notifyCurrentActionChanged(defaultActionRtti);
         m_graphicView->onSwitchToDefaultAction(true, defaultActionRtti, prevRtti);
         resumeAction(m_defaultAction);
@@ -294,7 +294,7 @@ bool LC_EventHandler::setCurrentAction(std::shared_ptr<RS_ActionInterface> actio
             if (hasNonDefaultAction) {
                 actionType = m_currentAction->rtti();
                 m_graphicView->notifyCurrentActionChanged(actionType);
-                auto defaultActionRtti = (m_defaultAction != nullptr) ? m_defaultAction->rtti() : RS2::ActionNone;
+                const auto defaultActionRtti = (m_defaultAction != nullptr) ? m_defaultAction->rtti() : RS2::ActionNone;
                 m_graphicView->onSwitchToDefaultAction(m_currentAction == m_defaultAction, defaultActionRtti, actionType);
                 resumeAction(m_currentAction);
             }
@@ -316,7 +316,7 @@ bool LC_EventHandler::setCurrentAction(std::shared_ptr<RS_ActionInterface> actio
         m_currentAction = action;
         passedActionIsNotFinished = true;
         const auto actionRtti = m_currentAction != nullptr ? m_currentAction->rtti() : RS2::ActionNone;
-        auto defaultActionRtti = (m_defaultAction != nullptr) ? m_defaultAction->rtti() : RS2::ActionNone;
+        const auto defaultActionRtti = (m_defaultAction != nullptr) ? m_defaultAction->rtti() : RS2::ActionNone;
         m_graphicView->onSwitchToDefaultAction(m_currentAction == m_defaultAction,defaultActionRtti, actionRtti);
         resumeAction(action);
     }
@@ -397,9 +397,9 @@ bool LC_EventHandler::killAllActions() {
             }
         }
 
-        auto defaultActionRtti = m_defaultAction->rtti();
+        const auto defaultActionRtti = m_defaultAction->rtti();
 
-        if (m_QAction) {
+        if (m_QAction != nullptr) {
             m_QAction->setChecked(false);
             m_QAction = nullptr;
             m_graphicView->notifyCurrentActionChanged(defaultActionRtti);

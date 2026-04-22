@@ -68,7 +68,7 @@ void LC_PrintPreviewViewRenderer::drawPaper(RS_Painter *painter) {
     }
 // draw paper:
     RS_Vector pinsbase = m_graphic->getPaperInsertionBase();
-    LC_PlotSettings* ps = m_graphic->getPlotSettings();
+    const LC_PlotSettings* ps = m_graphic->getPlotSettings();
     const RS_Vector printAreaSize = ps->getPrintAreaSize();
 
     const double paperFactorX = painter->toGuiDX(1.0) / m_paperScale;

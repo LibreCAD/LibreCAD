@@ -21,7 +21,7 @@
 ** Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 **
 **********************************************************************************
-*/
+ */
 // File: lc_looputils.h
 #ifndef LC_LOOPUTILS_H
 #define LC_LOOPUTILS_H

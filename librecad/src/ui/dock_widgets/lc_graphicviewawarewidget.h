@@ -35,9 +35,9 @@ public:
     ~LC_GraphicViewAwareWidget() override;
 public slots:
     void updateWidgetSettings() const;
-    virtual void doAdjustForDockLocation(Qt::DockWidgetArea area);
     void onDockLocationChanged(Qt::DockWidgetArea area);
 protected:
+    virtual void doAdjustForDockLocation(Qt::DockWidgetArea area);
     virtual QLayout* getTopLevelLayout() const = 0;
 };
 

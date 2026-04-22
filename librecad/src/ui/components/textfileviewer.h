@@ -21,7 +21,7 @@
 ** http://www.gnu.org/licenses/gpl-2.0.html
 **
 **********************************************************************************
-*/
+ */
 
 #ifndef TEXTFILEVIEWER_H
 #define TEXTFILEVIEWER_H

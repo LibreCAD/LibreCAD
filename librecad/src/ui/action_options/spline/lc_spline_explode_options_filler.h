@@ -24,9 +24,9 @@
 #ifndef LC_SPLINEEXPLODEOPTIONSFILLER_H
 #define LC_SPLINEEXPLODEOPTIONSFILLER_H
 
-#include "lc_action_options_properties_filler.h"
+#include "lc_action_options_properties_filler_base.h"
 
-class LC_SplineExplodeOptionsFiller: public LC_ActionOptionsPropertiesFiller {
+class LC_SplineExplodeOptionsFiller: public LC_ActionOptionsPropertiesFillerBase {
     Q_OBJECT
 public:
     LC_SplineExplodeOptionsFiller() = default;

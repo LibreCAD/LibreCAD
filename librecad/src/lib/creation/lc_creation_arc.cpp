@@ -36,7 +36,7 @@ namespace {
         double x = std::sqrt(6 - (6 * k));
 
         for (int i = 0; i < 6; i++) {
-            x = x - (std::sin(x) - k * x) / (std::cos(x) - k);
+            x = x - ((std::sin(x) - k * x) / (std::cos(x) - k));
         }
         return 2 * x;
     }
@@ -55,7 +55,7 @@ bool LC_CreationArc::createFrom3P(const RS_Vector& p1, const RS_Vector& p2, cons
     const RS_Vector vrb = p3 - p1;
     const double ra2 = vra.squared() * 0.5;
     const double rb2 = vrb.squared() * 0.5;
-    double crossp = vra.x * vrb.y - vra.y * vrb.x;
+    double crossp = (vra.x * vrb.y) - (vra.y * vrb.x);
     if (fabs(crossp) < RS_TOLERANCE2) {
         RS_DEBUG->print(RS_Debug::D_WARNING, "RS_Arc::createFrom3P(): " "Cannot create a arc with radius 0.0.");
         return false;
@@ -112,7 +112,7 @@ bool LC_CreationArc::createFrom2PDirectionRadius(const RS_Vector& startPoint, co
  * @retval false Cannot create arc (radius to small or endpoint to far away)
  */
 bool LC_CreationArc::createFrom2PDirectionAngle(const RS_Vector& startPoint, const RS_Vector& endPoint, double direction1, double angleLength, RS_ArcData& data) {
-    if (angleLength <= RS_TOLERANCE_ANGLE || angleLength > 2. * M_PI - RS_TOLERANCE_ANGLE) {
+    if (angleLength <= RS_TOLERANCE_ANGLE || angleLength > (2. * M_PI) - RS_TOLERANCE_ANGLE) {
         return false;
     }
     RS_Line l0{nullptr, startPoint, startPoint - RS_Vector{direction1}};
@@ -135,7 +135,7 @@ bool LC_CreationArc::createFrom2PDirectionAngle(const RS_Vector& startPoint, con
     l1 = RS_Line{nullptr, startPoint, startPoint + RS_Vector{direction1 + M_PI_2}};
 
     const auto sol = RS_Information::getIntersection(&l0, &l1, false);
-    if (sol.size() == 0) {
+    if (sol.empty()) {
         return false;
     }
 
@@ -170,7 +170,7 @@ bool LC_CreationArc::createFrom2PBulge(const RS_Vector& startPoint, const RS_Vec
     // alpha can't be 0.0 at this point
     data.radius = std::abs(dist / std::sin(alpha / 2.0));
 
-    const double wu = std::abs(data.radius * data.radius - dist * dist);
+    const double wu = std::abs((data.radius * data.radius) - (dist * dist));
     double angle = startPoint.angleTo(endPoint);
     const bool reversed = std::signbit(bulge);
     angle = reversed ? angle - M_PI_2 : angle + M_PI_2;
@@ -225,7 +225,7 @@ bool LC_CreationArc::createFrom2PHeight(const RS_Vector& firstPoint, const RS_Ve
     double chordLen = firstPoint.distanceTo(secondPoint);
     double arcHeight = height;
 
-    double radius = arcHeight / 2 + (chordLen * chordLen) / (8 * arcHeight);
+    double radius = (arcHeight / 2) + ((chordLen * chordLen) / (8 * arcHeight));
 
 
     auto circle1 = RS_Circle(nullptr, RS_CircleData(firstPoint, radius));
@@ -351,7 +351,7 @@ bool LC_CreationArc::createFrom2PRadius(const RS_Vector& firstPoint, const RS_Ve
 
     double distanceFromChordCenterToCenter = 0.0;
     if ((radius - chordHalf) > RS_TOLERANCE) {
-        const double triangleLegSquared = radius * radius - chordHalf * chordHalf;
+        const double triangleLegSquared = (radius * radius) - (chordHalf * chordHalf);
         if (triangleLegSquared > 0) {
             distanceFromChordCenterToCenter = sqrt(triangleLegSquared);
         }

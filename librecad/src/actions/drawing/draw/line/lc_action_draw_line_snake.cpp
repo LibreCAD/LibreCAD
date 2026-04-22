@@ -24,8 +24,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include <QMouseEvent>
 
 #include "lc_line_snake_options_filler.h"
-#include "lc_linemath.h"
 #include "lc_line_snake_options_widget.h"
+#include "lc_linemath.h"
 #include "rs_document.h"
 
 LC_ActionDrawLineSnake::LC_ActionDrawLineSnake(LC_ActionContext* actionContext, const RS2::ActionType actionType)

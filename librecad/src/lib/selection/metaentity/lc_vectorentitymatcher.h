@@ -46,8 +46,8 @@ public:
         else {
             auto matchType = this->propertyType->getType();
             auto coordX = matchType == LC_PropertyMatchTypeEnum::ENTITY_PROPERTY_COORD_X;
-            this->m_funMath = [this, mapper, coordX, valueToMatch, tolerance](RS_Entity* e)-> bool {
-                EntityType* ent = static_cast<EntityType*>(e);
+            this->m_funMath = [this, mapper, coordX, valueToMatch, tolerance](RS_Entity* e) -> bool {
+                auto* ent = static_cast<EntityType*>(e);
                 const RS_Vector wcsCoord = this->m_valueAccessor(ent);
                 const RS_Vector ucsCoord = mapper->toUCS(wcsCoord);
                 double entityPropertyValue = coordX ? ucsCoord.getX() : ucsCoord.getY();
@@ -69,8 +69,8 @@ public:
 
 template <typename EntityType>
 LC_EntityMatcher* LC_RS_VectorPropertyMatchDescriptor<EntityType>::createMatcher() {
-    auto propertyType = (LC_TypedPropertyMatchTypeDescriptor<double>*)(this->m_type);
-    auto matcher = new LC_RS_VectorEntityMatcher<EntityType>(propertyType, this->m_funAccess);
+    auto* propertyType = (LC_TypedPropertyMatchTypeDescriptor<double>*)(this->m_type);
+    auto* matcher = new LC_RS_VectorEntityMatcher<EntityType>(propertyType, this->m_funAccess);
     return matcher;
 }
 

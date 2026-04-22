@@ -24,6 +24,7 @@
 #include "lc_line_join_options_filler.h"
 
 #include "lc_action_modify_line_join.h"
+#include "lc_enum_descriptor.h"
 
 void LC_LineJoinOptionsFiller::fillToolOptionsContainer(LC_PropertyContainer* container) {
     auto action = static_cast<LC_ActionModifyLineJoin*>(m_action);
@@ -68,8 +69,8 @@ void LC_LineJoinOptionsFiller::fillToolOptionsContainer(LC_PropertyContainer* co
                 action->setAttributesSource(v);
             }, container);
 
-    int line1EdgeMode = action->getLine1EdgeMode();
-    int line2EdgeMode = action->getLine2EdgeMode();
+    const int line1EdgeMode = action->getLine1EdgeMode();
+    const int line2EdgeMode = action->getLine2EdgeMode();
 
     bool mayNotCreatePolyline = line1EdgeMode == LC_ActionModifyLineJoin::EdgeMode::EDGE_NO_MODIFICATION || line2EdgeMode ==
         LC_ActionModifyLineJoin::EdgeMode::EDGE_NO_MODIFICATION;

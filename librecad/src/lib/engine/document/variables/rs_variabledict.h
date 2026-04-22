@@ -91,11 +91,11 @@ public:
 private:
     //! Variables for the graphic
     bool insert(const QString& key, const RS_Variable& value) {
-        const QString actualKey = key;
+        const QString& actualKey = key;
         const auto it = m_variables.find(actualKey);
         bool modified = false;
         if (it != m_variables.end()) {
-            RS_Variable oldVar = it.value();
+            const RS_Variable& oldVar = it.value();
             if (oldVar != value) {
                 modified = true;
                 m_variables.insert(actualKey, value);

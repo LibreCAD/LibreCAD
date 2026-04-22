@@ -76,7 +76,7 @@ void LC_PropertiesEditingWidgetImage::updateUIbyEntity() {
     toUIAngleDeg(m_entity->getUVector().angle(), ui->leAngle);
     toUIValue(m_entity->getImageWidth(), ui->leWidth);
     toUIValue(m_entity->getImageHeight(), ui->leHeight);
-    RS_Vector scale = m_entity->getScale();
+    const RS_Vector scale = m_entity->getScale();
 
     toUIValue(scale.x, ui->leScaleX);
     toUIValue(scale.y, ui->leScaleY);
@@ -98,8 +98,8 @@ void LC_PropertiesEditingWidgetImage::onWidthChanged() {
     const bool meaningful = toDouble(ui->leWidth->text(), newWidthY, 0.0, true);
     newWidthY = meaningful ? newWidthY : originalSize.x;
 
-    double scaleY = 1.0;
-    double scaleX = newWidthY / originalSize.x;
+    const double scaleY = 1.0;
+    const double scaleX = newWidthY / originalSize.x;
     m_entity->scale(m_entity->getInsertionPoint(), RS_Vector(scaleX, scaleY));
     updateUIbyEntity();
 }
@@ -111,33 +111,33 @@ void LC_PropertiesEditingWidgetImage::onHeightChanged() {
     const bool meaningful = toDouble(ui->leHeight->text(), newHeightY, 0.0, true);
     newHeightY = meaningful ? newHeightY : originalSize.y;
 
-    double scaleX = 1.0;
-    double scaleY = newHeightY / originalSize.y;
+    const double scaleX = 1.0;
+    const double scaleY = newHeightY / originalSize.y;
     m_entity->scale(m_entity->getInsertionPoint(), RS_Vector(scaleX, scaleY));
     updateUIbyEntity();
 }
 
 void LC_PropertiesEditingWidgetImage::onScaleXChanged() {
-    RS_Vector scale = m_entity->getScale();
+    const RS_Vector scale = m_entity->getScale();
 
     double newScaleX;
     const bool meaningful = toDouble(ui->leScaleX->text(), newScaleX, 1.0, true);
     newScaleX = meaningful ? newScaleX : scale.getX();
-    double scaleY = 1.0;
-    double scaleX = newScaleX / scale.x;
+    const double scaleY = 1.0;
+    const double scaleX = newScaleX / scale.x;
 
     m_entity->scale(m_entity->getInsertionPoint(), RS_Vector(scaleX, scaleY));
     updateUIbyEntity();
 }
 
 void LC_PropertiesEditingWidgetImage::onScaleYChanged() {
-    RS_Vector scale = m_entity->getScale();
+    const RS_Vector scale = m_entity->getScale();
 
     double newScaleY;
     const bool meaningful = toDouble(ui->leScaleY->text(), newScaleY, 1.0, true);
     newScaleY = meaningful ? newScaleY : scale.getY();
-    double scaleX = 1.0;
-    double scaleY = newScaleY / scale.y;
+    const double scaleX = 1.0;
+    const double scaleY = newScaleY / scale.y;
 
     m_entity->scale(m_entity->getInsertionPoint(), RS_Vector(scaleX, scaleY));
     updateUIbyEntity();

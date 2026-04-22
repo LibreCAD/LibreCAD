@@ -96,7 +96,7 @@ protected:
         }
     }
 
-    [[deprecated]] void doRollbackValue() override {
+     void doRollbackValue() override {
         m_reverted = true;
     }
 

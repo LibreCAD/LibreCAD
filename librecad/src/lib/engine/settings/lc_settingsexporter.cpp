@@ -52,19 +52,17 @@ bool LC_SettingsExporter::obtainCustomWidgetsFileName(QWidget* parent, QString& 
                                                              tr("Import custom menus"), tr("Export custom menus"),
                                                              tr("LibreCAD custom menus file (*.%1)"));
     }
-    else {
-        return LC_FileNameSelectionService::doObtainFileName(parent, fileName, forRead, "lct", "lc_custom_toolbars.lcm",
-                                                             tr("Import custom toolbars"), tr("Export custom toolbars"),
-                                                             tr("LibreCAD custom toolbars file (*.%1)"));
-    }
+    return LC_FileNameSelectionService::doObtainFileName(parent, fileName, forRead, "lct", "lc_custom_toolbars.lcm",
+                                                         tr("Import custom toolbars"), tr("Export custom toolbars"),
+                                                         tr("LibreCAD custom toolbars file (*.%1)"));
 }
 
-void LC_SettingsExporter::exportValue(const QString& key, QVariant settingValue, QJsonObject& objValues) {
+void LC_SettingsExporter::exportValue(const QString& key, const QVariant& settingValue, QJsonObject& objValues) {
     QString value;
     if (settingValue.userType() ==  QMetaType::QStringList) {
         QStringList stringList = settingValue.toStringList();
         value += G_STRING_LIST_VALUE_START;
-        for (const auto& s: stringList) {
+        for (const auto& s: std::as_const(stringList)) {
             value += G_STRING_LIST_SEPARATOR;
             value += s;
         }
@@ -76,7 +74,7 @@ void LC_SettingsExporter::exportValue(const QString& key, QVariant settingValue,
 }
 
 void LC_SettingsExporter::exportKeyValue(const QString& key, QSettings* settings, QJsonObject &objValues) {
-    QVariant settingValue = settings->value(key);
+    const QVariant settingValue = settings->value(key);
     exportValue(key, settingValue, objValues);
 }
 
@@ -237,7 +235,6 @@ void LC_SettingsExporter::importCustomWidgetSettings(QWidget* parent, bool forMe
     }
 
     QMessageBox::information(parent, tr("Configurations Import"), tr("Configurations were imported."));
-    return ;
 }
 
 void LC_SettingsExporter::exportCustomWidgetSettings(QWidget* parent, bool forMenu) {

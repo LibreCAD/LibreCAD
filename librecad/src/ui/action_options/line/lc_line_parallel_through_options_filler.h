@@ -23,9 +23,10 @@
 
 #ifndef LC_LINEPARALLELTHROUGHOPTIONSFILLER_H
 #define LC_LINEPARALLELTHROUGHOPTIONSFILLER_H
-#include "lc_action_options_properties_filler.h"
 
-class LC_LineParallelThroughOptionsFiller: public LC_ActionOptionsPropertiesFiller{
+#include "lc_action_options_properties_filler_base.h"
+
+class LC_LineParallelThroughOptionsFiller: public LC_ActionOptionsPropertiesFillerBase{
     Q_OBJECT
 public:
     LC_LineParallelThroughOptionsFiller() = default;

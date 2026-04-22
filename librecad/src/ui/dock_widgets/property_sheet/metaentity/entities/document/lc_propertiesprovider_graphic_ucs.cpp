@@ -54,7 +54,7 @@ void LC_PropertiesProviderGraphicUCS::fillDocumentProperties(LC_PropertyContaine
 }
 
 int LC_PropertiesProviderGraphicUCS::createUcsActive(RS_Graphic* graphic, LC_UCSList* const ucsList, const LC_UCS* const currentUcs,
-                                                     QString currentUCSName, LC_PropertyContainer* const cont) const {
+                                                     const QString& currentUCSName, LC_PropertyContainer* const cont) const {
     int currentUCSIndex = 0;
     QVector<LC_EnumValueDescriptor> values;
     const auto systemsList = ucsList->getItems();

@@ -30,7 +30,7 @@ class RS_Vector;
 class LC_GraphicViewPortListener{
 public:
     virtual void onViewportChanged() {}
-    virtual void onViewportRedrawNeeded([[maybe_unused]]RS2::RedrawMethod redrawMethod = RS2::RedrawAll) {}
+    virtual void onViewportRedrawNeeded([[maybe_unused]]RS2::RedrawMethod redrawMethod = RS2::RedrawAll, [[maybe_unused]]bool redrawImmediately = false) {}
     virtual void previousZoomChanged([[maybe_unused]]bool value) {}
     virtual void onRelativeZeroChanged([[maybe_unused]]const RS_Vector& pos) {}
     virtual void onUCSChanged([[maybe_unused]]LC_UCS* ucs) {}

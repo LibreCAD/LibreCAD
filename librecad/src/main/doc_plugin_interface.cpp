@@ -35,11 +35,8 @@
 #include "lc_actioncontext.h"
 #include "lc_containertraverser.h"
 #include "lc_documentsstorage.h"
-#include "lc_graphicviewport.h"
 #include "lc_splinepoints.h"
 #include "lc_undosection.h"
-#include "rs_actioninterface.h"
-
 #include "rs_arc.h"
 #include "rs_block.h"
 #include "rs_circle.h"
@@ -404,7 +401,7 @@ void Plugin_Entity::updateData(QHash<int, QVariant>* data) {
         return;
     }
     RS_Entity* ec = entity;
-    if (hasContainer && dpi) {
+    if (hasContainer && (dpi != nullptr)) {
         ec = entity->clone();
     }
     QHash<int, QVariant> hash = *data;
@@ -688,13 +685,13 @@ void Plugin_Entity::updateData(QHash<int, QVariant>* data) {
             break;
     }
     ec->update();
-    if (hasContainer && dpi) {
+    if (hasContainer && (dpi != nullptr)) {
         this->dpi->updateEntity(entity, ec);
     }
 }
 
 void Plugin_Entity::getPolylineData(QList<Plug_VertexData>* data) {
-    if (!entity) {
+    if (entity == nullptr) {
         return;
     }
     const RS2::EntityType et = entity->rtti();
@@ -708,7 +705,7 @@ void Plugin_Entity::getPolylineData(QList<Plug_VertexData>* data) {
     RS_Entity* v = l->firstEntity(RS2::ResolveNone);
     double bulge = 0.0;
     //bad polyline without vertex
-    if (!v) {
+    if (v == nullptr) {
         return;
     }
 
@@ -734,14 +731,14 @@ void Plugin_Entity::getPolylineData(QList<Plug_VertexData>* data) {
             }
         }
 
-        if (!l->isClosed() || nextEntity) {
+        if (!l->isClosed() || (nextEntity != nullptr)) {
             data->append(Plug_VertexData(QPointF(ae->getEndpoint().x, ae->getEndpoint().y), bulge));
         }
     }
 }
 
 void Plugin_Entity::updatePolylineData(QList<Plug_VertexData>* data) {
-    if (!entity) {
+    if (entity == nullptr) {
         return;
     }
     const RS2::EntityType et = entity->rtti();
@@ -759,8 +756,7 @@ void Plugin_Entity::updatePolylineData(QList<Plug_VertexData>* data) {
     pl->setEndpoint(vec);
     pl->setStartpoint(vec);
     vec.valid = true;
-    for (int i = 0; i < data->size(); ++i) {
-        const auto& plugVertexData = data->at(i);
+    for (const auto& plugVertexData : *data) {
         vec.x = plugVertexData.point.x();
         vec.y = plugVertexData.point.y();
         pl->addVertex(vec, plugVertexData.bulge);
@@ -988,7 +984,7 @@ void Doc_plugin_interface::addInsert(const QString name, const QPointF ins, cons
 
 /*TODO RLZ: add undo support in this method*/
 QString Doc_plugin_interface::addBlockfromFromdisk(const QString fullName) {
-    if (fullName.isEmpty() || !m_document) {
+    if (fullName.isEmpty() || (m_document == nullptr)) {
         return nullptr;
     }
     RS_BlockList* blockList = m_document->getBlockList();
@@ -1159,7 +1155,7 @@ bool Doc_plugin_interface::getPoint(QPointF* point, const QString& message, QPoi
         }
         m_graphicView->killAllActions();
         m_graphicView->setCurrentAction(a);
-        if (base) {
+        if (base != nullptr) {
             a->setBasepoint(base);
         }
         QEventLoop ev;
@@ -1316,7 +1312,7 @@ bool Doc_plugin_interface::addVariable(const QString& key, const double value, c
 }
 
 bool Doc_plugin_interface::getInt(int* num, const QString& message, const QString& title) {
-    bool ok;
+    bool ok = false;
     QString msg, tit;
     if (message.isEmpty()) {
         msg = QObject::tr("enter an integer number");
@@ -1338,7 +1334,7 @@ bool Doc_plugin_interface::getInt(int* num, const QString& message, const QStrin
 }
 
 bool Doc_plugin_interface::getReal(qreal* num, const QString& message, const QString& title) {
-    bool ok;
+    bool ok = false;
     QString msg, tit;
     if (message.isEmpty()) {
         msg = QObject::tr("enter a number");
@@ -1361,7 +1357,7 @@ bool Doc_plugin_interface::getReal(qreal* num, const QString& message, const QSt
 }
 
 bool Doc_plugin_interface::getString(QString* txt, const QString& message, const QString& title) {
-    bool ok;
+    bool ok = false;
     QString msg, tit;
     if (message.isEmpty()) {
         msg = QObject::tr("enter text");

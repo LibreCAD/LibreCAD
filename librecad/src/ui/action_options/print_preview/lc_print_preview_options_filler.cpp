@@ -23,6 +23,7 @@
 
 #include "lc_print_preview_options_filler.h"
 
+#include "lc_enum_descriptor.h"
 #include "lc_property_rect.h"
 #include "lc_property_rsvector_view.h"
 #include "rs_actionprintpreview.h"
@@ -73,19 +74,19 @@ void LC_PrintPreviewOptionsFiller::fillToolOptionsContainer(LC_PropertyContainer
                }, container);
 
     addIntSpinbox({"printNumX", tr("Horizontal pages"), tr("Number of pages to print by horizontal")}, [action]() -> int {
-                      RS_Graphic* graphic = action->getActionContext()->getGraphic();
+                      const RS_Graphic* graphic = action->getActionContext()->getGraphic();
                       return graphic->getPlotSettings()->getPagesNumHoriz();
                   }, [action, this](const int& v) -> void {
-                      RS_Graphic* graphic = action->getActionContext()->getGraphic();
+                      const RS_Graphic* graphic = action->getActionContext()->getGraphic();
                       graphic->getPlotSettings()->setPagesNum(v, -1);
                       notifyDrawingOptionsChanged();
                   }, container);
 
     addIntSpinbox({"printNumY", tr("Vertical pages"), tr("Number of pages to print by vertical")}, [action]() -> int {
-                      RS_Graphic* graphic = action->getActionContext()->getGraphic();
+                      const RS_Graphic* graphic = action->getActionContext()->getGraphic();
                       return graphic->getPlotSettings()->getPagesNumVert();
                   }, [action, this](const int& v) -> void {
-                      RS_Graphic* graphic = action->getActionContext()->getGraphic();
+                      const RS_Graphic* graphic = action->getActionContext()->getGraphic();
                       graphic->getPlotSettings()->setPagesNum(-1, v);
                       notifyDrawingOptionsChanged();
                   }, container);
@@ -106,9 +107,9 @@ namespace {
 }
 
 void LC_PrintPreviewOptionsFiller::createPaperSection(QObject* parent, RS_ActionPrintPreview* action) {
-    auto parentContainer = dynamic_cast<LC_PropertyContainer*>(parent);
+    const auto parentContainer = dynamic_cast<LC_PropertyContainer*>(parent);
     if (parentContainer != nullptr) {
-        auto paperSection = createSection(parentContainer, {"_secPaper", "Paper", "Print paper settings"});
+        const auto paperSection = createSection(parentContainer, {"_secPaper", "Paper", "Print paper settings"});
         createPageFormat(paperSection, action);
         createPageSize(paperSection, action);
         createPrintOrientation(paperSection, action);
@@ -126,12 +127,12 @@ void LC_PrintPreviewOptionsFiller::createPrintMargins(LC_PropertyContainer* cont
     propertyMargins->setBottomDescription(tr("Bottom page margin"));
 
     auto funGet = [action]() -> LC_MarginsRect {
-        RS_Graphic* graphic = action->getActionContext()->getGraphic();
+        const RS_Graphic* graphic = action->getActionContext()->getGraphic();
         return graphic->getPlotSettings()->getMarginsInUnits();
     };
 
     auto funSet = [this, action](const LC_MarginsRect& v) -> void {
-        RS_Graphic* graphic = action->getActionContext()->getGraphic();
+        const RS_Graphic* graphic = action->getActionContext()->getGraphic();
         graphic->getPlotSettings()->setMarginsInUnits(v.left, v.top, v.right, v.bottom);
         notifyDrawingOptionsChanged();
     };
@@ -141,8 +142,8 @@ void LC_PrintPreviewOptionsFiller::createPrintMargins(LC_PropertyContainer* cont
 }
 
 void LC_PrintPreviewOptionsFiller::createPageSize(LC_PropertyContainer* const cont, RS_ActionPrintPreview* action) const {
-    bool landscape;
-    RS_Graphic* graphic = action->getActionContext()->getGraphic();
+    bool landscape = false;
+    const RS_Graphic* graphic = action->getActionContext()->getGraphic();
     if (graphic == nullptr) {
         return;
     }
@@ -160,13 +161,13 @@ void LC_PrintPreviewOptionsFiller::createPageSize(LC_PropertyContainer* const co
     propertyPageSize->setActionContextAndLaterRequestor(m_actionContext, m_widget);
 
     auto funGet = [action]() -> RS_Vector {
-        RS_Graphic* graphic = action->getActionContext()->getGraphic();
-        const auto paperSize = graphic->getPlotSettings()->getPaperSize();
+        const RS_Graphic* g = action->getActionContext()->getGraphic();
+        const auto paperSize = g->getPlotSettings()->getPaperSize();
         return paperSize;
     };
 
     auto funSet = [this, action](const RS_Vector& v) -> void {
-        RS_Graphic* graphic = action->getActionContext()->getGraphic();
+        const RS_Graphic* graphic = action->getActionContext()->getGraphic();
         graphic->getPlotSettings()->setPaperSize(v);
         notifyDrawingOptionsChanged();
     };
@@ -185,15 +186,15 @@ void LC_PrintPreviewOptionsFiller::notifyDrawingOptionsChanged() const {
 
 void LC_PrintPreviewOptionsFiller::createPageFormat(LC_PropertyContainer* const cont, RS_ActionPrintPreview* action) {
     auto funGetValue = [action]() -> RS2::PaperFormat {
-        [[maybe_unused]] bool landscape;
-        RS_Graphic* g = action->getActionContext()->getGraphic();
+        [[maybe_unused]] bool landscape = false;
+        const RS_Graphic* g = action->getActionContext()->getGraphic();
         return g->getPlotSettings()->getPaperFormat(&landscape);
     };
 
     auto funSetValue = [action, this](LC_PropertyEnumValueType v) -> void {
-        RS_Graphic* g = action->getActionContext()->getGraphic();
-        bool landscape;
-        auto ps = g->getPlotSettings();
+        const RS_Graphic* g = action->getActionContext()->getGraphic();
+        bool landscape = false;
+        const auto ps = g->getPlotSettings();
         [[maybe_unused]] auto oldFormat = ps->getPaperFormat(&landscape);
         if (v == RS2::PaperFormat::Custom) {
             auto paperSize = ps->getPaperSize();
@@ -221,7 +222,7 @@ void LC_PrintPreviewOptionsFiller::createPrintOrientation(LC_PropertyContainer* 
     static const LC_EnumDescriptor orientationDescriptor = {"printOrientation", {{0, tr("Landscape")}, {1, tr("Portrait")}}};
 
     auto funGetValue = [action]() -> LC_PropertyEnumValueType {
-        bool portrait = action->isPortrait();
+        const bool portrait = action->isPortrait();
         const int result = portrait ? 1 : 0;
         return result;
     };

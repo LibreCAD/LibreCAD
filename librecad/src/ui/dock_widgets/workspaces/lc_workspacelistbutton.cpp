@@ -52,7 +52,7 @@ void LC_WorkspaceListButton::fillMenu() {
     const int workspacesCount = workspacesList.count();
     const int actionsCount = m_createdActions.count();
     if (workspacesCount <= actionsCount){
-        int i;
+        int i = 0;
         for (i = 0; i < workspacesCount; i++){
             const auto a = m_createdActions.at(i);
             auto w = workspacesList.at(i);
@@ -67,7 +67,7 @@ void LC_WorkspaceListButton::fillMenu() {
         }
     }
     else{
-        int i;
+        int i = 0;
         for (i = 0;  i < actionsCount; i++){
             const auto a = m_createdActions.at(i);
             auto w = workspacesList.at(i);

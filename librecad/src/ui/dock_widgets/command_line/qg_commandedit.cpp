@@ -412,7 +412,7 @@ void QG_CommandEdit::readCommandFile(const QString& path) {
         file.close();
 
         // Process the commands while the file is closed
-        for (QString line : lines) {
+        for (QString line : std::as_const(lines)) {
             line.remove(" ");
             if (!line.startsWith("#")) {
                 processInput(line);

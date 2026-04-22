@@ -87,7 +87,7 @@ void LC_ActionDrawArc3Points::preparePreview(const bool alternatePoints) const {
         const RS_Vector &middlePoint = m_actionData->point2;
         const RS_Vector &startPoint = m_actionData->point1;
         const RS_Vector &endPoint = m_actionData->point3;
-        bool success;
+        bool success = false;
         if (alternatePoints){
             success = LC_CreationArc::createFrom3P(startPoint, endPoint, middlePoint, m_actionData->data);
         }

@@ -24,6 +24,7 @@
 #include "lc_arc_tangential_options_filler.h"
 
 #include "lc_action_draw_arc_tangential.h"
+#include "lc_enum_descriptor.h"
 
 void LC_ArcTangentialOptionsFiller::fillToolOptionsContainer(LC_PropertyContainer* container) {
     auto action = static_cast<LC_ActionDrawArcTangential*>(m_action);
@@ -37,7 +38,7 @@ void LC_ArcTangentialOptionsFiller::fillToolOptionsContainer(LC_PropertyContaine
                 action->setByRadius(v == 0);
             }, container);
 
-    bool byRadius = action->isByRadius();
+    const bool byRadius = action->isByRadius();
     if (byRadius) {
         addLinearDistance({"a_radius", tr("Radius"), tr("Radius of arc")}, [action]() {
                               return action->getRadius();

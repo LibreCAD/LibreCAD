@@ -358,10 +358,10 @@ RS_Vector RS_Solid::doGetNearestPointOnEntity(const RS_Vector& coord, const bool
     return ret;
 }
 
-RS_Vector RS_Solid::doGetNearestCenter([[maybe_unused]] const RS_Vector& coord, double* dist, RS_Entity** entity) const {
+RS_Vector RS_Solid::doGetNearestCenter([[maybe_unused]] const RS_Vector& coord, double* dist, RS_Entity** centerEntity) const {
     setDistPtr(dist, RS_MAXDOUBLE);
-    if (entity != nullptr) {
-        *entity = const_cast<RS_Solid*>(this);
+    if (centerEntity != nullptr) {
+        *centerEntity = const_cast<RS_Solid*>(this);
     }
     return RS_Vector(false);
 }

@@ -72,7 +72,7 @@ unsigned int LC_ActionPreSelectionAwareBase::collectSelectedEntities() {
     m_selectedEntities.clear();
     QList<RS_Entity*> entities;
     m_document->collectSelected(entities, false, m_catchForSelectionEntityTypes);
-    for (const auto e: entities) {
+    for (const auto e: std::as_const(entities)) {
         if (isEntityAllowedToSelect(e)) {
             m_selectedEntities.push_back(e);
         }
@@ -278,7 +278,7 @@ void LC_ActionPreSelectionAwareBase::proceedSelectionComplete(const bool allowEm
 }
 
 void LC_ActionPreSelectionAwareBase::setSelectionComplete(const bool allowEmptySelection, const bool fromInit) {
-    unsigned int selectedCount;
+    unsigned int selectedCount = 0;
     if (fromInit) {
        selectedCount = m_selectedEntities.size();
     }

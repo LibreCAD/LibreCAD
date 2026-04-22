@@ -59,7 +59,7 @@ void LC_LineAngleOptionsWidget::languageChange(){
     ui->retranslateUi(this);
 }
 
-void LC_LineAngleOptionsWidget::setupLengthType(bool angleIsNotFixed) {
+void LC_LineAngleOptionsWidget::setupLengthType(bool angleIsNotFixed) const {
     ui->cbLengthType->blockSignals(true);
     ui->cbLengthType->clear();
     ui->cbLengthType->addItem(tr("Line"), LC_ActionDrawLineAngle::LengthType::LINE);

@@ -24,9 +24,9 @@
 #ifndef LC_TRIMAMOUNTOPTIONSFILLER_H
 #define LC_TRIMAMOUNTOPTIONSFILLER_H
 
-#include "lc_action_options_properties_filler.h"
+#include "lc_action_options_properties_filler_base.h"
 
-class LC_TrimAmountOptionsFiller: public LC_ActionOptionsPropertiesFiller{
+class LC_TrimAmountOptionsFiller: public LC_ActionOptionsPropertiesFillerBase{
     Q_OBJECT
 public:
     LC_TrimAmountOptionsFiller() = default;

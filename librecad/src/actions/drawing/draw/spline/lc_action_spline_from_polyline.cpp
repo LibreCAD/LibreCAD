@@ -66,7 +66,7 @@ bool LC_ActionSplineFromPolyline::doTriggerModifications(LC_DocumentModification
     auto createdEntity = createSplineForPolyline(m_polyline);
 
     if (createdEntity != nullptr) {
-        RS_Layer* layerToSet;
+        RS_Layer* layerToSet = nullptr;
         if (m_useCurrentLayer) {
             layerToSet = m_graphicView->getGraphic()->getActiveLayer();
         }

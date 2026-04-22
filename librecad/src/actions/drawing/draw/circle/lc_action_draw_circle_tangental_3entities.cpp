@@ -331,7 +331,7 @@ bool LC_ActionDrawCircleTangental3Entities::getData(RS_Entity* testThirdEntity) 
 }
 
 bool LC_ActionDrawCircleTangental3Entities::preparePreview() const {
-    if (getStatus() != SetCenter || m_actionData->valid == false) {
+    if (getStatus() != SetCenter || !m_actionData->valid) {
         m_actionData->valid = false;
         return false;
     }
@@ -368,7 +368,7 @@ bool LC_ActionDrawCircleTangental3Entities::preparePreview() const {
  */
 RS_Entity* LC_ActionDrawCircleTangental3Entities::catchCircle(const LC_MouseEvent* e, const bool forPreview) const {
     RS_Entity* ret = nullptr;
-    RS_Entity* en;
+    RS_Entity* en = nullptr;
     if (forPreview) {
         en = catchModifiableAndDescribe(e, g_enTypeList);
     }

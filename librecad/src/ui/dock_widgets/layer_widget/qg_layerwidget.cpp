@@ -165,7 +165,7 @@ QVariant QG_LayerModel::data( const QModelIndex & index, const int role ) const{
             break;
         case Qt::FontRole:
             if (COLUMN_NAME == col) {
-                if (m_activeLayer && m_activeLayer == layer) {
+                if ((m_activeLayer != nullptr) && m_activeLayer == layer) {
                     QFont font;
                     font.setBold(true);
                     return font;
@@ -205,7 +205,7 @@ public:
 
                 painter->fillRect(colorRect, Qt::black);
                 colorRect.adjust(1, 1, -1, -1);
-                auto color = layer->getPen().getColor();
+                const auto color = layer->getPen().getColor();
                 painter->fillRect(colorRect, color);
             }
         }
@@ -252,7 +252,7 @@ QG_LayerWidget::QG_LayerWidget(LC_ActionGroupManager* actionGroupManager, const 
 
     QHeaderView* verticalHeader = m_layerView->verticalHeader();
     const QFontMetrics fm(font());
-    int itemHeight = fm.height() + 6;
+    const int itemHeight = fm.height() + 6;
     verticalHeader->setDefaultSectionSize(itemHeight);
 
     QHeaderView *horizontalHeader = m_layerView->horizontalHeader();
@@ -378,7 +378,7 @@ QString QG_LayerWidget::getActiveName() const{
 void QG_LayerWidget::updateWidget() {
     RS_DEBUG->print("QG_LayerWidget::update() begin");
 
-    if (!m_layerView) {
+    if (m_layerView == nullptr) {
         RS_DEBUG->print(RS_Debug::D_ERROR, "QG_LayerWidget::update: nullptr layerView");
         return;
     }
@@ -415,7 +415,7 @@ void QG_LayerWidget::updateWidget() {
 void QG_LayerWidget::restoreSelections() const {
     QItemSelectionModel* selectionModel = m_layerView->selectionModel();
     for (auto* layer: *m_layerList) {
-        if (!layer) {
+        if (layer == nullptr) {
             continue;
         }
         if (!layer->isVisibleInLayerList()) {
@@ -445,13 +445,13 @@ void QG_LayerWidget::activateLayer(RS_Layer* layer, const bool updateScroll) con
 
     m_graphic->activateLayer(layer);
 
-    if (!m_layerModel) {
+    if (m_layerModel == nullptr) {
         RS_DEBUG->print(RS_Debug::D_ERROR, "QG_LayerWidget::activateLayer: nullptr layerModel");
         return;
     }
     const QModelIndex idx = m_layerModel->getIndex(layer);
 
-    if (!idx.model() || !m_layerView) {
+    if ((idx.model() == nullptr) || (m_layerView == nullptr)) {
         RS_DEBUG->print(RS_Debug::D_ERROR, "QG_LayerWidget::activateLayer: invalid layer or nullptr layerView");
         return;
     }
@@ -540,7 +540,7 @@ void QG_LayerWidget::slotSelectionChanged(
 
     foreach (index, deselected.indexes()) {
         const auto layer = m_layerModel->getLayer(index.row());
-        if (layer && layer->isVisibleInLayerList()) {
+        if ((layer != nullptr) && layer->isVisibleInLayerList()) {
             layer->selectedInLayerList(false);
             selectionModel->select(QItemSelection(index, index), QItemSelectionModel::Deselect);
         }

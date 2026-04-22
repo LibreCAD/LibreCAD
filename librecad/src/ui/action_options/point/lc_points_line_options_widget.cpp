@@ -61,7 +61,7 @@ void LC_LinePointsOptionsWidget::doUpdateByAction(RS_ActionInterface* a) {
         angleMode = false;
     }
 
-    int pointsCount = m_action->getPointsCount();
+    const int pointsCount = m_action->getPointsCount();
     if (showAllControls) {
         edgePointMode = m_action->getEdgePointsMode();
         fixedDistanceMode = m_action->isFixedDistanceMode();
@@ -149,7 +149,7 @@ void LC_LinePointsOptionsWidget::onWithinLineClicked(const bool value) const {
 }
 
 void LC_LinePointsOptionsWidget::onDistanceEditingFinished() {
-    auto val = ui->leDistance->text();
+    const auto val = ui->leDistance->text();
     double distance;
     if (toDouble(val, distance, 1.0, true)) {
         m_action->setPointsDistance(distance);
@@ -158,7 +158,7 @@ void LC_LinePointsOptionsWidget::onDistanceEditingFinished() {
 }
 
 void LC_LinePointsOptionsWidget::onAngleEditingFinished() {
-    auto val = ui->leAngle->text();
+    const auto val = ui->leAngle->text();
     double angle;
     if (toDouble(val, angle, 0.0, false)) {
         m_action->setAngleValueDegrees(angle);

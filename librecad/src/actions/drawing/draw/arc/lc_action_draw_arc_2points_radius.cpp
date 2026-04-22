@@ -30,7 +30,7 @@ LC_ActionDrawArc2PointsRadius::LC_ActionDrawArc2PointsRadius(LC_ActionContext *a
     :LC_ActionDrawArc2PointsBase("ActionDrawArc2PRadius",actionContext, RS2::ActionDrawArc2PRadius) {
 }
 
-bool LC_ActionDrawArc2PointsRadius::createArcData(RS_ArcData &data, [[maybe_unused]]int status, RS_Vector pos, const bool alternate, [[maybe_unused]]bool reportErrors) {
+bool LC_ActionDrawArc2PointsRadius::createArcData(RS_ArcData &data, [[maybe_unused]]int status, const RS_Vector& pos, const bool alternate, [[maybe_unused]]bool reportErrors) {
     return LC_CreationArc::createFrom2PRadius(m_startPoint, pos, m_parameterLen, m_reversed, alternate, data);
 }
 

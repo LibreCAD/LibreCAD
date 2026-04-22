@@ -35,7 +35,7 @@ public:
     }
 
     static const QString SECTION_LAYER;
-    void fillDocumentProperties(LC_PropertyContainer* container, RS_Graphic* graphic);
+    void fillDocumentProperties(LC_PropertyContainer* container, RS_Graphic* graphic) override;
 protected:
     void createActiveLayer(LC_PropertyContainer* cont, RS_Graphic* graphic);
     bool inPrintPreview() const;

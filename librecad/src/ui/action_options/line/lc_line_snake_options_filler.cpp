@@ -24,6 +24,7 @@
 #include "lc_line_snake_options_filler.h"
 
 #include "lc_action_draw_line_snake.h"
+#include "lc_enum_descriptor.h"
 
 void LC_LineSnakeOptionsFiller::fillToolOptionsContainer(LC_PropertyContainer* container) {
     auto action = static_cast<LC_ActionDrawLineSnake*>(m_action);

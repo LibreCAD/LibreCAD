@@ -205,7 +205,7 @@ bool LC_PropertiesProviderGraphicGrid::createShowMetaGrid(LC_PropertyContainer* 
     return gridOn;
 }
 
-void LC_PropertiesProviderGraphicGrid::createDecimalMetaGrid(LC_PropertyContainer* cont, RS_Graphic* graphic, bool showGridOn,
+void LC_PropertiesProviderGraphicGrid::createDecimalMetaGrid(LC_PropertyContainer* cont, RS_Graphic* graphic, bool showGrid,
                                                              bool showMetaGrid) const {
     const auto graphicViewport = m_actionContext->getViewport();
     if (graphicViewport != nullptr) {
@@ -241,7 +241,7 @@ void LC_PropertiesProviderGraphicGrid::createDecimalMetaGrid(LC_PropertyContaine
                 };
 
                 createDirectDelegatedStorage<int, RS_Graphic>(funGetPagesHor, funSetPagesHor, graphic, propertyMetaStepEvery);
-                propertyMetaStepEvery->setReadOnly(!(showGridOn && showMetaGrid));
+                propertyMetaStepEvery->setReadOnly(!(showGrid && showMetaGrid));
                 cont->addChildProperty(propertyMetaStepEvery);
             }
         }

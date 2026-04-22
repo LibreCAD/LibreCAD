@@ -47,7 +47,7 @@ QG_MouseWidget::QG_MouseWidget(QWidget* parent, const char* name, const Qt::Wind
 
         if (useClassicalStatusBar) {
             int height{64};
-            const int allowStatusbarHeight = LC_GET_BOOL("AllowStatusbarHeight", false);
+            const bool allowStatusbarHeight = LC_GET_BOOL("AllowStatusbarHeight", false);
             if (allowStatusbarHeight) {
                 height = LC_GET_INT("StatusbarHeight", 64);
             }

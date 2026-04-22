@@ -82,7 +82,7 @@ RS_Font* QG_FontBox::getFont() const {
 void QG_FontBox::slotFontChanged(const int index) {
     RS_DEBUG->print("QG_FontBox::slotFontChanged %d\n", index);
     m_currentFont = RS_FONTLIST->requestFont(currentText());
-    if (m_currentFont) {
+    if (m_currentFont != nullptr) {
         RS_DEBUG->print("Current font is (%d): %s\n", index, m_currentFont->getFileName().toLatin1().data());
     }
     emit fontChanged(m_currentFont);

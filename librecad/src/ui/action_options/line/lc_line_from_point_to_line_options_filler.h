@@ -23,9 +23,10 @@
 
 #ifndef LC_LINEFROMPOINTTOLINEOPTIONSFILLER_H
 #define LC_LINEFROMPOINTTOLINEOPTIONSFILLER_H
-#include "lc_action_options_properties_filler.h"
 
-class LC_LineFromPointToLineOptionsFiller: public LC_ActionOptionsPropertiesFiller{
+#include "lc_action_options_properties_filler_base.h"
+
+class LC_LineFromPointToLineOptionsFiller: public LC_ActionOptionsPropertiesFillerBase{
     Q_OBJECT
 public:
     LC_LineFromPointToLineOptionsFiller() = default;

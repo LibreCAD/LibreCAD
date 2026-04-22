@@ -23,10 +23,7 @@
 
 #include "lc_propertyprovider_utils.h"
 
-#include <QTimer>
-
 #include "lc_propertiesprovider_dim_base.h"
-#include "qc_applicationwindow.h"
 #include "rs.h"
 
 LC_EnumDescriptor* LC_PropertyProviderUtils::getLinearUnitsEnumDescriptor(RS2::LinearFormat format) {

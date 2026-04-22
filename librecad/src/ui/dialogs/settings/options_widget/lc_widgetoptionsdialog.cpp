@@ -20,7 +20,7 @@
 ** Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 **
 **********************************************************************************
-*/
+ */
 
 #include "lc_widgetoptionsdialog.h"
 
@@ -203,8 +203,8 @@ bool LC_WidgetOptionsDialog::setupStylesCombobox() const {
     QStringList existingStyles;
     m_iconColorsOptions.getAvailableStyles(existingStyles);
     if (!existingStyles.isEmpty()) {
-        for (const auto& style:existingStyles){
-          cbIconsStyle->addItem(style);
+        for (const auto& style : std::as_const(existingStyles)) {
+            cbIconsStyle->addItem(style);
         }
         return true;
     }
@@ -216,13 +216,13 @@ void LC_WidgetOptionsDialog::updateStylesCombobox(QStringList options) const {
     m_iconColorsOptions.getAvailableStyles(options);
     pbRemoveStyle->setEnabled(!options.isEmpty());
     cbIconsStyle->clear();
-    for (const auto& style:options){
+    for (const auto& style : std::as_const(options)) {
         cbIconsStyle->addItem(style);
     }
 }
 
 void LC_WidgetOptionsDialog::onSaveStylePressed(){
-    bool ok;
+    bool ok = false;
     QStringList options;
     m_iconColorsOptions.getAvailableStyles(options);
     const auto styleName = LC_InputTextDialog::getText(this, tr("Save Icons Style"), tr("Enter name of icons style:"), options, true, m_currentIconsStyleName, &ok);
@@ -233,7 +233,7 @@ void LC_WidgetOptionsDialog::onSaveStylePressed(){
 }
 
 void LC_WidgetOptionsDialog::onRemoveStylePressed(){
-    bool ok;
+    bool ok = false;
     QStringList options;
     m_iconColorsOptions.getAvailableStyles(options);
     const auto styleName = LC_InputTextDialog::getText(this, tr("Remove Icons Style"), tr("Select style to remove:"), options, false, m_currentIconsStyleName, &ok);
@@ -261,8 +261,8 @@ QString LC_WidgetOptionsDialog::selectFolder(const QString& title) {
     dlg.setFileMode(QFileDialog::Directory);
     dlg.setOption(QFileDialog::ShowDirsOnly);
 
-    if (dlg.exec()) {
-        folder = dlg.selectedFiles()[0];
+    if (dlg.exec() != 0) {
+        folder = dlg.selectedFiles().at(0);
     }
     return folder;
 }
@@ -352,7 +352,7 @@ void LC_WidgetOptionsDialog::accept() {
 
         const bool allow_theme = false; //theme_checkbox->isChecked();
         LC_SET("AllowTheme", allow_theme);
-        const int allow_toolbar_icon_size = toolbar_icon_size_checkbox->isChecked();
+        const bool allow_toolbar_icon_size = toolbar_icon_size_checkbox->isChecked();
         LC_SET("AllowToolbarIconSize", allow_toolbar_icon_size);
         if (allow_toolbar_icon_size) {
             const int toolbar_icon_size = toolbar_icon_size_spinbox->value();
@@ -360,7 +360,7 @@ void LC_WidgetOptionsDialog::accept() {
             appWindow->setIconSize(QSize(toolbar_icon_size, toolbar_icon_size));
         }
 
-        const int allow_statusbar_fontsize = statusbar_fontsize_checkbox->isChecked();
+        const bool allow_statusbar_fontsize = statusbar_fontsize_checkbox->isChecked();
         LC_SET("AllowStatusbarFontSize", allow_statusbar_fontsize);
         if (allow_statusbar_fontsize) {
             const int statusbar_fontsize = statusbar_fontsize_spinbox->value();
@@ -370,7 +370,7 @@ void LC_WidgetOptionsDialog::accept() {
             appWindow->statusBar()->setFont(font);
         }
 
-        const int allow_statusbar_height = statusbar_height_checkbox->isChecked();
+        const bool allow_statusbar_height = statusbar_height_checkbox->isChecked();
         LC_SET("AllowStatusbarHeight", allow_statusbar_height);
         if (allow_statusbar_height) {
             const int statusbar_height = statusbar_height_spinbox->value();

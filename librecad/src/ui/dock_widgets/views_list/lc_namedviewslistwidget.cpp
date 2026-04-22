@@ -340,7 +340,7 @@ void LC_NamedViewsListWidget::renameView() {
 }
 
 void LC_NamedViewsListWidget::addNewView() {
-    bool ok;
+    bool ok = false;
     const QString defaultName = "";
     bool tryCreate = true;
     while (tryCreate) {
@@ -377,7 +377,7 @@ void LC_NamedViewsListWidget::addNewView() {
 
 void LC_NamedViewsListWidget::renameExistingView(LC_View* selectedView) {
     const QString viewName = selectedView->getName();
-    bool ok;
+    bool ok = false;
     bool tryRename = true;
     while (tryRename) {
         QString text = QInputDialog::getText(this, tr("Rename View"), tr("View name:"), QLineEdit::Normal, viewName, &ok);

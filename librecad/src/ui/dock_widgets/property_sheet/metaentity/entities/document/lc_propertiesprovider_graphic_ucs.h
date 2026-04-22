@@ -38,7 +38,7 @@ public:
     void fillDocumentProperties(LC_PropertyContainer* container, RS_Graphic* graphic) override;
 
 protected:
-    int createUcsActive(RS_Graphic* graphic, LC_UCSList* ucsList, const LC_UCS* currentUcs, QString currentUCSName,
+    int createUcsActive(RS_Graphic* graphic, LC_UCSList* ucsList, const LC_UCS* currentUcs, const QString& currentUCSName,
                         LC_PropertyContainer* cont) const;
     void createUcsGrid(LC_PropertyContainer* cont, const LC_UCS* currentUcs);
     void createUCSListCommands(LC_PropertyContainer* cont, RS_Graphic* graphic, LC_UCSList* ucsList, int currentUCSIndex, bool isUCS) const;

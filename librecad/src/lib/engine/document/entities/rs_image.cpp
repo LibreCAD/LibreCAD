@@ -228,7 +228,7 @@ RS_Vector RS_Image::doGetNearestPointOnEntity(const RS_Vector& coord, const bool
     return points.getClosest(coord, dist);
 }
 
-RS_Vector RS_Image::doGetNearestCenter(const RS_Vector& coord, double* dist, RS_Entity** entity) const {
+RS_Vector RS_Image::doGetNearestCenter(const RS_Vector& coord, double* dist, RS_Entity** centerEntity) const {
     const RS_VectorSolutions& corners{getCorners()};
     //bug#485, there's no clear reason to ignore snapping to center within an image
     //    if(containsPoint(coord)){
@@ -244,8 +244,8 @@ RS_Vector RS_Image::doGetNearestCenter(const RS_Vector& coord, double* dist, RS_
     }
     points.push_back((corners.get(0) + corners.get(2)) * 0.5);
 
-    if (entity != nullptr) {
-        *entity = const_cast<RS_Image*>(this);
+    if (centerEntity != nullptr) {
+        *centerEntity = const_cast<RS_Image*>(this);
     }
     return points.getClosest(coord, dist);
 }
@@ -338,7 +338,7 @@ void RS_Image::mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2) 
 }
 
 void RS_Image::draw(RS_Painter* painter) {
-    if (!m_img.get() || m_img->isNull()) {
+    if ((m_img.get() == nullptr) || m_img->isNull()) {
         return;
     }
     painter->drawImgWCS(*m_img, m_data.insertionPoint, m_data.uVector, m_data.vVector);

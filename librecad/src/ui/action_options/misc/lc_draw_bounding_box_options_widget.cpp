@@ -44,10 +44,10 @@ LC_DrawBoundingBoxOptionsWidget::~LC_DrawBoundingBoxOptionsWidget() {
 void LC_DrawBoundingBoxOptionsWidget::doUpdateByAction(RS_ActionInterface* a) {
     m_action = static_cast<LC_ActionDrawBoundingBox*>(a);
 
-    bool asGroup = m_action->isSelectionAsGroup();
-    bool cornerPoints = m_action->isCornerPointsOnly();
-    bool polyline = m_action->isCreatePolyline();
-    QString offset = fromDouble(m_action->getOffset());
+    const bool asGroup = m_action->isSelectionAsGroup();
+    const bool cornerPoints = m_action->isCornerPointsOnly();
+    const bool polyline = m_action->isCreatePolyline();
+    const QString offset = fromDouble(m_action->getOffset());
 
     LC_GuardedSignalsBlocker({ui->cbAsGroup, ui->cbCornerPointsOnly, ui->cbPolyline, ui->leOffset});
 

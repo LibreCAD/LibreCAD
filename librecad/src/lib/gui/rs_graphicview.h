@@ -92,9 +92,8 @@ public:
 /** This virtual method must be overwritten to return
   the height of the widget the graphic is shown in */
     virtual int getHeight() const = 0;
-/** This virtual method must be overwritten to redraw
-  the widget. */
-    virtual void redraw(RS2::RedrawMethod method = RS2::RedrawAll) = 0;
+/** This virtual method must be overwritten to redraw the widget. */
+    virtual void redraw(RS2::RedrawMethod method = RS2::RedrawAll, bool immediately = false) = 0;
 /** This virtual method must be overwritten and is then
   called whenever the view changed */
     virtual void adjustOffsetControls() = 0;
@@ -172,11 +171,11 @@ public:
     bool hasAction() const;
     void notifyLastActionFinished() const;
     void onSwitchToDefaultAction(bool actionIsDefault, RS2::ActionType actionRtti, RS2::ActionType prevActionRtti);
-    void showRelativeInputWidget(const RS_Vector& wcsPos, const RS_Vector& basePoint, bool baseIsRelativePoint, RS2::RelativePointParam param);
-    void hideRelativeInputWidget();
-    void restoreRelativeInputWidget();
+    void showRelativeInputWidget(const RS_Vector& wcsPos, const RS_Vector& basePoint, bool baseIsRelativePoint, RS2::RelativePointParam param) const;
+    void hideRelativeInputWidget() const;
+    void restoreRelativeInputWidget() const;
     bool isInRelativePointInput() const;
-    void onViewportRedrawNeeded(RS2::RedrawMethod method) override;
+    void onViewportRedrawNeeded(RS2::RedrawMethod method, bool redrawImmediately) override;
     LC_VisualSnapData* getVisualSnapData() const {return m_visualSnapData;}
 signals:
     void ucsChanged(LC_UCS* ucs);

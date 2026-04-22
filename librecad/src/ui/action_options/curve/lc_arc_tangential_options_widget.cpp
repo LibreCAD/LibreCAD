@@ -25,8 +25,6 @@
 **********************************************************************/
 #include "lc_arc_tangential_options_widget.h"
 
-#include<cmath>
-
 #include "lc_action_draw_arc_tangential.h"
 #include "lc_guarded_signals_blocker.h"
 #include "ui_lc_arc_tangential_options_widget.h"
@@ -89,7 +87,7 @@ void LC_ArcTangentialOptionsWidget::onRadiusEditingFinished() {
 }
 
 void LC_ArcTangentialOptionsWidget::onAngleEditingFinished() {
-    auto val = ui->leAngle->text();
+    const auto val = ui->leAngle->text();
     double angleDegree;
     if (toDoubleAngleDegrees(val, angleDegree, 1.0, true)) {
         double angleRad = RS_Math::correctAngle(RS_Math::deg2rad(angleDegree));

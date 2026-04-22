@@ -56,7 +56,7 @@ protected
     void updateLengthPrecision() const;
     void updateAnglePrecision() const;
     void updateUnitsPreview() const;
-    void updatePaperSize();
+    void updatePaperSize() const;
     void updateUnitLabels();
     void updateDimLengthPrecision() const;
     void updateDimAnglePrecision() const;
@@ -78,7 +78,7 @@ protected
     void onDimStyleImport(bool checked);
     void updateActiveStyleLabel(const LC_DimStyleTreeModel* model) const;
     void onDimStyleSetDefault(bool checked);
-    void updateActionButtons(const LC_DimStyleItem* item);
+    void updateActionButtons(const LC_DimStyleItem* item) const;
     void onDimCurrentChanged(const QModelIndex& current, const QModelIndex& previous);
 
     void onDimStylesListMenuRequested(const QPoint& pos);
@@ -88,13 +88,13 @@ protected
     void onCustomVariableDelete(bool checked);
     void reject() override;
 protected:
-    void setupPointsTab();
+    void setupPointsTab() const;
     void setupSplinesTab() const;
     void setupGridTab() const;
     void setupPaperTab();
     void setupMetaTab() const;
     void setupUserREditor(QLineEdit* edit, const QString& key) const;
-    void setupUserTab();
+    void setupUserTab() const;
     void _toRemoveSetupLegacyDimsTab(RS2::LinearFormat& linearFormat, int lunits, int luprec, int aunits, int auprec) const;
     LC_DimStyleTreeModel* getDimStylesModel() const;
     void doCreateDimStyle(const QString& newStyleName, LC_DimStyleTreeModel* model, const LC_DimStyleItem* styleItemBasedOn,
@@ -123,7 +123,7 @@ private:
     void setupDimStylesTab();
     void setupVariablesTab() const;
     void _toRemove_validateDimsOld() const;
-    bool validateDimensionsTab();
+    bool validateDimensionsTab() const;
     bool validatePointsTab() const;
     void validateSplinesTab() const;
     void validateGridTab() const;

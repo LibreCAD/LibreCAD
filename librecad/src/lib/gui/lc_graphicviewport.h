@@ -1,5 +1,5 @@
 /*******************************************************************************
-*
+ *
  This file is part of the LibreCAD project, a 2D CAD program
 
  Copyright (C) 2025 LibreCAD.org
@@ -171,7 +171,9 @@ public:
     RS_Graphic* getGraphic() const {return m_graphic;}
     void addViewportListener(LC_GraphicViewPortListener* listener);
     void removeViewportListener(LC_GraphicViewPortListener* listener);
-    void notifyChanged(const RS2::RedrawMethod method = RS2::RedrawDrawing) const { fireRedrawNeeded(method);}
+    void notifyChanged(const RS2::RedrawMethod method = RS2::RedrawDrawing, bool immediately = false) const {
+        fireRedrawNeeded(method, immediately);
+    }
 
     bool areAnglesCounterClockwise() const;
     double getAnglesBaseAngle() const;
@@ -239,7 +241,7 @@ protected:
 
     void fireViewportChanged() const;
     void fireUcsChanged(LC_UCS* ucs) const;
-    void fireRedrawNeeded(RS2::RedrawMethod method) const;
+    void fireRedrawNeeded(RS2::RedrawMethod method, bool immediately) const;
     void firePreviousZoomChanged(bool value);
     void fireRelativeZeroChanged(const RS_Vector &pos) const;
 

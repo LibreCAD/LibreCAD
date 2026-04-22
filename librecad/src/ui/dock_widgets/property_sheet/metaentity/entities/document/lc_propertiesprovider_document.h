@@ -26,8 +26,8 @@
 
 #include "lc_entity_type_propertiesprovider.h"
 #include "lc_propertiesprovider_active_pen.h"
-#include "lc_propertiesprovider_graphic_layer.h"
 #include "lc_propertiesprovider_graphic_grid.h"
+#include "lc_propertiesprovider_graphic_layer.h"
 #include "lc_propertiesprovider_graphic_paper.h"
 #include "lc_propertiesprovider_graphic_ucs.h"
 #include "lc_propertiesprovider_graphic_units.h"
@@ -44,8 +44,8 @@ public:
     virtual void fillDocumentProperties(LC_PropertyContainer* container);
     LC_PropertyContainer* createToolOptionsSection(LC_PropertyContainer* container) const;
     void fillDocumentPropertiesForToolOptions(LC_PropertyContainer* container) const;
-    void doCreateEntitySpecificProperties([[maybe_unused]]LC_PropertyContainer* container,[[maybe_unused]] const QList<RS_Entity*>& list) override {};
 protected:
+    void doCreateEntitySpecificProperties([[maybe_unused]]LC_PropertyContainer* container,[[maybe_unused]] const QList<RS_Entity*>& list) override {}
     void fillBlockProperties(LC_PropertyContainer* container, RS_Block* block) const;
     void fillGraphicProperties(LC_PropertyContainer* container, RS_Graphic* graphic) const;
 

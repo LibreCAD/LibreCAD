@@ -37,8 +37,8 @@ LC_FlexLayout::LC_FlexLayout(const int margin, const int hSpacing, const int vSp
 }
 
 LC_FlexLayout::~LC_FlexLayout(){
-    QLayoutItem *item;
-    while ((item = takeAt(0))) {
+    const QLayoutItem *item = nullptr;
+    while ((item = takeAt(0)) != nullptr) {
         delete item;
     }
 }
@@ -78,7 +78,7 @@ QSize LC_FlexLayout::sizeHint() const{
 }
 
 int LC_FlexLayout::performLayout(const QRect &rect, const bool geometryCheck) const{
-    int left, top, right, bottom;
+    int left = 0, top = 0, right = 0, bottom = 0;
     getContentsMargins(&left, &top, &right, &bottom);
     const QRect effectiveRect = rect.adjusted(+left, +top, -right, -bottom);
     int columnX = effectiveRect.x();
@@ -228,7 +228,7 @@ int LC_FlexLayout::getSpaceX(const QWidget *wid) const{
 
 int LC_FlexLayout::defaultSpacing(const QStyle::PixelMetric pm) const{
     QObject *parent = this->parent();
-    if (!parent) {
+    if (parent == nullptr) {
         return -1;
     }
     if (parent->isWidgetType()) {

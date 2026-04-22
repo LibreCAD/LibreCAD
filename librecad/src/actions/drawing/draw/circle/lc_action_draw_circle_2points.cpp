@@ -26,8 +26,8 @@
 
 #include "lc_action_draw_circle_2points.h"
 
-#include "rs_circle.h"
 #include "lc_creation_circle.h"
+#include "rs_circle.h"
 #include "rs_dialogfactory.h"
 #include "rs_dialogfactoryinterface.h"
 

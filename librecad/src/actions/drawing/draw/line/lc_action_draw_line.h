@@ -53,7 +53,7 @@ public:
 
     bool mayUndo() const;
     bool mayRedo() const;
-    bool mayClose();
+    bool mayClose() const;
 protected:
     /// Action States
     enum Status {

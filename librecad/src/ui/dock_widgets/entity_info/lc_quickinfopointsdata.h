@@ -1,5 +1,5 @@
 /****************************************************************************
-*
+ *
 * Class that holds the list of collected coordinates
 
 Copyright (C) 2024 LibreCAD.org

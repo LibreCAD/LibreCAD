@@ -35,7 +35,7 @@ CONFIG += c++17
 QMAKE_UIC_FLAGS += --connections string
 
 *-g++ {
-    QMAKE_CXXFLAGS += -fext-numeric-literals
+    # QMAKE_CXXFLAGS += -fext-numeric-literals
 }
 
 GEN_LIB_DIR = ../../generated/lib
@@ -109,6 +109,7 @@ INCLUDEPATH += \
     cmd \
     lib/actions \
     lib/actions/visual_snap \
+    lib/actions/options \
     lib/creation \
     lib/debug \
     lib/engine \
@@ -158,6 +159,7 @@ INCLUDEPATH += \
     lib/selection/metaentity \
     lib/selection/metaentity/entities \
     lib/printing \
+    lib/properties \
     actions \
     actions/dock_widgets \
     actions/dock_widgets/block \
@@ -374,7 +376,6 @@ HEADERS += \
     lib/actions/lc_overlayboxaction.h \
     lib/engine/document/container/lc_pathbuilder.h \
     lib/actions/lc_undoabledocumentmodificationaction.h \
-    lib/actions/lc_action_options_base.h \    
     lib/engine/document/dimstyles/lc_dimstyle.h \
     lib/engine/document/dimstyles/lc_dimstyleslist.h \
     lib/engine/document/dimstyles/lc_dimarrowregistry.h \
@@ -421,6 +422,15 @@ HEADERS += \
     lib/actions/visual_snap/lc_visual_snap_solution_solver.h \
     lib/actions/visual_snap/lc_visual_snap_solution_visualizer.h \
     lib/actions/visual_snap/lc_visual_snap_manager.h \
+    lib/actions/options/lc_property_sheet_interface.h \
+    lib/actions/options/lc_action_options_widget.h \
+    lib/actions/options/lc_action_options_editor.h \
+    lib/actions/options/lc_action_options_editor_typed.h \
+    lib/actions/options/lc_action_options_properties_filler.h \
+    lib/actions/options/lc_action_options_support.h \
+    lib/actions/options/lc_property_sheet_interface.h \
+    lib/actions/options/lc_tool_options_properties_container_provider.h \
+    lib/actions/options/lc_action_options_base.h \
     lib/creation/rs_creation.h \
     lib/creation/lc_creation_arc.h \
     lib/creation/lc_creation_circle.h \
@@ -534,10 +544,20 @@ HEADERS += \
     lib/math/lc_quadraticutils.h \
     lib/modification/lc_division.h \
     lib/modification/lc_copyutils.h \
+    lib/properties/lc_property.h \
+    lib/properties/lc_property_atomic.h \
+    lib/properties/lc_property_container.h \
+    lib/properties/lc_property_multi.h \
+    lib/properties/lc_property_numeric.h \
+    lib/properties/lc_property_single.h \
+    lib/properties/lc_property_structbase.h \
+    lib/properties/lc_property_utils.h \
+    lib/properties/lc_property_valuestorage.h \
+    lib/properties/lc_property_view_descriptor.h \
     plugins/lc_plugininvoker.h \
     lib/actions/lc_actioncontext.h \
     ui/action_options/line/lc_line_radiant_options_widget.h \
-    ui/action_options/line/lc_line_radiant_options_filler.h \
+    ui/action_options/line/lc_line_radiant_options_filler.h \    
     ui/components/relative_position_assistant/lc_relative_position_editing_widget.h \
     ui/components/relative_position_assistant/lc_relative_position_evaluator.h \
     ui/components/utils/lc_entitymetauiutils.h \
@@ -601,6 +621,7 @@ HEADERS += \
     lib/gui/render/widget/lc_printpreviewviewrenderer.cpp \
     lib/gui/render/widget/lc_widgetviewportrenderer.cpp \
     lib/modification/lc_align.h \
+    ui/action_options/lc_action_options_properties_filler_base.h \
     ui/action_options/curve/lc_arc_2points_options_widget.h \
     ui/action_options/curve/lc_arc_2_points_options_widget_filler.h \
     ui/action_options/misc/lc_center_line_options_widget.h \
@@ -730,17 +751,6 @@ HEADERS += \
     ui/components/status_bar/lc_relzerocoordinateswidget.h \
     ui/dialogs/lc_dialog.h \
     ui/main/lc_mdiapplicationwindow.h \
-    ui/dock_widgets/property_sheet/lib/lc_tool_options_properties_container_provider.h \
-    ui/dock_widgets/property_sheet/lib/properties/lc_property.h \
-    ui/dock_widgets/property_sheet/lib/properties/lc_property_atomic.h \
-    ui/dock_widgets/property_sheet/lib/properties/lc_property_container.h \
-    ui/dock_widgets/property_sheet/lib/properties/lc_property_multi.h \
-    ui/dock_widgets/property_sheet/lib/properties/lc_property_numeric.h \
-    ui/dock_widgets/property_sheet/lib/properties/lc_property_single.h \
-    ui/dock_widgets/property_sheet/lib/properties/lc_property_structbase.h \
-    ui/dock_widgets/property_sheet/lib/properties/lc_property_utils.h \
-    ui/dock_widgets/property_sheet/lib/properties/lc_property_valuestorage.h \
-    ui/dock_widgets/property_sheet/lib/properties/lc_property_view_descriptor.h \
     ui/dock_widgets/property_sheet/lib/view/lc_property_event_context.h \
     ui/dock_widgets/property_sheet/lib/view/lc_property_edit_context.h \
     ui/dock_widgets/property_sheet/lib/view/lc_property_view.h \
@@ -961,7 +971,8 @@ SOURCES += \
     lib/modification/lc_copyutils.cpp \
     plugins/lc_plugininvoker.cpp \
     lib/actions/lc_actioncontext.cpp \
-    lib/actions/lc_action_options_base.cpp \    
+    lib/actions/options/lc_action_options_base.cpp \
+    ui/action_options/lc_action_options_properties_filler_base.cpp \
     ui/action_options/line/lc_line_radiant_options_widget.cpp \
     ui/action_options/line/lc_line_radiant_options_filler.cpp \
     ui/components/relative_position_assistant/lc_relative_position_editing_widget.cpp \
@@ -1026,6 +1037,7 @@ SOURCES += \
     lib/gui/render/widget/lc_printpreviewviewrenderer.cpp \
     lib/gui/render/widget/lc_widgetviewportrenderer.cpp \
     lib/modification/lc_align.cpp \
+    ui/action_options/lc_action_options_manager.cpp \
     ui/action_options/curve/lc_arc_2points_options_widget.cpp \
     ui/action_options/curve/lc_arc_2_points_options_widget_filler.cpp \
     ui/action_options/misc/lc_center_line_options_widget.cpp \
@@ -1062,6 +1074,10 @@ SOURCES += \
     lib/actions/visual_snap/lc_visual_snap_solution_solver.cpp \
     lib/actions/visual_snap/lc_visual_snap_solution_visualizer.cpp \
     lib/actions/visual_snap/lc_visual_snap_manager.cpp \
+    lib/actions/options/lc_action_options_widget.cpp \
+    lib/actions/options/lc_action_options_editor_typed.cpp \
+    lib/actions/options/lc_action_options_properties_filler.cpp \
+    lib/actions/options/lc_action_options_support.cpp \
     lib/creation/rs_creation.cpp \
     lib/creation/lc_creation_arc.cpp \
     lib/creation/lc_creation_circle.cpp \
@@ -1223,6 +1239,12 @@ SOURCES += \
     lib/selection/metaentity/entities/lc_matchdescriptor_ellipse.cpp \
     lib/selection/metaentity/entities/lc_matchdescriptor_point.cpp \
     lib/selection/metaentity/entities/lc_matchdescriptor_splinepoints.cpp \
+    lib/properties/lc_property.cpp \
+    lib/properties/lc_property_atomic.cpp \
+    lib/properties/lc_property_container.cpp \
+    lib/properties/lc_property_multi.cpp \
+    lib/properties/lc_property_utils.cpp \
+    lib/properties/lc_property_view_descriptor.cpp \
     lib/engine/rs_color.cpp \
     lib/engine/rs_pen.cpp \
     main/console_dxf2png.cpp \
@@ -1624,13 +1646,6 @@ HEADERS += ui/action_options/lc_action_options_manager.h \
     ui/action_options/insert/lc_block_insert_options_filler.h \
     ui/action_options/insert/lc_block_library_insert_options_widget.h \
     ui/action_options/insert/lc_block_library_insert_options_filler.h \
-    ui/action_options/lc_action_options_widget.h \
-    ui/action_options/lc_action_options_widget_base.h \
-    ui/action_options/lc_action_options_editor.h \
-    ui/action_options/lc_action_options_editor_typed.h \
-    ui/action_options/lc_action_options_manager.h \
-    ui/action_options/lc_action_options_properties_filler.h \
-    ui/action_options/lc_action_options_support.h \
     ui/action_options/misc/lc_center_mark_options_widget.h \
     ui/action_options/misc/lc_center_mark_options_filler.h \
     ui/action_options/line/lc_line_angle_rel_options_widget.h \
@@ -1832,12 +1847,6 @@ SOURCES +=  ui/action_options/circle/lc_circle_by_arc_options_widget.cpp \
     ui/action_options/insert/lc_block_insert_options_filler.cpp \
     ui/action_options/insert/lc_block_library_insert_options_widget.cpp \
     ui/action_options/insert/lc_block_library_insert_options_filler.cpp \
-    ui/action_options/lc_action_options_widget.cpp \
-    ui/action_options/lc_action_options_widget_base.cpp \
-    ui/action_options/lc_action_options_editor_typed.cpp \
-    ui/action_options/lc_action_options_manager.cpp \
-    ui/action_options/lc_action_options_properties_filler.cpp \
-    ui/action_options/lc_action_options_support.cpp \
     ui/action_options/misc/lc_center_mark_options_widget.cpp \
     ui/action_options/misc/lc_center_mark_options_filler.cpp \
     ui/action_options/line/lc_line_angle_rel_options_widget.cpp \
@@ -1997,13 +2006,7 @@ SOURCES +=  ui/action_options/circle/lc_circle_by_arc_options_widget.cpp \
     ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp \
     ui/dock_widgets/pen_wizard/colorcombobox.cpp \
     ui/dock_widgets/pen_wizard/colorwizard.cpp \
-    ui/dock_widgets/pen_wizard/lc_penwizard.cpp \
-    ui/dock_widgets/property_sheet/lib/properties/lc_property.cpp \
-    ui/dock_widgets/property_sheet/lib/properties/lc_property_atomic.cpp \
-    ui/dock_widgets/property_sheet/lib/properties/lc_property_container.cpp \
-    ui/dock_widgets/property_sheet/lib/properties/lc_property_multi.cpp \
-    ui/dock_widgets/property_sheet/lib/properties/lc_property_utils.cpp \
-    ui/dock_widgets/property_sheet/lib/properties/lc_property_view_descriptor.cpp \
+    ui/dock_widgets/pen_wizard/lc_penwizard.cpp \    
     ui/dock_widgets/property_sheet/lib/view/lc_property_event_context.cpp \
     ui/dock_widgets/property_sheet/lib/view/lc_property_edit_context.cpp \
     ui/dock_widgets/property_sheet/lib/view/lc_property_paint_context.cpp \

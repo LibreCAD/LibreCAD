@@ -1,40 +1,36 @@
-/****************************************************************************
-**
-** This file is part of the LibreCAD project, a 2D CAD program
-**
-** Copyright (C) 2010 R. van Twisk (librecad@rvt.dds.nl)
-** Copyright (C) 2001-2003 RibbonSoft. All rights reserved.
-**
-**
-** This file may be distributed and/or modified under the terms of the
-** GNU General Public License version 2 as published by the Free Software
-** Foundation and appearing in the file gpl-2.0.txt included in the
-** packaging of this file.
-**
-** This program is distributed in the hope that it will be useful,
-** but WITHOUT ANY WARRANTY; without even the implied warranty of
-** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-** GNU General Public License for more details.
-**
-** You should have received a copy of the GNU General Public License
-** along with this program; if not, write to the Free Software
-** Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
-**
-** This copyright notice MUST APPEAR in all copies of the script!
-**
-**********************************************************************/
+/*
+ * ********************************************************************************
+ * This file is part of the LibreCAD project, a 2D CAD program
+ *
+ * Copyright (C) 2026 LibreCAD.org
+ * Copyright (C) 2026 sand1024
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 2
+ * of the License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ * ********************************************************************************
+ */
 
 #include "rs_actioninterface.h"
 
 #include <QMouseEvent>
 
-#include "lc_actioncontext.h"
-#include "lc_action_options_widget.h"
 #include "lc_action_options_editor.h"
 #include "lc_action_options_editor_typed.h"
+#include "lc_action_options_widget.h"
+#include "lc_actioncontext.h"
 #include "lc_cursoroverlayinfo.h"
 #include "lc_graphicviewport.h"
-#include "lc_undosection.h"
 #include "lc_visual_snap_manager.h"
 #include "rs_commandevent.h"
 #include "rs_commands.h"
@@ -44,7 +40,6 @@
 #include "rs_graphicview.h"
 #include "rs_selection.h"
 #include "rs_settings.h"
-
 
 /**
  * Constructor.
@@ -208,7 +203,7 @@ void RS_ActionInterface::mouseReleaseEvent(QMouseEvent* e) {
     }
     else if (button == Qt::MiddleButton) {
         if (hasVisualSnap()) {
-            bool control = isControl(e);
+            const bool control = isControl(e);
             if (control) {
                 stopVisualSnap();
                 onVisualSnapSolutionRefresh();
@@ -470,7 +465,7 @@ void RS_ActionInterface::hideOptions() {
     }
 }
 
-void RS_ActionInterface::updateOptions(const QString& tagToFocus) {
+void RS_ActionInterface::updateOptions(const QString& tagToFocus) const {
     if (m_optionsEditor != nullptr) {
         m_optionsEditor->updateOptions(tagToFocus);
         /*QTimer::singleShot(5, [this, tagToFocus]() {
@@ -504,7 +499,7 @@ void RS_ActionInterface::updateOptionsUI(const int mode, const QVariant *value) 
 /**
  * Shows the tool options. Default implementation does nothing.
  */
-void RS_ActionInterface::showOptions() {
+void RS_ActionInterface::showOptions() const {
     if (m_optionsEditor != nullptr) {
         m_optionsEditor->showOptions();
     }
@@ -677,15 +672,15 @@ void RS_ActionInterface::commandPrompt(const QString& msg) const {
 
 
 bool RS_ActionInterface::isControl(const QInputEvent* e) {
-    return e->modifiers() & (Qt::ControlModifier | Qt::MetaModifier);
+    return (e->modifiers() & (Qt::ControlModifier | Qt::MetaModifier)) != 0u;
 }
 
 bool RS_ActionInterface::isShift(const QInputEvent* e) {
-    return e->modifiers() & Qt::ShiftModifier;
+    return (e->modifiers() & Qt::ShiftModifier) != 0u;
 }
 
 bool RS_ActionInterface::isAlt(const QInputEvent* e) {
-    return e->modifiers() & Qt::AltModifier;
+    return (e->modifiers() & Qt::AltModifier) != 0u;
 }
 
 void RS_ActionInterface::fireCoordinateEvent(const RS_Vector& coord) {

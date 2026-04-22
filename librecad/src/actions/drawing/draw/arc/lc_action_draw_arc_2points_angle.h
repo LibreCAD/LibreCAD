@@ -31,7 +31,7 @@ public:
     explicit LC_ActionDrawArc2PointsAngle(LC_ActionContext *actionContext);
     ~LC_ActionDrawArc2PointsAngle() override = default;
 protected:
-    bool createArcData(RS_ArcData &data, int status, RS_Vector pos, bool alternate, bool reportErrors) override;
+    bool createArcData(RS_ArcData &data, int status, const RS_Vector& pos, bool alternate, bool reportErrors) override;
     void doPreviewOnPoint2Custom(RS_Arc *arc) override;
     void setParameterValue(double r) override;
     QString getParameterCommand() override;

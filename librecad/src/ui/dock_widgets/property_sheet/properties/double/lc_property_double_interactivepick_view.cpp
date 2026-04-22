@@ -23,11 +23,8 @@
 
 #include "lc_property_double_interactivepick_view.h"
 
-#include <QToolButton>
-
 #include "lc_convert.h"
 #include "lc_property_editor_button_handler.h"
-
 #include "lc_property_editor_utils.h"
 #include "lc_property_lineedit_with_button.h"
 
@@ -71,7 +68,7 @@ protected:
         onToolButtonClicked(false);
     }
 
-    bool fromString(const QString& text, double& val) {
+    bool fromString(const QString& text, double& val) const {
         auto* typedView = static_cast<LC_PropertyDoubleInteractivePickView*>(view());
         const bool result = typedView->getPropertyValueFromEditString(text, val);
         return result;
@@ -79,7 +76,7 @@ protected:
 
     void onEditingFinished() {
         if (doCheckMayApply()) {
-            auto lineEdit = getEditor()->getLineEdit();
+            const auto lineEdit = getEditor()->getLineEdit();
             const auto text = lineEdit->text();
             // LC_ERR << "ON EditingFinished " << text;
             double value;
@@ -99,7 +96,7 @@ protected:
     void onToolButtonClicked(bool) {
         LC_ERR << "Pick button clicked!";
         stopInplaceEdit();
-        auto propertyDouble = getBaseProperty();
+        const auto propertyDouble = getBaseProperty();
         if (propertyDouble != nullptr) {
             const auto propDouble = static_cast<LC_PropertyDouble*>(propertyDouble);
             propDouble->requestInteractiveInput();
@@ -195,7 +192,7 @@ QWidget* LC_PropertyDoubleInteractivePickView::doCreateValueEditor(QWidget* pare
         new LC_PropertyDoubleInteractivePickViewHandler(this, *le);
         LC_PropertyEditorUtils::initializeLineEditor(le->getLineEdit(), ctx);
         const QString buttonIconName = getButtonIconName();
-        auto toolButton = le->getToolButton();
+        const auto toolButton = le->getToolButton();
         if (buttonIconName.isEmpty()) {
             toolButton->setVisible(false);
         }

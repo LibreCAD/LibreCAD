@@ -29,8 +29,6 @@
 #include "lc_hyperbolaspline.h"
 #include "lc_hyperbola.h"
 #include "lc_quadratic.h"
-#include "lc_linemath.h"
-#include "rs_debug.h"
 #include "rs_math.h"
 #include "rs_vector.h"
 #include "drw_entities.h"
@@ -131,9 +129,9 @@ std::unique_ptr<LC_Hyperbola> LC_HyperbolaSpline::splineToHyperbola(const DRW_Sp
   const double inv_s_sq = 1.0 / s_sq;
 
          // Intermediate terms for radius calculations
-  const double term1 = w1_sq * l_sq + j_sq * inv_s_sq;
+  const double term1 = (w1_sq * l_sq) + (j_sq * inv_s_sq);
   const double term2 = 4.0 * dot * dot * w1_sq * inv_s_sq;
-  const double q = std::sqrt(term1 * term1 - term2);
+  const double q = std::sqrt((term1 * term1) - term2);
 
          // Semi-transverse axis (a) and semi-conjugate axis (b)
   const double a = std::sqrt(0.5 * (w1_sq * l_sq - j_sq * inv_s_sq + q));
@@ -149,7 +147,7 @@ std::unique_ptr<LC_Hyperbola> LC_HyperbolaSpline::splineToHyperbola(const DRW_Sp
 
          // Major axis vector: direction and magnitude a
          // Derived analytically to align with the control points
-  const double proj_factor = (a * a + j_sq * inv_s_sq);
+  const double proj_factor = (a * a + (j_sq * inv_s_sq));
   const RS_Vector major_vec = p1_rel * proj_factor - chord_dir * (dot * inv_s_sq);
   hd.majorP = major_vec.normalized() * a;
 

@@ -57,7 +57,7 @@ void LC_VisualSnapOptions::load() {
 
     LC_GROUP("InfoOverlayCursor");
     {
-        QString fontName = LC_GET_STR("FontName", "Helvetica");
+        const QString fontName = LC_GET_STR("FontName", "Helvetica");
         guidingEntitiesFont = QFont(fontName, guidingEntitiesFontSize);
 
         guidingEntitiesFontActive = QFont(fontName, guidingEntitiesFontSize + 2);

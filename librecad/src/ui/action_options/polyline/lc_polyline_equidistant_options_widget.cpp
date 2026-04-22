@@ -53,8 +53,8 @@ void LC_PolylineEquidistantOptionsWidget::languageChange() {
 void LC_PolylineEquidistantOptionsWidget::doUpdateByAction(RS_ActionInterface* a) {
     m_action = static_cast<LC_ActionPolylineEquidistant*>(a);
 
-    QString distance = fromDouble(m_action->getDistance());
-    int number = m_action->getCopiesNumber();
+    const QString distance = fromDouble(m_action->getDistance());
+    const int number = m_action->getCopiesNumber();
 
     LC_GuardedSignalsBlocker({ui->leDist, ui->sbNumber});
 
@@ -68,7 +68,7 @@ void LC_PolylineEquidistantOptionsWidget::onNumberValueChanged(const int number)
 }
 
 void LC_PolylineEquidistantOptionsWidget::onDistEditingFinished() {
-    auto strVal = ui->leDist->text();
+    const auto strVal = ui->leDist->text();
     double val;
     if (toDouble(strVal, val, 10.0, false)) {
         m_action->setDistance(val);

@@ -28,7 +28,7 @@ LC_DimArrowPoly::LC_DimArrowPoly(RS_EntityContainer* parent, const RS_Vector& po
     LC_DimArrowPoly::calculateBorders();
 }
 
-RS_Vector LC_DimArrowPoly::doGetNearestEndpoint(const RS_Vector& coord, double* dist, RS_Entity** entity) const {
+RS_Vector LC_DimArrowPoly::doGetNearestEndpoint(const RS_Vector& coord, double* dist, [[maybe_unused]] RS_Entity** entity) const {
     double minDist{RS_MAXDOUBLE};
     double curDist{0.0};
     RS_Vector ret;

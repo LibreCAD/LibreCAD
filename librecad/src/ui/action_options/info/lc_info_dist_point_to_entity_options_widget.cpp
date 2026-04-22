@@ -39,7 +39,7 @@ LC_InfoDistPointToEntityOptionsWidget::~LC_InfoDistPointToEntityOptionsWidget(){
 
 void LC_InfoDistPointToEntityOptionsWidget::doUpdateByAction(RS_ActionInterface *a){
     m_action = static_cast<LC_ActionInfoDistPointToEntity *>(a);
-    bool onEntity = m_action->isUseNearestPointOnEntity();
+    const bool onEntity = m_action->isUseNearestPointOnEntity();
     LC_GuardedSignalsBlocker({ui->cbOnEntity});
     ui->cbOnEntity->setChecked(onEntity);
 }

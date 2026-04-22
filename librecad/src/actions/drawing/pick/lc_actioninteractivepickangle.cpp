@@ -25,7 +25,6 @@
 
 #include "lc_actioninfomessagebuilder.h"
 #include "lc_cursoroverlayinfo.h"
-#include "lc_graphicviewport.h"
 #include "lc_linemath.h"
 #include "rs_information.h"
 #include "rs_line.h"

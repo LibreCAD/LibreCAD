@@ -121,7 +121,7 @@ void LC_PropertiesProviderGraphicPaper::createPrintMargins(LC_PropertyContainer*
     cont->addChildProperty(propertyMargins);
 }
 
-void LC_PropertiesProviderGraphicPaper::createPrintOrientation(LC_PropertyContainer* const cont, RS_Graphic* graphic) {
+void LC_PropertiesProviderGraphicPaper::createPrintOrientation(LC_PropertyContainer* const cont, RS_Graphic* graphic) const {
     static const LC_EnumDescriptor orientationDescriptor = {"printOrientation", {
         {0, tr("Landscape")},
         {1, tr("Portrait")}}
@@ -130,14 +130,14 @@ void LC_PropertiesProviderGraphicPaper::createPrintOrientation(LC_PropertyContai
     LC_PlotSettings* ps = graphic->getPlotSettings();
 
     auto funGetValue = [](const LC_PlotSettings* e) -> LC_PropertyEnumValueType {
-        bool landscape;
+        bool landscape = false;
         [[maybe_unused]] RS2::PaperFormat format = e->getPaperFormat(&landscape);
         const int result = landscape ? 0 : 1;
         return result;
     };
 
     auto funSetValue = [this]([[maybe_unused]] const LC_PropertyEnumValueType& v,  LC_PlotSettings* e) -> void {
-        bool landscape;
+        bool landscape = false;
         [[maybe_unused]] const RS2::PaperFormat format = e->getPaperFormat(&landscape);
         const bool newLandscape = v == 0;
         e->setPaperFormat(format, newLandscape);
@@ -149,8 +149,8 @@ void LC_PropertiesProviderGraphicPaper::createPrintOrientation(LC_PropertyContai
 }
 
 void LC_PropertiesProviderGraphicPaper::createPageSize(LC_PropertyContainer* const cont, RS_Graphic* graphic) const {
-    bool landscape;
-    auto ps = graphic->getPlotSettings();
+    bool landscape = false;
+    const auto ps = graphic->getPlotSettings();
     const RS2::PaperFormat paperFormat = ps->getPaperFormat(&landscape);
 
     const bool readOnlyPageSize = paperFormat != RS2::PaperFormat::Custom;
@@ -182,15 +182,15 @@ void LC_PropertiesProviderGraphicPaper::createPageSize(LC_PropertyContainer* con
     cont->addChildProperty(propertyPageSize);
 }
 
-void LC_PropertiesProviderGraphicPaper::createPageFormat(LC_PropertyContainer* const cont, RS_Graphic* graphic) {
+void LC_PropertiesProviderGraphicPaper::createPageFormat(LC_PropertyContainer* const cont, RS_Graphic* graphic) const {
     LC_PlotSettings* ps = graphic->getPlotSettings();
     auto funGetValue = [](const LC_PlotSettings* e) -> RS2::PaperFormat {
-        [[maybe_unused]] bool landscape;
+        [[maybe_unused]] bool landscape = false;
         return e->getPaperFormat(&landscape);
     };
 
     auto funSetValue = [this]([[maybe_unused]] const LC_PropertyEnumValueType& v,  LC_PlotSettings* e) -> void {
-        bool landscape;
+        bool landscape = false;
         [[maybe_unused]] auto oldFormat = e->getPaperFormat(&landscape);
         e->setPaperFormat(static_cast<RS2::PaperFormat>(v), landscape);
         notifyDrawingOptionsChanged();

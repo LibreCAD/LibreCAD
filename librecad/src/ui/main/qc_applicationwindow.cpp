@@ -32,7 +32,6 @@
 #include <QCloseEvent>
 #include <QDockWidget>
 #include <QMdiArea>
-#include <QMenuBar>
 #include <QMessageBox>
 #include <QMimeData>
 #include <QPushButton>
@@ -40,8 +39,8 @@
 #include <QTimer>
 
 #include "lc_action_block_library_insert.h"
-#include "lc_actiongroupmanager.h"
 #include "lc_action_options_manager.h"
+#include "lc_actiongroupmanager.h"
 #include "lc_actionsshortcutsdialog.h"
 #include "lc_anglesbasiswidget.h"
 #include "lc_applicationwindowinitializer.h"
@@ -60,6 +59,7 @@
 #include "lc_penpalettewidget.h"
 #include "lc_penwizard.h"
 #include "lc_printing.h"
+#include "lc_propertysheetwidget.h"
 #include "lc_qtstatusbarmanager.h"
 #include "lc_quickinfowidget.h"
 #include "lc_releasechecker.h"
@@ -69,8 +69,6 @@
 #include "lc_ucslistwidget.h"
 #include "lc_ucsstatewidget.h"
 #include "lc_workspacesinvoker.h"
-
-#include "lc_propertysheetwidget.h"
 #include "qc_dialogfactory.h"
 #include "qc_mdiwindow.h"
 #include "qg_actionhandler.h"
@@ -88,7 +86,6 @@
 #include "qg_selectionwidget.h"
 #include "qg_snaptoolbar.h"
 #include "rs_actioninterface.h"
-
 #include "rs_actionprintpreview.h"
 #include "rs_debug.h"
 #include "rs_settings.h"
@@ -179,7 +176,7 @@ void QC_ApplicationWindow::startAutoSaveTimer(const bool startAutoBackup) {
     }
 }
 
-void QC_ApplicationWindow::tryShowRelativeInput(RS2::RelativePointParam paramType) {
+void QC_ApplicationWindow::tryShowRelativeInput(RS2::RelativePointParam paramType) const {
     RS_ActionInterface* currentAction = m_actionContext->getCurrentAction();
     if (currentAction != nullptr) {
         currentAction->tryShowRelativeInput(paramType);
@@ -237,7 +234,7 @@ bool QC_ApplicationWindow::doSave(QC_MDIWindow* w, const bool forceSaveAs) {
         }
         QString msg = drawingFileFullPath.isEmpty() ? tr("Saving drawing...") : tr("Saving drawing: %1").arg(drawingFileFullPath);
         showStatusMessage(msg);
-        bool cancelled;
+        bool cancelled = false;
         const bool saved = forceSaveAs ? w->saveDocumentAs(cancelled) : w->saveDocument(cancelled);
         if (saved) {
             if (cancelled) {
@@ -672,7 +669,7 @@ void QC_ApplicationWindow::doWindowActivated(QMdiSubWindow* w, const bool forced
             emit gridChanged(activatedGraphic->isGridOn());
         }
 
-        RS_ActionInterface* currentAction = activatedGraphicView->getCurrentAction();
+        const RS_ActionInterface* currentAction = activatedGraphicView->getCurrentAction();
         if (currentAction != nullptr) {
             currentAction->showOptions();
         }
@@ -1127,7 +1124,7 @@ void QC_ApplicationWindow::slotFileSaveAs() {
 bool QC_ApplicationWindow::doSaveAllFiles() {
     QC_MDIWindow* current = getCurrentMDIWindow();
     bool result{true};
-    for (const auto w : m_windowList) {
+    for (const auto w : std::as_const(m_windowList)) {
         if (w != nullptr && w->isModified()) {
             result = doSave(w);
             if (!result) {
@@ -1233,8 +1230,8 @@ void QC_ApplicationWindow::closeWindow(QC_MDIWindow* win) {
 bool QC_ApplicationWindow::doCloseAllFiles() {
     bool hasParent(false);
     QC_MDIWindow::SaveOnClosePolicy policy = QC_MDIWindow::SaveOnClosePolicy::ASK;
-    for (const auto w : m_windowList) {
-        if (w) {
+    for (const auto w : std::as_const(m_windowList)) {
+        if (w != nullptr) {
             hasParent = w->getParentWindow() != nullptr;
             if (w->isModified() && !hasParent && policy == QC_MDIWindow::SaveOnClosePolicy::ASK) {
                 doActivate(w);
@@ -1620,7 +1617,7 @@ bool QC_ApplicationWindow::tryCloseAllBeforeExist() {
  * it will consume them also if a text field is active
  * which means it's impossible to enter a command.
  */
-void QC_ApplicationWindow::keyPressEvent(QKeyEvent* e) {
+void QC_ApplicationWindow:: keyPressEvent(QKeyEvent* e) {
     const int key = e->key();
     switch (key) {
         case Qt::Key_Escape: {
@@ -1836,7 +1833,7 @@ void QC_ApplicationWindow::showDeviceOptions() {
 
 void QC_ApplicationWindow::updateDevice(const QString& device) {
     LC_SET_ONE("Hardware", "Device", device);
-    for (const auto& win : m_windowList) {
+    for (const auto& win : std::as_const(m_windowList)) {
         win->getGraphicView()->setDeviceName(device);
     }
 }
@@ -1947,7 +1944,7 @@ LC_ActionGroup* QC_ApplicationWindow::getActionGroup(const QString& groupName) c
 void QC_ApplicationWindow::updateActionsAndWidgetsForPrintPreview(const bool printPreviewOn) {
     const bool enable = !printPreviewOn;
     enableWidgets(enable);
-    for (const auto a : m_actionsToDisableInPrintPreviewList) {
+    for (const auto a : std::as_const(m_actionsToDisableInPrintPreviewList)) {
         if (a->isEnabled() != enable) {
             a->setEnabled(enable);
         }

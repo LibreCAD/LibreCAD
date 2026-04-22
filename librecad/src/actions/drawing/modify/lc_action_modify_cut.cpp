@@ -56,7 +56,7 @@ bool LC_ActionModifyCut::doTriggerModifications(LC_DocumentModificationBatch& ct
         RS_Modification::cut(*m_cutCoord, static_cast<RS_AtomicEntity*>(m_cutEntity), ctx);
         const RS_Pen &originalPen = m_cutEntity->getPen(false);
         RS_Layer *originalLayer = m_cutEntity->getLayer(false);
-        for (const auto e: ctx.entitiesToAdd) {
+        for (const auto e: std::as_const(ctx.entitiesToAdd)) {
             e->setPen(originalPen);
             e->setLayer(originalLayer);
         }
@@ -75,7 +75,7 @@ void LC_ActionModifyCut::doTriggerCompletion(const bool success) {
 }
 
 bool LC_ActionModifyCut::isInVisualSnapStatus(int status) {
-    return (status = SetCutCoord);
+    return (status == SetCutCoord);
 }
 
 void LC_ActionModifyCut::finish(){

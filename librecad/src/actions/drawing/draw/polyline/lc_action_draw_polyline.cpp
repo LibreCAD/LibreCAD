@@ -27,11 +27,10 @@
 #include "lc_action_draw_polyline.h"
 
 #include "lc_creation_arc.h"
-#include "lc_polyline_options_widget.h"
 #include "lc_polyline_options_filler.h"
+#include "lc_polyline_options_widget.h"
 #include "lc_undosection.h"
 #include "muParser.h"
-
 #include "rs_arc.h"
 #include "rs_commandevent.h"
 #include "rs_document.h"
@@ -216,7 +215,7 @@ double LC_ActionDrawPolyline::solveBulge(const RS_Vector &mouse){
     bool success = false;
     RS_Line line{};
     double direction;
-    RS_AtomicEntity *lastEntity = nullptr;
+    const RS_AtomicEntity *lastEntity = nullptr;
     m_calculatedSegment = false;
 
     switch (m_mode) {
@@ -224,7 +223,7 @@ double LC_ActionDrawPolyline::solveBulge(const RS_Vector &mouse){
 //        b=0.0;
 //        break;
         case Tangential:
-            if (m_actionData->polyline){
+            if (m_actionData->polyline != nullptr){
                 if (m_prepend) {
                     lastEntity = dynamic_cast<RS_AtomicEntity *>(m_actionData->polyline->firstEntity());
                     direction = RS_Math::correctAngle(lastEntity->getDirection1() + M_PI);
@@ -265,7 +264,7 @@ double LC_ActionDrawPolyline::solveBulge(const RS_Vector &mouse){
 //        break;
             // fall-through
         case TangentalArcFixedRadius: {
-            if (m_actionData->polyline){
+            if (m_actionData->polyline != nullptr){
                 if (m_prepend){
                     lastEntity = dynamic_cast<RS_AtomicEntity *>(m_actionData->polyline->firstEntity());
                     direction = RS_Math::correctAngle(lastEntity->getDirection1() + M_PI);
@@ -286,7 +285,7 @@ double LC_ActionDrawPolyline::solveBulge(const RS_Vector &mouse){
             break;
         }
         case TangentalArcFixedAngle: {
-            if (m_actionData->polyline){
+            if (m_actionData->polyline != nullptr){
                 if (m_prepend){
                     lastEntity = dynamic_cast<RS_AtomicEntity *>(m_actionData->polyline->firstEntity());
                     direction = RS_Math::correctAngle(lastEntity->getDirection1() + M_PI);
@@ -578,7 +577,7 @@ bool LC_ActionDrawPolyline::doProcessCommand(const int status, const QString &co
             cRef.replace(tr("x"), someRandomNumber);
             setParserExpression(cRef);
             const double parseTestValue = m_muParserObject->Eval();
-            if (parseTestValue) { /* This is to counter the 'unused variable' warning. */ }
+            if (parseTestValue != 0.0) { /* This is to counter the 'unused variable' warning. */ }
             updatePromptTRBack(tr("Enter the start point x"));
             m_startPointSettingOn = true;
             m_actionData->equation = command;
@@ -808,7 +807,7 @@ RS2::CursorType LC_ActionDrawPolyline::doGetMouseCursor([[maybe_unused]] int sta
 
 void LC_ActionDrawPolyline::close(){
     if (m_actionData->history.size() > 2 && m_actionData->start.valid){
-        if (m_actionData->polyline){
+        if (m_actionData->polyline != nullptr){
             if (m_mode == TangentalArcFixedRadius){
                 m_mode = Line;
             }
@@ -837,7 +836,7 @@ void LC_ActionDrawPolyline::undo(){
             m_document->removeEntity(m_actionData->polyline);
             m_actionData->polyline = nullptr;
         }
-        if (m_actionData->polyline){
+        if (m_actionData->polyline != nullptr){
             m_actionData->polyline->removeLastVertex();
             moveRelativeZero(m_actionData->polyline->getEndpoint());
         }

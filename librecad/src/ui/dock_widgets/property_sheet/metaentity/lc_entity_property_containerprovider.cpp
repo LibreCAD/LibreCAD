@@ -235,7 +235,7 @@ void LC_EntityPropertyContainerProvider::setGraphicView([[maybe_unused]]RS_Graph
 
 void LC_EntityPropertyContainerProvider::clearCachedDimStyles() {
     if (RS2::isDimensionalEntity(m_entityType)) {
-        for (const auto d : m_entitiesList) {
+        for (const auto d : std::as_const(m_entitiesList)) {
             auto* dim = static_cast<RS_Dimension*>(d);
             dim->clearCachedDimStyle();
         }

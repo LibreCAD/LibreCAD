@@ -54,7 +54,6 @@ class RS_Polyline;
 struct RS_ActionDefault::ActionData {
     RS_Vector v1;
     RS_Vector v2;
-    RS_Entity* highlightedEntity = nullptr;
     RS_Entity* refMovingEntity = nullptr;
 };
 
@@ -526,7 +525,7 @@ void RS_ActionDefault::onMouseMoveEvent([[maybe_unused]] const int status, const
 
             QList<RS_Entity*> selection;
             if (m_document->collectSelected(selection)) {
-                for (auto ent : selection) {
+                for (auto ent : std::as_const(selection)) {
                     RS_Entity* clone = getClone(ent);
                     m_preview->addEntity(clone);
                 }
@@ -598,7 +597,7 @@ void RS_ActionDefault::onMouseMoveEvent([[maybe_unused]] const int status, const
 }
 
 RS_Entity* RS_ActionDefault::getClone(const RS_Entity* e){
-    RS_Entity* clone;
+    RS_Entity* clone = nullptr;
     const int rtti =e->rtti();
     switch (rtti) {
         case RS2::EntityText:
@@ -776,7 +775,7 @@ void RS_ActionDefault::onMouseMovingRefCompleted(const LC_MouseEvent* e) {
         clone->moveRef(m_actionData->v1, m_actionData->v2 - m_actionData->v1);
     }
 
-    if (m_document) {
+    if (m_document != nullptr) {
         // delete and add this into undo
         m_document->undoableModify(m_viewport, [refMovingEntity, clone](LC_DocumentModificationBatch& ctx)-> bool {
                             ctx.dontSetActiveLayerAndPen();

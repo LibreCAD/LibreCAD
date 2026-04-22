@@ -84,7 +84,7 @@ bool RS_ActionDrawHatch::doTriggerModifications(LC_DocumentModificationBatch& ct
 
     QList<RS_Entity*> entitiesList;
     // deselect unhatchable entities:
-    for (const auto e : selectedEntities) {
+    for (const auto e : std::as_const(selectedEntities)) {
         if (!hatchAble(e)) {
             unselect(e);
         }

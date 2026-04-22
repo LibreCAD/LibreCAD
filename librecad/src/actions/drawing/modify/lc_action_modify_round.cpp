@@ -27,8 +27,8 @@
 #include "lc_action_modify_round.h"
 
 #include "lc_actioninfomessagebuilder.h"
-#include "lc_round_options_widget.h"
 #include "lc_round_options_filler.h"
+#include "lc_round_options_widget.h"
 #include "rs_arc.h"
 #include "rs_document.h"
 #include "rs_entity.h"
@@ -84,9 +84,9 @@ void LC_ActionModifyRound::doSaveOptions() {
 }
 
 void LC_ActionModifyRound::doLoadOptions() {
-    double radius = loadDouble("Radius", 10.0);
+    const double radius = loadDouble("Radius", 10.0);
     setRadius(radius);
-    bool trimOn = loadBool("Trim", true);
+    const bool trimOn = loadBool("Trim", true);
     setTrim(trimOn);
 }
 
@@ -338,7 +338,7 @@ bool LC_ActionModifyRound::doProcessCommand(int status, const QString &command) 
                 updateOptions();
                 accept = true;
             } else {
-                bool ok;
+                bool ok = false;
                 const double r = RS_Math::eval(command, &ok);
                 if (ok && r > 1.0e-10){
                     accept = true;
@@ -354,7 +354,7 @@ bool LC_ActionModifyRound::doProcessCommand(int status, const QString &command) 
             break;
         }
         case SetRadius: {
-            bool ok;
+            bool ok = false;
             const double r = RS_Math::eval(command, &ok);
             if (ok){
                 accept = true;

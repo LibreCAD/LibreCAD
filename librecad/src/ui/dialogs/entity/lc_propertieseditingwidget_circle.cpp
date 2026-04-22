@@ -99,7 +99,7 @@ void LC_PropertiesEditingWidgetCircle::onDiameterEditingFinished() const {
 void LC_PropertiesEditingWidgetCircle::onRadiusTextChanged(const QString &text) const {
     int pos = 0;
     if (ui->leRadius->validator()->validate(const_cast<QString&>(text), pos) == QValidator::Acceptable) {
-        bool ok;
+        bool ok = false;
         const double value = text.toDouble(&ok);
         if (ok && value > 0.0) {
             ui->leDiameter->blockSignals(true);
@@ -112,7 +112,7 @@ void LC_PropertiesEditingWidgetCircle::onRadiusTextChanged(const QString &text) 
 void LC_PropertiesEditingWidgetCircle::onDiameterTextChanged(const QString &text) const {
     int pos = 0;
     if (ui->leDiameter->validator()->validate(const_cast<QString&>(text), pos) == QValidator::Acceptable) {
-        bool ok;
+        bool ok = false;
         const double value = text.toDouble(&ok);
         if (ok && value > 0.0) {
             ui->leRadius->blockSignals(true);

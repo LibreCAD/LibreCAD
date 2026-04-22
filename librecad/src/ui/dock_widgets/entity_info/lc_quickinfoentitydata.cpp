@@ -1,5 +1,5 @@
 /****************************************************************************
-*
+ *
 * class that process given entity and creates the list of properties of it
 
 Copyright (C) 2024 LibreCAD.org
@@ -775,7 +775,7 @@ void LC_QuickInfoEntityData::collectHyperbolaProperties(const LC_Hyperbola* hype
     m_entityName = tr("HYPERBOLA");
     const auto& startPoint = hyperbola->getStartpoint();
     const auto& endPoint = hyperbola->getStartpoint();
-    double area = hyperbola->areaLineIntegral();
+    const double area = hyperbola->areaLineIntegral();
     const auto& focus1 = hyperbola->getFocus1();
     const auto& focus2 = hyperbola->getFocus2();
     const auto& center = hyperbola->getCenter();
@@ -1336,7 +1336,7 @@ void LC_QuickInfoEntityData::collectParabolaProperties(const LC_Parabola* parabo
     const QString &name = tr("Control Point");
     for (size_t i = 0; i < data.m_controlPoints.size(); i++){
         RS_Vector cp = data.m_controlPoints.at(i);
-        addVectorProperty(name, i + 1, cp); 
+        addVectorProperty(name, i + 1, cp);
     }
 }
 

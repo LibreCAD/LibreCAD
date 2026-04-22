@@ -84,7 +84,7 @@ void LC_ActionPolylineDeleteNodeBetween::onMouseMoveEvent(const int status, cons
         }
         case SetVertex1: {
             RS_Vector vertex;
-            RS_Entity* segment;
+            RS_Entity* segment = nullptr;
             getSelectedPolylineVertex(e, vertex, segment);
             deleteSnapper();
             if (vertex.valid) {
@@ -95,7 +95,7 @@ void LC_ActionPolylineDeleteNodeBetween::onMouseMoveEvent(const int status, cons
         }
         case SetVertex2: {
             RS_Vector vertex;
-            RS_Entity* segment;
+            RS_Entity* segment = nullptr;
             getSelectedPolylineVertex(e, vertex, segment);
             deleteSnapper();
             previewRefSelectablePoint(m_vertexToDelete);
@@ -105,7 +105,7 @@ void LC_ActionPolylineDeleteNodeBetween::onMouseMoveEvent(const int status, cons
                 QList<RS_Entity*> entitiesToRemove;
                 collectEntitiesToRemove(m_vertexToDelete, vertex, entitiesToRemove);
                 if (!entitiesToRemove.isEmpty()) {
-                    for (const auto er : entitiesToRemove) {
+                    for (const auto er : std::as_const(entitiesToRemove)) {
                         highlightHover(er);
                     }
                     previewRefSelectablePoint(vertex);
@@ -151,7 +151,7 @@ void LC_ActionPolylineDeleteNodeBetween::onMouseLeftButtonRelease(const int stat
             }
             else {
                 RS_Vector vertex;
-                RS_Entity* segment;
+                RS_Entity* segment = nullptr;
                 getSelectedPolylineVertex(e, vertex, segment);
                 if (vertex.valid) {
                     if (!m_polylineToModify->isPointOnEntity(vertex)) {
@@ -175,7 +175,7 @@ void LC_ActionPolylineDeleteNodeBetween::onMouseLeftButtonRelease(const int stat
             }
             else {
                 RS_Vector vertex;
-                RS_Entity* segment;
+                RS_Entity* segment = nullptr;
                 getSelectedPolylineVertex(e, vertex, segment);
 
                 if (vertex.valid) {

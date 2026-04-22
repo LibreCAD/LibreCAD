@@ -33,7 +33,7 @@ LC_SnapManager::LC_SnapManager(QG_SnapToolBar* snapToolbar):m_snapToolbar{snapTo
 }
 
 void LC_SnapManager::setSnaps(const RS_SnapMode& s)  { // some flag set except free{
-    if (m_snapToolbar) {
+    if (m_snapToolbar != nullptr) {
         m_snapToolbar->setSnaps(s);
     }
     else {
@@ -198,7 +198,7 @@ void LC_SnapManager::setGraphicView(RS_GraphicView* gview) {
 }
 
 void LC_SnapManager::setRelativeZeroLock(const bool on) const {
-    if (m_snapToolbar) {
+    if (m_snapToolbar != nullptr) {
         m_snapToolbar->setLockedRelativeZero(on);
     }
 }

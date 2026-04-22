@@ -56,9 +56,9 @@ void LC_PropertiesProviderActivePen::fillDocumentProperties(LC_PropertyContainer
     }
 }
 
-void LC_PropertiesProviderActivePen::createColor(LC_PropertyContainer* cont, const RS_Pen& pen) const {
+void LC_PropertiesProviderActivePen::createColor(LC_PropertyContainer* container, const RS_Pen& pen) const {
     const LC_Property::Names names = {"color", tr("Color"), tr("Color of active pen")};
-    auto* layerColorProperty = new LC_PropertyRSColor(cont, false);
+    auto* layerColorProperty = new LC_PropertyRSColor(container, false);
     layerColorProperty->setNames(names);
     layerColorProperty->setViewAttribute(LC_PropertyRSColorComboBoxView::ATTR_SHOW_BY_LAYER, true);
 
@@ -73,13 +73,13 @@ void LC_PropertiesProviderActivePen::createColor(LC_PropertyContainer* cont, con
     };
 
     createDirectDelegatedStorage<RS_Color, RS_Graphic>(funGet, funSet, nullptr, layerColorProperty);
-    cont->addChildProperty(layerColorProperty);
+    container->addChildProperty(layerColorProperty);
 }
 
-void LC_PropertiesProviderActivePen::createLineType(LC_PropertyContainer* cont, const RS_Pen& pen) const {
+void LC_PropertiesProviderActivePen::createLineType(LC_PropertyContainer* container, const RS_Pen& pen) const {
     const LC_Property::Names names = {"linewidth", tr("Line Width"), tr("Line width for active pen")};
 
-    auto* layerLineWidthProperty = new LC_PropertyLineWidth(cont, false);
+    auto* layerLineWidthProperty = new LC_PropertyLineWidth(container, false);
     layerLineWidthProperty->setViewAttribute(LC_PropertyLineWidthComboboxView::ATTR_SHOW_BY_LAYER, true);
     layerLineWidthProperty->setNames(names);
 
@@ -94,12 +94,12 @@ void LC_PropertiesProviderActivePen::createLineType(LC_PropertyContainer* cont, 
     };
 
     createDirectDelegatedStorage<RS2::LineWidth, RS_Graphic>(funGet, funSet, nullptr, layerLineWidthProperty);
-    cont->addChildProperty(layerLineWidthProperty);
+    container->addChildProperty(layerLineWidthProperty);
 }
 
-void LC_PropertiesProviderActivePen::createLineWidth(LC_PropertyContainer* cont, const RS_Pen& pen) const {
+void LC_PropertiesProviderActivePen::createLineWidth(LC_PropertyContainer* container, const RS_Pen& pen) const {
     const LC_Property::Names names = {"linetype", tr("Line Type"), tr("Type of line for active pen")};
-    auto* layerLineTypeProperty = new LC_PropertyLineType(cont, false);
+    auto* layerLineTypeProperty = new LC_PropertyLineType(container, false);
     layerLineTypeProperty->setViewAttribute(LC_PropertyLineTypeComboboxView::ATTR_SHOW_BY_LAYER, true);
     layerLineTypeProperty->setNames(names);
     auto funGet = [pen]([[maybe_unused]]const RS_Graphic* e) -> RS2::LineType {
@@ -112,10 +112,10 @@ void LC_PropertiesProviderActivePen::createLineWidth(LC_PropertyContainer* cont,
         }
     };
     createDirectDelegatedStorage<RS2::LineType, RS_Graphic>(funGet, funSet, nullptr, layerLineTypeProperty);
-    cont->addChildProperty(layerLineTypeProperty);
+    container->addChildProperty(layerLineTypeProperty);
 }
 
-void LC_PropertiesProviderActivePen::createCommands(LC_PropertyContainer* cont) {
+void LC_PropertiesProviderActivePen::createCommands(LC_PropertyContainer* cont) const {
     auto pickClickHandler = [this]([[maybe_unused]] RS_Document* g, const int linkIndex) {
         switch (linkIndex) {
             case 0: {

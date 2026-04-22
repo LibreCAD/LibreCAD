@@ -66,7 +66,7 @@ bool RS_FilterCXF::fileImport(RS_Graphic& g, const QString& file, RS2::FormatTyp
     RS_Font font(file, false);
     success = font.loadFont();
 
-    if (success == false) {
+    if (!success) {
         RS_DEBUG->print(RS_Debug::D_WARNING, "Cannot open CXF file '%s'.", file.toLatin1().data());
         return false;
     }

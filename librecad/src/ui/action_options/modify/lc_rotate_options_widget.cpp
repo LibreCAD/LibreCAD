@@ -183,11 +183,11 @@ void LC_RotateOptionsWidget::cbUseCurrentLayerClicked(const bool val) {
     m_action->updateOptions();
 }
 
-void LC_RotateOptionsWidget::onCopiesNumberValueChanged(int number) {
-    if (number < 1) {
-        number = 1;
+void LC_RotateOptionsWidget::onCopiesNumberValueChanged(int value) {
+    if (value < 1) {
+        value = 1;
     }
-    m_action->setCopiesNumber(number);
+    m_action->setCopiesNumber(value);
     m_action->updateOptions();
 }
 

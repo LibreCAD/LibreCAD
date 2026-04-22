@@ -99,7 +99,7 @@ void LC_PolygonOptionsWidget::onRadiusToggled([[maybe_unused]] bool val) {
 }
 
 void LC_PolygonOptionsWidget::onVertexToggled([[maybe_unused]] bool val) {
-    bool value = ui->cbVertexToVertex->isChecked();
+    const bool value = ui->cbVertexToVertex->isChecked();
     if (m_sideSideAction) {
         auto* specificAction = static_cast<LC_ActionDrawLinePolygonSideSide*>(m_action);
         Q_ASSERT(specificAction != nullptr);
@@ -109,7 +109,7 @@ void LC_PolygonOptionsWidget::onVertexToggled([[maybe_unused]] bool val) {
 }
 
 void LC_PolygonOptionsWidget::onRadiusEditingFinished() {
-    auto val = ui->leRadius->text();
+    const auto val = ui->leRadius->text();
     double value = 0.;
     if (toDouble(val, value, 0.0, true)) {
         m_action->setRoundingRadius(value);

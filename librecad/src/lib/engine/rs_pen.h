@@ -203,7 +203,7 @@ private:
     RS2::LineType m_lineType = RS2::SolidLine;
     RS2::LineWidth m_width = RS2::Width00;
     double m_screenWidth = 0.;
-    RS_Color m_color{};
+    RS_Color m_color;
     float m_alpha = 1.;
     double m_dashOffset = 0.;
 };

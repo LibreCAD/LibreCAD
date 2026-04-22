@@ -55,7 +55,7 @@ void LC_ArcCenterPointParamOptionsWidget::languageChange() {
 
 void LC_ArcCenterPointParamOptionsWidget::doUpdateByAction(RS_ActionInterface* a) {
     m_action = static_cast<LC_ActionDrawArcCenterPointParam*>(a);
-    bool reversed = m_action->isReversed();
+    const bool reversed = m_action->isReversed();
 
     LC_GuardedSignalsBlocker({ui->rbNeg});
     ui->rbNeg->setChecked(reversed);

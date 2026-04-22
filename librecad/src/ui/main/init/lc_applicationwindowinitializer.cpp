@@ -1,5 +1,5 @@
 /*******************************************************************************
-*
+ *
  This file is part of the LibreCAD project, a 2D CAD program
 
  Copyright (C) 2025 LibreCAD.org
@@ -21,13 +21,12 @@
  ******************************************************************************/
 #include "lc_applicationwindowinitializer.h"
 
-#include <QCoreApplication>
 #include <QMdiArea>
 #include <QMdiSubWindow>
 
+#include "lc_action_options_manager.h"
 #include "lc_actionfactory.h"
 #include "lc_actiongroupmanager.h"
-#include "lc_action_options_manager.h"
 #include "lc_appwindowdialogsinvoker.h"
 #include "lc_centralwidget.h"
 #include "lc_customstylehelper.h"

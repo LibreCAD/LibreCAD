@@ -46,7 +46,7 @@ void LC_ActionEditUndoRedo::init(const int status) {
 }
 
 void LC_ActionEditUndoRedo::trigger(){
-    if (!m_graphic){
+    if (m_graphic == nullptr){
         qWarning("undo: graphic is null");
         return;
     }

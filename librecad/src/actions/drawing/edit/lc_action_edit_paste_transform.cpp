@@ -57,31 +57,31 @@ void LC_ActionEditPasteTransform::doSaveOptions() {
 }
 
 void LC_ActionEditPasteTransform::doLoadOptions() {
-    double angle = loadDouble("Angle", 0.0);
+    const double angle = loadDouble("Angle", 0.0);
     setAngle(angle);
 
-    double factor = loadDouble("ScaleFactor", 1.0);
+    const double factor = loadDouble("ScaleFactor", 1.0);
     setFactor(factor);
 
-    bool array = loadBool("IsArray", false);
+    const bool array = loadBool("IsArray", false);
     setArrayCreated(array);
 
-    int xCount = loadInt("ArrayXCount", 1.0);
+    const int xCount = loadInt("ArrayXCount", 1.0);
     setArrayXCount(xCount);
 
-    int yCount = loadInt("ArrayYCount", 1.0);
+    const int yCount = loadInt("ArrayYCount", 1.0);
     setArrayYCount(yCount);
 
-    int xSpacing = loadDouble("ArrayXSpacing", 10.0);
+    const int xSpacing = loadDouble("ArrayXSpacing", 10.0);
     setArraySpacingX(xSpacing);
 
-    int ySpacing = loadDouble("ArrayYSpacing", 10.0);
+    const int ySpacing = loadDouble("ArrayYSpacing", 10.0);
     setArraySpacingY(ySpacing);
 
-    double arrayAngle = loadDouble("ArrayAngle", 0.0);
+    const double arrayAngle = loadDouble("ArrayAngle", 0.0);
     setArrayAngle(arrayAngle);
 
-    bool sameAngles = loadBool("SameAngles", true);
+    const bool sameAngles = loadBool("SameAngles", true);
     setSameAngles(sameAngles);
 }
 
@@ -130,7 +130,7 @@ void LC_ActionEditPasteTransform::onMouseMoveEvent(const int status, const LC_Mo
         m_preview->addAllFrom(*clipboardGraphics, m_viewport);
         m_preview->move(*m_referencePoint);
 
-        if (m_graphic) {
+        if (m_graphic != nullptr) {
             const RS_Vector scaleFactor = LC_CopyUtils::getInterGraphicsScaleFactor(m_pasteData->factor, clipboardGraphics, m_graphic);
             m_preview->scale(*m_referencePoint, scaleFactor);
             m_preview->rotate(*m_referencePoint, m_pasteData->angle);

@@ -69,16 +69,16 @@ void LC_ScaleOptionsWidget::updateUI(const int mode, [[maybe_unused]]const QVari
 void LC_ScaleOptionsWidget::doUpdateByAction(RS_ActionInterface* a) {
     m_action = static_cast<LC_ActionModifyScale*>(a);
 
-    bool useCurrentLayer = m_action->isUseCurrentLayer();
-    bool useCurrentAttributes = m_action->isUseCurrentAttributes();
-    bool keepOriginals = m_action->isKeepOriginals();
-    bool useMultipleCopies = m_action->isUseMultipleCopies();
-    int copiesNumber = m_action->getCopiesNumber();
+    const bool useCurrentLayer = m_action->isUseCurrentLayer();
+    const bool useCurrentAttributes = m_action->isUseCurrentAttributes();
+    const bool keepOriginals = m_action->isKeepOriginals();
+    const bool useMultipleCopies = m_action->isUseMultipleCopies();
+    const int copiesNumber = m_action->getCopiesNumber();
 
-    bool explicitFactor = m_action->isExplicitFactor();
-    bool isotrophic = m_action->isIsotropicScaling();
-    QString factorX = fromDouble(m_action->getFactorX());
-    QString factorY = fromDouble(m_action->getFactorY());
+    const bool explicitFactor = m_action->isExplicitFactor();
+    const bool isotrophic = m_action->isIsotropicScaling();
+    const QString factorX = fromDouble(m_action->getFactorX());
+    const QString factorY = fromDouble(m_action->getFactorY());
 
     LC_GuardedSignalsBlocker({
         ui->cbCurrentAttr,
@@ -129,11 +129,11 @@ void LC_ScaleOptionsWidget::cbUseCurrentLayerClicked(const bool val) {
     m_action->updateOptions();
 }
 
-void LC_ScaleOptionsWidget::onCopiesNumberValueChanged(int number) {
-    if (number < 1) {
-        number = 1;
+void LC_ScaleOptionsWidget::onCopiesNumberValueChanged(int value) {
+    if (value < 1) {
+        value = 1;
     }
-    m_action->setCopiesNumber(number);
+    m_action->setCopiesNumber(value);
     m_action->updateOptions();
 }
 
@@ -148,7 +148,7 @@ void LC_ScaleOptionsWidget::cbIsotropicClicked(const bool val) {
 }
 
 void LC_ScaleOptionsWidget::onFactorXEditingFinished() {
-    auto val = ui->leFactorX->text();
+    const auto val = ui->leFactorX->text();
     double factor = 1.;
     if (toDouble(val, factor, 0.0, false)) {
         m_action->setFactorX(factor);
@@ -157,7 +157,7 @@ void LC_ScaleOptionsWidget::onFactorXEditingFinished() {
 }
 
 void LC_ScaleOptionsWidget::onFactorYEditingFinished() {
-    auto val = ui->leFactorY->text();
+    const auto val = ui->leFactorY->text();
     double factor = 1.;
     if (toDouble(val, factor, 0.0, false)) {
         m_action->setFactorY(factor);

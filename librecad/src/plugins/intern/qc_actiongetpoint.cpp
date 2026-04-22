@@ -36,7 +36,6 @@
 #include "rs_preview.h"
 
 struct QC_ActionGetPoint::ActionData {
-    RS_MoveData data;
     RS_Vector referencePoint;
     RS_Vector targetPoint;
     QString message;

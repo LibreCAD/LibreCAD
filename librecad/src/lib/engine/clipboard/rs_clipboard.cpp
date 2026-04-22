@@ -66,7 +66,7 @@ void RS_Clipboard::addBlock(RS_Block* b) const {
 }
 
 bool RS_Clipboard::hasBlock(const QString& name) const {
-    return m_graphic->findBlock(name);
+    return m_graphic->findBlock(name) != nullptr;
 }
 
 void RS_Clipboard::addLayer(RS_Layer* l) const {
@@ -76,7 +76,7 @@ void RS_Clipboard::addLayer(RS_Layer* l) const {
 }
 
 bool RS_Clipboard::hasLayer(const QString& name) const {
-    return m_graphic->findLayer(name);
+    return m_graphic->findLayer(name) != nullptr;
 }
 
 void RS_Clipboard::addEntity(RS_Entity* e) const {

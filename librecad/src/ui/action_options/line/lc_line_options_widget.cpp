@@ -56,27 +56,27 @@ void LC_LineOptionsWidget::doUpdateByAction(RS_ActionInterface* a) {
 }
 
 void LC_LineOptionsWidget::close() const {
-    if (m_action) {
+    if (m_action != nullptr) {
         m_action->close();
     }
 }
 
 void LC_LineOptionsWidget::undo() {
-    if (m_action) {
+    if (m_action != nullptr) {
         m_action->undo();
         m_action->updateOptions();
     }
 }
 
 void LC_LineOptionsWidget::redo() {
-    if (m_action) {
+    if (m_action != nullptr) {
         m_action->redo();
         m_action->updateOptions();
     }
 }
 
 void LC_LineOptionsWidget::enableButtons() const {
-    if (m_action) {
+    if (m_action != nullptr) {
         ui->bClose->setEnabled(m_action->mayClose());
         ui->bUndo->setEnabled(m_action->mayUndo());
         ui->bRedo->setEnabled(m_action->mayRedo());

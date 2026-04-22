@@ -61,7 +61,7 @@ public:
     int getViewMode() const;
     void setUCS(LC_UCS *pUcs);
     LC_UCS* getUCS() const;
-    bool isForPaperView() const {return  m_flags & 1;}
+    bool isForPaperView() const {return  (m_flags & 1) != 0;}
     void setForPaperView(const bool forPaper) {
         if (forPaper) {
             m_flags |= 1;

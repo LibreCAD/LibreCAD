@@ -448,7 +448,7 @@ void RS_Painter::drawArcEntity(RS_Arc* arc, QPainterPath& path) {
                 for (unsigned short i = 0; i < 4; i++) {
                     RS_Line line{vertex.at(i), vertex.at((i + 1) % 4)};
                     auto vpIts = RS_Information::getIntersection(arc, &line, true);
-                    if (vpIts.size() == 0) {
+                    if (vpIts.empty()) {
                         continue;
                     }
                     for (const RS_Vector& vp : vpIts) {
@@ -764,7 +764,7 @@ void RS_Painter::drawEllipseArcWCS(const RS_Vector& wcsCenter, double wcsMajorRa
     double uiMinorRadius = ratio * uiMajorRadius;
 
     const RS_Vector uiCenter = toGui(wcsCenter);
-    double uiAngleDegrees = toUCSAngleDegrees(wcsAngleDegrees);
+    const double uiAngleDegrees = toUCSAngleDegrees(wcsAngleDegrees);
     drawEllipseArcUI(uiCenter, {uiMajorRadius, uiMinorRadius}, uiAngleDegrees, angle1Degrees, angularLength, reversed);
 }
 
@@ -790,7 +790,7 @@ void RS_Painter::drawEllipseArcUI(const RS_Vector& uiCenter, const RS_Vector& ui
         const bool useSpline = std::max(uiRadii.x, uiRadii.y) > getMaximumArcNonErrorRadius();
 
         QPainterPath path;
-        double startDegrees = reversed ? angle1Degrees - angularLength : angle1Degrees;
+        const double startDegrees = reversed ? angle1Degrees - angularLength : angle1Degrees;
         addEllipseArcToPath(path, uiRadii, startDegrees, angularLength, useSpline);
         QPainter::drawPath(path);
     }
@@ -842,27 +842,27 @@ void RS_Painter::drawEllipseSegmentBySplinePointsUI(const RS_Vector& uiRadii, co
 
 void RS_Painter::drawEllipseBySplinePointsUI(const RS_Ellipse& ellipse, QPainterPath &path) const
 {
-  RS_Vector uiRadii{toGuiDX(ellipse.getMajorRadius()), toGuiDY(ellipse.getMinorRadius())};
-  double r = std::max(uiRadii.x, uiRadii.y);
+  const RS_Vector uiRadii{toGuiDX(ellipse.getMajorRadius()), toGuiDY(ellipse.getMinorRadius())};
+  const double r = std::max(uiRadii.x, uiRadii.y);
   // maximum angular step size: using this angular step size keeps the maximum
   // deviation of an arc from its parabola fitting
   const double dParam = std::pow(1./32. / r, 1. / 4.);
-  double lenRad = ellipse.getAngleLength();
+  const double lenRad = ellipse.getAngleLength();
   int numSegments = std::max(1, int(std::ceil(std::abs(lenRad) / dParam)));
   // Avoid performance issue: too many points when zoomed in
   // The maximum rendering error is relaxed
   numSegments = std::min(numSegments, 24);
   // Don't duplicate first point for closed
   const bool closed = !ellipse.isEllipticArc();
-  int numPoints = closed ? numSegments : numSegments + 1;
-  double delta = ellipse.isReversed() ? - lenRad / numSegments : lenRad / numSegments;
+  const int numPoints = closed ? numSegments : numSegments + 1;
+  const double delta = ellipse.isReversed() ? - lenRad / numSegments : lenRad / numSegments;
 
     LC_SplinePointsData data;
     data.closed = closed;
 
   double param = ellipse.getAngle1();
-  RS_Vector rotation{ellipse.getMajorP().angle()};
-  RS_Vector center = ellipse.getCenter();
+  const RS_Vector rotation{ellipse.getMajorP().angle()};
+  const RS_Vector center = ellipse.getCenter();
 
   const RS_Vector scaleXY(ellipse.getMajorRadius(), ellipse.getMinorRadius());
   for (int i = 0; i < numPoints; ++i) {
@@ -878,7 +878,7 @@ void RS_Painter::drawEllipseBySplinePointsUI(const RS_Ellipse& ellipse, QPainter
 
 void RS_Painter::addSplinePointsToPath(const std::vector<RS_Vector> &uiControlPoints, bool closed, QPainterPath &qPath) const
 {
-    size_t n = uiControlPoints.size();
+    const size_t n = uiControlPoints.size();
     if(n < 2){
         return;
     }
@@ -1065,9 +1065,10 @@ void RS_Painter::drawSplinePointsWCS(const std::vector<RS_Vector>& wcsControlPoi
 #define DEBUG_RENDER_SPLINEPOINTS_NO
 
 void RS_Painter::drawSplinePointsUI(const std::vector<RS_Vector> &uiControlPoints, bool closed){
-    if (uiControlPoints.empty())
+    if (uiControlPoints.empty()) {
         return;
-    QPointF startPos{uiControlPoints.front().x, uiControlPoints.front().y};
+    }
+    const QPointF startPos{uiControlPoints.front().x, uiControlPoints.front().y};
     QPainterPath qPath(startPos);
     qPath.moveTo(startPos);
     addSplinePointsToPath(uiControlPoints, closed, qPath);
@@ -1729,8 +1730,7 @@ void RS_Painter::pathForParametricCurve(
     const std::vector<double>& paramPoints,
     const std::function<RS_Vector(double)>& getPointAtParam,
     double approxRadius
-) const
-{
+) const{
   LC_LOG<<__func__<<"(): begin";
 
     const LC_Rect& vpRect = getWcsBoundingRect();
@@ -1747,14 +1747,17 @@ void RS_Painter::pathForParametricCurve(
         double d1 = paramPoints[i - 1];
         double d2 = paramPoints[i];
         double segmentLength = d2 - d1;
-        if (segmentLength < RS_TOLERANCE_ANGLE) continue;
+        if (segmentLength < RS_TOLERANCE_ANGLE) {
+            continue;
+        }
 
         double midP = (d1 + d2) / 2.0;
         RS_Vector midPoint = getPointAtParam(midP);
         bool visible = vpRect.inArea(midPoint, RS_TOLERANCE);
 
-        if (!std::isnormal(theta) || theta < RS_TOLERANCE_ANGLE)
+        if (!std::isnormal(theta) || theta < RS_TOLERANCE_ANGLE) {
             theta = M_PI / 12; // Fallback ~15 deg
+        }
         int numSamples = static_cast<int>(std::ceil(segmentLength / theta));
         numSamples = std::max(numSamples, 2);
         if (!visible) {
@@ -1780,7 +1783,9 @@ void RS_Painter::pathForParametricCurve(
         approx.update(); // Generates quadratic control points
 
         const auto& cps = approx.getControlPoints();
-        if (cps.empty()) continue;
+        if (cps.empty()) {
+            continue;
+        }
 
         std::vector<RS_Vector> uiCps;
         for (const auto& cp : cps) {
@@ -1804,13 +1809,13 @@ void RS_Painter::pathForEntity(
   const LC_Rect& vpRect = getWcsBoundingRect();
   std::vector<double> crossPoints;
   // Compute intersections with viewport borders
-  std::array<RS_Vector, 4> vertices = vpRect.vertices();
+  const std::array<RS_Vector, 4> vertices = vpRect.vertices();
   for (unsigned short i = 0; i < vertices.size(); ++i) {
     RS_Line line{vertices.at(i), vertices.at((i + 1) % vertices.size())};
     RS_VectorSolutions vpIts = RS_Information::getIntersection(entity, &line, true);
     for (const RS_Vector& vp : vpIts) {
-      double ap1 = entity->getTangentDirection(vp).angle();
-      double ap2 = line.getTangentDirection(vp).angle();
+      const double ap1 = entity->getTangentDirection(vp).angle();
+      const double ap2 = line.getTangentDirection(vp).angle();
       if (std::abs(RS_Math::correctAngle(ap2 - ap1)) > RS_TOLERANCE_ANGLE) {
         crossPoints.push_back(RS_Math::getAngleDifference(baseAngle, getParamFunc(vp)));
       }
@@ -1821,7 +1826,7 @@ void RS_Painter::pathForEntity(
   crossPoints.push_back(fullAngleLength);
   // Sort and unique
   std::sort(crossPoints.begin(), crossPoints.end());
-  auto last = std::unique(crossPoints.begin(), crossPoints.end(), [](double a, double b) {
+  const auto last = std::unique(crossPoints.begin(), crossPoints.end(), [](double a, double b) {
     return std::abs(a - b) < RS_TOLERANCE_ANGLE;
   });
   crossPoints.erase(last, crossPoints.end());

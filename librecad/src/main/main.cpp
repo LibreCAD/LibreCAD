@@ -80,7 +80,7 @@ void showFirstLoadSetupDialog(const bool firstLoad) {
             QG_DlgInitial di(nullptr);
             const QPixmap pxm(":/images/intro_librecad.png");
             di.setPixmap(pxm);
-            if (di.exec()) {
+            if (di.exec() != 0) {
                 QString unit = LC_GET_STR("Unit", "Invalid"); // fixme - sand - what for? review
                 unit = LC_GET_STR("Unit", "None");
             }

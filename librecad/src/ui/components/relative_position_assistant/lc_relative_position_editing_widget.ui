@@ -32,56 +32,23 @@
    <property name="verticalSpacing">
     <number>0</number>
    </property>
-   <item row="5" column="0" colspan="2">
-    <widget class="QWidget" name="wY" native="true">
-     <layout class="QGridLayout" name="gridLayout_6" columnstretch="0">
-      <property name="leftMargin">
-       <number>0</number>
-      </property>
-      <property name="topMargin">
-       <number>0</number>
-      </property>
-      <property name="rightMargin">
-       <number>0</number>
-      </property>
-      <property name="bottomMargin">
-       <number>0</number>
-      </property>
-     </layout>
-    </widget>
-   </item>
-   <item row="4" column="0" colspan="2">
-    <widget class="QWidget" name="wX" native="true">
-     <layout class="QGridLayout" name="gridLayout_5" columnstretch="0">
-      <property name="leftMargin">
-       <number>0</number>
-      </property>
-      <property name="topMargin">
-       <number>0</number>
-      </property>
-      <property name="rightMargin">
-       <number>0</number>
-      </property>
-      <property name="bottomMargin">
-       <number>0</number>
-      </property>
-     </layout>
+   <item row="1" column="0">
+    <widget class="QLabel" name="label_2">
+     <property name="toolTip">
+      <string>Projected position of the point</string>
+     </property>
+     <property name="text">
+      <string>Projected:</string>
+     </property>
     </widget>
    </item>
    <item row="0" column="0">
     <widget class="QLabel" name="lblBasePointType">
      <property name="toolTip">
-      <string>Base point coordinates, relative coordinates will be calculated against this point</string>
+      <string>&lt;p&gt;Base point coordinates. &lt;/p&gt;&lt;p&gt;Relative coordinates will be calculated based on this point&lt;/p&gt;</string>
      </property>
      <property name="text">
       <string>Base point:</string>
-     </property>
-    </widget>
-   </item>
-   <item row="1" column="1">
-    <widget class="QLabel" name="lblProjected">
-     <property name="text">
-      <string>-99.9999, -9999.99999</string>
      </property>
     </widget>
    </item>
@@ -98,16 +65,6 @@
      </property>
     </spacer>
    </item>
-   <item row="1" column="0">
-    <widget class="QLabel" name="label_2">
-     <property name="toolTip">
-      <string>Projected position of the point</string>
-     </property>
-     <property name="text">
-      <string>Projected:</string>
-     </property>
-    </widget>
-   </item>
    <item row="0" column="1">
     <widget class="QLabel" name="lblBasePoint">
      <property name="text">
@@ -115,13 +72,10 @@
      </property>
     </widget>
    </item>
-   <item row="1" column="2">
-    <widget class="QCheckBox" name="cbByOffset">
-     <property name="toolTip">
-      <string>If checked, relative coordinates mode (the offset from base point) will be used. Otherwise - absolute coordinates mode.</string>
-     </property>
+   <item row="1" column="1">
+    <widget class="QLabel" name="lblProjected">
      <property name="text">
-      <string>By Offset</string>
+      <string>-99.9999, -9999.99999</string>
      </property>
     </widget>
    </item>
@@ -1269,6 +1223,16 @@
        </widget>
       </item>
      </layout>
+    </widget>
+   </item>
+   <item row="1" column="2">
+    <widget class="QCheckBox" name="cbByOffset">
+     <property name="toolTip">
+      <string>&lt;p&gt;If checked, activates relative coordinates mode that calculates point position using offset from the base point. &lt;/p&gt;&lt;p&gt;Otherwise - absolute coordinates mode.&lt;/p&gt;</string>
+     </property>
+     <property name="text">
+      <string>By Offset</string>
+     </property>
     </widget>
    </item>
   </layout>

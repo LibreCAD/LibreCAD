@@ -29,7 +29,6 @@
 #include "lc_line_rel_angle_options_filler.h"
 #include "lc_line_rel_angle_options_widget.h"
 #include "rs_creation.h"
-#include "rs_document.h"
 #include "rs_line.h"
 #include "rs_polyline.h"
 

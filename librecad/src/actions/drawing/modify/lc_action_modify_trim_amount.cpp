@@ -79,8 +79,8 @@ void LC_ActionModifyTrimAmount::init(const int status) {
 bool LC_ActionModifyTrimAmount::doTriggerModifications(LC_DocumentModificationBatch& ctx) {
     if (m_trimEntity != nullptr && m_trimEntity->isVisible() && !m_trimEntity->isLocked()) {
         const double dist = determineDistance(m_trimEntity);
-        bool trimStart;
-        bool trimEnd;
+        bool trimStart = false;
+        bool trimEnd = false;
         const bool trimBoth = m_symmetricDistance && !m_distanceIsTotalLength;
         RS_Entity* trimmed = RS_Modification::trimAmount(*m_trimCoord, m_trimEntity, dist, trimBoth, trimStart, trimEnd, ctx);
         if (trimmed != nullptr) {
@@ -125,8 +125,8 @@ void LC_ActionModifyTrimAmount::onMouseMoveEvent([[maybe_unused]] const int stat
         auto* atomic = static_cast<RS_AtomicEntity*>(en);
         const double dist = determineDistance(atomic);
         const bool trimBoth = m_symmetricDistance && !m_distanceIsTotalLength;
-        bool trimStart;
-        bool trimEnd;
+        bool trimStart = false;
+        bool trimEnd = false;
         LC_DocumentModificationBatch ctx;
         const RS_Vector coord =  e->graphPoint;
         const auto trimmed = RS_Modification::trimAmount(coord, atomic, dist, trimBoth, trimStart, trimEnd, ctx);
@@ -221,7 +221,7 @@ bool LC_ActionModifyTrimAmount::doProcessCommand(const int status, const QString
     bool accept = false;
     switch (status) {
         case ChooseTrimEntity: {
-            bool ok;
+            bool ok = false;
             const double d = RS_Math::eval(command, &ok);
             if (ok){
                 accept = true;

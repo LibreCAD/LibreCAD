@@ -33,7 +33,7 @@ class RS_Vector;
 class LC_RelativePositionEvaluator {
 public:
     void update(const RS_Vector& wcsPos, const RS_Vector& baseWCSPoint);
-    void setPositionParam(RS2::RelativePointParam paramType, double value, bool fromInteractiveInput);
+    void setPositionParam(RS2::RelativePointParam paramType, double value);
     void setViewport(LC_GraphicViewport* viewport){m_viewport = viewport;}
     const LC_RelativePositionData* getRelativePositionData() const {return &m_relativeInputData;}
 protected:
@@ -41,12 +41,12 @@ protected:
     void recalculateLength(const RS_Vector& wcsBasePoint);
     void recalculateAngle(const RS_Vector& wcsBasePoint);
     void recalculateLengthAndAngle(const RS_Vector& wcsBasePoint);
-    void calculatePointForGivenXKeepingLength(double length, double wcsAngle, RS_Vector& ucsProjectedPoint);
-    void calculatePointForGivenYKeepingLength(double length, double wcsAngle, RS_Vector& ucsProjectedPoint);
+    void calculatePointForGivenXKeepingLength(double length, double wcsAngle, RS_Vector& ucsProjectedPoint) const;
+    void calculatePointForGivenYKeepingLength(double length, double wcsAngle, RS_Vector& ucsProjectedPoint) const;
     void calculatePointForGivenXKeepingAngle(RS_Vector& ucsProjectedPoint);
     void calculatePointForGivenYKeepingAngle(RS_Vector& ucsProjectedPoint);
-    void calculateForX(RS_Vector wcsBasePoint, double length, double wcsAngle, RS_Vector ucsProjectedPoint);
-    void calculateForY(RS_Vector wcsBasePoint, double length, double wcsAngle, RS_Vector ucsProjectedPoint);
+    void calculateForX(const RS_Vector& wcsBasePoint, double length, double wcsAngle, RS_Vector ucsProjectedPoint);
+    void calculateForY(const RS_Vector& wcsBasePoint, double length, double wcsAngle, RS_Vector ucsProjectedPoint);
 
 private:
     LC_RelativePositionData m_relativeInputData;

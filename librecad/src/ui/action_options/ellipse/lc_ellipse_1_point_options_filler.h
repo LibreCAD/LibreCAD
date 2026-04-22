@@ -24,9 +24,9 @@
 #ifndef LC_ELLIPSE1POINTOPTIONSFILLER_H
 #define LC_ELLIPSE1POINTOPTIONSFILLER_H
 
-#include "lc_action_options_properties_filler.h"
+#include "lc_action_options_properties_filler_base.h"
 
-class LC_Ellipse1PointOptionsFiller: public LC_ActionOptionsPropertiesFiller{
+class LC_Ellipse1PointOptionsFiller: public LC_ActionOptionsPropertiesFillerBase{
     Q_OBJECT
 public:
     LC_Ellipse1PointOptionsFiller() = default;

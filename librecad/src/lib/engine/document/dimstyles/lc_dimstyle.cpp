@@ -142,7 +142,7 @@ void LC_DimStyle::ZerosSuppression::setAltLinearFlag(const LinearSuppressionPoli
 }
 
 void LC_DimStyle::ZerosSuppression::setAltToleranceFlag(const ToleranceSuppressionPolicy dimalttz, const bool set) {
-    int newValue = set ? DIMALTTZ | dimalttz : DIMALTTZ & ~dimalttz;
+    const int newValue = set ? DIMALTTZ | dimalttz : DIMALTTZ & ~dimalttz;
     setAltToleranceRaw(newValue);
 }
 

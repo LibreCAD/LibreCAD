@@ -23,7 +23,6 @@
 
 #include "lc_actiondimstyleapply.h"
 
-#include "lc_graphicviewport.h"
 #include "rs_dimension.h"
 #include "rs_entity.h"
 

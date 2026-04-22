@@ -38,12 +38,11 @@ public:
 
     QLabel* getLabel() const {
         return m_label;
-    };
+    }
 
     QToolButton* getToolButton() const {
         return m_toolButton;
-    };
-
+    }
 protected:
     QLabel* m_label;
     QToolButton* m_toolButton;

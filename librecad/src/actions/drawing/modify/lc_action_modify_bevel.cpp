@@ -59,12 +59,12 @@ void LC_ActionModifyBevel::doSaveOptions() {
 }
 
 void LC_ActionModifyBevel::doLoadOptions() {
-    double len1 = loadDouble("Length1", 10.0);
+    const double len1 = loadDouble("Length1", 10.0);
     setLength1(len1);
-    double len2 = loadDouble("Length2", 10.0);
+    const double len2 = loadDouble("Length2", 10.0);
     setLength2(len2);
 
-    bool trimOn = loadBool("Trim", true);
+    const bool trimOn = loadBool("Trim", true);
     setTrim(trimOn);
 }
 
@@ -329,7 +329,7 @@ bool LC_ActionModifyBevel::doProcessCommand(const int status, const QString &com
             break;
         }
         case SetLength1: {
-            bool ok;
+            bool ok = false;
             const double l = RS_Math::eval(command, &ok);
             if (ok){
                 accept = true;
@@ -342,7 +342,7 @@ bool LC_ActionModifyBevel::doProcessCommand(const int status, const QString &com
             break;
         }
         case SetLength2: {
-            bool ok;
+            bool ok = false;
             const double l = RS_Math::eval(command, &ok);
             if (ok){
                 m_actionData->data.length2 = l;

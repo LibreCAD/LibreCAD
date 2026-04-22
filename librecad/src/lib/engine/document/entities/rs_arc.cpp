@@ -24,9 +24,9 @@
 **
 **********************************************************************/
 
-#include <QPainterPath>
-
 #include "rs_arc.h"
+
+#include <QPainterPath>
 
 #include "lc_creation_arc.h"
 #include "lc_quadratic.h"
@@ -243,11 +243,11 @@ RS_VectorSolutions RS_Arc::getTangentPoint(const RS_Vector& point) const {
     }
     RS_Vector vp(point - getCenter());
     const double c2(vp.squared());
-    if (c2 < r2 - radius * 2. * RS_TOLERANCE) {
+    if (c2 < r2 - (radius * 2. * RS_TOLERANCE)) {
         //inside point, no tangential point
         return ret;
     }
-    if (c2 > r2 + radius * 2. * RS_TOLERANCE) {
+    if (c2 > r2 + (radius * 2. * RS_TOLERANCE)) {
         //external point
         RS_Vector vp1(-vp.y, vp.x);
         vp1 *= radius * sqrt(c2 - r2) / c2;
@@ -291,12 +291,12 @@ RS_Vector RS_Arc::doGetNearestPointOnEntity(const RS_Vector& coord, const bool o
     return vec;
 }
 
-RS_Vector RS_Arc::doGetNearestCenter(const RS_Vector& coord, double* dist, RS_Entity** entity) const {
+RS_Vector RS_Arc::doGetNearestCenter(const RS_Vector& coord, double* dist, RS_Entity** centerEntity) const {
     if (dist != nullptr) {
         *dist = coord.distanceTo(m_data.center);
     }
-    if (entity != nullptr) {
-        *entity = const_cast<RS_Arc*>(this);
+    if (centerEntity != nullptr) {
+        *centerEntity = const_cast<RS_Arc*>(this);
     }
     return m_data.center;
 }
@@ -327,7 +327,7 @@ RS_Vector RS_Arc::doGetNearestMiddle(const RS_Vector& coord, double* dist, const
     if (isReversed()) {
         std::swap(amin, amax);
     }
-    double da = fmod(amax - amin + 2. * M_PI, 2. * M_PI);
+    double da = fmod(amax - amin + (2. * M_PI), 2. * M_PI);
     if (da < RS_TOLERANCE) {
         da = 2. * M_PI; // whole circle
     }
@@ -335,14 +335,14 @@ RS_Vector RS_Arc::doGetNearestMiddle(const RS_Vector& coord, double* dist, const
     double angle = getCenter().angleTo(vp);
     const int counts = middlePoints + 1;
     int i = static_cast<int>(fmod(angle - amin + 2. * M_PI, 2. * M_PI) / da * counts + 0.5);
-    if (!i) {
+    if (i == 0) {
         i++; // remove end points
     }
     if (i == counts) {
         i--;
     }
     const double doubleI = i;
-    angle = amin + da * (doubleI / counts);
+    angle = amin + (da * (doubleI / counts));
     vp.setPolar(getRadius(), angle);
     vp.move(getCenter());
 
@@ -419,7 +419,7 @@ RS_Vector RS_Arc::getNearestOrthTan(const RS_Vector& coord, const RS_Line& norma
     std::vector<RS_Vector> sol;
     for (int i = 0; i <= 1; i++) {
         if (!onEntity || RS_Math::isAngleBetween(angle, getAngle1(), getAngle2(), isReversed())) {
-            if (i) {
+            if (i != 0) {
                 sol.push_back(-vp);
             }
             else {
@@ -499,7 +499,7 @@ bool RS_Arc::offset(const RS_Vector& coord, const double distance) {
       }
       */
     const double dist(coord.distanceTo(getCenter()));
-    double newRadius;
+    double newRadius = NAN;
     if (dist > getRadius()) {
         //external
         newRadius = getRadius() + fabs(distance);
@@ -611,7 +611,7 @@ RS_Vector RS_Arc::prepareTrim(const RS_Vector& trimCoord, const RS_VectorSolutio
     //find the closest intersection to the trimCoord, according angular difference
     for (size_t ii = 0; ii < trimSol.getNumber(); ++ii) {
         ias.push_back(getArcAngle(trimSol.get(ii)));
-        if (!ii || fabs(remainder(ias[ii] - am, 2 * M_PI)) < fabs(remainder(ia - am, 2 * M_PI))) {
+        if ((ii == 0u) || fabs(remainder(ias[ii] - am, 2 * M_PI)) < fabs(remainder(ia - am, 2 * M_PI))) {
             ia = ias[ii];
             is = trimSol.get(ii);
         }
@@ -825,8 +825,8 @@ void RS_Arc::stretch(const RS_Vector& firstCorner, const RS_Vector& secondCorner
 }
 
 void RS_Arc::createPainterPath(RS_Painter* painter, QPainterPath& path) const {
-    double baseAngle = getAngle1();
-    double fullAngleLength = isReversed() ? - getAngleLength() : getAngleLength();
+    const double baseAngle = getAngle1();
+    const double fullAngleLength = isReversed() ? - getAngleLength() : getAngleLength();
     auto getParamFunc = [this](const RS_Vector& vp) { return getArcAngle(vp); };
     auto getPointFunc = [this](double param) { return getPointAtParameter(param); };
     painter->pathForEntity(path, this, baseAngle, fullAngleLength, getParamFunc, getPointFunc, getRadius());
@@ -838,7 +838,7 @@ void RS_Arc::draw(RS_Painter* painter) {
     painter->drawEntityArc(this);
   } else {
     QPainterPath path;
-    RS_Vector startUi = painter->toGui(getStartpoint());
+    const RS_Vector startUi = painter->toGui(getStartpoint());
     path.moveTo(startUi.x, startUi.y);
     createPainterPath(painter, path);
     painter->drawPath(path);
@@ -869,7 +869,7 @@ double RS_Arc::getBulge() const {
 double RS_Arc::getSagitta() const {
     const double radius = m_data.radius;
     const double chord = m_endPoint.distanceTo(m_startPoint);
-    const double result = radius - std::sqrt(radius * radius - chord * chord / 4);
+    const double result = radius - std::sqrt((radius * radius) - chord * chord / 4);
     return result;
 }
 
@@ -903,12 +903,12 @@ double RS_Arc::areaLineIntegral() const {
     const double& a0 = m_data.angle1;
     const double& a1 = m_data.angle2;
     const double r2 = 0.25 * r * r;
-    const double fStart = m_data.center.x * r * sin(a0) + r2 * sin(a0 + a0);
-    const double fEnd = m_data.center.x * r * sin(a1) + r2 * sin(a1 + a1);
+    const double fStart = (m_data.center.x * r * sin(a0)) + (r2 * sin(a0 + a0));
+    const double fEnd = (m_data.center.x * r * sin(a1)) + (r2 * sin(a1 + a1));
     if (isReversed()) {
-        return fEnd - fStart - 2. * r2 * getAngleLength();
+        return fEnd - fStart - (2. * r2 * getAngleLength());
     }
-    return fEnd - fStart + 2. * r2 * getAngleLength();
+    return fEnd - fStart + (2. * r2 * getAngleLength());
 }
 
 /**
@@ -924,7 +924,7 @@ void RS_Arc::updateMiddlePoint() {
     const double b = getAngle2();
 
     if (isReversed()) {
-        a = b + RS_Math::correctAngle(a - b) * 0.5;
+        a = b + (RS_Math::correctAngle(a - b) * 0.5);
     }
     else {
         a += RS_Math::correctAngle(b - a) * 0.5;

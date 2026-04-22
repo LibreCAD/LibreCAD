@@ -51,7 +51,6 @@ public:
     ~QG_ActionHandler() override = default;
     RS_ActionInterface *getCurrentAction() const;
     void promoteCommandIfNeeded(RS2::ActionType id) const;
-    void doWork(RS2::ActionType id) const;
     std::shared_ptr<RS_ActionInterface> setCurrentAction(RS2::ActionType id, void* data = nullptr) const;
     /**
     * @brief killAllActions kill all actions

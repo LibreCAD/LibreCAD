@@ -49,7 +49,7 @@ struct RS_PointData {
  */
 class RS_Point : public RS_AtomicEntity {
 public:
-    RS_Point(RS_EntityContainer* parent, const RS_Vector& c);
+    RS_Point(RS_EntityContainer* parent, const RS_Vector& p);
     RS_Point(RS_EntityContainer* parent, const RS_PointData& d);
     RS_Entity* clone() const override;
     /**	@return RS_ENTITY_POINT */

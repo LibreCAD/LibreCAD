@@ -72,7 +72,7 @@ QWidget* LC_PropertyIntListComboBoxView::doCreateValueEditor(QWidget* parent, co
     if (desc != nullptr) {
         QList<int> values;
         desc->load("values", values);
-        for (const auto value : values) {
+        for (const auto value : std::as_const(values)) {
             cb->addItem(QString::number(value), value);
         }
     }

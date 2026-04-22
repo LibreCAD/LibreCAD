@@ -59,15 +59,15 @@ LC_Rotate2OptionsWidget::~LC_Rotate2OptionsWidget() {
 void LC_Rotate2OptionsWidget::doUpdateByAction(RS_ActionInterface* a) {
     m_action = static_cast<LC_ActionModifyRotateTwice*>(a);
 
-    bool useCurrentLayer = m_action->isUseCurrentLayer();
-    bool useCurrentAttributes = m_action->isUseCurrentAttributes();
-    bool keepOriginals = m_action->isKeepOriginals();
-    bool useMultipleCopies = m_action->isUseMultipleCopies();
-    int copiesNumber = m_action->getCopiesNumber();
-    bool sameAngle = m_action->isUseSameAngle2ForCopies();
-    bool mirrorAngles = m_action->isMirrorAngles();
-    QString angle1 = fromDouble(RS_Math::rad2deg(m_action->getAngle1()));
-    QString angle2 = fromDouble(RS_Math::rad2deg(m_action->getAngle2()));
+    const bool useCurrentLayer = m_action->isUseCurrentLayer();
+    const bool useCurrentAttributes = m_action->isUseCurrentAttributes();
+    const bool keepOriginals = m_action->isKeepOriginals();
+    const bool useMultipleCopies = m_action->isUseMultipleCopies();
+    const int copiesNumber = m_action->getCopiesNumber();
+    const bool sameAngle = m_action->isUseSameAngle2ForCopies();
+    const bool mirrorAngles = m_action->isMirrorAngles();
+    const QString angle1 = fromDouble(RS_Math::rad2deg(m_action->getAngle1()));
+    const QString angle2 = fromDouble(RS_Math::rad2deg(m_action->getAngle2()));
 
     LC_GuardedSignalsBlocker({
         ui->cbCurrentAttr,
@@ -127,7 +127,7 @@ void LC_Rotate2OptionsWidget::onCopiesCountChanged(int number) {
 }
 
 void LC_Rotate2OptionsWidget::onAngle1EditingFinished() {
-    auto val = ui->leAngle1->text();
+    const auto val = ui->leAngle1->text();
     double angle;
     if (toDoubleAngleDegrees(val, angle, 0.0, false)) {
         m_action->setAngle1(RS_Math::deg2rad(angle));

@@ -40,7 +40,7 @@ void LC_UndoableDocumentModificationAction::doTrigger() {
 }
 
 void LC_UndoableDocumentModificationAction::previewEntitiesToAdd(LC_DocumentModificationBatch &ctx) const {
-    for (const auto e: ctx.entitiesToAdd) {
+    for (const auto e: std::as_const(ctx.entitiesToAdd)) {
         const RS2::EntityType rtti = e->rtti();
         if (rtti == RS2::EntityInsert || RS2::isDimensionalEntity(rtti)) {
             e->update();

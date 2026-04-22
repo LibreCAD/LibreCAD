@@ -383,8 +383,8 @@ void RS_Dimension::createHorizontalTextDimensionLine(const RS_Vector& p1, const 
 
     // evaluate intersection between dim line and text
     double textIntersectionLength = 0.0;
-    double w = text->getUsedTextWidth() / 2 + dimgap;
-    double h = text->getUsedTextHeight() / 2 + dimgap;
+    double w = (text->getUsedTextWidth() / 2) + dimgap;
+    double h = (text->getUsedTextHeight() / 2) + dimgap;
 
     // textCorner variables correspond to the corners of the text bounding box
     // if the text were to be positioned in the center of the dimensionLine.
@@ -398,7 +398,7 @@ void RS_Dimension::createHorizontalTextDimensionLine(const RS_Vector& p1, const 
     textIntersectionLength = sol1.get(0).distanceTo(sol1.get(1));
 
     // determine if we should use outside arrows
-    bool outsideArrows = (textIntersectionLength + 3 * arrowSize) > distance;
+    bool outsideArrows = (textIntersectionLength + (3 * arrowSize)) > distance;
 
     // add arrows
     // arrow angles:
@@ -419,7 +419,7 @@ void RS_Dimension::createHorizontalTextDimensionLine(const RS_Vector& p1, const 
 
         // move text to the side if it won't fit either
         if (textIntersectionLength > distance && autoText) {
-            double dist = (textIntersectionLength + distance) / 2.0 + arrowSize * 2;
+            double dist = (textIntersectionLength + distance) / 2.0 + (arrowSize * 2);
             RS_Vector distH = RS_Vector::polar(dist, arrowAngle1);
             text->move(distH);
             textPos = text->getInsertionPoint();
@@ -511,8 +511,8 @@ void RS_Dimension::createHorizontalTextDimensionLine(const RS_Vector& p1, const 
     // calculate split dimension lines
     bool splitDimensionLine = false;
     // if (!outsideArrows) {
-    w = text->getUsedTextWidth() / 2 + dimgap;
-    h = text->getUsedTextHeight() / 2 + dimgap;
+    w = (text->getUsedTextWidth() / 2) + dimgap;
+    h = (text->getUsedTextHeight() / 2) + dimgap;
     RS_Vector s1 = text->getInsertionPoint() - RS_Vector{w, h};
     RS_Vector s2 = text->getInsertionPoint() + RS_Vector{w, h};
     c = RS_EntityContainer();
@@ -597,8 +597,8 @@ void RS_Dimension::createHorizontalTextDimensionLine(const RS_Vector& p1, const 
 }
 
 void RS_Dimension::determineTextAreaBounds(RS_VectorSolutions& sol, const RS_MText* text, const double dimGap) {
-    const double w = text->getUsedTextWidth() / 2 + dimGap;
-    const double h = text->getUsedTextHeight() / 2 + dimGap;
+    const double w = (text->getUsedTextWidth() / 2) + dimGap;
+    const double h = (text->getUsedTextHeight() / 2) + dimGap;
 
     sol.push_back({-w, -h});
     sol.push_back({-w, h});
@@ -717,7 +717,7 @@ void RS_Dimension::createAlignedTextDimensionLine(const RS_Vector& p1, const RS_
         const double a = corrected ? -M_PI_2 : M_PI_2;
 
         double dimOffset = getVerticalDistanceToDimLine() * dimscale;
-        RS_Vector distV = RS_Vector::polar(dimOffset + dimtxt / 2.0, dimAngle1 + a);
+        RS_Vector distV = RS_Vector::polar(dimOffset + (dimtxt / 2.0), dimAngle1 + a);
 
         // move text away from dimension line:
         textPos += distV;
@@ -733,7 +733,7 @@ void RS_Dimension::createAlignedTextDimensionLine(const RS_Vector& p1, const RS_
     double usedTextWidth = text->getUsedTextWidth();
     if (usedTextWidth > distance) {
         RS_Vector distH;
-        distH.setPolar(usedTextWidth / 2.0 + distance / 2.0 + dimgap, textAngle);
+        distH.setPolar((usedTextWidth / 2.0) + (distance / 2.0) + dimgap, textAngle);
         text->move(distH);
     }
 
@@ -790,7 +790,7 @@ void RS_Dimension::createAlignedTextDimensionLine(const RS_Vector& p1, const RS_
             firstArrowIsObliqueOrArch = dimArrowRegistry.isObliqueOrArchArrow(firstArrowName);
             RS_Vector firstArrowAdjustmentVector;
             if (flipArrow1) {
-                dimLineOffsetFirst = arrow.second * arrowSize + 3 * arrowSize;
+                dimLineOffsetFirst = (arrow.second * arrowSize) + (3 * arrowSize);
                 firstArrowAdjustmentVector = RS_Vector::polar(dimLineOffsetFirst, dimAngle1);
             }
             else {
@@ -807,7 +807,7 @@ void RS_Dimension::createAlignedTextDimensionLine(const RS_Vector& p1, const RS_
             secondArrowIsObliqueOrArch = dimArrowRegistry.isObliqueOrArchArrow(secondArrowName);
             RS_Vector secondArrowAdjustmentVector;
             if (flipArrow2) {
-                dimLineOffsetSecond = arrow.second * arrowSize + 3 * arrowSize;
+                dimLineOffsetSecond = (arrow.second * arrowSize) + (3 * arrowSize);
                 secondArrowAdjustmentVector = RS_Vector::polar(dimLineOffsetSecond, dimAngle1);
             }
             else {
@@ -1107,7 +1107,7 @@ QString RS_Dimension::stripZerosAngle(QString angle, const int zeros) {
         //do nothing
         return angle;
     }
-    if (zeros & 2 && (angle.contains(QString('.')) || angle.contains(QString(',')))) {
+    if (((zeros & 2) != 0) && (angle.contains(QString('.')) || angle.contains(QString(',')))) {
         qsizetype end = angle.size() - 1;
         const QChar format = angle[end--]; //stores & skip format char
         while (end > 0 && angle[end] == QChar('0')) {
@@ -1120,7 +1120,7 @@ QString RS_Dimension::stripZerosAngle(QString angle, const int zeros) {
         angle.truncate(end + 1);
         angle.append(format);
     }
-    if (zeros & 1) {
+    if ((zeros & 1) != 0) {
         if (angle[0] == QChar('0') && angle[1] == QChar('.')) {
             angle = angle.remove(0, 1);
         }
@@ -1149,7 +1149,7 @@ QString RS_Dimension::stripZerosLinear(QString linear, const int zeros) {
     }
 
     // if removing of trailing zeroes is needed
-    if (zeros & 8 && (linear.contains(QString('.')) || linear.contains(QString(',')))) {
+    if (((zeros & 8) != 0) && (linear.contains(QString('.')) || linear.contains(QString(',')))) {
         // search index
         qsizetype i = linear.size() - 1;
         // locate first 0 in row from right
@@ -1164,7 +1164,7 @@ QString RS_Dimension::stripZerosLinear(QString linear, const int zeros) {
         linear = linear.remove(i + 1, linear.size() - i);
     }
     // if removing of initial zeroes is needed
-    if (zeros & 4) {
+    if ((zeros & 4) != 0) {
         qsizetype i = 0;
         // locate last 0 in row from left
         while (i < linear.size() - 1 && linear[i] == QChar('0')) {
@@ -1214,7 +1214,7 @@ void RS_Dimension::update() {
 
 LC_DimStyle* RS_Dimension::getGlobalDimStyle() const {
     const auto dimStyleName = getStyle();
-    auto graphic = getGraphic();
+    const auto graphic = getGraphic();
     if (graphic != nullptr) {
         const auto globalDimStyle = graphic->getResolvedDimStyle(dimStyleName, rtti());
         return globalDimStyle;
@@ -1224,9 +1224,9 @@ LC_DimStyle* RS_Dimension::getGlobalDimStyle() const {
 
 LC_DimStyle* RS_Dimension::getEffectiveDimStyle() const {
     const auto dimStyleName = getStyle();
-    auto graphic = getGraphic();
+    const auto graphic = getGraphic();
     if (graphic != nullptr) {
-        auto styleOverride = getDimStyleOverride();
+        const auto styleOverride = getDimStyleOverride();
         LC_DimStyle* result = graphic->getEffectiveDimStyle(dimStyleName, rtti(), styleOverride);
         return result;
     }
@@ -1237,8 +1237,8 @@ LC_DimStyle* RS_Dimension::getEffectiveDimStyle() const {
 LC_DimStyle* RS_Dimension::getEffectiveCachedDimStyle() {
     if (m_dimStyleTransient == nullptr) {
         const auto dimStyleName = getStyle();
-        auto styleOverride = getDimStyleOverride();
-        auto graphic = getGraphic();
+        const auto styleOverride = getDimStyleOverride();
+        const auto graphic = getGraphic();
         m_dimStyleTransient = graphic->getEffectiveDimStyleForEdit(dimStyleName, rtti(), styleOverride);
         // fixme - delete copy!
     }
@@ -1322,7 +1322,7 @@ RS_Line* RS_Dimension::addDimComponentLine(RS_Vector start, RS_Vector end, const
 QString RS_Dimension::createLinearMeasuredLabel(const double dist) const {
     const RS_Graphic* graphic = getGraphic();
     QString ret;
-    if (graphic) {
+    if (graphic != nullptr) {
         // int dimlunit = getDimLinearFormat();
         const int dimdec = getDimDecimalPlaces();
         // RS2::LinearFormat format = graphic->convertLinearFormatDXF2LC(dimlunit); // fixme - sand - move to generic utils!

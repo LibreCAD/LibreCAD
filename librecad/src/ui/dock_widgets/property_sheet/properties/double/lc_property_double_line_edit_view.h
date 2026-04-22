@@ -29,7 +29,6 @@
 
 class LC_PropertyDoubleLineEditView: public LC_PropertyViewTyped<LC_PropertyDouble> {
     Q_OBJECT Q_DISABLE_COPY(LC_PropertyDoubleLineEditView)
-
 public:
     static const QByteArray VIEW_NAME;
     static const QByteArray ATTR_POSITIVIE_VALUES_ONLY;
@@ -39,18 +38,20 @@ public:
     explicit LC_PropertyDoubleLineEditView(LC_PropertyDouble& owner)
         : LC_PropertyViewTyped<LC_PropertyDouble>(owner) {
     }
-
     bool getPropertyValueFromEditString(const QString& text, double& val);
-    bool doAcceptKeyPressedForInplaceEdit(QKeyEvent* keyEvent) const;
-    QWidget* doCreateValueEditor(QWidget* parent, const QRect& rect, const EditActivationContext* ctx);
-    void doApplyAttributes(const LC_PropertyViewDescriptor& info);
-    bool doPropertyValueToStrForView(QString& strValue);
-    bool doPropertyValueToStrForEdit(QString& strValue) const;
 protected:
     QString m_cachedStrValue;
     bool m_positiveOnly = true;
     QString m_zeroPlaceholder;
     int m_maxLength = 6;
+
+    bool doAcceptKeyPressedForInplaceEdit(QKeyEvent* keyEvent) const override;
+    QWidget* doCreateValueEditor(QWidget* parent, const QRect& rect, const EditActivationContext* ctx) override;
+    void doApplyAttributes(const LC_PropertyViewDescriptor& info) override;
+    bool doPropertyValueToStrForView(QString& strValue) override;
+    bool doPropertyValueToStrForEdit(QString& strValue) const override;
+
+    friend class LC_PropertyDoubleLineEditViewHandler;
 };
 
 #endif

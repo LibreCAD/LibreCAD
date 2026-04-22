@@ -60,7 +60,7 @@ protected:
     LC_ActionOptionsWidget *createOptionsWidget() override;
     LC_ActionOptionsPropertiesFiller* createOptionsFiller() override;
     RS_Arc *createArc(int status, const RS_Vector& pos, bool reverse, bool reportErrors = false);
-    virtual bool createArcData(RS_ArcData &data, int status, RS_Vector vector, bool alternate, bool reportErrors = false) = 0;
+    virtual bool createArcData(RS_ArcData &data, int status, const RS_Vector& vector, bool alternate, bool reportErrors = false) = 0;
     virtual void doPreviewOnPoint2Custom(RS_Arc *pArc) = 0;
     void proceedFromSetPoint2();
     virtual QString getParameterCommand() = 0;

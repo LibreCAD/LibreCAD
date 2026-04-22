@@ -208,7 +208,7 @@ QVariant LC_PenPaletteModel::data(const QModelIndex &index, const int role) cons
             break;
         case Qt::BackgroundRole: {
             // highlight pen that was active (in pen editor) by appropriate background
-            if (m_activePen && m_activePen == item){
+            if ((m_activePen != nullptr) && m_activePen == item){
                 return m_options->activeItemBGColor;
             }
             break;
@@ -242,7 +242,7 @@ QVariant LC_PenPaletteModel::data(const QModelIndex &index, const int role) cons
             // fonts - bold for active and italic for special attribute values
             QFont font;
             bool fontChanged = false;
-            if (m_activePen && m_activePen == item){
+            if ((m_activePen != nullptr) && m_activePen == item){
                 if (m_options->showEntireRowBold){
                     font.setBold(true);
                     fontChanged = true;

@@ -39,7 +39,6 @@ struct LC_FileDialogResult {
     QString fileName;
     QString fileExtension;
     RS2::FormatType fileType = RS2::FormatUnknown;
-    int checkState = 0;
 };
 
 void LC_ExportLayersService::exportLayers(LC_LayersExportOptions& exportOptions, RS_Graphic* sourceGraphic) {
@@ -77,7 +76,7 @@ void LC_ExportLayersService::doExportLayers(LC_LayersExportOptions& exportOption
 
             graphicToSave->setGraphicView(nullptr);
             graphicToSave->setParent(nullptr);
-            graphicToSave->newDoc();
+            graphicToSave->initForNewDocument();
 
             /*                if (saveWasSuccessful){
                     RS_DIALOGFACTORY->commandMessage(

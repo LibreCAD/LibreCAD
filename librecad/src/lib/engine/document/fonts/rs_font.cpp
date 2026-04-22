@@ -110,7 +110,7 @@ bool RS_Font::loadFont() {
         QStringList fonts = RS_SYSTEM->getNewFontList();
         fonts.append(RS_SYSTEM->getFontList());
 
-        for (const QString& font : fonts) {
+        for (const QString& font : std::as_const(fonts)) {
             if (QFileInfo(font).baseName().toLower() == m_fileName.toLower()) {
                 path = font;
                 break;
@@ -146,7 +146,7 @@ bool RS_Font::loadFont() {
     }
 
     const RS_Block* bk = m_letterList.find(QChar(0xfffd));
-    if (!bk) {
+    if (bk == nullptr) {
         // create new letter:
         const auto letter = new RS_FontChar(nullptr, QChar(0xfffd), RS_Vector(0.0, 0.0));
         auto* pline = new RS_Polyline(letter, RS_PolylineData());

@@ -43,10 +43,10 @@ LC_AlignRefOptionsWidget::~LC_AlignRefOptionsWidget() {
 void LC_AlignRefOptionsWidget::doUpdateByAction(RS_ActionInterface* a) {
     m_action = static_cast<LC_ActionModifyAlignRef*>(a);
 
-    bool scale = m_action->isScale();
-    bool useCurrentLayer = m_action->isUseCurrentLayer();
-    bool useCurrentAttributes = m_action->isUseCurrentAttributes();
-    bool keepOriginals = m_action->isKeepOriginals();
+    const bool scale = m_action->isScale();
+    const bool useCurrentLayer = m_action->isUseCurrentLayer();
+    const bool useCurrentAttributes = m_action->isUseCurrentAttributes();
+    const bool keepOriginals = m_action->isKeepOriginals();
 
     LC_GuardedSignalsBlocker({ui->cbLayer, ui->cbCurrentAttr,     ui->cbScale});
     ui->cbLayer->setChecked(useCurrentLayer);

@@ -38,7 +38,7 @@ public:
 
     virtual void fillDocumentProperties(LC_PropertyContainer* container, RS_Graphic* graphic) = 0;
 protected:
-    void doCreateEntitySpecificProperties([[maybe_unused]]LC_PropertyContainer* container,[[maybe_unused]] const QList<RS_Entity*>& list) override{};
+    void doCreateEntitySpecificProperties([[maybe_unused]]LC_PropertyContainer* container,[[maybe_unused]] const QList<RS_Entity*>& list) override{}
 
     void notifyDrawingOptionsChanged() const {
         m_widget->stopInplaceEdit();
@@ -46,7 +46,6 @@ protected:
             QC_ApplicationWindow::getAppWindow()->notifyCurrentDrawingOptionsChanged();
         });
     }
-
 };
 
 class LC_PropertiesProviderGraphicComponent: public LC_PropertiesProviderDocumentComponent {
@@ -61,8 +60,9 @@ public:
     LC_PropertiesProviderBlockComponent(LC_ActionContext* actionContext, LC_PropertySheetWidget* widget)
         : LC_EntityTypePropertiesProvider(RS2::EntityBlock, actionContext, widget) {
     }
-    void doCreateEntitySpecificProperties([[maybe_unused]]LC_PropertyContainer* container, [[maybe_unused]]const QList<RS_Entity*>& list) override{};
     virtual void fillDocumentProperties(LC_PropertyContainer* container, RS_Graphic* graphic, RS_Block *block) = 0;
+protected:
+    void doCreateEntitySpecificProperties([[maybe_unused]]LC_PropertyContainer* container, [[maybe_unused]]const QList<RS_Entity*>& list) override{}
 };
 
 class LC_PropertiesProviderGenericComponent: public LC_EntityTypePropertiesProvider {
@@ -70,11 +70,8 @@ public:
     LC_PropertiesProviderGenericComponent(LC_ActionContext* actionContext, LC_PropertySheetWidget* widget)
         : LC_EntityTypePropertiesProvider(RS2::EntityUnknown, actionContext, widget) {
     }
-
-    void doCreateEntitySpecificProperties([[maybe_unused]]LC_PropertyContainer* container, [[maybe_unused]]const QList<RS_Entity*>& list) override{};
     virtual void fillDocumentProperties(LC_PropertyContainer* container) = 0;
+protected:
+    void doCreateEntitySpecificProperties([[maybe_unused]]LC_PropertyContainer* container, [[maybe_unused]]const QList<RS_Entity*>& list) override{}
 };
-
-
-
 #endif

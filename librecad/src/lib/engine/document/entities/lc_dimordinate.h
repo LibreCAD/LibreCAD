@@ -35,14 +35,14 @@ struct LC_DimOrdinateData {
 
     LC_DimOrdinateData(const LC_DimOrdinateData& other)
       :featurePoint{other.featurePoint}, leaderEndPoint{other.leaderEndPoint}, ordinateForX{other.ordinateForX}{
-    }
+}
 
-    ~LC_DimOrdinateData();
+~LC_DimOrdinateData() = default;
 
-    RS_Vector featurePoint{false};
-    RS_Vector leaderEndPoint{false};
+RS_Vector featurePoint{false};
+RS_Vector leaderEndPoint{false};
 
-    bool ordinateForX{false};
+bool ordinateForX{false};
 };
 
 std::ostream& operator <<(std::ostream& os, const LC_DimOrdinateData& dd);

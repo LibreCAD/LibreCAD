@@ -73,13 +73,13 @@ void LC_RelativePointInputWidget::onLateRequestCompleted(bool shouldBeSkipped) {
                 break;
             }
             case LC_ActionContext::InteractiveInputInfo::POINT_X: {
-                RS_Vector ucsPoint = m_viewport->toUCS(inputInfo->wcsPoint);
+                const RS_Vector ucsPoint = m_viewport->toUCS(inputInfo->wcsPoint);
                 paramType = RS2::REL_POINT_X;
                 value = ucsPoint.x;
                 break;
             }
             case LC_ActionContext::InteractiveInputInfo::POINT_Y: {
-                RS_Vector ucsPoint = m_viewport->toUCS(inputInfo->wcsPoint);
+                const RS_Vector ucsPoint = m_viewport->toUCS(inputInfo->wcsPoint);
                 value = ucsPoint.y;
                 paramType = RS2::REL_POINT_Y;
                 break;
@@ -127,7 +127,7 @@ void LC_RelativePointInputWidget::setWidgetColors(const RS_Color& bgColor, const
     p.setColor(QPalette::WindowText, textColor);
 
     auto edits = findChildren<QLineEdit*>();
-    for (QLineEdit* e : edits) {
+    for (const QLineEdit* e : std::as_const(edits)) {
         QPalette palette = e->palette();
         palette.setColor(QPalette::Base, bgColor);
         palette.setColor(QPalette::QPalette::WindowText, bgColor);
@@ -138,26 +138,26 @@ void LC_RelativePointInputWidget::setWidgetColors(const RS_Color& bgColor, const
     setPalette(p);
 }
 
-void LC_RelativePointInputWidget::setFont(QString name, int size) {
-    QFont font(name, size);
+void LC_RelativePointInputWidget::setFont(const QString& name, int size) const {
+    const QFont font(name, size);
     auto labels = findChildren<QLabel*>();
-    for (auto lbl : labels) {
+    for (const auto lbl : std::as_const(labels)) {
         lbl->setFont(font);
     }
 
     auto checkboxes = findChildren<QCheckBox*>();
-    for (auto cb : checkboxes) {
+    for (const auto cb : std::as_const(checkboxes)) {
         cb->setFont(font);
     }
 
     auto edits = findChildren<QLineEdit*>();
-    for (auto e : edits) {
+    for (const auto e : std::as_const(edits)) {
         e->setFont(font);
     }
 }
 
 void LC_RelativePointInputWidget::setContentWidget(QWidget* w) {
-    auto layout = new QVBoxLayout(this);
+    const auto layout = new QVBoxLayout(this);
     layout->setContentsMargins(5, 5, 5, 5);
     layout->addWidget(w, 0, Qt::AlignCenter);
     setLayout(layout);

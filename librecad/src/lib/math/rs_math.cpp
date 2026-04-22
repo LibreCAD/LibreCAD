@@ -253,7 +253,7 @@ double RS_Math::makeAngleReadable(const double angle, const bool readable, bool*
         ret = correctAngle(angle + M_PI);
     }
 
-    if (corrected) {
+    if (corrected != nullptr) {
         *corrected = cor;
     }
 
@@ -1151,7 +1151,7 @@ RS_VectorSolutions RS_Math::simultaneousQuadraticSolverFull(const std::vector<st
     //             std::cout<<qy[4]<<"*y^4 +("<<qy[3]<<")*y^3+("<<qy[2]<<")*y^2+("<<qy[1]<<")*y+("<<qy[0]<<")==0"<<std::endl;
     // }
     //quarticSolver
-    auto roots=quarticSolverFull(qy);
+    const auto roots=quarticSolverFull(qy);
     // if(RS_DEBUG->getLevel()>=RS_Debug::D_INFORMATIONAL){
     //     std::cout<<"roots.size()= "<<roots.size()<<std::endl;
     // }

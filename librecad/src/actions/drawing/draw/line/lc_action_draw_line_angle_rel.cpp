@@ -338,7 +338,7 @@ LC_ActionDrawLineAngleRel::TickData* LC_ActionDrawLineAngleRel::prepareLineData(
     // store position for later use
     result->tickSnapPosition = tickSnapPosition;
 
-    double tickAngleDegrees = m_tickAngleDegrees;
+    const double tickAngleDegrees = m_tickAngleDegrees;
     // prepare angle
     double angleDegress = tickAngleDegrees;
     if (useAlternateAngle) {
@@ -366,7 +366,7 @@ LC_ActionDrawLineAngleRel::TickData* LC_ActionDrawLineAngleRel::prepareLineData(
 
     // handle tick length if length is free
     double actualTickLength = m_tickLength;
-    int tickSnapMode = m_tickSnapMode;
+    const int tickSnapMode = m_tickSnapMode;
     if (m_lengthIsFree) {
         if (tickEndSnapPosition.valid) {
             /// just create vector of length 10 using angle of tick that is used to set direction

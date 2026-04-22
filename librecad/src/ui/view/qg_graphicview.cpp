@@ -27,25 +27,25 @@
 #include "qg_graphicview.h"
 
 #include <QGridLayout>
-#include <QLabel>
 #include <QMenu>
 #include <QNativeGestureEvent>
 #include <QPoint>
 #include <QPointingDevice>
-#include <QPushButton>
 #include <QTimer>
-#include <cmath>
 #include <cstdlib>
 #include <iostream>
 
-#include "lc_actioncontext.h"
 #include "lc_action_modify_move_adjust.h"
+#include "lc_action_select_single.h"
+#include "lc_actioncontext.h"
 #include "lc_eventhandler.h"
 #include "lc_graphicviewport.h"
 #include "lc_graphicviewrenderer.h"
 #include "lc_overlayentitiescontainer.h"
 #include "lc_quickinfowidget.h"
 #include "lc_rect.h"
+#include "lc_relative_point_input_widget.h"
+#include "lc_relative_position_editing_widget.h"
 #include "lc_ucs_mark.h"
 #include "lc_undosection.h"
 #include "qc_applicationwindow.h"
@@ -53,10 +53,6 @@
 #include "qg_scrollbar.h"
 #include "rs.h"
 #include "rs_actiondefault.h"
-
-#include "lc_action_select_single.h"
-#include "lc_relative_point_input_widget.h"
-#include "lc_relative_position_editing_widget.h"
 #include "rs_blocklist.h"
 #include "rs_debug.h"
 #include "rs_dialogfactoryinterface.h"
@@ -354,7 +350,7 @@ void QG_GraphicView::initView() {
 }
 
 void QG_GraphicView::createViewRenderer() {
-    if (getViewPort()) {
+    if (getViewPort() != nullptr) {
         getViewPort()->setSize(width(), height()); // fixme - sand - merge - CHECK THIS
         setRenderer(std::make_unique<LC_GraphicViewRenderer>(getViewPort(), this));
     }
@@ -503,9 +499,12 @@ void QG_GraphicView::dragEnterEvent(QDragEnterEvent* event) {
 /**
  * Redraws the widget.
  */
-void QG_GraphicView::redraw(const RS2::RedrawMethod method) {
+void QG_GraphicView::redraw(const RS2::RedrawMethod method, bool immediately) {
     getRenderer()->invalidate(method);
     update(); // Paint when ready to paint
+    if (immediately) {
+        repaint();
+    }
 }
 
 void QG_GraphicView::resizeEvent(QResizeEvent* e) {
@@ -1346,8 +1345,8 @@ void QG_GraphicView::loadSettings() {
 
     LC_GROUP("Colors");
     {
-        RS_Color bgColor(LC_GET_STR("RelativePositionAssistantBackground", RS_Settings::RELATIVE_POSITION_BACKGROUND));
-        RS_Color txtColor(LC_GET_STR("RelativePositionAssistantText", RS_Settings::RELATIVE_POSITION_BACKGROUND));
+        const RS_Color bgColor(LC_GET_STR("RelativePositionAssistantBackground", RS_Settings::RELATIVE_POSITION_BACKGROUND));
+        const RS_Color txtColor(LC_GET_STR("RelativePositionAssistantText", RS_Settings::RELATIVE_POSITION_BACKGROUND));
         m_relativePointWidgetHolder->setWidgetColors(bgColor, txtColor);
     }
     LC_GROUP_END();
@@ -1355,7 +1354,7 @@ void QG_GraphicView::loadSettings() {
     LC_GROUP("RelativePositionAssistant");
     {
         const int fontSize = LC_GET_INT("FontSize", 10);
-        QString fontName = LC_GET_STR("FontName", "Helvetica");
+        const QString fontName = LC_GET_STR("FontName", "Helvetica");
         m_relativePointWidgetHolder->setFont(fontName, fontSize);
     }
     LC_GROUP_END();
@@ -1390,7 +1389,7 @@ void QG_GraphicView::setDraftLinesMode(const bool mode) const {
 }
 
 bool QG_GraphicView::isDraftLinesMode() const {
-    auto* viewRenderer = dynamic_cast<LC_GraphicViewRenderer*>(getRenderer());
+    const auto* viewRenderer = dynamic_cast<LC_GraphicViewRenderer*>(getRenderer());
     if (viewRenderer != nullptr) {
         return !viewRenderer->getLineWidthScaling();
     }

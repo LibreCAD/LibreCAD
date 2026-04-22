@@ -106,8 +106,8 @@ void LC_CADDockWidget::doUpdateWidgetSettings(int leftToolbarColumnsCount, const
 
 void LC_CADDockWidget::updateWidgetSettings() {
   LC_GROUP("Widgets");
-  int columnsCount, iconSize;
-  bool flatIcons;
+  int columnsCount = 0, iconSize = 0;
+  bool flatIcons = false;
   if (m_allTools) {
     columnsCount = LC_GET_INT("LeftToolbarAllColumnsCount", 5);
     flatIcons = LC_GET_BOOL("LeftToolbarAllFlatIcons", true);

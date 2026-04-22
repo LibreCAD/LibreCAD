@@ -31,7 +31,6 @@
 
 #include "lc_block_insert_options_filler.h"
 #include "lc_block_insert_options_widget.h"
-
 #include "rs_block.h"
 #include "rs_creation.h"
 #include "rs_graphic.h"
@@ -218,7 +217,7 @@ bool LC_ActionBlockInsert::doProcessCommand(int status, const QString &command){
             break;
         }
         case SetAngle: {
-            bool ok;
+            bool ok = false;
             const double a = RS_Math::eval(command, &ok);
             if (ok) {
                 accept = true;
@@ -231,7 +230,7 @@ bool LC_ActionBlockInsert::doProcessCommand(int status, const QString &command){
             break;
         }
         case SetFactor: {
-            bool ok;
+            bool ok = false;
             const double f = RS_Math::eval(command, &ok);
             if (ok) {
                 setFactor(f);
@@ -244,7 +243,7 @@ bool LC_ActionBlockInsert::doProcessCommand(int status, const QString &command){
             break;
         }
         case SetColumns: {
-            bool ok;
+            bool ok = false;
             const int cols = static_cast<int>(RS_Math::eval(command, &ok));
             if (ok) {
                 m_data->cols = cols;
@@ -257,7 +256,7 @@ bool LC_ActionBlockInsert::doProcessCommand(int status, const QString &command){
             break;
         }
         case SetRows: {
-            bool ok;
+            bool ok = false;
             const int rows = static_cast<int>(RS_Math::eval(command, &ok));
             if (ok) {
                 m_data->rows = rows;
@@ -270,7 +269,7 @@ bool LC_ActionBlockInsert::doProcessCommand(int status, const QString &command){
             break;
         }
         case SetColumnSpacing: {
-            bool ok;
+            bool ok = false;
             const double cs = static_cast<int>(RS_Math::eval(command, &ok));
             if (ok) {
                 m_data->spacing.x = cs;
@@ -283,7 +282,7 @@ bool LC_ActionBlockInsert::doProcessCommand(int status, const QString &command){
             break;
         }
         case SetRowSpacing: {
-            bool ok;
+            bool ok = false;
             const int rs = static_cast<int>(RS_Math::eval(command, &ok));
             if (ok) {
                 m_data->spacing.y = rs;

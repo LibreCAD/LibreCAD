@@ -71,7 +71,7 @@ bool LC_ActionContext::hasSelection() const {
 
 LC_Formatter* LC_ActionContext::getFormatter() const {
     LC_Formatter* result = nullptr;
-    auto viewport = getViewport();
+    const auto viewport = getViewport();
     if (viewport != nullptr) {
         result = viewport->getFormatter();
     }

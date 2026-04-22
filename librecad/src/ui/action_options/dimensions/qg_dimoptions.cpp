@@ -111,7 +111,7 @@ void QG_DimOptions::doUpdateByAction(RS_ActionInterface *a){
     QString stol2;
     QString sa;
     bool diam = false;
-    bool radial = false;
+    const bool radial = false;
     const RS2::ActionType type = m_action->rtti();
     const bool isDimLinear = type == RS2::ActionDimLinear;
     const bool baseline = type == RS2::ActionDimBaseline;
@@ -120,7 +120,7 @@ void QG_DimOptions::doUpdateByAction(RS_ActionInterface *a){
     bool circleAngleFree = false;
     QString circleAngle;
     QString baselineDistance;
-    bool update = true;
+    const bool update = true;
     if (update){
         st = m_action->getLabel();
         stol1 = m_action->getTol1();
@@ -297,15 +297,15 @@ void QG_DimOptions::updateUI(const int mode, [[maybe_unused]] const QVariant* va
     switch (mode){
         case UI_UPDATE_BASELINE_DISTANCE:{
             const auto dimBaselineAction = static_cast<LC_ActionDrawDimBaseline *>(m_action);
-            const double value = dimBaselineAction->getCurrentBaselineDistance();
-            const QString &strValue = fromDouble(value);
+            const double val = dimBaselineAction->getCurrentBaselineDistance();
+            const QString &strValue = fromDouble(val);
             ui->leBaselineDistance->setText(strValue);
             break;
         }
         case UI_UPDATE_CIRCLE_ANGLE:{
             const auto dimAction = static_cast<LC_ActionCircleDimBase *>(m_action);
-            const double value = dimAction->getCurrentAngle();
-            const QString &strValue = fromDouble(value);
+            const double val = dimAction->getCurrentAngle();
+            const QString &strValue = fromDouble(val);
             ui->leAngleCircle->blockSignals(true);
             ui->leAngleCircle->setText(strValue);
             ui->leAngleCircle->blockSignals(false);

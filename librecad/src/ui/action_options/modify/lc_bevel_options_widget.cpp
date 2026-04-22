@@ -60,9 +60,9 @@ void LC_BevelOptionsWidget::languageChange() {
 void LC_BevelOptionsWidget::doUpdateByAction(RS_ActionInterface* a) {
     m_action = static_cast<LC_ActionModifyBevel*>(a);
 
-    QString len1 = fromDouble(m_action->getLength1());
-    QString len2 = fromDouble(m_action->getLength2());
-    bool trim = m_action->isTrimOn();
+    const QString len1 = fromDouble(m_action->getLength1());
+    const QString len2 = fromDouble(m_action->getLength2());
+    const bool trim = m_action->isTrimOn();
 
     LC_GuardedSignalsBlocker({ui->leLength1, ui->leLength2, ui->cbTrim});
     ui->leLength1->setText(len1);
@@ -75,7 +75,7 @@ void LC_BevelOptionsWidget::onTrimToggled(const bool checked) {
 }
 
 void LC_BevelOptionsWidget::onLength1EditingFinished() {
-    auto val = ui->leLength1->text();
+    const auto val = ui->leLength1->text();
     double len;
     if (toDouble(val, len, 1.0, false)) {
         // fixme - check whether negative values are allowed
@@ -85,7 +85,7 @@ void LC_BevelOptionsWidget::onLength1EditingFinished() {
 }
 
 void LC_BevelOptionsWidget::onLength2EditingFinished() {
-    auto val = ui->leLength2->text();
+    const auto val = ui->leLength2->text();
     double len;
     if (toDouble(val, len, 1.0, false)) {
         // fixme - check whether negative values are allowed

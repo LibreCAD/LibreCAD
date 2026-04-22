@@ -1,5 +1,5 @@
 /****************************************************************************
-*
+ *
 * Options for QuickInfo widget related functions
 
 Copyright (C) 2024 LibreCAD.org

@@ -22,7 +22,9 @@
  */
 
 #include "lc_line_radiant_options_filler.h"
+
 #include "lc_action_draw_line_radiant.h"
+#include "lc_enum_descriptor.h"
 
 void LC_LineRadiantOptionsFiller::fillToolOptionsContainer(LC_PropertyContainer* container) {
     auto action = static_cast<LC_ActionDrawLineRadiant*>(m_action);

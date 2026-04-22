@@ -88,10 +88,10 @@ void LC_ActionModifyScale::doLoadOptions() {
     const int copiesNum = loadInt("Copies", 1);
     setCopiesNumber(copiesNum);
 
-    const bool factorX = loadDouble("FactorX", 1.0);
+    const double factorX = loadDouble("FactorX", 1.0);
     setFactorX(factorX);
 
-    const bool factorY = loadDouble("FactorY", 1.0);
+    const double factorY = loadDouble("FactorY", 1.0);
     setFactorX(factorY);
 
     const bool isotrophic = loadBool("Isotropic", true);

@@ -133,7 +133,7 @@ void QG_DlgOptionsGeneral::init(){
     QStringList languageList = RS_SYSTEM->getLanguageList();
     languageList.sort();
     languageList.prepend("en");
-    for (const auto&lang: languageList) {
+    for (const auto&lang: std::as_const(languageList)) {
         RS_DEBUG->print("QG_DlgOptionsGeneral::init: adding %s to combobox",
                         lang.toLatin1().data());
 
@@ -1016,7 +1016,7 @@ void QG_DlgOptionsGeneral::ok(){
             const bool defaultIsometricGrid = !rbGridOrtho->isChecked();
             LC_SET("IsometricGrid", defaultIsometricGrid);
             if (defaultIsometricGrid) {
-                int defaultIsoView;
+                int defaultIsoView = 0;
 
                 if (rbGridIsoLeft->isChecked()) {
                     defaultIsoView = RS2::IsoGridViewType::IsoLeft;
@@ -1329,8 +1329,8 @@ QString QG_DlgOptionsGeneral::selectFolder(const QString &title){
     dlg.setFileMode(QFileDialog::Directory);
     dlg.setOption(QFileDialog::ShowDirsOnly);
 
-    if (dlg.exec()) {
-        folder = dlg.selectedFiles()[0];
+    if (dlg.exec() != 0) {
+        folder = dlg.selectedFiles().at(0);
     }
     return folder;
 }
@@ -1340,8 +1340,8 @@ void QG_DlgOptionsGeneral::setLibraryPath(){
     QG_FileDialog dlg(this);
     dlg.setFileMode(QFileDialog::Directory);
 
-    if (dlg.exec()) {
-        const auto dir = dlg.selectedFiles()[0];
+    if (dlg.exec() != 0) {
+        const auto dir = dlg.selectedFiles().at(0);
         lePathLibrary->setText(QDir::toNativeSeparators(dir));
         setRestartNeeded();
     }
@@ -1401,8 +1401,8 @@ void QG_DlgOptionsGeneral::onAutoBackupChanged([[maybe_unused]] int state) const
     appWindow->startAutoSaveTimer(allowBackup);
 }
 
-void QG_DlgOptionsGeneral::initReferencePoints(){
-    int pdmode;
+void QG_DlgOptionsGeneral::initReferencePoints() const {
+    int pdmode = 0;
     QString pdsizeStr;
     LC_GROUP_GUARD("Appearance"); {
         // Points drawing style:
@@ -1483,7 +1483,7 @@ void QG_DlgOptionsGeneral::initReferencePoints(){
     // points size in absolute drawing units; pdsize == 0 implies points size to be
     // 5% relative to screen size.
 
-    bool ok;
+    bool ok = false;
     double pdsize = RS_Math::eval(pdsizeStr, &ok);
     if (!ok) {
         pdsize = LC_DEFAULTS_PDSize;
@@ -1579,7 +1579,7 @@ void QG_DlgOptionsGeneral::saveReferencePoints() const {
 
     // Get points display size from the value string and the relative vs. absolute
     // size radio buttons state
-    bool ok;
+    bool ok = false;
     double pdsize = RS_Math::eval(lePointSize->text(), &ok);
     if (!ok) {
         pdsize = LC_DEFAULTS_PDSize;

@@ -82,52 +82,52 @@ public:
     QString getPaperSizeName() const;
     void setPaperSizeName(const QString& paperSizeName);
     double getPaperWidthMm() const;
-    void setPaperWidthMm(const double paperWidthMm);
+    void setPaperWidthMm(double paperWidthMm);
     double getPaperHeightMm() const;
-    void setPaperHeightMm(const double paperHeightMm);
+    void setPaperHeightMm(double paperHeightMm);
     double getOriginOffsetXMm() const;
-    void setOriginOffsetXMm(const double originOffsetXMm);
+    void setOriginOffsetXMm(double originOffsetXMm);
     double getOriginOffsetYMm() const;
-    void setOriginOffsetYMm(const double originOffsetYMm);
+    void setOriginOffsetYMm(double originOffsetYMm);
     double getPlotWindowLowerLeftX() const;
-    void setPlotWindowLowerLeftX(const double plotWindowLowerLeftX);
+    void setPlotWindowLowerLeftX(double plotWindowLowerLeftX);
     double getPlotWindowLowerLeftY() const;
-    void setPlotWindowLowerLeftY(const double plotWindowLowerLeftY);
+    void setPlotWindowLowerLeftY(double plotWindowLowerLeftY);
     double getPlotWindowUpperRightX() const;
-    void setPlotWindowUpperRightX(const double plotWindowUpperRightX);
+    void setPlotWindowUpperRightX(double plotWindowUpperRightX);
     double getPlotWindowUpperRightY() const;
-    void setPlotWindowUpperRightY(const double plotWindowUpperRightY);
+    void setPlotWindowUpperRightY(double plotWindowUpperRightY);
     double getCustomPrintScalePaperUnitsNumerator() const;
-    void setCustomPrintScalePaperUnitsNumerator(const double customPrintScalePaperUnitsNumerator);
+    void setCustomPrintScalePaperUnitsNumerator(double customPrintScalePaperUnitsNumerator);
     double getCustomPrintScaleDrawingUnitsDenominator() const;
-    void setCustomPrintScaleDrawingUnitsDenominator(const double customPrintScaleDrawingUnitsDenominator);
+    void setCustomPrintScaleDrawingUnitsDenominator(double customPrintScaleDrawingUnitsDenominator);
     int getPlotLayoutFlag() const;
-    void setPlotLayoutFlag(const int plotLayoutFlag);
+    void setPlotLayoutFlag(int plotLayoutFlag);
     int getPlotPaperUnits() const;
-    void setPlotPaperUnits(const int plotPaperUnits);
+    void setPlotPaperUnits(int plotPaperUnits);
     int getPlotRotation() const;
-    void setPlotRotation(const int plotRotation);
+    void setPlotRotation(int plotRotation);
     int getPlotType() const;
-    void setPlotType(const int plotType);
+    void setPlotType(int plotType);
     int getStandardScaleType() const;
-    void setStandardScaleType(const int standardScaleType);
+    void setStandardScaleType(int standardScaleType);
     int getShadePlotMode() const;
-    void setShadePlotMode(const int shadePlotMode);
+    void setShadePlotMode(int shadePlotMode);
     int getShadePlotResolutionMode() const;
-    void setShadePlotResolutionMode(const int shadePlotResolutionMode);
+    void setShadePlotResolutionMode(int shadePlotResolutionMode);
     int getShadePlotCustomDpi() const;
-    void setShadePlotCustomDpi(const int shadePlotCustomDpi);
+    void setShadePlotCustomDpi(int shadePlotCustomDpi);
     double getStandardScaleFactor() const;
-    void setStandardScaleFactor(const double standardScaleFactor);
+    void setStandardScaleFactor(double standardScaleFactor);
     double getPaperImageOriginX() const;
-    void setPaperImageOriginX(const double paperImageOriginX);
+    void setPaperImageOriginX(double paperImageOriginX);
     double getPaperImageOriginY() const;
-    void setPaperImageOriginY(const double paperImageOriginY);
+    void setPaperImageOriginY(double paperImageOriginY);
     QString getCurrentStyleName();
-    void setCurrentStyleName(QString name);
+    void setCurrentStyleName(const QString& name);
 
     RS_Vector getPaperSize() const;
-    void setPaperSize(const RS_Vector& s);
+    void setPaperSize(const RS_Vector& s) const;
     RS_Vector getPrintAreaSize(bool total = true) const;
 
     //if set to true, will refuse to modify paper scale
@@ -143,12 +143,12 @@ public:
     void setPaperFormat(RS2::PaperFormat format, bool landscape);
 
     double getPaperScale() const;
-    void setPaperScale(double s);
+    void setPaperScale(double s) const;
 
     /**
      * Paper margins in millimeters
      */
-    void setMarginsInMm(const double left, const double top, const double right, const double bottom);
+    void setMarginsInMm(double left, double top, double right, double bottom);
 
     void setMarginsInMm(const LC_MarginsRect& margins) {
         setMarginsInMm(margins.left, margins.top, margins.right, margins.bottom);

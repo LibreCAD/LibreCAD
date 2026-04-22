@@ -1,29 +1,30 @@
-// *********************************************************************************
-// This file is part of the LibreCAD project, a 2D CAD program
-//
-// Copyright (C) 2025 LibreCAD.org
-// Copyright (C) 2025 sand1024
-//
-// This program is free software; you can redistribute it and/or
-// modify it under the terms of the GNU General Public License
-// as published by the Free Software Foundation; either version 2
-// of the License, or (at your option) any later version.
-//
-// This program is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-// GNU General Public License for more details.
-//
-// You should have received a copy of the GNU General Public License
-// along with this program; if not, write to the Free Software
-// Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
-// *********************************************************************************
+/*
+ * ********************************************************************************
+ * This file is part of the LibreCAD project, a 2D CAD program
+ *
+ * Copyright (C) 2025 LibreCAD.org
+ * Copyright (C) 2025 sand1024
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 2
+ * of the License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ * ********************************************************************************
+ */
 
 #include "lc_property_view_factory.h"
 
 #include "lc_property_atomic.h"
 #include "lc_property_view_error.h"
-#include "lc_property_view_registrator.h"
 #include "rs_debug.h"
 
 LC_PropertyViewFactory::LC_PropertyViewFactory(){
@@ -44,14 +45,13 @@ LC_PropertyView* LC_PropertyViewFactory::createView(LC_Property& property) {
         viewName = desc->viewName;
     }
 
-    // create delegate stub
     if (viewName.isEmpty()) {
         LC_ERR << "Cannot find default view for property" << property.getName();
-        LC_ERR << "Did you forget to register view delegate for " << property.metaObject()->className() << "type?";
+        LC_ERR << "Did you forget to register view for " << property.metaObject()->className() << "type?";
     }
     else {
         LC_ERR << "Cannot find view with name" << viewName << "for property" << property.getName();
-        LC_ERR << "Did you forget to register" << viewName << "delegate for" << property.metaObject()->className() << "type?";
+        LC_ERR << "Did you forget to register" << viewName << "view for" << property.metaObject()->className() << "type?";
     }
 
     return LC_PropertyViewError::createErrorView(property, QString("Delegate <%1> unknown").arg(QString::fromLatin1(viewName)));

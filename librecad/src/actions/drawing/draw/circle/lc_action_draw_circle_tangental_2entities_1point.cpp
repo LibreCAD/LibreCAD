@@ -35,8 +35,6 @@ struct LC_ActionDrawCircleTangental2Entities1Point::ActionData {
     RS_Vector point;
     RS_CircleData circleData;
     RS_Vector coord;
-    double radius = 0.;
-    bool valid = false;
     //keep a list of centers found
     RS_VectorSolutions centers;
     std::vector<RS_AtomicEntity*> circles;
@@ -191,7 +189,7 @@ bool LC_ActionDrawCircleTangental2Entities1Point::preparePreview() const {
 
 RS_Entity* LC_ActionDrawCircleTangental2Entities1Point::catchTangentEntity(const LC_MouseEvent* e, const bool forPreview) const {
     RS_Entity* ret = nullptr;
-    RS_Entity* en;
+    RS_Entity* en = nullptr;
     if (forPreview) {
         en = catchModifiableAndDescribe(e, g_enTypeList);
     }
@@ -205,7 +203,7 @@ RS_Entity* LC_ActionDrawCircleTangental2Entities1Point::catchTangentEntity(const
         return ret;
     }
     for (const auto p : m_actionData->circles) {
-        if (p && en->getId() == p->getId()) {
+        if ((p != nullptr) && en->getId() == p->getId()) {
             return ret; //do not pull in the same line again
         }
     }

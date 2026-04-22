@@ -45,11 +45,11 @@ LC_LineGapOptionsWidget::~LC_LineGapOptionsWidget() {
 void LC_LineGapOptionsWidget::doUpdateByAction(RS_ActionInterface* a) {
     m_action = static_cast<LC_ActionModifyLineGap*>(a);
 
-    QString gapSize = fromDouble(m_action->getGapSize());
-    bool gapFree = m_action->isFreeGapSize();
-    int lineSnap = m_action->getLineSnapMode();
-    QString snapDistance = fromDouble(m_action->getGapSnapDistance());
-    int gapSnap = m_action->getGapSnapMode();
+    const QString gapSize = fromDouble(m_action->getGapSize());
+    const bool gapFree = m_action->isFreeGapSize();
+    const int lineSnap = m_action->getLineSnapMode();
+    const QString snapDistance = fromDouble(m_action->getGapSnapDistance());
+    const int gapSnap = m_action->getGapSnapMode();
 
     LC_GuardedSignalsBlocker({ui->leSize, ui->cbFree, ui->cbGapSnap, ui->cbLineSnap, ui->leDistance});
 
@@ -77,7 +77,7 @@ void LC_LineGapOptionsWidget::onFreeGapClicked(const bool val) {
 }
 
 void LC_LineGapOptionsWidget::onSizeEditingFinished() {
-    auto val = ui->leSize->text();
+    const auto val = ui->leSize->text();
     double len;
     if (toDouble(val, len, 1.0, false)) {
         m_action->setGapSize(len);
@@ -86,7 +86,7 @@ void LC_LineGapOptionsWidget::onSizeEditingFinished() {
 }
 
 void LC_LineGapOptionsWidget::onDistanceEditingFinished() {
-    auto val = ui->leDistance->text();
+    const auto val = ui->leDistance->text();
     double len;
     if (toDouble(val, len, 0.0, false)) {
         m_action->setGapSnapDistance(len);

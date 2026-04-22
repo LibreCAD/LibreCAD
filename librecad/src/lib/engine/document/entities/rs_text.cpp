@@ -331,7 +331,7 @@ void RS_Text::update() {
     // Horizontal Align:
     switch (m_data.halign) {
         case RS_TextData::HAMiddle: {
-            offset.move(RS_Vector(-textSize.x / 2.0, -(vSize + textSize.y / 2.0 + getMin().y)));
+            offset.move(RS_Vector(-textSize.x / 2.0, -(vSize + (textSize.y / 2.0) + getMin().y)));
             break;
         }
         case RS_TextData::HACenter: {

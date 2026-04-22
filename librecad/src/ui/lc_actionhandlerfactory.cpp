@@ -164,7 +164,6 @@
 #include "lc_actionpenpick.h"
 #include "lc_actionpensyncactivebylayer.h"
 #include "lc_actionselectdimordinatesameorigin.h"
-
 #include "lc_actionsnapmiddlemanual.h"
 #include "lc_actionucsbydimordinate.h"
 #include "lc_actionucscreate.h"
@@ -182,18 +181,15 @@
 #include "rs_actiondimleader.h"
 #include "rs_actiondimlinear.h"
 #include "rs_actiondimradial.h"
-
 #include "rs_actiondrawellipse4points.h"
 #include "rs_actiondrawellipsecenter3points.h"
 #include "rs_actiondrawellipsefocipoint.h"
 #include "rs_actiondrawellipseinscribe.h"
 #include "rs_actiondrawhatch.h"
-
 #include "rs_actiondrawlinehorvert.h"
 #include "rs_actiondrawlineorthtan.h"
 #include "rs_actiondrawlinetangent1.h"
 #include "rs_actiondrawlinetangent2.h"
-
 #include "rs_actioninfoangle.h"
 #include "rs_actioninfoarea.h"
 #include "rs_actioninfodist.h"

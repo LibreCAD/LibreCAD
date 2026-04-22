@@ -59,7 +59,7 @@ void QG_DlgInitial::init() const {
     // Fill combobox with languages:
     QStringList languageList = RS_SYSTEM->getLanguageList();
     const QString defaultLanguage=RS_SYSTEM->symbolToLanguage(QString("en"));
-    for (QString language: languageList) {
+    for (const QString &language: std::as_const(languageList)) {
         QString l = RS_SYSTEM->symbolToLanguage(language);
         cbLanguage->addItem(l, language);
         cbLanguageCmd->addItem(l, language);

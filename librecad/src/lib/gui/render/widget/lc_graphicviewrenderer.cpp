@@ -79,7 +79,7 @@ void LC_GraphicViewRenderer::loadSettings() {
 
     LC_GROUP_GUARD("Colors");
     {
-        RS_Color bgColor(LC_GET_STR("background", RS_Settings::BACKGROUND));
+        const RS_Color bgColor(LC_GET_STR("background", RS_Settings::BACKGROUND));
         setBackground(bgColor);
         m_colorSelectedEntity = RS_Color(LC_GET_STR("select", RS_Settings::SELECT));
         m_colorHighlightedEntity = RS_Color(LC_GET_STR("highlight", RS_Settings::HIGHLIGHT));
@@ -359,15 +359,13 @@ void LC_GraphicViewRenderer::drawDraftSign(RS_Painter* painter) const {
     QRect boundingRect{TEXT_LABEL_OFFSET, TEXT_LABEL_OFFSET, size.width(), size.height()};
     for (int i = 1; i <= TEXT_LABEL_COUNT; ++i) {
         painter->drawText(boundingRect, m_draftMarkText, &boundingRect);
-        QPoint position{
-            (i & 1) ? m_viewport->getWidth() - boundingRect.width() - TEXT_LABEL_OFFSET : TEXT_LABEL_OFFSET,
-            (i & 2) ? m_viewport->getHeight() - boundingRect.height() - TEXT_LABEL_OFFSET : TEXT_LABEL_OFFSET
-        };
+        QPoint position{((i & 1) != 0) ? m_viewport->getWidth() - boundingRect.width() - TEXT_LABEL_OFFSET : TEXT_LABEL_OFFSET,
+                        ((i & 2) != 0) ? m_viewport->getHeight() - boundingRect.height() - TEXT_LABEL_OFFSET : TEXT_LABEL_OFFSET};
         boundingRect.moveTopLeft(position);
     }
 }
 
-void LC_GraphicViewRenderer::setupRefSnapEntityPen(RS_Painter* painter, RS_Pen &pen, const LC_RefSnapEntity* const ent, bool inVisualSnap) {
+void LC_GraphicViewRenderer::setupRefSnapEntityPen(const RS_Painter* painter, RS_Pen &pen, const LC_RefSnapEntity* const ent, bool inVisualSnap) const {
     if (ent->isStrict()) {
         pen.setLineType(RS2::SolidLine);
     }

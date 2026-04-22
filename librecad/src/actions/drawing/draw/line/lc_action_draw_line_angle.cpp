@@ -159,7 +159,7 @@ void LC_ActionDrawLineAngle::onMouseMoveEvent(const int status, const LC_MouseEv
     }
 }
 
-void LC_ActionDrawLineAngle::setLengthType(LengthType type, bool doUpdateOptions) {
+void LC_ActionDrawLineAngle::setLengthType(const LengthType type, bool doUpdateOptions) {
     m_lengthType = type;
     setMainStatus(SetPos);
     if (doUpdateOptions) {
@@ -245,7 +245,7 @@ void LC_ActionDrawLineAngle::preparePreview() {
        len = m_pos.distanceTo(m_secondPoint);
        if (m_lineSnapMode == SNAP_MIDDLE) {
          len = len*2;
-       };
+       }
     }
     else {
         if (!hasFixedAngle()) {
@@ -292,7 +292,7 @@ void LC_ActionDrawLineAngle::preparePreview() {
     p2 += p1;
 
     if (isFreeLineMode() && (m_lineSnapMode != SNAP_MIDDLE)) {
-        RS_Vector projectionPoint = LC_LineMath::getNearestPointOnInfiniteLine(m_secondPoint, p1,p2);
+        const RS_Vector projectionPoint = LC_LineMath::getNearestPointOnInfiniteLine(m_secondPoint, p1,p2);
         if (projectionPoint.distanceTo(p2) > projectionPoint.distanceTo(p1)) {
             p2 = p2.rotate(p1, M_PI);
         }
@@ -353,7 +353,7 @@ bool LC_ActionDrawLineAngle::doProcessCommand(const int status, const QString& c
                 const bool ok = parseToUCSBasisAngle(command, ucsBasisAngleRad);
                 if (ok) {
                     accept = true;
-                    ucsBasisAngleRad = ucsBasisAngleRad;
+                    m_ucsBasisAngleRad = ucsBasisAngleRad;
                 }
                 else {
                     commandMessage(tr("Not a valid expression for angle"));
@@ -363,7 +363,7 @@ bool LC_ActionDrawLineAngle::doProcessCommand(const int status, const QString& c
                 break;
             }
             case SetLength: {
-                bool ok;
+                bool ok = false;
                 const double l = RS_Math::eval(command, &ok);
                 if (ok) {
                     accept = true;

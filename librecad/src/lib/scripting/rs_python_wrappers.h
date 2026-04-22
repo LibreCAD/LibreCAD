@@ -26,4 +26,3 @@
 #ifdef RS_OPT_PYTHON
 extern "C" void initLibreCAD();
 #endif
-

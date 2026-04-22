@@ -23,8 +23,8 @@
 
 #include "lc_propertieseditingwidget_parabola.h"
 
-#include <array>
 #include <QStandardItemModel>
+#include <array>
 
 #include "lc_parabola.h"
 #include "rs_dialogfactory.h"
@@ -49,7 +49,7 @@ void LC_PropertiesEditingWidgetParabola::setEntity(RS_Entity* entity) {
 void LC_PropertiesEditingWidgetParabola::updatePoints(){
     const LC_ParabolaData& bData = m_entity->getData();
     const std::array<RS_Vector, 3>& pts = bData.m_controlPoints;
-    auto model = new QStandardItemModel(pts.size(), 2, this);
+    const auto model = new QStandardItemModel(pts.size(), 2, this);
     model->setHorizontalHeaderLabels({"x", "y"});
 
     //set control data

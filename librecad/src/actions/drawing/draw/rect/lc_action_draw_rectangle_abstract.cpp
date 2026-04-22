@@ -54,7 +54,7 @@ void LC_ActionDrawRectangleAbstract::doLoadOptions() {
     m_bevelX = loadDouble("LengthX", 1.0);
     m_bevelY = loadDouble("LengthY", 1.0);
     m_usePolyline = loadBool("Polyline", false);
-    m_snapToCornerArcCenter = loadBool("RadiusSnap", 0.0);
+    m_snapToCornerArcCenter = loadBool("RadiusSnap", false);
     m_edgesDrawMode = loadInt("Edges", EDGES_BOTH);
     m_baseAngleIsFixed = loadBool("BaseAngleIsFixed", false);
 }
@@ -94,7 +94,7 @@ void LC_ActionDrawRectangleAbstract::doAddPolylineToListOfEntities(RS_Polyline *
     const bool shouldInspectForNonCompleteShape = m_edgesDrawMode != EDGES_BOTH && m_cornersDrawMode == CORNER_STRAIGHT; // here we draw only side edges
 
     // flag that defines whether we'll insert polyline or individual elements
-    bool addAtOnce;
+    bool addAtOnce = false;
     if (preview){
         addAtOnce = !shouldInspectForNonCompleteShape;
     }

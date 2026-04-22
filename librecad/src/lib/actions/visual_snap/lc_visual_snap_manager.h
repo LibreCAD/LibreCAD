@@ -24,10 +24,8 @@
 #ifndef LC_VISUALSNAPMANAGER_H
 #define LC_VISUALSNAPMANAGER_H
 
-#include <QMutex>
 #include <QTimer>
 
-#include "lc_ref_snap_construction_line.h"
 #include "lc_relative_point_data.h"
 #include "lc_visual_snap_data.h"
 #include "lc_visual_snap_options.h"
@@ -75,7 +73,7 @@ class LC_VisualSnapManager : public QObject {
     void solveAndVisualizeSolution(RS_Preview* preview, LC_Highlight *highlight);
     void refreshSolutionVisualization(RS_Preview* preview, LC_Highlight* highlight);
     void visualizeOrdinaryRestrictions(RS_Preview* preview, LC_Highlight* highlight) const;
-    void removeLastAddition();
+    void removeLastAddition() const;
 
     void setSnapRange(double range);
     void doSaveLastSnappedPoint(const RS_Vector& v) const;
@@ -92,7 +90,7 @@ class LC_VisualSnapManager : public QObject {
         return m_options.autoAddSnappedPointToVisualSnap;
     }
 
-    void saveLastSnappedPoint(const RS_Vector& v);
+    void saveLastSnappedPoint(const RS_Vector& v) const;
     RS_Vector getLastSnappedPoint()const;
     void addRelativePointInfo(const LC_RelativePositionData* relativePositionData) const;
     void addGuidingPoint(const RS_Vector& snapPoint, const RS_Vector& graphPoint, const RS_Vector& relZero, bool hasLength, bool hasAngle,
@@ -100,24 +98,24 @@ class LC_VisualSnapManager : public QObject {
 
     void updateAndPreviewSolution(RS_Preview* preview, LC_Highlight* highlight, const RS_Vector& wcsPos);
     bool isClearVisualSnapByRMB() const {return m_options.allowClearingVisualSnapByRMB;}
-    void lockData(bool lock) const;
+    void lockData(bool performLock) const;
     bool isDataLocked() const;
 protected:
-    bool removeVertex(LC_VisualSnapVertex* vertex);
+    bool removeVertex(LC_VisualSnapVertex* vertex) const;
     void registerVertex(LC_VisualSnapVertex* vertex, bool removeExistingInSamePosition = true);
     void registerVertex();
     void registerDocumentEntity();
     void addVertexDelayed(RS2::SnapType snapType, const RS_Vector& coord, RS_Entity* entity);
-    void solveVisualSnap(const RS_Vector& wcsPos, LC_VisualSnapSolution& solut);
+    void solveVisualSnap(const RS_Vector& wcsPos, LC_VisualSnapSolution& solution) const;
     void visualizeSolution(RS_Preview* preview, LC_Highlight* highlight, LC_VisualSnapSolution& solution) const;
 
-    bool isLineIsNotHorizontalOrVerticalInUCS(RS_Vector startPoint, RS_Vector endPoint) const;
-    bool isLineIsNotHorizontalOrVerticalInUCS(RS_Vector startPoint, RS_Vector endPoint, bool& horizontal, bool& vertical) const;
+    bool isLineIsNotHorizontalOrVerticalInUCS(const RS_Vector& startPoint, const RS_Vector& endPoint) const;
+    bool isLineIsNotHorizontalOrVerticalInUCS(const RS_Vector& startPoint, const RS_Vector& endPoint, bool& horizontal, bool& vertical) const;
     void performDelayedOperation();
     void doSkipDelayedAdditions();
     void registerEntityEndpoints(RS_Entity* entity);
-    void storeEntityRef(RS_Entity* snapEntity, RS_Entity* documentViewSnapEntity,  unsigned long long entityId);
-    void storeVertexRef(LC_VisualSnapVertex* vertex);
+    void storeEntityRef(RS_Entity* snapEntity, RS_Entity* documentViewSnapEntity,  unsigned long long entityId) const;
+    void storeVertexRef(LC_VisualSnapVertex* vertex) const;
     LC_VisualSnapVertex* createVisualSnapVertex(RS2::SnapType snap, const RS_Vector& coord, RS_Entity* entity);
     int getVisualSnapVertexAddingDelay() const;
     int getSnapVertexAddingDelay() const;

@@ -109,20 +109,17 @@ void RS_System::initLanguageList() {
 #endif
     LC_GROUP_END();
 
-    for (QStringList::Iterator it = lst.begin();
-         it != lst.end();
-         ++it) {
+    for (auto& it : lst) {
 
-        RS_DEBUG->print("RS_System::initLanguageList: qm file: %s",
-                        it->toLatin1().data());
+        RS_DEBUG->print("RS_System::initLanguageList: qm file: %s", it.toLatin1().data());
 
-        const int i0 = it->lastIndexOf(QString("librecad"),-1,Qt::CaseInsensitive);
-        const int i1 = it->indexOf('_',i0);
-        const int i2 = it->indexOf('.', i1);
+        const int i0 = it.lastIndexOf(QString("librecad"), -1, Qt::CaseInsensitive);
+        const int i1 = it.indexOf('_', i0);
+        const int i2 = it.indexOf('.', i1);
         if (i1 == -1 || i2 == -1) {
             continue;
         }
-        QString l = it->mid(i1+1, i2-i1-1);
+        QString l = it.mid(i1 + 1, i2 - i1 - 1);
 
         if (!m_languageList.contains(l) ) {
             RS_DEBUG->print("RS_System::initLanguageList: append language: %s",
@@ -442,9 +439,7 @@ void RS_System::loadTranslation(const QString& lang, const QString& /*langCmd*/)
 
         // load LibreCAD translations
         if (nullptr == tLibreCAD) {
-            if (t->load( langFileLower, *it) == true
-                    || (  ! langUpper.isEmpty()
-                          && t->load( langFileUpper, *it) == true)) {
+            if (t->load(langFileLower, *it) || (!langUpper.isEmpty() && t->load(langFileUpper, *it))) {
                 tLibreCAD = t;
                 qApp->installTranslator( tLibreCAD);
                 t = new QTranslator(nullptr);
@@ -453,9 +448,7 @@ void RS_System::loadTranslation(const QString& lang, const QString& /*langCmd*/)
 
         // load PlugIns translations
         if (nullptr == tPlugIns) {
-            if (t->load( langPlugInsLower, *it) == true
-                    || (  ! langUpper.isEmpty()
-                          && t->load( langPlugInsUpper, *it) == true)) {
+            if (t->load(langPlugInsLower, *it) || (!langUpper.isEmpty() && t->load(langPlugInsUpper, *it) == true)) {
                 tPlugIns = t;
                 qApp->installTranslator( tPlugIns);
                 t = new QTranslator(nullptr);
@@ -464,9 +457,7 @@ void RS_System::loadTranslation(const QString& lang, const QString& /*langCmd*/)
 
         // load Qt standard dialog translations
         if (nullptr == tQt) {
-            if (t->load( langQtLower, *it) == true
-                    || (  ! langUpper.isEmpty()
-                          && t->load( langQtUpper, *it) == true)) {
+            if (t->load(langQtLower, *it) || (!langUpper.isEmpty() && t->load(langQtUpper, *it))) {
                 tQt = t;
                 qApp->installTranslator( tQt);
                 t = new QTranslator(nullptr);

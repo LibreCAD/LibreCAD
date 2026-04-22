@@ -23,9 +23,9 @@
 #include "lc_action_modify_align_ref.h"
 
 #include "lc_actioninfomessagebuilder.h"
-#include "lc_linemath.h"
-#include "lc_align_ref_options_widget.h"
 #include "lc_align_ref_options_filler.h"
+#include "lc_align_ref_options_widget.h"
+#include "lc_linemath.h"
 #include "rs_document.h"
 
 LC_ActionModifyAlignRef::LC_ActionModifyAlignRef(LC_ActionContext *actionContext)
@@ -40,13 +40,13 @@ void LC_ActionModifyAlignRef::doSaveOptions() {
 }
 
 void LC_ActionModifyAlignRef::doLoadOptions() {
-    bool scale = loadBool("Scale", true);
+    const bool scale = loadBool("Scale", true);
     setScale(scale);
-    bool curLayer = loadBool("UseCurrentLayer", true);
+    const bool curLayer = loadBool("UseCurrentLayer", true);
     setUseCurrentLayer(curLayer);
-    bool curAttrs = loadBool("UseCurrentAttributes", true);
+    const bool curAttrs = loadBool("UseCurrentAttributes", true);
     setUseCurrentAttributes(curAttrs);
-    bool keepOriginals = loadBool("KeepOriginals", false);
+    const bool keepOriginals = loadBool("KeepOriginals", false);
     setKeepOriginals(keepOriginals);
 }
 

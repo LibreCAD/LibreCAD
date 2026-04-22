@@ -25,6 +25,8 @@
 **********************************************************************/
 #include "rs_overlaybox.h"
 
+#include <math.h>
+
 #include "rs_painter.h"
 #include "rs_settings.h"
 
@@ -53,7 +55,7 @@ RS_OverlayBox::RS_OverlayBox(const RS_Vector &corner1, const RS_Vector &corner2,
    :m_corner1(corner1), m_corner2(corner2), m_options(options) {}
 
 void RS_OverlayBox::draw(RS_Painter* painter) {
-    double v1x;
+    double v1x = NAN;
     double v1y;
     double v2x;
     double v2y;

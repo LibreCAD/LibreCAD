@@ -26,7 +26,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include <cfloat>
 #include <numeric>
 
-#include "lc_quadratic.h"
 #include "lc_quadraticutils.h"
 
 #include "rs_atomicentity.h"
@@ -478,8 +477,8 @@ LC_Quadratic& LC_Quadratic::scale(const RS_Vector& center, const RS_Vector& fact
     return *this;
   }
 
-  double sx = factor.x;
-  double sy = factor.y;
+  const double sx = factor.x;
+  const double sy = factor.y;
 
   if (std::abs(sx) < RS_TOLERANCE || std::abs(sy) < RS_TOLERANCE) {
     // Degenerate scaling → invalidate
@@ -524,7 +523,7 @@ LC_Quadratic& LC_Quadratic::rotate(double angle)
   using namespace boost::numeric::ublas;
 
   matrix<double> R = rotationMatrix(angle);
-  matrix<double> Rt = trans(R);
+  const matrix<double> Rt = trans(R);
 
          // Rotate linear part
   m_vLinear = prod(Rt, m_vLinear);
@@ -703,8 +702,8 @@ RS_VectorSolutions LC_Quadratic::getIntersection(const LC_Quadratic& l1, const L
             break;
         }
         const std::vector<double> xyi = {v.x * v.x, v.x * v.y, v.y * v.y, v.x, v.y, 1.};
-        const double e0 = std::inner_product(xyi.cbegin(), xyi.cend(), ce.front().cbegin(), 0.);
-        const double e1 = std::inner_product(xyi.cbegin(), xyi.cend(), ce.back().cbegin(), 0.);
+        const double e0 = std::inner_product(xyi.cbegin(), xyi.cend(), ce.front().cbegin(), 0.); // fixme - never used!
+        const double e1 = std::inner_product(xyi.cbegin(), xyi.cend(), ce.back().cbegin(), 0.); // fixme - never used!
     }
     LC_ERR<<__LINE__;
     if(valid) {
@@ -767,21 +766,21 @@ LC_Quadratic LC_Quadratic::getDualCurve() const
   }
   if (!isQuadratic()) {
     // linear
-    double a = m_vLinear(0);
-    double b = m_vLinear(1);
-    double c = m_dConst;
+    const double a = m_vLinear(0);
+    const double b = m_vLinear(1);
+    const double c = m_dConst;
 
     return LC_Quadratic({a*a, 2*a*b, b*b, 2*a*c, 2*b*c, c*c}).getDualCurve();
   }
 
          // Primal coefficients: A x² + B xy + C y² + D x + E y + F = 0
-  std::vector<double> primal = getCoefficients();
-  double A = primal[0];
-  double B = primal[1];
-  double C = primal[2];
-  double D = primal[3];
-  double E = primal[4];
-  double F = primal[5];
+  const std::vector<double> primal = getCoefficients();
+  const double A = primal[0];
+  const double B = primal[1];
+  const double C = primal[2];
+  const double D = primal[3];
+  const double E = primal[4];
+  const double F = primal[5];
 
          // Dual coefficients via adjugate of conic matrix
   double A_prime = 4 * C * F - E * E;
@@ -806,11 +805,11 @@ double LC_Quadratic::evaluateAt(const RS_Vector& p) const
 {
   if (!p.valid) return 0.0;  // or NaN / throw — but consistent with project style
 
-  double x = p.x;
-  double y = p.y;
+  const double x = p.x;
+  const double y = p.y;
 
          // General conic: A x² + B xy + C y² + D x + E y + F
-  double result = m_mQuad(0,0) * x * x +                  // A x²
+  const double result = m_mQuad(0,0) * x * x +                  // A x²
                   2.0 * m_mQuad(0,1) * x * y +            // B xy (since matrix stores B/2)
                   m_mQuad(1,1) * y * y +                  // C y²
                   m_vLinear(0) * x +                      // D x
@@ -833,8 +832,8 @@ RS_Entity* LC_Quadratic::toEntity() const
   }
 
          // ─── Quadratic case ─────────────────────────────────────────────────
-  RS_Vector center = computeCenter(*this);
-  double v = evaluateAt(center);
+  const RS_Vector center = computeCenter(*this);
+  const double v = evaluateAt(center);
 
   // if (center.isValid() && std::abs(v) > 1e-5 * computeScale(*this)) {
   //   return nullptr;
@@ -845,14 +844,14 @@ RS_Entity* LC_Quadratic::toEntity() const
   }
 
          // ─── Non-degenerate conic ──────────────────────────────────────────
-  double theta = computeRotationAngle(*this);
+  const double theta = computeRotationAngle(*this);
   auto [Ap, Cp] = computePrincipalCoefficients(*this, theta);
 
   if (std::abs(Ap) < RS_TOLERANCE || std::abs(Cp) < RS_TOLERANCE) {
     return nullptr;
   }
 
-  double disc = computeDiscriminant(*this);
+  const double disc = computeDiscriminant(*this);
 
   if (disc < 0) {
     return createEllipseOrCircle(*this, center, v, Ap, Cp, theta);

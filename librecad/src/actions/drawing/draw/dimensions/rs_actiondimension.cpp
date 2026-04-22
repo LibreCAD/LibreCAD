@@ -91,7 +91,7 @@ QString RS_ActionDimension::getText() const{
 
     QString l = m_label;
 
-    if (l.isEmpty() && (m_diameter == true || !m_tol1.isEmpty() || !m_tol2.isEmpty())) {
+    if (l.isEmpty() && (m_diameter || !m_tol1.isEmpty() || !m_tol2.isEmpty())) {
         l = "<>";
     }
 

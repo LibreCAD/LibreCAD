@@ -252,11 +252,8 @@ void RS_GraphicView::onViewportChanged() {
     redraw();
 }
 
-void RS_GraphicView::onViewportRedrawNeeded(const RS2::RedrawMethod method) {
-    redraw(method);
-    if (method & RS2::RedrawImmediately) {
-        repaint();
-    }
+void RS_GraphicView::onViewportRedrawNeeded(const RS2::RedrawMethod method, bool redrawImmediately) {
+    redraw(method, redrawImmediately);
 }
 
 void RS_GraphicView::onUCSChanged(LC_UCS* ucs) {
@@ -376,7 +373,6 @@ void RS_GraphicView::setTypeToSelect(const RS2::EntityType mType) {
     m_typeToSelect = mType;
 }
 
-
 QString RS_GraphicView::obtainEntityDescription([[maybe_unused]] const RS_Entity* entity, [[maybe_unused]]RS2::EntityDescriptionLevel descriptionLevel) {
     return "";
 }
@@ -426,15 +422,15 @@ void RS_GraphicView::setRenderer(std::unique_ptr<LC_WidgetViewPortRenderer> rend
     m_renderer = std::move(renderer);
 }
 
-void RS_GraphicView::showRelativeInputWidget(const RS_Vector& wcsPos, const RS_Vector& basePoint, bool baseIsRelativePoint, RS2::RelativePointParam param) {
+void RS_GraphicView::showRelativeInputWidget(const RS_Vector& wcsPos, const RS_Vector& basePoint, bool baseIsRelativePoint, RS2::RelativePointParam param) const {
     m_relativePointWidgetHolder->show(wcsPos, basePoint,baseIsRelativePoint, param);
 }
 
-void RS_GraphicView::hideRelativeInputWidget() {
+void RS_GraphicView::hideRelativeInputWidget() const {
     m_relativePointWidgetHolder->hide();
 }
 
-void RS_GraphicView::restoreRelativeInputWidget() {
+void RS_GraphicView::restoreRelativeInputWidget() const {
     m_relativePointWidgetHolder->updatePosition(true);
     m_relativePointWidgetHolder->setVisible(true);
 }

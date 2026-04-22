@@ -24,9 +24,9 @@
 #ifndef LC_LINEBISECTOROPTIONSFILLER_H
 #define LC_LINEBISECTOROPTIONSFILLER_H
 
-#include "lc_action_options_properties_filler.h"
+#include "lc_action_options_properties_filler_base.h"
 
-class LC_LineBisectorOptionsFiller: public LC_ActionOptionsPropertiesFiller{
+class LC_LineBisectorOptionsFiller: public LC_ActionOptionsPropertiesFillerBase{
     Q_OBJECT
 public:
     LC_LineBisectorOptionsFiller() = default;

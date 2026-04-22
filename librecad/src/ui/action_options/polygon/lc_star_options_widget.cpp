@@ -91,7 +91,7 @@ void LC_StarOptionsWidget::onSymmetricClicked(const bool value) {
 }
 
 void LC_StarOptionsWidget::onRadiusOuterEditingFinished() {
-    auto value = ui->leRadusOuter->text();
+    const auto value = ui->leRadusOuter->text();
     double y;
     if (toDouble(value, y, 0.0, true)) {
         m_action->setRadiusOuter(y);
@@ -100,7 +100,7 @@ void LC_StarOptionsWidget::onRadiusOuterEditingFinished() {
 }
 
 void LC_StarOptionsWidget::onRadiusInnerEditingFinished() {
-    auto value = ui->leRadiusInner->text();
+    const auto value = ui->leRadiusInner->text();
     double y;
     if (toDouble(value, y, 0.0, true)) {
         m_action->setRadiusInner(y);

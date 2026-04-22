@@ -46,7 +46,7 @@ public:
     }
 protected:
     void adjustGuidingEntitiesLabelsPositions(std::vector<LC_RefSnapConstructionLine*> lines) const;
-    void assignGuidingEntitiesLabels(RS_EntityContainer* preview, std::list<RS_Entity*> clones) const;
+    void assignGuidingEntitiesLabels(RS_EntityContainer* preview, const std::list<RS_Entity*>& clones) const;
 
     LC_GraphicViewport* m_viewport = nullptr;
     RS_Snapper* m_snapper{nullptr};

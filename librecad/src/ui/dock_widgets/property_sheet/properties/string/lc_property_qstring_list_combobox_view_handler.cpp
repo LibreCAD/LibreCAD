@@ -30,7 +30,7 @@
 
 namespace{
 // fixme - to namespace or class
-static QString toSingleLine(const QString& str) {
+ QString toSingleLine(const QString& str) {
     const int n = str.indexOf('\n');
     const int r = str.indexOf('\r');
     const int len = n < 0 ? r : (r < 0 ? n : qMin(n, r));
@@ -93,7 +93,7 @@ void LC_PropertyQStringListComboBoxViewHandler::doUpdateEditor() {
     const auto lineEdit = cb->lineEdit();
     if (isMultiValue()) {
         cb->clearEditText();
-        if (lineEdit) {
+        if (lineEdit != nullptr) {
             lineEdit->setPlaceholderText(LC_Property::getMultiValuePlaceholder());
         }
     }
@@ -103,11 +103,11 @@ void LC_PropertyQStringListComboBoxViewHandler::doUpdateEditor() {
         if (cb->currentText() != getPropertyValue()) {
             cb->setCurrentIndex(-1);
         }
-        if (lineEdit) {
+        if (lineEdit != nullptr) {
             lineEdit->setPlaceholderText(QString());
         }
     }
-    if (lineEdit) {
+    if (lineEdit != nullptr) {
         lineEdit->selectAll();
     }
     m_updating--;

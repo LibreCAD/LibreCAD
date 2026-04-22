@@ -74,10 +74,10 @@ void LC_SelectWindowOptionsWidget::doSaveSettings() {
 
 void LC_SelectWindowOptionsWidget::doUpdateByAction(RS_ActionInterface *a) {
     m_action = static_cast<LC_ActionSelectWindow *>(a);
-    bool all;
+    bool all = false;
 
     QList<RS2::EntityType> entityTypes;
-    bool update = true;
+    const bool update = true;
     if (update){
         all = m_action->isSelectAllEntityTypes();
         entityTypes = m_action->getEntityTypesToSelect();
@@ -251,7 +251,7 @@ void LC_SelectWindowOptionsWidget::setEntityTypesToActinAndView(QList<RS2::Entit
     ui->cbInsert->setChecked(false);
     ui->cbDimension->setChecked(false);
     ui->cbWipeout->setChecked(false);
-    for (const auto t: entityTypes){
+    for (const auto t: std::as_const(entityTypes)){
         switch (t){
             case RS2::EntityLine:
                 ui->cbLine->setChecked(true);
@@ -302,8 +302,7 @@ void LC_SelectWindowOptionsWidget::setEntityTypesToActinAndView(QList<RS2::Entit
     }
 }
 
-
-void LC_SelectWindowOptionsWidget::setSelectAllToActionAndView(const bool value) {
+void LC_SelectWindowOptionsWidget::setSelectAllToActionAndView(const bool value) const {
     ui->cbAll->setChecked(value);
     m_action->setSelectAllEntityTypes(value);
     const bool enable = !value;

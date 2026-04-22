@@ -131,7 +131,7 @@ void LC_PenPaletteOptionsDialog::setComboBoxColor(const QComboBox* combo, const 
  */
 void LC_PenPaletteOptionsDialog::validate(){
     bool doAccept = true;
-    LC_PenInfoRegistry::ColorNameDisplayMode colorMode;
+    LC_PenInfoRegistry::ColorNameDisplayMode colorMode = LC_PenInfoRegistry::ColorNameDisplayMode::RGB;
 
     if (rbRGB->isChecked()){
         colorMode = LC_PenInfoRegistry::ColorNameDisplayMode::RGB;
@@ -141,16 +141,16 @@ void LC_PenPaletteOptionsDialog::validate(){
       colorMode = LC_PenInfoRegistry::ColorNameDisplayMode::NATURAL;
     }
 
-    QString activeBgColorName = cbColorActiveBg->currentText();
-    auto activeBgColor = QColor(activeBgColorName);
+    const QString activeBgColorName = cbColorActiveBg->currentText();
+    const auto activeBgColor = QColor(activeBgColorName);
     if (!activeBgColor.isValid()){
         showInvalidColorMessage("active row background");
         cbColorActiveBg ->setFocus();
         doAccept = false;
     }
 
-    QString matchedColorName = cbColorMatchedItem->currentText();
-    auto matchedItemColor = QColor(matchedColorName);
+    const QString matchedColorName = cbColorMatchedItem->currentText();
+    const auto matchedItemColor = QColor(matchedColorName);
     if (!matchedItemColor.isValid()){
         showInvalidColorMessage("filter matched item");
         cbColorMatchedItem ->setFocus();
@@ -163,17 +163,17 @@ void LC_PenPaletteOptionsDialog::validate(){
         m_options->showGrid =  cbShowGrid->isChecked();
         m_options->activeItemBGColor = activeBgColor;
 
-        bool showToolTip = cbShowTooltip->isChecked();
-        bool showColorIcon = chkShowColorIcon->isChecked();
-        bool showColorName = chkShowColorName->isChecked();
-        bool showLineTypeIcon = chkShowLineTypeIcon->isChecked();
-        bool showLineTypeName = chkShowLineTypeName->isChecked();
-        bool showLineWidthIcon = chkShowWidthIcon->isChecked();
-        bool showLineWidthName = chkShowWidthName->isChecked();
-        bool showNoSelectionMessage = cbShowMessageForNoSelection->isChecked();
-        bool ignoreCaseOnMatch = cbFilterCaseInsensitive->isChecked();
+        const bool showToolTip = cbShowTooltip->isChecked();
+        const bool showColorIcon = chkShowColorIcon->isChecked();
+        const bool showColorName = chkShowColorName->isChecked();
+        const bool showLineTypeIcon = chkShowLineTypeIcon->isChecked();
+        const bool showLineTypeName = chkShowLineTypeName->isChecked();
+        const bool showLineWidthIcon = chkShowWidthIcon->isChecked();
+        const bool showLineWidthName = chkShowWidthName->isChecked();
+        const bool showNoSelectionMessage = cbShowMessageForNoSelection->isChecked();
+        const bool ignoreCaseOnMatch = cbFilterCaseInsensitive->isChecked();
 
-        bool allRowBold = cbAllRowBold->isChecked();
+        const bool allRowBold = cbAllRowBold->isChecked();
         m_options->showEntireRowBold = allRowBold;
         m_options->showToolTip = showToolTip;
         m_options->showWidthIcon = showLineWidthIcon;
@@ -187,7 +187,7 @@ void LC_PenPaletteOptionsDialog::validate(){
 
         m_options->colorNameDisplayMode = colorMode;
 
-        int doubleClickMode = cbDoubleClickMode->currentIndex();
+        const int doubleClickMode = cbDoubleClickMode->currentIndex();
         m_options->doubleClickOnTableMode = doubleClickMode;
         accept();
     }

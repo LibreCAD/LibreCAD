@@ -24,7 +24,6 @@
 #ifndef LC_RECTANGLE1POINTOPTIONSFILLER_H
 #define LC_RECTANGLE1POINTOPTIONSFILLER_H
 
-#include "lc_action_options_properties_filler.h"
 #include "lc_rectangle_abstract_options_filler.h"
 
 class LC_Rectangle1PointOptionsFiller : public LC_RectangleAbstractOptionsFiller {

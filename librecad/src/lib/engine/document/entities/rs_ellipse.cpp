@@ -25,8 +25,9 @@
 **
 **********************************************************************/
 
-#include <QPainterPath>
 #include "rs_ellipse.h"
+
+#include <QPainterPath>
 
 #include "lc_creation_ellipse.h"
 #include "lc_quadratic.h"
@@ -57,8 +58,9 @@ namespace {
     //functor to solve for distance, used by snapDistance
     class EllipseDistanceFunctor {
     public:
-        EllipseDistanceFunctor(const RS_Ellipse& ellipse, const double target) : m_distance{target}, m_e{ellipse}, m_ra{m_e.getMajorRadius()},
-                                                                                 m_k2{1. - m_e.getRatio() * m_e.getRatio()}, m_k2Ra{m_k2 * m_ra} {
+        EllipseDistanceFunctor(const RS_Ellipse& ellipse, const double target) :
+            m_distance{target}, m_e{ellipse}, m_ra{m_e.getMajorRadius()}, m_k2{1. - (m_e.getRatio() * m_e.getRatio())},
+            m_k2Ra{m_k2 * m_ra} {
         }
 #if BOOST_VERSION > 104500
         boost::tuples::tuple<double, double, double> operator()(const double z) const {
@@ -69,7 +71,7 @@ namespace {
             const double cz = std::cos(z);
             const double sz = std::sin(z);
             //delta amplitude
-            const double d = std::sqrt(1 - m_k2 * sz * sz);
+            const double d = std::sqrt(1 - (m_k2 * sz * sz));
             // return f(x), f'(x) and f''(x)
 #if BOOST_VERSION > 104500
             return boost::tuples::make_tuple(
@@ -116,7 +118,7 @@ namespace {
         //solve equation of the distance by second order newton_raphson
         const EllipseDistanceFunctor X{e, trimmed};
         using namespace boost::math::tools;
-        const double sol = halley_iterate<EllipseDistanceFunctor, double>(X, guess, x1, x1 + 2 * M_PI - RS_TOLERANCE_ANGLE, digits);
+        const double sol = halley_iterate<EllipseDistanceFunctor, double>(X, guess, x1, x1 + (2 * M_PI) - RS_TOLERANCE_ANGLE, digits);
 
         const RS_Vector vp = e.getEllipsePoint(sol);
         if (dist != nullptr) {
@@ -133,8 +135,8 @@ namespace {
      */
     class ClosestEllipticPoint {
     public:
-        ClosestEllipticPoint(const double a, const double b, const RS_Vector& point) : m_point{point}, c2{b * b - a * a}, ax2{2. * a * point.x},
-                                                                           by2{2. * b * point.y} {
+        ClosestEllipticPoint(const double a, const double b, const RS_Vector& point) :
+            m_point{point}, c2{(b * b) - (a * a)}, ax2{2. * a * point.x}, by2{2. * b * point.y} {
         }
 
         // The elliptic angle of the closest point on ellipse.
@@ -159,13 +161,13 @@ namespace {
         // The first order derivative of ds2=dx^2+dy^2 over theta
         double ds2D1(const double t) const {
             using namespace std;
-            return c2 * sin(2. * t) + ax2 * sin(t) - by2 * cos(t);
+            return (c2 * sin(2. * t)) + (ax2 * sin(t)) - (by2 * cos(t));
         }
 
         // The second order derivative of ds2=dx^2+dy^2 over theta
         double ds2D2(const double t) const {
             using namespace std;
-            return 2. * c2 * cos(2. * t) + ax2 * cos(t) + by2 * sin(t);
+            return (2. * c2 * cos(2. * t)) + (ax2 * cos(t)) + (by2 * sin(t));
         }
 
         RS_Vector m_point{};
@@ -270,7 +272,7 @@ RS_VectorSolutions RS_Ellipse::getFoci() const {
     if (getRatio() > 1.) {
         e.switchMajorMinor();
     }
-    const RS_Vector vp(e.getMajorP() * sqrt(1. - e.getRatio() * e.getRatio()));
+    const RS_Vector vp(e.getMajorP() * sqrt(1. - (e.getRatio() * e.getRatio())));
     return RS_VectorSolutions({getCenter() + vp, getCenter() - vp});
 }
 
@@ -389,7 +391,7 @@ void RS_Ellipse::updateLength() {
 double RS_Ellipse::getEllipseLength(double angle1, double angle2) const {
     const double a(getMajorRadius());
     double k(getRatio());
-    k = std::sqrt(1 - k * k); //elliptic modulus, or eccentricity
+    k = std::sqrt(1 - (k * k)); // elliptic modulus, or eccentricity
     //    std::cout<<"1, angle1="<<x1/M_PI<<" angle2="<<x2/M_PI<<std::endl;
     //    if(isReversed())  std::swap(x1,x2);
     angle1 = RS_Math::correctAngle(angle1);
@@ -563,7 +565,7 @@ RS_Vector RS_Ellipse::doGetNearestPointOnEntity(const RS_Vector& coord, const bo
     if (a0 > RS_TOLERANCE && std::abs(getRatio() - 1.0) > RS_TOLERANCE && ret.squared() > RS_TOLERANCE2) {
         // a != b , ellipse
         ce[0] = -2. * twoax / twoa2b2;
-        ce[1] = (twoax * twoax + twoby * twoby) / a0 - 1.;
+        ce[1] = ((twoax * twoax + twoby * twoby) / a0) - 1.;
         ce[2] = -ce[0];
         ce[3] = -twoax * twoax / a0;
         //std::cout<<"1::find cosine, variable c, solve(c^4 +("<<ce[0]<<")*c^3+("<<ce[1]<<")*c^2+("<<ce[2]<<")*c+("<<ce[3]<<")=0,c)\n";
@@ -592,7 +594,7 @@ RS_Vector RS_Ellipse::doGetNearestPointOnEntity(const RS_Vector& coord, const bo
     //double ea;
     std::vector<std::pair<double, double>> directions;
     for (double cosTheta : roots) {
-        if (std::abs(twoax - twoa2b2 * cosTheta) > RS_TOLERANCE) {
+        if (std::abs(twoax - (twoa2b2 * cosTheta)) > RS_TOLERANCE) {
             const double sinTheta = twoby * cosTheta / (twoax - twoa2b2 * cosTheta); //sine
             directions.emplace_back(cosTheta, sinTheta);
         }
@@ -604,7 +606,7 @@ RS_Vector RS_Ellipse::doGetNearestPointOnEntity(const RS_Vector& coord, const bo
     for (const auto& [cosTheta, sinTheta] : directions) {
         //I don't understand the reason yet, but I can do without checking whether sine/cosine are valid
         //if (std::abs(s) > 1. ) continue;
-        const double d2 = twoa2b2 + (twoax - 2. * cosTheta * twoa2b2) * cosTheta + twoby * sinTheta;
+        const double d2 = twoa2b2 + ((twoax - 2. * cosTheta * twoa2b2) * cosTheta) + (twoby * sinTheta);
         if (std::signbit(d2)) {
             continue; // fartherest
         }
@@ -679,7 +681,7 @@ bool RS_Ellipse::doIsPointOnEntity(const RS_Vector& coord, const double toleranc
     return RS_Math::isAngleBetween(vp.angle(), getAngle1(), getAngle2(), isReversed());
 }
 
-RS_Vector RS_Ellipse::doGetNearestCenter(const RS_Vector& coord, double* dist, RS_Entity** entity) const {
+RS_Vector RS_Ellipse::doGetNearestCenter(const RS_Vector& coord, double* dist, RS_Entity** centerEntity) const {
     RS_Vector vCenter = m_data.center;
     double distCenter = coord.distanceTo(m_data.center);
 
@@ -708,8 +710,8 @@ RS_Vector RS_Ellipse::doGetNearestCenter(const RS_Vector& coord, double* dist, R
     if (dist != nullptr) {
         *dist = distCenter;
     }
-    if (entity != nullptr) {
-        *entity = const_cast<RS_Ellipse*>(this);
+    if (centerEntity != nullptr) {
+        *centerEntity = const_cast<RS_Ellipse*>(this);
     }
     return vCenter;
 }
@@ -752,19 +754,19 @@ RS_Vector RS_Ellipse::doGetNearestMiddle(const RS_Vector& coord, double* dist, c
     if (isReversed()) {
         std::swap(amin, amax);
     }
-    double da = std::fmod(amax - amin + 2. * M_PI, 2. * M_PI);
+    double da = std::fmod(amax - amin + (2. * M_PI), 2. * M_PI);
     if (da < RS_TOLERANCE) {
         da = 2. * M_PI; //whole ellipse
     }
     RS_Vector vp(getNearestPointOnEntity(coord, true, dist));
     double a = getCenter().angleTo(vp);
     const int counts(middlePoints + 1);
-    int i = static_cast<int>(std::fmod(a - amin + 2. * M_PI, 2. * M_PI) / da * counts + 0.5);
+    int i = static_cast<int>((std::fmod(a - amin + (2. * M_PI), 2. * M_PI) / da * counts) + 0.5);
     // remove end points
     i = std::max(i, 1);
     i = std::min(i, counts - 1);
     const double doubleI = i;
-    a = amin + da * (doubleI / counts) - getAngle();
+    a = amin + (da * (doubleI / counts)) - getAngle();
     vp.set(a);
     RS_Vector vp2(vp);
     vp2.scale(RS_Vector(1. / ra, 1. / rb));
@@ -811,7 +813,7 @@ RS_Vector RS_Ellipse::getNearestOrthTan(const RS_Vector& coord, const RS_Line& n
         }
         angle = RS_Math::correctAngle(angle + M_PI);
     }
-    if (sol.size() < 1) {
+    if (sol.empty()) {
         return RS_Vector(false);
     }
     aV.y *= -1.;
@@ -1138,7 +1140,7 @@ void RS_Ellipse::scale(const RS_Vector& center, const RS_Vector& factor) {
  */
 RS_Entity& RS_Ellipse::shear(const double k) {
     RS_Ellipse e1 = *this;
-    auto quadratic = e1.getQuadratic().shear(k);
+    const auto quadratic = e1.getQuadratic().shear(k);
     LC_CreationEllipse::createEllipseFromQuadratic(quadratic, e1.m_data);
     if (isArc()) {
         e1.moveStartpoint(getStartpoint().shear(k));
@@ -1277,7 +1279,7 @@ void RS_Ellipse::moveRef(const RS_Vector& ref, const RS_Vector& offset) {
             majorP *= d / k;
             setCenter(center);
             setMajorP(majorP);
-            setRatio(sqrt(d * d - c * c) / d);
+            setRatio(sqrt((d * d) - (c * c)) / d);
             correctAngles(); //avoid extra 2.*M_PI in angles
             if (m_data.ratio > 1.) {
                 switchMajorMinor();
@@ -1368,7 +1370,7 @@ double RS_Ellipse::areaLineIntegral() const {
       return M_PI * a * b;
   }
   const double ab = a * b;
-  const double r2 = a * a + b * b;
+  const double r2 = (a * a) + (b * b);
   const double& cx = m_data.center.x;
   const double aE = getAngle();
   const double y_start = getStartpoint().y;
@@ -1378,7 +1380,7 @@ double RS_Ellipse::areaLineIntegral() const {
   const double aE2 = aE + aE;
   const auto antiDerivative = [&cx, c1 = r2 * std::sin(aE2), c2 = std::cos(aE2), &ab](double t, double y) {
     const double t2 = t + t;
-    return cx * y + (c1 + c1 * std::cos(t2) + 2. * ab * ( t2 + c2 * std::sin(t2))) / 8.;
+    return (cx * y) + ((c1 + c1 * std::cos(t2) + 2. * ab * (t2 + c2 * std::sin(t2))) / 8.);
   };
 
   return antiDerivative(end_angle, y_end) - antiDerivative(start_angle, y_start);
@@ -1469,8 +1471,9 @@ double RS_Ellipse::getMinorRadius() const {
 }
 
 void RS_Ellipse::draw(RS_Painter* painter) {
-  if (painter == nullptr)
-    return;
+  if (painter == nullptr) {
+      return;
+  }
 
   const double uiRadius = painter->toGuiDX((getRatio() > 1.) ? getMajorRadius() : getMinorRadius());
   if (uiRadius <= double(RS_Painter::getMaximumArcNonErrorRadius())) {
@@ -1487,8 +1490,8 @@ void RS_Ellipse::draw(RS_Painter* painter) {
     return;
   }
 
-  RS_Vector startUi = painter->toGui(isArc() ? getStartpoint() : getCenter() + getMajorP());
-  QPointF startPos{startUi.x, startUi.y};
+  const RS_Vector startUi = painter->toGui(isArc() ? getStartpoint() : getCenter() + getMajorP());
+  const QPointF startPos{startUi.x, startUi.y};
   QPainterPath path(startPos);
   path.moveTo(startPos);
   createPainterPath(painter, path);
@@ -1496,10 +1499,11 @@ void RS_Ellipse::draw(RS_Painter* painter) {
 }
 
 void RS_Ellipse::createPainterPath(RS_Painter* painter, QPainterPath& path) const {
-    double baseAngle = getAngle1();
+    const double baseAngle = getAngle1();
     double fullAngleLength = isArc() ? getAngleLength() : 2 * M_PI;
-    if (isArc() && isReversed())
+    if (isArc() && isReversed()) {
         fullAngleLength = - fullAngleLength;
+    }
     auto getParamFunc = [this](const RS_Vector& vp) { return getEllipseAngle(vp); };
     auto getPointFunc = [this](double param) { return getEllipsePoint(param); };
     painter->pathForEntity(path, this, baseAngle, fullAngleLength, getParamFunc, getPointFunc, getMajorRadius());

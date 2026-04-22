@@ -1,5 +1,5 @@
 /*******************************************************************************
-*
+ *
  This file is part of the LibreCAD project, a 2D CAD program
 
  Copyright (C) 2025 LibreCAD.org
@@ -62,7 +62,7 @@ bool LC_DocumentsStorage::doSaveGraphicAs(RS_Graphic* graphic, RS_GraphicView *g
     RS2::FormatType saveFormat = RS2::FormatDXFRW;
     QG_FileDialog dlg(graphicView);
     const QString fileName = dlg.getSaveFile(&saveFormat, currentFileName);
-    bool result;
+    bool result = false;
     if (fileName.isEmpty()) {
         // cancel is not an error - returns true
         result = true;
@@ -143,7 +143,7 @@ bool LC_DocumentsStorage::loadGraphicFromTemplate(RS_Graphic* graphic, const QSt
     const QString autosaveFilename = createAutoSaveFileName(QDir::tempPath (), autosaveFilePrefix, tr("Unnamed")+".dxf");
 
     // clean all:
-    graphic->newDoc();
+    graphic->initForNewDocument();
 
     // import template file:
     const bool ret = RS_FileIO::instance()->fileImport(*graphic, templateFileName, type);
@@ -155,7 +155,7 @@ bool LC_DocumentsStorage::loadGraphicFromTemplate(RS_Graphic* graphic, const QSt
 }
 
 bool LC_DocumentsStorage::loadGraphic(RS_Graphic* graphic,  const QString &filename, const RS2::FormatType type) const {
-    graphic->newDoc();
+    graphic->initForNewDocument();
 
     const bool ret = RS_FileIO::instance()->fileImport(*graphic, filename, type);
 

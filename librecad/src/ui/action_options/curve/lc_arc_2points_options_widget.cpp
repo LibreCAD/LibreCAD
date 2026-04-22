@@ -92,12 +92,12 @@ void LC_Arc2PointsOptionsWidget::languageChange(){
 void LC_Arc2PointsOptionsWidget::doUpdateByAction(RS_ActionInterface *a) {
     m_action = static_cast<LC_ActionDrawArc2PointsBase *>(a);
 
-    bool reversed = m_action->isReversed();
+    const bool reversed = m_action->isReversed();
         double param = m_action->getParameter();
         if (m_action->rtti() == RS2::ActionDrawArc2PAngle){
             param = RS_Math::rad2deg(param);
         }
-        QString parameter = fromDouble(param);
+        const QString parameter = fromDouble(param);
 
     LC_GuardedSignalsBlocker({ui->rbNeg, ui->rbPos, ui->leValue});
 
@@ -106,7 +106,7 @@ void LC_Arc2PointsOptionsWidget::doUpdateByAction(RS_ActionInterface *a) {
 }
 
 void LC_Arc2PointsOptionsWidget::onValueChanged() {
-    auto val = ui->leValue->text();
+    const auto val = ui->leValue->text();
     double param;
     if (m_action->rtti() == RS2::ActionDrawArc2PAngle){
         if (toDoubleAngleDegrees(val, param, 1.0, true)){

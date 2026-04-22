@@ -167,7 +167,7 @@ void LC_ActionDrawLine::setStartPoint(const RS_Vector& v) {
 void LC_ActionDrawLine::onCoordinateEvent(const int status, [[maybe_unused]] bool isZero, const RS_Vector &coord) {
     RS_DEBUG->print("RS_ActionDrawLine::coordinateEvent");
 
-    if (m_actionData->data.startpoint.valid == false && status == SetEndpoint) {
+    if (!m_actionData->data.startpoint.valid && status == SetEndpoint) {
         setStatus(SetStartpoint);
         m_actionData->startOffset = 0;
     }
@@ -304,7 +304,7 @@ RS2::CursorType LC_ActionDrawLine::doGetMouseCursor([[maybe_unused]] int status)
     return RS2::CadCursor;
 }
 
-bool LC_ActionDrawLine::mayClose() {
+bool LC_ActionDrawLine::mayClose() const {
     return  SetEndpoint == getStatus()  &&  (1 < m_actionData->startOffset  && 0 <= m_actionData->historyIndex - m_actionData->startOffset);
 }
 
@@ -393,7 +393,7 @@ void LC_ActionDrawLine::redo(){
         ++m_actionData->historyIndex;
         const History h( m_actionData->history.at( m_actionData->index()));
         deletePreview();
-        auto startPoint = h.currentPoint;
+        const auto startPoint = h.currentPoint;
         moveRelativeZero(startPoint);
         m_actionData->startOffset = h.startOffset;
         switch (h.historicAction) {

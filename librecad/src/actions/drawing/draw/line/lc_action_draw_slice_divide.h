@@ -89,7 +89,7 @@ protected:
     enum {
         SetEntity = InitialActionStatus
     };
-    
+
     void doSaveOptions() override;
     void doLoadOptions() override;
 

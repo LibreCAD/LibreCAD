@@ -43,7 +43,7 @@ void RS_ActionLayersRemove::trigger() {
             RS_DIALOGFACTORY->requestSelectedLayersRemovalDialog(ll);
 
         if (!names.isEmpty()) {
-            for (auto name: names) {
+            for (const auto& name : std::as_const(names)) {
                 m_graphic->removeLayer(ll->find(name));
             }
             m_graphic->updateInserts();

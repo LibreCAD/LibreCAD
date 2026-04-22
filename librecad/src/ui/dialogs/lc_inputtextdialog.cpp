@@ -65,7 +65,7 @@ int LC_InputTextDialog::selectId(QWidget *parent, const QString &title, const QS
 
     const auto cb_input = dlg.ui->cbInput;
     cb_input->setEditable(false);
-    for (auto [fst, snd]: options) {
+    for (const auto& [fst, snd] : options) {
         cb_input->addItem(snd, fst);
     }
 

@@ -163,7 +163,7 @@ void QG_DlgText::setEntity(RS_Text* t, const bool isNew) {
 
     QString font;
     QString height;
-    QString def;
+    QString def; // fixme - sand - not used
     QString alignment;
     //QString letterSpacing;
     //QString wordSpacing;

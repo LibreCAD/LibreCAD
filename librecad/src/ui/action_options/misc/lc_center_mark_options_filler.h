@@ -24,9 +24,9 @@
 #ifndef LC_CENTERMARKOPTIONSFILLER_H
 #define LC_CENTERMARKOPTIONSFILLER_H
 
-#include "lc_action_options_properties_filler.h"
+#include "lc_action_options_properties_filler_base.h"
 
-class LC_CenterMarkOptionsFiller: public LC_ActionOptionsPropertiesFiller{
+class LC_CenterMarkOptionsFiller: public LC_ActionOptionsPropertiesFillerBase{
     Q_OBJECT
 public:
     LC_CenterMarkOptionsFiller() = default;

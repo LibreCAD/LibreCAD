@@ -30,10 +30,9 @@
 #define QC_APPLICATIONWINDOW_H
 
 #include "lc_actioncontext.h"
+#include "lc_actionfactory.h"
 #include "lc_mdiapplicationwindow.h"
 #include "lc_plugininvoker.h"
-#include "lc_actionfactory.h"
-
 
 class LC_PropertySheetWidget;
 class LC_ActionGroupManager;
@@ -225,7 +224,7 @@ public slots:
     void checkForNewVersion() const;
     void forceCheckForNewVersion() const;
     void slotShowEntityDescriptionOnHover(bool toggle);
-    void tryShowRelativeInput(RS2::RelativePointParam paramType);
+    void tryShowRelativeInput(RS2::RelativePointParam paramType) const;
 signals:
     void gridChanged(bool on);
     void draftChanged(bool on);

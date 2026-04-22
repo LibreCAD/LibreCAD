@@ -35,14 +35,14 @@ void LC_PropertiesProviderRenderOptions::fillDocumentProperties(LC_PropertyConta
     if (m_widget->getOptions()->noSelectionGraphicView) {
         const LC_Property::Names names = {SECTION_VIEW, tr("Graphic View"), tr("Setting that affects drawing appearance")};
         const auto cont = createSection(container, names);
-        bool draftMode = createDraft(cont);
+        const bool draftMode = createDraft(cont);
         createDraftLines(cont, draftMode);
         createAntialiasing(cont);
     }
 }
 
 bool LC_PropertiesProviderRenderOptions::createDraft(LC_PropertyContainer* cont) const {
-    auto graphicView = static_cast<QG_GraphicView*>(m_actionContext->getGraphicView());
+    const auto graphicView = static_cast<QG_GraphicView*>(m_actionContext->getGraphicView());
     if (graphicView == nullptr) {
         return false;
     }
@@ -61,7 +61,7 @@ bool LC_PropertiesProviderRenderOptions::createDraft(LC_PropertyContainer* cont)
 }
 
 void LC_PropertiesProviderRenderOptions::createDraftLines(LC_PropertyContainer* cont, bool draftMode) const {
-    auto graphicView = static_cast<QG_GraphicView*>(m_actionContext->getGraphicView());
+    const auto graphicView = static_cast<QG_GraphicView*>(m_actionContext->getGraphicView());
     if (graphicView == nullptr) {
         return;
     }
@@ -88,7 +88,7 @@ void LC_PropertiesProviderRenderOptions::createDraftLines(LC_PropertyContainer* 
 }
 
 void LC_PropertiesProviderRenderOptions::createAntialiasing(LC_PropertyContainer* cont) const {
-    auto graphicView = static_cast<QG_GraphicView*>(m_actionContext->getGraphicView());
+    const auto graphicView = static_cast<QG_GraphicView*>(m_actionContext->getGraphicView());
     if (graphicView == nullptr) {
         return;
     }

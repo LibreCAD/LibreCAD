@@ -31,8 +31,8 @@
 #include "lc_relative_position_editing_widget.h"
 #include "rs_actioninterface.h"
 #include "rs_entity.h"
-#include "rs_vector.h"
 #include "rs_preview.h"
+#include "rs_vector.h"
 
 class RS_Point;
 class LC_OverlayDrawable;
@@ -75,7 +75,7 @@ public:
     void resume() override;
     void trigger() override;
     void mouseMoveEvent(QMouseEvent *event) override;
-    void addSnappedPointToVisualSnap(const RS_Vector& v, RS_Entity* entity = nullptr, RS2::SnapType snapType = RS2::SnapType::ENDPOINT, bool clearOther = false);
+    void addSnappedPointToVisualSnap(const RS_Vector& v, RS_Entity* entity = nullptr, RS2::SnapType snapType = RS2::SnapType::ENDPOINT, bool clearOther = false) const;
     void keyPressEvent(QKeyEvent* e) override;
     QStringList getAvailableCommands() override;
     bool isClearVisualSnapMarks();
@@ -126,7 +126,7 @@ protected:
     void drawPreview();
     void drawHighlights() const;
     void drawPreviewAndHighlights();
-    bool isVisualSnapApplicable();
+    bool isVisualSnapApplicable() override;
 
     void addToHighlights(RS_Entity *e, bool enable = true) const;
 
@@ -187,7 +187,7 @@ protected:
 
     void previewSnapAngleMark(const RS_Vector &center, double angle) const;
     void previewSnapAngleMark(const RS_Vector &center, const RS_Vector &refPoint) const;
-    void previewSnapAngleMark(const RS_Vector& center, const double angle, double angleBase, bool isAnglesCounterClockWise) const;
+    void previewSnapAngleMark(const RS_Vector& center, double angle, double angleBase, bool isAnglesCounterClockWise) const;
 
     RS_Entity *catchModifiableEntity(const LC_MouseEvent *e, const EntityTypeList &enTypeList) const;
     RS_Entity *catchModifiableEntity(const LC_MouseEvent *e, RS2::EntityType enType) const;
@@ -245,7 +245,7 @@ protected:
     void initFromSettings() override;
 
     void onVisualSnapPointRegistered(LC_VisualSnapVertex* point, bool remove) override;
-    void onVisualSnapEntityRegistered(RS_Entity* point) override;
+    void onVisualSnapEntityRegistered(RS_Entity* entity) override;
     void onVisualSnapSolutionRefresh() override;
     virtual bool doCheckMayTrigger();
 

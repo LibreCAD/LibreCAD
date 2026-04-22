@@ -162,7 +162,7 @@ public:
     friend std::ostream& operator<<(std::ostream& os, const RS_Hatch& hatchEntity);
 
 protected:
-    RS_HatchData m_data{};
+    RS_HatchData m_data;
     double doGetDistanceToPoint(const RS_Vector& coord, RS_Entity** entity, RS2::ResolveLevel level, double solidDist) const override;
 private:
     void debugOutPath(const QPainterPath& path) const;

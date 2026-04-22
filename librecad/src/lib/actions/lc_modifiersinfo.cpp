@@ -67,14 +67,14 @@ LC_ModifiersInfo LC_ModifiersInfo::SHIFT_AND_CTRL(const QString &shiftMsg, const
 }
 
 const QString& LC_ModifiersInfo::getShiftMessage() const {
-    if (m_modifiers & Qt::ShiftModifier) {
+    if ((m_modifiers & Qt::ShiftModifier) != 0u) {
         return m_shiftMsg;
     }
     return MSG_EMPTY;
 }
 
 const QString& LC_ModifiersInfo::getCtrlMessage() const{
-    if (m_modifiers & Qt::ControlModifier){
+    if ((m_modifiers & Qt::ControlModifier) != 0u) {
         return m_ctrlMsg;
     }
     return MSG_EMPTY;

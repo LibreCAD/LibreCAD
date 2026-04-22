@@ -97,11 +97,11 @@ public:
     void resume() override;
     virtual bool mayBeTerminatedExternally() {return true;}
     void hideOptions();
-    void showOptions();
+    void showOptions() const;
     void onLateRequestCompleted(bool shouldBeSkipped) override;
-    void updateOptions(const QString& tagToFocus = "");
+    void updateOptions(const QString& tagToFocus = "") const;
     void postCreateInit();
-    virtual void tryShowRelativeInput([[maybe_unused]]RS2::RelativePointParam type) {};
+    virtual void tryShowRelativeInput([[maybe_unused]]RS2::RelativePointParam type) {}
 private:
     /**
      * Current status of the action. After an action has

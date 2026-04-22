@@ -142,7 +142,7 @@ struct LC_InfoCursorOverlayPrefs{
     bool showLabels = false;
     bool multiLine = false;
     bool showCurrentActionName = true;
-    LC_InfoCursorOptions options = LC_InfoCursorOptions();
+    LC_InfoCursorOptions options;
 
     void loadSettings();
 };

@@ -23,9 +23,9 @@
 
 #include "lc_propertiesprovider_parabola.h"
 
+#include "lc_parabola.h"
 #include "lc_property_container.h"
 #include "rs_entity.h"
-#include "lc_parabola.h"
 
 void LC_PropertiesProviderParabola::doCreateEntitySpecificProperties(LC_PropertyContainer* container, const QList<RS_Entity*>& list) {
     const auto contGeometry = createGeometrySection(container);

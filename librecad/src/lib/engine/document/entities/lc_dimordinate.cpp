@@ -31,8 +31,6 @@
 #include "rs_settings.h"
 #include "rs_text.h"
 
-LC_DimOrdinateData::~LC_DimOrdinateData() = default;
-
 std::ostream& operator <<(std::ostream& os, const LC_DimOrdinateData& dd) {
     os << "(" << dd.featurePoint << "," << dd.leaderEndPoint << ")";
     return os;
@@ -280,11 +278,11 @@ void LC_DimOrdinate::doUpdateDim() {
     if (m_dimGenericData.autoText) {
         if (inXDirection) {
             textPos = m_dimOrdinateData.leaderEndPoint; // fixme - positioning of text by x
-            textPos.y = textPos.y + (textOffsetV * (textWidth / 2.0 + dimgap)).y;
+            textPos.y = textPos.y + (textOffsetV * ((textWidth / 2.0) + dimgap)).y;
         }
         else {
             textPos = m_dimOrdinateData.leaderEndPoint; // fixme - positioning of text by Y;
-            textPos.x = textPos.x + (textOffsetV * (textWidth / 2.0 + dimgap)).x;
+            textPos.x = textPos.x + (textOffsetV * ((textWidth / 2.0) + dimgap)).x;
         }
 
         if (xAxisRotatedInUCS) {
@@ -336,7 +334,7 @@ QString LC_DimOrdinate::getMeasuredLabel() {
 
     const RS_Vector delta = featurePoint - m_dimGenericData.definitionPoint;
 
-    double distance;
+    double distance = NAN;
     if (m_dimOrdinateData.ordinateForX) {
         distance = delta.x;
     }

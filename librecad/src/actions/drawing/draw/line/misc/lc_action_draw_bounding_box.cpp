@@ -75,7 +75,7 @@ bool LC_ActionDrawBoundingBox::doTriggerModifications(LC_DocumentModificationBat
         }
     }
     else {
-        for (const auto e : m_selectedEntities) {
+        for (const auto e : std::as_const(m_selectedEntities)) {
             if (m_cornerPointsOnly) {
                 createCornerPoints(e->getMin() - m_offset, e->getMax() + m_offset, ctx.entitiesToAdd);
             }

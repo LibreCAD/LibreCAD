@@ -38,7 +38,7 @@
 RS_FontList* RS_FontList::m_uniqueInstance = nullptr;
 
 RS_FontList* RS_FontList::instance() {
-    if (!m_uniqueInstance) {
+    if (m_uniqueInstance == nullptr) {
         m_uniqueInstance = new RS_FontList();
     }
     return m_uniqueInstance;
@@ -55,10 +55,10 @@ void RS_FontList::init() {
     list.append(RS_SYSTEM->getFontList());
     QHash<QString, int> added; //used to remember added fonts (avoid duplication)
 
-    for (int i = 0; i < list.size(); ++i) {
-        RS_DEBUG->print(RS_Debug::D_ERROR, "font: %s:", list.at(i).toLatin1().data());
+    for (const auto& i : list) {
+        RS_DEBUG->print(RS_Debug::D_ERROR, "font: %s:", i.toLatin1().data());
 
-        QFileInfo fi(list.at(i));
+        QFileInfo fi(i);
         if (!added.contains(fi.baseName())) {
             m_fonts.emplace_back(new RS_Font(fi.baseName()));
             added.insert(fi.baseName(), 1);
@@ -122,7 +122,7 @@ RS_Font* RS_FontList::requestFont(const QString& name) {
         }
     }
 
-    if (!foundFont && name != "standard") {
+    if ((foundFont == nullptr) && name != "standard") {
         foundFont = requestFont("standard");
     }
 

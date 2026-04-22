@@ -76,7 +76,7 @@ void QG_SnapDistOptions::onPickDistanceClicked([[maybe_unused]] bool clicked) {
 }
 
 void QG_SnapDistOptions::onDistEditingFinished() {
-    if (m_dist) {
+    if (m_dist != nullptr) {
         QString value = ui->leDist->text();
         *m_dist = RS_Math::eval(value, 1.0);
         value = QString::number(*m_dist, 'g', 6);

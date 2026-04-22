@@ -130,6 +130,7 @@ set (SHARED_INCLUDES
      librecad/src/cmd
      librecad/src/lib/actions
      librecad/src/lib/actions/visual_snap
+     librecad/src/lib/actions/options
      librecad/src/lib/creation
      librecad/src/lib/debug
      librecad/src/lib/engine
@@ -177,6 +178,7 @@ set (SHARED_INCLUDES
      librecad/src/lib/math
      librecad/src/lib/modification
      librecad/src/lib/printing
+     librecad/src/lib/properties
      librecad/src/lib/scripting
      librecad/src/lib/selection
      librecad/src/lib/selection/metaentity
@@ -1234,10 +1236,8 @@ set (SHARED_SOURCES
      librecad/src/ui/action_options/insert/lc_block_library_insert_options_widget.h
      librecad/src/ui/action_options/lc_action_options_manager.cpp
      librecad/src/ui/action_options/lc_action_options_manager.h
-     librecad/src/ui/action_options/lc_action_options_widget.cpp
-     librecad/src/ui/action_options/lc_action_options_widget.h
-     librecad/src/ui/action_options/lc_action_options_widget_base.cpp
-     librecad/src/ui/action_options/lc_action_options_widget_base.h
+     librecad/src/lib/actions/options/lc_action_options_widget.cpp
+     librecad/src/lib/actions/options/lc_action_options_widget.h
      librecad/src/ui/action_options/line/lc_line_angle_rel_options_widget.cpp
      librecad/src/ui/action_options/line/lc_line_from_point_to_line_options_widget.cpp
      librecad/src/ui/action_options/line/lc_line_snake_options_widget.cpp
@@ -1598,22 +1598,22 @@ set (SHARED_SOURCES
      librecad/src/ui/dock_widgets/property_sheet/lc_propertysheet_widget_options.cpp
      librecad/src/ui/dock_widgets/property_sheet/lc_dlg_propertysheet_widget_options.h
      librecad/src/ui/dock_widgets/property_sheet/lc_dlg_propertysheet_widget_options.cpp
-     librecad/src/ui/dock_widgets/property_sheet/lib/properties/lc_property.cpp
-     librecad/src/ui/dock_widgets/property_sheet/lib/properties/lc_property.h
-     librecad/src/ui/dock_widgets/property_sheet/lib/properties/lc_property_atomic.cpp
-     librecad/src/ui/dock_widgets/property_sheet/lib/properties/lc_property_atomic.h
-     librecad/src/ui/dock_widgets/property_sheet/lib/properties/lc_property_container.cpp
-     librecad/src/ui/dock_widgets/property_sheet/lib/properties/lc_property_container.h
-     librecad/src/ui/dock_widgets/property_sheet/lib/properties/lc_property_multi.cpp
-     librecad/src/ui/dock_widgets/property_sheet/lib/properties/lc_property_multi.h
-     librecad/src/ui/dock_widgets/property_sheet/lib/properties/lc_property_numeric.h
-     librecad/src/ui/dock_widgets/property_sheet/lib/properties/lc_property_single.h
-     librecad/src/ui/dock_widgets/property_sheet/lib/properties/lc_property_structbase.h
-     librecad/src/ui/dock_widgets/property_sheet/lib/properties/lc_property_utils.cpp
-     librecad/src/ui/dock_widgets/property_sheet/lib/properties/lc_property_utils.h
-     librecad/src/ui/dock_widgets/property_sheet/lib/properties/lc_property_valuestorage.h
-     librecad/src/ui/dock_widgets/property_sheet/lib/properties/lc_property_view_descriptor.cpp
-     librecad/src/ui/dock_widgets/property_sheet/lib/properties/lc_property_view_descriptor.h
+     librecad/src/lib/properties/lc_property.cpp
+     librecad/src/lib/properties/lc_property.h
+     librecad/src/lib/properties/lc_property_atomic.cpp
+     librecad/src/lib/properties/lc_property_atomic.h
+     librecad/src/lib/properties/lc_property_container.cpp
+     librecad/src/lib/properties/lc_property_container.h
+     librecad/src/lib/properties/lc_property_multi.cpp
+     librecad/src/lib/properties/lc_property_multi.h
+     librecad/src/lib/properties/lc_property_numeric.h
+     librecad/src/lib/properties/lc_property_single.h
+     librecad/src/lib/properties/lc_property_structbase.h
+     librecad/src/lib/properties/lc_property_utils.cpp
+     librecad/src/lib/properties/lc_property_utils.h
+     librecad/src/lib/properties/lc_property_valuestorage.h
+     librecad/src/lib/properties/lc_property_view_descriptor.cpp
+     librecad/src/lib/properties/lc_property_view_descriptor.h
      librecad/src/ui/dock_widgets/property_sheet/lib/view/edit/lc_inplace_property_editing_controller.cpp
      librecad/src/ui/dock_widgets/property_sheet/lib/view/edit/lc_inplace_property_editing_controller.h
      librecad/src/ui/dock_widgets/property_sheet/lib/view/edit/lc_inplace_property_editing_stopper.h
@@ -1922,20 +1922,20 @@ set (SHARED_SOURCES
      librecad/src/ui/view/lc_printpreviewview.h
      librecad/src/ui/view/qg_graphicview.cpp
      librecad/src/ui/view/qg_graphicview.h
-     librecad/src/ui/dock_widgets/property_sheet/lib/lc_tool_options_properties_container_provider.h
-     librecad/src/ui/action_options/lc_action_options_support.cpp
-     librecad/src/ui/action_options/lc_action_options_support.h
-     librecad/src/ui/action_options/lc_action_options_editor.h
-     librecad/src/ui/action_options/lc_action_options_editor_typed.h
-     librecad/src/ui/action_options/lc_action_options_editor_typed.cpp
-     librecad/src/ui/action_options/lc_action_options_properties_filler.cpp
-     librecad/src/ui/action_options/lc_action_options_properties_filler.h
+     librecad/src/lib/actions/options/lc_tool_options_properties_container_provider.h
+     librecad/src/lib/actions/options/lc_action_options_support.cpp
+     librecad/src/lib/actions/options/lc_action_options_support.h
+     librecad/src/lib/actions/options/lc_action_options_editor.h
+     librecad/src/lib/actions/options/lc_action_options_editor_typed.h
+     librecad/src/lib/actions/options/lc_action_options_editor_typed.cpp
+     librecad/src/lib/actions/options/lc_action_options_properties_filler.cpp
+     librecad/src/lib/actions/options/lc_action_options_properties_filler.h
      librecad/src/ui/action_options/line/lc_line_radiant_options_filler.cpp
      librecad/src/ui/action_options/line/lc_line_radiant_options_filler.h
      librecad/src/ui/dock_widgets/property_sheet/metaentity/lc_property_container_builder.h
      librecad/src/ui/dock_widgets/property_sheet/metaentity/lc_property_container_builder.cpp
-     librecad/src/lib/actions/lc_action_options_base.cpp
-     librecad/src/lib/actions/lc_action_options_base.h
+     librecad/src/lib/actions/options/lc_action_options_base.cpp
+     librecad/src/lib/actions/options/lc_action_options_base.h
      librecad/src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp
      librecad/src/ui/action_options/line/lc_line_angle_rel_options_filler.h
      librecad/src/ui/action_options/line/lc_slice_divide_options_filler.cpp
@@ -2098,6 +2098,9 @@ set (SHARED_SOURCES
      librecad/src/lib/actions/visual_snap/lc_visual_snap_options.h
      librecad/src/lib/actions/visual_snap/lc_visual_snap_data.cpp
      librecad/src/lib/actions/visual_snap/lc_visual_snap_data.h
+     librecad/src/ui/action_options/lc_action_options_properties_filler_base.cpp
+     librecad/src/ui/action_options/lc_action_options_properties_filler_base.h
+     librecad/src/lib/actions/options/lc_property_sheet_interface.h
 )
 
 set (MUPARSER_SOURCES

@@ -85,8 +85,8 @@ void LC_PropertiesProviderImage::doCreateEntitySpecificProperties(LC_PropertyCon
             const double newScaleX = v.getX();
             const double newScaleY = v.getY();
 
-            double scaleX  = newScaleX / originalScaleX;
-            double scaleY  = newScaleY / originalScaleY;
+            const double scaleX  = newScaleX / originalScaleX;
+            const double scaleY  = newScaleY / originalScaleY;
 
             e->scale(e->getInsertionPoint(), RS_Vector(scaleX, scaleY));
         };
@@ -107,7 +107,7 @@ void LC_PropertiesProviderImage::doCreateEntitySpecificProperties(LC_PropertyCon
                                      QList<LC_PropertyAtomic*>* props) -> void {
                       const auto property = createVectorProperty(n, props, container, m_actionContext, m_widget);
                       property->setInteractiveInputType(LC_ActionContext::InteractiveInputInfo::NOTNEEDED);
-                      LC_PropertyViewDescriptor descriptor = {
+                      const LC_PropertyViewDescriptor descriptor = {
                           {
                               {LC_PropertyRSVectorView::ATTR_X_DISPLAY_NAME, tr("Width")},
                               {LC_PropertyRSVectorView::ATTR_Y_DISPLAY_NAME, tr("Height")},
@@ -133,8 +133,8 @@ void LC_PropertiesProviderImage::doCreateEntitySpecificProperties(LC_PropertyCon
 
     auto funSetImageSize = [](const RS_Vector& size, RS_Image* e) -> void {
         const RS_Vector originalSize = e->getImageSize();
-        double scaleX = size.x / originalSize.x;
-        double scaleY = size.y / originalSize.y;
+        const double scaleX = size.x / originalSize.x;
+        const double scaleY = size.y / originalSize.y;
         e->scale(e->getInsertionPoint(), RS_Vector(scaleX, scaleY));
     };
 
@@ -142,7 +142,7 @@ void LC_PropertiesProviderImage::doCreateEntitySpecificProperties(LC_PropertyCon
                 [this, funGetImageSize, funSetImageSize](const LC_Property::Names& n, RS_Image* e, LC_PropertyContainer* container,
                                    QList<LC_PropertyAtomic*>* props) -> void {
                     const auto property = createVectorProperty(n, props, container, m_actionContext, m_widget);
-                    LC_PropertyViewDescriptor descriptor = {
+                    const LC_PropertyViewDescriptor descriptor = {
                         {
                             {LC_PropertyRSVectorView::ATTR_X_DISPLAY_NAME, tr("Width")},
                             {LC_PropertyRSVectorView::ATTR_Y_DISPLAY_NAME, tr("Height")},
@@ -158,7 +158,7 @@ void LC_PropertiesProviderImage::doCreateEntitySpecificProperties(LC_PropertyCon
                 }, list, contGeometry);
 
     auto funGetDpi = [this](RS_Image* e) ->RS_Vector {
-        RS_Vector scale = e->getScale();
+        const RS_Vector scale = e->getScale();
         const double dpiX = RS_Units::scaleToDpi(scale.x, getFormatter()->getUnit());
         const double dpiY = RS_Units::scaleToDpi(scale.y, getFormatter()->getUnit());
         return RS_Vector(dpiX, dpiY);
@@ -179,7 +179,7 @@ void LC_PropertiesProviderImage::doCreateEntitySpecificProperties(LC_PropertyCon
                     property->setViewDescriptor(descriptor);
                     const auto valueStorage = new LC_EntityPropertyValueDelegate<RS_Vector, RS_Image>();
                     property->setValueStorage(valueStorage, true);
-                    typename LC_EntityPropertyValueDelegate<RS_Vector, RS_Image>::FunValueSetShort funSetDPI = nullptr;
+                    const typename LC_EntityPropertyValueDelegate<RS_Vector, RS_Image>::FunValueSetShort funSetDPI = nullptr;
                     valueStorage->setup(e, m_widget, funGetDpi, funSetDPI, nullptr);
                     property->setReadOnly(true);
                 }, list, contGeometry);

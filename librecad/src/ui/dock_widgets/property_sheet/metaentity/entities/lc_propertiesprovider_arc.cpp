@@ -25,7 +25,6 @@
 
 #include "lc_convert.h"
 #include "lc_entity_type_propertiesprovider.h"
-#include "lc_property_multi.h"
 #include "lc_propertysheetwidget.h"
 #include "rs_arc.h"
 
@@ -113,15 +112,15 @@ void LC_PropertiesProviderArc::doCreateCalculatedProperties(LC_PropertyContainer
 
 void LC_PropertiesProviderArc::doCreateSingleEntityCommands(LC_PropertyContainer* cont, RS_Entity* entity) {
     const auto arc = static_cast<RS_Arc*>(entity);
-    auto clickHandler = [this]([[maybe_unused]] RS_Arc* entity, const int linkIndex) {
+    auto clickHandler = [this]([[maybe_unused]] RS_Arc* ent, const int linkIndex) {
         switch (linkIndex) {
             case 0: {
-                m_actionContext->saveContextMenuActionContext(entity, entity->getStartpoint(), false);
+                m_actionContext->saveContextMenuActionContext(ent, ent->getStartpoint(), false);
                 m_actionContext->setCurrentAction(RS2::ActionDrawArcTangential, nullptr);
                 break;
             }
             case 1: {
-                m_actionContext->saveContextMenuActionContext(entity, entity->getEndpoint(), false);
+                m_actionContext->saveContextMenuActionContext(ent, ent->getEndpoint(), false);
                 m_actionContext->setCurrentAction(RS2::ActionDrawArcTangential, nullptr);
                 break;
             }

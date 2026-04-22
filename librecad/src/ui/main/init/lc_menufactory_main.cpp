@@ -113,7 +113,7 @@ void LC_MenuFactoryMain::doCreateMenus(QMenuBar* menuBar, const bool firstCreati
         topMenuMenus << m_menusHolder->m_menuHelp;
     }
 
-    for (const auto m : topMenuMenus) {
+    for (const auto m : std::as_const(topMenuMenus)) {
         menuBar->addMenu(m);
     }
 }
@@ -160,7 +160,7 @@ void LC_MenuFactoryMain::createHelpMenu(QMenuBar* menuBar, QList<QMenu*>& topMen
     topMenuMenus << menuHelp;
 }
 
-void LC_MenuFactoryMain::createToolsMenu(QMenuBar* menuBar, QList<QMenu*>& topMenuMenus) {
+void LC_MenuFactoryMain::createToolsMenu(QMenuBar* menuBar, QList<QMenu*>& topMenuMenus) const {
     if (m_menuOptions.expandToolsMenu) {
         createToolsMenuExpanded(menuBar, topMenuMenus);
     }
@@ -411,7 +411,7 @@ void LC_MenuFactoryMain::createWorkspaceMenu(QMenuBar* menuBar, QList<QMenu*>& t
 }
 
 void LC_MenuFactoryMain::prepareWorkspaceMenuComponents() const {
-    auto menuWorkspace = m_menusHolder->m_menuWorkspace;
+    const auto menuWorkspace = m_menusHolder->m_menuWorkspace;
     m_menusHolder->m_menuDockAreas = subMenu(menuWorkspace, tr("Dock Areas"), "dockareas", nullptr, {
                                                  "LeftDockAreaToggle",
                                                  "RightDockAreaToggle",
@@ -459,7 +459,7 @@ void LC_MenuFactoryMain::prepareWorkspaceMenuComponents() const {
         m_menusHolder->m_menuCADDockWidgets = menuCADDockWidgets;
         auto actions = QList<QAction*>();
         QAction* megaMenuAction = nullptr;
-        for (QDockWidget* dw : dockwidgetsList) {
+        for (QDockWidget* dw : std::as_const(dockwidgetsList)) {
             if (m_appWin->dockWidgetArea(dw) == Qt::LeftDockWidgetArea) {
                 if (dw->objectName() == "dock_cad_mega") {
                     megaMenuAction = dw->toggleViewAction();
@@ -475,7 +475,7 @@ void LC_MenuFactoryMain::prepareWorkspaceMenuComponents() const {
             menuCADDockWidgets->addSeparator();
         }
 
-        for (const auto action : actions) {
+        for (const auto action : std::as_const(actions)) {
             menuCADDockWidgets->QWidget::addAction(action);
         }
     }
@@ -489,7 +489,7 @@ void LC_MenuFactoryMain::prepareWorkspaceMenuComponents() const {
     if (cadToolbarsAreEnabled) {
         QList<QToolBar*> cadToolbarsList;
         QList<QToolBar*> otherToolbarsList;
-        for (QToolBar* tb : toolbarsList) {
+        for (QToolBar* tb : std::as_const(toolbarsList)) {
             const QVariant& variant = tb->property("_group");
             const int group = variant.toInt();
             if (group == 2) {
@@ -502,7 +502,7 @@ void LC_MenuFactoryMain::prepareWorkspaceMenuComponents() const {
 
         m_appWin->sortWidgetsByGroupAndTitle(cadToolbarsList);
         m_menusHolder->m_menuCADToolbars = doCreateSubMenu(menuWorkspace, tr("&CAD Toolbars"), "cadtoolbars", nullptr);
-        for (const QToolBar* tb : cadToolbarsList) {
+        for (const QToolBar* tb : std::as_const(cadToolbarsList)) {
             m_menusHolder->m_menuCADToolbars->QWidget::addAction(tb->toggleViewAction());
         }
         toolbarsList = otherToolbarsList;
@@ -511,7 +511,7 @@ void LC_MenuFactoryMain::prepareWorkspaceMenuComponents() const {
     m_appWin->sortWidgetsByGroupAndTitle(toolbarsList);
     int previousGroup = -100;
 
-    for (const QToolBar* tb : toolbarsList) {
+    for (const QToolBar* tb : std::as_const(toolbarsList)) {
         const QVariant& variant = tb->property("_group");
         const int group = variant.toInt();
         if (group != previousGroup) {
@@ -524,7 +524,7 @@ void LC_MenuFactoryMain::prepareWorkspaceMenuComponents() const {
     }
 }
 
-void LC_MenuFactoryMain::recreateToolbarsMenu() {
+void LC_MenuFactoryMain::recreateToolbarsMenu() const {
     m_menusHolder->m_menuWorkspace->clear();
     prepareWorkspaceMenuComponents();
 }
@@ -536,7 +536,7 @@ void LC_MenuFactoryMain::onWorkspaceMenuAboutToShow(const QList<QC_MDIWindow*>& 
         const auto menuWorkspace = m_menusHolder->m_menuWorkspace;
         menuWorkspace->clear(); // this is a temporary menu; constructed on-demand
         m_allowTearOffMenus = LC_GET_ONE_BOOL("Appearance", "AllowMenusTearOff", true);
-        QMenu* menu;
+        QMenu* menu = nullptr;
 
         addActions(menuWorkspace, {
             "Fullscreen",

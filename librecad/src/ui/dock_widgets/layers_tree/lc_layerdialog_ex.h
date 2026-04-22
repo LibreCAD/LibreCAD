@@ -25,8 +25,6 @@
 #ifndef LC_LAYERDIALOG_EX_H
 #define LC_LAYERDIALOG_EX_H
 
-#include <QString>
-
 #include "lc_dialog.h"
 #include "rs_pen.h"
 #include "ui_lc_layerdialog_ex.h"

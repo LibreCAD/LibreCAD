@@ -53,7 +53,7 @@
 
 struct RS_Entity::Impl {
     //! pen (attributes) for this entity
-    RS_Pen pen{};
+    RS_Pen pen;
     std::map<QString, QString> varList;
 
     void fromOther(const Impl* other) {
@@ -256,9 +256,9 @@ bool RS_Entity::isSelected() const {
  */
 bool RS_Entity::isParentSelected() const {
     auto p = this;
-    while (p) {
+    while (p != nullptr) {
         p = p->getParent();
-        if (p && p->isSelected() == true) {
+        if ((p != nullptr) && p->isSelected()) {
             return true;
         }
     }
@@ -531,7 +531,7 @@ RS_Graphic* RS_Entity::getGraphic() const {
         const auto* ret = static_cast<const RS_Graphic*>(this);
         return const_cast<RS_Graphic*>(ret);
     }
-    if (!m_parent) {
+    if (m_parent == nullptr) {
         return nullptr;
     }
     return m_parent->getGraphic();
@@ -547,7 +547,7 @@ RS_Block* RS_Entity::getBlock() const {
         const auto ret = static_cast<const RS_Block*>(this);
         return const_cast<RS_Block*>(ret);
     }
-    if (!m_parent) {
+    if (m_parent == nullptr) {
         return nullptr;
     }
     return m_parent->getBlock();
@@ -613,7 +613,7 @@ RS_Document* RS_Entity::getDocument() const {
         const auto ret = static_cast<const RS_Document*>(this);
         return const_cast<RS_Document*>(ret);
     }
-    if (!m_parent) {
+    if (m_parent == nullptr) {
         return nullptr;
     }
     return m_parent->getDocument();
@@ -722,7 +722,7 @@ QString RS_Entity::getGraphicVariableString(const QString& key, const QString& d
 RS2::Unit RS_Entity::getGraphicUnit() const {
     const RS_Graphic* graphic = getGraphic();
     RS2::Unit ret = RS2::None;
-    if (graphic) {
+    if (graphic != nullptr) {
         ret = graphic->getUnit();
     }
     return ret;
@@ -830,7 +830,7 @@ RS_Pen RS_Entity::getPenResolved() const {
         const RS_EntityContainer* ep = m_parent;
         //If parent is byblock check parent.parent (nested blocks)
         while (p.isColorByBlock()) {
-            if (ep) {
+            if (ep != nullptr) {
                 p.setColorFromPen(m_parent->getPen(false)); // fixme - check whether resolved pen is actually needed there...
                 ep = ep->m_parent;
             }
@@ -840,7 +840,7 @@ RS_Pen RS_Entity::getPenResolved() const {
         }
         ep = m_parent;
         while (p.isWidthByBlock()) {
-            if (ep) {
+            if (ep != nullptr) {
                 p.setWidthFromPen(m_parent->getPen(false)); // fixme - check whether resolved pen is actually needed there...
                 ep = ep->m_parent;
             }
@@ -850,7 +850,7 @@ RS_Pen RS_Entity::getPenResolved() const {
         }
         ep = m_parent;
         while (p.isLineTypeByBlock()) {
-            if (ep) {
+            if (ep != nullptr) {
                 p.setLineTypeFromPen(m_parent->getPen(false)); // fixme - check whether resolved pen is actually needed there...
                 ep = ep->m_parent;
             }
@@ -1032,7 +1032,7 @@ std::vector<QString> RS_Entity::getAllKeys() const {
 
 //! constructionLayer contains entities of infinite length, constructionLayer doesn't show up in print
 bool RS_Entity::isConstruction(const bool typeCheck) const {
-    if (typeCheck && getParent() && rtti() != RS2::EntityLine) {
+    if (typeCheck && (getParent() != nullptr) && rtti() != RS2::EntityLine) {
         // do not expand entities on construction layers, except lines
         return false;
     }
@@ -1092,7 +1092,7 @@ std::ostream& operator <<(std::ostream& os, RS_Entity& e) {
     //return os;
 
     os << " {Entity id: " << e.m_id;
-    if (e.m_parent) {
+    if (e.m_parent != nullptr) {
         os << " | parent id: " << e.m_parent->getId() << "\n";
     }
     else {

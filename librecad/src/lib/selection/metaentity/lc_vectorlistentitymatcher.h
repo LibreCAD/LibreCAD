@@ -48,8 +48,8 @@ public:
         else {
             auto type = this->propertyType->getType();
             auto coordX = type == LC_PropertyMatchTypeEnum::ENTITY_PROPERTY_COORD_X;
-            this->m_funMath = [this, mapper, coordX, valueToMatch, tolerance](RS_Entity* e)-> bool {
-                EntityType* ent = static_cast<EntityType*>(e);
+            this->m_funMath = [this, mapper, coordX, valueToMatch, tolerance](RS_Entity* e) -> bool {
+                auto* ent = static_cast<EntityType*>(e);
                 VectorsListType wcsCoordinates = this->m_valueAccessor(ent);
                 QList<double> ucsCoords;
 

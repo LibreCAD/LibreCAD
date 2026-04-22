@@ -24,9 +24,9 @@
 #ifndef LC_IMAGEOPTIONSFILLER_H
 #define LC_IMAGEOPTIONSFILLER_H
 
-#include "lc_action_options_properties_filler.h"
+#include "lc_action_options_properties_filler_base.h"
 
-class LC_ImageOptionsFiller : public LC_ActionOptionsPropertiesFiller{
+class LC_ImageOptionsFiller : public LC_ActionOptionsPropertiesFillerBase{
     Q_OBJECT
 public:
     LC_ImageOptionsFiller() = default;

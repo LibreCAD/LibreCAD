@@ -52,7 +52,7 @@ RS_Leader::RS_Leader(RS_EntityContainer* parent, const RS_LeaderData& d)
 }
 
 RS_Entity* RS_Leader::clone() const {
-    RS_LeaderData data(hasArrowHead(), m_data.styleName);
+    const RS_LeaderData data(hasArrowHead(), m_data.styleName);
     // fixme - setup other parts of data?
     auto* p = new RS_Leader(nullptr, data);
     p->setOwner(isOwner());
@@ -61,7 +61,7 @@ RS_Entity* RS_Leader::clone() const {
     p->setLayer(m_layer);
 
     p->m_empty = true;
-    p->m_data.arrowHead = m_data.arrowHead;    
+    p->m_data.arrowHead = m_data.arrowHead;
     for (const auto v : m_data.vertexes) {
         p->m_data.vertexes << v;
     }
@@ -93,7 +93,7 @@ void RS_Leader::update() {
     clear();
     m_empty = true;
     if (!m_data.vertexes.empty()) {
-        for (const auto v: m_data.vertexes) {
+        for (const auto v: std::as_const(m_data.vertexes)) {
             doAddVertex(v);
         }
         m_dimGenericData.definitionPoint = m_data.vertexes.first();
@@ -114,7 +114,7 @@ void RS_Leader::moveRef(const RS_Vector& ref, const RS_Vector& offset) {
     for (auto& v: m_data.vertexes) {
         if (v == ref) {
             v.move(offset);
-        };
+        }
     }
     update();
 }

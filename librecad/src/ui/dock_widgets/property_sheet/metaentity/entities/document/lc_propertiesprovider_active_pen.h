@@ -39,7 +39,7 @@ protected:
     void createColor(LC_PropertyContainer* container, const RS_Pen& pen) const;
     void createLineType(LC_PropertyContainer* container, const RS_Pen& pen) const;
     void createLineWidth(LC_PropertyContainer* container, const RS_Pen& pen) const;
-    void createCommands(LC_PropertyContainer* cont);
+    void createCommands(LC_PropertyContainer* cont) const;
 };
 
 #endif

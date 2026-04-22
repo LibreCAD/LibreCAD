@@ -24,8 +24,6 @@
 #include "lc_property_rsvector_view.h"
 
 #include <QLabel>
-#include <QLocale>
-#include <QToolButton>
 
 #include "lc_property_double_interactivepick_view.h"
 #include "lc_property_editor_button_handler.h"

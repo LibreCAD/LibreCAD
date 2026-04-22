@@ -91,7 +91,7 @@ void LC_ActionDrawText::init(const int status) {
 }
 
 void LC_ActionDrawText::reset() {
-    const QString text = m_textData.get() ? m_textData->text : "";
+    const QString text = (m_textData != nullptr) ? m_textData->text : "";
     m_textData.reset(new RS_TextData(RS_Vector(0.0, 0.0), RS_Vector(0.0, 0.0), 1.0, 1.0, RS_TextData::VABaseline, RS_TextData::HALeft,
                                      RS_TextData::None, text, "standard", 0.0, RS2::Update));
 }

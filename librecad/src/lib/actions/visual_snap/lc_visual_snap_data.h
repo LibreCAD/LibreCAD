@@ -45,8 +45,8 @@ public:
     }
     void unlock() {m_mutex.unlock();}
     void addRelativePositionInfo(const LC_RelativePositionData* relativePositionData);
-    void storeEntityRef(RS_Entity* const snapEntity, RS_Entity* documentViewSnapEntity,  unsigned long long entityId);
-    void storeVertexRef(LC_VisualSnapVertex* const vertex);
+    void storeEntityRef(RS_Entity* snapEntity, RS_Entity* documentViewSnapEntity, unsigned long long entityId);
+    void storeVertexRef(LC_VisualSnapVertex* vertex);
     void removeVertexWithPoint(const RS_Vector& pos);
     void removeDocumentEntityWithId(unsigned long long entityId);
     void removeVertex(LC_VisualSnapVertex* vertex);

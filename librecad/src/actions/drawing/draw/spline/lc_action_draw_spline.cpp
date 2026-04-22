@@ -77,7 +77,7 @@ void LC_ActionDrawSpline::doLoadOptions() {
         const int degree = loadInt("Degree", 3);
         setDegree(degree);
     }
-    bool closed = loadBool("Closed", false);
+    const bool closed = loadBool("Closed", false);
     setClosed(closed);
 }
 
@@ -96,7 +96,7 @@ void LC_ActionDrawSpline::init(const int status) {
 }
 
 RS_Entity* LC_ActionDrawSpline::doTriggerCreateEntity() {
-    if (!m_actionData->spline) {
+    if (m_actionData->spline == nullptr) {
         return nullptr;
     }
 
@@ -116,7 +116,7 @@ void LC_ActionDrawSpline::onMouseMoveEvent(const int status, const LC_MouseEvent
             break;
         }
         case SetNextPoint: {
-            if (m_actionData->spline /*&& point.valid*/) {
+            if (m_actionData->spline != nullptr /*&& point.valid*/) {
                 auto* tmpSplineClone = dynamic_cast<RS_Spline*>(m_actionData->spline->clone());
                 tmpSplineClone->addControlPoint(mouse);
                 tmpSplineClone->update();
@@ -161,7 +161,7 @@ void LC_ActionDrawSpline::onCoordinateEvent(const int status, [[maybe_unused]] b
         case SetStartPoint: {
             m_actionData->history.clear();
             m_actionData->history.append(coord);
-            if (!m_actionData->spline) {
+            if (m_actionData->spline == nullptr) {
                 m_actionData->spline = new RS_Spline(m_document, m_actionData->data);
                 m_actionData->spline->addControlPoint(coord);
             }
@@ -175,7 +175,7 @@ void LC_ActionDrawSpline::onCoordinateEvent(const int status, [[maybe_unused]] b
             moveRelativeZero(coord);
             addSnappedPointToVisualSnap(coord);
             m_actionData->history.append(coord);
-            if (m_actionData->spline) {
+            if (m_actionData->spline != nullptr) {
                 m_actionData->spline->addControlPoint(coord);
                 drawPreview();
                 drawSnapper();
@@ -296,7 +296,7 @@ void LC_ActionDrawSpline::undo() {
         if (!m_actionData->history.isEmpty()) {
             //point = *history.last();
         }
-        if (m_actionData->spline) {
+        if (m_actionData->spline != nullptr) {
             m_actionData->spline->removeLastControlPoint();
             if (!m_actionData->history.isEmpty()) {
                 const RS_Vector v = m_actionData->history.last();
@@ -312,7 +312,7 @@ void LC_ActionDrawSpline::undo() {
 
 void LC_ActionDrawSpline::setDegree(const int deg) {
     m_actionData->data.degree = deg;
-    if (m_actionData->spline) {
+    if (m_actionData->spline != nullptr) {
         m_actionData->spline->setDegree(deg);
     }
 }
@@ -323,7 +323,7 @@ int LC_ActionDrawSpline::getDegree() const {
 
 void LC_ActionDrawSpline::setClosed(const bool c) {
     m_actionData->data.setClosed(c);
-    if (m_actionData->spline) {
+    if (m_actionData->spline != nullptr) {
         m_actionData->spline->setClosed(c);
     }
 }

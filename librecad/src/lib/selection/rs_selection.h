@@ -25,12 +25,10 @@
 #define RS_SELECTION_H
 #include <QList>
 #include <QSet>
-#include <qcombobox.h>
 
 #include "lc_selectionpredicate.h"
 #include "rs_document.h"
 #include "rs_graphicview.h"
-#include "rs_layer.h"
 
 class RS_Document;
 

@@ -19,10 +19,11 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 **********************************************************************/
+
 #include "lc_paste_transform_options_widget.h"
+
 #include "lc_action_edit_paste_transform.h"
 #include "lc_guarded_signals_blocker.h"
-
 #include "ui_lc_paste_transform_options_widget.h"
 
 LC_PasteTransformOptionsWidget::LC_PasteTransformOptionsWidget(): ui(new Ui::LC_PasteTransformOptionsWidget) {
@@ -51,15 +52,15 @@ LC_PasteTransformOptionsWidget::~LC_PasteTransformOptionsWidget() {
 void LC_PasteTransformOptionsWidget::doUpdateByAction(RS_ActionInterface* a) {
     m_action = static_cast<LC_ActionEditPasteTransform*>(a);
 
-    QString angle = fromDouble(RS_Math::rad2deg(m_action->getAngle()));
-    QString factor = fromDouble(m_action->getFactor());
-    bool isArray = m_action->isArrayCreated();
-    int arrayXCount = m_action->getArrayXCount();
-    int arrayYCount = m_action->getArrayYCount();
-    QString arrayXSpacing = fromDouble(m_action->getArraySpacingX());
-    QString arrayYSpacing = fromDouble(m_action->getArraySpacingY());
-    bool sameAngles = m_action->isSameAngles();
-    QString arrayAngle = fromDouble(RS_Math::rad2deg(m_action->getArrayAngle()));
+    const QString angle = fromDouble(RS_Math::rad2deg(m_action->getAngle()));
+    const QString factor = fromDouble(m_action->getFactor());
+    const bool isArray = m_action->isArrayCreated();
+    const int arrayXCount = m_action->getArrayXCount();
+    const int arrayYCount = m_action->getArrayYCount();
+    const QString arrayXSpacing = fromDouble(m_action->getArraySpacingX());
+    const QString arrayYSpacing = fromDouble(m_action->getArraySpacingY());
+    const bool sameAngles = m_action->isSameAngles();
+    const QString arrayAngle = fromDouble(RS_Math::rad2deg(m_action->getArrayAngle()));
 
     LC_GuardedSignalsBlocker({
         ui->leAngle,
@@ -130,7 +131,7 @@ void LC_PasteTransformOptionsWidget::onArrayYCountChanged(const int value) {
 }
 
 void LC_PasteTransformOptionsWidget::onAngleEditingFinished() {
-    auto val = ui->leAngle->text();
+    const auto val = ui->leAngle->text();
     double angle;
     if (toDoubleAngleDegrees(val, angle, 0.0, false)) {
         m_action->setAngle(RS_Math::deg2rad(angle));
@@ -138,7 +139,7 @@ void LC_PasteTransformOptionsWidget::onAngleEditingFinished() {
 }
 
 void LC_PasteTransformOptionsWidget::onFactorEditingFinished() {
-    auto val = ui->leFactor->text();
+    const auto val = ui->leFactor->text();
     double y;
     if (toDouble(val, y, 1.0, true)) {
         m_action->setFactor(y);
@@ -147,7 +148,7 @@ void LC_PasteTransformOptionsWidget::onFactorEditingFinished() {
 }
 
 void LC_PasteTransformOptionsWidget::onArraySpacingXEditingFinished() {
-    auto val = ui->leArraySpacingX->text();
+    const auto val = ui->leArraySpacingX->text();
     double y;
     if (toDouble(val, y, 1.0, true)) {
         m_action->setArraySpacingX(y);
@@ -156,7 +157,7 @@ void LC_PasteTransformOptionsWidget::onArraySpacingXEditingFinished() {
 }
 
 void LC_PasteTransformOptionsWidget::onArraySpacingYEditingFinished() {
-    auto val = ui->leArraySpacingY->text();
+    const auto val = ui->leArraySpacingY->text();
     double y;
     if (toDouble(val, y, 1.0, true)) {
         m_action->setArraySpacingY(y);
@@ -165,7 +166,7 @@ void LC_PasteTransformOptionsWidget::onArraySpacingYEditingFinished() {
 }
 
 void LC_PasteTransformOptionsWidget::onArrayAngleEditingFinished() {
-    auto val = ui->leArrayAngle->text();
+    const auto val = ui->leArrayAngle->text();
     double angle;
     if (toDoubleAngleDegrees(val, angle, 0.0, false)) {
         m_action->setArrayAngle(RS_Math::deg2rad(angle));

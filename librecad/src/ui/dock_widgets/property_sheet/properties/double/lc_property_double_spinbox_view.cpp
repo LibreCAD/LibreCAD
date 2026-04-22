@@ -121,7 +121,7 @@ void LC_PropertyDoubleSpinBoxView::doApplyAttributes(const LC_PropertyViewDescri
     attrs.load(ATTR_PRECISION, m_precision);
     m_step = attrs[ATTR_STEP];
     if (m_step.isValid()) {
-        bool ok;
+        bool ok = false;
         const double step = m_step.toDouble(&ok);
         m_step = ok ? step : QVariant();
     }

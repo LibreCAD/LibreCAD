@@ -118,7 +118,7 @@ QList<QStringList> LC_Tolerance::getFields() const {
     QStringList lines = m_toleranceData.textCode.split("^J");
     const qsizetype len = lines.length();
     for (qsizetype k = 0; k < len; k++) {
-        QString line = lines[k];
+        const QString& line = lines[k];
         QStringList lineFields = line.split("%%v");
         ret.append(lineFields);
     }
@@ -140,7 +140,7 @@ double LC_Tolerance::getGraphicVariable(const QString& key, const double defMM, 
     return v;
 }
 
-double LC_Tolerance::getDimtxt(const bool scale) {
+double LC_Tolerance::getDimtxt(const bool scale) const {
     double v = 2.5;
 
     // get value from override:
@@ -218,7 +218,7 @@ void LC_Tolerance::createTextLabels(QList<QList<double>> &divisions) {
 
     qint64 qsizetype = fields.length();
     // find out if we need to join the first fields of the first two lines:
-    if (qsizetype>1 && fields[0].length()>0 && fields[1].length()>0) {
+    if (qsizetype > 1 && !fields[0].empty() && !fields[1].empty()) {
         QString field1 = fields[0][0];
         QString field2 = fields[1][0];
         auto reg = QRegularExpression("\\\\F[gG][dD][tT];", QRegularExpression::CaseInsensitiveOption);
@@ -237,7 +237,7 @@ void LC_Tolerance::createTextLabels(QList<QList<double>> &divisions) {
     RS_Pen textPen = getPenForText();
 
     for (qint64 k=0; k<qsizetype; k++) {
-        QStringList fieldsOfLine = fields[k];
+        const QStringList& fieldsOfLine = fields[k];
         double cursorX = dimtxt/2.0;
 
         QList<double> row;
@@ -247,7 +247,7 @@ void LC_Tolerance::createTextLabels(QList<QList<double>> &divisions) {
         qint64 len = fieldsOfLine.length();
         // render text strings with distance of dimtxt:
         for (qint64 i = 0; i < len; i++) {
-            QString field = fieldsOfLine[i];
+            const QString& field = fieldsOfLine[i];
             LC_ERR << "field:" << field;
             if (field.isEmpty()) {
                 continue;
@@ -274,7 +274,7 @@ void LC_Tolerance::createTextLabels(QList<QList<double>> &divisions) {
 
             cursorX += text->getUsedTextWidth();
             cursorX += dimtxt;
-            divisions.last().push_back(cursorX - dimtxt/2);
+            divisions.last().push_back(cursorX - (dimtxt / 2));
 
             if (k==1 && i==0 && m_joinFirstField) {
                 // skip first symbol of second line if fields are joined:
@@ -306,7 +306,7 @@ void LC_Tolerance::createFrameLines(QList<QList<double>> &divisions)  {
     for (qint64 i = 0; i < divisionsLen; i++) {
         //qDebug() << "divisions:" << divisions[i];
 
-        auto current = divisions[i];
+        const auto& current = divisions[i];
         const qsizetype currentLength = current.length();
         // never show vertical lines for empty rows:
         if (currentLength > 1) {

@@ -308,7 +308,7 @@ void LC_MakerCamSVG::writeLine(const RS_Line* line) const {
     const RS_Pen pen = line->getPen();
     const RS2::LineType lineType = pen.getLineType();
 
-    if ((RS2::SolidLine != lineType) & m_convertLineTypes ) {
+    if (static_cast<int>(RS2::SolidLine != lineType) & m_convertLineTypes) {
         RS_DEBUG->print("RS_MakerCamSVG::writeLine: write baked line as path");
 
         std::string path;

@@ -1,5 +1,5 @@
 /*******************************************************************************
-*
+ *
  This file is part of the LibreCAD project, a 2D CAD program
 
  Copyright (C) 2025 LibreCAD.org
@@ -106,7 +106,7 @@ double LC_GraphicViewport::getAnglesBaseAngle() const {
 void LC_GraphicViewport::highlightLocation(const RS_Vector &vector) {
     const auto container = m_overlaysManager.getEntitiesContainer(RS2::OverlayGraphics::PermanentHighlights);
     container->addEntity(new LC_RefPoint(container, vector,m_refPointSize, m_refPointMode));
-    notifyChanged(static_cast<RS2::RedrawMethod>(RS2::RedrawOverlay + RS2::RedrawImmediately));
+    notifyChanged(RS2::RedrawOverlay, true);
 }
 
 void LC_GraphicViewport::clearLocationsHighlight()  {
@@ -218,7 +218,7 @@ void LC_GraphicViewport::zoomOutX(const double f) {
 }
 
 void LC_GraphicViewport::centerOffsetXandY(const RS_Vector& containerMin, const RS_Vector& containerSize) {
-    if (m_document && !m_zoomFrozen) {
+    if ((m_document != nullptr) && !m_zoomFrozen) {
         m_offsetX = static_cast<int>((getWidth() - m_borderLeft - m_borderRight - containerSize.x * m_factor.x) / 2.0 - containerMin.x * m_factor.x) + m_borderLeft;
         m_offsetY = static_cast<int>((getHeight() - m_borderTop - m_borderBottom - containerSize.y * m_factor.y) / 2.0 - containerMin.y * m_factor.y) + m_borderBottom;
         fireViewportChanged();
@@ -229,7 +229,7 @@ void LC_GraphicViewport::centerOffsetXandY(const RS_Vector& containerMin, const 
  * Centers the drawing in x-direction.
  */
 void LC_GraphicViewport::centerOffsetX(const RS_Vector& containerMin, const RS_Vector& containerSize) {
-    if (m_document && !m_zoomFrozen) {
+    if ((m_document != nullptr) && !m_zoomFrozen) {
         m_offsetX = static_cast<int>((getWidth() - m_borderLeft - m_borderRight - containerSize.x * m_factor.x) / 2.0 - containerMin.x * m_factor.x) + m_borderLeft;
        fireViewportChanged();
     }
@@ -239,7 +239,7 @@ void LC_GraphicViewport::centerOffsetX(const RS_Vector& containerMin, const RS_V
  * Centers the drawing in y-direction.
  */
 void LC_GraphicViewport::centerOffsetY(const RS_Vector& containerMin, const RS_Vector& containerSize) {
-    if (m_document && !m_zoomFrozen) {
+    if ((m_document != nullptr) && !m_zoomFrozen) {
         m_offsetY = static_cast<int>((getHeight() - m_borderTop - m_borderBottom - containerSize.y * m_factor.y) / 2.0 - containerMin.y * m_factor.y) + m_borderBottom;
         fireViewportChanged();
     }
@@ -412,8 +412,7 @@ void LC_GraphicViewport::removeViewportListener(LC_GraphicViewPortListener *list
 
 void LC_GraphicViewport::fireViewportChanged() const {
     invalidateGrid();
-    for (int i=0; i<m_viewportListeners.size(); ++i) {
-        LC_GraphicViewPortListener* l = m_viewportListeners.at(i);
+    for (const auto l : m_viewportListeners) {
         l->onViewportChanged();
     }
 }
@@ -422,17 +421,15 @@ void LC_GraphicViewport::invalidateGrid() const {
     m_grid->invalidate(isGridOn());
 }
 
-void LC_GraphicViewport::fireRedrawNeeded(const RS2::RedrawMethod method) const {
-    for (int i=0; i<m_viewportListeners.size(); ++i) {
-        LC_GraphicViewPortListener* l = m_viewportListeners.at(i);
-        l->onViewportRedrawNeeded(method);
+void LC_GraphicViewport::fireRedrawNeeded(const RS2::RedrawMethod method, bool immediately) const {
+    for (const auto l : m_viewportListeners) {
+        l->onViewportRedrawNeeded(method, immediately);
     }
 }
 
 void LC_GraphicViewport::fireUcsChanged(LC_UCS *ucs) const {
     invalidateGrid();
-    for (int i=0; i<m_viewportListeners.size(); ++i) {
-        LC_GraphicViewPortListener* l = m_viewportListeners.at(i);
+    for (const auto l : m_viewportListeners) {
         l->onUCSChanged(ucs);
     }
 }
@@ -443,8 +440,7 @@ void LC_GraphicViewport::firePreviousZoomChanged([[maybe_unused]]bool value) {
 }
 
 void LC_GraphicViewport::fireRelativeZeroChanged(const RS_Vector &pos) const {
-    for (int i=0; i<m_viewportListeners.size(); ++i) {
-        LC_GraphicViewPortListener* l = m_viewportListeners.at(i);
+    for (const auto l : m_viewportListeners) {
         l->onRelativeZeroChanged(pos);
     }
 }
@@ -496,7 +492,7 @@ void LC_GraphicViewport::zoomScroll(const RS2::Direction direction) {
  *	*/
 
 void LC_GraphicViewport::zoomAutoY(const bool axis) {
-    if (m_document) {
+    if (m_document != nullptr) {
         double visibleHeight = 0.0;
         double minY = RS_MAXDOUBLE;
         double maxY = RS_MINDOUBLE;
@@ -553,7 +549,7 @@ void LC_GraphicViewport::zoomAutoY(const bool axis) {
 }
 
 void LC_GraphicViewport::zoomAutoEnsurePointsIncluded(const RS_Vector &wcsP1, const RS_Vector &wcsP2, const RS_Vector &wcsP3) {
-    if (m_document) {
+    if (m_document != nullptr) {
         m_document->calculateBorders();
         RS_Vector min = m_document->getMin();
         RS_Vector max = m_document->getMax();
@@ -578,7 +574,7 @@ void LC_GraphicViewport::zoomAutoEnsurePointsIncluded(const RS_Vector &wcsP1, co
  */
 void LC_GraphicViewport::zoomAuto(const bool axis, const bool keepAspectRatio) {
     RS_DEBUG->print("RS_GraphicView::zoomAuto");
-    if (m_document) {
+    if (m_document != nullptr) {
         m_document->calculateBorders();
         const RS_Vector min = m_document->getMin();
         const RS_Vector max = m_document->getMax();
@@ -682,7 +678,7 @@ void LC_GraphicViewport::zoomPrevious() {
 
     RS_DEBUG->print("RS_GraphicView::zoomPrevious");
 
-    if (m_document) {
+    if (m_document != nullptr) {
         restoreView();
     }
 }
@@ -794,7 +790,7 @@ void LC_GraphicViewport::loadGridSettings() const {
     if (m_grid != nullptr){
         m_grid->loadSettings();
     }
-    fireRedrawNeeded(RS2::RedrawGrid);
+    fireRedrawNeeded(RS2::RedrawGrid, false);
 }
 
 void LC_GraphicViewport::setUCS(const RS_Vector &origin, const double angle, const bool isometric, const RS2::IsoGridViewType isoType) {
@@ -961,7 +957,7 @@ LC_UCS* LC_GraphicViewport::getCurrentUCS() const{
     return result;
 }
 
-RS_Vector LC_GraphicViewport::snapGrid(const RS_Vector& coord, RS_Entity* entity) const {
+RS_Vector LC_GraphicViewport::snapGrid([[maybe_unused]] const RS_Vector& coord, [[maybe_unused]] RS_Entity* entity) const {
     // fixme - reserved for the future
     Q_ASSERT_X(false, "snapGrid", "Not implemented");
     return RS_Vector(false);
@@ -1118,16 +1114,16 @@ void LC_GraphicViewport::setGraphic(RS_Graphic *g) {
  // fixme - ucs, potentially, these methods should live in some other place...
 void LC_GraphicViewport::zoomPage() {
     RS_DEBUG->print("RS_GraphicView::zoomPage");
-    if (!m_document) {
+    if (m_document == nullptr) {
         return;
     }
 
     const RS_Graphic *graphic = m_document->getGraphic();
-    if (!graphic) {
+    if (graphic == nullptr) {
         return;
     }
 
-    LC_PlotSettings* ps = graphic->getPlotSettings();
+    const LC_PlotSettings* ps = graphic->getPlotSettings();
 
     const RS_Vector s = ps->getPrintAreaSize() / ps->getPaperScale();
 
@@ -1182,17 +1178,17 @@ void LC_GraphicViewport::zoomPage() {
 
 void LC_GraphicViewport::zoomPageEx() {
     RS_DEBUG->print("RS_GraphicView::zoomPage");
-    if (!m_document) {
+    if (m_document == nullptr) {
         return;
     }
 
     const RS_Graphic *graphic = m_document->getGraphic();
-    if (!graphic) {
+    if (graphic == nullptr) {
         return;
     }
 
     const RS2::Unit dest = graphic->getUnit();
-    LC_PlotSettings* ps = m_graphic->getPlotSettings();
+    const LC_PlotSettings* ps = m_graphic->getPlotSettings();
     const double marginsWidth = RS_Units::convert(ps->getMarginLeftMm() + ps->getMarginRightMm(), RS2::Millimeter, dest);
     const double marginsHeight = RS_Units::convert(ps->getMarginTopMm() + ps->getMarginBottomMm(), RS2::Millimeter, dest);
 

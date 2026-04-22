@@ -112,7 +112,7 @@ void RS_Insert::update() {
     RS_DEBUG->print("RS_Insert::update");
     RS_DEBUG->print("RS_Insert::update: name: %s", m_data.name.toLatin1().data());
 
-    if (m_updateEnabled == false) {
+    if (!m_updateEnabled) {
         return;
     }
 
@@ -238,8 +238,8 @@ RS_Block* RS_Insert::getBlockForInsert() const {
 
     RS_BlockList* blkList = nullptr;
 
-    if (!m_data.blockSource) {
-        if (getGraphic()) {
+    if (m_data.blockSource == nullptr) {
+        if (getGraphic() != nullptr) {
             blkList = getGraphic()->getBlockList();
         }
     }

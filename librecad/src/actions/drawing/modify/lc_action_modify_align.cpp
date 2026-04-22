@@ -19,13 +19,14 @@
  along with this program; if not, write to the Free Software
  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  ******************************************************************************/
+
 #include "lc_action_modify_align.h"
 
 #include "lc_actioninfomessagebuilder.h"
+#include "lc_align_options_filler.h"
+#include "lc_align_options_widget.h"
 #include "lc_cursoroverlayinfo.h"
 #include "lc_graphicviewport.h"
-#include "lc_align_options_widget.h"
-#include "lc_align_options_filler.h"
 #include "rs_document.h"
 #include "rs_entity.h"
 
@@ -133,7 +134,7 @@ void LC_ActionModifyAlign::onMouseMoveEventSelected([[maybe_unused]]int status, 
         QList<RS_Entity *> alignedEntitiesList;
         const RS_Vector groupOffset = createAlignedEntities(alignedEntitiesList, min, max, true);
 
-        for (const auto ent: alignedEntitiesList) {
+        for (const auto ent: std::as_const(alignedEntitiesList)) {
             previewEntity(ent);
         }
 
@@ -314,12 +315,12 @@ RS_Vector LC_ActionModifyAlign::createAlignedEntities(QList<RS_Entity *> &clones
         result = offset;
         result.valid = true;
 
-        for (const auto e: m_selectedEntities) {
+        for (const auto e: std::as_const(m_selectedEntities)) {
             RS_Entity* clone = LC_Align::createCloneMovedToOffset(e, offset, updateAttributes);
             clonesList << clone;
         }
     } else {
-        for (const auto e: m_selectedEntities) {
+        for (const auto e: std::as_const(m_selectedEntities)) {
             RS_Entity *clone = LC_Align::createCloneMovedToTarget(e, targetPoint, updateAttributes, m_hAlign, m_vAlign);
             clonesList << clone;
         }

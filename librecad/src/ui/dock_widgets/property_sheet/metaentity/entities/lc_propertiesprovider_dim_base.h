@@ -113,7 +113,7 @@ protected:
 
     void createDimGeometrySection(LC_PropertyContainer* container, const QList<RS_Entity*>& list);
     virtual void doCreateDimGeometrySection(LC_PropertyContainer* container, const QList<RS_Entity*>& list) = 0;
-    void fillComputedProperites([[maybe_unused]]LC_PropertyContainer* container, [[maybe_unused]]const QList<RS_Entity*>& entitiesList) override {};
+    void fillComputedProperites([[maybe_unused]]LC_PropertyContainer* container, [[maybe_unused]]const QList<RS_Entity*>& entitiesList) override {}
     void doCreateSelectedSetCommands(LC_PropertyContainer* propertyContainer, const QList<RS_Entity*>& list) override;
 };
 

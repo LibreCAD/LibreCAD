@@ -37,12 +37,12 @@ public:
     void fillDocumentProperties(LC_PropertyContainer* container, RS_Graphic* graphic) override;
 protected:
     void createAnglesBasisZeroDirection(LC_PropertyContainer* cont, RS_Graphic* graphic) const;
-    void createAngularPrecision(LC_PropertyContainer* cont, RS_Graphic* graphic);
-    void createLinearFormat(RS_Graphic* graphic, LC_PropertyContainer* cont);
-    void createLinearPrecision(LC_PropertyContainer* cont, RS_Graphic* graphic);
-    void createDrawingUnit(LC_PropertyContainer* cont, RS_Graphic* graphic);
-    void createAnglesBasisIncreaseDirection(RS_Graphic* graphic, LC_PropertyContainer* cont);
-    void createAngleFormat(LC_PropertyContainer* cont, RS_Graphic* graphic);
+    void createAngularPrecision(LC_PropertyContainer* cont, RS_Graphic* graphic) const;
+    void createLinearFormat(RS_Graphic* graphic, LC_PropertyContainer* cont) const;
+    void createLinearPrecision(LC_PropertyContainer* cont, RS_Graphic* graphic) const;
+    void createDrawingUnit(LC_PropertyContainer* cont, RS_Graphic* graphic) const;
+    void createAnglesBasisIncreaseDirection(RS_Graphic* graphic, LC_PropertyContainer* cont) const;
+    void createAngleFormat(LC_PropertyContainer* cont, RS_Graphic* graphic) const;
 };
 
 #endif

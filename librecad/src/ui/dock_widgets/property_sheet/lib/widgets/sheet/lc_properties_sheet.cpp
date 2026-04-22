@@ -1,23 +1,25 @@
-// *********************************************************************************
-// This file is part of the LibreCAD project, a 2D CAD program
-//
-// Copyright (C) 2025 LibreCAD.org
-// Copyright (C) 2025 sand1024
-//
-// This program is free software; you can redistribute it and/or
-// modify it under the terms of the GNU General Public License
-// as published by the Free Software Foundation; either version 2
-// of the License, or (at your option) any later version.
-//
-// This program is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-// GNU General Public License for more details.
-//
-// You should have received a copy of the GNU General Public License
-// along with this program; if not, write to the Free Software
-// Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
-// *********************************************************************************
+/*
+ * ********************************************************************************
+ * This file is part of the LibreCAD project, a 2D CAD program
+ *
+ * Copyright (C) 2025 LibreCAD.org
+ * Copyright (C) 2025 sand1024
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 2
+ * of the License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ * ********************************************************************************
+ */
 
 #include "lc_properties_sheet.h"
 
@@ -61,7 +63,7 @@ struct LC_PropertiesSheet::PropertyItemView {
         }
 
         // draw sub-items
-        for (const auto& part : viewParts) {
+        for (const auto& part : std::as_const(viewParts)) {
             part.paint(paintContext);
         }
     }
@@ -269,6 +271,7 @@ void LC_PropertiesSheet::connectOnPropertyChange(const LC_Property* property, co
     }
 }
 
+[[deprecated]]
 void LC_PropertiesSheet::onEditedPropertyWillChange(const LC_PropertyChangeReason reason, const LC_Property::PropertyValuePtr newValue,
                                                     const int typeId) {
     if (!(reason & PropertyChangeReasonEdit)) {
@@ -276,7 +279,8 @@ void LC_PropertiesSheet::onEditedPropertyWillChange(const LC_PropertyChangeReaso
     }
     Q_ASSERT(nullptr != qobject_cast<LC_Property*>(sender()));
     const auto property = static_cast<LC_Property*>(sender());
-    if (reason & PropertyChangeReasonValue) {
+    // fixme - review condition
+    if ((reason & PropertyChangeReasonValue) != 0u) {
         emit beforePropertyEdited(property, newValue, typeId);
     }
 }
@@ -286,7 +290,7 @@ void LC_PropertiesSheet::onEditedPropertyDidChange(const LC_PropertyChangeReason
         return;
     }
     Q_ASSERT(nullptr != qobject_cast<LC_Property*>(sender()));
-    if (reason & PropertyChangeReasonValue) {
+    if ((reason & PropertyChangeReasonValue) != 0u) {
         const auto property = static_cast<LC_Property*>(sender());
         emit propertyEdited(property);
     }
@@ -527,7 +531,7 @@ void LC_PropertiesSheet::mouseMoveEvent(QMouseEvent* e) {
             rect.setRight(mouseX);
             m_rubberBand->setGeometry(rect);
 
-            if (m_style & PropertiesSheetStyleLiveSplit) {
+            if ((m_style & PropertiesSheetStyleLiveSplit) != 0u) {
                 // update split ratio
                 const QRect viewportRect = viewport()->rect();
                 const int delta = mouseX - viewportRect.left();
@@ -551,7 +555,7 @@ void LC_PropertiesSheet::mouseMoveEvent(QMouseEvent* e) {
                 }
             }
 
-            if (e->buttons() & Qt::LeftButton) {
+            if ((e->buttons() & Qt::LeftButton) != 0u) {
                 changeActivePropertyByIndex(itemViewIndex);
             }
         }
@@ -690,7 +694,7 @@ void LC_PropertiesSheet::keyPressEvent(QKeyEvent* e) {
                     // collapse opened property
                     itemView.propertyItem->property->addState(PropertyStateCollapsed);
                 }
-                else if (itemView.propertyItem->parentItem) {
+                else if (itemView.propertyItem->parentItem != nullptr) {
                     // activate parent property
                     setActiveProperty(itemView.propertyItem->parentItem->property, true);
                 }
@@ -752,7 +756,7 @@ bool LC_PropertiesSheet::handleEvent(LC_PropertyEventContext& context, const Pro
         return false;
     }
     m_sheetModel.stopInvalidate(true);
-    bool result;
+    bool result = false;
     if (m_mouseEventsReceiverPart != nullptr) {
         result = m_mouseEventsReceiverPart->event(context);
     }
@@ -765,12 +769,12 @@ bool LC_PropertiesSheet::handleEvent(LC_PropertyEventContext& context, const Pro
                 activeParts.append(&part);
             }
         }
-        for (const auto part : m_activeViewParts) {
+        for (const auto part : std::as_const(m_activeViewParts)) {
             part->deactivate(this, mousePos);
         }
         m_activeViewParts.swap(activeParts);
 
-        for (const auto part : m_activeViewParts) {
+        for (const auto part : std::as_const(m_activeViewParts)) {
             if (part->event(context)) {
                 result = true;
                 break;
@@ -795,7 +799,7 @@ bool LC_PropertiesSheet::grabMouseForPart(LC_PropertyViewPart* part, const QPoin
 
 bool LC_PropertiesSheet::releaseMouseForPart([[maybe_unused]] const LC_PropertyViewPart* part, const QPoint mousePos) {
     Q_ASSERT(m_mouseEventsReceiverPart == part);
-    if (!m_mouseEventsReceiverPart) {
+    if (m_mouseEventsReceiverPart == nullptr) {
         return false;
     }
     m_mouseEventsReceiverPart->releaseMouse(this, mousePos);
@@ -831,7 +835,7 @@ void LC_PropertiesSheet::validateItemViews() const {
         return;
     }
 
-    fillItemViews(m_sheetModel.getRootItem(), (m_style & PropertiesSheetStyleShowRoot) ? 0 : -1);
+    fillItemViews(m_sheetModel.getRootItem(), ((m_style & PropertiesSheetStyleShowRoot) != 0u) ? 0 : -1);
     updateVerticalScrollbar();
     m_itemViewsValid = true;
 }
@@ -937,7 +941,7 @@ void LC_PropertiesSheet::deactivateViewParts() {
         viewport()->releaseMouse();
         m_mouseEventsReceiverPart = nullptr;
     }
-    for (const auto part : m_activeViewParts) {
+    for (const auto part : std::as_const(m_activeViewParts)) {
         part->deactivate(this, QPoint());
     }
     m_activeViewParts.clear();

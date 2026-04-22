@@ -60,7 +60,7 @@ public:
     void applyUCSByIndex(const QModelIndex& index) const;
     LC_UCS* getActiveUCS() const;
     void removeExistingUCS(LC_UCS* selectedUCS);
-    void removeExistingUCS(const QString& name);
+    void removeExistingUCS(const QString& name) const;
     void renameExistingUCS(const QString& name);
     void renameExistingUCS(LC_UCS *selectedUCS);
 signals:

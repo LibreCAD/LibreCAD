@@ -88,7 +88,7 @@ QModelIndex LC_DimStyleTreeModel::index(const int row, const int column, const Q
     }
     const LC_DimStyleItem* parentItem = parent.isValid() ? getItemForIndex(parent) : m_rootItem.get();
     const LC_DimStyleItem* childItem = parentItem->child(row);
-    return childItem ? createIndex(row, column, childItem) : QModelIndex();
+    return (childItem != nullptr) ? createIndex(row, column, childItem) : QModelIndex();
 }
 
 QModelIndex LC_DimStyleTreeModel::parent(const QModelIndex& childIndex) const {
@@ -105,7 +105,7 @@ QModelIndex LC_DimStyleTreeModel::parent(const QModelIndex& childIndex) const {
 }
 
 int LC_DimStyleTreeModel::rowCount(const QModelIndex& parent) const {
-    LC_DimStyleItem* parentItem;
+    const LC_DimStyleItem* parentItem = nullptr;
     if (parent.isValid()) {
         parentItem = getItemForIndex(parent);
     }

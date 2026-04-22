@@ -25,8 +25,8 @@
 **********************************************************************/
 #include "lc_text_options_widget.h"
 
-#include "lc_guarded_signals_blocker.h"
 #include "lc_action_draw_text.h"
+#include "lc_guarded_signals_blocker.h"
 #include "ui_lc_text_options_widget.h"
 
 /*
@@ -56,8 +56,8 @@ void LC_TextOptionsWidget::languageChange() {
 void LC_TextOptionsWidget::doUpdateByAction(RS_ActionInterface* a) {
     m_action = static_cast<LC_ActionDrawText*>(a);
 
-    QString text = m_action->getText();
-    QString angle = fromDouble(m_action->getUcsAngleDegrees());
+    const QString text = m_action->getText();
+    const QString angle = fromDouble(m_action->getUcsAngleDegrees());
 
     LC_GuardedSignalsBlocker({ui->leAngle, ui->leText});
 

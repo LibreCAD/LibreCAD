@@ -24,9 +24,9 @@
 #ifndef LC_MTEXTOPTIONSFILLER_H
 #define LC_MTEXTOPTIONSFILLER_H
 
-#include "lc_action_options_properties_filler.h"
+#include "lc_action_options_properties_filler_base.h"
 
-class LC_MTextOptionsFiller: public LC_ActionOptionsPropertiesFiller {
+class LC_MTextOptionsFiller: public LC_ActionOptionsPropertiesFillerBase {
     Q_OBJECT
 public:
     LC_MTextOptionsFiller() = default;

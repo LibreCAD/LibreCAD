@@ -59,7 +59,7 @@ void LC_ActionOrder::doTrigger() {
     RS_DEBUG->print("RS_ActionOrder::trigger()");
 
     QList<RS_Entity*> entList;
-    for (const auto e : m_selectedEntities) {
+    for (const auto e : std::as_const(m_selectedEntities)) {
         entList.append(e);
     }
 

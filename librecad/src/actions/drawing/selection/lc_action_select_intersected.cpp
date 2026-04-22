@@ -96,7 +96,7 @@ void LC_ActionSelectIntersected::selectionFinishedByKey([[maybe_unused]] QKeyEve
 void LC_ActionSelectIntersected::onMouseMoveEvent(const int status, const LC_MouseEvent* e) {
     if (status == SetPoint1) {
         if (e->isShift) {
-            RS_Entity* entity;
+            const RS_Entity* entity = nullptr;
             if (e->isControl) {
                 entity = catchAndDescribe(e, RS2::ResolveAll);
             }
@@ -140,7 +140,7 @@ void LC_ActionSelectIntersected::onMouseLeftButtonRelease(const int status, cons
 
     if (status == SetPoint1) {
         if (e->isShift) {
-            RS_Entity* entity;
+            RS_Entity* entity = nullptr;
             if (e->isControl) {
                 entity = catchAndDescribe(e, RS2::ResolveAll);
             }

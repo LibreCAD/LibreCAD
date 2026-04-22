@@ -59,18 +59,13 @@ void LC_Rectangle2PointsOptionsWidget::languageChange() {
 void LC_Rectangle2PointsOptionsWidget::doUpdateByAction(RS_ActionInterface* a) {
     m_action = static_cast<LC_ActionDrawRectangle2Points*>(a);
 
-    QString angle;
-    QString radius;
-    QString lenX;
-    QString lenY;
-
-    int cornersMode;
-    int insertSnapMode;
-    int secondPointSnapMode;
-    bool usePolyline;
-    bool snapRadiusCenter;
-    int edges;
-    bool isRotated;
+    int cornersMode = 0;
+    int insertSnapMode = 0;
+    int secondPointSnapMode = 0;
+    bool usePolyline = false;
+    bool snapRadiusCenter = false;
+    int edges = 0;
+    bool isRotated = false;
 
     cornersMode = m_action->getCornersMode();
     insertSnapMode = m_action->getInsertionPointSnapMode();
@@ -83,10 +78,10 @@ void LC_Rectangle2PointsOptionsWidget::doUpdateByAction(RS_ActionInterface* a) {
     const double lX = m_action->getCornerBevelLengthX();
     const double lY = m_action->getCornerBevelLengthY();
 
-    angle = fromDouble(an);
-    radius = fromDouble(r);
-    lenX = fromDouble(lX);
-    lenY = fromDouble(lY);
+    const QString angle = fromDouble(an);
+    const QString radius = fromDouble(r);
+    const QString lenX = fromDouble(lX);
+    const QString lenY = fromDouble(lY);
     snapRadiusCenter = m_action->isSnapToCornerArcCenter();
     isRotated = m_action->hasBaseAngle();
 

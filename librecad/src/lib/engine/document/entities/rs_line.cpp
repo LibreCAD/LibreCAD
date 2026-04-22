@@ -198,7 +198,7 @@ RS_Vector RS_Line::doGetNearestMiddle(const RS_Vector& coord, double* dist, cons
     }
     RS_Vector vp0(getNearestPointOnEntity(coord, true, dist));
     const int counts = middlePoints + 1;
-    int i(static_cast<int>(vp0.distanceTo(getStartpoint()) / l * counts + 0.5));
+    int i(static_cast<int>((vp0.distanceTo(getStartpoint()) / l * counts) + 0.5));
     if (i == 0) {
         i++; // remove end points
     }
@@ -324,14 +324,14 @@ RS_Vector RS_Line::prepareTrim(const RS_Vector& trimCoord, const RS_VectorSoluti
     //searching for intersection in the direction of the closer end point
     const auto dvp1 = vp1 - trimCoord;
     RS_VectorSolutions sol1;
-    for (size_t i = 0; i < trimSol.size(); i++) {
-        auto dvp2 = trimSol.at(i) - trimCoord;
+    for (const auto& i : trimSol) {
+        auto dvp2 = i - trimCoord;
         if (RS_Vector::dotP(dvp1, dvp2) > RS_TOLERANCE) {
-            sol1.push_back(trimSol.at(i));
+            sol1.push_back(i);
         }
     }
     //if found intersection in direction, return the closest to trimCoord from it
-    if (sol1.size()) {
+    if (!sol1.empty() != 0u) {
         return sol1.getClosest(trimCoord, nullptr, nullptr);
     }
 

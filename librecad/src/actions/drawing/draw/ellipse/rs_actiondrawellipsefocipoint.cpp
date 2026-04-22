@@ -184,7 +184,7 @@ bool RS_ActionDrawEllipseFociPoint::doProcessCommand(const int status, const QSt
     bool accept = false;
 
     if (status == SetPoint) {
-        bool ok;
+        bool ok = false;
         const double a = RS_Math::eval(command, &ok);
         if (ok) {
             m_actionData->halfDistance = 0.5 * fabs(a);

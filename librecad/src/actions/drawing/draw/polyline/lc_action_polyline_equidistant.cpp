@@ -64,7 +64,7 @@ bool LC_ActionPolylineEquidistant::doTriggerModifications(LC_DocumentModificatio
         QList<RS_Polyline*> polylines;
         makeContour(m_originalEntity, m_bRightSide, polylines);
 
-        for (RS_Polyline* newPolyline : polylines) {
+        for (RS_Polyline* newPolyline : std::as_const(polylines)) {
             ctx += newPolyline;
         }
         return true;
@@ -214,7 +214,7 @@ void LC_ActionPolylineEquidistant::makeContour(const RS_Polyline* originalPolyli
                     bulge = arc1.getBulge();
                 }
                 first = false;
-                if (!prevEntity) {
+                if (prevEntity == nullptr) {
                     break; //prevent crash if not exist offset for prevEntity
                 }
             }
@@ -276,7 +276,7 @@ void LC_ActionPolylineEquidistant::makeContour(const RS_Polyline* originalPolyli
             }
         }
         //properly terminated, check closed
-        if (prevEntity && currEntity) {
+        if ((prevEntity != nullptr) && (currEntity != nullptr)) {
             if (closed) {
                 if (currEntity->rtti() == RS2::EntityArc) {
                     arc1.setAngle2(arc1.getCenter().angleTo(newPolyline->getStartpoint()));
@@ -322,7 +322,7 @@ void LC_ActionPolylineEquidistant::onMouseMoveEvent(const int status, const LC_M
             QList<RS_Polyline*> polylines;
             makeContour(polyline, pointOnRightSide, polylines);
 
-            for (RS_Polyline* newPolyline : polylines) {
+            for (RS_Polyline* newPolyline : std::as_const(polylines)) {
                 newPolyline->reparent(m_preview.get());
                 previewEntity(newPolyline);
             }
@@ -362,7 +362,7 @@ void LC_ActionPolylineEquidistant::onMouseLeftButtonRelease(const int status, co
 
 void LC_ActionPolylineEquidistant::onMouseRightButtonRelease(const int status, [[maybe_unused]] const LC_MouseEvent* e) {
     deleteSnapper();
-    if (m_originalEntity) {
+    if (m_originalEntity != nullptr) {
         redraw();
     }
     initPrevious(status);

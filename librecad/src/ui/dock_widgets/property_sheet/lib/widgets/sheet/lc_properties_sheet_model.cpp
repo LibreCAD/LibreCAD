@@ -1,23 +1,25 @@
-// *********************************************************************************
-// This file is part of the LibreCAD project, a 2D CAD program
-//
-// Copyright (C) 2025 LibreCAD.org
-// Copyright (C) 2025 sand1024
-//
-// This program is free software; you can redistribute it and/or
-// modify it under the terms of the GNU General Public License
-// as published by the Free Software Foundation; either version 2
-// of the License, or (at your option) any later version.
-//
-// This program is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-// GNU General Public License for more details.
-//
-// You should have received a copy of the GNU General Public License
-// along with this program; if not, write to the Free Software
-// Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
-// *********************************************************************************
+/*
+ * ********************************************************************************
+ * This file is part of the LibreCAD project, a 2D CAD program
+ *
+ * Copyright (C) 2025 LibreCAD.org
+ * Copyright (C) 2025 sand1024
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 2
+ * of the License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ * ********************************************************************************
+ */
 
 #include "lc_properties_sheet_model.h"
 
@@ -99,14 +101,14 @@ void LC_PropertiesSheetModel::onPropertyDidChangeSelf(const LC_PropertyChangeRea
         return;
     }
 
-    if (reason & PropertyChangeReasonUpdateView) {
+    if ((reason & PropertyChangeReasonUpdateView) != 0u) {
         setupPropertyItemView(item);
     }
-    else if (reason & PropertyChangeReasonNewAttribute) {
+    else if ((reason & PropertyChangeReasonNewAttribute) != 0u) {
         applyItemViewAttr(item);
     }
 
-    if (m_stopInvalidate) {
+    if (m_stopInvalidate != 0u) {
         m_lastChangeReason |= reason;
     }
     else {
@@ -117,11 +119,11 @@ void LC_PropertiesSheetModel::onPropertyDidChangeSelf(const LC_PropertyChangeRea
 }
 
 void LC_PropertiesSheetModel::updateWithReason(const LC_PropertyChangeReason reason) {
-    if (reason & PropertyChangeReasonChildren) {
+    if ((reason & PropertyChangeReasonChildren) != 0u) {
         updateTree();
         emit modelChanged();
     }
-    else if (reason & (PropertyChangeReasonState | PropertyChangeReasonUpdateView)) {
+    else if ((reason & (PropertyChangeReasonState | PropertyChangeReasonUpdateView)) != 0u) {
         emit modelChanged();
     }
     else {

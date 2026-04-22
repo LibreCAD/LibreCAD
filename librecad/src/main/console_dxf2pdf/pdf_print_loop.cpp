@@ -64,8 +64,8 @@ void PdfPrintLoop::printOneDxfToOnePdf(const QString& dxfFile) {
         (m_params.outDir.isEmpty() ? dxfFileInfo.path() : m_params.outDir)
         + "/" + dxfFileInfo.completeBaseName() + ".pdf";
 
-    RS_Document *doc;
-    RS_Graphic *graphic;
+    RS_Document *doc = nullptr;
+    RS_Graphic *graphic = nullptr;
 
     if (!openDocAndSetGraphic(&doc, &graphic, dxfFile)) {
         return;
@@ -115,7 +115,7 @@ void PdfPrintLoop::printManyDxfToOnePdf() {
     // situation for the QPrinter and RS_PainterQt. Therefore, first open
     // all dxf files and apply required actions. Then run another 'for'
     // loop for actual printing.
-    for (auto dxfFile : m_params.dxfFiles) {
+    for (const auto &dxfFile : std::as_const(m_params.dxfFiles)) {
         DxfContentItems page;
         page.dxfFile = dxfFile;
         if (!openDocAndSetGraphic(&page.doc, &page.graphic, dxfFile)) {
@@ -145,7 +145,7 @@ void PdfPrintLoop::printManyDxfToOnePdf() {
     }
 
     // And now it's time to actually print all previously opened dxf files.
-    for (auto item : contentItems) {
+    for (const auto &item : contentItems) {
         nrPages--;
 
         qDebug() << "Printing" << item.dxfFile
@@ -213,7 +213,7 @@ static void touchGraphic(RS_Graphic* graphic, const PdfPrintParams& params){
 static void setupPrinterAndPaper(const RS_Graphic* graphic, QPrinter& printer,
     PdfPrintParams& params){
     bool landscape = false;
-    LC_PlotSettings* ps = graphic->getPlotSettings();
+    const LC_PlotSettings* ps = graphic->getPlotSettings();
     const RS2::PaperFormat pf = ps->getPaperFormat(&landscape);
     const QPageSize::PageSizeId paperSize = LC_Printing::rsToQtPaperFormat(pf);
 
@@ -260,7 +260,7 @@ static void drawGraphic(RS_Graphic* graphic, QPrinter& printer,
     const double printerFx = printerWidth / printer.widthMM();
     const double printerFy = printerHeight / printer.heightMM();
 
-    LC_PlotSettings* ps = graphic->getPlotSettings();
+    const LC_PlotSettings* ps = graphic->getPlotSettings();
 
     const double marginLeft = ps->getMarginLeftMm();
     const double marginTop = ps->getMarginTopMm();

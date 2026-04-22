@@ -24,9 +24,7 @@
 #include "lc_propertysheetwidget.h"
 
 #include <QMenu>
-#include <QTimer>
 
-#include "lc_action.h"
 #include "lc_actioncontext.h"
 #include "lc_actiongroupmanager.h"
 #include "lc_dlg_propertysheet_widget_options.h"
@@ -138,7 +136,7 @@ void LC_PropertySheetWidget::loadCollapsedSections() {
     const QString sectionsList = LC_GET_ONE_STR("PropertySheet", "CollapsedSections", "");
     if (!sectionsList.isEmpty()) {
         QStringList parts = sectionsList.split(",", Qt::SkipEmptyParts);
-        for (const auto& sectionName : parts) {
+        for (const auto& sectionName : std::as_const(parts)) {
             m_collapsedContainerNames << sectionName;
         }
     }
@@ -146,7 +144,7 @@ void LC_PropertySheetWidget::loadCollapsedSections() {
 
 void LC_PropertySheetWidget::saveCollapsedSections() {
     QString settingsValue;
-    for (const auto& sectionName : m_collapsedContainerNames) {
+    for (const auto& sectionName : std::as_const(m_collapsedContainerNames)) {
         settingsValue = settingsValue + "," + sectionName;
     }
     LC_SET_ONE("PropertySheet", "CollapsedSections", settingsValue);
@@ -333,7 +331,7 @@ void LC_PropertySheetWidget::onViewDefaultActionActivated(const bool defaultActi
     if (defaultActionActivated) {
         // prevent refresh of the widget if activation is called after interactive input  - it might be that update
         // is already performed as result of setting value of property
-        bool shouldRefill = !RS2::isInteractiveInputAction(prevActionRtti) && (prevActionRtti != RS2::ActionDefault && prevActionRtti != RS2::ActionNone);
+        const bool shouldRefill = !RS2::isInteractiveInputAction(prevActionRtti) && (prevActionRtti != RS2::ActionDefault && prevActionRtti != RS2::ActionNone);
         if (shouldRefill) {
             refill();
         }
@@ -387,13 +385,13 @@ void LC_PropertySheetWidget::entityModified([[maybe_unused]] RS_Entity* original
 }
 
 void LC_PropertySheetWidget::clearContextEntities() {
-    for (const auto e : m_orginalEntities) {
+    for (const auto e : std::as_const(m_orginalEntities)) {
         if (RS2::isDimensionalEntity(e->rtti())) {
             auto* d = static_cast<RS_Dimension*>(e);
             d->clearCachedDimStyle();
         }
     }
-    for (const auto e : m_modifiedEntities) {
+    for (const auto e : std::as_const(m_modifiedEntities)) {
         if (RS2::isDimensionalEntity(e->rtti())) {
             const auto d = static_cast<RS_Dimension*>(e);
             d->clearCachedDimStyle();
@@ -417,7 +415,7 @@ void LC_PropertySheetWidget::onPropertyEdited(LC_Property* property) {
         return;
     }
     // special processing for layer property - hidden layer may be selected, so such entity should not be selected
-    QString propertyName = property->getName();
+    const QString propertyName = property->getName();
     bool layerHidden = false;
     if (propertyName == "layer") {
         LC_PropertyAtomic* p = property->asAtomic();
@@ -435,7 +433,7 @@ void LC_PropertySheetWidget::onPropertyEdited(LC_Property* property) {
     }
 
     // fixme - add delayed modification method
-    QTimer::singleShot(30, [this, propertyName, layerHidden]()-> void {
+    QTimer::singleShot(30, [this, layerHidden]()-> void {
         // LC_ERR << "On Edited - " << propertyName;
         m_document->undoableModify(m_viewport, [this](LC_DocumentModificationBatch& ctx)-> bool {
                                        ctx.entitiesToAdd.append(m_modifiedEntities);
@@ -531,7 +529,7 @@ void LC_PropertySheetWidget::setPickedPropertyValue(const QString& propertyName,
     }
     else {
         const auto sheetModel = propertiesSheet->getModel();
-        for (const auto p : propertiesByName) {
+        for (const auto p : std::as_const(propertiesByName)) {
             auto* valueMultiProperty = dynamic_cast<LC_PropertyMulti*>(p);
             if (valueMultiProperty != nullptr) {
                 const auto propertyItem = sheetModel->findItem(sheetModel->getRootItem(), valueMultiProperty);
@@ -566,7 +564,7 @@ void LC_PropertySheetWidget::setPickedPropertyCoordinateValue(const QString& pro
     }
     else {
         const auto sheetModel = propertiesSheet->getModel();
-        for (const auto p : propertiesByName) {
+        for (const auto p : std::as_const(propertiesByName)) {
             const auto* vectorMultiProperty = dynamic_cast<LC_PropertyMulti*>(p);
             if (vectorMultiProperty == nullptr) {
                 const auto vectorProperty = dynamic_cast<LC_PropertyRSVector*>(p);
@@ -620,7 +618,7 @@ void LC_PropertySheetWidget::setPickedPointPropertyValue(const QString& property
     else {
         const auto propertiesSheet = ui->propertySheet->propertiesSheet();
         const auto sheetModel = propertiesSheet->getModel();
-        for (const auto p : lcProperties) {
+        for (const auto p : std::as_const(lcProperties)) {
             const auto vectorPropertyMulti = dynamic_cast<LC_PropertyMulti*>(p);
             if (vectorPropertyMulti == nullptr) {
                 const auto vectorProperty = dynamic_cast<LC_PropertyRSVector*>(p);
@@ -765,10 +763,12 @@ void LC_PropertySheetWidget::onActivePenChanged(RS_Pen) {
 void LC_PropertySheetWidget::onSettingsClicked() {
     LC_DlgPropertySheetWidgetOptions dlg(this, m_propertySheetOptions.get());
     if (dlg.exec() == QDialog::Accepted) {
-        ui->tbSelectionGeneral->setVisible(m_propertySheetOptions->duplicateSelectionAction);
+        const bool showSelectionButton = m_propertySheetOptions->duplicateSelectionAction;
+        ui->tbSelectionGeneral->setVisible(showSelectionButton);
+        ui->tbSelectionGeneralLeft->setVisible(showSelectionButton);
         updatePropertiesSheetFont();
         refill();
-    };
+    }
 }
 
 void LC_PropertySheetWidget::doAdjustForDockLocation(Qt::DockWidgetArea area) {
@@ -803,7 +803,7 @@ void LC_PropertySheetWidget::setCurrentQAction(const QAction* a) {
         const QIcon icon = a->icon();
         const QString text = LC_ShortcutsManager::getPlainActionToolTip(a);
         ui->lblActionIcon->setVisible(!icon.isNull());
-        const int m_iconSize = 24;
+        constexpr int m_iconSize = 24;
         ui->lblActionIcon->setPixmap(icon.pixmap(m_iconSize));
         ui->lblActionName->setText(text);
         ui->headerAction->setVisible(true);

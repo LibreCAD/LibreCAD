@@ -86,7 +86,7 @@ LC_PropertyRSVector* LC_PropertyContainerBuilder::createVectorProperty(const LC_
 }
 
 LC_PropertyBool* LC_PropertyContainerBuilder::createBoolProperty(const LC_Property::Names& names, LC_PropertyContainer* cont) {
-    auto property = new LC_PropertyBool(cont, false);
+    const auto property = new LC_PropertyBool(cont, false);
     property->setNames(names);
     return property;
 }

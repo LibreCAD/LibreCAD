@@ -24,9 +24,9 @@
 #ifndef LC_OFFSETOPTIONSFILLER_H
 #define LC_OFFSETOPTIONSFILLER_H
 
-#include "lc_action_options_properties_filler.h"
+#include "lc_action_options_properties_filler_base.h"
 
-class LC_OffsetOptionsFiller : public LC_ActionOptionsPropertiesFiller {
+class LC_OffsetOptionsFiller : public LC_ActionOptionsPropertiesFillerBase {
     Q_OBJECT public:
     LC_OffsetOptionsFiller() = default;
     ~LC_OffsetOptionsFiller() override = default;

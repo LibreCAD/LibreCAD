@@ -32,12 +32,12 @@ namespace LC_CreationArc {
     bool createFrom2PDirectionAngle(const RS_Vector& startPoint, const RS_Vector& endPoint, double direction1, double angleLength, RS_ArcData& data);
     bool createFrom2PBulge(const RS_Vector& startPoint, const RS_Vector& endPoint, double bulge, RS_ArcData& data);
     bool createFrom2PAngle(const RS_Vector& firstPoint, const RS_Vector& secondPoint, double angle, bool reversed,bool alternate, RS_ArcData& data);
-    bool createFrom2PHeight(const RS_Vector& firstPoint, const RS_Vector& secondPoint, double height, const bool reversed,
-                            const bool alternate, RS_ArcData& data);
-    bool createFrom2PArcLength(const RS_Vector& firstPoint, const RS_Vector& secondPoint, double arcLen, const bool reversed,
-                                       const bool alternate, RS_ArcData& data);
-    bool createFrom2PRadius(const RS_Vector& firstPoint, const RS_Vector& secondPoint, const double radius, const bool reversed,
-                                       const bool alternate, RS_ArcData& data);
-};
+    bool createFrom2PHeight(const RS_Vector& firstPoint, const RS_Vector& secondPoint, double height, bool reversed,
+                            bool alternate, RS_ArcData& data);
+    bool createFrom2PArcLength(const RS_Vector& firstPoint, const RS_Vector& secondPoint, double arcLen, bool reversed,
+                                       bool alternate, RS_ArcData& data);
+    bool createFrom2PRadius(const RS_Vector& firstPoint, const RS_Vector& secondPoint, double radius, bool reversed,
+                                       bool alternate, RS_ArcData& data);
+}
 
 #endif

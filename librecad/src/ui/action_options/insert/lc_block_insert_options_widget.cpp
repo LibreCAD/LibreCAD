@@ -25,8 +25,8 @@
 **********************************************************************/
 #include "lc_block_insert_options_widget.h"
 
-#include "lc_guarded_signals_blocker.h"
 #include "lc_action_block_insert.h"
+#include "lc_guarded_signals_blocker.h"
 #include "ui_lc_block_insert_options_widget.h"
 
 /*

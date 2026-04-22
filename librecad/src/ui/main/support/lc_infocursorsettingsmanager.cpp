@@ -1,5 +1,5 @@
 /*******************************************************************************
-*
+ *
  This file is part of the LibreCAD project, a 2D CAD program
 
  Copyright (C) 2025 LibreCAD.org
@@ -32,7 +32,7 @@ void LC_InfoCursorSettingsManager::slotInfoCursorSetting(const bool toggle) {
     if (action != nullptr) {
         const QVariant tag = action->property("InfoCursorActionTag");
         if (tag.isValid()) {
-            bool ok;
+            bool ok = false;
             const int tagValue = tag.toInt(&ok);
             if (ok) {
                 bool doUpdate = true;

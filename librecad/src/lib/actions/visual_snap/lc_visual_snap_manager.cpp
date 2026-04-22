@@ -40,11 +40,11 @@
 struct LC_VisualSnapEntityHolder;
 
 
-LC_VisualSnapManager::LC_VisualSnapManager(RS_Snapper* snapper) : m_snapper{snapper}, m_solutionSolver(snapper, &m_options), m_solutionVisualizer(snapper, &m_options) {
+LC_VisualSnapManager::LC_VisualSnapManager(RS_Snapper* snapper) : m_solutionVisualizer(snapper, &m_options), m_snapper{snapper}, m_solutionSolver(snapper, &m_options) {
     m_timer.setSingleShot(true);
     m_options.load();
-    auto actionContext = m_snapper->getActionContext();
-    auto graphicView = actionContext->getGraphicView();
+    const auto actionContext = m_snapper->getActionContext();
+    const auto graphicView = actionContext->getGraphicView();
     m_snapData = graphicView->getVisualSnapData();
     connect(&m_timer, &QTimer::timeout, this, &LC_VisualSnapManager::performDelayedOperation);
 }
@@ -75,7 +75,7 @@ LC_VisualSnapSolution* LC_VisualSnapManager::solveVisualSnap(const RS_Vector& wc
     return solution;
 }
 
-void LC_VisualSnapManager::solveVisualSnap(const RS_Vector& wcsPos, LC_VisualSnapSolution& solution) {
+void LC_VisualSnapManager::solveVisualSnap(const RS_Vector& wcsPos, LC_VisualSnapSolution& solution) const {
     m_solutionSolver.solveVisualSnap(wcsPos, solution);
 }
 
@@ -138,16 +138,17 @@ void LC_VisualSnapManager::addGuidesForBasePoint(const RS_Vector& snapPoint, [[m
         basePoint = relZero;
     }
 
-    const RS_Vector currentPoint = snapPoint;
-    const auto lastSnapVertex = new LC_VisualSnapVertex(basePoint, currentPoint);
-    registerVertex(lastSnapVertex, false);
-    const auto currentPointVertex = new LC_VisualSnapVertex(currentPoint, basePoint);
+    // const RS_Vector currentPoint = snapPoint;
+    // const auto lastSnapVertex = new LC_VisualSnapVertex(basePoint, currentPoint);
+    // registerVertex(lastSnapVertex, false);
+    const auto currentPointVertex = new LC_VisualSnapVertex(snapPoint, basePoint);
     registerVertex(currentPointVertex, false);
+    doSaveLastSnappedPoint(snapPoint);
     unlock();
 }
 
 bool LC_VisualSnapManager::isNotInVisualSnap(RS_Entity* e) const {
-    unsigned long long entityId = e->getId();
+    const unsigned long long entityId = e->getId();
     return m_snapData->doesNotContainsDocEntityWithId(entityId);
 }
 
@@ -214,7 +215,7 @@ void LC_VisualSnapManager::refreshSolutionVisualization(RS_Preview* preview, LC_
     if (m_solution != nullptr) {
         const RS_Vector wcsPoint = m_solution->wcsPoint;
         solveVisualSnap(wcsPoint);
-        visualizeSolution(preview, highlight, *m_solution.get());
+        visualizeSolution(preview, highlight, *m_solution);
     }
     unlock();
 }
@@ -223,7 +224,7 @@ void LC_VisualSnapManager::visualizeOrdinaryRestrictions(RS_Preview* preview, LC
     m_solutionVisualizer.visualizeOrdinaryRestrictions(preview, highlight);
 }
 
-void LC_VisualSnapManager::removeLastAddition() {
+void LC_VisualSnapManager::removeLastAddition() const {
     lock();
     if (m_snapData->removeLastAddition()) {
         invalidateSolution();
@@ -245,7 +246,7 @@ void LC_VisualSnapManager::doSaveLastSnappedPoint(const RS_Vector& v) const {
     m_snapData->saveLastSnappedPoint(v);
 }
 
-void LC_VisualSnapManager::saveLastSnappedPoint(const RS_Vector& v) {
+void LC_VisualSnapManager::saveLastSnappedPoint(const RS_Vector& v) const {
     lock();
     doSaveLastSnappedPoint(v);
     unlock();
@@ -313,7 +314,7 @@ bool LC_VisualSnapManager::isDataLocked() const {
     return locked;
 }
 
-bool LC_VisualSnapManager::removeVertex(LC_VisualSnapVertex* vertex) {
+bool LC_VisualSnapManager::removeVertex(LC_VisualSnapVertex* vertex) const {
     return m_snapData->forEachVertexTillFound([vertex, this](LC_VisualSnapVertex* v)-> bool {
         if (LC_LineMath::isNotMeaningfulDistance(vertex->wcsSnapCoordinate, v->wcsSnapCoordinate) && vertex->entityId == v->entityId) {
             // remove existing if this is requested
@@ -356,10 +357,10 @@ void LC_VisualSnapManager::registerDocumentEntity() {
                 const auto docEntity = static_cast<RS_Line*>(m_documentEntityToProcess);
                 const auto start = docEntity->getStartpoint();
                 const auto end = docEntity->getEndpoint();
-                unsigned long long entityId = docEntity->getId();
+                const unsigned long long entityId = docEntity->getId();
                 const auto snapEntity = new LC_RefSnapLine(start, end);
                 snapEntity->setOriginalId(entityId);
-                auto docViewEntity = new LC_RefSnapLine(start, end);
+                const auto docViewEntity = new LC_RefSnapLine(start, end);
                 docViewEntity->setPen(docEntity->getPen(true));
                 docViewEntity->setOriginalId(entityId);
                 docViewEntity->setFlag(RS2::FlagInVisualSnap);
@@ -371,9 +372,9 @@ void LC_VisualSnapManager::registerDocumentEntity() {
             case RS2::EntityCircle: {
                 const auto docEntity = static_cast<RS_Circle*>(m_documentEntityToProcess);
                 const auto snapEntity = new LC_RefSnapCircle(docEntity->getCenter(), docEntity->getRadius());
-                auto docViewEntity = new LC_RefSnapCircle(docEntity->getCenter(), docEntity->getRadius());
+                const auto docViewEntity = new LC_RefSnapCircle(docEntity->getCenter(), docEntity->getRadius());
                 docViewEntity->setPen(docEntity->getPen(true));
-                unsigned long long entityId = docEntity->getId();
+                const unsigned long long entityId = docEntity->getId();
                 docViewEntity->setOriginalId(entityId);
                 docViewEntity->setFlag(RS2::FlagInVisualSnap);
                 storeEntityRef(snapEntity, docViewEntity, entityId);
@@ -385,7 +386,7 @@ void LC_VisualSnapManager::registerDocumentEntity() {
             }
             case RS2::EntityArc: {
                 const auto docEntity = static_cast<RS_Arc*>(m_documentEntityToProcess);
-                unsigned long long entityId = docEntity->getId();
+                const unsigned long long entityId = docEntity->getId();
                 const auto snapEntity = new LC_RefSnapCircle(docEntity->getCenter(), docEntity->getRadius());
                 snapEntity->setOriginalId(entityId);
                 const auto docViewEntity = new LC_RefSnapArc(docEntity->getData());
@@ -409,7 +410,7 @@ void LC_VisualSnapManager::registerDocumentEntity() {
     }
     else {
         // remove existing entity
-        unsigned long long entityId = m_documentEntityToProcess->getId();
+        const unsigned long long entityId = m_documentEntityToProcess->getId();
         m_documentEntityToProcess->delFlag(RS2::FlagInVisualSnap);
         m_snapData->removeDocumentEntityWithId(entityId);
         m_solution.reset(nullptr);
@@ -421,7 +422,7 @@ void LC_VisualSnapManager::registerDocumentEntity() {
 void LC_VisualSnapManager::addVertexDelayed(const RS2::SnapType snapType, const RS_Vector& coord, RS_Entity* entity) {
     doSkipDelayedAdditions();
     m_vertexToProcess = createVisualSnapVertex(snapType, coord, entity);
-    int interval;
+    int interval = 0;
     if (snapType == RS2::VISUAL_SNAP) {
         interval = getVisualSnapVertexAddingDelay();
     }
@@ -451,7 +452,7 @@ void LC_VisualSnapManager::visualizeSolution(RS_Preview * preview, LC_Highlight*
     m_solutionVisualizer.visualizeSolution(preview, highlight, solution);
 }
 
-bool LC_VisualSnapManager::isLineIsNotHorizontalOrVerticalInUCS(RS_Vector startPoint, RS_Vector endPoint) const {
+bool LC_VisualSnapManager::isLineIsNotHorizontalOrVerticalInUCS(const RS_Vector& startPoint, const RS_Vector& endPoint) const {
     const RS_Vector ucsStart = m_viewport->toUCS(startPoint);
     const RS_Vector ucsEnd = m_viewport->toUCS(endPoint);
     const RS_Vector ucsDelta = ucsStart - ucsEnd;
@@ -461,7 +462,7 @@ bool LC_VisualSnapManager::isLineIsNotHorizontalOrVerticalInUCS(RS_Vector startP
     return !horizontal && !vertical;
 }
 
-bool LC_VisualSnapManager::isLineIsNotHorizontalOrVerticalInUCS(RS_Vector startPoint, RS_Vector endPoint, bool& horizontal,
+bool LC_VisualSnapManager::isLineIsNotHorizontalOrVerticalInUCS(const RS_Vector& startPoint, const RS_Vector& endPoint, bool& horizontal,
                                                                 bool& vertical) const {
     const RS_Vector ucsStart = m_viewport->toUCS(startPoint);
     const RS_Vector ucsEnd = m_viewport->toUCS(endPoint);
@@ -499,13 +500,13 @@ void LC_VisualSnapManager::registerEntityEndpoints(RS_Entity* const entity) {
     replaceVertexIfAny(endVertex);
 }
 
-void LC_VisualSnapManager::storeEntityRef(RS_Entity* const snapEntity, RS_Entity* documentViewSnapEntity,  unsigned long long entityId) {
+void LC_VisualSnapManager::storeEntityRef(RS_Entity* const snapEntity, RS_Entity* documentViewSnapEntity,  unsigned long long entityId) const {
     m_snapData->storeEntityRef(snapEntity, documentViewSnapEntity, entityId);
     invalidateSolution();
     m_snapper->onVisualSnapEntityRegistered(snapEntity->clone());
 }
 
-void LC_VisualSnapManager::storeVertexRef(LC_VisualSnapVertex* const vertex) {
+void LC_VisualSnapManager::storeVertexRef(LC_VisualSnapVertex* const vertex) const {
     m_snapData->storeVertexRef(vertex);
     invalidateSolution();
 }

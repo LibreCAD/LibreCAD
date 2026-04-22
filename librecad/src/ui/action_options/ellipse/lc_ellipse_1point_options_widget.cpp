@@ -89,7 +89,7 @@ void LC_Ellipse1PointOptionsWidget::languageChange() {
 }
 
 void LC_Ellipse1PointOptionsWidget::onAngleEditingFinished() {
-    auto val = ui->leAngle->text();
+    const auto val = ui->leAngle->text();
     double y;
     if (toDoubleAngleDegrees(val, y, 0, false)) {
         m_action->setUcsMajorAngleDegrees(y);
@@ -98,7 +98,7 @@ void LC_Ellipse1PointOptionsWidget::onAngleEditingFinished() {
 }
 
 void LC_Ellipse1PointOptionsWidget::onMajorRadiusEditingFinished() {
-    auto val = ui->leMajorRadius->text();
+    const auto val = ui->leMajorRadius->text();
     double y;
     if (toDouble(val, y, 1, true)) {
         m_action->setMajorRadius(y);
@@ -107,7 +107,7 @@ void LC_Ellipse1PointOptionsWidget::onMajorRadiusEditingFinished() {
 }
 
 void LC_Ellipse1PointOptionsWidget::onMinorRadiusEditingFinished() {
-    auto val = ui->leMinorRadius->text();
+    const auto val = ui->leMinorRadius->text();
     double y;
     if (toDouble(val, y, 1, true)) {
         m_action->setMinorRadius(y);

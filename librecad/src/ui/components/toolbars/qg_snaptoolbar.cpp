@@ -27,7 +27,6 @@
 #include "qg_snaptoolbar.h"
 
 #include <QMenu>
-#include <QToolButton>
 
 #include "lc_actiongroupmanager.h"
 #include "lc_snapoptionswidgetsholder.h"
@@ -50,10 +49,10 @@ QAction* QG_SnapToolBar::addOwnAction(const QString& name, const QMap<QString, Q
 }
 
 void QG_SnapToolBar::addVisualSnapAction(QMenu* menu, const QMap<QString, QAction*>& actionsMap, const char* actionName, const char* settingKey) {
-    auto vsActionAutoAddSnap = actionsMap[actionName];
+    const auto vsActionAutoAddSnap = actionsMap[actionName];
     connect(vsActionAutoAddSnap, &QAction::toggled, [settingKey, this](bool toggled) {
         LC_SET_ONE("Snap", settingKey, toggled);
-        auto currentAction = m_actionHandler->getCurrentAction();
+        const auto currentAction = m_actionHandler->getCurrentAction();
         if (currentAction != nullptr) {
             currentAction->refreshBySettings();
         }
@@ -68,11 +67,11 @@ QG_SnapToolBar::QG_SnapToolBar(QWidget* parent, QG_ActionHandler* ah, const LC_A
     m_actionSnapVisual = addOwnAction("SnapVisual", actionsMap);
 
     QWidget *button = widgetForAction(m_actionSnapVisual);
-    auto tb = dynamic_cast<QToolButton*>(button);
+    const auto tb = dynamic_cast<QToolButton*>(button);
     m_actionSnapVisualLock = actionsMap["SnapVisualLock"];
     if (tb != nullptr) {
         tb->setPopupMode(QToolButton::MenuButtonPopup);
-        auto menu = new QMenu();
+        const auto menu = new QMenu();
         menu->addAction(m_actionSnapVisualLock);
         menu->addSeparator();
         addVisualSnapAction(menu, actionsMap, "SnapVisualAutoAddSnap", "VSSnapAutoAddSnapPoint");
@@ -137,8 +136,8 @@ QG_SnapToolBar::QG_SnapToolBar(QWidget* parent, QG_ActionHandler* ah, const LC_A
 
 void QG_SnapToolBar::setGraphicView(RS_GraphicView* gview) {
     if (gview != nullptr) {
-        auto visualSnapData = gview->getVisualSnapData();
-        bool locked = visualSnapData->isContentLocked();
+        const auto visualSnapData = gview->getVisualSnapData();
+        const bool locked = visualSnapData->isContentLocked();
         m_actionSnapVisualLock->blockSignals(true);
         m_actionSnapVisualLock->setChecked(locked);
         m_actionSnapVisualLock->blockSignals(false);

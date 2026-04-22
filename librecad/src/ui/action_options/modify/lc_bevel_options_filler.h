@@ -24,9 +24,9 @@
 #ifndef LC_BEVELOPTIONSFILLER_H
 #define LC_BEVELOPTIONSFILLER_H
 
-#include "lc_action_options_properties_filler.h"
+#include "lc_action_options_properties_filler_base.h"
 
-class LC_BevelOptionsFiller: public LC_ActionOptionsPropertiesFiller{
+class LC_BevelOptionsFiller: public LC_ActionOptionsPropertiesFillerBase{
     Q_OBJECT
 public:
     LC_BevelOptionsFiller() = default;

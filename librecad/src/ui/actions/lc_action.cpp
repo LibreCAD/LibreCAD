@@ -26,7 +26,7 @@
 #include <QEvent>
 
 bool LC_Action::event(QEvent* event) {
-    auto type = event->type();
+    const auto type = event->type();
     switch (type) {
         case QEvent::Type::Shortcut: {
             m_elapsedTimer.start();

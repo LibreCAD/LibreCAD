@@ -63,14 +63,14 @@ bool isQuadratic(const LC_Quadratic& q) {
 }
 
 bool isDegenerate(const LC_Quadratic& q) {
-  double det3 = computeHomogeneousDeterminant(q);
-  double s = computeScale(q);
+  const double det3 = computeHomogeneousDeterminant(q);
+  const double s = computeScale(q);
   return std::abs(det3) < 1e-8 * s * s;
 }
 
 bool isParabolaCondition(double discriminant, const LC_Quadratic& q)
 {
-  double mag = std::max({
+  const double mag = std::max({
       std::abs(q.getA()),
       std::abs(q.getB()),
       std::abs(q.getC()),
@@ -78,17 +78,17 @@ bool isParabolaCondition(double discriminant, const LC_Quadratic& q)
   });
 
          // Require discriminant to be very close to zero relative to quadratic terms
-  double relTol = 1e-10 * mag * mag;
+  const double relTol = 1e-10 * mag * mag;
 
          // Also require that at least one quadratic coefficient is meaningfully non-zero
-  bool hasQuadraticTerm = mag > RS_TOLERANCE * 10;
+  const bool hasQuadraticTerm = mag > RS_TOLERANCE * 10;
 
   return hasQuadraticTerm && std::abs(discriminant) <= relTol;
 }
 
 RS_Vector computeCenter(const LC_Quadratic& q) {
-  double detQ = 4 * q.getA() * q.getC() - q.getB() * q.getB();
-  double qn = computeQuadNorm(q);
+  const double detQ = 4 * q.getA() * q.getC() - q.getB() * q.getB();
+  const double qn = computeQuadNorm(q);
   if (std::abs(detQ) <= RS_TOLERANCE * qn * qn) {
     return RS_Vector(false);
   }
@@ -127,8 +127,8 @@ double computeHomogeneousDeterminant(const LC_Quadratic& q) {
 }
 
 double computeRotationAngle(const LC_Quadratic& q) {
-  double B = q.getB();
-  double diff = q.getA() - q.getC();
+  const double B = q.getB();
+  const double diff = q.getA() - q.getC();
   if (std::abs(B) > RS_TOLERANCE) {
     return 0.5 * std::atan2(B, diff);
   }
@@ -155,15 +155,15 @@ std::array<RS_Vector, 3> computeParabolaControlPoints(
 std::pair<RS_Vector, double> computeHyperbolaMajorPAndRatio(
     double Ap, double Cp, double v, double theta)
 {
-  double a2 = -v / Ap;
-  double b2 = -v / Cp;
+  const double a2 = -v / Ap;
+  const double b2 = -v / Cp;
   if (a2 <= 0 || b2 <= 0 || std::min(a2, b2) < 1e-8) {
     return {{}, 0};
   }
 
-  bool xTrans = Ap * v < 0;
-  double semiTrans = std::sqrt(xTrans ? a2 : b2);
-  double semiConj  = std::sqrt(xTrans ? b2 : a2);
+  const bool xTrans = Ap * v < 0;
+  const double semiTrans = std::sqrt(xTrans ? a2 : b2);
+  const double semiConj  = std::sqrt(xTrans ? b2 : a2);
 
   RS_Vector majorP = xTrans
                          ? RS_Vector(std::cos(theta)*semiTrans, std::sin(theta)*semiTrans)
@@ -175,15 +175,15 @@ std::pair<RS_Vector, double> computeHyperbolaMajorPAndRatio(
 std::tuple<double, double, RS_Vector> computeEllipseSemiAxesAndMajorP(
     double Ap, double Cp, double v, double theta)
 {
-  double α = -v / Ap;
-  double β = -v / Cp;
+  const double α = -v / Ap;
+  const double β = -v / Cp;
 
   if (α <= 0 || β <= 0 || α < 1e-8 || β < 1e-8) {
     return {0, 0, RS_Vector()};
   }
 
   double sm = std::sqrt(std::max(α, β));
-  double sn = std::sqrt(std::min(α, β));
+  const double sn = std::sqrt(std::min(α, β));
   double r = sn / sm;
 
   RS_Vector mp = α >= β
@@ -204,12 +204,12 @@ std::tuple<double, double, RS_Vector> computeEllipseSemiAxesAndMajorP(
  */
 RS_Entity* createLineFromLinearCoefficients(const LC_Quadratic& q)
 {
-  double D = q.getD();
-  double E = q.getE();
-  double F = q.getF();
+  const double D = q.getD();
+  const double E = q.getE();
+  const double F = q.getF();
 
   double linNorm = std::hypot(D, E);
-  double scale   = std::max({linNorm, std::abs(F), 1e-6});
+  const double scale   = std::max({linNorm, std::abs(F), 1e-6});
   const double eps = RS_TOLERANCE * 10;  // Slightly looser tolerance for near-zero cases
 
          // If linear norm is negligible → constant equation (whole plane or empty)
@@ -266,7 +266,7 @@ RS_Entity* createDegeneratePointOrIntersecting(
     return nullptr;
   }
 
-  double scale = computeScale(q);
+  const double scale = computeScale(q);
 
          // If value at center is significantly non-zero → imaginary / invalid
   if (std::abs(valueAtCenter) > 1e-6 * scale) {
@@ -274,12 +274,12 @@ RS_Entity* createDegeneratePointOrIntersecting(
   }
 
          // Try to factor the quadratic at the center point (y = center.y fixed)
-  double yy = center.y;
-  double aa = q.getA();
-  double bb = q.getB() * yy + q.getD();
-  double cc = q.getC() * yy * yy + q.getE() * yy + q.getF();
+  const double yy = center.y;
+  const double aa = q.getA();
+  const double bb = q.getB() * yy + q.getD();
+  const double cc = q.getC() * yy * yy + q.getE() * yy + q.getF();
 
-  double dd = bb * bb - 4 * aa * cc;
+  const double dd = bb * bb - 4 * aa * cc;
 
          // Not a factorable quadratic at this y → single point degenerate
   if (std::abs(dd) >= 1e-6 * scale * scale || std::abs(aa) < RS_TOLERANCE) {
@@ -287,27 +287,27 @@ RS_Entity* createDegeneratePointOrIntersecting(
   }
 
          // Compute the two x roots (intersection points with horizontal line y = center.y)
-  double sd = std::sqrt(std::max(0.0, dd));
-  double x1 = (-bb + sd) / (2 * aa);
-  double x2 = (-bb - sd) / (2 * aa);
+  const double sd = std::sqrt(std::max(0.0, dd));
+  const double x1 = (-bb + sd) / (2 * aa);
+  const double x2 = (-bb - sd) / (2 * aa);
 
-  RS_Vector dir1(x1 - center.x, yy - center.y);
-  RS_Vector dir2(x2 - center.x, yy - center.y);
+  const RS_Vector dir1(x1 - center.x, yy - center.y);
+  const RS_Vector dir2(x2 - center.x, yy - center.y);
 
          // Check if directions are effectively the same (double line / parallel)
-  double cosAngle = std::abs(dir1.dotP(dir2)) /
+  const double cosAngle = std::abs(dir1.dotP(dir2)) /
                     (dir1.magnitude() * dir2.magnitude() + 1e-10);
 
   if (cosAngle > 0.999 || dir1.squared() < 1e-8 || dir2.squared() < 1e-8) {
     // Degenerate to a single line (double line or parallel case)
-    RS_Vector commonDir = dir1.magnitude() > dir2.magnitude() ? dir1 : dir2;
+    const RS_Vector commonDir = dir1.magnitude() > dir2.magnitude() ? dir1 : dir2;
     return new RS_Line(nullptr, {center - commonDir*500, center + commonDir*500});
   }
 
          // Two distinct intersecting lines → create polyline with two segments
-  auto poly = new RS_Polyline(nullptr, RS_PolylineData());
-  RS_Vector u1 = dir1.normalized();
-  RS_Vector u2 = dir2.normalized();
+  const auto poly = new RS_Polyline(nullptr, RS_PolylineData());
+  const RS_Vector u1 = dir1.normalized();
+  const RS_Vector u2 = dir2.normalized();
 
   poly->addVertex(center - u1 * 500);
   poly->addVertex(center + u1 * 500);
@@ -327,19 +327,19 @@ RS_Entity* createEllipseOrCircle(const LC_Quadratic& q,
                                  double Cp,
                                  double theta)
 {
-  double alpha = -valueAtCenter / Ap;
-  double beta  = -valueAtCenter / Cp;
+  const double alpha = -valueAtCenter / Ap;
+  const double beta  = -valueAtCenter / Cp;
 
          // Imaginary ellipse → degenerate to point
   if (alpha <= 0 || beta <= 0 || alpha < 1e-8 || beta < 1e-8) {
     return new RS_Point(nullptr, RS_PointData(center));
   }
 
-  double semiMajor = std::sqrt(std::max(alpha, beta));
-  double semiMinor = std::sqrt(std::min(alpha, beta));
-  double ratio     = semiMinor / semiMajor;
+  const double semiMajor = std::sqrt(std::max(alpha, beta));
+  const double semiMinor = std::sqrt(std::min(alpha, beta));
+  const double ratio     = semiMinor / semiMajor;
 
-  RS_Vector majorP = (alpha >= beta)
+  const RS_Vector majorP = (alpha >= beta)
                          ? RS_Vector(std::cos(theta) * semiMajor, std::sin(theta) * semiMajor)
                          : RS_Vector(-std::sin(theta) * semiMajor, std::cos(theta) * semiMajor);
 
@@ -375,7 +375,7 @@ RS_Entity* createParabola(const LC_Quadratic& q,
     ? RS_Vector(1.0, 0.0)
     : RS_Vector(0.0, 1.0);
   } else {
-    double angle = 0.5 * std::atan2(q.getB(), q.getA() - q.getC());
+    const double angle = 0.5 * std::atan2(q.getB(), q.getA() - q.getC());
     axis = RS_Vector(std::cos(angle), std::sin(angle));
   }
   axis.normalize();
@@ -383,13 +383,13 @@ RS_Entity* createParabola(const LC_Quadratic& q,
   RS_Vector perp(-axis.y, axis.x);
 
          // Estimate focal parameter p
-  double denom = std::abs(Ap) + std::abs(Cp) + 0.5 * std::abs(q.getB());
+  const double denom = std::abs(Ap) + std::abs(Cp) + 0.5 * std::abs(q.getB());
   double p = std::abs(valueAtCenter) / (denom + RS_TOLERANCE);
 
          // Special case: v == 0 (standard parabola with vertex at center)
   if (p < 1e-6) {
     // Try to estimate p from linear terms along axis
-    double linear = q.getB() * axis.x * axis.y + q.getD() * axis.x + q.getE() * axis.y;
+    const double linear = q.getB() * axis.x * axis.y + q.getD() * axis.x + q.getE() * axis.y;
     if (std::abs(linear) > RS_TOLERANCE) {
       p = std::abs(linear) / (2.0 * denom);
     } else {
@@ -405,7 +405,7 @@ RS_Entity* createParabola(const LC_Quadratic& q,
     perp = -perp;
   }
 
-  std::array<RS_Vector, 3> cps = {
+  const std::array<RS_Vector, 3> cps = {
       center + p*4*axis - 4*p*perp,
       center,
       center + p*4*axis + 4*p*perp
@@ -455,14 +455,14 @@ RS_Entity* createHyperbola(
     return nullptr;
   }
 
-  double semiTrans = std::sqrt(aa2);
-  double semiConj  = std::sqrt(-bb2);
+  const double semiTrans = std::sqrt(aa2);
+  const double semiConj  = std::sqrt(-bb2);
 
          // Direction of transverse axis (majorP)
-  RS_Vector majorP = RS_Vector(std::cos(theta) * semiTrans, std::sin(theta) * semiTrans);
+  const RS_Vector majorP = RS_Vector(std::cos(theta) * semiTrans, std::sin(theta) * semiTrans);
 
          // Create container for both branches
-  auto container = new RS_EntityContainer(nullptr, true);
+  const auto container = new RS_EntityContainer(nullptr, true);
 
          // First branch: +majorP direction, angle -4 to +4 rad
   LC_HyperbolaData data1;
@@ -493,16 +493,16 @@ RS_Entity* createDualAroundCenter(
     RS_Entity* entity,
     const RS_Vector& center)
 {
-  if (!entity || !center.valid) {
-    return nullptr;
-  }
+    if ((entity == nullptr) || !center.valid) {
+        return nullptr;
+    }
 
   switch (entity->rtti()) {
   case RS2::EntityLine:
   {
-    auto* line = static_cast<RS_Line*>(entity);
-    RS_Vector normal = line->getNormalVector();
-    double c = - normal.dotP(line->getStartpoint().move(-center));
+    const auto* line = static_cast<RS_Line*>(entity);
+    const RS_Vector normal = line->getNormalVector();
+    const double c = - normal.dotP(line->getStartpoint().move(-center));
     if (RS_Math::equal(c, 0.))
       return nullptr;
     return new RS_Point{nullptr, {RS_Vector{normal.x/c, normal.y/c} + center}};
@@ -510,7 +510,7 @@ RS_Entity* createDualAroundCenter(
   break;
   case RS2::EntityPoint:
   {
-    auto* point = static_cast<RS_Point*>(entity);
+    const auto* point = static_cast<RS_Point*>(entity);
     RS_Vector pos = point->getPos().move(-center);
     // pos.x * x + pos.y * y + 1 = 0
     if (RS_Math::equal(std::hypot(pos.x, pos.y), 0.))
@@ -530,7 +530,7 @@ RS_Entity* createDualAroundCenter(
   }
 
          // 2. Compute the point-symmetric dual around the given center
-  LC_Quadratic dualQ = q.move(- center).getDualCurve().move(center);
+  const LC_Quadratic dualQ = q.move(- center).getDualCurve().move(center);
 
          // 3. Convert the dual quadratic back to an entity
   std::unique_ptr<RS_Entity> dualEntity(dualQ.toEntity());

@@ -151,7 +151,7 @@ bool LC_DimStylesExporter::importStyles(QWidget* parent, QList<LC_DimStyle*>& st
         QString styleName = style.value("style_name").toString();
         const auto varDict = new RS_VariableDict();
         auto values = style.value("vars").toArray();
-        for (auto v: values) {
+        for (auto v: std::as_const(values)) {
             auto variable = v.toObject();
             const int type = variable.value("type").toInt();
             QString value = variable.value("val").toString();

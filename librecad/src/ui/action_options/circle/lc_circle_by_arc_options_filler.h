@@ -23,9 +23,9 @@
 
 #ifndef LC_CIRCLEBYARCOPTIONSFILLER_H
 #define LC_CIRCLEBYARCOPTIONSFILLER_H
-#include "lc_action_options_properties_filler.h"
+#include "lc_action_options_properties_filler_base.h"
 
-class LC_CircleByArcOptionsFiller: public LC_ActionOptionsPropertiesFiller{
+class LC_CircleByArcOptionsFiller: public LC_ActionOptionsPropertiesFillerBase{
     Q_OBJECT
 public:
     LC_CircleByArcOptionsFiller() = default;

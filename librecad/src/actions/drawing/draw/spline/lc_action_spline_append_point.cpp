@@ -172,7 +172,7 @@ RS_Entity *LC_ActionSplineAppendPoint::createModifiedSplineEntity(RS_Entity *e, 
         case RS2::EntitySplinePoints:{
             auto* clone = static_cast<LC_SplinePoints *>(e->clone());
             LC_SplinePointsData &data = clone->getData();
-            const bool hasSplinePoints = data.splinePoints.size() > 0; // handle spline point data magic :(
+            const bool hasSplinePoints = !data.splinePoints.empty(); // handle spline point data magic :(
             if (fromStart){
                 if (hasSplinePoints) {
                     data.splinePoints.insert(data.splinePoints.begin(), controlPoint);

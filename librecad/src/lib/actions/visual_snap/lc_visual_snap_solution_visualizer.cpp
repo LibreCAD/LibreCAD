@@ -135,7 +135,7 @@ void LC_VisualSnapSolutionVisualizer::visualizeSolution(RS_Preview* preview, LC_
         else {
             if (i->docEntityRef != nullptr) {
                 highlight->addEntity(i->docEntityRef->documentViewEntity.get(), false);
-            };
+            }
         }
     });
 
@@ -226,7 +226,7 @@ void LC_VisualSnapSolutionVisualizer::adjustGuidingEntitiesLabelsPositions(std::
 }
 
 void LC_VisualSnapSolutionVisualizer::assignGuidingEntitiesLabels([[maybe_unused]] RS_EntityContainer* preview,
-                                                                  std::list<RS_Entity*> clones) const {
+    const std::list<RS_Entity*>& clones) const {
     for (const auto clone:clones) {
         const auto snapEntity = dynamic_cast<LC_RefSnapEntity*>(clone);
         if (snapEntity->isActive()) {

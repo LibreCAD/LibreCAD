@@ -43,7 +43,7 @@ void LC_NamedViewsButton::fillMenu() {
     const int viewsCount = views.count();
     const int actionsCount = m_createdActions.count();
     if (viewsCount <= actionsCount){
-        int i;
+        int i = 0;
         for (i = 0;  i < viewsCount; i++){
             QAction* a = m_createdActions.at(i);
             const LC_View* v = views.at(i);
@@ -58,7 +58,7 @@ void LC_NamedViewsButton::fillMenu() {
         }
     }
     else{
-        int i;
+        int i = 0;
         for (i = 0;  i < actionsCount; i++){
             QAction* a = m_createdActions.at(i);
             const LC_View* v = views.at(i);

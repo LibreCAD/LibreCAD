@@ -37,9 +37,9 @@ public:
     void fillDocumentProperties(LC_PropertyContainer* container, RS_Graphic* graphic) override;
 
 protected:
-    void createPageFormat(LC_PropertyContainer* cont, RS_Graphic* graphic);
+    void createPageFormat(LC_PropertyContainer* cont, RS_Graphic* graphic) const;
     void createPageSize(LC_PropertyContainer* cont, RS_Graphic* graphic) const;
-    void createPrintOrientation(LC_PropertyContainer* cont, RS_Graphic* graphic);
+    void createPrintOrientation(LC_PropertyContainer* cont, RS_Graphic* graphic) const;
     void createPrintMargins(LC_PropertyContainer* cont, RS_Graphic* graphic) const;
     void createTiledPrintingPages(LC_PropertyContainer* cont, RS_Graphic* graphic);
 };

@@ -81,7 +81,7 @@ namespace {
 // convert DRW_Coord to RS_Vector
 RS_Vector coordToVector(const std::shared_ptr<DRW_Coord>& c) {
     return c ? RS_Vector(c->x, c->y) : RS_Vector(false);
-};
+}
 
 }
 
@@ -876,11 +876,11 @@ void RS_FilterDXFRW::addSpline(const DRW_Spline* data) {
 
     // Spline points case (degree 2, more than 3 control points)
     if (data->degree == 2) {
-        bool closed = (data->flags & 0x1) == 0x1;
-        bool controlOnly = data->nfit == 0;
+        const bool closed = (data->flags & 0x1) == 0x1;
+        const bool controlOnly = data->nfit == 0;
 
-        LC_SplinePointsData d(closed, controlOnly);
-        auto splinePoints = new LC_SplinePoints(m_currentContainer, d);
+        const LC_SplinePointsData d(closed, controlOnly);
+        const auto splinePoints = new LC_SplinePoints(m_currentContainer, d);
         setEntityAttributes(splinePoints, data);
 
         for (const auto& vert : data->controllist) {
@@ -906,24 +906,24 @@ void RS_FilterDXFRW::addSpline(const DRW_Spline* data) {
         return;
     }
 
-    bool isClosed = (data->flags & 0x1) == 0x1;
+    const bool isClosed = (data->flags & 0x1) == 0x1;
 
     RS_SplineData d(data->degree, isClosed);
     if (!data->knotslist.empty()) {
-        double tolknot = (data->tolknot > 0.0) ? data->tolknot : 1e-7;
-        for (double k : data->knotslist) {
+        const double tolknot = (data->tolknot > 0.0) ? data->tolknot : 1e-7;
+        for (const double k : data->knotslist) {
             d.knotslist.push_back(RS_Math::round(k, tolknot));
         }
     }
 
     d.type = isClosed ? RS_SplineData::SplineType::Standard : RS_SplineData::SplineType::ClampedOpen;
 
-    auto spline = new RS_Spline(m_currentContainer, d);
+    const auto spline = new RS_Spline(m_currentContainer, d);
     setEntityAttributes(spline, data);
     m_currentContainer->addEntity(spline);
 
     // Control points and weights
-    size_t numCtrl = data->controllist.size();
+    const size_t numCtrl = data->controllist.size();
     if (numCtrl != data->weightlist.size()) {
         RS_DEBUG->print(RS_Debug::D_WARNING,
                         "RS_FilterDXFRW::addSpline: control points (%zu) != weights (%zu)",
@@ -932,7 +932,7 @@ void RS_FilterDXFRW::addSpline(const DRW_Spline* data) {
 
     for (size_t i = 0; i < numCtrl; ++i) {
         const auto& vert = data->controllist[i];
-        double weight = (i < data->weightlist.size()) ? data->weightlist[i] : 1.0;
+        const double weight = (i < data->weightlist.size()) ? data->weightlist[i] : 1.0;
         if (vert) {
             spline->addControlPointRaw({vert->x, vert->y}, weight);
         }
@@ -2510,14 +2510,14 @@ void RS_FilterDXFRW::linkImage(const DRW_ImageDef* data) {
         RS_DEBUG->print("File %s doesn't exist.", (const char*)QFile::encodeName(sfile));
         // try relative path:
         const QString f1 = fiDxf.absolutePath() + "/" + sfile;
-        if (QFileInfo(f1).exists()) {
+        if (QFileInfo::exists(f1)) {
             sfile = f1;
         }
         else {
             RS_DEBUG->print("File %s doesn't exist.", (const char*)QFile::encodeName(f1));
             // try drawing path:
             const QString f2 = fiDxf.absolutePath() + "/" + fiBitmap.fileName();
-            if (QFileInfo(f2).exists()) {
+            if (QFileInfo::exists(f2)) {
                 sfile = f2;
             }
             else {
@@ -2629,7 +2629,7 @@ void RS_FilterDXFRW::addHeader(const DRW_Header* data) {
     auto option = QString::SkipEmptyParts;
 #endif
     QStringList commentList = QString::fromStdString(data->getComments()).split('\n', option);
-    for (auto commentLine : commentList) {
+    for (const auto &commentLine : std::as_const(commentList)) {
         QStringList commentWords = commentLine.split(' ', option);
         if (0 < commentWords.size()) {
             if ("dxflib" == commentWords.at(0)) {
@@ -3402,7 +3402,7 @@ void RS_FilterDXFRW::prepareDRWDimStyleDimLine(DRW_Dimstyle& d, const LC_DimStyl
 
 int RS_FilterDXFRW::findLineTypeHandleToWrite(const QString& name) const {
     const std::string lineName = name.toUpper().toStdString();
-    for (auto [fst, snd] : m_dxfW->getWritingContext()->lineTypesMap) {
+    for (const auto &[fst, snd] : m_dxfW->getWritingContext()->lineTypesMap) {
         if (fst.compare(lineName) == 0) {
             return snd;
         }

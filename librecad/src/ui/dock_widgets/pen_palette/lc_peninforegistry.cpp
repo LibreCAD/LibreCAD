@@ -181,7 +181,7 @@ RS_Color LC_PenInfoRegistry::getColorFromInternalString(const QString &str){
  * @return string representation
  */
 QString LC_PenInfoRegistry::getInternalColorString(const RS_Color &color){
-    int colorInt;
+    int colorInt = 0;
     if (isUnchangedColor(color)){
         colorInt = UNCHANGED_COLOR_INTERNAL_VALUE;
     }

@@ -44,9 +44,9 @@
 #include "qg_dlg_attributes.h"
 #include "qg_dlg_hatch.h"
 #include "qg_dlg_mtext.h"
+#include "qg_dlg_text.h"
 #include "qg_dlgoptionsdrawing.h"
 #include "qg_dlgoptionsmakercam.h"
-#include "qg_dlg_text.h"
 #include "qg_layerdialog.h"
 #include "qg_selectionwidget.h"
 #include "rs_blocklist.h"
@@ -120,7 +120,7 @@ RS_Layer* QG_DialogFactory::requestNewLayerDialog(RS_LayerList* layerList) {
             }
         }
 
-        while (layerList->find(newLayerName)) {
+        while (layerList->find(newLayerName) != nullptr) {
             newLayerName = QString("%1%2").arg(sBaseLayerName).arg(++i, nlen, 10, QChar('0'));
         }
     }
@@ -132,7 +132,7 @@ RS_Layer* QG_DialogFactory::requestNewLayerDialog(RS_LayerList* layerList) {
     dlg.setLayer(layer);
     dlg.setLayerList(layerList);
     dlg.getQLineEdit()->selectAll();
-    if (dlg.exec()) {
+    if (dlg.exec() != 0) {
         dlg.updateLayer();
     }
     else {
@@ -151,7 +151,7 @@ RS_Layer* QG_DialogFactory::requestNewLayerDialog(RS_LayerList* layerList) {
  */
 RS_Layer* QG_DialogFactory::requestLayerRemovalDialog(RS_LayerList* layerList) {
     RS_Layer* layer = nullptr;
-    if (!layerList) {
+    if (layerList == nullptr) {
         RS_DEBUG->print(RS_Debug::D_WARNING, "QG_DialogFactory::requestLayerRemovalDialog(): " "layerList is nullptr");
         return nullptr;
     }
@@ -167,7 +167,7 @@ RS_Layer* QG_DialogFactory::requestLayerRemovalDialog(RS_LayerList* layerList) {
     // Layer for parameter livery
     layer = layerList->getActive();
 
-    if (layer) {
+    if (layer != nullptr) {
         if (layer->getName() != "0") {
             QMessageBox msgBox(QMessageBox::Warning, QMessageBox::tr("Remove Layer"),
                                QMessageBox::tr("Layer \"%1\" and all " "entities on it will be removed.\n" "This action can NOT be undone.")
@@ -194,7 +194,7 @@ RS_Layer* QG_DialogFactory::requestLayerRemovalDialog(RS_LayerList* layerList) {
  * @return a list of layers names to be removed.
  */
 QStringList QG_DialogFactory::requestSelectedLayersRemovalDialog(RS_LayerList* layerList) {
-    if (!layerList) {
+    if (layerList == nullptr) {
         RS_DEBUG->print(RS_Debug::D_WARNING, "QG_DialogFactory::requestSelectedLayersRemovalDialog(): " "layerList is nullptr");
         return QStringList();
     }
@@ -204,7 +204,7 @@ QStringList QG_DialogFactory::requestSelectedLayersRemovalDialog(RS_LayerList* l
 
     // first, try to add selected layers
     for (const auto layer : *layerList) {
-        if (!layer) {
+        if (layer == nullptr) {
             continue;
         }
         if (!layer->isVisibleInLayerList()) {
@@ -224,7 +224,7 @@ QStringList QG_DialogFactory::requestSelectedLayersRemovalDialog(RS_LayerList* l
     // try to add active layer instead
     if (names.isEmpty()) {
         const RS_Layer* layer = layerList->getActive();
-        if (layer && layer->isVisibleInLayerList()) {
+        if ((layer != nullptr) && layer->isVisibleInLayerList()) {
             if (layer->getName() == "0") {
                 layer0Selected = true;
             }
@@ -292,20 +292,20 @@ RS_Layer* QG_DialogFactory::requestEditLayerDialog(RS_LayerList* layerList) {
        }
     */
 
-    if (!layerList) {
+    if (layerList == nullptr) {
         RS_DEBUG->print(RS_Debug::D_WARNING, "QG_DialogFactory::requestEditLayerDialog(): " "layerList is nullptr");
         return nullptr;
     }
 
     // Layer for parameter livery
-    if (layerList->getActive()) {
+    if (layerList->getActive() != nullptr) {
         layer = new RS_Layer(*layerList->getActive());
 
         QG_LayerDialog dlg(parent, QMessageBox::tr("Layer Dialog"));
         dlg.setLayer(layer);
         dlg.setLayerList(layerList);
         dlg.setEditLayer(true);
-        if (dlg.exec()) {
+        if (dlg.exec() != 0) {
             dlg.updateLayer();
         }
         else {
@@ -328,7 +328,7 @@ RS_BlockData QG_DialogFactory::requestNewBlockDialog(RS_BlockList* blockList) {
     //RS_Block* block = nullptr;
     auto ret = RS_BlockData("", RS_Vector(false), false);
 
-    if (!blockList) {
+    if (blockList == nullptr) {
         RS_DEBUG->print(RS_Debug::D_WARNING, "QG_DialogFactory::requestNewBlockDialog(): " "blockList is nullptr");
         return ret;
     }
@@ -338,7 +338,7 @@ RS_BlockData QG_DialogFactory::requestNewBlockDialog(RS_BlockList* blockList) {
 
     QG_BlockDialog dlg(parent);
     dlg.setBlockList(blockList);
-    if (dlg.exec()) {
+    if (dlg.exec() != 0) {
         ret = dlg.getBlockData();
     }
 
@@ -354,7 +354,7 @@ RS_BlockData QG_DialogFactory::requestBlockAttributesDialog(RS_BlockList* blockL
     //RS_Block* block = nullptr;
     auto ret = RS_BlockData("", RS_Vector(false), false);
 
-    if (!blockList) {
+    if (blockList == nullptr) {
         RS_DEBUG->print(RS_Debug::D_WARNING, "QG_DialogFactory::requestBlockAttributesDialog(): " "blockList is nullptr");
         return ret;
     }
@@ -373,7 +373,7 @@ RS_BlockData QG_DialogFactory::requestBlockAttributesDialog(RS_BlockList* blockL
     //    QG_BlockDialog dlg(parent, "Rename Block");
     QG_BlockDialog dlg(parent);
     dlg.setBlockList(blockList);
-    if (dlg.exec()) {
+    if (dlg.exec() != 0) {
         //dlg.updateBlock();
         //block->setData();
         ret = dlg.getBlockData();
@@ -394,7 +394,7 @@ RS_BlockData QG_DialogFactory::requestBlockAttributesDialog(RS_BlockList* blockL
 RS_Block* QG_DialogFactory::requestBlockRemovalDialog(RS_BlockList* blockList) {
     RS_Block* block = nullptr;
 
-    if (!blockList) {
+    if (blockList == nullptr) {
         RS_DEBUG->print(RS_Debug::D_WARNING, "QG_DialogFactory::requestBlockRemovalDialog(): " "blockList is nullptr");
         return nullptr;
     }
@@ -402,7 +402,7 @@ RS_Block* QG_DialogFactory::requestBlockRemovalDialog(RS_BlockList* blockList) {
     // Block for parameter livery
     block = blockList->getActive();
 
-    if (block) {
+    if (block != nullptr) {
         const int remove = QMessageBox::warning(parent, QMessageBox::tr("Remove Block"),
                                           QMessageBox::tr("Block \"%1\" and all " "its entities will be removed.").arg(block->getName()),
                                           QMessageBox::Ok | QMessageBox::Cancel, QMessageBox::Cancel);
@@ -423,7 +423,7 @@ RS_Block* QG_DialogFactory::requestBlockRemovalDialog(RS_BlockList* blockList) {
  * @return a list of blocks to be removed.
  */
 QList<RS_Block*> QG_DialogFactory::requestSelectedBlocksRemovalDialog(RS_BlockList* blockList) {
-    if (!blockList) {
+    if (blockList == nullptr) {
         RS_DEBUG->print(RS_Debug::D_WARNING, "QG_DialogFactory::requestSelectedBlocksRemovalDialog(): " "blockList is nullptr");
         return QList<RS_Block*>();
     }
@@ -432,7 +432,7 @@ QList<RS_Block*> QG_DialogFactory::requestSelectedBlocksRemovalDialog(RS_BlockLi
 
     // first, try to add selected blocks
     for (const auto block : *blockList) {
-        if (!block) {
+        if (block == nullptr) {
             continue;
         }
         if (!block->isVisibleInBlockList()) {
@@ -448,7 +448,7 @@ QList<RS_Block*> QG_DialogFactory::requestSelectedBlocksRemovalDialog(RS_BlockLi
     // try to add active block instead
     if (blocks.isEmpty()) {
         RS_Block* block = blockList->getActive();
-        if (block && block->isVisibleInBlockList()) {
+        if ((block != nullptr) && block->isVisibleInBlockList()) {
             blocks << block;
         }
     }
@@ -465,7 +465,7 @@ QList<RS_Block*> QG_DialogFactory::requestSelectedBlocksRemovalDialog(RS_BlockLi
     const QString text(QMessageBox::tr("Listed blocks and all their entities will be removed."));
 
     QStringList detailLines = {QMessageBox::tr("Blocks for removal:"), "",};
-    for (const auto block : blocks) {
+    for (const auto block : std::as_const(blocks)) {
         detailLines << block->getName();
     }
 
@@ -549,7 +549,7 @@ QString QG_DialogFactory::requestImageOpenDialog() {
 bool QG_DialogFactory::requestAttributesDialog(RS_AttributesData& data, RS_LayerList& layerList) {
     QG_DlgAttributes dlg(parent);
     dlg.setData(&data, layerList);
-    if (dlg.exec()) {
+    if (dlg.exec() != 0) {
         dlg.updateData();
         return true;
     }
@@ -604,7 +604,7 @@ bool QG_DialogFactory::requestModifyEntityDialog(RS_Entity* entity, [[maybe_unus
     }
 
     if (hasDialog) {
-        if (editDialog->exec()) {
+        if (editDialog->exec() != 0) {
             editDialog->updateEntity();
             ret = true;
         }
@@ -618,12 +618,12 @@ bool QG_DialogFactory::requestModifyEntityDialog(RS_Entity* entity, [[maybe_unus
  * Shows a dialog to edit the attributes of the given multi-line text entity.
  */
 bool QG_DialogFactory::requestMTextDialog(RS_MText* text, LC_GraphicViewport* viewport) {
-    if (!text) {
+    if (text == nullptr) {
         return false;
     }
 
     QG_DlgMText dlg(parent, viewport, text, true);
-    if (dlg.exec()) {
+    if (dlg.exec() != 0) {
         dlg.updateEntity();
         return true;
     }
@@ -635,12 +635,12 @@ bool QG_DialogFactory::requestMTextDialog(RS_MText* text, LC_GraphicViewport* vi
  * Shows a dialog to edit the attributes of the given text entity.
  */
 bool QG_DialogFactory::requestTextDialog(RS_Text* text, LC_GraphicViewport* viewport) {
-    if (!text) {
+    if (text == nullptr) {
         return false;
     }
 
     QG_DlgText dlg(parent, viewport, text, true);
-    if (dlg.exec()) {
+    if (dlg.exec() != 0) {
         dlg.updateEntity();
         return true;
     }
@@ -652,14 +652,14 @@ bool QG_DialogFactory::requestTextDialog(RS_Text* text, LC_GraphicViewport* view
  * Shows a dialog to edit pattern / hatch attributes of the given entity.
  */
 bool QG_DialogFactory::requestHatchDialog(RS_Hatch* hatch, LC_GraphicViewport* viewport) {
-    if (!hatch) {
+    if (hatch == nullptr) {
         return false;
     }
 
     RS_PATTERNLIST->init();
 
     QG_DlgHatch dlg(parent, viewport, hatch, true);
-    if (dlg.exec()) {
+    if (dlg.exec() != 0) {
         dlg.updateEntity();
         dlg.saveSettings();
         return true;
@@ -700,7 +700,7 @@ void QG_DialogFactory::displayBlockName(const QString& blockName, const bool dis
  */
 void QG_DialogFactory::commandMessage(const QString& message) {
     RS_DEBUG->print("QG_DialogFactory::commandMessage");
-    if (m_commandWidget) {
+    if (m_commandWidget != nullptr) {
         m_commandWidget->appendHistory(message);
     }
     RS_DEBUG->print("QG_DialogFactory::commandMessage: OK");
@@ -708,7 +708,7 @@ void QG_DialogFactory::commandMessage(const QString& message) {
 
 void QG_DialogFactory::command(const QString& message) {
     RS_DEBUG->print("QG_DialogFactory::command");
-    if (m_commandWidget) {
+    if (m_commandWidget != nullptr) {
         m_commandWidget->setInput(message);
     }
     RS_DEBUG->print("QG_DialogFactory::command: OK");
@@ -716,7 +716,7 @@ void QG_DialogFactory::command(const QString& message) {
 
 void QG_DialogFactory::commandPrompt(const QString& message) {
     RS_DEBUG->print("QG_DialogFactory::command");
-    if (m_commandWidget) {
+    if (m_commandWidget != nullptr) {
         m_commandWidget->setCommand(message);
     }
     RS_DEBUG->print("QG_DialogFactory::command: OK");

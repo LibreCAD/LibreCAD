@@ -34,7 +34,7 @@ LC_SelectedSet::~LC_SelectedSet() {
 }
 
 void LC_SelectedSet::clear() {
-    for (const auto e: m_entitiesList) {
+    for (const auto e: std::as_const(m_entitiesList)) {
         e->setSelectionFlag(false);
     }
     m_entitiesList.clear();
@@ -45,7 +45,7 @@ void LC_SelectedSet::clear() {
 
 void LC_SelectedSet::add(RS_Entity* entity) {
 #ifdef DEBUG_UNIQUE_SELECTION
-    for (const auto e : m_entitiesList) {
+    for (const auto e : std::as_const(m_entitiesList)) {
         Q_ASSERT_X(e != entity, "LC_SelectedSet::add()", "Entity not unique in selection");
     }
 #endif
@@ -60,14 +60,14 @@ void LC_SelectedSet::remove(RS_Entity* entity) {
 }
 
 void LC_SelectedSet::replaceBy(QList<RS_Entity*>& entities) {
-    for (const auto e: m_entitiesList) {
+    for (const auto e: std::as_const(m_entitiesList)) {
         e->setSelectionFlag(false);
     }
     m_entitiesList.clear();
     m_entitiesList.append(entities);
     // need to update flag again, as the same entity might be in current selection list (so it will be un-selected) and
     // be added in new list (so it should be selected).
-    for (const auto e: entities) {
+    for (const auto e: std::as_const(entities)) {
         e->setSelectionFlag(true);
     }
     fireSelectionChanged();
@@ -77,7 +77,7 @@ void LC_SelectedSet::addListener(LC_SelectedSetListener* listener) {
     if (listener == nullptr) {
         return;
     }
-    for (const auto l : m_listeners) {
+    for (const auto l : std::as_const(m_listeners)) {
         if (l == listener) {
             return;
         }
@@ -91,7 +91,7 @@ void LC_SelectedSet::removeListener(LC_SelectedSetListener* listener) {
 
 void LC_SelectedSet::fireSelectionChanged() {
     if (m_silentMode == 0) {
-        for (const auto l : m_listeners) {
+        for (const auto l : std::as_const(m_listeners)) {
             l->selectionChanged();
         }
     }
@@ -105,7 +105,7 @@ void LC_SelectedSet::cleanup() {
         return;
     }
     QList<RS_Entity*> validEntities;
-    for (const auto e: m_entitiesList) {
+    for (const auto e: std::as_const(m_entitiesList)) {
         bool valid = false;
         if (e->isSet(RS2::FlagSelected) && e->isAlive()) {
             const RS_Layer* layer = e->getLayerResolved();
@@ -131,7 +131,7 @@ void LC_SelectedSet::cleanup() {
 
 bool LC_SelectedSet::collectSelectedEntities(QList<RS_Entity*>& list) {
     bool cleanupNeeded = false;
-    for (const auto e: m_entitiesList) {
+    for (const auto e: std::as_const(m_entitiesList)) {
         if (e != nullptr) {
             if (e->isSet(RS2::FlagSelected) && e->isNotSet(RS2::FlagDeleted)) {
                 list.append(e);
@@ -148,9 +148,9 @@ bool LC_SelectedSet::collectSelectedEntities(QList<RS_Entity*>& list) {
 }
 
 bool LC_SelectedSet::collectSelectedEntities(QList<RS_Entity*>& list, const QList<RS2::EntityType>&types) {
-    const bool specificTypesNeeded = types.size() > 0;
+    const bool specificTypesNeeded = !types.empty();
     bool cleanupNeeded = false;
-    for (const auto e: m_entitiesList) {
+    for (const auto e: std::as_const(m_entitiesList)) {
         if (e != nullptr) {
             if (e->isSet(RS2::FlagSelected) && e->isNotSet(RS2::FlagDeleted)) {
                 if (specificTypesNeeded) {
@@ -177,7 +177,7 @@ bool LC_SelectedSet::collectSelectedEntities(QList<RS_Entity*>& list, const QLis
 bool LC_SelectedSet::hasSelection() {
     bool cleanupNeeded = false;
     bool hasSelection = false;
-    for (const auto e: m_entitiesList) {
+    for (const auto e: std::as_const(m_entitiesList)) {
         if (e != nullptr) {
             if (e->isSet(RS2::FlagSelected) && e->isNotSet(RS2::FlagDeleted)) {
                 hasSelection = true;

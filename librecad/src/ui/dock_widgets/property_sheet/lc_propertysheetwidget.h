@@ -31,6 +31,7 @@
 #include "lc_latecompletionrequestor.h"
 #include "lc_property.h"
 #include "lc_property_rsvector.h"
+#include "lc_property_sheet_interface.h"
 #include "lc_propertysheet_widget_options.h"
 #include "lc_selectedsetlistener.h"
 #include "lc_tool_options_properties_container_provider.h"
@@ -38,7 +39,6 @@
 #include "lc_viewslist.h"
 #include "rs_entity.h"
 #include "rs_layerlistlistener.h"
-#include "rs_pen.h"
 
 class LC_ActionGroupManager;
 class LC_ActionContext;
@@ -51,7 +51,7 @@ namespace Ui {
 
 class LC_PropertySheetWidget : public LC_GraphicViewAwareWidget, public LC_SelectedSetListener, public LC_UCSListListener,
                                public RS_LayerListListener, public LC_ViewListListener, public LC_EntitiesModificationContext,
-                               public LC_LateCompletionRequestor {
+                               public LC_LateCompletionRequestor, public LC_PropertySheetInterface {
     Q_OBJECT
 
 public:
@@ -62,8 +62,8 @@ public:
     void setGraphicView(RS_GraphicView* gv) override;
     void stopInplaceEdit() const;
     void selectionChanged() override {refill();}
-    void refill();
-    void showToolOptions(LC_ToolOptionsPropertiesContainerProvider* provider);
+    void refill() override;
+    void showToolOptions(LC_ToolOptionsPropertiesContainerProvider* provider) override;
     void setShouldHandleSelectionChange(bool value);
     void updateFormats();
     void doProcessLateRequest(const LC_ActionContext::InteractiveInputInfo& interactiveInputInfo);

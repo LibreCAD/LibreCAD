@@ -51,7 +51,7 @@ protected:
 };
 
 inline void LC_EntityMatchDescriptor::fillPropertiesInfo(const std::function<void(QString &, QString&, QString&)>& fillFunction){
-    for (const auto p: m_entityPropertyDescriptors) {
+    for (const auto p: std::as_const(m_entityPropertyDescriptors)) {
         QString name = p->getName();
         QString displayName = p->getDisplayName();
         QString description = p->getDescription();
@@ -60,7 +60,7 @@ inline void LC_EntityMatchDescriptor::fillPropertiesInfo(const std::function<voi
 }
 
 inline LC_PropertyMatchDescriptor* LC_EntityMatchDescriptor::findPropertyDescriptor(const QString& propertyName) {
-    for (const auto p: m_entityPropertyDescriptors) {
+    for (const auto p: std::as_const(m_entityPropertyDescriptors)) {
         if (p->getName() == propertyName) {
             return p;
         }
@@ -176,7 +176,7 @@ void LC_TypedEntityMatchDescriptor<EntityType>::addFontStringList(const QString&
             }
             fonts.append(fontName);
         }
-        for (QString f : fonts) {
+        for (const QString& f : fonts) {
             listValues.push_back(std::pair<QString, QVariant>(f, f));
         }
     });

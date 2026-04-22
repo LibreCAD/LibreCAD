@@ -22,8 +22,8 @@
 
 #include "lc_ellipse_arc_options_widget.h"
 
-#include "lc_guarded_signals_blocker.h"
 #include "lc_action_draw_ellipse_axis.h"
+#include "lc_guarded_signals_blocker.h"
 #include "ui_lc_ellipse_arc_options_widget.h"
 
 /*
@@ -52,7 +52,7 @@ void LC_EllipseArcOptionsWidget::languageChange(){
 
 void LC_EllipseArcOptionsWidget::doUpdateByAction(RS_ActionInterface *a){
     m_action = static_cast<RS_ActionDrawEllipseAxis *>(a);
-    bool reversed = m_action->isReversed();
+    const bool reversed = m_action->isReversed();
     LC_GuardedSignalsBlocker({ui->rbNeg, ui->rbPos});
     ui->rbNeg->setChecked(reversed);
 }

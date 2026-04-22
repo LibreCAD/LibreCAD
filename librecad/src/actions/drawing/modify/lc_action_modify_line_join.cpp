@@ -23,8 +23,8 @@
 #include "lc_action_modify_line_join.h"
 
 #include "lc_actioninfomessagebuilder.h"
-#include "lc_line_join_options_widget.h"
 #include "lc_line_join_options_filler.h"
+#include "lc_line_join_options_widget.h"
 #include "lc_linemath.h"
 #include "rs_document.h"
 #include "rs_line.h"
@@ -357,7 +357,7 @@ bool LC_ActionModifyLineJoin::doTriggerEntitiesPrepare(LC_DocumentModificationBa
  */
 void LC_ActionModifyLineJoin::applyAttributes(RS_Entity *e, bool forLine1){
     RS_Pen pen;
-    RS_Layer *layer;
+    RS_Layer *layer = nullptr;
     switch (m_attributesSource) {
         case ATTRIBUTES_LINE_1: { // pick attributes from line 1
             pen = m_line1->getPen(false);
@@ -675,7 +675,7 @@ LC_ActionModifyLineJoin::LC_LineJoinData *LC_ActionModifyLineJoin::proceedParall
         RS_Vector middleRightPoint;  // right point in the middle
 
         // check we have intersection of two lines
-        bool hasIntersection;
+        bool hasIntersection = false;
 
         if (sx1 < sx2){ // start of line 1 is on left from start of line 2
             hasIntersection = sx2 < ex1; // check whether start of line 2 between start and end of line 1

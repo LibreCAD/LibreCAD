@@ -45,7 +45,7 @@ void LC_EntityPropertiesEditorWidget::interactiveInputUpdate(const LC_ActionCont
 
     bool pointComponentSet = false;
     bool lineEditFound = false;
-    for (const auto lineEdit : list) {
+    for (const auto lineEdit : std::as_const(list)) {
         auto propertyInputType = lineEdit->property("_interactiveInputEdit");
         if (propertyInputType.isValid() && !propertyInputType.isNull()) {
             auto propertyTag = lineEdit->property("_interactiveInputTag");

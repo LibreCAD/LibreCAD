@@ -46,7 +46,7 @@ void LC_ShortcutsTreeModel::rebuildModel(LC_ActionGroupManager *pManager){
             auto *groupChild = new LC_ShortcutTreeItem(root, group->getIcon(), group->getDescription(),
                                                        group->getDescription());
 
-            for (QAction *action: group->actions()) {
+            for (const QAction *action: group->actions()) {
 
                 const QVariant &configurable = action->property(LC_ShortcutInfo::PROPERTY_ACTION_SHORTCUT_CONFIGURABLE);
                 if (configurable.isValid()){
@@ -113,7 +113,7 @@ int LC_ShortcutsTreeModel::columnCount([[maybe_unused]]const QModelIndex &parent
 }
 
 int LC_ShortcutsTreeModel::rowCount(const QModelIndex &parent) const {
-    LC_ShortcutTreeItem *parentItem;
+    const LC_ShortcutTreeItem *parentItem = nullptr;
     if (!parent.isValid()) {
         parentItem = m_rootItem;
     }
@@ -236,7 +236,7 @@ QModelIndex LC_ShortcutsTreeModel::index(const int row, const int column, const 
         return QModelIndex();
     }
 
-    LC_ShortcutTreeItem *parentItem;
+    const LC_ShortcutTreeItem *parentItem = nullptr;
 
     if (!parent.isValid()) {
         parentItem = m_rootItem;
@@ -272,7 +272,7 @@ void LC_ShortcutsTreeModel::setRootItem(LC_ShortcutTreeItem *rootItem) {
 }
 
 void LC_ShortcutsTreeModel::resetAllToDefault() {
-    for (LC_ShortcutInfo* shortcut:m_shortcuts){
+    for (LC_ShortcutInfo* shortcut:std::as_const(m_shortcuts)){
         shortcut->resetToDefault();
         shortcut->setCollision(false);
     }
@@ -281,12 +281,12 @@ void LC_ShortcutsTreeModel::resetAllToDefault() {
 
 bool LC_ShortcutsTreeModel::checkForCollisions(LC_ShortcutInfo *shortcutInfo) {
     bool hasCollisions = false;
-    for (const auto currentShortcut: m_shortcuts){
+    for (const auto currentShortcut: std::as_const(m_shortcuts)){
         currentShortcut->setCollision(false);
     }
     if (shortcutInfo != nullptr) { // simple check, for this shortcut only
         const QKeySequence keyToTest = shortcutInfo->getKey();
-        for (auto *shortcut: m_shortcuts) {
+        for (auto *shortcut: std::as_const(m_shortcuts)) {
             if (shortcut != shortcutInfo) {
                 if (shortcut->hasTheSameKey(keyToTest)) {
                     shortcut->setCollision(true);
@@ -297,12 +297,12 @@ bool LC_ShortcutsTreeModel::checkForCollisions(LC_ShortcutInfo *shortcutInfo) {
         shortcutInfo->setCollision(hasCollisions);
     }
     else { // checking for all possible duplicates
-        for (const auto currentShortcut: m_shortcuts){
+        for (const auto currentShortcut: std::as_const(m_shortcuts)){
             if (currentShortcut->hasCollision()){
                 continue;
             }
             QKeySequence keyToTest = currentShortcut->getKey();
-            for (const auto anotherShortcut: m_shortcuts){
+            for (const auto anotherShortcut: std::as_const(m_shortcuts)){
                 if (anotherShortcut != currentShortcut){
                     if (anotherShortcut->hasTheSameKey(keyToTest)){
                         hasCollisions = true;
@@ -326,7 +326,7 @@ void LC_ShortcutsTreeModel::setFilterForConflicts(const bool filter) {
 }
 
 void LC_ShortcutsTreeModel::collectShortcuts(QList<LC_ShortcutInfo *> &items, const bool includeEmpty) {
-    for (const auto shortcut : m_shortcuts){
+    for (const auto shortcut : std::as_const(m_shortcuts)){
         if (shortcut->hasKey() || includeEmpty){
             items << shortcut;
         }
@@ -342,7 +342,7 @@ void LC_ShortcutsTreeModel::collectShortcuts(QList<LC_ShortcutInfo *> &items, co
  */
 void LC_ShortcutsTreeModel::applyShortcuts(const QMap<QString, QKeySequence> &map, const bool replace) {
     if (replace){
-        for (const auto shortcut: m_shortcuts){
+        for (const auto shortcut: std::as_const(m_shortcuts)){
             shortcut->clear();
         }
     }
@@ -359,7 +359,7 @@ void LC_ShortcutsTreeModel::applyShortcuts(const QMap<QString, QKeySequence> &ma
 }
 
 bool LC_ShortcutsTreeModel::isModified() {
-    for (const auto shortcut: m_shortcuts){
+    for (const auto shortcut: std::as_const(m_shortcuts)){
         if (shortcut->isModified()){
             return true;
         }

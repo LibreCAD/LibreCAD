@@ -43,7 +43,7 @@ RS_ActionInfoInside::RS_ActionInfoInside(LC_ActionContext *actionContext)
     const RS_Document* container = actionContext->getDocument();
     QList<RS_Entity*> selection;
     if (container->collectSelected(selection)) {
-        for(const auto* e: selection){
+        for(const auto* e: std::as_const(selection)){
            m_contour->addEntity(e);
         }
     }

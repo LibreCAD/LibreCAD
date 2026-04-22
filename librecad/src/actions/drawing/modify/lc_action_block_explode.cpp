@@ -38,7 +38,7 @@ LC_ActionBlocksExplode::LC_ActionBlocksExplode(LC_ActionContext *actionContext)
 }
 
 bool LC_ActionBlocksExplode::doTriggerModifications(LC_DocumentModificationBatch& ctx) {
-    RS_Modification::explode(m_selectedEntities, true, ctx);
+    RS_Modification::explode(m_selectedEntities, ctx);
     ctx.setActiveLayerAndPen(false, false);
     return true;
 }

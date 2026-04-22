@@ -36,6 +36,6 @@ namespace LC_CreationEllipse {
     bool createEllipseFromQuadratic(const LC_Quadratic& q, RS_EllipseData &data);
     //! \}
     bool createEllipseInscribeQuadrilateral(const std::vector<RS_Line*>& lines,std::vector<RS_Vector> &tangent, RS_EllipseData &data);
-};
+}
 
 #endif

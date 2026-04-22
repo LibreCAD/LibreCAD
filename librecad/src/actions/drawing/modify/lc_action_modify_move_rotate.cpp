@@ -27,8 +27,8 @@
 #include "lc_action_modify_move_rotate.h"
 
 #include "lc_actioninfomessagebuilder.h"
-#include "lc_move_rotate_options_widget.h"
 #include "lc_move_rotate_options_filler.h"
+#include "lc_move_rotate_options_widget.h"
 #include "rs_modification.h"
 #include "rs_preview.h"
 
@@ -295,7 +295,7 @@ bool LC_ActionModifyMoveRotate::doProcessCommand(int status, const QString& comm
             break;
         }
         case SetAngle: {
-            bool ok;
+            bool ok = false;
             const double a = RS_Math::eval(command, &ok);
             if (ok) {
                 accept = true;

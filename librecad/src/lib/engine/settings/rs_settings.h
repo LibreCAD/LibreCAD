@@ -138,7 +138,7 @@ public:
     void endGroup();
 
     bool write(const QString& key, int value);
-    bool write(const QString& key, QVariant variant);
+    bool write(const QString& key, const QVariant& variant);
     bool writeColor(const QString& key, int value);
     bool write(const QString& key, double value);
     bool writeEntry(const QString& key, const QVariant& value);

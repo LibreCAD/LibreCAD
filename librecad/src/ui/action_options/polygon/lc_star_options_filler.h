@@ -24,9 +24,9 @@
 #ifndef LC_STARTOPTIONSFILLER_H
 #define LC_STARTOPTIONSFILLER_H
 
-#include "lc_action_options_properties_filler.h"
+#include "lc_action_options_properties_filler_base.h"
 
-class LC_StarOptionsFiller: public LC_ActionOptionsPropertiesFiller{
+class LC_StarOptionsFiller: public LC_ActionOptionsPropertiesFillerBase{
     Q_OBJECT
 public:
     LC_StarOptionsFiller() = default;

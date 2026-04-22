@@ -65,7 +65,7 @@ public:
  * \param coord the given point
  */
     RS_Vector snapGrid(const RS_Vector& coord) const;
-    RS_Vector snapGrid(const RS_Vector& coord, const RS_Vector& rayStart, const RS_Vector& rayEnd);
+    RS_Vector snapGrid(const RS_Vector& coord, const RS_Vector& rayStart, const RS_Vector& rayEnd) const;
 
     void setIsoViewType(RS2::IsoGridViewType chType);
     RS2::IsoGridViewType getIsoViewType() const;

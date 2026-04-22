@@ -24,8 +24,6 @@
 #include "lc_action_draw_arc_2points_length.h"
 
 #include "lc_creation_arc.h"
-#include "lc_linemath.h"
-#include "rs_arc.h"
 #include "rs_circle.h"
 #include "rs_information.h"
 
@@ -33,8 +31,8 @@ LC_ActionDrawArc2PointsLength::LC_ActionDrawArc2PointsLength(LC_ActionContext *a
     :LC_ActionDrawArc2PointsBase("ActionDrawArc2PLength",actionContext, RS2::ActionDrawArc2PLength) {
 }
 
-bool LC_ActionDrawArc2PointsLength::createArcData(RS_ArcData &data, [[maybe_unused]]int status, const RS_Vector pos, const bool alternate, [[maybe_unused]] const bool reportErrors) {
-    bool result = LC_CreationArc::createFrom2PArcLength(m_startPoint, pos, m_parameterLen, m_reversed, alternate, data);
+bool LC_ActionDrawArc2PointsLength::createArcData(RS_ArcData &data, [[maybe_unused]]int status, const RS_Vector& pos, const bool alternate, [[maybe_unused]] const bool reportErrors) {
+    const bool result = LC_CreationArc::createFrom2PArcLength(m_startPoint, pos, m_parameterLen, m_reversed, alternate, data);
     if (!result) {
         if (reportErrors) {
             commandMessage(tr("The distance between the two points must be less than the arc length"));

@@ -67,7 +67,7 @@ public:
 
     ~RS_Line() override {
         m_highlightedVertex = RS_Vector{false};
-    };
+    }
 
     /** @return RS2::EntityLine */
     RS2::EntityType rtti() const override{

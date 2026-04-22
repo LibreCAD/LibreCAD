@@ -1238,7 +1238,7 @@ QString RS_Units::replaceExplicitBearingAnglesByDecimalDegrees(const QString& va
 QString RS_Units::replaceAllPotentialAnglesByDecimalDegrees(const QString& val, bool* ok) {
     QString expr = val;
     QString msg;
-    bool noError;
+    bool noError = false;
     expr = replaceSurveyorsAnglesByDecimalDegrees(expr, &noError, msg);
     if (noError) {
         expr = replaceRadiantAnglesByDecimalDegrees(expr, &noError);
@@ -1257,7 +1257,7 @@ QString RS_Units::replaceAllPotentialAnglesByDecimalDegrees(const QString& val, 
     }
     return val;
 }
-
+[[deprecated]] // fixme - this function is not used. Yet there is similar in LC_Convert and RS_PreviewActionInterface
 double RS_Units::evalAngleValue(const QString& c, bool* ok) {
     const QString normalizedString = replaceAllPotentialAnglesByDecimalDegrees(c, ok);
     double result = 0.0;

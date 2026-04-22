@@ -117,7 +117,7 @@ void LC_DlgDimension::saveDimensionStyles() {
     QList<LC_DimStyleItem*> unsavedItems;
     model->collectUnsavedItems(unsavedItems);
 
-    for (const auto dsi: unsavedItems) {
+    for (const auto dsi: std::as_const(unsavedItems)) {
        const auto createdStyle = dsi->dimStyle();
        const auto createdStyleToAdd = createdStyle->getCopy();
        m_graphic->addDimStyle(createdStyleToAdd);
@@ -199,7 +199,7 @@ void LC_DlgDimension::setupDimensionTypeDependentUI(RS_Dimension* dim) {
 
 void LC_DlgDimension::setupDimensionAttributesUI(const RS_Dimension* dim) {
     m_graphic = m_entity->getGraphic();
-    if (m_graphic) {
+    if (m_graphic != nullptr) {
         ui->cbLayer->init(*m_graphic->getLayerList(), false, false);
     }
     RS_Layer* lay = m_entity->getLayer(false);
@@ -259,7 +259,7 @@ QModelIndex LC_DlgDimension::setupStylesList() {
     const int itemStyleRow = entityStyleItem->row();
     QModelIndex selectedItemIndex;
 
-    LC_DimStyleItem* actualEntityStyleItem;
+    const LC_DimStyleItem* actualEntityStyleItem = nullptr;
 
     const auto overrideStyle = m_entity->getDimStyleOverride();
     if (overrideStyle != nullptr) {
@@ -407,7 +407,7 @@ void LC_DlgDimension::onDimStyleOverrideSave([[maybe_unused]]bool val) {
             QString nameCandidate;
             bool styleNameNotUnique {true};
             do {
-                bool ok;
+                bool ok = false;
                 nameCandidate = LC_InputTextDialog::getText(this, tr("Saving Style Override"), tr("New Style Name"), {}, true, "", &ok);
                 nameCandidate = nameCandidate.trimmed();
                 if (ok) {
@@ -505,7 +505,7 @@ void LC_DlgDimension::onDimStyleOverrideEdit([[maybe_unused]]bool checked) {
             LC_DlgDimStyleManager dimStyleManager(this, styleCopyToEdit, m_graphic, m_entity, baseStyleName);
             QList<LC_DimStyleItem*> itemsMatchedStyle;
             model->collectItemsForBaseStyleName(baseName, &itemsMatchedStyle);
-            for (auto dsi: itemsMatchedStyle) {
+            for (auto dsi: std::as_const(itemsMatchedStyle)) {
                 auto styleToAdd = dsi->dimStyle();
                 if (itemToEdit != dsi){
                     dimStyleManager.addDimStyle(styleToAdd);
@@ -529,7 +529,7 @@ void LC_DlgDimension::onDimStyleOverrideEdit([[maybe_unused]]bool checked) {
             QString baseName = itemToEdit->baseName();
             QList<LC_DimStyleItem*> itemsMatchedStyle;
             model->collectItemsForBaseStyleName(baseName, &itemsMatchedStyle);
-            for (auto dsi: itemsMatchedStyle) {
+            for (auto dsi: std::as_const(itemsMatchedStyle)) {
                 auto styleToAdd = dsi->dimStyle();
                 if (itemToEdit != dsi){
                     dimStyleManager.addDimStyle(styleToAdd);

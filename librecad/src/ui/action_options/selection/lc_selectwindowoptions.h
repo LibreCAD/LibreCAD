@@ -44,7 +44,7 @@ protected:
     LC_ActionSelectWindow* m_action = nullptr;
     void doSaveSettings() ;
     void doUpdateByAction(RS_ActionInterface *a) override;
-    void setSelectAllToActionAndView(bool value);
+    void setSelectAllToActionAndView(bool value) const;
     void setEntityTypesToActinAndView(QList<RS2::EntityType> entityTypes) const;
     void enableEntityTypes(bool enable) const;
 

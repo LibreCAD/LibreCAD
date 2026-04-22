@@ -49,11 +49,11 @@ void LC_DuplicateOptionsWidget::languageChange() {
 void LC_DuplicateOptionsWidget::doUpdateByAction(RS_ActionInterface* a) {
     m_action = static_cast<LC_ActionModifyDuplicate*>(a);
 
-    QString ofX = fromDouble(m_action->getOffsetX());
-    QString ofY = fromDouble(m_action->getOffsetY());
-    bool inplace = m_action->isDuplicateInPlace();
-    int penMode = m_action->getPenMode();
-    int layerMode = m_action->getLayerMode();
+    const QString ofX = fromDouble(m_action->getOffsetX());
+    const QString ofY = fromDouble(m_action->getOffsetY());
+    const bool inplace = m_action->isDuplicateInPlace();
+    const int penMode = m_action->getPenMode();
+    const int layerMode = m_action->getLayerMode();
 
     LC_GuardedSignalsBlocker({ui->cbInPlace, ui->cbLayer, ui->cbLayer, ui->leOffsetX, ui->leOffsetY});
 

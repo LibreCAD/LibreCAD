@@ -79,7 +79,7 @@ public:
     RS_Vector getContextMenuActionClickPosition() const;
     bool hasSelection() const;
     LC_GraphicViewport* getViewport() const {return m_graphicView == nullptr ? nullptr : m_graphicView->getViewPort();}
-    RS_Graphic* getGraphic(bool resolved = true) const  {return m_graphicView == nullptr ? nullptr : m_graphicView->getGraphic(resolved);};
+    RS_Graphic* getGraphic(bool resolved = true) const  {return m_graphicView == nullptr ? nullptr : m_graphicView->getGraphic(resolved);}
     LC_Formatter * getFormatter() const;
 
     struct InteractiveInputInfo {
@@ -105,7 +105,7 @@ public:
         QString requestorTag;
         LC_LateCompletionRequestor* requestor {nullptr};
 
-        void copyTo(InteractiveInputInfo& copy) {
+        void copyTo(InteractiveInputInfo& copy) const {
             copy.state = state;
             copy.distance = distance;
             copy.angleRad  = angleRad;

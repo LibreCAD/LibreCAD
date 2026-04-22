@@ -39,7 +39,6 @@
 #include "lc_penpaletteoptions.h"
 #include "lc_penpaletteoptionsdialog.h"
 #include "lc_tableitem_delegate_base.h"
-#include "lc_undosection.h"
 #include "qc_applicationwindow.h"
 #include "qg_pentoolbar.h"
 #include "rs_entity.h"
@@ -48,7 +47,6 @@
 #include "rs_layer.h"
 #include "rs_modification.h"
 #include "rs_selection.h"
-#include "rs_settings.h"
 
 class QTableView;
 
@@ -644,7 +642,7 @@ void LC_PenPaletteWidget::selectEntitiesWithDrawingPenBySelectedPenItem() {
  * @param resolvePens - flag that indicates that entity's pen should be resolved
  * @param resolveLayers - flat that indicates that entity's layer should be resolved
  */
-void LC_PenPaletteWidget::doSelectEntitiesBySelectedPenItem(const bool resolvePens, const bool resolveLayers) {
+void LC_PenPaletteWidget::doSelectEntitiesBySelectedPenItem(const bool resolvePens, const bool resolveLayers) const {
     // obtain selected item
     LC_PenItem* item = getSelectedPenItem();
     if (item != nullptr) {

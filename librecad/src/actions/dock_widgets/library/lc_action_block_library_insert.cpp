@@ -30,7 +30,6 @@
 
 #include "lc_block_library_insert_options_filler.h"
 #include "lc_block_library_insert_options_widget.h"
-
 #include "lc_documentsstorage.h"
 #include "rs_creation.h"
 #include "rs_graphic.h"
@@ -137,7 +136,7 @@ void LC_ActionBlockLibraryInsert::onMouseMoveEvent(const int status, const LC_Mo
             m_preview->move(data.insertionPoint);
             m_preview->scale(data.insertionPoint, {data.factor, data.factor});
             // unit conversion:
-            if (m_graphic) {
+            if (m_graphic != nullptr) {
                 const double uf = RS_Units::convert(1.0, m_actionData->prev->getUnit(), m_graphic->getUnit());
                 m_preview->scale(data.insertionPoint, {uf, uf});
             }
@@ -185,7 +184,7 @@ bool LC_ActionBlockLibraryInsert::doProcessCommand(int status, const QString& co
             break;
         }
         case SetAngle: {
-            bool ok;
+            bool ok = false;
             const double a = RS_Math::eval(command, &ok);
             if (ok) {
                 m_actionData->data.angle = RS_Math::deg2rad(a);
@@ -199,7 +198,7 @@ bool LC_ActionBlockLibraryInsert::doProcessCommand(int status, const QString& co
             break;
         }
         case SetFactor: {
-            bool ok;
+            bool ok = false;
             const double f = RS_Math::eval(command, &ok);
             if (ok) {
                 setFactor(f);

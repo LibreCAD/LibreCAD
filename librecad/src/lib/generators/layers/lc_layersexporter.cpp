@@ -57,7 +57,7 @@ void LC_LayersExporter::exportLayersToIndividualDocuments(const LC_LayersExportO
 
     for (auto originalLayer : options->layers) {
         auto* exportGraphics = new RS_Graphic();
-        exportGraphics->newDoc();
+        exportGraphics->initForNewDocument();
         exportGraphics->setVariableDictObject(originalGraphic->getVariableDictObject());
         exportGraphics->setGraphicView(originalGraphicView);  // fixme - sand - dependency
 
@@ -150,7 +150,7 @@ void LC_LayersExporter::exportLayersToSingleDocument(const LC_LayersExportOption
     std::unordered_map<RS_Layer*, RS_Layer*> layerMap;
 
     auto* exportGraphic = new RS_Graphic();
-    exportGraphic->newDoc();
+    exportGraphic->initForNewDocument();
     exportGraphic->setVariableDictObject(originalGraphic->getVariableDictObject());
     auto zeroLayer = exportGraphic->findLayer("0"); // it's always present, created in newDoc
 

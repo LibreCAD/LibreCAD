@@ -105,7 +105,7 @@ void LC_CopyUtils::copy(const RS_Vector& ref, QList<RS_Entity*>& entities, const
     }
 
     clipboard->startCopy();
-    for (const auto e : entities) {
+    for (const auto e : std::as_const(entities)) {
         if (e != nullptr) {
             doCopyEntity(e, refPoint, clipboardGraphic);
         }
@@ -287,21 +287,21 @@ void LC_CopyUtils::paste(const RS_PasteData& data, RS_Graphic* graphic, LC_Docum
  *
  **/
 bool LC_CopyUtils::pasteLayers(RS_Graphic* source, RS_Graphic* destination) {
-    if (!source) {
+    if (source == nullptr) {
         RS_DEBUG->print(RS_Debug::D_ERROR, "RS_Modification::pasteLayers: no valid graphic found");
         return false;
     }
 
     RS_LayerList* lrs = source->getLayerList();
     for (const RS_Layer* layer : *lrs) {
-        if (!layer) {
+        if (layer == nullptr) {
             RS_DEBUG->print(RS_Debug::D_WARNING, "RS_Modification::pasteLayers: nullptr layer in source");
             continue;
         }
 
         // add layers if absent
         QString ln = layer->getName();
-        if (!destination->findLayer(ln)) {
+        if (destination->findLayer(ln) == nullptr) {
             destination->addLayer(layer->clone());
             RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Modification::pasteLayers: layer added: %s", ln.toLatin1().data());
         }
@@ -340,7 +340,7 @@ bool LC_CopyUtils::pasteContainer(RS_Entity* entity, RS_EntityContainer* contain
     }
     RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Modification::pasteInsert: processing container: %s", name_old.toLatin1().data());
     // rename if needed
-    if (destination->findBlock(name_old)) {
+    if (destination->findBlock(name_old) != nullptr) {
         if (insertBlock->getParent() == destination) {
             // If block is already in graphic, only paste a new insert
             pasteEntity(entity, destination, destination);
@@ -361,7 +361,7 @@ bool LC_CopyUtils::pasteContainer(RS_Entity* entity, RS_EntityContainer* contain
     // set the same layer in clone as in source
     const QString layerName = entity->getLayer()->getName();
     RS_Layer* layer = destination->getLayerList()->find(layerName);
-    if (!layer) {
+    if (layer == nullptr) {
         RS_DEBUG->print(RS_Debug::D_ERROR, "RS_Modification::pasteInsert: unable to select layer to paste in: %s",
                         layerName.toLatin1().data());
         return false;
@@ -408,14 +408,14 @@ bool LC_CopyUtils::pasteContainer(RS_Entity* entity, RS_EntityContainer* contain
  *
  **/
 bool LC_CopyUtils::pasteEntity(const RS_Entity* entity, RS_EntityContainer* containerToPaste, RS_Graphic* graphic) {
-    if (!entity) {
+    if (entity == nullptr) {
         return false;
     }
 
     // set the same layer in clone as in source
     const QString ln = entity->getLayer()->getName();
     RS_Layer* layer = graphic->getLayerList()->find(ln); // fixme - perf- layer search is not needed if copy paste within the same document
-    if (!layer) {
+    if (layer == nullptr) {
         RS_DEBUG->print(RS_Debug::D_ERROR, "RS_Modification::pasteInsert: unable to select layer to paste in: %s", ln.toLatin1().data());
         return false;
     }

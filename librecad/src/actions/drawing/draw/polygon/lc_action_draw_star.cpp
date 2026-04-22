@@ -24,8 +24,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 #include "lc_containertraverser.h"
 #include "lc_linemath.h"
-#include "lc_star_options_widget.h"
 #include "lc_star_options_filler.h"
+#include "lc_star_options_widget.h"
 #include "rs_document.h"
 #include "rs_line.h"
 #include "rs_polyline.h"

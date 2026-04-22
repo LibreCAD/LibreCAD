@@ -23,6 +23,7 @@
 
 #ifndef LC_LASTOPENFILESOPENER_H
 #define LC_LASTOPENFILESOPENER_H
+
 #include <QList>
 
 class QSplashScreen;

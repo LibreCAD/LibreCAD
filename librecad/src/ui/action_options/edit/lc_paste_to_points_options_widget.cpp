@@ -22,9 +22,9 @@
  */
 
 #include "lc_paste_to_points_options_widget.h"
+
 #include "lc_action_edit_paste_to_points.h"
 #include "lc_guarded_signals_blocker.h"
-
 #include "ui_lc_paste_to_points_options_widget.h"
 
 LC_PasteToPointsOptionsWidget::LC_PasteToPointsOptionsWidget():ui(new Ui::LC_PasteToPointsOptionsWidget) {
@@ -42,9 +42,9 @@ LC_PasteToPointsOptionsWidget::~LC_PasteToPointsOptionsWidget() {
 void LC_PasteToPointsOptionsWidget::doUpdateByAction(RS_ActionInterface* a) {
     m_action = static_cast<LC_ActionPasteToPoints*>(a);
 
-    QString angle = fromDouble(RS_Math::rad2deg(m_action->getAngle()));
-    QString factor = fromDouble(m_action->getScaleFactor());
-    bool removePoints = m_action->isRemovePointAfterPaste();
+    const QString angle = fromDouble(RS_Math::rad2deg(m_action->getAngle()));
+    const QString factor = fromDouble(m_action->getScaleFactor());
+    const bool removePoints = m_action->isRemovePointAfterPaste();
 
     LC_GuardedSignalsBlocker({ui->leAngle, ui->leFactor,  ui->cbRemovePoint});
     ui->leAngle->setText(angle);
@@ -53,7 +53,7 @@ void LC_PasteToPointsOptionsWidget::doUpdateByAction(RS_ActionInterface* a) {
 }
 
 void LC_PasteToPointsOptionsWidget::onAngleEditingFinished() {
-    auto val = ui->leAngle->text();
+    const auto val = ui->leAngle->text();
     double angle;
     if (toDoubleAngleDegrees(val, angle, 0.0, false)) {
         m_action->setAngle(RS_Math::deg2rad(angle));
@@ -62,7 +62,7 @@ void LC_PasteToPointsOptionsWidget::onAngleEditingFinished() {
 }
 
 void LC_PasteToPointsOptionsWidget::onFactorEditingFinished() {
-    auto val = ui->leFactor->text();
+    const auto val = ui->leFactor->text();
     double y;
     if (toDouble(val, y, 1.0, true)) {
         m_action->setScaleFactor(y);

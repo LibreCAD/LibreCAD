@@ -360,7 +360,7 @@ void LC_LayerTreeWidget::update() const {
 void LC_LayerTreeWidget::activateLayer(RS_Layer *layer) const {
     RS_DEBUG->print("QG_LayerWidget::activateLayer() begin");
 
-    if (!layer || !m_layerList){
+    if ((layer == nullptr) || (m_layerList == nullptr)){
         RS_DEBUG->print(RS_Debug::D_ERROR, "QG_LayerWidget::activateLayer: nullptr layer or layerList");
         return;
     }
@@ -627,7 +627,7 @@ void LC_LayerTreeWidget::slotFilteringMaskChanged() const {
  */
 void LC_LayerTreeWidget::onCustomContextMenu(const QPoint &point){
 
-    if (m_actionHandler){
+    if (m_actionHandler != nullptr){
         auto *contextMenu = new QMenu(this);
         /*auto *caption = new QLabel(tr("Layer Menu"), this);
         QPalette palette;
@@ -1051,7 +1051,7 @@ void LC_LayerTreeWidget::onDragEnterEvent(const QModelIndex &dropIndex) const {
 void LC_LayerTreeWidget::onDropEvent(const QModelIndex &dropIndex, const DropIndicatorPosition position) const {
     RS_DEBUG->print(RS_Debug::D_WARNING, "onDropEvent");
     LC_LayerTreeItem *currentlyDraggingItem = m_layerTreeModel->getCurrentlyDraggingItem();
-    if (currentlyDraggingItem){
+    if (currentlyDraggingItem != nullptr){
         LC_LayerTreeItem *destinationItem = nullptr;
         if (dropIndex.isValid()){ // going to drop on other item
             destinationItem = m_layerTreeModel->getItemForIndex(dropIndex);
@@ -1336,7 +1336,7 @@ void LC_LayerTreeWidget::removeChildLayersForSelected(){
 void LC_LayerTreeWidget::removeActiveLayers(){
     if (nullptr != m_layerList){
         const auto activeLayer = m_graphic->getActiveLayer();
-        if (activeLayer){
+        if (activeLayer != nullptr){
             LC_LayerTreeItem *currentItem = m_layerTreeModel->getItemForLayer(activeLayer);
             if (currentItem != nullptr){
                 doRemoveLayersFromSource(currentItem, false);
@@ -1348,7 +1348,7 @@ void LC_LayerTreeWidget::removeActiveLayers(){
 void LC_LayerTreeWidget::removeActiveLayer(bool removeWithChildren){
     if (nullptr != m_layerList){
         const auto activeLayer = m_graphic->getActiveLayer();
-        if (activeLayer){
+        if (activeLayer != nullptr){
             LC_LayerTreeItem *currentItem = m_layerTreeModel->getItemForLayer(activeLayer);
             if (currentItem != nullptr){
                 if (removeWithChildren) {
@@ -1491,7 +1491,7 @@ void LC_LayerTreeWidget::manageLayersVisibilityFlag(const QList<RS_Layer *> &lay
  * @param toggleMode - flag whether toggle mode should be called internally. if true, list in layersToDisable is ignored
  */
 void LC_LayerTreeWidget::manageLayersLockFlag(const QList<RS_Layer *> &layersToLockOrToggle, const QList<RS_Layer *> &layersToUnlock, const bool toggleMode){
-    int count;
+    int count = 0;
     QList<RS_Layer *> layersForEntitiesUpdate;
     if (toggleMode){
         m_graphic->toggleLockLayers(layersToLockOrToggle);

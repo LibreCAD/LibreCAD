@@ -120,7 +120,7 @@ void LC_ActionDrawMText::onMouseMoveEvent(const int status, const LC_MouseEvent*
         mouse = getRelZeroAwarePoint(e, mouse);
         const RS_Vector mov = mouse - *m_pos;
         *m_pos = mouse;
-        if (m_textChanged || m_pos->valid == false || m_preview->isEmpty()) {
+        if (m_textChanged || !m_pos->valid || m_preview->isEmpty()) {
             preparePreview();
         }
         else {

@@ -93,7 +93,7 @@ public:
     }
 
     void fireModified(const bool value) {
-        for (const auto l: m_viewListListeners) {
+        for (const auto l: std::as_const(m_viewListListeners)) {
             l->viewsListModified(value);
         }
     }

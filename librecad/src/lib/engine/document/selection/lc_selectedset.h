@@ -70,7 +70,7 @@ public:
 private:
     QList<RS_Entity*> m_entitiesList;
     QList<LC_SelectedSetListener*> m_listeners;
-    int m_silentMode{false};
+    int m_silentMode{0};
     bool m_changedInSilent{false};
 };
 

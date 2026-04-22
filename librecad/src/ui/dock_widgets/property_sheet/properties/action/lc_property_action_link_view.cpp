@@ -78,7 +78,7 @@ void LC_PropertyActionLinkView::buildPartBackground(const LC_PropertyPaintContex
     parts.append(part);
 }
 
-void LC_PropertyActionLinkView::builSingleLinkPart(const QRect& valuesRect, const QString& title, const QString& tooltip, bool linkIndex,
+void LC_PropertyActionLinkView::builSingleLinkPart(const QRect& valuesRect, const QString& title, const QString& tooltip, int linkIndex,
                                                    QList<LC_PropertyViewPart>& parts, bool linkEnabled) {
     LC_PropertyViewPart part(valuesRect);
     // part.m_rect.setWidth(ctx.painter->fontMetrics().boundingRect(m_title).width() + 5);
@@ -190,7 +190,7 @@ void LC_PropertyActionLinkView::doBuildViewParts(LC_PropertyPaintContext& ctx, Q
         builSingleLinkPart(valuesRect, m_titleLeft, m_tooltipLeft, 0, parts, m_enabledLeft);
     }
     else {
-        int splitPos = ctx.splitPos;
+        const int splitPos = ctx.splitPos;
         QRect leftRect = valuesRect;
         leftRect.setRight(splitPos);
 

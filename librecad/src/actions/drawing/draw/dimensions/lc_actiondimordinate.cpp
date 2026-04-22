@@ -37,7 +37,6 @@ struct LC_ActionDimOrdinate::ActionData {
     ~ActionData() = default;
     RS_Vector wcsFeaturePoint;
     RS_Vector leaderEndPoint;
-    bool directionX = false;
     bool ctrlPressed = false;
 };
 

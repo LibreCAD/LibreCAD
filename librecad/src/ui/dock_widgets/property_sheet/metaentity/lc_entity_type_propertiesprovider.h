@@ -613,18 +613,18 @@ void LC_EntityTypePropertiesProvider::createEntityContextCommand(LC_PropertyCont
                                                   const QString& linkTooltip, RS2::ActionType actionTypeRight,  const QString& linkTitleRight,
                                                   const QString& linkTooltipRight,  EntityClass* entity,
                                                   const QString &commonDescription, bool setContextEntity) {
-    auto clickHandler = [this, actionType, actionTypeRight, setContextEntity]([[maybe_unused]] EntityClass* entity, const int linkIndex) {
+    auto clickHandler = [this, actionType, actionTypeRight, setContextEntity]([[maybe_unused]] EntityClass* ent, const int linkIndex) {
         switch (linkIndex) {
             case 0: {
                 if (setContextEntity) {
-                    m_actionContext->saveContextMenuActionContext(entity, entity->getMiddlePoint(), false);
+                    m_actionContext->saveContextMenuActionContext(ent, ent->getMiddlePoint(), false);
                 }
                 m_actionContext->setCurrentAction(actionType, nullptr);
                 break;
             }
             case 1: {
                 if (setContextEntity) {
-                    m_actionContext->saveContextMenuActionContext(entity, entity->getMiddlePoint(), false);
+                    m_actionContext->saveContextMenuActionContext(ent, ent->getMiddlePoint(), false);
                 }
                 m_actionContext->setCurrentAction(actionTypeRight, nullptr);
                 break;

@@ -23,9 +23,6 @@
 
 #include "lc_relative_position_evaluator.h"
 
-#include <qassert.h>
-
-
 #include "lc_linemath.h"
 #include "rs.h"
 #include "rs_math.h"
@@ -40,7 +37,7 @@ void LC_RelativePositionEvaluator::update(const RS_Vector& wcsPos, const RS_Vect
     m_relativeInputData.setUnmodified();
 }
 
-void LC_RelativePositionEvaluator::recalculateDeltas(const RS_Vector& wcsEndPoint) {
+void LC_RelativePositionEvaluator::recalculateDeltas([[]] const RS_Vector& wcsEndPoint) {
     /*const RS_Vector delta = wcsEndPoint - m_relativeInputData.wcsBasePoint;
     m_relativeInputData.wcsDX = delta.x;
     m_relativeInputData.wcsDY = delta.y;*/
@@ -63,10 +60,10 @@ void LC_RelativePositionEvaluator::recalculateLengthAndAngle(const RS_Vector& wc
     recalculateAngle(wcsBasePoint);
 }
 
-void LC_RelativePositionEvaluator::calculatePointForGivenXKeepingLength(double length, double wcsAngle, RS_Vector& ucsProjectedPoint) {
-    auto ucsBase = m_viewport->toUCS(m_relativeInputData.wcsBasePoint);
-    RS_Vector ucsDelta = ucsProjectedPoint - ucsBase;
-    double ucsDX = ucsDelta.x;
+void LC_RelativePositionEvaluator::calculatePointForGivenXKeepingLength(double length, double wcsAngle, RS_Vector& ucsProjectedPoint) const {
+    const auto ucsBase = m_viewport->toUCS(m_relativeInputData.wcsBasePoint);
+    const RS_Vector ucsDelta = ucsProjectedPoint - ucsBase;
+    const double ucsDX = ucsDelta.x;
 
     const double ucsDY = std::sqrt(length * length - ucsDX * ucsDX);
 
@@ -76,7 +73,7 @@ void LC_RelativePositionEvaluator::calculatePointForGivenXKeepingLength(double l
     const double angle1 = ucsBase.angleTo(proj1);
     const double angle2 = ucsBase.angleTo(proj2);
 
-    double ucsAngle = m_viewport->toUCSAngle(wcsAngle);
+    const double ucsAngle = m_viewport->toUCSAngle(wcsAngle);
 
     const double deltaAngles1 = RS_Math::getAngleDifferenceU(angle1, ucsAngle);
     const double deltaAngles2 = RS_Math::getAngleDifferenceU(angle2, ucsAngle);
@@ -89,10 +86,10 @@ void LC_RelativePositionEvaluator::calculatePointForGivenXKeepingLength(double l
     }
 }
 
-void LC_RelativePositionEvaluator::calculatePointForGivenYKeepingLength(double length, double wcsAngle, RS_Vector& ucsProjectedPoint) {
-    auto ucsBase = m_viewport->toUCS(m_relativeInputData.wcsBasePoint);
-    RS_Vector ucsDelta = ucsProjectedPoint - ucsBase;
-    double ucsDY = ucsDelta.y;
+void LC_RelativePositionEvaluator::calculatePointForGivenYKeepingLength(double length, double wcsAngle, RS_Vector& ucsProjectedPoint) const {
+    const auto ucsBase = m_viewport->toUCS(m_relativeInputData.wcsBasePoint);
+    const RS_Vector ucsDelta = ucsProjectedPoint - ucsBase;
+    const double ucsDY = ucsDelta.y;
 
     const double ucsDX = std::sqrt(length * length - ucsDY * ucsDY);
 
@@ -102,7 +99,7 @@ void LC_RelativePositionEvaluator::calculatePointForGivenYKeepingLength(double l
     const double angle1 = ucsBase.angleTo(proj1);
     const double angle2 = ucsBase.angleTo(proj2);
 
-    double ucsAngle = m_viewport->toUCSAngle(wcsAngle);
+    const double ucsAngle = m_viewport->toUCSAngle(wcsAngle);
 
     const double deltaAngles1 = RS_Math::getAngleDifferenceU(angle1, ucsAngle);
     const double deltaAngles2 = RS_Math::getAngleDifferenceU(angle2, ucsAngle);
@@ -117,8 +114,8 @@ void LC_RelativePositionEvaluator::calculatePointForGivenYKeepingLength(double l
 
 void LC_RelativePositionEvaluator::calculatePointForGivenXKeepingAngle(RS_Vector& ucsProjectedPoint) {
     // try to keep angle
-    double ucsAngle = m_viewport->toUCSAngle(m_relativeInputData.wcsAngle);
-    auto ucsBase = m_viewport->toUCS(m_relativeInputData.wcsBasePoint);
+    const double ucsAngle = m_viewport->toUCSAngle(m_relativeInputData.wcsAngle);
+    const auto ucsBase = m_viewport->toUCS(m_relativeInputData.wcsBasePoint);
     RS_Vector ucsDelta = ucsProjectedPoint - ucsBase;
 
     const double normAngle = RS_Math::correctAngle0ToPi(ucsAngle);
@@ -138,8 +135,8 @@ void LC_RelativePositionEvaluator::calculatePointForGivenXKeepingAngle(RS_Vector
 
 void LC_RelativePositionEvaluator::calculatePointForGivenYKeepingAngle(RS_Vector& ucsProjectedPoint) {
     // try to keep angle
-    double ucsAngle = m_viewport->toUCSAngle(m_relativeInputData.wcsAngle);
-    auto ucsBase = m_viewport->toUCS(m_relativeInputData.wcsBasePoint);
+    const double ucsAngle = m_viewport->toUCSAngle(m_relativeInputData.wcsAngle);
+    const auto ucsBase = m_viewport->toUCS(m_relativeInputData.wcsBasePoint);
     RS_Vector ucsDelta = ucsProjectedPoint - ucsBase;
 
     const double normAngle = RS_Math::correctAngle0ToPi(ucsAngle);
@@ -160,7 +157,7 @@ void LC_RelativePositionEvaluator::calculatePointForGivenYKeepingAngle(RS_Vector
     m_relativeInputData.explicitDY = false;
 }
 
-void LC_RelativePositionEvaluator::calculateForX(RS_Vector wcsBasePoint, double length, double wcsAngle, RS_Vector ucsProjectedPoint) {
+void LC_RelativePositionEvaluator::calculateForX(const RS_Vector& wcsBasePoint, double length, double wcsAngle, RS_Vector ucsProjectedPoint) {
     bool calcAngle = true;
     bool calcLength = true;
 
@@ -190,7 +187,7 @@ void LC_RelativePositionEvaluator::calculateForX(RS_Vector wcsBasePoint, double 
     }
 }
 
-void LC_RelativePositionEvaluator::calculateForY(RS_Vector wcsBasePoint, double length, double wcsAngle, RS_Vector ucsProjectedPoint) {
+void LC_RelativePositionEvaluator::calculateForY(const RS_Vector& wcsBasePoint, double length, double wcsAngle, RS_Vector ucsProjectedPoint) {
     bool calcAngle = true;
     bool calcLength = true;
 
@@ -220,13 +217,10 @@ void LC_RelativePositionEvaluator::calculateForY(RS_Vector wcsBasePoint, double 
     }
 }
 
-void LC_RelativePositionEvaluator::setPositionParam(RS2::RelativePointParam paramType, double value, bool fromInteractiveInput) {
-    RS_Vector wcsBasePoint = m_relativeInputData.wcsBasePoint;
-    RS_Vector wcsDelta = m_relativeInputData.wcsProjection - wcsBasePoint;
-    double wcsDX = wcsDelta.x;
-    double wcsDY = wcsDelta.y;
-    double length = m_relativeInputData.length;
-    double wcsAngle = m_relativeInputData.wcsAngle;
+void LC_RelativePositionEvaluator::setPositionParam(RS2::RelativePointParam paramType, double value) {
+    const RS_Vector wcsBasePoint = m_relativeInputData.wcsBasePoint;
+    const double length = m_relativeInputData.length;
+    const double wcsAngle = m_relativeInputData.wcsAngle;
     switch (paramType) {
         case RS2::REL_POINT_LENGTH: {
             const double newLength = value;
@@ -253,14 +247,14 @@ void LC_RelativePositionEvaluator::setPositionParam(RS2::RelativePointParam para
             break;
         }
         case RS2::REL_POINT_DX: {
-            RS_Vector ucsBasePoint = m_viewport->toUCS(wcsBasePoint);
+            const RS_Vector ucsBasePoint = m_viewport->toUCS(wcsBasePoint);
             RS_Vector ucsProjectedPoint = m_viewport->toUCS(m_relativeInputData.wcsProjection);
             ucsProjectedPoint.x = ucsBasePoint.x + value;
             calculateForX(wcsBasePoint, length, wcsAngle, ucsProjectedPoint);
             break;
         }
         case RS2::REL_POINT_DY: {
-            RS_Vector ucsBasePoint = m_viewport->toUCS(wcsBasePoint);
+            const RS_Vector ucsBasePoint = m_viewport->toUCS(wcsBasePoint);
             RS_Vector ucsProjectedPoint = m_viewport->toUCS(m_relativeInputData.wcsProjection);
             ucsProjectedPoint.y = ucsBasePoint.y + value;
             calculateForY(wcsBasePoint, length, wcsAngle, ucsProjectedPoint);

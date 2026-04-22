@@ -93,11 +93,11 @@ public:
         m_snapInfo.update(other);
     }
 
-    void setLabel(QString label) {
+    void setLabel(const QString& label) {
         m_labelString = label;
     }
 
-    void setFont(QFont font) {
+    void setFont(const QFont& font) {
         m_font = font;
     }
 
@@ -106,19 +106,19 @@ public:
     }
 
     void drawMarker(RS_Painter* painter, const QFont& font, const RS_Vector& basePoint, int uiOffset, double offsetLevel,
-                    const QString& markerLetter);
+                    const QString& markerLetter) const;
 
     void setupForPoint(const RS_Vector& nearestPoint, RS2::VisualSnapGuideEntityType guideType, bool isActive, double wcsAngle = RS_MINDOUBLE) {
         m_snapInfo.setupForPoint(nearestPoint, wcsAngle, guideType);
         m_snapInfo.active = isActive;
     }
 
-    void setOriginalId(int id) {
-        m_oridinalId = id;
+    void setOriginalId(unsigned long long id) {
+        m_originalId = id;
     }
 
-    int getOriginalId() const{
-        return m_oridinalId;
+    unsigned long long getOriginalId() const {
+        return m_originalId;
     }
 
 protected:
@@ -126,7 +126,7 @@ protected:
     QString m_labelString;
     QFont m_font;
     int m_baseLabelOffset = 50;
-    int m_oridinalId = -1;
+    unsigned long long m_originalId = -1;
 };
 
 #endif

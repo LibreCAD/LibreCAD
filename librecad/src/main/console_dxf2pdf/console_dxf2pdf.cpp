@@ -139,13 +139,13 @@ int console_dxf2pdf(int argc, char* argv[]){
     params.monochrome = parser.isSet(monoOpt);
     params.pageSize = parsePageSizeArg(parser.value(pageSizeOpt));
 
-    bool resOk;
+    bool resOk = false;
     int res = parser.value(resOpt).toInt(&resOk);
     if (resOk) {
         params.resolution = res;
     }
 
-    bool scaleOk;
+    bool scaleOk = false;
     double scale = parser.value(scaleOpt).toDouble(&scaleOk);
     if (scaleOk) {
         params.scale = scale;
@@ -157,7 +157,7 @@ int console_dxf2pdf(int argc, char* argv[]){
     params.outFile = parser.value(outFileOpt);
     params.outDir = parser.value(outDirOpt);
 
-    for (auto arg : args) {
+    for (const auto &arg : args) {
         QFileInfo dxfFileInfo(arg);
         if (dxfFileInfo.suffix().toLower() != "dxf"){
             continue; // Skip files without .dxf extension

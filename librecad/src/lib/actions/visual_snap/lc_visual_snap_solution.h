@@ -25,12 +25,12 @@
 #define LC_VISUALSNAPSOLUTION_H
 
 #include "lc_ref_snap_arc.h"
-#include "lc_ref_snap_line.h"
-#include "lc_ref_snap_construction_line.h"
 #include "lc_ref_snap_circle.h"
-#include "rs_line.h"
+#include "lc_ref_snap_construction_line.h"
+#include "lc_ref_snap_line.h"
 #include "rs_arc.h"
 #include "rs_circle.h"
+#include "rs_line.h"
 
 class LC_VisualSnapData;
 
@@ -78,13 +78,13 @@ struct LC_VisualSnapVertex {
         delete refLine;
         delete refArc;
         delete refCircle;
-    };
+    }
 };
 
 struct LC_VisualSnapEntityHolder {
     bool processed{false};
-    RS_Entity* entity;
-    RS2::VisualSnapGuideEntityType snapEntityType;
+    RS_Entity* entity {nullptr};
+    RS2::VisualSnapGuideEntityType snapEntityType = RS2::VSNAP_NONE;
     double wcsRayAngleRad {RS_MINDOUBLE};
 
     LC_VisualSnapEntityHolder() = default;
@@ -132,7 +132,7 @@ struct LC_VisualSnapItem {
         docEntityRef.reset(new LC_VisualSnapDocumentEntityRef(snapEntity, docEntity, id));
     }
 
-    LC_VisualSnapItem(LC_VisualSnapVertex* v) {
+    explicit LC_VisualSnapItem(LC_VisualSnapVertex* v) {
         isVertexItem = true;
         vertex.reset(v);
     }
@@ -175,19 +175,19 @@ struct LC_VisualSnapSolution {
         return foundSnapPoint.valid;
     }
 
-    void setFoundSnapPoint(RS_Vector& snapPoint, const RS2::LC_VisualSnapIntersectionInfo pointInfo) {
+    void setFoundSnapPoint(RS_Vector& snapPoint, const RS2::LC_VisualSnapIntersectionInfo& pointInfo) {
         foundSnapPoint = snapPoint;
         foundSnapPointInfo = pointInfo;
     }
 
     void addGuidingEntity(LC_RefSnapLine* line, double wcsRayAngle = RS_MINDOUBLE) {
-        RS2::VisualSnapGuideEntityType guideType = line->getGuideType();
+        const RS2::VisualSnapGuideEntityType guideType = line->getGuideType();
         const LC_VisualSnapEntityHolder holder(line, guideType, wcsRayAngle);
         guidingEntities.push_back(holder);
     }
 
     void addGuidingEntity(LC_RefSnapConstructionLine* line, double wcsRayAngle = RS_MINDOUBLE) {
-        RS2::VisualSnapGuideEntityType guideType = line->getGuideType();
+        const RS2::VisualSnapGuideEntityType guideType = line->getGuideType();
         const LC_VisualSnapEntityHolder holder(line, guideType, wcsRayAngle);
         guidingEntities.push_back(holder);
     }
@@ -197,7 +197,7 @@ struct LC_VisualSnapSolution {
         guidingEntities.push_back(holder);
     }
     void addGuidingEntity(LC_RefSnapCircle* circle) {
-        RS2::VisualSnapGuideEntityType guideType = circle->getGuideType();
+        const RS2::VisualSnapGuideEntityType guideType = circle->getGuideType();
         const LC_VisualSnapEntityHolder holder(circle, guideType);
         guidingEntities.push_back(holder);
     }

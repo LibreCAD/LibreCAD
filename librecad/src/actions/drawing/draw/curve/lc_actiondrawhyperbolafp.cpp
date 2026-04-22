@@ -20,13 +20,14 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 ******************************************************************************/
 
+#include "lc_actiondrawhyperbolafp.h"
+
 #include <cmath>
 #include <memory>
 
-#include "lc_actiondrawhyperbolafp.h"
 #include "lc_hyperbola.h"
-#include "rs_preview.h"
 #include "qg_graphicview.h"
+#include "rs_preview.h"
 
 LC_ActionDrawHyperbolaFP::LC_ActionDrawHyperbolaFP(LC_ActionContext* actionContext)
     : LC_SingleEntityCreationAction("ActionDrawHyperbolaFoci2Points", actionContext, RS2::ActionDrawHyperbolaFoci2Points) {
@@ -131,7 +132,7 @@ RS_Entity* LC_ActionDrawHyperbolaFP::doTriggerCreateEntity() {
     data.angle2 = std::max(phiStart, phiEnd);
     data.reversed = rev;
 
-    const auto hyperbola = new LC_Hyperbola(nullptr, data);
+    auto hyperbola = new LC_Hyperbola(nullptr, data);
     if (hyperbola->isValid()) {
         moveRelativeZero(hyperbola->getCenter());
         hyperbola->calculateBorders();
@@ -139,6 +140,7 @@ RS_Entity* LC_ActionDrawHyperbolaFP::doTriggerCreateEntity() {
     }
     else {
         delete hyperbola;
+        hyperbola = nullptr;
     }
     return hyperbola;
 }

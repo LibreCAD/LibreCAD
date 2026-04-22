@@ -27,8 +27,8 @@
 #include "lc_action_modify_rotate_twice.h"
 
 #include "lc_actioninfomessagebuilder.h"
-#include "lc_rotate_2_options_widget.h"
 #include "lc_rotate_2_options_filler.h"
+#include "lc_rotate_2_options_widget.h"
 #include "rs_modification.h"
 #include "rs_preview.h"
 

@@ -268,7 +268,7 @@ LC_ActionOptionsWidget* LC_ActionDrawCircleByArc::createOptionsWidget() {
 }
 
 LC_ActionOptionsPropertiesFiller* LC_ActionDrawCircleByArc::createOptionsFiller() {
-    return new LC_CircleByArcOptionsFiller();;
+    return new LC_CircleByArcOptionsFiller();
 }
 
 void LC_ActionDrawCircleByArc::setReplaceArcByCircle(const bool value) {

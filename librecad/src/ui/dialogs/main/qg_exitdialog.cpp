@@ -98,7 +98,7 @@ void QG_ExitDialog::setShowOptionsForAll(const bool show) const {
     yesToAll->setVisible(show);
     ui->buttonBox->button(QDialogButtonBox::NoToAll)->setVisible(show);
 
-    QPushButton* defaultButton;
+    QPushButton* defaultButton = nullptr;
     if (show) {
         defaultButton = yesToAll;
     }

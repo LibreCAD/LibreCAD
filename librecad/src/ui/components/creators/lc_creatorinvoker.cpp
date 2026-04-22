@@ -1,5 +1,5 @@
 /*******************************************************************************
-*
+ *
  This file is part of the LibreCAD project, a 2D CAD program
 
  Copyright (C) 2025 LibreCAD.org
@@ -76,7 +76,7 @@ void LC_CreatorInvoker::createCustomToolbars(const bool showToolTips) {
         QList<QAction*> actionsList;
         auto actionNames = settings.value(key).toStringList();
         bool hasActions = false;
-        for (const QString& actionName : actionNames) {
+        for (const QString& actionName : std::as_const(actionNames)) {
             if ("" == actionName){
                 actionsList.push_back(nullptr);
             }
@@ -134,7 +134,7 @@ void LC_CreatorInvoker::invokeToolbarCreator() {
 void LC_CreatorInvoker::createToolbar(const QString &toolbarName, const QStringList& actionNames, const int areaIndex) const {
     auto toolbar = m_appWindow->findChild<QToolBar *>(toolbarName);
 
-    if (toolbar) {
+    if (toolbar != nullptr) {
         toolbar->clear();
     }
     else {
@@ -235,7 +235,7 @@ bool LC_CreatorInvoker::getMenuActionsForMouseEvent(const QMouseEvent* event, co
         entityType = entity->rtti();
     }
 
-    for (const auto a: m_menuActivators) {
+    for (const auto a: std::as_const(m_menuActivators)) {
         if (a->isEventApplicable(event)) {
             const RS2::EntityType activatorEntityType = a->getEntityType();
             if (a->isEntityRequired()) {
@@ -322,7 +322,7 @@ void LC_CreatorInvoker::loadMenuActivators() {
     LC_GROUP("Activators");
     auto activators = LC_CHILD_KEYS();
 
-    for (auto key : activators) {
+    for (const auto &key : std::as_const(activators)) {
         LC_MenuActivator* activator = LC_MenuActivator::fromShortcut(key);
         if (activator != nullptr) {
             QString menuName = LC_GET_STR(key);

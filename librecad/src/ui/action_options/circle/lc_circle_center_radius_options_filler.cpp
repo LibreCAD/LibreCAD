@@ -22,6 +22,7 @@
  */
 
 #include "lc_circle_center_radius_options_filler.h"
+
 #include "lc_action_draw_circle_center_radius.h"
 
 void LC_CircleCenterRadiusOptionsFiller::fillToolOptionsContainer(LC_PropertyContainer* container) {

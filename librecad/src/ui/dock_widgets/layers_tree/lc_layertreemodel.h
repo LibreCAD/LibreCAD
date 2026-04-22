@@ -72,7 +72,7 @@ public:
     LC_LayerTreeItem *getItemForLayer(RS_Layer *layer) const;
     bool renameVirtualLayer(LC_LayerTreeItem *source, QString &newSourceName);
     void renamePrimaryLayer(LC_LayerTreeItem *layerItem, const QString& newName, int newLayerType);
-    QString generateLayersDisplayPathString(LC_LayerTreeItem* item);
+    QString generateLayersDisplayPathString(LC_LayerTreeItem* item) const;
     QStringList getLayersListForRenamedVirtualLayer(LC_LayerTreeItem *source, QString &newName);
     QStringList getLayersListForRenamedPrimary(LC_LayerTreeItem* source, const QString &newSourceName, int newLayerType);
     QString createFullLayerName(LC_LayerTreeItem *treeItem, const QString &layerName, int layerType, bool newLayer);
@@ -87,7 +87,7 @@ private:
     QHash<RS_Layer *, RS_Layer *> doCreateLayersCopy(LC_LayerTreeItem *source, bool includeChildren, int newLayerType);
     bool renameLayers(const QList<LC_LayerTreeItem *>& layersList, const QString &fromNamePrefix, const QString &toNamePrefix);
     void emitDataChanged();
-    QString generateLayersPathString(const QList<LC_LayerTreeItem *>& itemsPathAsList, bool alternateName, const QString &shouldAlternate);
+    QString generateLayersPathString(const QList<LC_LayerTreeItem *>& itemsPathAsList, bool alternateName, const QString &shouldAlternate) const;
     QString restoreNamePart(QString name, int layerType) const;
     void setupDisplayNames(LC_LayerTreeItem *item) const;
     QString findNewUniqueName(const LC_LayerTreeItem *destination, const QString &name, const QString &copyPrefix, const QString &copySuffix, int layerType);

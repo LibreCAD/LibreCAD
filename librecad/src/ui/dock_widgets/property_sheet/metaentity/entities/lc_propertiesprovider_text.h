@@ -25,7 +25,7 @@
 #define LC_PROPERTIESPROVIDERTEXT_H
 
 #include "lc_entity_type_propertiesprovider.h"
-#include "lc_enum_descriptor.h"
+
 
 class LC_PropertiesProviderText : public LC_EntityTypePropertiesProvider {
     Q_OBJECT

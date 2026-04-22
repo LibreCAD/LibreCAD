@@ -322,7 +322,7 @@ bool RS_Information::isDimension(const RS2::EntityType type) {
  */
 bool RS_Information::isTrimmable(const RS_Entity* e) {
     if (e != nullptr) {
-        if (e->getParent()) {
+        if (e->getParent() != nullptr) {
             switch (e->getParent()->rtti()) {
                 case RS2::EntityPolyline:
                 case RS2::EntityContainer:
@@ -402,7 +402,7 @@ RS_Entity* RS_Information::getNearestEntity(const RS_Vector& coord, double* dist
 RS_VectorSolutions RS_Information::getIntersection(const RS_Entity* entity1, const RS_Entity* entity2, const bool onEntities) {
     RS_VectorSolutions ret;
 
-    if (!(entity1 && entity2)) {
+    if (!((entity1 != nullptr) && (entity2 != nullptr))) {
         RS_DEBUG->print("RS_Information::getIntersection() for nullptr entities");
         return ret;
     }
@@ -419,8 +419,8 @@ RS_VectorSolutions RS_Information::getIntersection(const RS_Entity* entity1, con
         return ret;
     }
 
-    bool e1Constructional =  e1Type == RS2::EntityConstructionLine ||  e1Type == RS2::EntitySnapConstructionLine || entity1->isConstruction();
-    bool e2Constructional =  e2Type == RS2::EntityConstructionLine ||  e2Type == RS2::EntitySnapConstructionLine || entity2->isConstruction();
+    const bool e1Constructional =  e1Type == RS2::EntityConstructionLine ||  e1Type == RS2::EntitySnapConstructionLine || entity1->isConstruction();
+    const bool e2Constructional =  e2Type == RS2::EntityConstructionLine ||  e2Type == RS2::EntitySnapConstructionLine || entity2->isConstruction();
 
     if (onEntities && !(e1Constructional || e2Constructional)) {
         // a little check to avoid doing unneeded intersections, an attempt to avoid O(N^2) increasing of checking two-entity information
@@ -453,7 +453,7 @@ RS_VectorSolutions RS_Information::getIntersection(const RS_Entity* entity1, con
         // circles/arcs can be removed
         // issue #523: TangentFinder cannot handle line-line
         const bool firstIsLine = e1Type == RS2::EntityLine || e1Type == RS2::EntityConstructionLine || e1Type == RS2::EntitySnapConstructionLine;
-        const bool secondIsLine = e2Type == RS2::EntityLine || e2Type == RS2::EntityConstructionLine || e2Type == RS2::EntitySnapConstructionLine;;
+        const bool secondIsLine = e2Type == RS2::EntityLine || e2Type == RS2::EntityConstructionLine || e2Type == RS2::EntitySnapConstructionLine;
         const bool isLineLine = firstIsLine && secondIsLine;
         if (isLineLine) {
             ret = getIntersectionLineLine(entity1, entity2);
@@ -641,7 +641,7 @@ RS_VectorSolutions RS_Information::getIntersectionLineArc(const RS_Entity* line,
  * @return One or two intersection points between given entities.
  */
 RS_VectorSolutions RS_Information::getIntersectionArcArc(const RS_Entity* arc1, const RS_Entity* arc2) {
-    if (!(arc1 && arc2)) {
+    if (!((arc1 != nullptr) && (arc2 != nullptr))) {
         return {};
     }
 
@@ -700,7 +700,7 @@ RS_VectorSolutions RS_Information::getIntersectionArcArc(const RS_Entity* arc1, 
 RS_VectorSolutions RS_Information::getIntersectionEllipseEllipse(const RS_Ellipse* ellipse1, const RS_Ellipse* ellipse2) {
     RS_VectorSolutions ret;
 
-    if (!(ellipse1 && ellipse2)) {
+    if (!((ellipse1 != nullptr) && (ellipse2 != nullptr))) {
         return ret;
     }
     if ((ellipse1->getCenter() - ellipse2->getCenter()).squared() < RS_TOLERANCE2 && (ellipse1->getMajorP() - ellipse2->getMajorP()).squared() < RS_TOLERANCE2 &&
@@ -811,7 +811,7 @@ RS_VectorSolutions RS_Information::getIntersectionArcEllipse(const RS_Arc* arc, 
 RS_VectorSolutions RS_Information::getIntersectionEllipseLine(const RS_Line* line, const RS_Ellipse* ellipse) {
     RS_VectorSolutions ret;
 
-    if (!(line && ellipse)) {
+    if (!((line != nullptr) && (ellipse != nullptr))) {
         return ret;
     }
     // rotate into normal position:
@@ -974,7 +974,7 @@ RS_VectorSolutions RS_Information::createQuadrilateral(const RS_EntityContainer&
     for (auto it = lines.begin() + 1; it != lines.end(); ++it) {
         for (auto jt = lines.begin(); jt != it; ++jt) {
             const RS_VectorSolutions& sol = RS_Information::getIntersectionLineLine(*it, *jt);
-            if (sol.size()) {
+            if (sol.size() != 0u) {
                 vertices.push_back(sol.at(0));
             }
         }

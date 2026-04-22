@@ -64,7 +64,7 @@ RS_Vector RS_Grid::snapGrid(const RS_Vector& coord) const {
    return m_gridSystem->snapGrid(coord);
 }
 
-RS_Vector RS_Grid::snapGrid(const RS_Vector& coord, const RS_Vector& rayStart, const RS_Vector& rayEnd) {
+RS_Vector RS_Grid::snapGrid(const RS_Vector& coord, const RS_Vector& rayStart, const RS_Vector& rayEnd) const {
     return m_gridSystem->snapGrid(coord, rayStart, rayEnd);
 }
 
@@ -287,7 +287,7 @@ bool RS_Grid::isDrawMetaGrid() const {
 }
 
 RS_Vector RS_Grid::prepareGridWidth() {// find out unit:
-    bool gridIsMetric = isGridMetric();
+    const bool gridIsMetric = isGridMetric();
 
     // init grid spacing:
     // metric grid:

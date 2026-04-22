@@ -42,7 +42,7 @@ void LC_ActionSelectLayer::onMouseMoveEvent([[maybe_unused]] const int status, c
 }
 
 void LC_ActionSelectLayer::doTrigger() {
-    if (m_entity){
+    if (m_entity != nullptr){
         const RS_Selection s(m_document, m_viewport);
         s.selectLayer(m_entity);
     } else {

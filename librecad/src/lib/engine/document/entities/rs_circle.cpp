@@ -28,9 +28,8 @@
 
 #include "rs_circle.h"
 
-#include <vector>
-
 #include <QPainterPath>
+#include <vector>
 
 #include "lc_quadratic.h"
 #include "rs_debug.h"
@@ -266,12 +265,12 @@ RS_Vector RS_Circle::getTangentDirection(const RS_Vector& point) const {
     return RS_Vector(-vp.y, vp.x);
 }
 
-RS_Vector RS_Circle::doGetNearestCenter(const RS_Vector& coord, double* dist, RS_Entity** entity) const {
+RS_Vector RS_Circle::doGetNearestCenter(const RS_Vector& coord, double* dist, RS_Entity** centerEntity) const {
     if (dist != nullptr) {
         *dist = coord.distanceTo(m_data.center);
     }
-    if (entity != nullptr) {
-        *entity = const_cast<RS_Circle*>(this);
+    if (centerEntity != nullptr) {
+        *centerEntity = const_cast<RS_Circle*>(this);
     }
     return m_data.center;
 }
@@ -450,15 +449,15 @@ RS_Entity& RS_Circle::shear(const double k) {
  */
 void RS_Circle::createPainterPath(RS_Painter* painter, QPainterPath& path) const
 {
-  if (!painter) {
+  if (painter == nullptr) {
     return;
   }
 
   const LC_Rect& vpRect = painter->getWcsBoundingRect();
 
          // Quick bounding box check
-  RS_Vector minV = getMin();
-  RS_Vector maxV = getMax();
+  const RS_Vector minV = getMin();
+  const RS_Vector maxV = getMax();
 
          // Completely outside → nothing to draw
   if (!vpRect.overlaps(LC_Rect(minV, maxV))) {
@@ -466,13 +465,13 @@ void RS_Circle::createPainterPath(RS_Painter* painter, QPainterPath& path) const
   }
 
          // Fast path: fully inside viewport → use Qt optimized ellipse
-  bool fullyInside =
+  const bool fullyInside =
       minV.x >= vpRect.minP().x && maxV.x <= vpRect.maxP().x &&
       minV.y >= vpRect.minP().y && maxV.y <= vpRect.maxP().y;
 
   if (fullyInside) {
-    RS_Vector uiCenter = painter->toGui(getCenter());
-    double uiRadius    = painter->toGuiDX(getRadius());
+    const RS_Vector uiCenter = painter->toGui(getCenter());
+    const double uiRadius    = painter->toGuiDX(getRadius());
 
     path.addEllipse(
         uiCenter.x - uiRadius,
@@ -491,18 +490,18 @@ void RS_Circle::createPainterPath(RS_Painter* painter, QPainterPath& path) const
 
   std::vector<double> crossPoints;
 
-  std::array<RS_Vector, 4> vertices = vpRect.vertices();
+  const std::array<RS_Vector, 4> vertices = vpRect.vertices();
   for (size_t i = 0; i < vertices.size(); ++i) {
     RS_Line edge{vertices[i], vertices[(i + 1) % vertices.size()]};
 
     RS_VectorSolutions sols = RS_Information::getIntersection(this, &edge, true);
 
     for (const RS_Vector& pt : sols) {
-      double dirCircle = getTangentDirection(pt).angle();
-      double dirEdge   = edge.getTangentDirection(pt).angle();
+      const double dirCircle = getTangentDirection(pt).angle();
+      const double dirEdge   = edge.getTangentDirection(pt).angle();
 
       if (std::abs(RS_Math::correctAngle(dirEdge - dirCircle)) > RS_TOLERANCE_ANGLE) {
-        double angle = (pt - getCenter()).angle();
+        const double angle = (pt - getCenter()).angle();
         double relParam = RS_Math::correctAngle(angle - baseAngle);
         crossPoints.push_back(relParam);
       }
@@ -515,7 +514,7 @@ void RS_Circle::createPainterPath(RS_Painter* painter, QPainterPath& path) const
 
          // Sort + remove near-duplicates
   std::sort(crossPoints.begin(), crossPoints.end());
-  auto last = std::unique(crossPoints.begin(), crossPoints.end(),
+  const auto last = std::unique(crossPoints.begin(), crossPoints.end(),
                           [](double a, double b) { return std::abs(a - b) < RS_TOLERANCE_ANGLE; });
   crossPoints.erase(last, crossPoints.end());
 
@@ -552,7 +551,7 @@ void RS_Circle::draw(RS_Painter* painter)
   QPainterPath path;
 
          // Arbitrary starting point at angle=0, mainly to satisfy moveTo requirement
-  RS_Vector centerUi = painter->toGui(getCenter() + RS_Vector{getRadius(), 0.});
+  const RS_Vector centerUi = painter->toGui(getCenter() + RS_Vector{getRadius(), 0.});
   path.moveTo(centerUi.x, centerUi.y);
 
          // Build the actual path (fast or clipped depending on visibility)

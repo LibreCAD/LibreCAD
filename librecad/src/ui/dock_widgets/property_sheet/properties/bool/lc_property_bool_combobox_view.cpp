@@ -66,7 +66,7 @@ protected:
 private:
     void onCurrentIndexChanged(int index) {
         if (index >= 0) {
-            auto propertyComboBox = getEditor();
+            const auto propertyComboBox = getEditor();
             const auto data = propertyComboBox->itemData(index);
             if (data.canConvert<bool>()) {
                 propertyComboBox->disablePaint(true);

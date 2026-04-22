@@ -223,7 +223,7 @@ void LC_DimArrowRegistry::insertStandardArrowBlocks(RS_EntityContainer* containe
     const auto graphic = container->getGraphic();
     if (graphic != nullptr) {
         RS_BlockList* blocksList = graphic->getBlockList();
-        for (auto arrowInfo : m_defaultArrowsInfo) {
+        for (const auto& arrowInfo : m_defaultArrowsInfo) {
             insertStandardArrowBlock(container, blocksList, arrowInfo);
         }
     }
@@ -370,7 +370,7 @@ void LC_DimArrowRegistry::insertStandardArrowBlocks(RS_Graphic* graphic, const Q
     QSet<QString> uniqueArrowBlockNames;
     collectUsedArrowTypes(styles, uniqueArrowBlockNames);
 
-    for (const auto& blockName : uniqueArrowBlockNames) {
+    for (const auto& blockName : std::as_const(uniqueArrowBlockNames)) {
         if (blockList->findCaseInsensitive(blockName) == nullptr) {
             ArrowInfo info;
             if (getArrowInfoByBlockName(blockName, info)) {
@@ -417,7 +417,7 @@ void LC_DimArrowRegistry::insertStandardArrowBlock(RS_EntityContainer* container
 
 void LC_DimArrowRegistry::fillDefaultArrowTypes(std::vector<ArrowInfo>& arrowTypes) {
     init();
-    for (auto at : m_defaultArrowsInfo) {
+    for (const auto& at : m_defaultArrowsInfo) {
         QString blockName = at.blockName;
         if (blockName.isEmpty()) {
             blockName = "_CLOSEDFILLED";

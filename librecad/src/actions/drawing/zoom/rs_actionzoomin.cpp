@@ -38,12 +38,9 @@
  * @param factor
  */
 RS_ActionZoomIn::RS_ActionZoomIn(LC_ActionContext* actionContext, const RS2::ZoomDirection direction, const RS2::Axis axis,
-                                 const RS_Vector* pCenter, const double factor)
-    : RS_ActionInterface("Zoom in", actionContext, RS2::ActionZoomIn)
-     ,m_zoomFactor(factor)
-     ,m_direction(direction)
-     ,m_axis(axis)
-     ,m_centerPoint{pCenter? RS_Vector{*pCenter}:RS_Vector()}{
+                                 const RS_Vector* pCenter, const double factor) :
+    RS_ActionInterface("Zoom in", actionContext, RS2::ActionZoomIn), m_zoomFactor(factor), m_direction(direction), m_axis(axis),
+    m_centerPoint{(pCenter != nullptr) ? RS_Vector{*pCenter} : RS_Vector()} {
 }
 
 RS_ActionZoomIn::~RS_ActionZoomIn() = default;

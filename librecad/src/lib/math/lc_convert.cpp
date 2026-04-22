@@ -175,8 +175,8 @@ QString LC_Convert::evaluateFraction(QString input, const QRegularExpression& rx
     }
     return input;
 }
-
-double LC_Convert::evalAngleValue(const QString &angleStr, bool &ok2) {
+[[deprecated]] // fixme - garbase value if doNotAllow is true and ok is valse?
+double LC_Convert::evalAngleValue(const QString& angleStr, bool& ok2) {
     double angleDegrees;
     ok2 = parseToToDoubleAngleDegrees(angleStr, angleDegrees, 0.0, false);
     return angleDegrees;

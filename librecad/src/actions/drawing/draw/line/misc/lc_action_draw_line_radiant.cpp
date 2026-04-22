@@ -23,10 +23,9 @@
 
 #include "lc_action_draw_line_radiant.h"
 
-#include "rs_document.h"
-#include "lc_action_options_editor_typed.h"
 #include "lc_line_radiant_options_filler.h"
 #include "lc_line_radiant_options_widget.h"
+#include "rs_document.h"
 #include "rs_line.h"
 #include "rs_settings.h"
 
@@ -203,14 +202,14 @@ bool LC_ActionDrawLineRadiant::doProcessCommand(const int status, const QString&
             }
         }
         else if (status == SetActive) {
-            bool ok;
+            bool ok = false;
             const int idx = command.toInt(&ok);
             if (ok) {
                 if (idx < 5 && idx > 0) {
                     const auto type = static_cast<RadiantIdx>(idx-1);
                     setActiveRadiantIndex(type);
                     updateOptions();
-                    RS_Vector activePoint = getActiveRadiant();
+                    const RS_Vector activePoint = getActiveRadiant();
                     QString activeStr = formatVector(activePoint);
                     commandMessage(tr("Radiant point to use: ")+ activeStr);
                 }

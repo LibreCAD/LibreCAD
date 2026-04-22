@@ -81,7 +81,7 @@ RS_EntityContainer::RefInfo RS_Document::getNearestSelectedRefInfo(const RS_Vect
     QList<RS_Entity*>selection;
     collectSelected(selection);
 
-    for (RS_Entity* en : selection) {
+    for (RS_Entity* en : std::as_const(selection)) {
         if (en->isVisible() && !en->isParentSelected()) {
             double curDist  = 0.; // currently measured distance
             const RS_Vector point = en->getNearestSelectedRef(coord, &curDist);
@@ -143,7 +143,7 @@ RS_Document::LC_SelectionInfo RS_Document::getSelectionInfo(const QList<RS2::Ent
     QList<RS_Entity*> selection;
 
     if (collectSelected(selection)) {
-        for (const auto e : selection) {
+        for (const auto e : std::as_const(selection)) {
             if (types.empty() || type.count(e->rtti()) != 0) {
                 result.entitiesCount++;
                 const double entityLength = e->getLength();

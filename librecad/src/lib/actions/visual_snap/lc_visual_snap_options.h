@@ -41,7 +41,7 @@ struct LC_VisualSnapOptions {
     bool createVertexVertexDistanceCircles = true;
     bool createVertexVertexDistanceCirclesTangents = true;
 
-    bool autoAddSnappedPointToVisualSnap = false;;
+    bool autoAddSnappedPointToVisualSnap = false;
     bool autoAddGuidesForLastSnapOnly = true;
 
     bool manualVertexAddingRequiresCTRL = false;

@@ -29,7 +29,6 @@
 #include "lc_copyutils.h"
 #include "rs_clipboard.h"
 #include "rs_graphic.h"
-#include "rs_graphicview.h"
 #include "rs_preview.h"
 #include "rs_units.h"
 
@@ -138,7 +137,7 @@ void RS_ActionEditCopyPaste::onMouseMoveEventSelected(const int status, const LC
                 m_preview->addAllFrom(*RS_CLIPBOARD->getGraphic(), m_viewport);
                 m_preview->move(*m_referencePoint);
 
-                if (m_graphic) {
+                if (m_graphic != nullptr) {
                     const RS2::Unit sourceUnit = RS_CLIPBOARD->getGraphic()->getUnit();
                     const RS2::Unit targetUnit = m_graphic->getUnit();
                     const double f = RS_Units::convert(1.0, sourceUnit, targetUnit);

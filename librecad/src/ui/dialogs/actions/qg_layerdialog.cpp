@@ -75,10 +75,10 @@ void QG_LayerDialog::updateLayer() const {
 }
 
 void QG_LayerDialog::validate() {
-    if (m_layerList &&
-        (m_editLayer == false || m_layerName != leName->text())) {
+    if ((m_layerList != nullptr) &&
+        (!m_editLayer || m_layerName != leName->text())) {
         const RS_Layer* l = m_layerList->find(leName->text());
-        if (l) {
+        if (l != nullptr) {
             QMessageBox::information(parentWidget(),
                                      QMessageBox::tr("Layer Properties"),
                                      QMessageBox::tr("Layer with a name \"%1\" "

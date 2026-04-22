@@ -1,24 +1,25 @@
-/*******************************************************************************
+/*
+ * ********************************************************************************
+ * This file is part of the LibreCAD project, a 2D CAD program
  *
- This file is part of the LibreCAD project, a 2D CAD program
-
- Copyright (C) 2024 LibreCAD.org
- Copyright (C) 2024 sand1024
-
- This program is free software; you can redistribute it and/or
- modify it under the terms of the GNU General Public License
- as published by the Free Software Foundation; either version 2
- of the License, or (at your option) any later version.
-
- This program is distributed in the hope that it will be useful,
- but WITHOUT ANY WARRANTY; without even the implied warranty of
- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- GNU General Public License for more details.
-
- You should have received a copy of the GNU General Public License
- along with this program; if not, write to the Free Software
- Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- ******************************************************************************/
+ * Copyright (C) 2026 LibreCAD.org
+ * Copyright (C) 2026 sand1024
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 2
+ * of the License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ * ********************************************************************************
+ */
 
 #include "lc_layertreemodel.h"
 
@@ -55,7 +56,7 @@ LC_LayerTreeModel::LC_LayerTreeModel(QObject * parent, LC_LayerTreeModelOptions 
  * @return
  */
 int LC_LayerTreeModel::rowCount ( const QModelIndex & parent ) const {
-    LC_LayerTreeItem *parentItem;
+    const LC_LayerTreeItem* parentItem = nullptr;
     if (!parent.isValid()) {
         parentItem = m_rootItem;
     }
@@ -112,7 +113,7 @@ QModelIndex LC_LayerTreeModel::index(const int row, const int column, const QMod
         return QModelIndex();
     }
 
-    LC_LayerTreeItem *parentItem;
+    const LC_LayerTreeItem* parentItem = nullptr;
 
     if (!parent.isValid()) {
         parentItem = m_rootItem;
@@ -126,7 +127,7 @@ QModelIndex LC_LayerTreeModel::index(const int row, const int column, const QMod
     }
 
     const LC_LayerTreeItem *childItem = parentItem->child(row);
-    if (childItem) {
+    if (childItem != nullptr) {
         return createIndex(row, column, childItem);
     }
     return QModelIndex();
@@ -495,7 +496,7 @@ QString LC_LayerTreeModel::restoreNamePart(QString name, const int layerType) co
  * @param shouldAlternate indicates that name should be alternated
  * @return generated full name
  */
-QString LC_LayerTreeModel::generateLayersPathString(const QList<LC_LayerTreeItem*>& itemsPathAsList, const bool alternateName, const QString &shouldAlternate){
+QString LC_LayerTreeModel::generateLayersPathString(const QList<LC_LayerTreeItem*>& itemsPathAsList, const bool alternateName, const QString &shouldAlternate) const {
     return doGenerateLayersPathString(itemsPathAsList, alternateName, shouldAlternate, m_options->layerLevelSeparator);
 }
 
@@ -696,7 +697,7 @@ bool LC_LayerTreeModel::isValidRestructure(const LC_LayerTreeItem*  source, cons
     }
 
     // prohibit dropping into own parent, allow dropping to viewport
-    if (!destination->parent()){
+    if (destination->parent() == nullptr) {
         if (source->parent() == m_rootItem){ // avoid duplication of top-level items
             return false;
         }
@@ -1133,7 +1134,7 @@ void LC_LayerTreeModel::doCreateChildLayersCopy(QHash<RS_Layer*, RS_Layer*>&resu
 
     source->collectLayers(childLayers, ACCEPT_ALL, false);
 
-    for (const auto& layer: childLayers){
+    for (const auto& layer: std::as_const(childLayers)){
          QString layerName = layer->getName();
          if (layerName.startsWith(oldPrefix)){
              // replace only first occurrence
@@ -1181,7 +1182,7 @@ bool LC_LayerTreeModel::renameVirtualLayer(LC_LayerTreeItem *source, QString &ne
  * @return  display name
  */
 // TODO - decide how to show the path - as original underlying layer name or as part of names...
-QString LC_LayerTreeModel::generateLayersDisplayPathString(LC_LayerTreeItem *item){
+QString LC_LayerTreeModel::generateLayersDisplayPathString(LC_LayerTreeItem *item) const {
     QList<LC_LayerTreeItem*> sourcePathItems;
     item->collectPathToParent(sourcePathItems, false);
     const QString prefix;

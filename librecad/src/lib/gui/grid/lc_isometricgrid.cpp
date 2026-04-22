@@ -24,8 +24,6 @@
 
 #include "lc_lattice.h"
 #include "lc_linemath.h"
-#include "lc_rectregion.h"
-#include "rs_debug.h"
 #include "rs_math.h"
 
 LC_IsometricGrid::LC_IsometricGrid(LC_GridOptions *options, const int isoProjection):LC_GridSystem(options) {
@@ -129,11 +127,9 @@ RS_Vector LC_IsometricGrid::snapGrid(const RS_Vector& coord, const RS_Vector& ra
         // LC_ERR << "ISO - GridRay: no intersections";
         return coord;
     }
-    else {
-        // LC_ERR << "###################   #####################ISO - GridRay: HAS intersections";
-        const RS_Vector result = minIntersectionPoint;
-        return result;
-    }
+    // LC_ERR << "###################   #####################ISO - GridRay: HAS intersections";
+    const RS_Vector result = minIntersectionPoint;
+    return result;
 }
 
 void LC_IsometricGrid::prepareGridOther(const RS_Vector &viewZero, const RS_Vector &viewSize) {
@@ -595,7 +591,7 @@ void LC_IsometricGrid::calculateTilesGridMetrics(const RS_Vector &maxCorner, con
         if (metaHorizontalX > offset.x) {
             shift =  metaHorizontalX;
         }
-        m_tilesStartPoint = RS_Vector(minX + shift - metaHorizontalX * 2 + m_tilesRowShift, minY - metaVerticalY);
+        m_tilesStartPoint = RS_Vector(minX + shift - (metaHorizontalX * 2) + m_tilesRowShift, minY - metaVerticalY);
     }
     m_tilesMaxPoint = RS_Vector(maxCorner.x + metaHorizontalX, maxCorner.y);
 
@@ -726,7 +722,7 @@ void LC_IsometricGrid::fillPointsNoGaps(const RS_Vector &min, const RS_Vector &m
 
     const RS_Vector offset = leftBottomCorner-m_metaGridMin;
 
-    const double startX =  min.x - remainder(offset.x, pointsDeltaX*2)+pointsDeltaX/2;
+    const double startX = min.x - remainder(offset.x, pointsDeltaX * 2) + (pointsDeltaX / 2);
     const double startY =  max.y - remainder(offset.y, pointsDeltaY*2)+pointsDeltaY;
 
     const double maxX = max.x;

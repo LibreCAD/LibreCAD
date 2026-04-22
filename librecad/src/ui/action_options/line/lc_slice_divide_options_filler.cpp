@@ -24,6 +24,7 @@
 #include "lc_slice_divide_options_filler.h"
 
 #include "lc_action_draw_slice_divide.h"
+#include "lc_enum_descriptor.h"
 
 void LC_SliceDivideOptionsFiller::fillToolOptionsContainer(LC_PropertyContainer* container) {
     auto action = static_cast<LC_ActionDrawSliceDivide*>(m_action);

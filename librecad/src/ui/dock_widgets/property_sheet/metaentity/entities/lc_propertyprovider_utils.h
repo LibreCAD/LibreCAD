@@ -128,7 +128,7 @@ namespace LC_PropertyProviderUtils {
         container->addChildProperty(property);
     }
 
-    inline void createDirectDelegatedReadonlyString(LC_PropertyContainer* container, const LC_Property::Names& names, QString value) {
+    inline void createDirectDelegatedReadonlyString(LC_PropertyContainer* container, const LC_Property::Names& names, const QString& value) {
         const auto gridTypeProperty = new LC_PropertyQString(container, true);
         gridTypeProperty->setNames(names);
         gridTypeProperty->setValue(value);
@@ -197,15 +197,14 @@ namespace LC_PropertyProviderUtils {
             viewDescriptor[LC_PropertyActionLinkView::ATTR_TOOLTIP_RIGHT] = linkTooltipRight;
         }
         property->setEntity(entity);
-        property->setClickHandler([entity, clickHandler](const LC_PropertyAction*, int linkIndex)  {
-            QTimer::singleShot(10, [entity, linkIndex, clickHandler] {
-                clickHandler(entity, linkIndex);
-            });
-        });
+        auto wrappingClickHandler = [entity, clickHandler](const LC_PropertyAction*, int linkIndex) {
+            QTimer::singleShot(10, [entity, linkIndex, clickHandler] { clickHandler(entity, linkIndex); });
+        };
+        property->setClickHandler(wrappingClickHandler);
         property->setDescription(commonDescription);
         property->setViewDescriptor(viewDescriptor);
         container->addChildProperty(property);
     }
-};
+}
 
 #endif

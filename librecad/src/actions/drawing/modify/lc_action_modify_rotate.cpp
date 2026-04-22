@@ -73,28 +73,28 @@ void LC_ActionModifyRotate::doLoadOptions() {
     const int copiesNum = loadInt("Copies", 1);
     setCopiesNumber(copiesNum);
 
-    double angle = loadDouble("Angle", 0.0);
+    const double angle = loadDouble("Angle", 0.0);
     setAngle(angle);
 
-    bool freeAngle = loadBool("AngleIsFree", false);
+    const bool freeAngle = loadBool("AngleIsFree", false);
     setFreeAngle(freeAngle);
 
-    bool angleIsRelative = loadBool("AngleIsRelative", false);
+    const bool angleIsRelative = loadBool("AngleIsRelative", false);
     setRelativeAngle(angleIsRelative);
 
-    bool centerFirst = loadBool("CenterPointFirst", true);
+    const bool centerFirst = loadBool("CenterPointFirst", true);
     setCenterPointFirst(centerFirst);
 
-    bool rotate2 = loadBool("TwoRotations", false);
+    const bool rotate2 = loadBool("TwoRotations", false);
     setRotateAlsoAroundReferencePoint(rotate2);
 
-    double angle2 = loadDouble("AngleRef", 0.0);
+    const double angle2 = loadDouble("AngleRef", 0.0);
     setRefPointAngle(angle2);
 
-    bool angle2free = loadBool("AngleRefIsFree", false);
+    const bool angle2free = loadBool("AngleRefIsFree", false);
     setFreeRefPointAngle(angle2free);
 
-    bool angle2abs = loadBool("AngleRefIsAbsolute", false);
+    const bool angle2abs = loadBool("AngleRefIsAbsolute", false);
     setRefPointAngleAbsolute(angle2abs);
 }
 
@@ -487,7 +487,7 @@ void LC_ActionModifyRotate::onCoordinateEvent(const int status, [[maybe_unused]]
                 rotationAngle = RS_Math::getAngleDifference(angleCenterToRefPointWCS, angleCenterToPosWCS);
             }
             else {
-                double rotation = RS_Math::correctAngle(toUCSBasisAngle(angleCenterToPosWCS));
+                const double rotation = RS_Math::correctAngle(toUCSBasisAngle(angleCenterToPosWCS));
                 rotationAngle = adjustRelativeAngleSignByBasis(rotation);
             }
             m_rotateData->angle = rotationAngle;

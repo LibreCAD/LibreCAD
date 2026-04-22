@@ -102,7 +102,7 @@ public:
     }
 
     /** @return Copy of data that defines the spline. */
-    LC_ParabolaData const& getData() const{
+    const LC_ParabolaData& getData() const{
         return m_data;
     }
 

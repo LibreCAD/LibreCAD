@@ -24,8 +24,6 @@
 #ifndef LC_RELATIVEPOINTINPUTWIDGET_H
 #define LC_RELATIVEPOINTINPUTWIDGET_H
 
-#include <QWidget>
-
 #include "lc_graphicviewportlistener.h"
 #include "lc_relative_position_editing_widget.h"
 #include "rs_vector.h"
@@ -42,10 +40,10 @@ public:
     void setContentWidget(QWidget* w);
     RS_Vector getGraphPosition() const {return m_graphPosition;}
     void show(const RS_Vector& pos, const RS_Vector& basePoint, bool baseIsRelativePoint, RS2::RelativePointParam activeParam);
-    void onViewportChanged();
+    void onViewportChanged() override;
     void updatePosition(bool resume);
     void setWidgetColors(const RS_Color& bgColor, const RS_Color& textColor);
-    void setFont(QString name, int size);
+    void setFont(const QString& name, int size) const;
     void onLateRequestCompleted(bool shouldBeSkipped) override;
 private:
     RS_Vector m_graphPosition{false};

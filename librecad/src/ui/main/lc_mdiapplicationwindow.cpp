@@ -1,5 +1,28 @@
 
 
+/*
+ * ********************************************************************************
+ * This file is part of the LibreCAD project, a 2D CAD program
+ *
+ * Copyright (C) 2026 LibreCAD.org
+ * Copyright (C) 2026 sand1024
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 2
+ * of the License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ * ********************************************************************************
+ */
+
 #include "lc_mdiapplicationwindow.h"
 
 #include <QDockWidget>
@@ -133,7 +156,7 @@ QC_MDIWindow *LC_MDIApplicationWindow::getWindowWithDoc(const RS_Document *doc) 
     QC_MDIWindow *wwd = nullptr;
     if (doc != nullptr) {
         foreach(QC_MDIWindow *w, m_windowList) {
-            if (w && w->getDocument() == doc) {
+            if ((w != nullptr) && w->getDocument() == doc) {
                 wwd = w;
                 break;
             }
@@ -144,7 +167,7 @@ QC_MDIWindow *LC_MDIApplicationWindow::getWindowWithDoc(const RS_Document *doc) 
 
 void LC_MDIApplicationWindow::closeAllWindowsWithDoc(const RS_Document *doc){
     if (doc != nullptr) {
-        for (auto*w :m_windowList) {
+        for (auto*w :std::as_const(m_windowList)) {
             if (w != nullptr && w->getDocument() == doc) {
                 closeWindow(w);
                 break;
@@ -179,7 +202,7 @@ void LC_MDIApplicationWindow::doArrangeWindows(const RS2::SubWindowMode subwindo
     if (!actuallyDont) {
         switch (mode) {
             case RS2::Maximized:
-                if (m_mdiAreaCAD->currentSubWindow()) {
+                if (m_mdiAreaCAD->currentSubWindow() != nullptr) {
                     m_mdiAreaCAD->currentSubWindow()->showMaximized();
                 }
                 break;
@@ -238,8 +261,8 @@ void LC_MDIApplicationWindow::slotCascade() {
             return;
         default: {
             QMdiSubWindow *active = m_mdiAreaCAD->activeSubWindow();
-            for (int i = 0; i < windows.size(); ++i) {
-                windows.at(i)->showNormal();
+            for (const auto window : windows) {
+                window->showNormal();
             }
             m_mdiAreaCAD->cascadeSubWindows();
             //find displacement by linear-regression
@@ -268,7 +291,7 @@ void LC_MDIApplicationWindow::slotCascade() {
             const double disY = (mih - mi * mh) * d;
             //End of Linear Regression
             //
-            QMdiSubWindow *window = windows.first();
+            const QMdiSubWindow *window = windows.first();
             QRect geo = window->geometry();
             const QRect frame = window->frameGeometry();
 //        std::cout<<"Frame=:"<<( frame.height() - geo.height())<<std::endl;
@@ -277,12 +300,11 @@ void LC_MDIApplicationWindow::slotCascade() {
             if (width <= 0 || height <= 0) {
                 return;
             }
-            for (int i = 0; i < windows.size(); ++i) {
-                window = windows.at(i);
-//            std::cout<<"window:("<<i<<"): pos()="<<(window->pos().x())<<" "<<(window->pos().y())<<std::endl;
-                geo = window->geometry();
-                window->setGeometry(geo.x(), geo.y(), width, height);
-                qobject_cast<QC_MDIWindow *>(window)->zoomAuto();
+            for (const auto w : windows) {
+                //            std::cout<<"window:("<<i<<"): pos()="<<(window->pos().x())<<" "<<(window->pos().y())<<std::endl;
+                geo = w->geometry();
+                w->setGeometry(geo.x(), geo.y(), width, height);
+                qobject_cast<QC_MDIWindow*>(w)->zoomAuto();
             }
             m_mdiAreaCAD->setActiveSubWindow(active);
         }
@@ -485,7 +507,7 @@ void LC_MDIApplicationWindow::onCADTabBarIndexChanged([[maybe_unused]]int index)
  */
 void LC_MDIApplicationWindow::redrawAll(){
     if (m_mdiAreaCAD) { // fixme - sand - redraw only if the window is visible, for tabbed view - redraw only current view
-        for (const QC_MDIWindow *win: m_windowList) {
+        for (const QC_MDIWindow *win: std::as_const(m_windowList)) {
             if (win != nullptr) {
                 QG_GraphicView *gv = win->getGraphicView();
                 if (gv != nullptr) {
@@ -570,8 +592,8 @@ void LC_MDIApplicationWindow::doForEachWindowGraphicView(const std::function<voi
 
 void LC_MDIApplicationWindow::doForEachSubWindowGraphicView(const std::function<void(QG_GraphicView *, QC_MDIWindow *)>& callback) const{
     const QList<QMdiSubWindow *> windows = m_mdiAreaCAD->subWindowList();
-    for (int i = 0; i < windows.size(); ++i) {
-        auto *win = qobject_cast<QC_MDIWindow *>(windows.at(i));
+    for (const auto window : windows) {
+        auto* win = qobject_cast<QC_MDIWindow*>(window);
         if (win != nullptr) {
             QG_GraphicView *gv = win->getGraphicView();
             if (gv != nullptr) {

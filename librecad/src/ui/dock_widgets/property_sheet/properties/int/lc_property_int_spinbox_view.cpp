@@ -117,7 +117,7 @@ void LC_PropertyIntSpinBoxView::doApplyAttributes(const LC_PropertyViewDescripto
     m_max = attrs[ATTR_MAX];
     m_step = attrs[ATTR_STEP];
     if (m_step.isValid()) {
-        bool ok;
+        bool ok = false;
         const int step = m_step.toInt(&ok);
         if (!ok) {
             m_step = QVariant();

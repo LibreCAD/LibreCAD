@@ -23,7 +23,8 @@
 
 #ifndef LC_DIMSTYLETOVARIABLESMAPPER_H
 #define LC_DIMSTYLETOVARIABLESMAPPER_H
-#include <qstring.h>
+
+#include <QString>
 
 #include "lc_dimstyle.h"
 #include "rs.h"

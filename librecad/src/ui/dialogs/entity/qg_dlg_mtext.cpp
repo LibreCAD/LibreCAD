@@ -275,7 +275,7 @@ void QG_DlgMText::layoutDirectionChanged() const {
     teText->setLayoutDirection(direction);
     m_entity->setDrawingDirection(leftToRight ? RS_MTextData::LeftToRight : RS_MTextData::RightToLeft);
     QTextDocument* doc = teText->document();
-    if (doc) {
+    if (doc != nullptr) {
         QTextOption option = doc->defaultTextOption();
         option.setTextDirection(direction);
         doc->setDefaultTextOption(option);

@@ -24,9 +24,9 @@
 #ifndef LC_MOVEROTATEOPTIONSFILLER_H
 #define LC_MOVEROTATEOPTIONSFILLER_H
 
-#include "lc_action_options_properties_filler.h"
+#include "lc_action_options_properties_filler_base.h"
 
-class LC_MoveRotateOptionsFiller: public LC_ActionOptionsPropertiesFiller{
+class LC_MoveRotateOptionsFiller: public LC_ActionOptionsPropertiesFillerBase{
     Q_OBJECT
 public:
     LC_MoveRotateOptionsFiller() = default;

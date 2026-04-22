@@ -24,6 +24,7 @@
 #include "lc_polyline_options_filler.h"
 
 #include "lc_action_draw_polyline.h"
+#include "lc_enum_descriptor.h"
 
 void LC_PolylineOptionsFiller::fillToolOptionsContainer(LC_PropertyContainer* container) {
     auto action = static_cast<LC_ActionDrawPolyline*>(m_action);
@@ -43,7 +44,7 @@ void LC_PolylineOptionsFiller::fillToolOptionsContainer(LC_PropertyContainer* co
             [action]() -> LC_PropertyEnumValueType {
                 return action->getMode();
             }, [action](const LC_PropertyEnumValueType& v)-> void {
-                auto mode = static_cast<LC_ActionDrawPolyline::SegmentMode>(v);
+                const auto mode = static_cast<LC_ActionDrawPolyline::SegmentMode>(v);
                 action->setMode(mode);
             }, container);
 
@@ -60,7 +61,7 @@ void LC_PolylineOptionsFiller::fillToolOptionsContainer(LC_PropertyContainer* co
                        }, [action](double val) {
                            action->setAngleDegrees(val);
                        }, container, [action]([[maybe_unused]]LC_PropertyViewDescriptor& d) {
-                           int mode = action->getMode();
+                           const int mode = action->getMode();
                            return !((mode == LC_ActionDrawPolyline::SegmentMode::TangentalArcFixedAngle) || (mode ==
                                LC_ActionDrawPolyline::SegmentMode::ArcFixedAngle));
                        });
@@ -70,7 +71,7 @@ void LC_PolylineOptionsFiller::fillToolOptionsContainer(LC_PropertyContainer* co
                }, [action](bool val)-> void {
                    action->setReversed(val);
                }, container, [action](LC_PropertyViewDescriptor&) {
-                   int mode = action->getMode();
+                   const int mode = action->getMode();
                    return mode != LC_ActionDrawPolyline::SegmentMode::ArcFixedAngle;
                });
 

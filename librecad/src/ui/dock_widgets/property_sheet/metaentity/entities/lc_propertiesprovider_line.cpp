@@ -23,15 +23,11 @@
 
 #include "lc_propertiesprovider_line.h"
 
-#include <QList>
-
 #include "lc_convert.h"
 #include "lc_property_action.h"
-#include "lc_property_action_link_view.h"
-#include "lc_property_multi.h"
 #include "lc_propertyprovider_utils.h"
 #include "rs_line.h"
-#include "rs_math.h"
+
 
 void LC_PropertiesProviderLine::doCreateEntitySpecificProperties(LC_PropertyContainer* cont, const QList<RS_Entity*>& list) {
     const auto contGeometry = createGeometrySection(cont);
@@ -49,25 +45,25 @@ void LC_PropertiesProviderLine::doCreateEntitySpecificProperties(LC_PropertyCont
                        }, list, contGeometry);
 }
 
-void LC_PropertiesProviderLine::doCreateCalculatedProperties(LC_PropertyContainer* container, const QList<RS_Entity*>& list) {
+void LC_PropertiesProviderLine::doCreateCalculatedProperties(LC_PropertyContainer* cont, const QList<RS_Entity*>& list) {
     addReadOnlyString<RS_Line>({"length", tr("Length"), tr("Length of line")}, [this](const RS_Line* e) -> QString {
         const double len = e->getLength();
         QString value = formatLinear(len);
         return value;
-    }, list, container);
+    }, list, cont);
 
     addReadOnlyString<RS_Line>({"angle1", tr("Angle 1"), tr("Angle from 0.0 to first point of line")}, [this](const RS_Line* e) -> QString {
         const double wcsAngleRad = e->getAngle1();
         QString value = formatWCSAngleDegrees(wcsAngleRad);
         return value;
-    }, list, container);
+    }, list, cont);
 
     addReadOnlyString<RS_Line>({"angle2", tr("Angle 2"), tr("Angle from 0.0 to second point of line")},
                                [this](const RS_Line* e) -> QString {
                                    const double wcsAngleRad = e->getAngle2();
                                    QString value = formatWCSAngleDegrees(wcsAngleRad);
                                    return value;
-                               }, list, container);
+                               }, list, cont);
 
     // addReadOnlyString<RS_Line>({"inclination", tr("Inclination"), tr("Angle of the line inclination to x-axis")},
     //                            [this](const RS_Line* e) -> QString {
@@ -80,18 +76,18 @@ void LC_PropertiesProviderLine::doCreateCalculatedProperties(LC_PropertyContaine
     if (graphicViewport != nullptr) {
         addVector<RS_Line>({"delta", tr("Delta"), tr("Distance between start and end point")}, [this](const RS_Line* line) -> RS_Vector {
             const auto deltaVectorWCS = line->getEndpoint() - line->getStartpoint();
-            auto graphicViewport = m_actionContext->getViewport();
-            if (graphicViewport == nullptr) {
+            const auto viewport = m_actionContext->getViewport();
+            if (viewport == nullptr) {
                 return deltaVectorWCS;
             }
-            const auto ucsDelta = graphicViewport->toUCSDelta(deltaVectorWCS);
+            const auto ucsDelta = viewport->toUCSDelta(deltaVectorWCS);
             return ucsDelta;
-        }, nullptr, list, container);
+        }, nullptr, list, cont);
     }
 
     addVector<RS_Line>({"middle", tr("Middle Point"), tr("Middle point of line")}, [](const RS_Line* e) -> RS_Vector {
         return e->getMiddlePoint();
-    }, nullptr, list, container);
+    }, nullptr, list, cont);
 }
 
 void LC_PropertiesProviderLine::doCreateSingleEntityCommands(LC_PropertyContainer* container, RS_Entity* ent) {

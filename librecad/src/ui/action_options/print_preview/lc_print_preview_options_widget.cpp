@@ -92,21 +92,21 @@ LC_PrintPreviewOptionsWidget::LC_PrintPreviewOptionsWidget():ui(new Ui::LC_Print
 
 void LC_PrintPreviewOptionsWidget::onScaleIndexChanged(int index) {
     LC_GuardedSignalsBlocker({ui->cbScale, ui->leDrawingUnits, ui->lePrintedUnits});
-    bool customScale = index == 0;
+    const bool customScale = index == 0;
     ui->leDrawingUnits->setEnabled(customScale);
     ui->lePrintedUnits->setEnabled(customScale);
 
     if (customScale) {
     }
     else{
-        QString scaleText = ui->cbScale->currentText();
+        const QString scaleText = ui->cbScale->currentText();
         const int colonIndex = scaleText.indexOf(':');
 
         bool ok1 = false;
         bool ok2 = false;
 
-        auto printed = scaleText.left(colonIndex);
-        auto drawing = scaleText.mid(colonIndex + 1);
+        const auto printed = scaleText.left(colonIndex);
+        const auto drawing = scaleText.mid(colonIndex + 1);
 
         ui->lePrintedUnits->setText(printed);
         ui->leDrawingUnits->setText(drawing);
@@ -115,7 +115,7 @@ void LC_PrintPreviewOptionsWidget::onScaleIndexChanged(int index) {
         const double denominator = RS_Math::eval(drawing, &ok2);
 
         if (ok1 && ok2 && denominator > 1.0e-6) {
-            double factor = numerator / denominator;
+            const double factor = numerator / denominator;
             if (std::abs(factor - m_action->getScale()) > PRINT_SCALE_STEP) {
                 if (m_action->setScale(factor, true)) {
                     updateScaleBox(factor);
@@ -159,13 +159,13 @@ void LC_PrintPreviewOptionsWidget::doUpdateByAction(RS_ActionInterface* a) {
         ui->cFixed
     });
 
-    bool paperScaleFixed;
-    bool blackAndWhiteMode;
-    bool scaleLineWidth;
+    bool paperScaleFixed = false;
+    bool blackAndWhiteMode = false;
+    bool scaleLineWidth = false;
 
     initializeScaleBoxItems();
 
-    bool update = true;
+    const bool update = true;
     if (update) {
         paperScaleFixed = m_action->isPaperScaleFixed();
         const double printScaleFactor = m_action->getScale();
@@ -244,7 +244,7 @@ void LC_PrintPreviewOptionsWidget::addScalesToCombobox(QStringList& scales) {
 }
 
 bool LC_PrintPreviewOptionsWidget::addScaleToScaleCombobox(const QString& scaleString) const {
-    bool parseOk;
+    bool parseOk = false;
     const double factor = parseScaleString(scaleString, parseOk);
     if (parseOk) {
         ui->cbScale->addItem(scaleString, QVariant(factor));
@@ -371,7 +371,7 @@ void LC_PrintPreviewOptionsWidget::scale(const QString& newScale, const bool for
             scaleToUse = newScale;
         }
     }
-    bool parseOk;
+    bool parseOk = false;
     const double factor = parseScaleString(scaleToUse, parseOk);
     if (m_action != nullptr) {
         if (!parseOk) {
@@ -445,7 +445,7 @@ double LC_PrintPreviewOptionsWidget::parseScaleString(const QString& scaleText, 
 
 void LC_PrintPreviewOptionsWidget::updateScaleBox(const double factor) {
     //    std::cout<<"void LC_PrintPreviewOptionsWidget::updateScaleBox() f="<<f<<std::endl;
-    int scaleIndex;
+    int scaleIndex = 0;
     int existingScalesCount = ui->cbScale->count();
     for (scaleIndex = 0; scaleIndex < existingScalesCount; scaleIndex++) {
         QVariant itemData = ui->cbScale->itemData(scaleIndex);

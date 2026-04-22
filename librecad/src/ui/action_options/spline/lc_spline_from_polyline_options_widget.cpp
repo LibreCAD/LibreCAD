@@ -44,12 +44,12 @@ LC_SplineFromPolylineOptionsWidget::~LC_SplineFromPolylineOptionsWidget() {
 void LC_SplineFromPolylineOptionsWidget::doUpdateByAction(RS_ActionInterface* a) {
     m_action = static_cast<LC_ActionSplineFromPolyline*>(a);
 
-    bool useFitPoints = m_action->isUseFitPoints();
-    bool useCurrentAttributes = m_action->isUseCurrentAttributes();
-    bool useCurrentLayer = m_action->isUseCurrentLayer();
-    bool keepOriginal = m_action->isKeepOriginals();
-    int midPoints = m_action->getSegmentPoints();
-    int splineDegree = m_action->getSplineDegree();
+    const bool useFitPoints = m_action->isUseFitPoints();
+    const bool useCurrentAttributes = m_action->isUseCurrentAttributes();
+    const bool useCurrentLayer = m_action->isUseCurrentLayer();
+    const bool keepOriginal = m_action->isKeepOriginals();
+    const int midPoints = m_action->getSegmentPoints();
+    const int splineDegree = m_action->getSplineDegree();
 
     LC_GuardedSignalsBlocker({ui->sbDegree, ui->sbMidPoints, ui->cbFitPoints, ui->cbCurrentAttr, ui->cbKeepOriginals, ui->cbLayer});
     ui->cbKeepOriginals->setChecked(keepOriginal);

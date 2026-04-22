@@ -22,21 +22,17 @@
 **
 **********************************************************************/
 //! File: lc_actiondrawdual.cpp
+#include "lc_actiondrawdual.h"
+
 #include <QMouseEvent>
 
-#include "lc_actiondrawdual.h"
-#include "rs_dialogfactory.h"
-#include "rs_dialogfactoryinterface.h"
-#include "rs_graphicview.h"
-#include "rs_coordinateevent.h"
-#include "rs_entitycontainer.h"
 #include "lc_quadraticutils.h"
-#include "rs_pen.h"
 #include "lc_undosection.h"
+#include "rs_entitycontainer.h"
+
 
 LC_ActionDrawDual::LC_ActionDrawDual(LC_ActionContext* context)
-    : LC_ActionPreSelectionAwareBase("Draw Dual", context),
-      m_center(false){
+    : LC_ActionPreSelectionAwareBase("Draw Dual", context){
 }
 
 void LC_ActionDrawDual::init(int status) {
@@ -84,7 +80,7 @@ void LC_ActionDrawDual::doTriggerCompletion([[maybe_unused]] bool success) {
 }
 
 void LC_ActionDrawDual::onMouseLeftButtonReleaseSelected(int status, const LC_MouseEvent* event) {
-    RS_Vector snap = event->snapPoint;
+    const RS_Vector snap = event->snapPoint;
     if (getStatus() == ChooseCenter) {
         m_center = snap;
         trigger();  // Always proceed to creation after center is chosen
@@ -103,7 +99,7 @@ void LC_ActionDrawDual::onMouseMoveEventSelected(int status, const LC_MouseEvent
 bool LC_ActionDrawDual::createDualForSelected(LC_DocumentModificationBatch& ctx){
     int count = 0;
     // Create a group to hold all dual copies
-    for (RS_Entity* e: m_selectedEntities) {
+    for (RS_Entity* e : std::as_const(m_selectedEntities)) {
         // Delegate dual creation to the utility function
         RS_Entity* dualCopy = LC_QuadraticUtils::createDualAroundCenter(e, m_center);
 

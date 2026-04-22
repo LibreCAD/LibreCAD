@@ -413,7 +413,7 @@ void LC_MenuFactoryGraphicView::createGVMenuFiles(QMenu* ctxMenu) const {
                                 "FileNew",
                                 "FileNewTemplate",
                                 "FileOpen"}, false);
-    auto menuRecentFiles = m_menusHolder->m_menuRecentFiles;
+    const auto menuRecentFiles = m_menusHolder->m_menuRecentFiles;
     if (menuRecentFiles != nullptr) {
         menuFile->addMenu(menuRecentFiles);
     }
@@ -1022,8 +1022,7 @@ void LC_MenuFactoryGraphicView::createGVMenuEntitySpecific(QMenu* contextMenu, Q
                 const auto insert = static_cast<RS_Insert*>(entity);
                 // For an insert, show the menu entry to edit the block instead
                 createGVEditPropertiesAction(contextMenu, graphicView, entity);
-                const auto editActionText = QString{"%1: %2"}.arg(tr("Edit Block")).arg(
-                    insert->getName().left(MAX_BLOCK_NAME_LENGTH));
+                const auto editActionText = QString{"%1: %2"}.arg(tr("Edit Block"), insert->getName().left(MAX_BLOCK_NAME_LENGTH));
 
                 createGVEditPropertiesAction(contextMenu, graphicView, entity, editActionText);
 

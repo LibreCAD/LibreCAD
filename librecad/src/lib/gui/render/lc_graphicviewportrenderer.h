@@ -74,7 +74,7 @@ protected:
     /** foreground color (black or white) */
     RS_Color m_colorForeground;
 
-    RS_Pen m_lastPaintEntityPen = {};
+    RS_Pen m_lastPaintEntityPen;
 
     LC_Rect prepareBoundingClipRect() const;
     virtual void doRender() = 0;

@@ -32,12 +32,11 @@ public:
     explicit LC_ActionDrawArc2PointsLength(LC_ActionContext *actionContext);
     ~LC_ActionDrawArc2PointsLength() override = default;
 protected:
-    bool createArcData(RS_ArcData &data, int status, RS_Vector pos, bool alternate, bool reportErrors) override;
+    bool createArcData(RS_ArcData &data, int status, const RS_Vector& pos, bool alternate, bool reportErrors) override;
     void doPreviewOnPoint2Custom(RS_Arc *pArc) override;
     QString getParameterCommand() override;
     QString getParameterPromptValue() const override;
     QString getAlternativePoint2Prompt() const override;
-    double determineArcAngleByLenAndChord(double arcLen, double chordLen);
 };
 
 #endif

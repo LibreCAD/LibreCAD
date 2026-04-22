@@ -248,7 +248,7 @@ void LC_DlgWidgetCreator::onAssignMenu([[maybe_unused]]bool checked) {
             return;
         }
         LC_MenuActivator* activator = findMenuActivator(menuName);
-        LC_MenuActivator* copyToEdit;
+        LC_MenuActivator* copyToEdit = nullptr;
         if (activator == nullptr) {
             copyToEdit = new LC_MenuActivator();
         }
@@ -504,7 +504,7 @@ void LC_DlgWidgetCreator::loadCustomWidgets() {
         qDeleteAll(m_menuActivators);
 
         auto activators = LC_CHILD_KEYS();
-        for (auto key : activators) {
+        for (const auto &key : std::as_const(activators)) {
             LC_MenuActivator* activator = LC_MenuActivator::fromShortcut(key);
             if (activator != nullptr) {
                 QString menuName = LC_GET_STR(key);
@@ -518,7 +518,7 @@ void LC_DlgWidgetCreator::loadCustomWidgets() {
         auto widgets = LC_CHILD_KEYS();
 
         std::vector<std::pair<QString, LC_MenuActivator*>> activatorsList;
-        for (auto key : widgets) {
+        for (auto key : std::as_const(widgets)) {
             auto activator = findMenuActivator(key);
             std::pair<QString, LC_MenuActivator*> pair(key, activator);
             activatorsList.push_back(pair);
@@ -564,7 +564,7 @@ void LC_DlgWidgetCreator::loadCustomWidgets() {
         ui->cbWidgetName->clear();
         auto widgets = LC_CHILD_KEYS();
 
-        for (auto key : widgets) {
+        for (const auto &key : std::as_const(widgets)) {
             ui->cbWidgetName->addItem(key, key);
         }
         LC_GROUP_END();
@@ -572,7 +572,7 @@ void LC_DlgWidgetCreator::loadCustomWidgets() {
 }
 
 LC_MenuActivator* LC_DlgWidgetCreator::findMenuActivator(const QString& menuName) {
-    for (const auto a: m_menuActivators) {
+    for (const auto a: std::as_const(m_menuActivators)) {
         if (a->getMenuName() == menuName) {
             return a;
         }

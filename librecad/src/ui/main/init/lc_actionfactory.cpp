@@ -2,8 +2,8 @@
  * ********************************************************************************
  * This file is part of the LibreCAD project, a 2D CAD program
  *
- * Copyright (C) 2025 LibreCAD.org
- * Copyright (C) 2025 sand1024
+ * Copyright (C) 2026 LibreCAD.org
+ * Copyright (C) 2026 sand1024
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -474,7 +474,7 @@ void LC_ActionFactory::createRelativeInputActions(QMap<QString, QAction*>& map, 
        {"RelativeAddPoint",   tr("Add Guiding Point"),   ":/icons/guiding_point.lci"},
     });
 
-    auto tryShowRelativeInput = [](QC_ApplicationWindow* appWin, RS2::RelativePointParam type) {
+    auto tryShowRelativeInput = [](const QC_ApplicationWindow* appWin, RS2::RelativePointParam type) {
         LC_ActionContext* ctx = appWin->getActionContext();
         RS_ActionInterface* currentAction = ctx->getCurrentAction();
         if (currentAction != nullptr) {
@@ -501,9 +501,9 @@ void LC_ActionFactory::createRelativeInputActions(QMap<QString, QAction*>& map, 
         tryShowRelativeInput(m_appWin, RS2::REL_POINT_Y);
     });
 
-    auto tryAddVisualGuide = [](QC_ApplicationWindow* appWin, bool hasLength, bool hasAngle, bool hasDx, bool hasDy, bool hasNormal) {
+    auto tryAddVisualGuide = [](const QC_ApplicationWindow* appWin, bool hasLength, bool hasAngle, bool hasDx, bool hasDy, bool hasNormal) {
         LC_ActionContext* ctx = appWin->getActionContext();
-        auto currentAction = dynamic_cast<RS_PreviewActionInterface*>(ctx->getCurrentAction());
+        const auto currentAction = dynamic_cast<RS_PreviewActionInterface*>(ctx->getCurrentAction());
         if (currentAction != nullptr) {
             currentAction->tryAddVisualGuidingPointForCurrentPoint(hasLength, hasAngle, hasDx, hasDy, hasNormal);
         }
@@ -794,13 +794,12 @@ void LC_ActionFactory::updateSnapActionsBySettings(const QMap<QString, QAction*>
         map["SnapVisualRelAngleSnap"]->setChecked(LC_GET_BOOL("VSAngleSnapStepRaysRelative", true));
         map["SnapVisualDynDistance"]->setChecked(LC_GET_BOOL("VSVertexVertexDistanceCircles", true));
         map["SnapVisualDistanceTan"]->setChecked(LC_GET_BOOL("VSVertexVertexDistanceTangents", true));
-        map["SnapVisualDistanceTan"]->setChecked(LC_GET_BOOL("VSVertexVertexDistanceTangents", true));
         map["SnapVisualShowFarGuides"]->setChecked(LC_GET_BOOL("VSShowNotSnappableGuides", true));
 
-        bool autoAddSnapPoints = LC_GET_BOOL("VSSnapAutoAddSnapPoint", true);
-        auto actionAddSnapAuto = map["SnapVisualAutoAddSnap"];
+        const bool autoAddSnapPoints = LC_GET_BOOL("VSSnapAutoAddSnapPoint", true);
+        const auto actionAddSnapAuto = map["SnapVisualAutoAddSnap"];
         actionAddSnapAuto->setChecked(autoAddSnapPoints);
-        auto actionAddLastSnapOnly = map["SnapVisualAutoAddSnapLast"];
+        const auto actionAddLastSnapOnly = map["SnapVisualAutoAddSnapLast"];
         actionAddLastSnapOnly->setEnabled(autoAddSnapPoints);
         actionAddLastSnapOnly->setChecked(LC_GET_BOOL("VSSnapAutoAddLastSnapPointOnly", true));
     }
@@ -868,7 +867,7 @@ void LC_ActionFactory::setupCreatedActions(QMap<QString, QAction *> &map) {
     QAction* actionSnapVisual = map["SnapVisual"];
 
     connect(map["SnapVisualLock"], &QAction::toggled, [this, actionSnapVisual](bool toggled) {
-        auto currentAction = m_actionHandler->getCurrentAction();
+        const auto currentAction = m_actionHandler->getCurrentAction();
         if (currentAction != nullptr) {
             currentAction->lockVisualSnap(toggled);
         }

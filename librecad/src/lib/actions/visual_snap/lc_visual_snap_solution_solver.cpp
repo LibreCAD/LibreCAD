@@ -22,6 +22,7 @@
  */
 
 #include "lc_visual_snap_solution_solver.h"
+
 #include "lc_ref_snap_circle.h"
 #include "lc_ref_snap_construction_line.h"
 #include "lc_ref_snap_entity.h"
@@ -32,8 +33,8 @@
 #include "rs.h"
 #include "rs_creation.h"
 #include "rs_information.h"
-#include "rs_vector.h"
 #include "rs_snapper.h"
+#include "rs_vector.h"
 
 namespace {
     constexpr double g_rayDirectionOffset = 10.0;
@@ -51,7 +52,7 @@ namespace {
     }
 }
 
-void LC_VisualSnapSolutionSolver::solveVisualSnap(const RS_Vector& wcsPos, LC_VisualSnapSolution& solution) {
+void LC_VisualSnapSolutionSolver::solveVisualSnap(const RS_Vector& wcsPos, LC_VisualSnapSolution& solution) const {
     solution.wcsPoint = wcsPos;
     addOrthoRaysForVertexes(wcsPos, solution);
     addLineRays(wcsPos, solution);
@@ -118,7 +119,7 @@ void LC_VisualSnapSolutionSolver::findSnapPoint(const RS_Vector& wcsPos, LC_Visu
     }
 
     solution.snapData->forEachVertex([&minDist, &minSnap, &minSnapIntersectionInfo, wcsPos, &solution](LC_VisualSnapVertex* vertex) {
-        RS_Vector v = vertex->wcsSnapCoordinate;
+        const RS_Vector v = vertex->wcsSnapCoordinate;
         const double dist = v.distanceTo(wcsPos);
         if (dist < minDist) {
             minDist = dist;
@@ -146,11 +147,11 @@ void LC_VisualSnapSolutionSolver::findSnapPoint(const RS_Vector& wcsPos, LC_Visu
 
 void LC_VisualSnapSolutionSolver::addOrthoAndAngleRaysForPoint(const RS_Vector& wcsPos, LC_VisualSnapSolution& solution,
                                                                const double angleStepRad, double wcsRaysStartAngle, double wcsRaysEndAngle,
-                                                               double wcsMPI_2Angle, RS_Vector vertexWCSPoint) const {
+                                                               double wcsMPI_2Angle, const RS_Vector& vertexWCSPoint) const {
     double dist;
     if (hasNoLinesForPoint(solution, vertexWCSPoint, RS2::VisualSnapGuideEntityType::VSNAP_LINE_VERTEX_HORIZONTAL)) {
         // create horizontal ray
-        auto horizontalPoint = m_viewport->restrictHorizontal(vertexWCSPoint,
+        const auto horizontalPoint = m_viewport->restrictHorizontal(vertexWCSPoint,
                                                               RS_Vector(vertexWCSPoint.x + g_rayDirectionOffset, vertexWCSPoint.y));
         const auto lineHor = tryCreateGuidingConstructionLine(wcsPos, vertexWCSPoint, horizontalPoint, dist,
                                                               RS2::VisualSnapGuideEntityType::VSNAP_LINE_VERTEX_HORIZONTAL);
@@ -161,7 +162,7 @@ void LC_VisualSnapSolutionSolver::addOrthoAndAngleRaysForPoint(const RS_Vector& 
 
     if (hasNoLinesForPoint(solution, vertexWCSPoint, RS2::VisualSnapGuideEntityType::VSNAP_LINE_VERTEX_VERTICAL)) {
         // create vertical ray
-        auto verticalPoint = m_viewport->restrictVertical(vertexWCSPoint,
+        const auto verticalPoint = m_viewport->restrictVertical(vertexWCSPoint,
                                                           RS_Vector(vertexWCSPoint.x, vertexWCSPoint.y + g_rayDirectionOffset));
 
         const auto lineVert = tryCreateGuidingConstructionLine(wcsPos, vertexWCSPoint, verticalPoint, dist,
@@ -189,9 +190,7 @@ void LC_VisualSnapSolutionSolver::addOrthoAndAngleRaysForPoint(const RS_Vector& 
                                                                   RS2::VisualSnapGuideEntityType::VSNAP_LINE_VERTEX_ANGLE_STEP);
             if (lineRay != nullptr) {
                 if (dist < minDistance) {
-                    if (minDistanceRay != nullptr) {
-                        delete minDistanceRay;
-                    }
+                    delete minDistanceRay;
                     minDistanceRay = lineRay;
                     minDistanceAngle = angle;
                     minDistance = dist;
@@ -224,7 +223,7 @@ void LC_VisualSnapSolutionSolver::addOrthoRaysForVertexes(const RS_Vector& wcsPo
     solution.snapData->forEachVertex(
         [this, wcsPos, &solution, angleStepRad, wcsRaysStartAngle, wcsRaysEndAngle, wcsMPI_2Angle](LC_VisualSnapVertex* vertex) {
             vertex->flagProcessed = false;
-            auto vertexWCSPoint = vertex->wcsSnapCoordinate;
+            const auto vertexWCSPoint = vertex->wcsSnapCoordinate;
             addOrthoAndAngleRaysForPoint(wcsPos, solution, angleStepRad, wcsRaysStartAngle, wcsRaysEndAngle, wcsMPI_2Angle, vertexWCSPoint);
         });
 }
@@ -233,14 +232,14 @@ void LC_VisualSnapSolutionSolver::addLineRayAndNormal(const RS_Vector& wcsPos, L
                                                       const RS_Vector& wcsSnapCoordinate, const LC_RefSnapConstructionLine* refLine) const {
     double dist;
     // create ray that is in line direction
-    auto endPoint = refLine->getEndpoint();
-    auto startPoint = refLine->getStartpoint();
+    const auto endPoint = refLine->getEndpoint();
+    const auto startPoint = refLine->getStartpoint();
 
     const bool createLineRay = hasNoLinesForPoints(solution, endPoint, startPoint);
     if (createLineRay) {
-        auto nearestPointOnEntity = refLine->getNearestPointOnEntity(wcsPos, false, &dist);
+        const auto nearestPointOnEntity = refLine->getNearestPointOnEntity(wcsPos, false, &dist);
         const double wcsDistance = nearestPointOnEntity.distanceTo(wcsPos);
-        bool withinSnapRange = wcsDistance < m_wcsSnapRange;
+        const bool withinSnapRange = wcsDistance < m_wcsSnapRange;
         if (withinSnapRange || m_options->showNotSnappableGuides) {
             const auto clone = static_cast<LC_RefSnapConstructionLine*>(refLine->clone());
             const double refLineAngle = startPoint.angleTo(endPoint);
@@ -253,7 +252,7 @@ void LC_VisualSnapSolutionSolver::addLineRayAndNormal(const RS_Vector& wcsPos, L
     const double wcsLineAngle = refLine->getDirection1();
     const double wcsNormalLineAngle = wcsLineAngle + M_PI_2;
 
-    RS_Vector secondPoint = wcsSnapCoordinate.relative(g_rayDirectionOffset, wcsNormalLineAngle);
+    const RS_Vector secondPoint = wcsSnapCoordinate.relative(g_rayDirectionOffset, wcsNormalLineAngle);
     const auto normalLine = tryCreateGuidingConstructionLine(wcsPos, wcsSnapCoordinate, secondPoint, dist, wcsNormalLineAngle,
                                                              RS2::VisualSnapGuideEntityType::VSNAP_LINE_ENDPOINT_NORMAL);
     if (normalLine != nullptr) {
@@ -273,17 +272,17 @@ void LC_VisualSnapSolutionSolver::addLineRays(const RS_Vector& wcsPos, LC_Visual
 
 void LC_VisualSnapSolutionSolver::addTangentialAndNormlRaysForArcEndpoint(const RS_Vector& wcsPos, LC_VisualSnapSolution& solution,
                                                                           const RS_Vector& wcsSnapCoordinate, LC_RefSnapArc* arc) const {
-    RS_Vector startPoint = arc->getStartpoint();
-    RS_Vector endPoint = arc->getEndpoint();
+    const RS_Vector startPoint = arc->getStartpoint();
+    const RS_Vector endPoint = arc->getEndpoint();
     RS_Vector endpointToUse;
     double direction;
     if (LC_LineMath::isNotMeaningfulDistance(wcsSnapCoordinate, startPoint)) {
-        double angle1 = arc->getAngle1();
+        const double angle1 = arc->getAngle1();
         direction = angle1 + M_PI_2;
         endpointToUse = startPoint;
     }
     else if (LC_LineMath::isNotMeaningfulDistance(wcsSnapCoordinate, endPoint)) {
-        double angle2 = arc->getAngle2();
+        const double angle2 = arc->getAngle2();
         direction = angle2 + M_PI_2;
         endpointToUse = endPoint;
     }
@@ -291,7 +290,7 @@ void LC_VisualSnapSolutionSolver::addTangentialAndNormlRaysForArcEndpoint(const 
         return;
     }
     // tangent
-    RS_Vector second = endpointToUse.relative(g_rayDirectionOffset, direction);
+    const RS_Vector second = endpointToUse.relative(g_rayDirectionOffset, direction);
     double dist;
 
     const auto tangent = tryCreateGuidingConstructionLine(wcsPos, endpointToUse, second, dist, direction,
@@ -301,7 +300,7 @@ void LC_VisualSnapSolutionSolver::addTangentialAndNormlRaysForArcEndpoint(const 
     }
 
     // normal
-    auto center = arc->getCenter();
+    const auto center = arc->getCenter();
     const auto lineToCenter = tryCreateGuidingConstructionLine(wcsPos, endpointToUse, center, dist,
                                                                RS2::VisualSnapGuideEntityType::VSNAP_LINE_ENDPOINT_NORMAL);
     if (lineToCenter != nullptr) {
@@ -315,7 +314,7 @@ void LC_VisualSnapSolutionSolver::addTangentialAndNormalRaysFromArcEndpoint(cons
     solution.snapData->forEachVertex([this, wcsPos, &solution](LC_VisualSnapVertex* vertex) {
         if (vertex->refArc != nullptr) {
             LC_RefSnapArc* arc = vertex->refArc;
-            auto wcsSnapCoordinate = vertex->wcsSnapCoordinate;
+            const auto wcsSnapCoordinate = vertex->wcsSnapCoordinate;
             addTangentialAndNormlRaysForArcEndpoint(wcsPos, solution, wcsSnapCoordinate, arc);
         }
     });
@@ -376,7 +375,7 @@ void LC_VisualSnapSolutionSolver::addTangentialRaysFromVertexesToArcs(const RS_V
 
         solution.snapData->forEachVertex(
             [this,entity, vertexStart, vertexEnd, wcsPos, &solution, &specialPointSnapCandidates](LC_VisualSnapVertex* vertexInner) {
-                auto vertexSnapCoord = vertexInner->wcsSnapCoordinate;
+                const auto vertexSnapCoord = vertexInner->wcsSnapCoordinate;
                 // avoid situation where endpoints of arc are vertexes and so additional tangents are created
                 if (LC_LineMath::isNotMeaningfulDistance(vertexSnapCoord, vertexStart) || LC_LineMath::isNotMeaningfulDistance(
                     vertexSnapCoord, vertexEnd)) {
@@ -391,7 +390,7 @@ void LC_VisualSnapSolutionSolver::createTangentialBetwenTwoEntities(const RS_Vec
                                                                     const RS_Entity* entityFirst, const RS_Entity* entitySecond,
                                                                     std::vector<LC_VisualSnapPointHolder>& specialPointSnapCandidates,
                                                                     RS2::VisualSnapGuideEntityType snapEntityType) const {
-    std::vector<std::unique_ptr<RS_Line>> tangentLines = RS_Creation::createTangent2(entityFirst, entitySecond);
+    const std::vector<std::unique_ptr<RS_Line>> tangentLines = RS_Creation::createTangent2(entityFirst, entitySecond);
     if (!tangentLines.empty()) {
         for (const auto& l : tangentLines) {
             double dist;
@@ -425,7 +424,7 @@ void LC_VisualSnapSolutionSolver::addTangentialRaysBetwenCirclesArcs(const RS_Ve
                     if (secondDocRef->processed) {
                         return;
                     }
-                    unsigned long long secondEntityId = secondDocRef->originalEntityId;
+                    const unsigned long long secondEntityId = secondDocRef->originalEntityId;
                     if (firstEntityId == secondEntityId) {
                         return;
                     }
@@ -433,8 +432,8 @@ void LC_VisualSnapSolutionSolver::addTangentialRaysBetwenCirclesArcs(const RS_Ve
                     if (ent == entityFirst) {
                         return;
                     }
-                    const RS2::EntityType type = ent->rtti();
-                    if (type == RS2::EntitySnapArc || type == RS2::EntitySnapCircle) {
+                    const RS2::EntityType entityType = ent->rtti();
+                    if (entityType == RS2::EntitySnapArc || entityType == RS2::EntitySnapCircle) {
                         createTangentialBetwenTwoEntities(wcsPos, solution, entityFirst, ent, specialPointSnapCandidates,
                                                           RS2::VisualSnapGuideEntityType::VSNAP_LINE_TANGENT2);
                     }
@@ -447,7 +446,7 @@ void LC_VisualSnapSolutionSolver::addExplicitlySetDistanceCircle(const RS_Vector
                                                                  LC_VisualSnapSolution& solution) const {
     const double distance = wcsCenter.distanceTo(wcsPos);
     const double distanceDelta = std::abs(distance - distanceWCS);
-    bool withinSnapRange = distanceDelta < m_wcsSnapRange;
+    const bool withinSnapRange = distanceDelta < m_wcsSnapRange;
     if (withinSnapRange || m_options->showNotSnappableGuides) {
         const auto circle = new LC_RefSnapCircle(wcsCenter, distanceWCS);
         circle->setupForPoint(circle->getNearestPointOnEntity(wcsPos), RS2::VSNAP_POINT_DISTANCE_EXPLICIT, withinSnapRange);
@@ -503,7 +502,7 @@ void LC_VisualSnapSolutionSolver::addVertexToVertexLines(const RS_Vector& wcsPos
         // add strict middle regardless snap to middle is enabled and if one is enabled, yet it is odd
         const bool odd = middlePoints % 2 == 0;
         if (odd) {
-            RS_Vector actualMiddle = (firstVertexSnap + innerVertexSnap) / 2;
+            const RS_Vector actualMiddle = (firstVertexSnap + innerVertexSnap) / 2;
             if (dist < m_wcsSnapRange) {
                 specialPointSnapCandidates.push_back(LC_VisualSnapPointHolder(actualMiddle, RS2::VisualSnapGuideEntityType::VSNAP_POINT_MIDDLE));
             }
@@ -530,9 +529,9 @@ void LC_VisualSnapSolutionSolver::addVertexToVertexLinesAndDistances(const RS_Ve
     clearVertexProcessedFlag(solution);
     bool snapMiddle = m_snapper->getSnapMode()->snapMiddle;
     bool snapDistance = m_snapper->getSnapMode()->snapDistance;
-    bool snapCenter = m_snapper->getSnapMode()->snapCenter;
+    const bool snapCenter = m_snapper->getSnapMode()->snapCenter;
     bool createVertexDistanceTangents = snapDistance && snapCenter && m_options->createVertexVertexDistanceCirclesTangents;
-    double snapDistanceRadius = m_snapper->getSnapDistance();
+    const double snapDistanceRadius = m_snapper->getSnapDistance();
 
     auto circleFirst = RS_Circle(RS_CircleData(RS_Vector(0, 0), snapDistanceRadius));
     auto circleSecond = RS_Circle(RS_CircleData(RS_Vector(0, 0), snapDistanceRadius));
@@ -547,8 +546,8 @@ void LC_VisualSnapSolutionSolver::addVertexToVertexLinesAndDistances(const RS_Ve
                     if (vertexInner->flagProcessed) {
                         return;
                     }
-                    auto firstVertexSnap = vertexFirst->wcsSnapCoordinate;
-                    auto innerVertexSnap = vertexInner->wcsSnapCoordinate;
+                    const auto firstVertexSnap = vertexFirst->wcsSnapCoordinate;
+                    const auto innerVertexSnap = vertexInner->wcsSnapCoordinate;
 
                     if (snapMiddle) {
                         addVertexToVertexLines(wcsPos, specialPointSnapCandidates, solution, firstVertexSnap, innerVertexSnap);
@@ -574,19 +573,19 @@ void LC_VisualSnapSolutionSolver::addGuideEntitiesForDocumentEntity(const RS_Vec
     if (docEntityRef->guidingEntity != nullptr) {
         const auto entity = docEntityRef->guidingEntity.get();
         RS_Vector v = entity->getNearestPointOnEntity(wcsPos, true, &dist);
-        bool withinSnapRange = dist < m_wcsSnapRange;
+        const bool withinSnapRange = dist < m_wcsSnapRange;
         if (withinSnapRange || m_options->showNotSnappableGuides) {
             RS_Entity* clone = entity->clone();
             solution.addGuidingEntity(clone, RS2::VisualSnapGuideEntityType::VSNAP_DOC_ENTITY);
         }
-        auto entityRtti = docEntityRef->guidingEntity->rtti();
+        const auto entityRtti = docEntityRef->guidingEntity->rtti();
         if (entityRtti == RS2::EntitySnapLine) {
             const auto& endpoint = entity->getEndpoint();
             const auto& startPoint = entity->getStartpoint();
             if (m_options->createAngleStepRaysForEntitiesEndpoints) {
                 tryAddRelativeRaysForStartAndEndPoints(wcsPos, startPoint, endpoint, solution);
             }
-            bool snapDistance = m_snapper->getSnapMode()->snapDistance;
+            const bool snapDistance = m_snapper->getSnapMode()->snapDistance;
             if (snapDistance && m_options->createVertexVertexDistanceCircles) {
                 createDistanceCircle2Point(wcsPos, startPoint, endpoint, solution);
                 createDistanceCircle2Point(wcsPos, endpoint, startPoint, solution);
@@ -672,8 +671,8 @@ void LC_VisualSnapSolutionSolver::addNormalFromVertexToDocEntity(const RS_Vector
         return;
     }
     double dist;
-    auto guideEntity = docEntityRef->guidingEntity.get();
-    auto nearestPointOnEntity = guideEntity->getNearestPointOnEntity(vertex->wcsSnapCoordinate, false, &dist);
+    const auto guideEntity = docEntityRef->guidingEntity.get();
+    const auto nearestPointOnEntity = guideEntity->getNearestPointOnEntity(vertex->wcsSnapCoordinate, false, &dist);
     if (LC_LineMath::isMeaningfulDistance(nearestPointOnEntity, vertex->wcsSnapCoordinate)) {
         // additional check that vertex is not on entity
         const auto normalLine = tryCreateGuidingConstructionLine(wcsPos, vertex->wcsSnapCoordinate, nearestPointOnEntity, dist,
@@ -700,14 +699,14 @@ void LC_VisualSnapSolutionSolver::addRelativePositionEntities(const RS_Vector& w
 
             if (data.explicitLength) {
                 const auto distanceCircle = new LC_RefSnapCircle(basePoint, data.length);
-                auto nearestPoint = distanceCircle->getNearestPointOnEntity(wcsPos);
+                const auto nearestPoint = distanceCircle->getNearestPointOnEntity(wcsPos);
                 const double wcsDistance = nearestPoint.distanceTo(wcsPos);
-                bool withinSnapRange = wcsDistance < m_wcsSnapRange;
+                const bool withinSnapRange = wcsDistance < m_wcsSnapRange;
                 distanceCircle->setupForPoint(nearestPoint, RS2::VSNAP_POINT_RELATIVE_DISTANCE, withinSnapRange);
                 solution.addGuidingEntity(distanceCircle);
             }
 
-            double wcsAngleToBasePoint = projectionPoint.angleTo(basePoint);
+            const double wcsAngleToBasePoint = projectionPoint.angleTo(basePoint);
             if (data.explicitAngle) {
                 createAndAddGuidingConstructionLine(wcsPos, basePoint, projectionPoint, RS2::VSNAP_POINT_RELATIVE_ANGLE_RAY, solution,
                                                     wcsAngleToBasePoint);
@@ -767,7 +766,7 @@ void LC_VisualSnapSolutionSolver::addOrdinaryRestrictionLines(const RS_Vector& w
         case RS2::RestrictHorizontal: {
             const auto lineHor = new LC_RefSnapConstructionLine(relZero,
                                                                 m_viewport->restrictHorizontal(relZero, relZero + g_rayDirectionOffset));
-            auto nearestPointOnEntity = lineHor->getNearestPointOnEntity(wcsPos, false, &dist);
+            const auto nearestPointOnEntity = lineHor->getNearestPointOnEntity(wcsPos, false, &dist);
             lineHor->setupForPoint(nearestPointOnEntity, RS2::VSNAP_LINE_RESTR_HORIZONTAL, false, 0);
             solution.addGuidingEntity(lineHor);
             break;
@@ -775,7 +774,7 @@ void LC_VisualSnapSolutionSolver::addOrdinaryRestrictionLines(const RS_Vector& w
         case RS2::RestrictVertical: {
             const auto lineVert = new LC_RefSnapConstructionLine(relZero,
                                                                  m_viewport->restrictVertical(relZero, relZero + g_rayDirectionOffset));
-            auto nearestPointOnEntity = lineVert->getNearestPointOnEntity(wcsPos, false, &dist);
+            const auto nearestPointOnEntity = lineVert->getNearestPointOnEntity(wcsPos, false, &dist);
             lineVert->setupForPoint(nearestPointOnEntity, RS2::VSNAP_LINE_RESTR_VERTICAL, false, M_PI_2);
             solution.addGuidingEntity(lineVert);
             break;
@@ -791,7 +790,7 @@ void LC_VisualSnapSolutionSolver::createDistanceCircle2Point(const RS_Vector& wc
     const double distanceBetweenVertexes = centerPoint.distanceTo(circlePoint);
     const double distanceFromFirstToMouse = centerPoint.distanceTo(wcsPos);
     const double distanceDelta = std::abs(distanceBetweenVertexes - distanceFromFirstToMouse);
-    bool withinSnapRange = distanceDelta < m_wcsSnapRange;
+    const bool withinSnapRange = distanceDelta < m_wcsSnapRange;
     if (withinSnapRange || m_options->showNotSnappableGuides) {
         // mouse is close to circle
         const auto circle = new LC_RefSnapCircle(centerPoint, distanceBetweenVertexes);
@@ -807,7 +806,7 @@ LC_RefSnapConstructionLine* LC_VisualSnapSolutionSolver::tryCreateGuidingConstru
     const auto line = new LC_RefSnapConstructionLine(start, end);
     const auto nearestPointOnEntity = line->getNearestPointOnEntity(wcsPos, false, &dist);
     const double wcsDistance = nearestPointOnEntity.distanceTo(wcsPos);
-    bool withinSnapRange = wcsDistance < m_wcsSnapRange;
+    const bool withinSnapRange = wcsDistance < m_wcsSnapRange;
     if (withinSnapRange || m_options->showNotSnappableGuides) {
         line->setupForPoint(nearestPointOnEntity, guideType, withinSnapRange, wcsLineAngle);
         return line;
@@ -846,13 +845,13 @@ LC_RefSnapConstructionLine* LC_VisualSnapSolutionSolver::tryCreateVertexVertexLi
     }
 
     // try to build ortho line from previous snapped point to vertex-vertex line
-    RS_Vector basePoint = solution.previousSnapPoint;
+    const RS_Vector basePoint = solution.previousSnapPoint;
     if (basePoint.valid && LC_LineMath::isMeaningfulDistance(basePoint, start) && LC_LineMath::isMeaningfulDistance(basePoint, end)) {
         // check that base point does not lie on vertex-vertex line
         double distFormBase;
         const auto pointOnLine = line->getNearestPointOnEntity(basePoint, false, &distFormBase);
         if (LC_LineMath::isMeaningful(distFormBase)) {
-            double wcsNormalAngle = wcsLineAngle + M_PI_2;
+            const double wcsNormalAngle = wcsLineAngle + M_PI_2;
             const auto normalLine = new LC_RefSnapConstructionLine(basePoint, pointOnLine);
             double distanceToNormal;
             const auto nearestPointOnNormal = normalLine->getNearestPointOnEntity(wcsPos, false, &distanceToNormal);
@@ -879,9 +878,9 @@ void LC_VisualSnapSolutionSolver::createAndAddGuidingConstructionLine(const RS_V
                                                                       RS2::VisualSnapGuideEntityType guideType,
                                                                       LC_VisualSnapSolution& solution, double wcsAngleToBasePoint) const {
     const auto verticalRay = new LC_RefSnapConstructionLine(start, end);
-    auto nearestPoint = verticalRay->getNearestPointOnEntity(wcsPos);
+    const auto nearestPoint = verticalRay->getNearestPointOnEntity(wcsPos);
     const double wcsDistance = nearestPoint.distanceTo(wcsPos);
-    bool withinSnapRange = wcsDistance < m_wcsSnapRange;
+    const bool withinSnapRange = wcsDistance < m_wcsSnapRange;
     verticalRay->setupForPoint(nearestPoint, guideType, withinSnapRange, wcsAngleToBasePoint);
     solution.addGuidingEntity(verticalRay);
 }
@@ -891,7 +890,7 @@ LC_RefSnapLine* LC_VisualSnapSolutionSolver::tryCreateCloseSnapLine(const RS_Vec
     const auto line = new LC_RefSnapLine(start, end);
     const auto nearestPointOnEntity = line->getNearestPointOnEntity(wcsPos, false, &dist);
     const double wcsDistance = nearestPointOnEntity.distanceTo(wcsPos);
-    bool withinSnapRange = wcsDistance < m_wcsSnapRange;
+    const bool withinSnapRange = wcsDistance < m_wcsSnapRange;
     if (withinSnapRange || m_options->showNotSnappableGuides) {
         const double wcsAngle = start.angleTo(end);
         line->setupForPoint(nearestPointOnEntity, guideType, withinSnapRange, wcsAngle);
@@ -901,7 +900,7 @@ LC_RefSnapLine* LC_VisualSnapSolutionSolver::tryCreateCloseSnapLine(const RS_Vec
     return nullptr;
 }
 
-bool LC_VisualSnapSolutionSolver::hasNoLinesForPoints(LC_VisualSnapSolution& solution, RS_Vector endPoint, RS_Vector startPoint) const {
+bool LC_VisualSnapSolutionSolver::hasNoLinesForPoints(const LC_VisualSnapSolution& solution, const RS_Vector& endPoint, const RS_Vector& startPoint) const {
     bool noLines = true;
     // ensure that line rays it not created already for another endpoint of line
     for (const auto guide : solution.guidingEntities) {
@@ -915,7 +914,7 @@ bool LC_VisualSnapSolutionSolver::hasNoLinesForPoints(LC_VisualSnapSolution& sol
     return noLines;
 }
 
-bool LC_VisualSnapSolutionSolver::hasNoLinesForPoint(LC_VisualSnapSolution& solution, RS_Vector point,
+bool LC_VisualSnapSolutionSolver::hasNoLinesForPoint(const LC_VisualSnapSolution& solution, const RS_Vector& point,
                                                      RS2::VisualSnapGuideEntityType guideType) const {
     bool noLines = true;
     // ensure that line rays it not created already for another endpoint of line

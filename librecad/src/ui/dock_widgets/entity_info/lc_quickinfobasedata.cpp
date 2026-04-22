@@ -1,5 +1,5 @@
 /****************************************************************************
-*
+ *
 * Basic data holder for properties and coordinates. Includes just several
 * utility methods.
 
@@ -199,7 +199,7 @@ void LC_QuickInfoBaseData::appendRawAngle(QString &result, const QString &label,
     createLabelValueString(result, label,formatRawAngle(value));
 }
 
-void LC_QuickInfoBaseData::appendValue(QString &result, const QString &label, const QString& value){
+void LC_QuickInfoBaseData::appendValue(QString &result, const QString &label, const QString& value) const {
     createLabelValueString(result, label, value);
 }
 

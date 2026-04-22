@@ -24,11 +24,10 @@
 #ifndef LC_PRINTPREVIEWOPTIONSFILLER_H
 #define LC_PRINTPREVIEWOPTIONSFILLER_H
 
-#include "lc_action_options_properties_filler.h"
-#include "lc_rectangle_abstract_options_filler.h"
+#include "lc_action_options_properties_filler_base.h"
 #include "rs_actionprintpreview.h"
 
-class LC_PrintPreviewOptionsFiller : public LC_ActionOptionsPropertiesFiller {
+class LC_PrintPreviewOptionsFiller : public LC_ActionOptionsPropertiesFillerBase {
     Q_OBJECT
 public:
     LC_PrintPreviewOptionsFiller() = default;

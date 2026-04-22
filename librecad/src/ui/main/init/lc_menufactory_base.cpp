@@ -55,7 +55,7 @@ void LC_MenuFactoryBase::createWorkspacesListSubMenu(QMenu* parentMenu) {
         const auto wsMenu = new QMenu(tr("&Workspaces"), parentMenu);
         wsMenu->setTearOffEnabled(m_allowTearOffMenus);
         wsMenu->setIcon(wsIcon);
-        for (const auto & [wId, name]: workspacesList) {
+        for (const auto & [wId, name]: std::as_const(workspacesList)) {
             auto* a = wsMenu->addAction(wsIcon, name);
             const int workspaceId = wId;
             connect(a, &QAction::triggered, [workspaceId, this]  {

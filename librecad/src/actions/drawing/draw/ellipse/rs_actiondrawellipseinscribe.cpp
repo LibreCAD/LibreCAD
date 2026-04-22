@@ -200,7 +200,7 @@ void RS_ActionDrawEllipseInscribe::onMouseLeftButtonRelease(const int status, co
                 return; //do not pull in the same line again
             }
         }
-        if (en->getParent()) {
+        if (en->getParent() != nullptr) {
             if (en->getParent()->ignoredOnModification()) {
                 return;
             }

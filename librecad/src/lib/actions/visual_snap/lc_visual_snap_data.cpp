@@ -51,7 +51,7 @@ void LC_VisualSnapData::lockContent(bool performLock) {
 }
 
 bool LC_VisualSnapData::isEmpty() const {
-    bool result = m_itemsList.empty() && m_relativePositionData.empty();
+    const bool result = m_itemsList.empty() && m_relativePositionData.empty();
     return result;
 }
 
@@ -92,7 +92,7 @@ void LC_VisualSnapData::removeDocumentEntityWithId(unsigned long long entityId) 
         if (it->isVertexItem) {
             return false;
         }
-        auto result = it->docEntityRef->originalEntityId == entityId;
+        const auto result = it->docEntityRef->originalEntityId == entityId;
         return result;
     });
     if (itr != m_itemsList.end()) {
@@ -100,10 +100,10 @@ void LC_VisualSnapData::removeDocumentEntityWithId(unsigned long long entityId) 
     }
 }
 
-void LC_VisualSnapData::removeVertex(LC_VisualSnapVertex* v) {
+void LC_VisualSnapData::removeVertex(LC_VisualSnapVertex* vertex) {
     // todo - remove by erase_if in C++ 20
-    auto itr = find_if(m_itemsList.begin(), m_itemsList.end(), [v](std::unique_ptr<LC_VisualSnapItem>& it) {
-        return it->getVertex() == v;
+    auto itr = find_if(m_itemsList.begin(), m_itemsList.end(), [vertex](std::unique_ptr<LC_VisualSnapItem>& it) {
+        return it->getVertex() == vertex;
     });
     if (itr != m_itemsList.end()) {
         itr = m_itemsList.erase(itr);
@@ -127,9 +127,9 @@ void LC_VisualSnapData::removeVertexWithLastSnappedData() {
     }
 }
 
-void LC_VisualSnapData::saveLastSnappedPoint(const RS_Vector& v) {
+void LC_VisualSnapData::saveLastSnappedPoint(const RS_Vector& pos) {
     m_previousSnappedBasePoint = m_lastSnappedBasePoint;
-    m_lastSnappedBasePoint = v;
+    m_lastSnappedBasePoint = pos;
 }
 
 bool LC_VisualSnapData::removeLastAddition() {

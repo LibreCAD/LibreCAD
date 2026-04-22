@@ -25,6 +25,7 @@
 #include "lc_creation_ellipse.h"
 
 #include <float.h>
+
 #include "lc_quadratic.h"
 #include "rs_debug.h"
 #include "rs_entitycontainer.h"
@@ -223,7 +224,7 @@ bool LC_CreationEllipse::createEllipseFromQuadratic(const LC_Quadratic& q, RS_El
     const auto& mL = q.getLinear();
     const double& d = mL(0);
     const double& e = mL(1);
-    const double determinant = c * c - 4. * a * b;
+    const double determinant = (c * c) - (4. * a * b);
     if (determinant >= -DBL_EPSILON) {
         return false;
     }
@@ -232,7 +233,7 @@ bool LC_CreationEllipse::createEllipseFromQuadratic(const LC_Quadratic& q, RS_El
     // C x   + 2 B y = E
     // x = (2BD - EC)/( 4AB - C^2)
     // y = (2AE - DC)/(4AB - C^2)
-    const RS_Vector eCenter = RS_Vector(2. * b * d - e * c, 2. * a * e - d * c) / determinant;
+    const RS_Vector eCenter = RS_Vector((2. * b * d) - (e * c), (2. * a * e) - (d * c)) / determinant;
     //generate centered quadratic
     LC_Quadratic qCentered = q;
     qCentered.move(-eCenter);
@@ -378,8 +379,8 @@ bool LC_CreationEllipse::createEllipseInscribeQuadrilateral(const std::vector<RS
     std::vector<double> dn(3);
     RS_Vector angleVector(false);
 
-    for (size_t i = 0; i < tangent.size(); i++) {
-        tangent[i] -= ellipseCenter; //relative to ellipse center
+    for (auto & i : tangent) {
+        i -= ellipseCenter; //relative to ellipse center
     }
     std::vector<std::vector<double>> mt;
     mt.clear();
@@ -422,8 +423,8 @@ bool LC_CreationEllipse::createEllipseInscribeQuadrilateral(const std::vector<RS
                 return false; //refuse to return zero size ellipse
             }
             angleVector.set(majorP.x / dx, -majorP.y / dx);
-            for (size_t i = 0; i < tangent.size(); i++) {
-                tangent[i].rotate(angleVector);
+            for (auto & i : tangent) {
+                i.rotate(angleVector);
             }
 
             RS_Vector minorP(tangent[2]);
@@ -445,7 +446,7 @@ bool LC_CreationEllipse::createEllipseInscribeQuadrilateral(const std::vector<RS
             // ia2*x^2 -2*ia2*minor.x/minor.y xy + ia2*minor.x^2*ib2 y^2 + ib2*y^2 =1
             dn[0] = ia2;
             dn[1] = -2. * ia2 * minorP.x / minorP.y;
-            dn[2] = ib2 * ia2 * minorP.x * minorP.x + ib2;
+            dn[2] = (ib2 * ia2 * minorP.x * minorP.x) + ib2;
         }
         break;
         case LINES_COUNT:

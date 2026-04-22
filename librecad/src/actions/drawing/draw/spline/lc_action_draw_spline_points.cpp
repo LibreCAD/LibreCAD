@@ -69,7 +69,7 @@ void LC_ActionDrawSplinePoints::doTriggerCompletion([[maybe_unused]] bool succes
 }
 
 RS_Entity* LC_ActionDrawSplinePoints::doTriggerCreateEntity() {
-    if (m_actionData->spline.get() != nullptr) {
+    if (m_actionData->spline != nullptr) {
         // setPenAndLayerToActive(m_actionData->spline.get());
         const auto spline = new LC_SplinePoints(m_document, m_actionData->spline->getData());
         return spline;
@@ -112,7 +112,7 @@ void LC_ActionDrawSplinePoints::onMouseLeftButtonRelease([[maybe_unused]] int st
 }
 
 void LC_ActionDrawSplinePoints::onMouseRightButtonRelease(const int status, [[maybe_unused]] const LC_MouseEvent* e) {
-    if (status == SetNextPoint && m_actionData->spline.get()) {
+    if (status == SetNextPoint && (m_actionData->spline.get() != nullptr)) {
         trigger();
     }
     initPrevious(status);
@@ -265,7 +265,7 @@ void RS_ActionDrawSplinePoints::close() {
 */
 
 void LC_ActionDrawSplinePoints::undo() {
-    if (!m_actionData->spline.get()) {
+    if (m_actionData->spline == nullptr) {
         commandMessage(tr("Cannot undo: Not enough entities defined yet."));
         return;
     }
@@ -311,7 +311,7 @@ void LC_ActionDrawSplinePoints::redo() {
 
 void LC_ActionDrawSplinePoints::setClosed(const bool c) {
     m_actionData->data.closed = c;
-    if (m_actionData->spline.get() != nullptr) {
+    if (m_actionData->spline != nullptr) {
         m_actionData->spline->setClosed(c);
     }
 }

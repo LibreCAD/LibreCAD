@@ -22,8 +22,8 @@
 **
 **********************************************************************************/
 
-#ifndef LC_ContainerTraverser_H
-#define LC_ContainerTraverser_H
+#ifndef LC_CONTAINERTRAVERSER_H
+#define LC_CONTAINERTRAVERSER_H
 
 #include <memory>
 #include <vector>
@@ -62,6 +62,7 @@ namespace lc {
  *   important, if traverse must be customized based on the current entity.
  * @author Dongxu Li
  */
+// fixme - sand - review and find why sometimes it returns non-unique entities (same entity is in list more than once)
 class LC_ContainerTraverser {
 public:
 

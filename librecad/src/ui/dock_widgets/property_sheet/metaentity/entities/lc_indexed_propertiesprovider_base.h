@@ -81,9 +81,9 @@ protected:
         int m_maxValue{0};
     };
 
-    LC_PropertyInt* createIndexProperty(LC_PropertyContainer* container, LC_Property::Names indexPropertNames, int pointCount,
+    LC_PropertyInt* createIndexProperty(LC_PropertyContainer* container, const LC_Property::Names& indexPropertNames, int pointCount,
                                         const FunGetWCSVectorByIndex &funGetPointByIndex,
-                                        const FunPersistValue &persistIndexValue);
+                                        const FunPersistValue &persistIndexValue) const;
     template <class EntityClass>
     void createIndexedPointProperty(LC_PropertyContainer* container, EntityClass* entity, LC_Property::Names indexedPointNames,
                                     const FunGetWCSVectorByIndex &funGetPointByIndex,
@@ -102,10 +102,10 @@ protected:
 };
 
 
-inline LC_PropertyInt* LC_IndexedPropertiesProviderBase::createIndexProperty(LC_PropertyContainer* container, const LC_Property::Names indexPropertNames,
+inline LC_PropertyInt* LC_IndexedPropertiesProviderBase::createIndexProperty(LC_PropertyContainer* container, const LC_Property::Names& indexPropertNames,
     const int pointCount, const FunGetWCSVectorByIndex &funGetPointByIndex,
-    const FunPersistValue &persistIndexValue) {
-    auto propertyPointIndex = new LC_PropertyInt(container, false);
+    const FunPersistValue &persistIndexValue) const {
+    const auto propertyPointIndex = new LC_PropertyInt(container, false);
     propertyPointIndex->setNames(indexPropertNames);
     LC_PropertyViewDescriptor viewDescriptor(LC_PropertyIntSpinBoxView::VIEW_NAME);
     viewDescriptor.attributes[LC_PropertyIntSpinBoxView::ATTR_MIN] = 0;
@@ -114,7 +114,7 @@ inline LC_PropertyInt* LC_IndexedPropertiesProviderBase::createIndexProperty(LC_
     viewDescriptor.attributes[LC_PropertyView::ATTR_VIRTUAL] = true;
     propertyPointIndex->setViewDescriptor(viewDescriptor);
 
-    auto valueStorage = new LC_IndexValueStorage(m_actionContext->getGraphicView()->getViewPort(), m_widget, pointCount, funGetPointByIndex,
+    const auto valueStorage = new LC_IndexValueStorage(m_actionContext->getGraphicView()->getViewPort(), m_widget, pointCount, funGetPointByIndex,
                                                  persistIndexValue);
     propertyPointIndex->setValueStorage(valueStorage, true);
     container->addChildProperty(propertyPointIndex);

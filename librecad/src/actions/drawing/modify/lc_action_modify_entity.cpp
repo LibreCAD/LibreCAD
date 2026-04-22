@@ -148,7 +148,7 @@ bool LC_ActionModifyEntity::doTriggerModifications(LC_DocumentModificationBatch&
 
             if (hasDialog) {
                 m_allowExternalTermination = false;
-                if (editDialog->exec()) {
+                if (editDialog->exec() != 0) {
                     editDialog->updateEntity();
                     ctx.replace(m_entity, m_clonedEntity);
                     if (!selected) {

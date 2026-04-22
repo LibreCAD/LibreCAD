@@ -1,5 +1,5 @@
 /*******************************************************************************
-*
+ *
  This file is part of the LibreCAD project, a 2D CAD program
 
  Copyright (C) 2025 LibreCAD.org
@@ -164,7 +164,7 @@ QPair<QString, QString> LC_AppWindowDialogsInvoker::showExportFileSelectionDialo
     QList<QByteArray> supportedImageFormats = QImageWriter::supportedImageFormats();
     supportedImageFormats.push_back("svg"); // add svg
 
-    for (QString format : supportedImageFormats) {
+    for (QString format : std::as_const(supportedImageFormats)) {
         format = format.toLower();
         QString st;
         if (format == "jpeg" || format == "tiff") {

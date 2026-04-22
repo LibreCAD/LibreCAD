@@ -117,7 +117,7 @@ void QG_DlgHatch::setEntity(RS_Hatch* h, const bool isNew) {
 }
 
 void QG_DlgHatch::updateEntity() {
-    if (m_entity) {
+    if (m_entity != nullptr) {
         m_entity->setSolid(cbSolid->isChecked());
         m_entity->setPattern(cbPattern->currentText());
 

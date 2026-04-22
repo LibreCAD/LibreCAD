@@ -24,6 +24,7 @@
 #include "lc_line_gap_options_filler.h"
 
 #include "lc_action_modify_line_gap.h"
+#include "lc_enum_descriptor.h"
 
 void LC_LineGapOptionsFiller::fillToolOptionsContainer(LC_PropertyContainer* container) {
     auto action = static_cast<LC_ActionModifyLineGap*>(m_action);
@@ -42,7 +43,7 @@ void LC_LineGapOptionsFiller::fillToolOptionsContainer(LC_PropertyContainer* con
                           return action->isFreeGapSize();
                       });
 
-    static LC_EnumDescriptor snapTypDescriptor = {
+    static LC_EnumDescriptor snapTypeDescriptor = {
         "snapTypeDescriptor",
         {
             {LC_AbstractActionWithPreview::LINE_SNAP_FREE, tr("Free")},
@@ -52,7 +53,7 @@ void LC_LineGapOptionsFiller::fillToolOptionsContainer(LC_PropertyContainer* con
         }
     };
 
-    addEnum({"a_snapType", tr("Line Snap"), tr("Snap point for gap on the line")}, &snapTypDescriptor,
+    addEnum({"a_snapType", tr("Line Snap"), tr("Snap point for gap on the line")}, &snapTypeDescriptor,
             [action]() -> LC_PropertyEnumValueType {
                 return action->getLineSnapMode();
             }, [action](const LC_PropertyEnumValueType& v)-> void {

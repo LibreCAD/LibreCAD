@@ -1,5 +1,3 @@
-// File: lc_hyperbola.h
-
 /*
  * ********************************************************************************
  * This file is part of the LibreCAD project, a 2D CAD program
@@ -32,9 +30,9 @@
 class LC_Quadratic;
 
 namespace lc {
-namespace geo {
-class Area;
-}
+    namespace geo {
+        class Area;
+    }
 }
 
 using LC_Rect = lc::geo::Area;

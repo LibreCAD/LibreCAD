@@ -115,7 +115,7 @@ bool RS_BlockList::add(RS_Block* block, const bool notify) {
  * to force an update of GUI blocklists.
  */
 void RS_BlockList::addNotification() {
-    for (const auto l : m_blockListListeners) {
+    for (const auto l : std::as_const(m_blockListListeners)) {
         l->blockAdded(nullptr);
     }
 }
@@ -131,7 +131,7 @@ void RS_BlockList::remove(RS_Block* block) {
     // here the block is removed from the list but not deleted
     m_blocks.removeOne(block);
 
-    for (const auto l : m_blockListListeners) {
+    for (const auto l : std::as_const(m_blockListListeners)) {
         l->blockRemoved(block);
     }
 
@@ -159,14 +159,14 @@ void RS_BlockList::remove(RS_Block* block) {
  * @retval false block couldn't be renamed.
  */
 bool RS_BlockList::rename(RS_Block* block, const QString& name) {
-    if (block) {
-        if (!find(name)) {
+    if (block != nullptr) {
+        if (find(name) == nullptr) {
             const QString oldName = block->getName();
             block->setName(name);
             setModified(true);
 
             // when the renamed block is nested within other block, we need to rename its inserts as well
-            for (RS_Block* b : m_blocks) {
+            for (RS_Block* b : std::as_const(m_blocks)) {
                 b->renameInserts(oldName, name);
             }
             return true;
@@ -206,7 +206,7 @@ RS_Block* RS_BlockList::find(const QString& name) {
     }
     // Todo : reduce this from O(N) to O(log(N)) complexity based on sorted list or hash
     //DFS
-    for (RS_Block* b : m_blocks) {
+    for (RS_Block* b : std::as_const(m_blocks)) {
         if (b->getName() == name) {
             return b;
         }
@@ -241,7 +241,7 @@ RS_Block* RS_BlockList::findCaseInsensitive(const QString& name) const {
  */
 QString RS_BlockList::newName(const QString& suggestion) {
     // qDebug()<<"begin: suggestion: "<<suggestion;
-    if (!find(suggestion)) {
+    if (find(suggestion) == nullptr) {
         return suggestion;
     }
 
@@ -253,7 +253,7 @@ QString RS_BlockList::newName(const QString& suggestion) {
         i = name.mid(index + 1).toInt();
         name = name.mid(0, index);
     }
-    for (const RS_Block* b : m_blocks) {
+    for (const RS_Block* b : std::as_const(m_blocks)) {
         index = b->getName().lastIndexOf(rx);
         if (index < 0) {
             continue;
@@ -281,7 +281,7 @@ void RS_BlockList::toggle(const QString& name) {
  * Listeners are notified.
  */
 void RS_BlockList::toggle(RS_Block* block) {
-    if (!block) {
+    if (block == nullptr) {
         return;
     }
 
@@ -290,7 +290,7 @@ void RS_BlockList::toggle(RS_Block* block) {
     //setModified(true);
 
     // Notify listeners:
-    for (const auto l : m_blockListListeners) {
+    for (const auto l : std::as_const(m_blockListListeners)) {
         l->blockToggled(block);
     }
 }
@@ -302,7 +302,7 @@ void RS_BlockList::toggle(RS_Block* block) {
  */
 void RS_BlockList::freezeAll(const bool freeze) {
     for (int l = 0; l < count(); l++) {
-        auto block = at(l);
+        const auto block = at(l);
         if (block->isVisibleInBlockList()) {
             block->freeze(freeze);
         }
@@ -310,7 +310,7 @@ void RS_BlockList::freezeAll(const bool freeze) {
     // TODO LordOfBikes: when block attributes are saved, activate this
     //setModified(true);
 
-    for (const auto l : m_blockListListeners) {
+    for (const auto l : std::as_const(m_blockListListeners)) {
         l->blockToggled(nullptr);
     }
 }
@@ -338,7 +338,7 @@ void RS_BlockList::toggleBlock(const QString& name) {
  * are notified when the block list changes.
  */
 void RS_BlockList::addListener(RS_BlockListListener* listener) {
-    for (const auto l : m_blockListListeners) {
+    for (const auto l : std::as_const(m_blockListListeners)) {
         if (l == listener) {
             return;
         }
@@ -397,14 +397,14 @@ void RS_BlockList::setModified(const bool m) {
 
     // Update each block modified status,
     // but only when the status is set to false.
-    if (m == false) {
-        for (const auto b : m_blocks) {
+    if (!m) {
+        for (const auto b : std::as_const(m_blocks)) {
             b->setModifiedFlag(false);
         }
     }
 
     // Notify listeners
-    for (const auto l : m_blockListListeners) {
+    for (const auto l : std::as_const(m_blockListListeners)) {
         l->blockListModified(m);
     }
 }

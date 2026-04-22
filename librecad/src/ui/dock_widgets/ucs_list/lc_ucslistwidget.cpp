@@ -456,7 +456,7 @@ void LC_UCSListWidget::setWCS() const {
     }
 }
 
-void LC_UCSListWidget::removeExistingUCS(const QString& name){
+void LC_UCSListWidget::removeExistingUCS(const QString& name) const {
     LC_UCS *existingUCS = m_currentUCSList->find(name);
     if (existingUCS != nullptr) {
         doRemoveExistingUCS(existingUCS);
@@ -472,7 +472,7 @@ void LC_UCSListWidget::renameExistingUCS(const QString& name) {
 
 void LC_UCSListWidget::renameExistingUCS(LC_UCS *selectedUCS) {
     const QString viewName = selectedUCS->getName();
-    bool ok;
+    bool ok = false;
     bool tryRename = true;
     while (tryRename) {
         QString text = QInputDialog::getText(this, tr("Rename UCS"),

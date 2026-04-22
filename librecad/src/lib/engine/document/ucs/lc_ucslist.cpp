@@ -124,7 +124,7 @@ LC_UCS *LC_UCSList::tryAddUCS(LC_UCS *candidate) {
     }
     LC_UCS *existingUCS = findExisting(candidate);
 
-    LC_UCS* result;
+    LC_UCS* result = nullptr;
     if (existingUCS == nullptr){
         m_ucsList.append(candidate);
         setModified(true);
@@ -138,14 +138,14 @@ LC_UCS *LC_UCSList::tryAddUCS(LC_UCS *candidate) {
 
 LC_UCS *LC_UCSList::findExisting(const LC_UCS *candidate) {// check if layer already exists:
     LC_UCS *existingUCS = nullptr;
-    for (const auto v: m_ucsList){
+    for (const auto v : std::as_const(m_ucsList)) {
         if (v == candidate){
             existingUCS = v;
             break;
         }
     }
     if (existingUCS == nullptr){
-        for (const auto v: m_ucsList) {
+        for (const auto v : std::as_const(m_ucsList)) {
             if (v->isSameTo(candidate)) {
                 existingUCS = v;
                 break;

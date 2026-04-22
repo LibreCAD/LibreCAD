@@ -28,15 +28,13 @@
 
 class LC_PropertiesProviderMultiple : public LC_EntityTypePropertiesProvider {
     Q_OBJECT
-
 public:
     LC_PropertiesProviderMultiple(LC_ActionContext* actionContext, LC_PropertySheetWidget* widget)
         : LC_EntityTypePropertiesProvider(RS2::EntityUnknown, actionContext, widget) {
     }
-
 protected:
-    void doCreateEntitySpecificProperties([[maybe_unused]]LC_PropertyContainer* container, [[maybe_unused]]const QList<RS_Entity*>& list) override{};
-    void fillComputedProperites([[maybe_unused]]LC_PropertyContainer* container, [[maybe_unused]]const QList<RS_Entity*>& entitiesList) override {};
+    void doCreateEntitySpecificProperties([[maybe_unused]]LC_PropertyContainer* container, [[maybe_unused]]const QList<RS_Entity*>& list) override{}
+    void fillComputedProperites([[maybe_unused]]LC_PropertyContainer* container, [[maybe_unused]]const QList<RS_Entity*>& entitiesList) override {}
 };
 
 #endif

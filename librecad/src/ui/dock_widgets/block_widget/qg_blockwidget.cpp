@@ -33,7 +33,6 @@
 #include <QLineEdit>
 #include <QMenu>
 #include <QScrollBar>
-#include <QTableView>
 #include <QToolButton>
 #include <algorithm>
 
@@ -127,7 +126,7 @@ QVariant QG_BlockModel::data ( const QModelIndex & index, const int role ) const
         return blk->getName();
     }
     if (role == Qt::FontRole && index.column() == NAME) {
-        if (m_activeBlock && m_activeBlock == blk) {
+        if ((m_activeBlock != nullptr) && m_activeBlock == blk) {
             QFont font;
             font.setBold(true);
             return font;

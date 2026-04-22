@@ -24,9 +24,9 @@
 #ifndef LC_POLYLINEOPTIONSFILLER_H
 #define LC_POLYLINEOPTIONSFILLER_H
 
-#include "lc_action_options_properties_filler.h"
+#include "lc_action_options_properties_filler_base.h"
 
-class LC_PolylineOptionsFiller: public LC_ActionOptionsPropertiesFiller{
+class LC_PolylineOptionsFiller: public LC_ActionOptionsPropertiesFillerBase{
     Q_OBJECT
 public:
     LC_PolylineOptionsFiller() = default;

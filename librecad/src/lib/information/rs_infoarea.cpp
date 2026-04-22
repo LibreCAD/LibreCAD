@@ -72,7 +72,7 @@ void RS_InfoArea::reset(){
   *@return false if the point is not in contour
   **/
 bool RS_InfoArea::duplicated(const RS_Vector &p) const {
-    if (m_points.size() < 1) {
+    if (m_points.empty()) {
         return false;
     }
     for (const RS_Vector &v: m_points) {

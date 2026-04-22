@@ -30,8 +30,7 @@ LC_ActionDrawArc2PointsAngle::LC_ActionDrawArc2PointsAngle(LC_ActionContext *act
     :LC_ActionDrawArc2PointsBase("ActionDrawArc2PAngle",actionContext, RS2::ActionDrawArc2PAngle) {
 }
 
-bool LC_ActionDrawArc2PointsAngle::createArcData(RS_ArcData& data, [[maybe_unused]] int status, const RS_Vector pos, const bool alternate,
-                                                 [[maybe_unused]] bool reportErrors) {
+bool LC_ActionDrawArc2PointsAngle::createArcData(RS_ArcData& data, [[maybe_unused]] int status, const RS_Vector& pos, const bool alternate, [[maybe_unused]] bool reportErrors) {
     return LC_CreationArc::createFrom2PAngle(m_startPoint, pos, m_parameterLen, m_reversed, alternate, data);
 }
 

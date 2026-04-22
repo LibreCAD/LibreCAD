@@ -79,7 +79,7 @@ QMap<QString, LC_ActionGroup *> LC_ActionGroupManager::allGroups() {
 
     QMap<QString, LC_ActionGroup *> actionGroupMap;
 
-    for (const auto ag: actionGroupList) {
+    for (const auto ag: std::as_const(actionGroupList)) {
         actionGroupMap[ag->objectName()] = ag;
     }
 
@@ -93,7 +93,7 @@ void LC_ActionGroupManager::toggleExclusiveSnapMode(const bool state) {
 
     QList<bool> tempSnapState;
 
-    for (const auto action: snapActions) {
+    for (const auto action: std::as_const(snapActions)) {
         tempSnapState << action->isChecked();
         if (action->isChecked()) {
             action->activate(QAction::Trigger);
@@ -200,7 +200,7 @@ void LC_ActionGroupManager::addActionGroup(const QString& name, LC_ActionGroup* 
 }
 
 void LC_ActionGroupManager::completeInit(){
-   for (const auto action: m_actionsMap) {
+   for (const auto action: std::as_const(m_actionsMap)) {
        if (action != nullptr) { // fixme - sand - check where from null may be inserted to action map
            auto property = action->property("RS2:actionType");
            if (property.isValid()) {

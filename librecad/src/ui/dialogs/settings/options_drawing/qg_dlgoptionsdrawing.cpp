@@ -322,7 +322,7 @@ void QG_DlgOptionsDrawing::setupUserREditor(QLineEdit* edit, const QString& key)
     edit->setText(val);
 }
 
-void QG_DlgOptionsDrawing::setupUserTab() {
+void QG_DlgOptionsDrawing::setupUserTab() const {
     sbUserI1->setValue(m_graphic->getVariableInt("$USERI1", 0));
     sbUserI2->setValue(m_graphic->getVariableInt("$USERI2", 0));
     sbUserI3->setValue(m_graphic->getVariableInt("$USERI3", 0));
@@ -473,7 +473,7 @@ void QG_DlgOptionsDrawing::onDimStylesListMenuRequested(const QPoint& pos) {
 }
 
 QString QG_DlgOptionsDrawing::askForUniqueDimStyleName(const QString& caption, const QString& prompt, const QString& defaultText) {
-    bool ok;
+    bool ok = false;
     bool styleNameNotUnique = false;
     QString styleName = "";
     QString value = defaultText;
@@ -547,7 +547,7 @@ void QG_DlgOptionsDrawing::doCreateDimStyle(const QString& newStyleName, LC_DimS
     // add relevant styles to the dialog
     QList<LC_DimStyleItem*> itemsMatchedStyle;
     model->collectAllItemsForStyle(styleCopyToEdit, &itemsMatchedStyle);
-    for (const auto dsi : itemsMatchedStyle) {
+    for (const auto dsi : std::as_const(itemsMatchedStyle)) {
         const auto styleToAdd = dsi->dimStyle();
         if (styleToAdd->getName() != newStyleName) {
             dimStyleManager.addDimStyle(styleToAdd);
@@ -598,7 +598,7 @@ void QG_DlgOptionsDrawing::onDimStyleEdit([[maybe_unused]] bool checked) {
         LC_DlgDimStyleManager dimStyleManager(this, styleCopyToEdit, m_graphic, dimType);
         QList<LC_DimStyleItem*> itemsMatchedStyle;
         model->collectItemsForBaseStyleName(baseName, &itemsMatchedStyle);
-        for (const auto dsi : itemsMatchedStyle) {
+        for (const auto dsi : std::as_const(itemsMatchedStyle)) {
             const auto styleToAdd = dsi->dimStyle();
             if (itemToEdit != dsi) {
                 dimStyleManager.addDimStyle(styleToAdd);
@@ -741,7 +741,7 @@ void QG_DlgOptionsDrawing::onDimStyleSetDefault([[maybe_unused]] bool checked) {
     }
 }
 
-void QG_DlgOptionsDrawing::updateActionButtons(const LC_DimStyleItem* item) {
+void QG_DlgOptionsDrawing::updateActionButtons(const LC_DimStyleItem* item) const {
     const auto model = getDimStylesModel();
     const int itemsCount = model->itemsCount();
     tbDimDefault->setEnabled(!item->isActive() && item->isBaseStyle());
@@ -765,7 +765,7 @@ void QG_DlgOptionsDrawing::updateDimStylePreview(LC_DimStyle* dimStyle, LC_DimSt
     QList<LC_DimStyleItem*> itemsMatchedStyle;
     model->collectAllItemsForStyle(dimStyle, &itemsMatchedStyle);
     const QString dimStyleName = dimStyle->getName();
-    for (const auto dsi : itemsMatchedStyle) {
+    for (const auto dsi : std::as_const(itemsMatchedStyle)) {
         const auto styleToAdd = dsi->dimStyle();
         if (styleToAdd->getName() != dimStyleName) {
             m_previewView->addDimStyle(styleToAdd);
@@ -775,7 +775,7 @@ void QG_DlgOptionsDrawing::updateDimStylePreview(LC_DimStyle* dimStyle, LC_DimSt
     m_previewView->refresh();
 }
 
-void QG_DlgOptionsDrawing::setupPointsTab() {
+void QG_DlgOptionsDrawing::setupPointsTab() const {
     // Points drawing style:
     const int pdmode = m_graphic->getVariableInt("$PDMODE", LC_DEFAULTS_PDMode);
     const double pdsize = m_graphic->getVariableDouble("$PDSIZE", LC_DEFAULTS_PDSize);
@@ -933,8 +933,8 @@ void QG_DlgOptionsDrawing::setupGridTab() const {
 
 void QG_DlgOptionsDrawing::setupPaperTab() {
     // paper format:
-    bool landscape;
-    LC_PlotSettings* ps = m_graphic->getPlotSettings();
+    bool landscape = false;
+    const LC_PlotSettings* ps = m_graphic->getPlotSettings();
     const RS2::PaperFormat format = ps->getPaperFormat(&landscape);
     RS_DEBUG->print("QG_DlgOptionsDrawing::setGraphic: paper format is: %d", format);
     cbPaperFormat->setCurrentIndex(format);
@@ -1203,7 +1203,7 @@ void QG_DlgOptionsDrawing::setupVariablesTab() const {
                 tabVariables->setItem(row, 2, new QTableWidgetItem(tr("VECTOR")));
                 const auto rsVector = it.value().getVector();
                 str = QString("%1/%2").arg(rsVector.x).arg(rsVector.y);
-                if (RS_FilterDXFRW::isVariableTwoDimensional(it.key()) == false) {
+                if (!RS_FilterDXFRW::isVariableTwoDimensional(it.key())) {
                     str += QString("/%1").arg(rsVector.z);
                 }
                 break;
@@ -1288,28 +1288,28 @@ void QG_DlgOptionsDrawing::_toRemove_validateDimsOld() const {
     m_graphic->addVariable("$DIMADEC", cbDimADec->currentIndex(), 70);
     //        graphic->addVariable("$DIMAZIN", cbDimAZin->currentIndex(), 70);
     m_graphic->addVariable("$DIMAZIN", cbDimAZin->getData(), 70);
-    int colRGB;
+    int colRGB = 0;
     int colNum = RS_FilterDXFRW::colorToNumber(cbDimClrD->getColor(), &colRGB);
     m_graphic->addVariable("$DIMCLRD", colNum, 70);
     colNum = RS_FilterDXFRW::colorToNumber(cbDimClrE->getColor(), &colRGB);
     m_graphic->addVariable("$DIMCLRE", colNum, 70);
     colNum = RS_FilterDXFRW::colorToNumber(cbDimClrT->getColor(), &colRGB);
     m_graphic->addVariable("$DIMCLRT", colNum, 70);
-    if (cbDimTxSty->getFont()) {
+    if (cbDimTxSty->getFont() != nullptr) {
         m_graphic->addVariable("$DIMTXSTY", cbDimTxSty->getFont()->getFileName(), 2);
     }
     m_graphic->addVariable("$DIMDSEP", (cbDimDSep->currentIndex() == 1) ? 44 : 0, 70);
     m_graphic->updateDimensions(ok1);
 }
 
-bool QG_DlgOptionsDrawing::validateDimensionsTab() {
+bool QG_DlgOptionsDrawing::validateDimensionsTab() const {
     LC_DimStyleTreeModel* model = getDimStylesModel();
     QList<LC_DimStyleItem*> items;
     model->collectAllStyleItems(items);
 
     QList<LC_DimStyle*> newDimStyles;
     QString currentDimStyleName;
-    for (const LC_DimStyleItem* item : items) {
+    for (const LC_DimStyleItem* item : std::as_const(items)) {
         const auto editedStyle = item->dimStyle();
         newDimStyles.push_back(editedStyle->getCopy());
         if (item->isActive()) {
@@ -1470,7 +1470,7 @@ void QG_DlgOptionsDrawing::validatePaperTab() const {
     // custom paper size:
     if (RS2::Custom == currentFormat) {
         ps->setPaperSize(RS_Vector(RS_Math::eval(lePaperWidth->text()), RS_Math::eval(lePaperHeight->text())));
-        bool landscape;
+        bool landscape = false;
         ps->getPaperFormat(&landscape);
         rbLandscape->setChecked(landscape);
     }
@@ -1732,7 +1732,7 @@ void QG_DlgOptionsDrawing::updateUnitsPreview() const {
  * Updates the paper size. Called for initialisation as well as when the
  * paper format changes.
  */
-void QG_DlgOptionsDrawing::updatePaperSize() {
+void QG_DlgOptionsDrawing::updatePaperSize() const {
     const auto format = static_cast<RS2::PaperFormat>(cbPaperFormat->currentIndex());
 
     RS_Vector s; //paper size: width, height
@@ -1749,7 +1749,7 @@ void QG_DlgOptionsDrawing::updatePaperSize() {
         std::swap(s.x, s.y);
     }
 
-    LC_PlotSettings* ps = m_graphic->getPlotSettings();
+    const LC_PlotSettings* ps = m_graphic->getPlotSettings();
     ps->setPaperSize(s);
 
     lePaperWidth->blockSignals(true);
@@ -1809,7 +1809,7 @@ void QG_DlgOptionsDrawing::updatePaperPreview() const {
     const int previewH = gvPaperPreview->height() - 10;
     const double scale = qMin(previewW / paperW, previewH / paperH);
     int lMargin = qRound(RS_Math::eval(leMarginLeft->text(), -1) * scale);
-    LC_PlotSettings* ps = m_graphic->getPlotSettings();
+    const LC_PlotSettings* ps = m_graphic->getPlotSettings();
     if (lMargin < 0.0) {
         lMargin = ps->getMarginLeftInUnits();
     }

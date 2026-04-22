@@ -22,6 +22,7 @@
  */
 
 #include "lc_propertiesprovider_graphic_workspace.h"
+
 #include "lc_propertyprovider_utils.h"
 #include "qc_applicationwindow.h"
 #include "rs_graphic.h"
@@ -78,7 +79,7 @@ void LC_PropertiesProviderGraphicWorkspace::createWorkspaceSelector(LC_PropertyC
     }
 }
 
-void LC_PropertiesProviderGraphicWorkspace::createUIActionProperty(LC_PropertyContainer* cont, const char* actionName, LC_Property::Names names) {
+void LC_PropertiesProviderGraphicWorkspace::createUIActionProperty(LC_PropertyContainer* cont, const char* actionName, const LC_Property::Names& names) {
     auto action = QC_ApplicationWindow::getAppWindow()->getAction(actionName);
     auto funGet = [action]([[maybe_unused]] const RS_Graphic* e) -> bool {
         if (action != nullptr) {

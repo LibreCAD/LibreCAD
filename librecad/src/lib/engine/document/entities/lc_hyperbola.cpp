@@ -1,4 +1,3 @@
-// lc_hyperbola.cpp
 /*******************************************************************************
  *
  This file is part of the LibreCAD project, a 2D CAD program
@@ -21,14 +20,14 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 ******************************************************************************/
 
+#include "lc_hyperbola.h"
+
 #include <algorithm>
 #include <cmath>
 #include <limits>
 #include <vector>
-
 #include <boost/math/quadrature/gauss_kronrod.hpp>
 
-#include "lc_hyperbola.h"
 #include "lc_quadratic.h"
 #include "rs_debug.h"
 #include "rs_line.h"
@@ -606,7 +605,7 @@ bool LC_Hyperbola::isInClipRect(const RS_Vector& p, const LC_Rect& rect) const {
 //=====================================================================
 
 void LC_Hyperbola::draw(RS_Painter* painter) {
-    if (!painter || !isValid()) {
+    if ((painter == nullptr) || !isValid()) {
         return;
     }
 
@@ -615,8 +614,8 @@ void LC_Hyperbola::draw(RS_Painter* painter) {
         return;
     }
 
-    double xmin = clip.minP().x, xmax = clip.maxP().x;
-    double ymin = clip.minP().y, ymax = clip.maxP().y;
+    const double xmin = clip.minP().x, xmax = clip.maxP().x;
+    const double ymin = clip.minP().y, ymax = clip.maxP().y;
 
     double a = getMajorRadius(), b = getMinorRadius();
     if (a < RS_TOLERANCE || b < RS_TOLERANCE) {
@@ -791,7 +790,7 @@ RS_Vector LC_Hyperbola::doGetNearestMiddle(const RS_Vector& coord, double* dist,
     Q_UNUSED(middlePoints); // Only one middle point is provided
 
     if (!m_bValid) {
-        if (dist) {
+        if (dist != nullptr) {
             *dist = RS_MAXDOUBLE;
         }
         return RS_Vector(false);
@@ -799,7 +798,7 @@ RS_Vector LC_Hyperbola::doGetNearestMiddle(const RS_Vector& coord, double* dist,
 
     // Unbounded hyperbola has no defined middle
     if (std::abs(data.angle1) < RS_TOLERANCE && std::abs(data.angle2) < RS_TOLERANCE) {
-        if (dist) {
+        if (dist != nullptr) {
             *dist = RS_MAXDOUBLE;
         }
         return RS_Vector(false);
@@ -807,7 +806,7 @@ RS_Vector LC_Hyperbola::doGetNearestMiddle(const RS_Vector& coord, double* dist,
 
     const double totalLength = getLength();
     if (std::isinf(totalLength) || totalLength <= 0.0) {
-        if (dist) {
+        if (dist != nullptr) {
             *dist = RS_MAXDOUBLE;
         }
         return RS_Vector(false);
@@ -820,7 +819,7 @@ RS_Vector LC_Hyperbola::doGetNearestMiddle(const RS_Vector& coord, double* dist,
     // Find geometrically closest point on the entire arc
     const RS_Vector nearest = getNearestPointOnEntity(coord, true);
     if (!nearest.valid) {
-        if (dist) {
+        if (dist != nullptr) {
             *dist = RS_MAXDOUBLE;
         }
         return RS_Vector(false);
@@ -829,7 +828,7 @@ RS_Vector LC_Hyperbola::doGetNearestMiddle(const RS_Vector& coord, double* dist,
     // Compute arc distance from startpoint to the nearest point
     const double phi_nearest = getParamFromPoint(nearest, data.reversed);
     if (std::isnan(phi_nearest)) {
-        if (dist) {
+        if (dist != nullptr) {
             *dist = RS_MAXDOUBLE;
         }
         return RS_Vector(false);
@@ -855,7 +854,7 @@ RS_Vector LC_Hyperbola::doGetNearestMiddle(const RS_Vector& coord, double* dist,
     // Dummy coordinate (center) — side selection irrelevant since we specify exact distance
     const RS_Vector middlePoint = getNearestDist(targetArcFromStart, data.center);
 
-    if (dist) {
+    if (dist != nullptr) {
         *dist = coord.distanceTo(middlePoint);
     }
 
@@ -1031,7 +1030,7 @@ RS_Vector LC_Hyperbola::doGetNearestDist(double distance, const RS_Vector& coord
         return RS_Vector(false);
     }
 
-    if (dist) {
+    if (dist != nullptr) {
         *dist = targetArcFromStart;
     }
 
@@ -1162,7 +1161,7 @@ void LC_Hyperbola::mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoin
 // Minimal overrides
 //=====================================================================
 RS_Vector LC_Hyperbola::doGetNearestEndpoint(const RS_Vector& coord, double* dist, RS_Entity** entity) const {
-    if (dist) {
+    if (dist != nullptr) {
         *dist = RS_MAXDOUBLE;
     }
     if (!m_bValid || !coord.valid) {
@@ -1197,13 +1196,13 @@ RS_Vector LC_Hyperbola::doGetNearestEndpoint(const RS_Vector& coord, double* dis
 //=====================================================================
 RS_Vector LC_Hyperbola::doGetNearestPointOnEntity(const RS_Vector& coord, bool onEntity, double* dist, RS_Entity** entity) const {
     if (!m_bValid || !coord.valid) {
-        if (dist) {
+        if (dist != nullptr) {
             *dist = RS_MAXDOUBLE;
         }
         return RS_Vector(false);
     }
 
-    if (entity) {
+    if (entity != nullptr) {
         *entity = const_cast<LC_Hyperbola*>(this);
     }
 
@@ -1221,7 +1220,7 @@ RS_Vector LC_Hyperbola::doGetNearestPointOnEntity(const RS_Vector& coord, bool o
 
         if (std::abs(dot) < RS_TOLERANCE_ANGLE || std::abs(dot - M_PI) < RS_TOLERANCE_ANGLE) {
             // Along major axis – nearest is vertex
-            if (dist) {
+            if (dist != nullptr) {
                 *dist = dVertex;
             }
             return vertex;
@@ -1349,7 +1348,7 @@ RS_Vector LC_Hyperbola::doGetNearestPointOnEntity(const RS_Vector& coord, bool o
         }
     }
 
-    if (dist) {
+    if (dist != nullptr) {
         *dist = std::sqrt(minD2);
     }
     return nearest;
@@ -1358,7 +1357,7 @@ RS_Vector LC_Hyperbola::doGetNearestPointOnEntity(const RS_Vector& coord, bool o
 //=====================================================================
 double LC_Hyperbola::doGetDistanceToPoint(const RS_Vector& coord, RS_Entity** entity, RS2::ResolveLevel /*level*/,
                                         double /*solidDist*/) const {
-    if (entity) {
+    if (entity != nullptr) {
         *entity = nullptr;
     }
 
@@ -1369,7 +1368,7 @@ double LC_Hyperbola::doGetDistanceToPoint(const RS_Vector& coord, RS_Entity** en
     double dist = RS_MAXDOUBLE;
     getNearestPointOnEntity(coord, true, &dist, entity);
 
-    if (entity && *entity == nullptr && dist < RS_MAXDOUBLE) {
+    if ((entity != nullptr) && *entity == nullptr && dist < RS_MAXDOUBLE) {
         *entity = const_cast<LC_Hyperbola*>(this);
     }
 
@@ -1438,7 +1437,7 @@ void LC_Hyperbola::calculateBorders() {
     RS_Vector dirY(-sin(rot), cos(rot));
 
     auto addExtrema = [&](const RS_Vector& dir) {
-        double dx = dir.x, dy = dir.y;
+        const double dx = dir.x, dy = dir.y;
         if (std::abs(dx) < RS_TOLERANCE && std::abs(dy) < RS_TOLERANCE) {
             return;
         }

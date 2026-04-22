@@ -71,7 +71,7 @@ void LC_PluginInvoker::loadPlugins(){
             QPluginLoader pluginLoader(pluginsDir.absoluteFilePath(fileName));
             QObject *plugin = pluginLoader.instance();
             if (plugin != nullptr) {
-                auto pluginInterface = qobject_cast<QC_PluginInterface *>(plugin);
+                const auto pluginInterface = qobject_cast<QC_PluginInterface *>(plugin);
                 if (pluginInterface != nullptr) {
                     m_loadedPluginList.push_back(pluginInterface);
                     loadedPluginFileNames.push_back(fileName);
@@ -125,7 +125,7 @@ void LC_PluginInvoker::loadPlugins(){
  */
 void LC_PluginInvoker::execPlug() const {
     const auto *action = qobject_cast<QAction *>(sender());
-    auto plugin = qobject_cast<QC_PluginInterface *>(action->parent());
+    const auto plugin = qobject_cast<QC_PluginInterface *>(action->parent());
     //get actual drawing
     const QC_MDIWindow *w = m_appWindow->getCurrentMDIWindow();
     if (w != nullptr) {

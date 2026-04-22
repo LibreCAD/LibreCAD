@@ -22,8 +22,8 @@
 
 #ifndef LC_SETTINGSEXPORTER_H
 #define LC_SETTINGSEXPORTER_H
-#include <QObject>
-#include <qsettings.h>
+
+#include <QSettings>
 
 class LC_SettingsExporter: public QObject{
   Q_OBJECT
@@ -35,7 +35,7 @@ public:
 protected:
   bool obtainSettingsFileName(QWidget* parent, QString& fileName, bool forRead);
   bool obtainCustomWidgetsFileName(QWidget* parent, QString& fileName, bool forRead, bool forMenu);
-  void exportValue(const QString& key, QVariant settingValue, QJsonObject& objValues);
+  void exportValue(const QString& key, const QVariant& settingValue, QJsonObject& objValues);
   void exportKeyValue(const QString& key, QSettings* settings, QJsonObject &objValues);
   void exportGroup(QSettings* settings, const QString& group, QJsonObject &objGroups);
 };

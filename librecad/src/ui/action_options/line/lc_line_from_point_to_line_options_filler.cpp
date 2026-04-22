@@ -24,6 +24,7 @@
 #include "lc_line_from_point_to_line_options_filler.h"
 
 #include "lc_action_draw_line_from_point_to_line.h"
+#include "lc_enum_descriptor.h"
 
 class LC_ActionDrawLineFromPointToLine;
 

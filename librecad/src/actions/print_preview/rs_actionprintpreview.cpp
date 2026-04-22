@@ -29,7 +29,6 @@
 #include "lc_print_preview_options_filler.h"
 #include "lc_print_preview_options_widget.h"
 #include "lc_printpreviewview.h"
-
 #include "rs_coordinateevent.h"
 #include "rs_dialogfactory.h"
 #include "rs_dialogfactoryinterface.h"
@@ -79,7 +78,7 @@ void RS_ActionPrintPreview::init(const int status) {
 }
 
 void RS_ActionPrintPreview::invokeSettingsDialog() const {
-    if (m_graphic) {
+    if (m_graphic != nullptr) {
         // fixme - sand - Actually, relevant settings there is just page setup and whole drawing options are ovekill.
         // fixme - sand - rework this with proper layouts support!!!
         // fixme - change to LC_AppWindowDialogsInvoker::requestOptionsDrawingDialog
@@ -91,14 +90,14 @@ void RS_ActionPrintPreview::invokeSettingsDialog() const {
 }
 
 bool RS_ActionPrintPreview::isPortrait() const {
-    bool landscape;
-    LC_PlotSettings* ps = m_graphic->getPlotSettings();
+    bool landscape = false;
+    const LC_PlotSettings* ps = m_graphic->getPlotSettings();
     ps->getPaperFormat(&landscape);
     return !landscape;
 }
 
 void RS_ActionPrintPreview::setPaperOrientation(const bool portrait) const {
-    bool landscape;
+    bool landscape = false;
     LC_PlotSettings* ps = m_graphic->getPlotSettings();
     const RS2::PaperFormat format = ps->getPaperFormat(&landscape);
     if (landscape != !portrait) {
@@ -119,9 +118,9 @@ void RS_ActionPrintPreview::mouseMoveEvent(QMouseEvent* e) {
             if (isControl(e)) {
                 m_actionData->v2.x = m_actionData->v1.x;
             }
-            if (m_graphic) {
+            if (m_graphic != nullptr) {
                 const RS_Vector pinsbase = m_graphic->getPaperInsertionBase();
-                LC_PlotSettings* ps = m_graphic->getPlotSettings();
+                const LC_PlotSettings* ps = m_graphic->getPlotSettings();
                 const double scale = ps->getPaperScale();
                 m_graphic->setPaperInsertionBase(pinsbase - m_actionData->v2 * scale + m_actionData->v1 * scale);
 
@@ -171,7 +170,7 @@ void RS_ActionPrintPreview::onCoordinateEvent([[maybe_unused]] int status, [[may
 
     if (m_bPaperOffset) {
         commandMessage(tr("Printout offset in paper coordinates by (%1, %2)").arg(mouse.x).arg(mouse.y));
-        LC_PlotSettings* ps = m_graphic->getPlotSettings();
+        const LC_PlotSettings* ps = m_graphic->getPlotSettings();
         mouse *= ps->getPaperScale();
     }
     else {
@@ -270,20 +269,20 @@ RS2::CursorType RS_ActionPrintPreview::doGetMouseCursor([[maybe_unused]] const i
 }
 
 void RS_ActionPrintPreview::center() const {
-    if (m_graphic) {
+    if (m_graphic != nullptr) {
         m_graphic->centerToPage();
         m_viewport->zoomPage();
     }
 }
 
 void RS_ActionPrintPreview::zoomToPage() const {
-    if (m_graphic) {
+    if (m_graphic != nullptr) {
         m_viewport->zoomPageEx();
     }
 }
 
 void RS_ActionPrintPreview::fit() const {
-    if (m_graphic) {
+    if (m_graphic != nullptr) {
         LC_PlotSettings* ps = m_graphic->getPlotSettings();
         const RS_Vector paperSize = RS_Units::convert(ps->getPaperSize(), getUnit(), RS2::Millimeter);
 
@@ -307,7 +306,7 @@ void RS_ActionPrintPreview::fit() const {
 
 bool RS_ActionPrintPreview::setScale(const double newScale, const bool autoZoom) const {
     if (m_graphic != nullptr) {
-        LC_PlotSettings* ps = m_graphic->getPlotSettings();
+        const LC_PlotSettings* ps = m_graphic->getPlotSettings();
         const double oldScale = ps->getPaperScale();
         if (LC_LineMath::isSameValue(newScale, oldScale)) {
             return false;
@@ -382,7 +381,7 @@ void RS_ActionPrintPreview::setBlackWhite(const bool bw) const {
 }
 
 RS2::Unit RS_ActionPrintPreview::getUnit() const {
-    if (m_graphic) {
+    if (m_graphic != nullptr) {
         return m_graphic->getUnit();
     }
     return RS2::None;
@@ -466,12 +465,12 @@ void RS_ActionPrintPreview::setPagesNumVertical(const int pagesCount) {
 }
 
 int RS_ActionPrintPreview::getPagesNumHorizontal() const {
-    LC_PlotSettings* ps = m_graphic->getPlotSettings();
+    const LC_PlotSettings* ps = m_graphic->getPlotSettings();
     return ps->getPagesNumHoriz();
 }
 
 int RS_ActionPrintPreview::getPagesNumVertical() const {
-    LC_PlotSettings* ps = m_graphic->getPlotSettings();
+    const LC_PlotSettings* ps = m_graphic->getPlotSettings();
     return ps->getPagesNumVert();
 }
 
@@ -486,7 +485,7 @@ bool RS_ActionPrintPreview::isUseImperialScales() const {
     return result;
 }
 
-QStringList RS_ActionPrintPreview::getStandardPrintScales() {
+QStringList RS_ActionPrintPreview::getStandardPrintScales() const {
     // todo - actually, this method should return list of scale object instead of strings, so it's temporary
 
     // Standard scales are refered to in DXF by PlotSettings data for a specific LAYOUT.

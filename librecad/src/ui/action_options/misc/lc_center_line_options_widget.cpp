@@ -44,7 +44,7 @@ void LC_CenterLineOptionsWidget::languageChange() {
 
 void LC_CenterLineOptionsWidget::doUpdateByAction(RS_ActionInterface* a) {
     m_action = static_cast<LC_ActionDrawCenterLine*>(a);
-    QString offset = fromDouble(m_action->getOffset());
+    const QString offset = fromDouble(m_action->getOffset());
     LC_GuardedSignalsBlocker({ui->leOffset});
     ui->leOffset->setText(offset);
 }

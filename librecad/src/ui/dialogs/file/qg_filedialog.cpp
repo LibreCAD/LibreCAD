@@ -186,7 +186,7 @@ QString QG_FileDialog::getOpenFile(RS2::FormatType* type) {
         fn = QDir::toNativeSeparators(QFileInfo(fn).absoluteFilePath());
 
         m_type = getType(selectedNameFilter());
-        if (type) {
+        if (type != nullptr) {
             *type = m_type;
         }
 
@@ -280,7 +280,7 @@ QString QG_FileDialog::getSaveFile(RS2::FormatType* type, const QString& current
     const auto firstSelectedFile = QFileInfo(filesList[0]);
     defaultFileName = QDir::toNativeSeparators(firstSelectedFile.absoluteFilePath());
     m_type = getType(selectedNameFilter());
-    if (type) {
+    if (type != nullptr) {
         *type = m_type;
     }
 
@@ -365,7 +365,7 @@ QString QG_FileDialog::getSaveFileName(QWidget* parent, RS2::FormatType* type) {
             }
 
             // set format:
-            if (type) {
+            if (type != nullptr) {
                 if (fileDlg.selectedNameFilter() == "LFF Font (*.lff)") {
                     *type = RS2::FormatLFF;
                 }
@@ -504,7 +504,7 @@ QString QG_FileDialog::getOpenFileName(QWidget* parent, RS2::FormatType* type) {
             fn = fl[0];
         }
         fn = QDir::toNativeSeparators(QFileInfo(fn).absoluteFilePath());
-        if (type) {
+        if (type != nullptr) {
             if (fileDlg.selectedNameFilter() == fDxf1) {
                 *type = RS2::FormatDXF1;
             }

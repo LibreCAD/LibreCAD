@@ -46,10 +46,10 @@ LC_CenterMarkOptionsWidget::~LC_CenterMarkOptionsWidget() {
 void LC_CenterMarkOptionsWidget::doUpdateByAction(RS_ActionInterface* a) {
     m_action = static_cast<LC_ActionDrawCenterMark*>(a);
 
-    QString x = fromDouble(m_action->getLenX());
-    QString y = fromDouble(m_action->getLenY());
-    QString angle = fromDouble(m_action->getCrossAngleDegrees());
-    int mode = m_action->getCrossMode();
+    const QString x = fromDouble(m_action->getLenX());
+    const QString y = fromDouble(m_action->getLenY());
+    const QString angle = fromDouble(m_action->getCrossAngleDegrees());
+    const int mode = m_action->getCrossMode();
 
     LC_GuardedSignalsBlocker({ui->leX, ui->leY, ui->leAngle, ui->cbMode});
 

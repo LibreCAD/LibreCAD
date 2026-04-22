@@ -981,8 +981,7 @@ namespace RS2 {
         RedrawGrid    = 1,
         RedrawOverlay = 2,
         RedrawDrawing = 4,
-        RedrawAll     = RedrawGrid + RedrawOverlay + RedrawDrawing,
-        RedrawImmediately = 8
+        RedrawAll     = RedrawGrid + RedrawOverlay + RedrawDrawing
     };
 
     /**

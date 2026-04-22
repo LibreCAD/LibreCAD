@@ -23,6 +23,7 @@
 
 
 #include "lc_align_single_options_widget.h"
+
 #include "lc_action_modify_align_single.h"
 #include "lc_guarded_signals_blocker.h"
 #include "ui_lc_align_single_options_widget.h"
@@ -51,9 +52,9 @@ LC_AlignSingleOptionsWidget::~LC_AlignSingleOptionsWidget() {
 void LC_AlignSingleOptionsWidget::doUpdateByAction(RS_ActionInterface* a) {
     m_action = static_cast<LC_ActionModifyAlignSingle*>(a);
 
-    int valign = m_action->getVAlign();
-    int halign = m_action->getHAlign();
-    int alignType = m_action->getAlignType();
+    const int valign = m_action->getVAlign();
+    const int halign = m_action->getHAlign();
+    const int alignType = m_action->getAlignType();
 
     LC_GuardedSignalsBlocker({
         ui->cbAlignTo,

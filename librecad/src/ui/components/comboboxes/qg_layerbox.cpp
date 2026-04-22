@@ -70,7 +70,7 @@ void QG_LayerBox::init(RS_LayerList& ll, const bool doShowByBlock, const bool do
 
     for (unsigned i = 0; i < ll.count(); ++i) {
         const RS_Layer* lay = ll.at(i);
-        if (lay && (lay->getName() != "ByBlock" || doShowByBlock)) {
+        if ((lay != nullptr) && (lay->getName() != "ByBlock" || doShowByBlock)) {
             addItem(lay->getName());
         }
     }

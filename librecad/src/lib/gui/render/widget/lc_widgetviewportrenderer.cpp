@@ -131,7 +131,7 @@ void LC_WidgetViewPortRenderer::paintSequental(QPaintDevice* pd) {
         m_redrawMethod=static_cast<RS2::RedrawMethod>(m_redrawMethod | RS2::RedrawGrid);
     }
 
-    if (m_redrawMethod & RS2::RedrawGrid) {
+    if ((m_redrawMethod & RS2::RedrawGrid) != 0) {
         m_pixmapLayerBackground->fill(m_colorBackground);
         RS_Painter painterBackground(m_pixmapLayerBackground.get());
         setupPainter(&painterBackground);
@@ -140,7 +140,7 @@ void LC_WidgetViewPortRenderer::paintSequental(QPaintDevice* pd) {
         m_redrawMethod=static_cast<RS2::RedrawMethod>(m_redrawMethod | RS2::RedrawDrawing);
     }
 
-    if (m_redrawMethod & RS2::RedrawDrawing) {
+    if ((m_redrawMethod & RS2::RedrawDrawing) != 0) {
         // DRaw layer 2
         *m_pixmapLayerDrawing = *m_pixmapLayerBackground;
         RS_Painter painterLayerDrawing(m_pixmapLayerDrawing.get());
@@ -152,7 +152,7 @@ void LC_WidgetViewPortRenderer::paintSequental(QPaintDevice* pd) {
         m_redrawMethod=static_cast<RS2::RedrawMethod>(m_redrawMethod | RS2::RedrawOverlay);
     }
 
-    if (m_redrawMethod & RS2::RedrawOverlay) {
+    if ((m_redrawMethod & RS2::RedrawOverlay) != 0) {
         *m_pixmapLayerOverlays = *m_pixmapLayerDrawing;
         RS_Painter painterLayerOverlays(m_pixmapLayerOverlays.get());
         setupPainter(&painterLayerOverlays);
@@ -179,14 +179,14 @@ void LC_WidgetViewPortRenderer::paintClassicalBuffered(QPaintDevice* pd) {
     }
 
     // Draw Layer 1
-    if (m_redrawMethod & RS2::RedrawGrid) {
+    if ((m_redrawMethod & RS2::RedrawGrid) != 0) {
         m_pixmapLayer1->fill(m_colorBackground);
         RS_Painter painterBackground(m_pixmapLayer1.get());
         setupPainter(&painterBackground);
         drawLayerBackground(&painterBackground);
     }
 
-    if (m_redrawMethod & RS2::RedrawDrawing) {
+    if ((m_redrawMethod & RS2::RedrawDrawing) != 0) {
         // DRaw layer 2
         m_pixmapLayer2->fill(Qt::transparent);
         RS_Painter painterLayerDrawing(m_pixmapLayer2.get());
@@ -195,7 +195,7 @@ void LC_WidgetViewPortRenderer::paintClassicalBuffered(QPaintDevice* pd) {
         drawLayerEntitiesOver(&painterLayerDrawing);
     }
 
-    if (m_redrawMethod & RS2::RedrawOverlay) {
+    if ((m_redrawMethod & RS2::RedrawOverlay) != 0) {
         m_pixmapLayer3->fill(Qt::transparent);
         RS_Painter painter3(m_pixmapLayer3.get());
         setupPainter(&painter3);
@@ -259,7 +259,7 @@ void LC_WidgetViewPortRenderer::drawLayerEntities(RS_Painter* painter) {
     if (document->collectSelected(selectedEntities)) {
         painter->setDrawSelectedOnly(true);
         doSetupBeforeContainerDraw();
-        for (const auto e: selectedEntities) {
+        for (const auto e: std::as_const(selectedEntities)) {
             painter->drawEntity(e);
         }
     }

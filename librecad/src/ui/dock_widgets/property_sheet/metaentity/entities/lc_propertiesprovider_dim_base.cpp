@@ -937,7 +937,7 @@ void LC_PropertiesProviderDimBase::addLinearUnitFormat_DS(const LC_Property::Nam
                                                           funSetValue, const QList<RS_Entity*>& list, LC_PropertyContainer* cont,
                                                           const std::function<bool(RS_Dimension*, LC_PropertyViewDescriptor&)>&
                                                           funPrepareDescriptor) {
-    auto decimalLinearUnitsDescriptor = LC_PropertyProviderUtils::getLinearUnitFormatEnumDescriptor();
+    const auto decimalLinearUnitsDescriptor = LC_PropertyProviderUtils::getLinearUnitFormatEnumDescriptor();
     addEnum_DS(names, decimalLinearUnitsDescriptor, funGetValue, funSetValue, list, cont, funPrepareDescriptor);
 }
 
@@ -960,7 +960,7 @@ void LC_PropertiesProviderDimBase::addAngleUnitFormat(const LC_Property::Names& 
                                                       const std::function<LC_PropertyEnumValueType(LC_DimStyle* ds)>& funGetValue,
                                                       const std::function<void(LC_PropertyEnumValueType& v, LC_DimStyle* ds)>& funSetValue,
                                                       const QList<RS_Entity*>& list, LC_PropertyContainer* cont) {
-    auto angleFormatDescriptor = LC_PropertyProviderUtils::getAngleUnitFormatEnumDescriptor();
+    const auto angleFormatDescriptor = LC_PropertyProviderUtils::getAngleUnitFormatEnumDescriptor();
     addEnum_DS(names, angleFormatDescriptor, funGetValue, funSetValue, list, cont);
 }
 
@@ -1059,7 +1059,7 @@ void LC_PropertiesProviderDimBase::createPrimaryUnitsSection(LC_PropertyContaine
                          }, [](const LC_DimStyle* ds) -> double {
                              auto suppression = ds->zerosSuppression();
                              return /*suppression->roundTo();*/ 0.0; // fixme - dims - where from it's obtained from dxf point of view?
-                         }, [](double& v, const LC_DimStyle* ds) -> void {
+                         }, [](double& /*v*/, const LC_DimStyle* /* ds*/) -> void {
                              // fixme - dims - where from it's obtained?
                          }, list, cont, funPositiveDoubleSpin);
         }
@@ -1118,7 +1118,7 @@ void LC_PropertiesProviderDimBase::createPrimaryUnitsSection(LC_PropertyContaine
                           const auto zerosSuppression = ds->zerosSuppression();
                           return zerosSuppression->isSuppressZeroFeets();
                       }, [](const LC_PropertyEnumValueType& v, const LC_DimStyle* ds) -> void {
-                          auto zerosSuppression = ds->zerosSuppression();
+                          const auto zerosSuppression = ds->zerosSuppression();
                           zerosSuppression->setSuppressZeroFeets(v);
                       }, list, cont, LC_PropertyBoolCheckBoxView::VIEW_NAME, funIsMetricLinearFormat);
 
@@ -1130,7 +1130,7 @@ void LC_PropertiesProviderDimBase::createPrimaryUnitsSection(LC_PropertyContaine
                           const auto zerosSuppression = ds->zerosSuppression();
                           return zerosSuppression->isSuppressZeroInches();
                       }, [](const LC_PropertyEnumValueType& v, const LC_DimStyle* ds) -> void {
-                          auto zerosSuppression = ds->zerosSuppression();
+                          const auto zerosSuppression = ds->zerosSuppression();
                           zerosSuppression->setSuppressZeroInches(v);
                       }, list, cont, LC_PropertyBoolCheckBoxView::VIEW_NAME, funIsMetricLinearFormat);
 
@@ -1373,7 +1373,7 @@ void LC_PropertiesProviderDimBase::createTolerancesSection(LC_PropertyContainer*
                    tr("Specifies display mode of dimension tolerances to dimension text (DIMTOL variable)")
                }, &dimtolPolicyDescriptor, [](const LC_DimStyle* ds) -> LC_PropertyEnumValueType {
                    const auto tolerance = ds->latteralTolerance();
-                   bool enable, showVerticalPosition, showLowerLimit, showUpperLimit;
+                   bool enable = false, showVerticalPosition = false, showLowerLimit = false, showUpperLimit = false;
                    const int tolMethod = LC_DlgDimStyleManager::computeToleranceMethod(ds, tolerance, enable, showVerticalPosition,
                                                                                        showLowerLimit, showUpperLimit);
                    return tolMethod;
@@ -1400,7 +1400,7 @@ void LC_PropertiesProviderDimBase::createTolerancesSection(LC_PropertyContainer*
                  }, list, cont, [](RS_Dimension* dimension, LC_PropertyViewDescriptor& descriptor)-> bool {
                      descriptor.attributes[LC_PropertyDoubleSpinBoxView::ATTR_MIN] = 0.0;
                      descriptor.attributes[LC_PropertyDoubleSpinBoxView::ATTR_STEP] = 0.01;
-                     bool enable, showVerticalPosition, showLowerLimit, showUpperLimit;
+                     bool enable = false, showVerticalPosition = false, showLowerLimit = false, showUpperLimit = false;
                      const LC_DimStyle* dimStyle = dimension->getEffectiveCachedDimStyle();
                      const auto tolerance = dimStyle->latteralTolerance();
                      [[maybe_unused]] int tolMethod = LC_DlgDimStyleManager::computeToleranceMethod(
@@ -1419,7 +1419,7 @@ void LC_PropertiesProviderDimBase::createTolerancesSection(LC_PropertyContainer*
                  }, list, cont, [](RS_Dimension* dimension, LC_PropertyViewDescriptor& descriptor)-> bool {
                      descriptor.attributes[LC_PropertyDoubleSpinBoxView::ATTR_MIN] = 0.0;
                      descriptor.attributes[LC_PropertyDoubleSpinBoxView::ATTR_STEP] = 0.01;
-                     bool enable, showVerticalPosition, showLowerLimit, showUpperLimit;
+                     bool enable = false, showVerticalPosition = false, showLowerLimit = false, showUpperLimit = false;
                      const LC_DimStyle* dimStyle = dimension->getEffectiveCachedDimStyle();
                      const auto tolerance = dimStyle->latteralTolerance();
                      [[maybe_unused]] int tolMethod = LC_DlgDimStyleManager::computeToleranceMethod(

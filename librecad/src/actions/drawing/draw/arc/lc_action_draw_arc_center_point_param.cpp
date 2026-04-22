@@ -24,8 +24,8 @@
 #include "lc_action_draw_arc_center_point_param.h"
 
 #include "lc_arc_center_point_param_options_filler.h"
-#include "lc_linemath.h"
 #include "lc_arc_center_point_param_options_widget.h"
+#include "lc_linemath.h"
 #include "rs_arc.h"
 #include "rs_circle.h"
 #include "rs_document.h"
@@ -206,7 +206,7 @@ void LC_ActionDrawArcCenterPointParam::onMouseMoveEvent(const int status, const 
             double distanceFromStartToMouse = arcStart.distanceTo(mouse);
 
             double diameter = m_arcData->radius * 2;
-            m_arcData->angle2 = m_arcData->angle1 + asin(distanceFromStartToMouse / diameter) * 2;
+            m_arcData->angle2 = m_arcData->angle1 + (asin(distanceFromStartToMouse / diameter) * 2);
 
             RS_Vector endpoint = m_arcData->center + RS_Vector::polar(m_arcData->radius, m_arcData->angle2);
             RS_Vector alternativePoint = endpoint.mirror(m_arcData->center, startpoint);
@@ -397,7 +397,7 @@ void LC_ActionDrawArcCenterPointParam::onCoordinateEvent(const int status, [[may
             const double distanceFromStartToMouse = startpoint.distanceTo(pos);
             const double diameter = 2 * m_arcData->radius;
             if (fabs(distanceFromStartToMouse / diameter) <= 1.0) {
-                m_arcData->angle2 = m_arcData->angle1 + asin(distanceFromStartToMouse / diameter) * 2;
+                m_arcData->angle2 = m_arcData->angle1 + (asin(distanceFromStartToMouse / diameter) * 2);
 
                 if (m_alternateArcDirection) {
                     RS_Vector endpoint = m_arcData->center + RS_Vector::polar(m_arcData->radius, m_arcData->angle2);
@@ -424,7 +424,7 @@ bool LC_ActionDrawArcCenterPointParam::doProcessCommand(const int status, const 
     else {
         switch (status) {
             case SetRadius: {
-                bool ok;
+                bool ok = false;
                 const double r = RS_Math::eval(command, &ok);
                 if (ok) {
                     m_arcData->radius = r;

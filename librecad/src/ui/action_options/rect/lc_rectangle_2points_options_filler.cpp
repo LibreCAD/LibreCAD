@@ -25,6 +25,7 @@
 
 #include "lc_action_draw_rectangle_1point.h"
 #include "lc_action_draw_rectangle_2points.h"
+#include "lc_enum_descriptor.h"
 
 void LC_Rectangle2PointsOptionsFiller::fillToolOptionsContainer(LC_PropertyContainer* container) {
     auto action = static_cast<LC_ActionDrawRectangle2Points*>(m_action);

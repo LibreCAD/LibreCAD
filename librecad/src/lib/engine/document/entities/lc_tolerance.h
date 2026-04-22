@@ -84,7 +84,7 @@ protected:
     QList<QStringList> getFields() const;
     double getTextHeight() const;
     double getGraphicVariable(const QString& key, double defMM, int code) const;
-    double getDimtxt(bool scale = true);
+    double getDimtxt(bool scale = true) const;
     void setDimtxt(double f);
     double getGeneralScale() const;
     double getDimscale() const;

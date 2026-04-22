@@ -64,7 +64,7 @@ LC_AbstractActionWithPreview::LC_AbstractActionWithPreview(const char *name,LC_A
 void LC_AbstractActionWithPreview::collectEntitiesForTriggerOnInit(QList<RS_Entity*> &entitiesForTrigger) {
     QList<RS_Entity*> selection;
     m_document->collectSelected(selection);
-    for (RS_Entity *e: selection) {
+    for (RS_Entity *e: std::as_const(selection)) {
         // check whether specific entity is suitable for processing
         if (isAcceptSelectedEntityToTriggerOnInit(e)) {
             entitiesForTrigger << e;
@@ -88,7 +88,7 @@ void LC_AbstractActionWithPreview::init(const int status){
         collectEntitiesForTriggerOnInit(entitiesForTrigger);
         if (!entitiesForTrigger.isEmpty()){
             showOptions(); // use this as simplest way to read settings for the action
-            if (m_document){
+            if (m_document != nullptr){
                 m_document->undoableModify(m_viewport, [this, entitiesForTrigger](LC_DocumentModificationBatch& ctx)->bool {
                     return performTriggerOnInit(entitiesForTrigger, ctx);
                 });
@@ -500,7 +500,7 @@ void LC_AbstractActionWithPreview::drawPreviewForPoint(const LC_MouseEvent* e, R
     // do actual creation of preview entities
     doPreparePreviewEntities(e, snap, entitiesForPreview, getStatus());
     // adding collected entities to preview
-    for (const auto ent: entitiesForPreview){
+    for (const auto ent: std::as_const(entitiesForPreview)){
         previewEntity(ent);
     }
     // draw

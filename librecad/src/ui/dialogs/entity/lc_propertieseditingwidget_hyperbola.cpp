@@ -1,5 +1,5 @@
 /*
-* ********************************************************************************
+ * ********************************************************************************
  * This file is part of the LibreCAD project, a 2D CAD program
  *
  * Copyright (C) 2025 LibreCAD.org
@@ -21,12 +21,12 @@
  * ********************************************************************************
  */
 #include "lc_propertieseditingwidget_hyperbola.h"
-#include "rs_dialogfactoryinterface.h"
-#include "ui_lc_propertieseditingwidget_hyperbola.h"
 
 #include "lc_hyperbola.h"
 #include "rs_dialogfactory.h"
+#include "rs_dialogfactoryinterface.h"
 #include "rs_math.h"
+#include "ui_lc_propertieseditingwidget_hyperbola.h"
 
 static bool evalDouble(const QLineEdit* le, double& value){
   bool ok = false;
@@ -45,13 +45,13 @@ LC_PropertiesEditingWidgetHyperbola::~LC_PropertiesEditingWidgetHyperbola(){
 
 void LC_PropertiesEditingWidgetHyperbola::setEntity(RS_Entity* entity){
   m_entity = static_cast<LC_Hyperbola*>(entity);
-  if (m_entity && m_entity->isValid()) {
+  if ((m_entity != nullptr) && m_entity->isValid()) {
       updateUI();
   }
 }
 
 void LC_PropertiesEditingWidgetHyperbola::updateUI() const {
-    if (!m_entity) {
+    if (m_entity == nullptr) {
         return;
     }
   const LC_HyperbolaData& d = m_entity->getData();
@@ -84,7 +84,7 @@ void LC_PropertiesEditingWidgetHyperbola::updateUI() const {
 // fixme - sand - it's better to rely on updating individual entity property as result of control change instead of using one upate method.
 // fixme - that will insure that only properties that were actually modified by the user will be changed (so no loss or precision for other properties)
 void LC_PropertiesEditingWidgetHyperbola::updateEntityData(){
-    if (!m_entity || !m_entity->isValid()) {
+    if ((m_entity == nullptr) || !m_entity->isValid()) {
         return;
     }
 

@@ -77,7 +77,7 @@ QList<RS_Layer*>::const_iterator RS_LayerList::end() const {
  */
 void RS_LayerList::activate(const QString& name, const bool notify) {
     RS_DEBUG->print("RS_LayerList::activate: %s, notify: %d begin",
-                    name.toLatin1().data(), notify);
+                    name.toLatin1().data(), static_cast<int>(notify));
 
     activate(find(name), notify);
     RS_DEBUG->print("RS_LayerList::activate: %s end", name.toLatin1().data());
@@ -90,7 +90,7 @@ void RS_LayerList::activate(const QString& name, const bool notify) {
  * @param notify Notify listeners.
  */
 void RS_LayerList::activate(RS_Layer* layer, const bool notify) {
-    RS_DEBUG->print("RS_LayerList::activate notify: %d begin", notify);
+    RS_DEBUG->print("RS_LayerList::activate notify: %d begin", static_cast<int>(notify));
     m_activeLayer = layer;
 
     if (notify) {
@@ -110,8 +110,7 @@ void RS_LayerList::sort() {
 }
 
 void RS_LayerList::fireLayerAdded(RS_Layer* layer) const {
-    for (int i = 0; i < m_layerListListeners.size(); ++i) {
-        RS_LayerListListener* l = m_layerListListeners.at(i);
+    for (const auto l : m_layerListListeners) {
         l->layerAdded(layer);
     }
 }
@@ -164,8 +163,7 @@ void RS_LayerList::add(RS_Layer* layerToAdd) {
 }
 
 void RS_LayerList::fireLayerRemoved(RS_Layer* layer) const {
-    for (int i = 0; i < m_layerListListeners.size(); ++i) {
-        RS_LayerListListener* l = m_layerListListeners.at(i);
+    for (const auto l : m_layerListListeners) {
         l->layerRemoved(layer);
     }
 }
@@ -211,7 +209,7 @@ void RS_LayerList::edit(RS_Layer* layer, const RS_Layer& source) {
 }
 
 void RS_LayerList::fireLayerEdited(RS_Layer* layer) {
-    for (const auto l : m_layerListListeners) {
+    for (const auto l : std::as_const(m_layerListListeners)) {
         l->layerEdited(layer);
     }
     setModified(true);
@@ -223,7 +221,7 @@ void RS_LayerList::fireLayerEdited(RS_Layer* layer) {
  */
 RS_Layer* RS_LayerList::find(const QString& name) {
     RS_Layer* ret = nullptr;
-    for (const auto l : m_layers) {
+    for (const auto l : std::as_const(m_layers)) {
         if (l->getName() == name) {
             ret = l;
             break;
@@ -238,7 +236,7 @@ RS_Layer* RS_LayerList::find(const QString& name) {
  */
 int RS_LayerList::getIndex(const QString& name) {
     int ret = 0;
-    for (const auto l : m_layers) {
+    for (const auto l : std::as_const(m_layers)) {
         if (l->getName() == name) {
             return ret;
         }
@@ -278,7 +276,7 @@ void RS_LayerList::toggle(RS_Layer* layer) {
     setModified(true);
 
     // Notify listeners:
-    for (auto* l : m_layerListListeners) {
+    for (auto* l : std::as_const(m_layerListListeners)) {
             l->layerToggled(layer);
     }
 }
@@ -296,7 +294,7 @@ void RS_LayerList::toggleLock(RS_Layer* layer) {
     setModified(true);
 
     // Notify listeners:
-    for (const auto l : m_layerListListeners) {
+    for (const auto l : std::as_const(m_layerListListeners)) {
         l->layerToggledLock(layer);
     }
 }
@@ -314,7 +312,7 @@ void RS_LayerList::togglePrint(RS_Layer* layer) {
     setModified(true);
 
     // Notify listeners:
-    for (const auto l : m_layerListListeners) {
+    for (const auto l : std::as_const(m_layerListListeners)) {
         l->layerToggledPrint(layer);
     }
 }
@@ -332,14 +330,14 @@ void RS_LayerList::toggleConstruction(RS_Layer* layer) {
     setModified(true);
 
     // Notify listeners:
-    for (const auto l : m_layerListListeners) {
+    for (const auto l : std::as_const(m_layerListListeners)) {
         l->layerToggledConstruction(layer);
     }
 }
 
 void RS_LayerList::fireLayerToggled() {
     setModified(true);
-    for (const auto l : m_layerListListeners) {
+    for (const auto l : std::as_const(m_layerListListeners)) {
         l->layerToggled(nullptr);
     }
 }
@@ -359,7 +357,7 @@ void RS_LayerList::freezeAll(const bool freeze) {
 }
 
 void RS_LayerList::fireLayerActivated() {
-    for (const auto l : m_layerListListeners) {
+    for (const auto l : std::as_const(m_layerListListeners)) {
         l->layerActivated(m_activeLayer);
     }
 }
@@ -506,7 +504,7 @@ void RS_LayerList::addListener(RS_LayerListListener* listener) {
     if (listener == nullptr) {
         return;
     }
-    for (const auto l : m_layerListListeners) {
+    for (const auto l : std::as_const(m_layerListListeners)) {
         if (l == listener) {
             return;
         }

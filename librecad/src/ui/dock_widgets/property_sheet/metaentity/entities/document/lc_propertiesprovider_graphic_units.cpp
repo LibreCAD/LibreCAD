@@ -25,7 +25,6 @@
 
 #include "lc_propertyprovider_utils.h"
 #include "rs_graphic.h"
-#include "rs_math.h"
 #include "rs_units.h"
 
 namespace {
@@ -58,7 +57,7 @@ void LC_PropertiesProviderGraphicUnits::fillDocumentProperties(LC_PropertyContai
     }
 }
 
-void LC_PropertiesProviderGraphicUnits::createAngleFormat(LC_PropertyContainer* const cont, RS_Graphic* graphic) {
+void LC_PropertiesProviderGraphicUnits::createAngleFormat(LC_PropertyContainer* const cont, RS_Graphic* graphic) const {
     const auto enumDescriptor = getAngleUnitFormatEnumDescriptor();
     auto funGet = [](const RS_Graphic* e) -> int {
         return e->getAngleFormat();
@@ -72,7 +71,7 @@ void LC_PropertiesProviderGraphicUnits::createAngleFormat(LC_PropertyContainer* 
     addDirectEnum<LC_PropertyEnumValueType, RS_Graphic>(cont, names, enumDescriptor, funGet, funSet, graphic);
 }
 
-void LC_PropertiesProviderGraphicUnits::createAngularPrecision(LC_PropertyContainer* const cont, RS_Graphic* graphic) {
+void LC_PropertiesProviderGraphicUnits::createAngularPrecision(LC_PropertyContainer* const cont, RS_Graphic* graphic) const {
     const auto enumDescriptor = getAngleUnitsEnumDescriptor(graphic->getAngleFormat());
     auto funGet = [](const RS_Graphic* e) -> int {
         return e->getAnglePrecision() + 1;
@@ -86,7 +85,7 @@ void LC_PropertiesProviderGraphicUnits::createAngularPrecision(LC_PropertyContai
     addDirectEnum<LC_PropertyEnumValueType, RS_Graphic>(cont, names, enumDescriptor, funGet, funSet, graphic);
 }
 
-void LC_PropertiesProviderGraphicUnits::createLinearFormat(RS_Graphic* graphic, LC_PropertyContainer* const cont) {
+void LC_PropertiesProviderGraphicUnits::createLinearFormat(RS_Graphic* graphic, LC_PropertyContainer* const cont) const {
     const auto* linearFormatDescriptor = getLinearUnitFormatEnumDescriptor();
     auto funGet = [](const RS_Graphic* e) -> RS2::LinearFormat {
         return e->getLinearFormat();
@@ -100,7 +99,7 @@ void LC_PropertiesProviderGraphicUnits::createLinearFormat(RS_Graphic* graphic, 
     addDirectEnum<LC_PropertyEnumValueType, RS_Graphic>(cont, names, linearFormatDescriptor, funGet, funSet, graphic);
 }
 
-void LC_PropertiesProviderGraphicUnits::createLinearPrecision(LC_PropertyContainer* const cont, RS_Graphic* graphic) {
+void LC_PropertiesProviderGraphicUnits::createLinearPrecision(LC_PropertyContainer* const cont, RS_Graphic* graphic) const {
     const auto* enumDescriptor = getLinearUnitsEnumDescriptor(graphic->getLinearFormat());
     auto funGet = [](const RS_Graphic* e) -> int {
         return e->getLinearPrecision() + 1;
@@ -118,7 +117,7 @@ void LC_PropertiesProviderGraphicUnits::createLinearPrecision(LC_PropertyContain
     addDirectEnum<LC_PropertyEnumValueType, RS_Graphic>(cont, names, enumDescriptor, funGet, funSet, graphic);
 }
 
-void LC_PropertiesProviderGraphicUnits::createDrawingUnit(LC_PropertyContainer* const cont, RS_Graphic* graphic) {
+void LC_PropertiesProviderGraphicUnits::createDrawingUnit(LC_PropertyContainer* const cont, RS_Graphic* graphic) const {
     static LC_EnumDescriptor enumDescriptor = createUnitsDescriptor();
     auto funGet = [](const RS_Graphic* e) -> RS2::Unit {
         return e->getUnit();
@@ -132,7 +131,7 @@ void LC_PropertiesProviderGraphicUnits::createDrawingUnit(LC_PropertyContainer* 
     addDirectEnum<LC_PropertyEnumValueType, RS_Graphic>(cont, names, &enumDescriptor, funGet, funSet, graphic);
 }
 
-void LC_PropertiesProviderGraphicUnits::createAnglesBasisIncreaseDirection(RS_Graphic* graphic, LC_PropertyContainer* const cont) {
+void LC_PropertiesProviderGraphicUnits::createAnglesBasisIncreaseDirection(RS_Graphic* graphic, LC_PropertyContainer* const cont) const {
     const LC_Property::Names names = {
         "unitsBaseAngleDir",
         tr("Angles clockwize"),

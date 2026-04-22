@@ -45,7 +45,6 @@ public:
         connect(&editor, &QLineEdit::editingFinished, this, &LC_PropertyDoubleLineEditViewHandler::onEditingFinished);
     }
 
-protected:
     void doUpdateEditor() override {
         const auto le = getEditor();
         le->setReadOnly(!isEditableByUser());
@@ -61,8 +60,8 @@ protected:
             le->selectAll();
         }
     }
-
-    bool fromString(const QString& text, double& val) {
+protected:
+    bool fromString(const QString& text, double& val) const {
         auto* typedView = static_cast<LC_PropertyDoubleLineEditView*>(view());
         const bool result = typedView->getPropertyValueFromEditString(text, val);
         return result;
@@ -118,14 +117,13 @@ bool LC_PropertyDoubleLineEditView::getPropertyValueFromEditString(const QString
 
 bool LC_PropertyDoubleLineEditView::doPropertyValueToStrForView(QString& strValue) {
     if (m_cachedStrValue.isEmpty()) {
-        QString value;
         const double doubleValue = propertyValue();
         if (!LC_LineMath::isMeaningful(doubleValue)) {
             strValue = m_zeroPlaceholder;
             return true;
         }
         const auto formatter = typedProperty().getFormatter();
-        value = formatter->formatDouble(doubleValue);
+        const QString value = formatter->formatDouble(doubleValue);
         m_cachedStrValue = value;
         strValue = m_cachedStrValue;
     }

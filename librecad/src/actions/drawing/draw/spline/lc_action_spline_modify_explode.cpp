@@ -67,10 +67,10 @@ void LC_ActionSplineExplode::doLoadOptions() {
 bool LC_ActionSplineExplode::doTriggerModifications(LC_DocumentModificationBatch& ctx) {
     int segmentsCount = obtainSegmentsCount();
     std::vector<RS_Vector> strokePoints;
-    bool closed;
+    bool closed = false;
     fillStrokePoints(m_entityToModify, segmentsCount, strokePoints, closed);
     if (!strokePoints.empty()) {
-        RS_Layer* layerToSet;
+        RS_Layer* layerToSet = nullptr;
         if (m_useCurrentLayer) {
             layerToSet = m_graphicView->getGraphic()->getActiveLayer();
         }
@@ -175,7 +175,7 @@ void LC_ActionSplineExplode::onMouseLeftButtonRelease([[maybe_unused]]int status
 RS_Entity *LC_ActionSplineExplode::createModifiedSplineEntity(RS_Entity *e, [[maybe_unused]]RS_Vector controlPoint, [[maybe_unused]]bool startDirection) {
     const int segmentsCount = obtainSegmentsCount();
     std::vector<RS_Vector> strokePoints;
-    bool closed;
+    bool closed = false;
     fillStrokePoints(e, segmentsCount, strokePoints, closed);
     if (!strokePoints.empty()) {
         RS_Entity *pEntity = createPolylineByVertexes(strokePoints, closed);
@@ -205,7 +205,7 @@ void  LC_ActionSplineExplode::fillStrokePoints(RS_Entity *e, const int segmentsC
 }
 
 int LC_ActionSplineExplode::obtainSegmentsCount() const {
-    int segmentsCount;
+    int segmentsCount = 0;
     if (m_useCustomSegmentsCount){
         segmentsCount = m_customSegmentsCount;
     }
@@ -248,7 +248,7 @@ LC_ActionOptionsPropertiesFiller* LC_ActionSplineExplode::createOptionsFiller() 
 int LC_ActionSplineExplode::getSegmentsCountFromDrawing() const {
     const RS_Graphic* graphic = m_graphicView->getGraphic();
     int result=8;
-    if (graphic) {
+    if (graphic != nullptr) {
         result = graphic->getVariableInt("$SPLINESEGS", result);
     }
     return result;

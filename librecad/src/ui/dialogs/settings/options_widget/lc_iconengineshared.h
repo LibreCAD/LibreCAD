@@ -54,14 +54,14 @@ namespace LC_SVGIconEngineAPI {
     inline void setColorAppProperty(const QString& baseKey, const IconMode mode, const IconState state, const QString& value){
         const QString key = getColorAppKeyName(baseKey, mode, state);
         // const auto basicString = key.toStdString();
-        std::string utf8_text = key.toUtf8().constData();
+        const std::string utf8_text = key.toUtf8().constData();
         const auto name = utf8_text.c_str();
         qApp->setProperty(name,   value);
     }
 
     inline QString getColorAppProperty(const QString& baseKey, const IconMode mode, const IconState state){
         const QString key = getColorAppKeyName(baseKey, mode, state);
-        std::string utf8_text = key.toUtf8().constData();
+        const std::string utf8_text = key.toUtf8().constData();
         const auto name = utf8_text.c_str();
         // const QVariant vProperty = qApp->property(key.toStdString().c_str());
          const QVariant vProperty = qApp->property(name);

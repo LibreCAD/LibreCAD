@@ -59,14 +59,14 @@ void LC_OverlayUCSZero::draw(RS_Painter *painter) {
     RS_Pen penYAxis (m_options->colorYAxisExtension, RS2::Width00, RS2::SolidLine);
     penYAxis.setScreenWidth(0);
 
-    auto viewport = painter->getViewPort();
+    auto* viewport = painter->getViewPort();
 
     int width = viewport->getWidth();
     int height = viewport->getHeight();
 
     if (m_options->extendAxisLines){ // axises are extended
-        int xAxisStartPoint;
-        int xAxisEndPoint;
+        double xAxisStartPoint = 0.0;
+        double xAxisEndPoint = 0.0;
 
         switch (m_options->extendAxisModeX){
             case LC_OverlayUCSZeroOptions::Both:

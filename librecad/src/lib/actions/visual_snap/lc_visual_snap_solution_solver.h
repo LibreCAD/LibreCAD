@@ -43,7 +43,7 @@ public:
         : m_snapper(snapper), m_options(options) {
     }
 
-    void solveVisualSnap(const RS_Vector& wcsPos, LC_VisualSnapSolution& solut);
+    void solveVisualSnap(const RS_Vector& wcsPos, LC_VisualSnapSolution& solution) const;
     void findSnapPoint(const RS_Vector& wcsPos, LC_VisualSnapSolution& solution, const std::vector<LC_VisualSnapPointHolder>& specialPointSnapCandidates) const;
     void setSnapRange(double snapRangeToUse) {m_wcsSnapRange = snapRangeToUse;}
     void setViewport(LC_GraphicViewport* viewport) {
@@ -52,13 +52,12 @@ public:
 protected:
     void addOrthoRaysForVertexes(const RS_Vector& wcsPos, LC_VisualSnapSolution& solution) const;
     void addLineRayAndNormal(const RS_Vector& wcsPos, LC_VisualSnapSolution& solution, const RS_Vector& wcsSnapCoordinate, const LC_RefSnapConstructionLine* refLine) const;
-    bool hasNoLinesForPoints(LC_VisualSnapSolution& solution, RS_Vector endPoint, RS_Vector startPoint) const;
-    bool hasNoLinesForPoint(LC_VisualSnapSolution& solution, RS_Vector point, RS2::VisualSnapGuideEntityType guideType) const;
+    bool hasNoLinesForPoints(const LC_VisualSnapSolution& solution, const RS_Vector& endPoint, const RS_Vector& startPoint) const;
+    bool hasNoLinesForPoint(const LC_VisualSnapSolution& solution, const RS_Vector& point, RS2::VisualSnapGuideEntityType guideType) const;
     void addLineRays(const RS_Vector& wcsPos, LC_VisualSnapSolution& solution) const;
     void addTangentialAndNormlRaysForArcEndpoint(const RS_Vector& wcsPos, LC_VisualSnapSolution& solution, const RS_Vector& wcsSnapCoordinate, LC_RefSnapArc* arc) const;
     void addOrthoAndAngleRaysForPoint(const RS_Vector& wcsPos, LC_VisualSnapSolution& solution, double angleStepRad,
-                                      double wcsRaysStartAngle, double wcsRaysEndAngle, double wcsMPI_2Angle,
-                                      RS_Vector vertexWCSPoint) const;
+                                      double wcsRaysStartAngle, double wcsRaysEndAngle, double wcsMPI_2Angle, const RS_Vector& vertexWCSPoint) const;
     void addTangentialAndNormalRaysFromArcEndpoint(const RS_Vector& wcsPos, LC_VisualSnapSolution& solution) const;
     void addTangentialRayFromVertexToEntity(const RS_Vector& wcsPos, std::vector<LC_VisualSnapPointHolder>& specialPointSnapCandidates, LC_VisualSnapSolution& solution, const RS_Entity* entity, const
                                             RS_Vector& vertexSnapCoord) const;
@@ -74,7 +73,8 @@ protected:
                             LC_VisualSnapSolution& solution) const;
     void addNormalsFromVertexToEntities(const RS_Vector& wcsPos, LC_VisualSnapSolution& solution) const;
     void addRelativePositionEntities(const RS_Vector& wcsPos, LC_VisualSnapSolution& solution, const LC_RelativePositionData& data) const;
-    void addNormalFromVertexToDocEntity(const RS_Vector& wcsPos, LC_VisualSnapSolution& solution, LC_VisualSnapVertex* vertex, LC_VisualSnapDocumentEntityRef* documentEntityRef) const;
+    void addNormalFromVertexToDocEntity(const RS_Vector& wcsPos, LC_VisualSnapSolution& solution, LC_VisualSnapVertex* vertex,
+                                        LC_VisualSnapDocumentEntityRef* docEntityRef) const;
     void addRelativePositionsEntities(const RS_Vector& wcsPos, LC_VisualSnapSolution& solution) const;
     void addOrdinaryRestrictionLines(const RS_Vector& wcsPos, LC_VisualSnapSolution& solution) const;
     void createDistanceCircle2Point(const RS_Vector& wcsPos, const RS_Vector& centerPoint, const RS_Vector& circlePoint,

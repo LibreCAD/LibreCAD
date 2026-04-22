@@ -24,6 +24,7 @@
 #include "lc_rectangle_abstract_options_filler.h"
 
 #include "lc_action_draw_rectangle_1point.h"
+#include "lc_enum_descriptor.h"
 
 void LC_RectangleAbstractOptionsFiller::createEdgesModeOption(LC_PropertyContainer* container, LC_ActionDrawRectangleAbstract* action) {
     static LC_EnumDescriptor edgesModeDescriptor = {

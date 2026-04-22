@@ -35,8 +35,8 @@ LC_BreakDivideOptionsWidget::LC_BreakDivideOptionsWidget() : ui(new Ui::LC_Break
 void LC_BreakDivideOptionsWidget::doUpdateByAction(RS_ActionInterface* a) {
     m_action = static_cast<LC_ActionModifyBreakDivide*>(a);
 
-    bool removeSelected = m_action->isRemoveSelected();
-    bool removeSegments = m_action->isRemoveSegment();
+    const bool removeSelected = m_action->isRemoveSelected();
+    const bool removeSegments = m_action->isRemoveSegment();
 
     LC_GuardedSignalsBlocker({ui->cbRemoveSegments, ui->cbRemoveSelected});
 

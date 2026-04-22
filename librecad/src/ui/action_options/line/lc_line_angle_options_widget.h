@@ -27,8 +27,8 @@
 #define QG_LINEANGLEOPTIONS_H
 
 
-#include "lc_action_options_widget.h"
 #include "lc_action_draw_line_angle.h"
+#include "lc_action_options_widget.h"
 
 class RS_ActionInterface;
 class LC_ActionDrawLineAngle;
@@ -44,7 +44,7 @@ public:
     ~LC_LineAngleOptionsWidget() override;
 protected:
     void doUpdateByAction(RS_ActionInterface *a) override;
-    void setupLengthType(bool angleIsNotFixed);
+    void setupLengthType(bool angleIsNotFixed) const;
 public slots:
     void onAngleEditingFinished();
     void onLengthEditingFinished();

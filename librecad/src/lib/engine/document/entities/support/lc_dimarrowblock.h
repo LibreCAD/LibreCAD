@@ -58,10 +58,10 @@ protected:
     RS_Vector doGetNearestMiddle(const RS_Vector& coord, double* dist, int middlePoints) const override;
     RS_Vector doGetNearestDist(double distance, const RS_Vector& coord, double* dist) const override;
 private:
-    RS_Vector m_position {};
+    RS_Vector m_position;
     double m_angle {0.0};
     double m_arrowSize {0.0};
-    RS_Vector m_dimLinePoint {};
+    RS_Vector m_dimLinePoint;
 };
 
 #endif

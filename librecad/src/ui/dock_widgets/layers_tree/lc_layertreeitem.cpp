@@ -70,7 +70,7 @@ LC_LayerTreeItem *LC_LayerTreeItem::parent() const {
 }
 
 int LC_LayerTreeItem::row() const{
-    if (m_parentItem) {
+    if (m_parentItem != nullptr) {
         return m_parentItem->m_childItems.indexOf(const_cast<LC_LayerTreeItem *>(this));
     }
     return 0;
@@ -128,7 +128,7 @@ void LC_LayerTreeItem::updateCalculatedFlagsForDescendentVirtualLayers(){
  */
 void LC_LayerTreeItem::collectLayers(QList<RS_Layer *> &result, const LC_LayerTreeItemAcceptor &acceptor, const bool includeSelf){
     if (includeSelf){
-        if (m_layer){
+        if (m_layer != nullptr){
             if (acceptor.acceptLayerTreeItem(this)){
                 result << m_layer;
             }

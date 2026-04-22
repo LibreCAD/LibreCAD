@@ -100,19 +100,19 @@ RS_Vector RS_ConstructionLine::doGetNearestPointOnEntity(const RS_Vector& coord,
     //    RS_Vector be = ea * RS_Vector::dotP(ea, ep)
     //                   / (ea.magnitude()*ea.magnitude());
 
-    auto result = m_data.point1 + ba;
+    const auto result = m_data.point1 + ba;
     if (dist != nullptr) {
         *dist = coord.distanceTo(result);
     }
     return result;
 }
 
-RS_Vector RS_ConstructionLine::doGetNearestCenter([[maybe_unused]]const RS_Vector& coord, double* dist, RS_Entity** entity) const {
+RS_Vector RS_ConstructionLine::doGetNearestCenter([[maybe_unused]]const RS_Vector& coord, double* dist, RS_Entity** centerEntity) const {
     if (dist != nullptr) {
         *dist = RS_MAXDOUBLE;
     }
-    if (entity != nullptr) {
-        *entity = const_cast<RS_ConstructionLine*>(this);
+    if (centerEntity != nullptr) {
+        *centerEntity = const_cast<RS_ConstructionLine*>(this);
     }
     return RS_Vector(false);
 }

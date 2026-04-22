@@ -54,8 +54,8 @@ void LC_CoordinatesMapper::doWCS2UCS(const double worldX, const double worldY, d
     const double ucsPositionX = worldX - m_ucsOrigin.x;
     const double ucsPositionY = worldY - m_ucsOrigin.y;
 
-    ucsX = ucsPositionX * m_cosXAngle - ucsPositionY * m_sinXAngle;
-    ucsY = ucsPositionX * m_sinXAngle + ucsPositionY * m_cosXAngle;
+    ucsX = (ucsPositionX * m_cosXAngle) - (ucsPositionY * m_sinXAngle);
+    ucsY = (ucsPositionX * m_sinXAngle) + (ucsPositionY * m_cosXAngle);
 }
 
 // todo - sand - ucs - inline calculations
@@ -103,8 +103,8 @@ void LC_CoordinatesMapper::doUCS2WCS(const double ucsX, const double ucsY, doubl
         worldY = world.y;
     */
 
-    const double wcsX = ucsX * m_cosNegativeXAngle - ucsY * m_sinNegativeXAngle;
-    const double wcsY = ucsX * m_sinNegativeXAngle + ucsY * m_cosNegativeXAngle;
+    const double wcsX = (ucsX * m_cosNegativeXAngle) - (ucsY * m_sinNegativeXAngle);
+    const double wcsY = (ucsX * m_sinNegativeXAngle) + (ucsY * m_cosNegativeXAngle);
 
     worldX = wcsX + m_ucsOrigin.x;
     worldY = wcsY + m_ucsOrigin.y;

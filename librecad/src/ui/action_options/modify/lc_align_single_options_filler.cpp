@@ -24,6 +24,7 @@
 #include "lc_align_single_options_filler.h"
 
 #include "lc_action_modify_align_single.h"
+#include "lc_enum_descriptor.h"
 
 void LC_AlignSingleOptionsFiller::fillToolOptionsContainer(LC_PropertyContainer* container) {
         auto action = static_cast<LC_ActionModifyAlignSingle*>(m_action);

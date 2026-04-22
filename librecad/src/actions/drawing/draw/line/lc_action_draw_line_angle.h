@@ -73,7 +73,7 @@ public:
         return m_lengthType;
     }
 
-    void setLengthType(LengthType type, bool updateOptions = true);
+    void setLengthType(LengthType type, bool doUpdateOptions = true);
     bool isFreeLineMode() const;
 
 protected:

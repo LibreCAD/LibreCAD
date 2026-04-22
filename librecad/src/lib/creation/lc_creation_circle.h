@@ -36,6 +36,6 @@ namespace LC_CreationCircle {
     RS_VectorSolutions createTan1_2P(const RS_AtomicEntity* circle, const std::vector<RS_Vector>& points);
     RS_VectorSolutions createTan2(const std::vector<RS_AtomicEntity*>& circles, double r);
     bool create2PRadius(const RS_Vector& point1, const RS_Vector& point2, double radius, RS_Vector& altCenter, RS_CircleData& m_circleData);
-};
+}
 
 #endif

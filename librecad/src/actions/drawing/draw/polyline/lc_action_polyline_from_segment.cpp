@@ -71,13 +71,13 @@ void LC_ActionPolylineFromSegment::init(const int status) {
         //TODO, find a better starting point
         QList<RS_Entity*> selectedEntities;
         selection->collectSelectedEntities(selectedEntities);
-        for (const auto e : selectedEntities) {
-            if (std::count(SUPPORTED_ENTITY_TYPES.begin(), SUPPORTED_ENTITY_TYPES.end(), e->rtti())) {
+        for (const auto e : std::as_const(selectedEntities)) {
+            if (std::count(SUPPORTED_ENTITY_TYPES.begin(), SUPPORTED_ENTITY_TYPES.end(), e->rtti()) != 0) {
                 m_targetEntity = e;
                 break;
             }
         }
-        if (m_targetEntity) {
+        if (m_targetEntity != nullptr) {
             trigger();
             commandMessage(tr("Polyline created"));
             finish();
@@ -190,7 +190,7 @@ void LC_ActionPolylineFromSegment::convertPolyline(RS_Entity* selectedEntity, co
 
     // find all connected entities:
     // fixme - this is search for contour - reuse the same code as for contour selection
-    bool done;
+    bool done = false;
     do {
         done = true;
         for (int i = (remaining.size() - 1); i >= 0; --i) {
@@ -340,7 +340,7 @@ void LC_ActionPolylineFromSegment::onMouseLeftButtonRelease(const int status, co
 
 void LC_ActionPolylineFromSegment::onMouseRightButtonRelease(const int status, [[maybe_unused]] const LC_MouseEvent* e) {
     deleteSnapper();
-    if (m_targetEntity) {
+    if (m_targetEntity != nullptr) {
         redraw();
     }
     initPrevious(status);

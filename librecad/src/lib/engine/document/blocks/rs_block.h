@@ -103,7 +103,7 @@ public:
     /**
      * Reimplementation from RS_Document. Does nothing.
      */
-    void newDoc() override {
+    void initForNewDocument() override {
         // do nothing
     }
 

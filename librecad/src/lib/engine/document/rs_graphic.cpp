@@ -146,7 +146,7 @@ void RS_Graphic::onLoadingCompleted() {
     LC_DimStyleToVariablesMapper dimStyleToVariablesMapper;
     dimStyleToVariablesMapper.fromDictionary(fallBackDimStyleFromVars, getVariableDictObjectRef(), getUnit());
 
-    m_anglesCounterClockWize = getVariableBool("$ANGDIR", 0);
+    m_anglesCounterClockWize = getVariableBool("$ANGDIR", false);
 
     if (m_dimstyleList.isEmpty()) {
         // add content of vars to dimstyle list, to ensure that we have at least one style there
@@ -169,9 +169,9 @@ void RS_Graphic::onLoadingCompleted() {
  */
 unsigned RS_Graphic::countLayerEntities(RS_Layer* layer) const {
     unsigned c = 0;
-    if (layer) {
+    if (layer != nullptr) {
         for (const RS_Entity* t : *this) {
-            if (t->getLayer() && t->getLayer()->getName() == layer->getName()) {
+            if ((t->getLayer() != nullptr) && t->getLayer()->getName() == layer->getName()) {
                 c += t->countDeep();
             }
         }
@@ -215,7 +215,7 @@ void RS_Graphic::removeLayer(RS_Layer* layer) {
                 }
                 for (auto e : *blk) {
                     const auto lay = e->getLayer();
-                    if (lay && lay->getName() == layerName) {
+                    if ((lay != nullptr) && lay->getName() == layerName) {
                         toRemove.push_back(e);
                     }
                 }
@@ -236,7 +236,7 @@ void RS_Graphic::removeLayer(RS_Layer* layer) {
  * Clears all layers, blocks and entities of this graphic.
  * A default layer (0) is created.
  */
-void RS_Graphic::newDoc() {
+void RS_Graphic::initForNewDocument() {
     RS_DEBUG->print("RS_Graphic::newDoc");
     clear();
     clearLayers();
@@ -604,7 +604,7 @@ void RS_Graphic::setPaperInsertionBase(const RS_Vector& p) {
  * Centers drawing on page. Affects DXF variable $PINSBASE.
  */
 void RS_Graphic::centerToPage() {
-    const RS_Vector paperSize = m_plotSettings->getPrintAreaSize(getUnit());
+    const RS_Vector paperSize = m_plotSettings->getPrintAreaSize(getUnit() != 0u);
     auto graphicSize = getSize();
     auto graphicMin = getMin();
     /** avoid zero size, bug#3573158 */

@@ -95,7 +95,7 @@ public:
     }
 
     void fireModified(const bool value) {
-        for (const auto l: m_ucsListListeners) {
+        for (const auto l: std::as_const(m_ucsListListeners)) {
             l->ucsListModified(value);
         }
     }

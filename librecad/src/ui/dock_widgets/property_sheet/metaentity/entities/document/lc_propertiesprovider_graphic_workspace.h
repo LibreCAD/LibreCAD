@@ -37,7 +37,7 @@ public:
     static const QString SECTION_WORKSPACE;
 protected:
     void createWorkspaceSelector(LC_PropertyContainer* container) const;
-    void createUIActionProperty(LC_PropertyContainer* cont, const char* actionName, LC_Property::Names names);
+    void createUIActionProperty(LC_PropertyContainer* cont, const char* actionName, const LC_Property::Names& names);
     void createShowFullScreen(LC_PropertyContainer* cont);
     void createShowMainMenu(LC_PropertyContainer* cont);
     void createShowStatusBar(LC_PropertyContainer* cont);

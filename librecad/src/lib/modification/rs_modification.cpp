@@ -229,7 +229,7 @@ bool RS_Modification::changeAttributes(const QList<RS_Entity*>& originalEntities
 
     if (hasInserts && data.applyBlockDeep) {
         QSet<QString> processedBlockName;
-        for (const auto block : blocks) {
+        for (const auto block : std::as_const(blocks)) {
             doChangeBlockAttributes(block, data, processedBlockName);
         }
         return hasInserts;
@@ -308,7 +308,7 @@ void RS_Modification::doChangeBlockAttributes(const RS_Block* block, RS_Attribut
     }
 
     if (!blocks.empty()) {
-        for (const auto b : blocks) {
+        for (const auto b : std::as_const(blocks)) {
             doChangeBlockAttributes(b, data, processedBlockNames);
         }
     }
@@ -413,10 +413,10 @@ bool RS_Modification::splitPolyline(RS_Polyline* polyline, const RS_Entity& e1, 
     RS_Polyline* pl = pl1; // Current polyline
     const RS_Line* line = nullptr;
 
-    if (polyline1) {
+    if (polyline1 != nullptr) {
         *polyline1 = pl1;
     }
-    if (polyline2) {
+    if (polyline2 != nullptr) {
         *polyline2 = pl2;
     }
 
@@ -657,7 +657,7 @@ RS_Polyline* RS_Modification::deletePolylineNodesBetween(RS_Polyline* polyline, 
             }
             e = polyline->nextEntity();
         }
-        for (; e; e = polyline->nextEntity()) {
+        for (; e != nullptr; e = polyline->nextEntity()) {
             if (e->isAtomic()) {
                 const auto* atomic = static_cast<RS_AtomicEntity*>(e);
 
@@ -726,16 +726,16 @@ RS_Polyline* RS_Modification::deletePolylineNodesBetween(RS_Polyline* polyline, 
             }
 
             // stop removing nodes:
-            if (removing == true && isOneOfPoints(endpoint, node1, node2)) {
+            if (removing && isOneOfPoints(endpoint, node1, node2)) {
                 removing = false;
                 done = true;
-                if (first == false) {
+                if (!first) {
                     nextIsStraight = true;
                 }
             }
 
             // normal node (not deleted):
-            if (removing == false && (done == false || deleteStart == false)) {
+            if (!removing && (!done || !deleteStart)) {
                 if (nextIsStraight) {
                     bulge = 0.0;
                     nextIsStraight = false;
@@ -748,7 +748,7 @@ RS_Polyline* RS_Modification::deletePolylineNodesBetween(RS_Polyline* polyline, 
             }
 
             // start to remove nodes from now on:
-            if (done == false && removing == false && isOneOfPoints(endpoint, node1, node2)) {
+            if (!done && !removing && isOneOfPoints(endpoint, node1, node2)) {
                 removing = true;
             }
 
@@ -896,14 +896,14 @@ RS_Polyline* RS_Modification::polylineTrim(RS_Polyline* polyline, RS_AtomicEntit
 
                 const bool isBoundarySegment = e == &segment1 || e == &segment2;
                 // trim and stop removing nodes:
-                if (removing == true && isBoundarySegment) {
+                if (removing && isBoundarySegment) {
                     newPolyline->setNextBulge(0.0);
                     // start of new polyline:
                     newPolyline->addVertex(sol.get(0));
                     removing = false;
                     nextIsStraight = true;
                 }
-                else if (removing == false && isBoundarySegment) {
+                else if (!removing && isBoundarySegment) {
                     // start removing nodes again:
                     newPolyline->setNextBulge(0.0);
                     // start of new polyline:
@@ -1994,7 +1994,7 @@ static void updateExplodedChildrenRecursively(const RS_EntityContainer* ec, cons
     }
 }
 
-bool RS_Modification::explode(const QList<RS_Entity*>& entitiesList, const bool remove, LC_DocumentModificationBatch& ctx) {
+bool RS_Modification::explode(const QList<RS_Entity*>& entitiesList, LC_DocumentModificationBatch& ctx) {
     for (const auto e : entitiesList) {
         if (e->isContainer()) {
             // add entities from container:

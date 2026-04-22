@@ -35,7 +35,6 @@
 #include "lc_propertiesprovider_dim_linear.h"
 #include "lc_propertiesprovider_dim_ordinate.h"
 #include "lc_propertiesprovider_dim_radial.h"
-#include "entities/document/lc_propertiesprovider_document.h"
 #include "lc_propertiesprovider_ellipse.h"
 #include "lc_propertiesprovider_hatch.h"
 #include "lc_propertiesprovider_hyperbola.h"
@@ -53,6 +52,7 @@
 #include "lc_propertiesprovider_text.h"
 #include "lc_propertiesprovider_tolerance.h"
 #include "lc_propertysheetwidget.h"
+#include "entities/document/lc_propertiesprovider_document.h"
 
 class LC_PropertySheetWidget;
 

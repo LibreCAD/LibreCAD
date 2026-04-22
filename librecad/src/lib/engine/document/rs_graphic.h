@@ -75,7 +75,7 @@ public:
     LC_DimStylesList* getDimStyleList() override {return &m_dimstyleList;}
     LC_TextStyleList* getTextStyleList() override {return &m_textStyleList;}
     void addDimStyle(LC_DimStyle* style) {m_dimstyleList.addDimStyle(style);}
-    void newDoc() override;
+    void initForNewDocument() override;
     // Wrappers for Layer functions:
     void clearLayers() {
         m_layerList.clear();
@@ -266,7 +266,7 @@ private:
     QString m_currentFileName; //keep a copy of filename for the modifiedTime
 
     // fixme - sand - files - change to unique_ptrs?
-    RS_LayerList m_layerList{};
+    RS_LayerList m_layerList;
     RS_BlockList m_blockList{true};
     RS_VariableDict m_variableDict;
     RS_VariableDict m_customVariablesDict;

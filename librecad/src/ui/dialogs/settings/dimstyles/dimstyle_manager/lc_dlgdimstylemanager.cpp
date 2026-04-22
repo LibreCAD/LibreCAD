@@ -1026,7 +1026,7 @@ void LC_DlgDimStyleManager::cbTolAlternateZerosSuppressionToggled([[maybe_unused
 
 void LC_DlgDimStyleManager::disableContainer(const QWidget* tab) {
     auto widgets = tab->findChildren<QWidget*>();
-    for (const auto it: widgets) {
+    for (const auto it: std::as_const(widgets)) {
         it->setDisabled(true);
     }
 }
@@ -1548,7 +1548,7 @@ void LC_DlgDimStyleManager::fillTextTab(const LC_DimStyle* dimStyle) const {
 
 void LC_DlgDimStyleManager::setArrowComboboxValue(QComboBox* arrowComboBox, const QString& arrowBlockName) const {
     arrowComboBox->blockSignals(true);
-    int existingItemIndex;
+    int existingItemIndex = 0;
     if (arrowBlockName.isEmpty()) {
         // first item in the list should be _CLOSEDFILLED, that corresponds as default to "" block name.
         existingItemIndex = 0;
@@ -1891,9 +1891,9 @@ void LC_DlgDimStyleManager::fillAltUnitTab(const LC_DimStyle* dimStyle) const {
 void LC_DlgDimStyleManager::fillToleranceTab(const LC_DimStyle* dimStyle) const {
     const auto tolerance = dimStyle->latteralTolerance();
 
-    bool enable;
-    bool showVerticalPosition;
-    bool showLowerLimit, showUpperLimit;
+    bool enable = false;
+    bool showVerticalPosition = false;
+    bool showLowerLimit = false, showUpperLimit = false;
     const int tolMethod = computeToleranceMethod(dimStyle,  tolerance, enable, showVerticalPosition, showLowerLimit, showUpperLimit);
 
     uiUpdateToleranceControls(enable,showLowerLimit, showVerticalPosition);

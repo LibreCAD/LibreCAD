@@ -54,7 +54,7 @@ void LC_UCSListButton::fillMenu() {
     const int ucsCount = ucsList.count();
     const int actionsCount = m_createdActions.count();
     if (ucsCount <= actionsCount){
-        int i;
+        int i = 0;
         for (i = 0; i < ucsCount; i++){
             const auto a = m_createdActions.at(i);
             const auto u = ucsList.at(i);
@@ -72,7 +72,7 @@ void LC_UCSListButton::fillMenu() {
         }
     }
     else{
-        int i;
+        int i = 0;
         for (i = 0;  i < actionsCount; i++){
             const auto a = m_createdActions.at(i);
             const auto u = ucsList.at(i);

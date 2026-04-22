@@ -57,7 +57,7 @@ QC_MDIWindow::QC_MDIWindow(RS_Document* doc, QWidget* parent, const bool printPr
 
     if (doc == nullptr) {
         m_document = new RS_Graphic();
-        m_document->newDoc();
+        m_document->initForNewDocument();
     }
     else {
         m_document = doc;
@@ -178,7 +178,7 @@ QList<QC_MDIWindow*>& QC_MDIWindow::getChildWindows() {
  * @return pointer to the print preview of this drawing or NULL.
  */
 QC_MDIWindow* QC_MDIWindow::getPrintPreview() {
-    for (auto* w : m_childWindows) {
+    for (auto* w : std::as_const(m_childWindows)) {
         if (w != nullptr && w->getGraphicView()->isPrintPreview()) {
             return w;
         }
@@ -253,7 +253,7 @@ void QC_MDIWindow::slotPenChanged(const RS_Pen& pen) const {
  */
 void QC_MDIWindow::slotFileNew() const {
     if (m_document != nullptr && m_graphicView != nullptr) {
-        m_document->newDoc();
+        m_document->initForNewDocument();
         m_graphicView->redraw();
     }
 }
@@ -340,7 +340,7 @@ bool QC_MDIWindow::saveDocumentAs(bool& cancelled) {
 }
 
 void QC_MDIWindow::zoomAuto() const {
-    if (m_graphicView) {
+    if (m_graphicView != nullptr) {
         if (m_graphicView->isPrintPreview()) {
             m_graphicView->getViewPort()->zoomPage();
         }
@@ -366,7 +366,7 @@ void QC_MDIWindow::slotFilePrint() {
     //statusBar()->showMessage(tr("Printing..."));
     QPrinter printer;
     QPrintDialog dialog(&printer, this);
-    if (dialog.exec()) {
+    if (dialog.exec() != 0) {
         QPainter painter;
         painter.begin(&printer);
 
@@ -384,7 +384,7 @@ void QC_MDIWindow::slotFilePrint() {
  */
 std::ostream& operator <<(std::ostream& os, const QC_MDIWindow& w) {
     os << "QC_MDIWindow[" << w.getId() << "]:\n";
-    if (w.m_parentWindow) {
+    if (w.m_parentWindow != nullptr) {
         os << "  parentWindow: " << w.m_parentWindow->getId() << "\n";
     }
     else {

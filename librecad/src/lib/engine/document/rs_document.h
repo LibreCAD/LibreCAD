@@ -151,8 +151,8 @@ public:
     }
 
     virtual LC_TextStyleList* getTextStyleList() = 0;
-    [[deprecated]]
-    virtual void newDoc() = 0;
+
+    virtual void initForNewDocument() = 0;
 
     /**
      * @return true for all document entities (e.g. Graphics or Blocks).

@@ -155,7 +155,7 @@ void RS_ActionDrawLineOrthTan::onMouseMoveEvent(const int status, const LC_Mouse
                     const RS_Vector mouse = e->graphPoint;
                     const auto tangent = RS_Creation::createLineOrthTan(mouse, normal, en, alternativeTangentPoint);
                     if (tangent != nullptr) {
-                        previewEntityToCreate(tangent.get()->clone(), true);
+                        previewEntityToCreate(tangent->clone(), true);
                         previewRefSelectablePoint(alternativeTangentPoint);
                         previewRefSelectablePoint(tangent->getEndpoint());
                         if (m_showRefEntitiesOnPreview) {

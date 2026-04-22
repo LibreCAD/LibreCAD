@@ -112,7 +112,7 @@ protected:
     QList<LC_PenItem *> getSelectedPenItems() const;
     void doFillPenEditorBySelectedEntity(bool resolvePenOnEntitySelect);
     void doSelectEntitiesByPenEditor(bool resolvePens, bool resolveLayers) const;
-    void doSelectEntitiesBySelectedPenItem(bool resolvePens, bool resolveLayers);
+    void doSelectEntitiesBySelectedPenItem(bool resolvePens, bool resolveLayers) const;
     void showNoSelectionDialog(bool hasOnFrozenLayers, bool hasOnLockedLayers) const;
     void initToolBar() const;
     void onTableRowDoubleClicked();

@@ -51,13 +51,13 @@ void LC_CircleTangental2EntitiesRadiusOptionsWidget::languageChange() {
 
 void LC_CircleTangental2EntitiesRadiusOptionsWidget::doUpdateByAction(RS_ActionInterface* a) {
     m_action = static_cast<LC_ActionDrawCircleTangental2EntitiesRadius*>(a);
-    QString radius = fromDouble(m_action->getRadius());
+    const QString radius = fromDouble(m_action->getRadius());
     LC_GuardedSignalsBlocker({ui->leRadius});
     ui->leRadius->setText(radius);
 }
 
 void LC_CircleTangental2EntitiesRadiusOptionsWidget::onRadiusEditingFinished() {
-    auto val = ui->leRadius->text();
+    const auto val = ui->leRadius->text();
     double radius;
     if (toDouble(val, radius, 1.0, true)) {
         m_action->setRadius(radius);

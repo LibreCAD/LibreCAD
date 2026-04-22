@@ -26,8 +26,8 @@
 
 #include "lc_action_draw_ellipse_axis.h"
 
-#include "lc_ellipse_arc_options_widget.h"
 #include "lc_ellipse_arc_options_filler.h"
+#include "lc_ellipse_arc_options_widget.h"
 #include "rs_document.h"
 #include "rs_ellipse.h"
 #include "rs_line.h"
@@ -73,7 +73,7 @@ void RS_ActionDrawEllipseAxis::doSaveOptions() {
 
 void RS_ActionDrawEllipseAxis::doLoadOptions() {
     if (m_actionData->isArc) {
-        bool reversed = loadBool("Reversed",  false);
+        const bool reversed = loadBool("Reversed",  false);
         setReversed(reversed);
     }
 }
@@ -343,7 +343,7 @@ bool RS_ActionDrawEllipseAxis::doProcessCommand(const int status, const QString&
     bool accept = false;
     switch (status) {
         case SetMinor: {
-            bool ok;
+            bool ok = false;
             const double m = RS_Math::eval(command, &ok);
             if (ok) {
                 accept = true;
@@ -361,7 +361,7 @@ bool RS_ActionDrawEllipseAxis::doProcessCommand(const int status, const QString&
             break;
         }
         case SetAngle1: {
-            bool ok;
+            bool ok = false;
             const double a = RS_Math::eval(command, &ok);
             if (ok) {
                 accept = true;
@@ -374,7 +374,7 @@ bool RS_ActionDrawEllipseAxis::doProcessCommand(const int status, const QString&
             break;
         }
         case SetAngle2: {
-            bool ok;
+            bool ok = false;
             const double a = RS_Math::eval(command, &ok);
             if (ok) {
                 accept = true;

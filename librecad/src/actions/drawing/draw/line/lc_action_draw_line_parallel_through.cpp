@@ -65,7 +65,7 @@ bool LC_ActionDrawLineParallelThrough::isInVisualSnapStatus(int status) {
 }
 
 void LC_ActionDrawLineParallelThrough::finish() {
-    if (m_entity) {
+    if (m_entity != nullptr) {
         m_entity->setHighlighted(false);
         m_entity = nullptr;
     }
@@ -220,7 +220,7 @@ bool LC_ActionDrawLineParallelThrough::doProcessCommand(const int status, const 
             break;
         }
         case SetNumber: {
-            bool ok;
+            bool ok = false;
             const int n = command.toInt(&ok);
             if (ok) {
                 accept = true;

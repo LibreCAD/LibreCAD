@@ -21,7 +21,7 @@
 ** Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 **
 **********************************************************************************
-*/
+ */
 // File: lc_looputils.cpp
 
 #include <algorithm>
@@ -62,8 +62,8 @@ namespace {
      * @return The built LC_Loops tree.
      */
     LC_LoopUtils::LC_Loops buildLoops(const RS_EntityContainer* cont, const std::vector<std::unique_ptr<RS_EntityContainer>>& allLoops) {
-        auto loopCopy = std::make_shared<RS_EntityContainer>(nullptr, true);
-        for (RS_Entity* e : *cont) {
+        const auto loopCopy = std::make_shared<RS_EntityContainer>(nullptr, true);
+        for (const RS_Entity* e : *cont) {
             if (e && !e->isContainer()) {
                 loopCopy->addEntity(e->clone()); // Clone atomics for independent ownership
             }
@@ -108,7 +108,7 @@ namespace {
             case RS2::EntityCircle:
                 return true;
             case RS2::EntityEllipse: {
-                const RS_Ellipse& ellipse = static_cast<const RS_Ellipse&>(en);
+                const auto& ellipse = static_cast<const RS_Ellipse&>(en);
                 if (!ellipse.isArc()) {
                     return true;
                 }
@@ -117,7 +117,7 @@ namespace {
             case RS2::EntityArc:
                 return en.getStartpoint() == en.getEndpoint();
             case RS2::EntitySpline: {
-                const LC_SplinePoints& spline = static_cast<const LC_SplinePoints&>(en);
+                const auto& spline = static_cast<const LC_SplinePoints&>(en);
                 return spline.isClosed();
             }
             case RS2::EntityParabola: default:
@@ -161,7 +161,7 @@ struct VectorKey {
 namespace std {
 template<> struct hash<VectorKey> {
   std::size_t operator()(const VectorKey& k) const {
-    std::hash<long long> h;
+    const std::hash<long long> h;
     return h(k.x) ^ (h(k.y) << 1);  // Simple but collision-resistant for CAD coords
   }
 };
@@ -231,8 +231,8 @@ std::vector<std::unique_ptr<RS_EntityContainer>> LoopExtractor::extract()const {
       m_loop->addEntity(cloned_first);
       m_data->processed[first] = true;
       m_data->current = cloned_first;
-      RS_Vector start = cloned_first->getStartpoint();
-      RS_Vector end = cloned_first->getEndpoint();
+      const RS_Vector start = cloned_first->getStartpoint();
+      const RS_Vector end = cloned_first->getEndpoint();
       m_data->targetPoint = start;
       m_data->endPoint = end;
       m_data->unprocessed.erase(std::remove(m_data->unprocessed.begin(), m_data->unprocessed.end(), first), m_data->unprocessed.end());
@@ -249,7 +249,7 @@ std::vector<std::unique_ptr<RS_EntityContainer>> LoopExtractor::extract()const {
         }
       }
       if (validate()) {
-        double area = m_loop->areaLineIntegral();
+        const double area = m_loop->areaLineIntegral();
         if (area < 0.0) {
           // Reverse direction for positive area (counter-clockwise)
           auto new_loop = std::make_unique<RS_EntityContainer>();
@@ -286,14 +286,14 @@ bool LoopExtractor::validate() const {
          // Special case: single closed entity (no chain to check)
   if (n == 1) {
     RS_Entity* e = m_loop->entityAt(0);
-    RS2::EntityType type = e->rtti();
+    const RS2::EntityType type = e->rtti();
     if (type == RS2::EntityCircle) return true;
     if (type == RS2::EntityEllipse) {
-      RS_Ellipse* ell = static_cast<RS_Ellipse*>(e);
-      return ell->getAngleLength() >= 2 * M_PI - RS_TOLERANCE;
+        const auto* ell = static_cast<RS_Ellipse*>(e);
+        return ell->getAngleLength() >= 2 * M_PI - RS_TOLERANCE;
     }
     if (type == RS2::EntitySpline) {  // Closed spline
-      LC_SplinePoints* spl = static_cast<LC_SplinePoints*>(e);
+      const LC_SplinePoints* spl = static_cast<LC_SplinePoints*>(e);
       return spl->isClosed();
     }
     if (type == RS2::EntityParabola) {  // Valid primitive
@@ -305,7 +305,7 @@ bool LoopExtractor::validate() const {
   }
 
          // Full multi-entity chain validation (ensures consistent forward directions)
-  RS_Entity* prev = m_loop->entityAt(0);
+  const RS_Entity* prev = m_loop->entityAt(0);
   for (size_t i = 1; i < n; ++i) {
     RS_Entity* curr = m_loop->entityAt(i);
     const double dist = prev->getEndpoint().distanceTo(curr->getStartpoint());
@@ -318,8 +318,8 @@ bool LoopExtractor::validate() const {
   }
 
          // Final closure: last end → first start
-  RS_Entity* first = m_loop->entityAt(0);
-  RS_Entity* last = m_loop->last();
+  const RS_Entity* first = m_loop->entityAt(0);
+  const RS_Entity* last = m_loop->last();
   const double closeDist = last->getEndpoint().distanceTo(first->getStartpoint());
   if (closeDist > ENDPOINT_TOLERANCE) {
     RS_DEBUG->print(RS_Debug::D_WARNING,
@@ -452,9 +452,9 @@ RS_Entity* LoopExtractor::findOutermost(std::vector<RS_Entity*> edges) const
  */
 std::vector<RS_Entity*> LoopExtractor::getConnected() const {
   std::vector<RS_Entity*> ret;
-  VectorKey k = makeVectorKey(m_data->endPoint);
+  const VectorKey k = makeVectorKey(m_data->endPoint);
 
-  auto it = m_data->endpointToEdges.find(k);
+  const auto it = m_data->endpointToEdges.find(k);
   if (it != m_data->endpointToEdges.end()) {
     for (RS_Entity* e : it->second) {
       auto pit = m_data->processed.find(e);
@@ -472,7 +472,7 @@ std::vector<RS_Entity*> LoopExtractor::getConnected() const {
  * @return True if found.
  */
 bool LoopExtractor::findNext() const {
-  std::vector<RS_Entity*> connected = getConnected();  // Now O(degree) fast
+  const std::vector<RS_Entity*> connected = getConnected();  // Now O(degree) fast
   if (connected.empty()) return false;
 
   RS_Entity* next = (connected.size() == 1) ? connected[0] : findOutermost(connected);
@@ -504,11 +504,11 @@ struct LoopSorter::Data {
      */
     struct LoopSorter::AreaPredicate {
         bool operator()(const RS_EntityContainer* a, const RS_EntityContainer* b) const {
-            double areaA = std::abs(a->areaLineIntegral());
-            double areaB = std::abs(b->areaLineIntegral());
+            const double areaA = std::abs(a->areaLineIntegral());
+            const double areaB = std::abs(b->areaLineIntegral());
             if (std::abs(areaA - areaB) < RS_TOLERANCE) {
-                double diagA = (a->getMax() - a->getMin()).magnitude();
-                double diagB = (b->getMax() - b->getMin()).magnitude();
+                const double diagA = (a->getMax() - a->getMin()).magnitude();
+                const double diagB = (b->getMax() - b->getMin()).magnitude();
                 return diagA < diagB;
             }
             return areaA < areaB; // Ascending abs area (small to large for parent assignment)
@@ -565,7 +565,7 @@ struct LoopSorter::Data {
      */
     std::shared_ptr<std::vector<LC_Loops>> LoopSorter::forestToLoops(std::vector<RS_EntityContainer*> forest) const {
         auto loops = std::make_shared<std::vector<LC_Loops>>();
-        for (RS_EntityContainer* container : forest) {
+        for (const RS_EntityContainer* container : forest) {
             loops->push_back(buildLoops(container, m_data->loops)); // Build recursive hierarchy
         }
         return loops;
@@ -583,16 +583,16 @@ struct LoopSorter::Data {
         if (sorted.size() == 1) {
             return;
         }
-        LC_Rect childBox{loop->getMin(), loop->getMax()};
-        double childArea = std::abs(loop->areaLineIntegral());
-        RS_Vector testPoint = (loop->getMin() + loop->getMax()) / 2.0; // Use bbox center for containment test
+        const LC_Rect childBox{loop->getMin(), loop->getMax()};
+        const double childArea = std::abs(loop->areaLineIntegral());
+        const RS_Vector testPoint = (loop->getMin() + loop->getMax()) / 2.0; // Use bbox center for containment test
         for (auto it = sorted.begin(); ++it != sorted.end();) {
             // Iterate small to large
             auto* potentialParent = it->second;
             if (potentialParent == loop) {
                 continue;
             }
-            double parentArea = it->first;
+            const double parentArea = it->first;
 
             // Skip smaller or equal
             if (parentArea <= childArea + RS_TOLERANCE) {
@@ -638,9 +638,9 @@ struct LoopSorter::Data {
      * @brief Processes a contour: Extract loops, sort, and build hierarchy.
      */
     void LoopOptimizer::addContainer(const RS_EntityContainer& contour) const {
-        LoopExtractor extractor(contour);
+        const LoopExtractor extractor(contour);
         auto loops = extractor.extract();
-        LoopSorter sorter(std::move(loops));
+        const LoopSorter sorter(std::move(loops));
         m_data->results = sorter.getResults();
     }
 
@@ -704,7 +704,7 @@ struct LoopSorter::Data {
     QPainterPath LC_Loops::getPainterPath(RS_Painter* painter, int level) const {
         QPainterPath path = buildPathFromLoop(painter, *m_loop);
         for (const auto& child : m_children) {
-            QPainterPath childPath = child.getPainterPath(painter, level + 1);
+            const QPainterPath childPath = child.getPainterPath(painter, level + 1);
             path -= childPath;
         }
         path.setFillRule(Qt::OddEvenFill);
@@ -745,15 +745,15 @@ struct LoopSorter::Data {
      */
     void LC_Loops::addEllipticArc(QPainterPath& path, const RS_Vector& center, double major, double minor, double rot, double a1,
                                   double a2) const {
-        double aspect = std::max(major, minor) / std::min(major, minor);
-        int extra_segments = static_cast<int>(std::ceil(aspect - 1.0)); // More segments for high aspect
-        double sweep = a2 - a1;
-        int n = static_cast<int>(std::ceil(std::abs(sweep) * 24. / M_PI)) + extra_segments; // Quadrants + extra
+        const double aspect = std::max(major, minor) / std::min(major, minor);
+        const int extra_segments = static_cast<int>(std::ceil(aspect - 1.0)); // More segments for high aspect
+        const double sweep = a2 - a1;
+        const int n = static_cast<int>(std::ceil(std::abs(sweep) * 24. / M_PI)) + extra_segments; // Quadrants + extra
         if (n <= 0) {
             return; // Degenerate case
         }
-        double dt = sweep / n;
-        double lambda = (4.0 / 3.0) * std::tan(dt / 4.0); // Bezier control factor (constant)
+        const double dt = sweep / n;
+        const double lambda = (4.0 / 3.0) * std::tan(dt / 4.0); // Bezier control factor (constant)
         double current_t = a1;
 
         // Initial endpoint and tangent for first segment
@@ -768,11 +768,11 @@ struct LoopSorter::Data {
         }
 
         for (int i = 0; i < n; ++i) {
-            double t1 = current_t + dt;
+            const double t1 = current_t + dt;
             RS_Vector p3 = e_point(center, major, minor, rot, t1);
             RS_Vector prime1 = e_prime(major, minor, rot, t1) * lambda;
-            RS_Vector p1 = p0 + prime0;
-            RS_Vector p2 = p3 - prime1;
+            const RS_Vector p1 = p0 + prime0;
+            const RS_Vector p2 = p3 - prime1;
             path.cubicTo(p1.x, p1.y, p2.x, p2.y, p3.x, p3.y);
 
             // Reuse for next segment
@@ -871,7 +871,7 @@ struct LoopSorter::Data {
      * @brief Checks if entity represents a closed shape (e.g., full circle, zero-length line).
      */
     bool LC_Loops::isEntityClosed(const RS_Entity* e) const {
-        RS2::EntityType type = e->rtti();
+        const RS2::EntityType type = e->rtti();
         if (type == RS2::EntityCircle) {
             return true;
         }
@@ -903,21 +903,21 @@ struct LoopSorter::Data {
      * Filters tiles that intersect or contain points inside the loop.
      */
     std::vector<RS_Vector> LC_Loops::createTiles(const RS_Pattern& pattern) const {
-        LC_Rect bBox = getBoundingBox();
-        LC_Rect pBox{pattern.getMin(), pattern.getMax()};
+        const LC_Rect bBox = getBoundingBox();
+        const LC_Rect pBox{pattern.getMin(), pattern.getMax()};
         const double pWidth = pBox.width();
         const double pHeight = pBox.height();
         if (pWidth < 1e-6 || pHeight < 1e-6) // Skip degenerate patterns
         {
             return {};
         }
-        RS_Vector offsetBase = bBox.lowerLeftCorner() - pBox.lowerLeftCorner();
+        const RS_Vector offsetBase = bBox.lowerLeftCorner() - pBox.lowerLeftCorner();
         std::vector<RS_Vector> tiles;
         // Use ceil for full coverage
-        int nx = static_cast<int>(std::ceil(bBox.width() / pWidth)) + 1;
-        int ny = static_cast<int>(std::ceil(bBox.height() / pHeight)) + 1;
+        const int nx = static_cast<int>(std::ceil(bBox.width() / pWidth)) + 1;
+        const int ny = static_cast<int>(std::ceil(bBox.height() / pHeight)) + 1;
         // Use pattern center for inside check
-        RS_Vector pCenter = (pBox.lowerLeftCorner() + pBox.upperRightCorner()) / 2.0;
+        const RS_Vector pCenter = (pBox.lowerLeftCorner() + pBox.upperRightCorner()) / 2.0;
         for (int i = 0; i < nx; ++i) {
             for (int j = 0; j < ny; ++j) {
                 RS_Vector tile = offsetBase + RS_Vector{pWidth * i, pHeight * j};

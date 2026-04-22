@@ -134,12 +134,12 @@ void QG_PenToolBar::setLayerList(RS_LayerList* ll) {
     }
 }
 
-void QG_PenToolBar::setGraphicView(RS_GraphicView* gv) {
-    if (gv == nullptr) {
+void QG_PenToolBar::setGraphicView(RS_GraphicView* gview) {
+    if (gview == nullptr) {
         setLayerList(nullptr);
     }
     else {
-        const auto graphic = gv->getGraphic();
+        const auto graphic = gview->getGraphic();
         if (graphic == nullptr) {
             setLayerList(nullptr);
         }

@@ -389,7 +389,7 @@ void RS_Hatch::updatePatternHatch(RS_Layer* layer, const RS_Pen& pen) {
  * @param visible true to show boundaries, false to hide.
  */
 void RS_Hatch::activateContour(const bool visible) const {
-    RS_DEBUG->print("RS_Hatch::activateContour: %d", visible);
+    RS_DEBUG->print("RS_Hatch::activateContour: %d", static_cast<int>(visible));
     for (const auto& sub : m_boundaryContainers) {
         if (sub) {
             for (RS_Entity* entity : *sub) {
@@ -465,7 +465,7 @@ void RS_Hatch::drawPatternLines(RS_Painter* painter) const {
     const bool selected = isSelected();
     for (RS_Entity* subEntity : *this) {
         // Draw only direct atomic children with FlagHatchChild (patterns); skip subcontainers
-        if (subEntity && !subEntity->isContainer() && subEntity->getFlag(RS2::FlagHatchChild)) {
+        if ((subEntity != nullptr) && !subEntity->isContainer() && subEntity->getFlag(RS2::FlagHatchChild)) {
             subEntity->setSelectionFlag(selected); // fixme - selection - just utility entity used on draw?
             painter->drawEntity(subEntity);
         }
@@ -480,9 +480,9 @@ void RS_Hatch::debugOutPath(const QPainterPath& path) const {
     for (int i = 0; i < elementCount; ++i) {
         const QPainterPath::Element& element = path.elementAt(i);
         LC_ERR << "Element " << i << " (" << element.x << "," << element.y << ") "
-               << "LineTo: " << element.isLineTo()
-               << " MoveTo: " << element.isMoveTo()
-               << " Curve: " << element.isCurveTo() << "\n";
+               << "LineTo: " << static_cast<int>(element.isLineTo())
+               << " MoveTo: " << static_cast<int>(element.isMoveTo())
+               << " Curve: " << static_cast<int>(element.isCurveTo()) << "\n";
     }
 }
 
@@ -567,7 +567,7 @@ void RS_Hatch::mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2) 
         }
     }
     const double mirrorAngle = axisPoint1.angleTo(axisPoint2);
-    m_data.angle = RS_Math::correctAngle(m_data.angle + mirrorAngle * 2.0);
+    m_data.angle = RS_Math::correctAngle(m_data.angle + (mirrorAngle * 2.0));
     update();
 }
 

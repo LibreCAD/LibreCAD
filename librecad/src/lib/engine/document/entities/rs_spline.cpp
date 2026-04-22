@@ -130,14 +130,14 @@ size_t RS_Spline::getUnwrappedSize() const {
 /** Unwrapped vectors */
 std::vector<RS_Vector> RS_Spline::getUnwrappedControlPoints() const {
   const size_t s = getUnwrappedSize();
-  return s ? std::vector<RS_Vector>(m_data.controlPoints.begin(),
+  return (s != 0u) ? std::vector<RS_Vector>(m_data.controlPoints.begin(),
                                     m_data.controlPoints.begin() + s)
            : std::vector<RS_Vector>{};
 }
 
 std::vector<double> RS_Spline::getUnwrappedWeights() const {
   const size_t s = getUnwrappedSize();
-  return s ? std::vector<double>(m_data.weights.begin(), m_data.weights.begin() + s)
+  return (s != 0u) ? std::vector<double>(m_data.weights.begin(), m_data.weights.begin() + s)
            : std::vector<double>{};
 }
 
@@ -573,7 +573,7 @@ void RS_Spline::rbspline(const size_t npts, const size_t k, const size_t numPoin
                  : x[i - 1];
   }
   double t = 0.0;
-  double step = x.back() / numPoints;
+  const double step = x.back() / numPoints;
   for (int idx = 1; idx <= static_cast<int>(numPoints); ++idx) {
     if (x.back() - t < g_knotTolerance) {
         t = x.back() - g_knotTolerance;
@@ -906,7 +906,7 @@ void RS_Spline::setFitPoints(const std::vector<RS_Vector> &fitPoints, const bool
 /** B-spline basis */
 std::vector<double> RS_Spline::getBSplineBasis(const double t,
                                                const std::vector<double> &knots, const int degree, const size_t numControls) const {
-  int order = degree + 1, np = static_cast<int>(numControls), c = order,
+  const int order = degree + 1, np = static_cast<int>(numControls), c = order,
       nplusc = np + c;
   std::vector<double> bf(nplusc, 0.0);
   for (int i = 0; i < nplusc - 1; ++i) {
@@ -1075,19 +1075,19 @@ double RS_Spline::getSecondDerivative(const double t, const bool isX) const {
 
 double RS_Spline::getCurvature(const double t) const {
   const auto d = evaluateWithDerivs(t);
-  double vx = d.der1.x, vy = d.der1.y;
-  double ax = d.der2.x, ay = d.der2.y;
-  const double speed2 = vx * vx + vy * vy;
+  const double vx = d.der1.x, vy = d.der1.y;
+  const double ax = d.der2.x, ay = d.der2.y;
+  const double speed2 = (vx * vx) + (vy * vy);
   if (speed2 < 1e-20) {
       return 0.0;
   }
-  return std::abs(vx * ay - vy * ax) / std::pow(speed2, 1.5);
+  return std::abs((vx * ay) - (vy * ax)) / std::pow(speed2, 1.5);
 }
 
 double RS_Spline::getSignedCurvature(const double t) const {
   const auto d = evaluateWithDerivs(t);
-  double vx = d.der1.x, vy = d.der1.y;
-  double ax = d.der2.x, ay = d.der2.y;
+  const double vx = d.der1.x, vy = d.der1.y;
+  const double ax = d.der2.x, ay = d.der2.y;
   const double speed = std::hypot(vx, vy);
   if (speed < 1e-10) {
       return 0.0;
@@ -1121,7 +1121,7 @@ RS_Spline::SplineDerivs RS_Spline::evaluateWithDerivs(double t) const {
     for (int r = 0; r < j; ++r) {
       double den = right[r + 1] + left[j - r];
       double tmp = ndu[r][j - 1] / den;
-      ndu[r][j] = saved + right[r + 1] * tmp;
+      ndu[r][j] = saved + (right[r + 1] * tmp);
       saved = left[j - r] * tmp;
     }
     ndu[j][j] = saved;
@@ -1226,13 +1226,13 @@ double RS_Spline::bisectDerivativeZero(double low, double high, double f_low, co
   // defensive)
   if (f_low * f_high > 0.0 && std::abs(f_low) >= RS_TOLERANCE &&
       std::abs(f_high) >= RS_TOLERANCE) {
-      return low + (high - low) * 0.5; // no root → return midpoint
+      return low + ((high - low) * 0.5); // no root → return midpoint
   }
 
   while (high - low >
          RS_TOLERANCE *
              (1.0 + std::abs(low + high))) { // relative + absolute tolerance
-    const double mid = low + (high - low) * 0.5;
+    const double mid = low + ((high - low) * 0.5);
     const double f_mid = getDerivative(mid, isX);
 
     if (f_mid == 0.0) {
@@ -1312,7 +1312,7 @@ std::vector<double> RS_Spline::basisFunctions(const size_t i, const double u, co
       // alpha = barycentric weight for current segment
       const double alpha = N[r] / (right[r + 1] + left[j - r]);
 
-      N[r] = saved + right[r + 1] * alpha;
+      N[r] = saved + (right[r + 1] * alpha);
       saved = left[j - r] * alpha;
     }
     // highest basis function for this j
@@ -1353,13 +1353,13 @@ void RS_Spline::insertKnot(const double u) {
       W.assign(P.size(), 1.0);
   }
 
-  size_t p = m_data.degree, n = P.size();
+  const size_t p = m_data.degree, n = P.size();
   if (n <= p + 1) {
       return;
   }
 
   // Valid interior parameter range only – endpoint insertion has no effect
-  double umin = K[p], umax = K[n];
+  const double umin = K[p], umax = K[n];
   if (u <= umin + RS_TOLERANCE || u >= umax - RS_TOLERANCE) {
       return;
   }

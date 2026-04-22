@@ -25,7 +25,6 @@
 #define LC_ENTITYPROPERTYVALUEDELEGATE_H
 
 #include "lc_property_valuestorage.h"
-#include "muParserDef.h"
 
 class RS_Entity;
 

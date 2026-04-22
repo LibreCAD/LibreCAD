@@ -63,8 +63,7 @@ protected:
     bool m_selectAllEntityTypes = true;
     QList<RS2::EntityType> m_entityTypesToSelect;
 
-    LC_ActionSelectWindow(const QString& name, LC_ActionContext* actionContext,
-                                             const RS2::ActionType actionType, const RS2::EntityType typeToSelect, const bool select);
+    LC_ActionSelectWindow(const QString& name, LC_ActionContext* actionContext, RS2::ActionType actionType, RS2::EntityType typeToSelect, bool select);
     RS2::CursorType doGetMouseCursor(int status) override;
     void onMouseLeftButtonPress(int status, const LC_MouseEvent* e) override;
     void onMouseLeftButtonRelease(int status, const LC_MouseEvent* e) override;

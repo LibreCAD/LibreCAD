@@ -24,9 +24,9 @@
 #ifndef LC_ROUNDOPTIONSFILLER_H
 #define LC_ROUNDOPTIONSFILLER_H
 
-#include "lc_action_options_properties_filler.h"
+#include "lc_action_options_properties_filler_base.h"
 
-class LC_RoundOptionsFiller: public LC_ActionOptionsPropertiesFiller{
+class LC_RoundOptionsFiller: public LC_ActionOptionsPropertiesFillerBase{
     Q_OBJECT
 public:
     LC_RoundOptionsFiller() = default;

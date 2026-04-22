@@ -524,7 +524,7 @@ void RS_Selection::conditionalSelection(const ConditionalSelectionOptions& optio
             // criteria applied to current selection
             QList<RS_Entity*> selectedEntities;
             m_document->collectSelected(selectedEntities);
-            for (const auto e : selectedEntities) {
+            for (const auto e : std::as_const(selectedEntities)) {
                 if (e->isDeleted()) {
                     continue;
                 }
@@ -574,7 +574,7 @@ void RS_Selection::countSelectedEntities(QMap<RS2::EntityType, int>& entityTypeM
         const auto doc = m_document->getDocument();
         QList<RS_Entity*> selectedEntities;
         doc->collectSelected(selectedEntities);
-        for (const auto e : selectedEntities) {
+        for (const auto e : std::as_const(selectedEntities)) {
             auto rtti = e->rtti();
             int count = entityTypeMaps[rtti];
             count++;

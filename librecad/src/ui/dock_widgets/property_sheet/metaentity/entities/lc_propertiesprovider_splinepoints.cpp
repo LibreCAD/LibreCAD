@@ -22,6 +22,7 @@
  */
 
 #include "lc_propertiesprovider_splinepoints.h"
+
 #include "lc_splinepoints.h"
 
 void LC_PropertiesProviderSplinePoints::doCreateEntitySpecificProperties(LC_PropertyContainer* container, const QList<RS_Entity*>& list) {

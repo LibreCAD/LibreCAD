@@ -24,9 +24,9 @@
 #ifndef LC_SCALEOPTIONSFILLER_H
 #define LC_SCALEOPTIONSFILLER_H
 
-#include "lc_action_options_properties_filler.h"
+#include "lc_action_options_properties_filler_base.h"
 
-class LC_ScaleOptionsFiller : public LC_ActionOptionsPropertiesFiller {
+class LC_ScaleOptionsFiller : public LC_ActionOptionsPropertiesFillerBase {
     Q_OBJECT
 public:
     LC_ScaleOptionsFiller() = default;

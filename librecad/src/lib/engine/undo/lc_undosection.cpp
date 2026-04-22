@@ -28,7 +28,6 @@
 #include "lc_graphicviewport.h"
 #include "rs_document.h"
 #include "rs_graphic.h"
-#include "rs_insert.h"
 #include "rs_layer.h"
 
 LC_UndoSection::LC_UndoSection(RS_Document *doc, LC_GraphicViewport* view) :
@@ -77,7 +76,7 @@ bool LC_UndoSection::undoableExecute(const RS_Document::FunUndoable& doUndoable,
     ctx.success = success;
     if (success) {
         if (!ctx.entitiesToDelete.isEmpty()) {
-            for (const auto e: ctx.entitiesToDelete) {
+            for (const auto e: std::as_const(ctx.entitiesToDelete)) {
                 const auto layer = e->getLayer(true);
                 if (!layer->isLocked()) {
                       m_document->undoableDelete(e);

@@ -29,7 +29,7 @@
 
 class LC_RefSnapArc : public RS_Arc, public LC_RefSnapEntity {
 public:
-    LC_RefSnapArc(const RS_ArcData& d);
+    explicit LC_RefSnapArc(const RS_ArcData& d);
     RS2::EntityType rtti() const override;
     RS_Entity* clone() const override;
     bool isArc() const override {return true;}

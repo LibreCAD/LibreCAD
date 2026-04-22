@@ -57,7 +57,7 @@ void RS_ActionDrawEllipse4Points::init(const int status) {
 }
 
 RS_Entity* RS_ActionDrawEllipse4Points::doTriggerCreateEntity() {
-    RS_Entity* en;
+    RS_Entity* en = nullptr;
     if (getStatus() == SetPoint4 && m_actionData->evalid) {
         en = new RS_Ellipse(m_document, m_actionData->ellipseData);
     }
@@ -166,7 +166,7 @@ bool RS_ActionDrawEllipse4Points::preparePreview() const {
                 }
                 else {
                     m_actionData->evalid = false;
-                    if (m_actionData->bUniqueEllipse == false) {
+                    if (!m_actionData->bUniqueEllipse) {
                         commandMessage(tr("Can not determine uniquely an ellipse"));
                         m_actionData->bUniqueEllipse = true;
                     }

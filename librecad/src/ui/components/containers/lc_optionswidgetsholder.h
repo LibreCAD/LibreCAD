@@ -35,8 +35,8 @@ class LC_OptionsWidgetsHolder : public QWidget{
 public:
     explicit LC_OptionsWidgetsHolder(QWidget *parent = nullptr);
     ~LC_OptionsWidgetsHolder() override;
-    void addOptionsWidget(QWidget* optionsWidget);
-    void removeOptionsWidget(QWidget *optionsWidget);
+    void addOptionsWidget(QWidget* optionsWidget) const;
+    void removeOptionsWidget(QWidget *optionsWidget) const;
     LC_SnapOptionsWidgetsHolder *getSnapOptionsHolder() const;
     void clearActionIcon();
 public slots:

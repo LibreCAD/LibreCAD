@@ -26,7 +26,6 @@
 #include "lc_copyutils.h"
 #include "lc_paste_to_points_options_filler.h"
 #include "lc_paste_to_points_options_widget.h"
-
 #include "rs_clipboard.h"
 #include "rs_document.h"
 #include "rs_entity.h"
@@ -60,7 +59,7 @@ void LC_ActionPasteToPoints::init(const int status) {
 }
 
 bool LC_ActionPasteToPoints::doTriggerModifications(LC_DocumentModificationBatch& ctx) {
-    for (const auto p: m_selectedEntities){
+    for (const auto p : std::as_const(m_selectedEntities)) {
         const RS_Vector currentPoint = p->getCenter();
         const auto pasteData = LC_CopyUtils::RS_PasteData(currentPoint, m_scaleFactor , m_angleRad);
         LC_CopyUtils::paste(pasteData, m_graphic, ctx);

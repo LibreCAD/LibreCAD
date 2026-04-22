@@ -148,7 +148,7 @@ bool LC_ActionDrawArc2PointsBase::doProcessCommand(const int status, const QStri
        updateOptions();
    }
    else {
-       bool ok;
+       bool ok = false;
        const double r = RS_Math::eval(command, &ok);
        if (ok) {
            if (r > RS_TOLERANCE) {

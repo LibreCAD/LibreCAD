@@ -62,7 +62,7 @@ void LC_PropertyQStringListArrowsComboboxViewHandler::connectCombobox(LC_Propert
 void LC_PropertyQStringListArrowsComboboxViewHandler::doUpdateEditor() {
     m_updating++;
 
-    auto* typedView = static_cast<LC_PropertyQStringListArrowsComboboxView*>(view());
+    const auto* typedView = static_cast<LC_PropertyQStringListArrowsComboboxView*>(view());
 
     const auto cb = getEditor();
     cb->setEnabled(isEditableByUser());
@@ -70,7 +70,7 @@ void LC_PropertyQStringListArrowsComboboxViewHandler::doUpdateEditor() {
     const auto lineEdit = cb->lineEdit();
     if (isMultiValue()) {
         cb->clearEditText();
-        if (lineEdit) {
+        if (lineEdit != nullptr) {
             lineEdit->setPlaceholderText(LC_Property::getMultiValuePlaceholder());
         }
     }

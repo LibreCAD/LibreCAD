@@ -53,9 +53,9 @@ public:
     void layerActivated(RS_Layer*) override;
     void layerEdited(RS_Layer*) override;
 
-    void setLayerColor(const RS_Color& color, bool b);
-    void setLayerWidth(RS2::LineWidth width, bool b);
-    void setLayerLineType(RS2::LineType lineType, bool b);
+    void setLayerColor(const RS_Color& color, bool updateSelection);
+    void setLayerWidth(RS2::LineWidth width, bool updateSelection);
+    void setLayerLineType(RS2::LineType lineType, bool updateSelection);
 
     void setColor(const RS_Color& color) const;
     void setWidth(RS2::LineWidth width) const;

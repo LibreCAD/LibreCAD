@@ -42,7 +42,7 @@ void LC_PropertiesProviderBlock::fillDocumentProperties(LC_PropertyContainer* co
 
 void LC_PropertiesProviderBlock::createName(LC_PropertyContainer* cont, RS_Block* block,[[maybe_unused]] RS_Graphic* graphic) {
     const LC_Property::Names names = {"blkName", tr("Name"), tr("Name of the block")};
-    QString blockName = block->getName();
+    const QString blockName = block->getName();
     createDirectDelegatedReadonlyString(cont, names, blockName);
 }
 

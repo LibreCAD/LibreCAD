@@ -725,7 +725,7 @@ class LC_DimStyle{
         bool isAltTolSuppressTrailing() const {return isAltToleranceSuppress(SUPPRESS_TRAILING_ZEROS);}
         void setAltTolSuppressTrailing(const bool value) {setAltToleranceFlag(SUPPRESS_TRAILING_ZEROS, value);}
         bool isSuppressZeroFeets() const {
-            bool feetSuppress = ! isLinearSuppress(LC_DimStyle::ZerosSuppression::INCLUDE_ZERO_FEET_AND_ZERO_INCHES);
+            const bool feetSuppress = ! isLinearSuppress(LC_DimStyle::ZerosSuppression::INCLUDE_ZERO_FEET_AND_ZERO_INCHES);
             return feetSuppress;
         }
 
@@ -743,7 +743,7 @@ class LC_DimStyle{
         }
 
         bool isAltSuppressZeroFeets() const {
-            bool feetSuppress = ! isAltLinearSuppress(LC_DimStyle::ZerosSuppression::INCLUDE_ZERO_FEET_AND_ZERO_INCHES);
+            const bool feetSuppress = ! isAltLinearSuppress(LC_DimStyle::ZerosSuppression::INCLUDE_ZERO_FEET_AND_ZERO_INCHES);
             return feetSuppress;
         }
 
@@ -761,7 +761,7 @@ class LC_DimStyle{
         }
 
         bool isAltTolSuppressZeroFeets() const {
-            bool feetSuppress = ! isAltToleranceSuppress(LC_DimStyle::ZerosSuppression::TOL_INCLUDE_ZERO_FEET_AND_ZERO_INCHES);
+            const bool feetSuppress = ! isAltToleranceSuppress(LC_DimStyle::ZerosSuppression::TOL_INCLUDE_ZERO_FEET_AND_ZERO_INCHES);
             return feetSuppress;
         }
 
@@ -779,7 +779,7 @@ class LC_DimStyle{
         }
 
         bool isTolSuppressZeroFeets() const {
-            bool feetSuppress = ! isToleranceSuppress(LC_DimStyle::ZerosSuppression::TOL_INCLUDE_ZERO_FEET_AND_ZERO_INCHES);
+            const bool feetSuppress = ! isToleranceSuppress(LC_DimStyle::ZerosSuppression::TOL_INCLUDE_ZERO_FEET_AND_ZERO_INCHES);
             return feetSuppress;
         }
 

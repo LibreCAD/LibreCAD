@@ -37,7 +37,6 @@ namespace {
 struct LC_ActionDrawCircleTangental2EntitiesRadius::ActionData {
     RS_CircleData circleData;
     RS_Vector coord;
-    double radius{0.};
     bool valid{false};
     RS_VectorSolutions centers;
     std::vector<RS_AtomicEntity*> circles;
@@ -59,7 +58,7 @@ void LC_ActionDrawCircleTangental2EntitiesRadius::doSaveOptions() {
 }
 
 void LC_ActionDrawCircleTangental2EntitiesRadius::doLoadOptions() {
-    double radius  = loadDouble("Radius", 1.0);
+    const double radius  = loadDouble("Radius", 1.0);
     setRadius(radius);
 }
 
@@ -206,7 +205,7 @@ bool LC_ActionDrawCircleTangental2EntitiesRadius::preparePreview() const {
 }
 
 RS_Entity* LC_ActionDrawCircleTangental2EntitiesRadius::catchTangentEntity(const LC_MouseEvent* e, const bool forPreview) const {
-    RS_Entity* en;
+    RS_Entity* en = nullptr;
     // fixme - sand - check whether snap is used for entity selection?  Ensure free snap?
     if (forPreview) {
         en = catchModifiableAndDescribe(e, g_enTypeList);

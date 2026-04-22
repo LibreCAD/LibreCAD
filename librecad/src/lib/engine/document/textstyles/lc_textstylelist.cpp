@@ -66,7 +66,7 @@ void LC_TextStyleList::remove(const QString& name) {
 
 LC_TextStyle* LC_TextStyleList::find(const QString& name) {
     // amount of styles should be small, so linear search should be fine
-    for (const auto v : m_styles) {
+    for (const auto v : std::as_const(m_styles)) {
         if (v->getName() == name) {
             // fixme - case sensitivity?
             return v;

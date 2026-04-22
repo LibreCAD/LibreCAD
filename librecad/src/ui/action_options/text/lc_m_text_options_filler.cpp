@@ -22,6 +22,7 @@
  */
 
 #include "lc_m_text_options_filler.h"
+
 #include "lc_action_draw_mtext.h"
 
 void LC_MTextOptionsFiller::fillToolOptionsContainer(LC_PropertyContainer* container) {

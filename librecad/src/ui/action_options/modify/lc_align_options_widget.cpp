@@ -49,10 +49,10 @@ LC_AlignOptionsWidget::~LC_AlignOptionsWidget() {
 void LC_AlignOptionsWidget::doUpdateByAction(RS_ActionInterface* a) {
     m_action = static_cast<LC_ActionModifyAlign*>(a);
 
-    int valign = m_action->getVAlign();
-    int halign = m_action->getHAlign();
-    int alignType = m_action->getAlignType();
-    bool asGroup = m_action->isAsGroup();
+    const int valign = m_action->getVAlign();
+    const int halign = m_action->getHAlign();
+    const int alignType = m_action->getAlignType();
+    const bool asGroup = m_action->isAsGroup();
 
     LC_GuardedSignalsBlocker({
         ui->cbAsGroup,

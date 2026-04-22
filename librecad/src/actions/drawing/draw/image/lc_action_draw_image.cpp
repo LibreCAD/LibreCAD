@@ -62,7 +62,7 @@ void LC_ActionDrawImage::doLoadOptions() {
     m_ucsAngleDegree =  loadDouble("Angle", 0.0);
     setUcsAngleDegrees(m_ucsAngleDegree);
 
-    double m_factor = loadDouble("Factor", 1.0);
+    m_factor = loadDouble("Factor", 1.0);
     setFactor(m_factor);
 }
 
@@ -185,7 +185,7 @@ bool LC_ActionDrawImage::doProcessCommand(int status, const QString& command) {
             break;
         }
         case SetFactor: {
-            bool ok;
+            bool ok = false;
             const double f = RS_Math::eval(command, &ok);
             if (ok) {
                 setFactor(f);
@@ -199,7 +199,7 @@ bool LC_ActionDrawImage::doProcessCommand(int status, const QString& command) {
             break;
         }
         case SetDPI: {
-            bool ok;
+            bool ok = false;
             const double dpi = RS_Math::eval(command, &ok);
 
             if (ok) {

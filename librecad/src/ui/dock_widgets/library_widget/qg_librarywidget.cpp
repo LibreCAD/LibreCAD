@@ -36,17 +36,16 @@
 #include <QPushButton>
 #include <QStandardItemModel>
 #include <QStandardPaths>
-#include <QToolButton>
 #include <QTreeView>
 #include <QVBoxLayout>
 
+#include "lc_action_block_library_insert.h"
 #include "lc_containertraverser.h"
 #include "lc_documentsstorage.h"
 #include "lc_graphicviewport.h"
 #include "lc_printviewportrenderer.h"
 #include "qg_actionhandler.h"
 #include "rs_actioninterface.h"
-#include "lc_action_block_library_insert.h"
 #include "rs_debug.h"
 #include "rs_graphic.h"
 #include "rs_painter.h"
@@ -146,7 +145,7 @@ void QG_LibraryWidget::insert() {
     QString dxfPath = getItemPath(item);
 
     if (QFileInfo(dxfPath).isReadable()) {
-        if (m_actionHandler) {
+        if (m_actionHandler != nullptr) {
             const std::shared_ptr<RS_ActionInterface> a = m_actionHandler->setCurrentAction(RS2::ActionLibraryInsert);
             if (a) {
                 const auto* action = static_cast<LC_ActionBlockLibraryInsert*>(a.get());
@@ -216,7 +215,7 @@ void QG_LibraryWidget::appendTree(QStandardItem* item, const QString& directory)
     // read subdirectories of this directory:
     QStringList lDirectoryList = dir.entryList(QDir::Dirs | QDir::NoDotAndDotDot, QDir::Name);
 
-    if (!item) {
+    if (item == nullptr) {
         item = m_dirModel->invisibleRootItem();
     }
 
@@ -234,7 +233,7 @@ void QG_LibraryWidget::appendTree(QStandardItem* item, const QString& directory)
         }
 
         // Create new item if no existing was found:
-        if (!newItem) {
+        if (newItem == nullptr) {
             newItem = new QStandardItem(QIcon(":/icons/folderclosed.lci"), lDirectory);
             item->setChild(item->rowCount(), newItem);
         }
@@ -294,13 +293,13 @@ void QG_LibraryWidget::updatePreview(const QModelIndex& idx) {
     QStringList itemPathList;
 
     // look in all possible system directories for DXF files in the current library path:
-    for (int i = 0; i < directoryList.size(); ++i) {
-        itemDir.setPath(directoryList.at(i) + directory);
+    for (const auto & i : directoryList) {
+        itemDir.setPath(i + directory);
 
         if (itemDir.exists()) {
             QStringList itemNameList = itemDir.entryList(QStringList("*.dxf"), QDir::Files, QDir::Name);
-            for (int j = 0; j < itemNameList.size(); ++j) {
-                itemPathList += itemDir.path() + QDir::separator() + itemNameList.at(j);
+            for (const auto & j : itemNameList) {
+                itemPathList += itemDir.path() + QDir::separator() + j;
             }
         }
     }
@@ -347,10 +346,10 @@ QString QG_LibraryWidget::getItemPath(const QStandardItem* item) {
     QStringList directoryList = RS_SYSTEM->getDirectoryList("library");
 
     // look in all possible system directories for DXF files in the current library path:
-    for (auto it = directoryList.begin(); it != directoryList.end(); ++it) {
-        QDir itemDir(*it + dir);
+    for (auto & it : directoryList) {
+        QDir itemDir(it + dir);
         if (itemDir.exists()) {
-            QString dxfFile = *it + dir + QDir::separator() + item->text() + ".dxf";
+            QString dxfFile = it + dir + QDir::separator() + item->text() + ".dxf";
             if (QFileInfo(dxfFile).isReadable()) {
                 return dxfFile;
             }

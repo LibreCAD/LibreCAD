@@ -212,7 +212,7 @@ std::unique_ptr<RS_Entity> RS_Polyline::createVertex(const RS_Vector& v, const d
         // alpha can't be 0.0 at this point
         const double radius = std::abs(dist / std::sin(alpha / 2.0));
 
-        const double wu = std::abs(radius * radius - dist * dist);
+        const double wu = std::abs((radius * radius) - (dist * dist));
         const double angleNew = reversed ? angle - M_PI_2 : angle + M_PI_2;
         const double h = (std::abs(alpha) > M_PI) ? -std::sqrt(wu) : std::sqrt(wu);
 
@@ -243,7 +243,7 @@ void RS_Polyline::endPolyline() {
         RS_DEBUG->print("RS_Polyline::endPolyline: adding closing entity");
 
         // remove old closing entity:
-        if (m_closingEntity) {
+        if (m_closingEntity != nullptr) {
             removeEntity(m_closingEntity);
         }
 
@@ -251,7 +251,7 @@ void RS_Polyline::endPolyline() {
         std::unique_ptr<RS_Entity> vertex = createVertex(m_data.startpoint, m_nextBulge);
         m_closingEntity = vertex.get();
         vertex.release();
-        if (m_closingEntity && m_closingEntity->getLength() > 1.0E-4) {
+        if ((m_closingEntity != nullptr) && m_closingEntity->getLength() > 1.0E-4) {
             RS_EntityContainer::addEntity(m_closingEntity);
             //data.endpoint = data.startpoint;
         }
@@ -796,7 +796,7 @@ RS_Arc* RS_Polyline::arcFromBulge(const RS_Vector& start, const RS_Vector& end, 
     const double dist = start.distanceTo(end) / 2.0;
     const double angle = start.angleTo(end);
     const double radius = std::abs(dist / std::sin(alpha / 2.0));
-    const double wu = std::abs(radius * radius - dist * dist);
+    const double wu = std::abs((radius * radius) - (dist * dist));
     const double h = (std::abs(alpha) > M_PI) ? -std::sqrt(wu) : std::sqrt(wu);
     const double angleNew = reversed ? angle - M_PI_2 : angle + M_PI_2;
     const RS_Vector center = middle + RS_Vector::polar(h, angleNew);

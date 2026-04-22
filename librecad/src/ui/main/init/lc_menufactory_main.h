@@ -41,7 +41,7 @@ public:
     void onWorkspaceMenuAboutToShow(const QList<QC_MDIWindow *> &windowList);
     QMenu* createMainWindowPopupMenu() const;
     QMenu * getRecentFilesMenu() const;
-    void recreateToolbarsMenu();
+    void recreateToolbarsMenu() const;
 protected:
     LC_ActionFactory *m_actionFactory = nullptr;
 
@@ -62,7 +62,7 @@ protected:
     MenuOptions m_menuOptions;
 
     void prepareWorkspaceMenuComponents() const;
-    void createToolsMenu(QMenuBar *menuBar, QList<QMenu *> &topMenuMenus);
+    void createToolsMenu(QMenuBar *menuBar, QList<QMenu *> &topMenuMenus) const;
     void createHelpMenu(QMenuBar *menuBar, QList<QMenu *> &topMenuMenus);
     void createFileMenu(QMenuBar *menuBar, QList<QMenu *> &topMenuMenus) const;
     void createSettingsMenu(QMenuBar *menuBar, QList<QMenu *> &topMenuMenus) const;

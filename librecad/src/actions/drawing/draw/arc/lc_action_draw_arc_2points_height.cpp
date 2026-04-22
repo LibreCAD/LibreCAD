@@ -24,7 +24,6 @@
 #include "lc_action_draw_arc_2points_height.h"
 
 #include "lc_creation_arc.h"
-#include "lc_linemath.h"
 #include "rs_arc.h"
 #include "rs_circle.h"
 #include "rs_information.h"
@@ -33,7 +32,7 @@ LC_ActionDrawArc2PointsHeight::LC_ActionDrawArc2PointsHeight(LC_ActionContext *a
     :LC_ActionDrawArc2PointsBase("ActionDrawArc2PHeight",actionContext, RS2::ActionDrawArc2PHeight) {
 }
 
-bool LC_ActionDrawArc2PointsHeight::createArcData(RS_ArcData &data, [[maybe_unused]]int status, RS_Vector pos, bool alternate, [[maybe_unused]]bool reportErrors) {
+bool LC_ActionDrawArc2PointsHeight::createArcData(RS_ArcData &data, [[maybe_unused]]int status, const RS_Vector& pos, bool alternate, [[maybe_unused]]bool reportErrors) {
     return LC_CreationArc::createFrom2PHeight(m_startPoint, pos, m_parameterLen, m_reversed, alternate, data);
 }
 

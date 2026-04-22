@@ -35,7 +35,7 @@
  *  name 'name' and widget flags set to 'f'.
  */
 LC_CircleCenterRadiusOptionsWidget::LC_CircleCenterRadiusOptionsWidget()
-    :m_action{nullptr}, ui(new Ui::LC_CircleCenterRadiusOptionsWidget{}){
+    : ui(new Ui::LC_CircleCenterRadiusOptionsWidget{}){
     ui->setupUi(this);
     connect(ui->leRadius, &QLineEdit::editingFinished, this, &LC_CircleCenterRadiusOptionsWidget::onRadiusEditingFinished);
 
@@ -59,7 +59,7 @@ void LC_CircleCenterRadiusOptionsWidget::languageChange() {
 void LC_CircleCenterRadiusOptionsWidget::doUpdateByAction(RS_ActionInterface* a) {
     m_action = static_cast<LC_ActionDrawCircleCenterRadius*>(a);
 
-    QString radius = fromDouble(m_action->getRadius());
+    const QString radius = fromDouble(m_action->getRadius());
     LC_GuardedSignalsBlocker({ui->leRadius});
     ui->leRadius->setText(radius);
 }

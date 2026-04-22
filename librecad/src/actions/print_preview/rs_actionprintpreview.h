@@ -78,7 +78,7 @@ public:
     bool isPortrait() const;
     void setPaperOrientation(bool portrait) const;
 
-    QStringList getStandardPrintScales();
+    QStringList getStandardPrintScales() const;
     bool isUseImperialScales() const;
 protected:
     /**

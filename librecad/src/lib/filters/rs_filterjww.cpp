@@ -901,14 +901,14 @@ void RS_FilterJWW::linkImage(const DL_ImageDefData& data) {
         RS_DEBUG->print("File %s doesn't exist.", (const char*)QFile::encodeName(sfile));
         // try relative path:
         const QString f1 = fiDxf.path() + "/" + sfile;
-        if (QFileInfo(f1).exists()) {
+        if (QFileInfo::exists(f1)) {
             sfile = f1;
         }
         else {
             RS_DEBUG->print("File %s doesn't exist.", (const char*)QFile::encodeName(f1));
             // try drawing path:
             const QString f2 = fiDxf.path() + "/" + fiBitmap.fileName();
-            if (QFileInfo(f2).exists()) {
+            if (QFileInfo::exists(f2)) {
                 sfile = f2;
             }
             else {
@@ -1234,7 +1234,7 @@ bool RS_FilterJWW::fileExport(RS_Graphic& g, const QString& file, const RS2::For
     delete dw;
 
     // check if file was actually written (strange world of windoze xp):
-    if (QFileInfo(file).exists() == false) {
+    if (QFileInfo::exists(file) == false) {
         RS_DEBUG->print("RS_FilterJWW::fileExport: file could not be written");
         return false;
     }

@@ -37,7 +37,7 @@ RS_ActionBlocksRemove::RS_ActionBlocksRemove(LC_ActionContext *actionContext)
     :LC_UndoableDocumentModificationAction("Remove Block", actionContext, RS2::ActionBlocksRemove) {}
 
 bool RS_ActionBlocksRemove::doTriggerModifications(LC_DocumentModificationBatch& ctx) {
-    if (!(m_graphic && m_document)) { /// fixme - remove, should be checked on init
+    if (!((m_graphic != nullptr) && (m_document != nullptr))) { /// fixme - remove, should be checked on init
         finish();
         return false;
     }
@@ -57,25 +57,25 @@ bool RS_ActionBlocksRemove::doTriggerModifications(LC_DocumentModificationBatch&
         containerList.push_back(blockList->at(bi));
     }
 
-    for (const auto block: blocks) {
+    for (const auto block: std::as_const(blocks)) {
         if (nullptr == block) {
             continue;
         }
         for (const auto cont: containerList) {
         // remove all inserts from the graphic:
-            bool done;
-            do {
-                done = true;
-                for (const auto e: *cont) {
-                    if (e->is(RS2::EntityInsert)) {
-                        auto *insert = static_cast<RS_Insert *>(e);
-                        if (insert->getName() == block->getName() && !insert->isDeleted()) {
-                            ctx -= insert;
-                            done = false;
-                            break;
-                        }
+        bool done = false;
+        do {
+            done = true;
+            for (const auto e : *cont) {
+                if (e->is(RS2::EntityInsert)) {
+                    auto* insert = static_cast<RS_Insert*>(e);
+                    if (insert->getName() == block->getName() && !insert->isDeleted()) {
+                        ctx -= insert;
+                        done = false;
+                        break;
                     }
                 }
+            }
             } while (!done);
         }
 

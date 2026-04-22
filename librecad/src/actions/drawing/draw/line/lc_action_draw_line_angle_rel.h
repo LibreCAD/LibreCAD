@@ -24,7 +24,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #define LC_ACTIONDRAWLINEANGLEREL_H
 
 #include "lc_abstractactionwithpreview.h"
-#include "lc_action_options_base.h"
 #include "lc_action_options_editor_typed.h"
 #include "rs_line.h"
 
@@ -60,7 +59,7 @@ public:
         TICK_SNAP_MIDDLE, // tick middle is on original line
         TICK_SNAP_END // tick end point is on original line
     };
-
+    void updateActionPrompt() override;
 private:
     /**
     * Action states
@@ -83,7 +82,7 @@ private:
      * describes data needed for drawing tick angle
      */
     TickData* m_tickData = nullptr;
-    
+
     /**
 * Controls in which point of original line snap is performed
 */
@@ -146,7 +145,6 @@ protected:
     bool isSetActivePenAndLayerOnTrigger() override;
     void doFinish() override;
     void setLine(RS_Entity* en, const RS_Vector& snapPoint);
-    void updateActionPrompt() override;
     bool doUpdateAngleByInteractiveInput(const QString& tag, double angleRad) override;
     bool doUpdateDistanceByInteractiveInput(const QString& tag, double distance) override;
     QString getSettingsGroupName() override;

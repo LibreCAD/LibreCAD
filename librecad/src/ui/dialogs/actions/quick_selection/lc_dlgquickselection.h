@@ -57,7 +57,7 @@ public:
     LC_ActionContext::InteractiveInputInfo::InputType isInteractiveInputRequested() const {return m_interactiveInputRequested;}
     LC_QuickSearchSelectionDialogState* getSavedState() const;
     bool isAdditionalSelectionRequested() const {return m_selectionRequested;}
-    RS_Selection::ConditionalSelectionOptions getSelectionOptions(RS_Selection::ConditionalSelectionOptions& result);
+    RS_Selection::ConditionalSelectionOptions getSelectionOptions(RS_Selection::ConditionalSelectionOptions& result) const;
     void accept() override;
 protected slots:
     void onApplyToCurrentIndexChanged(int index);

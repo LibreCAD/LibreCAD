@@ -1,5 +1,5 @@
 /****************************************************************************
-*
+ *
 * class that process given entity and creates the list of properties of it
 
 Copyright (C) 2024 LibreCAD.org

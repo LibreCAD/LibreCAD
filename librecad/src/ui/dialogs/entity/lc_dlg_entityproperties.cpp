@@ -25,11 +25,11 @@
 
 #include <QToolButton>
 
+#include "lc_dlg_dimension.h"
+#include "lc_entitypropertieseditorwidget.h"
 #include "lc_propertieseditingwidget_arc.h"
 #include "lc_propertieseditingwidget_circle.h"
-#include "lc_dlg_dimension.h"
 #include "lc_propertieseditingwidget_ellipse.h"
-#include "lc_entitypropertieseditorwidget.h"
 #include "lc_propertieseditingwidget_hyperbola.h"
 #include "lc_propertieseditingwidget_image.h"
 #include "lc_propertieseditingwidget_insert.h"
@@ -37,8 +37,8 @@
 #include "lc_propertieseditingwidget_parabola.h"
 #include "lc_propertieseditingwidget_point.h"
 #include "lc_propertieseditingwidget_polyline.h"
-#include "lc_propertieseditingwidget_splinepoints.h"
 #include "lc_propertieseditingwidget_spline.h"
+#include "lc_propertieseditingwidget_splinepoints.h"
 #include "rs_layer.h"
 #include "rs_settings.h"
 #include "ui_lc_dlg_entityproperties.h"
@@ -115,7 +115,7 @@ LC_DlgEntityProperties::LC_DlgEntityProperties(QWidget* parent, LC_GraphicViewpo
 
     const bool autoRaiseButtons = LC_GET_ONE_BOOL("Widgets", "DockWidgetsFlatIcons", true);
     QList<QToolButton*> list = findChildren<QToolButton*>();
-    for (const auto button : list) {
+    for (const auto button : std::as_const(list)) {
         button->setAutoRaise(autoRaiseButtons);
     }
 }

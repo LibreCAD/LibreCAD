@@ -188,7 +188,7 @@ int LC_StylesListModel::getItemIndex(const LC_DimStyleItem* itemToFind) {
 }
 
 void LC_StylesListModel::collectItemsForBaseStyleName(const QString &baseName, QList<LC_DimStyleItem*>* list) {
-    for (const auto dsi: m_items) {
+    for (const auto dsi: std::as_const(m_items)) {
         if (baseName == dsi->baseName()) {
             list->push_back(dsi);
         }

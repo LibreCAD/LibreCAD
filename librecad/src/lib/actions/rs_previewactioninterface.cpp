@@ -41,10 +41,9 @@
 #include "lc_refellipse.h"
 #include "lc_refline.h"
 #include "lc_refpoint.h"
-#include "visual_snap/lc_visual_snap_manager.h"
+#include "lc_visual_snap_manager.h"
 #include "rs_arc.h"
 #include "rs_circle.h"
-#include "rs_debug.h"
 #include "rs_document.h"
 #include "rs_ellipse.h"
 #include "rs_graphicview.h"
@@ -823,14 +822,14 @@ void RS_PreviewActionInterface::onVisualSnapSolutionRefresh() {
 void RS_PreviewActionInterface::onVisualSnapPointRegistered(LC_VisualSnapVertex* point, bool remove) {
     m_visualSnapManager->previewVertex(m_preview.get(), point, remove);
     drawPreview();
-    m_graphicView->redraw(static_cast<RS2::RedrawMethod>(RS2::RedrawOverlay + RS2::RedrawImmediately));
+    m_graphicView->redraw(RS2::RedrawOverlay, true);
 }
 
 void RS_PreviewActionInterface::onVisualSnapEntityRegistered([[maybe_unused]] RS_Entity* entity) {
     deleteHighlights();
     drawPreview();
     drawHighlights();
-    m_graphicView->redraw(static_cast<RS2::RedrawMethod>(RS2::RedrawDrawing + RS2::RedrawImmediately));
+    m_graphicView->redraw(RS2::RedrawDrawing, true);
 }
 
 void RS_PreviewActionInterface::mouseMoveEvent(QMouseEvent* event) {
@@ -845,8 +844,8 @@ void RS_PreviewActionInterface::mouseMoveEvent(QMouseEvent* event) {
     if (applyVisualSnap) {
         RS_Entity* ent = catchEntity(lcEvent.graphPoint, g_visualSnapEntities, RS2::ResolveAll);
         bool tryToProcessVertex = true;
-        bool control = isControl(event);
-        bool isManualVertexAddWithCtrl = m_visualSnapManager->isManualVertexAddWithCTRL();
+        const bool control = isControl(event);
+        const bool isManualVertexAddWithCtrl = m_visualSnapManager->isManualVertexAddWithCTRL();
         if (ent != nullptr) {
             if (m_visualSnapManager->isNotInVisualSnap(ent)) {
                 highlightHover(ent);
@@ -893,7 +892,7 @@ void RS_PreviewActionInterface::mouseMoveEvent(QMouseEvent* event) {
 }
 
 // fixme - check and ensure that coordinate is properly set if it is specified by command line
-void RS_PreviewActionInterface::addSnappedPointToVisualSnap(const RS_Vector& v, RS_Entity* entity, RS2::SnapType snapType, bool clearOther) {
+void RS_PreviewActionInterface::addSnappedPointToVisualSnap(const RS_Vector& v, RS_Entity* entity, RS2::SnapType snapType, bool clearOther) const {
     if (m_visualSnapManager->isAutoAddSnappedPoint()) {
         m_visualSnapManager->addSnappedPointAsVertex(v, snapType, entity, clearOther);
     }
@@ -936,8 +935,8 @@ void RS_PreviewActionInterface::tryShowRelativeInput(RS2::RelativePointParam typ
 }
 
 void RS_PreviewActionInterface::addProjectedRelativePointToVisualSnap(const LC_RelativePositionData* relativePositionData, bool applyProjectedPosition) {
-    auto projectedPoint = relativePositionData->wcsProjection;
-    bool apply = applyProjectedPosition && relativePositionData->isSingleSolution;
+    const auto projectedPoint = relativePositionData->wcsProjection;
+    const bool apply = applyProjectedPosition && relativePositionData->isSingleSolution;
     if (apply) {
         m_lastMouseMoveEvent.snapPoint = projectedPoint;
         m_lastMouseMoveEvent.graphPoint = projectedPoint;
@@ -997,7 +996,7 @@ void RS_PreviewActionInterface::onMouseLeftButtonRelease(const int status, QMous
 
 void RS_PreviewActionInterface::onMouseRightButtonRelease(const int status, QMouseEvent* e) {
     if (hasVisualSnap()) {
-        bool control = isControl(e);
+        const bool control = isControl(e);
         if (control) {
             removePrevioustVisualSnapAddition();
             e->accept();
@@ -1099,7 +1098,7 @@ bool RS_PreviewActionInterface::parseToRelativeAngle(const QString& c, double& u
     }
     return ok;
 }
-
+[[deprecated]] // fixme - sand - why not to use LC_Convert?
 double RS_PreviewActionInterface::evalAngleValue(const QString& c, bool* ok) const {
     QString stringToEval;
     if (m_doNotAllowNonDecimalAnglesInput) {

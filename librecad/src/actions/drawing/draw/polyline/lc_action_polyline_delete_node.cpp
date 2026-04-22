@@ -81,7 +81,7 @@ void LC_ActionPolylineDeleteNode::onMouseMoveEvent(const int status, const LC_Mo
         }
         case SetVertex1:{
             RS_Vector vertex;
-            RS_Entity * segment;
+            RS_Entity * segment = nullptr;
             getSelectedPolylineVertex(e, vertex, segment);
 
             if (vertex.valid){
@@ -125,7 +125,7 @@ void LC_ActionPolylineDeleteNode::onMouseLeftButtonRelease(const int status, con
                 commandMessage(tr("No Entity found."));
             } else {
                 RS_Vector vertex;
-                RS_Entity * segment;
+                RS_Entity * segment = nullptr;
                 getSelectedPolylineVertex(e, vertex, segment);
                 if (vertex.valid){
                     if (!m_polylineToModify->isPointOnEntity(vertex)){

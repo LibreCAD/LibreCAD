@@ -50,7 +50,9 @@ public:
     bool isFreeGapSize() const{return m_freeGapSize;}
     void setFreeGapSize(const bool value){m_freeGapSize = value;}
 
-    bool getGapSnapMode() const {return m_gapSnapMode;}
+    int getGapSnapMode() const {
+        return m_gapSnapMode;
+    }
     void setGapSnapMode(const int mode){m_gapSnapMode = mode;}
 
     /**

@@ -38,11 +38,11 @@ LC_MoveOptionsWidget::LC_MoveOptionsWidget(): ui(new Ui::LC_MoveOptionsWidget) {
 void LC_MoveOptionsWidget::doUpdateByAction(RS_ActionInterface* a) {
     m_action = static_cast<LC_ActionModifyMove*>(a);
 
-    bool useCurrentLayer = m_action->isUseCurrentLayer();
-    bool useCurrentAttributes = m_action->isUseCurrentAttributes();
-    int copiesNumber = m_action->getCopiesNumber();
-    bool keepOriginals = m_action->isKeepOriginals();
-    bool useMultipleCopies = m_action->isUseMultipleCopies();
+    const bool useCurrentLayer = m_action->isUseCurrentLayer();
+    const bool useCurrentAttributes = m_action->isUseCurrentAttributes();
+    const int copiesNumber = m_action->getCopiesNumber();
+    const bool keepOriginals = m_action->isKeepOriginals();
+    const bool useMultipleCopies = m_action->isUseMultipleCopies();
     LC_GuardedSignalsBlocker({ui->cbCurrentAttr, ui->cbKeepOriginals, ui->cbCurrentLayer, ui->cbMultipleCopies, ui->sbNumberOfCopies});
 
     ui->cbMultipleCopies->setChecked(useMultipleCopies);

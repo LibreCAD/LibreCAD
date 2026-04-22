@@ -24,8 +24,8 @@
 
 #include "lc_actioncontext.h"
 #include "lc_arc_tangential_options_filler.h"
-#include "lc_creation_arc.h"
 #include "lc_arc_tangential_options_widget.h"
+#include "lc_creation_arc.h"
 #include "rs_arc.h"
 #include "rs_debug.h"
 #include "rs_document.h"
@@ -69,7 +69,7 @@ void LC_ActionDrawArcTangential::doInitWithContextEntity(RS_Entity* contextEntit
 }
 
 RS_Entity* LC_ActionDrawArcTangential::doTriggerCreateEntity() {
-    if (!(m_point.valid && m_baseEntity)) {
+    if (!(m_point.valid && (m_baseEntity != nullptr))) {
         RS_DEBUG->print("RS_ActionDrawArcTangential::trigger: conditions not met");
         return nullptr;
     }
@@ -110,7 +110,7 @@ bool LC_ActionDrawArcTangential::doUpdateDistanceByInteractiveInput(const QStrin
 }
 
 void LC_ActionDrawArcTangential::preparePreview() {
-    if (m_baseEntity && m_point.valid) {
+    if ((m_baseEntity != nullptr) && m_point.valid) {
         RS_Vector startPoint;
         double direction;
         if (m_isStartPoint) {
