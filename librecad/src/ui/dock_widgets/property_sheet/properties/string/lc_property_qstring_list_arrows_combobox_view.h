@@ -32,7 +32,7 @@ public:
     static const QByteArray ATTR_BLOCK_NAMES;
     static const QByteArray ATTR_CURRENT_INDEX;
 
-    explicit LC_PropertyQStringListArrowsComboboxView(LC_PropertyQString& property)
+    explicit LC_PropertyQStringListArrowsComboboxView(LC_PropertyQString* property)
         : LC_PropertyQStringListComboBoxView(property) {
     }
 

@@ -31,7 +31,7 @@ class LC_PropertyBoolCheckBoxView : public LC_PropertyViewTyped<LC_PropertyBool,
     Q_DISABLE_COPY(LC_PropertyBoolCheckBoxView)
 public:
     static const QByteArray VIEW_NAME;
-    explicit LC_PropertyBoolCheckBoxView(LC_PropertyBool& property);
+    explicit LC_PropertyBoolCheckBoxView(LC_PropertyBool* property);
 protected:
     bool doBuildPartValue(LC_PropertyPaintContext& ctx, LC_PropertyViewPart& part) override;
 };

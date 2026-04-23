@@ -37,7 +37,7 @@ public:
     static const QByteArray ATTR_STEP;
     static const QByteArray ATTR_SUFFIX;
 
-    explicit LC_PropertyIntSpinBoxView(LC_PropertyInt& property);
+    explicit LC_PropertyIntSpinBoxView(LC_PropertyInt* property);
     int getMinValue() const;
     int getMaxValue() const;
     int getCurrentValue() const;

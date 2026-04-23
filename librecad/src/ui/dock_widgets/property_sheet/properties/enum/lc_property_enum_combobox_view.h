@@ -32,7 +32,7 @@ class LC_PropertyEnumComboBoxView : public LC_PropertyViewTyped<LC_PropertyEnum>
 
 public:
     static const QByteArray VIEW_NAME;
-    explicit LC_PropertyEnumComboBoxView(LC_PropertyEnum& property);
+    explicit LC_PropertyEnumComboBoxView(LC_PropertyEnum* property);
 
 protected:
     QWidget* doCreateValueEditor(QWidget* parent, const QRect& rect, const EditActivationContext* ctx) override;

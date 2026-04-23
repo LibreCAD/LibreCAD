@@ -68,7 +68,7 @@ private:
     }
 };
 
-LC_PropertyEnumComboBoxView::LC_PropertyEnumComboBoxView(LC_PropertyEnum& property)
+LC_PropertyEnumComboBoxView::LC_PropertyEnumComboBoxView(LC_PropertyEnum* property)
     : LC_PropertyViewTyped(property) {
 }
 

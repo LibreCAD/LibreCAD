@@ -26,7 +26,7 @@
 #include "lc_property_view_part.h"
 #include "lc_property_view_utils.h"
 
-LC_PropertyViewError::LC_PropertyViewError(LC_Property& property, const QString& error)
+LC_PropertyViewError::LC_PropertyViewError(LC_Property* property, const QString& error)
     : LC_PropertyViewWithValue(property), m_error(error) {
 }
 
@@ -40,6 +40,6 @@ bool LC_PropertyViewError::doBuildPartValue([[maybe_unused]] LC_PropertyPaintCon
     return true;
 }
 
-LC_PropertyView* LC_PropertyViewError::createErrorView(LC_Property& property, const QString& error) {
+LC_PropertyView* LC_PropertyViewError::createErrorView(LC_Property* property, const QString& error) {
     return new LC_PropertyViewError(property, error);
 }

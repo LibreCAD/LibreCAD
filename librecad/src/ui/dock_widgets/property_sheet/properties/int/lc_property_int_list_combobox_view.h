@@ -33,7 +33,7 @@ class LC_PropertyIntListComboBoxView : public LC_PropertyIntSpinBoxView {
 
 public:
     static const QByteArray VIEW_NAME;
-    explicit LC_PropertyIntListComboBoxView(LC_PropertyInt& property);
+    explicit LC_PropertyIntListComboBoxView(LC_PropertyInt* property);
 
 protected:
     QWidget* doCreateValueEditor(QWidget* parent, const QRect& rect, const EditActivationContext* ctx) override;

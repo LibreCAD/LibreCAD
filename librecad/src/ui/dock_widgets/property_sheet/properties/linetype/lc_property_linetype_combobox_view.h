@@ -36,7 +36,7 @@ public:
     static const QByteArray VIEW_NAME;
     static const QByteArray ATTR_SHOW_BY_LAYER;
 
-    explicit LC_PropertyLineTypeComboboxView(LC_PropertyLineType& property) : LC_PropertySimpleComboboxView(property) {
+    explicit LC_PropertyLineTypeComboboxView(LC_PropertyLineType* property) : LC_PropertySimpleComboboxView(property) {
     }
 
 protected:

@@ -130,6 +130,7 @@ private:
     QList<RS_Entity*> m_orginalEntities;
     QList<RS_Entity*> m_modifiedEntities;
     OperationMode m_operationMode = MODE_SELECTION;
+    QString m_activePropertyName;
 };
 
 #endif

@@ -32,7 +32,7 @@ class LC_PropertyViewMultiple : public LC_PropertyViewTypedCompound<LC_PropertyM
 
 public:
     static const QByteArray VIEW_NAME;
-    explicit LC_PropertyViewMultiple(LC_PropertyMulti& owner);
+    explicit LC_PropertyViewMultiple(LC_PropertyMulti* owner);
     ~LC_PropertyViewMultiple() override;
     bool isSplittable() const override;
 

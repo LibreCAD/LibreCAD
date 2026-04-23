@@ -35,7 +35,7 @@ public:
     static const QByteArray ATTR_MAX_LENGTH;
     static const QByteArray ATTR_ZERO_PLACEHOLDER;
 
-    explicit LC_PropertyDoubleLineEditView(LC_PropertyDouble& owner)
+    explicit LC_PropertyDoubleLineEditView(LC_PropertyDouble* owner)
         : LC_PropertyViewTyped<LC_PropertyDouble>(owner) {
     }
     bool getPropertyValueFromEditString(const QString& text, double& val);

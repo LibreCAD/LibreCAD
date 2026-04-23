@@ -34,7 +34,7 @@ public:
     using ValueType = QString;
     static const QByteArray VIEW_NAME;
 
-    explicit LC_PropertyQStringFontComboboxView(LC_PropertyQString& property) : LC_PropertySimpleComboboxView(property) {
+    explicit LC_PropertyQStringFontComboboxView(LC_PropertyQString* property) : LC_PropertySimpleComboboxView(property) {
     }
 
 protected:

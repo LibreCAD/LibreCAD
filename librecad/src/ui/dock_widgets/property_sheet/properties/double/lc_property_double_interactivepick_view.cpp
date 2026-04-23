@@ -104,7 +104,7 @@ protected:
     }
 };
 
-LC_PropertyDoubleInteractivePickView::LC_PropertyDoubleInteractivePickView(LC_PropertyDouble& property)
+LC_PropertyDoubleInteractivePickView::LC_PropertyDoubleInteractivePickView(LC_PropertyDouble* property)
     : LC_PropertyViewTyped(property) {
 }
 

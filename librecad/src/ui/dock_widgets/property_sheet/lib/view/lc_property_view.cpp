@@ -35,8 +35,8 @@ const QByteArray LC_PropertyView::ATTR_VIRTUAL = QByteArrayLiteral("_virtual");
 
 LC_PropertyView::ChildExpandsionViewStyle LC_PropertyView::m_expandedIndicatorStyle = ExpansionStyleQtDefault;
 
-LC_PropertyView::LC_PropertyView(LC_Property& property)
-    : m_property(&property), m_stateProperty(nullptr) {
+LC_PropertyView::LC_PropertyView(LC_Property* property)
+    : m_property{property}, m_stateProperty(nullptr) {
 }
 
 LC_PropertyView::~LC_PropertyView() {
@@ -82,7 +82,8 @@ void LC_PropertyView::applySubPropertyInfo(const LC_PropertyViewDescriptor& attr
     }
 
     const auto p = getSubProperty(subInfo.id);
-    p->setName(subInfo.key);
+    // fixme - sand - review whether name should be actually set!
+    // p->setName(subInfo.key);
     attrs.store(subInfo.displayNameAttr, p, &LC_Property::getDisplayName, &LC_Property::setDisplayName);
     attrs.store(subInfo.descriptionAttr, p, &LC_Property::getDescription, &LC_Property::setDescription);
     if (subPropertyAttrs.viewName.isEmpty()) {

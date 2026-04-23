@@ -147,7 +147,6 @@ void QG_SnapToolBar::setGraphicView(RS_GraphicView* gview) {
         else {
             m_actionSnapVisual->setIcon(QIcon(":/icons/snap_visual.lci"));
         }
-
     }
 }
 

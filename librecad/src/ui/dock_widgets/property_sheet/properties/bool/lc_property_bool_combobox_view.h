@@ -35,7 +35,7 @@ public:
     static const QByteArray ATTR_LABEL_TRUE;
     static const QByteArray ATTR_LABEL_FALSE;
 
-    explicit LC_PropertyBoolComboBoxView(LC_PropertyBool& property);
+    explicit LC_PropertyBoolComboBoxView(LC_PropertyBool* property);
 
 protected:
     void doApplyAttributes(const LC_PropertyViewDescriptor& attrs) override;

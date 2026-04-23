@@ -31,7 +31,7 @@ class LC_PropertyContainerView : public LC_PropertyView {
 
 public:
     static const QByteArray VIEW_NAME;
-    explicit LC_PropertyContainerView(LC_PropertyContainer& property);
+    explicit LC_PropertyContainerView(LC_PropertyContainer* property);
 
 protected:
     LC_Property* doGetSubProperty(int index) override;
@@ -41,7 +41,7 @@ protected:
     void buildPartName(const LC_PropertyPaintContext& ctx, QList<LC_PropertyViewPart>& parts) const;
 
 private:
-    LC_PropertyContainer& m_owner;
+    LC_PropertyContainer* m_owner;
 };
 
 #endif

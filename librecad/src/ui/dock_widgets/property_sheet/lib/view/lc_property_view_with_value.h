@@ -30,7 +30,7 @@ class LC_PropertyViewWithValue : public LC_PropertyViewWithValues {
     Q_DISABLE_COPY(LC_PropertyViewWithValue)
 
 protected:
-    explicit LC_PropertyViewWithValue(LC_Property& property);
+    explicit LC_PropertyViewWithValue(LC_Property* property);
     virtual bool doBuildPartValue(LC_PropertyPaintContext& ctx, LC_PropertyViewPart& parts) = 0;
     void doBuildPartValues(LC_PropertyPaintContext& ctx, const QRect& valueRect, QList<LC_PropertyViewPart>& parts) override;
 };

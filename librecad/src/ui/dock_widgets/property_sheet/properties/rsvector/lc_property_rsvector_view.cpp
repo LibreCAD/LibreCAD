@@ -81,29 +81,29 @@ protected:
     }
 };
 
-LC_PropertyRSVectorView::LC_PropertyRSVectorView(LC_PropertyRSVector& property)
+LC_PropertyRSVectorView::LC_PropertyRSVectorView(LC_PropertyRSVector* property)
     : LC_PropertyViewTypedCompound(property) {
-    const auto actionContext = property.getActionContext();
-    const auto interactiveInputRequestor = property.getInteractiveInputRequestor();
+    const auto actionContext = property->getActionContext();
+    const auto interactiveInputRequestor = property->getInteractiveInputRequestor();
 
     const bool readOnly = isReadOnly();
 
-    const auto xProperty = static_cast<LC_PropertyDouble*>(property.createXProperty());
+    const auto xProperty = static_cast<LC_PropertyDouble*>(property->createXProperty());
 
-    const bool pickable = property.getInteractiveInputType() != LC_ActionContext::InteractiveInputInfo::NOTNEEDED;
+    const bool pickable = property->getInteractiveInputType() != LC_ActionContext::InteractiveInputInfo::NOTNEEDED;
 
     xProperty->setActionContextAndLaterRequestor(actionContext, interactiveInputRequestor);
     if (pickable && !readOnly) {
         xProperty->setInteractiveInputType(LC_ActionContext::InteractiveInputInfo::POINT_X);
     }
     addSubProperty(xProperty);
-    const auto yProperty = static_cast<LC_PropertyDouble*>(property.createYProperty());
+    const auto yProperty = static_cast<LC_PropertyDouble*>(property->createYProperty());
     yProperty->setActionContextAndLaterRequestor(actionContext, interactiveInputRequestor);
     if (pickable && !readOnly) {
         yProperty->setInteractiveInputType(LC_ActionContext::InteractiveInputInfo::POINT_Y);
     }
     if (readOnly) {
-        property.setReadOnly(); // should restore original readonly
+        property->setReadOnly(); // should restore original readonly
         yProperty->setReadOnly();
         xProperty->setReadOnly();
     }

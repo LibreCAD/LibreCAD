@@ -33,7 +33,7 @@
 #include "lc_property_view_part.h"
 #include "lc_property_view_utils.h"
 
-LC_PropertyViewEditable::LC_PropertyViewEditable(LC_Property& property)
+LC_PropertyViewEditable::LC_PropertyViewEditable(LC_Property* property)
     : LC_PropertyViewWithValue(property) {
 }
 

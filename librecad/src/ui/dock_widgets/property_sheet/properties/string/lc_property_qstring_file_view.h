@@ -41,7 +41,7 @@ public:
     static const QByteArray ATTR_SHOW_RELATIVE_PATH;
     static const QByteArray ATTR_ACCEPT_MODE;
 
-    explicit LC_PropertyQStringFileView(LC_PropertyQString& property);
+    explicit LC_PropertyQStringFileView(LC_PropertyQString* property);
 
 protected:
     void doApplyAttributes(const LC_PropertyViewDescriptor& info) override;

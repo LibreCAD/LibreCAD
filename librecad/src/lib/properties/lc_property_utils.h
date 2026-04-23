@@ -94,7 +94,7 @@ namespace LC_PropertyFieldUtils {
 
     template <typename FieldPropertyType, typename ValueType, typename GetterType, typename SetterType>
     FieldPropertyType* createFieldDelegatedProperty(LC_PropertySingle<ValueType>* property, GetterType getter, SetterType setter,
-                                                    const QString& name = QString(), const QString& displayName = QString(),
+                                                    const QString& ownName = QString(), const QString& displayName = QString(),
                                                     const QString& descriptionFormat = QString(),
                                                     const QByteArray& viewName = QByteArray()) {
         using CallbackValueType = typename FieldPropertyType::ValueType;
@@ -108,8 +108,10 @@ namespace LC_PropertyFieldUtils {
         if (!displayName.isEmpty()) {
             result->setDisplayName(displayName);
         }
-        if (!name.isEmpty()) {
-            result->setName(name);
+        QString parentName = property->getName();
+        if (!ownName.isEmpty()) {
+            QString compoundName = parentName + "#" + ownName;
+            result->setName(compoundName);
         }
         if (!descriptionFormat.isEmpty()) {
             result->setDescription(descriptionFormat.arg(property->getDisplayName()));

@@ -36,7 +36,7 @@ class LC_PropertySimpleComboboxView : public LC_PropertyViewTyped<PropertyClass>
 public:
     using ValueType = typename PropertyClass::ValueType;
 
-    explicit LC_PropertySimpleComboboxView(PropertyClass& property) : LC_PropertyViewTyped<PropertyClass>(property) {
+    explicit LC_PropertySimpleComboboxView(PropertyClass* property) : LC_PropertyViewTyped<PropertyClass>(property) {
     }
 
 protected:

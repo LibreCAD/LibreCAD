@@ -36,7 +36,7 @@ public:
     static const QByteArray ATTR_MAX_LENGTH;
     static const QByteArray ATTR_PLACEHOLDER;
 
-    explicit LC_PropertyQStringLineEditView(LC_PropertyQString& property);
+    explicit LC_PropertyQStringLineEditView(LC_PropertyQString* property);
 
 protected:
     using Inherited = LC_PropertyViewTyped;

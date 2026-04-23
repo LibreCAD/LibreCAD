@@ -86,8 +86,7 @@ signals :
     void modelChanged();
     void modelDataChanged();
 
-protected
-    slots :
+protected slots :
     void onPropertyDidChangeSelf(LC_PropertyChangeReason reason, LC_PropertiesSheetModel::PropertyItem* item);
 
 protected:

@@ -33,7 +33,7 @@ public:
     bool isSplittable() const override;
 
 protected:
-    explicit LC_PropertyViewWithValues(LC_Property& property);
+    explicit LC_PropertyViewWithValues(LC_Property* property);
     virtual void doBuildPartValues(LC_PropertyPaintContext& ctx, const QRect& rect, QList<LC_PropertyViewPart>& parts) = 0;
     void doBuildViewParts(LC_PropertyPaintContext& ctx, QList<LC_PropertyViewPart>& parts) override;
     void buildPartBackground(const LC_PropertyPaintContext& ctx, QList<LC_PropertyViewPart>& parts);

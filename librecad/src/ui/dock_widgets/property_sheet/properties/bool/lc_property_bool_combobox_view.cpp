@@ -76,7 +76,7 @@ private:
     }
 };
 
-LC_PropertyBoolComboBoxView::LC_PropertyBoolComboBoxView(LC_PropertyBool& property)
+LC_PropertyBoolComboBoxView::LC_PropertyBoolComboBoxView(LC_PropertyBool* property)
     : LC_PropertyViewTyped(property) {
     m_labels[0] = getBoolText(false);
     m_labels[1] = getBoolText(true);

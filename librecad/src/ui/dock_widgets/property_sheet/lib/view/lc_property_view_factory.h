@@ -32,10 +32,10 @@ class LC_PropertyViewFactory {
     Q_DISABLE_COPY(LC_PropertyViewFactory)
 
 public:
-    using FunCreateViewForProperty = std::function<LC_PropertyView * (LC_Property&)>;
+    using FunCreateViewForProperty = std::function<LC_PropertyView * (LC_Property*)>;
     LC_PropertyViewFactory();
 
-    LC_PropertyView* createView(LC_Property& property);
+    LC_PropertyView* createView(LC_Property* property);
     void registerView(const QMetaObject* propertyMetaObject, const FunCreateViewForProperty& createFunction, const QByteArray& viewName);
     void registerViewDefault(const QMetaObject* propertyMetaObject, const FunCreateViewForProperty& createFunction,
                              const QByteArray& viewName = QByteArray());
@@ -46,7 +46,7 @@ public:
     static LC_PropertyViewFactory* staticInstance();
 
 private:
-    LC_PropertyView* createViewInternal(LC_Property& property);
+    LC_PropertyView* createViewInternal(LC_Property* property);
 
     struct ViewFactoryInfo {
         FunCreateViewForProperty defaultCreatePropertyViewViewFunc;
@@ -58,13 +58,13 @@ private:
 
 
 template <typename PropertyViewClass, typename PropertyClass>
-LC_PropertyView* createViewForProperty(LC_Property& property) {
-    auto theOwner = qobject_cast<PropertyClass*>(&property);
+LC_PropertyView* createViewForProperty(LC_Property* property) {
+    auto theOwner = qobject_cast<PropertyClass*>(property);
     if (theOwner == nullptr) {
         return nullptr;
     }
 
-    return new PropertyViewClass(*theOwner);
+    return new PropertyViewClass(theOwner);
 }
 
 #endif

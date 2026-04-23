@@ -31,7 +31,7 @@ class LC_PropertyQStringInvalidViewBase : public LC_PropertyQStringLineEditView 
 
 protected:
     static const QByteArray ATTR_INVALID_COLOR;
-    explicit LC_PropertyQStringInvalidViewBase(LC_PropertyQString& property);
+    explicit LC_PropertyQStringInvalidViewBase(LC_PropertyQString* property);
     void doApplyAttributes(const LC_PropertyViewDescriptor& atts) override;
     void doDrawValue(LC_PropertyPaintContext& ctx, QStylePainter& painter, const QRect& rect) override;
     virtual bool doCheckPropertyValid() const = 0;

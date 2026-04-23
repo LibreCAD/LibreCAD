@@ -28,16 +28,16 @@
 
 const QByteArray LC_PropertyContainerView::VIEW_NAME = QByteArrayLiteral("Default");
 
-LC_PropertyContainerView::LC_PropertyContainerView(LC_PropertyContainer& property)
-    : LC_PropertyView(property), m_owner(property) {
+LC_PropertyContainerView::LC_PropertyContainerView(LC_PropertyContainer* property)
+    : LC_PropertyView(property), m_owner{property} {
 }
 
 int LC_PropertyContainerView::doGetSubPropertyCount() const {
-    return m_owner.childProperties().size();
+    return m_owner->childProperties().size();
 }
 
 LC_Property* LC_PropertyContainerView::doGetSubProperty(const int index) {
-    return m_owner.childProperties()[index];
+    return m_owner->childProperties()[index];
 }
 
 void LC_PropertyContainerView::doBuildViewParts(LC_PropertyPaintContext& ctx, QList<LC_PropertyViewPart>& parts) {
@@ -48,7 +48,7 @@ void LC_PropertyContainerView::doBuildViewParts(LC_PropertyPaintContext& ctx, QL
 
 void LC_PropertyContainerView::buildPartName(const LC_PropertyPaintContext& ctx, QList<LC_PropertyViewPart>& parts) const {
     LC_PropertyViewPart part(ctx.rect.marginsRemoved(ctx.margins));
-    part.setPropertyDescriptionAsTooltip(m_owner);
+    part.setPropertyDescriptionAsTooltip(*m_owner);
 
     if (part.rect.isValid()) {
         part.funPaint = [this](const LC_PropertyPaintContext& paintContext, const LC_PropertyViewPart& item) {

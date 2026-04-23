@@ -38,7 +38,7 @@ const QByteArray LC_PropertyActionLinkView::ATTR_TITLE_RIGHT = QByteArrayLiteral
 const QByteArray LC_PropertyActionLinkView::ATTR_TOOLTIP_LEFT = QByteArrayLiteral("tooltipLeft");
 const QByteArray LC_PropertyActionLinkView::ATTR_TOOLTIP_RIGHT = QByteArrayLiteral("tooltipRight");
 
-LC_PropertyActionLinkView::LC_PropertyActionLinkView(LC_PropertyAction& property)
+LC_PropertyActionLinkView::LC_PropertyActionLinkView(LC_PropertyAction* property)
     : LC_PropertyView(property) {
 }
 

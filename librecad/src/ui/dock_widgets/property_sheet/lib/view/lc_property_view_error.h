@@ -30,8 +30,8 @@ class LC_PropertyViewError : public LC_PropertyViewWithValue {
     Q_DISABLE_COPY(LC_PropertyViewError)
 
 public:
-    LC_PropertyViewError(LC_Property& property, const QString& error);
-    static LC_PropertyView* createErrorView(LC_Property& property, const QString& error);
+    LC_PropertyViewError(LC_Property* property, const QString& error);
+    static LC_PropertyView* createErrorView(LC_Property* property, const QString& error);
 
 protected:
     bool doBuildPartValue(LC_PropertyPaintContext& ctx, LC_PropertyViewPart& part) override;

@@ -203,7 +203,7 @@ private:
     QString m_placeholder;
 };
 
-LC_PropertyQStringLineEditView::LC_PropertyQStringLineEditView(LC_PropertyQString& property)
+LC_PropertyQStringLineEditView::LC_PropertyQStringLineEditView(LC_PropertyQString* property)
     : LC_PropertyViewTyped(property), m_maxLength(0x1000000), m_multiline(true) {
 }
 

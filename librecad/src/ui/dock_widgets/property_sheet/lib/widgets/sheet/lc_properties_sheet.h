@@ -90,6 +90,7 @@ public:
         return m_style;
     }
 
+    LC_Property* getPropertyWithName(const QString& propertyName) const;
     void setPropertyViewStyle(LC_PropertiesSheetWidgetStyle style);
     void addPropertyViewStyle(LC_PropertiesSheetWidgetStyle style);
     void removePropertyViewStyle(LC_PropertiesSheetWidgetStyle style);

@@ -95,7 +95,14 @@ const QMetaObject* LC_Property::propertyMetaObject() const {
 }
 
 void LC_Property::setNames(const Names& names) {
-    setName(names.name);
+    auto ownName = names.name;
+    auto parentObj = parent();
+    QString parentName = "";
+    if (parentObj != nullptr) {
+        parentName = parentObj->objectName();
+    }
+    QString compoundName = parentName + "$" +ownName;
+    setName(compoundName);
     setDisplayName(names.displayName);
     setDescription(names.description);
 }

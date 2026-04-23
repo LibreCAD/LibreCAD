@@ -185,7 +185,7 @@ bool LC_PropertiesProviderGraphicGrid::createShowMetaGrid(LC_PropertyContainer* 
             auto funGet = [gridOn]([[maybe_unused]]const RS_Graphic* e) -> bool {
                 return gridOn;
             };
-            const LC_Property::Names names = {"gridVisible", tr("Show meta-grid"), tr("Defines whether meta-grid is shown or not")};
+            const LC_Property::Names names = {"gridMetaVisible", tr("Show meta-grid"), tr("Defines whether meta-grid is shown or not")};
             if (showGrid) {
                 auto funSet = [this]([[maybe_unused]] const bool& v, [[maybe_unused]]RS_Graphic* e) -> void {
                     LC_SET_ONE("Appearance", "metaGridDraw", v);

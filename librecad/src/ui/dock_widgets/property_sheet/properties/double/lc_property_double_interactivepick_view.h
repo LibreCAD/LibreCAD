@@ -36,7 +36,7 @@ public:
     static const QByteArray ATTR_NON_MEANINGFUL_DISTANCE;
     static const QByteArray ATTR_FORMAT_AS_INT;
 
-    explicit LC_PropertyDoubleInteractivePickView(LC_PropertyDouble& property);
+    explicit LC_PropertyDoubleInteractivePickView(LC_PropertyDouble* property);
 
     void getPropertyEditStringValue(QString& strValue) const {
         doPropertyValueToStrForEdit(strValue);

@@ -48,7 +48,7 @@ LC_PropertiesSheetModel::PropertyItem* LC_PropertiesSheetModel::findItem(Propert
 
 void LC_PropertiesSheetModel::setupPropertyItemView(PropertyItem* item) {
     const auto property = item->property;
-    const auto view = m_viewFactory->createView(*property);
+    const auto view = m_viewFactory->createView(property);
     Q_ASSERT(view != nullptr);
 
     item->view.reset(view);

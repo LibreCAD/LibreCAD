@@ -33,7 +33,7 @@ class LC_PropertyRectView : public LC_PropertyViewTypedCompound<LC_PropertyRect>
 
 public:
     static const QByteArray VIEW_NAME;
-    explicit LC_PropertyRectView(LC_PropertyRect& property);
+    explicit LC_PropertyRectView(LC_PropertyRect* property);
     static void formatMarginsToString(const LC_MarginsRect& value, const LC_Formatter* formatter, QString& strValue);
     void invalidateCached() override;
 protected:

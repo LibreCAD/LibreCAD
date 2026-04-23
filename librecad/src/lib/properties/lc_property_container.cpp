@@ -38,8 +38,6 @@ LC_PropertyContainer::~LC_PropertyContainer() {
 
 QList<LC_Property*> LC_PropertyContainer::findChildProperties(QString name, const Qt::FindChildOptions options) const {
     QList<LC_Property*> result;
-
-    // normilize name
     name = name.trimmed();
 
     // if name is dot separated property path

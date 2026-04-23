@@ -72,7 +72,7 @@ private:
     LC_PropertyIntSpinBoxView* m_view;
 };
 
-LC_PropertyIntSpinBoxView::LC_PropertyIntSpinBoxView(LC_PropertyInt& property)
+LC_PropertyIntSpinBoxView::LC_PropertyIntSpinBoxView(LC_PropertyInt* property)
     : LC_PropertyViewTyped(property) {
 }
 

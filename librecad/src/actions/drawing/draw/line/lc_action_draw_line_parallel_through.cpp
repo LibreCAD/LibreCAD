@@ -43,7 +43,6 @@ namespace {
 
 LC_ActionDrawLineParallelThrough::LC_ActionDrawLineParallelThrough(LC_ActionContext* actionContext)
     : LC_UndoableDocumentModificationAction("ActionDrawLineParallelThrough", actionContext, RS2::ActionDrawLineParallelThrough), m_coord(new RS_Vector{}) {
-    m_snapDistance = 1.;
 }
 
 LC_ActionDrawLineParallelThrough::~LC_ActionDrawLineParallelThrough() = default;

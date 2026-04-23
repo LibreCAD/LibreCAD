@@ -25,7 +25,7 @@
 
 #include "lc_property_view_part.h"
 
-LC_PropertyViewWithValue::LC_PropertyViewWithValue(LC_Property& property)
+LC_PropertyViewWithValue::LC_PropertyViewWithValue(LC_Property* property)
     : LC_PropertyViewWithValues(property) {
 }
 

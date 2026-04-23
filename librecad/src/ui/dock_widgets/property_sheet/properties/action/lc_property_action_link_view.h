@@ -39,7 +39,7 @@ public:
     static const QByteArray ATTR_TOOLTIP_LEFT;
     static const QByteArray ATTR_TOOLTIP_RIGHT;
 
-    explicit LC_PropertyActionLinkView(LC_PropertyAction& property);
+    explicit LC_PropertyActionLinkView(LC_PropertyAction* property);
 
     bool isSplittable() const override {
         return false;

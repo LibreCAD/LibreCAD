@@ -39,9 +39,9 @@ struct LC_PropertyViewMultiple::PropertyToEdit {
     LC_GuardedConnectionsList connections;
 };
 
-LC_PropertyViewMultiple::LC_PropertyViewMultiple(LC_PropertyMulti& owner)
+LC_PropertyViewMultiple::LC_PropertyViewMultiple(LC_PropertyMulti* owner)
     : LC_PropertyViewTypedCompound(owner) {
-    owner.updateMultipleState(true);
+    owner->updateMultipleState(true);
 }
 
 void LC_PropertyViewMultiple::init() {
@@ -50,7 +50,7 @@ void LC_PropertyViewMultiple::init() {
     auto& props = typedProperty().getProperties();
     m_propertiesViewsList.reserve(props.size());
     for (const auto prop : props) {
-        auto view = getFactory()->createView(*prop);
+        auto view = getFactory()->createView(prop);
         view->setStateProperty(&typedProperty());
         m_propertiesViewsList.emplace_back(view);
     }

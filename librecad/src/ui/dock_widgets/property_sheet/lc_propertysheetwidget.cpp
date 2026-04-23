@@ -246,6 +246,15 @@ void LC_PropertySheetWidget::refill() {
         LC_PropertyContainer* container = prepareToolOptionsContainer(m_toolOptionsPropertiesContainerProvider);
         replaceTopLevelContainer(container);
     }
+
+    if (!m_activePropertyName.isEmpty()) {
+        const auto propertiesSheet = ui->propertySheet->propertiesSheet();
+        const QString propertyName = m_activePropertyName;
+        const auto foundProperty = propertiesSheet->getPropertyWithName(propertyName);
+        if (foundProperty != nullptr) {
+            propertiesSheet->setActiveProperty(foundProperty, true);
+        }
+    }
 }
 
 void LC_PropertySheetWidget::showToolOptions(LC_ToolOptionsPropertiesContainerProvider* provider) {
@@ -704,6 +713,8 @@ void LC_PropertySheetWidget::onActivePropertyChanged(LC_Property* activeProperty
     else {
         checkIfVectorAndGetLocation(activeProperty);
     }
+
+    m_activePropertyName = activeProperty->getName();
 }
 
 void LC_PropertySheetWidget::highlightVectorPropertyPosition(const LC_PropertyRSVector* vectorProperty) const {

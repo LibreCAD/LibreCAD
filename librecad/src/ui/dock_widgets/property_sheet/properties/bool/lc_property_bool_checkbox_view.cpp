@@ -33,7 +33,7 @@
 
 const QByteArray LC_PropertyBoolCheckBoxView::VIEW_NAME = LC_PropertyViewUtils::getViewNameCheckBox();
 
-LC_PropertyBoolCheckBoxView::LC_PropertyBoolCheckBoxView(LC_PropertyBool& property)
+LC_PropertyBoolCheckBoxView::LC_PropertyBoolCheckBoxView(LC_PropertyBool* property)
     : LC_PropertyViewTyped(property) {
 }
 

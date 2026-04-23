@@ -30,7 +30,7 @@
 LC_PropertyViewFactory::LC_PropertyViewFactory(){
 }
 
-LC_PropertyView* LC_PropertyViewFactory::createView(LC_Property& property) {
+LC_PropertyView* LC_PropertyViewFactory::createView(LC_Property* property) {
     const auto result = createViewInternal(property);
     if (result != nullptr) {
         result->setFactory(this);
@@ -38,7 +38,7 @@ LC_PropertyView* LC_PropertyViewFactory::createView(LC_Property& property) {
         return result;
     }
 
-    const auto desc = property.getViewDescriptor();
+    const auto desc = property->getViewDescriptor();
     QByteArray viewName;
 
     if (desc != nullptr) {
@@ -46,32 +46,32 @@ LC_PropertyView* LC_PropertyViewFactory::createView(LC_Property& property) {
     }
 
     if (viewName.isEmpty()) {
-        LC_ERR << "Cannot find default view for property" << property.getName();
-        LC_ERR << "Did you forget to register view for " << property.metaObject()->className() << "type?";
+        LC_ERR << "Cannot find default view for property" << property->getName();
+        LC_ERR << "Did you forget to register view for " << property->metaObject()->className() << "type?";
     }
     else {
-        LC_ERR << "Cannot find view with name" << viewName << "for property" << property.getName();
-        LC_ERR << "Did you forget to register" << viewName << "view for" << property.metaObject()->className() << "type?";
+        LC_ERR << "Cannot find view with name" << viewName << "for property" << property->getName();
+        LC_ERR << "Did you forget to register" << viewName << "view for" << property->metaObject()->className() << "type?";
     }
 
-    return LC_PropertyViewError::createErrorView(property, QString("Delegate <%1> unknown").arg(QString::fromLatin1(viewName)));
+    return LC_PropertyViewError::createErrorView(property, QString("View <%1> unknown").arg(QString::fromLatin1(viewName)));
 }
 
-LC_PropertyView* LC_PropertyViewFactory::createViewInternal(LC_Property& property) {
-    const QMetaObject* metaObject = property.metaObject();
-    if (property.asAtomic() != nullptr && property.asContainer() != nullptr) {
-        return createViewInternal(*property.asAtomic());
+LC_PropertyView* LC_PropertyViewFactory::createViewInternal(LC_Property* property) {
+    const QMetaObject* metaObject = property->metaObject();
+    if (property->asAtomic() != nullptr && property->asContainer() != nullptr) {
+        return createViewInternal(property->asAtomic());
     }
 
     FunCreateViewForProperty createFunction = nullptr;
     while (metaObject != nullptr && !createFunction) {
-        // try to find delegate factory by class name
+        // try to find view factory by class name
         auto it = m_createItems.find(metaObject);
 
         if (it != m_createItems.end()) {
-            // try to find delegate factory by name
+            // try to find view factory by name
             const ViewFactoryInfo& createItem = it.value();
-            const auto desc = property.getViewDescriptor();
+            const auto desc = property->getViewDescriptor();
             QByteArray viewName;
 
             if (desc != nullptr) {
@@ -102,9 +102,7 @@ void LC_PropertyViewFactory::registerView(const QMetaObject* propertyMetaObject,
     Q_ASSERT(createFunction);
     Q_ASSERT(!viewName.isEmpty());
 
-    // find or create creation record
     ViewFactoryInfo& createItem = m_createItems[propertyMetaObject];
-    // register create function
     createItem.createFunctions[viewName] = createFunction;
 }
 
@@ -113,9 +111,7 @@ void LC_PropertyViewFactory::registerViewDefault(const QMetaObject* propertyMeta
     Q_ASSERT(propertyMetaObject);
     Q_ASSERT(createFunction);
 
-    // find or create creation record
     ViewFactoryInfo& createItem = m_createItems[propertyMetaObject];
-    // register default create function
     createItem.defaultCreatePropertyViewViewFunc = createFunction;
 
     if (!viewName.isEmpty()) {

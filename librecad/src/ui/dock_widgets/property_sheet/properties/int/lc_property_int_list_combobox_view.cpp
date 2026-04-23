@@ -62,7 +62,7 @@ private:
     }
 };
 
-LC_PropertyIntListComboBoxView::LC_PropertyIntListComboBoxView(LC_PropertyInt& property)
+LC_PropertyIntListComboBoxView::LC_PropertyIntListComboBoxView(LC_PropertyInt* property)
     : LC_PropertyIntSpinBoxView(property) {
 }
 

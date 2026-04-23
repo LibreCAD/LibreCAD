@@ -33,7 +33,7 @@ class LC_PropertyViewTypedCompound : public LC_PropertyViewTyped<PropertyClass, 
     Q_DISABLE_COPY(LC_PropertyViewTypedCompound)
 
 protected:
-    explicit LC_PropertyViewTypedCompound(PropertyClass& property)
+    explicit LC_PropertyViewTypedCompound(PropertyClass* property)
         : LC_PropertyViewTyped<PropertyClass, ParentViewClass>(property) {
     }
 

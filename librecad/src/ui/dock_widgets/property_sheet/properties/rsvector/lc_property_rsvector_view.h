@@ -39,7 +39,7 @@ public:
     static const QByteArray ATTR_Y_DESCRIPTION;
     static const QByteArray ATTR_FORMAT_AS_INT;
 
-    explicit LC_PropertyRSVectorView(LC_PropertyRSVector& property);
+    explicit LC_PropertyRSVectorView(LC_PropertyRSVector* property);
     static void formatVectorToString(const RS_Vector& value, const QString& suffix, const LC_Formatter* formatter, QString& strValue, bool asInt);
 
     void invalidateCached() override;

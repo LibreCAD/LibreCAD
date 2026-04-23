@@ -36,7 +36,7 @@ public:
     static const QByteArray ATTR_ITEMS_DATA;
     static const QByteArray ATTR_EDITABLE;
 
-    explicit LC_PropertyQStringListComboBoxView(LC_PropertyQString& property);
+    explicit LC_PropertyQStringListComboBoxView(LC_PropertyQString* property);
 
 protected:
     void doApplyAttributes(const LC_PropertyViewDescriptor& attrs) override;

@@ -41,7 +41,7 @@ const QByteArray LC_PropertyQStringFileView::ATTR_SHOW_RELATIVE_PATH = QByteArra
 const QByteArray LC_PropertyQStringFileView::ATTR_ACCEPT_MODE = QByteArrayLiteral("acceptMode");
 const QByteArray LC_PropertyQStringFileView::ATTR_OPTIONS = QByteArrayLiteral("options");
 
-LC_PropertyQStringFileView::LC_PropertyQStringFileView(LC_PropertyQString& property)
+LC_PropertyQStringFileView::LC_PropertyQStringFileView(LC_PropertyQString* property)
     : LC_PropertyQStringInvalidViewBase(property) {
 }
 

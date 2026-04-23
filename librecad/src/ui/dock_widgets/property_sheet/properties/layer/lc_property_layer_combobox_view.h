@@ -35,7 +35,7 @@ public:
     using ValueType = RS_Layer*;
     static const QByteArray VIEW_NAME;
 
-    explicit LC_PropertyLayerComboBoxView(LC_PropertyLayer& property) : LC_PropertySimpleComboboxView(property) {
+    explicit LC_PropertyLayerComboBoxView(LC_PropertyLayer* property) : LC_PropertySimpleComboboxView(property) {
     }
 
 protected:

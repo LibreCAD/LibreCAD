@@ -429,6 +429,17 @@ int LC_PropertiesSheet::getItemViewIndex(const LC_Property* property) const {
     return -1;
 }
 
+LC_Property* LC_PropertiesSheet::getPropertyWithName(const QString& propertyName) const {
+    validateItemViews();
+    for (qsizetype i = 0, n = m_itemViews.size(); i < n; ++i) {
+        auto property = m_itemViews[i].propertyItem->property;
+        if (property->getName() == propertyName) {
+            return property;
+        }
+    }
+    return nullptr;
+}
+
 bool LC_PropertiesSheet::handleMouseEvent(const int itemViewIndex, QEvent* e, const QPoint mousePos) {
     if (itemViewIndex < 0) {
         deactivateViewParts();

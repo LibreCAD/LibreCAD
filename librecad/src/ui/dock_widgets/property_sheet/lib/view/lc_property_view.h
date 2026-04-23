@@ -104,7 +104,7 @@ public:
     }
 
 protected:
-    explicit LC_PropertyView(LC_Property& property);
+    explicit LC_PropertyView(LC_Property* property);
     virtual int doGetSubPropertyCount() const;
     virtual LC_Property* doGetSubProperty(int index);
     virtual void doApplyAttributes(const LC_PropertyViewDescriptor& info);

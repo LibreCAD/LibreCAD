@@ -41,7 +41,7 @@ bool LC_PropertyViewWithValues::isSplittable() const {
     return true;
 }
 
-LC_PropertyViewWithValues::LC_PropertyViewWithValues(LC_Property& property)
+LC_PropertyViewWithValues::LC_PropertyViewWithValues(LC_Property* property)
     : LC_PropertyView(property) {
 }
 

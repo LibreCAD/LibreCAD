@@ -39,7 +39,7 @@ public:
     static const QByteArray ATTR_PRECISION;
     static const QByteArray ATTR_MULTIPLIER;
 
-    explicit LC_PropertyDoubleSpinBoxView(LC_PropertyDouble& property);
+    explicit LC_PropertyDoubleSpinBoxView(LC_PropertyDouble* property);
     double getStepValue() const;
     double getMinValue() const;
     double getMaxValue() const;

@@ -46,7 +46,7 @@ public:
     }
 
 protected:
-    explicit LC_PropertyViewTyped(PropertyClass& owner)
+    explicit LC_PropertyViewTyped(PropertyClass* owner)
         : ParentViewClass(owner) {
     }
 };

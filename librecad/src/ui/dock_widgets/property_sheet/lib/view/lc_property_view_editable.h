@@ -61,7 +61,7 @@ public:
     void stopInplaceEditing(bool deleteLater = true, bool restoreParentFocus = true) const;
 
 protected:
-    explicit LC_PropertyViewEditable(LC_Property& property);
+    explicit LC_PropertyViewEditable(LC_Property* property);
     bool doBuildPartValue(LC_PropertyPaintContext& ctx, LC_PropertyViewPart& partValue) override;
     virtual bool doPropertyValueToStr(QString& strValue) const;
     virtual bool doPropertyValueToStrForView(QString& strValue);

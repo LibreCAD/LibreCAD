@@ -25,7 +25,7 @@
 
 const QByteArray LC_PropertyQStringInvalidViewBase::ATTR_INVALID_COLOR = QByteArrayLiteral("invalidColor");
 
-LC_PropertyQStringInvalidViewBase::LC_PropertyQStringInvalidViewBase(LC_PropertyQString& property)
+LC_PropertyQStringInvalidViewBase::LC_PropertyQStringInvalidViewBase(LC_PropertyQString* property)
     : LC_PropertyQStringLineEditView(property), m_invalidColor(Qt::red) {
     m_multiline = false;
 }

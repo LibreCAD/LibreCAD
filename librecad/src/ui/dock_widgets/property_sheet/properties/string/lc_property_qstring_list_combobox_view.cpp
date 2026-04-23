@@ -34,7 +34,7 @@ const QByteArray LC_PropertyQStringListComboBoxView::ATTR_ITEMS_DATA = QByteArra
 const QByteArray LC_PropertyQStringListComboBoxView::ATTR_EDITABLE = QByteArrayLiteral("editable");
 
 
-LC_PropertyQStringListComboBoxView::LC_PropertyQStringListComboBoxView(LC_PropertyQString& property)
+LC_PropertyQStringListComboBoxView::LC_PropertyQStringListComboBoxView(LC_PropertyQString* property)
     : LC_PropertyQStringLineEditView(property) {
 }
 

@@ -28,29 +28,29 @@
 
 const QByteArray LC_PropertyRectView::VIEW_NAME = QByteArrayLiteral("RSVectorXY");
 
-LC_PropertyRectView::LC_PropertyRectView(LC_PropertyRect& property)
+LC_PropertyRectView::LC_PropertyRectView(LC_PropertyRect* property)
     : LC_PropertyViewTypedCompound(property) {
-    const auto actionContext = property.getActionContext();
+    const auto actionContext = property->getActionContext();
     const bool readOnly = isReadOnly();
 
-    const auto leftProperty = static_cast<LC_PropertyDouble*>(property.createLeftProperty());
+    const auto leftProperty = static_cast<LC_PropertyDouble*>(property->createLeftProperty());
     leftProperty->setActionContextAndLaterRequestor(actionContext, nullptr);
     addSubProperty(leftProperty);
 
-    const auto rightProperty = static_cast<LC_PropertyDouble*>(property.createRightProperty());
+    const auto rightProperty = static_cast<LC_PropertyDouble*>(property->createRightProperty());
     rightProperty->setActionContextAndLaterRequestor(actionContext, nullptr);
     addSubProperty(rightProperty);
 
-    const auto topProperty = static_cast<LC_PropertyDouble*>(property.createTopProperty());
+    const auto topProperty = static_cast<LC_PropertyDouble*>(property->createTopProperty());
     topProperty->setActionContextAndLaterRequestor(actionContext, nullptr);
     addSubProperty(topProperty);
 
-    const auto bottomProperty = static_cast<LC_PropertyDouble*>(property.createBottomProperty());
+    const auto bottomProperty = static_cast<LC_PropertyDouble*>(property->createBottomProperty());
     bottomProperty->setActionContextAndLaterRequestor(actionContext, nullptr);
     addSubProperty(bottomProperty);
 
     if (readOnly) {
-        property.setReadOnly(); // should restore original readonly
+        property->setReadOnly(); // should restore original readonly
         leftProperty->setReadOnly();
         rightProperty->setReadOnly();
         topProperty->setReadOnly();

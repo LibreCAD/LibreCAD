@@ -78,7 +78,7 @@ private:
     LC_PropertyDoubleSpinBoxView* m_view{nullptr};
 };
 
-LC_PropertyDoubleSpinBoxView::LC_PropertyDoubleSpinBoxView(LC_PropertyDouble& property)
+LC_PropertyDoubleSpinBoxView::LC_PropertyDoubleSpinBoxView(LC_PropertyDouble* property)
     : LC_PropertyViewTyped(property), m_multiplier(1.0), m_precision(std::numeric_limits<double>::digits10 - 1) {
 }
 
