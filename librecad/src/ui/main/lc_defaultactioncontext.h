@@ -23,6 +23,7 @@
 #ifndef LC_DEFAULTACTIONCONTEXT_H
 #define LC_DEFAULTACTIONCONTEXT_H
 #include "lc_actioncontext.h"
+#include "lc_propertysheetwidget.h"
 
 class QG_ActionHandler;
 class LC_QTStatusbarManager;
@@ -45,6 +46,7 @@ public:
     void commandMessage(const QString &message) override;
     void commandPrompt(const QString &message) override;
     void updateCoordinateWidget(const RS_Vector &abs, const RS_Vector &rel, bool updateFormat) override;
+    void setPropertySheetWidget(LC_PropertySheetWidget* widget);
 
     void setActionOptionsManager(LC_ActionOptionsManager *actionOptionsManager){
         m_actionOptionsManager = actionOptionsManager;
@@ -78,6 +80,7 @@ private:
     QG_MouseWidget* m_mouseWidget{nullptr};
     LC_QTStatusbarManager* m_statusBarManager{nullptr};
     QG_ActionHandler* m_actionHandler{nullptr};
+    LC_PropertySheetWidget* m_propertySheetWidget{nullptr};
 };
 
 #endif

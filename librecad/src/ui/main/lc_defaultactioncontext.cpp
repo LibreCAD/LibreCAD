@@ -48,6 +48,11 @@ void LC_DefaultActionContext::requestSnapMiddleOptions(int *middlePoints, const 
     m_actionOptionsManager->requestSnapMiddleOptions(middlePoints, on);
 }
 
+void LC_DefaultActionContext::setPropertySheetWidget(LC_PropertySheetWidget* widget) {
+    m_propertySheetWidget = widget;
+    m_actionOptionsManager->setPropertySheetWidget(widget);
+}
+
 void LC_DefaultActionContext::hideSnapOptions(){
     m_actionOptionsManager->hideSnapOptions();
 }

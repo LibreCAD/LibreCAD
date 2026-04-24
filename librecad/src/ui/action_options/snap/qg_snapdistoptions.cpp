@@ -57,14 +57,14 @@ void QG_SnapDistOptions::languageChange() {
     ui->retranslateUi(this);
 }
 
-void QG_SnapDistOptions::saveSettings() const {
+void QG_SnapDistOptions::saveSettings() {
     LC_SET_ONE("Snap", "Distance", ui->leDist->text());
+    emit distanceChanged();
 }
 
 void QG_SnapDistOptions::useSnapDistanceValue(double* d) {
     m_dist = d;
     const QString distance = LC_GET_ONE_STR("Snap", "Distance", "1.0");
-
     *m_dist = RS_Math::eval(distance, 1.0);
     const QString value = QString::number(*m_dist, 'g', 6);
     ui->leDist->setText(value);

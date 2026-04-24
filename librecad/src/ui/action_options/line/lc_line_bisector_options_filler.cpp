@@ -41,5 +41,4 @@ void LC_LineBisectorOptionsFiller::fillToolOptionsContainer(LC_PropertyContainer
                 }, [action](int val)-> void {
                     action->setNumber(val);
                 }, container);
-
 }

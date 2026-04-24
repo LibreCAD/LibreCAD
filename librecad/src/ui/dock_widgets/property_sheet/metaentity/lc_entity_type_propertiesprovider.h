@@ -63,6 +63,7 @@ class LC_EntityTypePropertiesProvider : public LC_PropertyContainerBuilder {
     static const QString SECTION_MULTI_ENTITY_ACTIONS;
     static const QString SECTION_TEXT;
     static const QString SECTION_TOOL_OPTIONS;
+    static const QString SECTION_SNAP_TOOL_OPTIONS;
 
     void fillEntityProperties(LC_PropertyContainer* container, const QList<RS_Entity*>& entitiesList);
 protected:

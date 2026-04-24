@@ -42,6 +42,7 @@ const QString LC_EntityTypePropertiesProvider::SECTION_SINGLE_ENTITY_ACTIONS = "
 const QString LC_EntityTypePropertiesProvider::SECTION_MULTI_ENTITY_ACTIONS = "_secMultiEntityActions";
 const QString LC_EntityTypePropertiesProvider::SECTION_TEXT = "_secText";
 const QString LC_EntityTypePropertiesProvider::SECTION_TOOL_OPTIONS = "_secToolOptions";
+const QString LC_EntityTypePropertiesProvider::SECTION_SNAP_TOOL_OPTIONS = "_secSnapToolOptions";
 
 void LC_EntityTypePropertiesProvider::addMultipleProperties(LC_PropertyContainer* cont, QList<LC_PropertyAtomic*> props) {
     const auto firstProperty = props.first();

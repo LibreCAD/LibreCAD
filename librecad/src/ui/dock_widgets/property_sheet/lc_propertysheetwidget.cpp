@@ -126,10 +126,8 @@ LC_PropertySheetWidget::~LC_PropertySheetWidget() {
 }
 
 void LC_PropertySheetWidget::updatePropertiesSheetFont() const {
-    auto font = ui->propertySheet->propertiesSheet()->font();
-    font.setPointSize(m_propertySheetOptions->fontSize);
-    ui->propertySheet->propertiesSheet()->setFont(font);
-    ui->propertySheet->propertiesSheet()->updateStylingVars();
+    int fontSize = m_propertySheetOptions->fontSize;
+    ui->propertySheet->setFontSize(fontSize);
 }
 
 void LC_PropertySheetWidget::loadCollapsedSections() {
@@ -495,7 +493,7 @@ LC_PropertyContainer* LC_PropertySheetWidget::prepareToolOptionsContainer(
     if (isVisible()) {
         result = new LC_PropertyContainer(this);
     }
-    m_entityContainerProvider->fillPropertyContainerToolOptions(m_document, result, toolOptionsContainerProvider);
+    m_entityContainerProvider->fillPropertyContainerToolOptions(m_document, result, toolOptionsContainerProvider, m_propertySheetOptions->showToolOptions);
     return result;
 }
 

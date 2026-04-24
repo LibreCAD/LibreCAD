@@ -31,6 +31,8 @@ protected:
     ~LC_ToolOptionsPropertiesContainerProvider() = default;
 public:
     virtual void fillToolOptionsContainer([[maybe_unused]]LC_PropertyContainer* propertyContainer){}
+    virtual bool hasSnapOptions() {return false;}
+    virtual void fillSnapToolOptionsContainer(LC_PropertyContainer* propertyContainer){};
 };
 
 #endif

@@ -32,6 +32,12 @@ LC_ActionOptionsManager::LC_ActionOptionsManager([[maybe_unused]]QWidget* parent
                                                  LC_SnapOptionsWidgetsHolder* snapOptionsHolder){
     m_snapOptionsWidgetHolderSnapToolbar  = snapOptionsHolder;
     setOptionWidget(optionsToolbar);
+    connect(snapOptionsHolder->getSnapDistanceOptions(), &QG_SnapDistOptions::distanceChanged, [this] {
+        m_propertySheetWidget->refill();
+    });
+    connect(snapOptionsHolder->getSnapMiddleOptions(), &QG_SnapMiddleOptions::middlePointsChanged, [this] {
+        m_propertySheetWidget->refill();
+    });
 }
 
 void LC_ActionOptionsManager::setOptionWidget(QToolBar* ow) {
@@ -59,6 +65,10 @@ void LC_ActionOptionsManager::hideSnapOptions(){
  */
 void LC_ActionOptionsManager::requestSnapMiddleOptions(int* middlePoints, const bool on) {
     getSnapOptionsHolder()->showSnapMiddleOptions(middlePoints, on);
+    if (m_previousSnapMiddleMode != on) {
+        m_propertySheetWidget->refill();
+    }
+    m_previousSnapMiddleMode = on;
 }
 
 /**
@@ -66,6 +76,10 @@ void LC_ActionOptionsManager::requestSnapMiddleOptions(int* middlePoints, const 
  */
 void LC_ActionOptionsManager::requestSnapDistOptions(double* dist, const bool on) {
     getSnapOptionsHolder()->showSnapDistOptions(dist, on);
+    if (m_previousSnapDistanceMode != on) {
+        m_propertySheetWidget->refill();
+    }
+    m_previousSnapDistanceMode = on;
 }
 
 LC_SnapOptionsWidgetsHolder* LC_ActionOptionsManager::getSnapOptionsHolder(){

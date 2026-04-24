@@ -24,6 +24,7 @@
 #define LC_SNAPOPTIONSWIDGETSHOLDER_H
 
 #include <QWidget>
+#include <ui_lc_snapoptionswidgetsholder.h>
 
 namespace Ui {
     class LC_SnapOptionsWidgetsHolder;
@@ -39,6 +40,8 @@ public:
     void hideSnapOptions() const;
     void setLocatedOnLeft(const bool value){m_widgetOnLeftWithinContainer = value;}
     void updateBy(const LC_SnapOptionsWidgetsHolder *other) const;
+    QG_SnapDistOptions* getSnapDistanceOptions() const {return ui->snapDistanceOptions;}
+    QG_SnapMiddleOptions* getSnapMiddleOptions() const {return ui->snapMiddleOptions;}
 public slots:
     void languageChange();
 private:

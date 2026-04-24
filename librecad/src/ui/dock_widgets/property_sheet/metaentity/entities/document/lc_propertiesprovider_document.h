@@ -42,6 +42,7 @@ class LC_PropertiesProviderDocument : public LC_EntityTypePropertiesProvider {
 public:
     LC_PropertiesProviderDocument(LC_ActionContext* actionContext, LC_PropertySheetWidget* widget);
     virtual void fillDocumentProperties(LC_PropertyContainer* container);
+    LC_PropertyContainer* createSnapToolOptionsSection(LC_PropertyContainer* container) const;
     LC_PropertyContainer* createToolOptionsSection(LC_PropertyContainer* container) const;
     void fillDocumentPropertiesForToolOptions(LC_PropertyContainer* container) const;
 protected:

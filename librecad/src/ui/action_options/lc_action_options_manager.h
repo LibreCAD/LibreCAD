@@ -24,12 +24,15 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 #include <QWidget>
 
+#include "lc_propertysheetwidget.h"
+
 class LC_ActionOptionsWidget;
 class LC_OptionsWidgetsHolder;
 class QToolBar;
 class LC_SnapOptionsWidgetsHolder;
 
-class LC_ActionOptionsManager{
+class LC_ActionOptionsManager: public QObject{
+    Q_OBJECT
 public:
     LC_ActionOptionsManager(QWidget *parent, QToolBar *optionsToolbar, LC_SnapOptionsWidgetsHolder *snapOptionsHolder);
     ~LC_ActionOptionsManager() = default;
@@ -44,14 +47,21 @@ public:
     LC_OptionsWidgetsHolder * getActionOptionWidgetHolder() const{
         return m_actionOptionWidgetHolder;
     }
+
+    void setPropertySheetWidget(LC_PropertySheetWidget* widget) {m_propertySheetWidget = widget;}
+
 protected:
     //! Pointer to the widget which can host individual tool options
     QToolBar* m_actionOptionsToolbar = nullptr;
+    LC_PropertySheetWidget* m_propertySheetWidget {nullptr};
     LC_OptionsWidgetsHolder* m_actionOptionWidgetHolder = nullptr;
     LC_SnapOptionsWidgetsHolder * m_snapOptionsWidgetHolderSnapToolbar = nullptr;
     LC_SnapOptionsWidgetsHolder * m_snapOptionsWidgetHolderOptionsToolbar = nullptr;
     LC_SnapOptionsWidgetsHolder * m_lastUsedSnapOptionsWidgetHolder = nullptr;
     LC_SnapOptionsWidgetsHolder *getSnapOptionsHolder();
+
+    bool m_previousSnapDistanceMode = {false};
+    bool m_previousSnapMiddleMode = {false};
 };
 
 #endif

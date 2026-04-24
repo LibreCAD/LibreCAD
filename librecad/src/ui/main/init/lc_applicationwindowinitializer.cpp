@@ -273,4 +273,5 @@ void LC_ApplicationWindowInitializer::setupActionContextWidgets() const {
     m_appWin->m_actionContext->setCoordinateWidget(m_appWin->m_coordinateWidget);
     m_appWin->m_actionContext->setMouseWidget(m_appWin->m_mouseWidget);
     m_appWin->m_actionContext->setStatusBarManager(m_appWin->m_statusbarManager);
+    m_appWin->m_actionContext->setPropertySheetWidget(m_appWin->m_propertySheetWidget);
 }

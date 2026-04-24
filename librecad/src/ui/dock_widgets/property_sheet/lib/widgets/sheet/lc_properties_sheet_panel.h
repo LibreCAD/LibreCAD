@@ -58,6 +58,7 @@ public:
     inline LC_PropertiesSheet* propertiesSheet() const;
     bool stopInplaceEdit(bool deleteLater = true, bool restoreParentFocus = true) override;
     void createDescriptionLabel(QSplitter* splitter);
+    void setFontSize(int fontSize);
 signals  :
     void propertySetChanged();
 
@@ -73,6 +74,8 @@ private:
     QWidget* m_descriptionSplitter;
     QLabel* m_propertyInfoLabel;
 };
+
+
 
 LC_PropertyWidgetAreas LC_PropertiesSheetPanel::parts() const {
     return m_areas;

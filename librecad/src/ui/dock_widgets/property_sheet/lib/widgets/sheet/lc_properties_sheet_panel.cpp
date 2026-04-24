@@ -107,6 +107,20 @@ void LC_PropertiesSheetPanel::createDescriptionLabel(QSplitter* splitter) {
     m_propertyInfoLabel->setSizePolicy(p);
 }
 
+void LC_PropertiesSheetPanel::setFontSize(int fontSize) {
+    auto font = m_propertiesSheet->font();
+    font.setPointSize(fontSize);
+    m_propertiesSheet->setFont(font);
+    m_propertiesSheet->updateStylingVars();
+
+    if (m_propertyInfoLabel != nullptr) {
+        auto labelFont = m_propertyInfoLabel->font();
+        labelFont.setPointSize(fontSize);
+        m_propertyInfoLabel->setFont(labelFont);
+        m_propertyInfoLabel->setMinimumSize(0, 5 * QFontMetrics(labelFont).height() / 2);
+    }
+}
+
 void LC_PropertiesSheetPanel::updateParts() {
     while (!m_layout->isEmpty()) {
         m_layout->takeAt(0);

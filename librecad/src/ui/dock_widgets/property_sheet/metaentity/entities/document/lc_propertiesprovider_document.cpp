@@ -77,6 +77,11 @@ void LC_PropertiesProviderDocument::fillDocumentProperties(LC_PropertyContainer*
     }
 }
 
+LC_PropertyContainer*  LC_PropertiesProviderDocument::createSnapToolOptionsSection(LC_PropertyContainer* container) const{
+    const auto result = createSection(container, {SECTION_SNAP_TOOL_OPTIONS, tr("Snap Options"), tr("Options for snap settings")});
+    return result;
+}
+
 LC_PropertyContainer*  LC_PropertiesProviderDocument::createToolOptionsSection(LC_PropertyContainer* container) const{
     const auto result = createSection(container, {SECTION_TOOL_OPTIONS, tr("Action Options"), tr("Options for currently active tool action")});
     return result;

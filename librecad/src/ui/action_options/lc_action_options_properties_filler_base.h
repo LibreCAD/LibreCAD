@@ -44,6 +44,10 @@ public:
         : LC_PropertyContainerBuilder(nullptr, QC_ApplicationWindow::getAppWindow()->getPropertySheetWidget()) {
     }
 
+    bool hasSnapOptions() override;
+
+    void fillSnapToolOptionsContainer(LC_PropertyContainer* propertyContainer) override;
+
 protected:
     template <class TValue>
     void createDelegatedStorage(LC_PropertySingle<TValue>* property, const typename LC_PropertyValueDelegated<TValue>::FunValueGet& funGet,

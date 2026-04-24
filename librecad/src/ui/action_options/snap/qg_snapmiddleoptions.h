@@ -42,13 +42,15 @@ public:
     void useMiddlePointsValue(int* i);
     void doShow();
     int* getMiddlePointsValue() const;
+signals:
+    void middlePointsChanged();
 protected:
     int* m_middlePoints = nullptr;
 protected slots:
     void languageChange();
     void on_sbMiddlePoints_valueChanged(int i);
 private:
-    void saveSettings() const;
+    void saveSettings();
     std::unique_ptr<Ui::Ui_SnapMiddleOptions> ui;
 };
 #endif

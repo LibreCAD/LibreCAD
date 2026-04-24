@@ -49,8 +49,10 @@ protected slots:
     void languageChange();
     void onDistEditingFinished();
     void onPickDistanceClicked(bool clicked);
+signals:
+    void distanceChanged();
 private:
-    void saveSettings() const;
+    void saveSettings();
     std::unique_ptr<Ui::Ui_SnapDistOptions> ui;
 };
 #endif

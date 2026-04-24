@@ -104,7 +104,8 @@ void LC_EntityPropertyContainerProvider::fillPropertyContainerForNoSelection([[m
 
 void LC_EntityPropertyContainerProvider::fillPropertyContainerToolOptions([[maybe_unused]] RS_Document* doc,
                                                                           LC_PropertyContainer* container,
-                                                                          LC_ToolOptionsPropertiesContainerProvider* toolOptionsProvider) {
+                                                                          LC_ToolOptionsPropertiesContainerProvider* toolOptionsProvider,
+                                                                          bool showToolOptions) {
     if (!m_entitiesList.empty()) {
         m_entitiesList.clear();
     }
@@ -112,14 +113,20 @@ void LC_EntityPropertyContainerProvider::fillPropertyContainerToolOptions([[mayb
         return;
     }
     if (toolOptionsProvider != nullptr) {
-        createToolOptions(container, toolOptionsProvider);
+        createToolOptions(container, toolOptionsProvider, showToolOptions);
     }
     m_document->fillDocumentPropertiesForToolOptions(container);
 }
 
-void LC_EntityPropertyContainerProvider::createToolOptions(LC_PropertyContainer* container,LC_ToolOptionsPropertiesContainerProvider* toolOptionsProvider) {
-   LC_PropertyContainer* toolOptionsSectionContainer = m_document->createToolOptionsSection(container);
-   toolOptionsProvider->fillToolOptionsContainer(toolOptionsSectionContainer);
+void LC_EntityPropertyContainerProvider::createToolOptions(LC_PropertyContainer* container, LC_ToolOptionsPropertiesContainerProvider* toolOptionsProvider, bool showToolOptions) {
+    if (toolOptionsProvider->hasSnapOptions()) {
+        LC_PropertyContainer* toolOptionsSectionContainer = m_document->createSnapToolOptionsSection(container);
+        toolOptionsProvider->fillSnapToolOptionsContainer(toolOptionsSectionContainer);
+    }
+    if (showToolOptions) {
+        LC_PropertyContainer* toolOptionsSectionContainer = m_document->createToolOptionsSection(container);
+        toolOptionsProvider->fillToolOptionsContainer(toolOptionsSectionContainer);
+    }
 }
 
 void LC_EntityPropertyContainerProvider::refillPropertyContainer([[maybe_unused]] RS_Document* doc, LC_PropertyContainer* container) const {
