@@ -723,6 +723,8 @@ void QG_DlgOptionsGeneral::init(){
 
         cbExpandToolsMenuTillEntity->setEnabled(useExpandedToolsMenu);
         cbStartupTBTooltips->setChecked( LC_GET_BOOL("ShowToolbarsTooltip", true));
+
+        cbShowVersionInWinTitle->setChecked(LC_GET_BOOL("ShowVersionInTitle", true));
     }
     LC_GROUP_END();
 
@@ -763,6 +765,17 @@ void QG_DlgOptionsGeneral::setTemplateFile(){
     QG_FileDialog dlg(this);
     const QString fileName = dlg.getOpenFile(&type);
     leTemplate->setText(fileName);
+}
+
+void QG_DlgOptionsGeneral::updateMainWindowTitle(bool showVersionInTitle) {
+    QString mainWinTitle;
+    if (showVersionInTitle) {
+        mainWinTitle = QApplication::applicationName() + " [" + QApplication::applicationVersion() + "]";
+    }
+    else {
+        mainWinTitle = QApplication::applicationName();
+    }
+    QC_ApplicationWindow::getAppWindow()->setWindowTitle(mainWinTitle);
 }
 
 void QG_DlgOptionsGeneral::ok(){
@@ -1085,6 +1098,9 @@ void QG_DlgOptionsGeneral::ok(){
             if (LC_SET("ShowToolbarsTooltip", cbStartupTBTooltips->isChecked())){
                 setRestartNeeded();
             }
+            bool showVersionInTitle = cbShowVersionInWinTitle->isChecked();
+            LC_SET("ShowVersionInTitle", showVersionInTitle);
+            updateMainWindowTitle(showVersionInTitle);
         }
         LC_GROUP_END();
 

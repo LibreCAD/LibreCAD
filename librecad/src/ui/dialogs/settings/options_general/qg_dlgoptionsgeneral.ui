@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1395</width>
-    <height>922</height>
+    <width>949</width>
+    <height>698</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -39,7 +39,7 @@
    <item row="1" column="0">
     <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
-      <number>2</number>
+      <number>7</number>
      </property>
      <widget class="QWidget" name="tabAppearance">
       <attribute name="title">
@@ -5779,26 +5779,6 @@
           <string>UI</string>
          </property>
          <layout class="QGridLayout" name="gridLayout_55">
-          <item row="1" column="0">
-           <widget class="QCheckBox" name="cbClassicStatusBar">
-            <property name="toolTip">
-             <string>If unchecked, individual widgets of statusbar are toolbars</string>
-            </property>
-            <property name="text">
-             <string>Use &quot;classic&quot; statusbar</string>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="0">
-           <widget class="QCheckBox" name="cbAllowMenusDetaching">
-            <property name="toolTip">
-             <string>If enabled, drop-down menus may become floating</string>
-            </property>
-            <property name="text">
-             <string>Allow menus detaching</string>
-            </property>
-           </widget>
-          </item>
           <item row="2" column="0">
            <widget class="QCheckBox" name="cbDuplicateActionsPromptsInStatusBar">
             <property name="toolTip">
@@ -5812,6 +5792,16 @@
             </property>
            </widget>
           </item>
+          <item row="0" column="0">
+           <widget class="QCheckBox" name="cbAllowMenusDetaching">
+            <property name="toolTip">
+             <string>If enabled, drop-down menus may become floating</string>
+            </property>
+            <property name="text">
+             <string>Allow menus detaching</string>
+            </property>
+           </widget>
+          </item>
           <item row="3" column="0">
            <widget class="QCheckBox" name="cbStartupTBTooltips">
             <property name="toolTip">
@@ -5819,6 +5809,26 @@
             </property>
             <property name="text">
              <string>Show tooltips for toolbars</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QCheckBox" name="cbClassicStatusBar">
+            <property name="toolTip">
+             <string>If unchecked, individual widgets of statusbar are toolbars</string>
+            </property>
+            <property name="text">
+             <string>Use &quot;classic&quot; statusbar</string>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="0">
+           <widget class="QCheckBox" name="cbShowVersionInWinTitle">
+            <property name="toolTip">
+             <string>If enabled, main window title string will also include application's version string.</string>
+            </property>
+            <property name="text">
+             <string>Show version in main window title</string>
             </property>
            </widget>
           </item>

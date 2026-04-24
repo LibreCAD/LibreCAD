@@ -288,14 +288,16 @@ int main(int argc, char** argv) {
     LC_Application app(argc, argv);
     QCoreApplication::setOrganizationName("LibreCAD");
     QCoreApplication::setApplicationName("LibreCAD");
-    QCoreApplication::setApplicationVersion(XSTR(LC_VERSION));
+    const auto versionStr = XSTR(LC_VERSION);
+    QCoreApplication::setApplicationVersion(versionStr);
 
     // fixme - sand - NEED TO CHECK WHERE lc_svgicons.so is located under linux and mac!!! That's tested for Windows
     const auto appDir = app.applicationDirPath();
     const auto inconEnginesDir = appDir + "/iconengines";
     app.addLibraryPath(inconEnginesDir);
 
-    RS_Settings::init(app.organizationName(), app.applicationName());
+    auto applicationName = app.applicationName();
+    RS_Settings::init(app.organizationName(), applicationName);
 
     QGuiApplication::setDesktopFileName("librecad");
 
@@ -381,7 +383,14 @@ int main(int argc, char** argv) {
     app.installEventFilter(&appWin);
 #endif
     RS_DEBUG->print("main: setting caption");
-    appWin.setWindowTitle(app.applicationName());
+    QString mainWinTitle = applicationName;
+
+    const bool showVersionInTitle = LC_GET_ONE_BOOL("Startup","ShowVersionInTitle", true);
+    if (showVersionInTitle) {
+        mainWinTitle = applicationName + " [" + versionStr + "]";
+    }
+
+    appWin.setWindowTitle(mainWinTitle);
 
     RS_DEBUG->print("main: show main window");
 

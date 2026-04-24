@@ -43,6 +43,7 @@ protected slots:
     void ok();
     void languageChange();
     void setTemplateFile();
+    void updateMainWindowTitle(bool showVersionInTitle);
     void setLibraryPath();
     void setRestartNeeded();
     void onAutoBackupChanged(int state) const;
