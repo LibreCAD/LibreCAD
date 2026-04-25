@@ -80,6 +80,9 @@ public:
 
     QStringList getStandardPrintScales() const;
     bool isUseImperialScales() const;
+
+    QStringList readCustomRatios(bool metric, int maxCount);
+    void saveCustomRatios(const QStringList& scales, int startIndex);
 protected:
     /**
     * Action States.

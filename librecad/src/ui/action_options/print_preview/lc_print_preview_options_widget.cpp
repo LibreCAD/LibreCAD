@@ -25,7 +25,6 @@
 **********************************************************************/
 #include "lc_print_preview_options_widget.h"
 
-#include <QLineEdit>
 #include <QPushButton>
 #include<cmath>
 
@@ -40,8 +39,7 @@ namespace {
     constexpr double MIN_PRINT_SCALE = 1.0 / 1e6;
     constexpr double PRINT_SCALE_STEP = MIN_PRINT_SCALE;
 
-    constexpr auto KEY_CUSTOM_SCALE_METRIC_TEMPLATE = "CustomScaleMe%1";
-    constexpr auto KEY_CUSTOM_SCALE_IMPERIAL_TEMPLATE = "CustomScaleIm1%1";
+
 }
 
 /*
@@ -55,23 +53,23 @@ LC_PrintPreviewOptionsWidget::LC_PrintPreviewOptionsWidget():ui(new Ui::LC_Print
     connect(ui->cFixed, &QCheckBox::clicked, this, &LC_PrintPreviewOptionsWidget::onScaleFixedClicked);
     connect(ui->bScaleLineWidth, &QPushButton::toggled, this, &LC_PrintPreviewOptionsWidget::onScaleLineClicked);
     connect(ui->bBlackWhite, &QPushButton::toggled, this, &LC_PrintPreviewOptionsWidget::onBlackWhiteClicked);
-    /*connect(ui->cbScale->lineEdit(), &QLineEdit::editingFinished, [this] {
+    connect(ui->cbScale->lineEdit(), &QLineEdit::editingFinished, [this] {
         ui->cbScale->blockSignals(true);
         scale(ui->cbScale->currentText());
         ui->cbScale->blockSignals(false);
-    });*/
-    /*connect(ui->cbScale, &QComboBox::currentIndexChanged, [this](const int index) {
+    });
+    connect(ui->cbScale, &QComboBox::currentIndexChanged, [this](const int index) {
         ui->cbScale->blockSignals(true);
         scale(ui->cbScale->itemText(index));
         ui->cbScale->blockSignals(false);
-    });*/
+    });
 
-    connect(ui->cbScale, &QComboBox::currentIndexChanged, this, &LC_PrintPreviewOptionsWidget::onScaleIndexChanged);
+    // connect(ui->cbScale, &QComboBox::currentIndexChanged, this, &LC_PrintPreviewOptionsWidget::onScaleIndexChanged);
     connect(ui->bFit, &QPushButton::clicked, this, &LC_PrintPreviewOptionsWidget::onFitClicked);
     connect(ui->bCenter, &QPushButton::clicked, this, &LC_PrintPreviewOptionsWidget::onCenterClicked);
     connect(ui->bCalcPagesNum, &QPushButton::clicked, this, &LC_PrintPreviewOptionsWidget::onCalcPagesNumClicked);
     connect(ui->bZoomPage, &QToolButton::clicked, this, &LC_PrintPreviewOptionsWidget::onZoomToPageClicked);
-    // connect(ui->cbTiledPrint, &QToolButton::clicked, this, &LC_PrintPreviewOptionsWidget::onTiledPrintClicked);
+    connect(ui->cbTiledPrint, &QToolButton::clicked, this, &LC_PrintPreviewOptionsWidget::onTiledPrintClicked);
 
     connect(ui->tbSettings, &QToolButton::clicked, this, &LC_PrintPreviewOptionsWidget::onSettingsClicked);
     connect(ui->tbPortait, &QToolButton::clicked, this, &LC_PrintPreviewOptionsWidget::onPortraitClicked);
@@ -80,7 +78,7 @@ LC_PrintPreviewOptionsWidget::LC_PrintPreviewOptionsWidget():ui(new Ui::LC_Print
     connect(ui->sbPagesVertical, &QSpinBox::valueChanged, this, &LC_PrintPreviewOptionsWidget::onVerticalPagesValueChanges);
     connect(ui->sbPagessHorizontal, &QSpinBox::valueChanged, this, &LC_PrintPreviewOptionsWidget::onHorizontalPagesValueChanges);
 
-    // ui->cbTiledPrint->setChecked(false);
+    ui->cbTiledPrint->setChecked(true);
     ui->wTiledPrint->setVisible(true);
 
     //make sure user scale is accepted
@@ -88,6 +86,13 @@ LC_PrintPreviewOptionsWidget::LC_PrintPreviewOptionsWidget():ui(new Ui::LC_Print
 
     ui->leDrawingUnits->setEnabled(false);
     ui->lePrintedUnits->setEnabled(false);
+
+    // hide controls for the future
+    ui->label_5->setVisible(false);
+    ui->label_6->setVisible(false);
+    ui->lePrintedUnits->setVisible(false);
+    ui->leDrawingUnits->setVisible(false);
+    ui->line_4->setVisible(false);
 }
 
 void LC_PrintPreviewOptionsWidget::onScaleIndexChanged(int index) {
@@ -197,30 +202,20 @@ void LC_PrintPreviewOptionsWidget::doUpdateByAction(RS_ActionInterface* a) {
     setPaperOrientation(m_action->isPortrait());
 }
 
-QStringList LC_PrintPreviewOptionsWidget::readCustomRatios([[maybe_unused]]const bool metric) {
-    QStringList ratios;
-    // const char* prefix = metric ? KEY_CUSTOM_SCALE_METRIC_TEMPLATE : KEY_CUSTOM_SCALE_IMPERIAL_TEMPLATE;
-    // for (unsigned i = 0; i < MAX_CUSTOM_RATIOS; ++i) {
-    //     QString ratio = load(QString(prefix).arg(i), "");
-    //     if (!ratio.isEmpty()) {
-    //         ratios.push_back(ratio);
-    //     }
-    // }
-    return ratios;
-}
 
 void LC_PrintPreviewOptionsWidget::saveCustomRatios() {
-    /*const bool metric = !m_action->isUseImperialScales();
+    const bool metric = !m_action->isUseImperialScales();
     const int existingScalesCount = ui->cbScale->count();
     int max = m_defaultScalesStartIndex + MAX_CUSTOM_RATIOS;
     max = std::min(max, existingScalesCount);
+    QStringList customScale;
     int propertyIndex = 0;
     for (int i = m_defaultScalesStartIndex; i < max; i++) {
-        const char* prefix = metric ? KEY_CUSTOM_SCALE_METRIC_TEMPLATE : KEY_CUSTOM_SCALE_IMPERIAL_TEMPLATE;
         const QString ratio = ui->cbScale->itemText(i);
-        save(QString(prefix).arg(propertyIndex), ratio);
+        customScale.push_back(ratio);
         propertyIndex++;
-    }*/
+    }
+    m_action->saveCustomRatios(customScale,m_defaultScalesStartIndex);
 }
 
 void LC_PrintPreviewOptionsWidget::initializeScaleBoxItems() {
@@ -230,8 +225,7 @@ void LC_PrintPreviewOptionsWidget::initializeScaleBoxItems() {
     QStringList scales = m_action->getStandardPrintScales();
     addScalesToCombobox(scales);
     m_defaultScalesStartIndex = ui->cbScale->count();
-
-    QStringList customScales = readCustomRatios(false);
+    QStringList customScales = m_action->readCustomRatios(false, MAX_CUSTOM_RATIOS);
     addScalesToCombobox(customScales);
 }
 
@@ -261,9 +255,9 @@ void LC_PrintPreviewOptionsWidget::onZoomToPageClicked() const {
 }
 
 void LC_PrintPreviewOptionsWidget::onTiledPrintClicked() {
-    // const bool enabled = ui->cbTiledPrint->isChecked();
-    // ui->wTiledPrint->setVisible(enabled);
-    /*if (!enabled){
+     const bool enabled = ui->cbTiledPrint->isChecked();
+     ui->wTiledPrint->setVisible(enabled);
+    if (!enabled){
         if (m_action != nullptr) {
             if (ui->cFixed) {
                 m_action->calcPagesNum(false);
@@ -271,7 +265,7 @@ void LC_PrintPreviewOptionsWidget::onTiledPrintClicked() {
                 fitPage();
             }
         }
-    }*/
+    }
 }
 
 void LC_PrintPreviewOptionsWidget::onSettingsClicked() const {
@@ -495,7 +489,7 @@ void LC_PrintPreviewOptionsWidget::updateScaleBox(const double factor) {
                 ui->cbScale->removeItem(i);
             }
         }
-        // saveSettings();
+        m_action->saveOptions();
     }
 }
 

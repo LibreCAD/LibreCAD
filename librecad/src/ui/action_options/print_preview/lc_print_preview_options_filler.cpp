@@ -39,6 +39,14 @@ void LC_PrintPreviewOptionsFiller::fillToolOptionsContainer(LC_PropertyContainer
                    action->setPaperScaleFixed(val);
                }, container);
 
+    // fixme - temporary, should be reworked later - may be to two fields (paper/printed, like in AutoCAD) or something similar.
+    // fixme - shoudl be reworked as part of printing
+    addDouble({"a_scale", tr("Scale"), tr("Scale factor for printing")}, [action]()-> double {
+                   return action->getScale();
+               }, [action](double val)-> void {
+                   action->setScale(val, true);
+               }, container);
+
     createCommandsLine(container, "a_commands1", tr("Center page"), tr("Page in center of drawing"), tr("Zoom to print"),
                        tr("Zoom to Print Area"), [action](int linkIndex)-> void {
                            if (linkIndex == 0) {

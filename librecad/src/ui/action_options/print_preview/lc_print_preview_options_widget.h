@@ -81,7 +81,6 @@ private:
     void addScalesToCombobox(QStringList &scales);
     void setScaleFixedToUI(bool fixed) const;
     void setScaleLineToUI(bool state) const;
-    QStringList readCustomRatios(bool metric);
     void saveCustomRatios();
     void fitPage();
     void updatePageNumbers() const;

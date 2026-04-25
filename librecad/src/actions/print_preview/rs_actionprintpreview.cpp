@@ -45,6 +45,11 @@ struct RS_ActionPrintPreview::ActionData {
     RS_Vector v2{};
 };
 
+namespace {
+    constexpr auto KEY_CUSTOM_SCALE_METRIC_TEMPLATE = "CustomScaleMe%1";
+    constexpr auto KEY_CUSTOM_SCALE_IMPERIAL_TEMPLATE = "CustomScaleIm1%1";
+}
+
 /**
  * Constructor.
  */
@@ -61,14 +66,47 @@ RS_ActionPrintPreview::RS_ActionPrintPreview(LC_ActionContext* actionContext)
 }
 
 void RS_ActionPrintPreview::doSaveOptions() {
-    // save("PrintScaleFixed", ui->cFixed->isChecked());
-    // save("ScaleLineWidth", isLineWidthScaling());
-    // save("BlackWhiteSet", isBlackWhite());
-    // save("PrintScaleValue", ui->cbScale->currentText());
+     save("ScaleLineWidth", isLineWidthScaling());
+     save("BlackWhiteSet", isBlackWhite());
+     save("PrintScaleFixed", isPaperScaleFixed());
+     save("PrintScaleValue", getScale());
 }
 
+// fixme - sand - storing scale and fixed in settings is obious suxx as they are part of drawing setttings...
+// fixme - sand - yet it will be reworked anywath with support of layouts later - so let it be as it was
 void RS_ActionPrintPreview::doLoadOptions() {
-    RS_ActionInterface::doLoadOptions();
+    const bool scaleLineWidth = loadBool("ScaleLineWidth", true);
+    const bool blackAndWhite = loadBool("BlackWhiteSet", false);
+    const double printScale = loadDouble("PrintScaleValue", 1.0);
+    const bool printScaleFixed = loadBool("PrintScaleFixed", false);
+
+    setLineWidthScaling(scaleLineWidth);
+    setBlackWhite(blackAndWhite);
+    setPaperScaleFixed(printScaleFixed);
+    setScale(printScale, true);
+}
+
+QStringList RS_ActionPrintPreview::readCustomRatios(const bool metric, int maxCount) {
+    QStringList ratios;
+    const char* prefix = metric ? KEY_CUSTOM_SCALE_METRIC_TEMPLATE : KEY_CUSTOM_SCALE_IMPERIAL_TEMPLATE;
+    for (unsigned i = 0; i < maxCount; ++i) {
+        QString ratio = load(QString(prefix).arg(i), "");
+        if (!ratio.isEmpty()) {
+            ratios.push_back(ratio);
+        }
+    }
+    return ratios;
+}
+
+
+void RS_ActionPrintPreview::saveCustomRatios(const QStringList& scales, int startIndex) {
+    const bool metric = !isUseImperialScales();
+    const char* prefix = metric ? KEY_CUSTOM_SCALE_METRIC_TEMPLATE : KEY_CUSTOM_SCALE_IMPERIAL_TEMPLATE;
+    int propertyIndex = startIndex;
+    for (const QString& ratio : std::as_const(scales)) {
+        save(QString(prefix).arg(propertyIndex), ratio);
+        propertyIndex++;
+    }
 }
 
 RS_ActionPrintPreview::~RS_ActionPrintPreview() = default;

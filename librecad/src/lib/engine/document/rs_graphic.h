@@ -261,6 +261,8 @@ public:
     void updateFallbackDimStyle(const LC_DimStyle* fromStyle);
     void replaceDimStylesList(const QString& defaultStyleName, const QList<LC_DimStyle*>& styles);
     void validateSelection() const {m_selectedSet->cleanup();}
+protected:
+    void fireGraphicModified(bool modified) const;
 private:
     QDateTime m_lastSaveTime;
     QString m_currentFileName; //keep a copy of filename for the modifiedTime

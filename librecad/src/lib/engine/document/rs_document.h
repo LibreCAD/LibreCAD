@@ -227,7 +227,15 @@ public:
     bool undoableModify(LC_GraphicViewport* viewport, const FunUndoable& funModification, const FunSelection& funSelection);
     bool undoableModify(LC_GraphicViewport* viewport, const FunUndoable& funModification);
 
-    void setModificationListener(LC_DocumentModificationListener * listener) {m_modificationListener = listener;}
+    void setModificationListener(LC_DocumentModificationListener * listener, bool add) {
+        if (add) {
+            m_modificationListeners.push_back(listener);
+        }
+        else {
+            m_modificationListeners.removeAll(listener);
+        }
+    }
+
 
 protected:
     /** Flag set if the document was modified and not yet saved. */
@@ -285,7 +293,7 @@ protected:
     bool m_inBulkUndoableCleanup = false;
     bool m_savedAutoUpdateBorders = false;
 
-    LC_DocumentModificationListener* m_modificationListener = nullptr;
+    QList<LC_DocumentModificationListener*> m_modificationListeners;
 
     friend class LC_UndoSection;
     friend class RS_Selection;

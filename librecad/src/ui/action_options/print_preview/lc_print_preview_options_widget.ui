@@ -364,6 +364,16 @@
     </widget>
    </item>
    <item>
+    <widget class="QCheckBox" name="cbTiledPrint">
+     <property name="toolTip">
+      <string>If enabled, paper space will include specified amount of pages organized in columns and rows</string>
+     </property>
+     <property name="text">
+      <string>Tiled Print</string>
+     </property>
+    </widget>
+   </item>
+   <item>
     <widget class="QWidget" name="wTiledPrint" native="true">
      <layout class="QGridLayout" name="gridLayout">
       <property name="topMargin">

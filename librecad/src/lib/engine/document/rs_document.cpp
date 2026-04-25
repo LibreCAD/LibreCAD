@@ -165,7 +165,9 @@ bool RS_Document::collectSelected(QList<RS_Entity*> &collect, [[maybe_unused]] b
 }
 
 void RS_Document::fireUndoStateChanged(const bool undoAvailable, const bool redoAvailable) const {
-    if (m_modificationListener != nullptr) {
-        m_modificationListener->undoStateChanged(this, undoAvailable, redoAvailable);
+    for (const auto listener: std::as_const(m_modificationListeners)) {
+        if (listener != nullptr) {
+            listener->undoStateChanged(this, undoAvailable, redoAvailable);
+        }
     }
 }

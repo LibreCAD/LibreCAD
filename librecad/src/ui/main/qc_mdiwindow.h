@@ -43,7 +43,6 @@ class QC_MDIWindow:public QMdiSubWindow,
     Q_OBJECT
 public:
     QC_MDIWindow(RS_Document *doc,QWidget *parent,bool printPreview, LC_ActionContext* actionContext);
-    void removeWidgetsListeners() const;
     ~QC_MDIWindow() override;
 public slots:
     void slotPenChanged(const RS_Pen &pen) const;
@@ -120,6 +119,7 @@ protected:
     void drawChars() const; // fime - sand - files - refactor and remove from there!
     void closeEvent(QCloseEvent *) override;
     void addWidgetsListeners();
+    void removeWidgetsListeners();
     void setupGraphicView(const QWidget *parent, bool printPreview, LC_ActionContext* actionContext);
 };
 #endif

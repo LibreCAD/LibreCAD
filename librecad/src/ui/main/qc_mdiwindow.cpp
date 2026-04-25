@@ -110,13 +110,13 @@ void QC_MDIWindow::setupGraphicView([[maybe_unused]]const QWidget* parent, const
 
 void QC_MDIWindow::addWidgetsListeners() {
     if (m_document != nullptr) {
-       m_document->setModificationListener(this);
+       m_document->setModificationListener(this, true);
     }
 }
 
-void QC_MDIWindow::removeWidgetsListeners() const {
+void QC_MDIWindow::removeWidgetsListeners()  {
     if (m_document != nullptr) {
-        m_document->setModificationListener(nullptr);
+        m_document->setModificationListener(this, false);
     }
 }
 

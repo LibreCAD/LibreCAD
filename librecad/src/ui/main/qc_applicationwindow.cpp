@@ -669,11 +669,6 @@ void QC_ApplicationWindow::doWindowActivated(QMdiSubWindow* w, const bool forced
             emit gridChanged(activatedGraphic->isGridOn());
         }
 
-        const RS_ActionInterface* currentAction = activatedGraphicView->getCurrentAction();
-        if (currentAction != nullptr) {
-            currentAction->showOptions();
-        }
-
         const bool printPreview = activatedGraphicView->isPrintPreview();
         if (!printPreview) {
             const bool isometricGrid = activatedGraphic->isIsometricGrid();
@@ -683,6 +678,11 @@ void QC_ApplicationWindow::doWindowActivated(QMdiSubWindow* w, const bool forced
         }
 
         updateActionsAndWidgetsForPrintPreview(printPreview);
+
+        const RS_ActionInterface* currentAction = activatedGraphicView->getCurrentAction();
+        if (currentAction != nullptr) {
+            currentAction->showOptions();
+        }
     }
 
     // Disable/Enable menu and toolbar items
@@ -1961,6 +1961,9 @@ void QC_ApplicationWindow::updateActionsAndWidgetsForPrintPreview(const bool pri
         m_mouseWidget->setActionIcon(QIcon());
         m_propertySheetWidget->setEnabled(true);
         m_propertySheetWidget->setCurrentQAction(getAction("FilePrintPreview"));
+    }
+    else {
+        m_propertySheetWidget->setCurrentQAction(nullptr);
     }
 
     emit printPreviewChanged(printPreviewOn);

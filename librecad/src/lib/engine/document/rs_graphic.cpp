@@ -748,8 +748,15 @@ void RS_Graphic::setModified(const bool m) {
         m_dimstyleList.setModified(m);
         m_variableDict.setModified(m);
     }
-    if (m_modificationListener != nullptr) {
-        m_modificationListener->graphicModified(this, m);
+
+    fireGraphicModified(m);
+}
+
+void RS_Graphic::fireGraphicModified(bool modified) const {
+    for (const auto listener: std::as_const(m_modificationListeners)) {
+        if (listener != nullptr) {
+            listener->graphicModified(this, modified);
+        }
     }
 }
 
