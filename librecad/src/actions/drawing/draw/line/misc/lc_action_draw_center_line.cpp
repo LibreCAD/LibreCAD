@@ -221,9 +221,9 @@ void LC_ActionDrawCenterLine::onMouseLeftButtonRelease(const int status, const L
             RS_Entity* ent = catchEntityByEvent(e, g_enTypeList, RS2::ResolveLevel::ResolveAll/*ButTextImage*/);
             if (ent != nullptr){
                 m_secondEntity = ent;
+                m_alternateEndpoints = e->isShift;
+                trigger();
             }
-            m_alternateEndpoints = e->isShift;
-            trigger();
             break;
         }
         default:
