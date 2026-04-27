@@ -2349,6 +2349,9 @@ TRANSLATIONS = \
     ../ts/librecad_sl.ts \
     ../ts/librecad_sq_al.ts \
     ../ts/librecad_sr.ts \
+    ../ts/librecad_sr_ba.ts \
+    ../ts/librecad_sr_me.ts \
+    ../ts/librecad_sr_rs.ts \
     ../ts/librecad_sv.ts \
     ../ts/librecad_ta.ts \
     ../ts/librecad_th.ts \

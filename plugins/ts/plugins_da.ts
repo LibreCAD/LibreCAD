@@ -6,12 +6,12 @@
     <message>
         <location filename="../asciifile/asciifile.cpp" line="35"/>
         <source>Read ASCII points</source>
-        <translation type="unfinished"></translation>
+        <translation>Læs ASCII-punkter</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="36"/>
         <source>Read ASCII test tip...</source>
-        <translation type="unfinished"></translation>
+        <translation>Læs ASCII-testtip...</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="42"/>
@@ -24,12 +24,12 @@
     <message>
         <location filename="../pointstocsv/pointstocsv.cpp" line="34"/>
         <source>Export points to csv</source>
-        <translation type="unfinished"></translation>
+        <translation>Eksportér punkter til CSV</translation>
     </message>
     <message>
         <location filename="../pointstocsv/pointstocsv.cpp" line="41"/>
         <source>Export to csv test tip...</source>
-        <translation type="unfinished"></translation>
+        <translation>Eksportér til CSV-testtip...</translation>
     </message>
 </context>
 <context>
@@ -42,43 +42,42 @@
     <message>
         <location filename="../align/align.cpp" line="31"/>
         <source>Align settings...</source>
-        <translation type="unfinished"></translation>
+        <translation>Justér indstillinger...</translation>
     </message>
     <message>
         <location filename="../align/align.cpp" line="32"/>
         <source>Align test tip...</source>
-        <translation type="unfinished"></translation>
+        <translation>Justér testtip...</translation>
     </message>
     <message>
         <location filename="../align/align.cpp" line="47"/>
         <source>Keep original objects</source>
-        <translation type="unfinished"></translation>
+        <translation>Behold de originale objekter</translation>
     </message>
     <message>
         <location filename="../align/align.cpp" line="48"/>
         <source>Specify base points first</source>
-        <translation type="unfinished"></translation>
+        <translation>Angiv først basispunkterne</translation>
     </message>
     <message>
         <location filename="../align/align.cpp" line="52"/>
         <source>Align Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Justér indstillinger</translation>
     </message>
     <message>
         <location filename="../align/align.cpp" line="55"/>
         <source>Click on options to set/unset,
 Ok to accept and start alignment.</source>
-        <translation type="unfinished"></translation>
+        <translation>Klik på indstillingerne for at aktivere/deaktivere, og klik på OK for at acceptere og starte justeringen.</translation>
     </message>
     <message>
-        <location filename="../align/align.cpp" line="58"/>
         <source>If &apos;Keep original objects&apos; is checked,
 Align will copy rather than move the selected objects.
-
 If &apos;Specify base points first&apos; is checked,
 Align will prompt for the alignment points in the order
 first base, second base, first target, second target.</source>
-        <translation type="unfinished"></translation>
+        <translation type="vanished">Hvis &apos;Behold originale objekter&apos; er markeret, vil Juster kopiere de valgte objekter i stedet for at flytte dem.
+Hvis &apos;Angiv basispunkter først&apos; er markeret, vil Juster bede om justeringspunkterne i følgende rækkefølge: først basispunkt, derefter andet basispunkt, derefter første målpunkt og til sidst andet målpunkt.</translation>
     </message>
     <message>
         <location filename="../align/align.cpp" line="79"/>
@@ -97,6 +96,16 @@ first base, second base, first target, second target.</source>
         <translation>Andet udgangspunkt:</translation>
     </message>
     <message>
+        <location filename="../align/align.cpp" line="58"/>
+        <source>If &apos;Keep original objects&apos; is checked,
+Align will copy rather than move the selected objects.
+
+If &apos;Specify base points first&apos; is checked,
+Align will prompt for the alignment points in the order
+first base, second base, first target, second target.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../align/align.cpp" line="89"/>
         <source>second target point:</source>
         <translation>Andet slutpunkt:</translation>
@@ -107,18 +116,18 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../gear/gear.cpp" line="33"/>
         <source>Gear creation plugin</source>
-        <translation type="unfinished"></translation>
+        <translation>Plugin til oprettelse af tandhjul</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="41"/>
         <source>Gear plugin</source>
-        <translation type="unfinished"></translation>
+        <translation>Tandhjulsplugin</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="42"/>
         <source>Select point for center of gear and press left mouse button.
 Then fill in the fields and press &apos;Accept&apos; button.</source>
-        <translation type="unfinished"></translation>
+        <translation>Vælg et punkt til tandhjulets centrum, og tryk på venstre museknap. Udfyld derefter felterne, og tryk på knappen &apos;Accepter&apos;.</translation>
     </message>
 </context>
 <context>
@@ -132,7 +141,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../list/list.cpp" line="30"/>
         <source>List test tip...</source>
-        <translation type="unfinished"></translation>
+        <translation>Listetesttip...</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="44"/>
@@ -220,7 +229,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../list/list.cpp" line="111"/>
         <source>Inc.</source>
-        <translation type="unfinished"></translation>
+        <translation>Forøg</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="116"/>
@@ -284,7 +293,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../list/list.cpp" line="167"/>
         <source>OVERLAYBOX</source>
-        <translation type="unfinished"></translation>
+        <translation>OVERLÆGSBOKS</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="170"/>
@@ -304,7 +313,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../list/list.cpp" line="181"/>
         <source>TEXTCONTENT</source>
-        <translation type="unfinished"></translation>
+        <translation>TEKSTINDHOLD</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="184"/>
@@ -324,22 +333,22 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../list/list.cpp" line="192"/>
         <source>Scale</source>
-        <translation type="unfinished"></translation>
+        <translation>Skalering</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="195"/>
         <source>Rotation</source>
-        <translation type="unfinished"></translation>
+        <translation>Rotation</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="201"/>
         <source>Columns/Rows</source>
-        <translation type="unfinished"></translation>
+        <translation>Kolonner/Rækker</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="205"/>
         <source>Column/Row Spacing</source>
-        <translation type="unfinished"></translation>
+        <translation>Afstand mellem kolonner/rækker</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="212"/>
@@ -364,12 +373,12 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../list/list.cpp" line="215"/>
         <source>Vertices</source>
-        <translation type="unfinished"></translation>
+        <translation>Hjørnepunkter</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="229"/>
         <source>IMAGE</source>
-        <translation type="unfinished"></translation>
+        <translation>BILLED</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="232"/>
@@ -379,7 +388,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../list/list.cpp" line="235"/>
         <source>SPLINEPOINTS</source>
-        <translation type="unfinished"></translation>
+        <translation>SPLINEPUNKTER</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="238"/>
@@ -389,27 +398,27 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../list/list.cpp" line="241"/>
         <source>DIMLEADER</source>
-        <translation type="unfinished"></translation>
+        <translation>DIMLEADER</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="244"/>
         <source>DIMALIGNED</source>
-        <translation type="unfinished"></translation>
+        <translation>DIMALIGNED</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="247"/>
         <source>DIMLINEAR</source>
-        <translation type="unfinished"></translation>
+        <translation>DIMLINEAR</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="250"/>
         <source>DIMRADIAL</source>
-        <translation type="unfinished"></translation>
+        <translation>DIMRADIAL</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="253"/>
         <source>DIMDIAMETRIC</source>
-        <translation type="unfinished"></translation>
+        <translation>DIMDIAMETRIC</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="256"/>
@@ -428,12 +437,12 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
         <location filename="../sameprop/sameprop.cpp" line="21"/>
         <location filename="../sameprop/sameprop.cpp" line="28"/>
         <source>Same properties</source>
-        <translation type="unfinished"></translation>
+        <translation>Samme egenskaber</translation>
     </message>
     <message>
         <location filename="../sameprop/sameprop.cpp" line="29"/>
         <source>Same properties test tip...</source>
-        <translation type="unfinished"></translation>
+        <translation>Tip om test af samme egenskaber...</translation>
     </message>
     <message>
         <location filename="../sameprop/sameprop.cpp" line="40"/>
@@ -452,12 +461,12 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
         <location filename="../sample/sample.cpp" line="26"/>
         <location filename="../sample/sample.cpp" line="33"/>
         <source>Sample plugin</source>
-        <translation type="unfinished"></translation>
+        <translation>Eksempelplugin</translation>
     </message>
     <message>
         <location filename="../sample/sample.cpp" line="34"/>
         <source>Sample test tip...</source>
-        <translation type="unfinished"></translation>
+        <translation>Tip om test af eksempel...</translation>
     </message>
 </context>
 <context>
@@ -465,195 +474,195 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../picfile/picfile.cpp" line="36"/>
         <source>Read PIC file</source>
-        <translation type="unfinished"></translation>
+        <translation>Læs PIC-fil</translation>
     </message>
     <message>
         <location filename="../picfile/picfile.cpp" line="37"/>
         <source>PIC test tip...</source>
-        <translation type="unfinished"></translation>
+        <translation>PIC-testtip...</translation>
     </message>
     <message>
         <location filename="../picfile/picfile.cpp" line="43"/>
         <source>import PIC file</source>
-        <translation type="unfinished"></translation>
+        <translation>Importer PIC-fil</translation>
     </message>
 </context>
 <context>
     <name>dibPunto</name>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="220"/>
+        <location filename="../asciifile/asciifile.cpp" line="221"/>
         <source>Read ascii points</source>
-        <translation type="unfinished">Importer ASCII punkter</translation>
+        <translation>Læs ASCII-punkter</translation>
     </message>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="226"/>
+        <location filename="../asciifile/asciifile.cpp" line="227"/>
         <source>File...</source>
-        <translation type="unfinished"></translation>
+        <translation>Fil...</translation>
     </message>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="233"/>
+        <location filename="../asciifile/asciifile.cpp" line="234"/>
         <source>Format:</source>
-        <translation type="unfinished"></translation>
+        <translation>Format:</translation>
     </message>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="235"/>
+        <location filename="../asciifile/asciifile.cpp" line="236"/>
         <source>Space Separator</source>
-        <translation type="unfinished"></translation>
+        <translation>Mellemrum som separator</translation>
     </message>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="235"/>
+        <location filename="../asciifile/asciifile.cpp" line="236"/>
         <source>Tab Separator</source>
-        <translation type="unfinished"></translation>
+        <translation>Tabulator som separator</translation>
     </message>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="235"/>
+        <location filename="../asciifile/asciifile.cpp" line="236"/>
         <source>Comma Separator</source>
-        <translation type="unfinished"></translation>
+        <translation>Komma som separator</translation>
     </message>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="235"/>
+        <location filename="../asciifile/asciifile.cpp" line="236"/>
         <source>Space in Columns</source>
-        <translation type="unfinished"></translation>
+        <translation>Mellemrum i kolonner</translation>
     </message>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="235"/>
+        <location filename="../asciifile/asciifile.cpp" line="236"/>
         <source>*.odb for Psion 2</source>
-        <translation type="unfinished"></translation>
+        <translation>*.odb til Psion 2</translation>
     </message>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="237"/>
+        <location filename="../asciifile/asciifile.cpp" line="238"/>
         <source>Connect points</source>
-        <translation type="unfinished"></translation>
+        <translation>Forbind punkter</translation>
     </message>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="245"/>
+        <location filename="../asciifile/asciifile.cpp" line="246"/>
         <source>2D Point</source>
-        <translation type="unfinished"></translation>
+        <translation>2D-punkt</translation>
     </message>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="245"/>
+        <location filename="../asciifile/asciifile.cpp" line="246"/>
         <source>Draw 2D Point</source>
-        <translation type="unfinished"></translation>
+        <translation>Tegn 2D-punkt</translation>
     </message>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="246"/>
+        <location filename="../asciifile/asciifile.cpp" line="247"/>
         <source>3D Point</source>
-        <translation type="unfinished"></translation>
+        <translation>3D-punkt</translation>
     </message>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="246"/>
+        <location filename="../asciifile/asciifile.cpp" line="247"/>
         <source>Draw 3D Point</source>
-        <translation type="unfinished"></translation>
+        <translation>Tegn 3D-punkt</translation>
     </message>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="247"/>
+        <location filename="../asciifile/asciifile.cpp" line="248"/>
         <source>Point Number</source>
-        <translation type="unfinished"></translation>
+        <translation>Punktnummer</translation>
     </message>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="247"/>
+        <location filename="../asciifile/asciifile.cpp" line="248"/>
         <source>Draw point number</source>
-        <translation type="unfinished"></translation>
+        <translation>Tegn punktnummer</translation>
     </message>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="248"/>
+        <location filename="../asciifile/asciifile.cpp" line="249"/>
         <source>Point Elevation</source>
-        <translation type="unfinished"></translation>
+        <translation>Punkthøjde</translation>
     </message>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="248"/>
+        <location filename="../asciifile/asciifile.cpp" line="249"/>
         <source>Draw point elevation</source>
-        <translation type="unfinished"></translation>
+        <translation>Tegn punkthøjde</translation>
     </message>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="249"/>
+        <location filename="../asciifile/asciifile.cpp" line="250"/>
         <source>Point Code</source>
-        <translation type="unfinished"></translation>
+        <translation>Punktkode</translation>
     </message>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="249"/>
+        <location filename="../asciifile/asciifile.cpp" line="250"/>
         <source>Draw point code</source>
-        <translation type="unfinished"></translation>
+        <translation>Tegn punktkode</translation>
     </message>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="263"/>
+        <location filename="../asciifile/asciifile.cpp" line="264"/>
         <source>Accept</source>
         <translation>Godkend</translation>
     </message>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="268"/>
+        <location filename="../asciifile/asciifile.cpp" line="269"/>
         <source>Cancel</source>
         <translation>Annuller</translation>
     </message>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="298"/>
+        <location filename="../asciifile/asciifile.cpp" line="299"/>
         <source>Select file</source>
         <translation>Vælg fil</translation>
     </message>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="304"/>
+        <location filename="../asciifile/asciifile.cpp" line="306"/>
         <source>Point 2D layer is empty</source>
-        <translation type="unfinished"></translation>
+        <translation>Punkt 2D-laget er tomt</translation>
     </message>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="307"/>
+        <location filename="../asciifile/asciifile.cpp" line="309"/>
         <source>Point 3D layer is empty</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../asciifile/asciifile.cpp" line="310"/>
-        <source>Point elevation layer is empty</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../asciifile/asciifile.cpp" line="311"/>
-        <source>Point elevation height is empty</source>
-        <translation type="unfinished"></translation>
+        <translation>Punkt 3D-laget er tomt</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="312"/>
+        <source>Point elevation layer is empty</source>
+        <translation>Punktens højde-lag er tomt</translation>
+    </message>
+    <message>
+        <location filename="../asciifile/asciifile.cpp" line="313"/>
+        <source>Point elevation height is empty</source>
+        <translation>Punktens højde er tom</translation>
+    </message>
+    <message>
+        <location filename="../asciifile/asciifile.cpp" line="314"/>
         <source>Point elevation separation is empty</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../asciifile/asciifile.cpp" line="315"/>
-        <source>Point number layer is empty</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../asciifile/asciifile.cpp" line="316"/>
-        <source>Point number height is empty</source>
-        <translation type="unfinished"></translation>
+        <translation>Punktets højdeangivelse er tom</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="317"/>
+        <source>Point number layer is empty</source>
+        <translation>Punktnummerlaget er tomt</translation>
+    </message>
+    <message>
+        <location filename="../asciifile/asciifile.cpp" line="318"/>
+        <source>Point number height is empty</source>
+        <translation>Punktnummerets højde er tom</translation>
+    </message>
+    <message>
+        <location filename="../asciifile/asciifile.cpp" line="319"/>
         <source>Point number separation is empty</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../asciifile/asciifile.cpp" line="320"/>
-        <source>Point code layer is empty</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../asciifile/asciifile.cpp" line="321"/>
-        <source>Point code height is empty</source>
-        <translation type="unfinished"></translation>
+        <translation>Punktnummerets afstand er tom</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="322"/>
+        <source>Point code layer is empty</source>
+        <translation>Punktkodelaget er tomt</translation>
+    </message>
+    <message>
+        <location filename="../asciifile/asciifile.cpp" line="323"/>
+        <source>Point code height is empty</source>
+        <translation>Punktkodens højde er tom</translation>
+    </message>
+    <message>
+        <location filename="../asciifile/asciifile.cpp" line="324"/>
         <source>Point code separation is empty</source>
-        <translation type="unfinished"></translation>
+        <translation>Punktkodens afstand er tom</translation>
     </message>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="358"/>
+        <location filename="../asciifile/asciifile.cpp" line="360"/>
         <source>The file %1 not exist</source>
-        <translation type="unfinished"></translation>
+        <translation>Filen %1 findes ikke</translation>
     </message>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="363"/>
+        <location filename="../asciifile/asciifile.cpp" line="365"/>
         <source>Can&apos;t open the file %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Kan ikke åbne filen %1</translation>
     </message>
 </context>
 <context>
@@ -662,176 +671,176 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
         <location filename="../divide/divide.cpp" line="34"/>
         <location filename="../divide/divide.cpp" line="41"/>
         <source>Divide</source>
-        <translation type="unfinished"></translation>
+        <translation>Del</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="42"/>
         <source>Divide test tip...</source>
-        <translation type="unfinished"></translation>
+        <translation>Del testtip...</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="53"/>
         <source>Select a line, circle or arc and press return</source>
-        <translation type="unfinished"></translation>
+        <translation>Vælg en linje, cirkel eller bue, og tryk på Enter</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="64"/>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation>Fejl</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="101"/>
         <source>n</source>
-        <translation type="unfinished">n</translation>
+        <translation>n</translation>
     </message>
     <message>
-        <location filename="../divide/divide.cpp" line="439"/>
+        <location filename="../divide/divide.cpp" line="441"/>
         <source>Empty Entity</source>
-        <translation type="unfinished">Slet objekt</translation>
+        <translation>Tom enhed</translation>
     </message>
     <message>
-        <location filename="../divide/divide.cpp" line="447"/>
+        <location filename="../divide/divide.cpp" line="449"/>
         <source>X</source>
-        <translation type="unfinished">X</translation>
+        <translation>X</translation>
     </message>
     <message>
-        <location filename="../divide/divide.cpp" line="447"/>
+        <location filename="../divide/divide.cpp" line="449"/>
         <source>Y</source>
-        <translation type="unfinished">Y</translation>
-    </message>
-    <message>
-        <location filename="../divide/divide.cpp" line="455"/>
-        <source>Layer</source>
-        <translation type="unfinished">Lag</translation>
+        <translation>Y</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="457"/>
-        <source>Color</source>
-        <translation type="unfinished">Farve</translation>
+        <source>Layer</source>
+        <translation>Lag</translation>
     </message>
     <message>
-        <location filename="../divide/divide.cpp" line="458"/>
-        <source>Line type</source>
-        <translation type="unfinished">Linjetype</translation>
+        <location filename="../divide/divide.cpp" line="459"/>
+        <source>Color</source>
+        <translation>Farve</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="460"/>
-        <source>Line thickness</source>
-        <translation type="unfinished">Linjetykkelse</translation>
+        <source>Line type</source>
+        <translation>Linjetype</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="462"/>
+        <source>Line thickness</source>
+        <translation>Linjetykkelse</translation>
+    </message>
+    <message>
+        <location filename="../divide/divide.cpp" line="464"/>
         <source>ID</source>
-        <translation type="unfinished">ID</translation>
+        <translation>ID</translation>
     </message>
     <message>
-        <location filename="../divide/divide.cpp" line="469"/>
+        <location filename="../divide/divide.cpp" line="471"/>
         <source>LINE</source>
-        <translation type="unfinished">LINJE</translation>
+        <translation>LINJE</translation>
     </message>
     <message>
-        <location filename="../divide/divide.cpp" line="474"/>
+        <location filename="../divide/divide.cpp" line="476"/>
         <source>from point</source>
-        <translation type="unfinished">startpunkt</translation>
+        <translation>fra punkt</translation>
     </message>
     <message>
-        <location filename="../divide/divide.cpp" line="477"/>
+        <location filename="../divide/divide.cpp" line="479"/>
         <source>to point</source>
-        <translation type="unfinished">slutpunkt</translation>
+        <translation>til punkt</translation>
     </message>
     <message>
-        <location filename="../divide/divide.cpp" line="482"/>
-        <location filename="../divide/divide.cpp" line="509"/>
+        <location filename="../divide/divide.cpp" line="484"/>
+        <location filename="../divide/divide.cpp" line="511"/>
         <source>length</source>
-        <translation type="unfinished">længde</translation>
-    </message>
-    <message>
-        <location filename="../divide/divide.cpp" line="487"/>
-        <source>Angle in XY plane</source>
-        <translation type="unfinished">Vinkel i XY-plan</translation>
+        <translation>længde</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="489"/>
+        <source>Angle in XY plane</source>
+        <translation>Vinkel i XY-planet</translation>
+    </message>
+    <message>
+        <location filename="../divide/divide.cpp" line="491"/>
         <source>Inc.</source>
-        <translation type="unfinished"></translation>
+        <translation>Incr.</translation>
     </message>
     <message>
-        <location filename="../divide/divide.cpp" line="494"/>
+        <location filename="../divide/divide.cpp" line="496"/>
         <source>ARC</source>
-        <translation type="unfinished">CIRKELBUE</translation>
+        <translation>BUUE</translation>
     </message>
     <message>
-        <location filename="../divide/divide.cpp" line="495"/>
-        <location filename="../divide/divide.cpp" line="514"/>
+        <location filename="../divide/divide.cpp" line="497"/>
+        <location filename="../divide/divide.cpp" line="516"/>
         <source>center point</source>
-        <translation type="unfinished">centrum</translation>
+        <translation>midterpunkt</translation>
     </message>
     <message>
-        <location filename="../divide/divide.cpp" line="501"/>
-        <location filename="../divide/divide.cpp" line="518"/>
-        <location filename="../divide/divide.cpp" line="540"/>
+        <location filename="../divide/divide.cpp" line="503"/>
+        <location filename="../divide/divide.cpp" line="520"/>
+        <location filename="../divide/divide.cpp" line="542"/>
         <source>radius</source>
-        <translation type="unfinished">radius</translation>
-    </message>
-    <message>
-        <location filename="../divide/divide.cpp" line="502"/>
-        <source>initial angle</source>
-        <translation type="unfinished">udgangsvinkel</translation>
+        <translation>radius</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="504"/>
+        <source>initial angle</source>
+        <translation>startvinkel</translation>
+    </message>
+    <message>
+        <location filename="../divide/divide.cpp" line="506"/>
         <source>final angle</source>
-        <translation type="unfinished">slutvinkel</translation>
+        <translation>slutvinkel</translation>
     </message>
     <message>
-        <location filename="../divide/divide.cpp" line="513"/>
+        <location filename="../divide/divide.cpp" line="515"/>
         <source>CIRCLE</source>
-        <translation type="unfinished">cirkel</translation>
-    </message>
-    <message>
-        <location filename="../divide/divide.cpp" line="519"/>
-        <source>circumference</source>
-        <translation type="unfinished">omkreds</translation>
+        <translation>CIRKEL</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="521"/>
+        <source>circumference</source>
+        <translation>omkreds</translation>
+    </message>
+    <message>
+        <location filename="../divide/divide.cpp" line="523"/>
         <source>area</source>
-        <translation type="unfinished">areal</translation>
+        <translation>areal</translation>
     </message>
     <message>
-        <location filename="../divide/divide.cpp" line="525"/>
+        <location filename="../divide/divide.cpp" line="527"/>
         <source>POLYLINE</source>
-        <translation type="unfinished">KNÆKLINJE</translation>
+        <translation>POLYLINJE</translation>
     </message>
     <message>
-        <location filename="../divide/divide.cpp" line="526"/>
+        <location filename="../divide/divide.cpp" line="528"/>
         <source>Closed</source>
-        <translation type="unfinished">Lukket</translation>
+        <translation>Lukket</translation>
     </message>
     <message>
-        <location filename="../divide/divide.cpp" line="528"/>
+        <location filename="../divide/divide.cpp" line="530"/>
         <source>No</source>
-        <translation type="unfinished">Nej</translation>
+        <translation>Nej</translation>
     </message>
     <message>
-        <location filename="../divide/divide.cpp" line="528"/>
+        <location filename="../divide/divide.cpp" line="530"/>
         <source>Yes</source>
-        <translation type="unfinished">Ja</translation>
+        <translation>Ja</translation>
     </message>
     <message>
-        <location filename="../divide/divide.cpp" line="529"/>
+        <location filename="../divide/divide.cpp" line="531"/>
         <source>Vertices</source>
-        <translation type="unfinished"></translation>
+        <translation>Hjørnepunkter</translation>
     </message>
     <message>
-        <location filename="../divide/divide.cpp" line="534"/>
+        <location filename="../divide/divide.cpp" line="536"/>
         <source>in point</source>
-        <translation type="unfinished">aktuelle objekt</translation>
+        <translation>i punkt</translation>
     </message>
     <message>
-        <location filename="../divide/divide.cpp" line="550"/>
+        <location filename="../divide/divide.cpp" line="552"/>
         <source>MUST be a line, circle or arc</source>
-        <translation type="unfinished"></translation>
+        <translation>SKAL være en linje, cirkel eller bue</translation>
     </message>
 </context>
 <context>
@@ -839,52 +848,52 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../divide/dividedlg.cpp" line="47"/>
         <source>Divide - </source>
-        <translation type="unfinished"></translation>
+        <translation>Opdel -</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="68"/>
         <source>Layers</source>
-        <translation type="unfinished"></translation>
+        <translation>Lag</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="74"/>
         <source>OK</source>
-        <translation type="unfinished"></translation>
+        <translation>OK</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="75"/>
         <source>Cancel</source>
-        <translation type="unfinished">Annuller</translation>
+        <translation>Annuller</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="84"/>
         <source>Divide at</source>
-        <translation type="unfinished"></translation>
+        <translation>Opdel ved</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="91"/>
         <source>Size</source>
-        <translation type="unfinished"></translation>
+        <translation>Størrelse</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="114"/>
         <source>places</source>
-        <translation type="unfinished"></translation>
+        <translation>placeringer</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="125"/>
         <source>Ticks - Off</source>
-        <translation type="unfinished"></translation>
+        <translation>Markeringer - Slået fra</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="133"/>
         <source>Breaks - Off</source>
-        <translation type="unfinished"></translation>
+        <translation>Afbrydelser - Slået fra</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="178"/>
         <source>&lt;i&gt;New&lt;/i&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;i&gt;Ny&lt;/i&gt;</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="209"/>
@@ -894,37 +903,37 @@ decimal degrees
 0° at 3 o&apos;clock
 goes
 anti-clockwise.</source>
-        <translation type="unfinished"></translation>
+        <translation>Indtast startvinkel i decimalgrader. 0° er ved 3-tiden og går mod uret.</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="245"/>
         <source>&lt;i&gt;&quot;New&quot;&lt;/i&gt;&lt;br&gt;Enter name&lt;br&gt;for a new layer&lt;br&gt;(if required?) to&lt;br&gt;draw ticks on.</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;i&gt;&quot;Ny&quot;&lt;/i&gt;&lt;br&gt;Indtast et navn&lt;br&gt;for et nyt lag&lt;br&gt;(hvis nødvendigt) til&lt;br&gt;at tegne markeringer på.</translation>
     </message>
     <message>
-        <location filename="../divide/dividedlg.cpp" line="250"/>
+        <location filename="../divide/dividedlg.cpp" line="251"/>
         <source>Ticks</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../divide/dividedlg.cpp" line="256"/>
-        <source>Above</source>
-        <translation type="unfinished"></translation>
+        <translation>Markeringer</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="257"/>
-        <source>Below</source>
-        <translation type="unfinished"></translation>
+        <source>Above</source>
+        <translation>Ovenover</translation>
     </message>
     <message>
-        <location filename="../divide/dividedlg.cpp" line="261"/>
-        <source>Outside</source>
-        <translation type="unfinished"></translation>
+        <location filename="../divide/dividedlg.cpp" line="258"/>
+        <source>Below</source>
+        <translation>Under</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="262"/>
+        <source>Outside</source>
+        <translation>Udenfor</translation>
+    </message>
+    <message>
+        <location filename="../divide/dividedlg.cpp" line="263"/>
         <source>Inside</source>
-        <translation type="unfinished"></translation>
+        <translation>Indeni</translation>
     </message>
 </context>
 <context>
@@ -932,17 +941,17 @@ anti-clockwise.</source>
     <message>
         <location filename="../pointstocsv/pointstocsv.cpp" line="120"/>
         <source>Export to file</source>
-        <translation type="unfinished"></translation>
+        <translation>Eksportér til fil</translation>
     </message>
     <message>
         <location filename="../pointstocsv/pointstocsv.cpp" line="120"/>
         <source>CSV (*.csv)</source>
-        <translation type="unfinished"></translation>
+        <translation>CSV (*.csv)</translation>
     </message>
     <message>
         <location filename="../pointstocsv/pointstocsv.cpp" line="128"/>
         <source>Unable to open file</source>
-        <translation type="unfinished"></translation>
+        <translation>Kunne ikke åbne filen</translation>
     </message>
 </context>
 <context>
@@ -950,107 +959,107 @@ anti-clockwise.</source>
     <message>
         <location filename="../gear/gear.cpp" line="113"/>
         <source>Number of teeth</source>
-        <translation type="unfinished"></translation>
+        <translation>Antal tænder</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="115"/>
         <source>Pressure angle (deg)</source>
-        <translation type="unfinished"></translation>
+        <translation>Trykvinkel (grader)</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="112"/>
         <source>Rotation angle</source>
-        <translation type="unfinished"></translation>
+        <translation>Rotationsvinkel</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="114"/>
         <source>Modulus</source>
-        <translation type="unfinished"></translation>
+        <translation>Modul</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="116"/>
         <source>Addendum (rel. to modulus)</source>
-        <translation type="unfinished"></translation>
+        <translation>Addendum (relativt til modul)</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="117"/>
         <source>Dedendum (rel. to modulus)</source>
-        <translation type="unfinished"></translation>
+        <translation>Dedendum (relativt til modul)</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="118"/>
         <source>Number of segments to draw (dedendum)</source>
-        <translation type="unfinished"></translation>
+        <translation>Antal segmenter, der skal tegnes (dedendum)</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="119"/>
         <source>Number of segments to draw (addendum)</source>
-        <translation type="unfinished"></translation>
+        <translation>Antal segmenter, der skal tegnes (tillegg)</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="120"/>
         <source>Draw all teeth?</source>
-        <translation type="unfinished"></translation>
+        <translation>Tegn alle tænder?</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="121"/>
         <source>Draw symmetric face?</source>
-        <translation type="unfinished"></translation>
+        <translation>Tegn symmetrisk side?</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="123"/>
         <source>Use layers?</source>
-        <translation type="unfinished"></translation>
+        <translation>Brug lag?</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="124"/>
         <source>Draw addendum circle?</source>
-        <translation type="unfinished"></translation>
+        <translation>Tegn tillægscirkel?</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="125"/>
         <source>Draw pitch circle?</source>
-        <translation type="unfinished"></translation>
+        <translation>Tegn inddelingscirkel?</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="126"/>
         <source>Draw base circle?</source>
-        <translation type="unfinished"></translation>
+        <translation>Tegn grundcirkel?</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="127"/>
         <source>Draw root circle?</source>
-        <translation type="unfinished"></translation>
+        <translation>Tegn rodcirkel?</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="128"/>
         <source>Draw pressure line?</source>
-        <translation type="unfinished"></translation>
+        <translation>Tegn tryklinje?</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="129"/>
         <source>Draw pressure limits?</source>
-        <translation type="unfinished"></translation>
+        <translation>Tegn trykgrænser?</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="131"/>
         <source>Calculate interference?</source>
-        <translation type="unfinished"></translation>
+        <translation>Beregn interferens?</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="132"/>
         <source>Number of segments to draw (interference)</source>
-        <translation type="unfinished"></translation>
+        <translation>Antal segmenter, der skal tegnes (interferens)</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="134"/>
         <source>Accept</source>
-        <translation type="unfinished">Godkend</translation>
+        <translation>Accepter</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="135"/>
         <source>Cancel</source>
-        <translation type="unfinished">Annuller</translation>
+        <translation>Annuller</translation>
     </message>
 </context>
 <context>
@@ -1058,7 +1067,7 @@ anti-clockwise.</source>
     <message>
         <location filename="../list/list.cpp" line="276"/>
         <source>List entities</source>
-        <translation type="unfinished">Vis objekter</translation>
+        <translation>Vis enheder</translation>
     </message>
 </context>
 <context>
@@ -1066,62 +1075,62 @@ anti-clockwise.</source>
     <message>
         <location filename="../sample/sample.cpp" line="53"/>
         <source>Draw line</source>
-        <translation type="unfinished"></translation>
+        <translation>Tegn linje</translation>
     </message>
     <message>
         <location filename="../sample/sample.cpp" line="59"/>
         <source>Start X:</source>
-        <translation type="unfinished"></translation>
+        <translation>Start X:</translation>
     </message>
     <message>
         <location filename="../sample/sample.cpp" line="65"/>
         <source>Start Y:</source>
-        <translation type="unfinished"></translation>
+        <translation>Start Y:</translation>
     </message>
     <message>
         <location filename="../sample/sample.cpp" line="71"/>
         <source>End X:</source>
-        <translation type="unfinished"></translation>
+        <translation>Slut X:</translation>
     </message>
     <message>
         <location filename="../sample/sample.cpp" line="77"/>
         <source>End Y:</source>
-        <translation type="unfinished"></translation>
+        <translation>Slut Y:</translation>
     </message>
     <message>
         <location filename="../sample/sample.cpp" line="85"/>
         <source>Accept</source>
-        <translation type="unfinished">Godkend</translation>
+        <translation>Accepter</translation>
     </message>
     <message>
         <location filename="../sample/sample.cpp" line="90"/>
         <source>Cancel</source>
-        <translation type="unfinished">Annuller</translation>
-    </message>
-    <message>
-        <location filename="../sample/sample.cpp" line="105"/>
-        <source>Start X is empty</source>
-        <translation type="unfinished"></translation>
+        <translation>Annuller</translation>
     </message>
     <message>
         <location filename="../sample/sample.cpp" line="106"/>
-        <source>Start Y is empty</source>
-        <translation type="unfinished"></translation>
+        <source>Start X is empty</source>
+        <translation>Start X er tom</translation>
     </message>
     <message>
         <location filename="../sample/sample.cpp" line="107"/>
-        <source>End X is empty</source>
-        <translation type="unfinished"></translation>
+        <source>Start Y is empty</source>
+        <translation>Start Y er tom</translation>
     </message>
     <message>
         <location filename="../sample/sample.cpp" line="108"/>
-        <source>End Y is empty</source>
-        <translation type="unfinished"></translation>
+        <source>End X is empty</source>
+        <translation>Slut X er tom</translation>
     </message>
     <message>
-        <location filename="../sample/sample.cpp" line="128"/>
+        <location filename="../sample/sample.cpp" line="109"/>
+        <source>End Y is empty</source>
+        <translation>Slut Y er tom</translation>
+    </message>
+    <message>
+        <location filename="../sample/sample.cpp" line="130"/>
         <source>Sample plugin</source>
-        <translation type="unfinished"></translation>
+        <translation>Eksempelplugin</translation>
     </message>
 </context>
 <context>
@@ -1129,63 +1138,63 @@ anti-clockwise.</source>
     <message>
         <location filename="../picfile/picfile.cpp" line="65"/>
         <source>File...</source>
-        <translation type="unfinished"></translation>
+        <translation>Fil...</translation>
     </message>
     <message>
         <location filename="../picfile/picfile.cpp" line="75"/>
         <source>Scale:</source>
-        <translation type="unfinished"></translation>
+        <translation>Skala:</translation>
     </message>
     <message>
         <location filename="../picfile/picfile.cpp" line="79"/>
         <source>Accept</source>
-        <translation type="unfinished">Godkend</translation>
+        <translation>Accepter</translation>
     </message>
     <message>
         <location filename="../picfile/picfile.cpp" line="83"/>
         <source>Cancel</source>
-        <translation type="unfinished">Annuller</translation>
+        <translation>Annuller</translation>
     </message>
     <message>
         <location filename="../picfile/picfile.cpp" line="111"/>
         <source>Select file</source>
-        <translation type="unfinished">Vælg fil</translation>
+        <translation>Vælg fil</translation>
     </message>
     <message>
-        <location filename="../picfile/picfile.cpp" line="118"/>
+        <location filename="../picfile/picfile.cpp" line="119"/>
         <source>Scale Factor is empty or invalid</source>
-        <translation type="unfinished"></translation>
+        <translation>Skaleringsfaktor er tom eller ugyldig</translation>
     </message>
     <message>
-        <location filename="../picfile/picfile.cpp" line="131"/>
+        <location filename="../picfile/picfile.cpp" line="132"/>
         <source>The file %1 not exist</source>
-        <translation type="unfinished"></translation>
+        <translation>Filen %1 findes ikke</translation>
     </message>
     <message>
-        <location filename="../picfile/picfile.cpp" line="136"/>
+        <location filename="../picfile/picfile.cpp" line="137"/>
         <source>Can&apos;t open the file %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Kan ikke åbne filen %1</translation>
     </message>
     <message>
-        <location filename="../picfile/picfile.cpp" line="143"/>
+        <location filename="../picfile/picfile.cpp" line="144"/>
         <source>%1 objects imported</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 objekter importeret</translation>
     </message>
     <message>
-        <location filename="../picfile/picfile.cpp" line="164"/>
+        <location filename="../picfile/picfile.cpp" line="166"/>
         <source>picPunto drawLine: first point is empty %1</source>
-        <translation type="unfinished"></translation>
+        <translation>picPunto drawLine: Første punkt er tomt %1</translation>
     </message>
     <message>
-        <location filename="../picfile/picfile.cpp" line="177"/>
+        <location filename="../picfile/picfile.cpp" line="179"/>
         <source>picPunto drawLine: next point is empty %1</source>
-        <translation type="unfinished"></translation>
+        <translation>picPunto drawLine: Næste punkt er tomt %1</translation>
     </message>
     <message>
-        <location filename="../picfile/picfile.cpp" line="260"/>
-        <location filename="../picfile/picfile.cpp" line="269"/>
+        <location filename="../picfile/picfile.cpp" line="262"/>
+        <location filename="../picfile/picfile.cpp" line="271"/>
         <source>format error in %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Formatfejl i %1</translation>
     </message>
 </context>
 <context>
@@ -1194,12 +1203,12 @@ anti-clockwise.</source>
         <location filename="../plotequation/plot.cpp" line="30"/>
         <location filename="../plotequation/plot.cpp" line="37"/>
         <source>Plot plugin</source>
-        <translation type="unfinished"></translation>
+        <translation>Plot-plugin</translation>
     </message>
     <message>
         <location filename="../plotequation/plot.cpp" line="38"/>
         <source>Plot test tip...</source>
-        <translation type="unfinished"></translation>
+        <translation>Plot-testtip...</translation>
     </message>
 </context>
 <context>
@@ -1207,7 +1216,7 @@ anti-clockwise.</source>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="15"/>
         <source>Plot equation</source>
-        <translation type="unfinished"></translation>
+        <translation>Plot ligning</translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="18"/>
@@ -1216,60 +1225,63 @@ If you don&apos;t want to use the parametric form, just leave out &quot;Equation
 You can use pi when you need the value of pi (i.e. (3*pi)).
 Use t or x in your equation as a variable/parameter.
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Dette plugin giver dig mulighed for at plotte matematiske ligninger.
+Hvis du ikke vil bruge den parametriske form, skal du blot udelade &quot;Ligning2&quot;.
+Du kan bruge pi, når du har brug for værdien af pi (f.eks. (3*pi)).
+Brug t eller x i din ligning som en variabel/parameter.</translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="22"/>
         <source>Equation 1:</source>
-        <translation type="unfinished"></translation>
+        <translation>Ligning 1:</translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="23"/>
         <source>Equation 2:</source>
-        <translation type="unfinished"></translation>
+        <translation>Ligning 2:</translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="26"/>
         <source>start value:</source>
-        <translation type="unfinished"></translation>
+        <translation>Startværdi:</translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="27"/>
         <source>end value:</source>
-        <translation type="unfinished"></translation>
+        <translation>Slutværdi:</translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="28"/>
         <source>step size:</source>
-        <translation type="unfinished"></translation>
+        <translation>Trinlængde:</translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="32"/>
         <source>Draw</source>
-        <translation type="unfinished"></translation>
+        <translation>Tegn</translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="33"/>
         <source>Cancel</source>
-        <translation type="unfinished">Annuller</translation>
+        <translation>Annuller</translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="59"/>
         <source>Line Segments</source>
         <comment>Plot Equation to generate RS_Line segments</comment>
-        <translation type="unfinished"></translation>
+        <translation>Linjesegmenter</translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="60"/>
         <source>Polyline</source>
         <comment>Plot Equation to generate RS_Polyline</comment>
-        <translation type="unfinished"></translation>
+        <translation>Polylinje</translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="61"/>
         <source>SplinePoints</source>
         <comment>Plot Equation to generate 2nd spline by LC_SplinePoints</comment>
-        <translation type="unfinished"></translation>
+        <translation>Splinepunkter</translation>
     </message>
 </context>
 <context>
@@ -1277,25 +1289,25 @@ Use t or x in your equation as a variable/parameter.
     <message>
         <location filename="../asciifile/asciifile.cpp" line="176"/>
         <source>Layer:</source>
-        <translation type="unfinished"></translation>
+        <translation>Lag:</translation>
     </message>
 </context>
 <context>
     <name>textBox</name>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="204"/>
-        <source>Style:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../asciifile/asciifile.cpp" line="205"/>
-        <source>Height:</source>
-        <translation type="unfinished"></translation>
+        <source>Style:</source>
+        <translation>Stil:</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="206"/>
+        <source>Height:</source>
+        <translation>Højde:</translation>
+    </message>
+    <message>
+        <location filename="../asciifile/asciifile.cpp" line="207"/>
         <source>Separation</source>
-        <translation type="unfinished"></translation>
+        <translation>Afstand</translation>
     </message>
 </context>
 </TS>

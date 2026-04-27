@@ -6,12 +6,12 @@
     <message>
         <location filename="../asciifile/asciifile.cpp" line="35"/>
         <source>Read ASCII points</source>
-        <translation type="unfinished"></translation>
+        <translation>ASCII fájl beolvasása</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="36"/>
         <source>Read ASCII test tip...</source>
-        <translation type="unfinished"></translation>
+        <translation>ASCII fájl beolvasása...</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="42"/>
@@ -24,12 +24,12 @@
     <message>
         <location filename="../pointstocsv/pointstocsv.cpp" line="34"/>
         <source>Export points to csv</source>
-        <translation type="unfinished"></translation>
+        <translation>Pontok CSV fájlba exportálása</translation>
     </message>
     <message>
         <location filename="../pointstocsv/pointstocsv.cpp" line="41"/>
         <source>Export to csv test tip...</source>
-        <translation type="unfinished"></translation>
+        <translation>Exportálás CSV fájlba...</translation>
     </message>
 </context>
 <context>
@@ -42,43 +42,42 @@
     <message>
         <location filename="../align/align.cpp" line="31"/>
         <source>Align settings...</source>
-        <translation type="unfinished"></translation>
+        <translation>Igazítás beállításai...</translation>
     </message>
     <message>
         <location filename="../align/align.cpp" line="32"/>
         <source>Align test tip...</source>
-        <translation type="unfinished"></translation>
+        <translation>Igazítás teszt...</translation>
     </message>
     <message>
         <location filename="../align/align.cpp" line="47"/>
         <source>Keep original objects</source>
-        <translation type="unfinished"></translation>
+        <translation>Az eredeti objektumok megtartása</translation>
     </message>
     <message>
         <location filename="../align/align.cpp" line="48"/>
         <source>Specify base points first</source>
-        <translation type="unfinished"></translation>
+        <translation>Először adja meg az alap pontokat</translation>
     </message>
     <message>
         <location filename="../align/align.cpp" line="52"/>
         <source>Align Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Igazítás beállításai</translation>
     </message>
     <message>
         <location filename="../align/align.cpp" line="55"/>
         <source>Click on options to set/unset,
 Ok to accept and start alignment.</source>
-        <translation type="unfinished"></translation>
+        <translation>Kattintson a beállításokra a be- vagy kikapcsoláshoz, majd kattintson az OK gombra az elfogadáshoz és az igazítás elindításához.</translation>
     </message>
     <message>
-        <location filename="../align/align.cpp" line="58"/>
         <source>If &apos;Keep original objects&apos; is checked,
 Align will copy rather than move the selected objects.
-
 If &apos;Specify base points first&apos; is checked,
 Align will prompt for the alignment points in the order
 first base, second base, first target, second target.</source>
-        <translation type="unfinished"></translation>
+        <translation type="vanished">Ha be van jelölve a „Tartsa meg az eredeti objektumokat” lehetőség, az Igazítás funkció másolja, nem pedig mozgatja a kiválasztott objektumokat.
+Ha be van jelölve a „Először adja meg az alappontokat” lehetőség, az Igazítás funkció kérni fogja az igazítási pontokat a következő sorrendben: első alappont, második alappont, első célpont, második célpont.</translation>
     </message>
     <message>
         <location filename="../align/align.cpp" line="79"/>
@@ -97,6 +96,16 @@ first base, second base, first target, second target.</source>
         <translation>második bázispont:</translation>
     </message>
     <message>
+        <location filename="../align/align.cpp" line="58"/>
+        <source>If &apos;Keep original objects&apos; is checked,
+Align will copy rather than move the selected objects.
+
+If &apos;Specify base points first&apos; is checked,
+Align will prompt for the alignment points in the order
+first base, second base, first target, second target.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../align/align.cpp" line="89"/>
         <source>second target point:</source>
         <translation>második célpont:</translation>
@@ -107,18 +116,18 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../gear/gear.cpp" line="33"/>
         <source>Gear creation plugin</source>
-        <translation type="unfinished"></translation>
+        <translation>Fogaskerék-létrehozó beépülő modul</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="41"/>
         <source>Gear plugin</source>
-        <translation type="unfinished"></translation>
+        <translation>Fogaskerék-beépülő modul</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="42"/>
         <source>Select point for center of gear and press left mouse button.
 Then fill in the fields and press &apos;Accept&apos; button.</source>
-        <translation type="unfinished"></translation>
+        <translation>Válassza ki a fogaskerék közepontjának megfelelő pontot, majd nyomja meg a bal egérgombot. Ezután töltse ki a mezőket, és nyomja meg az „Elfogad” gombot.</translation>
     </message>
 </context>
 <context>
@@ -132,7 +141,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../list/list.cpp" line="30"/>
         <source>List test tip...</source>
-        <translation type="unfinished"></translation>
+        <translation>Lista teszt tipp...</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="44"/>
@@ -142,7 +151,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../list/list.cpp" line="58"/>
         <source>Empty Entity</source>
-        <translation type="unfinished"></translation>
+        <translation>Üres entitás</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="65"/>
@@ -177,7 +186,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../list/list.cpp" line="80"/>
         <source>ID</source>
-        <translation type="unfinished"></translation>
+        <translation>Azonosító</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="86"/>
@@ -189,7 +198,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
         <location filename="../list/list.cpp" line="178"/>
         <location filename="../list/list.cpp" line="220"/>
         <source>in point</source>
-        <translation type="unfinished"></translation>
+        <translation>bemeneti pont</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="92"/>
@@ -220,7 +229,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../list/list.cpp" line="111"/>
         <source>Inc.</source>
-        <translation type="unfinished"></translation>
+        <translation>Növelés</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="116"/>
@@ -274,42 +283,42 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../list/list.cpp" line="146"/>
         <source>major axis</source>
-        <translation type="unfinished"></translation>
+        <translation>fő tengely</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="164"/>
         <source>CONSTRUCTIONLINE</source>
-        <translation type="unfinished"></translation>
+        <translation>ÉPÍTŐVONAL</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="167"/>
         <source>OVERLAYBOX</source>
-        <translation type="unfinished"></translation>
+        <translation>ÁTFEDÉS DOBOZ</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="170"/>
         <source>SOLID</source>
-        <translation type="unfinished"></translation>
+        <translation>TÖMÖR</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="174"/>
         <source>MTEXT</source>
-        <translation type="unfinished"></translation>
+        <translation>MTEXT</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="177"/>
         <source>TEXT</source>
-        <translation type="unfinished"></translation>
+        <translation>SZÖVEG</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="181"/>
         <source>TEXTCONTENT</source>
-        <translation type="unfinished"></translation>
+        <translation>SZÖVEGTARTALOM</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="184"/>
         <source>INSERT</source>
-        <translation type="unfinished"></translation>
+        <translation>BESZÚRÁS</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="187"/>
@@ -324,27 +333,27 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../list/list.cpp" line="192"/>
         <source>Scale</source>
-        <translation type="unfinished"></translation>
+        <translation>Méretezés</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="195"/>
         <source>Rotation</source>
-        <translation type="unfinished"></translation>
+        <translation>Forgatás</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="201"/>
         <source>Columns/Rows</source>
-        <translation type="unfinished"></translation>
+        <translation>Oszlopok/Sorok</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="205"/>
         <source>Column/Row Spacing</source>
-        <translation type="unfinished"></translation>
+        <translation>Oszlop-/sorköz</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="212"/>
         <source>POLYLINE</source>
-        <translation type="unfinished"></translation>
+        <translation>POLILÍNIA</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="213"/>
@@ -369,57 +378,57 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../list/list.cpp" line="229"/>
         <source>IMAGE</source>
-        <translation type="unfinished"></translation>
+        <translation>KÉP</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="232"/>
         <source>SPLINE</source>
-        <translation type="unfinished"></translation>
+        <translation>SPLINE</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="235"/>
         <source>SPLINEPOINTS</source>
-        <translation type="unfinished"></translation>
+        <translation>SPLINE-PONTOK</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="238"/>
         <source>HATCH</source>
-        <translation type="unfinished"></translation>
+        <translation>MINTA</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="241"/>
         <source>DIMLEADER</source>
-        <translation type="unfinished"></translation>
+        <translation>DIMENZIÓVÉG</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="244"/>
         <source>DIMALIGNED</source>
-        <translation type="unfinished"></translation>
+        <translation>DIMENZIÓ, EGYVONALÚ</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="247"/>
         <source>DIMLINEAR</source>
-        <translation type="unfinished"></translation>
+        <translation>DIMENZIÓ, VONAL</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="250"/>
         <source>DIMRADIAL</source>
-        <translation type="unfinished"></translation>
+        <translation>DIMENZIÓ, SUGÁR</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="253"/>
         <source>DIMDIAMETRIC</source>
-        <translation type="unfinished"></translation>
+        <translation>DIMDIAMETRIKUS</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="256"/>
         <source>DIMANGULAR</source>
-        <translation type="unfinished"></translation>
+        <translation>DIMANGULÁRIS</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="259"/>
         <source>UNKNOWN</source>
-        <translation type="unfinished"></translation>
+        <translation>ISMERETLEN</translation>
     </message>
 </context>
 <context>
@@ -428,22 +437,22 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
         <location filename="../sameprop/sameprop.cpp" line="21"/>
         <location filename="../sameprop/sameprop.cpp" line="28"/>
         <source>Same properties</source>
-        <translation type="unfinished"></translation>
+        <translation>Ugyanazok a tulajdonságok</translation>
     </message>
     <message>
         <location filename="../sameprop/sameprop.cpp" line="29"/>
         <source>Same properties test tip...</source>
-        <translation type="unfinished"></translation>
+        <translation>Ugyanazok a tulajdonságok – súgó...</translation>
     </message>
     <message>
         <location filename="../sameprop/sameprop.cpp" line="40"/>
         <source>select original entity:</source>
-        <translation type="unfinished"></translation>
+        <translation>Válassza ki az eredeti entitást:</translation>
     </message>
     <message>
         <location filename="../sameprop/sameprop.cpp" line="42"/>
         <source>select entities to change</source>
-        <translation type="unfinished"></translation>
+        <translation>Válassza ki a módosítandó entitásokat</translation>
     </message>
 </context>
 <context>
@@ -452,12 +461,12 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
         <location filename="../sample/sample.cpp" line="26"/>
         <location filename="../sample/sample.cpp" line="33"/>
         <source>Sample plugin</source>
-        <translation type="unfinished"></translation>
+        <translation>Minta beépülő modul</translation>
     </message>
     <message>
         <location filename="../sample/sample.cpp" line="34"/>
         <source>Sample test tip...</source>
-        <translation type="unfinished"></translation>
+        <translation>Minta – súgó...</translation>
     </message>
 </context>
 <context>
@@ -465,195 +474,195 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../picfile/picfile.cpp" line="36"/>
         <source>Read PIC file</source>
-        <translation type="unfinished"></translation>
+        <translation>PIC fájl beolvasása</translation>
     </message>
     <message>
         <location filename="../picfile/picfile.cpp" line="37"/>
         <source>PIC test tip...</source>
-        <translation type="unfinished"></translation>
+        <translation>PIC teszt tipp...</translation>
     </message>
     <message>
         <location filename="../picfile/picfile.cpp" line="43"/>
         <source>import PIC file</source>
-        <translation type="unfinished"></translation>
+        <translation>PIC fájl importálása</translation>
     </message>
 </context>
 <context>
     <name>dibPunto</name>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="220"/>
+        <location filename="../asciifile/asciifile.cpp" line="221"/>
         <source>Read ascii points</source>
-        <translation type="unfinished">ascii pontok olvasása</translation>
+        <translation>ASCII pontok beolvasása</translation>
     </message>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="226"/>
+        <location filename="../asciifile/asciifile.cpp" line="227"/>
         <source>File...</source>
-        <translation type="unfinished"></translation>
+        <translation>Fájl...</translation>
     </message>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="233"/>
+        <location filename="../asciifile/asciifile.cpp" line="234"/>
         <source>Format:</source>
-        <translation type="unfinished"></translation>
+        <translation>Formátum:</translation>
     </message>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="235"/>
+        <location filename="../asciifile/asciifile.cpp" line="236"/>
         <source>Space Separator</source>
-        <translation type="unfinished"></translation>
+        <translation>Szóköz elválasztó</translation>
     </message>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="235"/>
+        <location filename="../asciifile/asciifile.cpp" line="236"/>
         <source>Tab Separator</source>
-        <translation type="unfinished"></translation>
+        <translation>Tabulátor elválasztó</translation>
     </message>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="235"/>
+        <location filename="../asciifile/asciifile.cpp" line="236"/>
         <source>Comma Separator</source>
-        <translation type="unfinished"></translation>
+        <translation>Vessző elválasztó</translation>
     </message>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="235"/>
+        <location filename="../asciifile/asciifile.cpp" line="236"/>
         <source>Space in Columns</source>
-        <translation type="unfinished"></translation>
+        <translation>Szóköz az oszlopokban</translation>
     </message>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="235"/>
+        <location filename="../asciifile/asciifile.cpp" line="236"/>
         <source>*.odb for Psion 2</source>
-        <translation type="unfinished"></translation>
+        <translation>*.odb fájl a Psion 2-höz</translation>
     </message>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="237"/>
+        <location filename="../asciifile/asciifile.cpp" line="238"/>
         <source>Connect points</source>
-        <translation type="unfinished"></translation>
+        <translation>Pontok összekötése</translation>
     </message>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="245"/>
+        <location filename="../asciifile/asciifile.cpp" line="246"/>
         <source>2D Point</source>
-        <translation type="unfinished"></translation>
+        <translation>2D pont</translation>
     </message>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="245"/>
+        <location filename="../asciifile/asciifile.cpp" line="246"/>
         <source>Draw 2D Point</source>
-        <translation type="unfinished"></translation>
+        <translation>2D pont rajzolása</translation>
     </message>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="246"/>
+        <location filename="../asciifile/asciifile.cpp" line="247"/>
         <source>3D Point</source>
-        <translation type="unfinished"></translation>
+        <translation>3D pont</translation>
     </message>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="246"/>
+        <location filename="../asciifile/asciifile.cpp" line="247"/>
         <source>Draw 3D Point</source>
-        <translation type="unfinished"></translation>
+        <translation>3D pont rajzolása</translation>
     </message>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="247"/>
+        <location filename="../asciifile/asciifile.cpp" line="248"/>
         <source>Point Number</source>
-        <translation type="unfinished"></translation>
+        <translation>Pontszám</translation>
     </message>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="247"/>
+        <location filename="../asciifile/asciifile.cpp" line="248"/>
         <source>Draw point number</source>
-        <translation type="unfinished"></translation>
+        <translation>Pontszám rajzolása</translation>
     </message>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="248"/>
+        <location filename="../asciifile/asciifile.cpp" line="249"/>
         <source>Point Elevation</source>
-        <translation type="unfinished"></translation>
+        <translation>Pont magassága</translation>
     </message>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="248"/>
+        <location filename="../asciifile/asciifile.cpp" line="249"/>
         <source>Draw point elevation</source>
-        <translation type="unfinished"></translation>
+        <translation>Pont magasságának rajzolása</translation>
     </message>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="249"/>
+        <location filename="../asciifile/asciifile.cpp" line="250"/>
         <source>Point Code</source>
-        <translation type="unfinished"></translation>
+        <translation>Pontkód</translation>
     </message>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="249"/>
+        <location filename="../asciifile/asciifile.cpp" line="250"/>
         <source>Draw point code</source>
-        <translation type="unfinished"></translation>
+        <translation>Pont rajzolása</translation>
     </message>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="263"/>
+        <location filename="../asciifile/asciifile.cpp" line="264"/>
         <source>Accept</source>
-        <translation type="unfinished"></translation>
+        <translation>Elfogadás</translation>
     </message>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="268"/>
+        <location filename="../asciifile/asciifile.cpp" line="269"/>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Mégsem</translation>
     </message>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="298"/>
+        <location filename="../asciifile/asciifile.cpp" line="299"/>
         <source>Select file</source>
-        <translation type="unfinished"></translation>
+        <translation>Fájl kiválasztása</translation>
     </message>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="304"/>
+        <location filename="../asciifile/asciifile.cpp" line="306"/>
         <source>Point 2D layer is empty</source>
-        <translation type="unfinished"></translation>
+        <translation>A 2D pontréteg üres</translation>
     </message>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="307"/>
+        <location filename="../asciifile/asciifile.cpp" line="309"/>
         <source>Point 3D layer is empty</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../asciifile/asciifile.cpp" line="310"/>
-        <source>Point elevation layer is empty</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../asciifile/asciifile.cpp" line="311"/>
-        <source>Point elevation height is empty</source>
-        <translation type="unfinished"></translation>
+        <translation>A 3D pontréteg üres</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="312"/>
+        <source>Point elevation layer is empty</source>
+        <translation>A magasságréteg üres</translation>
+    </message>
+    <message>
+        <location filename="../asciifile/asciifile.cpp" line="313"/>
+        <source>Point elevation height is empty</source>
+        <translation>A magasságérték üres</translation>
+    </message>
+    <message>
+        <location filename="../asciifile/asciifile.cpp" line="314"/>
         <source>Point elevation separation is empty</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../asciifile/asciifile.cpp" line="315"/>
-        <source>Point number layer is empty</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../asciifile/asciifile.cpp" line="316"/>
-        <source>Point number height is empty</source>
-        <translation type="unfinished"></translation>
+        <translation>A magasságköz üres</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="317"/>
+        <source>Point number layer is empty</source>
+        <translation>A pontszámréteg üres</translation>
+    </message>
+    <message>
+        <location filename="../asciifile/asciifile.cpp" line="318"/>
+        <source>Point number height is empty</source>
+        <translation>A pontszám magassága üres</translation>
+    </message>
+    <message>
+        <location filename="../asciifile/asciifile.cpp" line="319"/>
         <source>Point number separation is empty</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../asciifile/asciifile.cpp" line="320"/>
-        <source>Point code layer is empty</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../asciifile/asciifile.cpp" line="321"/>
-        <source>Point code height is empty</source>
-        <translation type="unfinished"></translation>
+        <translation>A pontszámok közötti távolság üres</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="322"/>
+        <source>Point code layer is empty</source>
+        <translation>A pontkód rétege üres</translation>
+    </message>
+    <message>
+        <location filename="../asciifile/asciifile.cpp" line="323"/>
+        <source>Point code height is empty</source>
+        <translation>A pontkód magassága üres</translation>
+    </message>
+    <message>
+        <location filename="../asciifile/asciifile.cpp" line="324"/>
         <source>Point code separation is empty</source>
-        <translation type="unfinished"></translation>
+        <translation>A pontkódok közötti távolság üres</translation>
     </message>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="358"/>
+        <location filename="../asciifile/asciifile.cpp" line="360"/>
         <source>The file %1 not exist</source>
-        <translation type="unfinished"></translation>
+        <translation>A(z) %1 fájl nem létezik</translation>
     </message>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="363"/>
+        <location filename="../asciifile/asciifile.cpp" line="365"/>
         <source>Can&apos;t open the file %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Nem lehet megnyitni a(z) %1 fájlt</translation>
     </message>
 </context>
 <context>
@@ -662,176 +671,176 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
         <location filename="../divide/divide.cpp" line="34"/>
         <location filename="../divide/divide.cpp" line="41"/>
         <source>Divide</source>
-        <translation type="unfinished"></translation>
+        <translation>Felosztás</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="42"/>
         <source>Divide test tip...</source>
-        <translation type="unfinished"></translation>
+        <translation>Felosztás teszt – tipp...</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="53"/>
         <source>Select a line, circle or arc and press return</source>
-        <translation type="unfinished"></translation>
+        <translation>Válasszon ki egy vonalat, kört vagy ívet, majd nyomja meg az Entert</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="64"/>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation>Hiba</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="101"/>
         <source>n</source>
-        <translation type="unfinished">n</translation>
+        <translation>n</translation>
     </message>
     <message>
-        <location filename="../divide/divide.cpp" line="439"/>
+        <location filename="../divide/divide.cpp" line="441"/>
         <source>Empty Entity</source>
-        <translation type="unfinished"></translation>
+        <translation>Üres entitás</translation>
     </message>
     <message>
-        <location filename="../divide/divide.cpp" line="447"/>
+        <location filename="../divide/divide.cpp" line="449"/>
         <source>X</source>
-        <translation type="unfinished">X</translation>
+        <translation>X</translation>
     </message>
     <message>
-        <location filename="../divide/divide.cpp" line="447"/>
+        <location filename="../divide/divide.cpp" line="449"/>
         <source>Y</source>
-        <translation type="unfinished">Y</translation>
-    </message>
-    <message>
-        <location filename="../divide/divide.cpp" line="455"/>
-        <source>Layer</source>
-        <translation type="unfinished">Fólia</translation>
+        <translation>Y</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="457"/>
-        <source>Color</source>
-        <translation type="unfinished">Szín</translation>
+        <source>Layer</source>
+        <translation>Réteg</translation>
     </message>
     <message>
-        <location filename="../divide/divide.cpp" line="458"/>
-        <source>Line type</source>
-        <translation type="unfinished">Vonaltípus</translation>
+        <location filename="../divide/divide.cpp" line="459"/>
+        <source>Color</source>
+        <translation>Szín</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="460"/>
-        <source>Line thickness</source>
-        <translation type="unfinished">Vonalvastagság</translation>
+        <source>Line type</source>
+        <translation>Vonal típus</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="462"/>
+        <source>Line thickness</source>
+        <translation>Vonalvastagság</translation>
+    </message>
+    <message>
+        <location filename="../divide/divide.cpp" line="464"/>
         <source>ID</source>
-        <translation type="unfinished"></translation>
+        <translation>Azonosító</translation>
     </message>
     <message>
-        <location filename="../divide/divide.cpp" line="469"/>
+        <location filename="../divide/divide.cpp" line="471"/>
         <source>LINE</source>
-        <translation type="unfinished">VONAL</translation>
+        <translation>Vonal</translation>
     </message>
     <message>
-        <location filename="../divide/divide.cpp" line="474"/>
+        <location filename="../divide/divide.cpp" line="476"/>
         <source>from point</source>
-        <translation type="unfinished">ponttól</translation>
+        <translation>ponttól</translation>
     </message>
     <message>
-        <location filename="../divide/divide.cpp" line="477"/>
+        <location filename="../divide/divide.cpp" line="479"/>
         <source>to point</source>
-        <translation type="unfinished">pontig</translation>
+        <translation>pontig</translation>
     </message>
     <message>
-        <location filename="../divide/divide.cpp" line="482"/>
-        <location filename="../divide/divide.cpp" line="509"/>
+        <location filename="../divide/divide.cpp" line="484"/>
+        <location filename="../divide/divide.cpp" line="511"/>
         <source>length</source>
-        <translation type="unfinished">hossz</translation>
-    </message>
-    <message>
-        <location filename="../divide/divide.cpp" line="487"/>
-        <source>Angle in XY plane</source>
-        <translation type="unfinished">Szög az XY síkban</translation>
+        <translation>hossz</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="489"/>
+        <source>Angle in XY plane</source>
+        <translation>Szög az XY síkban</translation>
+    </message>
+    <message>
+        <location filename="../divide/divide.cpp" line="491"/>
         <source>Inc.</source>
-        <translation type="unfinished"></translation>
+        <translation>Növekmény</translation>
     </message>
     <message>
-        <location filename="../divide/divide.cpp" line="494"/>
+        <location filename="../divide/divide.cpp" line="496"/>
         <source>ARC</source>
-        <translation type="unfinished">ÍV</translation>
+        <translation>ÍV</translation>
     </message>
     <message>
-        <location filename="../divide/divide.cpp" line="495"/>
-        <location filename="../divide/divide.cpp" line="514"/>
+        <location filename="../divide/divide.cpp" line="497"/>
+        <location filename="../divide/divide.cpp" line="516"/>
         <source>center point</source>
-        <translation type="unfinished">középpont</translation>
+        <translation>középpont</translation>
     </message>
     <message>
-        <location filename="../divide/divide.cpp" line="501"/>
-        <location filename="../divide/divide.cpp" line="518"/>
-        <location filename="../divide/divide.cpp" line="540"/>
+        <location filename="../divide/divide.cpp" line="503"/>
+        <location filename="../divide/divide.cpp" line="520"/>
+        <location filename="../divide/divide.cpp" line="542"/>
         <source>radius</source>
-        <translation type="unfinished">sugár</translation>
-    </message>
-    <message>
-        <location filename="../divide/divide.cpp" line="502"/>
-        <source>initial angle</source>
-        <translation type="unfinished">kezdeti szög</translation>
+        <translation>sugár</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="504"/>
+        <source>initial angle</source>
+        <translation>kezdő szög</translation>
+    </message>
+    <message>
+        <location filename="../divide/divide.cpp" line="506"/>
         <source>final angle</source>
-        <translation type="unfinished">végső szög</translation>
+        <translation>végső szög</translation>
     </message>
     <message>
-        <location filename="../divide/divide.cpp" line="513"/>
+        <location filename="../divide/divide.cpp" line="515"/>
         <source>CIRCLE</source>
-        <translation type="unfinished">KÖR</translation>
-    </message>
-    <message>
-        <location filename="../divide/divide.cpp" line="519"/>
-        <source>circumference</source>
-        <translation type="unfinished">kerület</translation>
+        <translation>KÖR</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="521"/>
+        <source>circumference</source>
+        <translation>kerület</translation>
+    </message>
+    <message>
+        <location filename="../divide/divide.cpp" line="523"/>
         <source>area</source>
-        <translation type="unfinished">terület</translation>
+        <translation>terület</translation>
     </message>
     <message>
-        <location filename="../divide/divide.cpp" line="525"/>
+        <location filename="../divide/divide.cpp" line="527"/>
         <source>POLYLINE</source>
-        <translation type="unfinished"></translation>
+        <translation>POLIGON</translation>
     </message>
     <message>
-        <location filename="../divide/divide.cpp" line="526"/>
+        <location filename="../divide/divide.cpp" line="528"/>
         <source>Closed</source>
-        <translation type="unfinished">Zárt</translation>
+        <translation>Zárt</translation>
     </message>
     <message>
-        <location filename="../divide/divide.cpp" line="528"/>
+        <location filename="../divide/divide.cpp" line="530"/>
         <source>No</source>
-        <translation type="unfinished">Nem</translation>
+        <translation>Nem</translation>
     </message>
     <message>
-        <location filename="../divide/divide.cpp" line="528"/>
+        <location filename="../divide/divide.cpp" line="530"/>
         <source>Yes</source>
-        <translation type="unfinished">Igen</translation>
+        <translation>Igen</translation>
     </message>
     <message>
-        <location filename="../divide/divide.cpp" line="529"/>
+        <location filename="../divide/divide.cpp" line="531"/>
         <source>Vertices</source>
-        <translation type="unfinished">Tetőpontok</translation>
+        <translation>Csúcsok</translation>
     </message>
     <message>
-        <location filename="../divide/divide.cpp" line="534"/>
+        <location filename="../divide/divide.cpp" line="536"/>
         <source>in point</source>
-        <translation type="unfinished"></translation>
+        <translation>a pontban</translation>
     </message>
     <message>
-        <location filename="../divide/divide.cpp" line="550"/>
+        <location filename="../divide/divide.cpp" line="552"/>
         <source>MUST be a line, circle or arc</source>
-        <translation type="unfinished"></translation>
+        <translation>Vonalnak, körnek vagy ívnek kell lennie</translation>
     </message>
 </context>
 <context>
@@ -839,52 +848,52 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../divide/dividedlg.cpp" line="47"/>
         <source>Divide - </source>
-        <translation type="unfinished"></translation>
+        <translation>Felosztás -</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="68"/>
         <source>Layers</source>
-        <translation type="unfinished"></translation>
+        <translation>Rétegek</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="74"/>
         <source>OK</source>
-        <translation type="unfinished"></translation>
+        <translation>OK</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="75"/>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Mégsem</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="84"/>
         <source>Divide at</source>
-        <translation type="unfinished"></translation>
+        <translation>Felosztás itt:</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="91"/>
         <source>Size</source>
-        <translation type="unfinished"></translation>
+        <translation>Méret</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="114"/>
         <source>places</source>
-        <translation type="unfinished"></translation>
+        <translation>hely</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="125"/>
         <source>Ticks - Off</source>
-        <translation type="unfinished"></translation>
+        <translation>Jelölések - Ki</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="133"/>
         <source>Breaks - Off</source>
-        <translation type="unfinished"></translation>
+        <translation>Szünetek - Ki</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="178"/>
         <source>&lt;i&gt;New&lt;/i&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>Új</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="209"/>
@@ -894,37 +903,37 @@ decimal degrees
 0° at 3 o&apos;clock
 goes
 anti-clockwise.</source>
-        <translation type="unfinished"></translation>
+        <translation>Adja meg a kezdő szöget tizedes fokban. A 0°-os szög a 3 óránál van, és az óramutató járásával ellentétes irányban halad.</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="245"/>
         <source>&lt;i&gt;&quot;New&quot;&lt;/i&gt;&lt;br&gt;Enter name&lt;br&gt;for a new layer&lt;br&gt;(if required?) to&lt;br&gt;draw ticks on.</source>
-        <translation type="unfinished"></translation>
+        <translation>&quot;Új&quot;&lt;br&gt;Adja meg az új réteg nevét (ha szükséges), amelyre a vonásokat rajzolni kell.</translation>
     </message>
     <message>
-        <location filename="../divide/dividedlg.cpp" line="250"/>
+        <location filename="../divide/dividedlg.cpp" line="251"/>
         <source>Ticks</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../divide/dividedlg.cpp" line="256"/>
-        <source>Above</source>
-        <translation type="unfinished"></translation>
+        <translation>Vonások</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="257"/>
-        <source>Below</source>
-        <translation type="unfinished"></translation>
+        <source>Above</source>
+        <translation>Fent</translation>
     </message>
     <message>
-        <location filename="../divide/dividedlg.cpp" line="261"/>
-        <source>Outside</source>
-        <translation type="unfinished"></translation>
+        <location filename="../divide/dividedlg.cpp" line="258"/>
+        <source>Below</source>
+        <translation>Lent</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="262"/>
+        <source>Outside</source>
+        <translation>Kívül</translation>
+    </message>
+    <message>
+        <location filename="../divide/dividedlg.cpp" line="263"/>
         <source>Inside</source>
-        <translation type="unfinished"></translation>
+        <translation>Belül</translation>
     </message>
 </context>
 <context>
@@ -932,17 +941,17 @@ anti-clockwise.</source>
     <message>
         <location filename="../pointstocsv/pointstocsv.cpp" line="120"/>
         <source>Export to file</source>
-        <translation type="unfinished"></translation>
+        <translation>Exportálás fájlba</translation>
     </message>
     <message>
         <location filename="../pointstocsv/pointstocsv.cpp" line="120"/>
         <source>CSV (*.csv)</source>
-        <translation type="unfinished"></translation>
+        <translation>CSV (*.csv)</translation>
     </message>
     <message>
         <location filename="../pointstocsv/pointstocsv.cpp" line="128"/>
         <source>Unable to open file</source>
-        <translation type="unfinished"></translation>
+        <translation>A fájl nem nyitható meg</translation>
     </message>
 </context>
 <context>
@@ -950,107 +959,107 @@ anti-clockwise.</source>
     <message>
         <location filename="../gear/gear.cpp" line="113"/>
         <source>Number of teeth</source>
-        <translation type="unfinished"></translation>
+        <translation>Fogak száma</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="115"/>
         <source>Pressure angle (deg)</source>
-        <translation type="unfinished"></translation>
+        <translation>Nyomásszög (fok)</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="112"/>
         <source>Rotation angle</source>
-        <translation type="unfinished"></translation>
+        <translation>Forgásszög</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="114"/>
         <source>Modulus</source>
-        <translation type="unfinished"></translation>
+        <translation>Modul</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="116"/>
         <source>Addendum (rel. to modulus)</source>
-        <translation type="unfinished"></translation>
+        <translation>Feltépő (a modulhoz képest)</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="117"/>
         <source>Dedendum (rel. to modulus)</source>
-        <translation type="unfinished"></translation>
+        <translation>Fogmélység (a modulhoz képest)</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="118"/>
         <source>Number of segments to draw (dedendum)</source>
-        <translation type="unfinished"></translation>
+        <translation>A rajzolandó szegmensek száma (fogmélység)</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="119"/>
         <source>Number of segments to draw (addendum)</source>
-        <translation type="unfinished"></translation>
+        <translation>A rajzolandó szegmensek száma (feltépő)</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="120"/>
         <source>Draw all teeth?</source>
-        <translation type="unfinished"></translation>
+        <translation>Minden fogot rajzoljon?</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="121"/>
         <source>Draw symmetric face?</source>
-        <translation type="unfinished"></translation>
+        <translation>Rajzoljon szimmetrikus felületet?</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="123"/>
         <source>Use layers?</source>
-        <translation type="unfinished"></translation>
+        <translation>Használjon rétegeket?</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="124"/>
         <source>Draw addendum circle?</source>
-        <translation type="unfinished"></translation>
+        <translation>Rajzoljon kiegészítő kört?</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="125"/>
         <source>Draw pitch circle?</source>
-        <translation type="unfinished"></translation>
+        <translation>Rajzoljon osztókört?</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="126"/>
         <source>Draw base circle?</source>
-        <translation type="unfinished"></translation>
+        <translation>Rajzoljon alapkört?</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="127"/>
         <source>Draw root circle?</source>
-        <translation type="unfinished"></translation>
+        <translation>Rajzoljon gyökérkört?</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="128"/>
         <source>Draw pressure line?</source>
-        <translation type="unfinished"></translation>
+        <translation>Rajzoljon nyomásvonalat?</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="129"/>
         <source>Draw pressure limits?</source>
-        <translation type="unfinished"></translation>
+        <translation>Rajzoljon nyomáshatárokat?</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="131"/>
         <source>Calculate interference?</source>
-        <translation type="unfinished"></translation>
+        <translation>Számítsa ki a beavatkozást?</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="132"/>
         <source>Number of segments to draw (interference)</source>
-        <translation type="unfinished"></translation>
+        <translation>A rajolandó szegmensek száma (beavatkozás)</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="134"/>
         <source>Accept</source>
-        <translation type="unfinished"></translation>
+        <translation>Elfogad</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="135"/>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Mégsem</translation>
     </message>
 </context>
 <context>
@@ -1058,7 +1067,7 @@ anti-clockwise.</source>
     <message>
         <location filename="../list/list.cpp" line="276"/>
         <source>List entities</source>
-        <translation type="unfinished">Elemek listázása</translation>
+        <translation>Entitások listázása</translation>
     </message>
 </context>
 <context>
@@ -1066,62 +1075,62 @@ anti-clockwise.</source>
     <message>
         <location filename="../sample/sample.cpp" line="53"/>
         <source>Draw line</source>
-        <translation type="unfinished"></translation>
+        <translation>Vonal rajzolása</translation>
     </message>
     <message>
         <location filename="../sample/sample.cpp" line="59"/>
         <source>Start X:</source>
-        <translation type="unfinished"></translation>
+        <translation>Kezdő X:</translation>
     </message>
     <message>
         <location filename="../sample/sample.cpp" line="65"/>
         <source>Start Y:</source>
-        <translation type="unfinished"></translation>
+        <translation>Kezdő Y:</translation>
     </message>
     <message>
         <location filename="../sample/sample.cpp" line="71"/>
         <source>End X:</source>
-        <translation type="unfinished"></translation>
+        <translation>Befejező X:</translation>
     </message>
     <message>
         <location filename="../sample/sample.cpp" line="77"/>
         <source>End Y:</source>
-        <translation type="unfinished"></translation>
+        <translation>Befejező Y:</translation>
     </message>
     <message>
         <location filename="../sample/sample.cpp" line="85"/>
         <source>Accept</source>
-        <translation type="unfinished"></translation>
+        <translation>Elfogad</translation>
     </message>
     <message>
         <location filename="../sample/sample.cpp" line="90"/>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../sample/sample.cpp" line="105"/>
-        <source>Start X is empty</source>
-        <translation type="unfinished"></translation>
+        <translation>Mégsem</translation>
     </message>
     <message>
         <location filename="../sample/sample.cpp" line="106"/>
-        <source>Start Y is empty</source>
-        <translation type="unfinished"></translation>
+        <source>Start X is empty</source>
+        <translation>A kezdő X érték üres</translation>
     </message>
     <message>
         <location filename="../sample/sample.cpp" line="107"/>
-        <source>End X is empty</source>
-        <translation type="unfinished"></translation>
+        <source>Start Y is empty</source>
+        <translation>A kezdő Y érték üres</translation>
     </message>
     <message>
         <location filename="../sample/sample.cpp" line="108"/>
-        <source>End Y is empty</source>
-        <translation type="unfinished"></translation>
+        <source>End X is empty</source>
+        <translation>A záró X érték üres</translation>
     </message>
     <message>
-        <location filename="../sample/sample.cpp" line="128"/>
+        <location filename="../sample/sample.cpp" line="109"/>
+        <source>End Y is empty</source>
+        <translation>A záró Y érték üres</translation>
+    </message>
+    <message>
+        <location filename="../sample/sample.cpp" line="130"/>
         <source>Sample plugin</source>
-        <translation type="unfinished"></translation>
+        <translation>Minta beépülő modul</translation>
     </message>
 </context>
 <context>
@@ -1129,63 +1138,63 @@ anti-clockwise.</source>
     <message>
         <location filename="../picfile/picfile.cpp" line="65"/>
         <source>File...</source>
-        <translation type="unfinished"></translation>
+        <translation>Fájl...</translation>
     </message>
     <message>
         <location filename="../picfile/picfile.cpp" line="75"/>
         <source>Scale:</source>
-        <translation type="unfinished"></translation>
+        <translation>Méretezés:</translation>
     </message>
     <message>
         <location filename="../picfile/picfile.cpp" line="79"/>
         <source>Accept</source>
-        <translation type="unfinished"></translation>
+        <translation>Elfogadás</translation>
     </message>
     <message>
         <location filename="../picfile/picfile.cpp" line="83"/>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Mégsem</translation>
     </message>
     <message>
         <location filename="../picfile/picfile.cpp" line="111"/>
         <source>Select file</source>
-        <translation type="unfinished"></translation>
+        <translation>Fájl kiválasztása</translation>
     </message>
     <message>
-        <location filename="../picfile/picfile.cpp" line="118"/>
+        <location filename="../picfile/picfile.cpp" line="119"/>
         <source>Scale Factor is empty or invalid</source>
-        <translation type="unfinished"></translation>
+        <translation>A skálázási tényező üres vagy érvénytelen.</translation>
     </message>
     <message>
-        <location filename="../picfile/picfile.cpp" line="131"/>
+        <location filename="../picfile/picfile.cpp" line="132"/>
         <source>The file %1 not exist</source>
-        <translation type="unfinished"></translation>
+        <translation>A(z) %1 fájl nem létezik.</translation>
     </message>
     <message>
-        <location filename="../picfile/picfile.cpp" line="136"/>
+        <location filename="../picfile/picfile.cpp" line="137"/>
         <source>Can&apos;t open the file %1</source>
-        <translation type="unfinished"></translation>
+        <translation>A(z) %1 fájl nem nyitható meg.</translation>
     </message>
     <message>
-        <location filename="../picfile/picfile.cpp" line="143"/>
+        <location filename="../picfile/picfile.cpp" line="144"/>
         <source>%1 objects imported</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 objektum importálva.</translation>
     </message>
     <message>
-        <location filename="../picfile/picfile.cpp" line="164"/>
+        <location filename="../picfile/picfile.cpp" line="166"/>
         <source>picPunto drawLine: first point is empty %1</source>
-        <translation type="unfinished"></translation>
+        <translation>picPunto drawLine: az első pont üres %1</translation>
     </message>
     <message>
-        <location filename="../picfile/picfile.cpp" line="177"/>
+        <location filename="../picfile/picfile.cpp" line="179"/>
         <source>picPunto drawLine: next point is empty %1</source>
-        <translation type="unfinished"></translation>
+        <translation>picPunto drawLine: a következő pont üres %1</translation>
     </message>
     <message>
-        <location filename="../picfile/picfile.cpp" line="260"/>
-        <location filename="../picfile/picfile.cpp" line="269"/>
+        <location filename="../picfile/picfile.cpp" line="262"/>
+        <location filename="../picfile/picfile.cpp" line="271"/>
         <source>format error in %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Formázási hiba a(z) %1 fájlban.</translation>
     </message>
 </context>
 <context>
@@ -1194,12 +1203,12 @@ anti-clockwise.</source>
         <location filename="../plotequation/plot.cpp" line="30"/>
         <location filename="../plotequation/plot.cpp" line="37"/>
         <source>Plot plugin</source>
-        <translation type="unfinished"></translation>
+        <translation>Grafikon beépülő modul</translation>
     </message>
     <message>
         <location filename="../plotequation/plot.cpp" line="38"/>
         <source>Plot test tip...</source>
-        <translation type="unfinished"></translation>
+        <translation>Grafikon teszt tipp...</translation>
     </message>
 </context>
 <context>
@@ -1207,7 +1216,7 @@ anti-clockwise.</source>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="15"/>
         <source>Plot equation</source>
-        <translation type="unfinished"></translation>
+        <translation>Grafikon egyenlet</translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="18"/>
@@ -1216,60 +1225,63 @@ If you don&apos;t want to use the parametric form, just leave out &quot;Equation
 You can use pi when you need the value of pi (i.e. (3*pi)).
 Use t or x in your equation as a variable/parameter.
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Ez a beépülő modul lehetővé teszi matematikai egyenletek grafikonjának készítését.
+Ha nem szeretné a paraméteres formát használni, egyszerűen hagyja ki az &quot;Egyenlet2&quot; mezőt.
+A pi értékéhez használhatja a &quot;pi&quot; szót (pl. (3*pi)).
+Használjon &quot;t&quot; vagy &quot;x&quot; változót az egyenletben.</translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="22"/>
         <source>Equation 1:</source>
-        <translation type="unfinished"></translation>
+        <translation>Egyenlet 1:</translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="23"/>
         <source>Equation 2:</source>
-        <translation type="unfinished"></translation>
+        <translation>Egyenlet 2:</translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="26"/>
         <source>start value:</source>
-        <translation type="unfinished"></translation>
+        <translation>kezdő érték:</translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="27"/>
         <source>end value:</source>
-        <translation type="unfinished"></translation>
+        <translation>befejező érték:</translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="28"/>
         <source>step size:</source>
-        <translation type="unfinished"></translation>
+        <translation>lépésköz:</translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="32"/>
         <source>Draw</source>
-        <translation type="unfinished"></translation>
+        <translation>Rajzolás</translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="33"/>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Mégsem</translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="59"/>
         <source>Line Segments</source>
         <comment>Plot Equation to generate RS_Line segments</comment>
-        <translation type="unfinished"></translation>
+        <translation>Vonalak</translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="60"/>
         <source>Polyline</source>
         <comment>Plot Equation to generate RS_Polyline</comment>
-        <translation type="unfinished"></translation>
+        <translation>Poligon</translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="61"/>
         <source>SplinePoints</source>
         <comment>Plot Equation to generate 2nd spline by LC_SplinePoints</comment>
-        <translation type="unfinished"></translation>
+        <translation>Spline pontok</translation>
     </message>
 </context>
 <context>
@@ -1277,25 +1289,25 @@ Use t or x in your equation as a variable/parameter.
     <message>
         <location filename="../asciifile/asciifile.cpp" line="176"/>
         <source>Layer:</source>
-        <translation type="unfinished"></translation>
+        <translation>Réteg:</translation>
     </message>
 </context>
 <context>
     <name>textBox</name>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="204"/>
-        <source>Style:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../asciifile/asciifile.cpp" line="205"/>
-        <source>Height:</source>
-        <translation type="unfinished"></translation>
+        <source>Style:</source>
+        <translation>Stílus:</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="206"/>
+        <source>Height:</source>
+        <translation>Magasság:</translation>
+    </message>
+    <message>
+        <location filename="../asciifile/asciifile.cpp" line="207"/>
         <source>Separation</source>
-        <translation type="unfinished"></translation>
+        <translation>Távolság</translation>
     </message>
 </context>
 </TS>

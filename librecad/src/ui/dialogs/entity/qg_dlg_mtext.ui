@@ -869,7 +869,7 @@
            </sizepolicy>
           </property>
           <property name="toolTip">
-           <string>Symbol insertion</string>
+           <string>Symbol to insert</string>
           </property>
           <item>
            <property name="text">
@@ -886,16 +886,19 @@
             <string>Plus / Minus (±)</string>
            </property>
           </item>
+// We can use keyboard "Shift + 2"
           <item>
            <property name="text">
             <string>At (@)</string>
            </property>
           </item>
+// We can use keyboard "Shift + 3"
           <item>
            <property name="text">
             <string>Hash (#)</string>
            </property>
           </item>
+// English keyboard layout can use "Shift + 4"
           <item>
            <property name="text">
             <string>Dollar ($)</string>
@@ -926,9 +929,15 @@
             <string>Pound (£)</string>
            </property>
           </item>
+// Chinese keyboard layout can use "Shift + 4"
           <item>
            <property name="text">
-            <string>Yen (¥)</string>
+            <string>Yen / Yuan (¥)</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Euro (€)</string>
            </property>
           </item>
           <item>

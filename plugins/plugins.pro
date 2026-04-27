@@ -56,7 +56,7 @@ TRANSLATIONS = ./ts/plugins_ar.ts \
     ./ts/plugins_gl.ts \
     ./ts/plugins_hi.ts \
     ./ts/plugins_hu.ts \
-    ./ts/plugins_id_ID.ts \
+    ./ts/plugins_id_id.ts \
     ./ts/plugins_it.ts \
     ./ts/plugins_ja.ts \
     ./ts/plugins_ko.ts \
@@ -73,6 +73,10 @@ TRANSLATIONS = ./ts/plugins_ar.ts \
     ./ts/plugins_sk.ts \
     ./ts/plugins_sl.ts \
     ./ts/plugins_sq_al.ts \
+    ./ts/plugins_sr.ts \
+    ./ts/plugins_sr_ba.ts \
+    ./ts/plugins_sr_me.ts \
+    ./ts/plugins_sr_rs.ts \
     ./ts/plugins_sv.ts \
     ./ts/plugins_ta.ts \
     ./ts/plugins_tr.ts \

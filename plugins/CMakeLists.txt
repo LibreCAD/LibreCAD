@@ -66,7 +66,7 @@ set(PLUGIN_TS_FILES
     plugins_gl.ts
     plugins_hi.ts
     plugins_hu.ts
-    plugins_id_ID.ts
+    plugins_id_id.ts
     plugins_it.ts
     plugins_ja.ts
     plugins_ko.ts
@@ -83,6 +83,10 @@ set(PLUGIN_TS_FILES
     plugins_sk.ts
     plugins_sl.ts
     plugins_sq_al.ts
+    plugins_sr.ts
+    plugins_sr_ba.ts
+    plugins_sr_me.ts
+    plugins_sr_rs.ts
     plugins_sv.ts
     plugins_ta.ts
     plugins_tr.ts

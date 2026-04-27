@@ -95,7 +95,7 @@
     <message>
         <source>Specify corners type
 [str|round|bevels]</source>
-        <translation type="vanished">Укажите тип углов 
+        <translation type="vanished">Укажите тип углов
 [str|round|bevels]</translation>
     </message>
     <message>
@@ -637,8 +637,8 @@ This block cannot be inserted.</source>
     <name>LC_ActionDrawBoundingBox</name>
     <message>
         <location filename="../src/actions/drawing/draw/line/misc/lc_action_draw_bounding_box.cpp" line="162"/>
-        <source>Select entities for bounding box</source>
-        <translation>Выберите объекты для охватывающего прямоугольника</translation>
+        <source>Select entities for bounding box (Enter to complete)</source>
+        <translation>Выберите объекты для охватывающего прямоугольника  (Enter - завершает выбор)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/misc/lc_action_draw_bounding_box.cpp" line="163"/>
@@ -1032,7 +1032,7 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawdual.cpp" line="122"/>
         <source>No supported entities could be dualized.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Никакие поддерживаемые объекты не могут быть дуализованы.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawdual.cpp" line="126"/>
@@ -1415,8 +1415,7 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <source>Specify Second Point
 or [number|x|y|angle|p|edges|distance]</source>
-        <translation type="vanished">Укажите конечную точку или 
-[number|x|y|angle|p|edges|distance]</translation>
+        <translation type="vanished">Укажите конечную точку или \n [number|x|y|angle|p|edges|distance]</translation>
     </message>
     <message>
         <source>Specify Second Point
@@ -1995,7 +1994,7 @@ or [%2]</source>
         <location filename="../src/actions/drawing/draw/point/lc_action_draw_points_line.cpp" line="583"/>
         <source>Specify Second Point
 or [number|x|y|angle|p|edges|distance]</source>
-        <translation>Укажите конечную точку или 
+        <translation>Укажите конечную точку или
 [number|x|y|angle|p|edges|distance]</translation>
     </message>
     <message>
@@ -2375,7 +2374,7 @@ or [%2]</source>
         <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_abstract.cpp" line="449"/>
         <source>Specify corners type
 [str|round|bevels]</source>
-        <translation>Укажите тип углов 
+        <translation>Укажите тип углов
 [str|round|bevels]</translation>
     </message>
     <message>
@@ -7252,7 +7251,7 @@ Some error occurred during XML generation.</source>
         <location filename="../src/ui/dialogs/settings/shortcuts/lc_actionsshortcutsdialog.cpp" line="409"/>
         <source>Some mappings are modified.
 Are you sure you are going to discard changes?</source>
-        <translation>Настройки были изменены.
+        <translation>Настройки были изменены.\n
 Вы уверены что хотите не сохранять изменения?</translation>
     </message>
 </context>
@@ -7357,7 +7356,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_ref_options_filler.cpp" line="34"/>
         <source>If checked, entities will be scaled if necessary. Otherwise, they will be just positioned and rotated.</source>
-        <translation>Если выбрано, то объекты будут масштабироваться с коэффициентом, зависящим от отношения расстояний исходных и конечных точек. 
+        <translation>Если выбрано, то объекты будут масштабироваться с коэффициентом, зависящим от отношения расстояний исходных и конечных точек.
 Иначе, их размеры будут сохранены.</translation>
     </message>
     <message>
@@ -7433,7 +7432,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_ref_options_widget.ui" line="76"/>
         <source>If checked, entities will be scaled if necessary. Otherwise, they will be just positioned and rotated.</source>
-        <translation>Если выбрано, то объекты будут масштабироваться с коэффициентом, зависящим от отношения расстояний исходных и конечных точек. 
+        <translation>Если выбрано, то объекты будут масштабироваться с коэффициентом, зависящим от отношения расстояний исходных и конечных точек.
 Иначе, их размеры будут сохранены.</translation>
     </message>
     <message>
@@ -7654,7 +7653,7 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/main/support/lc_appwindowdialogsinvoker.cpp" line="87"/>
         <source>The following files could not be loaded:
 </source>
-        <translation>Файл не может быть загружен:</translation>
+        <translation>Не удалось загрузить следующие файлы:</translation>
     </message>
     <message>
         <location filename="../src/ui/main/support/lc_appwindowdialogsinvoker.cpp" line="88"/>
@@ -7664,7 +7663,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/main/support/lc_appwindowdialogsinvoker.cpp" line="94"/>
         <source>Device Options</source>
-        <translation></translation>
+        <translation>Настройки устройства</translation>
     </message>
     <message>
         <location filename="../src/ui/main/support/lc_appwindowdialogsinvoker.cpp" line="97"/>
@@ -8386,7 +8385,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/modify/lc_break_divide_options_filler.cpp" line="34"/>
         <source>If checked, sеgments between intersection points will be removed. If unchecked - the entitiy will be divided in intersection points</source>
-        <translation>Если выбрано, то сегменты определенные точками пересечения будут удаляться. 
+        <translation>Если выбрано, то сегменты определенные точками пересечения будут удаляться.
 Иначе. объект будет разделен в точках пересечения.</translation>
     </message>
     <message>
@@ -8410,13 +8409,13 @@ Are you sure you are going to discard changes?</source>
     </message>
     <message>
         <source>If checked, segements between intersection points will be removed. If unchecked - the entitiy will be divided in intersection points. </source>
-        <translation type="obsolete">Если выбрано, то сегменты определенные точками пересечения будут удаляться. 
+        <translation type="obsolete">Если выбрано, то сегменты определенные точками пересечения будут удаляться.
 Иначе. объект будет разделен в точках пересечения.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_break_divide_options_widget.ui" line="45"/>
         <source>If checked, segments between intersection points will be removed. If unchecked - the entitiy will be divided in intersection points. </source>
-        <translation>Если выбрано, то сегменты определенные точками пересечения будут удаляться. 
+        <translation>Если выбрано, то сегменты определенные точками пересечения будут удаляться.
 Иначе. объект будет разделен в точках пересечения.</translation>
     </message>
     <message>
@@ -11586,7 +11585,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="26"/>
         <source>If selected, confirmation dialog will be shown on removal of the view. Otherwise, view will be removed silently.</source>
-        <translation>Если выбранно,перед удалением будет показан диалог для подтверждения удаления. 
+        <translation>Если выбранно,перед удалением будет показан диалог для подтверждения удаления.
 Иначе, вид будет удален немедленно. </translation>
     </message>
     <message>
@@ -11739,7 +11738,7 @@ Are you sure you are going to discard changes?</source>
     </message>
     <message>
         <source>If selected, confirmation dialog will be shown on removal of the view. Otherwise, view will be removed silently. </source>
-        <translation type="vanished">Если выбранно,перед удаленеим будет показан диалог для подтверждения удаления. 
+        <translation type="vanished">Если выбранно,перед удаленеим будет показан диалог для подтверждения удаления.
 Иначе, вид будет удален немедленно. </translation>
     </message>
     <message>
@@ -12614,13 +12613,13 @@ Are you sure you are going to discard changes?</source>
     </message>
     <message>
         <source>If selected, confirmation dialog will be shown on removal of the view. Otherwise, view will be removed silently. </source>
-        <translation type="vanished">Если выбранно,перед удаленеим будет показан диалог для подтверждения удаления. 
+        <translation type="vanished">Если выбранно,перед удаленеим будет показан диалог для подтверждения удаления.
 Иначе, система координт будет удалена немедленно. </translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="95"/>
         <source>If selected, confirmation dialog will be shown on removal of the UCS. Otherwise, UCS will be removed silently.</source>
-        <translation>Если выбранно,перед удалением будет показан диалог для подтверждения удаления. 
+        <translation>Если выбранно,перед удалением будет показан диалог для подтверждения удаления.
 Иначе, система координат будет удалена немедленно. </translation>
     </message>
     <message>
@@ -12737,7 +12736,7 @@ Are you sure you are going to discard changes?</source>
     </message>
     <message>
         <source>If selected, confirmation dialog will be shown on removal of the view. Otherwise, view will be removed silently.</source>
-        <translation type="obsolete">Если выбранно,перед удалением будет показан диалог для подтверждения удаления. 
+        <translation type="obsolete">Если выбранно,перед удалением будет показан диалог для подтверждения удаления.
 Иначе,  будет удален немедленно. </translation>
     </message>
     <message>
@@ -13192,7 +13191,7 @@ Are you sure you are going to discard changes?</source>
     </message>
     <message>
         <source>If selected, only corner points will be drawn for bounding box. Otherwise, edge lines will be drawn.</source>
-        <translation type="vanished">Если выбрано,то будут созданы точки в вершинах охватывающего прямоугольника. 
+        <translation type="vanished">Если выбрано,то будут созданы точки в вершинах охватывающего прямоугольника.
 Иначе, будут созданы линии граней. </translation>
     </message>
     <message>
@@ -13228,7 +13227,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/misc/lc_draw_bounding_box_options_filler.cpp" line="36"/>
         <source>If selected, only corner points will be drawn for bounding box. Otherwise, edge lines will be drawn</source>
-        <translation>Если выбрано,то будут созданы только точки в вершинах охватывающего прямоугольника. 
+        <translation>Если выбрано,то будут созданы только точки в вершинах охватывающего прямоугольника.
 Иначе, будут созданы линии граней. </translation>
     </message>
     <message>
@@ -17363,8 +17362,8 @@ Please specify a different value.</source>
     </message>
     <message>
         <source>Specifies whether all points should fit between start/end points of line or whether the length of line is calculated based on number of points and distance between points.</source>
-        <translation type="vanished">Если выбрано, то все точки будут только между началом и концом заданой линии. 
-Иначе, длинна созданой линии точек будет вычисляться основываясь на количестве точек и расстоянии между ними. </translation>
+        <translation type="vanished">Если выбрано, то все точки будут только между началом и концом заданой линии.
+Иначе, длина созданой линии точек будет вычисляться основываясь на количестве точек и расстоянии между ними. </translation>
     </message>
     <message>
         <source>Fit Line</source>
@@ -17388,7 +17387,7 @@ Please specify a different value.</source>
     </message>
     <message>
         <source>If checked, fixed specified distance between points will be used. Otherwise, distance will be calculated.</source>
-        <translation type="vanished">Если выбрано, то между точками будет фиксированное расстояние. 
+        <translation type="vanished">Если выбрано, то между точками будет фиксированное расстояние.
 Иначе, расстояние межу точками будет вычисляться по длине линии и количеству точек.</translation>
     </message>
     <message>
@@ -17445,7 +17444,7 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/action_options/point/lc_points_line_options_widget.ui" line="115"/>
         <source>Specifies whether all points should fit between start/end points of line or whether the length of line is calculated based on number of points and distance between points.</source>
-        <translation>Если выбрано, то все точки будут только между началом и концом заданой линии. 
+        <translation>Если выбрано, то все точки будут только между началом и концом заданой линии.
 Иначе, длинна созданой линии точек будет вычисляться основываясь на количестве точек и расстоянии между ними. </translation>
     </message>
     <message>
@@ -22933,7 +22932,7 @@ Please specify a different value.</source>
     </message>
     <message>
         <source>If checked, entities will be scaled if necessary. Otherwise, they will be just positioned and rotated.</source>
-        <translation type="vanished">Если выбрано, то объекты будут масштабироваться с коэффициентом, зависящим от отношения расстояний исходных и конечных точек. 
+        <translation type="vanished">Если выбрано, то объекты будут масштабироваться с коэффициентом, зависящим от отношения расстояний исходных и конечных точек.
 Иначе, их размеры будут сохранены.</translation>
     </message>
     <message>
@@ -22949,7 +22948,7 @@ Please specify a different value.</source>
     </message>
     <message>
         <source>If checked, segements between intersection points will be removed. If unchecked - the entitiy will be divided in intersection points. </source>
-        <translation type="vanished">Если выбрано, то сегменты определенные точками пересечения будут удаляться. 
+        <translation type="vanished">Если выбрано, то сегменты определенные точками пересечения будут удаляться.
 Иначе. объект будет разделен в точках пересечения.</translation>
     </message>
     <message>
@@ -22990,7 +22989,7 @@ Please specify a different value.</source>
     </message>
     <message>
         <source>Snap point for gap on the line</source>
-        <translation type="vanished">Позиция разрыва в прямой- может быть плавающей и задаваться вручную мышью, или же быть одной из точек прямой</translation>
+        <translation type="vanished">Позиция разрыва в прямой - может быть плавающей и задаваться вручную мышью, или же быть одной из точек прямой</translation>
     </message>
     <message>
         <source>Free</source>
@@ -23170,7 +23169,7 @@ Please specify a different value.</source>
     </message>
     <message>
         <source>If absolute, reference point will be rotated but entity will be rotated by second angle only, otherwise angles will summ up</source>
-        <translation type="vanished">Если выбрано, то произойдет поворот относительно базовой точки, но сам объект будет повернут только на второй угол. 
+        <translation type="vanished">Если выбрано, то произойдет поворот относительно базовой точки, но сам объект будет повернут только на второй угол.
 Иначе,объект будет повернут на сумму двух углов.</translation>
     </message>
     <message>
@@ -23183,7 +23182,7 @@ Please specify a different value.</source>
     </message>
     <message>
         <source>If checked, current attributes will be applied to created entities, othewise original ones will be used. </source>
-        <translation type="vanished">Если выбрано, текущие аттрибуты будут применены к созданным объектам. 
+        <translation type="vanished">Если выбрано, текущие аттрибуты будут применены к созданным объектам.
 Иначе, к копиям будут применены аттрибуты оригинальных объектов.</translation>
     </message>
     <message>
@@ -23292,7 +23291,7 @@ Please specify a different value.</source>
     </message>
     <message>
         <source>If checked, original entities will survive, otherwise they will be removed.</source>
-        <translation type="vanished">Если выбрано, то оригинальные объекты останутся. 
+        <translation type="vanished">Если выбрано, то оригинальные объекты останутся.
 Иначе они будут удалены.</translation>
     </message>
     <message>
@@ -23305,7 +23304,7 @@ Please specify a different value.</source>
     </message>
     <message>
         <source>If checked, current attributes will be applied to created entities, otherwise original ones will be used. </source>
-        <translation type="vanished">Если выбрано, текущие аттрибуты будут применены к созданным объектам. 
+        <translation type="vanished">Если выбрано, текущие аттрибуты будут применены к созданным объектам.
 Иначе, к копиям будут применены аттрибуты оригинальных объектов.</translation>
     </message>
     <message>
@@ -23350,7 +23349,7 @@ Please specify a different value.</source>
     </message>
     <message>
         <source>If checked, original entities will survive, otherwise they will be removed.</source>
-        <translation type="vanished">Если выбрано, то оригинальные объекты останутся. 
+        <translation type="vanished">Если выбрано, то оригинальные объекты останутся.
 Иначе они будут удалены.</translation>
     </message>
     <message>
@@ -23379,7 +23378,7 @@ Please specify a different value.</source>
     </message>
     <message>
         <source>If checked, current attributes will be applied to created entities, owtherwise original ones will be used. </source>
-        <translation type="vanished">Если выбрано, текущие аттрибуты будут применены к созданным объектам. 
+        <translation type="vanished">Если выбрано, текущие аттрибуты будут применены к созданным объектам.
 Иначе, к копиям будут применены аттрибуты оригинальных объектов. </translation>
     </message>
     <message>
@@ -23388,7 +23387,7 @@ Please specify a different value.</source>
     </message>
     <message>
         <source>If checked, original entities will survive, otherwise they will be removed.</source>
-        <translation type="vanished">Если выбрано, то оригинальные объекты останутся. 
+        <translation type="vanished">Если выбрано, то оригинальные объекты останутся.
 Иначе они будут удалены.</translation>
     </message>
     <message>
@@ -23414,7 +23413,7 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_options_filler.cpp" line="31"/>
         <source>If checked, original entities will survive, otherwise they will be removed</source>
-        <translation>Если выбрано, то оригинальные объекты останутся. 
+        <translation>Если выбрано, то оригинальные объекты останутся.
 Иначе они будут удалены.</translation>
     </message>
     <message>
@@ -23445,7 +23444,7 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_options_filler.cpp" line="55"/>
         <source>If checked, current attributes will be applied to created entities, otherwise original ones will be used</source>
-        <translation>Если выбрано, текущие аттрибуты будут применены к созданным объектам. 
+        <translation>Если выбрано, текущие аттрибуты будут применены к созданным объектам.
 Иначе, к копиям будут применены аттрибуты оригинальных объектов.</translation>
     </message>
     <message>
@@ -23550,7 +23549,7 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_rotate_options_filler.cpp" line="48"/>
         <source>If checked, original entities will survive, otherwise they will be removed</source>
-        <translation>Если выбрано, то оригинальные объекты останутся. 
+        <translation>Если выбрано, то оригинальные объекты останутся.
 Иначе они будут удалены.</translation>
     </message>
     <message>
@@ -23581,7 +23580,7 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_rotate_options_filler.cpp" line="72"/>
         <source>If checked, all copies will be rotated by the same agle. Otherwise, angle will be proportional to number of each copy</source>
-        <translation>Если выбрано, созданые объекты будут повернуты на одинаковый угол. 
+        <translation>Если выбрано, созданые объекты будут повернуты на одинаковый угол.
 Иначе, угол поворота будет пропорционален номеру копии. </translation>
     </message>
     <message>
@@ -23592,7 +23591,7 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_rotate_options_filler.cpp" line="85"/>
         <source>If checked, current attributes will be applied to created entities, otherwise original ones will be used</source>
-        <translation>Если выбрано, текущие аттрибуты будут применены к созданным объектам. 
+        <translation>Если выбрано, текущие аттрибуты будут применены к созданным объектам.
 Иначе, к копиям будут применены аттрибуты оригинальных объектов.</translation>
     </message>
     <message>
@@ -23616,7 +23615,7 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_rotate_options_widget.ui" line="50"/>
         <source>If checked, current attributes will be applied to created entities, otherwise original ones will be used. </source>
-        <translation>Если выбрано, текущие аттрибуты будут применены к созданным объектам. 
+        <translation>Если выбрано, текущие аттрибуты будут применены к созданным объектам.
 Иначе, к копиям будут применены аттрибуты оригинальных объектов.</translation>
     </message>
     <message>
@@ -23642,7 +23641,7 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_rotate_options_widget.ui" line="90"/>
         <source>If checked, all copies will be rotated by the same agle. Otherwise, angle will be proportional to number of each copy. </source>
-        <translation>Если выбрано, созданые объекты будут повернуты на одинаковый угол. 
+        <translation>Если выбрано, созданые объекты будут повернуты на одинаковый угол.
 Иначе, угол поворота будет пропорционален номеру копии. </translation>
     </message>
     <message>
@@ -24022,7 +24021,7 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/action_options/modify/lc_offset_options_filler.cpp" line="49"/>
         <source>If checked, original entities will survive, otherwise they will be removed</source>
-        <translation>Если выбрано, то оригинальные объекты останутся. 
+        <translation>Если выбрано, то оригинальные объекты останутся.
 Иначе они будут удалены.</translation>
     </message>
     <message>
@@ -24053,7 +24052,7 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/action_options/modify/lc_offset_options_filler.cpp" line="73"/>
         <source>If checked, current attributes will be applied to created entities, otherwise original ones will be used</source>
-        <translation>Если выбрано, текущие аттрибуты будут применены к созданным объектам. 
+        <translation>Если выбрано, текущие аттрибуты будут применены к созданным объектам.
 Иначе, к копиям будут применены аттрибуты оригинальных объектов.</translation>
     </message>
     <message>
@@ -24118,7 +24117,7 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/action_options/modify/lc_offset_options_widget.ui" line="119"/>
         <source>If checked, current attributes will be applied to created entities, otherwise original ones will be used. </source>
-        <translation>Если выбрано, текущие аттрибуты будут применены к созданным объектам. 
+        <translation>Если выбрано, текущие аттрибуты будут применены к созданным объектам.
 Иначе, к копиям будут применены аттрибуты оригинальных объектов.</translation>
     </message>
     <message>
@@ -24354,7 +24353,7 @@ Warning: this action can NOT be undone!</source>
     </message>
     <message>
         <source>If checked, the same rotation angle is used for each individual paste and whole array. Otherwise, different angles are used. </source>
-        <translation type="vanished">Если выбрано, то будет использоваться одинаковое значение угла для наклона решетки и поворота объектов. 
+        <translation type="vanished">Если выбрано, то будет использоваться одинаковое значение угла для наклона решетки и поворота объектов.
 Иначе, углы решетки и поворота объектов будут разными.</translation>
     </message>
     <message>
@@ -24383,7 +24382,7 @@ Warning: this action can NOT be undone!</source>
     </message>
     <message>
         <source>Scale factor for pasted entities</source>
-        <translation type="vanished">Коэфиициент масштабирования вставляемых объектов (1.0 -без изменения масштаба)</translation>
+        <translation type="vanished">Коэффициент масштабирования вставляемых объектов (1.0 -без изменения масштаба)</translation>
     </message>
     <message>
         <source>Spacing between insertion points of entities in columns.</source>
@@ -24480,7 +24479,7 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/action_options/edit/lc_paste_transform_options_filler.cpp" line="75"/>
         <source>If checked, the same rotation angle is used for each individual paste and whole array. Otherwise, different angles are used</source>
-        <translation>Если выбрано, то будет использоваться одинаковое значение угла для наклона решётки и поворота объектов. 
+        <translation>Если выбрано, то будет использоваться одинаковое значение угла для наклона решётки и поворота объектов.
 Иначе, углы решётки и поворота объектов будут разными.</translation>
     </message>
 </context>
@@ -24569,7 +24568,7 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/action_options/edit/lc_paste_transform_options_widget.ui" line="267"/>
         <source>If checked, the same rotation angle is used for each individual paste and whole array. Otherwise, different angles are used. </source>
-        <translation>Если выбрано, то будет использоваться одинаковое значение угла для наклона решетки и поворота объектов. 
+        <translation>Если выбрано, то будет использоваться одинаковое значение угла для наклона решетки и поворота объектов.
 Иначе, углы решетки и поворота объектов будут разными.</translation>
     </message>
     <message>
@@ -25562,7 +25561,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/action_options/point/lc_points_line_options_filler.cpp" line="62"/>
         <source>If checked, fixed specified distance between points will be used. Otherwise, distance will be calculated.</source>
-        <translation>Если выбрано, то между точками будет фиксированное расстояние. 
+        <translation>Если выбрано, то между точками будет фиксированное расстояние.
 Иначе, расстояние межу точками будет вычисляться по длине линии и количеству точек.</translation>
     </message>
     <message>
@@ -25583,7 +25582,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/action_options/point/lc_points_line_options_filler.cpp" line="76"/>
         <source>Specifies whether all points should fit between start/end points of line or whether the length of line is calculated based on number of points and distance between points</source>
-        <translation>Если выбрано, то все точки будут только между началом и концом заданой линии. 
+        <translation>Если выбрано, то все точки будут только между началом и концом заданой линии.
 Иначе, длинна созданой линии точек будет вычисляться основываясь на количестве точек и расстоянии между ними. </translation>
     </message>
     <message>
@@ -25637,7 +25636,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/action_options/polygon/lc_polygon_options_filler.cpp" line="37"/>
         <source>If checked, the polygon will be drawn as polyline. Otherwise, individual entities will be created</source>
-        <translation>Если выбрана, будет создана одна ломаная для всего многоугольника. 
+        <translation>Если выбрана, будет создана одна ломаная для всего многоугольника.
 Иначе, будут созданны отдельные объекты. </translation>
     </message>
     <message>
@@ -25706,7 +25705,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/action_options/polygon/lc_polygon_options_widget.ui" line="126"/>
         <source>If checked, the polygon will be drawn as polyline. Otherwise, individual entities will be created. </source>
-        <translation>Если выбрана, будет создана одна ломаная для всего многоугольника. 
+        <translation>Если выбрана, будет создана одна ломаная для всего многоугольника.
 Иначе, будут созданны отдельные объекты. </translation>
     </message>
     <message>
@@ -35902,7 +35901,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Specifies whetether copies will be inserted to current or original layer</source>
-        <translation type="vanished">Если выбрано, то оригинальные объекты останутся. 
+        <translation type="vanished">Если выбрано, то оригинальные объекты останутся.
 Иначе они будут удалены.</translation>
     </message>
     <message>
@@ -35924,7 +35923,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Defines whether current or original drawing attributes will be applied</source>
-        <translation type="vanished">Если выбрано, то оригинальные объекты останутся. 
+        <translation type="vanished">Если выбрано, то оригинальные объекты останутся.
 Иначе они будут удалены.</translation>
     </message>
     <message>
@@ -35957,7 +35956,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>If checked, the same angle will be used for all copies. Otherwise, it will be increased proportionally to copy number. </source>
-        <translation type="vanished">Если выбрано, то одно значеие второго угла поворота будет использовано для всех копий. 
+        <translation type="vanished">Если выбрано, то одно значеие второго угла поворота будет использовано для всех копий.
 Иначе, второй угол будет увеличиваться пропрорцонально номеру копии.</translation>
     </message>
     <message>
@@ -36027,7 +36026,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_2_options_filler.cpp" line="61"/>
         <source>If checked, original entities will survive, otherwise they will be removed</source>
-        <translation>Если выбрано, то оригинальные объекты останутся. 
+        <translation>Если выбрано, то оригинальные объекты останутся.
 Иначе они будут удалены.</translation>
     </message>
     <message>
@@ -36058,7 +36057,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_2_options_filler.cpp" line="85"/>
         <source>If checked, current attributes will be applied to created entities, otherwise original ones will be used</source>
-        <translation>Если выбрано, текущие аттрибуты будут применены к созданным объектам. 
+        <translation>Если выбрано, текущие аттрибуты будут применены к созданным объектам.
 Иначе, к копиям будут применены аттрибуты оригинальных объектов.</translation>
     </message>
     <message>
@@ -36144,7 +36143,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_2_options_widget.ui" line="208"/>
         <source>Specifies whetether copies will be inserted to current or original layer</source>
-        <translation>Если выбрано, то оригинальные объекты останутся. 
+        <translation>Если выбрано, то оригинальные объекты останутся.
 Иначе они будут удалены.</translation>
     </message>
     <message>
@@ -36165,7 +36164,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_2_options_widget.ui" line="228"/>
         <source>Defines whether current or original drawing attributes will be applied</source>
-        <translation>Если выбрано, то оригинальные объекты останутся. 
+        <translation>Если выбрано, то оригинальные объекты останутся.
 Иначе они будут удалены.</translation>
     </message>
     <message>
@@ -36268,7 +36267,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_filler.cpp" line="98"/>
         <source>If absolute, reference point will be rotated but entity will be rotated by second angle only, otherwise angles will summ up</source>
-        <translation>Если выбрано, то произойдет поворот относительно базовой точки, но сам объект будет повернут только на второй угол. 
+        <translation>Если выбрано, то произойдет поворот относительно базовой точки, но сам объект будет повернут только на второй угол.
 Иначе,объект будет повернут на сумму двух углов.</translation>
     </message>
     <message>
@@ -36279,7 +36278,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_filler.cpp" line="107"/>
         <source>If checked, original entities will survive, otherwise they will be removed</source>
-        <translation>Если выбрано, то оригинальные объекты останутся. 
+        <translation>Если выбрано, то оригинальные объекты останутся.
 Иначе они будут удалены.</translation>
     </message>
     <message>
@@ -36310,7 +36309,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_filler.cpp" line="131"/>
         <source>If checked, current attributes will be applied to created entities, otherwise original ones will be used</source>
-        <translation>Если выбрано, текущие аттрибуты будут применены к созданным объектам. 
+        <translation>Если выбрано, текущие аттрибуты будут применены к созданным объектам.
 Иначе, к копиям будут применены аттрибуты оригинальных объектов.</translation>
     </message>
     <message>
@@ -36339,7 +36338,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_widget.ui" line="89"/>
         <source>If checked, current attributes will be applied to created entities, othewise original ones will be used. </source>
-        <translation>Если выбрано, текущие аттрибуты будут применены к созданным объектам. 
+        <translation>Если выбрано, текущие аттрибуты будут применены к созданным объектам.
 Иначе, к копиям будут применены аттрибуты оригинальных объектов.</translation>
     </message>
     <message>
@@ -36370,7 +36369,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_widget.ui" line="165"/>
         <source>If absolute, reference point will be rotated but entity will be rotated by second angle only, otherwise angles will summ up</source>
-        <translation>Если выбрано, то произойдет поворот относительно базовой точки, но сам объект будет повернут только на второй угол. 
+        <translation>Если выбрано, то произойдет поворот относительно базовой точки, но сам объект будет повернут только на второй угол.
 Иначе,объект будет повернут на сумму двух углов.</translation>
     </message>
     <message>
@@ -36573,7 +36572,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_scale_options_filler.cpp" line="64"/>
         <source>If checked, original entities will survive, otherwise they will be removed</source>
-        <translation>Если выбрано, то оригинальные объекты останутся. 
+        <translation>Если выбрано, то оригинальные объекты останутся.
 Иначе они будут удалены.</translation>
     </message>
     <message>
@@ -36604,7 +36603,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_scale_options_filler.cpp" line="88"/>
         <source>If checked, current attributes will be applied to created entities, otherwise original ones will be used</source>
-        <translation>Если выбрано, текущие аттрибуты будут применены к созданным объектам. 
+        <translation>Если выбрано, текущие аттрибуты будут применены к созданным объектам.
 Иначе, к копиям будут применены аттрибуты оригинальных объектов.</translation>
     </message>
     <message>
@@ -36643,7 +36642,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_scale_options_widget.ui" line="73"/>
         <source>If checked, original entities will survive, otherwise they will be removed.</source>
-        <translation>Если выбрано, то оригинальные объекты останутся. 
+        <translation>Если выбрано, то оригинальные объекты останутся.
 Иначе они будут удалены.</translation>
     </message>
     <message>
@@ -36701,7 +36700,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_scale_options_widget.ui" line="199"/>
         <source>If checked, current attributes will be applied to created entities, otherwise original ones will be used. </source>
-        <translation>Если выбрано, текущие аттрибуты будут применены к созданным объектам. 
+        <translation>Если выбрано, текущие аттрибуты будут применены к созданным объектам.
 Иначе, к копиям будут применены аттрибуты оригинальных объектов.</translation>
     </message>
     <message>
@@ -37474,7 +37473,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Defines the number of line segments to be generated for each spline-fit spline-fit polyline</source>
-        <translation type="vanished">Определяет количество прямых для сегмента сплайна которые будут сгенерированы. 
+        <translation type="vanished">Определяет количество прямых для сегмента сплайна которые будут сгенерированы.
 Чем выше значение - тем точнее аппроксимация.</translation>
     </message>
     <message>
@@ -37505,7 +37504,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>If checked, it is possible to specify custom amount of line segments. Otherwise, the value from settings for current drawing will be used.</source>
-        <translation type="vanished">Если выбранно, то можно задать количество сегментов между вершинами сплайна. 
+        <translation type="vanished">Если выбранно, то можно задать количество сегментов между вершинами сплайна.
 Иначе, будет использоваться значение из настроек чертежа.</translation>
     </message>
     <message>
@@ -37514,7 +37513,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>If checked, line segments will be part of polyline. Otherwise, they will be individual lines</source>
-        <translation type="vanished">Если выбрана, будет создана одна ломаная из сегментов сплайна. 
+        <translation type="vanished">Если выбрана, будет создана одна ломаная из сегментов сплайна.
 Иначе, будут созданны отдельные прямые. </translation>
     </message>
     <message>
@@ -37532,7 +37531,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_filler.cpp" line="34"/>
         <source>If checked, it is possible to specify custom amount of line segments. Otherwise, the value from settings for current drawing will be used.</source>
-        <translation>Если выбранно, то можно задать количество сегментов между вершинами сплайна. 
+        <translation>Если выбранно, то можно задать количество сегментов между вершинами сплайна.
 Иначе, будет использоваться значение из настроек чертежа.</translation>
     </message>
     <message>
@@ -37543,7 +37542,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_filler.cpp" line="43"/>
         <source>Defines the number of line segments to be generated for each spline-fit polyline</source>
-        <translation>Определяет количество прямых для сегмента сплайна которые будут сгенерированы. 
+        <translation>Определяет количество прямых для сегмента сплайна которые будут сгенерированы.
 Чем выше значение - тем точнее аппроксимация.</translation>
     </message>
     <message>
@@ -37554,7 +37553,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_filler.cpp" line="50"/>
         <source>If checked, line segments will be part of polyline. Otherwise, they will be individual lines</source>
-        <translation>Если выбрана, будет создана одна ломаная из сегментов сплайна. 
+        <translation>Если выбрана, будет создана одна ломаная из сегментов сплайна.
 Иначе, будут созданны отдельные прямые. </translation>
     </message>
     <message>
@@ -37708,7 +37707,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>If checked, polyline vertexes are considered as spline points and spline by points will be created. Otherwise, they are considered as control points and orinary spline will be created.</source>
-        <translation type="vanished">Если выбрано, то точки из ломаной будут точками сплана и будет создан Сплайн по Точкам. 
+        <translation type="vanished">Если выбрано, то точки из ломаной будут точками сплана и будет создан Сплайн по Точкам.
 Иначе, точки из ломаной это контрольные точки и будет содан Сплайн.</translation>
     </message>
     <message>
@@ -37736,7 +37735,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_from_polyline_options_filler.cpp" line="39"/>
         <source>If checked, polyline vertexes are considered as spline points and spline by points will be created. Otherwise, they are considered as control points and ordinary spline will be created</source>
-        <translation>Если выбрано, то точки из ломаной будут точками сплана и будет создан Сплайн по Точкам. 
+        <translation>Если выбрано, то точки из ломаной будут точками сплана и будет создан Сплайн по Точкам.
 Иначе, точки из ломаной это контрольные точки и будет содан Сплайн.</translation>
     </message>
     <message>
@@ -38357,7 +38356,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_stretch_options_filler.cpp" line="31"/>
         <source>If checked, original entities will survive, otherwise they will be removed</source>
-        <translation>Если выбрано, то оригинальные объекты останутся. 
+        <translation>Если выбрано, то оригинальные объекты останутся.
 Иначе они будут удалены.</translation>
     </message>
 </context>
@@ -38371,7 +38370,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_stretch_options_widget.ui" line="32"/>
         <source>If checked, original entities will survive, otherwise they will be removed.</source>
-        <translation>Если выбрано, то оригинальные объекты останутся. 
+        <translation>Если выбрано, то оригинальные объекты останутся.
 Иначе они будут удалены.</translation>
     </message>
     <message>
@@ -43325,12 +43324,12 @@ and your preferred language for Ui and Command.&lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="147"/>
         <source>On mouse wheel zoom, pan to the middle of the window.</source>
-        <translation>При масштабировании чертрежа колесиком мыши, позиционировать чертеж в центр окна</translation>
+        <translation>При масштабировании чертежа колесиком мыши, позиционировать чертеж в центр окна</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="150"/>
         <source>Pan on wheel zoom</source>
-        <translation>Позиционировать при мастштабировании колесиком мыши</translation>
+        <translation>Позиционировать при масштабировании колесиком мыши</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="134"/>
@@ -45426,7 +45425,7 @@ and your preferred language for Ui and Command.&lt;br&gt;
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/makercam/qg_dlgoptionsmakercam.cpp" line="31"/>
-        <source>MakerCAM as of November 2014 does not hide SVG content 
+        <source>MakerCAM as of November 2014 does not hide SVG content
 that has been set invisibe (&quot;display: none&quot; or &quot;visibility: hidden&quot;).</source>
         <translation>MakerCAM по состоянию на ноябрь 2014 года не скрывает содержимое SVG&#xa0;
 которое было установлено невидимым (&quot;отображение: нет&quot; или &quot;видимость: скрыто&quot;).</translation>
@@ -45449,21 +45448,21 @@ the &lt;transform&gt; attribute or as &lt;path&gt; using elliptic arc segments.<
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/makercam/qg_dlgoptionsmakercam.cpp" line="38"/>
-        <source>Exported images can be useful in SVG editors (Inkscape, etc), 
+        <source>Exported images can be useful in SVG editors (Inkscape, etc),
 but avoided in some CAM&apos;s.</source>
         <translation>Экспортированные изображения могут быть использованы в SVG редакторах (Inkscape и т.д.),&#xa0;
 но некоторые CAM&apos;ы будут отброшены.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/makercam/qg_dlgoptionsmakercam.cpp" line="39"/>
-        <source>Many CAM&apos;s(MakerCAM, EleskCAM, LaserWeb) ignore dashed/doted line style, 
+        <source>Many CAM&apos;s(MakerCAM, EleskCAM, LaserWeb) ignore dashed/doted line style,
 which can be useful in lasercut of plywood or for papercraft. </source>
         <translation>Многие CAM&apos;ы(MakerCAM, EleskCAM, LaserWeb) игнорируют стиль пунктирной линии,&#xa0;
 который может быть полезен при лазерной резке фанеры или для изготовления поделок из бумаги. </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/makercam/qg_dlgoptionsmakercam.cpp" line="42"/>
-        <source>Default width of elements can affect some CAM&apos;s/SVG Editors, 
+        <source>Default width of elements can affect some CAM&apos;s/SVG Editors,
 but ignored by other</source>
         <translation>Ширина элементов по умолчанию может влиять на некоторые редакторы CAM/SVG,&#xa0;
 но игнорироваться другими</translation>
@@ -45682,7 +45681,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="255"/>
         <source>Obligue of text</source>
-        <translation>Накло букв</translation>
+        <translation>Наклон букв</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="268"/>
@@ -45712,8 +45711,18 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="948"/>
         <source>Symbol to insert</source>
-        <translation>Выбор символа для вставки в текст</translation>
+        <translation>Символ для вставки</translation>
     </message>
+      <message>
+   <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1011"/>
+   <source>Yen / Yuan (¥)</source>
+   <translation>Йена / Юань (¥)</translation>
+  </message>
+  <message>
+   <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1016"/>
+   <source>Euro (€)</source>
+   <translation>Евро (€)</translation>
+  </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1046"/>
         <source>Codepage selection for selecting character</source>
@@ -46491,7 +46500,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/dialogs/file/export/image/qg_dlgimageoptions.ui" line="264"/>
         <source>Black / White</source>
-        <translation>Черно-белое</translation>
+        <translation>Чёрно-белое</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/image/qg_dlgimageoptions.ui" line="274"/>
@@ -47024,8 +47033,8 @@ This action can NOT be undone.</source>
         <source>Remove %n layer(s)</source>
         <translation>
             <numerusform>Удалить слой %n</numerusform>
-            <numerusform>Удалить %n слоя</numerusform>
-            <numerusform>Удалить %n слоев</numerusform>
+            <numerusform>Удалить слой %n</numerusform>
+            <numerusform>Удалить %n слоёв</numerusform>
         </translation>
     </message>
     <message>
@@ -47056,7 +47065,7 @@ This action can NOT be undone.</source>
         <source>Remove %n block(s)</source>
         <translation>
             <numerusform>Удалить блок %n</numerusform>
-            <numerusform>Удалить %n блока</numerusform>
+            <numerusform>Удалить блок %n</numerusform>
             <numerusform>Удалить %n блоков</numerusform>
         </translation>
     </message>
@@ -47109,9 +47118,7 @@ Please specify a different value.</source>
         <source>Layer(s) without entities found, yet they are filtered and not visible.
 
 Clear filtering mask and repeat.</source>
-        <translation>Слои без сущностей найдены, но они отфильтрованы и не видны.
-
-Очистите маску фильтрации и повторите.</translation>
+        <translation>Слои без сущностей найдены, но они отфильтрованы и не видны.\n\nОчистите маску фильтрации и повторите.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="973"/>
@@ -47168,10 +47175,10 @@ If Yes - entities with &quot;By Layer&quot; pens will look on new layer exactly 
 If No - &quot;By Layer&quot; values remains and so pen of target layer will define pen for such entities.</source>
         <translation>Заменить значения &quot;По Слою&quot; на значения из исходного слоя?
 
-Если ДА - Объекты с перьями &quot;По Слою&quot; будут изменены так что перья будут содержать значения 
+Если ДА - Объекты с перьями &quot;По Слою&quot; будут изменены так что перья будут содержать значения
 результирующего пера в исходном слое. В слое-назначении такие объекты будут выглядеть также как и в исходном слое. 
 
-Если НЕТ - объекты с перьями &quot;По Слою&quot; останутся неизменными, и таким образом перо слоя-назначения будет аттрибуты пера для таких объектов. 
+Если НЕТ - объекты с перьями &quot;По Слою&quot; останутся неизменными, и таким образом перо слоя-назначения будет аттрибуты пера для таких объектов.
 Поэтому внешний вид объектов может измениться. </translation>
     </message>
     <message>
@@ -47509,7 +47516,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/main/main.cpp" line="502"/>
         <source>Release Candidate</source>
-        <translation>Release Candidate</translation>
+        <translation>Релиз-кандидат</translation>
     </message>
     <message>
         <location filename="../src/main/main.cpp" line="503"/>
@@ -53039,11 +53046,7 @@ Cartesian: (%2 , %3)
 Polar: (%4 &lt; %5)
 Start: (%6 , %7)
 End: (%8 , %9)</source>
-        <translation>Расстояние: %1
-Картезианские: (%2 , %3)
-Полярные: (%4 &lt; %5)
-Начало: (%6 , %7)
-Конец: (%8 , %9)</translation>
+        <translation>Расстояние: %1\nКартезианские: (%2 , %3)\nПолярные: (%4 &lt; %5)\nНачало: (%6 , %7)\nКонец: (%8 , %9)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfodist.cpp" line="102"/>
@@ -53094,11 +53097,7 @@ Cartesian: (%2 , %3)
 Polar: (%4 &lt; %5)
 Point On Entity: (%6 , %7)
 Point: (%8 , %9)</source>
-        <translation type="vanished">Расстояние: %1
-Картезианские: (%2 , %3)
-Полярные: (%4 &lt; %5)
-Точка в объекте: (%6 , %7)
-Точка: (%8 , %9)&quot;</translation>
+        <translation type="vanished">Расстояние: %1\nКартезианские: (%2 , %3)\nПолярные: (%4 &lt; %5)\nТочка в объекте: (%6 , %7)\nТочка: (%8 , %9)&quot;</translation>
     </message>
     <message>
         <source>Specify entity</source>
@@ -55235,7 +55234,7 @@ Point: (%8 , %9)</source>
     </message>
     <message>
         <source>If checked, the polygon will be drawn as polyline. Otherwise, individual entities will be created. </source>
-        <translation type="vanished">Если выбрана, будет создана одна ломаная для всего многоугольника. 
+        <translation type="vanished">Если выбрана, будет создана одна ломаная для всего многоугольника.
 Иначе, будут созданны отдельные объекты. </translation>
     </message>
     <message>
@@ -55362,7 +55361,7 @@ Point: (%8 , %9)</source>
     </message>
     <message>
         <source>If checked, current attributes will be applied to created entities, otherwise original ones will be used. </source>
-        <translation type="vanished">Если выбрано, текущие аттрибуты будут применены к созданным объектам. 
+        <translation type="vanished">Если выбрано, текущие аттрибуты будут применены к созданным объектам.
 Иначе, к копиям будут применены аттрибуты оригинальных объектов.</translation>
     </message>
     <message>
@@ -55390,7 +55389,7 @@ Point: (%8 , %9)</source>
     </message>
     <message>
         <source>If checked, current attributes will be applied to created entities, otherwise original ones will be used. </source>
-        <translation type="vanished">Если выбрано, текущие аттрибуты будут применены к созданным объектам. 
+        <translation type="vanished">Если выбрано, текущие аттрибуты будут применены к созданным объектам.
 Иначе, к копиям будут применены аттрибуты оригинальных объектов.</translation>
     </message>
     <message>
@@ -55411,7 +55410,7 @@ Point: (%8 , %9)</source>
     </message>
     <message>
         <source>If checked, all copies will be rotated by the same agle. Otherwise, angle will be proportional to number of each copy. </source>
-        <translation type="vanished">Если выбрано, созданые объекты будут повернуты на одинаковый угол. 
+        <translation type="vanished">Если выбрано, созданые объекты будут повернуты на одинаковый угол.
 Иначе, угол поворота будет пропорционален номеру копии. </translation>
     </message>
     <message>
