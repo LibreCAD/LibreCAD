@@ -273,7 +273,7 @@ void LC_ActionModifyAlign::updateActionPromptForSelected([[maybe_unused]]int sta
 }
 
 void LC_ActionModifyAlign::updateActionPromptForSelection() {
-    updatePromptTRCancel(tr("Select entities to align (Enter to complete)") + getSelectionCompletionHintMsg(),
+    updatePromptTRCancel(tr("Select entities to align") + getSelectionCompletionHintMsg(),
                          MOD_SHIFT_AND_CTRL(tr("Select contour"), tr("Select and align")));
 }
 

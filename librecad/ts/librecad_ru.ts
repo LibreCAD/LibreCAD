@@ -636,9 +636,13 @@ This block cannot be inserted.</source>
 <context>
     <name>LC_ActionDrawBoundingBox</name>
     <message>
-        <location filename="../src/actions/drawing/draw/line/misc/lc_action_draw_bounding_box.cpp" line="162"/>
         <source>Select entities for bounding box (Enter to complete)</source>
-        <translation>Выберите объекты для охватывающего прямоугольника  (Enter - завершает выбор)</translation>
+        <translation type="vanished">Выберите объекты для охватывающего прямоугольника  (Enter - завершает выбор)</translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/draw/line/misc/lc_action_draw_bounding_box.cpp" line="162"/>
+        <source>Select entities for bounding box</source>
+        <translation>Выбрать объекты для охватывающей рамки</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/misc/lc_action_draw_bounding_box.cpp" line="163"/>
@@ -5176,6 +5180,10 @@ Point: (%8 , %9)</source>
         <location filename="../src/actions/drawing/modify/lc_action_modify_align.cpp" line="267"/>
         <source>Click or Enter to finish align</source>
         <translation>Кликните мышью или Enter для подтвержения выравнивания</translation>
+    </message>
+    <message>
+        <source>Select entities to align (Enter to complete)</source>
+        <translation type="vanished">Выберите объекты для выравнивания </translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_align.cpp" line="276"/>
@@ -40659,9 +40667,8 @@ and your preferred language for Ui and Command.&lt;br&gt;
         <translation>Вставить символ</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="872"/>
         <source>Symbol insertion</source>
-        <translation>Выбор символа для вставки в текст</translation>
+        <translation type="vanished">Выбор символа для вставки в текст</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="881"/>
@@ -40674,627 +40681,641 @@ and your preferred language for Ui and Command.&lt;br&gt;
         <translation>± (Плюс / Минус)</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="891"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="892"/>
         <source>At (@)</source>
         <translation>@ (коммерческое at)</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="896"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="898"/>
         <source>Hash (#)</source>
         <translation># (Хэш)</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="901"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="904"/>
         <source>Dollar ($)</source>
         <translation>$ (Доллар)</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="906"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="909"/>
         <source>Copyright (©)</source>
         <translation>© (авторское право)</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="911"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="914"/>
         <source>Registered (®)</source>
         <translation>® (зарегистрированная марка)</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="916"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="919"/>
         <source>Paragraph (§)</source>
         <translation>§ (Параграф)</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="921"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="924"/>
         <source>Pi (π)</source>
         <translation>π («Пи»)</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="926"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="929"/>
         <source>Pound (£)</source>
         <translation>£ (Фунт стерлинг)</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="931"/>
         <source>Yen (¥)</source>
-        <translation>¥ (Иена)</translation>
+        <translation type="vanished">¥ (Иена)</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="936"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="872"/>
+        <source>Symbol to insert</source>
+        <translation>Символ для вставки</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="935"/>
+        <source>Yen / Yuan (¥)</source>
+        <translation>Йена / Юань (¥)</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="940"/>
+        <source>Euro (€)</source>
+        <translation>Евро (€)</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="945"/>
         <source>Times (×)</source>
         <translation>× (Умножение)</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="941"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="950"/>
         <source>Division (÷)</source>
         <translation>÷ (Деление)</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="952"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="961"/>
         <source>Insert Unicode</source>
         <translation>Вставить символ Юникода</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="958"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="967"/>
         <source>Page:</source>
         <translation>Страница:</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="968"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="977"/>
         <source>Char:</source>
         <translation>Символ:</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="990"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="999"/>
         <source>Codepage to use for characted selection</source>
         <translation>Выбор кодовой страницы символов Юникод</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="994"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1003"/>
         <source>[0000-007F] Basic Latin</source>
         <translation>[0000-007F] Основная латиница</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="999"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1008"/>
         <source>[0080-00FF] Latin-1 Supplementary</source>
         <translation>[0080-00FF] Дополнительная латиница 1</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1004"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1013"/>
         <source>[0100-017F] Latin Extended-A</source>
         <translation>[0100-017F] Расширенная латиница A</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1009"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1018"/>
         <source>[0180-024F] Latin Extended-B</source>
         <translation>[0180-024F] Расширенная латиница B</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1014"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1023"/>
         <source>[0250-02AF] IPA Extensions</source>
         <translation>[0250-02AF] Расширения МФА</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1019"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1028"/>
         <source>[02B0-02FF] Spacing Modifier Letters</source>
         <translation>[02B0-02FF] Некомбинируемые протяжённые символы-модификаторы</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1024"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1033"/>
         <source>[0300-036F] Combining Diacritical Marks</source>
         <translation>[0300-036F] Комбинируемые диакритические знаки</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1029"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1038"/>
         <source>[0370-03FF] Greek and Coptic</source>
         <translation>[0370-03FF] Греческий и коптский</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1034"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1043"/>
         <source>[0400-04FF] Cyrillic</source>
         <translation>[0400-04FF] Кириллица</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1039"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1048"/>
         <source>[0500-052F] Cyrillic Supplementary</source>
         <translation>[0500-052F] Дополнительная кириллица</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1044"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1053"/>
         <source>[0530-058F] Armenian</source>
         <translation>[0530-058F] Армянский</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1049"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1058"/>
         <source>[0590-05FF] Hebrew</source>
         <translation>[0590-05FF] Иврит</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1054"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1063"/>
         <source>[0600-06FF] Arabic</source>
         <translation>[0600-06FF] Арабский</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1059"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1068"/>
         <source>[0700-074F] Syriac</source>
         <translation>[0700-074F] Сирийский</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1064"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1073"/>
         <source>[0780-07BF] Thaana</source>
         <translation>[0780-07BF] Таана</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1069"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1078"/>
         <source>[0900-097F] Devanagari</source>
         <translation>[0900-097F] Деванагари</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1074"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1083"/>
         <source>[0980-09FF] Bengali</source>
         <translation>[0980-09FF] Бенгальская письменность</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1079"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1088"/>
         <source>[0A00-0A7F] Gurmukhi</source>
         <translation>[0A00-0A7F] Гурмукхи</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1084"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1093"/>
         <source>[0A80-0AFF] Gujarati</source>
         <translation>[0A80-0AFF] Гуджарати</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1089"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1098"/>
         <source>[0B00-0B7F] Oriya</source>
         <translation>[0B00-0B7F] Ория</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1094"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1103"/>
         <source>[0B80-0BFF] Tamil</source>
         <translation>[0B80-0BFF] Тамильская письменность</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1099"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1108"/>
         <source>[0C00-0C7F] Telugu</source>
         <translation>[0C00-0C7F] Телугу</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1104"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1113"/>
         <source>[0C80-0CFF] Kannada</source>
         <translation>[0C80-0CFF] Каннада</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1109"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1118"/>
         <source>[0D00-0D7F] Malayalam</source>
         <translation>[0D00-0D7F] Малаялам</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1114"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1123"/>
         <source>[0D80-0DFF] Sinhala</source>
         <translation>[0D80-0DFF] Сингальская письменность</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1119"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1128"/>
         <source>[0E00-0E7F] Thai</source>
         <translation>[0E00-0E7F] Тайская письменность</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1124"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1133"/>
         <source>[0E80-0EFF] Lao</source>
         <translation>[0E80-0EFF] Лаосская письменность</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1129"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1138"/>
         <source>[0F00-0FFF] Tibetan</source>
         <translation>[0F00-0FFF] Тибетская письменность</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1134"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1143"/>
         <source>[1000-109F] Myanmar</source>
         <translation>[1000-109F] Мьянманская письменность</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1139"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1148"/>
         <source>[10A0-10FF] Georgian</source>
         <translation>[10A0-10FF] Грузинский</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1144"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1153"/>
         <source>[1100-11FF] Hangul Jamo</source>
         <translation>[1100-11FF] Хангыль (корейский)</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1149"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1158"/>
         <source>[1200-137F] Ethiopic</source>
         <translation>[1200-137F] Эфиопская слоговая письменность</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1154"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1163"/>
         <source>[13A0-13FF] Cherokee</source>
         <translation>[13A0-13FF] Письменность Чероки</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1159"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1168"/>
         <source>[1400-167F] Unified Canadian Aboriginal Syllabic</source>
         <translation>[1400-167F] Унифицированная слоговая система Аборигенов Канады</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1164"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1173"/>
         <source>[1680-169F] Ogham</source>
         <translation>[1680-169F] Огам</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1169"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1178"/>
         <source>[16A0-16FF] Runic</source>
         <translation>[16A0-16FF] Руническая письменность</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1174"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1183"/>
         <source>[1700-171F] Tagalog</source>
         <translation>[1700-171F] Тагальская (байбайин)</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1179"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1188"/>
         <source>[1720-173F] Hanunoo</source>
         <translation>[1720-173F] Хануноо</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1184"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1193"/>
         <source>[1740-175F] Buhid</source>
         <translation>[1740-175F] Бухид</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1189"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1198"/>
         <source>[1760-177F] Tagbanwa</source>
         <translation>[1760-177F] Тагбанва</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1194"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1203"/>
         <source>[1780-17FF] Khmer</source>
         <translation>[1780-17FF] Кхмерская письменность</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1199"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1208"/>
         <source>[1800-18AF] Mongolian</source>
         <translation>[1800-18AF] Старомонгольское письмо</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1204"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1213"/>
         <source>[1E00-1EFF] Latin Extended Additional</source>
         <translation>[1E00-1EFF] Дополнительная расширенная латиница</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1209"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1218"/>
         <source>[1F00-1FFF] Greek Extended</source>
         <translation>[1F00-1FFF] Расширенный греческий</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1214"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1223"/>
         <source>[2000-206F] General Punctuation</source>
         <translation>[2000-206F] Знаки пунктуации</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1219"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1228"/>
         <source>[2070-209F] Superscripts and Subscripts</source>
         <translation>[2070-209F] Надстрочные и подстрочные знаки</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1224"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1233"/>
         <source>[20A0-20CF] Currency Symbols</source>
         <translation>[20A0-20CF] Символы валют</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1229"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1238"/>
         <source>[20D0-20FF] Combining Marks for Symbols</source>
         <translation>[20D0-20FF] Комбинируемые диакритические знаки для символов</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1234"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1243"/>
         <source>[2100-214F] Letterlike Symbols</source>
         <translation>[2100-214F] Буквоподобные символы</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1239"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1248"/>
         <source>[2150-218F] Number Forms</source>
         <translation>[2150-218F] Числовые формы</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1244"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1253"/>
         <source>[2190-21FF] Arrows</source>
         <translation>[2190-21FF] Стрелки</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1249"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1258"/>
         <source>[2200-22FF] Mathematical Operators</source>
         <translation>[2200-22FF] Математические операторы</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1254"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1263"/>
         <source>[2300-23FF] Miscellaneous Technical</source>
         <translation>[2300-23FF] Технические символы</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1259"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1268"/>
         <source>[2400-243F] Control Pictures</source>
         <translation>[2400-243F] Значки управляющих кодов</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1264"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1273"/>
         <source>[2440-245F] Optical Character Recognition</source>
         <translation>[2440-245F] Символы оптического распознавания</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1269"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1278"/>
         <source>[2460-24FF] Enclosed Alphanumerics</source>
         <translation>[2460-24FF] Вложенные буквы и цифры</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1274"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1283"/>
         <source>[2500-257F] Box Drawing</source>
         <translation>[2500-257F] Символы для рисования рамок</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1279"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1288"/>
         <source>[2580-259F] Block Elements</source>
         <translation>[2580-259F] Блочные элементы</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1284"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1293"/>
         <source>[25A0-25FF] Geometric Shapes</source>
         <translation>[25A0-25FF] Геометрические фигуры</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1289"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1298"/>
         <source>[2600-26FF] Miscellaneous Symbols</source>
         <translation>[2600-26FF] Разнообразные символы</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1294"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1303"/>
         <source>[2700-27BF] Dingbats</source>
         <translation>[2700-27BF] Графические метки</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1299"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1308"/>
         <source>[27C0-27EF] Miscellaneous Mathematical Symbols-A</source>
         <translation>[27C0-27EF] Разнообразные математические символы A</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1304"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1313"/>
         <source>[27F0-27FF] Supplemental Arrows-A</source>
         <translation>[27F0-27FF] Дополнительные стрелки A</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1309"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1318"/>
         <source>[2800-28FF] Braille Patterns</source>
         <translation>[2800-28FF] Азбука Брайля</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1314"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1323"/>
         <source>[2900-297F] Supplemental Arrows-B</source>
         <translation>[2900-297F] Дополнительные стрелки-B</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1319"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1328"/>
         <source>[2980-29FF] Miscellaneous Mathematical Symbols-B</source>
         <translation>[2980-29FF] Разнообразные математические символы-B</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1324"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1333"/>
         <source>[2A00-2AFF] Supplemental Mathematical Operators</source>
         <translation>[2A00-2AFF] Дополнительные математические операторы</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1329"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1338"/>
         <source>[2E80-2EFF] CJK Radicals Supplement</source>
         <translation>[2E80-2EFF] Дополнительные иероглифические ключи ККЯ</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1334"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1343"/>
         <source>[2F00-2FDF] Kangxi Radicals</source>
         <translation>[2F00-2FDF] Иероглифические ключи словаря Канси</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1339"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1348"/>
         <source>[2FF0-2FFF] Ideographic Description Characters</source>
         <translation>[2FF0-2FFF] Символы описания иероглифов</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1344"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1353"/>
         <source>[3000-303F] CJK Symbols and Punctuation</source>
         <translation>[3000-303F] Символы и знаки пунктуации ККЯ</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1349"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1358"/>
         <source>[3040-309F] Hiragana</source>
         <translation>[3040-309F] Хирагана</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1354"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1363"/>
         <source>[30A0-30FF] Katakana</source>
         <translation>[30A0-30FF] Катакана</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1359"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1368"/>
         <source>[3100-312F] Bopomofo</source>
         <translation>[3100-312F] Чжуинь (бопомофо)</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1364"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1373"/>
         <source>[3130-318F] Hangul Compatibility Jamo</source>
         <translation>[3130-318F] Чамо, комбинируемое с хангылем</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1369"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1378"/>
         <source>[3190-319F] Kanbun</source>
         <translation>[3190-319F] Камбун</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1374"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1383"/>
         <source>[31A0-31BF] Bopomofo Extended</source>
         <translation>[31A0-31BF] Расширенный набор символов бопомофо</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1379"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1388"/>
         <source>[3200-32FF] Enclosed CJK Letters and Months</source>
         <translation>[3200-32FF] Вложенные буквы и месяцы ККЯ</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1384"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1393"/>
         <source>[3300-33FF] CJK Compatibility</source>
         <translation>[3300-33FF] Знаки совместимости ККЯ</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1389"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1398"/>
         <source>[3400-4DBF] CJK Unified Ideographs Extension A</source>
         <translation>[3400-4DBF] Унифицированные иероглифы ККЯ (расширение А)</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1394"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1403"/>
         <source>[4E00-9FAF] CJK Unified Ideographs</source>
         <translation>[4E00-9FAF] Унифицированные идеограммы ККЯ</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1399"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1408"/>
         <source>[A000-A48F] Yi Syllables</source>
         <translation>[A000-A48F] Слоги, письмо И</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1404"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1413"/>
         <source>[A490-A4CF] Yi Radicals</source>
         <translation>[A490-A4CF] Радикалы, письмо И</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1409"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1418"/>
         <source>[AC00-D7AF] Hangul Syllables</source>
         <translation>[AC00-D7AF] Слоги Хангыля</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1414"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1423"/>
         <source>[D800-DBFF] High Surrogates</source>
         <translation>[D800-DBFF] Верхняя часть Суррогатных пар</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1419"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1428"/>
         <source>[DC00-DFFF] Low Surrogate Area</source>
         <translation>[DC00-DFFF] Нижняя часть Суррогатных пар</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1424"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1433"/>
         <source>[E000-F8FF] Private Use Area</source>
         <translation>[E000-F8FF] Область для частного использования</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1429"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1438"/>
         <source>[F900-FAFF] CJK Compatibility Ideographs</source>
         <translation>[F900-FAFF] Совместимые иероглифы ККЯ</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1434"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1443"/>
         <source>[FB00-FB4F] Alphabetic Presentation Forms</source>
         <translation>[FB00-FB4F] Алфавитные формы представления</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1439"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1448"/>
         <source>[FB50-FDFF] Arabic Presentation Forms-A</source>
         <translation>[FB50-FDFF] Формы представления арабских букв-A</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1444"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1453"/>
         <source>[FE00-FE0F] Variation Selectors</source>
         <translation>[FE00-FE0F] Селекторы вариантов начертания</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1449"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1458"/>
         <source>[FE20-FE2F] Combining Half Marks</source>
         <translation>[FE20-FE2F] Комбинируемые половинки символов</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1454"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1463"/>
         <source>[FE30-FE4F] CJK Compatibility Forms</source>
         <translation>[FE30-FE4F] Формы совместимости ККЯ</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1459"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1468"/>
         <source>[FE50-FE6F] Small Form Variants</source>
         <translation>[FE50-FE6F] Варианты малого размера</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1464"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1473"/>
         <source>[FE70-FEFF] Arabic Presentation Forms-B</source>
         <translation>[FE70-FEFF] Формы представления арабских букв B</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1469"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1478"/>
         <source>[FF00-FFEF] Halfwidth and Fullwidth Forms</source>
         <translation>[FF00-FFEF] Полуширинные и полноширинные формы</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1474"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1483"/>
         <source>[FFF0-FFFF] Specials</source>
         <translation>[FFF0-FFFF] Специальные символы</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1479"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1488"/>
         <source>[10300-1032F] Old Italic</source>
         <translation>[10300-1032F] Старый курсив</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1484"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1493"/>
         <source>[10330-1034F] Gothic</source>
         <translation>[10330-1034F] Готический</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1489"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1498"/>
         <source>[10400-1044F] Deseret</source>
         <translation>[10400-1044F] Десерет</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1494"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1503"/>
         <source>[1D000-1D0FF] Byzantine Musical Symbols</source>
         <translation>[1D000-1D0FF] Византийские музыкальные символы</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1499"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1508"/>
         <source>[1D100-1D1FF] Musical Symbols</source>
         <translation>[1D100-1D1FF] Музыкальные символы</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1504"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1513"/>
         <source>[1D400-1D7FF] Mathematical Alphanumeric Symbols</source>
         <translation>[1D400-1D7FF] Математические буквенно-цифровые символы</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1509"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1518"/>
         <source>[20000-2A6DF] CJK Unified Ideographs Extension B</source>
         <translation>[20000-2A6DF] Унифицированные иероглифы ККЯ (расширение B)</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1514"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1523"/>
         <source>[2F800-2FA1F] CJK Compatibility Ideographs Supplement</source>
         <translation>[2F800-2FA1F] Дополнение совместимых иероглифов ККЯ</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1519"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1528"/>
         <source>[E0000-E007F] Tags</source>
         <translation>[E0000-E007F] Символы тегов</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1524"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1533"/>
         <source>[F0000-FFFFD] Supplementary Private Use Area-A</source>
         <translation>[F0000-FFFFD] Дополнительная частная плоскость А</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1529"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1538"/>
         <source>[100000-10FFFD] Supplementary Private Use Area-B</source>
         <translation>[100000-10FFFD] Дополнительная частная плоскость B</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1549"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1558"/>
         <source>Selection of character to insert</source>
         <translation>Выбор символа для вставки в текст</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1574"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1583"/>
         <source>Selected character preview. Click to insert to text.</source>
         <translation>Предпросмотр выбранного символа. 
 Нажмите для вставки в текст.</translation>
@@ -45424,8 +45445,14 @@ and your preferred language for Ui and Command.&lt;br&gt;
         <translation>Преобразуйте штриховые/точечные линии в контур SVG</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/file/export/makercam/qg_dlgoptionsmakercam.cpp" line="31"/>
         <source>MakerCAM as of November 2014 does not hide SVG content
+that has been set invisibe (&quot;display: none&quot; or &quot;visibility: hidden&quot;).</source>
+        <translation type="vanished">MakerCAM по состоянию на ноябрь 2014 года не скрывает содержимое SVG&#xa0;
+которое было установлено невидимым (&quot;отображение: нет&quot; или &quot;видимость: скрыто&quot;).</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dialogs/file/export/makercam/qg_dlgoptionsmakercam.cpp" line="31"/>
+        <source>MakerCAM as of November 2014 does not hide SVG content 
 that has been set invisibe (&quot;display: none&quot; or &quot;visibility: hidden&quot;).</source>
         <translation>MakerCAM по состоянию на ноябрь 2014 года не скрывает содержимое SVG&#xa0;
 которое было установлено невидимым (&quot;отображение: нет&quot; или &quot;видимость: скрыто&quot;).</translation>
@@ -45448,23 +45475,41 @@ the &lt;transform&gt; attribute or as &lt;path&gt; using elliptic arc segments.<
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/makercam/qg_dlgoptionsmakercam.cpp" line="38"/>
-        <source>Exported images can be useful in SVG editors (Inkscape, etc),
+        <source>Exported images can be useful in SVG editors (Inkscape, etc), 
 but avoided in some CAM&apos;s.</source>
         <translation>Экспортированные изображения могут быть использованы в SVG редакторах (Inkscape и т.д.),&#xa0;
 но некоторые CAM&apos;ы будут отброшены.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/makercam/qg_dlgoptionsmakercam.cpp" line="39"/>
-        <source>Many CAM&apos;s(MakerCAM, EleskCAM, LaserWeb) ignore dashed/doted line style,
+        <source>Many CAM&apos;s(MakerCAM, EleskCAM, LaserWeb) ignore dashed/doted line style, 
 which can be useful in lasercut of plywood or for papercraft. </source>
         <translation>Многие CAM&apos;ы(MakerCAM, EleskCAM, LaserWeb) игнорируют стиль пунктирной линии,&#xa0;
 который может быть полезен при лазерной резке фанеры или для изготовления поделок из бумаги. </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/makercam/qg_dlgoptionsmakercam.cpp" line="42"/>
-        <source>Default width of elements can affect some CAM&apos;s/SVG Editors,
+        <source>Default width of elements can affect some CAM&apos;s/SVG Editors, 
 but ignored by other</source>
         <translation>Ширина элементов по умолчанию может влиять на некоторые редакторы CAM/SVG,&#xa0;
+но игнорироваться другими</translation>
+    </message>
+    <message>
+        <source>Exported images can be useful in SVG editors (Inkscape, etc),
+but avoided in some CAM&apos;s.</source>
+        <translation type="vanished">Экспортированные изображения могут быть использованы в SVG редакторах (Inkscape и т.д.),&#xa0;
+но некоторые CAM&apos;ы будут отброшены.</translation>
+    </message>
+    <message>
+        <source>Many CAM&apos;s(MakerCAM, EleskCAM, LaserWeb) ignore dashed/doted line style,
+which can be useful in lasercut of plywood or for papercraft. </source>
+        <translation type="vanished">Многие CAM&apos;ы(MakerCAM, EleskCAM, LaserWeb) игнорируют стиль пунктирной линии,&#xa0;
+который может быть полезен при лазерной резке фанеры или для изготовления поделок из бумаги. </translation>
+    </message>
+    <message>
+        <source>Default width of elements can affect some CAM&apos;s/SVG Editors,
+but ignored by other</source>
+        <translation type="vanished">Ширина элементов по умолчанию может влиять на некоторые редакторы CAM/SVG,&#xa0;
 но игнорироваться другими</translation>
     </message>
     <message>
@@ -45588,83 +45633,82 @@ so default step value required for baking</source>
         <translation>± (плюс / минус)</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="967"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="968"/>
         <source>At (@)</source>
         <translation>@ (коммерческое at)</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="972"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="974"/>
         <source>Hash (#)</source>
         <translation># (Хеш)</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="977"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="980"/>
         <source>Dollar ($)</source>
         <translation>$ (Доллар)</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="982"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="985"/>
         <source>Copyright (©)</source>
         <translation>© (авторское право)</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="987"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="990"/>
         <source>Registered (®)</source>
         <translation>® (зарегистрированная марка)</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="992"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="995"/>
         <source>Paragraph (§)</source>
         <translation>§ (Параграф)</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="997"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1000"/>
         <source>Pi (π)</source>
         <translation>π («Пи»)</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1002"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1005"/>
         <source>Pound (£)</source>
         <translation>£ (Фунт стерлингов)</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1007"/>
         <source>Yen (¥)</source>
-        <translation>¥ (Йена)</translation>
+        <translation type="vanished">¥ (Йена)</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1012"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1021"/>
         <source>Times (×)</source>
         <translation>× (Умножение)</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1017"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1026"/>
         <source>Division (÷)</source>
         <translation>÷ (Деление)</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1028"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1037"/>
         <source>Insert Unicode</source>
         <translation>Вставить символ Юникод</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1593"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1602"/>
         <source>Page:</source>
         <translation>Страница:</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1621"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1630"/>
         <source>Selected character preview. Click to insert to text.</source>
         <translation>Предпросмотр выбранного символа. 
 Нажмите для вставки в текст.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1631"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1640"/>
         <source>Char:</source>
         <translation>Символ:</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1050"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1059"/>
         <source>[0000-007F] Basic Latin</source>
         <translation>[0000-007F] Основная латиница</translation>
     </message>
@@ -45713,558 +45757,558 @@ so default step value required for baking</source>
         <source>Symbol to insert</source>
         <translation>Символ для вставки</translation>
     </message>
-      <message>
-   <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1011"/>
-   <source>Yen / Yuan (¥)</source>
-   <translation>Йена / Юань (¥)</translation>
-  </message>
-  <message>
-   <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1016"/>
-   <source>Euro (€)</source>
-   <translation>Евро (€)</translation>
-  </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1046"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1011"/>
+        <source>Yen / Yuan (¥)</source>
+        <translation>Йена / Юань (¥)</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1016"/>
+        <source>Euro (€)</source>
+        <translation>Евро (€)</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1055"/>
         <source>Codepage selection for selecting character</source>
         <translation>Выбор кодовой страницы символов Юникод</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1055"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1064"/>
         <source>[0080-00FF] Latin-1 Supplementary</source>
         <translation>[0080-00FF] Латиница-1</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1060"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1069"/>
         <source>[0100-017F] Latin Extended-A</source>
         <translation>[0100-017F] Расширенная латиница-A</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1065"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1074"/>
         <source>[0180-024F] Latin Extended-B</source>
         <translation>[0180-024F] Расширенная латиница-B</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1070"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1079"/>
         <source>[0250-02AF] IPA Extensions</source>
         <translation>[0250-02AF] Фонетические знаки</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1075"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1084"/>
         <source>[02B0-02FF] Spacing Modifier Letters</source>
         <translation>[02B0-02FF] Символы изменения пробела</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1080"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1089"/>
         <source>[0300-036F] Combining Diacritical Marks</source>
         <translation>[0300-036F] Дополняющие диакритические знаки</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1085"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1094"/>
         <source>[0370-03FF] Greek and Coptic</source>
         <translation>[0370-03FF] Греческий и египетский (коптский)</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1090"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1099"/>
         <source>[0400-04FF] Cyrillic</source>
         <translation>[0400-04FF] Кириллица</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1095"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1104"/>
         <source>[0500-052F] Cyrillic Supplementary</source>
         <translation>[0500-052F] Дополнительная кириллица</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1100"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1109"/>
         <source>[0530-058F] Armenian</source>
         <translation>[0530-058F] Армянский</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1105"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1114"/>
         <source>[0590-05FF] Hebrew</source>
         <translation>[0590-05FF] Иврит</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1110"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1119"/>
         <source>[0600-06FF] Arabic</source>
         <translation>[0600-06FF] Арабский</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1115"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1124"/>
         <source>[0700-074F] Syriac</source>
         <translation>[0700-074F] Сирийский</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1120"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1129"/>
         <source>[0780-07BF] Thaana</source>
         <translation>[0780-07BF] Тана (Мальдивский)</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1125"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1134"/>
         <source>[0900-097F] Devanagari</source>
         <translation>[0900-097F] Деванагари</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1130"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1139"/>
         <source>[0980-09FF] Bengali</source>
         <translation>[0980-09FF] Бенгальская письменность</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1135"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1144"/>
         <source>[0A00-0A7F] Gurmukhi</source>
         <translation>[0A00-0A7F] Гурмукхи</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1140"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1149"/>
         <source>[0A80-0AFF] Gujarati</source>
         <translation>[0A80-0AFF] Гуджарати</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1145"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1154"/>
         <source>[0B00-0B7F] Oriya</source>
         <translation>[0B00-0B7F] Ория</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1150"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1159"/>
         <source>[0B80-0BFF] Tamil</source>
         <translation>[0B80-0BFF] Тамильская письменность</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1155"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1164"/>
         <source>[0C00-0C7F] Telugu</source>
         <translation>[0C00-0C7F] Телугу</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1160"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1169"/>
         <source>[0C80-0CFF] Kannada</source>
         <translation>[0C80-0CFF] Каннада</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1165"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1174"/>
         <source>[0D00-0D7F] Malayalam</source>
         <translation>[0D00-0D7F] Малаялам</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1170"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1179"/>
         <source>[0D80-0DFF] Sinhala</source>
         <translation>[0D80-0DFF] Сингальская письменность</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1175"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1184"/>
         <source>[0E00-0E7F] Thai</source>
         <translation>[0E00-0E7F] Тайская письменность</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1180"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1189"/>
         <source>[0E80-0EFF] Lao</source>
         <translation>[0E80-0EFF] Лаосская письменность</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1185"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1194"/>
         <source>[0F00-0FFF] Tibetan</source>
         <translation>[0F00-0FFF] Тибетская письменность</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1190"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1199"/>
         <source>[1000-109F] Myanmar</source>
         <translation>[1000-109F] Мьянманская письменность</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1195"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1204"/>
         <source>[10A0-10FF] Georgian</source>
         <translation>[10A0-10FF] Грузинский алфавит</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1200"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1209"/>
         <source>[1100-11FF] Hangul Jamo</source>
         <translation>[1100-11FF] Хангыль (корейский)</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1205"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1214"/>
         <source>[1200-137F] Ethiopic</source>
         <translation>[1200-137F] Эфиопская слоговая письменность</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1210"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1219"/>
         <source>[13A0-13FF] Cherokee</source>
         <translation>[13A0-13FF] Письменность чероки</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1215"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1224"/>
         <source>[1400-167F] Unified Canadian Aboriginal Syllabic</source>
         <translation>[1400-167F] Канадское слоговое письмо</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1220"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1229"/>
         <source>[1680-169F] Ogham</source>
         <translation>[1680-169F] Огам</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1225"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1234"/>
         <source>[16A0-16FF] Runic</source>
         <translation>[16A0-16FF] Руническая письменность</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1230"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1239"/>
         <source>[1700-171F] Tagalog</source>
         <translation>[1700-171F] Тагальская (байбайин)</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1235"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1244"/>
         <source>[1720-173F] Hanunoo</source>
         <translation>[1720-173F] Хануноо</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1240"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1249"/>
         <source>[1740-175F] Buhid</source>
         <translation>[1740-175F] Бухид</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1245"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1254"/>
         <source>[1760-177F] Tagbanwa</source>
         <translation>[1760-177F] Тагбанва</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1250"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1259"/>
         <source>[1780-17FF] Khmer</source>
         <translation>[1780-17FF] Кхмерская письменность</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1255"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1264"/>
         <source>[1800-18AF] Mongolian</source>
         <translation>[1800-18AF] Старомонгольская письменность</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1260"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1269"/>
         <source>[1E00-1EFF] Latin Extended Additional</source>
         <translation>[1E00-1EFF] Дополнительная расширенная латиница</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1265"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1274"/>
         <source>[1F00-1FFF] Greek Extended</source>
         <translation>[1F00-1FFF] Расширенный греческий</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1270"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1279"/>
         <source>[2000-206F] General Punctuation</source>
         <translation>[2000-206F] Знаки пунктуации</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1275"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1284"/>
         <source>[2070-209F] Superscripts and Subscripts</source>
         <translation>[2070-209F] Надстрочные и подстрочные знаки</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1280"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1289"/>
         <source>[20A0-20CF] Currency Symbols</source>
         <translation>[20A0-20CF] Символы валют</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1285"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1294"/>
         <source>[20D0-20FF] Combining Marks for Symbols</source>
         <translation>[20D0-20FF] Комбинируемые диакритические знаки для символов</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1290"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1299"/>
         <source>[2100-214F] Letterlike Symbols</source>
         <translation>[2100-214F] Буквоподобные символы</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1295"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1304"/>
         <source>[2150-218F] Number Forms</source>
         <translation>[2150-218F] Числовые формы</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1300"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1309"/>
         <source>[2190-21FF] Arrows</source>
         <translation>[2190-21FF] Стрелки</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1305"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1314"/>
         <source>[2200-22FF] Mathematical Operators</source>
         <translation>[2200-22FF] Математические операторы</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1310"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1319"/>
         <source>[2300-23FF] Miscellaneous Technical</source>
         <translation>[2300-23FF] Технические символы</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1315"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1324"/>
         <source>[2400-243F] Control Pictures</source>
         <translation>[2400-243F] Значки управляющих кодов</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1320"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1329"/>
         <source>[2440-245F] Optical Character Recognition</source>
         <translation>[2440-245F] Символы оптического распознавания</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1325"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1334"/>
         <source>[2460-24FF] Enclosed Alphanumerics</source>
         <translation>[2460-24FF] Вложенные буквы и цифры</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1330"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1339"/>
         <source>[2500-257F] Box Drawing</source>
         <translation>[2500-257F] Символы для рисования рамок</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1335"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1344"/>
         <source>[2580-259F] Block Elements</source>
         <translation>[2580-259F] Блочные элементы</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1340"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1349"/>
         <source>[25A0-25FF] Geometric Shapes</source>
         <translation>[25A0-25FF] Геометрические фигуры</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1345"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1354"/>
         <source>[2600-26FF] Miscellaneous Symbols</source>
         <translation>[2600-26FF] Разнообразные символы</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1350"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1359"/>
         <source>[2700-27BF] Dingbats</source>
         <translation>[2700-27BF] Графические метки</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1355"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1364"/>
         <source>[27C0-27EF] Miscellaneous Mathematical Symbols-A</source>
         <translation>[27C0-27EF] Разнообразные математические символы-A</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1360"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1369"/>
         <source>[27F0-27FF] Supplemental Arrows-A</source>
         <translation>[27F0-27FF] Дополнительные стрелки-A</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1365"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1374"/>
         <source>[2800-28FF] Braille Patterns</source>
         <translation>[2800-28FF] Азбука Брайля</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1370"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1379"/>
         <source>[2900-297F] Supplemental Arrows-B</source>
         <translation>[2900-297F] Дополнительные стрелки-B</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1375"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1384"/>
         <source>[2980-29FF] Miscellaneous Mathematical Symbols-B</source>
         <translation>[2980-29FF] Разнообразные математические символы B</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1380"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1389"/>
         <source>[2A00-2AFF] Supplemental Mathematical Operators</source>
         <translation>[2A00-2AFF] Дополнительные математические операторы</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1385"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1394"/>
         <source>[2E80-2EFF] CJK Radicals Supplement</source>
         <translation>[2E80-2EFF] Дополнительные иероглифические ключи ККЯ</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1390"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1399"/>
         <source>[2F00-2FDF] Kangxi Radicals</source>
         <translation>[2F00-2FDF] Иероглифические ключи словаря Канси</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1395"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1404"/>
         <source>[2FF0-2FFF] Ideographic Description Characters</source>
         <translation>[2FF0-2FFF] Символы описания иероглифов</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1400"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1409"/>
         <source>[3000-303F] CJK Symbols and Punctuation</source>
         <translation>[3000-303F] Символы и пунктуация ККЯ</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1405"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1414"/>
         <source>[3040-309F] Hiragana</source>
         <translation>[3040-309F] Хирагана</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1410"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1419"/>
         <source>[30A0-30FF] Katakana</source>
         <translation>[30A0-30FF] Катакана</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1415"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1424"/>
         <source>[3100-312F] Bopomofo</source>
         <translation>[3100-312F] Чжуинь (бопомофо)</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1420"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1429"/>
         <source>[3130-318F] Hangul Compatibility Jamo</source>
         <translation>[3130-318F] Чамо, комбинируемое с хангылем</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1425"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1434"/>
         <source>[3190-319F] Kanbun</source>
         <translation>[3190-319F] Камбун</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1430"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1439"/>
         <source>[31A0-31BF] Bopomofo Extended</source>
         <translation>[31A0-31BF] Расширенный набор символов бопомофо</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1435"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1444"/>
         <source>[3200-32FF] Enclosed CJK Letters and Months</source>
         <translation>[3200-32FF] Вложенные буквы и месяцы ККЯ</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1440"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1449"/>
         <source>[3300-33FF] CJK Compatibility</source>
         <translation>[3300-33FF] Знаки совместимости ККЯ</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1445"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1454"/>
         <source>[3400-4DBF] CJK Unified Ideographs Extension A</source>
         <translation>[3400-4DBF] Унифицированные иероглифы ККЯ (расширение А)</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1450"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1459"/>
         <source>[4E00-9FAF] CJK Unified Ideographs</source>
         <translation>[4E00-9FAF] Унифицированные идеограммы ККЯ</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1455"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1464"/>
         <source>[A000-A48F] Yi Syllables</source>
         <translation>[A000-A48F] Слоги И</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1460"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1469"/>
         <source>[A490-A4CF] Yi Radicals</source>
         <translation>[A490-A4CF] Радикалы И</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1465"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1474"/>
         <source>[AC00-D7AF] Hangul Syllables</source>
         <translation>[AC00-D7AF] Слоги Хангыля</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1470"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1479"/>
         <source>[D800-DBFF] High Surrogates</source>
         <translation>[D800-DBFF] Верхняя часть суррогатных пар</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1475"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1484"/>
         <source>[DC00-DFFF] Low Surrogate Area</source>
         <translation>[DC00-DFFF] Нижняя часть суррогатных пар</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1480"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1489"/>
         <source>[E000-F8FF] Private Use Area</source>
         <translation>[E000-F8FF] Область для частного использования</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1485"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1494"/>
         <source>[F900-FAFF] CJK Compatibility Ideographs</source>
         <translation>[F900-FAFF] Совместимые иероглифы ККЯ</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1490"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1499"/>
         <source>[FB00-FB4F] Alphabetic Presentation Forms</source>
         <translation>[FB00-FB4F] Алфавитные формы представления</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1495"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1504"/>
         <source>[FB50-FDFF] Arabic Presentation Forms-A</source>
         <translation>[FB50-FDFF] Формы представления арабских букв-A</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1500"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1509"/>
         <source>[FE00-FE0F] Variation Selectors</source>
         <translation>[FE00-FE0F] Селекторы вариантов начертания</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1505"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1514"/>
         <source>[FE20-FE2F] Combining Half Marks</source>
         <translation>[FE20-FE2F] Комбинируемые половинки символов</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1510"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1519"/>
         <source>[FE30-FE4F] CJK Compatibility Forms</source>
         <translation>[FE30-FE4F] Формы совместимости ККЯ</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1515"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1524"/>
         <source>[FE50-FE6F] Small Form Variants</source>
         <translation>[FE50-FE6F] Варианты малого размера</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1520"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1529"/>
         <source>[FE70-FEFF] Arabic Presentation Forms-B</source>
         <translation>[FE70-FEFF] Формы представления арабских букв-B</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1525"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1534"/>
         <source>[FF00-FFEF] Halfwidth and Fullwidth Forms</source>
         <translation>[FF00-FFEF] Полуширинные и полноширинные формы</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1530"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1539"/>
         <source>[FFF0-FFFF] Specials</source>
         <translation>[FFF0-FFFF] Специальные символы</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1535"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1544"/>
         <source>[10300-1032F] Old Italic</source>
         <translation>[10300-1032F] Старый курсив</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1540"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1549"/>
         <source>[10330-1034F] Gothic</source>
         <translation>[10330-1034F] Готический</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1545"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1554"/>
         <source>[10400-1044F] Deseret</source>
         <translation>[10400-1044F] Дезерет</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1550"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1559"/>
         <source>[1D000-1D0FF] Byzantine Musical Symbols</source>
         <translation>[1D000-1D0FF] Византийские музыкальные символы</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1555"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1564"/>
         <source>[1D100-1D1FF] Musical Symbols</source>
         <translation>[1D100-1D1FF] Музыкальные символы</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1560"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1569"/>
         <source>[1D400-1D7FF] Mathematical Alphanumeric Symbols</source>
         <translation>[1D400-1D7FF] Математические буквенно-цифровые символы</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1565"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1574"/>
         <source>[20000-2A6DF] CJK Unified Ideographs Extension B</source>
         <translation>[20000-2A6DF] Унифицированные иероглифы ККЯ (расширение B)</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1570"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1579"/>
         <source>[2F800-2FA1F] CJK Compatibility Ideographs Supplement</source>
         <translation>[2F800-2FA1F] Дополнение совместимых иероглифов ККЯ</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1575"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1584"/>
         <source>[E0000-E007F] Tags</source>
         <translation>[E0000-E007F] Символы тегов</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1580"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1589"/>
         <source>[F0000-FFFFD] Supplementary Private Use Area-A</source>
         <translation>[F0000-FFFFD] Дополнительные плоскости-А</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1585"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1594"/>
         <source>[100000-10FFFD] Supplementary Private Use Area-B</source>
         <translation>[100000-10FFFD] Дополнительные плоскости-B</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1653"/>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1662"/>
         <source>Selection of character to insert</source>
         <translation>Выбор символа для вставки в текст</translation>
     </message>
@@ -46887,32 +46931,32 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>QG_SnapToolBar</name>
     <message>
-        <location filename="../src/ui/components/toolbars/qg_snaptoolbar.cpp" line="223"/>
+        <location filename="../src/ui/components/toolbars/qg_snaptoolbar.cpp" line="222"/>
         <source>Relative zero position is %1</source>
         <translation>Положение относительно нуля %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/components/toolbars/qg_snaptoolbar.cpp" line="223"/>
+        <location filename="../src/ui/components/toolbars/qg_snaptoolbar.cpp" line="222"/>
         <source>locked</source>
         <translation>закрытый</translation>
     </message>
     <message>
-        <location filename="../src/ui/components/toolbars/qg_snaptoolbar.cpp" line="223"/>
+        <location filename="../src/ui/components/toolbars/qg_snaptoolbar.cpp" line="222"/>
         <source>unlocked</source>
         <translation>разблокированный</translation>
     </message>
     <message>
-        <location filename="../src/ui/components/toolbars/qg_snaptoolbar.cpp" line="228"/>
+        <location filename="../src/ui/components/toolbars/qg_snaptoolbar.cpp" line="227"/>
         <source>Coordinate system: %1</source>
         <translation>Система координат: %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/components/toolbars/qg_snaptoolbar.cpp" line="228"/>
+        <location filename="../src/ui/components/toolbars/qg_snaptoolbar.cpp" line="227"/>
         <source>User</source>
         <translation>Пользовательская</translation>
     </message>
     <message>
-        <location filename="../src/ui/components/toolbars/qg_snaptoolbar.cpp" line="228"/>
+        <location filename="../src/ui/components/toolbars/qg_snaptoolbar.cpp" line="227"/>
         <source>World</source>
         <translation>Мировая</translation>
     </message>
