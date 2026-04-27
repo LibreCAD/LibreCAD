@@ -77,64 +77,64 @@
 <context>
     <name>LC_ActionBlockInsert</name>
     <message>
-        <location filename="../src/actions/dock_widgets/block/lc_action_block_insert.cpp" line="89"/>
+        <location filename="../src/actions/dock_widgets/block/lc_action_block_insert.cpp" line="88"/>
         <source>Block cannot contain an insert of itself.</source>
         <translation type="unfinished">Blok nemůže obsahovat sám vložku.</translation>
     </message>
     <message>
-        <location filename="../src/actions/dock_widgets/block/lc_action_block_insert.cpp" line="96"/>
+        <location filename="../src/actions/dock_widgets/block/lc_action_block_insert.cpp" line="95"/>
         <source> has nested insert of current block in:
 </source>
         <translation type="unfinished">má vnořenou vložku aktuálního bloku v:</translation>
     </message>
     <message>
-        <location filename="../src/actions/dock_widgets/block/lc_action_block_insert.cpp" line="98"/>
+        <location filename="../src/actions/dock_widgets/block/lc_action_block_insert.cpp" line="97"/>
         <source>
 This block cannot be inserted.</source>
         <translation type="unfinished">Tento blok nelze vložit.</translation>
     </message>
     <message>
-        <location filename="../src/actions/dock_widgets/block/lc_action_block_insert.cpp" line="227"/>
-        <location filename="../src/actions/dock_widgets/block/lc_action_block_insert.cpp" line="240"/>
-        <location filename="../src/actions/dock_widgets/block/lc_action_block_insert.cpp" line="253"/>
-        <location filename="../src/actions/dock_widgets/block/lc_action_block_insert.cpp" line="266"/>
-        <location filename="../src/actions/dock_widgets/block/lc_action_block_insert.cpp" line="279"/>
-        <location filename="../src/actions/dock_widgets/block/lc_action_block_insert.cpp" line="292"/>
+        <location filename="../src/actions/dock_widgets/block/lc_action_block_insert.cpp" line="226"/>
+        <location filename="../src/actions/dock_widgets/block/lc_action_block_insert.cpp" line="239"/>
+        <location filename="../src/actions/dock_widgets/block/lc_action_block_insert.cpp" line="252"/>
+        <location filename="../src/actions/dock_widgets/block/lc_action_block_insert.cpp" line="265"/>
+        <location filename="../src/actions/dock_widgets/block/lc_action_block_insert.cpp" line="278"/>
+        <location filename="../src/actions/dock_widgets/block/lc_action_block_insert.cpp" line="291"/>
         <source>Not a valid expression</source>
         <translation type="unfinished">Neplatný výraz</translation>
     </message>
     <message>
-        <location filename="../src/actions/dock_widgets/block/lc_action_block_insert.cpp" line="374"/>
+        <location filename="../src/actions/dock_widgets/block/lc_action_block_insert.cpp" line="373"/>
         <source>Specify reference point</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/dock_widgets/block/lc_action_block_insert.cpp" line="377"/>
+        <location filename="../src/actions/dock_widgets/block/lc_action_block_insert.cpp" line="376"/>
         <source>Enter angle:</source>
         <translation type="unfinished">Zadejte úhel:</translation>
     </message>
     <message>
-        <location filename="../src/actions/dock_widgets/block/lc_action_block_insert.cpp" line="380"/>
+        <location filename="../src/actions/dock_widgets/block/lc_action_block_insert.cpp" line="379"/>
         <source>Enter factor:</source>
         <translation type="unfinished">Zadejte měřítko:</translation>
     </message>
     <message>
-        <location filename="../src/actions/dock_widgets/block/lc_action_block_insert.cpp" line="383"/>
+        <location filename="../src/actions/dock_widgets/block/lc_action_block_insert.cpp" line="382"/>
         <source>Enter columns:</source>
         <translation type="unfinished">Zadejte počet sloupců:</translation>
     </message>
     <message>
-        <location filename="../src/actions/dock_widgets/block/lc_action_block_insert.cpp" line="386"/>
+        <location filename="../src/actions/dock_widgets/block/lc_action_block_insert.cpp" line="385"/>
         <source>Enter rows:</source>
         <translation type="unfinished">Zadejte počet řádků:</translation>
     </message>
     <message>
-        <location filename="../src/actions/dock_widgets/block/lc_action_block_insert.cpp" line="389"/>
+        <location filename="../src/actions/dock_widgets/block/lc_action_block_insert.cpp" line="388"/>
         <source>Enter column spacing:</source>
         <translation type="unfinished">Zadejte vzdálenost mezi sloupci:</translation>
     </message>
     <message>
-        <location filename="../src/actions/dock_widgets/block/lc_action_block_insert.cpp" line="392"/>
+        <location filename="../src/actions/dock_widgets/block/lc_action_block_insert.cpp" line="391"/>
         <source>Enter row spacing:</source>
         <translation type="unfinished">Zadejte vzdálenost mezi řádky:</translation>
     </message>
@@ -142,28 +142,28 @@ This block cannot be inserted.</source>
 <context>
     <name>LC_ActionBlockLibraryInsert</name>
     <message>
-        <location filename="../src/actions/dock_widgets/library/lc_action_block_library_insert.cpp" line="94"/>
+        <location filename="../src/actions/dock_widgets/library/lc_action_block_library_insert.cpp" line="93"/>
         <source>Cannot open file &apos;%1&apos;</source>
         <translation type="unfinished">Nelze otevřít soubor &apos;%1&apos;</translation>
     </message>
     <message>
-        <location filename="../src/actions/dock_widgets/library/lc_action_block_library_insert.cpp" line="195"/>
-        <location filename="../src/actions/dock_widgets/library/lc_action_block_library_insert.cpp" line="209"/>
+        <location filename="../src/actions/dock_widgets/library/lc_action_block_library_insert.cpp" line="194"/>
+        <location filename="../src/actions/dock_widgets/library/lc_action_block_library_insert.cpp" line="208"/>
         <source>Not a valid expression</source>
         <translation type="unfinished">Neplatný výraz</translation>
     </message>
     <message>
-        <location filename="../src/actions/dock_widgets/library/lc_action_block_library_insert.cpp" line="238"/>
+        <location filename="../src/actions/dock_widgets/library/lc_action_block_library_insert.cpp" line="237"/>
         <source>Specify reference point</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/dock_widgets/library/lc_action_block_library_insert.cpp" line="241"/>
+        <location filename="../src/actions/dock_widgets/library/lc_action_block_library_insert.cpp" line="240"/>
         <source>Enter angle:</source>
         <translation type="unfinished">Zadejte úhel:</translation>
     </message>
     <message>
-        <location filename="../src/actions/dock_widgets/library/lc_action_block_library_insert.cpp" line="244"/>
+        <location filename="../src/actions/dock_widgets/library/lc_action_block_library_insert.cpp" line="243"/>
         <source>Enter factor:</source>
         <translation type="unfinished">Zadejte měřítko:</translation>
     </message>
@@ -263,17 +263,17 @@ This block cannot be inserted.</source>
 <context>
     <name>LC_ActionDimOrdinate</name>
     <message>
-        <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimordinate.cpp" line="208"/>
+        <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimordinate.cpp" line="207"/>
         <source>Specify first point</source>
         <translation type="unfinished">Zadejte první bod</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimordinate.cpp" line="212"/>
+        <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimordinate.cpp" line="211"/>
         <source>Specify leader end point</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimordinate.cpp" line="212"/>
+        <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimordinate.cpp" line="211"/>
         <source>Change Ordinate</source>
         <translation type="unfinished"></translation>
     </message>
@@ -289,17 +289,17 @@ This block cannot be inserted.</source>
 <context>
     <name>LC_ActionDimStyleApply</name>
     <message>
-        <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimstyleapply.cpp" line="165"/>
+        <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimstyleapply.cpp" line="164"/>
         <source>Specify dimension to pick the style</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimstyleapply.cpp" line="168"/>
+        <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimstyleapply.cpp" line="167"/>
         <source>Specify dimension to apply style</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimstyleapply.cpp" line="168"/>
+        <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimstyleapply.cpp" line="167"/>
         <source>Do not apply style override</source>
         <translation type="unfinished"></translation>
     </message>
@@ -358,12 +358,12 @@ This block cannot be inserted.</source>
 <context>
     <name>LC_ActionDrawArc2PointsAngle</name>
     <message>
-        <location filename="../src/actions/drawing/draw/arc/lc_action_draw_arc_2points_angle.cpp" line="59"/>
+        <location filename="../src/actions/drawing/draw/arc/lc_action_draw_arc_2points_angle.cpp" line="58"/>
         <source>Enter value of central angle</source>
         <translation>Zadejte hodnotu centrálního úhlu</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/arc/lc_action_draw_arc_2points_angle.cpp" line="63"/>
+        <location filename="../src/actions/drawing/draw/arc/lc_action_draw_arc_2points_angle.cpp" line="62"/>
         <source>Alternate angle to outer arc</source>
         <translation>Alternativní úhel k vnějšímu oblouku</translation>
     </message>
@@ -404,12 +404,12 @@ This block cannot be inserted.</source>
 <context>
     <name>LC_ActionDrawArc2PointsHeight</name>
     <message>
-        <location filename="../src/actions/drawing/draw/arc/lc_action_draw_arc_2points_height.cpp" line="56"/>
+        <location filename="../src/actions/drawing/draw/arc/lc_action_draw_arc_2points_height.cpp" line="55"/>
         <source>Enter height of arc</source>
         <translation>Zadejte výšku oblouku</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/arc/lc_action_draw_arc_2points_height.cpp" line="60"/>
+        <location filename="../src/actions/drawing/draw/arc/lc_action_draw_arc_2points_height.cpp" line="59"/>
         <source>Alternative arc where diameter is reduced by height</source>
         <translation>Alternativní oblouk, kde je průměr snížen o výšku</translation>
     </message>
@@ -417,17 +417,17 @@ This block cannot be inserted.</source>
 <context>
     <name>LC_ActionDrawArc2PointsLength</name>
     <message>
-        <location filename="../src/actions/drawing/draw/arc/lc_action_draw_arc_2points_length.cpp" line="40"/>
+        <location filename="../src/actions/drawing/draw/arc/lc_action_draw_arc_2points_length.cpp" line="38"/>
         <source>The distance between the two points must be less than the arc length</source>
         <translation>Vzdálenost mezi oběma body musí být menší než délka oblouku</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/arc/lc_action_draw_arc_2points_length.cpp" line="55"/>
+        <location filename="../src/actions/drawing/draw/arc/lc_action_draw_arc_2points_length.cpp" line="53"/>
         <source>Enter length of arc</source>
         <translation>Zadejte délku oblouku</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/arc/lc_action_draw_arc_2points_length.cpp" line="59"/>
+        <location filename="../src/actions/drawing/draw/arc/lc_action_draw_arc_2points_length.cpp" line="57"/>
         <source>Alternate solutions</source>
         <translation>Alternativní řešení</translation>
     </message>
@@ -803,22 +803,22 @@ Vzdálenost mezi body=%2 je větší než průměr=%3</translation>
 <context>
     <name>LC_ActionDrawCircleTangental1Entity2Points</name>
     <message>
-        <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_tangental_1entity_2points.cpp" line="450"/>
+        <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_tangental_1entity_2points.cpp" line="449"/>
         <source>Specify a line/arc/circle</source>
         <translation type="unfinished">Zadejte úsečku/oblouk/kružnici</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_tangental_1entity_2points.cpp" line="453"/>
+        <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_tangental_1entity_2points.cpp" line="452"/>
         <source>Specify the first point on the tangent circle</source>
         <translation type="unfinished">Zadejte první bod na tečné kružnici</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_tangental_1entity_2points.cpp" line="456"/>
+        <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_tangental_1entity_2points.cpp" line="455"/>
         <source>Specify the second point on the tangent circle</source>
         <translation type="unfinished">Zadejte druhý bod na tečné kružnici</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_tangental_1entity_2points.cpp" line="459"/>
+        <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_tangental_1entity_2points.cpp" line="458"/>
         <source>Select the center of the tangent circle</source>
         <translation type="unfinished"></translation>
     </message>
@@ -826,22 +826,22 @@ Vzdálenost mezi body=%2 je větší než průměr=%3</translation>
 <context>
     <name>LC_ActionDrawCircleTangental2Entities1Point</name>
     <message>
-        <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_tangental_2entities_1point.cpp" line="340"/>
+        <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_tangental_2entities_1point.cpp" line="338"/>
         <source>Specify a line/arc/circle</source>
         <translation type="unfinished">Zadejte úsečku/oblouk/kružnici</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_tangental_2entities_1point.cpp" line="343"/>
+        <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_tangental_2entities_1point.cpp" line="341"/>
         <source>Specify the another line/arc/circle</source>
         <translation type="unfinished">Upřesněte další řádek / oblouk / kruh</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_tangental_2entities_1point.cpp" line="346"/>
+        <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_tangental_2entities_1point.cpp" line="344"/>
         <source>Specify a point on the tangent circle</source>
         <translation type="unfinished">Zadejte bod na tečné kružnici</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_tangental_2entities_1point.cpp" line="349"/>
+        <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_tangental_2entities_1point.cpp" line="347"/>
         <source>Select the center of the tangent circle</source>
         <translation type="unfinished"></translation>
     </message>
@@ -849,22 +849,22 @@ Vzdálenost mezi body=%2 je větší než průměr=%3</translation>
 <context>
     <name>LC_ActionDrawCircleTangental2EntitiesRadius</name>
     <message>
-        <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_tangental_2entities_radius.cpp" line="263"/>
+        <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_tangental_2entities_radius.cpp" line="262"/>
         <source>No common tangential circle for radius &apos;%1&apos;</source>
         <translation type="unfinished">Žádný společný tangenciální kruh pro poloměr &apos;% 1&apos;</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_tangental_2entities_radius.cpp" line="293"/>
+        <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_tangental_2entities_radius.cpp" line="292"/>
         <source>Specify the first line/arc/circle</source>
         <translation type="unfinished">Zadejte první úsečku/oblouk/kružnici</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_tangental_2entities_radius.cpp" line="296"/>
+        <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_tangental_2entities_radius.cpp" line="295"/>
         <source>Specify the second line/arc/circle</source>
         <translation type="unfinished">Zadejte druhou úsečku/oblouk/kružnici</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_tangental_2entities_radius.cpp" line="299"/>
+        <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_tangental_2entities_radius.cpp" line="298"/>
         <source>Select the center of the tangent circle</source>
         <translation type="unfinished"></translation>
     </message>
@@ -945,7 +945,7 @@ Vzdálenost mezi body=%2 je větší než průměr=%3</translation>
 <context>
     <name>LC_ActionDrawDual</name>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawdual.cpp" line="67"/>
+        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawdual.cpp" line="63"/>
         <source>Select Center</source>
         <translation>Vybrat střed</translation>
     </message>
@@ -954,27 +954,27 @@ Vzdálenost mezi body=%2 je větší než průměr=%3</translation>
         <translation type="vanished">Není specifikováno žádné centrum.</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawdual.cpp" line="72"/>
+        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawdual.cpp" line="68"/>
         <source>No entities selected. Dual creation cancelled.</source>
         <translation>Žádné vybrané subjekty. Dvojité stvoření zrušeno.</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawdual.cpp" line="126"/>
+        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawdual.cpp" line="122"/>
         <source>No supported entities could be dualized.</source>
         <translation>Žádné podporované subjekty nemohou být dualizovány.</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawdual.cpp" line="130"/>
+        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawdual.cpp" line="126"/>
         <source>Dual created around center (%1 entities)</source>
         <translation>Dual created around centre (% 1 entities)</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawdual.cpp" line="63"/>
+        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawdual.cpp" line="59"/>
         <source>Select to create dual (Enter to complete)</source>
         <translation>Zvolte vytvořit dual (Enter pro dokončení)</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawdual.cpp" line="63"/>
+        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawdual.cpp" line="59"/>
         <source>Select contour</source>
         <translation>Vybrat obrys</translation>
     </message>
@@ -1012,44 +1012,44 @@ Vzdálenost mezi body=%2 je větší než průměr=%3</translation>
 <context>
     <name>LC_ActionDrawHyperbolaFP</name>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawhyperbolafp.cpp" line="97"/>
-        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawhyperbolafp.cpp" line="239"/>
+        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawhyperbolafp.cpp" line="98"/>
+        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawhyperbolafp.cpp" line="241"/>
         <source>Foci cannot be coincident</source>
         <translation>Foci nemůže být náhoda</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawhyperbolafp.cpp" line="103"/>
-        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawhyperbolafp.cpp" line="255"/>
+        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawhyperbolafp.cpp" line="104"/>
+        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawhyperbolafp.cpp" line="257"/>
         <source>Start and end points cannot be the same</source>
         <translation>Počáteční a koncové body nemohou být stejné</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawhyperbolafp.cpp" line="111"/>
+        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawhyperbolafp.cpp" line="112"/>
         <source>Invalid foci or point</source>
         <translation>Neplatné foci nebo bod</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawhyperbolafp.cpp" line="123"/>
+        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawhyperbolafp.cpp" line="124"/>
         <source>Points not on hyperbola</source>
         <translation>Body ne na hyperbola</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawhyperbolafp.cpp" line="274"/>
+        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawhyperbolafp.cpp" line="276"/>
         <source>Specify first focus</source>
         <translation>Upřesněte první zaměření</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawhyperbolafp.cpp" line="277"/>
+        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawhyperbolafp.cpp" line="279"/>
         <source>Specify second focus</source>
         <translation>Upřesněte druhé zaměření</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawhyperbolafp.cpp" line="280"/>
+        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawhyperbolafp.cpp" line="282"/>
         <source>Specify start point on branch</source>
         <translation>Upřesněte počáteční bod na větvi</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawhyperbolafp.cpp" line="283"/>
+        <location filename="../src/actions/drawing/draw/curve/lc_actiondrawhyperbolafp.cpp" line="285"/>
         <source>Specify end point on branch</source>
         <translation>Upřesněte koncový bod na větvi</translation>
     </message>
@@ -1315,32 +1315,32 @@ Vzdálenost mezi body=%2 je větší než průměr=%3</translation>
 <context>
     <name>LC_ActionDrawLineParallelThrough</name>
     <message>
-        <location filename="../src/actions/drawing/draw/line/lc_action_draw_line_parallel_through.cpp" line="129"/>
+        <location filename="../src/actions/drawing/draw/line/lc_action_draw_line_parallel_through.cpp" line="128"/>
         <source> entities will be created</source>
         <translation type="unfinished">budou vytvořeny subjekty</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/lc_action_draw_line_parallel_through.cpp" line="194"/>
+        <location filename="../src/actions/drawing/draw/line/lc_action_draw_line_parallel_through.cpp" line="193"/>
         <source>Select entity</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/lc_action_draw_line_parallel_through.cpp" line="197"/>
+        <location filename="../src/actions/drawing/draw/line/lc_action_draw_line_parallel_through.cpp" line="196"/>
         <source>Specify through point</source>
         <translation type="unfinished">Zadejte bod na rovnoběžce</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/lc_action_draw_line_parallel_through.cpp" line="200"/>
+        <location filename="../src/actions/drawing/draw/line/lc_action_draw_line_parallel_through.cpp" line="199"/>
         <source>Number:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/lc_action_draw_line_parallel_through.cpp" line="231"/>
+        <location filename="../src/actions/drawing/draw/line/lc_action_draw_line_parallel_through.cpp" line="230"/>
         <source>Not a valid number. Try 1..99</source>
         <translation type="unfinished">Neplatný počet. Zkuste 1..99</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/lc_action_draw_line_parallel_through.cpp" line="235"/>
+        <location filename="../src/actions/drawing/draw/line/lc_action_draw_line_parallel_through.cpp" line="234"/>
         <source>Not a valid expression</source>
         <translation type="unfinished">Neplatný výraz</translation>
     </message>
@@ -1548,77 +1548,77 @@ nebo [% 2]</translation>
 <context>
     <name>LC_ActionDrawLineRadiant</name>
     <message>
-        <location filename="../src/actions/drawing/draw/line/misc/lc_action_draw_line_radiant.cpp" line="75"/>
+        <location filename="../src/actions/drawing/draw/line/misc/lc_action_draw_line_radiant.cpp" line="74"/>
         <source>Resulting line is too short</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/misc/lc_action_draw_line_radiant.cpp" line="181"/>
-        <location filename="../src/actions/drawing/draw/line/misc/lc_action_draw_line_radiant.cpp" line="401"/>
+        <location filename="../src/actions/drawing/draw/line/misc/lc_action_draw_line_radiant.cpp" line="180"/>
+        <location filename="../src/actions/drawing/draw/line/misc/lc_action_draw_line_radiant.cpp" line="400"/>
         <source>line</source>
         <translation type="unfinished">řádek</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/misc/lc_action_draw_line_radiant.cpp" line="185"/>
-        <location filename="../src/actions/drawing/draw/line/misc/lc_action_draw_line_radiant.cpp" line="401"/>
+        <location filename="../src/actions/drawing/draw/line/misc/lc_action_draw_line_radiant.cpp" line="184"/>
+        <location filename="../src/actions/drawing/draw/line/misc/lc_action_draw_line_radiant.cpp" line="400"/>
         <source>x</source>
         <translation type="unfinished">x</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/misc/lc_action_draw_line_radiant.cpp" line="189"/>
-        <location filename="../src/actions/drawing/draw/line/misc/lc_action_draw_line_radiant.cpp" line="401"/>
+        <location filename="../src/actions/drawing/draw/line/misc/lc_action_draw_line_radiant.cpp" line="188"/>
+        <location filename="../src/actions/drawing/draw/line/misc/lc_action_draw_line_radiant.cpp" line="400"/>
         <source>y</source>
         <translation type="unfinished">y</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/misc/lc_action_draw_line_radiant.cpp" line="193"/>
-        <location filename="../src/actions/drawing/draw/line/misc/lc_action_draw_line_radiant.cpp" line="401"/>
+        <location filename="../src/actions/drawing/draw/line/misc/lc_action_draw_line_radiant.cpp" line="192"/>
+        <location filename="../src/actions/drawing/draw/line/misc/lc_action_draw_line_radiant.cpp" line="400"/>
         <source>point</source>
         <translation type="unfinished">bod</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/misc/lc_action_draw_line_radiant.cpp" line="197"/>
-        <location filename="../src/actions/drawing/draw/line/misc/lc_action_draw_line_radiant.cpp" line="401"/>
+        <location filename="../src/actions/drawing/draw/line/misc/lc_action_draw_line_radiant.cpp" line="196"/>
+        <location filename="../src/actions/drawing/draw/line/misc/lc_action_draw_line_radiant.cpp" line="400"/>
         <source>free</source>
         <translation type="unfinished">bez</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/misc/lc_action_draw_line_radiant.cpp" line="215"/>
+        <location filename="../src/actions/drawing/draw/line/misc/lc_action_draw_line_radiant.cpp" line="214"/>
         <source>Radiant point to use: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/misc/lc_action_draw_line_radiant.cpp" line="218"/>
+        <location filename="../src/actions/drawing/draw/line/misc/lc_action_draw_line_radiant.cpp" line="217"/>
         <source>Invalid radiant point number.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/misc/lc_action_draw_line_radiant.cpp" line="385"/>
+        <location filename="../src/actions/drawing/draw/line/misc/lc_action_draw_line_radiant.cpp" line="384"/>
         <source>Specify start point</source>
         <translation type="unfinished">Upřesněte počáteční bod</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/misc/lc_action_draw_line_radiant.cpp" line="389"/>
+        <location filename="../src/actions/drawing/draw/line/misc/lc_action_draw_line_radiant.cpp" line="388"/>
         <source>Specify second point</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/misc/lc_action_draw_line_radiant.cpp" line="393"/>
+        <location filename="../src/actions/drawing/draw/line/misc/lc_action_draw_line_radiant.cpp" line="392"/>
         <source>Specify radiant point position</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/misc/lc_action_draw_line_radiant.cpp" line="397"/>
+        <location filename="../src/actions/drawing/draw/line/misc/lc_action_draw_line_radiant.cpp" line="396"/>
         <source>Specify line length</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/misc/lc_action_draw_line_radiant.cpp" line="401"/>
+        <location filename="../src/actions/drawing/draw/line/misc/lc_action_draw_line_radiant.cpp" line="400"/>
         <source>Specify line length type </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/misc/lc_action_draw_line_radiant.cpp" line="405"/>
+        <location filename="../src/actions/drawing/draw/line/misc/lc_action_draw_line_radiant.cpp" line="404"/>
         <source>Specify number of radiant point to use [1-4]</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1626,28 +1626,28 @@ nebo [% 2]</translation>
 <context>
     <name>LC_ActionDrawLineRelAngle</name>
     <message>
-        <location filename="../src/actions/drawing/draw/line/lc_action_draw_line_rel_angle.cpp" line="221"/>
-        <location filename="../src/actions/drawing/draw/line/lc_action_draw_line_rel_angle.cpp" line="235"/>
+        <location filename="../src/actions/drawing/draw/line/lc_action_draw_line_rel_angle.cpp" line="220"/>
+        <location filename="../src/actions/drawing/draw/line/lc_action_draw_line_rel_angle.cpp" line="234"/>
         <source>Not a valid expression</source>
         <translation type="unfinished">Neplatný výraz</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/lc_action_draw_line_rel_angle.cpp" line="267"/>
+        <location filename="../src/actions/drawing/draw/line/lc_action_draw_line_rel_angle.cpp" line="266"/>
         <source>Select base entity</source>
         <translation type="unfinished">Vyberte základní prvek</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/lc_action_draw_line_rel_angle.cpp" line="270"/>
+        <location filename="../src/actions/drawing/draw/line/lc_action_draw_line_rel_angle.cpp" line="269"/>
         <source>Specify position</source>
         <translation type="unfinished">Zadejte pozici</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/lc_action_draw_line_rel_angle.cpp" line="273"/>
+        <location filename="../src/actions/drawing/draw/line/lc_action_draw_line_rel_angle.cpp" line="272"/>
         <source>Specify angle</source>
         <translation type="unfinished">Upřesněte úhel</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/lc_action_draw_line_rel_angle.cpp" line="276"/>
+        <location filename="../src/actions/drawing/draw/line/lc_action_draw_line_rel_angle.cpp" line="275"/>
         <source>Specify length</source>
         <translation type="unfinished">Upřesněte délku</translation>
     </message>
@@ -1813,58 +1813,58 @@ nebo [% 2]</translation>
 <context>
     <name>LC_ActionDrawPointsLattice</name>
     <message>
-        <location filename="../src/actions/drawing/draw/point/lc_action_draw_points_lattice.cpp" line="190"/>
+        <location filename="../src/actions/drawing/draw/point/lc_action_draw_points_lattice.cpp" line="189"/>
         <source>Second point is too close to the first one</source>
         <translation>Druhý bod je příliš blízko k tomu prvnímu</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/point/lc_action_draw_points_lattice.cpp" line="202"/>
-        <location filename="../src/actions/drawing/draw/point/lc_action_draw_points_lattice.cpp" line="214"/>
+        <location filename="../src/actions/drawing/draw/point/lc_action_draw_points_lattice.cpp" line="201"/>
+        <location filename="../src/actions/drawing/draw/point/lc_action_draw_points_lattice.cpp" line="213"/>
         <source>Third point is too close to the second one</source>
         <translation>Třetí bod je příliš blízko tomu druhému</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/point/lc_action_draw_points_lattice.cpp" line="263"/>
+        <location filename="../src/actions/drawing/draw/point/lc_action_draw_points_lattice.cpp" line="262"/>
         <source>Invalid value provided</source>
         <translation>Neplatná hodnota</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/point/lc_action_draw_points_lattice.cpp" line="281"/>
+        <location filename="../src/actions/drawing/draw/point/lc_action_draw_points_lattice.cpp" line="280"/>
         <source>Specify first point</source>
         <translation>Upřesněte první bod</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/point/lc_action_draw_points_lattice.cpp" line="285"/>
+        <location filename="../src/actions/drawing/draw/point/lc_action_draw_points_lattice.cpp" line="284"/>
         <source>Specify second point</source>
         <translation>Upřesněte druhý bod</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/point/lc_action_draw_points_lattice.cpp" line="289"/>
+        <location filename="../src/actions/drawing/draw/point/lc_action_draw_points_lattice.cpp" line="288"/>
         <source>Specify third point</source>
         <translation>Uveďte třetí bod</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/point/lc_action_draw_points_lattice.cpp" line="293"/>
+        <location filename="../src/actions/drawing/draw/point/lc_action_draw_points_lattice.cpp" line="292"/>
         <source>Specify fourth point</source>
         <translation>Upřesněte čtvrtý bod</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/point/lc_action_draw_points_lattice.cpp" line="293"/>
+        <location filename="../src/actions/drawing/draw/point/lc_action_draw_points_lattice.cpp" line="292"/>
         <source>Last point position is un-adjusted</source>
         <translation>Pozice posledního bodu není upravena</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/point/lc_action_draw_points_lattice.cpp" line="294"/>
+        <location filename="../src/actions/drawing/draw/point/lc_action_draw_points_lattice.cpp" line="293"/>
         <source>Last point position is adjusted to first</source>
         <translation>Poslední bod pozice je upraven na první</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/point/lc_action_draw_points_lattice.cpp" line="298"/>
+        <location filename="../src/actions/drawing/draw/point/lc_action_draw_points_lattice.cpp" line="297"/>
         <source>Enter number of points by X</source>
         <translation>Zadejte počet bodů podle X</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/point/lc_action_draw_points_lattice.cpp" line="302"/>
+        <location filename="../src/actions/drawing/draw/point/lc_action_draw_points_lattice.cpp" line="301"/>
         <source>Enter number of points by Y</source>
         <translation>Zadejte počet bodů podle Y</translation>
     </message>
@@ -2022,74 +2022,74 @@ nebo [% 2]</translation>
 <context>
     <name>LC_ActionDrawPolyline</name>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/lc_action_draw_polyline.cpp" line="369"/>
-        <location filename="../src/actions/drawing/draw/polyline/lc_action_draw_polyline.cpp" line="598"/>
+        <location filename="../src/actions/drawing/draw/polyline/lc_action_draw_polyline.cpp" line="368"/>
+        <location filename="../src/actions/drawing/draw/polyline/lc_action_draw_polyline.cpp" line="597"/>
         <source>Enter the end point x</source>
         <translation type="unfinished">Zadejte koncový bod x</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/lc_action_draw_polyline.cpp" line="440"/>
-        <location filename="../src/actions/drawing/draw/polyline/lc_action_draw_polyline.cpp" line="607"/>
+        <location filename="../src/actions/drawing/draw/polyline/lc_action_draw_polyline.cpp" line="439"/>
+        <location filename="../src/actions/drawing/draw/polyline/lc_action_draw_polyline.cpp" line="606"/>
         <source>Enter number of polylines</source>
         <translation type="unfinished">Zadejte počet polylinů</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/lc_action_draw_polyline.cpp" line="565"/>
+        <location filename="../src/actions/drawing/draw/polyline/lc_action_draw_polyline.cpp" line="564"/>
         <source>Enter an equation, f(x)</source>
         <translation type="unfinished">Zadejte rovnici, f (x)</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/lc_action_draw_polyline.cpp" line="578"/>
+        <location filename="../src/actions/drawing/draw/polyline/lc_action_draw_polyline.cpp" line="577"/>
         <source>x</source>
         <translation type="unfinished">x</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/lc_action_draw_polyline.cpp" line="582"/>
+        <location filename="../src/actions/drawing/draw/polyline/lc_action_draw_polyline.cpp" line="581"/>
         <source>Enter the start point x</source>
         <translation type="unfinished">Zadejte výchozí bod x</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/lc_action_draw_polyline.cpp" line="587"/>
+        <location filename="../src/actions/drawing/draw/polyline/lc_action_draw_polyline.cpp" line="586"/>
         <source>The entered x is invalid.</source>
         <translation type="unfinished">Zadané x je neplatné.</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/lc_action_draw_polyline.cpp" line="626"/>
+        <location filename="../src/actions/drawing/draw/polyline/lc_action_draw_polyline.cpp" line="625"/>
         <source>The step size entered is invalid.</source>
         <translation type="unfinished">Zadaná velikost kroku je neplatná.</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/lc_action_draw_polyline.cpp" line="661"/>
+        <location filename="../src/actions/drawing/draw/polyline/lc_action_draw_polyline.cpp" line="660"/>
         <source>The value x entered is invalid.</source>
         <translation type="unfinished">Hodnota x zadaná je neplatná.</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/lc_action_draw_polyline.cpp" line="768"/>
+        <location filename="../src/actions/drawing/draw/polyline/lc_action_draw_polyline.cpp" line="767"/>
         <source>Specify first point</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/lc_action_draw_polyline.cpp" line="788"/>
+        <location filename="../src/actions/drawing/draw/polyline/lc_action_draw_polyline.cpp" line="787"/>
         <source>Alternative Arc</source>
         <translation type="unfinished">Alternativní oblouk</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/lc_action_draw_polyline.cpp" line="799"/>
+        <location filename="../src/actions/drawing/draw/polyline/lc_action_draw_polyline.cpp" line="798"/>
         <source>Specify next point or [%1]</source>
         <translation type="unfinished">Zadejte další bod nebo [%1]</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/lc_action_draw_polyline.cpp" line="801"/>
+        <location filename="../src/actions/drawing/draw/polyline/lc_action_draw_polyline.cpp" line="800"/>
         <source>Specify next point</source>
         <translation type="unfinished">Zadejte další bod</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/lc_action_draw_polyline.cpp" line="822"/>
+        <location filename="../src/actions/drawing/draw/polyline/lc_action_draw_polyline.cpp" line="821"/>
         <source>Cannot close sequence of lines: Not enough entities defined yet.</source>
         <translation type="unfinished">Nelze uzavřít posloupnost čar: Ještě není definován dostatečný počet prvků.</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/lc_action_draw_polyline.cpp" line="845"/>
+        <location filename="../src/actions/drawing/draw/polyline/lc_action_draw_polyline.cpp" line="844"/>
         <source>Cannot undo: Not enough entities defined yet.</source>
         <translation type="unfinished">Nelze vrátit zpět: Ještě není definován dostatečný počet prvků.</translation>
     </message>
@@ -2130,27 +2130,27 @@ nebo [% 2]</translation>
 <context>
     <name>LC_ActionDrawRectangle2Points</name>
     <message>
-        <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_2points.cpp" line="308"/>
+        <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_2points.cpp" line="307"/>
         <source>Specify second point</source>
         <translation>Upřesněte druhý bod</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_2points.cpp" line="308"/>
+        <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_2points.cpp" line="307"/>
         <source>Draw Square</source>
         <translation>Draw Square</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_2points.cpp" line="311"/>
+        <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_2points.cpp" line="310"/>
         <source>Specify point 1 snap [corner|mid-vert|mid-hor|middle]</source>
         <translation>Upřesněte bod 1 snap [rohová 124; mid- vert 124; mid- hor 124; střední]</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_2points.cpp" line="314"/>
+        <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_2points.cpp" line="313"/>
         <source>Specify point 2 snap [corner|mid-vert|mid-hor|middle]</source>
         <translation>Upřesněte bod 2 snap [rohová 124; mid- vert 124; mid- hor 124; střední]</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_2points.cpp" line="317"/>
+        <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_2points.cpp" line="316"/>
         <source>Specify size (width, height)</source>
         <translation>Uveďte velikost (šířka, výška)</translation>
     </message>
@@ -2287,27 +2287,27 @@ nebo [% 2]</translation>
 <context>
     <name>LC_ActionDrawSliceDivide</name>
     <message>
-        <location filename="../src/actions/drawing/draw/line/lc_action_draw_slice_divide.cpp" line="239"/>
+        <location filename="../src/actions/drawing/draw/line/lc_action_draw_slice_divide.cpp" line="238"/>
         <source>Line</source>
         <translation>Čára</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/lc_action_draw_slice_divide.cpp" line="249"/>
+        <location filename="../src/actions/drawing/draw/line/lc_action_draw_slice_divide.cpp" line="248"/>
         <source>Arc</source>
         <translation>Arc</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/lc_action_draw_slice_divide.cpp" line="259"/>
+        <location filename="../src/actions/drawing/draw/line/lc_action_draw_slice_divide.cpp" line="258"/>
         <source>Circle</source>
         <translation>Kruh</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/lc_action_draw_slice_divide.cpp" line="629"/>
+        <location filename="../src/actions/drawing/draw/line/lc_action_draw_slice_divide.cpp" line="628"/>
         <source>Select line</source>
         <translation>Vybrat řádek</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/line/lc_action_draw_slice_divide.cpp" line="632"/>
+        <location filename="../src/actions/drawing/draw/line/lc_action_draw_slice_divide.cpp" line="631"/>
         <source>Select circle or arc</source>
         <translation>Vybrat kruh nebo oblouk</translation>
     </message>
@@ -4118,7 +4118,7 @@ nebo [% 2]</translation>
         <translation>Vybrat &amp; všechny</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="911"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="910"/>
         <source>Ctrl+K</source>
         <translation>Ctrl + K</translation>
     </message>
@@ -4228,7 +4228,7 @@ nebo [% 2]</translation>
         <translation>&amp; Grid</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="928"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="927"/>
         <source>Ctrl+G</source>
         <comment>Toggle Grid</comment>
         <translation>Ctrl + G</translation>
@@ -4244,7 +4244,7 @@ nebo [% 2]</translation>
         <translation>&amp; Statusbar</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="931"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="930"/>
         <source>Ctrl+I</source>
         <comment>Hide Statusbar</comment>
         <translation>Ctrl + I</translation>
@@ -4355,7 +4355,7 @@ nebo [% 2]</translation>
         <translation>Ukazatel výběru</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="930"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="929"/>
         <source>Ctrl+D</source>
         <comment>Toggle Draft Mode</comment>
         <translation>Ctrl + D</translation>
@@ -4702,142 +4702,142 @@ Bod: (% 8,% 9)</translation>
 <context>
     <name>LC_ActionInteractivePickAngle</name>
     <message>
-        <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="140"/>
+        <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="139"/>
         <source>Lines are parallel</source>
         <translation>Čáry jsou rovnoběžné</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="160"/>
+        <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="159"/>
         <source>Angle Info</source>
         <translation>Informace o úhlu</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="161"/>
-        <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="319"/>
-        <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="338"/>
+        <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="160"/>
+        <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="318"/>
+        <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="337"/>
         <source>Angle:</source>
         <translation>Úhel:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="162"/>
-        <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="320"/>
+        <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="161"/>
+        <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="319"/>
         <source>Complementary:</source>
         <translation>Doplňková látka:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="163"/>
-        <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="321"/>
+        <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="162"/>
+        <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="320"/>
         <source>Supplementary:</source>
         <translation>Doplňující:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="164"/>
-        <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="322"/>
+        <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="163"/>
+        <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="321"/>
         <source>Alternative: </source>
         <translation>Alternativa:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="165"/>
-        <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="324"/>
+        <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="164"/>
+        <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="323"/>
         <source>Intersection:</source>
         <translation>Intersekce:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="166"/>
+        <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="165"/>
         <source>Line 1 Angle:</source>
         <translation>Přímka 1 Úhel:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="167"/>
+        <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="166"/>
         <source>Line 2 Angle:</source>
         <translation>Linie 2 Úhel:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="289"/>
+        <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="288"/>
         <source>Select first edge point of angle</source>
         <translation>Vyberte první úhel hrany</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="289"/>
+        <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="288"/>
         <source>Select first line/Pick Supplementary</source>
         <translation>Vyberte první řádek / Vybrat dodatek</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="289"/>
+        <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="288"/>
         <source>Pick from line</source>
         <translation>Vyberte si z řady</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="293"/>
+        <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="292"/>
         <source>Select second (intersection) point of angle</source>
         <translation>Vyberte druhý (průsečík) úhel</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="293"/>
+        <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="292"/>
         <source>Pick angle</source>
         <translation>Úhel výběru</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="297"/>
+        <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="296"/>
         <source>Select second edge point of angle</source>
         <translation>Vyberte druhý úhel hrany</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="297"/>
-        <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="301"/>
+        <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="296"/>
+        <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="300"/>
         <source>Pick Supplementary</source>
         <translation>Vybrat doplňkový</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="301"/>
+        <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="300"/>
         <source>Specify second line</source>
         <translation>Upřesněte druhý řádek</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="301"/>
+        <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="300"/>
         <source>Pick Complementary</source>
         <translation>Vybrat doplněk</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="318"/>
-        <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="336"/>
+        <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="317"/>
+        <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="335"/>
         <source>Pick Angle</source>
         <translation>Vyberte úhel</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="323"/>
-        <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="339"/>
+        <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="322"/>
+        <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="338"/>
         <source>From:</source>
         <translation>Od:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="325"/>
-        <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="340"/>
+        <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="324"/>
+        <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="339"/>
         <source>To:</source>
         <translation>Pro:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="326"/>
+        <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="325"/>
         <source>Distance1:</source>
         <translation>Vzdálenost 1:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="327"/>
+        <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="326"/>
         <source>Distance2:</source>
         <translation>Vzdálenost 2:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="328"/>
+        <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="327"/>
         <source>Angle 1:</source>
         <translation>Úhel 1:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="329"/>
+        <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="328"/>
         <source>Angle 2:</source>
         <translation>Úhel 2:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="337"/>
+        <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="336"/>
         <source>Distance:</source>
         <translation>Vzdálenost:</translation>
     </message>
@@ -5000,67 +5000,67 @@ Bod: (% 8,% 9)</translation>
 <context>
     <name>LC_ActionModifyAlign</name>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_action_modify_align.cpp" line="52"/>
+        <location filename="../src/actions/drawing/modify/lc_action_modify_align.cpp" line="53"/>
         <source>Align action at the moment supports only World Coordinates system, and may not be invoked if User Coordinate System is active.</source>
         <translation>Uspořádat činnost v současné době podporuje pouze World Souřadnice systému, a nelze se dovolávat, pokud je uživatelský souřadnicový systém aktivní.</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_action_modify_align.cpp" line="146"/>
+        <location filename="../src/actions/drawing/modify/lc_action_modify_align.cpp" line="147"/>
         <source>Align to </source>
         <translation>Zarovnat</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_action_modify_align.cpp" line="149"/>
+        <location filename="../src/actions/drawing/modify/lc_action_modify_align.cpp" line="150"/>
         <source>Entity</source>
         <translation>Subjekt</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_action_modify_align.cpp" line="153"/>
+        <location filename="../src/actions/drawing/modify/lc_action_modify_align.cpp" line="154"/>
         <source>Position</source>
         <translation>Pozice</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_action_modify_align.cpp" line="157"/>
+        <location filename="../src/actions/drawing/modify/lc_action_modify_align.cpp" line="158"/>
         <source>Drawing</source>
         <translation>Kreslení</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_action_modify_align.cpp" line="164"/>
+        <location filename="../src/actions/drawing/modify/lc_action_modify_align.cpp" line="165"/>
         <source>Reference: </source>
         <translation>Odkaz:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_action_modify_align.cpp" line="180"/>
+        <location filename="../src/actions/drawing/modify/lc_action_modify_align.cpp" line="181"/>
         <source>Offset:</source>
         <translation>Offset:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_action_modify_align.cpp" line="244"/>
+        <location filename="../src/actions/drawing/modify/lc_action_modify_align.cpp" line="245"/>
         <source>Coordinate is accepted only for Align to &quot;Position&quot;</source>
         <translation>Souřadnice je přijímána pouze pro spojení na &quot;pozici&quot;</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_action_modify_align.cpp" line="260"/>
+        <location filename="../src/actions/drawing/modify/lc_action_modify_align.cpp" line="261"/>
         <source>Select base alignment entity</source>
         <translation>Vybrat základní sladění</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_action_modify_align.cpp" line="260"/>
+        <location filename="../src/actions/drawing/modify/lc_action_modify_align.cpp" line="261"/>
         <source>Select child entities of containers</source>
         <translation>Vybrat dětské subjekty kontejnerů</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_action_modify_align.cpp" line="263"/>
+        <location filename="../src/actions/drawing/modify/lc_action_modify_align.cpp" line="264"/>
         <source>Specify base alignment point</source>
         <translation>Upřesněte bod seřízení základny</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_action_modify_align.cpp" line="266"/>
+        <location filename="../src/actions/drawing/modify/lc_action_modify_align.cpp" line="267"/>
         <source>Click or Enter to finish align</source>
         <translation>Klepněte na tlačítko nebo Zadejte pro dokončení nastavení</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_action_modify_align.cpp" line="275"/>
+        <location filename="../src/actions/drawing/modify/lc_action_modify_align.cpp" line="276"/>
         <source>Select entities to align</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5069,12 +5069,12 @@ Bod: (% 8,% 9)</translation>
         <translation type="vanished">Vybrat subjekty k zarovnání (Enter to complete)</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_action_modify_align.cpp" line="276"/>
+        <location filename="../src/actions/drawing/modify/lc_action_modify_align.cpp" line="277"/>
         <source>Select and align</source>
         <translation>Vyberte a seřaďte</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_action_modify_align.cpp" line="276"/>
+        <location filename="../src/actions/drawing/modify/lc_action_modify_align.cpp" line="277"/>
         <source>Select contour</source>
         <translation>Vybrat obrys</translation>
     </message>
@@ -5305,58 +5305,58 @@ Bod: (% 8,% 9)</translation>
 <context>
     <name>LC_ActionModifyBreakDivide</name>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_action_modify_break_divide.cpp" line="153"/>
+        <location filename="../src/actions/drawing/modify/lc_action_modify_break_divide.cpp" line="151"/>
         <source>Invalid entity selected - no segments between intersections to break/divide.</source>
         <translation>Vybraná neplatná entita - žádné segmenty mezi úseky pro rozdělení / rozdělení.</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_action_modify_break_divide.cpp" line="250"/>
+        <location filename="../src/actions/drawing/modify/lc_action_modify_break_divide.cpp" line="248"/>
         <source>Break/Divide Line</source>
         <translation>Break / Divide Line</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_action_modify_break_divide.cpp" line="251"/>
-        <location filename="../src/actions/drawing/modify/lc_action_modify_break_divide.cpp" line="373"/>
-        <location filename="../src/actions/drawing/modify/lc_action_modify_break_divide.cpp" line="472"/>
+        <location filename="../src/actions/drawing/modify/lc_action_modify_break_divide.cpp" line="249"/>
+        <location filename="../src/actions/drawing/modify/lc_action_modify_break_divide.cpp" line="371"/>
+        <location filename="../src/actions/drawing/modify/lc_action_modify_break_divide.cpp" line="470"/>
         <source>Point 1:</source>
         <translation>Bod 1:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_action_modify_break_divide.cpp" line="252"/>
-        <location filename="../src/actions/drawing/modify/lc_action_modify_break_divide.cpp" line="375"/>
-        <location filename="../src/actions/drawing/modify/lc_action_modify_break_divide.cpp" line="474"/>
+        <location filename="../src/actions/drawing/modify/lc_action_modify_break_divide.cpp" line="250"/>
+        <location filename="../src/actions/drawing/modify/lc_action_modify_break_divide.cpp" line="373"/>
+        <location filename="../src/actions/drawing/modify/lc_action_modify_break_divide.cpp" line="472"/>
         <source>Point 2:</source>
         <translation>Bod 2:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_action_modify_break_divide.cpp" line="371"/>
+        <location filename="../src/actions/drawing/modify/lc_action_modify_break_divide.cpp" line="369"/>
         <source>Break/Divide Circle</source>
         <translation>Rozlom / rozdělený kruh</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_action_modify_break_divide.cpp" line="372"/>
-        <location filename="../src/actions/drawing/modify/lc_action_modify_break_divide.cpp" line="471"/>
+        <location filename="../src/actions/drawing/modify/lc_action_modify_break_divide.cpp" line="370"/>
+        <location filename="../src/actions/drawing/modify/lc_action_modify_break_divide.cpp" line="469"/>
         <source>Angle 1:</source>
         <translation>Úhel 1:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_action_modify_break_divide.cpp" line="374"/>
-        <location filename="../src/actions/drawing/modify/lc_action_modify_break_divide.cpp" line="473"/>
+        <location filename="../src/actions/drawing/modify/lc_action_modify_break_divide.cpp" line="372"/>
+        <location filename="../src/actions/drawing/modify/lc_action_modify_break_divide.cpp" line="471"/>
         <source>Angle 2:</source>
         <translation>Úhel 2:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_action_modify_break_divide.cpp" line="470"/>
+        <location filename="../src/actions/drawing/modify/lc_action_modify_break_divide.cpp" line="468"/>
         <source>Break/Divide Arc</source>
         <translation>Přerušení / rozdělení oblouku</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_action_modify_break_divide.cpp" line="522"/>
+        <location filename="../src/actions/drawing/modify/lc_action_modify_break_divide.cpp" line="520"/>
         <source>Select line, arc or circle</source>
         <translation>Vybrat řádek, oblouk nebo kruh</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_action_modify_break_divide.cpp" line="522"/>
+        <location filename="../src/actions/drawing/modify/lc_action_modify_break_divide.cpp" line="520"/>
         <source>Proceed even if no intersections</source>
         <translation>Pokračovat i když žádné křižovatky</translation>
     </message>
@@ -6226,6 +6226,29 @@ Bod: (% 8,% 9)</translation>
     </message>
 </context>
 <context>
+    <name>LC_ActionOptionsPropertiesFillerBase</name>
+    <message>
+        <location filename="../src/ui/action_options/lc_action_options_properties_filler_base.cpp" line="294"/>
+        <source>Snap Distance</source>
+        <translation type="unfinished">Snap vzdálenost</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/action_options/lc_action_options_properties_filler_base.cpp" line="294"/>
+        <source>Distance of snap point from initially resolved snap point</source>
+        <translation type="unfinished">Vzdálenost bodu zlomu od původně vyřešeného bodu zlomu</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/action_options/lc_action_options_properties_filler_base.cpp" line="308"/>
+        <source>Snap middle</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/action_options/lc_action_options_properties_filler_base.cpp" line="308"/>
+        <source>Number of equidistant division points</source>
+        <translation type="unfinished">Počet stejně vzdálených dělicích bodů</translation>
+    </message>
+</context>
+<context>
     <name>LC_ActionOrder</name>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_order.cpp" line="115"/>
@@ -6256,17 +6279,17 @@ Bod: (% 8,% 9)</translation>
 <context>
     <name>LC_ActionPasteToPoints</name>
     <message>
-        <location filename="../src/actions/drawing/edit/lc_action_edit_paste_to_points.cpp" line="53"/>
+        <location filename="../src/actions/drawing/edit/lc_action_edit_paste_to_points.cpp" line="52"/>
         <source>Clipboard is empty</source>
         <translation>Klipboard je prázdný</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/edit/lc_action_edit_paste_to_points.cpp" line="136"/>
+        <location filename="../src/actions/drawing/edit/lc_action_edit_paste_to_points.cpp" line="135"/>
         <source>Select and paste</source>
         <translation>Vybrat a vložit</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/edit/lc_action_edit_paste_to_points.cpp" line="136"/>
+        <location filename="../src/actions/drawing/edit/lc_action_edit_paste_to_points.cpp" line="135"/>
         <source>Select insertion points</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6334,37 +6357,37 @@ Bod: (% 8,% 9)</translation>
 <context>
     <name>LC_ActionPolylineAppend</name>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_append.cpp" line="125"/>
+        <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_append.cpp" line="124"/>
         <source>No Entity found.</source>
         <translation type="unfinished">Nenalezen žádný prvek.</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_append.cpp" line="129"/>
+        <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_append.cpp" line="128"/>
         <source>Entity must be a polyline.</source>
         <translation type="unfinished">Prvkem musí být křivka.</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_append.cpp" line="133"/>
+        <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_append.cpp" line="132"/>
         <source>Can not append nodes in a closed polyline.</source>
         <translation type="unfinished">K uzavřené křivce body nelze přidat.</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_append.cpp" line="172"/>
+        <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_append.cpp" line="171"/>
         <source>Click somewhere near the beginning or end of existing polyline.</source>
         <translation type="unfinished">Klepněte někam poblíž počátku nebo konce stávající křivky.</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_append.cpp" line="295"/>
+        <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_append.cpp" line="294"/>
         <source>Enter number of polylines</source>
         <translation type="unfinished">Zadejte počet polylinů</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_append.cpp" line="310"/>
+        <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_append.cpp" line="309"/>
         <source>Specify the polyline somewhere near the beginning or end point</source>
         <translation type="unfinished">Zadejte křivku poblíž počátečního nebo koncového bodu</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_append.cpp" line="330"/>
+        <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_append.cpp" line="329"/>
         <source>Cannot undo: Not enough entities defined yet.</source>
         <translation type="unfinished">Nelze vrátit zpět: Ještě není definován dostatečný počet prvků.</translation>
     </message>
@@ -7126,89 +7149,89 @@ Jste si jistý, že se chystáte zahodit změny?</translation>
 <context>
     <name>LC_AlignOptionsFiller</name>
     <message>
-        <location filename="../src/ui/action_options/modify/lc_align_options_filler.cpp" line="34"/>
+        <location filename="../src/ui/action_options/modify/lc_align_options_filler.cpp" line="35"/>
         <source>Entity</source>
         <translation type="unfinished">Subjekt</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/modify/lc_align_options_filler.cpp" line="35"/>
+        <location filename="../src/ui/action_options/modify/lc_align_options_filler.cpp" line="36"/>
         <source>Drawing</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/modify/lc_align_options_filler.cpp" line="36"/>
+        <location filename="../src/ui/action_options/modify/lc_align_options_filler.cpp" line="37"/>
         <source>Position</source>
         <translation type="unfinished">Pozice</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/modify/lc_align_options_filler.cpp" line="40"/>
+        <location filename="../src/ui/action_options/modify/lc_align_options_filler.cpp" line="41"/>
         <source>Align To</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/modify/lc_align_options_filler.cpp" line="40"/>
+        <location filename="../src/ui/action_options/modify/lc_align_options_filler.cpp" line="41"/>
         <source>Defines the way of selected entities alignment</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/modify/lc_align_options_filler.cpp" line="50"/>
-        <location filename="../src/ui/action_options/modify/lc_align_options_filler.cpp" line="67"/>
+        <location filename="../src/ui/action_options/modify/lc_align_options_filler.cpp" line="51"/>
+        <location filename="../src/ui/action_options/modify/lc_align_options_filler.cpp" line="68"/>
         <source>None</source>
         <translation type="unfinished">Žádné</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/modify/lc_align_options_filler.cpp" line="51"/>
+        <location filename="../src/ui/action_options/modify/lc_align_options_filler.cpp" line="52"/>
         <source>Left</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/modify/lc_align_options_filler.cpp" line="52"/>
-        <location filename="../src/ui/action_options/modify/lc_align_options_filler.cpp" line="69"/>
+        <location filename="../src/ui/action_options/modify/lc_align_options_filler.cpp" line="53"/>
+        <location filename="../src/ui/action_options/modify/lc_align_options_filler.cpp" line="70"/>
         <source>Middle</source>
         <translation type="unfinished">Střední</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/modify/lc_align_options_filler.cpp" line="53"/>
+        <location filename="../src/ui/action_options/modify/lc_align_options_filler.cpp" line="54"/>
         <source>Right</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/modify/lc_align_options_filler.cpp" line="57"/>
+        <location filename="../src/ui/action_options/modify/lc_align_options_filler.cpp" line="58"/>
         <source>Horizontal</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/modify/lc_align_options_filler.cpp" line="57"/>
+        <location filename="../src/ui/action_options/modify/lc_align_options_filler.cpp" line="58"/>
         <source>Mode of horizontal align</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/modify/lc_align_options_filler.cpp" line="68"/>
+        <location filename="../src/ui/action_options/modify/lc_align_options_filler.cpp" line="69"/>
         <source>Top</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/modify/lc_align_options_filler.cpp" line="70"/>
+        <location filename="../src/ui/action_options/modify/lc_align_options_filler.cpp" line="71"/>
         <source>Bottom</source>
         <translation type="unfinished">Dole</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/modify/lc_align_options_filler.cpp" line="74"/>
+        <location filename="../src/ui/action_options/modify/lc_align_options_filler.cpp" line="75"/>
         <source>Vertical</source>
         <translation type="unfinished">Vertikální</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/modify/lc_align_options_filler.cpp" line="74"/>
+        <location filename="../src/ui/action_options/modify/lc_align_options_filler.cpp" line="75"/>
         <source>Mode of vertical align</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/modify/lc_align_options_filler.cpp" line="82"/>
+        <location filename="../src/ui/action_options/modify/lc_align_options_filler.cpp" line="83"/>
         <source>As Group</source>
         <translation type="unfinished">Skupina</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/modify/lc_align_options_filler.cpp" line="83"/>
+        <location filename="../src/ui/action_options/modify/lc_align_options_filler.cpp" line="84"/>
         <source>If selected, relative positions of entities within selection will be unchanged. Otherwise, each entity will be positioned individually.</source>
         <translation type="unfinished">V případě výběru se relativní pozice subjektů v rámci výběru nezmění. V opačném případě bude každá účetní jednotka umístěna jednotlivě.</translation>
     </message>
@@ -7307,79 +7330,79 @@ Jste si jistý, že se chystáte zahodit změny?</translation>
 <context>
     <name>LC_AlignSingleOptionsFiller</name>
     <message>
-        <location filename="../src/ui/action_options/modify/lc_align_single_options_filler.cpp" line="34"/>
+        <location filename="../src/ui/action_options/modify/lc_align_single_options_filler.cpp" line="35"/>
         <source>Entity</source>
         <translation type="unfinished">Subjekt</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/modify/lc_align_single_options_filler.cpp" line="35"/>
+        <location filename="../src/ui/action_options/modify/lc_align_single_options_filler.cpp" line="36"/>
         <source>Drawing</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/modify/lc_align_single_options_filler.cpp" line="36"/>
+        <location filename="../src/ui/action_options/modify/lc_align_single_options_filler.cpp" line="37"/>
         <source>Position</source>
         <translation type="unfinished">Pozice</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/modify/lc_align_single_options_filler.cpp" line="40"/>
+        <location filename="../src/ui/action_options/modify/lc_align_single_options_filler.cpp" line="41"/>
         <source>Align To</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/modify/lc_align_single_options_filler.cpp" line="40"/>
+        <location filename="../src/ui/action_options/modify/lc_align_single_options_filler.cpp" line="41"/>
         <source>Defines the way of selected entities alignment</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/modify/lc_align_single_options_filler.cpp" line="52"/>
-        <location filename="../src/ui/action_options/modify/lc_align_single_options_filler.cpp" line="69"/>
+        <location filename="../src/ui/action_options/modify/lc_align_single_options_filler.cpp" line="53"/>
+        <location filename="../src/ui/action_options/modify/lc_align_single_options_filler.cpp" line="70"/>
         <source>None</source>
         <translation type="unfinished">Žádné</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/modify/lc_align_single_options_filler.cpp" line="53"/>
+        <location filename="../src/ui/action_options/modify/lc_align_single_options_filler.cpp" line="54"/>
         <source>Left</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/modify/lc_align_single_options_filler.cpp" line="54"/>
-        <location filename="../src/ui/action_options/modify/lc_align_single_options_filler.cpp" line="71"/>
+        <location filename="../src/ui/action_options/modify/lc_align_single_options_filler.cpp" line="55"/>
+        <location filename="../src/ui/action_options/modify/lc_align_single_options_filler.cpp" line="72"/>
         <source>Middle</source>
         <translation type="unfinished">Střední</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/modify/lc_align_single_options_filler.cpp" line="55"/>
+        <location filename="../src/ui/action_options/modify/lc_align_single_options_filler.cpp" line="56"/>
         <source>Right</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/modify/lc_align_single_options_filler.cpp" line="59"/>
+        <location filename="../src/ui/action_options/modify/lc_align_single_options_filler.cpp" line="60"/>
         <source>Horizontal</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/modify/lc_align_single_options_filler.cpp" line="59"/>
+        <location filename="../src/ui/action_options/modify/lc_align_single_options_filler.cpp" line="60"/>
         <source>Mode of horizontal align</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/modify/lc_align_single_options_filler.cpp" line="70"/>
+        <location filename="../src/ui/action_options/modify/lc_align_single_options_filler.cpp" line="71"/>
         <source>Top</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/modify/lc_align_single_options_filler.cpp" line="72"/>
+        <location filename="../src/ui/action_options/modify/lc_align_single_options_filler.cpp" line="73"/>
         <source>Bottom</source>
         <translation type="unfinished">Dole</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/modify/lc_align_single_options_filler.cpp" line="76"/>
+        <location filename="../src/ui/action_options/modify/lc_align_single_options_filler.cpp" line="77"/>
         <source>Vertical</source>
         <translation type="unfinished">Vertikální</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/modify/lc_align_single_options_filler.cpp" line="76"/>
+        <location filename="../src/ui/action_options/modify/lc_align_single_options_filler.cpp" line="77"/>
         <source>Mode of vertical align</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7875,42 +7898,42 @@ Jste si jistý, že se chystáte zahodit změny?</translation>
 <context>
     <name>LC_ArcTangentialOptionsFiller</name>
     <message>
-        <location filename="../src/ui/action_options/curve/lc_arc_tangential_options_filler.cpp" line="31"/>
+        <location filename="../src/ui/action_options/curve/lc_arc_tangential_options_filler.cpp" line="32"/>
         <source>Fixed Radius</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/curve/lc_arc_tangential_options_filler.cpp" line="31"/>
+        <location filename="../src/ui/action_options/curve/lc_arc_tangential_options_filler.cpp" line="32"/>
         <source>Fixed Angle</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/curve/lc_arc_tangential_options_filler.cpp" line="33"/>
+        <location filename="../src/ui/action_options/curve/lc_arc_tangential_options_filler.cpp" line="34"/>
         <source>Draw mode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/curve/lc_arc_tangential_options_filler.cpp" line="33"/>
+        <location filename="../src/ui/action_options/curve/lc_arc_tangential_options_filler.cpp" line="34"/>
         <source>Specifies whether arc should be created with fixed radius or fixed central angle</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/curve/lc_arc_tangential_options_filler.cpp" line="42"/>
+        <location filename="../src/ui/action_options/curve/lc_arc_tangential_options_filler.cpp" line="43"/>
         <source>Radius</source>
         <translation type="unfinished">Poloměr</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/curve/lc_arc_tangential_options_filler.cpp" line="42"/>
+        <location filename="../src/ui/action_options/curve/lc_arc_tangential_options_filler.cpp" line="43"/>
         <source>Radius of arc</source>
         <translation type="unfinished">Poloměr oblouku</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/curve/lc_arc_tangential_options_filler.cpp" line="49"/>
+        <location filename="../src/ui/action_options/curve/lc_arc_tangential_options_filler.cpp" line="50"/>
         <source>Central Angle</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/curve/lc_arc_tangential_options_filler.cpp" line="49"/>
+        <location filename="../src/ui/action_options/curve/lc_arc_tangential_options_filler.cpp" line="50"/>
         <source>Central angle of the arc</source>
         <translation type="unfinished">Střední úhel oblouku</translation>
     </message>
@@ -8328,57 +8351,57 @@ Jste si jistý, že se chystáte zahodit změny?</translation>
 <context>
     <name>LC_CenterMarkOptionsFiller</name>
     <message>
-        <location filename="../src/ui/action_options/misc/lc_center_mark_options_filler.cpp" line="37"/>
+        <location filename="../src/ui/action_options/misc/lc_center_mark_options_filler.cpp" line="38"/>
         <source>Extension</source>
         <translation type="unfinished">Rozšíření</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/misc/lc_center_mark_options_filler.cpp" line="38"/>
+        <location filename="../src/ui/action_options/misc/lc_center_mark_options_filler.cpp" line="39"/>
         <source>Total Length</source>
         <translation type="unfinished">Celková délka</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/misc/lc_center_mark_options_filler.cpp" line="39"/>
+        <location filename="../src/ui/action_options/misc/lc_center_mark_options_filler.cpp" line="40"/>
         <source>Percent</source>
         <translation type="unfinished">Procento</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/misc/lc_center_mark_options_filler.cpp" line="43"/>
+        <location filename="../src/ui/action_options/misc/lc_center_mark_options_filler.cpp" line="44"/>
         <source>Mark Type</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/misc/lc_center_mark_options_filler.cpp" line="43"/>
+        <location filename="../src/ui/action_options/misc/lc_center_mark_options_filler.cpp" line="44"/>
         <source>Defines how to handle size of cross</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/misc/lc_center_mark_options_filler.cpp" line="50"/>
+        <location filename="../src/ui/action_options/misc/lc_center_mark_options_filler.cpp" line="51"/>
         <source>Horizontal</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/misc/lc_center_mark_options_filler.cpp" line="50"/>
+        <location filename="../src/ui/action_options/misc/lc_center_mark_options_filler.cpp" line="51"/>
         <source>Horizontal dimension of cross</source>
         <translation type="unfinished">Horizontální rozměr příčného průřezu</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/misc/lc_center_mark_options_filler.cpp" line="56"/>
+        <location filename="../src/ui/action_options/misc/lc_center_mark_options_filler.cpp" line="57"/>
         <source>Vertical</source>
         <translation type="unfinished">Vertikální</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/misc/lc_center_mark_options_filler.cpp" line="56"/>
+        <location filename="../src/ui/action_options/misc/lc_center_mark_options_filler.cpp" line="57"/>
         <source>Vertical dimension of the cross</source>
         <translation type="unfinished">Svislý rozměr kříže</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/misc/lc_center_mark_options_filler.cpp" line="62"/>
+        <location filename="../src/ui/action_options/misc/lc_center_mark_options_filler.cpp" line="63"/>
         <source>Angle</source>
         <translation type="unfinished">Úhel</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/misc/lc_center_mark_options_filler.cpp" line="62"/>
+        <location filename="../src/ui/action_options/misc/lc_center_mark_options_filler.cpp" line="63"/>
         <source>Rotation angle for cross around center</source>
         <translation type="unfinished">Úhel otáčení pro kříž kolem středu</translation>
     </message>
@@ -8532,59 +8555,59 @@ Jste si jistý, že se chystáte zahodit změny?</translation>
 <context>
     <name>LC_CircleByArcOptionsFiller</name>
     <message>
-        <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_filler.cpp" line="31"/>
+        <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_filler.cpp" line="32"/>
         <source>Replace arc</source>
         <translation type="unfinished">Nahradit oblouk</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_filler.cpp" line="31"/>
+        <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_filler.cpp" line="32"/>
         <source>If checked, original arc will be removed</source>
         <translation type="unfinished">Pokud je zaškrtnuto, bude odstraněn původní oblouk</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_filler.cpp" line="38"/>
+        <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_filler.cpp" line="39"/>
         <source>Radius Shift</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_filler.cpp" line="38"/>
+        <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_filler.cpp" line="39"/>
         <source>Delta of circle&apos;s radius to arc&apos;s radius</source>
         <translation type="unfinished">Delta poloměru kruhu k poloměru oblouku</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_filler.cpp" line="45"/>
-        <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_filler.cpp" line="61"/>
+        <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_filler.cpp" line="46"/>
+        <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_filler.cpp" line="62"/>
         <source>Active</source>
         <translation type="unfinished">Aktivní</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_filler.cpp" line="46"/>
-        <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_filler.cpp" line="62"/>
+        <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_filler.cpp" line="47"/>
+        <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_filler.cpp" line="63"/>
         <source>Original</source>
         <translation type="unfinished">Původní</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_filler.cpp" line="47"/>
+        <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_filler.cpp" line="48"/>
         <source>Original Resolved</source>
         <translation type="unfinished">Originální řešení</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_filler.cpp" line="51"/>
+        <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_filler.cpp" line="52"/>
         <source>Pen to apply</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_filler.cpp" line="51"/>
+        <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_filler.cpp" line="52"/>
         <source>Defines which pen should be applied to created circle</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_filler.cpp" line="66"/>
+        <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_filler.cpp" line="67"/>
         <source>Layer to apply</source>
         <translation type="unfinished">Vrstva, která se použije</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_filler.cpp" line="66"/>
+        <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_filler.cpp" line="67"/>
         <source>Defines which layer should created circle be placed in</source>
         <translation type="unfinished"></translation>
     </message>
@@ -8675,12 +8698,12 @@ Jste si jistý, že se chystáte zahodit změny?</translation>
 <context>
     <name>LC_CircleCenterRadiusOptionsFiller</name>
     <message>
-        <location filename="../src/ui/action_options/circle/lc_circle_center_radius_options_filler.cpp" line="30"/>
+        <location filename="../src/ui/action_options/circle/lc_circle_center_radius_options_filler.cpp" line="31"/>
         <source>Radius</source>
         <translation type="unfinished">Poloměr</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/circle/lc_circle_center_radius_options_filler.cpp" line="30"/>
+        <location filename="../src/ui/action_options/circle/lc_circle_center_radius_options_filler.cpp" line="31"/>
         <source>Radius of circle to be created</source>
         <translation type="unfinished"></translation>
     </message>
@@ -11896,172 +11919,182 @@ Jste si jistý, že se chystáte zahodit změny?</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/lc_dlg_propertysheet_widget_options.ui" line="30"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/lc_dlg_propertysheet_widget_options.ui" line="59"/>
         <source>No Selection View</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/lc_dlg_propertysheet_widget_options.ui" line="36"/>
-        <source>Select sections that in should be shown properties sheet if there are no entities are selected</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/lc_dlg_propertysheet_widget_options.ui" line="46"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/lc_dlg_propertysheet_widget_options.ui" line="125"/>
         <source>Grid settings for drawing view</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/lc_dlg_propertysheet_widget_options.ui" line="49"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/lc_dlg_propertysheet_widget_options.ui" line="128"/>
         <source>Grid</source>
         <translation type="unfinished">Mřížka</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/lc_dlg_propertysheet_widget_options.ui" line="56"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/lc_dlg_propertysheet_widget_options.ui" line="85"/>
         <source>Linear and angular units settings for the drawing</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/lc_dlg_propertysheet_widget_options.ui" line="59"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/lc_dlg_propertysheet_widget_options.ui" line="88"/>
         <source>Drawing Units</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/lc_dlg_propertysheet_widget_options.ui" line="66"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/lc_dlg_propertysheet_widget_options.ui" line="75"/>
         <source>Named view selection and operations</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/lc_dlg_propertysheet_widget_options.ui" line="69"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/lc_dlg_propertysheet_widget_options.ui" line="20"/>
+        <source>Entities View</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dock_widgets/property_sheet/lc_dlg_propertysheet_widget_options.ui" line="26"/>
+        <source>If enabled, calculated properties for entities will be also shown (if any exists)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dock_widgets/property_sheet/lc_dlg_propertysheet_widget_options.ui" line="29"/>
+        <source>Show calculated properties</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dock_widgets/property_sheet/lc_dlg_propertysheet_widget_options.ui" line="78"/>
         <source>Named Views</source>
         <translation type="unfinished">Name</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/lc_dlg_propertysheet_widget_options.ui" line="76"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/lc_dlg_propertysheet_widget_options.ui" line="115"/>
         <source>Active layer selection, properties and commands</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/lc_dlg_propertysheet_widget_options.ui" line="79"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/lc_dlg_propertysheet_widget_options.ui" line="118"/>
         <source>Active Layer</source>
         <translation type="unfinished">Aktivní vrstva</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/lc_dlg_propertysheet_widget_options.ui" line="86"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/lc_dlg_propertysheet_widget_options.ui" line="135"/>
         <source>Active pen settings section</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/lc_dlg_propertysheet_widget_options.ui" line="89"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/lc_dlg_propertysheet_widget_options.ui" line="138"/>
         <source>Active Pen</source>
         <translation type="unfinished">Aktivní pero</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/lc_dlg_propertysheet_widget_options.ui" line="96"/>
-        <source>Paper format and margins for printing</source>
+        <location filename="../src/ui/dock_widgets/property_sheet/lc_dlg_propertysheet_widget_options.ui" line="237"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;If selected, fields for current tool options (usually shown in &lt;span style=&quot; font-style:italic;&quot;&gt;Tool Options&lt;/span&gt; toolbar) will also be shown in property sheet.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/lc_dlg_propertysheet_widget_options.ui" line="99"/>
-        <source>Print Paper</source>
+        <location filename="../src/ui/dock_widgets/property_sheet/lc_dlg_propertysheet_widget_options.ui" line="240"/>
+        <source>Show tool options</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/lc_dlg_propertysheet_widget_options.ui" line="106"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/lc_dlg_propertysheet_widget_options.ui" line="105"/>
         <source>User coordinates system sleection and related operations</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/lc_dlg_propertysheet_widget_options.ui" line="109"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/lc_dlg_propertysheet_widget_options.ui" line="108"/>
         <source>User Coordinate system (UCS)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/lc_dlg_propertysheet_widget_options.ui" line="116"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/lc_dlg_propertysheet_widget_options.ui" line="95"/>
         <source>Workspace selection and saving section</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/lc_dlg_propertysheet_widget_options.ui" line="119"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/lc_dlg_propertysheet_widget_options.ui" line="98"/>
         <source>Workspace</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/lc_dlg_propertysheet_widget_options.ui" line="126"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/lc_dlg_propertysheet_widget_options.ui" line="65"/>
         <source>Settings for generic rendering of drawing</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/lc_dlg_propertysheet_widget_options.ui" line="129"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/lc_dlg_propertysheet_widget_options.ui" line="68"/>
         <source>Graphic View</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/lc_dlg_propertysheet_widget_options.ui" line="139"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/lc_dlg_propertysheet_widget_options.ui" line="168"/>
         <source>General</source>
         <translation type="unfinished">Obecné</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/lc_dlg_propertysheet_widget_options.ui" line="145"/>
-        <source>If enabled, computed properties for entities will be also shown (if any exists)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/lc_dlg_propertysheet_widget_options.ui" line="148"/>
-        <source>Show computed properties</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/lc_dlg_propertysheet_widget_options.ui" line="155"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/lc_dlg_propertysheet_widget_options.ui" line="194"/>
         <source>Font size:</source>
         <translation type="unfinished">Velikost písma:</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/lc_dlg_propertysheet_widget_options.ui" line="162"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/lc_dlg_propertysheet_widget_options.ui" line="201"/>
         <source>Size of the font, in points, that is used by properties sheet</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/lc_dlg_propertysheet_widget_options.ui" line="178"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/lc_dlg_propertysheet_widget_options.ui" line="227"/>
         <source>If enabled, generic selection-related actions will be included into the widget toolbar</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/lc_dlg_propertysheet_widget_options.ui" line="181"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/lc_dlg_propertysheet_widget_options.ui" line="230"/>
         <source>Show generic selection actions button in toolbar</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/lc_dlg_propertysheet_widget_options.ui" line="188"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/lc_dlg_propertysheet_widget_options.ui" line="217"/>
         <source>If enabled, property sheet will include links to command actions, that are relevant to specific properties or sections</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/lc_dlg_propertysheet_widget_options.ui" line="191"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/lc_dlg_propertysheet_widget_options.ui" line="220"/>
         <source>Include command links</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/lc_dlg_propertysheet_widget_options.ui" line="198"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/lc_dlg_propertysheet_widget_options.ui" line="36"/>
         <source>If selected, if there is one or more entities selected, the list of entity set modification commands will be shown (if any applicable).</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/lc_dlg_propertysheet_widget_options.ui" line="201"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/lc_dlg_propertysheet_widget_options.ui" line="39"/>
         <source>Show multiple entities modification commands</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/lc_dlg_propertysheet_widget_options.ui" line="221"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/lc_dlg_propertysheet_widget_options.ui" line="46"/>
         <source>If selected, in case there is only on entity in sheet, the list for commands that are relevant for entity will be shown (if any applicable).</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/lc_dlg_propertysheet_widget_options.ui" line="224"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/lc_dlg_propertysheet_widget_options.ui" line="49"/>
         <source>Show single entity commands</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/lc_dlg_propertysheet_widget_options.ui" line="231"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/lc_dlg_propertysheet_widget_options.ui" line="145"/>
+        <source>Sections that should be visible if there are no selected entities</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dock_widgets/property_sheet/lc_dlg_propertysheet_widget_options.ui" line="148"/>
+        <source>Visible sections:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dock_widgets/property_sheet/lc_dlg_propertysheet_widget_options.ui" line="174"/>
         <source>points</source>
         <translation type="unfinished"></translation>
     </message>
@@ -12349,7 +12382,7 @@ Jste si jistý, že se chystáte zahodit změny?</translation>
         <translation>Terciární datum</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/entity/lc_dlg_tolerance.cpp" line="53"/>
+        <location filename="../src/ui/dialogs/entity/lc_dlg_tolerance.cpp" line="76"/>
         <source>Pen</source>
         <translation>Pen</translation>
     </message>
@@ -13189,79 +13222,79 @@ Jste si jistý, že se chystáte zahodit změny?</translation>
 <context>
     <name>LC_DuplicateOptionsFiller</name>
     <message>
-        <location filename="../src/ui/action_options/modify/lc_duplicate_options_filler.cpp" line="31"/>
+        <location filename="../src/ui/action_options/modify/lc_duplicate_options_filler.cpp" line="32"/>
         <source>In place</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/modify/lc_duplicate_options_filler.cpp" line="31"/>
+        <location filename="../src/ui/action_options/modify/lc_duplicate_options_filler.cpp" line="32"/>
         <source>If checked, duplicate will be positioned in original&apos;s coordinates</source>
         <translation type="unfinished">Pokud je zaškrtnuto, bude duplikát umístěn na původních souřadnicích</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/modify/lc_duplicate_options_filler.cpp" line="39"/>
+        <location filename="../src/ui/action_options/modify/lc_duplicate_options_filler.cpp" line="40"/>
         <source>Offset X</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/modify/lc_duplicate_options_filler.cpp" line="39"/>
+        <location filename="../src/ui/action_options/modify/lc_duplicate_options_filler.cpp" line="40"/>
         <source>Horizontal offset of duplicate from original entity</source>
         <translation type="unfinished">Horizontální offset duplikátu od původního subjektu</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/modify/lc_duplicate_options_filler.cpp" line="47"/>
+        <location filename="../src/ui/action_options/modify/lc_duplicate_options_filler.cpp" line="48"/>
         <source>Offset Y</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/modify/lc_duplicate_options_filler.cpp" line="47"/>
+        <location filename="../src/ui/action_options/modify/lc_duplicate_options_filler.cpp" line="48"/>
         <source>Vertical offset of duplicate from original entity</source>
         <translation type="unfinished">Vertikální kompenzace duplikátu od původní účetní jednotky</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/modify/lc_duplicate_options_filler.cpp" line="58"/>
+        <location filename="../src/ui/action_options/modify/lc_duplicate_options_filler.cpp" line="59"/>
         <source>Active</source>
         <translation type="unfinished">Aktivní</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/modify/lc_duplicate_options_filler.cpp" line="59"/>
+        <location filename="../src/ui/action_options/modify/lc_duplicate_options_filler.cpp" line="60"/>
         <source>Original</source>
         <translation type="unfinished">Původní</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/modify/lc_duplicate_options_filler.cpp" line="60"/>
+        <location filename="../src/ui/action_options/modify/lc_duplicate_options_filler.cpp" line="61"/>
         <source>Original (Resolved)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/modify/lc_duplicate_options_filler.cpp" line="64"/>
+        <location filename="../src/ui/action_options/modify/lc_duplicate_options_filler.cpp" line="65"/>
         <source>Pen mode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/modify/lc_duplicate_options_filler.cpp" line="64"/>
+        <location filename="../src/ui/action_options/modify/lc_duplicate_options_filler.cpp" line="65"/>
         <source>Pen to apply to created duplicate</source>
         <translation type="unfinished">Pero pro aplikaci na vytvořený duplikát</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/modify/lc_duplicate_options_filler.cpp" line="76"/>
+        <location filename="../src/ui/action_options/modify/lc_duplicate_options_filler.cpp" line="77"/>
         <source>Active</source>
         <comment>layer</comment>
         <translation type="unfinished">Aktivní</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/modify/lc_duplicate_options_filler.cpp" line="77"/>
+        <location filename="../src/ui/action_options/modify/lc_duplicate_options_filler.cpp" line="78"/>
         <source>Original</source>
         <comment>layer</comment>
         <translation type="unfinished">Původní</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/modify/lc_duplicate_options_filler.cpp" line="81"/>
+        <location filename="../src/ui/action_options/modify/lc_duplicate_options_filler.cpp" line="82"/>
         <source>Layer mode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/modify/lc_duplicate_options_filler.cpp" line="81"/>
+        <location filename="../src/ui/action_options/modify/lc_duplicate_options_filler.cpp" line="82"/>
         <source>Layer to which duplicate should be placed</source>
         <translation type="unfinished">Vrstva, do které se umístí duplikát</translation>
     </message>
@@ -13880,248 +13913,248 @@ Jste si jistý, že se chystáte zahodit změny?</translation>
 <context>
     <name>LC_EntityTypePropertiesProvider</name>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="61"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="60"/>
         <source>Geometry</source>
         <translation type="unfinished">Geometrie</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="61"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="60"/>
         <source>Geometrical properties</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="66"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="65"/>
         <source>Text</source>
         <translation type="unfinished">Text</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="66"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="65"/>
         <source>Text properties</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="71"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="70"/>
         <source>Calculated</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="71"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="70"/>
         <source>Calculated properties</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="76"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="75"/>
         <source>Single Entity Actions</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="76"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="75"/>
         <source>Action commands applicable to single edited entity</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="81"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="80"/>
         <source>Selected Set Actions</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="81"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="80"/>
         <source>Action commands applicable for ALL selected entities</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="89"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="88"/>
         <source>Moving or rotating operations</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="90"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="89"/>
         <source>Move / Copy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="90"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="89"/>
         <source>Move selected entities</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="91"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="90"/>
         <source>Rotate</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="91"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="90"/>
         <source>Rotate of selected entities</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="94"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="93"/>
         <source>Duplicating or mirroring</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="95"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="94"/>
         <source>Duplicate</source>
         <translation type="unfinished">Duplikovat</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="95"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="94"/>
         <source>Duplicate selection</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="96"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="95"/>
         <source>Mirror</source>
         <translation type="unfinished">Zrcadlo</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="96"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="95"/>
         <source>Mirror selection</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="99"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="98"/>
         <source>Scaling and stretching</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="100"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="99"/>
         <source>Scale</source>
         <translation type="unfinished">Stupnice</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="100"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="99"/>
         <source>Selection scaling</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="101"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="100"/>
         <source>Stretch</source>
         <translation type="unfinished">Protáhnout</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="101"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="100"/>
         <source>Strech selection</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="104"/>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="109"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="103"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="108"/>
         <source>Aligning selection</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="105"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="104"/>
         <source>Align</source>
         <translation type="unfinished">Zarovnat</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="105"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="104"/>
         <source>Align selection</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="106"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="105"/>
         <source>Align ref</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="106"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="105"/>
         <source>Align selection by reference points</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="110"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="109"/>
         <source>Move rotate</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="110"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="109"/>
         <source>Move and rotate selection</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="111"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="110"/>
         <source>Rotate two</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="111"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="110"/>
         <source>Rotate selection two times</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="162"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="161"/>
         <source>General</source>
         <translation type="unfinished">Obecné</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="162"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="161"/>
         <source>General properties</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="169"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="168"/>
         <source>Layer</source>
         <translation type="unfinished">Vrstva</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="169"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="168"/>
         <source>Layer of entity</source>
         <translation type="unfinished">Vrstva účetní jednotky</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="205"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="204"/>
         <source>Select all</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="206"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="205"/>
         <source>Select all entities in layer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="206"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="205"/>
         <source>Unselect All</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="207"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="206"/>
         <source>Unselect all entities in layer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="208"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="207"/>
         <source>Selection of layer&apos;s entities</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="211"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="210"/>
         <source>Color</source>
         <translation type="unfinished">Barva</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="211"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="210"/>
         <source>Color of entity</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="228"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="227"/>
         <source>Line Type</source>
         <translation type="unfinished">Typ čáry</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="228"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="227"/>
         <source>Type of entity pen line</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="246"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="245"/>
         <source>Line Width</source>
         <translation type="unfinished">Šířka čáry</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="246"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="245"/>
         <source>Width of entity pen line</source>
         <translation type="unfinished"></translation>
     </message>
@@ -14129,13 +14162,13 @@ Jste si jistý, že se chystáte zahodit změny?</translation>
 <context>
     <name>LC_ExportLayersService</name>
     <message>
-        <location filename="../src/ui/dialogs/file/export/layers/lc_exportlayersdialogservice.cpp" line="136"/>
-        <location filename="../src/ui/dialogs/file/export/layers/lc_exportlayersdialogservice.cpp" line="177"/>
+        <location filename="../src/ui/dialogs/file/export/layers/lc_exportlayersdialogservice.cpp" line="135"/>
+        <location filename="../src/ui/dialogs/file/export/layers/lc_exportlayersdialogservice.cpp" line="176"/>
         <source>Export Layers</source>
         <translation>Exportní vrstvy</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/file/export/layers/lc_exportlayersdialogservice.cpp" line="150"/>
+        <location filename="../src/ui/dialogs/file/export/layers/lc_exportlayersdialogservice.cpp" line="149"/>
         <source>Exported Layers</source>
         <translation>Exportované vrstvy</translation>
     </message>
@@ -15548,89 +15581,89 @@ Uveďte prosím jinou hodnotu.</translation>
 <context>
     <name>LC_LineAngleOptionsFiller</name>
     <message>
-        <location filename="../src/ui/action_options/line/lc_line_angle_options_filler.cpp" line="33"/>
+        <location filename="../src/ui/action_options/line/lc_line_angle_options_filler.cpp" line="34"/>
         <source>Angle</source>
         <translation type="unfinished">Úhel</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_line_angle_options_filler.cpp" line="33"/>
+        <location filename="../src/ui/action_options/line/lc_line_angle_options_filler.cpp" line="34"/>
         <source>Angle of line</source>
         <translation type="unfinished">Úhel čáry</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_line_angle_options_filler.cpp" line="43"/>
-        <location filename="../src/ui/action_options/line/lc_line_angle_options_filler.cpp" line="52"/>
+        <location filename="../src/ui/action_options/line/lc_line_angle_options_filler.cpp" line="44"/>
+        <location filename="../src/ui/action_options/line/lc_line_angle_options_filler.cpp" line="53"/>
         <source>Line</source>
         <translation type="unfinished">Čára</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_line_angle_options_filler.cpp" line="44"/>
+        <location filename="../src/ui/action_options/line/lc_line_angle_options_filler.cpp" line="45"/>
         <source>By X</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_line_angle_options_filler.cpp" line="45"/>
+        <location filename="../src/ui/action_options/line/lc_line_angle_options_filler.cpp" line="46"/>
         <source>By Y</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_line_angle_options_filler.cpp" line="46"/>
-        <location filename="../src/ui/action_options/line/lc_line_angle_options_filler.cpp" line="52"/>
+        <location filename="../src/ui/action_options/line/lc_line_angle_options_filler.cpp" line="47"/>
+        <location filename="../src/ui/action_options/line/lc_line_angle_options_filler.cpp" line="53"/>
         <source>Free</source>
         <translation type="unfinished">Volný</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_line_angle_options_filler.cpp" line="59"/>
+        <location filename="../src/ui/action_options/line/lc_line_angle_options_filler.cpp" line="60"/>
         <source>Length type</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_line_angle_options_filler.cpp" line="59"/>
+        <location filename="../src/ui/action_options/line/lc_line_angle_options_filler.cpp" line="60"/>
         <source>Defines how to handle length parameter</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_line_angle_options_filler.cpp" line="67"/>
+        <location filename="../src/ui/action_options/line/lc_line_angle_options_filler.cpp" line="68"/>
         <source>Length</source>
         <translation type="unfinished">Délka</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_line_angle_options_filler.cpp" line="67"/>
+        <location filename="../src/ui/action_options/line/lc_line_angle_options_filler.cpp" line="68"/>
         <source>Length of line</source>
         <translation type="unfinished">Délka čáry</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_line_angle_options_filler.cpp" line="76"/>
+        <location filename="../src/ui/action_options/line/lc_line_angle_options_filler.cpp" line="77"/>
         <source>Start</source>
         <translation type="unfinished">Start</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_line_angle_options_filler.cpp" line="77"/>
+        <location filename="../src/ui/action_options/line/lc_line_angle_options_filler.cpp" line="78"/>
         <source>Middle</source>
         <translation type="unfinished">Střední</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_line_angle_options_filler.cpp" line="78"/>
+        <location filename="../src/ui/action_options/line/lc_line_angle_options_filler.cpp" line="79"/>
         <source>End</source>
         <translation type="unfinished">Konec</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_line_angle_options_filler.cpp" line="84"/>
+        <location filename="../src/ui/action_options/line/lc_line_angle_options_filler.cpp" line="85"/>
         <source>Line Snap</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_line_angle_options_filler.cpp" line="85"/>
+        <location filename="../src/ui/action_options/line/lc_line_angle_options_filler.cpp" line="86"/>
         <source>Snap point for position of intersection point between created line and source entity (within original line)</source>
         <translation type="unfinished">Špičkový bod pro umístění průsečíku mezi vytvořenou linkou a zdrojovou jednotkou (v rámci původní linky)</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_line_angle_options_filler.cpp" line="97"/>
+        <location filename="../src/ui/action_options/line/lc_line_angle_options_filler.cpp" line="98"/>
         <source>To Angles Basis</source>
         <translation type="unfinished">Do Angles Basis</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_line_angle_options_filler.cpp" line="98"/>
+        <location filename="../src/ui/action_options/line/lc_line_angle_options_filler.cpp" line="99"/>
         <source>If selected, line will be orhotogonal to axis of angles basis. Otherwise - to screen axis</source>
         <translation type="unfinished">Pokud je zvolena, linka bude orhotogonální k ose úhlů. Jinak - k ose obrazovky</translation>
     </message>
@@ -15848,110 +15881,110 @@ Uveďte prosím jinou hodnotu.</translation>
 <context>
     <name>LC_LineAngleRelOptionsFiller</name>
     <message>
-        <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="31"/>
+        <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="32"/>
         <source>Free length</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="31"/>
+        <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="32"/>
         <source>If checked, the length of line is defined by mouse position instead of setting</source>
         <translation type="unfinished">Pokud je zaškrtnuto, délka řádku je definována polohou myši místo nastavení</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="39"/>
+        <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="40"/>
         <source>Length</source>
         <translation type="unfinished">Délka</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="39"/>
+        <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="40"/>
         <source>Length of line</source>
         <translation type="unfinished">Délka čáry</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="45"/>
+        <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="46"/>
         <source>Angle</source>
         <translation type="unfinished">Úhel</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="45"/>
+        <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="46"/>
         <source>Angle of line</source>
         <translation type="unfinished">Úhel čáry</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="51"/>
+        <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="52"/>
         <source>Relative angle</source>
         <translation type="unfinished">Relativní úhel</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="51"/>
+        <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="52"/>
         <source>If checked, angle is relative to angle of selected entity</source>
         <translation type="unfinished">Je-li zaškrtnuto, úhel je vztažen k úhlu vybrané entity</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="62"/>
+        <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="63"/>
         <source>Free</source>
         <translation type="unfinished">Volný</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="63"/>
-        <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="88"/>
+        <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="64"/>
+        <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="89"/>
         <source>Start</source>
         <translation type="unfinished">Start</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="64"/>
-        <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="89"/>
+        <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="65"/>
+        <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="90"/>
         <source>Middle</source>
         <translation type="unfinished">Střední</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="65"/>
-        <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="90"/>
+        <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="66"/>
+        <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="91"/>
         <source>End</source>
         <translation type="unfinished">Konec</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="71"/>
+        <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="72"/>
         <source>Line Snap</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="72"/>
+        <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="73"/>
         <source>Snap point for position of intersection point between created line and source entity (within original line)</source>
         <translation type="unfinished">Špičkový bod pro umístění průsečíku mezi vytvořenou linkou a zdrojovou jednotkou (v rámci původní linky)</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="79"/>
+        <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="80"/>
         <source>Snap Distance</source>
         <translation type="unfinished">Snap vzdálenost</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="94"/>
+        <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="95"/>
         <source>Tick Snap</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="94"/>
+        <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="95"/>
         <source>Defines which part of created line will be snapped to intersection point</source>
         <translation type="unfinished">Definuje, která část vytvořeného řádku bude přeložena do průsečíku</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="101"/>
+        <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="102"/>
         <source>Offset</source>
         <translation type="unfinished">Offset</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="101"/>
+        <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="102"/>
         <source>Offset of tick snap point from intersection point</source>
         <translation type="unfinished">Offset of tick snap point from junction point</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="107"/>
+        <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="108"/>
         <source>Divide</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="107"/>
+        <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="108"/>
         <source>If checked, original entity will be divided by intersection point.</source>
         <translation type="unfinished">Pokud je zaškrtnuto, bude původní účetní jednotka rozdělena průsečíkem.</translation>
     </message>
@@ -16244,87 +16277,87 @@ Uveďte prosím jinou hodnotu.</translation>
 <context>
     <name>LC_LineFromPointToLineOptionsFiller</name>
     <message>
-        <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_filler.cpp" line="33"/>
+        <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_filler.cpp" line="34"/>
         <source>Orthogonal</source>
         <translation type="unfinished">Orthogonal</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_filler.cpp" line="33"/>
+        <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_filler.cpp" line="34"/>
         <source>If checked, created line will be orthogonal to selected line</source>
         <translation type="unfinished">Pokud je zaškrtnuto, vytvořená linka bude ortogonální na zvolenou řadu</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_filler.cpp" line="40"/>
+        <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_filler.cpp" line="41"/>
         <source>Angle</source>
         <translation type="unfinished">Úhel</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_filler.cpp" line="40"/>
+        <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_filler.cpp" line="41"/>
         <source>Angle between original line and created one</source>
         <translation type="unfinished">Úhel mezi původní čárou a vytvořil jeden</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_filler.cpp" line="47"/>
+        <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_filler.cpp" line="48"/>
         <source>To Intersection</source>
         <translation type="unfinished">Do Intersekce</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_filler.cpp" line="48"/>
+        <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_filler.cpp" line="49"/>
         <source>Fixed Length</source>
         <translation type="unfinished">Pevná délka</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_filler.cpp" line="54"/>
+        <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_filler.cpp" line="55"/>
         <source>Size</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_filler.cpp" line="55"/>
+        <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_filler.cpp" line="56"/>
         <source>Defines whether created line should be created to intersection point or should have fixed length</source>
         <translation type="unfinished">Definuje, zda vytvořená čára má být vytvořena do průsečíku nebo by měla mít pevnou délku</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_filler.cpp" line="65"/>
+        <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_filler.cpp" line="66"/>
         <source>End Offset</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_filler.cpp" line="65"/>
+        <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_filler.cpp" line="66"/>
         <source>Offset for created line from intersection point</source>
         <translation type="unfinished">Offset pro vytvořenou linku z průsečíku</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_filler.cpp" line="72"/>
+        <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_filler.cpp" line="73"/>
         <source>Length</source>
         <translation type="unfinished">Délka</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_filler.cpp" line="72"/>
+        <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_filler.cpp" line="73"/>
         <source>Fixed length of created line</source>
         <translation type="unfinished">Pevná délka vytvořeného řádku</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_filler.cpp" line="81"/>
+        <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_filler.cpp" line="82"/>
         <source>Start</source>
         <translation type="unfinished">Start</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_filler.cpp" line="82"/>
+        <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_filler.cpp" line="83"/>
         <source>Middle</source>
         <translation type="unfinished">Střední</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_filler.cpp" line="83"/>
+        <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_filler.cpp" line="84"/>
         <source>End</source>
         <translation type="unfinished">Konec</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_filler.cpp" line="87"/>
+        <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_filler.cpp" line="88"/>
         <source>Snap</source>
         <translation type="unfinished">Snap</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_filler.cpp" line="87"/>
+        <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_filler.cpp" line="88"/>
         <source>Snap point for created line</source>
         <translation type="unfinished">Bod pro vytvořený řádek</translation>
     </message>
@@ -16440,75 +16473,75 @@ Uveďte prosím jinou hodnotu.</translation>
 <context>
     <name>LC_LineGapOptionsFiller</name>
     <message>
-        <location filename="../src/ui/action_options/modify/lc_line_gap_options_filler.cpp" line="31"/>
+        <location filename="../src/ui/action_options/modify/lc_line_gap_options_filler.cpp" line="32"/>
         <source>Free size</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/modify/lc_line_gap_options_filler.cpp" line="31"/>
+        <location filename="../src/ui/action_options/modify/lc_line_gap_options_filler.cpp" line="32"/>
         <source>If cheched, the size of the gap is determined by mouse</source>
         <translation type="unfinished">Pokud je kontrola, velikost mezery je určena myší</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/modify/lc_line_gap_options_filler.cpp" line="37"/>
+        <location filename="../src/ui/action_options/modify/lc_line_gap_options_filler.cpp" line="38"/>
         <source>Size</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/modify/lc_line_gap_options_filler.cpp" line="37"/>
+        <location filename="../src/ui/action_options/modify/lc_line_gap_options_filler.cpp" line="38"/>
         <source>Size of the gap, if not free</source>
         <translation type="unfinished">Velikost mezery, pokud není volná</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/modify/lc_line_gap_options_filler.cpp" line="48"/>
+        <location filename="../src/ui/action_options/modify/lc_line_gap_options_filler.cpp" line="49"/>
         <source>Free</source>
         <translation type="unfinished">Volný</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/modify/lc_line_gap_options_filler.cpp" line="49"/>
-        <location filename="../src/ui/action_options/modify/lc_line_gap_options_filler.cpp" line="73"/>
+        <location filename="../src/ui/action_options/modify/lc_line_gap_options_filler.cpp" line="50"/>
+        <location filename="../src/ui/action_options/modify/lc_line_gap_options_filler.cpp" line="74"/>
         <source>Start</source>
         <translation type="unfinished">Start</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/modify/lc_line_gap_options_filler.cpp" line="50"/>
-        <location filename="../src/ui/action_options/modify/lc_line_gap_options_filler.cpp" line="74"/>
+        <location filename="../src/ui/action_options/modify/lc_line_gap_options_filler.cpp" line="51"/>
+        <location filename="../src/ui/action_options/modify/lc_line_gap_options_filler.cpp" line="75"/>
         <source>Middle</source>
         <translation type="unfinished">Střední</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/modify/lc_line_gap_options_filler.cpp" line="51"/>
-        <location filename="../src/ui/action_options/modify/lc_line_gap_options_filler.cpp" line="75"/>
+        <location filename="../src/ui/action_options/modify/lc_line_gap_options_filler.cpp" line="52"/>
+        <location filename="../src/ui/action_options/modify/lc_line_gap_options_filler.cpp" line="76"/>
         <source>End</source>
         <translation type="unfinished">Konec</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/modify/lc_line_gap_options_filler.cpp" line="55"/>
+        <location filename="../src/ui/action_options/modify/lc_line_gap_options_filler.cpp" line="56"/>
         <source>Line Snap</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/modify/lc_line_gap_options_filler.cpp" line="55"/>
+        <location filename="../src/ui/action_options/modify/lc_line_gap_options_filler.cpp" line="56"/>
         <source>Snap point for gap on the line</source>
         <translation type="unfinished">Bod pro mezeru na trati</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/modify/lc_line_gap_options_filler.cpp" line="62"/>
+        <location filename="../src/ui/action_options/modify/lc_line_gap_options_filler.cpp" line="63"/>
         <source>Distance</source>
         <translation type="unfinished">Vzdálenost</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/modify/lc_line_gap_options_filler.cpp" line="62"/>
+        <location filename="../src/ui/action_options/modify/lc_line_gap_options_filler.cpp" line="63"/>
         <source>Distance from snap point</source>
         <translation type="unfinished">Vzdálenost od bodu zlomu</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/modify/lc_line_gap_options_filler.cpp" line="79"/>
+        <location filename="../src/ui/action_options/modify/lc_line_gap_options_filler.cpp" line="80"/>
         <source>Gap Snap</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/modify/lc_line_gap_options_filler.cpp" line="79"/>
+        <location filename="../src/ui/action_options/modify/lc_line_gap_options_filler.cpp" line="80"/>
         <source>Snap point of gap to line snap point</source>
         <translation type="unfinished">Bod zlomu mezery k bodu zlomu čáry</translation>
     </message>
@@ -16701,79 +16734,79 @@ Uveďte prosím jinou hodnotu.</translation>
 <context>
     <name>LC_LineJoinOptionsFiller</name>
     <message>
-        <location filename="../src/ui/action_options/modify/lc_line_join_options_filler.cpp" line="34"/>
+        <location filename="../src/ui/action_options/modify/lc_line_join_options_filler.cpp" line="35"/>
         <source>Extend/Trim</source>
         <translation type="unfinished">Rozšíření / rozvržení</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/modify/lc_line_join_options_filler.cpp" line="35"/>
+        <location filename="../src/ui/action_options/modify/lc_line_join_options_filler.cpp" line="36"/>
         <source>Add Segment</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/modify/lc_line_join_options_filler.cpp" line="36"/>
+        <location filename="../src/ui/action_options/modify/lc_line_join_options_filler.cpp" line="37"/>
         <source>No change</source>
         <translation type="unfinished">Žádná změna</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/modify/lc_line_join_options_filler.cpp" line="40"/>
-        <location filename="../src/ui/action_options/modify/lc_line_join_options_filler.cpp" line="58"/>
+        <location filename="../src/ui/action_options/modify/lc_line_join_options_filler.cpp" line="41"/>
+        <location filename="../src/ui/action_options/modify/lc_line_join_options_filler.cpp" line="59"/>
         <source>Line 1</source>
         <translation type="unfinished">Řádek 1</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/modify/lc_line_join_options_filler.cpp" line="40"/>
+        <location filename="../src/ui/action_options/modify/lc_line_join_options_filler.cpp" line="41"/>
         <source>Policy for joining line that was selected first</source>
         <translation type="unfinished">Zásady pro připojení k řádku, který byl vybrán jako první</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/modify/lc_line_join_options_filler.cpp" line="47"/>
-        <location filename="../src/ui/action_options/modify/lc_line_join_options_filler.cpp" line="59"/>
+        <location filename="../src/ui/action_options/modify/lc_line_join_options_filler.cpp" line="48"/>
+        <location filename="../src/ui/action_options/modify/lc_line_join_options_filler.cpp" line="60"/>
         <source>Line 2</source>
         <translation type="unfinished">Řádek 2</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/modify/lc_line_join_options_filler.cpp" line="47"/>
+        <location filename="../src/ui/action_options/modify/lc_line_join_options_filler.cpp" line="48"/>
         <source>Policy for the line was selected second</source>
         <translation type="unfinished">Zásada pro řádek byl vybrán druhý</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/modify/lc_line_join_options_filler.cpp" line="57"/>
+        <location filename="../src/ui/action_options/modify/lc_line_join_options_filler.cpp" line="58"/>
         <source>Active Pen</source>
         <translation type="unfinished">Aktivní pero</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/modify/lc_line_join_options_filler.cpp" line="60"/>
+        <location filename="../src/ui/action_options/modify/lc_line_join_options_filler.cpp" line="61"/>
         <source>Both Lines</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/modify/lc_line_join_options_filler.cpp" line="64"/>
+        <location filename="../src/ui/action_options/modify/lc_line_join_options_filler.cpp" line="65"/>
         <source>Pen mode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/modify/lc_line_join_options_filler.cpp" line="64"/>
+        <location filename="../src/ui/action_options/modify/lc_line_join_options_filler.cpp" line="65"/>
         <source>Defines how pen should be applied to created entities</source>
         <translation type="unfinished">Definuje, jak by pero mělo být aplikováno na vytvořené subjekty</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/modify/lc_line_join_options_filler.cpp" line="77"/>
+        <location filename="../src/ui/action_options/modify/lc_line_join_options_filler.cpp" line="78"/>
         <source>Polyline</source>
         <translation type="unfinished">Polyline</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/modify/lc_line_join_options_filler.cpp" line="77"/>
+        <location filename="../src/ui/action_options/modify/lc_line_join_options_filler.cpp" line="78"/>
         <source>If checked, polyline will be created instead of individual lines</source>
         <translation type="unfinished">Pokud je zaškrtnuto, vytvoří se místo jednotlivých řádků polyline</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/modify/lc_line_join_options_filler.cpp" line="88"/>
+        <location filename="../src/ui/action_options/modify/lc_line_join_options_filler.cpp" line="89"/>
         <source>Remove originals</source>
         <translation type="unfinished">Odstranit originály</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/modify/lc_line_join_options_filler.cpp" line="88"/>
+        <location filename="../src/ui/action_options/modify/lc_line_join_options_filler.cpp" line="89"/>
         <source>If checked, original lines will be removed</source>
         <translation type="unfinished">Pokud je zaškrtnuto, budou odstraněny původní řádky</translation>
     </message>
@@ -17325,67 +17358,67 @@ Uveďte prosím jinou hodnotu.</translation>
 <context>
     <name>LC_LineRadiantOptionsFiller</name>
     <message>
-        <location filename="../src/ui/action_options/line/lc_line_radiant_options_filler.cpp" line="30"/>
+        <location filename="../src/ui/action_options/line/lc_line_radiant_options_filler.cpp" line="32"/>
         <source>Radiant Index</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_line_radiant_options_filler.cpp" line="30"/>
+        <location filename="../src/ui/action_options/line/lc_line_radiant_options_filler.cpp" line="32"/>
         <source>Selection of radiant (center) point draw to</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_line_radiant_options_filler.cpp" line="36"/>
+        <location filename="../src/ui/action_options/line/lc_line_radiant_options_filler.cpp" line="38"/>
         <source>Radiant Point</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_line_radiant_options_filler.cpp" line="36"/>
+        <location filename="../src/ui/action_options/line/lc_line_radiant_options_filler.cpp" line="38"/>
         <source>Specifies position of active radiant point</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_line_radiant_options_filler.cpp" line="45"/>
+        <location filename="../src/ui/action_options/line/lc_line_radiant_options_filler.cpp" line="47"/>
         <source>Line</source>
         <translation type="unfinished">Čára</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_line_radiant_options_filler.cpp" line="46"/>
+        <location filename="../src/ui/action_options/line/lc_line_radiant_options_filler.cpp" line="48"/>
         <source>By X</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_line_radiant_options_filler.cpp" line="47"/>
+        <location filename="../src/ui/action_options/line/lc_line_radiant_options_filler.cpp" line="49"/>
         <source>By Y</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_line_radiant_options_filler.cpp" line="48"/>
+        <location filename="../src/ui/action_options/line/lc_line_radiant_options_filler.cpp" line="50"/>
         <source>To Point</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_line_radiant_options_filler.cpp" line="49"/>
+        <location filename="../src/ui/action_options/line/lc_line_radiant_options_filler.cpp" line="51"/>
         <source>Free</source>
         <translation type="unfinished">Volný</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_line_radiant_options_filler.cpp" line="53"/>
+        <location filename="../src/ui/action_options/line/lc_line_radiant_options_filler.cpp" line="55"/>
         <source>Length type</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_line_radiant_options_filler.cpp" line="53"/>
+        <location filename="../src/ui/action_options/line/lc_line_radiant_options_filler.cpp" line="55"/>
         <source>Defines how to handle length parameter</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_line_radiant_options_filler.cpp" line="61"/>
+        <location filename="../src/ui/action_options/line/lc_line_radiant_options_filler.cpp" line="63"/>
         <source>Length</source>
         <translation type="unfinished">Délka</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_line_radiant_options_filler.cpp" line="61"/>
+        <location filename="../src/ui/action_options/line/lc_line_radiant_options_filler.cpp" line="63"/>
         <source>Length of line to draw</source>
         <translation type="unfinished"></translation>
     </message>
@@ -17568,94 +17601,94 @@ Uveďte prosím jinou hodnotu.</translation>
 <context>
     <name>LC_LineSnakeOptionsFiller</name>
     <message>
-        <location filename="../src/ui/action_options/line/lc_line_snake_options_filler.cpp" line="34"/>
+        <location filename="../src/ui/action_options/line/lc_line_snake_options_filler.cpp" line="35"/>
         <source>X</source>
         <translation type="unfinished">X</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_line_snake_options_filler.cpp" line="35"/>
+        <location filename="../src/ui/action_options/line/lc_line_snake_options_filler.cpp" line="36"/>
         <source>Y</source>
         <translation type="unfinished">Y</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_line_snake_options_filler.cpp" line="36"/>
+        <location filename="../src/ui/action_options/line/lc_line_snake_options_filler.cpp" line="37"/>
         <source>Point</source>
         <translation type="unfinished">Bod</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_line_snake_options_filler.cpp" line="37"/>
-        <location filename="../src/ui/action_options/line/lc_line_snake_options_filler.cpp" line="49"/>
+        <location filename="../src/ui/action_options/line/lc_line_snake_options_filler.cpp" line="38"/>
+        <location filename="../src/ui/action_options/line/lc_line_snake_options_filler.cpp" line="50"/>
         <source>Angle</source>
         <translation type="unfinished">Úhel</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_line_snake_options_filler.cpp" line="41"/>
+        <location filename="../src/ui/action_options/line/lc_line_snake_options_filler.cpp" line="42"/>
         <source>Direction</source>
         <translation type="unfinished">Směr</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_line_snake_options_filler.cpp" line="41"/>
+        <location filename="../src/ui/action_options/line/lc_line_snake_options_filler.cpp" line="42"/>
         <source>Direction mode for line drawing</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_line_snake_options_filler.cpp" line="49"/>
+        <location filename="../src/ui/action_options/line/lc_line_snake_options_filler.cpp" line="50"/>
         <source>Angle of line</source>
         <translation type="unfinished">Úhel čáry</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_line_snake_options_filler.cpp" line="56"/>
+        <location filename="../src/ui/action_options/line/lc_line_snake_options_filler.cpp" line="57"/>
         <source>Relative angle</source>
         <translation type="unfinished">Relativní úhel</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_line_snake_options_filler.cpp" line="56"/>
+        <location filename="../src/ui/action_options/line/lc_line_snake_options_filler.cpp" line="57"/>
         <source>If checked, angle is relative to previous segment</source>
         <translation type="unfinished">Pokud je zaškrtnuto, úhel je vztažen k předchozímu segmentu</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_line_snake_options_filler.cpp" line="63"/>
+        <location filename="../src/ui/action_options/line/lc_line_snake_options_filler.cpp" line="64"/>
         <source>Close</source>
         <translation type="unfinished">Zavřít</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_line_snake_options_filler.cpp" line="63"/>
+        <location filename="../src/ui/action_options/line/lc_line_snake_options_filler.cpp" line="64"/>
         <source>Form a closed contour from lines drawn</source>
         <translation type="unfinished">Vytvořit uzavřený obrys z nakreslených čar</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_line_snake_options_filler.cpp" line="63"/>
+        <location filename="../src/ui/action_options/line/lc_line_snake_options_filler.cpp" line="64"/>
         <source>Polyline</source>
         <translation type="unfinished">Polyline</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_line_snake_options_filler.cpp" line="64"/>
+        <location filename="../src/ui/action_options/line/lc_line_snake_options_filler.cpp" line="65"/>
         <source>Creates polyline from line segments</source>
         <translation type="unfinished">Vytvoří polyline z úseků</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_line_snake_options_filler.cpp" line="71"/>
-        <location filename="../src/ui/action_options/line/lc_line_snake_options_filler.cpp" line="81"/>
+        <location filename="../src/ui/action_options/line/lc_line_snake_options_filler.cpp" line="72"/>
+        <location filename="../src/ui/action_options/line/lc_line_snake_options_filler.cpp" line="82"/>
         <source>Generic commands for line</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_line_snake_options_filler.cpp" line="73"/>
+        <location filename="../src/ui/action_options/line/lc_line_snake_options_filler.cpp" line="74"/>
         <source>Undo</source>
         <translation type="unfinished">Zpět</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_line_snake_options_filler.cpp" line="73"/>
+        <location filename="../src/ui/action_options/line/lc_line_snake_options_filler.cpp" line="74"/>
         <source>Undo the last line drawing</source>
         <translation type="unfinished">Zrušit poslední výkres čáry</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_line_snake_options_filler.cpp" line="73"/>
+        <location filename="../src/ui/action_options/line/lc_line_snake_options_filler.cpp" line="74"/>
         <source>Redo</source>
         <translation type="unfinished">Znovu</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_line_snake_options_filler.cpp" line="73"/>
+        <location filename="../src/ui/action_options/line/lc_line_snake_options_filler.cpp" line="74"/>
         <source>Redo the last line drawing</source>
         <translation type="unfinished">Znovu nakreslit poslední řádek</translation>
     </message>
@@ -17777,22 +17810,22 @@ Uveďte prosím jinou hodnotu.</translation>
 <context>
     <name>LC_MTextOptionsFiller</name>
     <message>
-        <location filename="../src/ui/action_options/text/lc_m_text_options_filler.cpp" line="30"/>
+        <location filename="../src/ui/action_options/text/lc_m_text_options_filler.cpp" line="31"/>
         <source>Text</source>
         <translation type="unfinished">Text</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/text/lc_m_text_options_filler.cpp" line="30"/>
+        <location filename="../src/ui/action_options/text/lc_m_text_options_filler.cpp" line="31"/>
         <source>Text to insert</source>
         <translation type="unfinished">Text k vložení</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/text/lc_m_text_options_filler.cpp" line="36"/>
+        <location filename="../src/ui/action_options/text/lc_m_text_options_filler.cpp" line="37"/>
         <source>Angle</source>
         <translation type="unfinished">Úhel</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/text/lc_m_text_options_filler.cpp" line="36"/>
+        <location filename="../src/ui/action_options/text/lc_m_text_options_filler.cpp" line="37"/>
         <source>Text rotation angle over insertion point</source>
         <translation type="unfinished"></translation>
     </message>
@@ -21818,7 +21851,7 @@ Uveďte prosím jinou hodnotu.</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_graphicview.cpp" line="213"/>
-        <location filename="../src/ui/main/init/lc_menufactory_graphicview.cpp" line="1076"/>
+        <location filename="../src/ui/main/init/lc_menufactory_graphicview.cpp" line="1075"/>
         <source>Align</source>
         <translation type="unfinished">Zarovnat</translation>
     </message>
@@ -21829,13 +21862,13 @@ Uveďte prosím jinou hodnotu.</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_graphicview.cpp" line="228"/>
-        <location filename="../src/ui/main/init/lc_menufactory_graphicview.cpp" line="1093"/>
+        <location filename="../src/ui/main/init/lc_menufactory_graphicview.cpp" line="1092"/>
         <source>Layers</source>
         <translation type="unfinished">Vrstvy</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_graphicview.cpp" line="233"/>
-        <location filename="../src/ui/main/init/lc_menufactory_graphicview.cpp" line="1113"/>
+        <location filename="../src/ui/main/init/lc_menufactory_graphicview.cpp" line="1112"/>
         <source>Info</source>
         <translation type="unfinished">Informace</translation>
     </message>
@@ -21971,7 +22004,7 @@ Uveďte prosím jinou hodnotu.</translation>
         <translation type="unfinished">Upravit blok</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_menufactory_graphicview.cpp" line="1084"/>
+        <location filename="../src/ui/main/init/lc_menufactory_graphicview.cpp" line="1083"/>
         <source>Order</source>
         <translation type="unfinished">Pořadí</translation>
     </message>
@@ -24845,52 +24878,52 @@ Varování: Tato akce nemůže být zrušena!</translation>
         <translation>Režim zvýraznění</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="305"/>
+        <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="303"/>
         <source>&amp;Apply Pen To Selection</source>
         <translation>Aplikovat pero na výběr</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="306"/>
+        <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="304"/>
         <source>&amp;Set As Current Pen</source>
         <translation>Nastavit jako současné pero</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="307"/>
+        <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="305"/>
         <source>&amp;Apply Pen To Active Layer</source>
         <translation>Použít pero na aktivní vrstvu</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="308"/>
+        <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="306"/>
         <source>&amp;Select Entities With Attributes Pen</source>
         <translation>Vybrat subjekty s Atributy Pen</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="310"/>
+        <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="308"/>
         <source>&amp;Select Entities With Drawing Pen</source>
         <translation>Vybrat subjekty s kresbou pera</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="314"/>
+        <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="312"/>
         <source>&amp;Edit Pen</source>
         <translation>&amp; Upravit pero</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="315"/>
+        <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="313"/>
         <source>&amp;Remove Pen</source>
         <translation>Odstranit pero</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="319"/>
+        <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="317"/>
         <source>&amp;Remove Pens</source>
         <translation>Odstranit pera</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="432"/>
+        <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="430"/>
         <source>Pen palette</source>
         <translation>Paleta pera</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="433"/>
+        <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="431"/>
         <source>Location of pens file is changed, please restart the application so new pens file will be used.
 
 Please note that if you&apos;ll save pen via editor without restart, current pens from palette will be saved in the new file and therefore existing content of it will be overridden.</source>
@@ -25050,94 +25083,94 @@ Vezměte prosím na vědomí, že pokud ušetříte pero přes editor bez restar
 <context>
     <name>LC_PointsLineOptionsFiller</name>
     <message>
-        <location filename="../src/ui/action_options/point/lc_points_line_options_filler.cpp" line="34"/>
+        <location filename="../src/ui/action_options/point/lc_points_line_options_filler.cpp" line="35"/>
         <source>Fixed Angle</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/point/lc_points_line_options_filler.cpp" line="34"/>
+        <location filename="../src/ui/action_options/point/lc_points_line_options_filler.cpp" line="35"/>
         <source>If checked, line of points will be drawn with specified angle</source>
         <translation type="unfinished">Je-li zaškrtnuto, čára bodů bude vykreslena se zadaným úhlem</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/point/lc_points_line_options_filler.cpp" line="49"/>
+        <location filename="../src/ui/action_options/point/lc_points_line_options_filler.cpp" line="50"/>
         <source>Angle</source>
         <translation type="unfinished">Úhel</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/point/lc_points_line_options_filler.cpp" line="49"/>
+        <location filename="../src/ui/action_options/point/lc_points_line_options_filler.cpp" line="50"/>
         <source>Angle of line</source>
         <translation type="unfinished">Úhel čáry</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/point/lc_points_line_options_filler.cpp" line="54"/>
-        <location filename="../src/ui/action_options/point/lc_points_line_options_filler.cpp" line="98"/>
+        <location filename="../src/ui/action_options/point/lc_points_line_options_filler.cpp" line="55"/>
+        <location filename="../src/ui/action_options/point/lc_points_line_options_filler.cpp" line="99"/>
         <source>Points number</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/point/lc_points_line_options_filler.cpp" line="54"/>
-        <location filename="../src/ui/action_options/point/lc_points_line_options_filler.cpp" line="98"/>
+        <location filename="../src/ui/action_options/point/lc_points_line_options_filler.cpp" line="55"/>
+        <location filename="../src/ui/action_options/point/lc_points_line_options_filler.cpp" line="99"/>
         <source>Number of points</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/point/lc_points_line_options_filler.cpp" line="60"/>
+        <location filename="../src/ui/action_options/point/lc_points_line_options_filler.cpp" line="61"/>
         <source>Fixed Distance</source>
         <translation type="unfinished">Pevná vzdálenost</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/point/lc_points_line_options_filler.cpp" line="61"/>
+        <location filename="../src/ui/action_options/point/lc_points_line_options_filler.cpp" line="62"/>
         <source>If checked, fixed specified distance between points will be used. Otherwise, distance will be calculated.</source>
         <translation type="unfinished">Pokud je zaškrtnuto, bude použita pevně stanovená vzdálenost mezi body. Jinak se vypočítá vzdálenost.</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/point/lc_points_line_options_filler.cpp" line="69"/>
+        <location filename="../src/ui/action_options/point/lc_points_line_options_filler.cpp" line="70"/>
         <source>Distance</source>
         <translation type="unfinished">Vzdálenost</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/point/lc_points_line_options_filler.cpp" line="69"/>
+        <location filename="../src/ui/action_options/point/lc_points_line_options_filler.cpp" line="70"/>
         <source>Distance between points</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/point/lc_points_line_options_filler.cpp" line="74"/>
+        <location filename="../src/ui/action_options/point/lc_points_line_options_filler.cpp" line="75"/>
         <source>Fit Line</source>
         <translation type="unfinished">Fit Line</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/point/lc_points_line_options_filler.cpp" line="75"/>
+        <location filename="../src/ui/action_options/point/lc_points_line_options_filler.cpp" line="76"/>
         <source>Specifies whether all points should fit between start/end points of line or whether the length of line is calculated based on number of points and distance between points</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/point/lc_points_line_options_filler.cpp" line="83"/>
+        <location filename="../src/ui/action_options/point/lc_points_line_options_filler.cpp" line="84"/>
         <source>None</source>
         <translation type="unfinished">Žádné</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/point/lc_points_line_options_filler.cpp" line="84"/>
+        <location filename="../src/ui/action_options/point/lc_points_line_options_filler.cpp" line="85"/>
         <source>Both</source>
         <translation type="unfinished">Obojí</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/point/lc_points_line_options_filler.cpp" line="85"/>
+        <location filename="../src/ui/action_options/point/lc_points_line_options_filler.cpp" line="86"/>
         <source>Start</source>
         <translation type="unfinished">Start</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/point/lc_points_line_options_filler.cpp" line="86"/>
+        <location filename="../src/ui/action_options/point/lc_points_line_options_filler.cpp" line="87"/>
         <source>End</source>
         <translation type="unfinished">Konec</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/point/lc_points_line_options_filler.cpp" line="90"/>
+        <location filename="../src/ui/action_options/point/lc_points_line_options_filler.cpp" line="91"/>
         <source>Edge Points</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/point/lc_points_line_options_filler.cpp" line="90"/>
+        <location filename="../src/ui/action_options/point/lc_points_line_options_filler.cpp" line="91"/>
         <source>Controls how points on the edges (start/end points) should be created. </source>
         <translation type="unfinished"></translation>
     </message>
@@ -25315,92 +25348,92 @@ Vezměte prosím na vědomí, že pokud ušetříte pero přes editor bez restar
 <context>
     <name>LC_PolylineOptionsFiller</name>
     <message>
-        <location filename="../src/ui/action_options/polyline/lc_polyline_options_filler.cpp" line="34"/>
+        <location filename="../src/ui/action_options/polyline/lc_polyline_options_filler.cpp" line="35"/>
         <source>Line</source>
         <translation type="unfinished">Čára</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/polyline/lc_polyline_options_filler.cpp" line="35"/>
+        <location filename="../src/ui/action_options/polyline/lc_polyline_options_filler.cpp" line="36"/>
         <source>Arc tangental</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/polyline/lc_polyline_options_filler.cpp" line="36"/>
+        <location filename="../src/ui/action_options/polyline/lc_polyline_options_filler.cpp" line="37"/>
         <source>Arc radius</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/polyline/lc_polyline_options_filler.cpp" line="37"/>
+        <location filename="../src/ui/action_options/polyline/lc_polyline_options_filler.cpp" line="38"/>
         <source>Arc angle</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/polyline/lc_polyline_options_filler.cpp" line="38"/>
+        <location filename="../src/ui/action_options/polyline/lc_polyline_options_filler.cpp" line="39"/>
         <source>Arc</source>
         <translation type="unfinished">Arc</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/polyline/lc_polyline_options_filler.cpp" line="42"/>
+        <location filename="../src/ui/action_options/polyline/lc_polyline_options_filler.cpp" line="43"/>
         <source>Segment type</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/polyline/lc_polyline_options_filler.cpp" line="42"/>
+        <location filename="../src/ui/action_options/polyline/lc_polyline_options_filler.cpp" line="43"/>
         <source>Defines type of polyline&apos;s segment to be created)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/polyline/lc_polyline_options_filler.cpp" line="50"/>
+        <location filename="../src/ui/action_options/polyline/lc_polyline_options_filler.cpp" line="51"/>
         <source>Radius</source>
         <translation type="unfinished">Poloměr</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/polyline/lc_polyline_options_filler.cpp" line="50"/>
+        <location filename="../src/ui/action_options/polyline/lc_polyline_options_filler.cpp" line="51"/>
         <source>Radius of arc</source>
         <translation type="unfinished">Poloměr oblouku</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/polyline/lc_polyline_options_filler.cpp" line="58"/>
+        <location filename="../src/ui/action_options/polyline/lc_polyline_options_filler.cpp" line="59"/>
         <source>Angle</source>
         <translation type="unfinished">Úhel</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/polyline/lc_polyline_options_filler.cpp" line="58"/>
+        <location filename="../src/ui/action_options/polyline/lc_polyline_options_filler.cpp" line="59"/>
         <source>Angle of arc</source>
         <translation type="unfinished">Úhel oblouku</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/polyline/lc_polyline_options_filler.cpp" line="68"/>
+        <location filename="../src/ui/action_options/polyline/lc_polyline_options_filler.cpp" line="69"/>
         <source>Reversed</source>
         <translation type="unfinished">Vráceno</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/polyline/lc_polyline_options_filler.cpp" line="68"/>
+        <location filename="../src/ui/action_options/polyline/lc_polyline_options_filler.cpp" line="69"/>
         <source>If selected, arc will be clockwise, otherwise - counterclockwise</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/polyline/lc_polyline_options_filler.cpp" line="77"/>
+        <location filename="../src/ui/action_options/polyline/lc_polyline_options_filler.cpp" line="78"/>
         <source>Close</source>
         <translation type="unfinished">Zavřít</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/polyline/lc_polyline_options_filler.cpp" line="77"/>
+        <location filename="../src/ui/action_options/polyline/lc_polyline_options_filler.cpp" line="78"/>
         <source>Connects endpoints of the polyline so closed contour is created</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/polyline/lc_polyline_options_filler.cpp" line="77"/>
+        <location filename="../src/ui/action_options/polyline/lc_polyline_options_filler.cpp" line="78"/>
         <source>Undo</source>
         <translation type="unfinished">Zpět</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/polyline/lc_polyline_options_filler.cpp" line="78"/>
+        <location filename="../src/ui/action_options/polyline/lc_polyline_options_filler.cpp" line="79"/>
         <source>Undo for previous vertex</source>
         <translation type="unfinished">Zpět na předchozí vrchol</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/polyline/lc_polyline_options_filler.cpp" line="85"/>
+        <location filename="../src/ui/action_options/polyline/lc_polyline_options_filler.cpp" line="86"/>
         <source>Generic commands for polyline</source>
         <translation type="unfinished"></translation>
     </message>
@@ -25529,182 +25562,192 @@ Vezměte prosím na vědomí, že pokud ušetříte pero přes editor bez restar
 <context>
     <name>LC_PrintPreviewOptionsFiller</name>
     <message>
-        <location filename="../src/ui/action_options/print_preview/lc_print_preview_options_filler.cpp" line="35"/>
+        <location filename="../src/ui/action_options/print_preview/lc_print_preview_options_filler.cpp" line="36"/>
         <source>Fixed scale</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/print_preview/lc_print_preview_options_filler.cpp" line="35"/>
+        <location filename="../src/ui/action_options/print_preview/lc_print_preview_options_filler.cpp" line="36"/>
         <source>Print Scale is locked to the current value</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/print_preview/lc_print_preview_options_filler.cpp" line="41"/>
+        <location filename="../src/ui/action_options/print_preview/lc_print_preview_options_filler.cpp" line="44"/>
+        <source>Scale</source>
+        <translation type="unfinished">Stupnice</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/action_options/print_preview/lc_print_preview_options_filler.cpp" line="44"/>
+        <source>Scale factor for printing</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/action_options/print_preview/lc_print_preview_options_filler.cpp" line="50"/>
         <source>Center page</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/print_preview/lc_print_preview_options_filler.cpp" line="41"/>
+        <location filename="../src/ui/action_options/print_preview/lc_print_preview_options_filler.cpp" line="50"/>
         <source>Page in center of drawing</source>
         <translation type="unfinished">Stránka v centru kresby</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/print_preview/lc_print_preview_options_filler.cpp" line="41"/>
+        <location filename="../src/ui/action_options/print_preview/lc_print_preview_options_filler.cpp" line="50"/>
         <source>Zoom to print</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/print_preview/lc_print_preview_options_filler.cpp" line="42"/>
+        <location filename="../src/ui/action_options/print_preview/lc_print_preview_options_filler.cpp" line="51"/>
         <source>Zoom to Print Area</source>
         <translation type="unfinished">Přiblížit do oblasti tisku</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/print_preview/lc_print_preview_options_filler.cpp" line="51"/>
+        <location filename="../src/ui/action_options/print_preview/lc_print_preview_options_filler.cpp" line="60"/>
         <source>Positioning commands</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/print_preview/lc_print_preview_options_filler.cpp" line="53"/>
+        <location filename="../src/ui/action_options/print_preview/lc_print_preview_options_filler.cpp" line="62"/>
         <source>Fit to 1 page</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/print_preview/lc_print_preview_options_filler.cpp" line="53"/>
+        <location filename="../src/ui/action_options/print_preview/lc_print_preview_options_filler.cpp" line="62"/>
         <source>Fit the content to be printed on one page</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/print_preview/lc_print_preview_options_filler.cpp" line="53"/>
+        <location filename="../src/ui/action_options/print_preview/lc_print_preview_options_filler.cpp" line="62"/>
         <source>Calc pages</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/print_preview/lc_print_preview_options_filler.cpp" line="54"/>
+        <location filename="../src/ui/action_options/print_preview/lc_print_preview_options_filler.cpp" line="63"/>
         <source>Calculate number of pages needed to contain the drawing</source>
         <translation type="unfinished">Vypočítejte počet stránek potřebných k zadržení výkresu</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/print_preview/lc_print_preview_options_filler.cpp" line="61"/>
+        <location filename="../src/ui/action_options/print_preview/lc_print_preview_options_filler.cpp" line="70"/>
         <source>Content fit command</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/print_preview/lc_print_preview_options_filler.cpp" line="63"/>
+        <location filename="../src/ui/action_options/print_preview/lc_print_preview_options_filler.cpp" line="72"/>
         <source>Scaled line width</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/print_preview/lc_print_preview_options_filler.cpp" line="63"/>
+        <location filename="../src/ui/action_options/print_preview/lc_print_preview_options_filler.cpp" line="72"/>
         <source>Apply Print Scale to line width</source>
         <translation type="unfinished">Aplikovat měřítko tisku na šířku čáry</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/print_preview/lc_print_preview_options_filler.cpp" line="69"/>
+        <location filename="../src/ui/action_options/print_preview/lc_print_preview_options_filler.cpp" line="78"/>
         <source>Black&amp;White</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/print_preview/lc_print_preview_options_filler.cpp" line="69"/>
+        <location filename="../src/ui/action_options/print_preview/lc_print_preview_options_filler.cpp" line="78"/>
         <source>Toggle Black / White mode</source>
         <translation type="unfinished">Přepnout černý / bílý režim</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/print_preview/lc_print_preview_options_filler.cpp" line="75"/>
+        <location filename="../src/ui/action_options/print_preview/lc_print_preview_options_filler.cpp" line="84"/>
         <source>Horizontal pages</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/print_preview/lc_print_preview_options_filler.cpp" line="75"/>
+        <location filename="../src/ui/action_options/print_preview/lc_print_preview_options_filler.cpp" line="84"/>
         <source>Number of pages to print by horizontal</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/print_preview/lc_print_preview_options_filler.cpp" line="84"/>
+        <location filename="../src/ui/action_options/print_preview/lc_print_preview_options_filler.cpp" line="93"/>
         <source>Vertical pages</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/print_preview/lc_print_preview_options_filler.cpp" line="84"/>
+        <location filename="../src/ui/action_options/print_preview/lc_print_preview_options_filler.cpp" line="93"/>
         <source>Number of pages to print by vertical</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/print_preview/lc_print_preview_options_filler.cpp" line="121"/>
+        <location filename="../src/ui/action_options/print_preview/lc_print_preview_options_filler.cpp" line="130"/>
         <source>Margins</source>
         <translation type="unfinished">Mříže</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/print_preview/lc_print_preview_options_filler.cpp" line="121"/>
+        <location filename="../src/ui/action_options/print_preview/lc_print_preview_options_filler.cpp" line="130"/>
         <source>Margins for print page</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/print_preview/lc_print_preview_options_filler.cpp" line="123"/>
+        <location filename="../src/ui/action_options/print_preview/lc_print_preview_options_filler.cpp" line="132"/>
         <source>Left page margin</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/print_preview/lc_print_preview_options_filler.cpp" line="124"/>
+        <location filename="../src/ui/action_options/print_preview/lc_print_preview_options_filler.cpp" line="133"/>
         <source>Right page margin</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/print_preview/lc_print_preview_options_filler.cpp" line="125"/>
+        <location filename="../src/ui/action_options/print_preview/lc_print_preview_options_filler.cpp" line="134"/>
         <source>Top page margin</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/print_preview/lc_print_preview_options_filler.cpp" line="126"/>
+        <location filename="../src/ui/action_options/print_preview/lc_print_preview_options_filler.cpp" line="135"/>
         <source>Bottom page margin</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/print_preview/lc_print_preview_options_filler.cpp" line="152"/>
+        <location filename="../src/ui/action_options/print_preview/lc_print_preview_options_filler.cpp" line="161"/>
         <source>Page size</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/print_preview/lc_print_preview_options_filler.cpp" line="152"/>
+        <location filename="../src/ui/action_options/print_preview/lc_print_preview_options_filler.cpp" line="161"/>
         <source>Size of page used for printing</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/print_preview/lc_print_preview_options_filler.cpp" line="156"/>
+        <location filename="../src/ui/action_options/print_preview/lc_print_preview_options_filler.cpp" line="165"/>
         <source>Width</source>
         <translation type="unfinished">Šířka</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/print_preview/lc_print_preview_options_filler.cpp" line="156"/>
+        <location filename="../src/ui/action_options/print_preview/lc_print_preview_options_filler.cpp" line="165"/>
         <source>Height</source>
         <translation type="unfinished">Výška</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/print_preview/lc_print_preview_options_filler.cpp" line="216"/>
+        <location filename="../src/ui/action_options/print_preview/lc_print_preview_options_filler.cpp" line="225"/>
         <source>Page</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/print_preview/lc_print_preview_options_filler.cpp" line="216"/>
+        <location filename="../src/ui/action_options/print_preview/lc_print_preview_options_filler.cpp" line="225"/>
         <source>Page format used for printing</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/print_preview/lc_print_preview_options_filler.cpp" line="221"/>
+        <location filename="../src/ui/action_options/print_preview/lc_print_preview_options_filler.cpp" line="230"/>
         <source>Landscape</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/print_preview/lc_print_preview_options_filler.cpp" line="221"/>
+        <location filename="../src/ui/action_options/print_preview/lc_print_preview_options_filler.cpp" line="230"/>
         <source>Portrait</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/print_preview/lc_print_preview_options_filler.cpp" line="234"/>
+        <location filename="../src/ui/action_options/print_preview/lc_print_preview_options_filler.cpp" line="243"/>
         <source>Orientation</source>
         <translation type="unfinished">Orientace</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/print_preview/lc_print_preview_options_filler.cpp" line="234"/>
+        <location filename="../src/ui/action_options/print_preview/lc_print_preview_options_filler.cpp" line="243"/>
         <source>Orientation of page for printing</source>
         <translation type="unfinished"></translation>
     </message>
@@ -25802,47 +25845,57 @@ Vezměte prosím na vědomí, že pokud ušetříte pero přes editor bez restar
         <translation type="unfinished">Fit to 1 Page</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/print_preview/lc_print_preview_options_widget.ui" line="378"/>
+        <location filename="../src/ui/action_options/print_preview/lc_print_preview_options_widget.ui" line="369"/>
+        <source>If enabled, paper space will include specified amount of pages organized in columns and rows</source>
+        <translation type="unfinished">Pokud je povoleno, papírový prostor bude obsahovat určené množství stránek uspořádaných ve sloupcích a řádcích</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/action_options/print_preview/lc_print_preview_options_widget.ui" line="372"/>
+        <source>Tiled Print</source>
+        <translation type="unfinished">Tištěný tisk</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/action_options/print_preview/lc_print_preview_options_widget.ui" line="388"/>
         <source>Pages Rows:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/print_preview/lc_print_preview_options_widget.ui" line="385"/>
+        <location filename="../src/ui/action_options/print_preview/lc_print_preview_options_widget.ui" line="395"/>
         <source>Amount of pages columns</source>
         <translation type="unfinished">Počet sloupců stránek</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/print_preview/lc_print_preview_options_widget.ui" line="395"/>
+        <location filename="../src/ui/action_options/print_preview/lc_print_preview_options_widget.ui" line="405"/>
         <source>Pages Columns:</source>
         <translation type="unfinished">Sloupce stránek:</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/print_preview/lc_print_preview_options_widget.ui" line="402"/>
+        <location filename="../src/ui/action_options/print_preview/lc_print_preview_options_widget.ui" line="412"/>
         <source>Amount of pages rows</source>
         <translation type="unfinished">Počet řádků stránek</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/print_preview/lc_print_preview_options_widget.ui" line="418"/>
+        <location filename="../src/ui/action_options/print_preview/lc_print_preview_options_widget.ui" line="428"/>
         <source>Calculate number of pages needed to contain the drawing</source>
         <translation type="unfinished">Vypočítejte počet stránek potřebných k zadržení výkresu</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/print_preview/lc_print_preview_options_widget.cpp" line="229"/>
+        <location filename="../src/ui/action_options/print_preview/lc_print_preview_options_widget.cpp" line="221"/>
         <source>Custom</source>
         <translation type="unfinished">Vlastní</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/print_preview/lc_print_preview_options_widget.cpp" line="378"/>
+        <location filename="../src/ui/action_options/print_preview/lc_print_preview_options_widget.cpp" line="370"/>
         <source>Invalid scale provided</source>
         <translation type="unfinished">Poskytovaná neplatná stupnice</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/print_preview/lc_print_preview_options_widget.cpp" line="436"/>
+        <location filename="../src/ui/action_options/print_preview/lc_print_preview_options_widget.cpp" line="428"/>
         <source>Paper scale factor larger than max print ratio</source>
         <translation type="unfinished">Faktor stupnice papíru větší než poměr max. tisku</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/print_preview/lc_print_preview_options_widget.cpp" line="440"/>
+        <location filename="../src/ui/action_options/print_preview/lc_print_preview_options_widget.cpp" line="432"/>
         <source>Paper scale factor smaller than min print ratio</source>
         <translation type="unfinished">Papírový faktor menší než min. poměr tisku</translation>
     </message>
@@ -25984,465 +26037,465 @@ Vezměte prosím na vědomí, že pokud ušetříte pero přes editor bez restar
 <context>
     <name>LC_PropertiesProviderArc</name>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="35"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="34"/>
         <source>Center</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="35"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="34"/>
         <source>Center point of arc</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="41"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="40"/>
         <source>Radius</source>
         <translation type="unfinished">Poloměr</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="41"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="40"/>
         <source>Radius of arc</source>
         <translation type="unfinished">Poloměr oblouku</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="47"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="46"/>
         <source>Diameter</source>
         <translation type="unfinished">Průměr</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="47"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="46"/>
         <source>Diameter of arc</source>
         <translation type="unfinished">Průměr oblouku</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="53"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="52"/>
         <source>Is Reversed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="53"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="52"/>
         <source>Clockwise direction if reversed, counterclockwise otherwise</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="60"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="59"/>
         <source>Start Angle</source>
         <translation type="unfinished">Spustit úhel</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="60"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="59"/>
         <source>Start angle of arc</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="66"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="65"/>
         <source>End Angle</source>
         <translation type="unfinished">Konec úhlu</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="66"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="65"/>
         <source>End angle of arc</source>
         <translation type="unfinished">Konečný úhel oblouku</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="74"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="73"/>
         <source>Start Point</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="74"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="73"/>
         <source>Start point of arc</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="78"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="77"/>
         <source>End Point</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="78"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="77"/>
         <source>End point of arc</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="82"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="81"/>
         <source>Arc Length</source>
         <translation type="unfinished">Délka oblouku</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="82"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="81"/>
         <source>Total angle of arc</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="88"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="87"/>
         <source>Circumference</source>
         <comment>arc</comment>
         <translation type="unfinished">Obvod</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="88"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="87"/>
         <source>Total linear length of arc</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="95"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="94"/>
         <source>Chord Length</source>
         <translation type="unfinished">Délka chordu</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="95"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="94"/>
         <source>Distance between end points of arc</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="101"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="100"/>
         <source>Sagitta</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="101"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="100"/>
         <source>Height of arc</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="107"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="106"/>
         <source>Bulge</source>
         <translation type="unfinished">Bulge</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="107"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="106"/>
         <source>Bulge of arc</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="132"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="131"/>
         <source>Tangental Arc (start)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="133"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="132"/>
         <source>Create tangental arc in start point</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="133"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="132"/>
         <source>Tangental Arc (end)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="134"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="133"/>
         <source>Create tangental arc in end point</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="135"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="134"/>
         <source>Create tangental arc</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="138"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="137"/>
         <source>Concentric arcs creation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="139"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="138"/>
         <source>Offset</source>
         <translation type="unfinished">Offset</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="139"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="138"/>
         <source>Create parallel arc via offset</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="140"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="139"/>
         <source>Parallel (Point)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="140"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="139"/>
         <source>Create parallel arc by point</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="143"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="142"/>
         <source>Arc trimming or dividing</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="144"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="143"/>
         <source>Divide</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="144"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="143"/>
         <source>Divide arc in specified point</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="145"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="144"/>
         <source>Trim</source>
         <translation type="unfinished">Trim</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="145"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="144"/>
         <source>Trim the arc by other entity</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="148"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="147"/>
         <source>Creation of circle tangental to arc</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="149"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="148"/>
         <source>Tangent Circle (2 P)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="149"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="148"/>
         <source>Create tangental circle by 2 points</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="150"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="149"/>
         <source>Tangent Circle (2 E, 1 P)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="150"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="149"/>
         <source>Create tangental circle by 2 entitites and 1 point</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="153"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="152"/>
         <source>Creation of circle tangental</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="154"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="153"/>
         <source>Tangent Circle (3 E)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="154"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="153"/>
         <source>Create tangental circle by 3 entities</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="155"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="154"/>
         <source>Tangent Circle (2 E, R)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="155"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="154"/>
         <source>Create tangental circle by 2 points and radius</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="158"/>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="163"/>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="168"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="157"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="162"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="167"/>
         <source>Creation of line tangental to circle</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="159"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="158"/>
         <source>Tangent (P,C)</source>
         <translation type="unfinished">Tangent (P, C)</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="159"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="158"/>
         <source>Create line tangental to arc</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="160"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="159"/>
         <source>Tangent (C,C)</source>
         <translation type="unfinished">Tangent (C, C)</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="160"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="159"/>
         <source>Create line tangental for two circles/arcs</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="164"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="163"/>
         <source>Orthogonal</source>
         <translation type="unfinished">Orthogonal</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="164"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="163"/>
         <source>Create line orthogonal to arc</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="165"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="164"/>
         <source>Tangent Orthogonal</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="165"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="164"/>
         <source>Create arc tangental line orthogonal to line</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="169"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="168"/>
         <source>Relative angle</source>
         <translation type="unfinished">Relativní úhel</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="169"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="168"/>
         <source>Create line with relative angle to arc</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="170"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="169"/>
         <source>Fillet</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="170"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="169"/>
         <source>Create fillet for arc</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="173"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="172"/>
         <source>Dividing arc</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="174"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="173"/>
         <source>Slice/Divide</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="174"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="173"/>
         <source>Slice or divide an arc</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="175"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="174"/>
         <source>Break/Divide</source>
         <translation type="unfinished">Přerušení / rozdělení</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="175"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="174"/>
         <source>Break or divide the arc by intesection points</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="178"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="177"/>
         <source>Creation of ellipse or bounding box</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="179"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="178"/>
         <source>Ellipse inscribed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="179"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="178"/>
         <source>Create elipse inscribed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="180"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="179"/>
         <source>Bounding box</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="180"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="179"/>
         <source>Create bounding box for arc</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="183"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="182"/>
         <source>Creation of dimension, diametric or radial</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="184"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="183"/>
         <source>Dim Diametric</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="184"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="183"/>
         <source>Create of diametric dimension for arc</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="185"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="184"/>
         <source>Dim Radial</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="185"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="184"/>
         <source>Create of radial dimension for arc</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="188"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="187"/>
         <source>Creation of dimension, angular or ordinate</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="189"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="188"/>
         <source>Dim Ordinate</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="189"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="188"/>
         <source>Create of ordinate dimension for arc</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="190"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="189"/>
         <source>Dim Arc</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="190"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="189"/>
         <source>Create of arc dimension</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="200"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="199"/>
         <source>Center marks and circle creation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="201"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="200"/>
         <source>Center mark</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="201"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="200"/>
         <source>Create center mark for selected circles and arcs</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="202"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="201"/>
         <source>Circle by arc</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="202"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="201"/>
         <source>Create circles by selected arcs</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="205"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="204"/>
         <source>Reverting direction</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="206"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="205"/>
         <source>Revert direction</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="206"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="205"/>
         <source>Change direction of arcs by swapping start and end points</source>
         <translation type="unfinished"></translation>
     </message>
@@ -27110,7 +27163,7 @@ Vezměte prosím na vědomí, že pokud ušetříte pero přes editor bez restar
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="331"/>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="701"/>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1367"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1369"/>
         <source>None</source>
         <translation type="unfinished">Žádné</translation>
     </message>
@@ -27713,22 +27766,22 @@ Vezměte prosím na vědomí, že pokud ušetříte pero přes editor bez restar
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1033"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1034"/>
         <source>Dim roundoff</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1033"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1034"/>
         <source>Specifies the distance rounding value (DIMRND variable)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1044"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1045"/>
         <source>Dim scale linear</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1045"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1046"/>
         <source>Specifies global scale factor for linear dimensions (DIMLFAC variable)</source>
         <translation type="unfinished"></translation>
     </message>
@@ -27743,495 +27796,495 @@ Vezměte prosím na vědomí, že pokud ušetříte pero přes editor bez restar
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1068"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1070"/>
         <source>Dim units</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1068"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1070"/>
         <source>Specifies units format for linear dimensions (DIMLUNIT variable)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1094"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1096"/>
         <source>Suppress leading zeros</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1095"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1097"/>
         <source>Sets suppression of leading zeros for dimensions (DIMZIN variable)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1104"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1106"/>
         <source>Suppress trailing zeros</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1105"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1107"/>
         <source>Sets suppression of trailing zeros for dimensions (DIMZIN variable)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1115"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1117"/>
         <source>Suppress zero feet</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1116"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1118"/>
         <source>Sets suppression of zero feet in dimension (DIMZIN variable)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1127"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1129"/>
         <source>Suppress zero inches</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1128"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1130"/>
         <source>Sets suppression of zero inches for dimension (DIMZIN variable)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1138"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1140"/>
         <source>Precision</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1138"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1140"/>
         <source>Specifies precision for primary units dimensions (DIMDEC variable)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1151"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1153"/>
         <source>Angle precision</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1152"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1154"/>
         <source>Specifies number of precision decimal places displayed for angular dimension text (DIMADEC variable)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1163"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1165"/>
         <source>Angle format</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1163"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1165"/>
         <source>Specifies the angle format (DIMAUNIT variable)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1177"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1179"/>
         <source>Alternate Units</source>
         <translation type="unfinished">Alternativní jednotky</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1177"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1179"/>
         <source>Alternate units for dimensions</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1181"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1183"/>
         <source>Alt enabled</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1182"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1184"/>
         <source>Sets units format for alternate units dimensions On or Off except angular (DIMALT variable)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1197"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1199"/>
         <source>Alt format</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1198"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1200"/>
         <source>Specifies units format for alternate units dimensions except angular (DIMALTU variable)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1211"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1213"/>
         <source>Alt precision</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1212"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1214"/>
         <source>Specifies precision for alternate units dimensions (DIMALTD variable)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1222"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1224"/>
         <source>Alt round</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1222"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1224"/>
         <source>Specifies distances rounding value for alternate units (DIMALTRND variable)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1238"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1240"/>
         <source>Alt scale factor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1238"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1240"/>
         <source>Specifies scale factor for alternative units (DIMALTF variable)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1265"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1267"/>
         <source>Alt suppress leading zeros</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1266"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1268"/>
         <source>Sets suppression of leading zeros for alternate units in dimension (DIMALTZ variable)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1275"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1277"/>
         <source>Alt suppress trailing zeros</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1276"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1278"/>
         <source>Sets suppression of trailing zeros for alternate units in dimension (DIMALTZ variable)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1285"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1287"/>
         <source>Alt suppress zero feet</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1286"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1288"/>
         <source>Sets suppression of zero feet for alternate units in dimension (DIMALTZ variable)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1296"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1298"/>
         <source>Alt suppress zero inches</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1297"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1299"/>
         <source>Sets suppression of zero inches for alternate units in dimension (DIMALTZ variable)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1305"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1307"/>
         <source>Alt prefix</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1305"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1307"/>
         <source>Specifies text prefix to alternate dimensions except angular (DIMAPOST variable)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1316"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1318"/>
         <source>Alt suffix</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1316"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1318"/>
         <source>Specifies text suffix to alternate dimensions except angular (DIMAPOST variable)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1348"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1350"/>
         <source>Tolerances</source>
         <translation type="unfinished">Tolerance</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1348"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1350"/>
         <source>Tolerance settings for dimensions</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1353"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1355"/>
         <source>Operational symbols</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1354"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1356"/>
         <source>Decimal separators</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1358"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1360"/>
         <source>Tolerance alignment</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1358"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1360"/>
         <source>Specifies alignment for stacked numbers (DIMTALN variable)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1367"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1369"/>
         <source>Symmetrical</source>
         <translation type="unfinished">Symetrický</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1367"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1369"/>
         <source>Deviation</source>
         <translation type="unfinished">Odchylka</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1367"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1369"/>
         <source>Limits</source>
         <translation type="unfinished">Mezní hodnoty</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1367"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1369"/>
         <source>Basic</source>
         <translation type="unfinished">Základní</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1372"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1374"/>
         <source>Tolerance display</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1373"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1375"/>
         <source>Specifies display mode of dimension tolerances to dimension text (DIMTOL variable)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1394"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1396"/>
         <source>Tolerance limit lower</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1395"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1397"/>
         <source>Specifies the minimal (or lower) tolerance limit for dimension text when DIMTOL or DIMLIM is on (DIMTM variable)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1413"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1415"/>
         <source>Tolerance limit upper</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1414"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1416"/>
         <source>Specifies the maximum (or upper) tolerance limit for dimension text when DIMTOL or DIMLIM is on (DIMTP variable)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1433"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1435"/>
         <source>Bottom</source>
         <translation type="unfinished">Dole</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1434"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1436"/>
         <source>Middle</source>
         <translation type="unfinished">Střední</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1435"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1437"/>
         <source>Top</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1441"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1443"/>
         <source>Tolerance pos vert</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1442"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1444"/>
         <source>Specifies vertical justification for tolerance values relative to nominal dimension text (DIMTOLJ variable)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1455"/>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1470"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1457"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1472"/>
         <source>Tolerance precision</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1456"/>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1471"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1458"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1473"/>
         <source>Specifies number of decimal places for tolerance values of a dimension (DIMTDEC variable)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1496"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1498"/>
         <source>Tolerance suppress leading zeros</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1497"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1499"/>
         <source>Sets suppression of leading zeros for tolerance values in dimension (DIMTZIN value)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1506"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1508"/>
         <source>Tolerance suppress trailing zeros</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1507"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1509"/>
         <source>Sets suppression of trailing zeros for tolerance values in dimension (DIMTZIN value)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1517"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1519"/>
         <source>Tolerance suppress zero feet</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1518"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1520"/>
         <source>Sets suppression of zero feet for tolerance values in dimension (DIMTZIN variable)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1528"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1530"/>
         <source>Tolerance suppress zero inches</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1529"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1531"/>
         <source>Sets suppression of zero inches for tolerance values in dimension (DIMTZIN variable)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1540"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1542"/>
         <source>Tolerance text height</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1541"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1543"/>
         <source>Specifies scale factor for text height of tolerance values relative to dimension text height as set by DIMTXT (DIMTFAC variable)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1568"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1570"/>
         <source>Alt tolerance precision</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1569"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1571"/>
         <source>Specifies number of decimal places for tolerance values of an alternate units dimension (DIMALTTD variable)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1586"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1588"/>
         <source>Alt tolerance suppress leading zeros</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1587"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1589"/>
         <source>Sets suppression of leading zeros for alternate units tolerance values in dimension (DIMALTTZ value)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1596"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1598"/>
         <source>Alt tolerance suppress trailing zeros</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1597"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1599"/>
         <source>Sets suppression of trailing zeros for alternate units tolerance values in dimension (DIMALTTZ value)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1606"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1608"/>
         <source>Alt tolerance suppress zero feet</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1607"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1609"/>
         <source>Sets suppression of zero feet for alternate units tolerance values in dimension (DIMALTTZ variable)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1617"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1619"/>
         <source>Alt tolerance suppress zero inches</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1618"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1620"/>
         <source>Sets suppression of zero inches for alterate units tolerance values in dimension (DIMALTTZ variable)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1779"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1781"/>
         <source>Dim geometry</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1779"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1781"/>
         <source>Dimension&apos;s geometry properties</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1787"/>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1788"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1789"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1790"/>
         <source>Regenerate dimensions</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1788"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1790"/>
         <source>Dim Regenerate</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertyprovider_utils.cpp" line="222"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertyprovider_utils.cpp" line="219"/>
         <source>Decimal Degrees</source>
         <translation type="unfinished">Desetinné stupně</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertyprovider_utils.cpp" line="223"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertyprovider_utils.cpp" line="220"/>
         <source>Deg/min/sec</source>
         <translation type="unfinished">Stupně/minuty/vteřiny</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertyprovider_utils.cpp" line="224"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertyprovider_utils.cpp" line="221"/>
         <source>Gradians</source>
         <translation type="unfinished">Grady</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertyprovider_utils.cpp" line="225"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertyprovider_utils.cpp" line="222"/>
         <source>Radians</source>
         <translation type="unfinished">Radiány</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertyprovider_utils.cpp" line="226"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertyprovider_utils.cpp" line="223"/>
         <source>Surveyor&apos;s units</source>
         <translation type="unfinished">Zeměměřické jednotky</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertyprovider_utils.cpp" line="236"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertyprovider_utils.cpp" line="233"/>
         <source>Scientific</source>
         <translation type="unfinished">Vědecký</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertyprovider_utils.cpp" line="237"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertyprovider_utils.cpp" line="234"/>
         <source>Decimal</source>
         <translation type="unfinished">Desetinný</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertyprovider_utils.cpp" line="238"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertyprovider_utils.cpp" line="235"/>
         <source>Engineering</source>
         <translation type="unfinished">Strojařský</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertyprovider_utils.cpp" line="239"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertyprovider_utils.cpp" line="236"/>
         <source>Architectural</source>
         <translation type="unfinished">Stavařský</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertyprovider_utils.cpp" line="240"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertyprovider_utils.cpp" line="237"/>
         <source>Fractional</source>
         <translation type="unfinished">Zlomkový</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertyprovider_utils.cpp" line="241"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertyprovider_utils.cpp" line="238"/>
         <source>Architectural (metric)</source>
         <translation type="unfinished">Architektonické (metrické)</translation>
     </message>
@@ -28498,11 +28551,21 @@ Vezměte prosím na vědomí, že pokud ušetříte pero přes editor bez restar
     <name>LC_PropertiesProviderDocument</name>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_document.cpp" line="81"/>
-        <source>Action Options</source>
+        <source>Snap Options</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_document.cpp" line="81"/>
+        <source>Options for snap settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_document.cpp" line="86"/>
+        <source>Action Options</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_document.cpp" line="86"/>
         <source>Options for currently active tool action</source>
         <translation type="unfinished"></translation>
     </message>
@@ -29275,82 +29338,82 @@ Vezměte prosím na vědomí, že pokud ušetříte pero přes editor bez restar
 <context>
     <name>LC_PropertiesProviderGraphicUnits</name>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_units.cpp" line="49"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_units.cpp" line="48"/>
         <source>Drawing Units</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_units.cpp" line="49"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_units.cpp" line="48"/>
         <source>Units and precisions for current drawing</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_units.cpp" line="71"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_units.cpp" line="70"/>
         <source>Angle</source>
         <translation type="unfinished">Úhel</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_units.cpp" line="71"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_units.cpp" line="70"/>
         <source>Format of angle units used in drawing</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_units.cpp" line="85"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_units.cpp" line="84"/>
         <source>Angle precision</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_units.cpp" line="85"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_units.cpp" line="84"/>
         <source>Precision of angular units used in drawing</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_units.cpp" line="99"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_units.cpp" line="98"/>
         <source>Linear</source>
         <translation type="unfinished">Lineární</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_units.cpp" line="99"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_units.cpp" line="98"/>
         <source>Format of linear units used in drawing</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_units.cpp" line="115"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_units.cpp" line="114"/>
         <source>Linear precision</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_units.cpp" line="116"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_units.cpp" line="115"/>
         <source>Precision of linear units units used in drawing</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_units.cpp" line="131"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_units.cpp" line="130"/>
         <source>Primary Units</source>
         <translation type="unfinished">Primární jednotky</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_units.cpp" line="131"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_units.cpp" line="130"/>
         <source>Primary linear units used by drawing</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_units.cpp" line="138"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_units.cpp" line="137"/>
         <source>Angles clockwize</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_units.cpp" line="139"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_units.cpp" line="138"/>
         <source>Direction of angles. If counterclockwize, 90 degrees is north, for clockwise - 90 degrees is south</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_units.cpp" line="156"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_units.cpp" line="155"/>
         <source>Base angle</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_units.cpp" line="157"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_units.cpp" line="156"/>
         <source>Direction of zero angle (in degrees). 0 degrees there is 3 pm.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -29427,68 +29490,68 @@ Vezměte prosím na vědomí, že pokud ušetříte pero přes editor bez restar
 <context>
     <name>LC_PropertiesProviderGraphicWorkspace</name>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_workspace.cpp" line="35"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_workspace.cpp" line="36"/>
         <source>Workspace</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_workspace.cpp" line="35"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_workspace.cpp" line="36"/>
         <source>Generic UI settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_workspace.cpp" line="55"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_workspace.cpp" line="56"/>
         <source>&lt;Select Workspace&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_workspace.cpp" line="76"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_workspace.cpp" line="77"/>
         <source>Workspace to use</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_workspace.cpp" line="76"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_workspace.cpp" line="77"/>
         <source>Restores one of previously saved workspaces</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_workspace.cpp" line="97"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_workspace.cpp" line="98"/>
         <source>Fullscreen</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_workspace.cpp" line="97"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_workspace.cpp" line="98"/>
         <source>Defines whether main window is shown in fullscreen window or not</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_workspace.cpp" line="102"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_workspace.cpp" line="103"/>
         <source>Main menu</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_workspace.cpp" line="102"/>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_workspace.cpp" line="107"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_workspace.cpp" line="103"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_workspace.cpp" line="108"/>
         <source>Defines whether main menu is shown or not</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_workspace.cpp" line="107"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_workspace.cpp" line="108"/>
         <source>Statusbar</source>
         <translation type="unfinished">Statusbar</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_workspace.cpp" line="117"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_workspace.cpp" line="118"/>
         <source>Save workspace...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_workspace.cpp" line="118"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_workspace.cpp" line="119"/>
         <source>Save current workspace for later use</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_workspace.cpp" line="119"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_workspace.cpp" line="120"/>
         <source>Saving current workspace for later use</source>
         <translation type="unfinished"></translation>
     </message>
@@ -30014,454 +30077,454 @@ Vezměte prosím na vědomí, že pokud ušetříte pero přes editor bez restar
 <context>
     <name>LC_PropertiesProviderLine</name>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="39"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="35"/>
         <source>Start</source>
         <translation type="unfinished">Start</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="39"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="35"/>
         <source>Start point of line</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="45"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="41"/>
         <source>End</source>
         <translation type="unfinished">Konec</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="45"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="41"/>
         <source>End point of line</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="53"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="49"/>
         <source>Length</source>
         <translation type="unfinished">Délka</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="53"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="49"/>
         <source>Length of line</source>
         <translation type="unfinished">Délka čáry</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="59"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="55"/>
         <source>Angle 1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="59"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="55"/>
         <source>Angle from 0.0 to first point of line</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="65"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="61"/>
         <source>Angle 2</source>
         <translation type="unfinished">Úhel 2</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="65"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="61"/>
         <source>Angle from 0.0 to second point of line</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="81"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="77"/>
         <source>Delta</source>
         <translation type="unfinished">Delta</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="81"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="77"/>
         <source>Distance between start and end point</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="92"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="88"/>
         <source>Middle Point</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="92"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="88"/>
         <source>Middle point of line</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="102"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="98"/>
         <source>Length and lines join</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="103"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="99"/>
         <source>Lengthen</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="103"/>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="144"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="99"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="140"/>
         <source>Create parallel line through point</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="104"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="100"/>
         <source>Line Join</source>
         <translation type="unfinished">Připojit řádek</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="104"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="100"/>
         <source>Join two lines</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="107"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="103"/>
         <source>Trimming two lines</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="108"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="104"/>
         <source>Trim</source>
         <translation type="unfinished">Trim</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="108"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="104"/>
         <source>Trim line by limiting entity</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="109"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="105"/>
         <source>Trim Two</source>
         <translation type="unfinished">Trim 2</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="109"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="105"/>
         <source>Trim two lines</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="112"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="108"/>
         <source>Cutting and gap</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="113"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="109"/>
         <source>Divide</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="113"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="109"/>
         <source>Divide line</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="114"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="110"/>
         <source>Line Gap</source>
         <translation type="unfinished">Line Gap</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="114"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="110"/>
         <source>Break the line by gap</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="136"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="132"/>
         <source>Tangental Arc (start)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="137"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="133"/>
         <source>Create tangental arc in start point</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="138"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="134"/>
         <source>Tangental Arc (end)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="138"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="134"/>
         <source>Create tangental arc in end point</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="139"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="135"/>
         <source>Creation of tangental arc</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="143"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="139"/>
         <source>Creation of parallels or bisector lines</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="144"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="140"/>
         <source>Parallel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="145"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="141"/>
         <source>Bisector</source>
         <translation type="unfinished">Bisector</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="145"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="141"/>
         <source>Create bisector between lines</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="148"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="144"/>
         <source>Creating orthogonal or relative angle lines</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="149"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="145"/>
         <source>Orthogonal</source>
         <translation type="unfinished">Orthogonal</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="149"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="145"/>
         <source>Create line orhtogonal to this line</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="150"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="146"/>
         <source>Relative Angle</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="150"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="146"/>
         <source>Create line with related angle to this line</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="153"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="149"/>
         <source>Creation line from point or tangental orthogonal</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="154"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="150"/>
         <source>Line from Point</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="154"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="150"/>
         <source>Create line from point to this line</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="155"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="151"/>
         <source>Tangent Ort</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="155"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="151"/>
         <source>Create orthogonal line that is tangental to other entity</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="158"/>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="163"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="154"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="159"/>
         <source>Creation of circle tangental to line</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="159"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="155"/>
         <source>Tangential Circle (2 P)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="159"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="155"/>
         <source>Create circle tangental 2 points</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="160"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="156"/>
         <source>Tangential Circle (2 E, 1 P)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="160"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="156"/>
         <source>Create circle tangental by 2 entitites and 1 point</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="164"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="160"/>
         <source>Tangential Circle (3 E)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="164"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="160"/>
         <source>Create circle tangental to 3 entities</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="165"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="161"/>
         <source>Tangential Cicle (2 E, R)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="165"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="161"/>
         <source>Create circle tangental by 2 entities and radius</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="168"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="164"/>
         <source>Creation of ellipse or bounding box</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="169"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="165"/>
         <source>Ellipse inscribed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="169"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="165"/>
         <source>Create elipse inscribed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="170"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="166"/>
         <source>Bounding box</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="170"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="166"/>
         <source>Create of bounding box for line</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="173"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="169"/>
         <source>Modification of line with bevel or fillet</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="174"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="170"/>
         <source>Bevel</source>
         <translation type="unfinished">Bevel</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="174"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="170"/>
         <source>Create a bevel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="175"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="171"/>
         <source>Round</source>
         <translation type="unfinished">Kulaté</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="175"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="171"/>
         <source>Create rounding between line and other entity</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="178"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="174"/>
         <source>Dividing line</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="179"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="175"/>
         <source>Slice/Divide</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="179"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="175"/>
         <source>Slice or divide a line</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="180"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="176"/>
         <source>Break/Divide</source>
         <translation type="unfinished">Přerušení / rozdělení</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="180"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="176"/>
         <source>Break or divide the line by intesection points</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="182"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="178"/>
         <source>Center line</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="183"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="179"/>
         <source>Centerline</source>
         <translation type="unfinished">Centerline</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="183"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="179"/>
         <source>Create center line between two lines</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="184"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="180"/>
         <source>Radiant</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="184"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="180"/>
         <source>Create radiant line from center point</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="187"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="183"/>
         <source>Creation of dimension, aligned or linear</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="188"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="184"/>
         <source>Dim Aligned</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="188"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="184"/>
         <source>Create aligned dimension for line</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="189"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="185"/>
         <source>Dim Linear</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="189"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="185"/>
         <source>Create linear dimension for line</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="192"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="188"/>
         <source>Creation of dimension, angular or ordinate</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="193"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="189"/>
         <source>Dim Angular</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="193"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="189"/>
         <source>Create angular dimension for line</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="194"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="190"/>
         <source>Dim Ordinate</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="194"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="190"/>
         <source>Create ordinate dimension for line</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="206"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="202"/>
         <source>Reverting direction</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="207"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="203"/>
         <source>Revert direction</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="207"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="203"/>
         <source>Change direction of line by swapping start and end points</source>
         <translation type="unfinished"></translation>
     </message>
@@ -31289,192 +31352,192 @@ Vezměte prosím na vědomí, že pokud ušetříte pero přes editor bez restar
 <context>
     <name>LC_PropertiesProviderSplinePoints</name>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_splinepoints.cpp" line="30"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_splinepoints.cpp" line="31"/>
         <source>Closed</source>
         <translation type="unfinished">Zavřeno</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_splinepoints.cpp" line="30"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_splinepoints.cpp" line="31"/>
         <source>Determines whether spline is closed or not</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_splinepoints.cpp" line="37"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_splinepoints.cpp" line="38"/>
         <source>Points Count</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_splinepoints.cpp" line="37"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_splinepoints.cpp" line="38"/>
         <source>Amount of spline points</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_splinepoints.cpp" line="63"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_splinepoints.cpp" line="64"/>
         <source>Control Point Index</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_splinepoints.cpp" line="63"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_splinepoints.cpp" line="64"/>
         <source>Fit Point Index</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_splinepoints.cpp" line="64"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_splinepoints.cpp" line="65"/>
         <source>Index of current point of spline</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_splinepoints.cpp" line="65"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_splinepoints.cpp" line="66"/>
         <source>Control Point</source>
         <translation type="unfinished">Kontrolní bod</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_splinepoints.cpp" line="65"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_splinepoints.cpp" line="66"/>
         <source>Control point of spline with given index</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_splinepoints.cpp" line="77"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_splinepoints.cpp" line="78"/>
         <source>Length</source>
         <translation type="unfinished">Délka</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_splinepoints.cpp" line="77"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_splinepoints.cpp" line="78"/>
         <source>Length of spline</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_splinepoints.cpp" line="84"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_splinepoints.cpp" line="85"/>
         <source>Start</source>
         <translation type="unfinished">Start</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_splinepoints.cpp" line="84"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_splinepoints.cpp" line="85"/>
         <source>Start point of spline</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_splinepoints.cpp" line="88"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_splinepoints.cpp" line="89"/>
         <source>End</source>
         <translation type="unfinished">Konec</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_splinepoints.cpp" line="88"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_splinepoints.cpp" line="89"/>
         <source>End point of spline</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_splinepoints.cpp" line="98"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_splinepoints.cpp" line="99"/>
         <source>Spline points adding</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_splinepoints.cpp" line="99"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_splinepoints.cpp" line="100"/>
         <source>Insert point</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_splinepoints.cpp" line="99"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_splinepoints.cpp" line="100"/>
         <source>Insert point of spline</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_splinepoints.cpp" line="100"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_splinepoints.cpp" line="101"/>
         <source>Append point</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_splinepoints.cpp" line="100"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_splinepoints.cpp" line="101"/>
         <source>Append point to start or end points of spline</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_splinepoints.cpp" line="103"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_splinepoints.cpp" line="104"/>
         <source>Spline points removal</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_splinepoints.cpp" line="104"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_splinepoints.cpp" line="105"/>
         <source>Remove point</source>
         <translation type="unfinished">Odstranit bod</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_splinepoints.cpp" line="104"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_splinepoints.cpp" line="105"/>
         <source>Remove point of spline</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_splinepoints.cpp" line="105"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_splinepoints.cpp" line="106"/>
         <source>Delete between 2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_splinepoints.cpp" line="105"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_splinepoints.cpp" line="106"/>
         <source>Delete points between two points of spline</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_splinepoints.cpp" line="108"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_splinepoints.cpp" line="109"/>
         <source>Dividing and exploding spline</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_splinepoints.cpp" line="109"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_splinepoints.cpp" line="110"/>
         <source>Divide</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_splinepoints.cpp" line="109"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_splinepoints.cpp" line="110"/>
         <source>Divide spline in provided point</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_splinepoints.cpp" line="110"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_splinepoints.cpp" line="111"/>
         <source>Explode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_splinepoints.cpp" line="110"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_splinepoints.cpp" line="111"/>
         <source>Explode spline to lines</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_splinepoints.cpp" line="113"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_splinepoints.cpp" line="114"/>
         <source>Tangent and rounding box</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_splinepoints.cpp" line="114"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_splinepoints.cpp" line="115"/>
         <source>Tangent (P,C)</source>
         <translation type="unfinished">Tangent (P, C)</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_splinepoints.cpp" line="114"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_splinepoints.cpp" line="115"/>
         <source>Create tangental line in given position of spline</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_splinepoints.cpp" line="115"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_splinepoints.cpp" line="116"/>
         <source>Rounding box</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_splinepoints.cpp" line="115"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_splinepoints.cpp" line="116"/>
         <source>Create bounding box around spline</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_splinepoints.cpp" line="126"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_splinepoints.cpp" line="127"/>
         <source>Reverting direction</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_splinepoints.cpp" line="127"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_splinepoints.cpp" line="128"/>
         <source>Revert direction</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_splinepoints.cpp" line="127"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_splinepoints.cpp" line="128"/>
         <source>Change direction of spline by swapping start and end points</source>
         <translation type="unfinished"></translation>
     </message>
@@ -31686,12 +31749,12 @@ Vezměte prosím na vědomí, že pokud ušetříte pero přes editor bez restar
 <context>
     <name>LC_PropertiesSheet</name>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/lib/view/lc_property_view.cpp" line="238"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/lib/view/lc_property_view.cpp" line="241"/>
         <source>Click to expand</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/lib/view/lc_property_view.cpp" line="239"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/lib/view/lc_property_view.cpp" line="242"/>
         <source>Click to collapse</source>
         <translation type="unfinished"></translation>
     </message>
@@ -31699,7 +31762,7 @@ Vezměte prosím na vědomí, že pokud ušetříte pero přes editor bez restar
 <context>
     <name>LC_Property</name>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/lib/properties/lc_property.h" line="125"/>
+        <location filename="../src/lib/properties/lc_property.h" line="125"/>
         <source>(VARIES)</source>
         <translation type="unfinished"></translation>
     </message>
@@ -31733,27 +31796,27 @@ Vezměte prosím na vědomí, že pokud ušetříte pero přes editor bez restar
 <context>
     <name>LC_PropertyDoubleInteractivePickView</name>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/properties/double/lc_property_double_interactivepick_view.cpp" line="176"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/properties/double/lc_property_double_interactivepick_view.cpp" line="173"/>
         <source>Pick X component of position from drawing</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/properties/double/lc_property_double_interactivepick_view.cpp" line="178"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/properties/double/lc_property_double_interactivepick_view.cpp" line="175"/>
         <source>Pick Y component of position from drawing</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/properties/double/lc_property_double_interactivepick_view.cpp" line="180"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/properties/double/lc_property_double_interactivepick_view.cpp" line="177"/>
         <source>Pick coordinates of point from drawing</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/properties/double/lc_property_double_interactivepick_view.cpp" line="182"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/properties/double/lc_property_double_interactivepick_view.cpp" line="179"/>
         <source>Pick angle value from drawing</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/properties/double/lc_property_double_interactivepick_view.cpp" line="184"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/properties/double/lc_property_double_interactivepick_view.cpp" line="181"/>
         <source>Pick value as distance from drawing</source>
         <translation type="unfinished"></translation>
     </message>
@@ -31761,17 +31824,17 @@ Vezměte prosím na vědomí, že pokud ušetříte pero přes editor bez restar
 <context>
     <name>LC_PropertyQString</name>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/properties/string/lc_property_qstring.cpp" line="38"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/properties/string/lc_property_qstring.cpp" line="40"/>
         <source>(Empty)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/properties/string/lc_property_qstring.cpp" line="43"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/properties/string/lc_property_qstring.cpp" line="45"/>
         <source>(Multiline Text)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/properties/string/lc_property_qstring.cpp" line="54"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/properties/string/lc_property_qstring.cpp" line="56"/>
         <source>%1 (Read only)</source>
         <translation type="unfinished"></translation>
     </message>
@@ -31795,27 +31858,27 @@ Vezměte prosím na vědomí, že pokud ušetříte pero přes editor bez restar
 <context>
     <name>LC_PropertyRSVector</name>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/properties/rsvector/lc_property_rsvector.cpp" line="55"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/properties/rsvector/lc_property_rsvector.cpp" line="56"/>
         <source>X</source>
         <translation type="unfinished">X</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/properties/rsvector/lc_property_rsvector.cpp" line="59"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/properties/rsvector/lc_property_rsvector.cpp" line="60"/>
         <source>X of the %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/properties/rsvector/lc_property_rsvector.cpp" line="63"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/properties/rsvector/lc_property_rsvector.cpp" line="64"/>
         <source>Y</source>
         <translation type="unfinished">Y</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/properties/rsvector/lc_property_rsvector.cpp" line="67"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/properties/rsvector/lc_property_rsvector.cpp" line="68"/>
         <source>Y of the %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/properties/rsvector/lc_property_rsvector.cpp" line="71"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/properties/rsvector/lc_property_rsvector.cpp" line="72"/>
         <source>[%1, %2]</source>
         <translation type="unfinished"></translation>
     </message>
@@ -31823,7 +31886,7 @@ Vezměte prosím na vědomí, že pokud ušetříte pero přes editor bez restar
 <context>
     <name>LC_PropertyRSVectorView</name>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/properties/rsvector/lc_property_rsvector_view.cpp" line="145"/>
+        <location filename="../src/ui/dock_widgets/property_sheet/properties/rsvector/lc_property_rsvector_view.cpp" line="143"/>
         <source>Pick coordinate from drawing</source>
         <translation type="unfinished"></translation>
     </message>
@@ -33437,117 +33500,117 @@ p, li {white- space: pre- wrap;}
 <context>
     <name>LC_Rectangle1PointOptionsFiller</name>
     <message>
-        <location filename="../src/ui/action_options/rect/lc_rectangle_1_point_options_filler.cpp" line="31"/>
+        <location filename="../src/ui/action_options/rect/lc_rectangle_1_point_options_filler.cpp" line="32"/>
         <source>Width</source>
         <translation type="unfinished">Šířka</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/rect/lc_rectangle_1_point_options_filler.cpp" line="31"/>
+        <location filename="../src/ui/action_options/rect/lc_rectangle_1_point_options_filler.cpp" line="32"/>
         <source>Width of rectangle</source>
         <translation type="unfinished">Šířka obdélníku</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/rect/lc_rectangle_1_point_options_filler.cpp" line="37"/>
+        <location filename="../src/ui/action_options/rect/lc_rectangle_1_point_options_filler.cpp" line="38"/>
         <source>Height</source>
         <translation type="unfinished">Výška</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/rect/lc_rectangle_1_point_options_filler.cpp" line="37"/>
+        <location filename="../src/ui/action_options/rect/lc_rectangle_1_point_options_filler.cpp" line="38"/>
         <source>Height of rectangle</source>
         <translation type="unfinished">Výška obdélníku</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/rect/lc_rectangle_1_point_options_filler.cpp" line="46"/>
+        <location filename="../src/ui/action_options/rect/lc_rectangle_1_point_options_filler.cpp" line="47"/>
         <source>Top-left</source>
         <translation type="unfinished">Vlevo nahoře</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/rect/lc_rectangle_1_point_options_filler.cpp" line="47"/>
+        <location filename="../src/ui/action_options/rect/lc_rectangle_1_point_options_filler.cpp" line="48"/>
         <source>Top</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/rect/lc_rectangle_1_point_options_filler.cpp" line="48"/>
+        <location filename="../src/ui/action_options/rect/lc_rectangle_1_point_options_filler.cpp" line="49"/>
         <source>Top-right</source>
         <translation type="unfinished">Top- right</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/rect/lc_rectangle_1_point_options_filler.cpp" line="49"/>
+        <location filename="../src/ui/action_options/rect/lc_rectangle_1_point_options_filler.cpp" line="50"/>
         <source>Left</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/rect/lc_rectangle_1_point_options_filler.cpp" line="50"/>
+        <location filename="../src/ui/action_options/rect/lc_rectangle_1_point_options_filler.cpp" line="51"/>
         <source>Middle</source>
         <translation type="unfinished">Střední</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/rect/lc_rectangle_1_point_options_filler.cpp" line="51"/>
+        <location filename="../src/ui/action_options/rect/lc_rectangle_1_point_options_filler.cpp" line="52"/>
         <source>Right</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/rect/lc_rectangle_1_point_options_filler.cpp" line="52"/>
+        <location filename="../src/ui/action_options/rect/lc_rectangle_1_point_options_filler.cpp" line="53"/>
         <source>Bottom-left</source>
         <translation type="unfinished">Vlevo dole</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/rect/lc_rectangle_1_point_options_filler.cpp" line="53"/>
+        <location filename="../src/ui/action_options/rect/lc_rectangle_1_point_options_filler.cpp" line="54"/>
         <source>Bottom</source>
         <translation type="unfinished">Dole</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/rect/lc_rectangle_1_point_options_filler.cpp" line="54"/>
+        <location filename="../src/ui/action_options/rect/lc_rectangle_1_point_options_filler.cpp" line="55"/>
         <source>Bottom-right</source>
         <translation type="unfinished">Vpravo dole</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/rect/lc_rectangle_1_point_options_filler.cpp" line="58"/>
+        <location filename="../src/ui/action_options/rect/lc_rectangle_1_point_options_filler.cpp" line="59"/>
         <source>Snap</source>
         <translation type="unfinished">Snap</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/rect/lc_rectangle_1_point_options_filler.cpp" line="58"/>
+        <location filename="../src/ui/action_options/rect/lc_rectangle_1_point_options_filler.cpp" line="59"/>
         <source>Point of rectangle wich will be placed to insertion point. </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/rect/lc_rectangle_1_point_options_filler.cpp" line="65"/>
+        <location filename="../src/ui/action_options/rect/lc_rectangle_1_point_options_filler.cpp" line="66"/>
         <source>Rotated</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/rect/lc_rectangle_1_point_options_filler.cpp" line="65"/>
+        <location filename="../src/ui/action_options/rect/lc_rectangle_1_point_options_filler.cpp" line="66"/>
         <source>If checked, rectangle will be rotated on specified angle</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/rect/lc_rectangle_1_point_options_filler.cpp" line="72"/>
+        <location filename="../src/ui/action_options/rect/lc_rectangle_1_point_options_filler.cpp" line="73"/>
         <source>Angle is Free</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/rect/lc_rectangle_1_point_options_filler.cpp" line="73"/>
+        <location filename="../src/ui/action_options/rect/lc_rectangle_1_point_options_filler.cpp" line="74"/>
         <source>If checked, angle will be specified by mouse position. Otherwise, specified value will be used.</source>
         <translation type="unfinished">Pokud je zaškrtnuto, úhel bude určen polohou myši. Jinak se použije zadaná hodnota.</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/rect/lc_rectangle_1_point_options_filler.cpp" line="78"/>
+        <location filename="../src/ui/action_options/rect/lc_rectangle_1_point_options_filler.cpp" line="79"/>
         <source>Angle</source>
         <translation type="unfinished">Úhel</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/rect/lc_rectangle_1_point_options_filler.cpp" line="78"/>
+        <location filename="../src/ui/action_options/rect/lc_rectangle_1_point_options_filler.cpp" line="79"/>
         <source>Rotation angle</source>
         <translation type="unfinished">Úhel otáčení</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/rect/lc_rectangle_1_point_options_filler.cpp" line="82"/>
+        <location filename="../src/ui/action_options/rect/lc_rectangle_1_point_options_filler.cpp" line="83"/>
         <source>Polyline</source>
         <translation type="unfinished">Polyline</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/rect/lc_rectangle_1_point_options_filler.cpp" line="82"/>
+        <location filename="../src/ui/action_options/rect/lc_rectangle_1_point_options_filler.cpp" line="83"/>
         <source>If checked, rectangle will be created as polyline instead of individual segments</source>
         <translation type="unfinished"></translation>
     </message>
@@ -33950,72 +34013,72 @@ p, li {white- space: pre- wrap;}
 <context>
     <name>LC_Rectangle2PointsOptionsFiller</name>
     <message>
-        <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_filler.cpp" line="35"/>
+        <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_filler.cpp" line="36"/>
         <source>Corner</source>
         <translation type="unfinished">Roh</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_filler.cpp" line="36"/>
+        <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_filler.cpp" line="37"/>
         <source>Mid-vertical</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_filler.cpp" line="37"/>
+        <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_filler.cpp" line="38"/>
         <source>Mid-horizontal</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_filler.cpp" line="38"/>
+        <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_filler.cpp" line="39"/>
         <source>Middle</source>
         <translation type="unfinished">Střední</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_filler.cpp" line="42"/>
+        <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_filler.cpp" line="43"/>
         <source>Start Snap</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_filler.cpp" line="42"/>
+        <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_filler.cpp" line="43"/>
         <source>Defines which point of rectangle should be placed into start point position</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_filler.cpp" line="49"/>
+        <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_filler.cpp" line="50"/>
         <source>End Snap</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_filler.cpp" line="49"/>
+        <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_filler.cpp" line="50"/>
         <source>Defines which point of rectangle should be placed into end point position</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_filler.cpp" line="56"/>
+        <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_filler.cpp" line="57"/>
         <source>Rotated</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_filler.cpp" line="56"/>
+        <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_filler.cpp" line="57"/>
         <source>If checked, allows to specify rotation angle for rectangle.</source>
         <translation type="unfinished">Pokud je zaškrtnuto, umožňuje určit úhel otáčení pro obdélník.</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_filler.cpp" line="63"/>
+        <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_filler.cpp" line="64"/>
         <source>Angle</source>
         <translation type="unfinished">Úhel</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_filler.cpp" line="63"/>
+        <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_filler.cpp" line="64"/>
         <source>Rotation angle</source>
         <translation type="unfinished">Úhel otáčení</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_filler.cpp" line="67"/>
+        <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_filler.cpp" line="68"/>
         <source>Polyline</source>
         <translation type="unfinished">Polyline</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_filler.cpp" line="67"/>
+        <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_filler.cpp" line="68"/>
         <source>If checked, rectangle will be created as polyline instead of individual segments</source>
         <translation type="unfinished"></translation>
     </message>
@@ -34359,52 +34422,52 @@ p, li {white- space: pre- wrap;}
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/rect/lc_rectangle_3_points_options_filler.cpp" line="41"/>
+        <location filename="../src/ui/action_options/rect/lc_rectangle_3_points_options_filler.cpp" line="40"/>
         <source>Fixed inner angle</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/rect/lc_rectangle_3_points_options_filler.cpp" line="41"/>
+        <location filename="../src/ui/action_options/rect/lc_rectangle_3_points_options_filler.cpp" line="40"/>
         <source>If checked, inner angle of quadrangle will be fixed to specified value</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/rect/lc_rectangle_3_points_options_filler.cpp" line="48"/>
+        <location filename="../src/ui/action_options/rect/lc_rectangle_3_points_options_filler.cpp" line="47"/>
         <source>Inner Angle</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/rect/lc_rectangle_3_points_options_filler.cpp" line="48"/>
+        <location filename="../src/ui/action_options/rect/lc_rectangle_3_points_options_filler.cpp" line="47"/>
         <source>Inner angle of quadrangle</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/rect/lc_rectangle_3_points_options_filler.cpp" line="54"/>
+        <location filename="../src/ui/action_options/rect/lc_rectangle_3_points_options_filler.cpp" line="53"/>
         <source>Fixed base angle</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/rect/lc_rectangle_3_points_options_filler.cpp" line="54"/>
+        <location filename="../src/ui/action_options/rect/lc_rectangle_3_points_options_filler.cpp" line="53"/>
         <source>If checked, allows to specify rotation angle for rectangle.</source>
         <translation type="unfinished">Pokud je zaškrtnuto, umožňuje určit úhel otáčení pro obdélník.</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/rect/lc_rectangle_3_points_options_filler.cpp" line="61"/>
+        <location filename="../src/ui/action_options/rect/lc_rectangle_3_points_options_filler.cpp" line="60"/>
         <source>Angle</source>
         <translation type="unfinished">Úhel</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/rect/lc_rectangle_3_points_options_filler.cpp" line="61"/>
+        <location filename="../src/ui/action_options/rect/lc_rectangle_3_points_options_filler.cpp" line="60"/>
         <source>Rotation angle</source>
         <translation type="unfinished">Úhel otáčení</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/rect/lc_rectangle_3_points_options_filler.cpp" line="65"/>
+        <location filename="../src/ui/action_options/rect/lc_rectangle_3_points_options_filler.cpp" line="64"/>
         <source>Polyline</source>
         <translation type="unfinished">Polyline</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/rect/lc_rectangle_3_points_options_filler.cpp" line="65"/>
+        <location filename="../src/ui/action_options/rect/lc_rectangle_3_points_options_filler.cpp" line="64"/>
         <source>If checked, rectangle will be created as polyline instead of individual segments</source>
         <translation type="unfinished"></translation>
     </message>
@@ -34585,102 +34648,102 @@ p, li {white- space: pre- wrap;}
 <context>
     <name>LC_RectangleAbstractOptionsFiller</name>
     <message>
-        <location filename="../src/ui/action_options/rect/lc_rectangle_abstract_options_filler.cpp" line="32"/>
+        <location filename="../src/ui/action_options/rect/lc_rectangle_abstract_options_filler.cpp" line="33"/>
         <source>Both</source>
         <translation type="unfinished">Obojí</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/rect/lc_rectangle_abstract_options_filler.cpp" line="33"/>
+        <location filename="../src/ui/action_options/rect/lc_rectangle_abstract_options_filler.cpp" line="34"/>
         <source>Vertical</source>
         <translation type="unfinished">Vertikální</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/rect/lc_rectangle_abstract_options_filler.cpp" line="34"/>
+        <location filename="../src/ui/action_options/rect/lc_rectangle_abstract_options_filler.cpp" line="35"/>
         <source>Horizontal</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/rect/lc_rectangle_abstract_options_filler.cpp" line="40"/>
+        <location filename="../src/ui/action_options/rect/lc_rectangle_abstract_options_filler.cpp" line="41"/>
         <source>Edges</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/rect/lc_rectangle_abstract_options_filler.cpp" line="41"/>
+        <location filename="../src/ui/action_options/rect/lc_rectangle_abstract_options_filler.cpp" line="42"/>
         <source>Defines which edges of rectangle should be drawn (so it is possible to create just two parallel lines instead of rectangle)</source>
         <translation type="unfinished">Definuje, které hrany obdélníku by měly být taženy (takže je možné vytvořit jen dvě rovnoběžné čáry namísto obdélníku)</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/rect/lc_rectangle_abstract_options_filler.cpp" line="55"/>
+        <location filename="../src/ui/action_options/rect/lc_rectangle_abstract_options_filler.cpp" line="56"/>
         <source>Straight</source>
         <translation type="unfinished">Rovné</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/rect/lc_rectangle_abstract_options_filler.cpp" line="56"/>
+        <location filename="../src/ui/action_options/rect/lc_rectangle_abstract_options_filler.cpp" line="57"/>
         <source>Round</source>
         <translation type="unfinished">Kulaté</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/rect/lc_rectangle_abstract_options_filler.cpp" line="57"/>
+        <location filename="../src/ui/action_options/rect/lc_rectangle_abstract_options_filler.cpp" line="58"/>
         <source>Bevel</source>
         <translation type="unfinished">Bevel</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/rect/lc_rectangle_abstract_options_filler.cpp" line="61"/>
+        <location filename="../src/ui/action_options/rect/lc_rectangle_abstract_options_filler.cpp" line="62"/>
         <source>Corners</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/rect/lc_rectangle_abstract_options_filler.cpp" line="61"/>
+        <location filename="../src/ui/action_options/rect/lc_rectangle_abstract_options_filler.cpp" line="62"/>
         <source>Controls how corners of rectangle should be drawn</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/rect/lc_rectangle_abstract_options_filler.cpp" line="76"/>
+        <location filename="../src/ui/action_options/rect/lc_rectangle_abstract_options_filler.cpp" line="77"/>
         <source>Radius</source>
         <translation type="unfinished">Poloměr</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/rect/lc_rectangle_abstract_options_filler.cpp" line="76"/>
+        <location filename="../src/ui/action_options/rect/lc_rectangle_abstract_options_filler.cpp" line="77"/>
         <source>Radius of rounded corners</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/rect/lc_rectangle_abstract_options_filler.cpp" line="84"/>
+        <location filename="../src/ui/action_options/rect/lc_rectangle_abstract_options_filler.cpp" line="85"/>
         <source>Snap Shift</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/rect/lc_rectangle_abstract_options_filler.cpp" line="85"/>
+        <location filename="../src/ui/action_options/rect/lc_rectangle_abstract_options_filler.cpp" line="86"/>
         <source>If checked, specifies that snap point should be shifted by radius of corners.</source>
         <translation type="unfinished">Pokud je zaškrtnuto, specifikuje se, že bod zlomu se posune o poloměr rohů.</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/rect/lc_rectangle_abstract_options_filler.cpp" line="96"/>
+        <location filename="../src/ui/action_options/rect/lc_rectangle_abstract_options_filler.cpp" line="97"/>
         <source>Size inner</source>
         <translation type="unfinished">Vnitřní velikost</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/rect/lc_rectangle_abstract_options_filler.cpp" line="97"/>
+        <location filename="../src/ui/action_options/rect/lc_rectangle_abstract_options_filler.cpp" line="98"/>
         <source>If checked, specified height and width of rectangle defines distance between centers of arcs for rounding corners. Otherwise, these values defines outer size of the rectangle</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/rect/lc_rectangle_abstract_options_filler.cpp" line="108"/>
+        <location filename="../src/ui/action_options/rect/lc_rectangle_abstract_options_filler.cpp" line="109"/>
         <source>Length X</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/rect/lc_rectangle_abstract_options_filler.cpp" line="108"/>
+        <location filename="../src/ui/action_options/rect/lc_rectangle_abstract_options_filler.cpp" line="109"/>
         <source>Length of bevel corner for X direction</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/rect/lc_rectangle_abstract_options_filler.cpp" line="114"/>
+        <location filename="../src/ui/action_options/rect/lc_rectangle_abstract_options_filler.cpp" line="115"/>
         <source>Length Y</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/rect/lc_rectangle_abstract_options_filler.cpp" line="114"/>
+        <location filename="../src/ui/action_options/rect/lc_rectangle_abstract_options_filler.cpp" line="115"/>
         <source>Length of bevel corner for Y direction</source>
         <translation type="unfinished"></translation>
     </message>
@@ -34711,285 +34774,285 @@ p, li {white- space: pre- wrap;}
         <translation type="unfinished">Formulář</translation>
     </message>
     <message>
-        <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="74"/>
-        <source>Base point coordinates, relative coordinates will be calculated against this point</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="77"/>
-        <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.cpp" line="304"/>
+        <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="51"/>
+        <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.cpp" line="328"/>
         <source>Base point:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="84"/>
-        <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="114"/>
+        <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="71"/>
+        <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="78"/>
         <source>-99.9999, -9999.99999</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="104"/>
+        <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="38"/>
         <source>Projected position of the point</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="107"/>
+        <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="41"/>
         <source>Projected:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="124"/>
+        <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="1231"/>
+        <source>&lt;p&gt;If checked, activates relative coordinates mode that calculates point position using offset from the base point. &lt;/p&gt;&lt;p&gt;Otherwise - absolute coordinates mode.&lt;/p&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="1234"/>
         <source>By Offset</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="155"/>
-        <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="1012"/>
+        <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="109"/>
+        <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="966"/>
         <source>Offset by X from base to new point</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="158"/>
+        <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="48"/>
+        <source>&lt;p&gt;Base point coordinates. &lt;/p&gt;&lt;p&gt;Relative coordinates will be calculated based on this point&lt;/p&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="112"/>
         <source>Offset X:</source>
         <translation type="unfinished">Offset X:</translation>
     </message>
     <message>
-        <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="165"/>
-        <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="324"/>
+        <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="119"/>
+        <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="278"/>
         <source>Absolute Y for new point</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="200"/>
+        <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="154"/>
         <source>Pick Y from drawing</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="223"/>
-        <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="430"/>
-        <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="570"/>
-        <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="723"/>
-        <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="882"/>
-        <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="1051"/>
+        <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="177"/>
+        <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="384"/>
+        <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="524"/>
+        <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="677"/>
+        <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="836"/>
+        <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="1005"/>
         <source>Apply data</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="226"/>
-        <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="433"/>
-        <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="573"/>
-        <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="726"/>
-        <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="885"/>
-        <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="1054"/>
+        <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="180"/>
+        <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="387"/>
+        <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="527"/>
+        <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="680"/>
+        <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="839"/>
+        <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="1008"/>
         <source>...</source>
         <translation type="unfinished">...</translation>
     </message>
     <message>
-        <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="506"/>
+        <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="460"/>
         <source>Specify position on drawing</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="285"/>
+        <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="239"/>
         <source>Click to edit absolute Y coordinate for new point</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="121"/>
-        <source>If checked, relative coordinates mode (the offset from base point) will be used. Otherwise - absolute coordinates mode.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="246"/>
-        <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="453"/>
-        <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="593"/>
-        <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="746"/>
-        <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="905"/>
-        <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="1074"/>
+        <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="200"/>
+        <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="407"/>
+        <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="547"/>
+        <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="700"/>
+        <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="859"/>
+        <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="1028"/>
         <source>Manually specify point on drawing</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="288"/>
-        <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="495"/>
-        <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="635"/>
-        <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="791"/>
-        <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="947"/>
-        <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="1116"/>
+        <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="242"/>
+        <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="449"/>
+        <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="589"/>
+        <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="745"/>
+        <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="901"/>
+        <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="1070"/>
         <source>12234345.23123235</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="327"/>
+        <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="281"/>
         <source>Y:</source>
         <translation type="unfinished">Y:</translation>
     </message>
     <message>
-        <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="340"/>
-        <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="843"/>
+        <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="294"/>
+        <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="797"/>
         <source>Absolute X for new point</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="343"/>
+        <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="297"/>
         <source>X:</source>
         <translation type="unfinished">X:</translation>
     </message>
     <message>
-        <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="388"/>
-        <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="983"/>
+        <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="342"/>
+        <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="937"/>
         <source>Distance between base and new points</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="407"/>
+        <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="361"/>
         <source>Pick length from drawing</source>
         <translation type="unfinished">Délka výběru z výkresu</translation>
     </message>
     <message>
-        <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="492"/>
+        <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="446"/>
         <source>Click to edit distance</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="531"/>
-        <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="1174"/>
+        <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="485"/>
+        <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="1128"/>
         <source>Angle from base to new point</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="547"/>
+        <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="501"/>
         <source>Pick angle from drawing</source>
         <translation type="unfinished">Úhel výběru z výkresu</translation>
     </message>
     <message>
-        <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="632"/>
+        <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="586"/>
         <source>Click to edit angle</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="652"/>
-        <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="684"/>
+        <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="606"/>
+        <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="638"/>
         <source>Offset by Y from base to new point</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="655"/>
+        <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="609"/>
         <source>Offset Y:</source>
         <translation type="unfinished">Offset Y:</translation>
     </message>
     <message>
-        <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="700"/>
+        <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="654"/>
         <source>Pick offset Y from drawing</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="788"/>
+        <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="742"/>
         <source>Click to edit offset by Y</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="859"/>
+        <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="813"/>
         <source>Pick X from drawing</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="944"/>
+        <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="898"/>
         <source>Click to edit absolute X coordinate for new point</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="986"/>
+        <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="940"/>
         <source>Distance:</source>
         <translation type="unfinished">Vzdálenost:</translation>
     </message>
     <message>
-        <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="1028"/>
+        <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="982"/>
         <source>Pick offset X from drawing</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="1113"/>
+        <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="1067"/>
         <source>Click to edit offset by X</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="1177"/>
+        <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="1131"/>
         <source>Angle:</source>
         <translation type="unfinished">Úhel:</translation>
     </message>
     <message>
-        <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="1189"/>
-        <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="1204"/>
-        <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="1219"/>
-        <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="1234"/>
-        <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="1249"/>
-        <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="1264"/>
+        <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="1143"/>
+        <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="1158"/>
+        <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="1173"/>
+        <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="1188"/>
+        <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="1203"/>
+        <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="1218"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Modification status. Exclamation mark (&lt;span style=&quot; font-weight:700;&quot;&gt;!&lt;/span&gt;) means that parameter is entered explicitly and so it&apos;s value has higher priority during calculation of relative point coordinates.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="1192"/>
-        <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="1207"/>
-        <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="1222"/>
-        <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="1237"/>
-        <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="1252"/>
-        <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="1267"/>
+        <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="1146"/>
+        <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="1161"/>
+        <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="1176"/>
+        <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="1191"/>
+        <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="1206"/>
+        <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="1221"/>
         <source>!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.cpp" line="70"/>
+        <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.cpp" line="92"/>
         <source>Distance</source>
         <translation type="unfinished">Vzdálenost</translation>
     </message>
     <message>
-        <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.cpp" line="69"/>
+        <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.cpp" line="91"/>
         <source>Relative point assistant. Use keys to activate:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.cpp" line="71"/>
+        <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.cpp" line="93"/>
         <source>Angle</source>
         <translation type="unfinished">Úhel</translation>
     </message>
     <message>
-        <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.cpp" line="71"/>
+        <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.cpp" line="93"/>
         <source>Offset/Abs X</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.cpp" line="72"/>
+        <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.cpp" line="94"/>
         <source>Offset/Abs Y</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.cpp" line="73"/>
+        <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.cpp" line="95"/>
         <source>Toggle delta/absolute mode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.cpp" line="73"/>
+        <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.cpp" line="95"/>
         <source>Pick input value from drawing</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.cpp" line="74"/>
+        <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.cpp" line="96"/>
         <source>Select manually with entered parameters</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.cpp" line="75"/>
+        <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.cpp" line="97"/>
         <source>Confirm edit and try to apply values</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.cpp" line="76"/>
+        <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.cpp" line="98"/>
         <source>Cancel assistant</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.cpp" line="304"/>
+        <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.cpp" line="328"/>
         <source>Relative zero:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -35896,18 +35959,18 @@ p, li {white- space: pre- wrap;}
         <translation>Nastavení exportu</translation>
     </message>
     <message>
-        <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="112"/>
-        <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="123"/>
+        <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="110"/>
+        <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="121"/>
         <source>Settings Export</source>
         <translation>Exportovat nastavení</translation>
     </message>
     <message>
-        <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="123"/>
+        <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="121"/>
         <source>Application preferences were exported.</source>
         <translation>Byly vyvezeny preference použití.</translation>
     </message>
     <message>
-        <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="113"/>
+        <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="111"/>
         <source>Can&apos;t open provided file for writing - check that provided location is writable. Preferences were not exported.</source>
         <translation>Nelze otevřít poskytnutý soubor pro zápis - zkontrolujte, zda je dané místo zapisovatelné. Předvolby nebyly vyváženy.</translation>
     </message>
@@ -35932,120 +35995,120 @@ p, li {white- space: pre- wrap;}
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="57"/>
+        <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="56"/>
         <source>Import custom toolbars</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="57"/>
+        <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="56"/>
         <source>Export custom toolbars</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="58"/>
+        <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="57"/>
         <source>LibreCAD custom toolbars file (*.%1)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="134"/>
-        <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="141"/>
-        <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="146"/>
+        <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="132"/>
+        <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="139"/>
+        <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="144"/>
         <source>Settings Import Error</source>
         <translation>Chyba při importu nastavení</translation>
     </message>
     <message>
-        <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="142"/>
+        <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="140"/>
         <source>Unexpected error during preferences parsing. Message:</source>
         <translation>Neočekávaná chyba při analýze preferencí. Zpráva:</translation>
     </message>
     <message>
-        <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="152"/>
-        <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="181"/>
+        <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="150"/>
+        <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="179"/>
         <source>Settings Import</source>
         <translation>Importovat nastavení</translation>
     </message>
     <message>
-        <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="181"/>
+        <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="179"/>
         <source>Application preferences were imported.</source>
         <translation>Byly dováženy preference použití.</translation>
     </message>
     <message>
-        <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="192"/>
-        <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="199"/>
-        <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="204"/>
+        <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="190"/>
+        <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="197"/>
+        <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="202"/>
         <source>Configurations Import Error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="193"/>
+        <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="191"/>
         <source>Can&apos;t open provided file for reading. Configurations were not imported.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="200"/>
+        <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="198"/>
         <source>Unexpected error during configurations file parsing. Message:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="205"/>
+        <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="203"/>
         <source>Unexpected format of file, it does not contains proper LibreCAD data.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="210"/>
-        <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="239"/>
+        <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="208"/>
+        <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="237"/>
         <source>Configurations Import</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="210"/>
+        <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="208"/>
         <source>No items to import.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="239"/>
+        <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="237"/>
         <source>Configurations were imported.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="281"/>
-        <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="293"/>
+        <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="278"/>
+        <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="290"/>
         <source>Custom Menus Export</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="281"/>
-        <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="296"/>
+        <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="278"/>
+        <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="293"/>
         <source>Custom Toolbars Export</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="282"/>
+        <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="279"/>
         <source>Can&apos;t open provided file for writing - check that provided location is writable. Export was not exported.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="293"/>
+        <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="290"/>
         <source>Custom menu configurations were exported.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="296"/>
+        <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="293"/>
         <source>Custom toolbars configurations were exported.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="152"/>
+        <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="150"/>
         <source>No settings groups to import.</source>
         <translation>Žádné skupiny nastavení pro import.</translation>
     </message>
     <message>
-        <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="147"/>
+        <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="145"/>
         <source>Unexpected format of file, it does not contains LibreCAD preferences.</source>
         <translation>Neočekávaný formát souboru neobsahuje preference LibreCAD.</translation>
     </message>
     <message>
-        <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="135"/>
+        <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="133"/>
         <source>Can&apos;t open provided file for reading. Preferences were not imported.</source>
         <translation>Nelze otevřít soubor pro čtení. Předvolby nebyly dováženy.</translation>
     </message>
@@ -36219,140 +36282,140 @@ p, li {white- space: pre- wrap;}
 <context>
     <name>LC_SliceDivideOptionsFiller</name>
     <message>
-        <location filename="../src/ui/action_options/line/lc_slice_divide_options_filler.cpp" line="33"/>
-        <location filename="../src/ui/action_options/line/lc_slice_divide_options_filler.cpp" line="59"/>
+        <location filename="../src/ui/action_options/line/lc_slice_divide_options_filler.cpp" line="34"/>
+        <location filename="../src/ui/action_options/line/lc_slice_divide_options_filler.cpp" line="60"/>
         <source>Ticks Count</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_slice_divide_options_filler.cpp" line="42"/>
+        <location filename="../src/ui/action_options/line/lc_slice_divide_options_filler.cpp" line="43"/>
         <source>Fixed Distance</source>
         <translation type="unfinished">Pevná vzdálenost</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_slice_divide_options_filler.cpp" line="43"/>
+        <location filename="../src/ui/action_options/line/lc_slice_divide_options_filler.cpp" line="44"/>
         <source>If checked, specified fixed distance between ticks will be used. Otherwise, distance will be calculated based on entity length and ticks count. </source>
         <translation type="unfinished">Pokud je zaškrtnuto, bude použita stanovená pevná vzdálenost mezi klíšťaty. V opačném případě se vzdálenost vypočte na základě délky a počtu klíšťat.</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_slice_divide_options_filler.cpp" line="52"/>
+        <location filename="../src/ui/action_options/line/lc_slice_divide_options_filler.cpp" line="53"/>
         <source>Distance</source>
         <translation type="unfinished">Vzdálenost</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_slice_divide_options_filler.cpp" line="52"/>
+        <location filename="../src/ui/action_options/line/lc_slice_divide_options_filler.cpp" line="53"/>
         <source>Distance between ticks</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_slice_divide_options_filler.cpp" line="67"/>
+        <location filename="../src/ui/action_options/line/lc_slice_divide_options_filler.cpp" line="68"/>
         <source>Tick length</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_slice_divide_options_filler.cpp" line="67"/>
+        <location filename="../src/ui/action_options/line/lc_slice_divide_options_filler.cpp" line="68"/>
         <source>Length of tick</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_slice_divide_options_filler.cpp" line="73"/>
+        <location filename="../src/ui/action_options/line/lc_slice_divide_options_filler.cpp" line="74"/>
         <source>Angle</source>
         <translation type="unfinished">Úhel</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_slice_divide_options_filler.cpp" line="73"/>
+        <location filename="../src/ui/action_options/line/lc_slice_divide_options_filler.cpp" line="74"/>
         <source>Angle between tick and selected entity</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_slice_divide_options_filler.cpp" line="81"/>
+        <location filename="../src/ui/action_options/line/lc_slice_divide_options_filler.cpp" line="82"/>
         <source>Relative angle</source>
         <translation type="unfinished">Relativní úhel</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_slice_divide_options_filler.cpp" line="82"/>
+        <location filename="../src/ui/action_options/line/lc_slice_divide_options_filler.cpp" line="83"/>
         <source>If checked, tick angle is related to selected entity, otherwise it is absolute angle.</source>
         <translation type="unfinished">Pokud je zaškrtnuto, klíšťový úhel souvisí s vybranou jednotkou, jinak je to absolutní úhel.</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_slice_divide_options_filler.cpp" line="92"/>
+        <location filename="../src/ui/action_options/line/lc_slice_divide_options_filler.cpp" line="93"/>
         <source>Free</source>
         <translation type="unfinished">Volný</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_slice_divide_options_filler.cpp" line="93"/>
-        <location filename="../src/ui/action_options/line/lc_slice_divide_options_filler.cpp" line="117"/>
+        <location filename="../src/ui/action_options/line/lc_slice_divide_options_filler.cpp" line="94"/>
+        <location filename="../src/ui/action_options/line/lc_slice_divide_options_filler.cpp" line="118"/>
         <source>Start</source>
         <translation type="unfinished">Start</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_slice_divide_options_filler.cpp" line="94"/>
+        <location filename="../src/ui/action_options/line/lc_slice_divide_options_filler.cpp" line="95"/>
         <source>Middle</source>
         <translation type="unfinished">Střední</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_slice_divide_options_filler.cpp" line="95"/>
-        <location filename="../src/ui/action_options/line/lc_slice_divide_options_filler.cpp" line="118"/>
+        <location filename="../src/ui/action_options/line/lc_slice_divide_options_filler.cpp" line="96"/>
+        <location filename="../src/ui/action_options/line/lc_slice_divide_options_filler.cpp" line="119"/>
         <source>End</source>
         <translation type="unfinished">Konec</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_slice_divide_options_filler.cpp" line="99"/>
+        <location filename="../src/ui/action_options/line/lc_slice_divide_options_filler.cpp" line="100"/>
         <source>Tick Snap</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_slice_divide_options_filler.cpp" line="99"/>
+        <location filename="../src/ui/action_options/line/lc_slice_divide_options_filler.cpp" line="100"/>
         <source>Defines which point of tick should be placed to intersection point with selected entity</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_slice_divide_options_filler.cpp" line="106"/>
+        <location filename="../src/ui/action_options/line/lc_slice_divide_options_filler.cpp" line="107"/>
         <source>Offset</source>
         <translation type="unfinished">Offset</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_slice_divide_options_filler.cpp" line="106"/>
+        <location filename="../src/ui/action_options/line/lc_slice_divide_options_filler.cpp" line="107"/>
         <source>Offset of tick snap point to intersection point</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_slice_divide_options_filler.cpp" line="115"/>
+        <location filename="../src/ui/action_options/line/lc_slice_divide_options_filler.cpp" line="116"/>
         <source>None</source>
         <translation type="unfinished">Žádné</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_slice_divide_options_filler.cpp" line="116"/>
+        <location filename="../src/ui/action_options/line/lc_slice_divide_options_filler.cpp" line="117"/>
         <source>Both</source>
         <translation type="unfinished">Obojí</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_slice_divide_options_filler.cpp" line="122"/>
+        <location filename="../src/ui/action_options/line/lc_slice_divide_options_filler.cpp" line="123"/>
         <source>Edge Tick</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_slice_divide_options_filler.cpp" line="122"/>
+        <location filename="../src/ui/action_options/line/lc_slice_divide_options_filler.cpp" line="123"/>
         <source>Defines how ticks on entity edges should be placed. </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_slice_divide_options_filler.cpp" line="130"/>
+        <location filename="../src/ui/action_options/line/lc_slice_divide_options_filler.cpp" line="131"/>
         <source>Start Circle Angle</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_slice_divide_options_filler.cpp" line="130"/>
+        <location filename="../src/ui/action_options/line/lc_slice_divide_options_filler.cpp" line="131"/>
         <source>Start angle for circle from which ticks will start</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_slice_divide_options_filler.cpp" line="137"/>
+        <location filename="../src/ui/action_options/line/lc_slice_divide_options_filler.cpp" line="138"/>
         <source>Divide</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_slice_divide_options_filler.cpp" line="137"/>
+        <location filename="../src/ui/action_options/line/lc_slice_divide_options_filler.cpp" line="138"/>
         <source>If checked, selected entity will be divided by tick intersection points</source>
         <translation type="unfinished"></translation>
     </message>
@@ -38107,237 +38170,237 @@ Varování: Tato akce nemůže být zrušena!</translation>
 <context>
     <name>LC_WidgetFactory</name>
     <message>
-        <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="292"/>
+        <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="291"/>
         <source>Library Browser</source>
         <translation>Prohlížeč knihovny</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="292"/>
+        <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="291"/>
         <source>Library</source>
         <translation>Knihovna</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="308"/>
-        <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="337"/>
+        <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="307"/>
+        <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="336"/>
         <source>Cmd</source>
         <translation>Cmd</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="314"/>
+        <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="313"/>
         <source>Dock</source>
         <translation>Dok</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="314"/>
-        <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="338"/>
+        <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="313"/>
+        <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="337"/>
         <source>Float</source>
         <translation>Plavit</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="139"/>
+        <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="138"/>
         <source>Select</source>
         <translation>Vybrat</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="107"/>
+        <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="106"/>
         <source>All</source>
         <translation type="unfinished">Všechny</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="131"/>
+        <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="130"/>
         <source>Line</source>
         <translation>Čára</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="133"/>
+        <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="132"/>
         <source>Polygon</source>
         <translation>Polygon</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="134"/>
+        <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="133"/>
         <source>Circle</source>
         <translation>Kruh</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="137"/>
+        <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="136"/>
         <source>Ellipse</source>
         <translation>Elipsa</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="138"/>
+        <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="137"/>
         <source>Polyline</source>
         <translation>Polyline</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="140"/>
+        <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="139"/>
         <source>Dimension</source>
         <translation>Rozměr</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="141"/>
+        <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="140"/>
         <source>Other</source>
         <translation>Ostatní</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="143"/>
-        <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="250"/>
+        <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="142"/>
+        <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="249"/>
         <source>Info</source>
         <translation>Informace</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="144"/>
+        <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="143"/>
         <source>Order</source>
         <translation>Pořadí</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="175"/>
+        <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="174"/>
         <source>Pens Palette</source>
         <translation>Pera Palette</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="175"/>
+        <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="174"/>
         <source>Pens</source>
         <translation>Pero</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="189"/>
-        <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="189"/>
+        <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="188"/>
+        <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="188"/>
         <source>Layers</source>
         <translation>Vrstvy</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="202"/>
+        <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="201"/>
         <source>Views</source>
         <translation>Náhledy</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="225"/>
+        <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="224"/>
         <source>User Coordinate Systems</source>
         <translation>Souřadnice uživatelů</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="225"/>
+        <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="224"/>
         <source>UCSs</source>
         <translation>UCS</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="237"/>
-        <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="237"/>
+        <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="236"/>
+        <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="236"/>
         <source>Layers Tree</source>
         <translation>Strom vrstev</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="262"/>
-        <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="262"/>
+        <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="261"/>
+        <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="261"/>
         <source>Properties</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="277"/>
-        <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="277"/>
+        <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="276"/>
+        <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="276"/>
         <source>Blocks</source>
         <translation>Bloky</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="308"/>
-        <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="337"/>
+        <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="307"/>
+        <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="336"/>
         <source>Command Line</source>
         <translation>Příkazová čára</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="338"/>
+        <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="337"/>
         <source>Dock</source>
         <comment>Dock the command widget to the main window</comment>
         <translation>Dok</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="430"/>
+        <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="428"/>
         <source>Pen Wizard</source>
         <translation>Průvodce perem</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="430"/>
+        <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="428"/>
         <source>PenWiz</source>
         <translation>PenWiz</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="478"/>
+        <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="476"/>
         <source>Toolbar: %1</source>
         <translation>Nástrojová lišta:% 1</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="250"/>
+        <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="249"/>
         <source>Entity Info</source>
         <translation>Informace o subjektu</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="202"/>
+        <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="201"/>
         <source>Named Views</source>
         <translation>Name</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="132"/>
+        <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="131"/>
         <source>Point</source>
         <translation>Bod</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="135"/>
+        <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="134"/>
         <source>Arc</source>
         <translation>Arc</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="136"/>
+        <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="135"/>
         <source>Spline</source>
         <translation>Spline</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="495"/>
-        <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="543"/>
+        <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="493"/>
+        <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="541"/>
         <source>Grid Status</source>
         <translation>Stav mřížky</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="538"/>
+        <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="536"/>
         <source>Coordinates</source>
         <translation>Souřadnice</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="539"/>
+        <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="537"/>
         <source>Relative Zero</source>
         <translation>Relativní nula</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="540"/>
+        <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="538"/>
         <source>Mouse</source>
         <translation>Myš</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="541"/>
+        <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="539"/>
         <source>Selection Info</source>
         <translation>Informace o výběru</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="542"/>
+        <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="540"/>
         <source>Active Layer</source>
         <translation>Aktivní vrstva</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="544"/>
+        <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="542"/>
         <source>UCS Status</source>
         <translation>Stav UCS</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="545"/>
+        <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="543"/>
         <source>Angles Basis</source>
         <translation>Angles Basis</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="549"/>
+        <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="547"/>
         <source>Current size of Grid/MetaGrid. Click to change grid size.</source>
         <translation>Aktuální velikost mřížky / MetaGrid. Kliknutím změníte velikost mřížky.</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="142"/>
+        <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="141"/>
         <source>Modify</source>
         <translation>Změnit</translation>
     </message>
@@ -38725,7 +38788,7 @@ Varování: Tato akce nemůže být zrušena!</translation>
 <context>
     <name>QC_ActionGetPoint</name>
     <message>
-        <location filename="../src/plugins/intern/qc_actiongetpoint.cpp" line="105"/>
+        <location filename="../src/plugins/intern/qc_actiongetpoint.cpp" line="104"/>
         <source>Cancel</source>
         <translation>Zrušit</translation>
     </message>
@@ -38747,72 +38810,72 @@ Varování: Tato akce nemůže být zrušena!</translation>
 <context>
     <name>QC_ApplicationWindow</name>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="812"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="809"/>
         <source>Creating new file...</source>
         <translation>Vytváří se nový soubor...</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="748"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="745"/>
         <source>unnamed document %1</source>
         <translation>nepojmenovaný dokument %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1786"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1783"/>
         <source>Opening recent file...</source>
         <translation>Otevírá se nedávno použitý soubor...</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1070"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1067"/>
         <source>Loaded document: </source>
         <translation>Načtený dokument: </translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1007"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1004"/>
         <source>Opening aborted</source>
         <translation>Otevírání přerušeno</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1317"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1314"/>
         <source>Printing...</source>
         <translation>Probíhá tisk...</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1420"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1417"/>
         <source>Exiting application...</source>
         <translation>Ukončuji program...</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="205"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="202"/>
         <source>Print preview for %1</source>
         <translation>Náhled před tiskem pro %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="835"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="832"/>
         <source>New Drawing created.</source>
         <translation>Nový výkres vytvořen.</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="238"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="235"/>
         <source>Saving drawing...</source>
         <translation>Ukládá se výkres...</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="249"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="246"/>
         <source>Saved drawing: %1</source>
         <translation>Uložený výkres: %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1321"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1318"/>
         <source>Printing complete</source>
         <translation>Tisk dokončen</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="744"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="741"/>
         <source>Block &apos;%1&apos;</source>
         <translation>Blok &apos;%1&apos;</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="879"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="876"/>
         <source>Cannot open the file
 %1
 Please check the permissions.</source>
@@ -38821,17 +38884,17 @@ Please check the permissions.</source>
 Zkontrolujte prosím přístupová práva.</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1157"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1154"/>
         <source>Auto-saving drawing...</source>
         <translation>Automaticky se ukládá výkres...</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1163"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1160"/>
         <source>Auto-saved drawing</source>
         <translation>Výkres automaticky uložen</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1169"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1166"/>
         <source>Cannot auto-save the file
 %1
 Please check the permissions.
@@ -38842,42 +38905,42 @@ Zkontrolujte prosím přístupová práva.
 Automatické ukládání bylo vypnuto.</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1014"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1011"/>
         <source>Warning: File already opened : </source>
         <translation>Upozornění: Soubor je již otevřen: </translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="262"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="259"/>
         <source>Cannot save the file </source>
         <translation>Nelze uložit soubor </translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="262"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="259"/>
         <source> , please check the filename and permissions.</source>
         <translation> , zkontrolujte jméno souboru a přístupová práva.</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="831"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="828"/>
         <source>New document from template: </source>
         <translation>Nový dokument ze šablony: </translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="863"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="860"/>
         <source>Select Template aborted</source>
         <translation>Výběr šablony přerušen</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1171"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1168"/>
         <source>Auto-saving failed</source>
         <translation>Automatické ukládání neúspěšné</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="215"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="212"/>
         <source>Draft Mode</source>
         <translation>Režim náčrtu</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1028"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1025"/>
         <source>Cannot open the file
 %1
 Please check its existence and permissions.</source>
@@ -38886,49 +38949,49 @@ Please check its existence and permissions.</source>
 Prosím zkontrolujte jeho existenci a oprávnění.</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1006"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1003"/>
         <source>File &apos;%1&apos; does not exist. Opening aborted</source>
         <translation>Soubor &apos;% 1&apos; neexistuje. Otevření přerušeno</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="238"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="235"/>
         <source>Saving drawing: %1</source>
         <translation>Uložení výkresu:% 1</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="244"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="241"/>
         <source>Save cancelled</source>
         <translation>Uložit zrušeno</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="379"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="376"/>
         <source>&amp;Save</source>
         <translation>Uložit</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="380"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="377"/>
         <source>Save &amp;as...</source>
         <translation>Uložit jako...</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="384"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="381"/>
         <source>&amp;Save %1</source>
         <translation>Uložit% 1</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="385"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="382"/>
         <source>Save %1 &amp;as...</source>
         <translation>Uložit% 1 a jako...</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1134"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1131"/>
         <source>Save All cancelled</source>
         <translation>Uložit vše zrušeno</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1254"/>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1260"/>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1274"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1251"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1257"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1271"/>
         <source>Close All cancelled</source>
         <translation>Zavřít Všechny zrušeny</translation>
     </message>
@@ -38936,17 +38999,17 @@ Prosím zkontrolujte jeho existenci a oprávnění.</translation>
 <context>
     <name>QG_ActionHandler</name>
     <message>
-        <location filename="../src/ui/qg_actionhandler.cpp" line="188"/>
+        <location filename="../src/ui/qg_actionhandler.cpp" line="186"/>
         <source>Spacebar: restored snapping mode to normal</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_actionhandler.cpp" line="189"/>
+        <location filename="../src/ui/qg_actionhandler.cpp" line="187"/>
         <source>Spacebar: temporarily set snapping mode to free snapping</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_actionhandler.cpp" line="198"/>
+        <location filename="../src/ui/qg_actionhandler.cpp" line="196"/>
         <source>escape</source>
         <comment>escape, go back from action steps</comment>
         <translation>odejít</translation>
@@ -39001,12 +39064,12 @@ Prosím zkontrolujte jeho existenci a oprávnění.</translation>
 <context>
     <name>QG_BlockWidget</name>
     <message>
-        <location filename="../src/ui/dock_widgets/block_widget/qg_blockwidget.cpp" line="211"/>
+        <location filename="../src/ui/dock_widgets/block_widget/qg_blockwidget.cpp" line="210"/>
         <source>Filter</source>
         <translation>Filtr</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/block_widget/qg_blockwidget.cpp" line="213"/>
+        <location filename="../src/ui/dock_widgets/block_widget/qg_blockwidget.cpp" line="212"/>
         <source>Looking for matching block names</source>
         <translation>Hledám odpovídající názvy bloků</translation>
     </message>
@@ -41595,7 +41658,7 @@ To rekurzivně upravuje všechny entity samotného bloku.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="3130"/>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="1891"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="1510"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="1526"/>
         <source>Dwg Units</source>
         <translation>Dwg jednotky</translation>
     </message>
@@ -41636,7 +41699,7 @@ To rekurzivně upravuje všechny entity samotného bloku.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="1888"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="1507"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="1523"/>
         <source>Screen %</source>
         <translation>Screen%</translation>
     </message>
@@ -41644,27 +41707,27 @@ To rekurzivně upravuje všechny entity samotného bloku.</translation>
 <context>
     <name>QG_DlgOptionsGeneral</name>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="1102"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="1118"/>
         <source>Preferences</source>
         <translation>Nastavení</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6060"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6070"/>
         <source>Translations:</source>
         <translation>Překlady:</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5956"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5966"/>
         <source>Hatch Patterns:</source>
         <translation>Vzory šraf:</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5980"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5990"/>
         <source>Fonts:</source>
         <translation>Písma:</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6032"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6042"/>
         <source>Part Libraries:</source>
         <translation>Knihovny součástí:</translation>
     </message>
@@ -41694,7 +41757,7 @@ To rekurzivně upravuje všechny entity samotného bloku.</translation>
         <translation>Jazyk pro &amp;příkazy:</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5864"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5874"/>
         <source>&amp;Paths</source>
         <translation>&amp;Cesty</translation>
     </message>
@@ -41720,7 +41783,7 @@ To rekurzivně upravuje všechny entity samotného bloku.</translation>
         <translation>&amp;Automatické měřítko mřížky</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="1103"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="1119"/>
         <source>Please restart the application to apply all changes.</source>
         <translation>Aby se všechny změny projevily, restartujte prosím program.</translation>
     </message>
@@ -41750,7 +41813,7 @@ To rekurzivně upravuje všechny entity samotného bloku.</translation>
         <translation>Pokud je nastaveno, LibreCAD automaticky vytvoří zálohu aktuálního výkresu.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6070"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6080"/>
         <source>Template:</source>
         <translation>Šablony:</translation>
     </message>
@@ -41791,18 +41854,18 @@ To rekurzivně upravuje všechny entity samotného bloku.</translation>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3305"/>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3539"/>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3617"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6256"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6307"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6323"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6339"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6362"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6378"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6415"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6266"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6317"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6333"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6349"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6372"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6388"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6425"/>
         <source> px</source>
         <translation>px</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6297"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6307"/>
         <source>Line length:</source>
         <translation>Délka čáry:</translation>
     </message>
@@ -41900,12 +41963,12 @@ To rekurzivně upravuje všechny entity samotného bloku.</translation>
         <translation>Vysvětlující referenční bod Styl</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6211"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6221"/>
         <source>If selected, the angle of the line interpolation segment is calculated to ensure that resulting sagitta (height of arc segment) is less than specified.</source>
         <translation>Pokud se zvolí, vypočítá se úhel interpolačního segmentu přímky tak, aby se zajistilo, že výsledná sagitta (výška obloukového segmentu) je menší, než je uvedeno.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6278"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6288"/>
         <source>If selected, the same rendering settings will be applied also to circles.</source>
         <translation>Pokud je zvoleno, bude použito stejné vykreslování i pro kruhy.</translation>
     </message>
@@ -41940,12 +42003,12 @@ To rekurzivně upravuje všechny entity samotného bloku.</translation>
         <translation>Udržet vybrané upravené subjekty</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5805"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5785"/>
         <source>If checked, prompt messages of actions will be also shown in bottom statusbar</source>
         <translation>Pokud je zaškrtnuto, budou v dolní stavové liště zobrazeny také okamžité zprávy o akcích</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5811"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5791"/>
         <source>Duplicate prompt messages of actions in statusbar</source>
         <translation>Duplikovat okamžité zprávy akcí ve stavové liště</translation>
     </message>
@@ -41960,27 +42023,27 @@ To rekurzivně upravuje všechny entity samotného bloku.</translation>
         <translation>Grid je vypnutý</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5831"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5841"/>
         <source>New Versions</source>
         <translation>Nové verze</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5837"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5847"/>
         <source>Check GitHub for new releases of LibreCAD on program startup</source>
         <translation>Zkontrolovat GitHub pro nové verze LibreCAD při spuštění programu</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5840"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5850"/>
         <source>Check for new versions on startup</source>
         <translation>Zkontrolovat nové verze při spuštění</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5847"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5857"/>
         <source>If checked, pre-release versions will be ignored</source>
         <translation>Pokud je zaškrtnuto, budou ignorovány verze před vydáním</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5853"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5863"/>
         <source>Ignore pre-release versions</source>
         <translation>Ignorovat verze před-vydání</translation>
     </message>
@@ -41990,22 +42053,22 @@ To rekurzivně upravuje všechny entity samotného bloku.</translation>
         <translation>Otevřít poslední otevřené soubory</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5795"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5798"/>
         <source>If enabled, drop-down menus may become floating</source>
         <translation>Pokud je zapnuto, může se rozbalovací menu stát plovoucím</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5798"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5801"/>
         <source>Allow menus detaching</source>
         <translation>Povolit oddělení menu</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5785"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5818"/>
         <source>If unchecked, individual widgets of statusbar are toolbars</source>
         <translation>Pokud není zaškrtnuto, jednotlivé widgety stavové lišty jsou nástrojové lišty</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5788"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5821"/>
         <source>Use &quot;classic&quot; statusbar</source>
         <translation>Použít &quot;classic&quot; stavusbar</translation>
     </message>
@@ -42078,43 +42141,43 @@ To rekurzivně upravuje všechny entity samotného bloku.</translation>
         <translation># 1E90FF</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="1124"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="1140"/>
         <source>Select Color</source>
         <translation>Vybrat barvu</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="1268"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="1284"/>
         <source>Clear settings</source>
         <translation>Vyčistit nastavení</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="1269"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="1285"/>
         <source>This will also include custom menus and toolbars. Continue?</source>
         <translation>To bude také zahrnovat vlastní menu a nástrojové lišty. Pokračovat?</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="1273"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="1279"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="1289"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="1295"/>
         <source>You must restart LibreCAD to see the changes.</source>
         <translation>Musíte restartovat LibreCAD vidět změny.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="1295"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="1311"/>
         <source>Select Fonts Folder</source>
         <translation>Vybrat složku fontů</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="1302"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="1318"/>
         <source>Select Translations Folder</source>
         <translation>Vybrat složku překladů</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="1309"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="1325"/>
         <source>Select Hatch Patterns Folder</source>
         <translation>Vybrat složku šablon Hatch</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="1316"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="1332"/>
         <source>Select Other Settings Folder</source>
         <translation>Vybrat další složku nastavení</translation>
     </message>
@@ -42124,7 +42187,7 @@ To rekurzivně upravuje všechny entity samotného bloku.</translation>
         <translation>&lt; html &gt; &lt; hlava / &gt; &lt; tělo &gt; &lt; p &gt; Aktivování vrstvy by při zapnutí modifikovalo všechny vybrané subjekty na tuto novou vrstvu. Chcete-li změnit vrstvu více subjektů: nejprve vyberte potřebné jednotky; aktivujte vrstvu v widgetu vrstvy. Díky tomu jsou všechny vybrané subjekty upraveny tak, aby patřily do nové vrstvy. &lt; / p &gt; &lt; / tělo &gt; &lt; / html &gt;</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5924"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5934"/>
         <source>Variable File:</source>
         <translation>Proměnný soubor:</translation>
     </message>
@@ -42949,82 +43012,82 @@ To rekurzivně upravuje všechny entity samotného bloku.</translation>
         <translation>Velikost v tažných jednotkách</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6291"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6301"/>
         <source>Rendering Minimums</source>
         <translation>Rendering Minimums</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6412"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6422"/>
         <source>If height of text line on the screen is less than specified pixels, placholder will be drawn instead of text</source>
         <translation>Pokud je výška textové čáry na obrazovce menší než stanovené pixely, bude místo textu nakreslena plachtitelka</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6352"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6362"/>
         <source>Height of text line:</source>
         <translation>Výška textového řádku:</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6405"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6415"/>
         <source>Ellipse Major Axis:</source>
         <translation>Elipse Major Axis:</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6375"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6385"/>
         <source>If screen size of minor ellipse axis is less than value, ellipse is drawn as line</source>
         <translation>Pokud je velikost obrazovky menší elipsy menší než hodnota, elipsa je nakreslena jako přímka</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6320"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6330"/>
         <source>If screen length of line is less than value, the line is drawn as point</source>
         <translation>Pokud je délka obrazovky přímky menší než hodnota, čára je nakreslena jako bod</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6359"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6369"/>
         <source>If screen radius of circle is less than value, circle is drawn as point</source>
         <translation>Pokud je poloměr obrazovky kružnice menší než hodnota, kružnice je nakreslena jako bod</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6434"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6444"/>
         <source>Circle Radius:</source>
         <translation>Kruhový poloměr:</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6391"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6401"/>
         <source>Arc Radius:</source>
         <translation>Arc Radius:</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6336"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6346"/>
         <source>If screen radius of arc is less than value, arc is drawn as point</source>
         <translation>Pokud je poloměr oblouku menší než hodnota, oblouk je nakreslený jako bod</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6398"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6408"/>
         <source>Ellipse Minor Axis:</source>
         <translation>Elipse Minor Axis:</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6304"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6314"/>
         <source>If screen size for major ellipse axis is less than value, ellipse is drawn as point</source>
         <translation>Pokud velikost obrazovky pro velkou osu elipsy je menší než hodnota, elipsa je kreslena jako bod</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6153"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6163"/>
         <source>If selected, text baselines will be drawn instead of the text letters (similar to draft mode) during panning. </source>
         <translation>Pokud je zvoleno, budou během panningu nakresleny základní čáry textu namísto textových písmen (podobných režimu návrhu).</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6156"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6166"/>
         <source>Draw text as draft within paning operations</source>
         <translation>Nakreslete text jako návrh v rámci paining operací</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6163"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6173"/>
         <source>If selected, text baselines will be drawn instead of the text letters (similar to draft mode) in preview. </source>
         <translation>Pokud je zvoleno, budou v náhledu vykresleny základní čáry textu namísto textových písmen (podobných režimu návrhu).</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6166"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6176"/>
         <source>Draw text as draft in preview</source>
         <translation>Nakreslete text jako návrh v náhledu</translation>
     </message>
@@ -44086,102 +44149,112 @@ To rekurzivně upravuje všechny entity samotného bloku.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5818"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5808"/>
         <source>If enabled, tooltips toolbar&apos;s name will be shown</source>
         <translation>Pokud je zapnuto, zobrazí se název nástrojové lišty</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5821"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5811"/>
         <source>Show tooltips for toolbars</source>
         <translation>Zobrazit tipy nástrojů pro nástrojové lišty</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5870"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5828"/>
+        <source>If enabled, main window title string will also include application&apos;s version string.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5831"/>
+        <source>Show version in main window title</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5880"/>
         <source>Exchange</source>
         <translation>Burza</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5876"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5886"/>
         <source>Exports settings to the file.</source>
         <translation>Exportuje nastavení do souboru.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5879"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5889"/>
         <source>Export settings to file</source>
         <translation>Nastavení exportu do souboru</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5890"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5900"/>
         <source>Imports application&apos;s preferences from external file</source>
         <translation>Přednosti žádosti o dovoz z externího souboru</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5893"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5903"/>
         <source>Import settings from file</source>
         <translation>Importovat nastavení ze souboru</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5907"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5917"/>
         <source>Paths</source>
         <translation>Cesty</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6080"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6090"/>
         <source>Other settings locations</source>
         <translation>Ostatní místa nastavení</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6087"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6097"/>
         <source>Directory where various settings are located (shortcuts, workspaces, pens etc.)</source>
         <translation>Adresář, kde se nacházejí různá nastavení (zkratky, pracovní prostory, pera atd.)</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6138"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6148"/>
         <source>Renderer</source>
         <translation>Návratnost</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6185"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6195"/>
         <source>If checked, archs are drawn using line segments interpolation.  This sliminates drawing artefacts near to endpoints, yet may result drawing of less smooth arcs.  No drawing errors near endpoints on large zooms.</source>
         <translation>Pokud je zaškrtnuto, archy se kreslí pomocí interpolace úseček. Tento sliminuje kreslení artefakty v blízkosti koncových bodů, ale může mít za následek kreslení méně hladké oblouky. Žádné chyby v kreslení v blízkosti koncových bodů na velkých zooms.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6195"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6205"/>
         <source>If this method is selected, arcs are drawn using method of QT library.  On large zooms, arcs may be rendered with errors near endpoints.</source>
         <translation>Je-li zvolena tato metoda, vykreslují se oblouky metodou QT knihovny. Na velkých zónách, oblouky mohou být provedeny s chybami v blízkosti koncových bodů.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6198"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6208"/>
         <source>Qt-native drawing method (unexact near endpoints)</source>
         <translation>Qt- native kreslicí metoda (nepřesné blízké koncové body)</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6444"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6454"/>
         <source>Fonts Files</source>
         <translation>Soubory písem</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6450"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6460"/>
         <source>Amount of letters columns:</source>
         <translation>Počet písmen sloupce:</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6463"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6473"/>
         <source>Contains the number of columns in one row for rendering font letter blocks. If 0 - all letters in one row. </source>
         <translation>Obsahuje počet sloupců v jednom řádku pro vykreslování fontových bloků. Pokud 0 - všechna písmena v jedné řadě.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6144"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6154"/>
         <source>Operations</source>
         <translation>Operace</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6150"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6160"/>
         <source>If enabled, during pan operation TEXT and MTEXT objects will be drawn schematically</source>
         <translation>Pokud je zapnuto, budou během provozu Pan</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6176"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6186"/>
         <source>Defines how arcs are rendered in UI. </source>
         <translation>Určuje, jak jsou oblouky v UI.</translation>
     </message>
@@ -44221,52 +44294,52 @@ To rekurzivně upravuje všechny entity samotného bloku.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6179"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6189"/>
         <source>Arcs Rendering Method</source>
         <translation>Metoda snímání oblouků</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6188"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6198"/>
         <source>Interpolate by line segments</source>
         <translation>Interpolát podle úseků</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6205"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6215"/>
         <source>Single segment angle</source>
         <translation>Jediný úhel segmentu</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6214"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6224"/>
         <source>Determine segments by max sagitta</source>
         <translation>Určete segmenty max sagitta</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6221"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6231"/>
         <source>If selected, the fixed angle of line interpolation segment will be used. Smaller angle deliver more smooth arc yet is slower.</source>
         <translation>Bude-li zvoleno, použije se pevný úhel interpolačního segmentu. Menší úhel poskytuje větší hladký oblouk, ale je pomalejší.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6224"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6234"/>
         <source>Use fixed segment angle value</source>
         <translation>Použít pevnou hodnotu úhlu segmentu</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6231"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6241"/>
         <source>Value of fixed segment&apos;s angle</source>
         <translation>Hodnota úhlu pevného segmentu</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6234"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6244"/>
         <source> degrees</source>
         <translation>stupně</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6253"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6263"/>
         <source>Maximal distance betwen arc and segment interpolation line</source>
         <translation>Maximální vzdálenost mezi obloukovou a segmentovou interpolační linkou</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6281"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6291"/>
         <source>Render circles in the same way as arcs.</source>
         <translation>Render kroužky stejným způsobem jako oblouky.</translation>
     </message>
@@ -44326,16 +44399,16 @@ To rekurzivně upravuje všechny entity samotného bloku.</translation>
         <translation>Ve směru hodinových ručiček, 90 stupňů je sourth.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5938"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5993"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6007"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6018"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6042"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5948"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6003"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6017"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6028"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6052"/>
         <source>Click to select directory</source>
         <translation>Kliknutím vyberte adresář</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5966"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5976"/>
         <source>Path to folder with fonts</source>
         <translation>Cesta ke složce s písmy</translation>
     </message>
@@ -44350,28 +44423,28 @@ To rekurzivně upravuje všechny entity samotného bloku.</translation>
         <translation>Obnovuje nastavení programu do původního stavu</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5913"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6094"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5923"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6104"/>
         <source>Click to select file</source>
         <translation>Kliknutím vyberte soubor</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5973"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5983"/>
         <source>Path to folder with hatch patterns</source>
         <translation>Cesta ke složce se vzory poklopů</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5931"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5941"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-family:&apos;-apple-system&apos;,&apos;BlinkMacSystemFont&apos;,&apos;Segoe UI&apos;,&apos;Noto Sans&apos;,&apos;Helvetica&apos;,&apos;Arial&apos;,&apos;sans-serif&apos;,&apos;Apple Color Emoji&apos;,&apos;Segoe UI Emoji&apos;; font-size:14px; color:#1f2328; background-color:#ffffff;&quot;&gt;Part library folder. The symbol library dxf files must be located in the subdirectories of this folder. The subfolder names will be displayed in the Library Browser.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-family:&apos;-apple-system&apos;,&apos;BlinkMacSystemFont&apos;,&apos;Segoe UI&apos;,&apos;Noto Sans&apos;,&apos;Helvetica&apos;,&apos;Arial&apos;,&apos;sans-serif&apos;,&apos;Apple Color Emoji&apos;,&apos;Segoe UI Emoji&apos;; font-size:14px; color:#1f2328; background-color:#ffffff;&quot;&gt;( Menu: Widgets &amp;gt; Dock Widgets &amp;gt; Library Browser)&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt; html &gt; &lt; hlava / &gt; &lt; tělo &gt; &lt; p &gt; &lt; rozpětí styl = &quot;font- family: &apos;-apple-system&apos;, &apos;BlinkMacSystemFont&apos;, &apos;Segoe UI&apos;, &apos;Noto Sans&apos;, &apos;Helvetica&apos;, &apos;Arial&apos;, &apos;sans-serif&apos;, &apos;Apple Color Emoji&apos;, &apos;Segoe UI Emoji&apos;; font-size: 14px; color: # 1f2328; backgroundcolor: # ffff;&quot; &gt; Část složky knihovny. Symbolové soubory dxf knihovny musí být umístěny v podadresářích této složky. Jména podsložek budou zobrazena v prohlížeči Knihovna. &lt; / span &gt; &lt; / p &gt; &lt; p &gt; &lt; span style = &quot;font- family: &apos;-apple-system&apos;, &apos;BlinkMacSystemFont&apos;, &apos;Segoe UI&apos;, &apos;Noto Sans&apos;, &apos;Helvetica&apos;, &apos;Arial&apos;, &apos;sans- serif&apos;, &apos;Apple Color Emoji&apos;, &apos;Segoe UI Emoji&apos;; font- size: 14px; color: # 1f2328; backgroundcolor: # ffff;&quot; &gt; (Menu: Widgets &amp; gt; Dock Widgets &amp; gt; Library Browser) &lt; / span &gt; &lt; / p &gt; &lt; / tělo &gt; &lt; / html &gt;</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5949"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5959"/>
         <source>Path to file with variables</source>
         <translation>Cesta k souboru s proměnnými</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6053"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6063"/>
         <source>Path to folder with translation files</source>
         <translation>Cesta ke složce s překladovými soubory</translation>
     </message>
@@ -45763,22 +45836,22 @@ Obsah pomocné hladiny se nezobrazí ve výstupu.</translation>
 <context>
     <name>QG_LibraryWidget</name>
     <message>
-        <location filename="../src/ui/dock_widgets/library_widget/qg_librarywidget.cpp" line="199"/>
+        <location filename="../src/ui/dock_widgets/library_widget/qg_librarywidget.cpp" line="198"/>
         <source>Directories</source>
         <translation>Adresáře</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/library_widget/qg_librarywidget.cpp" line="90"/>
+        <location filename="../src/ui/dock_widgets/library_widget/qg_librarywidget.cpp" line="89"/>
         <source>Insert</source>
         <translation>Vložit</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/library_widget/qg_librarywidget.cpp" line="94"/>
+        <location filename="../src/ui/dock_widgets/library_widget/qg_librarywidget.cpp" line="93"/>
         <source>Refresh</source>
         <translation>Obnovit</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/library_widget/qg_librarywidget.cpp" line="96"/>
+        <location filename="../src/ui/dock_widgets/library_widget/qg_librarywidget.cpp" line="95"/>
         <source>Rebuild</source>
         <translation>Přestavět</translation>
     </message>
@@ -46040,32 +46113,32 @@ p, li {white- space: pre- wrap;}
 <context>
     <name>QG_SnapToolBar</name>
     <message>
-        <location filename="../src/ui/components/toolbars/qg_snaptoolbar.cpp" line="225"/>
+        <location filename="../src/ui/components/toolbars/qg_snaptoolbar.cpp" line="223"/>
         <source>Relative zero position is %1</source>
         <translation>Relativní nulová pozice je% 1</translation>
     </message>
     <message>
-        <location filename="../src/ui/components/toolbars/qg_snaptoolbar.cpp" line="225"/>
+        <location filename="../src/ui/components/toolbars/qg_snaptoolbar.cpp" line="223"/>
         <source>locked</source>
         <translation>zamčeno</translation>
     </message>
     <message>
-        <location filename="../src/ui/components/toolbars/qg_snaptoolbar.cpp" line="225"/>
+        <location filename="../src/ui/components/toolbars/qg_snaptoolbar.cpp" line="223"/>
         <source>unlocked</source>
         <translation>odemčeno</translation>
     </message>
     <message>
-        <location filename="../src/ui/components/toolbars/qg_snaptoolbar.cpp" line="230"/>
+        <location filename="../src/ui/components/toolbars/qg_snaptoolbar.cpp" line="228"/>
         <source>Coordinate system: %1</source>
         <translation>Souřadnice:% 1</translation>
     </message>
     <message>
-        <location filename="../src/ui/components/toolbars/qg_snaptoolbar.cpp" line="230"/>
+        <location filename="../src/ui/components/toolbars/qg_snaptoolbar.cpp" line="228"/>
         <source>User</source>
         <translation>Uživatel</translation>
     </message>
     <message>
-        <location filename="../src/ui/components/toolbars/qg_snaptoolbar.cpp" line="230"/>
+        <location filename="../src/ui/components/toolbars/qg_snaptoolbar.cpp" line="228"/>
         <source>World</source>
         <translation>Svět</translation>
     </message>
@@ -46121,9 +46194,9 @@ p, li {white- space: pre- wrap;}
     <name>QMessageBox</name>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="88"/>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="881"/>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1030"/>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1168"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="878"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1027"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1165"/>
         <source>Warning</source>
         <translation>Upozornění</translation>
     </message>
@@ -46346,85 +46419,85 @@ Please specify a different value.</source>
 Uveďte prosím jinou hodnotu.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1404"/>
+        <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1402"/>
         <source>Remove pen</source>
         <translation>Odstranit pero</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1406"/>
+        <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1404"/>
         <source>Pen will be removed from palette, drawing entities will not be affected.</source>
         <translation>Pero bude odstraněno z palety, kreslicí subjekty nebudou ovlivněny.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1408"/>
-        <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1430"/>
+        <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1406"/>
+        <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1428"/>
         <source>Are you sure you&apos;d like to proceed?</source>
         <translation>Určitě chcete pokračovat?</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1410"/>
+        <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1408"/>
         <source>Pen for removal:</source>
         <translation>Pero na odstranění:</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1426"/>
+        <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1424"/>
         <source>Remove pens</source>
         <translation>Odstranit pera</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1428"/>
+        <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1426"/>
         <source>Pens will be removed from palette, drawing entities will not be affected.</source>
         <translation>Pera budou odstraněny z palety, kreslení subjekty nebudou ovlivněny.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1432"/>
+        <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1430"/>
         <source>Pens for removal:</source>
         <translation>Pero na odstranění:</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1453"/>
+        <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1451"/>
         <source>Select Entities </source>
         <translation>Vybrat subjekty</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1455"/>
+        <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1453"/>
         <source>There are no entities that matches pen on visible layers.</source>
         <translation>Na viditelných vrstvách nejsou žádné subjekty, které by odpovídaly perům.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1456"/>
+        <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1454"/>
         <source>Such entities exist on frozen layers.
 </source>
         <translation>Takové subjekty existují na zmrazených vrstvách.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1457"/>
+        <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1455"/>
         <source>Such entities exist on locked layers.
 </source>
         <translation>Takové subjekty existují na uzamčených vrstvách.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1458"/>
+        <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1456"/>
         <source>Please use different pen attributes.</source>
         <translation>Prosím, použijte různé atributy pera.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1468"/>
+        <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1466"/>
         <source>Set pen by entity</source>
         <translation>Nastavit pero podle subjektu</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1469"/>
+        <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1467"/>
         <source>Please select only one entity to pick pen setting.</source>
         <translation>Vyberte si prosím pouze jeden subjekt pro nastavení pera.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1479"/>
+        <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1477"/>
         <source>Saving Pens Data</source>
         <translation>Ukládání údajů o pera</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1480"/>
+        <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1478"/>
         <source>Unable to save pens data to specified pens file. Would you like to specify correct path to the file?</source>
         <translation>Nelze uložit data pera do specifikovaného souboru per. Chcete zadat správnou cestu do souboru?</translation>
     </message>
@@ -46830,55 +46903,55 @@ Přejete si ho přepsat?</translation>
         <translation>arch</translation>
     </message>
     <message>
-        <location filename="../src/main/main.cpp" line="523"/>
+        <location filename="../src/main/main.cpp" line="535"/>
         <source>Loading..</source>
         <translation>Načítá se..</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/support/lc_lastopenfilesopener.cpp" line="63"/>
+        <location filename="../src/ui/main/support/lc_lastopenfilesopener.cpp" line="86"/>
         <source>Loading File %1..</source>
         <translation>Načítá se soubor %1..</translation>
     </message>
     <message>
-        <location filename="../src/main/main.cpp" line="414"/>
+        <location filename="../src/main/main.cpp" line="426"/>
         <source>Loading...</source>
         <translation>Načítá se...</translation>
     </message>
     <message>
-        <location filename="../src/main/main.cpp" line="490"/>
+        <location filename="../src/main/main.cpp" line="502"/>
         <source>Release Candidate</source>
         <translation>Vypustit kandidáta</translation>
     </message>
     <message>
-        <location filename="../src/main/main.cpp" line="491"/>
+        <location filename="../src/main/main.cpp" line="503"/>
         <source>BETA</source>
         <translation>BETA</translation>
     </message>
     <message>
-        <location filename="../src/main/main.cpp" line="492"/>
-        <location filename="../src/main/main.cpp" line="501"/>
+        <location filename="../src/main/main.cpp" line="504"/>
+        <location filename="../src/main/main.cpp" line="513"/>
         <source>ALPHA</source>
         <translation>ALPHA</translation>
     </message>
     <message>
-        <location filename="../src/main/doc_plugin_interface.cpp" line="1322"/>
+        <location filename="../src/main/doc_plugin_interface.cpp" line="1318"/>
         <source>enter an integer number</source>
         <translation>zadejte celé číslo</translation>
     </message>
     <message>
-        <location filename="../src/main/doc_plugin_interface.cpp" line="1328"/>
-        <location filename="../src/main/doc_plugin_interface.cpp" line="1350"/>
-        <location filename="../src/main/doc_plugin_interface.cpp" line="1373"/>
+        <location filename="../src/main/doc_plugin_interface.cpp" line="1324"/>
+        <location filename="../src/main/doc_plugin_interface.cpp" line="1346"/>
+        <location filename="../src/main/doc_plugin_interface.cpp" line="1369"/>
         <source>LibreCAD query</source>
         <translation>Dotaz LibreCADu</translation>
     </message>
     <message>
-        <location filename="../src/main/doc_plugin_interface.cpp" line="1344"/>
+        <location filename="../src/main/doc_plugin_interface.cpp" line="1340"/>
         <source>enter a number</source>
         <translation>zadejte číslo</translation>
     </message>
     <message>
-        <location filename="../src/main/doc_plugin_interface.cpp" line="1367"/>
+        <location filename="../src/main/doc_plugin_interface.cpp" line="1363"/>
         <source>enter text</source>
         <translation>zadejte text</translation>
     </message>
@@ -47181,1083 +47254,1083 @@ Přejete si ho přepsat?</translation>
         <translation>: duplicated command:% 1 is already taken by% 2</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="900"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="903"/>
         <source>point</source>
         <comment>draw point</comment>
         <translation>bod</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="901"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="904"/>
         <source>po</source>
         <comment>draw point</comment>
         <translation>po</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="94"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="97"/>
         <source>line</source>
         <comment>draw line</comment>
         <translation>řádek</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="93"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="96"/>
         <source>li</source>
         <comment>draw line</comment>
         <translation>li</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="95"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="98"/>
         <source>l</source>
         <comment>draw line</comment>
         <translation>l</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="538"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="541"/>
         <source>polyline</source>
         <comment>draw polyline</comment>
         <translation>polylin</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="539"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="542"/>
         <source>pl</source>
         <comment>draw polyline</comment>
         <translation>pl</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="491"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="494"/>
         <source>free</source>
         <comment>draw freehand line</comment>
         <translation>bez</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="493"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="496"/>
         <source>fhl</source>
         <comment>draw freehand line</comment>
         <translation>fhl</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="454"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="457"/>
         <source>spline</source>
         <comment>draw spline</comment>
         <translation>spline</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="456"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="459"/>
         <source>spl</source>
         <comment>draw spline</comment>
         <translation>spl</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="461"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="464"/>
         <source>spline2</source>
         <comment>spline through points</comment>
         <translation>spline2</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="463"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="466"/>
         <source>stp</source>
         <comment>spline through points</comment>
         <translation>kp</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="272"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="275"/>
         <source>ptp</source>
         <comment>parallel through point</comment>
         <translation>ptp</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="279"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="282"/>
         <source>bisect</source>
         <comment>angle bisector</comment>
         <translation>bisect</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="278"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="281"/>
         <source>bi</source>
         <comment>angle bisector</comment>
         <translation>bi</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="286"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="289"/>
         <source>tanpc</source>
         <comment>tangent point and circle</comment>
         <translation>tanpc</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="305"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="308"/>
         <source>ortho</source>
         <comment>perpendicular line</comment>
         <translation>ortoped</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="141"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="144"/>
         <source>rect</source>
         <comment>draw rectangle</comment>
         <translation>rect</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="337"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="340"/>
         <source>polygon2v</source>
         <comment>polygon by 2 vertices</comment>
         <translation>polygon2v</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="339"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="342"/>
         <source>poly2</source>
         <comment>polygon by 2 vertices</comment>
         <translation>poly2</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="346"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="349"/>
         <source>circle</source>
         <comment>draw circle</comment>
         <translation>kružnice</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="347"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="350"/>
         <source>ci</source>
         <comment>draw circle</comment>
         <translation>ní</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="354"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="357"/>
         <source>c2</source>
         <comment>circle 2 points</comment>
         <translation>c2</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="367"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="370"/>
         <source>c3</source>
         <comment>circle 3 points</comment>
         <translation>c3</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="403"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="406"/>
         <source>tan3</source>
         <comment>circle tangent to 3</comment>
         <translation>tan3</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="402"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="405"/>
         <source>ct3</source>
         <comment>circle tangent to 3</comment>
         <translation>ct3</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="529"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="532"/>
         <source>ellipseinscribed</source>
         <comment>inscribed ellipse</comment>
         <translation>ellipsescripbed</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="530"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="533"/>
         <source>ei</source>
         <comment>inscribed ellipse</comment>
         <translation>ei</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="531"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="534"/>
         <source>ie</source>
         <comment>inscribed ellipse</comment>
         <translation>io</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="894"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="897"/>
         <source>hatch</source>
         <comment>draw hatch</comment>
         <translation>poklop</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="895"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="898"/>
         <source>ha</source>
         <comment>draw hatch</comment>
         <translation>ha</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="880"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="883"/>
         <source>mtext</source>
         <comment>draw mtext</comment>
         <translation>mtext</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="882"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="885"/>
         <source>mtxt</source>
         <comment>draw mtext</comment>
         <translation>mtxt</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="887"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="890"/>
         <source>text</source>
         <comment>draw text</comment>
         <translation>text</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="889"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="892"/>
         <source>txt</source>
         <comment>draw text</comment>
         <translation>txt</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1040"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1043"/>
         <source>regen</source>
         <comment>zoom - redraw</comment>
         <translation>regen</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1041"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1044"/>
         <source>redraw</source>
         <comment>zoom - redraw</comment>
         <translation>přečerpat</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1042"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1045"/>
         <source>rg</source>
         <comment>zoom - redraw</comment>
         <translation>rg</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1043"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1046"/>
         <source>zr</source>
         <comment>zoom - redraw</comment>
         <translation>zr</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1072"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1075"/>
         <source>zoomwindow</source>
         <comment>zoom - window</comment>
         <translation>zoomwincolor</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1073"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1076"/>
         <source>zw</source>
         <comment>zoom - window</comment>
         <translation>zw</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1060"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1063"/>
         <source>zoomauto</source>
         <comment>zoom - auto</comment>
         <translation>zoomauto</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1061"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1064"/>
         <source>za</source>
         <comment>zoom - auto</comment>
         <translation>za</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1078"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1081"/>
         <source>zoompan</source>
         <comment>zoom - pan</comment>
         <translation>zoompan</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1079"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1082"/>
         <source>zp</source>
         <comment>zoom - pan</comment>
         <translation>zp</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1066"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1069"/>
         <source>zoomprevious</source>
         <comment>zoom - previous</comment>
         <translation>zoomprevious</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1067"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1070"/>
         <source>zv</source>
         <comment>zoom - previous</comment>
         <translation>zv</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1009"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1012"/>
         <source>kill</source>
         <comment>kill all actions</comment>
         <translation>zabít</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1011"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1014"/>
         <source>k</source>
         <comment>kill all actions</comment>
         <translation>k</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1016"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1019"/>
         <source>undo</source>
         <comment>undo cycle</comment>
         <translation>zpět</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1018"/>
-        <location filename="../src/cmd/lc_commandItems.h" line="1262"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1021"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1265"/>
         <source>u</source>
         <comment>undo cycle</comment>
         <translation>u</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1023"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1026"/>
         <source>redo</source>
         <comment>redo cycle</comment>
         <translation>redo</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1025"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1028"/>
         <source>r</source>
         <comment>redo cycle</comment>
         <translation>r</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="645"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="648"/>
         <source>dimaligned</source>
         <comment>dimension - aligned</comment>
         <translation>dimalkované</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="668"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="671"/>
         <source>dimhorizontal</source>
         <comment>dimension - horizontal</comment>
         <translation>downhorizontální</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="669"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="672"/>
         <source>dh</source>
         <comment>dimension - horizontal</comment>
         <translation>dh</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="674"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="677"/>
         <source>dimvertical</source>
         <comment>dimension - vertical</comment>
         <translation>dilvertal</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="675"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="678"/>
         <source>dv</source>
         <comment>dimension - vertical</comment>
         <translation>dv</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="651"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="654"/>
         <source>dimlinear</source>
         <comment>dimension - linear</comment>
         <translation>dimlinear</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="652"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="655"/>
         <source>dl</source>
         <comment>dimension - linear</comment>
         <translation>ní</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="694"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="697"/>
         <source>dimangular</source>
         <comment>dimension - angular</comment>
         <translation>dimangulární</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="696"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="699"/>
         <source>dan</source>
         <comment>dimension - angular</comment>
         <translation>dan</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="681"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="684"/>
         <source>dimradial</source>
         <comment>dimension - radial</comment>
         <translation>dimradial</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="689"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="692"/>
         <source>dimdiametric</source>
         <comment>dimension - diametric</comment>
         <translation>dimdiametric</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="687"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="690"/>
         <source>dimdiameter</source>
         <comment>dimension - diametric</comment>
         <translation>průměr</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="688"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="691"/>
         <source>dd</source>
         <comment>dimension - diametric</comment>
         <translation>dd</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="701"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="704"/>
         <source>dimleader</source>
         <comment>dimension - leader</comment>
         <translation>dimleader</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="702"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="705"/>
         <source>ld</source>
         <comment>dimension - leader</comment>
         <translation>d</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="707"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="710"/>
         <source>dimregen</source>
         <comment>dimension - regenerate</comment>
         <translation>dimregen</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="982"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="985"/>
         <source>restrictnothing</source>
         <comment>restrict - nothing</comment>
         <translation>restriktivní nic</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="983"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="986"/>
         <source>rn</source>
         <comment>restrict - nothing</comment>
         <translation>rn</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="988"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="991"/>
         <source>restrictorthogonal</source>
         <comment>restrict - orthogonal</comment>
         <translation>restriktorthogonal</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="989"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="992"/>
         <source>rr</source>
         <comment>restrict - orthogonal</comment>
         <translation>rr</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="994"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="997"/>
         <source>restricthorizontal</source>
         <comment>restrict - horizontal</comment>
         <translation>restrictorizonatal</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="995"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="998"/>
         <source>rh</source>
         <comment>restrict - horizontal</comment>
         <translation>rh</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1000"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1003"/>
         <source>restrictvertical</source>
         <comment>restrict - vertical</comment>
         <translation>restrictvertial</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1001"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1004"/>
         <source>rv</source>
         <comment>restrict - vertical</comment>
         <translation>rv</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="716"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="719"/>
         <source>mv</source>
         <comment>modify - move (copy)</comment>
         <translation>mv</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="787"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="790"/>
         <source>bev</source>
         <comment>modify - bevel</comment>
         <translation>bev</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="788"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="791"/>
         <source>ch</source>
         <comment>modify - bevel</comment>
         <translation>e</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="794"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="797"/>
         <source>fi</source>
         <comment>modify - fillet</comment>
         <translation>fi</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="802"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="805"/>
         <source>cut</source>
         <comment>modify - divide (cut)</comment>
         <translation>střih</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="803"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="806"/>
         <source>div</source>
         <comment>modify - divide (cut)</comment>
         <translation>div</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="734"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="737"/>
         <source>mi</source>
         <comment>modify -  mirror</comment>
         <translation>mi</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="753"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="756"/>
         <source>rev</source>
         <comment>modify -  revert direction</comment>
         <translation>rev</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="722"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="725"/>
         <source>ro</source>
         <comment>modify - rotate</comment>
         <translation>re</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="728"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="731"/>
         <source>sz</source>
         <comment>modify - scale</comment>
         <translation>sz</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="759"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="762"/>
         <source>tm</source>
         <comment>modify - trim (extend)</comment>
         <translation>tm</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="766"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="769"/>
         <source>tm2</source>
         <comment>modify - multi trim (extend)</comment>
         <translation>tm2</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="772"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="775"/>
         <source>le</source>
         <comment>modify - lengthen</comment>
         <translation>le</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="810"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="813"/>
         <source>ss</source>
         <comment>modify - stretch</comment>
         <translation>s</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="842"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="845"/>
         <source>er</source>
         <comment>modify - delete (erase)</comment>
         <translation>re</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="843"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="846"/>
         <source>del</source>
         <comment>modify - delete (erase)</comment>
         <translation>del</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="836"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="839"/>
         <source>xp</source>
         <comment>explode block/polyline into entities</comment>
         <translation>xp</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="80"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="83"/>
         <source>cnlayer</source>
         <translation>cnlayer</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="81"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="84"/>
         <source>cnly</source>
         <translation>cinly</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="85"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="88"/>
         <source>cslayer</source>
         <translation>name</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="86"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="89"/>
         <source>csly</source>
         <translation>csly</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="915"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="918"/>
         <source>snapfree</source>
         <comment>snap - free</comment>
         <translation>snapfree</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="917"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="920"/>
         <source>os</source>
         <comment>snap - free</comment>
         <translation>os</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="922"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="925"/>
         <source>snapcenter</source>
         <comment>snap - center</comment>
         <translation>snapcenter</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="923"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="926"/>
         <source>sc</source>
         <comment>snap - center</comment>
         <translation>sc</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="928"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="931"/>
         <source>snapdist</source>
         <comment>snap - distance to endpoints</comment>
         <translation>snaptid</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="929"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="932"/>
         <source>sd</source>
         <comment>snap - distance to endpoints</comment>
         <translation>sd</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="934"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="937"/>
         <source>snapend</source>
         <comment>snap - end points</comment>
         <translation>snapend</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="935"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="938"/>
         <source>se</source>
         <comment>snap - end points</comment>
         <translation>re</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="940"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="943"/>
         <source>snapgrid</source>
         <comment>snap - grid</comment>
         <translation>snapgrift</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="941"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="944"/>
         <source>sg</source>
         <comment>snap - grid</comment>
         <translation>sg</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="946"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="949"/>
         <source>snapintersection</source>
         <comment>snap - intersection</comment>
         <translation>průsečík</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="947"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="950"/>
         <source>si</source>
         <comment>snap - intersection</comment>
         <translation>si</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="952"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="955"/>
         <source>snapmiddle</source>
         <comment>snap - middle points</comment>
         <translation>snapmidname</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="953"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="956"/>
         <source>sm</source>
         <comment>snap - middle points</comment>
         <translation>sm</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="958"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="961"/>
         <source>snaponentity</source>
         <comment>snap - on entity</comment>
         <translation>hadí subjekt</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="959"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="962"/>
         <source>sn</source>
         <comment>snap - on entity</comment>
         <translation>n</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="960"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="963"/>
         <source>np</source>
         <comment>snap - on entity</comment>
         <translation>np</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="976"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="979"/>
         <source>setrelativezero</source>
         <comment>set relative zero position</comment>
         <translation>setrelativenum</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="977"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="980"/>
         <source>rz</source>
         <comment>set relative zero position</comment>
         <translation>rz</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="612"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="615"/>
         <source>selectall</source>
         <comment>Select all entities</comment>
         <translation>selektall</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="613"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="616"/>
         <source>sa</source>
         <comment>Select all entities</comment>
         <translation>s</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="618"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="621"/>
         <source>deselectall</source>
         <comment>deselect all entities</comment>
         <translation>deselektall</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="620"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="623"/>
         <source>tn</source>
         <comment>deselect all entities</comment>
         <translation>n</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="823"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="826"/>
         <source>attr</source>
         <comment>modify attribute</comment>
         <translation>attr</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="824"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="827"/>
         <source>ma</source>
         <comment>modify attribute</comment>
         <translation>ma</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="816"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="819"/>
         <source>prop</source>
         <comment>modify properties</comment>
         <translation>prop</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="852"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="855"/>
         <source>dist</source>
         <comment>distance point to point</comment>
         <translation>dist</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="853"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="856"/>
         <source>dpp</source>
         <comment>distance point to point</comment>
         <translation>dpp</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="867"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="870"/>
         <source>ang</source>
         <comment>measure angle</comment>
         <translation>ang</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1086"/>
-        <location filename="../src/cmd/lc_commandItems.h" line="1191"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1089"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1194"/>
         <source>angle</source>
         <translation>úhel</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1089"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1092"/>
         <source>dpi</source>
         <translation>dpi</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1090"/>
-        <location filename="../src/cmd/lc_commandItems.h" line="1205"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1093"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1208"/>
         <source>close</source>
         <translation>zavřít</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1092"/>
-        <location filename="../src/cmd/lc_commandItems.h" line="1208"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1095"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1211"/>
         <source>columns</source>
         <translation>sloupce</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1093"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1096"/>
         <source>columnspacing</source>
         <translation>sloučení</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1095"/>
-        <location filename="../src/cmd/lc_commandItems.h" line="1216"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1098"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1219"/>
         <source>factor</source>
         <translation>faktor</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1096"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1099"/>
         <source>length</source>
         <translation>délka</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1099"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1102"/>
         <source>number</source>
         <translation>číslo</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1100"/>
-        <location filename="../src/cmd/lc_commandItems.h" line="1243"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1103"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1246"/>
         <source>radius</source>
         <translation>poloměr</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1101"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1104"/>
         <source>rows</source>
         <translation>řádky</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1102"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1105"/>
         <source>rowspacing</source>
         <translation>rowspacing</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1103"/>
-        <location filename="../src/cmd/lc_commandItems.h" line="1258"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1106"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1261"/>
         <source>through</source>
         <translation>skrz</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1104"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1107"/>
         <source>trim</source>
         <translation>střih</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1194"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1197"/>
         <source>ang</source>
         <comment>angle</comment>
         <translation>ang</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1195"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1198"/>
         <source>an</source>
         <comment>angle</comment>
         <translation>a</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1197"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1200"/>
         <source>center</source>
         <translation>střed</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1198"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1201"/>
         <source>cen</source>
         <comment>center</comment>
         <translation>cin</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1199"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1202"/>
         <source>ce</source>
         <comment>center</comment>
         <translation>re</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1206"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1209"/>
         <source>c</source>
         <comment>close</comment>
         <translation>c</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1209"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1212"/>
         <source>cols</source>
         <comment>columns</comment>
         <translation>příloha</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1210"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1213"/>
         <source>co</source>
         <comment>columns</comment>
         <translation>co</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1212"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1215"/>
         <source>columnspacing</source>
         <comment>columnspacing for inserts</comment>
         <translation>sloučení</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1213"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1216"/>
         <source>colspacing</source>
         <comment>columnspacing for inserts</comment>
         <translation>colspacing</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1214"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1217"/>
         <source>cs</source>
         <comment>columnspacing for inserts</comment>
         <translation>cs</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1217"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1220"/>
         <source>fact</source>
         <comment>factor</comment>
         <translation>fakt</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1218"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1221"/>
         <source>f</source>
         <comment>factor</comment>
         <translation>f</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1224"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1227"/>
         <source>help</source>
         <translation>pomoc</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1225"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1228"/>
         <source>?</source>
         <comment>help</comment>
         <translation>?</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1227"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1230"/>
         <source>length</source>
         <comment>length</comment>
         <translation>délka</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1228"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1231"/>
         <source>len</source>
         <comment>length</comment>
         <translation>len</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1229"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1232"/>
         <source>l</source>
         <comment>length</comment>
         <translation>l</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1231"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1234"/>
         <source>length1</source>
         <comment>length1</comment>
         <translation>délka 1</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1232"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1235"/>
         <source>len1</source>
         <comment>length1</comment>
         <translation>len1</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1233"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1236"/>
         <source>l1</source>
         <comment>length1</comment>
         <translation>l1</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1235"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1238"/>
         <source>length2</source>
         <comment>length2</comment>
         <translation>délka 2</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1236"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1239"/>
         <source>len2</source>
         <comment>length2</comment>
         <translation>len2</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1237"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1240"/>
         <source>l2</source>
         <comment>length2</comment>
         <translation>l2</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1239"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1242"/>
         <source>number</source>
         <comment>number</comment>
         <translation>číslo</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1240"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1243"/>
         <source>num</source>
         <comment>number</comment>
         <translation>num</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1241"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1244"/>
         <source>n</source>
         <comment>number</comment>
         <translation>n</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1244"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1247"/>
         <source>ra</source>
         <comment>radius</comment>
         <translation>re</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1246"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1249"/>
         <source>reversed</source>
         <comment>reversed</comment>
         <translation>obráceně</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1247"/>
-        <location filename="../src/cmd/lc_commandItems.h" line="1248"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1250"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1251"/>
         <source>rev</source>
         <comment>reversed</comment>
         <translation>rev</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1250"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1253"/>
         <source>row</source>
         <comment>row</comment>
         <translation>řádek</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1252"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1255"/>
         <source>rowspacing</source>
         <comment>rowspacing for inserts</comment>
         <translation>rowspacing</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1253"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1256"/>
         <source>rs</source>
         <comment>rowspacing for inserts</comment>
         <translation>án</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1255"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1258"/>
         <source>text</source>
         <translation>text</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1256"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1259"/>
         <source>t</source>
         <comment>text</comment>
         <translation>t</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1259"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1262"/>
         <source>t</source>
         <comment>through</comment>
         <translation>t</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1261"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1264"/>
         <source>undo</source>
         <translation>zpět</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1264"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1267"/>
         <source>redo</source>
         <translation>redo</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1267"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1270"/>
         <source>back</source>
         <translation>zpět</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1268"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1271"/>
         <source>b</source>
         <comment>back</comment>
         <translation>b</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1273"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1276"/>
         <source>paperoffset</source>
         <translation>paperofset</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1274"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1277"/>
         <source>graphoffset</source>
         <translation>grafoffset</translation>
     </message>
@@ -48308,34 +48381,34 @@ Přejete si ho přepsat?</translation>
         <translation>Chyba kalkulátoru pro vstup:</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1270"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1273"/>
         <source>bw</source>
         <translation>bw</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1271"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1274"/>
         <source>blackwhite</source>
         <translation>černobílá</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1272"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1275"/>
         <source>color</source>
         <translation>barva</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="804"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="807"/>
         <source>di</source>
         <comment>modify - divide (cut)</comment>
         <translation>di</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="765"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="768"/>
         <source>t2</source>
         <comment>modify - multi trim (extend)</comment>
         <translation>t2</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="817"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="820"/>
         <source>mp</source>
         <comment>modify properties</comment>
         <translation>mp</translation>
@@ -48346,7 +48419,7 @@ Přejete si ho přepsat?</translation>
         <translation>Všechny</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="986"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="983"/>
         <source>Invalid objects removed:</source>
         <translation>Neplatné objekty odstraněny:</translation>
     </message>
@@ -48413,1771 +48486,1771 @@ Přejete si ho přepsat?</translation>
         <translation>Nenalezeno% 1 vrstev</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="92"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="95"/>
         <source>line2p</source>
         <comment>draw line</comment>
         <translation>line2p</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="100"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="103"/>
         <source>sline</source>
         <comment>draw snake line</comment>
         <translation>sline</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="101"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="104"/>
         <source>sli</source>
         <comment>draw snake line</comment>
         <translation>sli</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="102"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="105"/>
         <source>sl</source>
         <comment>draw snake line</comment>
         <translation>sl</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="107"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="110"/>
         <source>slinex</source>
         <comment>draw snake line (X)</comment>
         <translation>linex</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="108"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="111"/>
         <source>slix</source>
         <comment>draw snake line (X)</comment>
         <translation>sliz</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="109"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="112"/>
         <source>rlx</source>
         <comment>draw snake line (X)</comment>
         <translation>rlx</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="114"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="117"/>
         <source>sliney</source>
         <comment>draw snake line (Y)</comment>
         <translation>gliney</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="115"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="118"/>
         <source>sliy</source>
         <comment>draw snake line (Y)</comment>
         <translation>sliz</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="116"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="119"/>
         <source>rly</source>
         <comment>draw snake line (Y)</comment>
         <translation>rly</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="121"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="124"/>
         <source>lineang</source>
         <comment>angled line</comment>
         <translation>linang</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="122"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="125"/>
         <source>la</source>
         <comment>angled line</comment>
         <translation>la</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="127"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="130"/>
         <source>linehor</source>
         <comment>horizontal line</comment>
         <translation>linehor</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="128"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="131"/>
         <source>lh</source>
         <comment>horizontal line</comment>
         <translation>lh</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="133"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="136"/>
         <source>linever</source>
         <comment>vertical line</comment>
         <translation>linever</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="134"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="137"/>
         <source>lv</source>
         <comment>vertical line</comment>
         <translation>lv</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="139"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="142"/>
         <source>linerec</source>
         <comment>draw rectangle</comment>
         <translation>linkonazol</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="140"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="143"/>
         <source>re</source>
         <comment>draw rectangle</comment>
         <translation>re</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="146"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="149"/>
         <source>rect1</source>
         <comment>draw rectangle (1 Point)</comment>
         <translation>rect1</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="147"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="150"/>
         <source>re1</source>
         <comment>draw rectangle (1 Point)</comment>
         <translation>re1</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="152"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="155"/>
         <source>rect2</source>
         <comment>draw rectangle (2 Points)</comment>
         <translation>rect2</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="153"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="156"/>
         <source>re2</source>
         <comment>draw rectangle (2 Points)</comment>
         <translation>re2</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="158"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="161"/>
         <source>rect3</source>
         <comment>draw rectangle (3 Points)</comment>
         <translation>rect3</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="159"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="162"/>
         <source>re3</source>
         <comment>draw rectangle (3 Points)</comment>
         <translation>re3</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="164"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="167"/>
         <source>slicel</source>
         <comment>slice/divide line</comment>
         <translation>kráječ</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="165"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="168"/>
         <source>sll</source>
         <comment>slice/divide line</comment>
         <translation>sll</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="170"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="173"/>
         <source>slicec</source>
         <comment>slice/divide circle/arc</comment>
         <translation>králík</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="171"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="174"/>
         <source>slc</source>
         <comment>slice/divide circle/arc</comment>
         <translation>slc</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="176"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="179"/>
         <source>star</source>
         <comment>draw star</comment>
         <translation>hvězda</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="177"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="180"/>
         <source>st</source>
         <comment>draw star</comment>
         <translation>s</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="182"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="185"/>
         <source>cross</source>
         <comment>draw cross for circle</comment>
         <translation>kříž</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="183"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="186"/>
         <source>cx</source>
         <comment>draw cross for circle</comment>
         <translation>cx</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="187"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="190"/>
         <source>bbox</source>
         <comment>draw bound box</comment>
         <translation>bbox</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="188"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="191"/>
         <source>bb</source>
         <comment>draw bound box</comment>
         <translation>bb</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="192"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="195"/>
         <source>midline</source>
         <comment>draw middle line</comment>
         <translation>střed</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="193"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="196"/>
         <source>ml</source>
         <comment>draw mid line</comment>
         <translation>ml</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="197"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="200"/>
         <source>radiant</source>
         <comment>draw perspective line</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="198"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="201"/>
         <source>rl</source>
         <comment>draw perspective line</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="203"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="206"/>
         <source>linepoints</source>
         <comment>draw line of points</comment>
         <translation>linepoint</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="204"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="207"/>
         <source>lpoints</source>
         <comment>draw line of points</comment>
         <translation>body</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="208"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="211"/>
         <source>midpoint</source>
         <comment>draw middle points</comment>
         <translation>střed</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="209"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="212"/>
         <source>mpoint</source>
         <comment>draw middle of points</comment>
         <translation>mpoint</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="214"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="217"/>
         <source>criclebyarc</source>
         <comment>draw circle by arc</comment>
         <translation>kriklebyarc</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="215"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="218"/>
         <source>cba</source>
         <comment>draw circle by arc</comment>
         <translation>cba</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="220"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="223"/>
         <source>duplicate</source>
         <comment>duplicate entity</comment>
         <translation>duplikát</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="221"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="224"/>
         <source>dup</source>
         <comment>duplicate entity</comment>
         <translation>dup</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="226"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="229"/>
         <source>align</source>
         <comment>align entities</comment>
         <translation>sladit</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="227"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="230"/>
         <source>al</source>
         <comment>align entities</comment>
         <translation>re</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="232"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="235"/>
         <source>align1</source>
         <comment>align entities</comment>
         <translation>align1</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="233"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="236"/>
         <source>al1</source>
         <comment>align entities</comment>
         <translation>al1</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="237"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="240"/>
         <source>alignref</source>
         <comment>align references</comment>
         <translation>alignref</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="238"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="241"/>
         <source>alr</source>
         <comment>align references</comment>
         <translation>alr</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="243"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="246"/>
         <source>linejoin</source>
         <comment>lines join</comment>
         <translation>linjoint</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="244"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="247"/>
         <source>lj</source>
         <comment>lines join</comment>
         <translation>lj</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="249"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="252"/>
         <source>breakdivide</source>
         <comment>break or divide entity</comment>
         <translation>breakbreak</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="250"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="253"/>
         <source>bd</source>
         <comment>break or divide entity</comment>
         <translation>bd</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="255"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="258"/>
         <source>gapline</source>
         <comment>line gap</comment>
         <translation>gapline</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="256"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="259"/>
         <source>gl</source>
         <comment>line gap</comment>
         <translation>gl</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="261"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="264"/>
         <source>linepar</source>
         <comment>create parallel</comment>
         <translation>linepar</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="262"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="265"/>
         <source>parallel</source>
         <comment>create parallel</comment>
         <translation>paralelní</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="263"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="266"/>
         <source>lineoff</source>
         <comment>create parallel</comment>
         <translation>lineoff</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="264"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="267"/>
         <source>pa</source>
         <comment>create parallel</comment>
         <translation>pa</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="265"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="268"/>
         <source>ll</source>
         <comment>create parallel</comment>
         <translation>iii</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="270"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="273"/>
         <source>lineparthro</source>
         <comment>parallel through point</comment>
         <translation>lineparthro</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="271"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="274"/>
         <source>lp</source>
         <comment>parallel through point</comment>
         <translation>kj</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="277"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="280"/>
         <source>linebisect</source>
         <comment>angle bisector</comment>
         <translation>linebisect</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="284"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="287"/>
         <source>linetancp</source>
         <comment>tangent point and circle</comment>
         <translation>linetancp</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="285"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="288"/>
         <source>lt</source>
         <comment>tangent point and circle</comment>
         <translation>it</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="291"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="294"/>
         <source>linetan2c</source>
         <comment>tangent two circles</comment>
         <translation>linetan2c</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="292"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="295"/>
         <source>lc</source>
         <comment>tangent two circles</comment>
         <translation>lc</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="297"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="300"/>
         <source>linetancper</source>
         <comment>tangent line and circle</comment>
         <translation>linetancper</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="298"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="301"/>
         <source>or</source>
         <comment>tangent line and circle</comment>
         <translation>nebo</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="303"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="306"/>
         <source>lineperp</source>
         <comment>perpendicular line</comment>
         <translation>lineperp</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="304"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="307"/>
         <source>lo</source>
         <comment>perpendicular line</comment>
         <translation>ní</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="310"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="313"/>
         <source>linerelang</source>
         <comment>relative line</comment>
         <translation>linerang</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="311"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="314"/>
         <source>lr</source>
         <comment>relative line</comment>
         <translation>ní</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="316"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="319"/>
         <source>polygoncencor</source>
         <comment>polygon centre point</comment>
         <translation>polygoncencor</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="317"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="320"/>
         <source>pp</source>
         <comment>polygon centre point</comment>
         <translation>pp</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="318"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="321"/>
         <source>polycp</source>
         <comment>polygon centre point</comment>
         <translation>polycp</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="319"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="322"/>
         <source>pcp</source>
         <comment>polygon centre point</comment>
         <translation>pcp</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="324"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="327"/>
         <source>polygoncentan</source>
         <comment>polygon centre vertex</comment>
         <translation>polygoncentan</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="325"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="328"/>
         <source>pv</source>
         <comment>polygon centre vertex</comment>
         <translation>pv</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="326"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="329"/>
         <source>polyct</source>
         <comment>polygon centre vertex</comment>
         <translation>polyct</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="331"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="334"/>
         <source>polygonvv</source>
         <comment>polygon vertex vertex</comment>
         <translation>polygonvv</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="332"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="335"/>
         <source>pvv</source>
         <comment>polygon vertex vertex</comment>
         <translation>pvv</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="338"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="341"/>
         <source>p2</source>
         <comment>polygon by 2 vertices</comment>
         <translation>p2</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="348"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="351"/>
         <source>c</source>
         <comment>draw circle</comment>
         <translation>c</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="353"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="356"/>
         <source>circle2p</source>
         <comment>circle 2 points</comment>
         <translation>circle2p</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="355"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="358"/>
         <source>c2p</source>
         <comment>circle 2 points</comment>
         <translation>c2p</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="360"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="363"/>
         <source>circle2pr</source>
         <comment>circle 2 points radius</comment>
         <translation>circle2pr</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="361"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="364"/>
         <source>cc</source>
         <comment>circle 2 points radius</comment>
         <translation>cc</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="366"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="369"/>
         <source>circle3p</source>
         <comment>circle 3 points</comment>
         <translation>circle3p</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="368"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="371"/>
         <source>c3p</source>
         <comment>circle 3 points</comment>
         <translation>c3p</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="373"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="376"/>
         <source>circlecr</source>
         <comment>circle point radius</comment>
         <translation>cirklecr</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="374"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="377"/>
         <source>cr</source>
         <comment>circle point radius</comment>
         <translation>cr</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="375"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="378"/>
         <source>ccr</source>
         <comment>circle point radius</comment>
         <translation>ccr</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="381"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="384"/>
         <source>circletan2cp</source>
         <comment>circle 2 tangent point</comment>
         <translation>circletan2cp</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="382"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="385"/>
         <source>tr</source>
         <comment>circle 2 tangent point</comment>
         <translation>gi</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="387"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="390"/>
         <source>circletan2p</source>
         <comment>circle tangent 2 points</comment>
         <translation>circletan2p</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="388"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="391"/>
         <source>td</source>
         <comment>circle tangent 2 points</comment>
         <translation>td</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="393"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="396"/>
         <source>circletan2cr</source>
         <comment>circle 2 tangent radius</comment>
         <translation>circletan2cr</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="394"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="397"/>
         <source>tc</source>
         <comment>circle 2 tangent radius</comment>
         <translation>tc</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="400"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="403"/>
         <source>circletan3</source>
         <comment>circle tangent to 3</comment>
         <translation>circletan3</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="401"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="404"/>
         <source>t3</source>
         <comment>circle tangent to 3</comment>
         <translation>t3</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="410"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="413"/>
         <source>arc</source>
         <comment>arc point radius</comment>
         <translation>oblouk</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="411"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="414"/>
         <source>ar</source>
         <comment>arc point radius</comment>
         <translation>ar</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="412"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="415"/>
         <source>a</source>
         <comment>arc point radius</comment>
         <translation>a</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="417"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="420"/>
         <source>arc3p</source>
         <comment>draw 3pt arc</comment>
         <translation>arc3p</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="418"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="421"/>
         <source>a3</source>
         <comment>draw 3pt arc</comment>
         <translation>a3</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="423"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="426"/>
         <source>arctan</source>
         <comment>arc tangent</comment>
         <translation>arktan</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="424"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="427"/>
         <source>at</source>
         <comment>arc tangent</comment>
         <translation>v</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="429"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="432"/>
         <source>arc2p3</source>
         <comment>draw 2pt arc radius</comment>
         <translation>arc2p3</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="430"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="433"/>
         <source>a2r</source>
         <comment>draw 2pt arc radius</comment>
         <translation>a2r</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="435"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="438"/>
         <source>arc2pl</source>
         <comment>draw 2pt arc length</comment>
         <translation>arc2pl</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="436"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="439"/>
         <source>a2l</source>
         <comment>draw 2pt arc length</comment>
         <translation>a2l</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="441"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="444"/>
         <source>arc2ph</source>
         <comment>draw 2pt arc height</comment>
         <translation>arc2ph</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="442"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="445"/>
         <source>a2h</source>
         <comment>draw 2pt arc height</comment>
         <translation>a2h</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="447"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="450"/>
         <source>arc2pa</source>
         <comment>draw 2pt arc angle</comment>
         <translation>arc2pa</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="448"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="451"/>
         <source>a2a</source>
         <comment>draw 2pt arc angle</comment>
         <translation>a2a</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="455"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="458"/>
         <source>sf</source>
         <comment>draw spline</comment>
         <translation>sf</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="462"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="465"/>
         <source>sp</source>
         <comment>spline through points</comment>
         <translation>sp</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="468"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="471"/>
         <source>arcellc2ax</source>
         <comment>arc ellipse</comment>
         <translation>arcellc2ax</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="469"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="472"/>
         <source>ae</source>
         <comment>arc ellipse</comment>
         <translation>ae</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="473"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="476"/>
         <source>arcellc1ax</source>
         <comment>arc ellipse 1 point</comment>
         <translation>arcellc1ax</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="474"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="477"/>
         <source>ae1</source>
         <comment>arc ellipse 1 point</comment>
         <translation>ae1</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="479"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="482"/>
         <source>parabola4p</source>
         <comment>Parabola 4 points</comment>
         <translation>parabola4p</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="480"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="483"/>
         <source>pl4</source>
         <comment>Parabola 4 points</comment>
         <translation>p4</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="485"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="488"/>
         <source>parabolafd</source>
         <comment>Parabola focus directrix</comment>
         <translation>parabolafd</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="486"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="489"/>
         <source>plfd</source>
         <comment>Parabola focus directrix</comment>
         <translation>pfd</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="492"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="495"/>
         <source>fh</source>
         <comment>draw freehand line</comment>
         <translation>fh</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="500"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="503"/>
         <source>ellipsec2p</source>
         <comment>ellipse axis</comment>
         <translation>elipsec2p</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="501"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="504"/>
         <source>ea</source>
         <comment>ellipse axis</comment>
         <translation>ea</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="505"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="508"/>
         <source>ellipsec1p</source>
         <comment>ellipse 1 point</comment>
         <translation>elipsec1p</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="506"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="509"/>
         <source>ea1</source>
         <comment>ellipse 1 point</comment>
         <translation>ea1</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="511"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="514"/>
         <source>ellipse3p</source>
         <comment>ellipse foci</comment>
         <translation>elipse3p</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="512"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="515"/>
         <source>ef</source>
         <comment>ellipse foci</comment>
         <translation>ef</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="517"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="520"/>
         <source>ellipse4p</source>
         <comment>ellipse 4 point</comment>
         <translation>elipse4p</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="518"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="521"/>
         <source>e4</source>
         <comment>ellipse 4 point</comment>
         <translation>e4</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="523"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="526"/>
         <source>ellipsec3p</source>
         <comment>ellipse center 3 point</comment>
         <translation>elipsec3p</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="524"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="527"/>
         <source>e3</source>
         <comment>ellipse center 3 point</comment>
         <translation>e3</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="544"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="547"/>
         <source>angleline</source>
         <comment>draw angle from line</comment>
         <translation>anglelin</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="545"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="548"/>
         <source>aline</source>
         <comment>draw angle from line</comment>
         <translation>aline</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="550"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="553"/>
         <source>rortoline</source>
         <comment>draw orthogonal</comment>
         <translation>rortolin</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="551"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="554"/>
         <source>rort</source>
         <comment>draw orthogonal</comment>
         <translation>rort</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="556"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="559"/>
         <source>point2line</source>
         <comment>draw line from point to line</comment>
         <translation>bod 2řádek</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="557"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="560"/>
         <source>p2l</source>
         <comment>draw line from point to line</comment>
         <translation>p2l</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="563"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="566"/>
         <source>plineadd</source>
         <comment>pl add node</comment>
         <translation>plineadd</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="564"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="567"/>
         <source>pi</source>
         <comment>pl add node</comment>
         <translation>pí</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="569"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="572"/>
         <source>plineapp</source>
         <comment>pl append node</comment>
         <translation>plineapp</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="570"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="573"/>
         <source>pn</source>
         <comment>pl append node</comment>
         <translation>pn</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="575"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="578"/>
         <source>plinedel</source>
         <comment>pl delete node</comment>
         <translation>plinedel</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="576"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="579"/>
         <source>pd</source>
         <comment>pl delete node</comment>
         <translation>pd</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="581"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="584"/>
         <source>plinedeltwn</source>
         <comment>pl del between nodes</comment>
         <translation>plinedeltwn</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="582"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="585"/>
         <source>pr</source>
         <comment>pl del between nodes</comment>
         <translation>pr</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="587"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="590"/>
         <source>plinetrm</source>
         <comment>pl trim segments</comment>
         <translation>plinetrm</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="588"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="591"/>
         <source>pt</source>
         <comment>pl trim segments</comment>
         <translation>pt</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="593"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="596"/>
         <source>plinepar</source>
         <comment>pl equidistant</comment>
         <translation>plinepar</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="594"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="597"/>
         <source>pe</source>
         <comment>pl equidistant</comment>
         <translation>pe</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="599"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="602"/>
         <source>plinejoin</source>
         <comment>pl join</comment>
         <translation>plinejoin</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="600"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="603"/>
         <source>pj</source>
         <comment>pl join</comment>
         <translation>pj</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="605"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="608"/>
         <source>dual</source>
         <comment>create dual geometries</comment>
         <translation>duální</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="606"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="609"/>
         <source>du</source>
         <comment>create dual geometries</comment>
         <translation>již</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="619"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="622"/>
         <source>sx</source>
         <comment>deselect all entities</comment>
         <translation>sx</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="625"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="628"/>
         <source>invertselect</source>
         <comment>invert select</comment>
         <translation>invertselect name</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="626"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="629"/>
         <source>is</source>
         <comment>invert select</comment>
         <translation>vá</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="630"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="633"/>
         <source>selectquick</source>
         <comment>select quick</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="631"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="634"/>
         <source>sq</source>
         <comment>select quick</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="635"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="638"/>
         <source>smtoggle</source>
         <comment>select mode toggle</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="636"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="639"/>
         <source>smt</source>
         <comment>select mode toggle</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="646"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="649"/>
         <source>ds</source>
         <comment>dimension - aligned</comment>
         <translation>s</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="657"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="660"/>
         <source>dimord</source>
         <comment>dimension - ordinate</comment>
         <translation>dimord</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="658"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="661"/>
         <source>do</source>
         <comment>dimension - ordinate</comment>
         <translation>do</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="662"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="665"/>
         <source>dimordrebase</source>
         <comment>dimension - ordinate</comment>
         <translation>dimordrebase</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="663"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="666"/>
         <source>dor</source>
         <comment>dimension - ordinate</comment>
         <translation>dor</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="680"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="683"/>
         <source>dimradius</source>
         <comment>dimension - radial</comment>
         <translation>dimradius</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="682"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="685"/>
         <source>dr</source>
         <comment>dimension - radial</comment>
         <translation>dr</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="695"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="698"/>
         <source>da</source>
         <comment>dimension - angular</comment>
         <translation>s</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="708"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="711"/>
         <source>dg</source>
         <comment>dimension - regenerate</comment>
         <translation>dg</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="715"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="718"/>
         <source>modmove</source>
         <comment>modify - move (copy)</comment>
         <translation>modmove</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="721"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="724"/>
         <source>modrotate</source>
         <comment>modify - rotate</comment>
         <translation>modrotát</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="727"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="730"/>
         <source>modscale</source>
         <comment>modify - scale</comment>
         <translation>modální stupnice</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="733"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="736"/>
         <source>modmirror</source>
         <comment>modify -  mirror</comment>
         <translation>modelové zrcadlo</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="739"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="742"/>
         <source>modmovrot</source>
         <comment>modify - move rotate</comment>
         <translation>modmovrot</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="740"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="743"/>
         <source>mr</source>
         <comment>modify - move rotate</comment>
         <translation>pane</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="745"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="748"/>
         <source>mod2rot</source>
         <comment>modify - rotate2</comment>
         <translation>mod2rot</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="746"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="749"/>
         <source>r2</source>
         <comment>modify - rotate2</comment>
         <translation>r2</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="751"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="754"/>
         <source>modrevert</source>
         <comment>modify -  revert direction</comment>
         <translation>modrevert</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="752"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="755"/>
         <source>md</source>
         <comment>modify -  revert direction</comment>
         <translation>md</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="758"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="761"/>
         <source>modtrim</source>
         <comment>modify - trim (extend)</comment>
         <translation>modtrim</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="764"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="767"/>
         <source>modtrim2</source>
         <comment>modify - multi trim (extend)</comment>
         <translation>modtrim2</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="771"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="774"/>
         <source>modlengthen</source>
         <comment>modify - lengthen</comment>
         <translation>modlengthen</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="777"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="780"/>
         <source>modoffset</source>
         <comment>modify - offset</comment>
         <translation>modeffset</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="778"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="781"/>
         <source>offset</source>
         <comment>modify - offset</comment>
         <translation>ofset</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="780"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="783"/>
         <source>mo</source>
         <comment>modify - offset</comment>
         <translation>mo</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="781"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="784"/>
         <source>moff</source>
         <comment>modify - offset</comment>
         <translation>moff</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="786"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="789"/>
         <source>modbevel</source>
         <comment>modify - bevel</comment>
         <translation>modbevel</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="793"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="796"/>
         <source>modfillet</source>
         <comment>modify - fillet</comment>
         <translation>modfillet</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="795"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="798"/>
         <source>fillet</source>
         <comment>modify - fillet</comment>
         <translation>filet</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="796"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="799"/>
         <source>bevel</source>
         <comment>modify - fillet</comment>
         <translation>bevel</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="801"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="804"/>
         <source>moddivide</source>
         <comment>modify - divide (cut)</comment>
         <translation>modalive</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="809"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="812"/>
         <source>modstretch</source>
         <comment>modify - stretch</comment>
         <translation>modstretch</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="815"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="818"/>
         <source>modproperties</source>
         <comment>modify properties</comment>
         <translation>modality</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="822"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="825"/>
         <source>modattr</source>
         <comment>modify attribute</comment>
         <translation>modattr</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="829"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="832"/>
         <source>modexpltext</source>
         <comment>explode text strings</comment>
         <translation>modexplicitext</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="830"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="833"/>
         <source>xt</source>
         <comment>explode text strings</comment>
         <translation>xt</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="835"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="838"/>
         <source>modexplode</source>
         <comment>explode block/polyline into entities</comment>
         <translation>modexploze</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="841"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="844"/>
         <source>moddelete</source>
         <comment>modify - delete (erase)</comment>
         <translation>moddelete</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="850"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="853"/>
         <source>infodistance</source>
         <comment>distance point to point</comment>
         <translation>infodistance</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="851"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="854"/>
         <source>id</source>
         <comment>distance point to point</comment>
         <translation>id</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="858"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="861"/>
         <source>infodistep</source>
         <comment>distance entity to point</comment>
         <translation>infodistep</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="859"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="862"/>
         <source>ii</source>
         <comment>distance entity to point</comment>
         <translation>ii</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="860"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="863"/>
         <source>dep</source>
         <comment>distance entity to point</comment>
         <translation>dep</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="865"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="868"/>
         <source>infoangle</source>
         <comment>measure angle</comment>
         <translation>infoúhel</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="866"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="869"/>
         <source>ia</source>
         <comment>measure angle</comment>
         <translation>ia</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="872"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="875"/>
         <source>infoarea</source>
         <comment>measure area</comment>
         <translation>oblast</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="873"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="876"/>
         <source>aa</source>
         <comment>measure area</comment>
         <translation>aa</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="881"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="884"/>
         <source>mt</source>
         <comment>draw mtext</comment>
         <translation>mt</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="888"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="891"/>
         <source>tx</source>
         <comment>draw text</comment>
         <translation>tx</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="916"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="919"/>
         <source>so</source>
         <comment>snap - free</comment>
         <translation>takže</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="967"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="970"/>
         <source>snapmiddlemanual</source>
         <comment>snap middle manual</comment>
         <translation>snapmiddlemanual</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="968"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="971"/>
         <source>snapmanual</source>
         <comment>snap middle manual</comment>
         <translation>snapmanual</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="969"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="972"/>
         <source>smm</source>
         <comment>snap middle manual</comment>
         <translation>smm</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1010"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1013"/>
         <source>ki</source>
         <comment>kill all actions</comment>
         <translation>ki</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1017"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1020"/>
         <source>un</source>
         <comment>undo cycle</comment>
         <translation>un</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1024"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1027"/>
         <source>rd</source>
         <comment>redo cycle</comment>
         <translation>re</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1032"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1035"/>
         <source>drawpref</source>
         <comment>drawing preferences</comment>
         <translation>page pref</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1033"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1036"/>
         <source>dp</source>
         <comment>drawing preferences</comment>
         <translation>dp</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1048"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1051"/>
         <source>zoomin</source>
         <comment>zoom - in</comment>
         <translation>zoomin</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1049"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1052"/>
         <source>zi</source>
         <comment>zoom - in</comment>
         <translation>zi</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1054"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1057"/>
         <source>zoomout</source>
         <comment>zoom - out</comment>
         <translation>zoomout</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1055"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1058"/>
         <source>zo</source>
         <comment>zoom - out</comment>
         <translation>zo</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1087"/>
-        <location filename="../src/cmd/lc_commandItems.h" line="1192"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1090"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1195"/>
         <source>angle1</source>
         <translation>angle1</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1088"/>
-        <location filename="../src/cmd/lc_commandItems.h" line="1193"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1091"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1196"/>
         <source>angle2</source>
         <translation>angle2</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1091"/>
-        <location filename="../src/cmd/lc_commandItems.h" line="1201"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1094"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1204"/>
         <source>chordlen</source>
         <translation>chordlen</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1094"/>
-        <location filename="../src/cmd/lc_commandItems.h" line="1220"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1097"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1223"/>
         <source>equation</source>
         <translation>rovnice</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1097"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1100"/>
         <source>length1</source>
         <comment>bevel/fillet length1</comment>
         <translation>délka 1</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1098"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1101"/>
         <source>length2</source>
         <comment>bevel/fillet length2</comment>
         <translation>délka 2</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1107"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1110"/>
         <source>x</source>
         <translation>x</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1108"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1111"/>
         <source>y</source>
         <translation>y</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1109"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1112"/>
         <source>p</source>
         <translation>p</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1110"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1113"/>
         <source>anglerel</source>
         <translation>anglerel</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1111"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1114"/>
         <source>start</source>
         <translation>start</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1114"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1117"/>
         <source>offset</source>
         <translation>ofset</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1115"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1118"/>
         <source>linesnap</source>
         <translation>linesnap</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1116"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1119"/>
         <source>ticksnap</source>
         <translation>ticksnap</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1119"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1122"/>
         <source>width</source>
         <translation>šířka</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1120"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1123"/>
         <source>height</source>
         <translation>výška</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1121"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1124"/>
         <source>pos</source>
         <translation>pos</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1122"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1125"/>
         <source>size</source>
         <translation>velikost</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1123"/>
-        <location filename="../src/cmd/lc_commandItems.h" line="1129"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1126"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1132"/>
         <source>bevels</source>
         <translation>klavíry</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1124"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1127"/>
         <source>nopoly</source>
         <translation>nopoly</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1125"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1128"/>
         <source>usepoly</source>
         <translation>usepoly</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1126"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1129"/>
         <source>corners</source>
         <translation>rohy</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1127"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1130"/>
         <source>str</source>
         <translation>str</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1128"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1131"/>
         <source>round</source>
         <translation>kulaté</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1130"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1133"/>
         <source>snap1</source>
         <translation>snap1</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1131"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1134"/>
         <source>topl</source>
         <translation>horní</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1132"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1135"/>
         <source>top</source>
         <translation>nahoře</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1133"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1136"/>
         <source>topr</source>
         <translation>topr</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1134"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1137"/>
         <source>left</source>
         <translation>vlevo</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1135"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1138"/>
         <source>middle</source>
         <translation>střední</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1136"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1139"/>
         <source>right</source>
         <translation>správně</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1137"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1140"/>
         <source>bottoml</source>
         <translation>bottom</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1138"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1141"/>
         <source>bottom</source>
         <translation>dole</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1139"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1142"/>
         <source>bottomr</source>
         <translation>bottomr</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1140"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1143"/>
         <source>snapcorner</source>
         <translation>snapcorn</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1141"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1144"/>
         <source>snapshift</source>
         <translation>chvat</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1142"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1145"/>
         <source>sizein</source>
         <translation>sizein</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1143"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1146"/>
         <source>sizeout</source>
         <translation>sizeout</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1144"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1147"/>
         <source>hor</source>
         <translation>hr</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1145"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1148"/>
         <source>vert</source>
         <translation>vert</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1148"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1151"/>
         <source>snap2</source>
         <translation>snap2</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1149"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1152"/>
         <source>corner</source>
         <translation>roh</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1150"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1153"/>
         <source>mid-vert</source>
         <translation>mid- vert</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1151"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1154"/>
         <source>mid-hor</source>
         <translation>mid- hor</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1153"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1156"/>
         <source>quad</source>
         <translation>kvad</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1154"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1157"/>
         <source>noquad</source>
         <translation>nokvád</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1155"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1158"/>
         <source>angle_inner</source>
         <translation>úhel _ vnitřní</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1158"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1161"/>
         <source>edges</source>
         <translation>okraje</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1159"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1162"/>
         <source>edge-none</source>
         <translation>edge- none</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1160"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1163"/>
         <source>edge-both</source>
         <translation>edge- oba</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1161"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1164"/>
         <source>edge-start</source>
         <translation>edge- start</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1162"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1165"/>
         <source>edge-end</source>
         <translation>edge- end</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1163"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1166"/>
         <source>end</source>
         <translation>konec</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1164"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1167"/>
         <source>both</source>
         <translation>oba</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1165"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1168"/>
         <source>none</source>
         <translation>žádný</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1166"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1169"/>
         <source>fit</source>
         <translation>fit</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1167"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1170"/>
         <source>nofit</source>
         <translation>nofit</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1168"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1171"/>
         <source>dist_fixed</source>
         <translation>dist _ fixed</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1169"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1172"/>
         <source>dist_flex</source>
         <translation>dist _ flex</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1170"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1173"/>
         <source>distance</source>
         <translation>vzdálenost</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1173"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1176"/>
         <source>radiant</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1174"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1177"/>
         <source>active</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1175"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1178"/>
         <source>lentype</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1176"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1179"/>
         <source>fixed</source>
         <translation type="unfinished">pevné</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1179"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1182"/>
         <source>sym</source>
         <translation>sym</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1180"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1183"/>
         <source>nosym</source>
         <translation>nosym</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1181"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1184"/>
         <source>snap</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1182"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1185"/>
         <source>s</source>
         <comment>snap start</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1183"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1186"/>
         <source>m</source>
         <comment>snap middle</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1184"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1187"/>
         <source>e</source>
         <comment>snap end</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1203"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1206"/>
         <source>cl</source>
         <comment>chordlen</comment>
         <translation>cl</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1221"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1224"/>
         <source>eqn</source>
         <comment>equation</comment>
         <translation>eqn</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1222"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1225"/>
         <source>eq</source>
         <comment>equation</comment>
         <translation>eq</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="1265"/>
+        <location filename="../src/cmd/lc_commandItems.h" line="1268"/>
         <source>r</source>
         <comment>redo redo cycle</comment>
         <translation>r</translation>
@@ -50337,7 +50410,7 @@ Přejete si ho přepsat?</translation>
         <translation>Kombinovat všechny vrstvy</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/file/export/layers/lc_exportlayersdialogservice.cpp" line="178"/>
+        <location filename="../src/ui/dialogs/file/export/layers/lc_exportlayersdialogservice.cpp" line="177"/>
         <location filename="../src/ui/dialogs/file/export/layers/lc_filedialogservice.cpp" line="204"/>
         <source>File &quot;%1&quot; already exists. Do you want to replace it?</source>
         <translation>Soubor &quot;% 1&quot; již existuje. Chceš ho vyměnit?</translation>
@@ -50723,7 +50796,7 @@ Přejete si ho přepsat?</translation>
         <translation>[Override]</translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_actionhandler.cpp" line="88"/>
+        <location filename="../src/ui/qg_actionhandler.cpp" line="86"/>
         <source>%2 - command for &quot;%1&quot;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -50735,17 +50808,17 @@ Přejete si ho přepsat?</translation>
         <translation type="vanished">Zvolte vytvořit blok (Zadejte pro dokončení)</translation>
     </message>
     <message>
-        <location filename="../src/actions/dock_widgets/block/rs_actionblockscreate.cpp" line="106"/>
+        <location filename="../src/actions/dock_widgets/block/rs_actionblockscreate.cpp" line="105"/>
         <source>Select contour</source>
         <translation>Vybrat obrys</translation>
     </message>
     <message>
-        <location filename="../src/actions/dock_widgets/block/rs_actionblockscreate.cpp" line="106"/>
+        <location filename="../src/actions/dock_widgets/block/rs_actionblockscreate.cpp" line="105"/>
         <source>Select to create block</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/dock_widgets/block/rs_actionblockscreate.cpp" line="112"/>
+        <location filename="../src/actions/dock_widgets/block/rs_actionblockscreate.cpp" line="111"/>
         <source>Specify reference point</source>
         <translation>Zadejte referenční bod</translation>
     </message>
@@ -50821,169 +50894,169 @@ This block cannot be inserted.</source>
 <context>
     <name>RS_ActionDefault</name>
     <message>
-        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="577"/>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="576"/>
         <source>Selecting</source>
         <translation>Výběr</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="577"/>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="576"/>
         <source>De-Selecting</source>
         <translation>De- výběr</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="578"/>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="577"/>
         <source> entities </source>
         <translation>subjekty</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="579"/>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="578"/>
         <source>that intersect with box</source>
         <translation>které se protínají s krabicí</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="579"/>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="578"/>
         <source>that are within box</source>
         <translation>které jsou v krabici</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="623"/>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="622"/>
         <source>Line</source>
         <translation>Čára</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="624"/>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="623"/>
         <source>Length: </source>
         <translation>Délka:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="625"/>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="624"/>
         <source>Angle: </source>
         <translation>Úhel:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="634"/>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="633"/>
         <source>Arc</source>
         <translation>Arc</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="505"/>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="504"/>
         <source>Offset</source>
         <translation>Offset</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="508"/>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="507"/>
         <source>New Position</source>
         <translation>Nová pozice</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="549"/>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="548"/>
         <source>Copy Offset</source>
         <translation>Kopírovat offset</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="551"/>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="550"/>
         <source>Move Offset</source>
         <translation>Přesunout offset</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="635"/>
-        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="646"/>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="634"/>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="645"/>
         <source>Radius:</source>
         <translation>Poloměr:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="636"/>
-        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="647"/>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="635"/>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="646"/>
         <source>Center:</source>
         <translation>Střed:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="637"/>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="636"/>
         <source>Angle Length:</source>
         <translation>Délka úhlu:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="638"/>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="637"/>
         <source>Chord Length:</source>
         <translation>Délka chóru:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="639"/>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="638"/>
         <source>Height:</source>
         <translation>Výška:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="645"/>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="644"/>
         <source>Circle</source>
         <translation>Kruh</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="995"/>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="994"/>
         <source>Set new position</source>
         <translation>Nastavit novou pozici</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="995"/>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="994"/>
         <source>Create a copy</source>
         <translation>Vytvořit kopii</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="1003"/>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="1002"/>
         <source>Lengthen Line</source>
         <translation>Lengthen Line</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="1006"/>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="1005"/>
         <source>Lengthen/Scale</source>
         <translation>Lengthen / Scale</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="1006"/>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="1005"/>
         <source>Lengthen Chord</source>
         <translation>Lengthen Chord</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="1009"/>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="1008"/>
         <source>Move in Previous segment direction</source>
         <translation>Přesunout ve směru předchozích segmentů</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="1009"/>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="1008"/>
         <source>Move in Next segment direction</source>
         <translation>Přesunout ve směru dalšího segmentu</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="1015"/>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="1014"/>
         <source>Set new ref position</source>
         <translation>Nastavit novou pozici ref</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="1019"/>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="1018"/>
         <source>Zoom, pan or select entity</source>
         <translation>Zvětšit, pánev nebo vybrat subjekt</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="1019"/>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="1018"/>
         <source>Scroll Horizontally / Select Contour</source>
         <translation>Skroluj horizontálně / zvolte Contour</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="1019"/>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="1018"/>
         <source>Pan / Scroll Vertically / Select Child entities</source>
         <translation>Pan / Scroll Vertikálně / Vybrat Dětské subjekty</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="1024"/>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="1023"/>
         <source>Select/Deselect entities</source>
         <translation>Vybrat / Vybrat jednotky</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="1024"/>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="1023"/>
         <source>Select Intersecting</source>
         <translation>Vybrat protínání</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="1024"/>
+        <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="1023"/>
         <source>Choose second edge</source>
         <translation>Zvolte druhou stranu</translation>
     </message>
@@ -51959,21 +52032,21 @@ This block cannot be inserted.</source>
         <translation type="vanished">Zvolte pro střih (Zadejte pro dokončení)</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/edit/lc_action_edit_copy_cut.cpp" line="176"/>
-        <location filename="../src/actions/drawing/edit/lc_action_edit_copy_cut.cpp" line="181"/>
-        <location filename="../src/actions/drawing/edit/lc_action_edit_copy_cut.cpp" line="186"/>
-        <location filename="../src/actions/drawing/edit/lc_action_edit_copy_cut.cpp" line="191"/>
+        <location filename="../src/actions/drawing/edit/lc_action_edit_copy_cut.cpp" line="175"/>
+        <location filename="../src/actions/drawing/edit/lc_action_edit_copy_cut.cpp" line="180"/>
+        <location filename="../src/actions/drawing/edit/lc_action_edit_copy_cut.cpp" line="185"/>
+        <location filename="../src/actions/drawing/edit/lc_action_edit_copy_cut.cpp" line="190"/>
         <source>Select contour</source>
         <translation>Vybrat obrys</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/edit/lc_action_edit_copy_cut.cpp" line="176"/>
-        <location filename="../src/actions/drawing/edit/lc_action_edit_copy_cut.cpp" line="186"/>
+        <location filename="../src/actions/drawing/edit/lc_action_edit_copy_cut.cpp" line="175"/>
+        <location filename="../src/actions/drawing/edit/lc_action_edit_copy_cut.cpp" line="185"/>
         <source>Set point after selection</source>
         <translation>Nastavit bod po výběru</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/edit/lc_action_edit_copy_cut.cpp" line="181"/>
+        <location filename="../src/actions/drawing/edit/lc_action_edit_copy_cut.cpp" line="180"/>
         <source>Cut right after selection</source>
         <translation>Vystřihnout vpravo po výběru</translation>
     </message>
@@ -51982,39 +52055,39 @@ This block cannot be inserted.</source>
         <translation type="vanished">Zvolte pro kopírování (Zadejte pro dokončení)</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/edit/lc_action_edit_copy_cut.cpp" line="175"/>
-        <location filename="../src/actions/drawing/edit/lc_action_edit_copy_cut.cpp" line="180"/>
-        <location filename="../src/actions/drawing/edit/lc_action_edit_copy_cut.cpp" line="190"/>
+        <location filename="../src/actions/drawing/edit/lc_action_edit_copy_cut.cpp" line="174"/>
+        <location filename="../src/actions/drawing/edit/lc_action_edit_copy_cut.cpp" line="179"/>
+        <location filename="../src/actions/drawing/edit/lc_action_edit_copy_cut.cpp" line="189"/>
         <source>Select to cut</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/edit/lc_action_edit_copy_cut.cpp" line="185"/>
+        <location filename="../src/actions/drawing/edit/lc_action_edit_copy_cut.cpp" line="184"/>
         <source>Select to copy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/edit/lc_action_edit_copy_cut.cpp" line="191"/>
+        <location filename="../src/actions/drawing/edit/lc_action_edit_copy_cut.cpp" line="190"/>
         <source>Copy right after selection</source>
         <translation>Kopírovat hned po výběru</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/edit/lc_action_edit_copy_cut.cpp" line="205"/>
+        <location filename="../src/actions/drawing/edit/lc_action_edit_copy_cut.cpp" line="204"/>
         <source>Specify reference point</source>
         <translation>Upřesněte referenční bod</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/edit/lc_action_edit_copy_cut.cpp" line="205"/>
+        <location filename="../src/actions/drawing/edit/lc_action_edit_copy_cut.cpp" line="204"/>
         <source>Paste Immediately</source>
         <translation>Vložit okamžitě</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/edit/lc_action_edit_copy_cut.cpp" line="209"/>
+        <location filename="../src/actions/drawing/edit/lc_action_edit_copy_cut.cpp" line="208"/>
         <source>Set paste reference point</source>
         <translation>Nastavit referenční bod pasty</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/edit/lc_action_edit_copy_cut.cpp" line="209"/>
+        <location filename="../src/actions/drawing/edit/lc_action_edit_copy_cut.cpp" line="208"/>
         <source>Paste Multiple</source>
         <translation>Vložit více</translation>
     </message>
@@ -52361,22 +52434,22 @@ Bod: (% 8,% 9)</translation>
 <context>
     <name>RS_ActionInterface</name>
     <message>
-        <location filename="../src/lib/actions/rs_actioninterface.cpp" line="636"/>
+        <location filename="../src/lib/actions/rs_actioninterface.cpp" line="631"/>
         <source>Back</source>
         <translation>Zpět</translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/rs_actioninterface.cpp" line="613"/>
+        <location filename="../src/lib/actions/rs_actioninterface.cpp" line="608"/>
         <source>SHIFT:</source>
         <translation>SHIFT:</translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/rs_actioninterface.cpp" line="620"/>
+        <location filename="../src/lib/actions/rs_actioninterface.cpp" line="615"/>
         <source>CTRL:</source>
         <translation>CTRL:</translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/rs_actioninterface.cpp" line="645"/>
+        <location filename="../src/lib/actions/rs_actioninterface.cpp" line="640"/>
         <source>Cancel</source>
         <translation>Zrušit</translation>
     </message>
@@ -53284,72 +53357,72 @@ Bod: (% 8,% 9)</translation>
 <context>
     <name>RS_ActionPrintPreview</name>
     <message>
-        <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="296"/>
+        <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="333"/>
         <source>RS_ActionPrintPreview::fit(): Invalid paper size</source>
         <translation>RS_ActionPrintPreview::fit(): Neplatná velikost papíru</translation>
     </message>
     <message>
-        <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="173"/>
+        <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="210"/>
         <source>Printout offset in paper coordinates by (%1, %2)</source>
         <translation>Posun výstupu v souřadnicích papíru o (%1, %2)</translation>
     </message>
     <message>
-        <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="178"/>
+        <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="215"/>
         <source>Printout offset in graph coordinates by (%1, %2)</source>
         <translation>Posun výstupu v souřadnicích výkresu o (%1, %2)</translation>
     </message>
     <message>
-        <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="203"/>
+        <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="240"/>
         <source>Printout offset in graph coordinates</source>
         <translation>Posun výstupu v souřadnicích výkresu</translation>
     </message>
     <message>
-        <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="208"/>
+        <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="245"/>
         <source>Printout offset in paper coordinates</source>
         <translation>Posun výstupu v souřadnicích papíru</translation>
     </message>
     <message>
-        <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="241"/>
+        <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="278"/>
         <source>: select printout offset coordinates</source>
         <translation>: vyberte souřadnice posunu výstupu</translation>
     </message>
     <message>
-        <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="241"/>
+        <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="278"/>
         <source>type in offset from command line to offset printout</source>
         <translation>zadejte z příkazového řádku posun výstupu</translation>
     </message>
     <message>
-        <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="413"/>
+        <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="450"/>
         <source>Limit of pages has been exceeded.</source>
         <translation>Bylo překročeno omezení stran.</translation>
     </message>
     <message>
-        <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="479"/>
+        <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="516"/>
         <source>Drag with Left Button to Position Paper or with Middle Button to Pan</source>
         <translation>Přetáhněte levým tlačítkem do pozičního papíru nebo prostředním tlačítkem do Pan</translation>
     </message>
     <message>
-        <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="480"/>
+        <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="517"/>
         <source>Move Horizontally</source>
         <translation>Přesunout vodorovně</translation>
     </message>
     <message>
-        <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="480"/>
+        <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="517"/>
         <source>Move Vertically</source>
         <translation>Vertikální pohyb</translation>
     </message>
     <message>
-        <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="216"/>
+        <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="253"/>
         <source>Printout offset ignores relative zero. Ignoring &apos;@&apos;</source>
         <translation>Posun výstupu ignoruje relativní počátek. Ignoruje se &apos;@&apos;</translation>
     </message>
     <message>
-        <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="193"/>
+        <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="230"/>
         <source>Printout in Black/White</source>
         <translation>Tisk v černé / bílé</translation>
     </message>
     <message>
-        <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="198"/>
+        <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="235"/>
         <source>Printout in color</source>
         <translation>Vytisknout v barvě</translation>
     </message>
@@ -53357,7 +53430,7 @@ Bod: (% 8,% 9)</translation>
 <context>
     <name>RS_ActionSelectBase</name>
     <message>
-        <location filename="../src/lib/actions/rs_actionselectbase.h" line="50"/>
+        <location filename="../src/lib/actions/rs_actionselectbase.h" line="51"/>
         <source> (Enter or CTRL+LMB click to complete)</source>
         <translation type="unfinished"></translation>
     </message>
@@ -53460,7 +53533,7 @@ Bod: (% 8,% 9)</translation>
 <context>
     <name>RS_ActionSetRelativeZero</name>
     <message>
-        <location filename="../src/actions/drawing/rel_zero/rs_actionsetrelativezero.cpp" line="73"/>
+        <location filename="../src/actions/drawing/rel_zero/rs_actionsetrelativezero.cpp" line="72"/>
         <source>Set relative Zero</source>
         <translation>Nastavit relativní počátek</translation>
     </message>

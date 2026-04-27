@@ -219,7 +219,7 @@ bool RS_Modification::changeAttributes(const QList<RS_Entity*>& originalEntities
         if (en == nullptr) {
             continue;
         }
-        RS_Entity* clone;
+        RS_Entity* clone = nullptr;
         doChangeEntityAttributes(en, clone, data, blocks);
         ctx += clone;
         ctx -= en;
@@ -795,7 +795,7 @@ RS_Polyline* RS_Modification::polylineTrim(RS_Polyline* polyline, RS_AtomicEntit
     }
 
     // check which segment comes first in the polyline:
-    RS_AtomicEntity* firstSegment;
+    RS_AtomicEntity* firstSegment = nullptr;
     if (polyline->findEntity(&segment1) > polyline->findEntity(&segment2)) {
         firstSegment = &segment2;
     }
@@ -1450,7 +1450,7 @@ bool RS_Modification::cut(const RS_Vector& cutCoord, RS_AtomicEntity* cutEntity,
 
     RS_AtomicEntity* cut1 = nullptr;
     RS_AtomicEntity* cut2 = nullptr;
-    double a;
+    double a = NAN;
 
     switch (cutEntity->rtti()) {
         case RS2::EntityCircle: {
@@ -1907,7 +1907,7 @@ LC_RoundResult::TrimMode RS_Modification::roundingTrimEntity(const RS_VectorSolu
                                                              const RS_Arc* arc, const RS_Vector& trimPoint,
                                                              const RS_Vector& selectionPoint1, const RS_Vector& selectionPoint2) {
     const RS_Vector is2 = entitiesIntersection.getClosest(selectionPoint1);
-    LC_RoundResult::TrimMode trimMode;
+    LC_RoundResult::TrimMode trimMode = LC_RoundResult::TRIM_CIRCLE;
     const RS2::Ending ending = entityToTrim->getTrimPoint(selectionPoint2, is2);
     switch (ending) {
         case RS2::EndingStart: {
@@ -2000,9 +2000,9 @@ bool RS_Modification::explode(const QList<RS_Entity*>& entitiesList, LC_Document
             // add entities from container:
             const auto* container = static_cast<RS_EntityContainer*>(e);
 
-            RS2::ResolveLevel resolveLevel;
-            bool resolvePen;
-            bool resolveLayer;
+            RS2::ResolveLevel resolveLevel = RS2::ResolveNone;
+            bool resolvePen = false;
+            bool resolveLayer = false;
 
             const auto containerType = container->rtti(); // fixme - sand - review this logic.
             switch (containerType) {

@@ -37,7 +37,7 @@ void LC_RelativePositionEvaluator::update(const RS_Vector& wcsPos, const RS_Vect
     m_relativeInputData.setUnmodified();
 }
 
-void LC_RelativePositionEvaluator::recalculateDeltas([[]] const RS_Vector& wcsEndPoint) {
+void LC_RelativePositionEvaluator::recalculateDeltas([[maybe_unused]] const RS_Vector& wcsEndPoint) {
     /*const RS_Vector delta = wcsEndPoint - m_relativeInputData.wcsBasePoint;
     m_relativeInputData.wcsDX = delta.x;
     m_relativeInputData.wcsDY = delta.y;*/
@@ -65,7 +65,7 @@ void LC_RelativePositionEvaluator::calculatePointForGivenXKeepingLength(double l
     const RS_Vector ucsDelta = ucsProjectedPoint - ucsBase;
     const double ucsDX = ucsDelta.x;
 
-    const double ucsDY = std::sqrt(length * length - ucsDX * ucsDX);
+    const double ucsDY = std::sqrt((length * length) - ucsDX * ucsDX);
 
     const RS_Vector proj1 = ucsBase + RS_Vector(ucsDX, ucsDY);
     const RS_Vector proj2 = ucsBase + RS_Vector(ucsDX, -ucsDY);

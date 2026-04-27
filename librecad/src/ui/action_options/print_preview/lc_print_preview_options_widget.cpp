@@ -203,19 +203,16 @@ void LC_PrintPreviewOptionsWidget::doUpdateByAction(RS_ActionInterface* a) {
 }
 
 
-void LC_PrintPreviewOptionsWidget::saveCustomRatios() {
-    const bool metric = !m_action->isUseImperialScales();
+void LC_PrintPreviewOptionsWidget::saveCustomRatios() {    
     const int existingScalesCount = ui->cbScale->count();
     int max = m_defaultScalesStartIndex + MAX_CUSTOM_RATIOS;
     max = std::min(max, existingScalesCount);
-    QStringList customScale;
-    int propertyIndex = 0;
+    QStringList customScale;    
     for (int i = m_defaultScalesStartIndex; i < max; i++) {
         const QString ratio = ui->cbScale->itemText(i);
-        customScale.push_back(ratio);
-        propertyIndex++;
+        customScale.push_back(ratio);        
     }
-    m_action->saveCustomRatios(customScale,m_defaultScalesStartIndex);
+    m_action->saveCustomRatios(customScale, m_defaultScalesStartIndex);
 }
 
 void LC_PrintPreviewOptionsWidget::initializeScaleBoxItems() {
@@ -259,9 +256,10 @@ void LC_PrintPreviewOptionsWidget::onTiledPrintClicked() {
      ui->wTiledPrint->setVisible(enabled);
     if (!enabled){
         if (m_action != nullptr) {
-            if (ui->cFixed) {
+            if (ui->cFixed->isChecked()) {
                 m_action->calcPagesNum(false);
-            } else {
+            }
+            else {
                 fitPage();
             }
         }

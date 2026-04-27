@@ -21,6 +21,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 **********************************************************************/
 #include "lc_slice_divide_options_widget.h"
 
+#include <math.h>
+
 #include "lc_action_draw_slice_divide.h"
 #include "lc_guarded_signals_blocker.h"
 #include "ui_lc_slice_divide_options_widget.h"
@@ -53,7 +55,7 @@ LC_SliceDivideOptionsWidget::~LC_SliceDivideOptionsWidget() {
 }
 
 // just provide indication to the user that some options are not applicable for selected entity
-void LC_SliceDivideOptionsWidget::updateUI(const int mode, const QVariant* value) {
+void LC_SliceDivideOptionsWidget::updateUI(const int mode, [[maybe_unused]] const QVariant* value) {
     switch (mode) {
         case LC_ActionDrawSliceDivide::SELECTION_NONE:
             ui->frmCircle->setEnabled(true);
@@ -131,7 +133,7 @@ void LC_SliceDivideOptionsWidget::onCountChanged(const int value) {
 
 void LC_SliceDivideOptionsWidget::onDistanceEditingFinished() {
     const QString& expr = ui->leDistance->text();
-    double value;
+    double value = NAN;
     if (toDouble(expr, value, 1.0, true)) {
         m_action->setDistance(value);
     }
@@ -140,7 +142,7 @@ void LC_SliceDivideOptionsWidget::onDistanceEditingFinished() {
 
 void LC_SliceDivideOptionsWidget::onTickLengthEditingFinished() {
     const QString& expr = ui->leTickLengh->text();
-    double value;
+    double value = NAN;
     if (toDouble(expr, value, 0.0, true)) {
         m_action->setTickLength(value);
     }
@@ -149,7 +151,7 @@ void LC_SliceDivideOptionsWidget::onTickLengthEditingFinished() {
 
 void LC_SliceDivideOptionsWidget::onTickAngleEditingFinished() {
     const QString& expr = ui->leTickAngle->text();
-    double angle;
+    double angle = NAN;
     if (toDoubleAngleDegrees(expr, angle, 0.0, false)) {
         m_action->setTickAngleDegrees(angle);
     }
@@ -158,7 +160,7 @@ void LC_SliceDivideOptionsWidget::onTickAngleEditingFinished() {
 
 void LC_SliceDivideOptionsWidget::onTickOffsetEditingFinished() {
     const QString& expr = ui->leTickOffset->text();
-    double value;
+    double value = NAN;
     if (toDouble(expr, value, 0.0, false)) {
         m_action->setTickOffset(value);
     }
@@ -167,7 +169,7 @@ void LC_SliceDivideOptionsWidget::onTickOffsetEditingFinished() {
 
 void LC_SliceDivideOptionsWidget::onCircleStartAngleEditingFinished() {
     const QString& expr = ui->leCircleStartAngle->text();
-    double angle;
+    double angle = NAN;
     if (toDoubleAngleDegrees(expr, angle, 0.0, false)) {
         m_action->setCircleStartTickAngleDegrees(angle);
     }

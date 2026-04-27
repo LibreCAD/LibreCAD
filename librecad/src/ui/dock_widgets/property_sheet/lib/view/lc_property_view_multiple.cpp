@@ -61,7 +61,7 @@ LC_PropertyViewMultiple::~LC_PropertyViewMultiple() {
 }
 
 bool LC_PropertyViewMultiple::isSplittable() const {
-    if (m_propertiesViewsList.size() > 0) {
+    if (!m_propertiesViewsList.empty()) {
         const auto lcPropertyView = m_propertiesViewsList.front().get();
         return lcPropertyView->isSplittable();
     }

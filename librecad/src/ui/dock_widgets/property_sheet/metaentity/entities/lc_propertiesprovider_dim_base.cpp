@@ -1007,6 +1007,7 @@ void LC_PropertiesProviderDimBase::createPrimaryUnitsSection(LC_PropertyContaine
                      pattern->setSuffix(v);
                  }, list, cont, true);
 
+    // fixme - sand - review!
     auto funPositiveDoubleSpinMetric = [](RS_Dimension* dimension, LC_PropertyViewDescriptor& descriptor)-> bool {
         descriptor.attributes[LC_PropertyDoubleSpinBoxView::ATTR_MIN] = 0.0;
         descriptor.attributes[LC_PropertyDoubleSpinBoxView::ATTR_STEP] = 0.01;
@@ -1052,16 +1053,17 @@ void LC_PropertiesProviderDimBase::createPrimaryUnitsSection(LC_PropertyContaine
                      }, list, cont, funPositiveDoubleSpin);
 
         if (m_entityType != RS2::EntityDimDiametric && m_entityType != RS2::EntityDimRadial) {
-            addDouble_DS({
-                             "dimPrimarySubUnitsScale",
-                             tr("Dim sub-units scale"),
-                             tr("Specifies sub-units scale factor for all applicable linear dimensions")
-                         }, [](const LC_DimStyle* ds) -> double {
-                             auto suppression = ds->zerosSuppression();
-                             return /*suppression->roundTo();*/ 0.0; // fixme - dims - where from it's obtained from dxf point of view?
-                         }, [](double& /*v*/, const LC_DimStyle* /* ds*/) -> void {
-                             // fixme - dims - where from it's obtained?
-                         }, list, cont, funPositiveDoubleSpin);
+            addDouble_DS(
+                {"dimPrimarySubUnitsScale", tr("Dim sub-units scale"),
+                 tr("Specifies sub-units scale factor for all applicable linear dimensions")},
+                [](const LC_DimStyle* ds) -> double {
+                    auto suppression = ds->zerosSuppression();
+                    return /*suppression->roundTo();*/ 0.0; // fixme - sand - where from it's obtained from dxf point of view?
+                },
+                [](double& /*v*/, const LC_DimStyle* /* ds*/) -> void {
+                    // fixme - dims - where from it's obtained?
+                },
+                list, cont, funPositiveDoubleSpin);
         }
 
         addLinearUnitFormat_DS(

@@ -265,7 +265,7 @@ void RS_ActionDefault::onMouseMoveEvent([[maybe_unused]] const int status, const
 
             if (toGuiDX(m_actionData->v1.distanceTo(m_actionData->v2)) > 10){
                 // look for reference points to drag:
-                double dist;
+                double dist = NAN;
                 bool singleEntitySelection = m_document->isSingleEntitySelected();
                 RS_EntityContainer::RefInfo refInfo;
                 if (singleEntitySelection) {

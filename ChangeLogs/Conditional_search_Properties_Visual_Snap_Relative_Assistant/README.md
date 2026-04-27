@@ -324,7 +324,7 @@ Properties that cannot be modified are displayed in gray, and no editor is avail
 
 For example, the length of a line is a calculated value and is read-only.
 
-![alt text](property_sheet\ps_read_only.png "Line Radiant")
+![alt text](property_sheet\ps_read_only.png "Readonly properties")
 
 
 #### Multiple Entities Editing 
@@ -333,7 +333,7 @@ Depending on the current selection mode, multiple entities may be selected simul
 
 The Properties widget effectively manages these discrepancies: if values vary across the selection, the **(VARIES)** placeholder is displayed.
 
-![alt text](property_sheet\ps_line_minimal_varies.png "Line Radiant")
+![alt text](property_sheet\ps_line_minimal_varies.png "Multiple Values")
 
 After a user finishes editing a property, the change is applied to **every entity** in the current selection. 
 
@@ -349,7 +349,7 @@ An informational section is located at the bottom of the widget.
 
 It displays the name of the selected property along with a description providing additional context and details.
 
-![alt text](property_sheet\ps_info_section.png "Line Radiant")
+![alt text](property_sheet\ps_info_section.png "Info section")
 
 The informational section supports resizing and collapsing. Users can adjust the area by dragging the top boundary to fit the content or hide the section completely. 
 
@@ -361,7 +361,7 @@ In its simplest form, the widget typically contains two sections:
 1) General: Includes generic attributes common to all entity types (e.g., Layer and Pen).
 2) Geometry: A set of geometric properties that depends on the selected entity type.
  
-![alt text](property_sheet\ps_line_minimal.png "Line Radiant")
+![alt text](property_sheet\ps_line_minimal.png "Minimal Properties")
 
 ### Enhancing the Property Sheet
 Several settings are available to control the content displayed in the Property Sheet. 
@@ -414,7 +414,7 @@ These settings affect the content displayed for selected properties:
  
 * **Show Tool Options** 
 
-  If selected, the property show mya also include active tool options (duplicating the content of corresponding toolbar). 
+  If selected, the property show may also include active tool options (duplicating the content of corresponding toolbar). 
 
 ### Dimensional Entities
 
@@ -426,6 +426,7 @@ For dimensions, the Property Sheet displays a combination of specific entity pro
 If no style override exists, the properties of the entity's current Dimension Style are displayed.
 
 Modifying these values automatically creates a Dimension Style override for the selected dimension entities.
+
 
 ### "No selection" mode
 
@@ -458,6 +459,9 @@ When an action is active, the widget's title changes to display the icon and nam
 ![alt text](property_sheet\ps_action_options_bevel.png "Tool Options Bevel")
 
 Additionally, an _Action Options_ section is pinned to the top of the Property Sheet. The content of this section dynamically updates based on the requirements of the active command.
+
+
+> **Note:** If _Snap Distance_ or Snap Middle snap modes are enabled, setting for their values will be shown in section _Snap Options_ located above the _Action Options_ section.
 
 ### Property Sheet in Print Preview
 
@@ -970,7 +974,7 @@ When guiding entities are created, they are evaluated based on their distance fr
  
 ![alt text](visual_snap\visual_snap_show_far_guides.png "Visual Snap Hide Far guides") 
 
-**Note**: Snappable guiding lines use a denser dotted pattern than non-snappable ones.
+> **Note**: Snappable guiding lines use a denser dotted pattern than non-snappable ones.
 
 In the _Snap Toolbar_ drop-down, the item "**Show Far Guides**" toggles this setting.
 

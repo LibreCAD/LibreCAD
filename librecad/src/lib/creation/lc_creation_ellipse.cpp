@@ -54,7 +54,7 @@ bool LC_CreationEllipse::createEllipseFrom4P(const RS_VectorSolutions& sol, RS_E
     std::vector<double> dn(solSize);
     switch (solSize) {
         case 2:
-            for (int i = 0; i < solSize; i++) {
+            for (size_t i = 0; i < solSize; i++) {
                 //form the linear equation
                 mt[i].resize(solSize + 1);
                 const RS_Vector vp(sol.get(i + 1) - sol.get(0)); //the first vector is center
@@ -76,7 +76,7 @@ bool LC_CreationEllipse::createEllipseFrom4P(const RS_VectorSolutions& sol, RS_E
             return true;
 
         case 3:
-            for (int i = 0; i < solSize; i++) {
+            for (size_t i = 0; i < solSize; i++) {
                 //form the linear equation
                 mt[i].resize(solSize + 1);
                 const RS_Vector vp(sol.get(i + 1) - sol.get(0)); //the first vector is center
@@ -118,7 +118,7 @@ bool LC_CreationEllipse::createEllipseFromCenter3Points(const RS_VectorSolutions
     std::vector<double> dn(solSize);
     switch (solSize) {
         case 2:
-            for (int i = 0; i < solSize; i++) {
+            for (size_t i = 0; i < solSize; i++) {
                 //form the linear equation
                 mt[i].resize(solSize + 1);
                 const RS_Vector vp(sol.get(i + 1) - sol.get(0)); //the first vector is center
@@ -140,7 +140,7 @@ bool LC_CreationEllipse::createEllipseFromCenter3Points(const RS_VectorSolutions
             return true;
 
         case 3:
-            for (int i = 0; i < solSize; i++) {
+            for (size_t i = 0; i < solSize; i++) {
                 //form the linear equation
                 mt[i].resize(solSize + 1);
                 const RS_Vector vp(sol.get(i + 1) - sol.get(0)); //the first vector is center

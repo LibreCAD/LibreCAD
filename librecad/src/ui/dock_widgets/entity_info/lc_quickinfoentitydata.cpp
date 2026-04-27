@@ -412,10 +412,10 @@ bool LC_QuickInfoEntityData::processEntity(const RS_Entity* en) {
  * @return html with entity properties.
  */
 QString LC_QuickInfoEntityData::generateView() {
-    const int propertiesCount = m_properties.size();
+    const qsizetype propertiesCount = m_properties.size();
     QString data = "<body><table>";
     data.append("<tr><td colspan = '2'><b>").append(m_entityName).append("</b></td></tr>");
-    for (int i = 0; i < propertiesCount; i++) {
+    for (qsizetype i = 0; i < propertiesCount; i++) {
         data.append("<tr>");
         const PropertyInfo* property = m_properties.at(i);
         data.append("<td>");
@@ -457,10 +457,10 @@ QString LC_QuickInfoEntityData::generateView() {
 bool LC_QuickInfoEntityData::updateForCoordinateViewMode(const int mode) {
     if (mode != m_coordinatesMode) {
         m_coordinatesMode = mode;
-        const int propertiesCount = m_properties.size();
+        const qsizetype propertiesCount = m_properties.size();
         const RS_Vector relativeZero = getRelativeZero();
 
-        for (int i = 0; i < propertiesCount; i++) {
+        for (qsizetype i = 0; i < propertiesCount; i++) {
             PropertyInfo* propertyInfo = m_properties.at(i);
             if (propertyInfo->type == PROPERTY_TYPE_VECTOR) {
                 const auto* vectorProperty = static_cast<VectorPropertyInfo*>(propertyInfo);

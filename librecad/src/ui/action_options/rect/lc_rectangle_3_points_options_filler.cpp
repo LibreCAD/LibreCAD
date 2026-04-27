@@ -36,7 +36,6 @@ void LC_Rectangle3PointsOptionsFiller::fillToolOptionsContainer(LC_PropertyConta
 
     const bool quadrangle = action->isCreateQuadrangle();
     if (quadrangle) {
-        const bool fixedInnerAngle = action->isInnerAngleFixed();
 
         addBoolean({"a_hasFixedInnerAngle", tr("Fixed inner angle"), tr("If checked, inner angle of quadrangle will be fixed to specified value")}, [action]()-> bool {
                        return action->isInnerAngleFixed();

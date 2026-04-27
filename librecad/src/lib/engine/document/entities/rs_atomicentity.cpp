@@ -101,7 +101,8 @@ double RS_AtomicEntity::getRadius() const {
 *
 * @return The closest center point.
 */
-RS_Vector RS_AtomicEntity::doGetNearestCenter([[maybe_unused]]const RS_Vector& coord, [[maybe_unused]]double* dist, RS_Entity** centerEntity) const {
+RS_Vector RS_AtomicEntity::doGetNearestCenter([[maybe_unused]] const RS_Vector& coord, [[maybe_unused]] double* dist,
+                                              [[maybe_unused]] RS_Entity** centerEntity) const {
     return RS_Vector(false);
 }
 

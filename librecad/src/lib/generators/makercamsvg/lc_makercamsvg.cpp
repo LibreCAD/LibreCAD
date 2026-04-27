@@ -661,7 +661,7 @@ std::vector<RS_Vector> LC_MakerCamSVG::calcCubicBezierPoints(const std::vector<R
         bezier_points_size = bezier_points.size();
 
         // Update the up to now original spline control points to bezier endpoints
-        for (int i = 3; i < bezier_points_size - 1; i += 3) {
+        for (size_t i = 3; i < bezier_points_size - 1; i += 3) {
             bezier_points[i] = (bezier_points[i - 1] + bezier_points[i + 1]) / 2.0;
         }
     }

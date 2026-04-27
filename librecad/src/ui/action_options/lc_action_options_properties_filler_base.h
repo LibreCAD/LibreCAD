@@ -37,8 +37,7 @@
 class LC_EnumDescriptor;
 using FunPepareDescriptor = typename std::function<bool(LC_PropertyViewDescriptor&)>;
 
-class LC_ActionOptionsPropertiesFillerBase : public LC_ActionOptionsPropertiesFiller,
-                                         public LC_PropertyContainerBuilder {
+class LC_ActionOptionsPropertiesFillerBase : public LC_ActionOptionsPropertiesFiller, public LC_PropertyContainerBuilder {
 public:
     LC_ActionOptionsPropertiesFillerBase()
         : LC_PropertyContainerBuilder(nullptr, QC_ApplicationWindow::getAppWindow()->getPropertySheetWidget()) {
@@ -114,7 +113,6 @@ protected:
     void cleanup() override {
     }
 };
-
 
 template <typename ValueType>
 class LC_PropertyValueDelegatedWithReload : public LC_PropertyValueDelegated<ValueType> {

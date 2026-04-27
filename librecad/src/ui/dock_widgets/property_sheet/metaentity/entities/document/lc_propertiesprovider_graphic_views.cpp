@@ -56,7 +56,7 @@ void LC_PropertiesProviderGraphicViews::createViewSelector(LC_PropertyContainer*
     auto desc = LC_EnumValueDescriptor(-1, tr("<Select View>"));
     values.append(desc);
 
-    for (int i = 0; i < count; i++) {
+    for (size_t i = 0; i < count; i++) {
         const auto view = viewList->at(i);
         auto name = view->getName();
         if (name.isEmpty()) {

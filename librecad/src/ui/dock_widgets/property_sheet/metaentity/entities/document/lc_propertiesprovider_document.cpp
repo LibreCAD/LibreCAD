@@ -102,7 +102,7 @@ void LC_PropertiesProviderDocument::fillDocumentPropertiesForToolOptions(LC_Prop
     }
     const auto rtti = document->rtti();
     if (rtti == RS2::EntityBlock) {
-        const auto block = static_cast<RS_Block*>(document);
+        [[maybe_unused]] const auto block = static_cast<RS_Block*>(document);
         // fillBlockProperties(container, block);
     }
     else if (rtti == RS2::EntityGraphic) {

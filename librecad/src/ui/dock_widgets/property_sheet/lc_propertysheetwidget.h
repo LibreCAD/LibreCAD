@@ -39,6 +39,7 @@
 #include "lc_viewslist.h"
 #include "rs_entity.h"
 #include "rs_layerlistlistener.h"
+#include "rs_pen.h"
 
 class LC_ActionGroupManager;
 class LC_ActionContext;

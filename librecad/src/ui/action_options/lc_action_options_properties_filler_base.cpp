@@ -299,7 +299,7 @@ void LC_ActionOptionsPropertiesFillerBase::fillSnapToolOptionsContainer(LC_Prope
                           }, [this](double val)-> void {
                               QString value = QString::number(val, 'g', 6);
                               LC_SET_ONE("Snap", "Distance", value);
-                              double dist;
+                              double dist = NAN;
                               m_actionContext->requestSnapDistOptions(&dist, true);
                           }, propertyContainer);
     }
@@ -313,7 +313,7 @@ void LC_ActionOptionsPropertiesFillerBase::fillSnapToolOptionsContainer(LC_Prope
                           return points;
                       }, [this](int val)-> void {
                           LC_SET_ONE("Snap", "MiddlePoints", val);
-                          int mpoints;
+                          int mpoints = 0;
                           m_actionContext->requestSnapMiddleOptions(&mpoints, true);
                       }, propertyContainer);
     }

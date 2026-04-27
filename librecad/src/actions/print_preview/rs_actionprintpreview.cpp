@@ -89,7 +89,7 @@ void RS_ActionPrintPreview::doLoadOptions() {
 QStringList RS_ActionPrintPreview::readCustomRatios(const bool metric, int maxCount) {
     QStringList ratios;
     const char* prefix = metric ? KEY_CUSTOM_SCALE_METRIC_TEMPLATE : KEY_CUSTOM_SCALE_IMPERIAL_TEMPLATE;
-    for (unsigned i = 0; i < maxCount; ++i) {
+    for (int i = 0; i < maxCount; ++i) {
         QString ratio = load(QString(prefix).arg(i), "");
         if (!ratio.isEmpty()) {
             ratios.push_back(ratio);
