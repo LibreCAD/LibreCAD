@@ -165,10 +165,19 @@ void LC_GridSystem::drawGrid(RS_Painter* painter, LC_GraphicViewport* view) {
 
 void LC_GridSystem::drawGridPoints(RS_Painter* painter, [[maybe_unused]] LC_GraphicViewport* view) const {
     const int pointsCount = getGridPointsCount();
-    for (int i = 0; i < pointsCount; i++) {
-        const double pX = m_gridLattice->getPointX(i);
-        const double pY = m_gridLattice->getPointY(i);
-        painter->drawGridPoint(pX, pY);
+    if(painter->isHiDPIDevice()) {
+        for (int i = 0; i < pointsCount; i++) {
+            const double pX = m_gridLattice->getPointX(i);
+            const double pY = m_gridLattice->getPointY(i);
+            painter->drawGridPointHiDPI(pX, pY);
+        }
+    }
+    else {
+        for (int i = 0; i < pointsCount; i++) {
+            const double pX = m_gridLattice->getPointX(i);
+            const double pY = m_gridLattice->getPointY(i);
+            painter->drawGridPoint(pX, pY);
+        }
     }
 }
 

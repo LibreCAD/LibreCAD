@@ -124,26 +124,26 @@ void LC_WidgetViewPortRenderer::doRender() {
 void LC_WidgetViewPortRenderer::paintSequental(QPaintDevice* pd) {
     // width/height are in logical pixels; on HiDPI displays the physical pixel
     // count is larger by the device pixel ratio (e.g. 1.5x on a 150% scaled desktop).
-    int width = m_viewport->getWidth();
-    int height = m_viewport->getHeight();
-    qreal dpr = pd->devicePixelRatioF();
+    const int width = m_viewport->getWidth();
+    const int height = m_viewport->getHeight();
+    const qreal devicePixelRatio = pd->devicePixelRatioF();
     // Allocate pixmaps at physical resolution so the GPU has real pixels to fill,
     // not a upscaled logical-resolution buffer that Qt would stretch to fit.
-    int physWidth = qRound(width * dpr);
-    int physHeight = qRound(height * dpr);
+    const int physicalWidth = qRound(width * devicePixelRatio);
+    const int physicalHeight = qRound(height * devicePixelRatio);
 
     // QPixmap::size() returns the physical pixel size after setDevicePixelRatioF(),
     // so compare against physical dimensions to detect actual resize events.
-    const QSize s0(physWidth, physHeight);
+    const QSize s0(physicalWidth, physicalHeight);
     if (m_pixmapLayerBackground->size() != s0){
-        m_pixmapLayerBackground = std::make_unique<QPixmap>(physWidth, physHeight);
         // Tell Qt the logical-to-physical mapping so drawPixmap() onto pd places
         // the content at the correct logical coordinates without blurry upscaling.
-        m_pixmapLayerBackground->setDevicePixelRatio(dpr);
-        m_pixmapLayerDrawing = std::make_unique<QPixmap>(physWidth, physHeight);
-        m_pixmapLayerDrawing->setDevicePixelRatio(dpr);
-        m_pixmapLayerOverlays = std::make_unique<QPixmap>(physWidth, physHeight);
-        m_pixmapLayerOverlays->setDevicePixelRatio(dpr);
+        m_pixmapLayerBackground = std::make_unique<QPixmap>(physicalWidth, physicalHeight);
+        m_pixmapLayerBackground->setDevicePixelRatio(devicePixelRatio);
+        m_pixmapLayerDrawing = std::make_unique<QPixmap>(physicalWidth, physicalHeight);
+        m_pixmapLayerDrawing->setDevicePixelRatio(devicePixelRatio);
+        m_pixmapLayerOverlays = std::make_unique<QPixmap>(physicalWidth, physicalHeight);
+        m_pixmapLayerOverlays->setDevicePixelRatio(devicePixelRatio);
         m_redrawMethod=static_cast<RS2::RedrawMethod>(m_redrawMethod | RS2::RedrawGrid);
     }
 
@@ -188,18 +188,18 @@ void LC_WidgetViewPortRenderer::paintClassicalBuffered(QPaintDevice* pd) {
     // logical coordinates to real pixels without blurry upscaling.
     const int width = m_viewport->getWidth();
     const int height = m_viewport->getHeight();
-    const qreal dpr = pd->devicePixelRatioF();
-    int physWidth = qRound(width * dpr);
-    int physHeight = qRound(height * dpr);
-    const QSize s0(physWidth, physHeight);
+    const qreal devicePixelRatio = pd->devicePixelRatioF();
+    const int physicalWidth = qRound(width * devicePixelRatio);
+    const int physicalHeight = qRound(height * devicePixelRatio);
+    const QSize s0(physicalWidth, physicalHeight);
     const bool sizeDifferent = m_pixmapLayer1->size() != s0;
     if (sizeDifferent){
-        m_pixmapLayer1 = std::make_unique<QPixmap>(physWidth, physHeight);
-        m_pixmapLayer1->setDevicePixelRatio(dpr);
-        m_pixmapLayer2 = std::make_unique<QPixmap>(physWidth, physHeight);
-        m_pixmapLayer2->setDevicePixelRatio(dpr);
-        m_pixmapLayer3 = std::make_unique<QPixmap>(physWidth, physHeight);
-        m_pixmapLayer3->setDevicePixelRatio(dpr);
+        m_pixmapLayer1 = std::make_unique<QPixmap>(physicalWidth, physicalHeight);
+        m_pixmapLayer1->setDevicePixelRatio(devicePixelRatio);
+        m_pixmapLayer2 = std::make_unique<QPixmap>(physicalWidth, physicalHeight);
+        m_pixmapLayer2->setDevicePixelRatio(devicePixelRatio);
+        m_pixmapLayer3 = std::make_unique<QPixmap>(physicalWidth, physicalHeight);
+        m_pixmapLayer3->setDevicePixelRatio(devicePixelRatio);
         m_redrawMethod = RS2::RedrawAll;
     }
 

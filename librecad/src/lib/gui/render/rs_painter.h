@@ -175,6 +175,9 @@ public:
     void setPointsMode(const int pdMode){m_pointsMode = pdMode;}
 
     void drawGridPoint(const RS_Vector& p);
+    qreal getDevicePixelRatio();
+    bool isHiDPIDevice();
+    void drawGridPointHiDPI(double x, double y);
     void drawGridPoint(double x, double y);
 
 

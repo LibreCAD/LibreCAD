@@ -951,8 +951,8 @@ void LC_ActionFactory::setDefaultShortcuts(QMap<QString, QAction*>& map, const L
         {"RelativeAddLine", QKeySequence(Qt::SHIFT | Qt::Key_L)},
         {"RelativeAddCircle", QKeySequence(Qt::SHIFT | Qt::Key_C)},
         {"RelativeAddPoint", QKeySequence(Qt::SHIFT | Qt::Key_P)},
+        {"RestrictOrthogonal", QKeySequence(Qt::Key_F8)} // Issue #2526: default shortcut for snapping: restriction orthogonal
     };
-
 
     map["FileClose"]->setShortcutContext(Qt::WidgetShortcut);
 

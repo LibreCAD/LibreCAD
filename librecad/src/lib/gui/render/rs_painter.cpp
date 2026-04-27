@@ -171,19 +171,28 @@ void RS_Painter::drawGridPoint(const RS_Vector& p) {
     drawGridPoint(p.x, p.y);
 }
 
-// fixme - GRID_POINT
-void RS_Painter::drawGridPoint(const double x, const double y) {
+qreal RS_Painter::getDevicePixelRatio() {
     qreal dpr = device()->devicePixelRatioF();
-    if (dpr >= 1.0 + 1.e-6) {
-        // With HiDPI-aware pixmaps the painter coordinate system is in logical
-        // pixels, so a cosmetic drawPoint is only 1 physical pixel — visually
-        // much smaller than at 1× DPI.  Fill a 1-logical-pixel square (= dpr
-        // physical pixels) so the dot keeps a consistent apparent size.
-        constexpr qreal half = 0.5;
-        QPainter::fillRect(QRectF(x - half, y - half, 1.0, 1.0), QBrush(pen().color()));
-    } else {
-        QPainter::drawPoint(QPointF(x, y));
-    }
+    return dpr;
+}
+
+bool RS_Painter::isHiDPIDevice() {
+    qreal dpr = getDevicePixelRatio();
+    return dpr >= (1.0 + 1.e-6);
+}
+
+void RS_Painter::drawGridPointHiDPI(const double x, const double y) {
+    // With HiDPI-aware pixmaps the painter coordinate system is in logical
+    // pixels, so a cosmetic drawPoint is only 1 physical pixel — visually
+    // much smaller than at 1× DPI.  Fill a 1-logical-pixel square (= dpr
+    // physical pixels) so the dot keeps a consistent apparent size.
+    constexpr qreal half = 0.5;
+    // QPainter::fillRect(QRectF(x - half, y - half, 1.0, 1.0), QBrush(pen().color()));
+    QPainter::fillRect(QRectF(x - half, y - half, 1.0, 1.0), pen().color());
+}
+
+void RS_Painter::drawGridPoint(const double x, const double y) {
+    QPainter::drawPoint(QPointF(x, y));
 }
 
 void RS_Painter::drawPointEntityWCS(const RS_Vector& wcsPos) {

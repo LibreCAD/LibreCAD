@@ -47,6 +47,7 @@ public:
     void init(int status) override;
     void notifyFinished() const;
     bool mayBeTerminatedExternally() override {return m_allowExternalTermination;}
+    void onLateRequestCompleted(bool shouldBeSkipped) override;
 protected:
     enum State {
         ShowDialog = InitialActionStatus,
@@ -60,7 +61,6 @@ protected:
     void onMouseRightButtonRelease(int status, const LC_MouseEvent* e) override;
     void onMouseMoveEvent(int status, const LC_MouseEvent* e) override;
     void updateActionPrompt() override;
-    void onLateRequestCompleted(bool shouldBeSkipped) override;
     bool doTriggerModifications(LC_DocumentModificationBatch& ctx) override;
     void doTriggerCompletion(bool success) override;
 private:
