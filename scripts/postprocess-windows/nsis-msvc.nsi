@@ -174,6 +174,7 @@ Section "Main Section" SecMain
   File /nonfatal "*.qm"
   File /nonfatal "librecad\ts\*.qm"
   File /nonfatal "..\..\librecad\ts\*.qm"
+  File /nonfatal "..\..\plugins\ts\*.qm"
 
   ; === Package LFF fonts ===
   SetOutPath "$INSTDIR\resources\fonts"

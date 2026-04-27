@@ -167,6 +167,8 @@ Section "Install Section" SecInstall
   File /NONFATAL "${TRANSLATIONS_DIR}\qtscript_??_??.qm"
   File "${TRANSLATIONS_DIR}\qtxmlpatterns_??.qm"
   File /NONFATAL "${TRANSLATIONS_DIR}\qtxmlpatterns_??_??.qm"
+  File /NONFATAL "..\..\librecad\ts\*.qm"
+  File /NONFATAL "..\..\plugins\ts\*.qm"
   SetOutPath "$INSTDIR"
 
   ;Store installation folder
@@ -229,5 +231,3 @@ Section "Uninstall"
   DeleteRegKey HKLM "${UNINSTKEY}"
 
 SectionEnd
-
-

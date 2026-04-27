@@ -120,6 +120,8 @@ Section "Install Section" SecInstall
   File /r "..\..\windows\*.*"
   SetOutPath "$INSTDIR\resources\qm"
   File /NONFATAL "${TRANSLATIONS_DIR}\qt*.qm"
+  File /NONFATAL "..\..\librecad\ts\*.qm"
+  File /NONFATAL "..\..\plugins\ts\*.qm"
   SetOutPath "$INSTDIR"
 
   ;Store installation folder
@@ -182,5 +184,3 @@ Section "Uninstall"
   DeleteRegKey HKLM "${UNINSTKEY}"
 
 SectionEnd
-
-

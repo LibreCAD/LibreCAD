@@ -136,6 +136,8 @@ Section "Install Section" SecInstall
   File /NONFATAL "${Qt_Dir}\Qt${Qt_Version}\${Qt_Version}\mingw47_32\translations\qtscript_??_??.qm"
   File "${Qt_Dir}\Qt${Qt_Version}\${Qt_Version}\mingw47_32\translations\qtxmlpatterns_??.qm"
   File /NONFATAL "${Qt_Dir}\Qt${Qt_Version}\${Qt_Version}\mingw47_32\translations\qtxmlpatterns_??_??.qm"
+  File /NONFATAL "..\..\librecad\ts\*.qm"
+  File /NONFATAL "..\..\plugins\ts\*.qm"
   SetOutPath "$INSTDIR"
 
   ;Store installation folder
@@ -181,5 +183,3 @@ Section "Uninstall"
   DeleteRegKey /ifempty HKCU "Software\LibreCAD"
 
 SectionEnd
-
-

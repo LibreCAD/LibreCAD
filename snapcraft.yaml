@@ -85,7 +85,7 @@ parts:
       export SRC_DIR=$CRAFT_PART_BUILD/unix
       mkdir -p $CRAFT_STAGE/usr/{bin,share/{icons,librecad/resources/qm,applications}}
       cp -a $SRC_DIR/librecad $CRAFT_STAGE/usr/bin/
-      find $CRAFT_PART_SRC/librecad/res $CRAFT_PART_SRC/librecad/ts -name '*.qm' -exec cp -a {} $CRAFT_STAGE/usr/share/librecad/resources/qm/ ';'
+      find $CRAFT_PART_SRC/librecad/res $CRAFT_PART_SRC/librecad/ts $CRAFT_PART_SRC/plugins/ts -name '*.qm' -exec cp -a {} $CRAFT_STAGE/usr/share/librecad/resources/qm/ ';'
       rsync -vaut $CRAFT_PART_SRC/librecad/support/* $CRAFT_STAGE/usr/share/librecad/resources/
       find $CRAFT_PART_SRC -type f -name librecad.svg -exec cp -av '{}' $CRAFT_STAGE/usr/share/icons/ ';'
       export DESKTOP_DIR=$CRAFT_PART_SRC/desktop

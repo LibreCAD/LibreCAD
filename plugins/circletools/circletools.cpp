@@ -47,17 +47,13 @@
 #include "circletools.h"
 
 QString CircleToolsPlugin::name() const {
-    return QStringLiteral("CircleTools");
+    return tr("CircleTools");
 }
 
 PluginCapabilities CircleToolsPlugin::getCapabilities() const {
     PluginCapabilities cap;
 
-    // Use ASCII only to avoid encoding issues on Windows builds
-    const QString action = QStringLiteral("CircleTools - Circles (diameter / layer)");
-    cap.menuEntryPoints << PluginMenuLocation(QStringLiteral("Plugins"), action);
-//    cap.menuEntryPoints << PluginMenuLocation(QStringLiteral("plugins_menu"), action);
-    //cap.menuEntryPoints << PluginMenuLocation(QStringLiteral("menu_Plugins"), action);
+    cap.menuEntryPoints << PluginMenuLocation("plugins_menu", tr("CircleTools"));
 
     return cap;
 }
@@ -902,7 +898,7 @@ void CircleToolsPlugin::opResizeSelected(Document_Interface* doc, QWidget* paren
 
     qDeleteAll(sel);
     doc->updateView();
-	
+
 	const CircleStats statsAfter = scanCircleStats(doc);
     logLine(QStringLiteral("RESULT changed=%1 unchanged=%2 ignored=%3 skippedInvisible=%4 skippedDuplicate=%5")
             .arg(changed).arg(unchanged).arg(ignored).arg(skippedInvisible).arg(skippedDuplicate));
@@ -932,7 +928,7 @@ void CircleToolsPlugin::opResizeSelected(Document_Interface* doc, QWidget* paren
 
 void CircleToolsPlugin::opFindResize(Document_Interface* doc, QWidget* parent) {
     const QString title = QStringLiteral("CircleTools");
-	
+
 	const CircleStats statsBefore = scanCircleStats(doc);
     logSep();
     logLine(QStringLiteral("opFindResize START"));
@@ -1009,7 +1005,7 @@ void CircleToolsPlugin::opFindResize(Document_Interface* doc, QWidget* parent) {
 
     qDeleteAll(all);
     doc->updateView();
-	
+
 	const CircleStats statsAfter = scanCircleStats(doc);
     logLine(QStringLiteral("RESULT checked=%1 changed=%2").arg(checked).arg(changed));
     logLine(QStringLiteral("AFTER  %1").arg(statsText(statsAfter)));
@@ -1053,5 +1049,3 @@ void CircleToolsPlugin::execComm(Document_Interface* doc, QWidget* parent, QStri
             break;
     }
 }
-
-
