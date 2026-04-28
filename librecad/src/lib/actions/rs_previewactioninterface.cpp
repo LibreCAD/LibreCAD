@@ -705,7 +705,7 @@ void RS_PreviewActionInterface::prepareEntityDescription(const RS_Entity* entity
 }
 
 void RS_PreviewActionInterface::appendInfoCursorEntityCreationMessage(const QString& message) const {
-    if (m_infoCursorOverlayPrefs->enabled && m_infoCursorOverlayPrefs->showEntityInfoOnCreation) {
+    if (isInfoCursorForModificationEnabled()) {
         appendInfoCursorZoneMessage(message, 2, false);
     }
 }

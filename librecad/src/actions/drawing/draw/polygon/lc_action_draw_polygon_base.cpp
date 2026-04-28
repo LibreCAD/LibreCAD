@@ -286,7 +286,7 @@ void LC_ActionDrawPolygonBase::createPolygonPreview(const RS_Vector &mouse) {
     const RS_Polyline* polyline = createShapePolyline(polygonInfo, true);
     if (polyline != nullptr){
         previewEntity(polyline);
-        if (m_infoCursorOverlayPrefs->enabled && m_infoCursorOverlayPrefs->showEntityInfoOnCreation) {
+        if (isInfoCursorForModificationEnabled()) {
               msg(tr("To be created:"), tr("Polygon"))
                 .vector(tr("Center:"), polygonInfo.centerPoint)
                 .wcsAngle(tr("Start angle:"), polygonInfo.startingAngle)

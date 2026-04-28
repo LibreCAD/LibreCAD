@@ -317,6 +317,7 @@ protected:
     void updateSnapAngleStep();
     virtual void initFromGraphic(RS_Graphic* graphic);
     virtual bool isInVisualSnapStatus(int status);
+    virtual bool isSnapExpected() = 0;
     bool isClearVisualSnapByRMB() const;
 
     virtual void onVisualSnapPointRegistered([[maybe_unused]]LC_VisualSnapVertex* point, [[maybe_unused]]bool remove) {}

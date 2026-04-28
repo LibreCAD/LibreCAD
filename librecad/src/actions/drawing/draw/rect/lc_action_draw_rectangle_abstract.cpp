@@ -188,7 +188,7 @@ void LC_ActionDrawRectangleAbstract::doPreparePreviewEntities([[maybe_unused]] c
         createRefPoint(data.centerPoint, list);
     }
 
-    if (m_infoCursorOverlayPrefs->enabled && m_infoCursorOverlayPrefs->showEntityInfoOnCreation) {
+    if (isInfoCursorForModificationEnabled()) {
         msg(tr("To be created:"), tr("Rectangle"))
             .linear(tr("Width:"), data.width)
             .linear(tr("Height:"), data.height)

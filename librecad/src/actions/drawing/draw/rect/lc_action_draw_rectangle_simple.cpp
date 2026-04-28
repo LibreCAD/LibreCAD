@@ -101,7 +101,7 @@ void RS_ActionDrawLineRectangle::onMouseMoveEvent(const int status, const LC_Mou
                     previewRefPoint(m_actionData->corner2);
                     previewRefPoint((m_actionData->corner1 + m_actionData->corner2) * 0.5); // center of rect
                 }
-                if (m_infoCursorOverlayPrefs->enabled && m_infoCursorOverlayPrefs->showEntityInfoOnCreation) {
+                if (isInfoCursorForModificationEnabled()) {
                     msg(tr("To be created:"), tr("Rectangle")).linear(tr("Width:"), abs(m_actionData->corner1.x - m_actionData->corner2.x)).
                                                                linear(tr("Height:"), abs(m_actionData->corner1.y - m_actionData->corner2.y))
                                                               .vector(tr("Center:"), (m_actionData->corner1 + m_actionData->corner2) * 0.5).

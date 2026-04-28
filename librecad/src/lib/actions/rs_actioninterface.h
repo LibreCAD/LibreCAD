@@ -209,8 +209,9 @@ protected:
     void unselectAll() const;
     void unselect(RS_Entity* e) const;
     void clearVisualSnap() const override;
+    bool isSnapExpected() override {return isInVisualSnapStatus(getStatus());}
 
-    virtual bool doUpdateAngleByInteractiveInput([[maybe_unused]]const QString& tag,[[maybe_unused]] double angleRad) {return false;}
+virtual bool doUpdateAngleByInteractiveInput([[maybe_unused]]const QString& tag,[[maybe_unused]] double angleRad) {return false;}
     virtual bool doUpdateDistanceByInteractiveInput([[maybe_unused]]const QString& tag, [[maybe_unused]]double distance) {return false;}
     virtual bool doUpdatePointByInteractiveInput([[maybe_unused]]const QString& tag, [[maybe_unused]]RS_Vector &point) {return false;}
 };

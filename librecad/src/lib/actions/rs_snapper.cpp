@@ -1208,7 +1208,8 @@ void RS_Snapper::deleteInfoCursor() const {
 void RS_Snapper::drawSnapper() {
     LC_OverlayDrawablesContainer* snapperOverlay = m_viewport->getOverlaysDrawablesContainer(RS2::Snapper);
     snapperOverlay->clear();
-    if (!m_finished && m_impData->snapSpot.valid) {
+    bool showSnapIndicator = showSnapIndicator = isSnapExpected(); // LibreCAD#2520
+    if (!m_finished && m_impData->snapSpot.valid && showSnapIndicator) {
         if (m_snapIndicator->drawLines || m_snapIndicator->drawShape) {
             auto* crosshair = new LC_Crosshair(m_impData->snapCoord, m_snapIndicator->shape_Type, m_snapIndicator->lines_Type,
                                                m_snapIndicator->lines_Pen, m_snapIndicator->pointSize, m_snapIndicator->pointType);
