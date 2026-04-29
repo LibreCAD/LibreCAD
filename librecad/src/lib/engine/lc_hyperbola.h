@@ -2,9 +2,9 @@
 **
 ** This file is part of the LibreCAD project, a 2D CAD program
 **
-** Copyright (C) 2011-2012 Dongxu Li (dongxuli2011@gmail.com)
-
-Copyright (C) 2012 Dongxu Li (dongxuli2011@gmail.com)
+** Copyright (C) 2026 LibreCAD www.librecad.org
+** Copyright (C) 2026 Dongxu Li (dongxuli2011@gmail.com)
+**
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License

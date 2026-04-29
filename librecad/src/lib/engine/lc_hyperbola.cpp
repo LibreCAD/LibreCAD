@@ -2,9 +2,9 @@
 **
 ** This file is part of the LibreCAD project, a 2D CAD program
 **
-** Copyright (C) 2010 R. van Twisk (librecad@rvt.dds.nl)
-** Copyright (C) 2001-2003 RibbonSoft. All rights reserved.
 **
+** Copyright (C) 2026 LibreCAD www.librecad.org
+** Copyright (C) 2026 Dongxu Li (dongxuli2011@gmail.com)
 **
 ** This file may be distributed and/or modified under the terms of the
 ** GNU General Public License version 2 as published by the Free Software
@@ -290,4 +290,3 @@ std::ostream& operator << (std::ostream& os, const LC_Hyperbola& a) {
     os << " Hyperbola: " << a.data << "\n";
     return os;
 }
-

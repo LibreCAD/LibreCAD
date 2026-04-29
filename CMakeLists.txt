@@ -192,6 +192,7 @@ librecad/src/lib/actions/rs_preview.cpp
 librecad/src/lib/actions/rs_previewactioninterface.cpp
 librecad/src/lib/actions/rs_snapper.cpp
 librecad/src/lib/debug/rs_debug.cpp
+librecad/src/lib/debug/lc_crashhandler.cpp
 librecad/src/lib/engine/rs_flags.cpp
 librecad/src/lib/engine/rs_pen.cpp
 librecad/src/lib/engine/lc_rect.cpp
@@ -930,6 +931,12 @@ ${SOURCES}
 ${QM_FILES}
  )
 target_link_libraries(librecad PRIVATE muparser Qt5::Core Qt5::Widgets Qt5::Gui Qt5::PrintSupport Qt5::Svg Qt5::Network)
+if(WIN32)
+    target_link_libraries(librecad PRIVATE dbghelp)
+else()
+    # Export symbols so backtrace_symbols() can resolve global function names.
+    set_target_properties(librecad PROPERTIES ENABLE_EXPORTS ON)
+endif()
 set_target_properties(librecad PROPERTIES
 WIN32_EXECUTABLE ON
 MACOSX_BUNDLE ON
