@@ -1,11 +1,8 @@
-#define _POSIX_C_SOURCE 200809L
-#define _GNU_SOURCE
-#define _XOPEN_SOURCE 700
-
 /****************************************************************************
 **
 ** This file is part of the LibreCAD project, a 2D CAD program
 **
+** Copyright (C) 2026 LibreCAD www.librecad.org
 ** Copyright (C) 2018 A. Stebich (librecad@mail.lordofbikes.de)
 ** Copyright (C) 2018 Simon Wells <simonrwells@gmail.com>
 ** Copyright (C) 2020 Nikita Letov <letovnn@gmail.com>
@@ -33,30 +30,10 @@
 #include <clocale>
 #include <cstdio>
 #include <cstddef>
+#include <cstdint>
 #include <ctime>
 #include <cstdlib>
 #include <cstring>
-
-#ifdef _WIN32
-#include <windows.h>
-#include <DbgHelp.h>
-#include <imagehlp.h>
-#pragma comment(lib, "DbgHelp.lib")
-#elif defined(__linux__) || defined(__APPLE__)
-#include <signal.h>
-#include <execinfo.h>
-#include <unistd.h>
-#include <cxxabi.h>
-#include <sys/time.h>
-#include <limits.h>
-#include <stdlib.h>
-#include <string.h>
-#include <errno.h>
-#ifdef __APPLE__
-#include <mach-o/dyld.h>
-#include <dlfcn.h>
-#endif
-#endif
 
 #include <QApplication>
 #include <QByteArray>
@@ -76,6 +53,7 @@
 #include "console_dxf2pdf.h"
 #include "console_dxf2png.h"
 #include "lc_application.h"
+#include "lc_crash_handler.h"
 #include "main.h"
 
 #include "lc_iconcolorsoptions.h"
@@ -100,304 +78,6 @@ const std::string g_lcVersion{"LC_VISION=" XSTR(LC_VERSION)};
 
 // update splash for alpha/beta names)
     void updateSplash(const std::unique_ptr<QSplashScreen>& splash);
-}
-
-#ifdef _WIN32
-LONG WINAPI CrashHandler(EXCEPTION_POINTERS* pExceptionInfo)
-{
-    HANDLE hProcess = GetCurrentProcess();
-    SymInitialize(hProcess, nullptr, TRUE);
-
-    char crashFileName[MAX_PATH];
-    GetModuleFileNameA(nullptr, crashFileName, MAX_PATH);
-    strcat_s(crashFileName, MAX_PATH, ".crash.log");
-    
-    FILE* pFile = nullptr;
-    fopen_s(&pFile, crashFileName, "w");
-    
-    if (pFile != nullptr) {
-        fprintf(pFile, "=========================================\n");
-        fprintf(pFile, "LibreCAD Crash Report\n");
-        fprintf(pFile, "=========================================\n\n");
-        
-        SYSTEMTIME st;
-        GetLocalTime(&st);
-        fprintf(pFile, "Crash Time: %04d-%02d-%02d %02d:%02d:%02d\n\n",
-                st.wYear, st.wMonth, st.wDay, st.wHour, st.wMinute, st.wSecond);
-        
-        EXCEPTION_RECORD* pExceptionRecord = pExceptionInfo->ExceptionRecord;
-        fprintf(pFile, "Exception Code: 0x%08X\n", pExceptionRecord->ExceptionCode);
-        fprintf(pFile, "Exception Address: 0x%p\n", pExceptionRecord->ExceptionAddress);
-        fprintf(pFile, "Number of Parameters: %d\n", pExceptionRecord->NumberParameters);
-        
-        for (ULONG i = 0; i < pExceptionRecord->NumberParameters; i++) {
-            fprintf(pFile, "Parameter %d: 0x%08X\n", i, pExceptionRecord->ExceptionInformation[i]);
-        }
-        fprintf(pFile, "\n");
-        
-        fprintf(pFile, "Call Stack:\n");
-        fprintf(pFile, "-----------\n");
-        
-        CONTEXT* pContext = pExceptionInfo->ContextRecord;
-        STACKFRAME64 stackFrame = {0};
-        
-#ifdef _M_IX86
-        stackFrame.AddrPC.Offset = pContext->Eip;
-        stackFrame.AddrPC.Mode = AddrModeFlat;
-        stackFrame.AddrStack.Offset = pContext->Esp;
-        stackFrame.AddrStack.Mode = AddrModeFlat;
-        stackFrame.AddrFrame.Offset = pContext->Ebp;
-        stackFrame.AddrFrame.Mode = AddrModeFlat;
-#elif _M_X64
-        stackFrame.AddrPC.Offset = pContext->Rip;
-        stackFrame.AddrPC.Mode = AddrModeFlat;
-        stackFrame.AddrStack.Offset = pContext->Rsp;
-        stackFrame.AddrStack.Mode = AddrModeFlat;
-        stackFrame.AddrFrame.Offset = pContext->Rbp;
-        stackFrame.AddrFrame.Mode = AddrModeFlat;
-#else
-#error Unsupported platform
-#endif
-        
-        HANDLE hThread = GetCurrentThread();
-        DWORD machineType = IMAGE_FILE_MACHINE_I386;
-#ifdef _M_X64
-        machineType = IMAGE_FILE_MACHINE_AMD64;
-#endif
-        
-        for (int i = 0; i < 64; i++) {
-            if (!StackWalk64(machineType, hProcess, hThread, &stackFrame, pContext,
-                            nullptr, SymFunctionTableAccess64, SymGetModuleBase64, nullptr)) {
-                break;
-            }
-            
-            if (stackFrame.AddrPC.Offset == 0) {
-                break;
-            }
-            
-            char buffer[sizeof(SYMBOL_INFO) + MAX_SYM_NAME] = {0};
-            PSYMBOL_INFO pSymbol = reinterpret_cast<PSYMBOL_INFO>(buffer);
-            pSymbol->SizeOfStruct = sizeof(SYMBOL_INFO);
-            pSymbol->MaxNameLen = MAX_SYM_NAME;
-            
-            DWORD64 displacement = 0;
-            SymFromAddr(hProcess, stackFrame.AddrPC.Offset, &displacement, pSymbol);
-            
-            char moduleName[MAX_PATH] = {0};
-            HMODULE hModule = nullptr;
-            GetModuleHandleEx(GET_MODULE_HANDLE_EX_FLAG_FROM_ADDRESS | 
-                            GET_MODULE_HANDLE_EX_FLAG_UNCHANGED_REFCOUNT,
-                            reinterpret_cast<LPCWSTR>(stackFrame.AddrPC.Offset), &hModule);
-            if (hModule != nullptr) {
-                GetModuleFileNameA(hModule, moduleName, MAX_PATH);
-            }
-            
-            fprintf(pFile, "%2d: 0x%p %s (%s+0x%X)\n", 
-                    i,
-                    reinterpret_cast<void*>(stackFrame.AddrPC.Offset),
-                    pSymbol->Name,
-                    moduleName,
-                    static_cast<DWORD>(stackFrame.AddrPC.Offset - 
-                    reinterpret_cast<DWORD64>(hModule)));
-        }
-        
-        fprintf(pFile, "\n=========================================\n");
-        fprintf(pFile, "End of Crash Report\n");
-        fprintf(pFile, "=========================================\n");
-        fclose(pFile);
-        
-        printf("\n\n*** LibreCAD has crashed ***\n");
-        printf("Crash log saved to: %s\n\n", crashFileName);
-    }
-    
-    SymCleanup(hProcess);
-    return EXCEPTION_EXECUTE_HANDLER;
-}
-#elif defined(__linux__) || defined(__APPLE__)
-static void signalHandler(int sig, siginfo_t* info, [[maybe_unused]]void* context)
-{
-    const char* signalNames[] = {
-        "Unknown", "SIGHUP", "SIGINT", "SIGQUIT", "SIGILL", "SIGTRAP",
-        "SIGABRT", "SIGBUS", "SIGFPE", "SIGKILL", "SIGUSR1", "SIGSEGV",
-        "SIGUSR2", "SIGPIPE", "SIGALRM", "SIGTERM"
-    };
-    
-    char crashFileName[PATH_MAX];
-#ifdef __linux__
-    ssize_t len = readlink("/proc/self/exe", crashFileName, PATH_MAX - 1);
-    if (len == -1) {
-        snprintf(crashFileName, PATH_MAX, "librecad.crash.log");
-    } else {
-        crashFileName[len] = '\0';
-        strncat(crashFileName, ".crash.log", PATH_MAX - len - 1);
-    }
-#elif __APPLE__
-    uint32_t size = PATH_MAX;
-    if (_NSGetExecutablePath(crashFileName, &size) != 0) {
-        snprintf(crashFileName, PATH_MAX, "LibreCAD.crash.log");
-    } else {
-        strncat(crashFileName, ".crash.log", PATH_MAX - strlen(crashFileName) - 1);
-    }
-#endif
-    
-    FILE* pFile = fopen(crashFileName, "w");
-    if (pFile != nullptr) {
-        struct timeval tv;
-        gettimeofday(&tv, nullptr);
-        struct tm* tm = localtime(&tv.tv_sec);
-        
-        fprintf(pFile, "=========================================\n");
-        fprintf(pFile, "LibreCAD Crash Report\n");
-        fprintf(pFile, "=========================================\n\n");
-        
-        fprintf(pFile, "Crash Time: %04d-%02d-%02d %02d:%02d:%02d.%03d\n\n",
-                tm->tm_year + 1900, tm->tm_mon + 1, tm->tm_mday,
-                tm->tm_hour, tm->tm_min, tm->tm_sec, (int)(tv.tv_usec / 1000));
-        
-        fprintf(pFile, "Signal: %d (%s)\n", sig, 
-                sig < (int)(sizeof(signalNames)/sizeof(signalNames[0])) ? signalNames[sig] : signalNames[0]);
-        
-        if (info != nullptr) {
-            fprintf(pFile, "Signal Code: %d\n", info->si_code);
-            fprintf(pFile, "Fault Address: 0x%p\n", info->si_addr);
-        }
-        
-        fprintf(pFile, "\nCall Stack:\n");
-        fprintf(pFile, "-----------\n");
-        
-#ifdef __APPLE__
-        void* callstack[64];
-        int frames = 0;
-        char** symbols = nullptr;
-        
-        // Dynamically load backtrace functions on macOS
-        typedef int (*BacktraceFunc)(void**, int);
-        typedef char** (*BacktraceSymbolsFunc)(void* const*, int);
-        
-        void* dlHandle = dlopen(nullptr, RTLD_LAZY);
-        BacktraceFunc backtrace_func = dlHandle ? (BacktraceFunc)dlsym(dlHandle, "backtrace") : nullptr;
-        BacktraceSymbolsFunc backtrace_symbols_func = dlHandle ? (BacktraceSymbolsFunc)dlsym(dlHandle, "backtrace_symbols") : nullptr;
-        
-        if (backtrace_func != nullptr && backtrace_symbols_func != nullptr) {
-            frames = (int)backtrace_func(callstack, 64);
-            symbols = backtrace_symbols_func(callstack, frames);
-        }
-        
-        for (int i = 0; i < frames; i++) {
-            char funcName[256] = "??";
-            char moduleName[256] = "??";
-            
-            if (symbols != nullptr) {
-                const char* symbol = symbols[i];
-                char* addr_end = strchr((char*)symbol, ' ');
-                char* func_start = addr_end ? strchr(addr_end + 1, '(') : nullptr;
-                
-                if (addr_end) *addr_end = '\0';
-                strncpy(moduleName, symbol, sizeof(moduleName) - 1);
-                
-                if (func_start) {
-                    char* func_end = strchr(func_start + 1, '+');
-                    if (func_end) *func_end = '\0';
-                    strncpy(funcName, func_start + 1, sizeof(funcName) - 1);
-                    
-                    int status = 0;
-                    char* demangled = abi::__cxa_demangle(funcName, nullptr, nullptr, &status);
-                    if (status == 0 && demangled != nullptr) {
-                        strncpy(funcName, demangled, sizeof(funcName) - 1);
-                        free(demangled);
-                    }
-                }
-            }
-            
-            fprintf(pFile, "%2d: 0x%p %s (%s)\n", i, callstack[i], funcName, moduleName);
-        }
-        
-        if (symbols != nullptr) {
-            free(symbols);
-        }
-        
-        if (dlHandle != nullptr) {
-            dlclose(dlHandle);
-        }
-#else
-        void* callstack[64];
-        int frames = (int)backtrace(callstack, 64);
-        char** symbols = backtrace_symbols(callstack, frames);
-        
-        for (int i = 0; i < frames; i++) {
-            char funcName[256] = "??";
-            char moduleName[256] = "??";
-            
-            if (symbols != nullptr) {
-                char* begin = nullptr;
-                char* end = nullptr;
-                
-                for (char* p = symbols[i]; *p; p++) {
-                    if (*p == '(') begin = p;
-                    if (*p == '+') end = p;
-                }
-                
-                if (begin && end) {
-                    *begin = '\0';
-                    *end = '\0';
-                    strncpy(moduleName, symbols[i], sizeof(moduleName) - 1);
-                    
-                    begin++;
-                    size_t len = end - begin;
-                    if (len > 0 && len < sizeof(funcName)) {
-                        strncpy(funcName, begin, len);
-                        funcName[len] = '\0';
-                        
-                        int status = 0;
-                        char* demangled = abi::__cxa_demangle(funcName, nullptr, nullptr, &status);
-                        if (status == 0 && demangled != nullptr) {
-                            strncpy(funcName, demangled, sizeof(funcName) - 1);
-                            free(demangled);
-                        }
-                    }
-                } else {
-                    strncpy(funcName, symbols[i], sizeof(funcName) - 1);
-                }
-            }
-            
-            fprintf(pFile, "%2d: 0x%p %s (%s)\n", i, callstack[i], funcName, moduleName);
-        }
-        
-        if (symbols != nullptr) {
-            free(symbols);
-        }
-#endif
-        
-        fprintf(pFile, "\n=========================================\n");
-        fprintf(pFile, "End of Crash Report\n");
-        fprintf(pFile, "=========================================\n");
-        fclose(pFile);
-        
-        printf("\n\n*** LibreCAD has crashed ***\n");
-        printf("Crash log saved to: %s\n\n", crashFileName);
-    }
-    
-    signal(sig, SIG_DFL);
-    raise(sig);
-}
-#endif
-
-void InstallCrashHandler()
-{
-#ifdef _WIN32
-    SetUnhandledExceptionFilter(CrashHandler);
-#elif defined(__linux__) || defined(__APPLE__)
-    struct sigaction sa;
-    sa.sa_sigaction = signalHandler;
-    sigemptyset(&sa.sa_mask);
-    sa.sa_flags = SA_RESTART | SA_SIGINFO;
-    
-    sigaction(SIGSEGV, &sa, nullptr);
-    sigaction(SIGILL, &sa, nullptr);
-    sigaction(SIGFPE, &sa, nullptr);
-    sigaction(SIGABRT, &sa, nullptr);
-    sigaction(SIGBUS, &sa, nullptr);
-#endif
 }
 
 void showFirstLoadSetupDialog(bool first_load) {
@@ -578,16 +258,16 @@ int main(int argc, char** argv) {
 
 #    else
 
-    InstallCrashHandler();
+    LC_CrashHandler::install();
 
     // Create compilater's error: this QT macros may be in .pro file only.
     //QT_REQUIRE_VERSION(argc, argv, "6.4");
-    
+
     // May be this code must be on begin of main.cpp?
     #if QT_VERSION < QT_VERSION_CHECK(6, 4, 0)
         #error "This programm requires Qt6 ver.6.4.0 or higher."
     #endif
-    
+
     // Check first two arguments in order to decide if we want to run librecad
     // as console dxf2pdf or dxf2png tools. On Linux we can create a link to
     // librecad executable and  name it dxf2pdf. So, we can run either:

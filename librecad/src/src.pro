@@ -615,6 +615,7 @@ HEADERS += \
     lib/engine/undo/lc_undosection.h \
     lib/printing/lc_printing.h \
     main/lc_application.h \
+    main/lc_crash_handler.h \
     ui/action_options/curve/lc_ellipsearcoptions.h \
     ui/action_options/ellipse/lc_ellipse1pointoptions.h \
     ui/components/status_bar/lc_relzerocoordinateswidget.h \
@@ -929,6 +930,7 @@ SOURCES += \
     lib/engine/rs.cpp \
     lib/printing/lc_printing.cpp \
     main/lc_application.cpp \
+    main/lc_crash_handler.cpp \
     ui/action_options/curve/lc_ellipsearcoptions.cpp \
     ui/action_options/ellipse/lc_ellipse1pointoptions.cpp \
     ui/components/status_bar/lc_relzerocoordinateswidget.cpp \

@@ -1047,6 +1047,8 @@ set(SHARED_SOURCES
     librecad/src/main/doc_plugin_interface.h
     librecad/src/main/lc_application.cpp
     librecad/src/main/lc_application.h
+    librecad/src/main/lc_crash_handler.cpp
+    librecad/src/main/lc_crash_handler.h
     librecad/src/main/qc_dialogfactory.cpp
     librecad/src/main/qc_dialogfactory.h
     librecad/src/plugins/document_interface.h
