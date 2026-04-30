@@ -42,6 +42,7 @@ unix/
 windows/
 release/
 debug/
+!librecad/src/lib/debug/
 *.ncb
 *.suo
 *.idb
