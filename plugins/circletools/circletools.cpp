@@ -51,11 +51,10 @@ QString CircleToolsPlugin::name() const {
 }
 
 PluginCapabilities CircleToolsPlugin::getCapabilities() const {
-    PluginCapabilities cap;
-
-    cap.menuEntryPoints << PluginMenuLocation("plugins_menu", tr("CircleTools"));
-
-    return cap;
+    PluginCapabilities pluginCapabilities;
+    pluginCapabilities.menuEntryPoints
+        << PluginMenuLocation("plugins_menu", tr("CircleTools"));
+    return pluginCapabilities;
 }
 
 static void info(QWidget* parent, const QString& title, const QString& text) {
