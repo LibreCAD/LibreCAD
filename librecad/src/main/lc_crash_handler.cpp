@@ -110,6 +110,13 @@ LONG WINAPI windowsCrashHandler(EXCEPTION_POINTERS* pExceptionInfo)
         stackFrame.AddrStack.Mode = AddrModeFlat;
         stackFrame.AddrFrame.Offset = pContext->Rbp;
         stackFrame.AddrFrame.Mode = AddrModeFlat;
+#elif defined(_M_ARM64)
+        stackFrame.AddrPC.Offset = pContext->Pc;
+        stackFrame.AddrPC.Mode = AddrModeFlat;
+        stackFrame.AddrStack.Offset = pContext->Sp;
+        stackFrame.AddrStack.Mode = AddrModeFlat;
+        stackFrame.AddrFrame.Offset = pContext->Fp;
+        stackFrame.AddrFrame.Mode = AddrModeFlat;
 #else
 #error Unsupported platform
 #endif
@@ -118,6 +125,8 @@ LONG WINAPI windowsCrashHandler(EXCEPTION_POINTERS* pExceptionInfo)
         DWORD machineType = IMAGE_FILE_MACHINE_I386;
 #ifdef _M_X64
         machineType = IMAGE_FILE_MACHINE_AMD64;
+#elif defined(_M_ARM64)
+        machineType = IMAGE_FILE_MACHINE_ARM64;
 #endif
 
         for (int i = 0; i < 64; i++) {
