@@ -35,7 +35,6 @@
 #ifdef _WIN32
 #include <windows.h>
 #include <DbgHelp.h>
-#include <imagehlp.h>
 #pragma comment(lib, "DbgHelp.lib")
 #elif defined(__linux__) || defined(__APPLE__)
 #include <signal.h>
