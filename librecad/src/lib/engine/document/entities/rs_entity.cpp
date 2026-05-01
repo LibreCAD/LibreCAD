@@ -311,6 +311,15 @@ double RS_Entity::areaLineIntegral() const{
     return 0.;
 }
 
+LC_FirstMoment RS_Entity::firstMomentLineIntegral() const
+{
+    return {};
+}
+
+LC_SecondMoment RS_Entity::secondMomentLineIntegral() const {
+    return {};
+}
+
 bool RS_Entity::isArc() const{
     switch (rtti()) {
         case RS2::EntityArc:

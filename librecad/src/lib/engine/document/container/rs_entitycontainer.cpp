@@ -1936,6 +1936,108 @@ double RS_EntityContainer::areaLineIntegral() const {
     return std::abs(contourArea) + closedArea - subArea;
 }
 
+LC_FirstMoment RS_EntityContainer::firstMomentLineIntegral() const {
+    // Mirrors secondMomentLineIntegral() traversal; accumulates (∬ x dA, ∬ y dA).
+    LC_FirstMoment contourMoment;
+    double         contourArea = 0.0;
+    LC_FirstMoment closedMoment;
+    LC_FirstMoment subMoment;
+
+    RS_Vector previousPoint(false);
+    for (unsigned i = 0; i < count(); ++i) {
+        RS_Entity* e = m_entities.at(i);
+        if (isClosedLoop(*e)) {
+            if (e->isContainer())
+                subMoment += e->firstMomentLineIntegral();
+            else
+                closedMoment += e->firstMomentLineIntegral();
+            continue;
+        }
+        e->setLayer(getLayer());
+        LC_FirstMoment m        = e->firstMomentLineIntegral();
+        double         integral = e->areaLineIntegral();
+        RS_Vector      startPt  = e->getStartpoint();
+        RS_Vector      endPt    = e->getEndpoint();
+
+        if (previousPoint.valid && endPt.squaredTo(previousPoint) <= RS_TOLERANCE15) {
+            contourArea   -= integral;
+            contourMoment -= m;
+            previousPoint  = startPt;
+        } else {
+            bool useEndPoint = true;
+            if (!previousPoint.valid && i + 1 < count()) {
+                auto currEntity = m_entities.at(i + 1);
+                useEndPoint = endPointDistance(endPt, *currEntity) < endPointDistance(startPt, *currEntity);
+            }
+            if (useEndPoint) {
+                contourArea   += integral;
+                contourMoment += m;
+                previousPoint  = endPt;
+            } else {
+                contourArea   -= integral;
+                contourMoment -= m;
+                previousPoint  = startPt;
+            }
+        }
+    }
+    if (contourArea < 0.0)
+        contourMoment = -contourMoment;
+
+    return contourMoment + closedMoment - subMoment;
+}
+
+LC_SecondMoment RS_EntityContainer::secondMomentLineIntegral() const {
+    // Follows the same traversal logic as areaLineIntegral(), applying identical
+    // sign flips so the moments are consistent with the signed area convention.
+    LC_SecondMoment contourMoment;
+    double          contourArea = 0.0;
+    LC_SecondMoment closedMoment;
+    LC_SecondMoment subMoment;
+
+    RS_Vector previousPoint(false);
+    for (unsigned i = 0; i < count(); ++i) {
+        RS_Entity* e = m_entities.at(i);
+        if (isClosedLoop(*e)) {
+            if (e->isContainer())
+                subMoment += e->secondMomentLineIntegral();
+            else
+                closedMoment += e->secondMomentLineIntegral();
+            continue;
+        }
+        e->setLayer(getLayer());
+        LC_SecondMoment m        = e->secondMomentLineIntegral();
+        double          integral = e->areaLineIntegral();
+        RS_Vector       startPt  = e->getStartpoint();
+        RS_Vector       endPt    = e->getEndpoint();
+
+        if (previousPoint.valid && endPt.squaredTo(previousPoint) <= RS_TOLERANCE15) {
+            contourArea   -= integral;
+            contourMoment -= m;
+            previousPoint  = startPt;
+        } else {
+            bool useEndPoint = true;
+            if (!previousPoint.valid && i + 1 < count()) {
+                auto currEntity = m_entities.at(i + 1);
+                useEndPoint = endPointDistance(endPt, *currEntity) < endPointDistance(startPt, *currEntity);
+            }
+            if (useEndPoint) {
+                contourArea   += integral;
+                contourMoment += m;
+                previousPoint  = endPt;
+            } else {
+                contourArea   -= integral;
+                contourMoment -= m;
+                previousPoint  = startPt;
+            }
+        }
+    }
+    // Match the abs-value convention of areaLineIntegral()
+    if (contourArea < 0.0)
+        contourMoment = -contourMoment;
+
+    return contourMoment + closedMoment - subMoment;
+}
+
 bool RS_EntityContainer::ignoredOnModification() const {
     RS2::EntityType ownType = rtti();
     if (RS2::isDimensionalEntity(ownType) || RS2::isTextEntity(ownType) || ownType == RS2::EntityHatch){

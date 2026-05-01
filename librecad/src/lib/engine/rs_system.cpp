@@ -121,6 +121,9 @@ void RS_System::initLanguageList() {
                         (*it).toLatin1().data());
 
         int i0 = (*it).lastIndexOf(QString("librecad"),-1,Qt::CaseInsensitive);
+        if (i0 == -1)
+          continue;
+
         int i1 = (*it).indexOf('_',i0);
         int i2 = (*it).indexOf('.', i1);
         if (i1 == -1 || i2 == -1) {

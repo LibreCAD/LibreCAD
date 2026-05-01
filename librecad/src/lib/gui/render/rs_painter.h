@@ -86,6 +86,7 @@ public:
     double toGuiDX(double d) const;
     double toGuiDY(double d) const;
     QTransform getToGuiTransform() const;
+    using LC_CoordinatesMapper::toUCSAngleDegrees;
 
     bool isPrinting() const
     {

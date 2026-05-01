@@ -28,6 +28,7 @@
 #include "lc_circlepropertieseditingwidget.h"
 #include "lc_dlgdimension.h"
 #include "lc_ellipsepropertieseditingwidget.h"
+#include "lc_hatchpropertieseditingwidget.h"
 #include "lc_entitypropertieseditorwidget.h"
 #include "lc_hyperbolapropertieseditingwidget.h"
 #include "lc_imagepropertieseditingwidget.h"
@@ -239,11 +240,15 @@ void LC_DlgEntityProperties::prepareTypeSpecificUI(LC_EntityPropertiesEditorWidg
             break;
         }
         case RS2::EntityText:
-        case RS2::EntityMText:
-        case RS2::EntityHatch: {
-            // propertiesEditingWidget = new LC_ArcPropertiesEditingWidget(this);
+        case RS2::EntityMText: {
             windowTitle = tr("Properties?");
             dlgName = "DlgLineProperties";
+            break;
+        }
+        case RS2::EntityHatch: {
+            primaryWidget = new LC_HatchPropertiesEditingWidget(this);
+            windowTitle = tr("Hatch Properties");
+            dlgName = "DlgHatchProperties";
             break;
         }
         default:

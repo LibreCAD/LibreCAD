@@ -1063,17 +1063,136 @@ LC_Quadratic RS_Arc::getQuadratic() const {
  * \oint x dy = c_x r \sin t + \frac{1}{4}r^2\sin 2t +  \frac{1}{2}r^2 t
  */
 double RS_Arc::areaLineIntegral() const {
-    const double &r = data.radius;
-    const double &a0 = data.angle1;
-    const double &a1 = data.angle2;
-    const double r2 = 0.25 * r * r;
-    const double fStart = data.center.x * r * sin(a0) + r2 * sin(a0 + a0);
-    const double fEnd = data.center.x * r * sin(a1) + r2 * sin(a1 + a1);
-    if (isReversed()) {
-        return fEnd - fStart - 2. * r2 * getAngleLength();
-    } else {
-        return fEnd - fStart + 2. * r2 * getAngleLength();
-    }
+  // Original implementation (kept unchanged)
+  const double &r = data.radius;
+  const double &a0 = data.angle1;
+  const double &a1 = data.angle2;
+  const double r2 = 0.25 * r * r;
+  const double fStart = data.center.x * r * sin(a0) + r2 * sin(a0 + a0);
+  const double fEnd = data.center.x * r * sin(a1) + r2 * sin(a1 + a1);
+  if (isReversed()) {
+    return fEnd - fStart - 2. * r2 * getAngleLength();
+  } else {
+    return fEnd - fStart + 2. * r2 * getAngleLength();
+  }
+}
+
+LC_FirstMoment RS_Arc::firstMomentLineIntegral() const {
+    const double cx = data.center.x;
+    const double cy = data.center.y;
+    const double r  = data.radius;
+    const double a0 = data.angle1;
+    const double L  = getAngleLength();
+    const double r2 = r * r;
+
+    // mx = (1/2) ∮ x² dy = (r/2) ∫ (cx + r cos t)² cos t dt
+    // Anti-derivative periodic part: F(t) = (r/2)[cx²·sin t + cx·r·sin(2t)/2 + r²·(sin t − sin³t/3)]
+    // Linear coefficient: k_mx = cx·r²/2
+    auto F_mx = [&](double t) -> double {
+        const double st  = std::sin(t);
+        const double s2t = std::sin(2.0 * t);
+        return (r / 2.0) * (
+            cx * cx * st
+            + cx * r * s2t / 2.0
+            + r2 * (st - st * st * st / 3.0)
+        );
+    };
+
+    // my = −(1/2) ∮ y² dx = (r/2) ∫ (cy + r sin t)² sin t dt
+    // Anti-derivative periodic part: G(t) = (r/2)[−cy²·cos t − cy·r·sin(2t)/2 + r²·(−cos t + cos³t/3)]
+    // Linear coefficient: k_my = cy·r²/2
+    auto G_my = [&](double t) -> double {
+        const double ct  = std::cos(t);
+        const double s2t = std::sin(2.0 * t);
+        return (r / 2.0) * (
+            -cy * cy * ct
+            - cy * r * s2t / 2.0
+            + r2 * (-ct + ct * ct * ct / 3.0)
+        );
+    };
+
+    const double k_mx = cx * r2 / 2.0;
+    const double k_my = cy * r2 / 2.0;
+    const double sign = isReversed() ? -1.0 : 1.0;
+    const double a1   = a0 + sign * L;
+
+    return {
+        F_mx(a1) - F_mx(a0) + sign * k_mx * L,
+        G_my(a1) - G_my(a0) + sign * k_my * L
+    };
+}
+
+LC_SecondMoment RS_Arc::secondMomentLineIntegral() const {
+    const double cx = data.center.x;
+    const double cy = data.center.y;
+    const double r  = data.radius;
+    const double a0 = data.angle1;
+    const double a1 = data.angle2;
+    const double L  = getAngleLength();
+    const double r2 = r * r;
+    const double r3 = r2 * r;
+    const double r4 = r2 * r2;
+
+    // ixx = (r/3) ∫ (cx + r cos t)³ cos t dt
+    // Anti-derivative (periodic part only):
+    //   F_nt(t) = (r/3)[(cx³+3cx·r²)sin t + (3cx²r/4+r³/4)sin 2t + r³/32 sin 4t - cx·r²·sin³t]
+    // t-linear coefficient: k_ixx = cx²r²/2 + r⁴/8
+    auto F_nt = [&](double t) -> double {
+        const double st  = std::sin(t);
+        const double s2t = std::sin(2.0*t);
+        const double s4t = std::sin(4.0*t);
+        return (r / 3.0) * (
+            (cx*cx*cx + 3.0*cx*r2) * st
+            + (3.0*cx*cx*r / 4.0 + r3 / 4.0) * s2t
+            + r3 * s4t / 32.0
+            - cx * r2 * st*st*st
+        );
+    };
+    const double k_ixx = cx*cx*r2 / 2.0 + r4 / 8.0;
+
+    // iyy = (r/3) ∫ (cy + r sin t)³ sin t dt
+    // Anti-derivative (periodic part only):
+    //   G_nt(t) = (r/3)[-(cy³+3cy·r²)cos t + cy·r²·cos³t - (3cy²r/4+r³/4)sin 2t + r³/32 sin 4t]
+    // t-linear coefficient: k_iyy = cy²r²/2 + r⁴/8
+    auto G_nt = [&](double t) -> double {
+        const double ct  = std::cos(t);
+        const double s2t = std::sin(2.0*t);
+        const double s4t = std::sin(4.0*t);
+        return (r / 3.0) * (
+            -(cy*cy*cy + 3.0*cy*r2) * ct
+            + cy * r2 * ct*ct*ct
+            - (3.0*cy*cy*r / 4.0 + r3 / 4.0) * s2t
+            + r3 * s4t / 32.0
+        );
+    };
+    const double k_iyy = cy*cy*r2 / 2.0 + r4 / 8.0;
+
+    // ixy = (r/2) ∫ (cx+r cos t)²(cy+r sin t) cos t dt
+    // Anti-derivative (periodic part only):
+    //   H_nt(t) = (r/2)[(cx²cy+r²cy)sin t + cx²r·sin²t/2 + cx·r·cy·sin 2t/2
+    //                   - 2cx·r²·cos³t/3 - r²cy·sin³t/3 - r³·cos⁴t/4]
+    // t-linear coefficient: k_ixy = cx·cy·r²/2
+    auto H_nt = [&](double t) -> double {
+        const double st  = std::sin(t);
+        const double ct  = std::cos(t);
+        const double s2t = std::sin(2.0*t);
+        return (r / 2.0) * (
+            (cx*cx*cy + r2*cy) * st
+            + cx*cx*r * st*st / 2.0
+            + cx*r*cy * s2t / 2.0
+            - 2.0*cx*r2 * ct*ct*ct / 3.0
+            - r2*cy * st*st*st / 3.0
+            - r3 * ct*ct*ct*ct / 4.0
+        );
+    };
+    const double k_ixy = cx*cy*r2 / 2.0;
+
+    const double sign = isReversed() ? -1.0 : 1.0;
+    return {
+        F_nt(a1) - F_nt(a0) + sign * k_ixx * L,
+        G_nt(a1) - G_nt(a0) + sign * k_iyy * L,
+        H_nt(a1) - H_nt(a0) + sign * k_ixy * L
+    };
 }
 
 /**

@@ -250,6 +250,19 @@ public:
      */
     double areaLineIntegral() const override;
     /**
+     * @brief firstMomentLineIntegral - aggregates the first-moment line integrals
+     * of all boundary entities, with the same orientation correction as areaLineIntegral().
+     * Returns (∬ x dA, ∬ y dA) for use in centroid computation.
+     */
+    LC_FirstMoment firstMomentLineIntegral() const override;
+    /**
+     * @brief secondMomentLineIntegral - aggregates the second-moment line integrals
+     * of all boundary entities in this container, applying the same orientation
+     * correction as areaLineIntegral().  Returns absolute-value-convention moments
+     * suitable for use in LC_Loops::getTotalSecondMoment().
+     */
+    LC_SecondMoment secondMomentLineIntegral() const override;
+    /**
 	 * @brief ignoreForModification ignore this entity for entity catch for certain actions
      * like catching circles to create tangent circles
      * @return, true, indicate this entity container should be ignored

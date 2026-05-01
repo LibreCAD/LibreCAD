@@ -212,6 +212,18 @@ public:
      * \oint x dy = 0.5*(x0+x1)*(y1-y0)
      */
     double areaLineIntegral() const override;
+
+    LC_FirstMoment firstMomentLineIntegral() const override;
+
+    /**
+     * @brief secondMomentLineIntegral - exact second-moment line integrals for
+     * a line segment via polynomial anti-derivatives.
+     *
+     *   ixx = (y1-y0)/12 · (x0+x1)(x0²+x1²)
+     *   iyy = -(x1-x0)/12 · (y0+y1)(y0²+y1²)
+     *   ixy = (y1-y0)/24 · [x0²(3y0+y1) + 2x0x1(y0+y1) + x1²(y0+3y1)]
+     */
+    LC_SecondMoment secondMomentLineIntegral() const override;
 protected:
     RS_LineData data;
 private:

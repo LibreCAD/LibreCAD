@@ -1,0 +1,341 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>LC_HatchPropertiesEditingWidget</class>
+ <widget class="QWidget" name="LC_HatchPropertiesEditingWidget">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>300</width>
+    <height>420</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <property name="leftMargin">
+    <number>0</number>
+   </property>
+   <property name="topMargin">
+    <number>0</number>
+   </property>
+   <property name="rightMargin">
+    <number>0</number>
+   </property>
+   <property name="bottomMargin">
+    <number>0</number>
+   </property>
+   <property name="spacing">
+    <number>0</number>
+   </property>
+   <item>
+    <widget class="QGroupBox" name="gbPattern">
+     <property name="title">
+      <string>Pattern</string>
+     </property>
+     <layout class="QGridLayout" name="gridPattern" columnstretch="0,5">
+      <item row="0" column="0">
+       <widget class="QLabel" name="lSolid">
+        <property name="text">
+         <string>Solid Fill:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QCheckBox" name="cbSolid">
+        <property name="toolTip">
+         <string>Toggle solid fill (no pattern)</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <widget class="QLabel" name="lPattern">
+        <property name="text">
+         <string>Pattern:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <widget class="QLineEdit" name="lePattern">
+        <property name="toolTip">
+         <string>Hatch pattern name</string>
+        </property>
+        <property name="readOnly">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="0">
+       <widget class="QLabel" name="lScale">
+        <property name="text">
+         <string>Scale:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="1">
+       <widget class="QLineEdit" name="leScale">
+        <property name="minimumSize">
+         <size>
+          <width>64</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="toolTip">
+         <string>Hatch pattern scale factor</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="0">
+       <widget class="QLabel" name="lAngle">
+        <property name="toolTip">
+         <string>in degrees</string>
+        </property>
+        <property name="text">
+         <string>Angle (°):</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="1">
+       <widget class="QLineEdit" name="leAngle">
+        <property name="minimumSize">
+         <size>
+          <width>64</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="toolTip">
+         <string>Hatch pattern rotation angle, degrees</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <widget class="QGroupBox" name="gbArea">
+     <property name="title">
+      <string>Area &amp; Centroid</string>
+     </property>
+     <layout class="QGridLayout" name="gridArea" columnstretch="0,5">
+      <item row="0" column="0">
+       <widget class="QLabel" name="lArea">
+        <property name="text">
+         <string>Area:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QLineEdit" name="leArea">
+        <property name="toolTip">
+         <string>Total enclosed area of the hatch region</string>
+        </property>
+        <property name="readOnly">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <widget class="QLabel" name="lCentroidX">
+        <property name="text">
+         <string>Centroid (x):</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <widget class="QLineEdit" name="leCentroidX">
+        <property name="toolTip">
+         <string>X coordinate of centroid</string>
+        </property>
+        <property name="readOnly">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="0">
+       <widget class="QLabel" name="lCentroidY">
+        <property name="text">
+         <string>Centroid (y):</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="1">
+       <widget class="QLineEdit" name="leCentroidY">
+        <property name="toolTip">
+         <string>Y coordinate of centroid</string>
+        </property>
+        <property name="readOnly">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <widget class="QGroupBox" name="gbMoments">
+     <property name="title">
+      <string>Moment of Inertia</string>
+     </property>
+     <layout class="QGridLayout" name="gridMoments" columnstretch="0,5">
+      <item row="0" column="0">
+       <widget class="QLabel" name="lIxx">
+        <property name="toolTip">
+         <string>Second moment about x-axis (central): ∬(x−cx)² dA</string>
+        </property>
+        <property name="text">
+         <string>Ixx:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QLineEdit" name="leIxx">
+        <property name="toolTip">
+         <string>Second central moment about x-axis: ∬(x−cx)² dA</string>
+        </property>
+        <property name="readOnly">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <widget class="QLabel" name="lIyy">
+        <property name="toolTip">
+         <string>Second moment about y-axis (central): ∬(y−cy)² dA</string>
+        </property>
+        <property name="text">
+         <string>Iyy:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <widget class="QLineEdit" name="leIyy">
+        <property name="toolTip">
+         <string>Second central moment about y-axis: ∬(y−cy)² dA</string>
+        </property>
+        <property name="readOnly">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="0">
+       <widget class="QLabel" name="lIxy">
+        <property name="toolTip">
+         <string>Product moment of area (central): ∬(x−cx)(y−cy) dA</string>
+        </property>
+        <property name="text">
+         <string>Ixy:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="1">
+       <widget class="QLineEdit" name="leIxy">
+        <property name="toolTip">
+         <string>Product of area central moment: ∬(x−cx)(y−cy) dA</string>
+        </property>
+        <property name="readOnly">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="0" colspan="2">
+       <widget class="QLabel" name="lPrincipal">
+        <property name="text">
+         <string>Principal Axes</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="0">
+       <widget class="QLabel" name="lI1">
+        <property name="toolTip">
+         <string>Maximum principal second moment of area</string>
+        </property>
+        <property name="text">
+         <string>I₁ (max):</string>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="1">
+       <widget class="QLineEdit" name="leI1">
+        <property name="toolTip">
+         <string>Maximum principal second moment of area</string>
+        </property>
+        <property name="readOnly">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item row="5" column="0">
+       <widget class="QLabel" name="lI2">
+        <property name="toolTip">
+         <string>Minimum principal second moment of area</string>
+        </property>
+        <property name="text">
+         <string>I₂ (min):</string>
+        </property>
+       </widget>
+      </item>
+      <item row="5" column="1">
+       <widget class="QLineEdit" name="leI2">
+        <property name="toolTip">
+         <string>Minimum principal second moment of area</string>
+        </property>
+        <property name="readOnly">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item row="6" column="0">
+       <widget class="QLabel" name="lPrincipalAngle">
+        <property name="toolTip">
+         <string>in degrees</string>
+        </property>
+        <property name="text">
+         <string>Axis Angle (°):</string>
+        </property>
+       </widget>
+      </item>
+      <item row="6" column="1">
+       <widget class="QLineEdit" name="lePrincipalAngle">
+        <property name="toolTip">
+         <string>Angle of the minimum principal axis from the x-axis, degrees</string>
+        </property>
+        <property name="readOnly">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item row="7" column="0">
+       <widget class="QLabel" name="lDegenerate">
+        <property name="toolTip">
+         <string>Indicates if the moment of inertia matrix is degenerate (I₁ ≈ I₂)</string>
+        </property>
+        <property name="text">
+         <string>Degenerate:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="7" column="1">
+       <widget class="QLineEdit" name="leDegenerate">
+        <property name="toolTip">
+         <string>Shows whether the shape has rotational symmetry (any axis is principal)</string>
+        </property>
+        <property name="readOnly">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

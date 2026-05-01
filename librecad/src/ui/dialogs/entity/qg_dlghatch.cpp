@@ -161,36 +161,34 @@ void QG_DlgHatch::updatePreview() {
         gvPreview->zoomAuto();
         return;
     }
-    m_pattern = cbPattern->getPattern();
-    if (m_pattern->countDeep()==0)
-        return;
 
-    QString patName = cbPattern->currentText();
     bool isSolid = cbSolid->isChecked();
     double scale = toWCSValue(leScale, 1.0);
     double angle = toWCSAngle(leAngle, 0.0);
     double prevSize = 100.0;
-    if (m_pattern) {
+
+    if (!isSolid) {
+        m_pattern = cbPattern->getPattern();
+        if (!m_pattern || m_pattern->countDeep() == 0)
+            return;
         m_pattern->calculateBorders();
         prevSize = std::max(prevSize, m_pattern->getSize().magnitude());
     }
 
     m_preview->clear();
 
+    QString patName = isSolid ? "SOLID" : cbPattern->currentText();
     auto* prevHatch = new RS_Hatch(m_preview.get(),
                                        RS_HatchData(isSolid, scale, angle, patName));
     prevHatch->setPen(m_entity->getPen());
 
     auto* loop = new RS_EntityContainer(prevHatch);
-//    loop->setPen(RS_Pen(RS2::FlagInvalid));
     const RS_Pen &pen = RS_Pen(RS_Color(RS2::FlagByLayer), RS2::WidthByLayer, RS2::LineByLayer);
     loop->setPen(pen);
     addRectangle(pen, {0., 0.}, {prevSize,prevSize}, loop);
     prevHatch->addEntity(loop);
     m_preview->addEntity(prevHatch);
-    if (!isSolid) {
-        prevHatch->update();
-    }
+    prevHatch->update();
 
     gvPreview->zoomAuto();
 }

@@ -78,11 +78,7 @@ void LC_Lattice::calcDeltas(double angleX, double angleY, const RS_Vector &gridW
 
 void LC_Lattice::init([[maybe_unused]]int projectedPointsCount) {
     pointsX.clear();
-//    pointsX.resize(projectedPointsCount);
-    pointsX.resize(0);
     pointsY.clear();
-//    pointsY.resize(projectedPointsCount);
-    pointsY.resize(0);
 }
 
 void LC_Lattice::fillVerticalEdge(int numPointsByX, const RS_Vector &baseGridPoint, bool reverseX, bool reverseY, bool skipFirstPoint) {

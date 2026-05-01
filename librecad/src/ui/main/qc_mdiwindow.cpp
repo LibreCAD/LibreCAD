@@ -163,8 +163,8 @@ void QC_MDIWindow::addChildWindow(QC_MDIWindow* w) {
     m_childWindows.append(w);
     w->setParentWindow(this);
 
-    int size = (int)m_childWindows.count(); // well, yes, loss of precision... yet for windows amount that's fine.
-    RS_DEBUG->print("children: %d", size);
+    const size_t size = m_childWindows.count();
+    LC_LOG<<__func__<<"(): children: "<<size;
 }
 
 /**
@@ -173,7 +173,7 @@ void QC_MDIWindow::addChildWindow(QC_MDIWindow* w) {
  * @see addChildWindow
  */
 void QC_MDIWindow::removeChildWindow(QC_MDIWindow* w) {
-    if(m_childWindows.size()>0 ){
+  if(!m_childWindows.empty()){
         if(m_childWindows.contains(w)){
             m_childWindows.removeAll(w);
         }
@@ -188,12 +188,12 @@ QList<QC_MDIWindow*>& QC_MDIWindow::getChildWindows(){
  * @return pointer to the print preview of this drawing or NULL.
  */
 QC_MDIWindow* QC_MDIWindow::getPrintPreview() {
-    for(auto* w: m_childWindows){
-        if(w != nullptr && w->getGraphicView()->isPrintPreview()){
-			return w;
-		}
-	}
-	return nullptr;
+  for(auto* w: m_childWindows){
+    if(w != nullptr && w->getGraphicView()->isPrintPreview()){
+      return w;
+    }
+  }
+  return nullptr;
 }
 
 /**

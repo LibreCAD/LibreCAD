@@ -30,7 +30,6 @@
 #include "lc_entitypropertieseditor.h"
 #include "lc_quickinfowidget.h"
 #include "qc_applicationwindow.h"
-#include "qg_dlghatch.h"
 #include "qg_dlgmtext.h"
 #include "qg_dlgtext.h"
 #include "rs_debug.h"
@@ -147,7 +146,8 @@ void RS_ActionModifyEntity::doTrigger() {
                 case RS2::EntitySplinePoints:
                 case RS2::EntityInsert:
                 case RS2::EntityPolyline:
-                case RS2::EntityImage: {
+                case RS2::EntityImage:
+                case RS2::EntityHatch: {
                     // editing via delayed invocation in editor to support interactive input
                     m_propertiesEditor = new LC_EntityPropertiesEditor(m_actionContext, this);
                     m_allowExternalTermination = false;
@@ -171,10 +171,6 @@ void RS_ActionModifyEntity::doTrigger() {
                 }
                 case RS2::EntityText: {
                     editDialog = new QG_DlgText(parent, m_viewport, static_cast<RS_Text*>(m_clonedEntity), false);
-                    break;
-                }
-                case RS2::EntityHatch: {
-                    editDialog = new QG_DlgHatch(parent, m_viewport, static_cast<RS_Hatch*>(m_clonedEntity), false);
                     break;
                 }
                 default:

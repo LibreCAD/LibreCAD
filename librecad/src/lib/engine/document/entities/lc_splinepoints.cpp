@@ -3431,3 +3431,90 @@ double LC_SplinePoints::areaLineIntegral() const
 
     return res;
 }
+
+LC_SecondMoment LC_SplinePoints::secondMomentLineIntegral() const {
+    // 5-point Gauss-Legendre quadrature on [0,1] — exact for polynomial degree ≤ 9.
+    // Each quadratic Bézier segment has degree-7 integrands (x³y'/3 etc.),
+    // so this gives the exact result per segment.
+    static constexpr double t5[] = {
+        0.04691007703067, 0.23076534494716, 0.5,
+        0.76923465505284, 0.95308992296933
+    };
+    static constexpr double w5[] = {
+        0.11846344252810, 0.23931433524969, 0.28444444444444,
+        0.23931433524969, 0.11846344252810
+    };
+
+    // Helper: integrate second moments over one quadratic Bézier segment P0,P1,P2
+    auto segMoment = [&](const RS_Vector& p0, const RS_Vector& p1, const RS_Vector& p2) -> LC_SecondMoment {
+        LC_SecondMoment m;
+        for (int i = 0; i < 5; ++i) {
+            const double t   = t5[i];
+            const double mt  = 1.0 - t;
+            const double x   = mt*mt*p0.x + 2.0*mt*t*p1.x + t*t*p2.x;
+            const double y   = mt*mt*p0.y + 2.0*mt*t*p1.y + t*t*p2.y;
+            const double dxdt = 2.0*(mt*(p1.x-p0.x) + t*(p2.x-p1.x));
+            const double dydt = 2.0*(mt*(p1.y-p0.y) + t*(p2.y-p1.y));
+            m.ixx += w5[i] * x*x*x / 3.0 * dydt;
+            m.iyy += w5[i] * (-y*y*y / 3.0) * dxdt;
+            m.ixy += w5[i] * x*x * y / 2.0 * dydt;
+        }
+        return m;
+    };
+
+    // Replicate the segment decomposition from areaLineIntegral()
+    size_t n = data.controlPoints.size();
+    if (n < 2)
+        return {};
+
+    LC_SecondMoment res;
+    RS_Vector vStart, vControl, vEnd;
+
+    if (!data.closed) {
+        if (n == 2) {
+            // Degenerate: straight line
+            RS_Vector s = getStartpoint();
+            RS_Vector e = getEndpoint();
+            RS_Line line(nullptr, RS_LineData{s, e});
+            return line.secondMomentLineIntegral();
+        }
+        vStart   = data.controlPoints[0];
+        vControl = data.controlPoints[1];
+        if (n == 3) {
+            vEnd = data.controlPoints[2];
+            return segMoment(vStart, vControl, vEnd);
+        }
+        vEnd = (data.controlPoints[1] + data.controlPoints[2]) / 2.0;
+        res += segMoment(vStart, vControl, vEnd);
+
+        for (size_t i = 2; i < n - 2; ++i) {
+            vStart   = vEnd;
+            vControl = data.controlPoints[i];
+            vEnd     = (data.controlPoints[i] + data.controlPoints[i+1]) / 2.0;
+            res += segMoment(vStart, vControl, vEnd);
+        }
+        vStart   = vEnd;
+        vControl = data.controlPoints[n-2];
+        vEnd     = data.controlPoints[n-1];
+        res += segMoment(vStart, vControl, vEnd);
+    } else {
+        if (n < 3)
+            return {};
+        vStart   = (data.controlPoints[n-1] + data.controlPoints[0]) / 2.0;
+        vControl = data.controlPoints[0];
+        vEnd     = (data.controlPoints[0]   + data.controlPoints[1]) / 2.0;
+        res += segMoment(vStart, vControl, vEnd);
+
+        for (size_t i = 1; i < n - 1; ++i) {
+            vStart   = vEnd;
+            vControl = data.controlPoints[i];
+            vEnd     = (data.controlPoints[i] + data.controlPoints[i+1]) / 2.0;
+            res += segMoment(vStart, vControl, vEnd);
+        }
+        vStart   = vEnd;
+        vControl = data.controlPoints[n-1];
+        vEnd     = (data.controlPoints[n-1] + data.controlPoints[0]) / 2.0;
+        res += segMoment(vStart, vControl, vEnd);
+    }
+    return res;
+}

@@ -1,15 +1,11 @@
 @echo off
+rem set-windows-env.bat - ensure makensis.exe is on PATH for NSIS packaging.
+rem Qt env vars are expected to come from jurplel/install-qt-action (QT_ROOT_DIR / Qt6_DIR);
+rem this script does not override them.
 
-if "%Qt6_Dir%"=="" goto SetEnv
-if "%NSIS_DIR%"=="" goto SetEnv
-goto Exit
+if "%NSIS_DIR%"=="" set "NSIS_DIR=C:\Program Files\NSIS"
 
-:SetEnv
-set Qt6_Dir=D:\a\LibreCAD\Qt\6.9.0
-set NSIS_DIR=C:\Program Files (x86)\NSIS
+echo %PATH% | findstr /I /C:"%NSIS_DIR%" >nul
+if errorlevel 1 set "PATH=%NSIS_DIR%;%PATH%"
 
-if exist custom-windows.bat call custom-windows.bat
-set PATH=%Qt6_Dir%\%MINGW_VER%\bin;%Qt6_Dir%\..\Tools\%MINGW_VER%\bin;%NSIS_DIR%;%PATH%
-
-:Exit
-echo on
+if exist "%~dp0custom-windows.bat" call "%~dp0custom-windows.bat"

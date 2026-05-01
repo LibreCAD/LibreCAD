@@ -259,6 +259,18 @@ a quadratic contains coefficients for quadratic:
 */
     double areaLineIntegral() const override;
 
+    /**
+     * @brief firstMomentLineIntegral – exact closed-form 1st-order moments
+     *        via Green's theorem contour integrals (local aligned frame + transform)
+     */
+    LC_FirstMoment firstMomentLineIntegral() const override;
+
+    /**
+     * @brief secondMomentLineIntegral – exact closed-form 2nd-order moments
+     *        via Green's theorem contour integrals (local aligned frame + transform)
+     */
+    LC_SecondMoment secondMomentLineIntegral() const override;
+
 protected:
     RS_EllipseData data; // fixme - renderperf - cache major and minor radiuses!
     void updateLength() override;
@@ -272,6 +284,9 @@ private:
      * @author Dongxu Li
      */
     void mergeBoundingBox(LC_Rect& boundingBox, const RS_Vector& direction);
+    double computeLocalArea(double t1, double t2) const;
+    LC_FirstMoment computeLocalFirstMoment(double t1, double t2) const;
+    LC_SecondMoment computeLocalSecondMoment(double t1, double t2) const;
 };
 
 #endif

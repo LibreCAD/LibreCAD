@@ -49,16 +49,14 @@ void PathBuilder::append(RS_Entity* entity) {
   if (!entity || entity->isUndone()) return;
 
   RS_Vector startp = entity->getStartpoint();
-  if (m_hasLastPoint)
-    lineTo(startp);
-  else
-    moveTo(startp);
-  const double tol = 1e-6;
-  if (!m_hasLastPoint || m_lastPoint.distanceTo(startp) > tol) {
-    LC_ERR<<__func__<<": line "<<__LINE__<<": found gap at "<<m_lastPoint<<" to "<<startp;
+  if (startp.valid) {
+    if (m_hasLastPoint) {
+      lineTo(startp);
+    } else {
+      m_firstPoint = startp;
+      moveTo(startp);
+    }
   }
-  if (!m_hasLastPoint)
-    m_firstPoint = startp;
 
   RS2::EntityType type = entity->rtti();
 
@@ -124,15 +122,20 @@ QPointF PathBuilder::toGuiPoint(const RS_Vector& vp) const {
 
 void PathBuilder::appendLine(RS_Line* line) {
   if (!line) return;
-  m_path.moveTo(toGuiPoint(line->getStartpoint()));
   m_path.lineTo(toGuiPoint(line->getEndpoint()));
-  //LC_LOG<<"adding line: now at: "<<toGuiPoint(line->getEndpoint()).y();
 }
 
 void PathBuilder::appendArc(RS_Arc* arc) {
   if (!arc || !m_painter) return;
-  arc->createPainterPath(m_painter, m_path);
-  //LC_LOG<<"adding arc: now at: "<<m_path.currentPosition().y();
+  const double radius = arc->getRadius();
+  RS_Vector uiCenter = m_painter->toGui(arc->getCenter());
+  RS_Vector uiRadii{m_painter->toGuiDX(radius), m_painter->toGuiDY(radius)};
+  RS_Vector minCorner = uiCenter - uiRadii;
+  RS_Vector uiSize = uiRadii + uiRadii;
+  double startAngleDeg = m_painter->toUCSAngleDegrees(arc->getData().startAngleDegrees);
+  double angularLength = arc->getData().angularLength;
+  // arcTo without arcMoveTo connects from current position without starting a new subpath
+  m_path.arcTo(minCorner.x, minCorner.y, uiSize.x, uiSize.y, startAngleDeg, angularLength);
 }
 
 void PathBuilder::appendCircle(RS_Circle* circle) {

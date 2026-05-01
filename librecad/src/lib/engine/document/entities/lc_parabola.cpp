@@ -591,6 +591,83 @@ double LC_Parabola::areaLineIntegral() const
 
     return a * y0 + b * y1 + c * y2;
 }
+double LC_Parabola::computeLocalArea(double t1, double t2) const {
+  const RS_Vector& p0 = data.m_controlPoints[0];
+  const RS_Vector& p1 = data.m_controlPoints[1];
+  const RS_Vector& p2 = data.m_controlPoints[2];
+  auto F = [&](double t) {
+    const double mt = 1.0 - t;
+    const double x = mt*mt*p0.x + 2.0*mt*t*p1.x + t*t*p2.x;
+    const double dy = 2.0*(mt*(p1.y - p0.y) + t*(p2.y - p1.y));
+    return x * dy;
+  };
+  return 0.5 * (F(t2) - F(t1));   // ½ ∮ x dy
+}
+
+LC_FirstMoment LC_Parabola::computeLocalFirstMoment(double t1, double t2) const {
+  const RS_Vector& p0 = data.m_controlPoints[0];
+  const RS_Vector& p1 = data.m_controlPoints[1];
+  const RS_Vector& p2 = data.m_controlPoints[2];
+  auto F_mx = [&](double t) {
+    const double mt = 1.0 - t;
+    const double x = mt*mt*p0.x + 2.0*mt*t*p1.x + t*t*p2.x;
+    const double dy = 2.0*(mt*(p1.y - p0.y) + t*(p2.y - p1.y));
+    return 0.5 * x * x * dy;
+  };
+  auto F_my = [&](double t) {
+    const double mt = 1.0 - t;
+    const double y = mt*mt*p0.y + 2.0*mt*t*p1.y + t*t*p2.y;
+    const double dx = 2.0*(mt*(p1.x - p0.x) + t*(p2.x - p1.x));
+    return -0.5 * y * y * dx;
+  };
+  return {F_mx(t2) - F_mx(t1), F_my(t2) - F_my(t1)};
+}
+
+LC_SecondMoment LC_Parabola::computeLocalSecondMoment(double t1, double t2) const {
+  const RS_Vector& p0 = data.m_controlPoints[0];
+  const RS_Vector& p1 = data.m_controlPoints[1];
+  const RS_Vector& p2 = data.m_controlPoints[2];
+  auto F_ixx = [&](double t) {
+    const double mt = 1.0 - t;
+    const double x = mt*mt*p0.x + 2.0*mt*t*p1.x + t*t*p2.x;
+    const double dy = 2.0*(mt*(p1.y - p0.y) + t*(p2.y - p1.y));
+    return x * x * x / 3.0 * dy;
+  };
+  auto F_iyy = [&](double t) {
+    const double mt = 1.0 - t;
+    const double y = mt*mt*p0.y + 2.0*mt*t*p1.y + t*t*p2.y;
+    const double dx = 2.0*(mt*(p1.x - p0.x) + t*(p2.x - p1.x));
+    return - y * y * y / 3.0 * dx;
+  };
+  auto F_ixy = [&](double t) {
+    const double mt = 1.0 - t;
+    const double x = mt*mt*p0.x + 2.0*mt*t*p1.x + t*t*p2.x;
+    const double y = mt*mt*p0.y + 2.0*mt*t*p1.y + t*t*p2.y;
+    const double dy = 2.0*(mt*(p1.y - p0.y) + t*(p2.y - p1.y));
+    return 0.5 * x * x * y * dy;
+  };
+
+  LC_SecondMoment m;
+  m.ixx = F_ixx(t2) - F_ixx(t1);
+  m.iyy = F_iyy(t2) - F_iyy(t1);
+  m.ixy = F_ixy(t2) - F_ixy(t1);
+  return m;
+}
+
+LC_FirstMoment LC_Parabola::firstMomentLineIntegral() const {
+  if (!data.m_valid) return {};
+  // Parabola is already in world coordinates (no extra rotation needed)
+  const auto local = computeLocalFirstMoment(0.0, 1.0);
+  const double area = computeLocalArea(0.0, 1.0);
+  return local.shifted(-data.m_vertex.x, -data.m_vertex.y, area);
+}
+
+LC_SecondMoment LC_Parabola::secondMomentLineIntegral() const {
+  if (!data.m_valid) return {};
+  const auto local = computeLocalSecondMoment(0.0, 1.0);
+  const double area = computeLocalArea(0.0, 1.0);
+  return local.shifted(-data.m_vertex.x, -data.m_vertex.y, area);
+}
 
 double LC_Parabola::getLength() const
 {

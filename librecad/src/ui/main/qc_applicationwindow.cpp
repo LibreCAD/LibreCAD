@@ -728,7 +728,7 @@ void QC_ApplicationWindow::slotPenChanged(const RS_Pen& pen) {
 
 
 QC_MDIWindow *QC_ApplicationWindow::createNewDrawingWindow(RS_Document *doc, const QString& expectedFileName) {
-    static int id = 0;
+    static unsigned id = 0;
     id++;
 
     auto *w = new QC_MDIWindow(doc, m_mdiAreaCAD, false, m_actionContext);

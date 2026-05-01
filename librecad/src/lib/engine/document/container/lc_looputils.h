@@ -30,6 +30,8 @@
 #include <memory>
 #include <vector>
 
+#include "lc_secondmoment.h"
+
 class QPainterPath;
 class RS_AtomicEntity;
 class RS_Entity;
@@ -108,6 +110,27 @@ public:
    * @return The net area as a double.
    */
   double getTotalArea() const;
+  /**
+   * @brief getTotalFirstMoment - recursively computes the first moments of area
+   * (∬ x dA, ∬ y dA) for this loop hierarchy using the same hole-subtraction
+   * logic as getTotalArea():
+   *
+   *   totalMoment = outerMoment - ∑(child.getTotalFirstMoment())
+   *
+   * Divide by getTotalArea() to get the centroid (cx, cy).
+   */
+  LC_FirstMoment getTotalFirstMoment() const;
+  /**
+   * @brief getTotalSecondMoment - recursively computes the three second moments
+   * of area for this loop hierarchy using the same hole-subtraction logic as
+   * getTotalArea():
+   *
+   *   totalMoment = outerMoment - ∑(child.getTotalSecondMoment())
+   *
+   * @return LC_SecondMoment with ixx=∬x²dA, iyy=∬y²dA, ixy=∬xydA for the
+   *         net region (outer shape minus holes, plus islands, etc.)
+   */
+  LC_SecondMoment getTotalSecondMoment() const;
   /**
    * @brief Checks if this loop overlaps with a given rectangle.
    * @param other The rectangle to check against.
@@ -336,11 +359,6 @@ private:
    * @brief Sorts loops and builds the hierarchy forest.
    */
   void sortAndBuild();
-  /**
-   * @brief Initializes data structures.
-   */
-  void init();
-
   /**
    * @brief Finds and assigns the parent for a loop.
    * @param loop The child loop.

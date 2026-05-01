@@ -29,6 +29,7 @@
 #define RS_ARC_H
 
 #include "lc_cachedlengthentity.h"
+#include "lc_secondmoment.h"
 
 class LC_Quadratic;
 class QPainterPath;
@@ -275,6 +276,8 @@ m0 x + m1 y + m2 =0
      * \oint x dy = c_x r \sin t + \frac{1}{4}r^2\sin 2t +  \frac{1}{2}r^2 t
      */
     double areaLineIntegral() const override;
+    LC_FirstMoment firstMomentLineIntegral() const override;
+    LC_SecondMoment secondMomentLineIntegral() const override;
 
     void updateMiddlePoint();
 protected:

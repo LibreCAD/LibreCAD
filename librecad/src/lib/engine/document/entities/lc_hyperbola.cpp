@@ -1775,9 +1775,94 @@ double LC_Hyperbola::areaLineIntegral() const
   };
 
   return primitive(phi2) - primitive(phi1);
-
 }
 
+double LC_Hyperbola::computeLocalArea(double phi1, double phi2) const {
+  if (isInfinite()) return 0.0;
+  const double a = getMajorRadius();
+  const double b = getMinorRadius();
+  auto F = [&](double phi) {
+    return (a * b / 2.0) * (phi + 0.5 * std::sinh(2.0 * phi));
+  };
+  return F(phi2) - F(phi1);
+}
+
+LC_FirstMoment LC_Hyperbola::computeLocalFirstMoment(double phi1, double phi2) const {
+  if (isInfinite()) return {};
+  const double a = getMajorRadius();
+  const double b = getMinorRadius();
+  auto F_mx = [&](double phi) {
+    const double ch = std::cosh(phi);
+    const double sh = std::sinh(phi);
+    return (a * a * b / 2.0) * (ch * sh + phi);   // after integration of cosh³
+  };
+  auto F_my = [&](double phi) {
+    const double ch = std::cosh(phi);
+    const double sh = std::sinh(phi);
+    return (a * b * b / 2.0) * (sh * ch - phi);   // after integration of sinh³
+  };
+  return {F_mx(phi2) - F_mx(phi1), F_my(phi2) - F_my(phi1)};
+}
+
+LC_SecondMoment LC_Hyperbola::computeLocalSecondMoment(double phi1, double phi2) const {
+  if (isInfinite()) return {};
+  const double a = getMajorRadius();
+  const double b = getMinorRadius();
+  auto F_ixx = [&](double phi) {
+    // Integral of x³ dy leads to terms in phi, sinh(2phi), sinh(4phi)
+    const double s2 = std::sinh(2.0 * phi);
+    const double s4 = std::sinh(4.0 * phi);
+    return (a * a * a * b / 24.0) * (3.0 * phi + 2.0 * s2 + 0.25 * s4);
+  };
+  auto F_iyy = [&](double phi) {
+    const double s2 = std::sinh(2.0 * phi);
+    const double s4 = std::sinh(4.0 * phi);
+    return (a * b * b * b / 24.0) * (3.0 * phi - 2.0 * s2 + 0.25 * s4);
+  };
+  auto F_ixy = [&](double phi) {
+    const double ch = std::cosh(phi);
+    const double sh = std::sinh(phi);
+    return -(a * a * b * b / 8.0) * (ch * ch * ch * ch);   // after integration of x² y dy
+  };
+
+  LC_SecondMoment m;
+  m.ixx = F_ixx(phi2) - F_ixx(phi1);
+  m.iyy = F_iyy(phi2) - F_iyy(phi1);
+  m.ixy = F_ixy(phi2) - F_ixy(phi1);
+  return m;
+}
+
+LC_FirstMoment LC_Hyperbola::firstMomentLineIntegral() const {
+  if (!m_bValid || isInfinite()) return {};
+  const double phi = getAngle();
+  const double cx  = data.center.x;
+  const double cy  = data.center.y;
+
+  double t0 = data.angle1;
+  double t1 = data.angle2;
+  if (data.reversed) std::swap(t0, t1);
+
+  const auto local = computeLocalFirstMoment(t0, t1);
+  const double area = computeLocalArea(t0, t1);
+
+  return local.rotated(phi).shifted(-cx, -cy, area);
+}
+
+LC_SecondMoment LC_Hyperbola::secondMomentLineIntegral() const {
+  if (!m_bValid || isInfinite()) return {};
+  const double phi = getAngle();
+  const double cx  = data.center.x;
+  const double cy  = data.center.y;
+
+  double t0 = data.angle1;
+  double t1 = data.angle2;
+  if (data.reversed) std::swap(t0, t1);
+
+  const auto local = computeLocalSecondMoment(t0, t1);
+  const double area = computeLocalArea(t0, t1);
+
+  return local.rotated(phi).shifted(-cx, -cy, area);
+}
 //=====================================================================
 RS_Vector LC_Hyperbola::dualLineTangentPoint(const RS_Vector &line) const {
   if (!m_bValid || !line.valid) {
