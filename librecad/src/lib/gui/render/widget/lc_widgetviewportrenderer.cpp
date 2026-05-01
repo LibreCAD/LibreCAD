@@ -140,7 +140,6 @@ void LC_WidgetViewPortRenderer::paintSequental(QPaintDevice* pd) {
         pixmapLayerBackground = std::make_unique<QPixmap>(physWidth, physHeight);
         // Tell Qt the logical-to-physical mapping so drawPixmap() onto pd places
         // the content at the correct logical coordinates without blurry upscaling.
-        // QPixmap uses setDevicePixelRatio (not the F variant).
         pixmapLayerBackground->setDevicePixelRatio(dpr);
         pixmapLayerDrawing = std::make_unique<QPixmap>(physWidth, physHeight);
         pixmapLayerDrawing->setDevicePixelRatio(dpr);

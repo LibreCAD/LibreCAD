@@ -169,11 +169,21 @@ RS_Painter::RS_Painter( QPaintDevice* pd)
  * Draws a grid point at (x1, y1).
  */
 void RS_Painter::drawGridPoint(const RS_Vector& p) {
-    QPainter::drawPoint(QPointF(p.x, p.y));
+    drawGridPoint(p.x, p.y);
 }
 
 void RS_Painter::drawGridPoint(double x, double y) {
-    QPainter::drawPoint(QPointF(x, y));
+    qreal dpr = device()->devicePixelRatioF();
+    if (dpr >= 1.0 + 1.e-6) {
+        // With HiDPI-aware pixmaps the painter coordinate system is in logical
+        // pixels, so a cosmetic drawPoint is only 1 physical pixel — visually
+        // much smaller than at 1× DPI.  Fill a 1-logical-pixel square (= dpr
+        // physical pixels) so the dot keeps a consistent apparent size.
+        constexpr qreal half = 0.5;
+        QPainter::fillRect(QRectF(x - half, y - half, 1.0, 1.0), QBrush(pen().color()));
+    } else {
+        QPainter::drawPoint(QPointF(x, y));
+    }
 }
 
 void RS_Painter::drawPointEntityWCS(const RS_Vector& wcsPos) {
@@ -1422,22 +1432,10 @@ void RS_Painter::resetClipping() {
 }
 
 void RS_Painter::fillRect ( const QRectF & rectangle, const RS_Color & color ) {
-
-    double x1=rectangle.left();
-    double x2=rectangle.right();
-    double y1=rectangle.top();
-    double y2=rectangle.bottom();
-    // fixme - review (width height semantics)
-//        QPainter::fillRect(toScreenX(x1),toScreenY(y1),toScreenX(x2)-toScreenX(x1),toScreenY(y2)-toScreenX(y1), color);
-    QPainter::fillRect(x1,y1,x2-x1,y2-y1, color);
+    QPainter::fillRect(rectangle, color);
 }
+
 void RS_Painter::fillRect ( const QRectF & rectangle, const QBrush & brush ) {
-  /*  double x1=rectangle.left();
-    double x2=rectangle.right();
-    double y1=rectangle.top();
-    double y2=rectangle.bottom();*/
-    // fixme - review (width height semantics)
-//        QPainter::fillRect(toScreenX(x1),toScreenY(y1),toScreenX(x2),toScreenY(y2), brush);
     QPainter::fillRect(rectangle, brush);
 }
 

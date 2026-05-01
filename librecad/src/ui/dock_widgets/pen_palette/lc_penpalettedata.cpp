@@ -77,10 +77,9 @@ bool LC_PenPaletteData::saveItems(){
 
 bool LC_PenPaletteData::loadItems(){
     QString fileName = m_options->pensFileName;
-    bool result = false;
     QFile file(fileName);
-    file.open(QIODevice::ReadOnly | QIODevice::Text);
-    if (file.isOpen()){
+    bool result = file.open(QIODevice::ReadOnly | QIODevice::Text);
+    if (result && file.isOpen()){
         QTextStream in(&file);
 #if QT_VERSION >= QT_VERSION_CHECK(6, 2, 0)
         in.setEncoding(QStringConverter::Utf8);
