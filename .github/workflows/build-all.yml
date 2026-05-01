@@ -136,22 +136,18 @@ jobs:
           fetch-depth: 0
           ref: ${{ github.ref }}
 
-      - name: install snap
-        uses: samuelmeuli/action-snapcraft@v2
-          
-      - name: Create snapcraft
-        run: |
-          pwd
-          ls
-          ls scripts
-          bash ./scripts/createSnap.sh
-          mv librecad*.snap LibreCAD-`git describe --always`.snap
+      - name: Build snap
+        id: snap
+        uses: canonical/action-build@v1
+
+      - name: Rename snap
+        run: mv "${{ steps.snap.outputs.snap }}" "LibreCAD-$(git describe --always).snap"
 
       - name: Uploading snap
         uses: actions/upload-artifact@v5
         with:
           name: snapAssets
-          path: ${{github.workspace}}/LibreCAD*.snap
+          path: ${{ github.workspace }}/LibreCAD*.snap
           retention-days: 2
 
   BuildMacOS:
