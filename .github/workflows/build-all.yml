@@ -4,6 +4,20 @@ on:
     branches:
       - master
       - 2.2.1
+    tags:
+      - 'v*'
+      - '*_rc[0-9]*'
+      - '*-rc[0-9]*'
+
+# A release pushes branch+tag atomically and GitHub fires two workflow runs
+# (refs/heads/<branch> and refs/tags/<tag>) on the same SHA. We let both run
+# to completion: which event arrives first is undocumented, so cancelling
+# could lose the tag run (and with it ReleaseAssets). The branch run does
+# UpdateAssets; the tag run does ReleaseAssets; they're mutually exclusive
+# and don't conflict. Cost: 2x build time on release pushes only.
+concurrency:
+  group: build-${{ github.ref }}
+  cancel-in-progress: false
 
 jobs:
   BuildLinux:
@@ -13,7 +27,7 @@ jobs:
         uses: actions/checkout@main
         with:
           fetch-depth: 0
-          ref: 2.2.1
+          ref: ${{ github.ref }}
 
       - name: Install Qt5
         uses: jurplel/install-qt-action@v3
@@ -36,6 +50,7 @@ jobs:
           ${ANALYZE}make release -j$(nproc)
 
       - name: Create report repository
+        if: ${{ !startsWith(github.ref, 'refs/tags/') }}
         run: |
           cd out
           find . -mindepth 2 -type f -print -exec mv {} . \;
@@ -47,7 +62,7 @@ jobs:
           git commit -m "latest analyzer report"
 
       - name: Push changes
-        if: github.repository_owner == 'LibreCAD'
+        if: ${{ github.repository_owner == 'LibreCAD' && !startsWith(github.ref, 'refs/tags/') }}
         uses: ad-m/github-push-action@master
         with:
           repository: ${{github.repository_owner}}/static-analyzer-reports
@@ -66,7 +81,7 @@ jobs:
           ls 
 
       - name: Upload artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: linuxAssets
           path: ${{github.workspace}}/LibreCAD*.AppImage
@@ -79,7 +94,7 @@ jobs:
         uses: actions/checkout@main
         with:
           fetch-depth: 0
-          ref: 2.2.1
+          ref: ${{ github.ref }}
           
       - name: Install dependencies
         run: |
@@ -106,7 +121,7 @@ jobs:
           ls 
 
       - name: Upload artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: linuxAarch64Assets
           path: ${{github.workspace}}/LibreCAD*.AppImage
@@ -119,24 +134,20 @@ jobs:
         uses: actions/checkout@main
         with:
           fetch-depth: 0
-          ref: 2.2.1
+          ref: ${{ github.ref }}
 
-      - name: install snap
-        uses: samuelmeuli/action-snapcraft@v2
-          
-      - name: Create snapcraft
-        run: |
-          pwd
-          ls
-          ls scripts
-          bash ./scripts/createSnap.sh
-          mv librecad*.snap LibreCAD-`git describe --always`.snap
+      - name: Build snap
+        id: snap
+        uses: canonical/action-build@v1
+
+      - name: Rename snap
+        run: mv "${{ steps.snap.outputs.snap }}" "LibreCAD-$(git describe --always).snap"
 
       - name: Uploading snap
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: snapAssets
-          path: ${{github.workspace}}/LibreCAD*.snap
+          path: ${{ github.workspace }}/LibreCAD*.snap
           retention-days: 2
 
   BuildMacOS:
@@ -146,7 +157,7 @@ jobs:
         uses: actions/checkout@main
         with:
           fetch-depth: 0
-          ref: 2.2.1
+          ref: ${{ github.ref }}
           
       - name: Install Qt5
         uses: jurplel/install-qt-action@v3
@@ -177,7 +188,7 @@ jobs:
           mv LibreCAD.dmg LibreCAD-`git describe --always`.dmg
 
       - name: Upload artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: macOSAssets
           path: ${{github.workspace}}/LibreCAD*.dmg
@@ -190,7 +201,7 @@ jobs:
         uses: actions/checkout@main
         with:
           fetch-depth: 0
-          ref: 2.2.1
+          ref: ${{ github.ref }}
           
       - name: Install dependencies
         run: |
@@ -216,7 +227,7 @@ jobs:
           mv LibreCAD.dmg LibreCAD-`git describe --always`-arm64.dmg
 
       - name: Upload artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: macOSArm64Assets
           path: ${{github.workspace}}/LibreCAD*.dmg
@@ -229,7 +240,7 @@ jobs:
         uses: actions/checkout@main
         with:
           fetch-depth: 0
-          ref: 2.2.1
+          ref: ${{ github.ref }}
 
       - name: Setup MSVC developer environment (32-bit)
         uses: ilammy/msvc-dev-cmd@v1
@@ -278,7 +289,7 @@ jobs:
           mv generated/LibreCAD-*.exe LibreCAD-`git describe --always`-msvc.exe
 
       - name: Upload artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: win32Assets
           path: ${{github.workspace}}/LibreCAD*.exe
@@ -291,7 +302,7 @@ jobs:
         uses: actions/checkout@main
         with:
           fetch-depth: 0
-          ref: 2.2.1
+          ref: ${{ github.ref }}
 
       - name: Setup MSVC developer environment (64-bit)
         uses: ilammy/msvc-dev-cmd@v1
@@ -340,14 +351,14 @@ jobs:
           mv generated/LibreCAD-*.exe LibreCAD-`git describe --always`-win64-msvc.exe
 
       - name: Upload artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: win64Assets
           path: ${{github.workspace}}/LibreCAD*.exe
           retention-days: 2
 
   UpdateAssets:
-    if: github.repository_owner == 'LibreCAD'
+    if: ${{ github.repository_owner == 'LibreCAD' && !startsWith(github.ref, 'refs/tags/') }}
     needs: [BuildLinux, BuildLinuxAarch64, BuildMacOS, BuildMacOSArm64, BuildWindows, BuildWindows64, BuildSnap]
     runs-on: ubuntu-latest
     steps:
@@ -355,10 +366,10 @@ jobs:
         uses: actions/checkout@main
         with:
           fetch-depth: 0
-          ref: 2.2.1
+          ref: ${{ github.ref }}
 
       - name: Fetch artifacts
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v6
 
       - name: Upload latest pre-release
         uses: "marvinpinto/action-automatic-releases@latest"
@@ -374,5 +385,59 @@ jobs:
             macOSAssets/LibreCAD*.dmg
             macOSArm64Assets/LibreCAD*.dmg
             win*Assets/LibreCAD*.exe
+            snapAssets/LibreCAD*.snap
+            LICENSE
+
+  ReleaseAssets:
+    if: ${{ github.repository_owner == 'LibreCAD' && startsWith(github.ref, 'refs/tags/') }}
+    needs: [BuildLinux, BuildLinuxAarch64, BuildMacOS, BuildMacOSArm64, BuildWindows, BuildWindows64, BuildSnap]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@main
+        with:
+          fetch-depth: 0
+          ref: ${{ github.ref }}
+
+      - name: Fetch artifacts
+        uses: actions/download-artifact@v6
+
+      - name: Determine release kind
+        id: relkind
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          tag="${GITHUB_REF#refs/tags/}"
+          echo "tag=$tag" >> "$GITHUB_OUTPUT"
+          if [[ "$tag" == *_rc[0-9]* || "$tag" == *-rc[0-9]* || "$tag" == *_alpha[0-9]* || "$tag" == *-alpha[0-9]* || "$tag" == *_beta[0-9]* || "$tag" == *-beta[0-9]* ]]; then
+            echo "prerelease=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "prerelease=false" >> "$GITHUB_OUTPUT"
+          fi
+          # If the script already created the release with notes, leave those
+          # alone; only auto-generate when CI is the one creating the release.
+          if gh release view "$tag" >/dev/null 2>&1; then
+            echo "generate_notes=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "generate_notes=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Publish release assets
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ steps.relkind.outputs.tag }}
+          name: LibreCAD ${{ steps.relkind.outputs.tag }}
+          prerelease: ${{ steps.relkind.outputs.prerelease }}
+          generate_release_notes: ${{ steps.relkind.outputs.generate_notes }}
+          fail_on_unmatched_files: true
+          files: |
+            linuxAssets/LibreCAD*.AppImage
+            linuxAarch64Assets/LibreCAD*.AppImage
+            macOSAssets/LibreCAD*.dmg
+            macOSArm64Assets/LibreCAD*.dmg
+            win32Assets/LibreCAD*.exe
+            win64Assets/LibreCAD*.exe
             snapAssets/LibreCAD*.snap
             LICENSE
