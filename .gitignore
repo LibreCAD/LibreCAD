@@ -63,6 +63,7 @@ object_script.libdxfrw.*
 custom-windows*.*
 *.db*
 *.opendb
+__pycache__
 
 #Doxygen
 html/
