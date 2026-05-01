@@ -78,6 +78,13 @@ win32 {
     contains(DISABLE_POSTSCRIPT, false) {
         QMAKE_POST_LINK = "$$_PRO_FILE_PWD_/../../scripts/postprocess-win.bat" $$LC_VERSION
     }
+
+    # lc_crashhandler: symbol resolution for stack traces
+    LIBS += -ldbghelp
+}
+else:unix {
+    # lc_crashhandler: export symbols so backtrace_symbols() can resolve them
+    QMAKE_LFLAGS += -rdynamic
 }
 
 DEFINES += LC_VERSION=\"$$LC_VERSION\"
@@ -149,6 +156,7 @@ HEADERS += \
     lib/actions/rs_snapper.h \
     lib/creation/rs_creation.h \
     lib/debug/rs_debug.h \
+    lib/debug/lc_crashhandler.h \
     lib/engine/lc_looputils.h \
     lib/engine/lc_parabola.h \
     lib/engine/rs.h \
@@ -309,6 +317,7 @@ SOURCES += \
     lib/actions/rs_snapper.cpp \
     lib/creation/rs_creation.cpp \
     lib/debug/rs_debug.cpp \
+    lib/debug/lc_crashhandler.cpp \
     lib/engine/lc_looputils.cpp \
     lib/engine/lc_parabola.cpp \
     lib/engine/rs_arc.cpp \
