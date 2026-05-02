@@ -1706,6 +1706,7 @@ if(BUILD_TESTS)
         librecad/src/lib/engine/document/entities/tests/rs_hatch_tests.cpp
         librecad/src/lib/math/tests/rs_math_tests.cpp
         librecad/src/lib/math/tests/lc_quadratic_tests.cpp
+        librecad/src/lib/filters/tests/dwg_smoke_tests.cpp
     )
 
     # Include directories for rs_math.h and other dependencies

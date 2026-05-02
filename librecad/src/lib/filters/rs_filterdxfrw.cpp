@@ -192,6 +192,10 @@ bool RS_FilterDXFRW::fileImport(RS_Graphic& g, const QString& file, [[maybe_unus
         bool success = dwgr.read(this, true);
         RS_DEBUG->print("RS_FilterDXFRW::fileImport: reading DWG file: OK");
         RS_DIALOGFACTORY->commandMessage(QObject::tr("Opened dwg file version %1.").arg(printDwgVersion(dwgr.getVersion())));
+        RS_DEBUG->print("DWG read summary: %d entities, %d blocks, error=%d",
+                        m_graphic ? m_graphic->count() : -1,
+                        m_graphic ? m_graphic->countBlocks() : -1,
+                        dwgr.getError());
         int  lastError = dwgr.getError();
         if (false == success) {
             printDwgError(lastError);

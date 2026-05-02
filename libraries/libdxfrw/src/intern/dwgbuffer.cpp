@@ -219,6 +219,7 @@ bool dwgBuffer::moveBitPos(dint32 size){
 
 /**Reads one Bit returns a char with value 0/1 (B) **/
 duint8 dwgBuffer::getBit(){
+    if (!isGood()) return 0;
     duint8 buffer;
     duint8 ret = 0;
     if (bitPos == 0){
