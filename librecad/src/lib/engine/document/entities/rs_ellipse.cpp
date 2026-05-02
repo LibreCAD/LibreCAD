@@ -1255,9 +1255,6 @@ RS_Vector RS_Ellipse::dualLineTangentPoint(const RS_Vector& line) const{
 
 void RS_Ellipse::move(const RS_Vector& offset) {
     data.center.move(offset);
-    //calculateEndpoints();
-    //    minV.move(offset);
-    //    maxV.move(offset);
     moveBorders(offset);
 }
 
@@ -1265,7 +1262,6 @@ void RS_Ellipse::rotate(const RS_Vector& center, double angle) {
     RS_Vector angleVector(angle);
     data.center.rotate(center, angleVector);
     data.majorP.rotate(angleVector);
-    //calculateEndpoints();
     calculateBorders();
 }
 
@@ -1283,7 +1279,7 @@ std::vector<RS_Entity*> RS_Ellipse::createOffset(const RS_Vector& coord,
     const double b = getMinorRadius();
     if (a < RS_TOLERANCE || b < RS_TOLERANCE)
         return {};
-    if (std::fabs(distance) < RS_TOLERANCE)
+    if (std::abs(distance) < RS_TOLERANCE)
         return {};
 
     // Sign convention: positive when `coord` is outside the ellipse.
@@ -1296,13 +1292,13 @@ std::vector<RS_Entity*> RS_Ellipse::createOffset(const RS_Vector& coord,
     local.rotate(-majorAngle);
     const double q = (local.x / a) * (local.x / a)
                    + (local.y / b) * (local.y / b);
-    const double signedD = (q >= 1.0) ? std::fabs(distance) : -std::fabs(distance);
+    const double signedD = (q >= 1.0) ? std::abs(distance) : -std::abs(distance);
 
     // Cusp / self-intersection rejection: inward offset cusps when |d| ≥ b²/a.
     // Reject with a 1% safety margin.
     if (signedD < 0.0) {
         const double cuspLimit = (b * b) / a;
-        if (std::fabs(signedD) >= 0.99 * cuspLimit)
+        if (std::abs(signedD) >= 0.99 * cuspLimit)
             return {};
     }
 
@@ -1327,7 +1323,7 @@ std::vector<RS_Entity*> RS_Ellipse::createOffset(const RS_Vector& coord,
         angleEnd = 2.0 * M_PI;
     }
     const double sweep = angleEnd - angleStart;
-    const double sweepLen = std::fabs(sweep);
+    const double sweepLen = std::abs(sweep);
     if (sweepLen < RS_TOLERANCE_ANGLE)
         return {};
     const double dir = (sweep >= 0.0) ? 1.0 : -1.0;
@@ -1394,7 +1390,7 @@ std::vector<RS_Entity*> RS_Ellipse::createOffset(const RS_Vector& coord,
         if (dTheta > dThetaMax)
             dTheta = dThetaMax;
 
-        const double remaining = std::fabs(angleEnd - theta);
+        const double remaining = std::abs(angleEnd - theta);
         if (remaining <= dTheta) {
             if (isArc) {
                 // Open spline: include exact endpoint.
