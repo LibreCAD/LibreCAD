@@ -285,6 +285,8 @@ set(SHARED_SOURCES
     libraries/libdxfrw/src/intern/dwgreader24.h
     libraries/libdxfrw/src/intern/dwgreader27.cpp
     libraries/libdxfrw/src/intern/dwgreader27.h
+    libraries/libdxfrw/src/intern/dwgreader32.cpp
+    libraries/libdxfrw/src/intern/dwgreader32.h
     libraries/libdxfrw/src/intern/dwgutil.cpp
     libraries/libdxfrw/src/intern/dwgutil.h
     libraries/libdxfrw/src/intern/dxfreader.cpp

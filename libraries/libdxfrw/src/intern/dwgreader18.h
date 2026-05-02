@@ -78,11 +78,12 @@ protected:
     std::unique_ptr<duint8[]> objData;
     duint64 uncompSize;
 
+    bool parseSysPage(duint8 *decompSec, duint32 decompSize); //called: Section page map: 0x41630e3b
+    bool parseDataPage(const dwgSectionInfo &si/*, duint8 *dData*/); //called ???: Section map: 0x4163003b
+
 private:
     void genMagicNumber();
 //    dwgBuffer* bufObj;
-    bool parseSysPage(duint8 *decompSec, duint32 decompSize); //called: Section page map: 0x41630e3b
-    bool parseDataPage(const dwgSectionInfo &si/*, duint8 *dData*/); //called ???: Section map: 0x4163003b
     duint32 checksum(duint32 seed, duint8* data, duint64 sz);
 
 private:

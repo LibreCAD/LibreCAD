@@ -103,7 +103,6 @@ public:
 class DRW_ObjControl : public DRW_TableEntry {
 public:
     DRW_ObjControl() { reset();}
-    ~DRW_ObjControl() override = default;
 
     // hmm-- is DRW_TableEntry::reset() intended to be virtual??
     void reset(){
@@ -167,12 +166,12 @@ public:
     std::unordered_map<duint32, DRW_Textstyle*> stylemap;
     std::unordered_map<duint32, DRW_Dimstyle*> dimstylemap;
     std::unordered_map<duint32, DRW_Vport*> vportmap;
-    // std::unordered_map<duint32, DRW_Block_Record*> blockRecordmap;
+    std::unordered_map<duint32, DRW_Block_Record*> blockRecordmap;
     std::unordered_map<duint32, DRW_AppId*> appIdmap;
+    std::unordered_map<duint32, DRW_View*> viewmap;
+    std::unordered_map<duint32, DRW_UCS*> ucsmap;
 //    duint32 currBlock;
     duint8 maintenanceVersion{0};
-
-    DRW_ParsingContext parsingContext;
 
 protected:
     std::unique_ptr<dwgBuffer> fileBuf;

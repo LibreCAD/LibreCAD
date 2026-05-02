@@ -429,7 +429,7 @@ DRW_Coord dwgBuffer::get2RawDouble(){
 }
 
 
-/**Reads raw int 32 bits little-endian order, returns a unsigned (RL) **/
+/**Reads raw int 32 bits little-endian order, returns a unsigned int (RL) **/
 duint32 dwgBuffer::getRawLong32(){
     duint16 tmp1 = getRawShort16();
     duint16 tmp2 = getRawShort16();
@@ -447,7 +447,7 @@ duint64 dwgBuffer::getRawLong64(){
     return ret;
 }
 
-/**Reads modular unsigner int, char based, compressed form, little-endian order, returns a unsigned (U-MC) **/
+/**Reads modular unsigner int, char based, compressed form, little-endian order, returns a unsigned int (U-MC) **/
 duint32 dwgBuffer::getUModularChar(){
     std::vector<duint8> buffer;
     duint32 result =0;
@@ -495,7 +495,7 @@ dint32 dwgBuffer::getModularChar(){
     return result;
 }
 
-/**Reads modular int, short based, compressed form, little-endian order, returns a unsigned (MC) **/
+/**Reads modular int, short based, compressed form, little-endian order, returns a unsigned int (MC) **/
 dint32 dwgBuffer::getModularShort(){
 //    bool negative = false;
     std::vector<dint16> buffer;
@@ -745,7 +745,7 @@ double dwgBuffer::getThickness(bool b_R2000_style) {
 * For R2004+, can be CMC or ENC
 * RGB value, first 4bits 0xC0 => ByLayer, 0xC1 => ByBlock, 0xC2 => RGB,  0xC3 => last 4 are ACIS
 */
-duint32 dwgBuffer::getCmColor(DRW::Version v) {
+duint32 dwgBuffer::getCmColor(DRW::Version v, dint32* rgb24) {
     if (v < DRW::AC1018) //2000-
         return getSBitShort();
     duint16 idx = getBitShort();
@@ -770,7 +770,12 @@ duint32 dwgBuffer::getCmColor(DRW::Version v) {
     case 0xC1:
         return 0;//ByBlock
     case 0xC2:
-        return 256;//RGB RLZ TODO
+        //true RGB: expose the 24-bit color via out-param for callers that
+        //track DXF code 420 (DRW_Layer.color24, etc.); return ByLayer
+        //sentinel for the indexed-color slot.
+        if (rgb24)
+            *rgb24 = static_cast<dint32>(rgb & 0xFFFFFF);
+        return 256;
     case 0xC3:
         return rgb&0xFF;//ACIS
     default:

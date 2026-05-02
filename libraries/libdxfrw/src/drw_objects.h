@@ -15,13 +15,12 @@
 #define DRW_OBJECTS_H
 
 
+#include <map>
+#include <memory>
 #include <string>
 #include <vector>
-#include <map>
 #include "drw_base.h"
 
-class DRW_Textstyle;
-class DRW_Block_Record;
 class dxfReader;
 class dxfWriter;
 class dwgBuffer;
@@ -39,12 +38,17 @@ namespace DRW {
          BLOCK_RECORD,
          APPID,
          IMAGEDEF,
-         PLOTSETTINGS
+         PLOTSETTINGS,
+         VIEW,
+         UCS,
+         MLINESTYLE,
+         LAYOUT,
+         DICTIONARY
      };
 
-//pending VIEW, UCS, APPID, VP_ENT_HDR, GROUP, MLINESTYLE, LONG_TRANSACTION, XRECORD,
+//pending VP_ENT_HDR, GROUP, LONG_TRANSACTION, XRECORD,
 //ACDBPLACEHOLDER, VBA_PROJECT, ACAD_TABLE, CELLSTYLEMAP, DBCOLOR, DICTIONARYVAR,
-//DICTIONARYWDFLT, FIELD, IDBUFFER, IMAGEDEF, IMAGEDEFREACTOR, LAYER_INDEX, LAYOUT
+//DICTIONARYWDFLT, FIELD, IDBUFFER, IMAGEDEF, IMAGEDEFREACTOR, LAYER_INDEX,
 //MATERIAL, PLACEHOLDER, PLOTSETTINGS, RASTERVARIABLES, SCALE, SORTENTSTABLE,
 //SPATIAL_INDEX, SPATIAL_FILTER, TABLEGEOMETRY, TABLESTYLES,VISUALSTYLE,
 }
@@ -52,17 +56,14 @@ namespace DRW {
 #define SETOBJFRIENDS  friend class dxfRW; \
                        friend class dwgReader;
 
-
-
 //! Base class for tables entries
 /*!
 *  Base class for tables entries
 *  @author Rallaz
 */
-class DRW_TableEntry : public DRW_ParseableEntity{
+class DRW_TableEntry {
 public:
-
-    DRW_TableEntry() {}
+    DRW_TableEntry() = default;
 
     virtual~DRW_TableEntry() {
         for (std::vector<DRW_Variant*>::iterator it = extData.begin(); it != extData.end(); ++it) {
@@ -80,7 +81,8 @@ public:
         flags {e.flags},
         xDictFlag {e.xDictFlag},
         numReactors {e.numReactors},
-        curr {nullptr}    {
+        curr {nullptr}
+    {
         for (std::vector<DRW_Variant *>::const_iterator it = e.extData.begin(); it != e.extData.end(); ++it) {
             DRW_Variant *src = *it;
             DRW_Variant *dst = new DRW_Variant( *src);
@@ -90,8 +92,11 @@ public:
             }
         }
     }
-    virtual DRW_TableEntry* newInstance() {return nullptr;}
 
+protected:
+    virtual bool parseCode(int code, const std::unique_ptr<dxfReader>& reader);
+    virtual bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) = 0;
+    bool parseDwg(DRW::Version version, dwgBuffer *buf, dwgBuffer* strBuf, duint32 bs=0);
     void reset() {
         flags = 0;
         for (std::vector<DRW_Variant*>::iterator it = extData.begin(); it != extData.end(); ++it) {
@@ -100,13 +105,6 @@ public:
         extData.clear();
         curr = nullptr;
     }
-
-    bool parseCode(int code, dxfReader *reader) override;
-
-protected:
-
-    virtual bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) = 0;
-    bool parseDwg(DRW::Version version, dwgBuffer *buf, dwgBuffer* strBuf, duint32 bs=0);
 
 public:
     enum DRW::TTYPE tType {DRW::UNKNOWNT};  /*!< enum: entity type, code 0 */
@@ -127,7 +125,6 @@ private:
     DRW_Variant* curr {nullptr};
 };
 
-class DRW_ParsingContext;
 
 //! Class to handle dimstyle entries
 /*!
@@ -138,8 +135,17 @@ class DRW_Dimstyle : public DRW_TableEntry {
     SETOBJFRIENDS
 public:
     DRW_Dimstyle() { reset();}
-    ~DRW_Dimstyle() override;
+    ~DRW_Dimstyle() {
+        for (auto& kv : vars) delete kv.second;
+    }
 
+    void add(const std::string& key, int code, int value) { vars[key] = new DRW_Variant(code, value); }
+    void add(const std::string& key, int code, double value) { vars[key] = new DRW_Variant(code, value); }
+    void add(const std::string& key, int code, std::string value) { vars[key] = new DRW_Variant(code, UTF8STRING(value)); }
+    DRW_Variant* get(const std::string& key) const {
+        auto it = vars.find(key);
+        return (it != vars.end()) ? it->second : nullptr;
+    }
 
     void reset(){
         tType = DRW::DIMSTYLE;
@@ -166,34 +172,11 @@ public:
         DRW_TableEntry::reset();
     }
 
-    class ValueHolder {
-    public:
-        bool has() {return m_var != nullptr;}
-        UTF8STRING sval(){return m_var->c_str();} // string value
-        double dval() {return m_var->d_val();} // double value
-        int ival() {return m_var->i_val();} // int value
-        void update(DRW_Variant* var) {m_var = var;}
-    private:
-        DRW_Variant* m_var{nullptr};
-    };
+protected:
+    bool parseCode(int code, const std::unique_ptr<dxfReader>& reader) override;
+    bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) override;
 
-    DRW_TableEntry* newInstance() override {return new DRW_Dimstyle();}
-
-    bool parseCode(int code, dxfReader *reader) override;
-    DRW_Variant* get(const std::string& key) const;
-    bool get(const std::string& key, ValueHolder& holder) const;
-    bool get(const std::string& key, double& var) const;
-    bool get(const std::string& key, int& var) const;
-    bool get(const std::string& key, UTF8STRING& var) const;
-
-    void add(const std::string& key, int code, int value);
-    void add(const std::string& key, int code, double value);
-    void add(const std::string& key, int code, UTF8STRING value);
-
-    std::unordered_map<std::string,DRW_Variant*> vars;
-
-    // todo - actually, fields are mostly used for debug purposes, as they are filled on parsing of DXF only.
-    // todo - so actually they should be removed later
+public:
     //V12
     UTF8STRING dimpost;       /*!< code 3 */
     UTF8STRING dimapost;      /*!< code 4 */
@@ -226,20 +209,6 @@ public:
     int dimtoh;               /*!< code 74 */
     int dimse1;               /*!< code 75 */
     int dimse2;               /*!< code 76 */
-
-    // UTF8STRING dimltext1;        /*!< code  347, code 343 V2000+ */
-    // UTF8STRING dimltext2;       /*!< code  349, code 344 V2000+ */
-    // UTF8STRING dimltype;        /*!< code 346 V2000+ */
-    int dimltext1;        /*!<  code  347, code 343 V2000+ handle to line type */
-    int dimltext2;       /*!< code  349, code 344 V2000+ */
-    int dimltype;                /*!< code 345 V2000+, ref to linetype */
-
-    int dimtfillclr;           /*!< code 70 */
-    int dimtfill;              /*!< code 69 */
-    int dimtxtdirection;       /*!< code 292 */
-
-    double mleaderscale; // fixme - code!
-
     int dimtad;               /*!< code 77 */
     int dimzin;               /*!< code 78 */
     int dimazin;              /*!< code 79 V2000+ */
@@ -278,17 +247,7 @@ public:
     UTF8STRING dimldrblk;     /*!< code 341 V2000+ */
     int dimlwd;               /*!< code 371 V2000+ */
     int dimlwe;               /*!< code 372 V2000+ */
-    int dymarcsym;
-
-protected:
-    void resolveBlockRecordNameByHandle(DRW_ParsingContext& ctx,const std::string& unresolvedKey,
-                          const std::string &resolvedKey, int code);
-    void resolveTextStyleNameByHandle(DRW_ParsingContext& ctx, const std::string& unresolvedKey,
-                                      const std::string& resolvedKey, int code);
-    void resolveLineTypeNameByHandle(DRW_ParsingContext& ctx, const std::string& unresolvedKey,
-                                     const std::string& resolvedKey, int code);
-    bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) override;
-    bool resolveRefs(DRW_ParsingContext& ctx);
+    std::map<std::string, DRW_Variant*> vars; /*!< extra/override variables written after standard fields */
 };
 
 
@@ -302,7 +261,6 @@ class DRW_LType : public DRW_TableEntry {
     SETOBJFRIENDS
 public:
     DRW_LType() { reset();}
-    ~DRW_LType() override = default;
 
     void reset(){
         tType = DRW::LTYPE;
@@ -313,8 +271,7 @@ public:
         DRW_TableEntry::reset();
     }
 
-    DRW_TableEntry* newInstance() override;
-
+public:
     void updateValues(const UTF8STRING &lTypeName, const UTF8STRING &ltDescription, int ltSize, double ltLength, const std::vector<double> &ltPath) {
         reset();
         name = lTypeName;
@@ -322,13 +279,11 @@ public:
         size = ltSize;
         length = ltLength;
         path.clear();
-
-        for (auto it:ltPath) {
-            path.push_back(it);
-        }
+        for (auto it: ltPath) { path.push_back(it); }
     }
+
 protected:
-    bool parseCode(int code, dxfReader *reader) override;
+    bool parseCode(int code, const std::unique_ptr<dxfReader>& reader) override;
     bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) override;
     void update();
 
@@ -353,7 +308,6 @@ class DRW_Layer : public DRW_TableEntry {
     SETOBJFRIENDS
 public:
     DRW_Layer() { reset();}
-    ~DRW_Layer() override = default;
 
     void reset() {
         tType = DRW::LAYER;
@@ -366,7 +320,7 @@ public:
     }
 
 protected:
-    bool parseCode(int code, dxfReader *reader) override;
+    bool parseCode(int code, const std::unique_ptr<dxfReader>& reader) override;
     bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) override;
 
 public:
@@ -390,8 +344,6 @@ class DRW_Block_Record : public DRW_TableEntry {
     SETOBJFRIENDS
 public:
     DRW_Block_Record() { reset();}
-    ~DRW_Block_Record() override = default;
-
     void reset() {
         tType = DRW::BLOCK_RECORD;
         flags = 0;
@@ -399,8 +351,6 @@ public:
         DRW_TableEntry::reset();
     }
 
-    DRW_TableEntry* newInstance() override;
-    bool parseCode(int code, dxfReader* reader) override {return DRW_TableEntry::parseCode(code,reader);}
 protected:
     bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) override;
 
@@ -416,8 +366,6 @@ private:
     duint32 firstEH; //handle of first entity, only in pre-2004
     duint32 lastEH;  //handle of last entity, only in pre-2004
     std::vector<duint32>entMap;
-    // fixme - sand - expand by other attributes
-    // https://help.autodesk.com/view/ACD/2025/ENU/?guid=GUID-A1FD1934-7EF5-4D35-A4B0-F8AE54A9A20A
 };
 
 //! Class to handle text style entries
@@ -429,7 +377,6 @@ class DRW_Textstyle : public DRW_TableEntry {
     SETOBJFRIENDS
 public:
     DRW_Textstyle() { reset();}
-    ~DRW_Textstyle() override = default;
 
     void reset(){
         tType = DRW::STYLE;
@@ -442,7 +389,7 @@ public:
     }
 
 protected:
-    bool parseCode(int code, dxfReader *reader) override;
+    bool parseCode(int code, const std::unique_ptr<dxfReader>& reader) override;
     bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) override;
 
 public:
@@ -456,100 +403,6 @@ public:
     int fontFamily;         /*!< ttf font family, italic and bold flags, code 1071 */
 };
 
-class DRW_UCS:public DRW_TableEntry{
-    SETOBJFRIENDS
-public:
-    DRW_Coord origin;
-    DRW_Coord xAxisDirection;
-    DRW_Coord yAxisDirection;
-    DRW_Coord orthoOrigin;
-    double elevation;
-    int orthoType;
-
-    DRW_UCS() { reset();}
-    ~DRW_UCS() override = default;
-
-    void reset(){
-        origin.x = origin.y = origin.z = 0.0;
-        xAxisDirection.x = xAxisDirection.y = xAxisDirection.z = 0.0;
-        yAxisDirection.x = yAxisDirection.y = yAxisDirection.z = 0.0;
-        orthoOrigin.x = orthoOrigin.y = orthoOrigin.z = 0.0;
-        elevation = 0.0;
-        orthoType = 0.0;
-    }
-protected:
-    bool parseCode(int code, dxfReader *reader) override;
-    bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) override;
-};
-
-
-class DRW_View:public DRW_TableEntry{
-    SETOBJFRIENDS
-public:
-    DRW_View() { reset();}
-    ~DRW_View() override = default;
-
-    void reset(){
-        size.x = size.y = size.z = 0.0;
-        center.x = center.y = center.z = 0.0;
-        viewDirectionFromTarget.x = viewDirectionFromTarget.y = viewDirectionFromTarget.z = 0.0;
-        targetPoint.x = targetPoint.y = targetPoint.z = 0.0;
-        lensLen = 0.0;
-        frontClippingPlaneOffset = 0.0;
-        backClippingPlaneOffset = 0.0;
-        twistAngle = 0.0;
-        viewMode = 0;
-        renderMode = 0;
-        hasUCS = false;
-        cameraPlottable = false;
-
-        ucsOrigin.x = ucsOrigin.y = ucsOrigin.z = 0.0;
-        ucsXAxis.x = ucsXAxis.y = ucsXAxis.z = 0.0;
-        ucsYAxis.x = ucsYAxis.y = ucsYAxis.z = 0.0;
-        ucsOrthoType = 1;
-        ucsElevation = 0.0;
-        namedUCS_ID = 0;
-        baseUCS_ID = 0;
-        DRW_TableEntry::reset();
-    }
-
-protected:
-    bool parseCode(int code, dxfReader *reader) override;
-    bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) override;
-
-public:
-    DRW_Coord size;     // view width/height in DCS, codes 40 & 41
-    DRW_Coord center;   // View center point (in DCS) code 10 & 20
-    DRW_Coord viewDirectionFromTarget;   //View direction from target (in WCS), code 11, 21, 31
-    DRW_Coord targetPoint;   //Target point (in WCS), code 12, 22, 32
-    double lensLen; // Lens length, code 42
-    double frontClippingPlaneOffset; // Front clipping plane (offset from target point), code 43
-    double backClippingPlaneOffset; // Back clipping plane (offset from target point), code 44
-    double twistAngle; // Twist angle, code 50
-    int viewMode; //(?? type) View mode (see VIEWMODE system variable), code 71
-    unsigned int renderMode;  // Render mode: code 281.
-    // 0 = 2D Optimized (classic 2D)
-//    1 = Wireframe
-//    2 = Hidden line
-//    3 = Flat shaded
-//    4 = Gouraud shaded
-//    5 = Flat shaded with wireframe
-//    6 = Gouraud shaded with wireframe
-//    All rendering modes other than 2D Optimized engage the new 3D graphics pipeline. These values directly correspond to the SHADEMODE command and the AcDbAbstractViewTableRecord::RenderMode enum
-
-    bool hasUCS; // 72, 1 if there is a UCS associated to this view; 0 otherwise
-    bool cameraPlottable; // 73, 1 if the camera is plottable
-
-    DRW_Coord ucsOrigin; // UCS origin, 110, 120, 130
-    DRW_Coord ucsXAxis; // UCS X-axis, 111, 121, 131
-    DRW_Coord ucsYAxis; // UCS Y-axis, 112, 122, 132
-    int ucsOrthoType;// Orthographic type of UCS, 0 = UCS is not orthographic, 1 = Top; 2 = Bottom, 3 = Front; 4 = Back, 5 = Left; 6 = Right, code 79
-    double ucsElevation; // UCS elevation, code 146
-    /*dwgHandle*/
-    duint32         namedUCS_ID;// ID/handle of AcDbUCSTableRecord if UCS is a named UCS. If not present, then UCS is unnamed, code 345
-    duint32         baseUCS_ID;// ID/handle of AcDbUCSTableRecord of base UCS if UCS is orthographic, If not present and 79 code is non-zero, then base UCS is taken to be WORLD, code 346
-};
-
 //! Class to handle vport entries
 /*!
 *  Class to handle vport symbol table entries
@@ -559,7 +412,6 @@ class DRW_Vport : public DRW_TableEntry {
     SETOBJFRIENDS
 public:
     DRW_Vport() { reset();}
-    ~DRW_Vport() override = default;
 
     void reset(){
         tType = DRW::VPORT;
@@ -582,7 +434,7 @@ public:
     }
 
 protected:
-    bool parseCode(int code, dxfReader *reader) override;
+    bool parseCode(int code, const std::unique_ptr<dxfReader>& reader) override;
     bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) override;
 
 public:
@@ -631,8 +483,6 @@ public:
         reset();
     }
 
-    ~DRW_ImageDef() override = default;
-
     void reset(){
         tType = DRW::IMAGEDEF;
         imgVersion = 0;
@@ -640,7 +490,7 @@ public:
     }
 
 protected:
-    bool parseCode(int code, dxfReader *reader) override;
+    bool parseCode(int code, const std::unique_ptr<dxfReader>& reader) override;
     bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) override;
 
 public:
@@ -669,8 +519,6 @@ public:
         reset();
     }
 
-    ~DRW_PlotSettings() override = default;
-
     void reset(){
         tType = DRW::PLOTSETTINGS;
         marginLeft = 0.0;
@@ -681,7 +529,7 @@ public:
     }
 
 protected:
-    bool parseCode(int code, dxfReader *reader) override;
+    bool parseCode(int code, const std::unique_ptr<dxfReader>& reader) override;
     bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) override;
 
 public:
@@ -690,6 +538,98 @@ public:
     double marginBottom;    /*!< Size, in millimeters, of unprintable margin on bottom side of paper, code 41 */
     double marginRight;     /*!< Size, in millimeters, of unprintable margin on right side of paper, code 42 */
     double marginTop;       /*!< Size, in millimeters, of unprintable margin on top side of paper, code 43 */
+};
+
+//! Class to handle UCS entries
+/*!
+*  Class to handle UCS symbol-table entries (named user coordinate systems).
+*/
+class DRW_UCS : public DRW_TableEntry {
+    SETOBJFRIENDS
+public:
+    DRW_UCS() { reset(); }
+
+    void reset(){
+        tType = DRW::UCS;
+        origin.x = origin.y = origin.z = 0.0;
+        xAxisDirection.x = xAxisDirection.y = xAxisDirection.z = 0.0;
+        yAxisDirection.x = yAxisDirection.y = yAxisDirection.z = 0.0;
+        orthoOrigin.x = orthoOrigin.y = orthoOrigin.z = 0.0;
+        elevation = 0.0;
+        orthoType = 0;
+        DRW_TableEntry::reset();
+    }
+
+protected:
+    bool parseCode(int code, const std::unique_ptr<dxfReader>& reader) override;
+    bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) override;
+
+public:
+    DRW_Coord origin;           /*!< UCS origin, codes 10/20/30 */
+    DRW_Coord xAxisDirection;   /*!< UCS X-axis direction, codes 11/21/31 */
+    DRW_Coord yAxisDirection;   /*!< UCS Y-axis direction, codes 12/22/32 */
+    DRW_Coord orthoOrigin;      /*!< Origin for orthographic UCS, codes 13/23/33 */
+    double elevation;           /*!< Elevation, code 146 */
+    int orthoType;              /*!< Orthographic type, code 71 (0 none, 1 Top, ...) */
+};
+
+//! Class to handle VIEW entries
+/*!
+*  Class to handle VIEW symbol-table entries (named views).
+*/
+class DRW_View : public DRW_TableEntry {
+    SETOBJFRIENDS
+public:
+    DRW_View() { reset(); }
+
+    void reset(){
+        tType = DRW::VIEW;
+        size.x = size.y = size.z = 0.0;
+        center.x = center.y = center.z = 0.0;
+        viewDirectionFromTarget.x = viewDirectionFromTarget.y = viewDirectionFromTarget.z = 0.0;
+        targetPoint.x = targetPoint.y = targetPoint.z = 0.0;
+        lensLen = 0.0;
+        frontClippingPlaneOffset = 0.0;
+        backClippingPlaneOffset = 0.0;
+        twistAngle = 0.0;
+        viewMode = 0;
+        renderMode = 0;
+        hasUCS = false;
+        cameraPlottable = false;
+        ucsOrigin.x = ucsOrigin.y = ucsOrigin.z = 0.0;
+        ucsXAxis.x = ucsXAxis.y = ucsXAxis.z = 0.0;
+        ucsYAxis.x = ucsYAxis.y = ucsYAxis.z = 0.0;
+        ucsOrthoType = 1;
+        ucsElevation = 0.0;
+        namedUCS_ID = 0;
+        baseUCS_ID = 0;
+        DRW_TableEntry::reset();
+    }
+
+protected:
+    bool parseCode(int code, const std::unique_ptr<dxfReader>& reader) override;
+    bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) override;
+
+public:
+    DRW_Coord size;                     /*!< View width/height in DCS, codes 40 & 41 */
+    DRW_Coord center;                   /*!< View center point in DCS, codes 10 & 20 */
+    DRW_Coord viewDirectionFromTarget;  /*!< View direction from target in WCS, codes 11/21/31 */
+    DRW_Coord targetPoint;              /*!< Target point in WCS, codes 12/22/32 */
+    double lensLen;                     /*!< Lens length, code 42 */
+    double frontClippingPlaneOffset;    /*!< Front clipping plane offset from target, code 43 */
+    double backClippingPlaneOffset;     /*!< Back clipping plane offset from target, code 44 */
+    double twistAngle;                  /*!< Twist angle, code 50 */
+    int viewMode;                       /*!< View mode, code 71 */
+    unsigned int renderMode;            /*!< Render mode, code 281 */
+    bool hasUCS;                        /*!< 1 if a UCS is associated, code 72 */
+    bool cameraPlottable;               /*!< 1 if camera is plottable, code 73 */
+    DRW_Coord ucsOrigin;                /*!< UCS origin, codes 110/120/130 */
+    DRW_Coord ucsXAxis;                 /*!< UCS X axis, codes 111/121/131 */
+    DRW_Coord ucsYAxis;                 /*!< UCS Y axis, codes 112/122/132 */
+    int ucsOrthoType;                   /*!< Orthographic type, code 79 */
+    double ucsElevation;                /*!< UCS elevation, code 146 */
+    duint32 namedUCS_ID;                /*!< Handle of named UCS table record, code 345 */
+    duint32 baseUCS_ID;                 /*!< Handle of base UCS table record, code 346 */
 };
 
 //! Class to handle AppId entries
@@ -701,7 +641,6 @@ class DRW_AppId : public DRW_TableEntry {
     SETOBJFRIENDS
 public:
     DRW_AppId() { reset();}
-    ~DRW_AppId() override = default;
 
     void reset(){
         tType = DRW::APPID;
@@ -713,29 +652,80 @@ protected:
     bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) override;
 };
 
-class DRW_ParsingContext {
+//! Class to handle Dictionary (ODA spec sec 19.4.30 fixed type 42)
+/*!
+*  Minimal carrier for named-object dictionaries; full entry-list parsing
+*  pending sample-validated implementation.
+*/
+class DRW_Dictionary : public DRW_TableEntry {
+    SETOBJFRIENDS
 public:
-    DRW_ParsingContext() = default;
-    ~DRW_ParsingContext();
-
-    std::string resolveBlockRecordName(int handle);
-    std::string resolveLineTypeName(int handle);
-    std::string resolveTextStyleName(int handle);
-
-    std::unordered_map<duint32, DRW_LType*> lineTypeMap;
-    std::unordered_map<duint32, DRW_Block_Record*> blockRecordMap;
-    std::unordered_map<duint32, DRW_Textstyle*> textStyles;
+    DRW_Dictionary() { reset(); }
+    void reset(){
+        tType = DRW::DICTIONARY;
+        cloning = 0;
+        hardOwner = 0;
+        name.clear();
+    }
+protected:
+    bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) override;
+public:
+    int cloning;     /*!< duplicate-record handling (BS) */
+    int hardOwner;   /*!< hard-owner flag (RC, R2007+) */
+    //future: std::vector<std::pair<UTF8STRING, duint32>> entries; per ODA 19.4.30
 };
 
+//! Class to handle Layout (ODA spec sec 19.4.85 fixed type 82)
+/*!
+*  Minimal carrier for paperspace layouts; full field parsing pending.
+*/
+class DRW_Layout : public DRW_TableEntry {
+    SETOBJFRIENDS
+public:
+    DRW_Layout() { reset(); }
+    void reset(){
+        tType = DRW::LAYOUT;
+        layoutFlags = 0;
+        tabOrder = 0;
+        name.clear();
+    }
+protected:
+    bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) override;
+public:
+    int layoutFlags;   /*!< layout flags (BS) */
+    int tabOrder;      /*!< tab order (BL) */
+    //future: minLim/maxLim, insertionBase, ucsOrigin, etc. per ODA 19.4.85
+};
+
+//! Class to handle MLineStyle (ODA spec sec 19.4.73 fixed type 73)
+/*!
+*  Minimal carrier for multiline styles; per-line parsing pending.
+*/
+class DRW_MLineStyle : public DRW_TableEntry {
+    SETOBJFRIENDS
+public:
+    DRW_MLineStyle() { reset(); }
+    void reset(){
+        tType = DRW::MLINESTYLE;
+        flags = 0;
+        startAngle = endAngle = 0.0;
+        name.clear();
+    }
+protected:
+    bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) override;
+public:
+    int flags;          /*!< style flags (BS) */
+    double startAngle;  /*!< start angle (BD) */
+    double endAngle;    /*!< end angle (BD) */
+    //future: description, fillColor, lines vector per ODA 19.4.73
+};
+
+/** Holds per-write-session maps populated during DXF writing. */
 class DRW_WritingContext {
 public:
     DRW_WritingContext() = default;
-    ~DRW_WritingContext();
-    std::vector<std::pair<std::string, int>> lineTypesMap;
-    std::unordered_map<std::string,int> blockMap;
-    std::unordered_map<std::string,int> textStyleMap;
+    std::vector<std::pair<std::string, int>> lineTypesMap; /*!< uppercase name -> handle */
 };
-
 
 namespace DRW {
 
@@ -1004,3 +994,6 @@ const unsigned char dxfColors[][3] = {
 }
 
 #endif
+
+// EOF
+

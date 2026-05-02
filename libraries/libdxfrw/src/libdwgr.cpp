@@ -23,6 +23,7 @@
 #include "intern/dwgreader21.h"
 #include "intern/dwgreader24.h"
 #include "intern/dwgreader27.h"
+#include "intern/dwgreader32.h"
 
 #define FIRSTHANDLE 48
 
@@ -203,8 +204,8 @@ std::unique_ptr<dwgReader> dwgR::createReaderForVersion(DRW::Version version, st
        case DRW::AC1027:
            return std::unique_ptr< dwgReader >( new dwgReader27( stream, p) );
 
-       // unsupported
        case DRW::AC1032:
+           return std::unique_ptr< dwgReader >( new dwgReader32( stream, p) );
            break;
     }
     return nullptr;
@@ -219,9 +220,6 @@ std::unique_ptr<dwgReader> dwgR::createReaderForVersion(DRW::Version version, st
 bool dwgR::openFile(std::ifstream *filestr){
     bool isOk = false;
     DRW_DBG("dwgR::read 1\n");
-   /* enum { BufferSize = 16184 };
-    char _buffer[BufferSize];
-    filestr->rdbuf()->pubsetbuf(_buffer, BufferSize);*/
     filestr->open (fileName.c_str(), std::ios_base::in | std::ios::binary);
     if (!filestr->is_open() || !filestr->good() ){
         error = DRW::BAD_OPEN;
@@ -240,7 +238,7 @@ bool dwgR::openFile(std::ifstream *filestr){
     version = DRW::UNKNOWNV;
     for ( auto it = DRW::dwgVersionStrings.begin(); it != DRW::dwgVersionStrings.end(); ++it )
     {
-        if ( strncmp( line, it->first, 32) == 0 ) {
+        if ( strcmp( line, it->first ) == 0 ) {
             version = it->second;
             break;
         }
@@ -316,6 +314,16 @@ bool dwgR::processDwg() {
     for (auto it=reader->appIdmap.begin(); it!=reader->appIdmap.end(); ++it) {
         DRW_AppId *ly = it->second;
         iface->addAppId(const_cast<DRW_AppId&>(*ly));
+    }
+
+    for (auto it=reader->viewmap.begin(); it!=reader->viewmap.end(); ++it) {
+        DRW_View *vw = it->second;
+        iface->addView(const_cast<DRW_View&>(*vw));
+    }
+
+    for (auto it=reader->ucsmap.begin(); it!=reader->ucsmap.end(); ++it) {
+        DRW_UCS *u = it->second;
+        iface->addUCS(const_cast<DRW_UCS&>(*u));
     }
 
     ret2 = reader->readDwgBlocks(*iface);

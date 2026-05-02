@@ -1,0 +1,10 @@
+prefix=@CMAKE_INSTALL_PREFIX@
+exec_prefix=@CMAKE_INSTALL_PREFIX@
+libdir=|@CMAKE_INSTALL_FULL_LIBDIR@
+includedir=@CMAKE_INSTALL_FULL_INCLUDEDIR@
+
+Name: libdxfrw
+Description: c++ library to read/write dxf files in binary and ascii form
+Version: @PROJECT_VERSION@
+Libs: -L${libdir} -ldxfrw
+Cflags: -I${includedir}/libdxfrw

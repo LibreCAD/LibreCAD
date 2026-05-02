@@ -60,8 +60,7 @@ void DRW_TextCodec::setVersion(DRW::Version v, bool dxfFormat){
         case DRW::AC1027:
         case DRW::AC1032:
         {
-            // version = DRW::AC1021;
-            // fixme - check why version was limited there...
+            version = DRW::AC1021;
             if (dxfFormat)
                 cp = "UTF-8";//RLZ: can be UCS2 or UTF-16 16bits per char
             else
@@ -76,7 +75,7 @@ void DRW_TextCodec::setVersion(const std::string &v, bool dxfFormat){
     version = DRW::UNKNOWNV;
     for ( auto it = DRW::dwgVersionStrings.begin(); it != DRW::dwgVersionStrings.end(); ++it )
     {
-        if ( std::strncmp( v.c_str(), it->first, 32) == 0 ) {
+        if ( std::strcmp( v.c_str(), it->first ) == 0 ) {
             version = it->second;
             setVersion( it->second, dxfFormat);
             break;

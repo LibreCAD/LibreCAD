@@ -124,7 +124,11 @@ public:
     double getDefaultDouble(double d); //DD
     double getThickness(bool b_R2000_style);//BT
     //3DD
-    duint32 getCmColor(DRW::Version v); //CMC
+    /// Read a CMC (Complex Material Color) field per ODA spec.
+    /// Returns the indexed color value (or sentinel for ByLayer/ByBlock/RGB).
+    /// If rgb24 is non-null, also populates the 24-bit RGB component for
+    /// type-0xC2 (true color) entries; otherwise leaves rgb24 untouched.
+    duint32 getCmColor(DRW::Version v, dint32* rgb24 = nullptr); //CMC
     duint32 getEnColor(DRW::Version v); //ENC
     //TC
 

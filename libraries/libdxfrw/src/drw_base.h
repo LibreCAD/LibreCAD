@@ -20,8 +20,6 @@
 #include <cmath>
 #include <unordered_map>
 
-class dxfReader;
-
 #ifdef DRW_ASSERTS
 # define drw_assert(a) assert(a)
 #else
@@ -149,6 +147,7 @@ public:
     virtual void printB(int i){(void)i;}
     virtual void printHL(int c, int s, int h){(void)c;(void)s;(void)h;}
     virtual void printPT(double x, double y, double z){(void)x;(void)y;(void)z;}
+    DebugPrinter()=default;
     virtual ~DebugPrinter()=default;
 };
 
@@ -210,17 +209,14 @@ enum TransparencyCodes {
 class DRW_Coord {
 public:
     DRW_Coord()=default;
-    DRW_Coord(double ix, double iy): x(ix), y(iy){}
+    DRW_Coord(double ix, double iy): x(ix), y(iy), z(0.0){}
     DRW_Coord(double ix, double iy, double iz): x(ix), y(iy),z(iz){}
 
 /*!< convert to unitary vector */
     void unitize(){
-#if __cplusplus < 201703
-        double dist = std::hypot(std::hypot(x, y), z);
-#else
-        double dist = std::hypot(x, y, z);
-#endif
-        if (std::isnormal(dist)) {
+        double dist;
+        dist = hypot(hypot(x, y), z);
+        if (dist > 0.0) {
             x= x/dist;
             y= y/dist;
             z= z/dist;
@@ -234,12 +230,6 @@ public:
 };
 
 
-class DRW_ParseableEntity {
-public:
-    virtual ~DRW_ParseableEntity() = default;
-    virtual bool parseCode(int code, dxfReader *reader) = 0;
-};
-
 //! Class to handle vertex
 /*!
 *  Class to handle vertex for lwpolyline entity
@@ -252,11 +242,11 @@ public:
     DRW_Vertex2D(double sx, double sy, double b): x(sx), y(sy), stawidth(0), endwidth(0), bulge(b) {}
 
 public:
-    double x=0.;                 /*!< x coordinate, code 10 */
-    double y=0.;                 /*!< y coordinate, code 20 */
-    double stawidth=0.;          /*!< Start width, code 40 */
-    double endwidth=0.;          /*!< End width, code 41 */
-    double bulge=0.;             /*!< bulge, code 42 */
+    double x;                 /*!< x coordinate, code 10 */
+    double y;                 /*!< y coordinate, code 20 */
+    double stawidth;          /*!< Start width, code 40 */
+    double endwidth;          /*!< End width, code 41 */
+    double bulge;             /*!< bulge, code 42 */
 };
 
 
@@ -294,6 +284,9 @@ public:
             content.s = &sdata;
     }
 
+    ~DRW_Variant() {
+    }
+
     void addString(int c, UTF8STRING s) {vType = STRING; sdata = s; content.s = &sdata; vCode=c;}
     void addInt(int c, int i) {vType = INTEGER; content.i = i; vCode=c;}
     void addDouble(int c, double d) {vType = DOUBLE; content.d = d; vCode=c;}
@@ -302,11 +295,12 @@ public:
     void setCoordY(double d) { if (vType == COORD) vdata.y = d;}
     void setCoordZ(double d) { if (vType == COORD) vdata.z = d;}
     enum TYPE type() const { return vType;}
-    int code() const { return vCode;}            /*!< returns dxf code of this value*/
-    const char* c_str() const  {return content.s->c_str();}
-    double d_val() const  {return content.d;}
-    dint32 i_val() const  {return content.i;}
-    DRW_Coord* coord() const  {return content.v;}
+    int code() const { return vCode;}       /*!< returns dxf code of this value*/
+    const char* c_str() const { return content.s->c_str(); }
+    double d_val() const { return content.d; }
+    dint32 i_val() const { return content.i; }
+    DRW_Coord* coord() const { return content.v; }
+
 private:
     std::string sdata;
     DRW_Coord vdata;
@@ -327,8 +321,8 @@ private:
 public:
     DRW_VarContent content;
 private:
-    enum TYPE vType = INVALID;
-    int vCode = 0;            /*!< dxf code of this value*/
+    enum TYPE vType;
+    int vCode;            /*!< dxf code of this value*/
 
 };
 
@@ -337,10 +331,14 @@ private:
 *  Class to handle dwg handles
 *  @author Rallaz
 */
-struct dwgHandle{
-    duint8 code = 0;
-    duint8 size = 0;
-    duint32 ref = 0;
+class dwgHandle{
+public:
+    dwgHandle(): code(0), size(0), ref(0){}
+
+    ~dwgHandle(){}
+    duint8 code;
+    duint8 size;
+    duint32 ref;
 };
 
 //! Class to convert between line width and integer
@@ -519,3 +517,6 @@ public:
 };
 
 #endif
+
+// EOF
+
