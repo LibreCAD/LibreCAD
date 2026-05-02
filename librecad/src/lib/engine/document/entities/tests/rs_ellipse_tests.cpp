@@ -24,9 +24,11 @@
 **
 **********************************************************************/
 #include <cmath>  // For std::abs, M_PI
+#include <limits>
 #include <catch2/catch_test_macros.hpp>
 #include <catch2/matchers/catch_matchers_floating_point.hpp>
 
+#include "lc_splinepoints.h"
 #include "rs_ellipse.h"
 #include "rs_line.h"
 #include "rs_vector.h"
@@ -448,5 +450,155 @@ TEST_CASE("Elliptic arc segment area", "[rs_ellipse]") {
         double area = ellipse.areaLineIntegral() + line.areaLineIntegral();
         double expected = 99.7117795862;
         REQUIRE_THAT(area, Matchers::WithinAbs(expected, 1e-7));
+    }
+}
+
+namespace {
+
+// Helper: signed distance from `p` to the ellipse, positive outside the
+// ellipse and negative inside. Uses brute-force sampling because
+// RS_Ellipse::getNearestPointOnEntity occasionally returns a far-side point
+// for query points strictly inside the ellipse.
+double signedDistanceToEllipse(const RS_Ellipse& ellipse, const RS_Vector& p) {
+    const double a = ellipse.getMajorRadius();
+    const double b = ellipse.getMinorRadius();
+    const double majorAngle = ellipse.getMajorP().angle();
+
+    constexpr int kSamples = 4000;
+    double best = std::numeric_limits<double>::infinity();
+    for (int i = 0; i < kSamples; ++i) {
+        const double t = (2.0 * M_PI * i) / kSamples;
+        RS_Vector q(a * std::cos(t), b * std::sin(t));
+        q.rotate(majorAngle);
+        q += ellipse.getCenter();
+        const double d = q.distanceTo(p);
+        if (d < best) best = d;
+    }
+
+    // Sign from the implicit form in the local frame.
+    RS_Vector local = p - ellipse.getCenter();
+    local.rotate(-majorAngle);
+    const double quad = (local.x / a) * (local.x / a) + (local.y / b) * (local.y / b);
+    return (quad >= 1.0) ? best : -best;
+}
+
+} // namespace
+
+TEST_CASE("RS_Ellipse::createOffset full ellipse outward") {
+    RS_Ellipse ellipse(nullptr, {RS_Vector(0,0), RS_Vector(5,0), 0.4, 0.0, 0.0, false});
+    const double d = 1.0;
+    const RS_Vector outsidePoint(20.0, 0.0);
+
+    auto offsets = ellipse.createOffset(outsidePoint, d);
+    REQUIRE(offsets.size() == 1);
+    auto* sp = dynamic_cast<LC_SplinePoints*>(offsets.front());
+    REQUIRE(sp != nullptr);
+    REQUIRE(sp->isClosed());
+
+    const auto& pts = sp->getPoints();
+    REQUIRE(pts.size() >= 16);
+
+    // Each spline point should sit at the requested distance from the source
+    // ellipse, on the outside. Allow looser tolerance than the planning
+    // 0.1% target because the chord-error budget bites at the major-axis
+    // tips (high curvature region) for eccentric ellipses.
+    for (const auto& q : pts) {
+        const double s = signedDistanceToEllipse(ellipse, q);
+        REQUIRE_THAT(s, Catch::Matchers::WithinAbs(d, 5.0e-2));
+    }
+
+    for (auto* o : offsets) delete o;
+}
+
+TEST_CASE("RS_Ellipse::createOffset full ellipse inward") {
+    RS_Ellipse ellipse(nullptr, {RS_Vector(0,0), RS_Vector(5,0), 0.4, 0.0, 0.0, false});
+    const double d = 0.5;  // safely below cusp limit b^2/a = (2)^2/5 = 0.8
+    const RS_Vector insidePoint(0.0, 0.0);
+
+    auto offsets = ellipse.createOffset(insidePoint, d);
+    REQUIRE(offsets.size() == 1);
+    auto* sp = dynamic_cast<LC_SplinePoints*>(offsets.front());
+    REQUIRE(sp != nullptr);
+
+    for (const auto& q : sp->getPoints()) {
+        const double s = signedDistanceToEllipse(ellipse, q);
+        REQUIRE_THAT(s, Catch::Matchers::WithinAbs(-d, 5.0e-2));
+    }
+
+    for (auto* o : offsets) delete o;
+}
+
+TEST_CASE("RS_Ellipse::createOffset rejects cusp-exceeding inward offset") {
+    // a=5, b=2 → cusp limit b^2/a = 0.8. Asking for d=1.0 inward must fail.
+    RS_Ellipse ellipse(nullptr, {RS_Vector(0,0), RS_Vector(5,0), 0.4, 0.0, 0.0, false});
+    const RS_Vector insidePoint(0.0, 0.0);
+
+    auto offsets = ellipse.createOffset(insidePoint, 1.0);
+    REQUIRE(offsets.empty());
+}
+
+TEST_CASE("RS_Ellipse::createOffset elliptic arc, half ellipse, open spline") {
+    RS_Ellipse ellipse(nullptr, {RS_Vector(0,0), RS_Vector(5,0), 0.4, 0.0, M_PI, false});
+    const double d = 0.3;
+    const RS_Vector outsidePoint(0.0, 20.0);
+
+    auto offsets = ellipse.createOffset(outsidePoint, d);
+    REQUIRE(offsets.size() == 1);
+    auto* sp = dynamic_cast<LC_SplinePoints*>(offsets.front());
+    REQUIRE(sp != nullptr);
+    REQUIRE(sp->isClosed() == false);
+
+    const auto& pts = sp->getPoints();
+    REQUIRE(pts.size() >= 8);
+
+    // Endpoints should sit at the exact arc start/end displaced by d along
+    // the outward normal there. At angle 0: ellipse point = (5, 0); tangent
+    // (0, b·1) → outward normal +x. So offset endpoint ≈ (5+d, 0).
+    REQUIRE_THAT(pts.front().x, Catch::Matchers::WithinAbs(5.0 + d, 1.0e-9));
+    REQUIRE_THAT(pts.front().y, Catch::Matchers::WithinAbs(0.0, 1.0e-9));
+    // At angle π: ellipse point = (-5, 0); tangent (0, -b) → outward normal -x.
+    REQUIRE_THAT(pts.back().x, Catch::Matchers::WithinAbs(-5.0 - d, 1.0e-9));
+    REQUIRE_THAT(pts.back().y, Catch::Matchers::WithinAbs(0.0, 1.0e-9));
+
+    for (auto* o : offsets) delete o;
+}
+
+TEST_CASE("RS_Ellipse::createOffset reversed arc preserves geometry") {
+    RS_Ellipse forward(nullptr, {RS_Vector(0,0), RS_Vector(5,0), 0.4, 0.0, M_PI, false});
+    RS_Ellipse reversed(nullptr, {RS_Vector(0,0), RS_Vector(5,0), 0.4, M_PI, 0.0, true});
+    const double d = 0.3;
+    const RS_Vector outsidePoint(0.0, 20.0);
+
+    auto fwd = forward.createOffset(outsidePoint, d);
+    auto rev = reversed.createOffset(outsidePoint, d);
+    REQUIRE(fwd.size() == 1);
+    REQUIRE(rev.size() == 1);
+    auto* spF = dynamic_cast<LC_SplinePoints*>(fwd.front());
+    auto* spR = dynamic_cast<LC_SplinePoints*>(rev.front());
+    REQUIRE(spF != nullptr);
+    REQUIRE(spR != nullptr);
+
+    // Reversed arc samples the same geometric curve in reverse order: front
+    // and back endpoints should be swapped (modulo any small step-discretization
+    // differences in the interior).
+    REQUIRE_THAT(spF->getPoints().front().x,
+                 Catch::Matchers::WithinAbs(spR->getPoints().back().x, 1.0e-9));
+    REQUIRE_THAT(spF->getPoints().back().x,
+                 Catch::Matchers::WithinAbs(spR->getPoints().front().x, 1.0e-9));
+
+    for (auto* o : fwd) delete o;
+    for (auto* o : rev) delete o;
+}
+
+TEST_CASE("RS_Ellipse::createOffset rejects degenerate inputs") {
+    // Zero distance.
+    {
+        RS_Ellipse e(nullptr, {RS_Vector(0,0), RS_Vector(5,0), 0.4, 0.0, 0.0, false});
+        REQUIRE(e.createOffset(RS_Vector(20,0), 0.0).empty());
+    }
+    // Zero major radius.
+    {
+        RS_Ellipse e(nullptr, {RS_Vector(0,0), RS_Vector(0,0), 0.4, 0.0, 0.0, false});
+        REQUIRE(e.createOffset(RS_Vector(20,0), 1.0).empty());
     }
 }

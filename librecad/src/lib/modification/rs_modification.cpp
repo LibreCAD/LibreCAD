@@ -1879,6 +1879,17 @@ bool RS_Modification::offset(const RS_OffsetData& data, const std::vector<RS_Ent
     // too slow:
     for(auto e: entitiesList){
         for (int num=1; num<= numberOfCopies; num++) {
+            // First try the type-changing path (e.g. ellipse → spline).
+            auto offsetCopies = e->createOffset(data.coord, num*data.distance);
+            if (!offsetCopies.empty()) {
+                for (auto* off : offsetCopies) {
+                    off->setHighlighted(false);
+                    clonesList.push_back(off);
+                }
+                continue;
+            }
+
+            // Fall back to the in-place clone+offset path.
             auto ec = e->clone();
             //highlight is used by trim actions. do not carry over flag
             ec->setHighlighted(false);

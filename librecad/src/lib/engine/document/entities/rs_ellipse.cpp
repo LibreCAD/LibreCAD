@@ -34,6 +34,7 @@
 #include "rs_debug.h"
 #include "rs_entitycontainer.h"
 #include "rs_information.h"
+#include "lc_splinepoints.h"
 #include "rs_line.h"
 #include "rs_math.h"
 #include "rs_painter.h"
@@ -1274,6 +1275,163 @@ void RS_Ellipse::revertDirection(){
         data.reversed = !data.reversed;
         calculateBorders();
     }
+}
+
+std::vector<RS_Entity*> RS_Ellipse::createOffset(const RS_Vector& coord,
+                                                 const double& distance) const {
+    const double a = getMajorRadius();
+    const double b = getMinorRadius();
+    if (a < RS_TOLERANCE || b < RS_TOLERANCE)
+        return {};
+    if (std::fabs(distance) < RS_TOLERANCE)
+        return {};
+
+    // Sign convention: positive when `coord` is outside the ellipse.
+    // Use the implicit form in the ellipse-aligned frame: q = (u/a)^2 + (v/b)^2.
+    // q > 1 ⇒ outside, q < 1 ⇒ inside.
+    const RS_Vector center = getCenter();
+    const RS_Vector majorP = getMajorP();
+    const double majorAngle = majorP.angle();
+    RS_Vector local = coord - center;
+    local.rotate(-majorAngle);
+    const double q = (local.x / a) * (local.x / a)
+                   + (local.y / b) * (local.y / b);
+    const double signedD = (q >= 1.0) ? std::fabs(distance) : -std::fabs(distance);
+
+    // Cusp / self-intersection rejection: inward offset cusps when |d| ≥ b²/a.
+    // Reject with a 1% safety margin.
+    if (signedD < 0.0) {
+        const double cuspLimit = (b * b) / a;
+        if (std::fabs(signedD) >= 0.99 * cuspLimit)
+            return {};
+    }
+
+    // Parameter range.
+    const bool isArc = isEllipticArc();
+    double angleStart;
+    double angleEnd;
+    if (isArc) {
+        angleStart = getAngle1();
+        angleEnd = getAngle2();
+        if (isReversed()) {
+            // Sweep from angle1 down to angle2 (CW). Normalize so end > start
+            // by adding 2π if needed; we then walk negatively.
+            if (angleEnd > angleStart)
+                angleEnd -= 2.0 * M_PI;
+        } else {
+            if (angleEnd < angleStart)
+                angleEnd += 2.0 * M_PI;
+        }
+    } else {
+        angleStart = 0.0;
+        angleEnd = 2.0 * M_PI;
+    }
+    const double sweep = angleEnd - angleStart;
+    const double sweepLen = std::fabs(sweep);
+    if (sweepLen < RS_TOLERANCE_ANGLE)
+        return {};
+    const double dir = (sweep >= 0.0) ? 1.0 : -1.0;
+
+    // Adaptive sagitta-based sampling on the offset curve.
+    // Tolerance: 0.1% of major radius, with an absolute floor.
+    const double epsilon = std::max(a * 1.0e-3, RS_TOLERANCE * 100.0);
+
+    // Per-revolution caps (scaled to the actual sweep below).
+    constexpr int kNMinFull = 16;
+    constexpr int kNMaxFull = 512;
+    const double sweepFraction = sweepLen / (2.0 * M_PI);
+    const int nMin = std::max(2, static_cast<int>(std::ceil(kNMinFull * sweepFraction)));
+    const int nMax = std::max(nMin + 1, static_cast<int>(std::ceil(kNMaxFull * sweepFraction)));
+
+    // ρ_ellipse(θ) = ((a sinθ)² + (b cosθ)²)^(3/2) / (a·b)
+    auto rhoEllipse = [a, b](double theta) {
+        const double s = std::sin(theta);
+        const double c = std::cos(theta);
+        const double term = (a * s) * (a * s) + (b * c) * (b * c);
+        return std::pow(term, 1.5) / (a * b);
+    };
+    auto rhoOffset = [&](double theta) {
+        return std::max(rhoEllipse(theta) - signedD, RS_TOLERANCE);
+    };
+
+    // Hard caps on per-step Δθ regardless of curvature.
+    const double dThetaMax = M_PI / 8.0;                // 22.5°
+    const double dThetaMin = sweepLen / static_cast<double>(nMax);
+
+    std::vector<RS_Vector> offsetPoints;
+    offsetPoints.reserve(64);
+
+    auto pushSample = [&](double theta) {
+        // Tangent at this parametric angle, in the local (ellipse-aligned) frame.
+        // p_local(θ) = (a cosθ, b sinθ); tangent ∝ (-a sinθ, b cosθ).
+        // Rotate by majorAngle to world coordinates.
+        const double s = std::sin(theta);
+        const double c = std::cos(theta);
+        RS_Vector p(a * c, b * s);
+        p.rotate(majorAngle);
+        p += center;
+
+        RS_Vector t(-a * s, b * c);
+        t.rotate(majorAngle);
+        // Outward normal: rotate tangent by -90° (right-hand normal); ensure it
+        // points away from center.
+        RS_Vector n(t.y, -t.x);
+        n.normalize();
+        const RS_Vector toPoint = p - center;
+        if (RS_Vector::dotP(n, toPoint) < 0.0)
+            n = -n;
+
+        offsetPoints.push_back(p + signedD * n);
+    };
+
+    double theta = angleStart;
+    pushSample(theta);
+    while (true) {
+        const double rho = rhoOffset(theta);
+        double dTheta = std::sqrt(8.0 * epsilon / rho);
+        if (!std::isfinite(dTheta) || dTheta < dThetaMin)
+            dTheta = dThetaMin;
+        if (dTheta > dThetaMax)
+            dTheta = dThetaMax;
+
+        const double remaining = std::fabs(angleEnd - theta);
+        if (remaining <= dTheta) {
+            if (isArc) {
+                // Open spline: include exact endpoint.
+                theta = angleEnd;
+                pushSample(theta);
+            }
+            // Closed spline: omit the duplicate endpoint (LC_SplinePoints
+            // closes implicitly).
+            break;
+        }
+        theta += dir * dTheta;
+        pushSample(theta);
+    }
+
+    // Bounds: ensure at least nMin points (e.g. for very low-curvature
+    // shallow arcs where the adaptive step is huge).
+    if (static_cast<int>(offsetPoints.size()) < nMin) {
+        offsetPoints.clear();
+        const int n = nMin;
+        for (int i = 0; i < n; ++i) {
+            const double t = angleStart + sweep * (static_cast<double>(i) / (n - (isArc ? 1 : 0)));
+            pushSample(t);
+        }
+        if (!isArc && !offsetPoints.empty())
+            offsetPoints.pop_back();  // drop duplicate wrap point
+    }
+
+    if (offsetPoints.size() < 3)
+        return {};
+
+    LC_SplinePointsData spd(/*closed=*/!isArc, /*cut=*/false);
+    spd.splinePoints = std::move(offsetPoints);
+    auto* sp = new LC_SplinePoints(nullptr, spd);
+    sp->setPen(getPen(false));
+    sp->setLayer(getLayer());
+    sp->calculateBorders();
+    return { sp };
 }
 
 void RS_Ellipse::rotate(const RS_Vector& center, const RS_Vector& angleVector) {

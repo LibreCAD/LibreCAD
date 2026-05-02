@@ -432,6 +432,17 @@ public:
     virtual bool offset(const RS_Vector & /*coord*/, const double & /*distance*/){return false;}
 
     /**
+     * Produce offset copies for entities whose offset cannot be expressed as
+     * an in-place mutation of the same type (e.g. ellipses → splines).
+     * Default returns empty so callers fall back to the in-place offset() path.
+     * Caller takes ownership of returned entities.
+     */
+    virtual std::vector<RS_Entity *> createOffset(const RS_Vector & /*coord*/,
+                                                  const double & /*distance*/) const {
+        return std::vector<RS_Entity *>();
+    }
+
+    /**
      * Implementations must offset the entity by the distance at both directions
      * used to generate tangential circles
      */
