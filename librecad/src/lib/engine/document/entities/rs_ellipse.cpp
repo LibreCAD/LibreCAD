@@ -1339,15 +1339,28 @@ std::vector<RS_Entity*> RS_Ellipse::createOffset(const RS_Vector& coord,
     const int nMin = std::max(2, static_cast<int>(std::ceil(kNMinFull * sweepFraction)));
     const int nMax = std::max(nMin + 1, static_cast<int>(std::ceil(kNMaxFull * sweepFraction)));
 
-    // ρ_ellipse(θ) = ((a sinθ)² + (b cosθ)²)^(3/2) / (a·b)
-    auto rhoEllipse = [a, b](double theta) {
+    // Sagitta-bounded step size in the ellipse parameter θ. For the ellipse
+    // p(θ) = (a cosθ, b sinθ):
+    //   |p_ell'(θ)|² = a²sin²θ + b²cos²θ ≡ T(θ)
+    //   ρ_ell(θ) = T(θ)^(3/2) / (a·b)
+    // Offsetting by signedD along the outward unit normal:
+    //   ρ_off(θ) = ρ_ell(θ) + signedD      (signedD>0 outward, <0 inward)
+    //   |p_off'(θ)| = (ρ_off / ρ_ell) · |p_ell'(θ)|     ← key correction
+    // The offset curve's parametric speed differs from the ellipse's; for
+    // inner offsets it slows down, vanishing at a cusp (ρ_off→0). Bounding
+    // sagitta h ≈ chord_off²/(8 ρ_off) ≤ ε with chord_off = |p_off'|·Δθ:
+    //   Δθ = (ρ_ell / √T) · √(8 ε / ρ_off) = (T / (a·b)) · √(8 ε / ρ_off)
+    // Result: uniform sagitta along the offset curve regardless of offset
+    // direction. Sample density on the offset is 1/√(8ε ρ_off) per unit arc
+    // length — high at sharp regions, low at shallow ones, in both inner and
+    // outer offsets.
+    auto stepTheta = [&](double theta) {
         const double s = std::sin(theta);
         const double c = std::cos(theta);
         const double term = (a * s) * (a * s) + (b * c) * (b * c);
-        return std::pow(term, 1.5) / (a * b);
-    };
-    auto rhoOffset = [&](double theta) {
-        return std::max(rhoEllipse(theta) - signedD, RS_TOLERANCE);
+        const double rhoEll = std::pow(term, 1.5) / (a * b);
+        const double rhoOff = std::max(rhoEll + signedD, RS_TOLERANCE);
+        return (term / (a * b)) * std::sqrt(8.0 * epsilon / rhoOff);
     };
 
     // Hard caps on per-step Δθ regardless of curvature.
@@ -1358,33 +1371,24 @@ std::vector<RS_Entity*> RS_Ellipse::createOffset(const RS_Vector& coord,
     offsetPoints.reserve(64);
 
     auto pushSample = [&](double theta) {
-        // Tangent at this parametric angle, in the local (ellipse-aligned) frame.
-        // p_local(θ) = (a cosθ, b sinθ); tangent ∝ (-a sinθ, b cosθ).
-        // Rotate by majorAngle to world coordinates.
+        // Work in the ellipse-aligned local frame, then transform once to world.
+        // p_local(θ) = (a cosθ, b sinθ); tangent ∝ (-a sinθ, b cosθ); rotating
+        // the tangent by -90° gives the outward normal (b cosθ, a sinθ), which
+        // is always outward since dot(n, p_local) = a·b > 0.
         const double s = std::sin(theta);
         const double c = std::cos(theta);
-        RS_Vector p(a * c, b * s);
+        RS_Vector n(b * c, a * s);
+        n.normalize();
+        RS_Vector p = RS_Vector(a * c, b * s) + signedD * n;
         p.rotate(majorAngle);
         p += center;
-
-        RS_Vector t(-a * s, b * c);
-        t.rotate(majorAngle);
-        // Outward normal: rotate tangent by -90° (right-hand normal); ensure it
-        // points away from center.
-        RS_Vector n(t.y, -t.x);
-        n.normalize();
-        const RS_Vector toPoint = p - center;
-        if (RS_Vector::dotP(n, toPoint) < 0.0)
-            n = -n;
-
-        offsetPoints.push_back(p + signedD * n);
+        offsetPoints.push_back(p);
     };
 
     double theta = angleStart;
     pushSample(theta);
     while (true) {
-        const double rho = rhoOffset(theta);
-        double dTheta = std::sqrt(8.0 * epsilon / rho);
+        double dTheta = stepTheta(theta);
         if (!std::isfinite(dTheta) || dTheta < dThetaMin)
             dTheta = dThetaMin;
         if (dTheta > dThetaMax)
