@@ -15,6 +15,7 @@
 #include <filesystem>
 #include <iomanip>
 #include <iostream>
+#include <map>
 #include <stdexcept>
 #include <string>
 
@@ -30,11 +31,21 @@ public:
     int entities = 0;
     int blocks   = 0;
     int layers   = 0;
+    std::map<int, int> entityLWeights;  // lWeight enum -> count
+    std::map<std::string, int> layerLWeights; // layer name -> lWeight enum
+
+    void track(const DRW_Entity& e) {
+        ++entities;
+        entityLWeights[static_cast<int>(e.lWeight)]++;
+    }
 
     // tables
     void addHeader(const DRW_Header*) override {}
     void addLType(const DRW_LType&) override {}
-    void addLayer(const DRW_Layer&) override { ++layers; }
+    void addLayer(const DRW_Layer& l) override {
+        ++layers;
+        layerLWeights[l.name] = static_cast<int>(l.lWeight);
+    }
     void addDimStyle(const DRW_Dimstyle&) override {}
     void addVport(const DRW_Vport&) override {}
     void addTextStyle(const DRW_Textstyle&) override {}
@@ -46,34 +57,34 @@ public:
     void endBlock() override {}
 
     // entities — all increment the counter
-    void addPoint(const DRW_Point&) override { ++entities; }
-    void addLine(const DRW_Line&) override { ++entities; }
-    void addRay(const DRW_Ray&) override { ++entities; }
-    void addXline(const DRW_Xline&) override { ++entities; }
-    void addArc(const DRW_Arc&) override { ++entities; }
-    void addCircle(const DRW_Circle&) override { ++entities; }
-    void addEllipse(const DRW_Ellipse&) override { ++entities; }
-    void addLWPolyline(const DRW_LWPolyline&) override { ++entities; }
-    void addPolyline(const DRW_Polyline&) override { ++entities; }
-    void addSpline(const DRW_Spline*) override { ++entities; }
+    void addPoint(const DRW_Point& e) override { track(e); }
+    void addLine(const DRW_Line& e) override { track(e); }
+    void addRay(const DRW_Ray& e) override { track(e); }
+    void addXline(const DRW_Xline& e) override { track(e); }
+    void addArc(const DRW_Arc& e) override { track(e); }
+    void addCircle(const DRW_Circle& e) override { track(e); }
+    void addEllipse(const DRW_Ellipse& e) override { track(e); }
+    void addLWPolyline(const DRW_LWPolyline& e) override { track(e); }
+    void addPolyline(const DRW_Polyline& e) override { track(e); }
+    void addSpline(const DRW_Spline* e) override { track(*e); }
     void addKnot(const DRW_Entity&) override {}
-    void addInsert(const DRW_Insert&) override { ++entities; }
-    void addTrace(const DRW_Trace&) override { ++entities; }
-    void add3dFace(const DRW_3Dface&) override { ++entities; }
-    void addSolid(const DRW_Solid&) override { ++entities; }
-    void addMText(const DRW_MText&) override { ++entities; }
-    void addText(const DRW_Text&) override { ++entities; }
-    void addDimAlign(const DRW_DimAligned*) override { ++entities; }
-    void addDimLinear(const DRW_DimLinear*) override { ++entities; }
-    void addDimRadial(const DRW_DimRadial*) override { ++entities; }
-    void addDimDiametric(const DRW_DimDiametric*) override { ++entities; }
-    void addDimAngular(const DRW_DimAngular*) override { ++entities; }
-    void addDimAngular3P(const DRW_DimAngular3p*) override { ++entities; }
-    void addDimOrdinate(const DRW_DimOrdinate*) override { ++entities; }
-    void addLeader(const DRW_Leader*) override { ++entities; }
-    void addHatch(const DRW_Hatch*) override { ++entities; }
-    void addViewport(const DRW_Viewport&) override { ++entities; }
-    void addImage(const DRW_Image*) override { ++entities; }
+    void addInsert(const DRW_Insert& e) override { track(e); }
+    void addTrace(const DRW_Trace& e) override { track(e); }
+    void add3dFace(const DRW_3Dface& e) override { track(e); }
+    void addSolid(const DRW_Solid& e) override { track(e); }
+    void addMText(const DRW_MText& e) override { track(e); }
+    void addText(const DRW_Text& e) override { track(e); }
+    void addDimAlign(const DRW_DimAligned* e) override { track(*e); }
+    void addDimLinear(const DRW_DimLinear* e) override { track(*e); }
+    void addDimRadial(const DRW_DimRadial* e) override { track(*e); }
+    void addDimDiametric(const DRW_DimDiametric* e) override { track(*e); }
+    void addDimAngular(const DRW_DimAngular* e) override { track(*e); }
+    void addDimAngular3P(const DRW_DimAngular3p* e) override { track(*e); }
+    void addDimOrdinate(const DRW_DimOrdinate* e) override { track(*e); }
+    void addLeader(const DRW_Leader* e) override { track(*e); }
+    void addHatch(const DRW_Hatch* e) override { track(*e); }
+    void addViewport(const DRW_Viewport& e) override { track(e); }
+    void addImage(const DRW_Image* e) override { track(*e); }
     void linkImage(const DRW_ImageDef*) override {}
     void addComment(const char*) override {}
     void addPlotSettings(const DRW_PlotSettings*) override {}
@@ -103,8 +114,10 @@ struct DwgResult {
     int layers;
 };
 
-DwgResult readDwg(const std::string& path, bool verbose = false) {
-    CountingIface iface;
+DwgResult readDwg(const std::string& path, bool verbose = false,
+                  CountingIface* outIface = nullptr) {
+    CountingIface localIface;
+    CountingIface& iface = outIface ? *outIface : localIface;
     try {
         dwgR reader(path.c_str());
         if (verbose)
@@ -120,6 +133,22 @@ DwgResult readDwg(const std::string& path, bool verbose = false) {
         std::cerr << "  [UNKNOWN EXCEPTION]\n";
         return {false, DRW::BAD_UNKNOWN, DRW::UNKNOWNV,
                 iface.entities, iface.blocks, iface.layers};
+    }
+}
+
+// DRW_LW_Conv::lineWidth enum -> human-readable mm
+const char* lWeightToMm(int lw) {
+    switch (lw) {
+        case 0: return "0.00mm";   case 1:  return "0.05mm";  case 2:  return "0.09mm";
+        case 3: return "0.13mm";   case 4:  return "0.15mm";  case 5:  return "0.18mm";
+        case 6: return "0.20mm";   case 7:  return "0.25mm";  case 8:  return "0.30mm";
+        case 9: return "0.35mm";   case 10: return "0.40mm";  case 11: return "0.50mm";
+        case 12: return "0.53mm";  case 13: return "0.60mm";  case 14: return "0.70mm";
+        case 15: return "0.80mm";  case 16: return "0.90mm";  case 17: return "1.00mm";
+        case 18: return "1.06mm";  case 19: return "1.20mm";  case 20: return "1.40mm";
+        case 21: return "1.58mm";  case 22: return "2.00mm";  case 23: return "2.11mm";
+        case 29: return "ByLayer"; case 30: return "ByBlock"; case 31: return "Default";
+        default: return "?";
     }
 }
 
@@ -251,6 +280,44 @@ TEST_CASE("DWG smoke test: read ~/doc/dwg/*.dwg and report entity counts") {
         std::cout << "No corpus files present; nothing to verify.\n";
     else if (!anyFailed)
         std::cout << "All " << filesChecked << " present file(s) opened as expected.\n";
+}
+
+TEST_CASE("DWG lineweights: distribution in lineweights.dwg", "[.dwg_lineweights]") {
+    const char* home = getenv("HOME");
+    if (!home) { SUCCEED("HOME not set"); return; }
+    const std::string path = std::string(home) + "/doc/dwg/lineweights.dwg";
+    if (!std::filesystem::is_regular_file(path)) {
+        SUCCEED("lineweights.dwg not present; skipping"); return;
+    }
+
+    CountingIface iface;
+    const DwgResult r = readDwg(path, /*verbose=*/false, &iface);
+    REQUIRE(r.error == DRW::BAD_NONE);
+
+    std::cout << "\n=== lineweights.dwg lWeight distribution ===\n";
+    std::cout << "Total entities: " << iface.entities << "\n\n";
+
+    std::cout << "Per-entity lWeights:\n";
+    for (const auto& [lw, count] : iface.entityLWeights) {
+        std::cout << "  enum=" << std::setw(3) << lw
+                  << "  width=" << std::setw(8) << lWeightToMm(lw)
+                  << "  count=" << count << "\n";
+    }
+
+    std::cout << "\nPer-layer lWeights:\n";
+    for (const auto& [name, lw] : iface.layerLWeights) {
+        std::cout << "  layer=" << std::setw(15) << name
+                  << "  enum=" << std::setw(3) << lw
+                  << "  width=" << lWeightToMm(lw) << "\n";
+    }
+
+    int byLayerCount = iface.entityLWeights.count(29) ? iface.entityLWeights[29] : 0;
+    int byBlockCount = iface.entityLWeights.count(30) ? iface.entityLWeights[30] : 0;
+    int defaultCount = iface.entityLWeights.count(31) ? iface.entityLWeights[31] : 0;
+    std::cout << "\nSummary: entities resolving via layer=" << byLayerCount
+              << ", block=" << byBlockCount << ", default=" << defaultCount
+              << ", explicit=" << (iface.entities - byLayerCount - byBlockCount - defaultCount)
+              << "\n";
 }
 
 // Verbose re-run of the two AC1021 files that fail in the main sweep.
