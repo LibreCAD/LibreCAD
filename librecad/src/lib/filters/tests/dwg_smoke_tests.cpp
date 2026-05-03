@@ -320,6 +320,7 @@ struct DeepResult {
     DRW::Version version;
     TypeTrackingIface iface;
     std::map<int,int> unhandledTypes; // oType -> count
+    std::string debugLog;             // full captured debug trace (for verbose dumps)
 };
 
 DeepResult readDwgDeep(const std::string& path) {
@@ -346,10 +347,13 @@ DeepResult readDwgDeep(const std::string& path) {
         dr.error = DRW::BAD_UNKNOWN;
     }
 
-    // Extract before replacing printer (which deletes capturePrinter)
+    // Extract before replacing printer (which deletes capturePrinter).
+    // Grab the full log now — avoids printer-state complications in callers that
+    // want to print it after this function returns.
     dr.unhandledTypes = capturePrinter->unhandledTypes();
+    dr.debugLog = std::move(capturePrinter->buf);
 
-    // Restore silent printer — DRW_dbg::setCustomDebugPrinter deletes capturePrinter here
+    // Restore silent printer — DRW_dbg::setCustomDebugPrinter deletes capturePrinter here.
     DRW::setCustomDebugPrinter(new DRW::DebugPrinter());
 
     return dr;
@@ -684,4 +688,129 @@ TEST_CASE("DWG deep diagnostic: entity type breakdown for target files", "[.dwg_
         const DeepResult dr = readDwgDeep(path);
         printDeepReport(name, dr);
     }
+}
+
+// Deep troubleshooting for Cover.dwg (AC1027/R2013, dwgReader27).
+// Run:
+//   ./librecad_tests "[.dwg_cover]" -s
+// Then for full verbose trace:
+//   ./librecad_tests "[.dwg_cover_verbose]" -s 2>&1 | less
+TEST_CASE("DWG Cover.dwg: deep entity/type breakdown", "[.dwg_cover]") {
+    const char* home = getenv("HOME");
+    if (!home) { SUCCEED("HOME not set; skipping"); return; }
+    const std::string path = std::string(home) + "/doc/dwg/Cover.dwg";
+    if (!std::filesystem::is_regular_file(path)) {
+        SUCCEED("Cover.dwg not present; skipping"); return;
+    }
+    const DeepResult dr = readDwgDeep(path);
+    printDeepReport("Cover.dwg", dr);
+}
+
+// ---------------------------------------------------------------------------
+// dwg_samples corpus: 42 minimal single-entity files across 6 DWG versions.
+// Auto-discovers every *.dwg in ~/dev/dwg_samples/ and asserts each one
+// parses without error and contains at least one entity.
+// Skips cleanly when the directory is absent.
+// ---------------------------------------------------------------------------
+TEST_CASE("DWG samples: load all files in ~/dev/dwg_samples/") {
+    const char* home = getenv("HOME");
+    if (!home) { SUCCEED("HOME not set; skipping"); return; }
+    const std::string dir = std::string(home) + "/dev/dwg_samples/";
+    if (!std::filesystem::is_directory(dir)) {
+        SUCCEED("~/dev/dwg_samples/ not found; skipping");
+        return;
+    }
+
+    // Collect *.dwg paths, sorted for deterministic output.
+    std::vector<std::string> paths;
+    for (const auto& entry : std::filesystem::directory_iterator(dir)) {
+        if (!entry.is_regular_file()) continue;
+        const auto& p = entry.path();
+        const std::string ext = p.extension().string();
+        if (ext == ".dwg" || ext == ".DWG")
+            paths.push_back(p.string());
+    }
+    std::sort(paths.begin(), paths.end());
+
+    if (paths.empty()) {
+        SUCCEED("No .dwg files found in ~/dev/dwg_samples/; skipping");
+        return;
+    }
+
+    // Header
+    std::cout << "\n"
+              << std::left
+              << std::setw(46) << "File"
+              << std::setw(16) << "Version"
+              << std::setw(24) << "Error"
+              << std::setw(10) << "Entities"
+              << std::setw(8)  << "Blocks"
+              << "Layers\n"
+              << std::string(110, '-') << "\n";
+
+    int passed = 0, failed = 0;
+    for (const auto& path : paths) {
+        const std::string name = std::filesystem::path(path).filename().string();
+        const DwgResult r = readDwg(path);
+
+        std::cout << std::left
+                  << std::setw(46) << name
+                  << std::setw(16) << versionStr(r.version)
+                  << std::setw(24) << errorStr(r.error)
+                  << std::setw(10) << r.entities
+                  << std::setw(8)  << r.blocks
+                  << r.layers << "\n";
+
+        if (r.error != DRW::BAD_NONE) {
+            ++failed;
+            FAIL_CHECK(name << ": expected OK but got " << errorStr(r.error));
+        } else if (r.entities < 1) {
+            ++failed;
+            FAIL_CHECK(name << ": parsed OK but 0 entities (expected >= 1)");
+        } else {
+            ++passed;
+        }
+    }
+
+    std::cout << std::string(110, '-') << "\n";
+    std::cout << "Passed: " << passed << "  Failed: " << failed
+              << "  Total: " << paths.size() << "\n";
+}
+
+// Deep + verbose diagnostic for the one failure in the samples suite:
+// polyline2d_line_R14.dwg (AC1014) returns OK but 0 entities.
+// Run:  ./librecad_tests "[.dwg_polyR14]" -s 2>/tmp/poly_r14_verbose.txt
+TEST_CASE("DWG polyline2d_line_R14: deep + verbose", "[.dwg_polyR14]") {
+    const char* home = getenv("HOME");
+    if (!home) { SUCCEED("HOME not set"); return; }
+    const std::string path = std::string(home) + "/dev/dwg_samples/polyline2d_line_R14.dwg";
+    if (!std::filesystem::is_regular_file(path)) {
+        SUCCEED("polyline2d_line_R14.dwg not present; skipping"); return;
+    }
+
+    // readDwgDeep captures the full debug log internally — no separate verbose
+    // reader needed and no printer-state complications.
+    const DeepResult dr = readDwgDeep(path);
+
+    std::cout << "\n--- Deep diagnostic ---\n";
+    printDeepReport("polyline2d_line_R14.dwg", dr);
+
+    std::cout << "\n--- Reader debug trace ---\n";
+    std::cout << dr.debugLog;
+}
+
+TEST_CASE("DWG Cover.dwg: verbose reader trace", "[.dwg_cover_verbose]") {
+    const char* home = getenv("HOME");
+    if (!home) { SUCCEED("HOME not set; skipping"); return; }
+    const std::string path = std::string(home) + "/doc/dwg/Cover.dwg";
+    if (!std::filesystem::is_regular_file(path)) {
+        SUCCEED("Cover.dwg not present; skipping"); return;
+    }
+    std::cout << "\n=== Cover.dwg (verbose) ===\n";
+    const DwgResult r = readDwg(path, /*verbose=*/true);
+    std::cout << "Result: " << errorStr(r.error)
+              << "  version=" << versionStr(r.version)
+              << "  entities=" << r.entities
+              << "  blocks=" << r.blocks
+              << "  layers=" << r.layers << "\n";
 }

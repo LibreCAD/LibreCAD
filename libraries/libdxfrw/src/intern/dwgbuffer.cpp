@@ -579,7 +579,10 @@ std::string dwgBuffer::get8bitStr(){
     }*/
     std::string str(reinterpret_cast<char*>(tmpBuffer), textSize);
     delete[]tmpBuffer;
-
+    // R13/R14 TV strings include the null terminator in the length field;
+    // strip it so comparisons like recName == "LWPOLYLINE" work correctly.
+    while (!str.empty() && str.back() == '\0')
+        str.pop_back();
     return str;
 }
 
