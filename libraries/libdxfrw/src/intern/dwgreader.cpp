@@ -1205,6 +1205,7 @@ bool dwgReader::readDwgEntity(dwgBuffer *dbuf, objHandle& obj, DRW_Interface& in
         default:
             //not supported or are object add to remaining map
             objObjectMap[obj.handle]= obj;
+            DRW_DBG("[unhandled-entity-type "); DRW_DBG(oType); DRW_DBG("]\n");
             break;
     }
     if (!ret){
