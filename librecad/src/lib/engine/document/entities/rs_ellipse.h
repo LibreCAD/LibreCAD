@@ -70,8 +70,6 @@ struct RS_EllipseData {
 
 std::ostream& operator << (std::ostream& os, const RS_EllipseData& ed);
 
-// fixme - add support of offset operation for ellipse entity!
-
 /**
  * Class for an ellipse entity. All angles are in Rad.
  *
@@ -230,6 +228,15 @@ public:
     void mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2) override;
     void moveRef(const RS_Vector& ref, const RS_Vector& offset) override;
     void revertDirection() override;
+
+    /**
+     * Produce a true equidistant offset of this ellipse approximated by an
+     * `LC_SplinePoints` (the offset of an ellipse is not itself an ellipse).
+     * Returns one spline (full ellipse → closed; elliptic arc → open) wrapped
+     * in a vector, or empty for degenerate/cusp inputs.
+     */
+    std::vector<RS_Entity*> createOffset(const RS_Vector& coord,
+                                         const double& distance) const override;
 
     void draw(RS_Painter* painter) override;
     void createPainterPath(RS_Painter* painter, QPainterPath& path) const;

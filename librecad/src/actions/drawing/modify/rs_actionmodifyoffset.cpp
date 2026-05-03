@@ -33,7 +33,7 @@
 
 RS_ActionModifyOffset::RS_ActionModifyOffset(LC_ActionContext *actionContext)
     :LC_ActionModifyBase("Modify Offset", actionContext,RS2::ActionModifyOffset,
-                         {RS2::EntityArc, RS2::EntityCircle, RS2::EntityLine, RS2::EntityPolyline},
+                         {RS2::EntityArc, RS2::EntityCircle, RS2::EntityEllipse, RS2::EntityLine, RS2::EntityPolyline},
                          true)
     , m_offsetData(new RS_OffsetData()){
 
@@ -46,11 +46,6 @@ RS_ActionModifyOffset::RS_ActionModifyOffset(LC_ActionContext *actionContext)
 // fixme - support remove originals mode
 // fixme - number of copies support
 // fixme - support attributes support
-// todo - basically, it seems that this action should be re-thought in general. There are several limitations (say,
-// todo - some entities like ellipse or splines do not support offset.
-// todo - also, it seems that it's related to parallel/equidistant polyline actions...
-// todo - so probably either this action should be reworked, or existing actions should be extended to support
-// todo - selection and better offset operations...
 
 RS_ActionModifyOffset::~RS_ActionModifyOffset() = default;
 
@@ -189,7 +184,7 @@ void RS_ActionModifyOffset::updateMouseButtonHintsForSelected(int status) {
 }
 
 void RS_ActionModifyOffset::updateMouseButtonHintsForSelection() {
-    updateMouseWidgetTRCancel(tr("Select line, polyline, circle or arc to create offset (Enter to complete)"), MOD_SHIFT_AND_CTRL(tr("Select contour"),tr("Offset immediately after selection")));
+    updateMouseWidgetTRCancel(tr("Select line, polyline, circle, arc or ellipse to create offset (Enter to complete)"), MOD_SHIFT_AND_CTRL(tr("Select contour"),tr("Offset immediately after selection")));
 }
 
 LC_ModifyOperationFlags* RS_ActionModifyOffset::getModifyOperationFlags() {
