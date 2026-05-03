@@ -178,9 +178,9 @@ const FileInfo kTestFiles[] = {
     {"architectural_example-imperial.dwg",                       true},
     {"children-room-decoration.dwg",                             true},
     {"civil_example-imperial.dwg",                               true},
-    {"mechanical_example-imperial (1).dwg",                      true},
     {"mechanical_example-imperial.dwg",                          true},
     {"#mechanical_example-imperial.dwg",                         false}, // bad magic bytes
+    {"#title_block-iso.dwg",                                     false}, // bad magic bytes
     {"plot_screening_and_fill_patterns.dwg",                     true},
     {"title_block-arch.dwg",                                     true},
     {"title_block-iso.dwg",                                      true},
