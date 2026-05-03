@@ -814,3 +814,70 @@ TEST_CASE("DWG Cover.dwg: verbose reader trace", "[.dwg_cover_verbose]") {
               << "  blocks=" << r.blocks
               << "  layers=" << r.layers << "\n";
 }
+
+// ---------------------------------------------------------------------------
+// ~/doc/dwg2/ corpus: real-world DWG files (mixed versions, complex content).
+// Asserts each file parses without a reader error (BAD_NONE).
+// Entity count is reported but not asserted — some real-world files may be
+// 3D-only or otherwise legitimately produce 0 2D entities.
+// Skips cleanly when the directory is absent.
+// ---------------------------------------------------------------------------
+TEST_CASE("DWG corpus: load all files in ~/doc/dwg2/") {
+    const char* home = getenv("HOME");
+    if (!home) { SUCCEED("HOME not set; skipping"); return; }
+    const std::string dir = std::string(home) + "/doc/dwg2/";
+    if (!std::filesystem::is_directory(dir)) {
+        SUCCEED("~/doc/dwg2/ not found; skipping");
+        return;
+    }
+
+    std::vector<std::string> paths;
+    for (const auto& entry : std::filesystem::directory_iterator(dir)) {
+        if (!entry.is_regular_file()) continue;
+        const auto& p = entry.path();
+        const std::string ext = p.extension().string();
+        if (ext == ".dwg" || ext == ".DWG")
+            paths.push_back(p.string());
+    }
+    std::sort(paths.begin(), paths.end());
+
+    if (paths.empty()) {
+        SUCCEED("No .dwg files found in ~/doc/dwg2/; skipping");
+        return;
+    }
+
+    std::cout << "\n"
+              << std::left
+              << std::setw(46) << "File"
+              << std::setw(16) << "Version"
+              << std::setw(24) << "Error"
+              << std::setw(10) << "Entities"
+              << std::setw(8)  << "Blocks"
+              << "Layers\n"
+              << std::string(110, '-') << "\n";
+
+    int passed = 0, failed = 0;
+    for (const auto& path : paths) {
+        const std::string name = std::filesystem::path(path).filename().string();
+        const DwgResult r = readDwg(path);
+
+        std::cout << std::left
+                  << std::setw(46) << name
+                  << std::setw(16) << versionStr(r.version)
+                  << std::setw(24) << errorStr(r.error)
+                  << std::setw(10) << r.entities
+                  << std::setw(8)  << r.blocks
+                  << r.layers << "\n";
+
+        if (r.error != DRW::BAD_NONE) {
+            ++failed;
+            FAIL_CHECK(name << ": expected OK but got " << errorStr(r.error));
+        } else {
+            ++passed;
+        }
+    }
+
+    std::cout << std::string(110, '-') << "\n";
+    std::cout << "Passed: " << passed << "  Failed: " << failed
+              << "  Total: " << paths.size() << "\n";
+}
