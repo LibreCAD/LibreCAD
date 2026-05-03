@@ -836,8 +836,10 @@ TEST_CASE("DWG corpus: load all files in ~/doc/dwg2/") {
         if (!entry.is_regular_file()) continue;
         const auto& p = entry.path();
         const std::string ext = p.extension().string();
-        if (ext == ".dwg" || ext == ".DWG")
-            paths.push_back(p.string());
+        if (ext != ".dwg" && ext != ".DWG") continue;
+        // '#'-prefixed files have invalid magic bytes; skip them like the smoke test does.
+        if (p.filename().string().front() == '#') continue;
+        paths.push_back(p.string());
     }
     std::sort(paths.begin(), paths.end());
 
