@@ -167,7 +167,7 @@ const FileInfo kTestFiles[] = {
     {"ET-Drawing-with-Border.dwg",                               true},
     // AC1021 (R2007)
     {"colorwh.dwg",                                              true},
-    {"dwgreader21_230.dwg",                                      true},
+    {"dwgreader21_230.dwg",                                      false}, // 522-byte truncated test file
     {"blocks_and_tables_-_imperial.dwg",                         true},
     {"blocks_and_tables_-_metric.dwg",                           true},
     {"lineweights.dwg",                                          true},
