@@ -16,8 +16,6 @@
 #include "intern/dxfwriter.h"
 #include "intern/drw_dbg.h"
 #include "intern/dwgbuffer.h"
-#include <iostream>
-#include <fstream>
 
 DRW_Header::DRW_Header() {
     linetypeCtrl = layerCtrl = styleCtrl = dimstyleCtrl = appidCtrl = 0;
@@ -1993,10 +1991,6 @@ bool DRW_Header::parseDwg(DRW::Version version, dwgBuffer *buf, dwgBuffer *hBbuf
     vars["INSBASE"]=new DRW_Variant(10, buf->get3BitDouble());
     vars["EXTMIN"]=new DRW_Variant(10, buf->get3BitDouble());
     vars["EXTMAX"]=new DRW_Variant(10, buf->get3BitDouble());
-std::cout<<__func__<<"(): extmax: "<<vars["EXTMAX"]->content.d<<std::endl;
-std::ofstream fs0("/tmp/extmax.txt");
-fs0<<__func__<<"(): extmax: "<<vars["EXTMAX"]->content.d<<std::endl;
-fs0.close();
 
     vars["LIMMIN"]=new DRW_Variant(10, buf->get2RawDouble());
     vars["LIMMAX"]=new DRW_Variant(10, buf->get2RawDouble());

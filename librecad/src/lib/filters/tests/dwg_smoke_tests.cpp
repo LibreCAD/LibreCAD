@@ -16,13 +16,51 @@
 #include <iomanip>
 #include <iostream>
 #include <map>
+#include <regex>
+#include <sstream>
 #include <stdexcept>
 #include <string>
+#include <vector>
 
+#include "drw_base.h"
 #include "drw_interface.h"
+#include "intern/drw_dbg.h"
 #include "libdwgr.h"
 
 namespace {
+
+// ---- capturing DRW debug printer -------------------------------------------
+
+class CapturingPrinter : public DRW::DebugPrinter {
+public:
+    std::string buf;
+    void printS(const std::string& s) override { buf += s; }
+    void printI(long long int i)      override { buf += std::to_string(i); }
+    void printUI(long long unsigned int i) override { buf += std::to_string(i); }
+    void printD(double d)             override { buf += std::to_string(d); }
+    void printH(long long int i)      override {
+        char tmp[32]; snprintf(tmp, sizeof(tmp), "%llX", (unsigned long long)i); buf += tmp;
+    }
+    void printB(int i)                override { buf += std::to_string(i); }
+    void printHL(int c, int s, int h) override {
+        char tmp[64]; snprintf(tmp, sizeof(tmp), "(%d,%d,%X)", c, s, (unsigned)h); buf += tmp;
+    }
+    void printPT(double x, double y, double z) override {
+        char tmp[96]; snprintf(tmp, sizeof(tmp), "(%.3f,%.3f,%.3f)", x, y, z); buf += tmp;
+    }
+
+    // Parse [unhandled-entity-type N] tokens out of captured buffer.
+    // Returns map of oType -> count.
+    std::map<int,int> unhandledTypes() const {
+        std::map<int,int> result;
+        std::regex re(R"(\[unhandled-entity-type (\d+)\])");
+        auto begin = std::sregex_iterator(buf.begin(), buf.end(), re);
+        auto end   = std::sregex_iterator();
+        for (auto it = begin; it != end; ++it)
+            result[std::stoi((*it)[1].str())]++;
+        return result;
+    }
+};
 
 // ---- minimal counting DRW_Interface ----------------------------------------
 
@@ -186,6 +224,267 @@ const char* errorStr(DRW::error e) {
     }
 }
 
+// ---- entity type-tracking interface ----------------------------------------
+
+class TypeTrackingIface : public DRW_Interface {
+public:
+    std::map<std::string, int> typeCounts; // entity type name -> count
+    std::map<std::string, int> layerEntities; // layer name -> entity count
+    int inBlock = 0;
+    int modelSpaceEntities = 0;
+    int blockSpaceEntities = 0;
+    int blocks = 0;
+    int layers = 0;
+
+    void trackT(const DRW_Entity& e, const char* typeName) {
+        typeCounts[typeName]++;
+        if (e.layer.empty())
+            layerEntities["(no layer)"]++;
+        else
+            layerEntities[e.layer]++;
+        if (inBlock > 1)  // inBlock==1 means model-space (*MODEL_SPACE block)
+            blockSpaceEntities++;
+        else
+            modelSpaceEntities++;
+    }
+
+    void addHeader(const DRW_Header*) override {}
+    void addLType(const DRW_LType&) override {}
+    void addLayer(const DRW_Layer&) override { ++layers; }
+    void addDimStyle(const DRW_Dimstyle&) override {}
+    void addVport(const DRW_Vport&) override {}
+    void addTextStyle(const DRW_Textstyle&) override {}
+    void addAppId(const DRW_AppId&) override {}
+
+    void addBlock(const DRW_Block&) override { ++blocks; ++inBlock; }
+    void setBlock(const int) override {}
+    void endBlock() override { if (inBlock > 0) --inBlock; }
+
+    void addPoint(const DRW_Point& e)                   override { trackT(e, "POINT"); }
+    void addLine(const DRW_Line& e)                     override { trackT(e, "LINE"); }
+    void addRay(const DRW_Ray& e)                       override { trackT(e, "RAY"); }
+    void addXline(const DRW_Xline& e)                   override { trackT(e, "XLINE"); }
+    void addArc(const DRW_Arc& e)                       override { trackT(e, "ARC"); }
+    void addCircle(const DRW_Circle& e)                 override { trackT(e, "CIRCLE"); }
+    void addEllipse(const DRW_Ellipse& e)               override { trackT(e, "ELLIPSE"); }
+    void addLWPolyline(const DRW_LWPolyline& e)         override { trackT(e, "LWPOLYLINE"); }
+    void addPolyline(const DRW_Polyline& e)             override { trackT(e, "POLYLINE"); }
+    void addSpline(const DRW_Spline* e)                 override { trackT(*e, "SPLINE"); }
+    void addKnot(const DRW_Entity&) override {}
+    void addInsert(const DRW_Insert& e)                 override { trackT(e, "INSERT"); }
+    void addTrace(const DRW_Trace& e)                   override { trackT(e, "TRACE"); }
+    void add3dFace(const DRW_3Dface& e)                 override { trackT(e, "3DFACE"); }
+    void addSolid(const DRW_Solid& e)                   override { trackT(e, "SOLID"); }
+    void addMText(const DRW_MText& e)                   override { trackT(e, "MTEXT"); }
+    void addText(const DRW_Text& e)                     override { trackT(e, "TEXT"); }
+    void addDimAlign(const DRW_DimAligned* e)           override { trackT(*e, "DIM_ALIGNED"); }
+    void addDimLinear(const DRW_DimLinear* e)           override { trackT(*e, "DIM_LINEAR"); }
+    void addDimRadial(const DRW_DimRadial* e)           override { trackT(*e, "DIM_RADIAL"); }
+    void addDimDiametric(const DRW_DimDiametric* e)     override { trackT(*e, "DIM_DIAMETRIC"); }
+    void addDimAngular(const DRW_DimAngular* e)         override { trackT(*e, "DIM_ANGULAR"); }
+    void addDimAngular3P(const DRW_DimAngular3p* e)     override { trackT(*e, "DIM_ANGULAR3P"); }
+    void addDimOrdinate(const DRW_DimOrdinate* e)       override { trackT(*e, "DIM_ORDINATE"); }
+    void addLeader(const DRW_Leader* e)                 override { trackT(*e, "LEADER"); }
+    void addHatch(const DRW_Hatch* e)                   override { trackT(*e, "HATCH"); }
+    void addViewport(const DRW_Viewport& e)             override { trackT(e, "VIEWPORT"); }
+    void addImage(const DRW_Image* e)                   override { trackT(*e, "IMAGE"); }
+    void addTolerance(const DRW_Tolerance& e)           override { trackT(e, "TOLERANCE"); }
+    void linkImage(const DRW_ImageDef*) override {}
+    void addComment(const char*) override {}
+    void addPlotSettings(const DRW_PlotSettings*) override {}
+
+    void writeHeader(DRW_Header&) override {}
+    void writeBlocks() override {}
+    void writeBlockRecords() override {}
+    void writeEntities() override {}
+    void writeLTypes() override {}
+    void writeLayers() override {}
+    void writeTextstyles() override {}
+    void writeVports() override {}
+    void writeDimstyles() override {}
+    void writeObjects() override {}
+    void writeAppId() override {}
+
+    int total() const {
+        int n = 0;
+        for (const auto& kv : typeCounts) n += kv.second;
+        return n;
+    }
+};
+
+// ---- deep diagnostic read --------------------------------------------------
+
+struct DeepResult {
+    bool       ok;
+    DRW::error error;
+    DRW::Version version;
+    TypeTrackingIface iface;
+    std::map<int,int> unhandledTypes; // oType -> count
+};
+
+DeepResult readDwgDeep(const std::string& path) {
+    DeepResult dr;
+
+    // Allocate on heap — ownership transferred to DRW_dbg via setCustomDebugPrinter.
+    // Keep a raw ptr to read results BEFORE the next setCustomDebugPrinter call deletes it.
+    auto* capturePrinter = new CapturingPrinter();
+    DRW::setCustomDebugPrinter(capturePrinter);  // DRW_dbg takes ownership
+
+    try {
+        dwgR reader(path.c_str());
+        reader.setDebug(DRW::DebugLevel::Debug);  // also sets DRW_dbg level to Debug
+        dr.ok = reader.read(&dr.iface, true);
+        dr.error   = reader.getError();
+        dr.version = reader.getVersion();
+    } catch (const std::exception& ex) {
+        std::cerr << "  [EXCEPTION: " << ex.what() << "]\n";
+        dr.ok    = false;
+        dr.error = DRW::BAD_UNKNOWN;
+    } catch (...) {
+        std::cerr << "  [UNKNOWN EXCEPTION]\n";
+        dr.ok    = false;
+        dr.error = DRW::BAD_UNKNOWN;
+    }
+
+    // Extract before replacing printer (which deletes capturePrinter)
+    dr.unhandledTypes = capturePrinter->unhandledTypes();
+
+    // Restore silent printer — DRW_dbg::setCustomDebugPrinter deletes capturePrinter here
+    DRW::setCustomDebugPrinter(new DRW::DebugPrinter());
+
+    return dr;
+}
+
+// map raw oType number to a human-readable name (ODA entity type codes)
+const char* oTypeName(int t) {
+    switch (t) {
+        case  1: return "TEXT";
+        case  2: return "ATTRIB";
+        case  3: return "ATTDEF";
+        case  4: return "BLOCK";
+        case  5: return "ENDBLK";
+        case  6: return "SEQEND";
+        case  7: return "INSERT";
+        case  8: return "MINSERT";
+        case 10: return "VERTEX_2D";
+        case 11: return "VERTEX_3D";
+        case 12: return "VERTEX_MESH";
+        case 13: return "VERTEX_PFACE";
+        case 14: return "VERTEX_PFACE_FACE";
+        case 15: return "POLYLINE_2D";
+        case 16: return "POLYLINE_3D";
+        case 17: return "ARC";
+        case 18: return "CIRCLE";
+        case 19: return "LINE";
+        case 20: return "DIM_ORDINATE";
+        case 21: return "DIM_LINEAR";
+        case 22: return "DIM_ALIGNED";
+        case 23: return "DIM_ANGULAR3P";
+        case 24: return "DIM_ANGULAR";
+        case 25: return "DIM_RADIAL";
+        case 26: return "DIM_DIAMETRIC";
+        case 27: return "POINT";
+        case 28: return "3DFACE";
+        case 29: return "POLYLINE_PFACE";
+        case 30: return "POLYLINE_MESH";
+        case 31: return "SOLID";
+        case 32: return "TRACE";
+        case 33: return "SHAPE";
+        case 34: return "VIEWPORT";
+        case 35: return "ELLIPSE";
+        case 36: return "SPLINE";
+        case 37: return "REGION";
+        case 38: return "3DSOLID";
+        case 39: return "BODY";
+        case 40: return "RAY";
+        case 41: return "XLINE";
+        case 42: return "DICTIONARY";
+        case 43: return "OLEFRAME";
+        case 44: return "MTEXT";
+        case 45: return "LEADER";
+        case 46: return "TOLERANCE";
+        case 47: return "MLINE";
+        case 48: return "BLOCK_CONTROL";
+        case 49: return "BLOCK_HDR";
+        case 50: return "LAYER_CONTROL";
+        case 51: return "LAYER";
+        case 52: return "STYLE_CONTROL";
+        case 53: return "STYLE";
+        case 56: return "LTYPE_CONTROL";
+        case 57: return "LTYPE";
+        case 60: return "VIEW_CONTROL";
+        case 61: return "VIEW";
+        case 62: return "UCS_CONTROL";
+        case 63: return "UCS";
+        case 64: return "VPORT_CONTROL";
+        case 65: return "VPORT";
+        case 66: return "APPID_CONTROL";
+        case 67: return "APPID";
+        case 68: return "DIMSTYLE_CONTROL";
+        case 69: return "DIMSTYLE";
+        case 70: return "VP_ENT_HDR_CTRL";
+        case 71: return "VP_ENT_HDR";
+        case 72: return "GROUP";
+        case 73: return "MLINESTYLE";
+        case 74: return "OLE2FRAME";
+        case 76: return "DUMMY";
+        case 77: return "LWPOLYLINE";
+        case 78: return "HATCH";
+        case 79: return "XRECORD";
+        case 80: return "PLACEHOLDER";
+        case 81: return "VBA_PROJECT";
+        case 82: return "LAYOUT";
+        case 101: return "IMAGE";
+        default: return nullptr;
+    }
+}
+
+void printDeepReport(const char* filename, const DeepResult& dr) {
+    std::cout << "\n";
+    std::cout << "=== " << filename << " ===\n";
+    std::cout << "Version : " << versionStr(dr.version) << "\n";
+    std::cout << "Error   : " << errorStr(dr.error) << "\n";
+    std::cout << "Blocks  : " << dr.iface.blocks
+              << "  Layers: " << dr.iface.layers << "\n";
+    int total = dr.iface.total();
+    std::cout << "Entities: " << total
+              << "  (model-space=" << dr.iface.modelSpaceEntities
+              << ", in-blocks=" << dr.iface.blockSpaceEntities << ")\n";
+
+    std::cout << "\n  Handled entity type distribution:\n";
+    for (const auto& [type, count] : dr.iface.typeCounts) {
+        std::cout << "    " << std::left << std::setw(16) << type
+                  << " " << count << "\n";
+    }
+
+    if (!dr.unhandledTypes.empty()) {
+        std::cout << "\n  *** UNHANDLED entity types (silently skipped) ***\n";
+        int totalSkipped = 0;
+        for (const auto& [oType, count] : dr.unhandledTypes) {
+            totalSkipped += count;
+            const char* name = oTypeName(oType);
+            std::cout << "    oType=" << std::setw(4) << oType
+                      << "  name=" << std::setw(18) << (name ? name : "(unknown/custom)")
+                      << "  count=" << count << "\n";
+        }
+        std::cout << "  Total skipped: " << totalSkipped << "\n";
+    } else {
+        std::cout << "\n  (no unhandled entity types)\n";
+    }
+
+    std::cout << "\n  Top layers by entity count:\n";
+    std::vector<std::pair<int,std::string>> sorted;
+    for (const auto& [layer, cnt] : dr.iface.layerEntities)
+        sorted.emplace_back(cnt, layer);
+    std::sort(sorted.rbegin(), sorted.rend());
+    int shown = 0;
+    for (const auto& [cnt, layer] : sorted) {
+        std::cout << "    " << std::left << std::setw(30) << layer
+                  << " " << cnt << "\n";
+        if (++shown >= 15) { std::cout << "    ...\n"; break; }
+    }
+}
+
 struct FileInfo {
     const char* name;
     bool expectSuccess;
@@ -214,7 +513,7 @@ const FileInfo kTestFiles[] = {
     {"plot_screening_and_fill_patterns.dwg",                     true},
     {"title_block-arch.dwg",                                     true},
     {"title_block-iso.dwg",                                      true},
-    {"visualization_-_aerial.dwg",                               true},
+    {"visualization_-_aerial.dwg",                               true},  // 3D-solid-only model; 0 entities is correct for a 2D reader
     {"visualization_-_condominium_with_skylight.dwg",            true},
     {"visualization_-_conference_room.dwg",                      true},
     {"visualization_-_sun_and_sky_demo.dwg",                     true},
@@ -338,6 +637,7 @@ TEST_CASE("DWG verbose debug: failing AC1021 files", "[.dwg_verbose]") {
     const char* failingFiles[] = {
         "colorwh.dwg",
         "dwgreader21_230.dwg",
+        "blocks_and_tables_-_metric.dwg",
     };
 
     for (const auto* name : failingFiles) {
@@ -352,5 +652,36 @@ TEST_CASE("DWG verbose debug: failing AC1021 files", "[.dwg_verbose]") {
                   << "  entities=" << r.entities
                   << "  blocks=" << r.blocks
                   << "  layers=" << r.layers << "\n";
+    }
+}
+
+// Deep diagnostic: entity type breakdown + unhandled oType report.
+// Run individually:
+//   ./librecad_tests "[.dwg_deep]" -s
+TEST_CASE("DWG deep diagnostic: entity type breakdown for target files", "[.dwg_deep]") {
+    const char* home = getenv("HOME");
+    if (!home) { SUCCEED("HOME not set; skipping"); return; }
+    const std::string dir = std::string(home) + "/doc/dwg/";
+    if (!std::filesystem::is_directory(dir)) {
+        SUCCEED("DWG corpus directory not found; skipping"); return;
+    }
+
+    const char* targets[] = {
+        "blocks_and_tables_-_metric.dwg",
+        "blocks_and_tables_-_imperial.dwg",
+        "architectural_example-imperial.dwg",
+        "architectural_-_annotation_scaling_and_multileaders.dwg",
+        "visualization_-_aerial.dwg",
+        "visualization_-_conference_room.dwg",
+    };
+
+    for (const auto* name : targets) {
+        const std::string path = dir + name;
+        if (!std::filesystem::is_regular_file(path)) {
+            std::cout << "\n=== " << name << " (missing - skipped) ===\n";
+            continue;
+        }
+        const DeepResult dr = readDwgDeep(path);
+        printDeepReport(name, dr);
     }
 }
