@@ -48,6 +48,7 @@
 #include "rs_ellipse.h"
 #include "rs_hatch.h"
 #include "rs_image.h"
+#include "rs_wipeout.h"
 #include "rs_insert.h"
 #include "rs_layer.h"
 #include "rs_leader.h"
@@ -981,6 +982,58 @@ void RS_FilterDXFRW::addInsert(const DRW_Insert& data) {
     RS_DEBUG->print("  id: %lu", entity->getId());
 //    entity->update();
     m_currentContainer->addEntity(entity);
+
+    // Render visible block attributes (ATTRIB) attached to this INSERT.
+    // ATTRIB coordinates are in world space (per AutoCAD convention), so
+    // each becomes an independent RS_Text in the current container.
+    // Bit 1 of attribFlags marks the attribute as invisible.
+    for (const auto& att : data.attlist) {
+        if (!att || (att->attribFlags & 0x1) != 0)
+            continue;
+
+        // MText-style ATTRIB (R2010+): the AcDbMText nested subclass parsed in
+        // libdxfrw populated att->mtext.  Render it as RS_MText so the
+        // multi-line content + formatting codes survive.  The plain `text`
+        // field is kept as a single-line fallback by libdxfrw, but ignored
+        // here when the MText payload is present.
+        if (att->mtext) {
+            auto* mt = mtextEntityFromDRW(*att->mtext);
+            mt->setParent(m_currentContainer);
+            setEntityAttributes(mt, att.get());
+            mt->update();
+            m_currentContainer->addEntity(mt);
+            continue;
+        }
+
+        RS_Vector refPoint(att->basePoint.x, att->basePoint.y);
+        RS_Vector secPoint(att->secPoint.x, att->secPoint.y);
+        if (att->alignV != 0 || att->alignH != 0 || att->alignH == DRW_Text::HMiddle) {
+            if (att->alignH != DRW_Text::HAligned && att->alignH != DRW_Text::HFit) {
+                secPoint = RS_Vector(att->basePoint.x, att->basePoint.y);
+                refPoint = RS_Vector(att->secPoint.x, att->secPoint.y);
+            }
+        }
+
+        RS_TextData::VAlign valign = (RS_TextData::VAlign)att->alignV;
+        RS_TextData::HAlign halign = (RS_TextData::HAlign)att->alignH;
+        RS_TextData::TextGeneration dir;
+        if (att->textgen == 2)      dir = RS_TextData::Backward;
+        else if (att->textgen == 4) dir = RS_TextData::UpsideDown;
+        else                        dir = RS_TextData::None;
+
+        QString sty = QString::fromUtf8(att->style.c_str());
+        prepareTextStyleName(sty);
+        QString text = toNativeString(QString::fromUtf8(att->text.c_str()));
+
+        RS_TextData td(refPoint, secPoint, att->height, att->widthscale,
+                       valign, halign, dir,
+                       text, sty, att->angle * M_PI / 180,
+                       RS2::NoUpdate);
+        auto* textEntity = new RS_Text(m_currentContainer, td);
+        setEntityAttributes(textEntity, att.get());
+        textEntity->update();
+        m_currentContainer->addEntity(textEntity);
+    }
 }
 
 void RS_FilterDXFRW::prepareTextStyleName(QString& sty) const {
@@ -998,17 +1051,19 @@ void RS_FilterDXFRW::prepareTextStyleName(QString& sty) const {
 }
 
 /**
- * Implementation of the method which handles
- * multi texts (MTEXT).
+ * Builds an RS_MText entity from a DRW_MText payload, applying the same
+ * alignment/drawing-direction/line-spacing/legacy-correction logic that
+ * addMText() uses.  Shared between addMText() (standalone MTEXT entities) and
+ * addInsert() (block attributes whose AcDbMText nested subclass produced an
+ * att->mtext payload).  Returns a freshly-constructed entity not yet attached
+ * to any container; the caller is responsible for setEntityAttributes() and
+ * appending.
  */
-void RS_FilterDXFRW::addMText(const DRW_MText& data) {
-    RS_DEBUG->print("RS_FilterDXF::addMText: %s", data.text.c_str());
-
+RS_MText* RS_FilterDXFRW::mtextEntityFromDRW(const DRW_MText& data) {
     RS_MTextData::VAlign valign;
     RS_MTextData::HAlign halign;
     RS_MTextData::MTextDrawingDirection dir;
     RS_MTextData::MTextLineSpacingStyle lss;
-
 
     if (data.textgen<=3) {
         valign=RS_MTextData::VATop;
@@ -1043,13 +1098,10 @@ void RS_FilterDXFRW::addMText(const DRW_MText& data) {
     QString sty = QString::fromUtf8(data.style.c_str());
     prepareTextStyleName(sty);
 
-    RS_DEBUG->print("Text as unicode:");
-    RS_DEBUG->printUnicode(mtext);
     double interlin = data.interlin;
     double angle = data.angle*M_PI/180.;
     RS_Vector ip = RS_Vector(data.basePoint.x, data.basePoint.y);
 
-//Correct bad alignment of older dxflib or libdxfrw < 0.5.4
     if (m_oldMText) {
         interlin = data.interlin*0.96;
         if (valign == RS_MTextData::VABottom) {
@@ -1061,11 +1113,10 @@ void RS_FilterDXFRW::addMText(const DRW_MText& data) {
             if (!tl.isEmpty()) {
                 QString txt = tl.at(tl.size()-1);
                 RS_TextData d(RS_Vector(0.,0.,0.), RS_Vector(0.,0.,0.),
-
                               data.height, 1, RS_TextData::VABaseline, RS_TextData::HALeft,
                               RS_TextData::None, txt, sty, 0,
                               RS2::Update);
-				auto entity = new RS_Text(nullptr, d);
+                auto entity = new RS_Text(nullptr, d);
                 double textTail = entity->getMin().y;
                 delete entity;
                 auto ot = RS_Vector(0.0,textTail).rotate(angle);
@@ -1075,13 +1126,9 @@ void RS_FilterDXFRW::addMText(const DRW_MText& data) {
     }
 
     RS_MTextData d(ip, data.height, data.widthscale,
-                  valign, halign,
-                  dir, lss,
-                  interlin,
-                  mtext, sty, angle,
-                  RS2::NoUpdate);
+                   valign, halign, dir, lss, interlin,
+                   mtext, sty, angle, RS2::NoUpdate);
     switch (data.alignH) {
-        //case DRW_Text::DrawingDirection::LeftToRight:
         default:
             d.drawingDirection = RS_MTextData::MTextDrawingDirection::LeftToRight;
             break;
@@ -1093,7 +1140,17 @@ void RS_FilterDXFRW::addMText(const DRW_MText& data) {
             d.drawingDirection = RS_MTextData::MTextDrawingDirection::RightToLeft;
             break;
     }
-    auto entity = new RS_MText(m_currentContainer, d);
+    return new RS_MText(nullptr, d);
+}
+
+/**
+ * Implementation of the method which handles
+ * multi texts (MTEXT).
+ */
+void RS_FilterDXFRW::addMText(const DRW_MText& data) {
+    RS_DEBUG->print("RS_FilterDXF::addMText: %s", data.text.c_str());
+    auto* entity = mtextEntityFromDRW(data);
+    entity->setParent(m_currentContainer);
     setEntityAttributes(entity, &data);
     entity->update();
     m_currentContainer->addEntity(entity);
@@ -2405,6 +2462,46 @@ void RS_FilterDXFRW::addImage(const DRW_Image *data) {
 }
 
 /**
+ * Implementation of the method which handles WIPEOUT entities.
+ *
+ * WIPEOUT shares the IMAGE binary layout but only the polygon (clipPath) and
+ * the IMAGE's frame parameters (basePoint, secPoint=uVector, vVector,
+ * sizeu/sizev) are meaningful — there's no raster file behind it.
+ *
+ * AutoCAD stores the polygon vertices in normalized image-pixel coordinates,
+ * with a half-pixel origin offset.  The WCS transform is:
+ *     P_wcs = basePoint + (px + 0.5) * sizeu * uVector
+ *                       + (py + 0.5) * sizev * vVector
+ * (cf. ODA Open Design Specification §20.4.96; verify on samples — see plan.)
+ */
+void RS_FilterDXFRW::addWipeout(const DRW_Image *data) {
+    RS_DEBUG->print("RS_FilterDXFRW::addWipeout");
+    if (data == nullptr || data->clipPath.empty()) {
+        return;
+    }
+
+    const RS_Vector base(data->basePoint.x, data->basePoint.y);
+    const RS_Vector u(data->secPoint.x, data->secPoint.y);
+    const RS_Vector v(data->vVector.x, data->vVector.y);
+    const double sizeU = data->sizeu;
+    const double sizeV = data->sizev;
+
+    std::vector<RS_Vector> wcsVerts;
+    wcsVerts.reserve(data->clipPath.size());
+    for (const DRW_Coord& c : data->clipPath) {
+        const double fx = c.x + 0.5;
+        const double fy = c.y + 0.5;
+        wcsVerts.push_back(base + u * (fx * sizeU) + v * (fy * sizeV));
+    }
+
+    auto* w = new RS_Wipeout(m_currentContainer,
+                             RS_WipeoutData(std::move(wcsVerts),
+                                            data->wipeoutFrame));
+    setEntityAttributes(w, data);
+    m_currentContainer->appendEntity(w);
+}
+
+/**
  * Implementation of the method which links image entities to image files.
  */
 void RS_FilterDXFRW::linkImage(const DRW_ImageDef *data) {
@@ -3660,6 +3757,9 @@ void RS_FilterDXFRW::writeEntity(RS_Entity* e){
     case RS2::EntityImage:
         writeImage(static_cast<RS_Image*>(e));
         break;
+    case RS2::EntityWipeout:
+        writeWipeout(static_cast<RS_Wipeout*>(e));
+        break;
     default:
         break;
     }
@@ -4547,6 +4647,38 @@ void RS_FilterDXFRW::writeImage(RS_Image * i) {
         imgDef->vp = 1;
         imgDef->resolution = 0;
     }
+}
+
+void RS_FilterDXFRW::writeWipeout(RS_Wipeout *w) {
+    if (w == nullptr) {
+        return;
+    }
+    // RS_Wipeout stores the polygon already resolved to WCS, not as
+    // image-pixel coords + basis.  On write we pick a trivial basis
+    //     basePoint=(0,0), u=(1,0), v=(0,1), sizeU=sizeV=1
+    // so that the inverse transform px = v.x - 0.5 / py = v.y - 0.5
+    // (chosen so that the reader's `(p + 0.5) * size * axis + base` round-trips
+    // back to v) yields exactly the original WCS vertices.  This trades
+    // byte-identical round-trip of the original IMAGE-frame fields for a
+    // simpler entity model in LibreCAD; the rendered geometry is preserved.
+    DRW_Image img;
+    getEntityAttributes(&img, w);
+    img.basePoint = DRW_Coord(0.0, 0.0, 0.0);
+    img.secPoint = DRW_Coord(1.0, 0.0, 0.0);
+    img.vVector = DRW_Coord(0.0, 1.0, 0.0);
+    img.sizeu = 1.0;
+    img.sizev = 1.0;
+    img.clip = 1;
+    img.brightness = 50;
+    img.contrast = 50;
+    img.fade = 0;
+    img.wipeoutFrame = w->getFrame();
+    img.clipPath.clear();
+    img.clipPath.reserve(w->getVertices().size());
+    for (const RS_Vector& v : w->getVertices()) {
+        img.clipPath.emplace_back(v.x - 0.5, v.y - 0.5);
+    }
+    m_dxfW->writeWipeout(&img);
 }
 
 /*void RS_FilterDXFRW::writeEntityContainer(DL_WriterA& dw, RS_EntityContainer* con,

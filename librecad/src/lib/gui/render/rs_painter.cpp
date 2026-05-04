@@ -255,6 +255,10 @@ void RS_Painter::drawPointEntityUI(const RS_Vector& uiPos, int pdmode, int pdsiz
     }
 }
 
+RS_Color RS_Painter::getBackgroundColor() const {
+    return renderer ? renderer->getBackgroundColor() : RS_Color{};
+}
+
 void RS_Painter::drawSolidWCS(const RS_VectorSolutions& wcsVertices) {
     QPolygonF uiPolygon;
     for (const RS_Vector& wcsVertex : wcsVertices) {

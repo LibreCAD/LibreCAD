@@ -103,6 +103,10 @@ public:
     }
     void setViewPort(LC_GraphicViewport* v);
     void setRenderer(LC_GraphicViewportRenderer *r) {renderer = r;}
+    /** Active background color for entities like RS_Wipeout that mask using
+     *  the viewport background.  Returns a default-constructed color if no
+     *  renderer is attached (e.g. during headless tests). */
+    RS_Color getBackgroundColor() const;
     void updateDashOffset(RS_Entity* e);
     void clearDashOffset() {currenPatternOffset = 0.0;}
     double currentDashOffset() const {return currenPatternOffset;}

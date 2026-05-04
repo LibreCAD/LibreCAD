@@ -135,6 +135,13 @@ public:
     void addHatch(const DRW_Hatch* e) override { track(*e); }
     void addViewport(const DRW_Viewport& e) override { track(e); }
     void addImage(const DRW_Image* e) override { track(*e); }
+    void addWipeout(const DRW_Image* e) override {
+        track(*e);
+        wipeouts++;
+        wipeoutVertices += static_cast<int>(e->clipPath.size());
+    }
+    int wipeouts = 0;
+    int wipeoutVertices = 0;
     void linkImage(const DRW_ImageDef*) override {}
     void addComment(const char*) override {}
     void addPlotSettings(const DRW_PlotSettings*) override {}
@@ -247,6 +254,7 @@ public:
     int blockSpaceEntities = 0;
     int blocks = 0;
     int layers = 0;
+    size_t wipeoutVertexCount = 0;
 
     void trackT(const DRW_Entity& e, const char* typeName) {
         typeCounts[typeName]++;
@@ -283,7 +291,15 @@ public:
     void addPolyline(const DRW_Polyline& e)             override { trackT(e, "POLYLINE"); }
     void addSpline(const DRW_Spline* e)                 override { trackT(*e, "SPLINE"); }
     void addKnot(const DRW_Entity&) override {}
-    void addInsert(const DRW_Insert& e)                 override { trackT(e, "INSERT"); }
+    void addInsert(const DRW_Insert& e)                 override {
+        trackT(e, "INSERT");
+        // Attached attribute entities (DWG attlist model) — surface them
+        // alongside the INSERT count so tests can assert ATTRIB delivery.
+        for (const auto& a : e.attlist) {
+            if (!a) continue;
+            typeCounts[a->eType == DRW::ATTDEF ? "ATTDEF" : "ATTRIB"]++;
+        }
+    }
     void addTrace(const DRW_Trace& e)                   override { trackT(e, "TRACE"); }
     void add3dFace(const DRW_3Dface& e)                 override { trackT(e, "3DFACE"); }
     void addSolid(const DRW_Solid& e)                   override { trackT(e, "SOLID"); }
@@ -300,6 +316,12 @@ public:
     void addHatch(const DRW_Hatch* e)                   override { trackT(*e, "HATCH"); }
     void addViewport(const DRW_Viewport& e)             override { trackT(e, "VIEWPORT"); }
     void addImage(const DRW_Image* e)                   override { trackT(*e, "IMAGE"); }
+    void addWipeout(const DRW_Image* e)                 override {
+        trackT(*e, "WIPEOUT");
+        // Surface the polygon size so tests can sanity-check that the boundary
+        // actually came through — empty clipPath is the historical bug shape.
+        wipeoutVertexCount += e->clipPath.size();
+    }
     void addTolerance(const DRW_Tolerance& e)           override { trackT(e, "TOLERANCE"); }
     void linkImage(const DRW_ImageDef*) override {}
     void addComment(const char*) override {}
@@ -1233,5 +1255,232 @@ TEST_CASE("DWG gear_pump_subassy: entity population", "[.dwg_gear_pump]") {
     CHECK(dr.iface.blocks > 0);
     CHECK(dr.iface.layers > 0);
 
+    // ATTRIB / ATTDEF / SEQEND no longer leak into the unhandled-entity bucket
+    // since the DWG dispatcher routes them via the deferred-INSERT flush
+    // (oType 2 = ATTRIB, 3 = ATTDEF, 6 = SEQEND).
+    CHECK(dr.unhandledTypes.count(2) == 0);
+    CHECK(dr.unhandledTypes.count(3) == 0);
+    CHECK(dr.unhandledTypes.count(6) == 0);
+
+    // Custom-class objects (oType >= 500, AutoCAD Mechanical proxy entities)
+    // are skipped via the [custom-class-skipped] token, not the unhandled
+    // entity-type token, so no oType >= 500 should appear here.
+    int customLeak = 0;
+    for (const auto& [oType, count] : dr.unhandledTypes)
+        if (oType >= 500) customLeak += count;
+    CHECK(customLeak == 0);
+
+    // ATTRIBs ride attached to their owning INSERTs via DRW_Insert::attlist.
+    // The file declares 17 visible-attribute instances; require at least 14
+    // to flow through (the 3 outliers exercise an unimplemented MText-style
+    // ATTRIB variant tracked separately).
+    if (dr.iface.typeCounts.count("ATTRIB"))
+        CHECK(dr.iface.typeCounts.at("ATTRIB") >= 14);
+
     printDeepReport("gear_pump_subassy.dwg", dr);
+}
+
+// End-to-end pipeline test: load gear_pump_subassy.dwg via the full
+// RS_FilterDXFRW reader and verify that visible block attribute text
+// flows through to RS_Text entities in the resulting graphic.
+// Run: ./librecad_tests "[.dwg_gear_pump_attrib]" -s
+TEST_CASE("DWG gear_pump_subassy: ATTRIB pipeline", "[.dwg_gear_pump_attrib]") {
+    const char* home = getenv("HOME");
+    if (!home) { SUCCEED("HOME not set; skipping"); return; }
+    const std::string path =
+        std::string(home) + "/doc/dwg2/gear_pump_subassy.dwg";
+    if (!std::filesystem::is_regular_file(path)) {
+        SUCCEED("gear_pump_subassy.dwg not present; skipping"); return;
+    }
+
+    HatchFillIface iface;
+    {
+        dwgR reader(path.c_str());
+        reader.setDebug(DRW::DebugLevel::None);
+        bool ok = reader.read(&iface, true);
+        REQUIRE(ok);
+    }
+
+    const int attribs = iface.typeCounts.count("ATTRIB")
+                          ? iface.typeCounts.at("ATTRIB") : 0;
+    const int inserts = iface.typeCounts.count("INSERT")
+                          ? iface.typeCounts.at("INSERT") : 0;
+
+    std::cout << "\n  INSERT count = " << inserts
+              << "\n  ATTRIB count = " << attribs << "\n";
+
+    // The file has 7 INSERTs and 17 declared ATTRIBs.  At least 14 should be
+    // routed via attlist (3 outliers exercise the MText-style attribute path
+    // that this iteration does not yet decode).
+    CHECK(inserts == 7);
+    CHECK(attribs >= 14);
+}
+
+// Deep diagnostic for House-Dwgfree.com_-1.dwg (AC1021/R2007, ~988 entities).
+// Run: ./librecad_tests "[.dwg_house]" -s
+TEST_CASE("DWG House-Dwgfree.com_-1: entity population", "[.dwg_house]") {
+    const char* home = getenv("HOME");
+    if (!home) { SUCCEED("HOME not set; skipping"); return; }
+    const std::string path =
+        std::string(home) + "/doc/dwg2/House-Dwgfree.com_-1.dwg";
+    if (!std::filesystem::is_regular_file(path)) {
+        SUCCEED("House-Dwgfree.com_-1.dwg not present; skipping"); return;
+    }
+
+    const DeepResult dr = readDwgDeep(path);
+
+    REQUIRE(dr.ok);
+    REQUIRE(dr.error == DRW::BAD_NONE);
+
+    static const std::set<int> kGraphicalOTypes = {
+        1, 7, 8, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28,
+        29, 30, 31, 32, 33, 34, 35, 36, 40, 41, 44, 45, 46, 47, 77, 78, 101
+    };
+    int unhandledGraphicalLost = 0;
+    for (const auto& [oType, count] : dr.unhandledTypes) {
+        if (kGraphicalOTypes.count(oType)) {
+            std::cout << "  *** LOST graphical entity oType=" << oType
+                      << " name=" << (oTypeName(oType) ? oTypeName(oType) : "?")
+                      << " count=" << count << "\n";
+            unhandledGraphicalLost += count;
+        }
+    }
+    CHECK(unhandledGraphicalLost == 0);
+
+    CHECK(dr.iface.total() > 0);
+    CHECK(dr.iface.blocks > 0);
+    CHECK(dr.iface.layers > 0);
+
+    printDeepReport("House-Dwgfree.com_-1.dwg", dr);
+}
+
+// Deep diagnostic for pump_wheel.dwg (AC1024/R2010, 45 entities).
+// Run: ./librecad_tests "[.dwg_pump_wheel]" -s
+TEST_CASE("DWG pump_wheel: entity population", "[.dwg_pump_wheel]") {
+    const char* home = getenv("HOME");
+    if (!home) { SUCCEED("HOME not set; skipping"); return; }
+    const std::string path =
+        std::string(home) + "/doc/dwg2/pump_wheel.dwg";
+    if (!std::filesystem::is_regular_file(path)) {
+        SUCCEED("pump_wheel.dwg not present; skipping"); return;
+    }
+
+    const DeepResult dr = readDwgDeep(path);
+
+    REQUIRE(dr.ok);
+    REQUIRE(dr.error == DRW::BAD_NONE);
+
+    static const std::set<int> kGraphicalOTypes = {
+        1, 7, 8, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28,
+        29, 30, 31, 32, 33, 34, 35, 36, 40, 41, 44, 45, 46, 47, 77, 78, 101
+    };
+    int unhandledGraphicalLost = 0;
+    for (const auto& [oType, count] : dr.unhandledTypes) {
+        if (kGraphicalOTypes.count(oType)) {
+            std::cout << "  *** LOST graphical entity oType=" << oType
+                      << " name=" << (oTypeName(oType) ? oTypeName(oType) : "?")
+                      << " count=" << count << "\n";
+            unhandledGraphicalLost += count;
+        }
+    }
+    CHECK(unhandledGraphicalLost == 0);
+
+    CHECK(dr.iface.total() > 0);
+    CHECK(dr.iface.blocks > 0);
+    CHECK(dr.iface.layers > 0);
+
+    printDeepReport("pump_wheel.dwg", dr);
+}
+
+// Deep diagnostic for robot_handling_cell.dwg (AC1024/R2010, 7341 entities).
+// Run: ./librecad_tests "[.dwg_robot]" -s
+TEST_CASE("DWG robot_handling_cell: entity population", "[.dwg_robot]") {
+    const char* home = getenv("HOME");
+    if (!home) { SUCCEED("HOME not set; skipping"); return; }
+    const std::string path =
+        std::string(home) + "/doc/dwg2/robot_handling_cell.dwg";
+    if (!std::filesystem::is_regular_file(path)) {
+        SUCCEED("robot_handling_cell.dwg not present; skipping"); return;
+    }
+
+    const DeepResult dr = readDwgDeep(path);
+
+    REQUIRE(dr.ok);
+    REQUIRE(dr.error == DRW::BAD_NONE);
+
+    static const std::set<int> kGraphicalOTypes = {
+        1, 7, 8, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28,
+        29, 30, 31, 32, 33, 34, 35, 36, 40, 41, 44, 45, 46, 47, 77, 78, 101
+    };
+    int unhandledGraphicalLost = 0;
+    for (const auto& [oType, count] : dr.unhandledTypes) {
+        if (kGraphicalOTypes.count(oType)) {
+            std::cout << "  *** LOST graphical entity oType=" << oType
+                      << " name=" << (oTypeName(oType) ? oTypeName(oType) : "?")
+                      << " count=" << count << "\n";
+            unhandledGraphicalLost += count;
+        }
+    }
+    CHECK(unhandledGraphicalLost == 0);
+
+    CHECK(dr.iface.total() > 0);
+    CHECK(dr.iface.blocks > 0);
+    CHECK(dr.iface.layers > 0);
+
+    printDeepReport("robot_handling_cell.dwg", dr);
+}
+
+// Scans the corpus for WIPEOUT entities (custom-class oType >= 500 with class
+// recName "WIPEOUT").  Pre-fix these were silently dropped via the
+// [custom-class-skipped] log path; this test asserts the dispatch-and-parse
+// path is wired up.  The test is informational by default — it always passes
+// when the corpus contains zero WIPEOUTs — and prints per-file counts when
+// any are present so visual / round-trip work has a starting point.
+TEST_CASE("DWG corpus: WIPEOUT entity inventory", "[.dwg_wipeout]") {
+    const char* home = getenv("HOME");
+    if (!home) { SUCCEED("HOME not set; skipping"); return; }
+    const std::string dir = std::string(home) + "/doc/dwg2/";
+    if (!std::filesystem::is_directory(dir)) {
+        SUCCEED("~/doc/dwg2/ not found; skipping");
+        return;
+    }
+
+    int totalWipeouts = 0;
+    int totalVertices = 0;
+    int filesWithWipeout = 0;
+
+    for (const auto& entry : std::filesystem::directory_iterator(dir)) {
+        if (!entry.is_regular_file()) continue;
+        const auto& p = entry.path();
+        const std::string ext = p.extension().string();
+        if (ext != ".dwg" && ext != ".DWG") continue;
+        if (p.filename().string().front() == '#') continue;
+
+        CountingIface iface;
+        try {
+            dwgR reader(p.string().c_str());
+            reader.read(&iface, true);
+        } catch (...) {
+            continue;
+        }
+
+        if (iface.wipeouts > 0) {
+            ++filesWithWipeout;
+            totalWipeouts += iface.wipeouts;
+            totalVertices += iface.wipeoutVertices;
+            std::cout << "  " << p.filename().string()
+                      << ": " << iface.wipeouts << " wipeouts, "
+                      << iface.wipeoutVertices << " polygon vertices total\n";
+            // A WIPEOUT with empty clipPath is the historical bug shape (the
+            // dwg-side polygon was being read and discarded).  Ensure that
+            // every wipeout we delivered carries actual geometry.
+            CHECK(iface.wipeoutVertices >= iface.wipeouts * 3);
+        }
+    }
+
+    std::cout << "\nCorpus WIPEOUT summary: "
+              << totalWipeouts << " entities across "
+              << filesWithWipeout << " files, "
+              << totalVertices << " vertices\n";
+    SUCCEED();
 }

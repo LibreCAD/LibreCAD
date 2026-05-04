@@ -1459,6 +1459,43 @@ DRW_ImageDef* dxfRW::writeImage(DRW_Image *ent, std::string name){
     return NULL; //not exist in acad 12
 }
 
+bool dxfRW::writeWipeout(DRW_Image *ent){
+    // WIPEOUT inherits AcDbRasterImage's group codes plus an AcDbWipeout
+    // subclass marker carrying the polygon (91 + 14/24) and frame flag (290).
+    // No AcDbRasterImageDef is written: WIPEOUT carries no actual raster.
+    if (version <= DRW::AC1009) {
+        return false; // not in ACAD R12 / earlier
+    }
+    writer->writeString(0, "WIPEOUT");
+    writeEntity(ent);
+    writer->writeString(100, "AcDbRasterImage");
+    writer->writeDouble(10, ent->basePoint.x);
+    writer->writeDouble(20, ent->basePoint.y);
+    writer->writeDouble(30, ent->basePoint.z);
+    writer->writeDouble(11, ent->secPoint.x);
+    writer->writeDouble(21, ent->secPoint.y);
+    writer->writeDouble(31, ent->secPoint.z);
+    writer->writeDouble(12, ent->vVector.x);
+    writer->writeDouble(22, ent->vVector.y);
+    writer->writeDouble(32, ent->vVector.z);
+    writer->writeDouble(13, ent->sizeu);
+    writer->writeDouble(23, ent->sizev);
+    writer->writeInt16(70, 1);             // image-display flags
+    writer->writeInt16(280, ent->clip);    // 1 = clipping enabled
+    writer->writeInt16(281, ent->brightness);
+    writer->writeInt16(282, ent->contrast);
+    writer->writeInt16(283, ent->fade);
+    writer->writeString(100, "AcDbWipeout");
+    writer->writeInt32(90, 0);             // class version
+    writer->writeInt32(91, static_cast<dint32>(ent->clipPath.size()));
+    for (const DRW_Coord& v : ent->clipPath) {
+        writer->writeDouble(14, v.x);
+        writer->writeDouble(24, v.y);
+    }
+    writer->writeBool(290, ent->wipeoutFrame);
+    return true;
+}
+
 bool dxfRW::writeBlockRecord(std::string name){
     if (version > DRW::AC1009) {
         writer->writeString(0, "BLOCK_RECORD");
@@ -2509,6 +2546,8 @@ bool dxfRW::processEntities(bool isblock) {
             processed = processViewport();
         } else if (nextentity == "IMAGE") {
             processed = processImage();
+        } else if (nextentity == "WIPEOUT") {
+            processed = processWipeout();
         } else if (nextentity == "DIMENSION") {
             processed = processDimension();
         } else if (nextentity == "LEADER") {
@@ -2969,6 +3008,30 @@ bool dxfRW::processImage() {
 
         if (!img.parseCode(code, reader)) {
             return setError( DRW::BAD_CODE_PARSED);
+        }
+    }
+
+    return setError(DRW::BAD_READ_ENTITIES);
+}
+
+bool dxfRW::processWipeout() {
+    // WIPEOUT shares DRW_Image's group codes (subclass marker AcDbRasterImage)
+    // plus AcDbWipeout-specific codes 91/14/24/290 already handled by
+    // DRW_Image::parseCode.  Differs from processImage only in the callback.
+    DRW_DBG("dxfRW::processWipeout");
+    int code;
+    DRW_Image img;
+    while (reader->readRec(&code)) {
+        DRW_DBG(code); DRW_DBG("\n");
+        if (0 == code) {
+            nextentity = reader->getString();
+            DRW_DBG(nextentity); DRW_DBG("\n");
+            iface->addWipeout(&img);
+            return true;
+        }
+
+        if (!img.parseCode(code, reader)) {
+            return setError(DRW::BAD_CODE_PARSED);
         }
     }
 

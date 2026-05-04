@@ -183,7 +183,7 @@ public:
     virtual void addViewport(const DRW_Viewport& data) = 0;
 
     /**
-	 * Called for every image entity. 
+	 * Called for every image entity.
 	 */
     virtual void addImage(const DRW_Image *data) = 0;
 
@@ -191,6 +191,14 @@ public:
 	 * Called for every image definition.
 	 */
     virtual void linkImage(const DRW_ImageDef *data) = 0;
+
+    /**
+     * Called for every WIPEOUT entity.  WIPEOUT shares the binary layout of
+     * IMAGE (subclass AcDbWipeout); the meaningful payload is the polygon
+     * stored in DRW_Image::clipPath.  Default no-op so existing implementers
+     * compile unchanged; override to consume.
+     */
+    virtual void addWipeout(const DRW_Image *data) { (void) data; }
 
     /**
      * Called for every comment in the DXF file (code 999).

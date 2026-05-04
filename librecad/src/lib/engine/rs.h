@@ -161,6 +161,7 @@ namespace RS2 {
         EntityDimLeader,    /**< Leader Dimension */
         EntityHatch,        /**< Hatch */
         EntityImage,        /**< Image */
+        EntityWipeout,      /**< Wipeout (background-masking polygon) */
         EntitySpline,       /**< Spline */
         EntitySplinePoints,       /**< SplinePoints */
         EntityParabola,       /**< Parabola */

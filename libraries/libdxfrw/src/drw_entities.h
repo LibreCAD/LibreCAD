@@ -24,6 +24,7 @@
 class dxfReader;
 class dwgBuffer;
 class DRW_Polyline;
+class DRW_MText;
 
 namespace DRW {
 
@@ -688,6 +689,13 @@ public:
         lockPosition = false;
         attVersion = 0;
     }
+    // Out-of-line so unique_ptr<DRW_MText> works with the forward declaration
+    // (the DRW_MText destructor must be visible at the call site).
+    ~DRW_Attrib() override;
+    DRW_Attrib(const DRW_Attrib&);
+    DRW_Attrib& operator=(const DRW_Attrib&);
+    DRW_Attrib(DRW_Attrib&&) noexcept;
+    DRW_Attrib& operator=(DRW_Attrib&&) noexcept;
 
 protected:
     bool parseCode(int code, const std::unique_ptr<dxfReader>& reader) override;
@@ -697,7 +705,12 @@ public:
     UTF8STRING tag;            /*!< attribute tag, code 2 */
     duint8 attribFlags;        /*!< attribute flags, code 70 (1=invisible, 2=constant, 4=verify, 8=preset) */
     bool lockPosition;         /*!< lock position flag (R2010+) */
-    duint8 attVersion;         /*!< version byte (R2010+) */
+    duint8 attVersion;         /*!< version byte (R2010+); 0=plain TEXT-style, >0=MText-style */
+    /* MText-style payload (R2010+).  Non-null iff attVersion > 0 (DWG) or the
+       AcDbMText nested subclass was seen (DXF).  Carries the multi-line text
+       and formatting (paragraph breaks, font runs, etc.) that the single-line
+       `text` field can't represent. */
+    std::unique_ptr<DRW_MText> mtext;
 };
 
 //! Class to handle ATTDEF entities (block attribute definition).
@@ -728,6 +741,10 @@ public:
 */
 class DRW_MText : public DRW_Text {
     SETENTFRIENDS
+    // ATTRIB / ATTDEF embed a DRW_MText for the AcDbMText nested subclass; let
+    // them route DXF group codes via the protected parseCode().
+    friend class DRW_Attrib;
+    friend class DRW_Attdef;
 public:
     //! Attachments.
     enum Attach {
@@ -1060,6 +1077,13 @@ public:
     int brightness;            /*!< Brightness value, code 281, (0-100) default 50 */
     int contrast;              /*!< Brightness value, code 282, (0-100) default 50 */
     int fade;                  /*!< Brightness value, code 283, (0-100) default 0 */
+    /* Polygonal clip boundary in image-pixel coordinates (DXF codes 91 + 14/24,
+       or DWG image-clip block).  Populated for both raster IMAGEs (when a clip
+       is set) and WIPEOUTs (where this is the only meaningful payload). */
+    std::vector<DRW_Coord> clipPath;
+    /* WIPEOUT-only: render the polygon outline (DXF code 290).  Ignored for
+       non-wipeout IMAGEs.  Defaults to true for round-trip safety. */
+    bool wipeoutFrame = true;
 
 };
 

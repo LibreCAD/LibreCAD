@@ -791,6 +791,8 @@ set(SHARED_SOURCES
     librecad/src/lib/engine/document/entities/rs_hatch.h
     librecad/src/lib/engine/document/entities/rs_image.cpp
     librecad/src/lib/engine/document/entities/rs_image.h
+    librecad/src/lib/engine/document/entities/rs_wipeout.cpp
+    librecad/src/lib/engine/document/entities/rs_wipeout.h
     librecad/src/lib/engine/document/entities/rs_insert.cpp
     librecad/src/lib/engine/document/entities/rs_insert.h
     librecad/src/lib/engine/document/entities/rs_leader.cpp

@@ -1472,7 +1472,47 @@ bool DRW_Text::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
     return buf->isGood();
 }
 
+// Out-of-line special members: required because mtext is a unique_ptr<DRW_MText>
+// declared with a forward-declared element type in the header.
+DRW_Attrib::~DRW_Attrib() = default;
+DRW_Attrib::DRW_Attrib(const DRW_Attrib& o)
+    : DRW_Text(o), tag(o.tag), attribFlags(o.attribFlags),
+      lockPosition(o.lockPosition), attVersion(o.attVersion),
+      mtext(o.mtext ? std::make_unique<DRW_MText>(*o.mtext) : nullptr) {}
+DRW_Attrib& DRW_Attrib::operator=(const DRW_Attrib& o) {
+    if (this != &o) {
+        DRW_Text::operator=(o);
+        tag = o.tag;
+        attribFlags = o.attribFlags;
+        lockPosition = o.lockPosition;
+        attVersion = o.attVersion;
+        mtext = o.mtext ? std::make_unique<DRW_MText>(*o.mtext) : nullptr;
+    }
+    return *this;
+}
+DRW_Attrib::DRW_Attrib(DRW_Attrib&&) noexcept = default;
+DRW_Attrib& DRW_Attrib::operator=(DRW_Attrib&&) noexcept = default;
+
 bool DRW_Attrib::parseCode(int code, const std::unique_ptr<dxfReader>& reader){
+    // Once we've seen the AcDbMText nested subclass marker, route group codes
+    // to the embedded MText so its formatted-text payload (group 1, rect width
+    // 41, attachment point 71, etc.) is captured in `mtext` instead of being
+    // mis-applied to the outer ATTRIB.  This is how multi-line ATTRIBs preserve
+    // their formatting through DXF round-trips.
+    if (code == 100) {
+        const std::string sub = reader->getString();
+        if (sub == "AcDbMText" && !mtext) {
+            mtext = std::make_unique<DRW_MText>();
+            // attVersion may not have been set by the file (DXF doesn't have a
+            // direct equivalent of the DWG version byte); stamp it so other
+            // consumers can branch on the same predicate.
+            if (attVersion == 0) attVersion = 1;
+        }
+        return true;
+    }
+    if (mtext) {
+        return mtext->parseCode(code, reader);
+    }
     switch (code) {
     case 2:
         tag = reader->getUtf8String();
@@ -2516,6 +2556,26 @@ bool DRW_Image::parseCode(int code, const std::unique_ptr<dxfReader>& reader){
     case 283:
         fade = reader->getInt32();
         break;
+    case 91:
+        // WIPEOUT: number of polygon vertices.  We don't pre-size — the count
+        // is informational and the 14/24 pairs follow in order.
+        clipPath.clear();
+        clipPath.reserve(static_cast<size_t>(reader->getInt32()));
+        break;
+    case 14:
+        // WIPEOUT polygon vertex x — start a new vertex.  Group 24 (y) follows.
+        clipPath.emplace_back(reader->getDouble(), 0.0);
+        break;
+    case 24:
+        // WIPEOUT polygon vertex y — complete the most recently started vertex.
+        if (!clipPath.empty()) {
+            clipPath.back().y = reader->getDouble();
+        }
+        break;
+    case 290:
+        // WIPEOUT frame display flag.
+        wipeoutFrame = reader->getBool();
+        break;
     default:
         return DRW_Line::parseCode(code, reader);
     }
@@ -2556,13 +2616,21 @@ bool DRW_Image::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
         DRW_UNUSED(clipMode);//RLZ: temporary, complete API
     }
     duint16 clipType = buf->getBitShort();
+    clipPath.clear();
     if (clipType == 1){
-        buf->get2RawDouble();
-        buf->get2RawDouble();
+        // rectangular clip: lower-left and upper-right corners; expand to a
+        // 4-vertex polygon so downstream consumers can treat both kinds uniformly.
+        DRW_Coord ll = buf->get2RawDouble();
+        DRW_Coord ur = buf->get2RawDouble();
+        clipPath.push_back(ll);
+        clipPath.push_back(DRW_Coord(ur.x, ll.y, 0.0));
+        clipPath.push_back(ur);
+        clipPath.push_back(DRW_Coord(ll.x, ur.y, 0.0));
     } else { //clipType == 2
         dint32 numVerts = buf->getBitLong();
+        clipPath.reserve(numVerts);
         for (int i= 0; i< numVerts;++i)
-            buf->get2RawDouble();
+            clipPath.push_back(buf->get2RawDouble());
     }
 
     ret = DRW_Entity::parseDwgEntHandle(version, buf);

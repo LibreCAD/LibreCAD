@@ -1083,8 +1083,14 @@ bool dwgReader::readDwgEntity(dwgBuffer *dbuf, objHandle& obj, DRW_Interface& in
             }
             break; }
         case 2: {//ATTRIB
+            // Per-entity parse failures are non-fatal: route to orphan cache
+            // / pending-insert at most when parse fully succeeds, but always
+            // restore ret=true so the stream-level loop continues.  (A bad
+            // ATTRIB shouldn't break sibling LINEs/ARCs in the same drawing.)
             auto a = std::make_shared<DRW_Attrib>();
-            if (entryParse(*a, buff, bs, ret)) {
+            bool localRet = true;
+            entryParse(*a, buff, bs, localRet);
+            if (localRet) {
                 a->style = findTableName(DRW::STYLE, a->styleH.ref);
                 const duint32 ownerH = a->parentHandle;
                 auto pendIt = m_pendingInserts.find(ownerH);
@@ -1097,12 +1103,17 @@ bool dwgReader::readDwgEntity(dwgBuffer *dbuf, objHandle& obj, DRW_Interface& in
                 } else {
                     m_orphanAttribs[ownerH].push_back(a);
                 }
+            } else {
+                DRW_DBG("[attrib parse failed, handle "); DRW_DBG(obj.handle); DRW_DBG("]\n");
             }
+            ret = true;
             break; }
         case 3: {//ATTDEF — typically owned by BLOCK_RECORD; route same as ATTRIB
                   //and rely on end-of-section flush for the orphan path.
             auto a = std::make_shared<DRW_Attdef>();
-            if (entryParse(*a, buff, bs, ret)) {
+            bool localRet = true;
+            entryParse(*a, buff, bs, localRet);
+            if (localRet) {
                 a->style = findTableName(DRW::STYLE, a->styleH.ref);
                 const duint32 ownerH = a->parentHandle;
                 auto pendIt = m_pendingInserts.find(ownerH);
@@ -1115,7 +1126,10 @@ bool dwgReader::readDwgEntity(dwgBuffer *dbuf, objHandle& obj, DRW_Interface& in
                 } else {
                     m_orphanAttribs[ownerH].push_back(a);
                 }
+            } else {
+                DRW_DBG("[attdef parse failed, handle "); DRW_DBG(obj.handle); DRW_DBG("]\n");
             }
+            ret = true;
             break; }
         case 6:
             //SEQEND — terminator for INSERT/POLYLINE attribute/vertex chain.
@@ -1271,9 +1285,34 @@ bool dwgReader::readDwgEntity(dwgBuffer *dbuf, objHandle& obj, DRW_Interface& in
             break; }
 
         default:
-            //not supported or are object add to remaining map
-            objObjectMap[obj.handle]= obj;
-            DRW_DBG("[unhandled-entity-type "); DRW_DBG(oType); DRW_DBG("]\n");
+            if (oType >= 500) {
+                // Custom-class object (typically AutoCAD Mechanical AcDbAm*,
+                // AcDbAssoc*, or vendor proxy entity).  Rendering proxy
+                // graphics requires an ODA spec §20.4.95 decoder, which is
+                // out of scope here; emit a distinct token so diagnostic
+                // tools can distinguish "missing dispatch case" from
+                // "intentionally-skipped custom class".
+                auto cit = classesmap.find(oType);
+                if (cit != classesmap.end() && cit->second
+                    && cit->second->recName == "WIPEOUT") {
+                    // WIPEOUT inherits the IMAGE binary layout; reuse parser.
+                    // Polygon vertices are now stored in DRW_Image::clipPath.
+                    DRW_Image e;
+                    if (entryParse(e, buff, bs, ret)) {
+                        intfa.addWipeout(&e);
+                    }
+                    break;
+                }
+                const char* className = (cit != classesmap.end() && cit->second)
+                                          ? cit->second->recName.c_str()
+                                          : "(unknown)";
+                objObjectMap[obj.handle]= obj;
+                DRW_DBG("[custom-class-skipped "); DRW_DBG(oType);
+                DRW_DBG(" "); DRW_DBG(className); DRW_DBG("]\n");
+            } else {
+                objObjectMap[obj.handle]= obj;
+                DRW_DBG("[unhandled-entity-type "); DRW_DBG(oType); DRW_DBG("]\n");
+            }
             break;
     }
     if (!ret){

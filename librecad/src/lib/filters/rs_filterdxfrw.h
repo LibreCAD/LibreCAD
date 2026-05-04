@@ -51,6 +51,7 @@ class RS_MText;
 class RS_Text;
 class RS_Hatch;
 class RS_Image;
+class RS_Wipeout;
 class RS_Leader;
 class RS_Polyline;
 class DL_WriterA;
@@ -116,6 +117,10 @@ public:
     void addTolerance(const DRW_Tolerance& tol) override;
     void addSolid(const DRW_Solid& data) override;
     void addMText(const DRW_MText& data) override;
+    /** Build an RS_MText from a DRW_MText payload, handling alignment / drawing
+     *  direction / line spacing / oldMText legacy correction.  Caller takes
+     *  ownership of the returned entity (parent is null). */
+    RS_MText* mtextEntityFromDRW(const DRW_MText& data);
     void addDimAlign(const DRW_DimAligned *data) override;
     void addDimLinear(const DRW_DimLinear *data) override;
     void addDimRadial(const DRW_DimRadial *data) override;
@@ -128,6 +133,7 @@ public:
     void addViewport(const DRW_Viewport& /*data*/) override{}
     void addImage(const DRW_Image* data) override;
     void linkImage(const DRW_ImageDef* data) override;
+    void addWipeout(const DRW_Image* data) override;
 
     void add3dFace(const DRW_3Dface& data) override;
     void addComment(const char*) override;
@@ -186,6 +192,7 @@ public:
     void writeText(RS_Text* t);
     void writeHatch(RS_Hatch* h);
     void writeImage(RS_Image* i);
+    void writeWipeout(RS_Wipeout* w);
     void writeLeader(RS_Leader* l);
     void writeDimension(RS_Dimension* d);
     void writePolyline(RS_Polyline* p);
