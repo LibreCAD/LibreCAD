@@ -1940,15 +1940,20 @@ bool DRW_Hatch::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
     solid = buf->getBit();
     associative = buf->getBit();
     loopsnum = buf->getBitLong();
+    DRW_DBG("solid: "); DRW_DBG(solid); DRW_DBG(" associative: "); DRW_DBG(associative);
+    DRW_DBG(" loopsnum: "); DRW_DBG(loopsnum); DRW_DBG("\n");
 
     //read loops
     for (dint32 i = 0 ; i < loopsnum; ++i){
         loop = std::make_shared<DRW_HatchLoop>(buf->getBitLong());
         havePixelSize |= loop->type & 4;
+        DRW_DBG(" loop["); DRW_DBG(i); DRW_DBG("] type: "); DRW_DBG(loop->type);
         if (!(loop->type & 2)){ //Not polyline
             dint32 numPathSeg = buf->getBitLong();
+            DRW_DBG(" numPathSeg: "); DRW_DBG(numPathSeg); DRW_DBG("\n");
             for (dint32 j = 0; j<numPathSeg;++j){
                 duint8 typePath = buf->getRawChar8();
+                DRW_DBG("  seg["); DRW_DBG(j); DRW_DBG("] typePath: "); DRW_DBG(typePath); DRW_DBG("\n");
                 if (typePath == 1){ //line
                     addLine();
                     line->basePoint = buf->get2RawDouble();
@@ -2010,6 +2015,8 @@ bool DRW_Hatch::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
             bool asBulge = buf->getBit();
             pline->flags = buf->getBit();//closed bit
             dint32 numVert = buf->getBitLong();
+            DRW_DBG(" asBulge: "); DRW_DBG(asBulge); DRW_DBG(" closed: "); DRW_DBG(pline->flags);
+            DRW_DBG(" numVert: "); DRW_DBG(numVert); DRW_DBG("\n");
             for (dint32 j = 0; j<numVert;++j){
                 DRW_Vertex2D v;
                 v.x = buf->getRawDouble();

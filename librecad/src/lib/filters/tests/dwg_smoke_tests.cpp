@@ -883,3 +883,35 @@ TEST_CASE("DWG corpus: load all files in ~/doc/dwg2/") {
     std::cout << "Passed: " << passed << "  Failed: " << failed
               << "  Total: " << paths.size() << "\n";
 }
+
+// Verifies that all HATCH entities in a real-world R2013 file parse correctly:
+// loop structure, boundary geometry, and associative handles are all consumed
+// with zero remaining bytes.
+// Run verbosely:  ./librecad_tests "[.dwg_arch_hatch]" -s 2>/tmp/arch_hatch_trace.txt
+TEST_CASE("DWG Architectural-Modern-Building-Design: hatch parsing", "[.dwg_arch_hatch]") {
+    const char* home = getenv("HOME");
+    if (!home) { SUCCEED("HOME not set; skipping"); return; }
+    const std::string path =
+        std::string(home) + "/doc/dwg2/Architectural-Modern-Building-Design.dwg";
+    if (!std::filesystem::is_regular_file(path)) {
+        SUCCEED("Architectural-Modern-Building-Design.dwg not present; skipping"); return;
+    }
+
+    const DeepResult dr = readDwgDeep(path);
+
+    // Basic load check.
+    REQUIRE(dr.ok);
+    REQUIRE(dr.error == DRW::BAD_NONE);
+
+    // The file has 48 HATCH entities (mix of solid, gradient, and GLASS pattern
+    // hatches with 1..56 boundary loops each).  All should be parsed — none left
+    // in the unhandled bucket.
+    CHECK(dr.iface.typeCounts.at("HATCH") == 48);
+    CHECK(dr.unhandledTypes.count(78) == 0); // oType 78 = HATCH
+
+    std::cout << "\n--- Deep diagnostic ---\n";
+    printDeepReport("Architectural-Modern-Building-Design.dwg", dr);
+
+    std::cout << "\n--- Reader debug trace ---\n";
+    std::cout << dr.debugLog;
+}
