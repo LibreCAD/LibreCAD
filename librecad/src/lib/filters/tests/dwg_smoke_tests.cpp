@@ -17,6 +17,7 @@
 #include <iostream>
 #include <map>
 #include <regex>
+#include <set>
 #include <sstream>
 #include <stdexcept>
 #include <string>
@@ -1136,4 +1137,58 @@ TEST_CASE("DWG Architectural-Modern-Building-Design: hatch fill pipeline", "[.dw
               << "  Contour errors: " << contourErrors
               << "  Loop-loss hatches: " << loopLoss
               << "  Total: " << iface.hatches.size() << "\n";
+}
+
+// Verifies that trolley_structure.dwg (AC1024/R2010, ~3218 entities, 79 blocks,
+// 13 layers) loads cleanly with every entity type properly dispatched into a
+// handler.  No oTypes should land in the unhandled bucket.
+// Run:  ./librecad_tests "[.dwg_trolley]" -s
+TEST_CASE("DWG trolley_structure: entity population", "[.dwg_trolley]") {
+    const char* home = getenv("HOME");
+    if (!home) { SUCCEED("HOME not set; skipping"); return; }
+    const std::string path =
+        std::string(home) + "/doc/dwg2/trolley_structure.dwg";
+    if (!std::filesystem::is_regular_file(path)) {
+        SUCCEED("trolley_structure.dwg not present; skipping"); return;
+    }
+
+    const DeepResult dr = readDwgDeep(path);
+
+    REQUIRE(dr.ok);
+    REQUIRE(dr.error == DRW::BAD_NONE);
+    REQUIRE(dr.version == DRW::AC1024);
+
+    // Inventory of standard graphical-entity oTypes (visible 2D geometry).
+    // OBJECTS-section types (DICTIONARY=42, MLINESTYLE=73, XRECORD=79,
+    // PLACEHOLDER=80, LAYOUT=82) and custom oTypes >=500 (AutoCAD Mechanical
+    // proxy/AM_ classes) are NOT entities and may legitimately appear in the
+    // unhandled bucket — they don't carry drawable geometry.
+    static const std::set<int> kGraphicalOTypes = {
+        1, 7, 8, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28,
+        29, 30, 31, 32, 33, 34, 35, 36, 40, 41, 44, 45, 46, 47, 77, 78, 101
+    };
+    int unhandledGraphicalLost = 0;
+    for (const auto& [oType, count] : dr.unhandledTypes) {
+        if (kGraphicalOTypes.count(oType)) {
+            std::cout << "  *** LOST graphical entity oType=" << oType
+                      << " name=" << (oTypeName(oType) ? oTypeName(oType) : "?")
+                      << " count=" << count << "\n";
+            unhandledGraphicalLost += count;
+        }
+    }
+    CHECK(unhandledGraphicalLost == 0);
+
+    // Counts observed at 2026-05-04 from libdxfrw against this file.
+    // Drift in any of these flags either reader regression or upstream-file change.
+    CHECK(dr.iface.total() == 3218);
+    CHECK(dr.iface.blocks == 79);
+    CHECK(dr.iface.layers == 13);
+    CHECK(dr.iface.typeCounts.at("LINE")       == 1652);
+    CHECK(dr.iface.typeCounts.at("ARC")        == 711);
+    CHECK(dr.iface.typeCounts.at("POINT")      == 652);
+    CHECK(dr.iface.typeCounts.at("CIRCLE")     == 161);
+    CHECK(dr.iface.typeCounts.at("LWPOLYLINE") == 41);
+    CHECK(dr.iface.typeCounts.at("VIEWPORT")   == 1);
+
+    printDeepReport("trolley_structure.dwg", dr);
 }
