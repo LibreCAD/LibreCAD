@@ -27,6 +27,17 @@
 #include "intern/drw_dbg.h"
 #include "libdwgr.h"
 
+// LibreCAD entity headers for end-to-end DRW→RS_Hatch pipeline tests.
+#include "lc_containertraverser.h"
+#include "rs_arc.h"
+#include "rs_circle.h"
+#include "rs_ellipse.h"
+#include "rs_entitycontainer.h"
+#include "rs_hatch.h"
+#include "rs_line.h"
+#include "rs_math.h"
+#include "rs_polyline.h"
+
 namespace {
 
 // ---- capturing DRW debug printer -------------------------------------------
@@ -523,6 +534,139 @@ const FileInfo kTestFiles[] = {
     {"visualization_-_sun_and_sky_demo.dwg",                     true},
 };
 
+// ---- DRW_Hatch → RS_Hatch pipeline (mirrors RS_FilterDXFRW::addHatch) ----------
+
+// Builds an RS_Hatch with boundary loops populated from DRW_Hatch data.
+// Replicates the boundary-construction logic of RS_FilterDXFRW::addHatch without
+// needing a live document context.  Does NOT call update(); caller owns the result.
+RS_Hatch* buildRS_Hatch(const DRW_Hatch* data) {
+    auto* hatch = new RS_Hatch(nullptr,
+        RS_HatchData(data->solid != 0, data->scale, data->angle,
+                     QString::fromUtf8(data->name.c_str())));
+
+    for (const auto& loop : data->looplist) {
+        if (loop->type & 32) continue;  // skip textbox-boundary loops
+
+        auto* hatchLoop = new RS_EntityContainer(hatch);
+        hatchLoop->setLayer(nullptr);
+        hatch->addEntity(hatchLoop);
+
+        if (loop->type & 2) {
+            // Polyline boundary: convert to line/arc segments via RS_Polyline.
+            if (loop->objlist.empty()) continue;
+            auto* pline = static_cast<DRW_LWPolyline*>(loop->objlist.at(0).get());
+            RS_Polyline poly{nullptr,
+                             RS_PolylineData(RS_Vector(false), RS_Vector(false), pline->flags)};
+            for (const auto& v : pline->vertlist)
+                poly.addVertex(RS_Vector{v->x, v->y}, v->bulge);
+            for (RS_Entity* e : lc::LC_ContainerTraverser{poly, RS2::ResolveNone}.entities()) {
+                RS_Entity* tmp = e->clone();
+                tmp->reparent(hatchLoop);
+                tmp->setLayer(nullptr);
+                hatchLoop->addEntity(tmp);
+            }
+        } else {
+            // Explicit-segment boundary: line, arc, ellipse (spline skipped same as filter).
+            for (const auto& seg : loop->objlist) {
+                RS_Entity* e = nullptr;
+                switch (seg->eType) {
+                case DRW::LINE: {
+                    auto* l = static_cast<DRW_Line*>(seg.get());
+                    e = new RS_Line(hatchLoop,
+                                    {{l->basePoint.x, l->basePoint.y},
+                                     {l->secPoint.x,  l->secPoint.y}});
+                    break;
+                }
+                case DRW::ARC: {
+                    auto* a = static_cast<DRW_Arc*>(seg.get());
+                    RS_Vector ctr{a->basePoint.x, a->basePoint.y};
+                    if (a->isccw && a->staangle < 1e-6
+                                 && a->endangle > RS_Math::deg2rad(360) - 1e-6) {
+                        e = new RS_Circle(hatchLoop, {ctr, a->radious});
+                    } else if (a->isccw) {
+                        e = new RS_Arc(hatchLoop,
+                            RS_ArcData(ctr, a->radious,
+                                       RS_Math::correctAngle(a->staangle),
+                                       RS_Math::correctAngle(a->endangle), false));
+                    } else {
+                        e = new RS_Arc(hatchLoop,
+                            RS_ArcData(ctr, a->radious,
+                                       RS_Math::correctAngle(2*M_PI - a->staangle),
+                                       RS_Math::correctAngle(2*M_PI - a->endangle), true));
+                    }
+                    break;
+                }
+                case DRW::ELLIPSE: {
+                    auto* el = static_cast<DRW_Ellipse*>(seg.get());
+                    double a1 = el->staparam, a2 = el->endparam;
+                    if (std::abs(a2 - 2.*M_PI) < 1e-10 && std::abs(a1) < 1e-10) {
+                        a2 = 0.;
+                    } else {
+                        // Mirror of RS_FilterDXFRW::addHatch ellipse angle conversion.
+                        a1 = std::atan(std::tan(a1) / el->ratio);
+                        a2 = std::atan(std::tan(a2) / el->ratio);
+                        if (a1 < 0) { a1 += M_PI; if (el->staparam > M_PI) a1 += M_PI; }
+                        else if (el->staparam > M_PI) a1 += M_PI;
+                        if (a2 < 0) { a2 += M_PI; if (el->endparam > M_PI) a2 += M_PI; }
+                        else if (el->endparam > M_PI) a2 += M_PI;
+                    }
+                    e = new RS_Ellipse(hatchLoop,
+                        {{el->basePoint.x, el->basePoint.y},
+                         {el->secPoint.x,  el->secPoint.y},
+                         el->ratio, a1, a2, !el->isccw});
+                    break;
+                }
+                default:
+                    break;
+                }
+                if (e) { e->setLayer(nullptr); hatchLoop->addEntity(e); }
+            }
+        }
+    }
+    return hatch;
+}
+
+struct HatchFillResult {
+    std::string pattern;
+    bool solid;
+    int declaredLoops;   // loopsnum from DWG
+    int filledLoops;     // countLoops() after update
+    RS_Hatch::RS_HatchError error;
+    double area;
+};
+
+// DRW_Interface that builds + validates/updates an RS_Hatch for every DRW_Hatch received.
+// For solid hatches the full update() pipeline runs (validate + fill + area).
+// For pattern hatches only validate() is called — updatePatternHatch() requires the
+// LibreCAD pattern library singleton which is not initialised in the headless test binary.
+class HatchFillIface : public TypeTrackingIface {
+public:
+    std::vector<HatchFillResult> hatches;
+
+    void addHatch(const DRW_Hatch* e) override {
+        TypeTrackingIface::addHatch(e);
+        std::unique_ptr<RS_Hatch> hatch{buildRS_Hatch(e)};
+
+        RS_Hatch::RS_HatchError error;
+        int filledLoops;
+        double area = 0.0;
+
+        if (hatch->isSolid()) {
+            hatch->update();
+            error      = hatch->getUpdateError();
+            filledLoops = hatch->countLoops();
+            area       = hatch->getTotalArea();
+        } else {
+            // Pattern hatch: validate boundary only; don't attempt pattern rendering.
+            bool valid  = hatch->validate();
+            error       = valid ? RS_Hatch::HATCH_OK : RS_Hatch::HATCH_INVALID_CONTOUR;
+            filledLoops = hatch->countLoops();
+        }
+
+        hatches.push_back({e->name, e->solid != 0, e->loopsnum, filledLoops, error, area});
+    }
+};
+
 } // namespace
 
 TEST_CASE("DWG smoke test: read ~/doc/dwg/*.dwg and report entity counts") {
@@ -914,4 +1058,62 @@ TEST_CASE("DWG Architectural-Modern-Building-Design: hatch parsing", "[.dwg_arch
 
     std::cout << "\n--- Reader debug trace ---\n";
     std::cout << dr.debugLog;
+}
+
+// Verifies that the DRW→RS_Hatch pipeline produces properly filled hatches for
+// every HATCH entity in Architectural-Modern-Building-Design.dwg:
+//   • Solid hatches (42 of 48): must fully succeed (HATCH_OK, area > 0).
+//   • Pattern hatches (6 GLASS): boundary must be valid (no HATCH_INVALID_CONTOUR);
+//     HATCH_PATTERN_NOT_FOUND is accepted because the test env has no pattern library.
+// Run:  ./librecad_tests "[.dwg_arch_hatch_fill]" -s
+TEST_CASE("DWG Architectural-Modern-Building-Design: hatch fill pipeline", "[.dwg_arch_hatch_fill]") {
+    const char* home = getenv("HOME");
+    if (!home) { SUCCEED("HOME not set; skipping"); return; }
+    const std::string path =
+        std::string(home) + "/doc/dwg2/Architectural-Modern-Building-Design.dwg";
+    if (!std::filesystem::is_regular_file(path)) {
+        SUCCEED("Architectural-Modern-Building-Design.dwg not present; skipping"); return;
+    }
+
+    HatchFillIface iface;
+    {
+        dwgR reader(path.c_str());
+        reader.setDebug(DRW::DebugLevel::None);
+        bool ok = reader.read(&iface, true);
+        REQUIRE(ok);
+    }
+
+    REQUIRE(iface.hatches.size() == 48);
+
+    int solidFailed = 0;
+    int contourErrors = 0;
+
+    std::cout << "\n  pattern              solid loops  filledLoops  error  area\n";
+    std::cout << "  " << std::string(70, '-') << "\n";
+
+    for (const auto& r : iface.hatches) {
+        std::cout << "  " << std::setw(20) << std::left << r.pattern
+                  << " " << r.solid
+                  << "    " << std::setw(4) << r.declaredLoops
+                  << " " << std::setw(4) << r.filledLoops
+                  << " err=" << r.error
+                  << " area=" << r.area << "\n";
+
+        // No hatch should have a broken boundary topology.
+        CHECK(r.error != RS_Hatch::HATCH_INVALID_CONTOUR);
+        if (r.error == RS_Hatch::HATCH_INVALID_CONTOUR) ++contourErrors;
+
+        if (r.solid) {
+            // Solid hatches must produce a filled result with positive area.
+            CHECK(r.error == RS_Hatch::HATCH_OK);
+            CHECK(r.filledLoops > 0);
+            CHECK(r.area > 0.0);
+            if (r.error != RS_Hatch::HATCH_OK) ++solidFailed;
+        }
+        // Non-solid (GLASS) hatches: HATCH_PATTERN_NOT_FOUND is expected in headless tests.
+    }
+
+    std::cout << "\n  Solid failed: " << solidFailed
+              << "  Contour errors: " << contourErrors
+              << "  Total: " << iface.hatches.size() << "\n";
 }

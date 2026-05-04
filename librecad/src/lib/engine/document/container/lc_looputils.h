@@ -324,8 +324,10 @@ private:
    */
   RS_Entity* findOutermost(std::vector<RS_Entity*> edges) const;
 
-         // Tolerance for endpoint matching
-  static constexpr double ENDPOINT_TOLERANCE = 1e-10;
+  // Endpoint matching tolerance: must be consistent with VectorKey resolution (SCALE=1e8 → ~5e-9).
+  // Real-world DWG files can have boundary segment endpoints that differ by ~1e-10 due to
+  // floating-point arithmetic in AutoCAD, so 1e-10 is too tight.
+  static constexpr double ENDPOINT_TOLERANCE = 1e-8;
 
   mutable std::unique_ptr<RS_EntityContainer> m_loop;  ///< Current loop being built
 
