@@ -825,14 +825,20 @@ void RS_Painter::addEllipseArcToPath(QPainterPath& localPath, const RS_Vector& u
 
 void RS_Painter::drawEllipseSegmentBySplinePointsUI(const RS_Vector& uiRadii, double startRad, double lenRad, QPainterPath &path, bool closed)
 {
-    double r = std::max(uiRadii.x, uiRadii.y);
-    // maximum angular step size: using this angular step size keeps the maximum
-    // deviation of an arc from its parabola fitting
-    const double dParam = std::pow(1./32. / r, 1. / 4.);
+    // The interpolating-quadratic-spline error for samples taken uniformly in the
+    // ellipse angle parameter is e_max = max(a,b)^3 * h^4 / (24 * min(a,b)^2)
+    // (derivation in RS_Ellipse::createPainterPath). Using just max(a,b) as in a
+    // circle approximation drastically undercounts segments for flat ellipses; for
+    // a 100:1 ellipse with a=10000 px, b=100 px, the true worst-case error at h=2pi/24
+    // is ~20000 px. Calibrate against the curvature-aware r so the per-segment error
+    // tracks ~0.5 px regardless of axis ratio, matching pathForParametricCurve.
+    const double maxSemi = std::max(uiRadii.x, uiRadii.y);
+    const double minSemi = std::min(uiRadii.x, uiRadii.y);
+    const double r = (minSemi > RS_TOLERANCE)
+        ? (maxSemi * maxSemi * maxSemi) / (minSemi * minSemi)
+        : maxSemi;
+    const double dParam = std::pow(12. / r, 1. / 4.);
     int numSegments = std::max(1, int(std::ceil(std::abs(lenRad) / dParam)));
-  // Avoid performance issue: too many points when zoomed in
-  // The maximum rendering error is relaxed
-    numSegments = std::min(24, numSegments);
     // Don't duplicate first point for closed
     int numPoints = closed ? numSegments : numSegments + 1;
     double delta = lenRad / numSegments;
