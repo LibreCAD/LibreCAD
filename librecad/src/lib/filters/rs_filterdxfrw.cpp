@@ -926,11 +926,13 @@ void RS_FilterDXFRW::addSpline(const DRW_Spline* data) {
     setEntityAttributes(spline, data);
     m_currentContainer->addEntity(spline);
 
-    // Control points and weights
+    // Control points and weights. Non-rational B-splines have no weight array
+    // (weight=1.0 implied); only warn for rational splines (flag bit 2).
     size_t numCtrl = data->controllist.size();
-    if (numCtrl != data->weightlist.size()) {
+    bool isRational = (data->flags & 0x4) != 0;
+    if (isRational && numCtrl != data->weightlist.size()) {
         RS_DEBUG->print(RS_Debug::D_WARNING,
-                        "RS_FilterDXFRW::addSpline: control points (%zu) != weights (%zu)",
+                        "RS_FilterDXFRW::addSpline: rational spline control points (%zu) != weights (%zu)",
                         numCtrl, data->weightlist.size());
     }
 

@@ -16,10 +16,12 @@
 #include <unordered_map>
 #include <list>
 #include <memory>
+#include <vector>
 #include "drw_textcodec.h"
 #include "dwgutil.h"
 #include "dwgbuffer.h"
 #include "../libdwgr.h"
+#include "../drw_entities.h"
 
 class objHandle{
 public:
@@ -170,6 +172,14 @@ public:
     std::unordered_map<duint32, DRW_AppId*> appIdmap;
     std::unordered_map<duint32, DRW_View*> viewmap;
     std::unordered_map<duint32, DRW_UCS*> ucsmap;
+
+    // Buffers for ATTRIB attached-attlist routing in processDwgEntity.
+    // m_pendingInserts: INSERT entities awaiting their ATTRIB children + SEQEND
+    //                   before being dispatched to addInsert.  Keyed by INSERT handle.
+    // m_orphanAttribs:  ATTRIB entities seen before their owning INSERT.
+    //                   Keyed by parent (INSERT) handle.
+    std::unordered_map<duint32, DRW_Insert> m_pendingInserts;
+    std::unordered_map<duint32, std::vector<std::shared_ptr<DRW_Attrib>>> m_orphanAttribs;
 //    duint32 currBlock;
     duint8 maintenanceVersion{0};
 

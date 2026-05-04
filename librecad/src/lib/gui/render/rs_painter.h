@@ -263,8 +263,6 @@ public:
         return 3000;
     }
 
-    void drawEllipseBySplinePointsUI(const RS_Ellipse& ellipse, QPainterPath &path);
-
     /**
      * @brief Generates a clipped QPainterPath for a parametric entity (arc, circle, ellipse, etc.)
      *        by finding viewport border intersections and approximating visible segments.
@@ -291,9 +289,11 @@ public:
      *      * @param getPointFromParam Function that converts a parameter value → world point on the curve.
      *                          Example for arc/circle:    [](double t){ return center + RS_Vector::polar(radius, t); }
      *                          Example for ellipse:       [](double t){ return getEllipsePoint(t); }
-     *      * @param approxRadius      Reference radius used to control approximation quality / step size.
+     *      * @param approxRadius      Reference curvature radius used to control approximation quality / step size.
      *                          • circle → radius
-     *                          • ellipse → major radius (conservative choice)
+     *                          • ellipse → max(a,b)^3 / min(a,b)^2 (worst-case error
+     *                            location is the sharper-axis tip when sampling uniformly
+     *                            in the ellipse angle parameter)
      *                          Larger values produce fewer segments (coarser approximation).
      *      * @note
      *   - The generated path is **not** automatically closed.
@@ -356,9 +356,9 @@ public:
      *      * @param getPointAtParam   Functor/lambda that maps a parameter value → world coordinate (RS_Vector)
      *                          Example for circle:    [this](double t){ return center + polar(radius, t); }
      *                          Example for ellipse:   [this](double t){ return getEllipsePoint(t); }
-     *      * @param approxRadius      Reference radius used to estimate approximation error / step size.
+     *      * @param approxRadius      Reference curvature radius used to estimate approximation error / step size.
      *                          • For circles → radius
-     *                          • For ellipses → major radius (conservative choice)
+     *                          • For ellipses → max(a,b)^3 / min(a,b)^2
      *                          Larger values → coarser approximation (fewer segments)
      *                          Smaller values → finer approximation (more segments, better quality)
      *      * Typical usage pattern in entity classes:

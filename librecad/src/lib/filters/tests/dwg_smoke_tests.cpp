@@ -1192,3 +1192,46 @@ TEST_CASE("DWG trolley_structure: entity population", "[.dwg_trolley]") {
 
     printDeepReport("trolley_structure.dwg", dr);
 }
+
+// Verifies that gear_pump_subassy.dwg (AC1024/R2010) loads cleanly with every
+// graphical entity properly dispatched into a typed handler.
+// Run:  ./librecad_tests "[.dwg_gear_pump]" -s
+TEST_CASE("DWG gear_pump_subassy: entity population", "[.dwg_gear_pump]") {
+    const char* home = getenv("HOME");
+    if (!home) { SUCCEED("HOME not set; skipping"); return; }
+    const std::string path =
+        std::string(home) + "/doc/dwg2/gear_pump_subassy.dwg";
+    if (!std::filesystem::is_regular_file(path)) {
+        SUCCEED("gear_pump_subassy.dwg not present; skipping"); return;
+    }
+
+    const DeepResult dr = readDwgDeep(path);
+
+    REQUIRE(dr.ok);
+    REQUIRE(dr.error == DRW::BAD_NONE);
+    REQUIRE(dr.version == DRW::AC1024);
+
+    // No standard graphical entity (oType in valid 2D-graphic set) may be lost
+    // to the unhandled bucket. OBJECTS-section types and custom oTypes >=500
+    // are non-graphical and are accepted as unhandled.
+    static const std::set<int> kGraphicalOTypes = {
+        1, 7, 8, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28,
+        29, 30, 31, 32, 33, 34, 35, 36, 40, 41, 44, 45, 46, 47, 77, 78, 101
+    };
+    int unhandledGraphicalLost = 0;
+    for (const auto& [oType, count] : dr.unhandledTypes) {
+        if (kGraphicalOTypes.count(oType)) {
+            std::cout << "  *** LOST graphical entity oType=" << oType
+                      << " name=" << (oTypeName(oType) ? oTypeName(oType) : "?")
+                      << " count=" << count << "\n";
+            unhandledGraphicalLost += count;
+        }
+    }
+    CHECK(unhandledGraphicalLost == 0);
+
+    CHECK(dr.iface.total() > 0);
+    CHECK(dr.iface.blocks > 0);
+    CHECK(dr.iface.layers > 0);
+
+    printDeepReport("gear_pump_subassy.dwg", dr);
+}

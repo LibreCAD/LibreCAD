@@ -970,6 +970,17 @@ bool dwgReader::readDwgEntities(DRW_Interface& intfa, dwgBuffer *dbuf){
         ObjectMap.erase( itB);
         itB = ObjectMap.begin();
     }
+
+    // Flush any INSERTs still awaiting ATTRIB children (defensive — handles
+    // missing SEQEND or ATTRIB entries that failed to parse).
+    for (auto& kv : m_pendingInserts)
+        intfa.addInsert(kv.second);
+    m_pendingInserts.clear();
+    if (!m_orphanAttribs.empty()) {
+        DRW_DBG("\nDropping orphan ATTRIB groups: "); DRW_DBG(m_orphanAttribs.size()); DRW_DBG("\n");
+        m_orphanAttribs.clear();
+    }
+
     return ret;
 }
 
@@ -1052,9 +1063,66 @@ bool dwgReader::readDwgEntity(dwgBuffer *dbuf, objHandle& obj, DRW_Interface& in
             if (entryParse( e, buff, bs, ret)) {
                 e.name = findTableName(DRW::BLOCK_RECORD,
                                        e.blockRecH.ref);//RLZ: find as block or blockrecord (ps & ps0)
-                intfa.addInsert(e);
+
+                // Drain any orphan ATTRIBs already seen for this INSERT.
+                auto orphIt = m_orphanAttribs.find(e.handle);
+                if (orphIt != m_orphanAttribs.end()) {
+                    for (auto& a : orphIt->second)
+                        e.attlist.push_back(std::move(a));
+                    m_orphanAttribs.erase(orphIt);
+                }
+
+                if (e.attribHandles.empty() ||
+                    e.attlist.size() >= e.attribHandles.size()) {
+                    // No pending children — dispatch immediately.
+                    intfa.addInsert(e);
+                } else {
+                    // Defer: wait for remaining ATTRIBs (or end-of-section flush).
+                    m_pendingInserts.emplace(e.handle, std::move(e));
+                }
             }
             break; }
+        case 2: {//ATTRIB
+            auto a = std::make_shared<DRW_Attrib>();
+            if (entryParse(*a, buff, bs, ret)) {
+                a->style = findTableName(DRW::STYLE, a->styleH.ref);
+                const duint32 ownerH = a->parentHandle;
+                auto pendIt = m_pendingInserts.find(ownerH);
+                if (pendIt != m_pendingInserts.end()) {
+                    pendIt->second.attlist.push_back(a);
+                    if (pendIt->second.attlist.size() >= pendIt->second.attribHandles.size()) {
+                        intfa.addInsert(pendIt->second);
+                        m_pendingInserts.erase(pendIt);
+                    }
+                } else {
+                    m_orphanAttribs[ownerH].push_back(a);
+                }
+            }
+            break; }
+        case 3: {//ATTDEF — typically owned by BLOCK_RECORD; route same as ATTRIB
+                  //and rely on end-of-section flush for the orphan path.
+            auto a = std::make_shared<DRW_Attdef>();
+            if (entryParse(*a, buff, bs, ret)) {
+                a->style = findTableName(DRW::STYLE, a->styleH.ref);
+                const duint32 ownerH = a->parentHandle;
+                auto pendIt = m_pendingInserts.find(ownerH);
+                if (pendIt != m_pendingInserts.end()) {
+                    pendIt->second.attlist.push_back(a);
+                    if (pendIt->second.attlist.size() >= pendIt->second.attribHandles.size()) {
+                        intfa.addInsert(pendIt->second);
+                        m_pendingInserts.erase(pendIt);
+                    }
+                } else {
+                    m_orphanAttribs[ownerH].push_back(a);
+                }
+            }
+            break; }
+        case 6:
+            //SEQEND — terminator for INSERT/POLYLINE attribute/vertex chain.
+            //Carries no geometry; pending inserts are flushed once their
+            //attlist matches attribHandles, and the end-of-section flush
+            //catches any with missing children.  Silently consumed here.
+            break;
         case 77: {
             DRW_LWPolyline e;
             if (entryParse( e, buff, bs, ret)) {

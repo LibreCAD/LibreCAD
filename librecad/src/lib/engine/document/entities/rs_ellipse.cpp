@@ -2133,6 +2133,10 @@ void RS_Ellipse::draw(RS_Painter* painter) {
   QPainterPath path(startPos);
   path.moveTo(startPos);
   createPainterPath(painter, path);
+  // A full ellipse is a closed contour; close the subpath so the stroke uses
+  // the pen's join style at the closure point rather than its cap style.
+  if (!isArc())
+    path.closeSubpath();
   painter->drawPath(path);
 }
 
@@ -2143,7 +2147,23 @@ void RS_Ellipse::createPainterPath(RS_Painter* painter, QPainterPath& path) cons
         fullAngleLength = - fullAngleLength;
     auto getParamFunc = [this](const RS_Vector& vp) { return getEllipseAngle(vp); };
     auto getPointFunc = [this](double param) { return getEllipsePoint(param); };
-    painter->pathForEntity(path, this, baseAngle, fullAngleLength, getParamFunc, getPointFunc, getMajorRadius());
+    // pathForParametricCurve calibrates the step assuming an arc with constant
+    // curvature radius equal to approxRadius and uniform-arc-length sampling.
+    // We sample uniformly in the ellipse's angle parameter t, so combining the
+    // local arc length |r'(t)| = sqrt(a^2 sin^2 t + b^2 cos^2 t) with the local
+    // curvature radius rho(t) yields the per-segment error
+    //     e(t) = (ab)^3 h^4 / (24 (a^2 sin^2 t + b^2 cos^2 t)^(5/2))
+    // which is maximized at the SHARPER axis tip (smallest a^2 s^2 + b^2 c^2).
+    // The bound is e_max = max(a,b)^3 h^4 / (24 min(a,b)^2), so passing
+    // approxRadius = max^3 / min^2 keeps the calibration's 1-px target valid.
+    const double a = getMajorRadius();
+    const double b = getMinorRadius();
+    const double maxSemi = std::max(a, b);
+    const double minSemi = std::min(a, b);
+    const double approxRadius = (minSemi > RS_TOLERANCE)
+        ? (maxSemi * maxSemi * maxSemi) / (minSemi * minSemi)
+        : maxSemi;
+    painter->pathForEntity(path, this, baseAngle, fullAngleLength, getParamFunc, getPointFunc, approxRadius);
 }
 
 /**

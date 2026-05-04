@@ -1151,12 +1151,15 @@ bool DRW_Insert::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
         if (version < DRW::AC1018) {//2000-
             dwgHandle attH = buf->getHandle(); /* H 2 BLOCK HEADER (hard pointer) */
             DRW_DBG("first attrib Handle: "); DRW_DBGHL(attH.code, attH.size, attH.ref); DRW_DBG("\n");
+            attribHandles.push_back(attH);
             attH = buf->getHandle(); /* H 2 BLOCK HEADER (hard pointer) */
             DRW_DBG("second attrib Handle: "); DRW_DBGHL(attH.code, attH.size, attH.ref); DRW_DBG("\n");
+            attribHandles.push_back(attH);
         } else {
             for (duint8 i=0; i< objCount; ++i){
                 dwgHandle attH = buf->getHandle(); /* H 2 BLOCK HEADER (hard pointer) */
                 DRW_DBG("attrib Handle #"); DRW_DBG(i); DRW_DBG(": "); DRW_DBGHL(attH.code, attH.size, attH.ref); DRW_DBG("\n");
+                attribHandles.push_back(attH);
             }
         }
         seqendH = buf->getHandle(); /* H 2 BLOCK HEADER (hard pointer) */
@@ -1466,6 +1469,207 @@ bool DRW_Text::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
     DRW_DBG("text style Handle: "); DRW_DBGHL(styleH.code, styleH.size, styleH.ref); DRW_DBG("\n");
 
     /* CRC X --- */
+    return buf->isGood();
+}
+
+bool DRW_Attrib::parseCode(int code, const std::unique_ptr<dxfReader>& reader){
+    switch (code) {
+    case 2:
+        tag = reader->getUtf8String();
+        break;
+    case 70:
+        attribFlags = reader->getInt32();
+        break;
+    case 280:
+        // Lock position flag (R2010+ DXF group code)
+        lockPosition = reader->getInt32() != 0;
+        break;
+    default:
+        return DRW_Text::parseCode(code, reader);
+    }
+    return true;
+}
+
+bool DRW_Attrib::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
+    dwgBuffer sBuff = *buf;
+    dwgBuffer *sBuf = buf;
+    if (version > DRW::AC1018) {//2007+
+        sBuf = &sBuff; //separate buffer for strings
+    }
+    bool ret = DRW_Entity::parseDwg(version, buf, sBuf, bs);
+    if (!ret)
+        return ret;
+    DRW_DBG("\n***************************** parsing attrib *********************************************\n");
+
+    // R2010+: leading version byte (per ODA spec §20.4.65)
+    if (version >= DRW::AC1024) {
+        attVersion = buf->getRawChar8();
+        DRW_DBG("att version: "); DRW_DBG(attVersion); DRW_DBG("\n");
+    }
+
+    // Inline TEXT subtype data (mirrors DRW_Text::parseDwg layout, sans handles)
+    duint8 data_flags = 0x00;
+    if (version > DRW::AC1014) {
+        data_flags = buf->getRawChar8();
+        if (!(data_flags & 0x01)) {
+            basePoint.z = buf->getRawDouble();
+        }
+    } else {
+        basePoint.z = buf->getBitDouble();
+    }
+    basePoint.x = buf->getRawDouble();
+    basePoint.y = buf->getRawDouble();
+    DRW_DBG("Insert point: "); DRW_DBGPT(basePoint.x, basePoint.y, basePoint.z); DRW_DBG("\n");
+    if (version > DRW::AC1014) {
+        if (!(data_flags & 0x02)) {
+            secPoint.x = buf->getDefaultDouble(basePoint.x);
+            secPoint.y = buf->getDefaultDouble(basePoint.y);
+        } else {
+            secPoint = basePoint;
+        }
+    } else {
+        secPoint.x = buf->getRawDouble();
+        secPoint.y = buf->getRawDouble();
+    }
+    secPoint.z = basePoint.z;
+    extPoint = buf->getExtrusion(version > DRW::AC1014);
+    thickness = buf->getThickness(version > DRW::AC1014);
+    if (version > DRW::AC1014) {
+        if (!(data_flags & 0x04)) oblique = buf->getRawDouble();
+        if (!(data_flags & 0x08)) angle = buf->getRawDouble();
+        height = buf->getRawDouble();
+        if (!(data_flags & 0x10)) widthscale = buf->getRawDouble();
+    } else {
+        oblique = buf->getBitDouble();
+        angle = buf->getBitDouble();
+        height = buf->getBitDouble();
+        widthscale = buf->getBitDouble();
+    }
+    angle *= ARAD;
+    text = sBuf->getVariableText(version, false);
+    DRW_DBG("text value: "); DRW_DBG(text.c_str()); DRW_DBG("\n");
+    if (!(data_flags & 0x20)) textgen = buf->getBitShort();
+    if (!(data_flags & 0x40)) alignH = (HAlign)buf->getBitShort();
+    if (!(data_flags & 0x80)) alignV = (VAlign)buf->getBitShort();
+
+    // ATTRIB-specific fields
+    tag = sBuf->getVariableText(version, false);
+    DRW_DBG("attrib tag: "); DRW_DBG(tag.c_str()); DRW_DBG("\n");
+
+    duint16 fieldLen = buf->getBitShort(); /* Field length BS (always 0) */
+    DRW_UNUSED(fieldLen);
+
+    attribFlags = buf->getRawChar8();
+    DRW_DBG("attrib flags: "); DRW_DBG(attribFlags); DRW_DBG("\n");
+
+    if (version >= DRW::AC1024) {
+        lockPosition = buf->getBit();
+        DRW_DBG("lock position: "); DRW_DBG(lockPosition); DRW_DBG("\n");
+    }
+
+    /* Common Entity Handle Data */
+    ret = DRW_Entity::parseDwgEntHandle(version, buf);
+    if (!ret)
+        return ret;
+
+    styleH = buf->getHandle();
+    DRW_DBG("text style Handle: "); DRW_DBGHL(styleH.code, styleH.size, styleH.ref); DRW_DBG("\n");
+
+    return buf->isGood();
+}
+
+bool DRW_Attdef::parseCode(int code, const std::unique_ptr<dxfReader>& reader){
+    switch (code) {
+    case 3:
+        prompt = reader->getUtf8String();
+        break;
+    default:
+        return DRW_Attrib::parseCode(code, reader);
+    }
+    return true;
+}
+
+bool DRW_Attdef::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
+    // ATTDEF mirrors ATTRIB layout but adds a prompt string after the tag.
+    // Implementation duplicates ATTRIB::parseDwg in order to inject the
+    // prompt read at the correct offset; refactor opportunity if a third
+    // sibling appears.
+    dwgBuffer sBuff = *buf;
+    dwgBuffer *sBuf = buf;
+    if (version > DRW::AC1018) {
+        sBuf = &sBuff;
+    }
+    bool ret = DRW_Entity::parseDwg(version, buf, sBuf, bs);
+    if (!ret)
+        return ret;
+    DRW_DBG("\n***************************** parsing attdef *********************************************\n");
+
+    if (version >= DRW::AC1024) {
+        attVersion = buf->getRawChar8();
+    }
+
+    duint8 data_flags = 0x00;
+    if (version > DRW::AC1014) {
+        data_flags = buf->getRawChar8();
+        if (!(data_flags & 0x01)) basePoint.z = buf->getRawDouble();
+    } else {
+        basePoint.z = buf->getBitDouble();
+    }
+    basePoint.x = buf->getRawDouble();
+    basePoint.y = buf->getRawDouble();
+    if (version > DRW::AC1014) {
+        if (!(data_flags & 0x02)) {
+            secPoint.x = buf->getDefaultDouble(basePoint.x);
+            secPoint.y = buf->getDefaultDouble(basePoint.y);
+        } else {
+            secPoint = basePoint;
+        }
+    } else {
+        secPoint.x = buf->getRawDouble();
+        secPoint.y = buf->getRawDouble();
+    }
+    secPoint.z = basePoint.z;
+    extPoint = buf->getExtrusion(version > DRW::AC1014);
+    thickness = buf->getThickness(version > DRW::AC1014);
+    if (version > DRW::AC1014) {
+        if (!(data_flags & 0x04)) oblique = buf->getRawDouble();
+        if (!(data_flags & 0x08)) angle = buf->getRawDouble();
+        height = buf->getRawDouble();
+        if (!(data_flags & 0x10)) widthscale = buf->getRawDouble();
+    } else {
+        oblique = buf->getBitDouble();
+        angle = buf->getBitDouble();
+        height = buf->getBitDouble();
+        widthscale = buf->getBitDouble();
+    }
+    angle *= ARAD;
+    text = sBuf->getVariableText(version, false);
+    if (!(data_flags & 0x20)) textgen = buf->getBitShort();
+    if (!(data_flags & 0x40)) alignH = (HAlign)buf->getBitShort();
+    if (!(data_flags & 0x80)) alignV = (VAlign)buf->getBitShort();
+
+    tag = sBuf->getVariableText(version, false);
+    DRW_DBG("attdef tag: "); DRW_DBG(tag.c_str()); DRW_DBG("\n");
+
+    duint16 fieldLen = buf->getBitShort();
+    DRW_UNUSED(fieldLen);
+
+    attribFlags = buf->getRawChar8();
+
+    if (version >= DRW::AC1024) {
+        lockPosition = buf->getBit();
+    }
+
+    // ATTDEF prompt follows attrib body
+    prompt = sBuf->getVariableText(version, false);
+    DRW_DBG("attdef prompt: "); DRW_DBG(prompt.c_str()); DRW_DBG("\n");
+
+    ret = DRW_Entity::parseDwgEntHandle(version, buf);
+    if (!ret)
+        return ret;
+
+    styleH = buf->getHandle();
+
     return buf->isGood();
 }
 

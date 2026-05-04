@@ -33,8 +33,8 @@ namespace DRW {
 //        E3DSOLID, //encrypted proprietary data
 //        ACAD_PROXY_ENTITY,
         ARC,
-//        ATTDEF,
-//        ATTRIB,
+        ATTDEF,
+        ATTRIB,
         BLOCK,// and ENDBLK
 //        BODY, //encrypted proprietary data
         CIRCLE,
@@ -516,6 +516,8 @@ private:
 *  Class to handle insert entries
 *  @author Rallaz
 */
+class DRW_Attrib;
+
 class DRW_Insert : public DRW_Point {
     SETENTFRIENDS
 public:
@@ -545,9 +547,14 @@ public:
     int rowcount;            /*!< row count, code 71 */
     double colspace;         /*!< column space, code 44 */
     double rowspace;         /*!< row space, code 45 */
+    /*!< Attached attribute entities, populated by DWG dispatcher when
+         ATTRIB entities owned by this INSERT are read. */
+    std::vector<std::shared_ptr<DRW_Attrib>> attlist;
 public: //only for read dwg
     dwgHandle blockRecH;
     dwgHandle seqendH; //RLZ: on implement attrib remove this handle from obj list (see pline/vertex code)
+    /*!< Handles of attached ATTRIBs, captured from DRW_Insert::parseDwg. */
+    std::vector<dwgHandle> attribHandles;
 };
 
 //! Class to handle lwpolyline entity
@@ -663,6 +670,55 @@ public:
     enum HAlign alignH;        /*!< horizontal align, code 72 */
     enum VAlign alignV;        /*!< vertical align, code 73 */
     dwgHandle styleH;          /*!< handle for text style */
+};
+
+//! Class to handle ATTRIB entities (block attribute instance).
+/*!
+*  ATTRIB derives from TEXT in both DXF and DWG formats. It carries the
+*  attribute tag plus a flags byte (group 70: 1=invisible, 2=constant,
+*  4=verify, 8=preset). In DWG, ATTRIBs follow their owning INSERT and
+*  are routed to DRW_Insert::attlist by the dispatcher.
+*/
+class DRW_Attrib : public DRW_Text {
+    SETENTFRIENDS
+public:
+    DRW_Attrib() {
+        eType = DRW::ATTRIB;
+        attribFlags = 0;
+        lockPosition = false;
+        attVersion = 0;
+    }
+
+protected:
+    bool parseCode(int code, const std::unique_ptr<dxfReader>& reader) override;
+    virtual bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) override;
+
+public:
+    UTF8STRING tag;            /*!< attribute tag, code 2 */
+    duint8 attribFlags;        /*!< attribute flags, code 70 (1=invisible, 2=constant, 4=verify, 8=preset) */
+    bool lockPosition;         /*!< lock position flag (R2010+) */
+    duint8 attVersion;         /*!< version byte (R2010+) */
+};
+
+//! Class to handle ATTDEF entities (block attribute definition).
+/*!
+*  ATTDEF extends ATTRIB with a prompt string. Lives in BLOCK definitions
+*  as a template; the corresponding ATTRIB instance carries the runtime
+*  value.
+*/
+class DRW_Attdef : public DRW_Attrib {
+    SETENTFRIENDS
+public:
+    DRW_Attdef() {
+        eType = DRW::ATTDEF;
+    }
+
+protected:
+    bool parseCode(int code, const std::unique_ptr<dxfReader>& reader) override;
+    virtual bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) override;
+
+public:
+    UTF8STRING prompt;         /*!< prompt string, code 3 */
 };
 
 //! Class to handle insert entries
