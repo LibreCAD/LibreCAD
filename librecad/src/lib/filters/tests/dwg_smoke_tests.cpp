@@ -629,8 +629,9 @@ RS_Hatch* buildRS_Hatch(const DRW_Hatch* data) {
 struct HatchFillResult {
     std::string pattern;
     bool solid;
-    int declaredLoops;   // loopsnum from DWG
-    int filledLoops;     // countLoops() after update
+    int declaredLoops;    // loopsnum from DWG
+    int rootLoops;        // countLoops() — root loops after hierarchy assignment
+    int allLoops;         // countAllLoops() — roots + all nested children
     RS_Hatch::RS_HatchError error;
     double area;
 };
@@ -648,22 +649,25 @@ public:
         std::unique_ptr<RS_Hatch> hatch{buildRS_Hatch(e)};
 
         RS_Hatch::RS_HatchError error;
-        int filledLoops;
+        int rootLoops, allLoops;
         double area = 0.0;
 
         if (hatch->isSolid()) {
             hatch->update();
-            error      = hatch->getUpdateError();
-            filledLoops = hatch->countLoops();
-            area       = hatch->getTotalArea();
+            error     = hatch->getUpdateError();
+            rootLoops = hatch->countLoops();
+            allLoops  = hatch->countAllLoops();
+            area      = hatch->getTotalArea();
         } else {
             // Pattern hatch: validate boundary only; don't attempt pattern rendering.
-            bool valid  = hatch->validate();
-            error       = valid ? RS_Hatch::HATCH_OK : RS_Hatch::HATCH_INVALID_CONTOUR;
-            filledLoops = hatch->countLoops();
+            bool valid = hatch->validate();
+            error      = valid ? RS_Hatch::HATCH_OK : RS_Hatch::HATCH_INVALID_CONTOUR;
+            rootLoops  = hatch->countLoops();
+            allLoops   = hatch->countAllLoops();
         }
 
-        hatches.push_back({e->name, e->solid != 0, e->loopsnum, filledLoops, error, area});
+        hatches.push_back({e->name, e->solid != 0, e->loopsnum,
+                           rootLoops, allLoops, error, area});
     }
 };
 
@@ -1087,33 +1091,49 @@ TEST_CASE("DWG Architectural-Modern-Building-Design: hatch fill pipeline", "[.dw
 
     int solidFailed = 0;
     int contourErrors = 0;
+    int loopLoss = 0;    // hatches where allLoops < declaredLoops (real boundary loss)
 
-    std::cout << "\n  pattern              solid loops  filledLoops  error  area\n";
+    // Columns: pattern | solid | decl | roots | all | err | area
+    std::cout << "\n  "
+              << std::setw(20) << std::left << "pattern"
+              << std::setw(6) << "solid"
+              << std::setw(6) << "decl"
+              << std::setw(6) << "roots"
+              << std::setw(6) << "all"
+              << std::setw(6) << "err"
+              << "area\n";
     std::cout << "  " << std::string(70, '-') << "\n";
 
     for (const auto& r : iface.hatches) {
         std::cout << "  " << std::setw(20) << std::left << r.pattern
-                  << " " << r.solid
-                  << "    " << std::setw(4) << r.declaredLoops
-                  << " " << std::setw(4) << r.filledLoops
-                  << " err=" << r.error
-                  << " area=" << r.area << "\n";
+                  << std::setw(6) << r.solid
+                  << std::setw(6) << r.declaredLoops
+                  << std::setw(6) << r.rootLoops
+                  << std::setw(6) << r.allLoops
+                  << std::setw(6) << r.error
+                  << r.area << "\n";
 
         // No hatch should have a broken boundary topology.
         CHECK(r.error != RS_Hatch::HATCH_INVALID_CONTOUR);
         if (r.error == RS_Hatch::HATCH_INVALID_CONTOUR) ++contourErrors;
 
+        // Every declared loop must be successfully extracted (no under-extraction from
+        // cross-contamination at shared corners).  allLoops > declaredLoops is acceptable:
+        // a self-intersecting DWG loop can legitimately yield multiple extracted loops.
+        CHECK(r.allLoops >= r.declaredLoops);
+        if (r.allLoops < r.declaredLoops) ++loopLoss;
+
         if (r.solid) {
             // Solid hatches must produce a filled result with positive area.
             CHECK(r.error == RS_Hatch::HATCH_OK);
-            CHECK(r.filledLoops > 0);
+            CHECK(r.rootLoops > 0);
             CHECK(r.area > 0.0);
             if (r.error != RS_Hatch::HATCH_OK) ++solidFailed;
         }
-        // Non-solid (GLASS) hatches: HATCH_PATTERN_NOT_FOUND is expected in headless tests.
     }
 
     std::cout << "\n  Solid failed: " << solidFailed
               << "  Contour errors: " << contourErrors
+              << "  Loop-loss hatches: " << loopLoss
               << "  Total: " << iface.hatches.size() << "\n";
 }
