@@ -3237,9 +3237,45 @@ bool DRW_Leader::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
 
 // Phase 1 placeholder: skeleton class is in place but no parser yet.
 bool DRW_MLeader::parseCode(int code, const std::unique_ptr<dxfReader>& reader){
-    // DXF parsing is implemented in Phase 8 (libdxfrw.cpp::processMultiLeader).
-    // For now route to base.
-    return DRW_Entity::parseCode(code, reader);
+    // DXF MULTILEADER (ODA spec §20.4.48 mapped to DXF group codes).  The
+    // entity-level fields read here mirror the DWG body parser; the
+    // embedded CONTEXT_DATA{} block (§20.4.86) uses group 100 nested
+    // subclass markers + control-flow markers (302 LEADER{, 304 LEADER_LINE{,
+    // 305 }, 303 }, 301 }) and is parsed via the libdxfrw DXF state machine.
+    // Phase 8 captures a minimal subset (entity-level scalars + basic
+    // CONTEXT_DATA points); a full DXF round-trip is Phase 9 follow-up.
+    switch (code) {
+    case 170: leaderType = reader->getInt32(); break;
+    case 171: leaderLineWeight = reader->getInt32(); break;
+    case 172: styleContentType = reader->getInt32(); break;
+    case 173: styleLeftAttach = reader->getInt32(); break;
+    case 95:  styleRightAttach = reader->getInt32(); break;
+    case 174: styleTextAngleType = reader->getInt32(); break;
+    case 175: unknown175 = reader->getInt32(); break;
+    case 176: styleAttachmentType = reader->getInt32(); break;
+    case 178: ipeAlign = reader->getInt32(); break;
+    case 179: justification = reader->getInt32(); break;
+    case 271: attachmentDirection = reader->getInt32(); break;
+    case 272: styleBottomAttach = reader->getInt32(); break;
+    case 273: styleTopAttach = reader->getInt32(); break;
+    case 90:  overrideFlags = reader->getInt32(); break;
+    case 91:  leaderColor = reader->getInt32(); break;
+    case 92:  styleTextColor = reader->getInt32(); break;
+    case 93:  styleBlockColor = reader->getInt32(); break;
+    case 41:  landingDistance = reader->getDouble(); break;
+    case 42:  defaultArrowHeadSize = reader->getDouble(); break;
+    case 43:  styleBlockRotation = reader->getDouble(); break;
+    case 45:  scaleFactor = reader->getDouble(); break;
+    case 290: landingEnabled = (reader->getInt32() != 0); break;
+    case 291: doglegEnabled = (reader->getInt32() != 0); break;
+    case 292: styleTextFrameEnabled = (reader->getInt32() != 0); break;
+    case 293: isAnnotative = (reader->getInt32() != 0); break;
+    case 294: isTextDirectionNegative = (reader->getInt32() != 0); break;
+    case 295: leaderExtendedToText = (reader->getInt32() != 0); break;
+    default:
+        return DRW_Entity::parseCode(code, reader);
+    }
+    return true;
 }
 
 // Helper: parse one AcDbMLeaderObjectContextData::LeaderRoot entry (§20.4.86).

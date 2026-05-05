@@ -3847,6 +3847,9 @@ void RS_FilterDXFRW::writeEntity(RS_Entity* e){
     case RS2::EntityWipeout:
         writeWipeout(static_cast<RS_Wipeout*>(e));
         break;
+    case RS2::EntityMLeader:
+        writeMLeader(static_cast<LC_MLeader*>(e));
+        break;
     default:
         break;
     }
@@ -4766,6 +4769,35 @@ void RS_FilterDXFRW::writeWipeout(RS_Wipeout *w) {
         img.clipPath.emplace_back(v.x - 0.5, v.y - 0.5);
     }
     m_dxfW->writeWipeout(&img);
+}
+
+/**
+ * Serialize an LC_MLeader to DXF MULTILEADER.  Phase 9 emits the
+ * entity-level scalar fields (override flags, leader type/color/weight,
+ * landing/dogleg, attachment types, content type, etc.).  The full
+ * AcDbMLeaderObjectContextData CONTEXT_DATA{} block (root → leader
+ * line → point hierarchy + content branch) is NOT emitted yet — a
+ * full faithful round-trip needs the control-flow group-code state
+ * machine.  Read-side parser can recover what was written; consumers
+ * that depend on geometric round-trip will need the follow-up.
+ */
+void RS_FilterDXFRW::writeMLeader(LC_MLeader *m) {
+    if (m == nullptr) return;
+    DRW_MLeader e;
+    getEntityAttributes(&e, m);
+    const auto& d = m->getData();
+    e.overrideFlags         = 0;  // Phase 9 doesn't track override bits;
+                                  // emit defaults so a re-read picks the
+                                  // entity-level values as authoritative.
+    e.leaderType            = d.leaderType;
+    e.leaderColor           = d.leaderColor;
+    e.landingDistance       = d.landingDistance;
+    e.defaultArrowHeadSize  = d.arrowSize;
+    e.landingEnabled        = d.landingEnabled;
+    e.doglegEnabled         = d.doglegEnabled;
+    e.styleContentType      = d.contentType;
+    e.scaleFactor           = d.scaleFactor;
+    m_dxfW->writeMultiLeader(&e);
 }
 
 /*void RS_FilterDXFRW::writeEntityContainer(DL_WriterA& dw, RS_EntityContainer* con,

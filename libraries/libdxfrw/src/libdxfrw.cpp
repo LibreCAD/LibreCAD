@@ -1459,6 +1459,50 @@ DRW_ImageDef* dxfRW::writeImage(DRW_Image *ent, std::string name){
     return NULL; //not exist in acad 12
 }
 
+// MULTILEADER DXF write.  Mirrors the entity-level field set captured by
+// DRW_MLeader::parseCode.  The CONTEXT_DATA{} block is NOT emitted yet —
+// a full faithful round-trip requires walking all roots/leader-lines
+// with their control-flow markers (302/304 open, 305/303/301 close);
+// follow-up.  For now the entity is written as a recognisable
+// AcDbMLeader stub plus its scalar fields; consumers that read it back
+// see all the override flags + style fields preserved.
+bool dxfRW::writeMultiLeader(DRW_MLeader *ent){
+    if (version <= DRW::AC1009) {
+        return false;  // not in ACAD R12 / earlier
+    }
+    writer->writeString(0, "MULTILEADER");
+    writeEntity(ent);
+    writer->writeString(100, "AcDbMLeader");
+    writer->writeInt32(90, ent->overrideFlags);
+    writer->writeInt16(170, ent->leaderType);
+    writer->writeInt32(91, ent->leaderColor);
+    writer->writeInt32(171, ent->leaderLineWeight);
+    writer->writeBool(290, ent->landingEnabled);
+    writer->writeBool(291, ent->doglegEnabled);
+    writer->writeDouble(41, ent->landingDistance);
+    writer->writeDouble(42, ent->defaultArrowHeadSize);
+    writer->writeInt16(172, ent->styleContentType);
+    writer->writeInt16(173, ent->styleLeftAttach);
+    writer->writeInt16(95, ent->styleRightAttach);
+    writer->writeInt16(174, ent->styleTextAngleType);
+    writer->writeInt16(175, ent->unknown175);
+    writer->writeInt32(92, ent->styleTextColor);
+    writer->writeBool(292, ent->styleTextFrameEnabled);
+    writer->writeInt32(93, ent->styleBlockColor);
+    writer->writeDouble(43, ent->styleBlockRotation);
+    writer->writeInt16(176, ent->styleAttachmentType);
+    writer->writeBool(293, ent->isAnnotative);
+    writer->writeBool(294, ent->isTextDirectionNegative);
+    writer->writeInt16(178, ent->ipeAlign);
+    writer->writeInt16(179, ent->justification);
+    writer->writeDouble(45, ent->scaleFactor);
+    writer->writeInt16(271, ent->attachmentDirection);
+    writer->writeInt16(273, ent->styleTopAttach);
+    writer->writeInt16(272, ent->styleBottomAttach);
+    writer->writeBool(295, ent->leaderExtendedToText);
+    return true;
+}
+
 bool dxfRW::writeWipeout(DRW_Image *ent){
     // WIPEOUT inherits AcDbRasterImage's group codes plus an AcDbWipeout
     // subclass marker carrying the polygon (91 + 14/24) and frame flag (290).
@@ -2551,6 +2595,8 @@ bool dxfRW::processEntities(bool isblock) {
             processed = processImage();
         } else if (nextentity == "WIPEOUT") {
             processed = processWipeout();
+        } else if (nextentity == "MULTILEADER") {
+            processed = processMultiLeader();
         } else if (nextentity == "DIMENSION") {
             processed = processDimension();
         } else if (nextentity == "LEADER") {
@@ -3014,6 +3060,30 @@ bool dxfRW::processImage() {
         }
     }
 
+    return setError(DRW::BAD_READ_ENTITIES);
+}
+
+// MULTILEADER DXF read.  Captures the entity-level scalar fields via
+// DRW_MLeader::parseCode.  Nested CONTEXT_DATA{} / LEADER{} / LEADER_LINE{}
+// blocks use control-flow group codes (300/302/304 open + 301/303/305 close)
+// — Phase 8 keeps the body capture minimal; Phase 9 / follow-up will wire
+// the full nested-block state machine.
+bool dxfRW::processMultiLeader() {
+    DRW_DBG("dxfRW::processMultiLeader");
+    int code;
+    DRW_MLeader e;
+    while (reader->readRec(&code)) {
+        DRW_DBG(code); DRW_DBG("\n");
+        if (0 == code) {
+            nextentity = reader->getString();
+            DRW_DBG(nextentity); DRW_DBG("\n");
+            iface->addMLeader(&e);
+            return true;
+        }
+        if (!e.parseCode(code, reader)) {
+            return setError(DRW::BAD_CODE_PARSED);
+        }
+    }
     return setError(DRW::BAD_READ_ENTITIES);
 }
 

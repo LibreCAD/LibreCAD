@@ -92,6 +92,7 @@ public:
     bool writeViewport(DRW_Viewport *ent);
     DRW_ImageDef *writeImage(DRW_Image *ent, std::string name);
     bool writeWipeout(DRW_Image *ent);
+    bool writeMultiLeader(DRW_MLeader *ent);
     bool writeLeader(DRW_Leader *ent);
     bool writeDimension(DRW_Dimension *ent);
     void setEllipseParts(int parts){elParts = parts;} /*!< set parts number when convert ellipse to polyline */
@@ -146,6 +147,7 @@ private:
     bool processImage();
     bool processImageDef();
     bool processWipeout();
+    bool processMultiLeader();
     bool processDimension();
     bool processLeader();
     bool processPlotSettings();

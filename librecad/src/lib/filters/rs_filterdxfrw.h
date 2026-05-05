@@ -196,6 +196,7 @@ public:
     void writeHatch(RS_Hatch* h);
     void writeImage(RS_Image* i);
     void writeWipeout(RS_Wipeout* w);
+    void writeMLeader(LC_MLeader* m);
     void writeLeader(RS_Leader* l);
     void writeDimension(RS_Dimension* d);
     void writePolyline(RS_Polyline* p);

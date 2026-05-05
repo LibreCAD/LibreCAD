@@ -56,16 +56,41 @@ void LC_MLeader::calculateBorders() {
 void LC_MLeader::draw(RS_Painter* painter) {
     if (painter == nullptr) return;
 
-    // Phase 6 placeholder render: draw each leader line as a polyline.
-    // Phase 7 adds arrowheads at the leader-line tips and routes the
-    // content (text or block) through the renderer's MText/Insert paths.
-    // Spline leader type (data.leaderType == 2) is rendered as a polyline
-    // here too — same start/end points, slightly different visual weight.
+    // For each leader line: draw the polyline + a filled arrowhead at the
+    // tip (the last point — the spec orders points from connection-side
+    // to arrow-side).  Spline leader type renders as polyline for now;
+    // proper spline-leader fitting is a follow-up.
+    //
+    // Arrowhead geometry: simple triangle with width = arrowSize, depth
+    // = arrowSize.  Aligned with the last segment direction.  AutoCAD's
+    // default arrow blocks (closed-filled, dot, etc.) require resolving
+    // the arrow-handle from MLEADERSTYLE — deferred; the closed-filled
+    // triangle here matches AutoCAD's default appearance closely enough
+    // for read-only ingestion.
+    const double arrowSize = data.arrowSize > 0.0 ? data.arrowSize
+                                                  : data.scaleFactor * 1.0;
+
     for (const auto& r : data.roots) {
         for (const auto& ll : r.leaderLines) {
-            for (size_t i = 1; i < ll.points.size(); ++i) {
+            const size_t n = ll.points.size();
+            if (n < 2) continue;
+            for (size_t i = 1; i < n; ++i) {
                 painter->drawLineWCS(ll.points[i - 1], ll.points[i]);
             }
+            // Arrowhead at the tip: triangle from tip back along the
+            // last segment by `arrowSize`, fanned out by `arrowSize/3`
+            // perpendicular on each side.
+            const RS_Vector& tip  = ll.points[n - 1];
+            const RS_Vector& prev = ll.points[n - 2];
+            const RS_Vector seg = tip - prev;
+            const double segLen = seg.magnitude();
+            if (segLen < RS_TOLERANCE) continue;
+            const RS_Vector dir = seg / segLen;
+            const RS_Vector perp{-dir.y, dir.x};
+            const RS_Vector basePt = tip - dir * arrowSize;
+            const RS_Vector w1 = basePt + perp * (arrowSize / 6.0);
+            const RS_Vector w2 = basePt - perp * (arrowSize / 6.0);
+            painter->drawSolidWCS({tip, w1, w2});
         }
     }
 }
