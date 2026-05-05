@@ -143,10 +143,20 @@ public:
     void addMLeader(const DRW_MLeader* e) override {
         track(*e);
         mleaders++;
+        mleaderRoots += static_cast<int>(e->context.roots.size());
+        for (const auto& r : e->context.roots) {
+            mleaderLines += static_cast<int>(r.leaderLines.size());
+            for (const auto& ll : r.leaderLines) {
+                mleaderPoints += static_cast<int>(ll.points.size());
+            }
+        }
     }
     int wipeouts = 0;
     int wipeoutVertices = 0;
     int mleaders = 0;
+    int mleaderRoots = 0;
+    int mleaderLines = 0;
+    int mleaderPoints = 0;
     void linkImage(const DRW_ImageDef*) override {}
     void addComment(const char*) override {}
     void addPlotSettings(const DRW_PlotSettings*) override {}
@@ -1528,7 +1538,10 @@ TEST_CASE("DWG corpus: MULTILEADER entity inventory", "[.dwg_mleader]") {
                 ++filesWithMLeader;
                 totalMLeaders += iface.mleaders;
                 std::cout << "  " << p.filename().string()
-                          << ": " << iface.mleaders << " MLEADERs\n";
+                          << ": " << iface.mleaders << " MLEADERs, "
+                          << iface.mleaderRoots << " roots, "
+                          << iface.mleaderLines << " leader lines, "
+                          << iface.mleaderPoints << " points\n";
             }
         }
     }

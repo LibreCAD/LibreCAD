@@ -3236,18 +3236,184 @@ bool DRW_Leader::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
 }
 
 // Phase 1 placeholder: skeleton class is in place but no parser yet.
-// Phase 3 will replace this with the §20.4.48 entity-level parser; Phase 4
-// will add the embedded MLeaderAnnotContext.  Until then the dispatcher
-// short-circuits to addMLeader() with the entity in default-constructed state.
 bool DRW_MLeader::parseCode(int code, const std::unique_ptr<dxfReader>& reader){
+    // DXF parsing is implemented in Phase 8 (libdxfrw.cpp::processMultiLeader).
+    // For now route to base.
     return DRW_Entity::parseCode(code, reader);
 }
 
+// Helper: parse one AcDbMLeaderObjectContextData::LeaderRoot entry (§20.4.86).
+//
+// Each root has: connection point + direction, optional break pairs, leader
+// index, landing distance, then a count-and-list of leader lines.  Lines
+// themselves carry: point list, break-info pairs, and (R2010+) per-line
+// style overrides.  The handles inside (line-type / arrow per leader line)
+// are deferred to the entity-level handle stream and not stored here.
+static bool parseMLeaderRoot(DRW::Version version, dwgBuffer *buf,
+                             DRW_MLeaderRoot& root) {
+    root.isContentValid = buf->getBit();
+    root.unknown291    = buf->getBit();
+    root.connectionPoint = buf->get3BitDouble();
+    root.direction       = buf->get3BitDouble();
+
+    dint32 nBreaks = buf->getBitLong();
+    if (nBreaks < 0 || nBreaks > 1000000) return false; // sanity
+    root.breaks.reserve(static_cast<size_t>(nBreaks));
+    for (dint32 i = 0; i < nBreaks; ++i) {
+        DRW_Coord a = buf->get3BitDouble();
+        DRW_Coord b = buf->get3BitDouble();
+        root.breaks.emplace_back(a, b);
+    }
+
+    root.leaderIndex     = buf->getBitLong();
+    root.landingDistance = buf->getBitDouble();
+
+    dint32 nLines = buf->getBitLong();
+    if (nLines < 0 || nLines > 1000000) return false; // sanity
+    root.leaderLines.reserve(static_cast<size_t>(nLines));
+    for (dint32 i = 0; i < nLines; ++i) {
+        DRW_MLeaderLeaderLine line;
+        dint32 nPts = buf->getBitLong();
+        if (nPts < 0 || nPts > 1000000) return false;
+        line.points.reserve(static_cast<size_t>(nPts));
+        for (dint32 j = 0; j < nPts; ++j) {
+            line.points.push_back(buf->get3BitDouble());
+        }
+        dint32 brkInfoCount = buf->getBitLong();
+        DRW_UNUSED(brkInfoCount);
+        line.segmentIndex = buf->getBitLong();
+
+        dint32 nPairs = buf->getBitLong();
+        if (nPairs < 0 || nPairs > 1000000) return false;
+        for (dint32 j = 0; j < nPairs; ++j) {
+            DRW_Coord a = buf->get3BitDouble();
+            DRW_Coord b = buf->get3BitDouble();
+            line.breaks.emplace_back(a, b);
+        }
+        line.leaderLineIndex = buf->getBitLong();
+
+        // R2010+ per-line override block.  The spec marks this block "R2010"
+        // (§20.4.86 page 215); the override flags BL 93 says which fields
+        // were overridden.  The handle fields (340 line-type, 341 arrow) are
+        // deferred to the trailing handle stream.
+        if (version >= DRW::AC1024) {
+            line.leaderType = buf->getBitShort();
+            line.color      = buf->getCmColor(version);
+            // line type handle 340 — read from handles section later
+            line.lineWeight = buf->getBitLong();
+            line.arrowSize  = buf->getBitDouble();
+            // arrow handle 341 — handles section
+            line.overrideFlags = buf->getBitLong();
+        }
+        root.leaderLines.push_back(std::move(line));
+    }
+
+    if (version >= DRW::AC1024) {
+        root.attachmentDirection = buf->getBitShort();
+    }
+
+    return buf->isGood();
+}
+
+// Helper: parse the AcDbMLeaderObjectContextData (§20.4.86) payload, the
+// large embedded block at the start of the MLEADER body that carries the
+// leader geometry plus either text or block content.
+static bool parseMLeaderAnnotContext(DRW::Version version, dwgBuffer *buf,
+                                     dwgBuffer *sBuf,
+                                     DRW_MLeaderAnnotContext& ctx) {
+    // NOTE: when AcDbMLeaderObjectContextData is embedded INSIDE the MLEADER
+    // entity body (rather than serialized as a standalone object), the
+    // AcDbObjectContextData base preamble (BS version, B has-file-ext-dict,
+    // B default-flag) does NOT appear in the bit stream — those fields are
+    // standalone-object metadata.  The embedded AnnotContext starts directly
+    // with the leader-roots count.  AcDbAnnotScaleObjectContextData's scale
+    // handle is deferred to the trailing handle stream.
+
+    // Number of leader roots.
+    dint32 nRoots = buf->getBitLong();
+    if (nRoots < 0 || nRoots > 1000000) return false;
+    ctx.roots.clear();
+    ctx.roots.reserve(static_cast<size_t>(nRoots));
+    for (dint32 i = 0; i < nRoots; ++i) {
+        DRW_MLeaderRoot root;
+        if (!parseMLeaderRoot(version, buf, root)) return false;
+        ctx.roots.push_back(std::move(root));
+    }
+
+    // Common content fields.
+    ctx.overallScale     = buf->getBitDouble();
+    ctx.contentBasePoint = buf->get3BitDouble();
+    ctx.textHeight       = buf->getBitDouble();
+    ctx.arrowHeadSize    = buf->getBitDouble();
+    ctx.landingGap       = buf->getBitDouble();
+    ctx.styleLeftAttach  = buf->getBitShort();
+    ctx.styleRightAttach = buf->getBitShort();
+    ctx.textAlignType    = buf->getBitShort();
+    ctx.attachmentType   = buf->getBitShort();
+    ctx.hasTextContents  = buf->getBit();
+
+    if (ctx.hasTextContents) {
+        ctx.textLabel        = sBuf->getVariableText(version, false);
+        ctx.textNormal       = buf->get3BitDouble();
+        // text style handle 340 — handles section
+        ctx.textLocation     = buf->get3BitDouble();
+        ctx.textDirection    = buf->get3BitDouble();
+        ctx.textRotation     = buf->getBitDouble();
+        ctx.boundaryWidth    = buf->getBitDouble();
+        ctx.boundaryHeight   = buf->getBitDouble();
+        ctx.lineSpacingFactor = buf->getBitDouble();
+        ctx.lineSpacingStyle  = buf->getBitShort();
+        ctx.textColor         = buf->getCmColor(version);
+        ctx.alignment         = buf->getBitShort();
+        ctx.flowDirection     = buf->getBitShort();
+        ctx.bgFillColor       = buf->getCmColor(version);
+        ctx.bgScaleFactor     = buf->getBitDouble();
+        ctx.bgTransparency    = buf->getBitLong();
+        ctx.bgFillEnabled     = buf->getBit();
+        ctx.bgMaskFillOn      = buf->getBit();
+        ctx.columnType        = buf->getBitShort();
+        ctx.textHeightAuto    = buf->getBit();
+        ctx.columnWidth       = buf->getBitDouble();
+        ctx.columnGutter      = buf->getBitDouble();
+        ctx.columnFlowReversed = buf->getBit();
+        dint32 nColSizes = buf->getBitLong();
+        if (nColSizes < 0 || nColSizes > 1000000) return false;
+        ctx.columnSizes.reserve(static_cast<size_t>(nColSizes));
+        for (dint32 i = 0; i < nColSizes; ++i) {
+            ctx.columnSizes.push_back(buf->getBitDouble());
+        }
+        ctx.wordBreak = buf->getBit();
+        buf->getBit();  // unknown trailing bit
+    } else {
+        ctx.hasContentsBlock = buf->getBit();
+        if (ctx.hasContentsBlock) {
+            // BlockTableRecord handle 341 — deferred
+            ctx.blockNormal   = buf->get3BitDouble();
+            ctx.blockLocation = buf->get3BitDouble();
+            ctx.blockScale    = buf->get3BitDouble();
+            ctx.blockRotation = buf->getBitDouble();
+            ctx.blockColor    = buf->getCmColor(version);
+            for (size_t i = 0; i < 16; ++i) {
+                ctx.blockTransform[i] = buf->getBitDouble();
+            }
+        }
+    }
+
+    // Common tail.
+    ctx.basePoint     = buf->get3BitDouble();
+    ctx.baseDirection = buf->get3BitDouble();
+    ctx.baseVertical  = buf->get3BitDouble();
+    ctx.isNormalReversed = buf->getBit();
+
+    if (version >= DRW::AC1024) {
+        ctx.styleTopAttach    = buf->getBitShort();
+        ctx.styleBottomAttach = buf->getBitShort();
+    }
+
+    return buf->isGood();
+}
+
 bool DRW_MLeader::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
-    // Common entity preamble must always be read so the stream stays aligned
-    // with the next entity even if the body parse is unimplemented.  Follows
-    // the R2007+ separate-string-buffer convention used by every other
-    // entity's parseDwg (cf. DRW_Image, DRW_Leader, etc.).
     dwgBuffer sBuff = *buf;
     dwgBuffer *sBuf = buf;
     if (version > DRW::AC1018) {  // 2007+
@@ -3255,10 +3421,95 @@ bool DRW_MLeader::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
     }
     bool ret = DRW_Entity::parseDwg(version, buf, sBuf, bs);
     if (!ret) return ret;
-    DRW_DBG("\n*** parsing MLEADER (Phase 2 stub: body skipped) ***\n");
-    // Phase 3 will fill in the body parser.  Until then return true so the
-    // dispatcher delivers the entity (in default-constructed state) rather
-    // than rejecting the whole entity stream.
+    DRW_DBG("\n***************************** parsing MLEADER ***************\n");
+
+    // Phase 4 — embedded AcDbMLeaderObjectContextData / MLeaderAnnotContext.
+    // Body misalignment is local to this entity's buffer (each entity gets a
+    // fresh buffer from the object map), so on a partial-parse failure we
+    // keep whatever was captured and return true.  This preserves the
+    // entity-stream-continues invariant established in Phase 2.
+    if (!parseMLeaderAnnotContext(version, buf, sBuf, context)) {
+        DRW_DBG("\nMLEADER: AnnotContext parse drift — partial fields kept\n");
+        return true;
+    }
+
+    // Phase 3 — entity-level fields per §20.4.48 (after the AnnotContext).
+    // Many handle slots are deferred to the trailing handle stream and not
+    // stored here yet (resolution comes in Phase 7).
+    overrideFlags        = buf->getBitLong();
+    leaderType           = buf->getBitShort();
+    leaderColor          = buf->getCmColor(version);
+    // leader line type handle 341 — handle stream
+    leaderLineWeight     = buf->getBitLong();
+    landingEnabled       = buf->getBit();
+    doglegEnabled        = buf->getBit();
+    landingDistance      = buf->getBitDouble();
+    // arrow head handle 342 — handle stream
+    defaultArrowHeadSize = buf->getBitDouble();
+    styleContentType     = buf->getBitShort();
+    // text style handle 343 — handle stream
+    styleLeftAttach      = buf->getBitShort();
+    styleRightAttach     = buf->getBitShort();
+    styleTextAngleType   = buf->getBitShort();
+    unknown175           = buf->getBitShort();
+    styleTextColor       = buf->getCmColor(version);
+    styleTextFrameEnabled = buf->getBit();
+    // style block handle 344 — handle stream (optional)
+    styleBlockColor      = buf->getCmColor(version);
+    styleBlockScale      = buf->get3BitDouble();
+    styleBlockRotation   = buf->getBitDouble();
+    styleAttachmentType  = buf->getBitShort();
+    isAnnotative         = buf->getBit();
+
+    // R2007 arrays (pre-R2010 only): per spec §20.4.48.  Bounds-check the
+    // counts; a misaligned bit stream would produce huge nonsense values.
+    // On a sanity-check trip, abort the rest of the body parse but keep
+    // the entity (per Phase 4 contract above).
+    if (version < DRW::AC1024) {
+        dint32 nArrows = buf->getBitLong();
+        if (nArrows < 0 || nArrows > 1000000) return true;
+        arrowHeads.reserve(static_cast<size_t>(nArrows));
+        for (dint32 i = 0; i < nArrows; ++i) {
+            ArrowHeadEntry e;
+            e.isDefault = buf->getBit();
+            arrowHeads.push_back(e);
+        }
+        dint32 nLabels = buf->getBitLong();
+        if (nLabels < 0 || nLabels > 1000000) return true;
+        blockLabels.reserve(static_cast<size_t>(nLabels));
+        for (dint32 i = 0; i < nLabels; ++i) {
+            BlockLabelEntry e;
+            e.labelText = sBuf->getVariableText(version, false);
+            e.uiIndex   = buf->getBitShort();
+            e.width     = buf->getBitDouble();
+            blockLabels.push_back(std::move(e));
+        }
+    }
+
+    isTextDirectionNegative = buf->getBit();
+    ipeAlign      = buf->getBitShort();
+    justification = buf->getBitShort();
+    scaleFactor   = buf->getBitDouble();
+
+    if (version >= DRW::AC1024) {  // R2010+
+        attachmentDirection = buf->getBitShort();
+        styleTopAttach      = buf->getBitShort();
+        styleBottomAttach   = buf->getBitShort();
+    }
+    if (version >= DRW::AC1027) {  // R2013+
+        leaderExtendedToText = buf->getBit();
+    }
+
+    // Trailing handle stream — resolved in Phase 7 by reading the handles
+    // in the order they were referenced above.  For Phase 3+4 we just call
+    // parseDwgEntHandle so the next entity in the stream is reached cleanly.
+    ret = DRW_Entity::parseDwgEntHandle(version, buf);
+    if (!ret) {
+        // Don't fail the whole stream on a handle-decode hiccup — the body
+        // fields we care about are already populated.  The full handle
+        // resolution will land in Phase 7.
+        DRW_DBG("\nMLEADER: parseDwgEntHandle hiccup — proceeding with body fields\n");
+    }
     return true;
 }
 
