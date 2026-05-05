@@ -54,6 +54,10 @@ unix {
     LC_VERSION=$$system([ "$(which git)x" != "x" -a -d ../../.git ] && echo "$(git describe --always)" || echo "$${LC_VERSION}")
 
     macx {
+        equals(QT_ARCH, arm64):greaterThan(QT_MAJOR_VERSION, 5) {
+            # Qt6 on Apple Silicon: qyieldcpu.h uses __yield() which requires arm_acle.h
+            QMAKE_CXXFLAGS += -include arm_acle.h
+        }
         TARGET = LibreCAD
         VERSION=$$system(echo "$${LC_VERSION}" | sed -e 's/\-.*//g')
         QMAKE_INFO_PLIST = Info.plist.app
@@ -508,6 +512,7 @@ HEADERS += \
     lib/engine/document/entities/rs_solid.h \
     lib/engine/document/entities/rs_spline.h \
     lib/engine/document/entities/lc_splinepoints.h \
+    lib/engine/document/entities/lc_secondmoment.h \
     lib/engine/rs_system.h \
     lib/engine/document/entities/rs_text.h \
     lib/engine/undo/lc_undoablerelzero.h \
@@ -557,7 +562,7 @@ HEADERS += \
     plugins/lc_plugininvoker.h \
     lib/actions/lc_actioncontext.h \
     ui/action_options/line/lc_line_radiant_options_widget.h \
-    ui/action_options/line/lc_line_radiant_options_filler.h \    
+    ui/action_options/line/lc_line_radiant_options_filler.h \
     ui/components/relative_position_assistant/lc_relative_position_editing_widget.h \
     ui/components/relative_position_assistant/lc_relative_position_evaluator.h \
     ui/components/utils/lc_entitymetauiutils.h \
@@ -575,6 +580,7 @@ HEADERS += \
     ui/dialogs/entity/lc_dlg_dimension.h \
     ui/dialogs/entity/lc_dlg_entityproperties.h \
     ui/dialogs/entity/lc_propertieseditingwidget_ellipse.h \
+    ui/dialogs/entity/lc_hatchpropertieseditingwidget.h \
     ui/dialogs/entity/lc_entitypropertieseditor.h \
     ui/dialogs/entity/lc_entitypropertieseditorsupport.h \
     ui/dialogs/entity/lc_entitypropertieseditorwidget.h \
@@ -744,6 +750,7 @@ HEADERS += \
     lib/engine/undo/lc_undosection.h \
     lib/printing/lc_printing.h \
     main/lc_application.h \
+    main/lc_crash_handler.h \
     ui/action_options/curve/lc_ellipse_arc_options_widget.h \
     ui/action_options/curve/lc_ellipse_arc_options_filler.h \
     ui/action_options/ellipse/lc_ellipse_1point_options_widget.h \
@@ -992,6 +999,7 @@ SOURCES += \
     ui/dialogs/entity/lc_dlg_entityproperties.cpp \
     ui/dialogs/entity/lc_dlg_tolerance.cpp \
     ui/dialogs/entity/lc_propertieseditingwidget_ellipse.cpp \
+    ui/dialogs/entity/lc_hatchpropertieseditingwidget.cpp \
     ui/dialogs/entity/lc_entitypropertieseditor.cpp \
     ui/dialogs/entity/lc_entitypropertieseditorsupport.cpp \
     ui/dialogs/entity/lc_entitypropertieseditorwidget.cpp \
@@ -1068,7 +1076,7 @@ SOURCES += \
     lib/actions/rs_actioninterface.cpp \
     lib/engine/overlays/preview/rs_preview.cpp \
     lib/actions/rs_previewactioninterface.cpp \
-    lib/actions/rs_snapper.cpp \    
+    lib/actions/rs_snapper.cpp \
     lib/actions/visual_snap/lc_visual_snap_data.cpp \
     lib/actions/visual_snap/lc_visual_snap_options.cpp \
     lib/actions/visual_snap/lc_visual_snap_solution_solver.cpp \
@@ -1260,6 +1268,7 @@ SOURCES += \
     lib/engine/rs.cpp \
     lib/printing/lc_printing.cpp \
     main/lc_application.cpp \
+    main/lc_crash_handler.cpp \
     ui/action_options/curve/lc_ellipse_arc_options_widget.cpp \
     ui/action_options/curve/lc_ellipse_arc_options_filler.cpp \
     ui/action_options/ellipse/lc_ellipse_1point_options_widget.cpp \
@@ -1474,7 +1483,7 @@ SOURCES += actions/dock_widgets/block/rs_actionblocksadd.cpp \
     actions/dock_widgets/layer/rs_actionlayerstogglelock.cpp \
     actions/dock_widgets/layer/rs_actionlayerstoggleprint.cpp \
     actions/dock_widgets/layer/rs_actionlayerstoggleview.cpp \
-    actions/dock_widgets/library/lc_action_block_library_insert.cpp \    
+    actions/dock_widgets/library/lc_action_block_library_insert.cpp \
     actions/drawing/draw/arc/lc_action_draw_arc_center_point_param.cpp \
     actions/drawing/draw/arc/lc_action_draw_arc_3points.cpp \
     actions/drawing/draw/arc/lc_action_draw_arc_tangential.cpp \
@@ -1494,7 +1503,7 @@ SOURCES += actions/dock_widgets/block/rs_actionblocksadd.cpp \
     actions/drawing/draw/curve/lc_actiondrawparabolaFD.cpp \
     actions/drawing/draw/curve/lc_action_draw_line_freehand.cpp \
     actions/drawing/draw/spline/lc_action_draw_spline_points.cpp \
-    actions/drawing/draw/curve/lc_actiondrawdual.cpp \    
+    actions/drawing/draw/curve/lc_actiondrawdual.cpp \
     actions/drawing/draw/spline/lc_action_draw_spline.cpp \
     actions/drawing/draw/dimensions/lc_actiondimarc.cpp \
     actions/drawing/draw/dimensions/lc_actiondimlinearbase.cpp \
@@ -2006,7 +2015,7 @@ SOURCES +=  ui/action_options/circle/lc_circle_by_arc_options_widget.cpp \
     ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp \
     ui/dock_widgets/pen_wizard/colorcombobox.cpp \
     ui/dock_widgets/pen_wizard/colorwizard.cpp \
-    ui/dock_widgets/pen_wizard/lc_penwizard.cpp \    
+    ui/dock_widgets/pen_wizard/lc_penwizard.cpp \
     ui/dock_widgets/property_sheet/lib/view/lc_property_event_context.cpp \
     ui/dock_widgets/property_sheet/lib/view/lc_property_edit_context.cpp \
     ui/dock_widgets/property_sheet/lib/view/lc_property_paint_context.cpp \
@@ -2208,6 +2217,7 @@ FORMS = ui/action_options/circle/lc_circle_by_arc_options_widget.ui \
        ui/dialogs/entity/lc_dlg_tolerance.ui \
        ui/dialogs/entity/lc_propertieseditingwidget_ellipse.ui \
        ui/dialogs/entity/lc_propertieseditingwidget_hyperbola.ui \
+       ui/dialogs/entity/lc_hatchpropertieseditingwidget.ui \
        ui/dialogs/entity/lc_propertieseditingwidget_image.ui \
        ui/dialogs/entity/lc_propertieseditingwidget_insert.ui \
        ui/dialogs/entity/lc_propertieseditingwidget_line.ui \

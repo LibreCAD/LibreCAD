@@ -30,6 +30,7 @@
 #include <memory>
 #include <vector>
 
+#include "lc_secondmoment.h"
 #include "rs_entitycontainer.h"
 
 class QPainterPath;
@@ -113,8 +114,8 @@ public:
      */
     int countLoops() const;
 
-    /** @return true if solid hatch. */
-    bool isSolid() const { return m_data.solid; }
+    /** @return true if solid hatch (either flag set or pattern name is "SOLID"). */
+    bool isSolid() const { return m_data.solid || m_data.pattern.compare("SOLID", Qt::CaseInsensitive) == 0; }
     void setSolid(const bool solid) { m_data.solid = solid; }
 
     QString getPattern() const { return m_data.pattern; }
@@ -127,9 +128,30 @@ public:
     void setAngle(const double angle) { m_data.angle = angle; }
 
     /**
-     * @return Total enclosed area of loops.
+     * @return Total enclosed area (0th moment) of loops.
      */
     double getTotalArea() const;
+
+    /**
+     * @return Centroid of the hatch region as (cx, cy) = (∬ x dA / A, ∬ y dA / A).
+     * Returns an invalid RS_Vector if area is zero or update() has not run.
+     */
+    RS_Vector getCentroid() const;
+
+    /**
+     * @brief getMomentOfInertia - the three second central moments of area for the
+     * hatch region, computed via Green's theorem line integrals about the centroid.
+     *
+     * Returns LC_SecondMoment{ixx, iyy, ixy} where:
+     *   ixx = ∬ (x - cx)² dA,   iyy = ∬ (y - cy)² dA,   ixy = ∬ (x-cx)(y-cy) dA
+     *
+     * The full inertia tensor about the centroid is:
+     *   I = | iyy  -ixy |
+     *       | -ixy  ixx |
+     *
+     * Must be called after update() has run.
+     */
+    LC_SecondMoment getMomentOfInertia() const;
 
     void calculateBorders() override;
     void update() override;
@@ -165,22 +187,21 @@ protected:
     RS_HatchData m_data;
     double doGetDistanceToPoint(const RS_Vector& coord, RS_Entity** entity, RS2::ResolveLevel level, double solidDist) const override;
 private:
-    void debugOutPath(const QPainterPath& path) const;
     void drawPatternLines(RS_Painter* painter) const;
     void drawSolidFill(RS_Painter* painter) const;
     void updatePatternHatch(RS_Layer* layer, const RS_Pen& pen);
     void updateSolidHatch(RS_Layer* layer, const RS_Pen& pen) const;
-    void prepareUpdate();
-
     mutable double m_area = RS_MAXDOUBLE;
+    mutable LC_FirstMoment m_firstMoment;
+    mutable LC_SecondMoment m_secondMoment;
+    mutable bool m_secondMomentValid = false;
     RS_HatchError m_updateError = HATCH_UNDEFINED;
     bool m_updateRunning = false;
     bool m_needOptimization = true;
     bool m_updated = false;
     mutable std::shared_ptr<std::vector<LC_LoopUtils::LC_Loops>> m_orderedLoops;
-    mutable std::shared_ptr<std::vector<QPainterPath>> m_solidPath;
 
-    // Internal: Vector of boundary subcontainers (one per loop)
+    // Internal: Vector of boundary subcontainers (one per loop, recursive)
     mutable std::vector<std::shared_ptr<RS_EntityContainer>> m_boundaryContainers;
 };
 

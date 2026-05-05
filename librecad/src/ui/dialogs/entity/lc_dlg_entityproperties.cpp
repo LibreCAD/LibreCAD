@@ -26,6 +26,7 @@
 #include <QToolButton>
 
 #include "lc_dlg_dimension.h"
+#include "lc_hatchpropertieseditingwidget.h"
 #include "lc_entitypropertieseditorwidget.h"
 #include "lc_propertieseditingwidget_arc.h"
 #include "lc_propertieseditingwidget_circle.h"
@@ -240,11 +241,15 @@ void LC_DlgEntityProperties::prepareTypeSpecificUI(LC_EntityPropertiesEditorWidg
             break;
         }
         case RS2::EntityText:
-        case RS2::EntityMText:
-        case RS2::EntityHatch: {
-            // propertiesEditingWidget = new LC_ArcPropertiesEditingWidget(this);
+        case RS2::EntityMText: {
             windowTitle = tr("Properties?");
             dlgName = "DlgLineProperties";
+            break;
+        }
+        case RS2::EntityHatch: {
+            primaryWidget = new LC_HatchPropertiesEditingWidget(this);
+            windowTitle = tr("Hatch Properties");
+            dlgName = "DlgHatchProperties";
             break;
         }
         default:

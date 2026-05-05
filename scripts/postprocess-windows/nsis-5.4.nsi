@@ -104,7 +104,11 @@ FunctionEnd
     !define Qt_Version 	"6.9.0"
 !endif
 !ifndef Mingw_Ver
-    !define Mingw_Ver 	"mingw_64"
+    !ifdef ARM64
+        !define Mingw_Ver 	"msvc2022_arm64"
+    !else
+        !define Mingw_Ver 	"mingw_64"
+    !endif
 !endif
 ;--- folder contains mingw64-make.exe
 !define MINGW_DIR 	"C:\mingw64\bin"
@@ -114,18 +118,30 @@ FunctionEnd
 !define QMAKE_DIR 	"${QTMINGW_DIR}\bin"
 !define PLUGINS_DIR 	"${QTMINGW_DIR}\plugins"
 !define TRANSLATIONS_DIR	"${QTMINGW_DIR}\translations"
+;--- architecture-specific CMake output directory
+!ifdef ARM64
+    !define RELEASE_DIR "..\..\generated\ARM64\Release"
+!else
+    !define RELEASE_DIR "..\..\generated\Release"
+!endif
 
 ;--------------------------------
 ;Installer Sections
 
 Section "Install Section" SecInstall
   SetOutPath "$INSTDIR"
-  File /r "..\..\generated\Release\*.*"
+  ; Exclude translations subdir — copied explicitly to resources\qm below
+  File /r /x "translations" "${RELEASE_DIR}\*.*"
   SetOutPath "$INSTDIR\resources"
   File /r "..\..\librecad\support\*.*"
   File /r "..\..\generated\plugins"
   SetOutPath "$INSTDIR\resources\qm"
-  File /NONFATAL "..\..\generated\*.qm"
+  ; Qt system translations deployed by windeployqt6 into the exe directory
+  File /NONFATAL "${RELEASE_DIR}\translations\*.qm"
+  ; LibreCAD translations compiled by CMake qt_add_translations (lands in binary dir root)
+  File /NONFATAL "..\..\generated\librecad_*.qm"
+  ; Plugin translations compiled by CMake qt_add_translations
+  File /NONFATAL "..\..\generated\plugins\plugins_*.qm"
   SetOutPath "$INSTDIR"
 
   ;Store installation folder

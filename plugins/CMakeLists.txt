@@ -105,3 +105,11 @@ add_subdirectory(picfile)
 add_subdirectory(plotequation)
 add_subdirectory(pointstocsv)
 add_subdirectory(gear)
+
+# Compile plugin translations (.ts → .qm)
+set(PLUGIN_TS_DIR ${CMAKE_CURRENT_SOURCE_DIR}/ts)
+list(TRANSFORM PLUGIN_TS_FILES PREPEND "${PLUGIN_TS_DIR}/")
+qt_add_translations(align
+    TS_FILE_DIR ${PLUGIN_TS_DIR}
+    TS_FILES ${PLUGIN_TS_FILES}
+)

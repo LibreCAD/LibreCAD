@@ -31,6 +31,7 @@
 #include <QString>
 
 #include "lc_drawable.h"
+#include "lc_secondmoment.h"
 #include "rs_undoable.h"
 #include "rs_vector.h"
 
@@ -368,6 +369,17 @@ public:
     }
 
     /**
+     * Produce offset copies for entities whose offset cannot be expressed as
+     * an in-place mutation of the same type (e.g. ellipses → splines).
+     * Default returns empty so callers fall back to the in-place offset() path.
+     * Caller takes ownership of returned entities.
+     */
+    virtual std::vector<RS_Entity *> createOffset(const RS_Vector & /*coord*/,
+                                                  const double & /*distance*/) const {
+        return std::vector<RS_Entity *>();
+    }
+
+    /**
      * Implementations must offset the entity by the distance at both directions
      * used to generate tangential circles
      */
@@ -495,6 +507,34 @@ m0 x + m1 y + m2 =0
      * @return line integral \oint x dy along the entity
      */
     virtual double areaLineIntegral() const;
+
+    /**
+     * @brief firstMomentLineIntegral - computes the first-order moments of area
+     *        via Green's theorem contour integrals.
+     *
+     * Returns:
+     *   mx = ∬ x dA   (first moment with respect to y-axis)
+     *   my = ∬ y dA   (first moment with respect to x-axis)
+     *
+     * These values are used to compute the centroid: cx = mx / A, cy = my / A.
+     *
+     * @return LC_FirstMoment containing mx and my.
+     */
+    virtual LC_FirstMoment firstMomentLineIntegral() const;
+
+    /**
+     * @brief secondMomentLineIntegral - Green's theorem line integrals for the
+     * three second moments of area (∬ x² dA, ∬ y² dA, ∬ x·y dA).
+     *
+     * For a closed contour traversed counter-clockwise, summing the contributions
+     * of all boundary entities gives:
+     *   ixx = ∮ (x³/3) dy       →  ∬ x² dA
+     *   iyy = -∮ (y³/3) dx      →  ∬ y² dA
+     *   ixy = ∮ (x²·y/2) dy     →  ∬ x·y dA
+     *
+     * @return LC_SecondMoment containing the three line-integral contributions.
+     */
+    virtual LC_SecondMoment secondMomentLineIntegral() const;
     /**
      * @brief trimmable, whether the entity type can be trimmed
      * @return true, for trimmable entity types

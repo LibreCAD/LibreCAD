@@ -75,6 +75,10 @@ QT += svg
 
 greaterThan( QT_MAJOR_VERSION, 5) {
     CONFIG += c++17
+    macx:equals(QT_ARCH, arm64) {
+        # Qt6 on Apple Silicon: qyieldcpu.h uses __yield() which requires arm_acle.h
+        QMAKE_CXXFLAGS += -include arm_acle.h
+    }
 }else{
     unix|macx|win32-g++ {
         # no such option for MSVC

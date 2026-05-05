@@ -113,9 +113,12 @@ void RS_System::initLanguageList() {
 
         RS_DEBUG->print("RS_System::initLanguageList: qm file: %s", it.toLatin1().data());
 
-        const int i0 = it.lastIndexOf(QString("librecad"), -1, Qt::CaseInsensitive);
-        const int i1 = it.indexOf('_', i0);
-        const int i2 = it.indexOf('.', i1);
+       const int i0 = it.lastIndexOf(QString("librecad"), -1, Qt::CaseInsensitive);
+        if (i0 == -1){
+            continue;
+       }
+       const int i1 = it.indexOf('_', i0);
+       const int i2 = it.indexOf('.', i1);
         if (i1 == -1 || i2 == -1) {
             continue;
         }

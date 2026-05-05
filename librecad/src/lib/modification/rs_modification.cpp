@@ -1025,8 +1025,19 @@ bool RS_Modification::offset(const RS_OffsetData& data, const QList<RS_Entity*>&
     const int numberOfCopies = data.obtainNumberOfCopies();
     // Create new entities
     // too slow:
-    for (const auto e : entitiesList) {
-        for (int num = 1; num <= numberOfCopies; num++) {
+    for(auto e: entitiesList){
+        for (int num=1; num<= numberOfCopies; num++) {
+            // First try the type-changing path (e.g. ellipse → spline).
+            auto offsetCopies = e->createOffset(data.coord, num*data.distance);
+            if (!offsetCopies.empty()) {
+                for (auto* off : offsetCopies) {
+                    off->setHighlighted(false);
+                    ctx += off;
+                }
+                continue;
+            }
+
+            // Fall back to the in-place clone+offset path.
             const auto clone = getClone(forPreviewOnly, e);
             //highlight is used by trim actions. do not carry over flag
             clone->setHighlighted(false);

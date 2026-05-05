@@ -25,7 +25,7 @@ jobs:
           sudo apt-get -qq install libgl-dev libxcb-cursor0 libmuparser-dev libboost-dev libssl-dev libssl3
           sudo apt-get -qq install imagemagick librsvg2-bin libfreetype6-dev libicu-dev pkg-config libfuse2 rsync
           sudo apt-get -qq install cmake
-          
+
       - name: Set Dark splash
         # Test setting dark splash screen for `2.2.2_alpha`,
         # then switch "Loading..." label text color to white.
@@ -41,7 +41,7 @@ jobs:
           cmake -S . -B unix -DBUILD_TESTS=ON
           echo "cmake build"
           cmake --build unix -j$(nproc)
-          
+
       - name: Run Tests
         run: |
           cd unix
@@ -135,7 +135,7 @@ jobs:
         with:
           fetch-depth: 0
           ref: master
-          
+
       - name: Install Qt6
         uses: jurplel/install-qt-action@v4
         with:
@@ -144,7 +144,7 @@ jobs:
 
       - name: install snap
         uses: samuelmeuli/action-snapcraft@v2
-          
+
       - name: Create snapcraft
         run: |
           pwd
@@ -273,7 +273,7 @@ jobs:
           tools-only: 'false'
           modules: 'qt3d qt5compat qtimageformats qtshadertools'
           tools: 'tools_cmake'
-          
+
       - name: (3) Add MSBuild to PATH
         uses: microsoft/setup-msbuild@v2
 
@@ -290,7 +290,7 @@ jobs:
 
       - name: Configure CMake
         run: |
-          cmake.exe -S . -B generated -G "Visual Studio 17 2022" -DBoost_INCLUDE_DIR=%BOOST_ROOT%/include -DBoost_LIBRARY_DIRS=%BOOST_ROOT%/lib 
+          cmake.exe -S . -B generated -G "Visual Studio 17 2022" -DBoost_INCLUDE_DIR=%BOOST_ROOT%/include -DBoost_LIBRARY_DIRS=%BOOST_ROOT%/lib
         shell: cmd
         env:
           BUILD_TYPE: release
@@ -308,7 +308,6 @@ jobs:
           cd generated
           dir *.*
           dir Release\*.*
-          dir x64\*.*
         shell: cmd
 
       - name: List files
@@ -317,22 +316,49 @@ jobs:
             dir "${{ github.workspace }}"
         shell: cmd
 
-      - name: winDeployment
+      - name: Extract version (SCMREVISION)
+        id: extract_version
         run: |
-          copy CI\custom-win.pri custom.pri
-          copy CI\custom-win-x64.nsh scripts\postprocess-windows\custom.nsh
-          mkdir generated\plugins
-          for /r %%a in (*.dll) do copy "%%a" generated\plugins
+          $scmRevision = "2.2.2-alpha"
+          if (Test-Path .git) {
+            $out = (git describe --always 2>$null) | Out-String
+            if ($LASTEXITCODE -eq 0 -and $out.Trim()) { $scmRevision = $out.Trim() }
+          }
+
+          # VIProductVersion must be X.X.X.X with each field <= 65535.
+          # Parse `git describe` output: <major>.<minor>[.<patch>][-anything][-<commits>-g<sha>]
+          $vi = "0.0.0.0"
+          if ($scmRevision -match '^v?(\d+)\.(\d+)(?:\.(\d+))?[^-]*(?:-(\d+))?') {
+            $major = $Matches[1]
+            $minor = $Matches[2]
+            $patch = if ($Matches[3]) { $Matches[3] } else { '0' }
+            $build = if ($Matches[4]) { $Matches[4] } else { '0' }
+            $vi = "$major.$minor.$patch.$build"
+          }
+
+          echo "SCMREVISION=$scmRevision" >> $env:GITHUB_ENV
+          echo "VIProductVersion=$vi" >> $env:GITHUB_ENV
+          echo "Extracted: SCMREVISION=$scmRevision, VIProductVersion=$vi"
+        shell: pwsh
+
+      - name: Generate custom.nsh and Deploy
+        run: |
+          cd "${{ github.workspace }}"
+          powershell.exe -ExecutionPolicy Bypass -File scripts\generate-custom-nsh.ps1 -Architecture AMD64 -OutputPath "scripts\postprocess-windows\custom.nsh"
+
           cd generated
           windeployqt6.exe --release --compiler-runtime Release\LibreCAD.exe
-          dir *.*
-          pushd "${{ github.workspace }}\scripts"
-          call build-win-setup.bat
+          cd ..
+          xcopy /E /Y /I generated\Release windows
+          for /r generated %%f in (librecad_*.qm) do copy "%%f" librecad\ts\
+          for /r generated %%f in (plugins_*.qm) do copy "%%f" plugins\ts\
+          set LC_ARCH=AMD64
+          call "${{ github.workspace }}\scripts\build-nsis.bat"
         shell: cmd
-        
+
       - name: Rename installer
         run: |
-          mv LibreCAD-Installer.exe LibreCAD-`git describe --always`-win64.exe
+          mv generated/LibreCAD-*.exe LibreCAD-`git describe --always`-win-x64.exe
         shell: bash
 
       - name: Upload artifact
@@ -382,7 +408,7 @@ jobs:
 
       - name: Configure CMake
         run: |
-          cmake.exe -S . -B generated -G "Visual Studio 17 2022" -DBoost_INCLUDE_DIR=%BOOST_ROOT%/include -DBoost_LIBRARY_DIRS=%BOOST_ROOT%/lib 
+          cmake.exe -S . -B generated -G "Visual Studio 17 2022" -A ARM64 -DBoost_INCLUDE_DIR=%BOOST_ROOT%/include -DBoost_LIBRARY_DIRS=%BOOST_ROOT%/lib
         shell: cmd
         env:
           BUILD_TYPE: release
@@ -399,8 +425,7 @@ jobs:
         run: |
           cd generated
           dir *.*
-          dir Release\*.*
-          dir ARM64\*.*
+          dir ARM64\Release\*.*
         shell: cmd
 
       - name: List files
@@ -409,22 +434,47 @@ jobs:
             dir "${{ github.workspace }}"
         shell: cmd
 
-      - name: winDeployment
+      - name: Extract version (SCMREVISION)
+        id: extract_version
         run: |
-          copy CI\custom-win.pri custom.pri
-          copy CI\custom-win-ARM64.nsh scripts\postprocess-windows\custom.nsh
-          mkdir generated\plugins
-          for /r %%a in (*.dll) do copy "%%a" generated\plugins
+          $scmRevision = "2.2.2-alpha"
+          if (Test-Path .git) {
+            $out = (git describe --always 2>$null) | Out-String
+            if ($LASTEXITCODE -eq 0 -and $out.Trim()) { $scmRevision = $out.Trim() }
+          }
+
+          $vi = "0.0.0.0"
+          if ($scmRevision -match '^v?(\d+)\.(\d+)(?:\.(\d+))?[^-]*(?:-(\d+))?') {
+            $major = $Matches[1]
+            $minor = $Matches[2]
+            $patch = if ($Matches[3]) { $Matches[3] } else { '0' }
+            $build = if ($Matches[4]) { $Matches[4] } else { '0' }
+            $vi = "$major.$minor.$patch.$build"
+          }
+
+          echo "SCMREVISION=$scmRevision" >> $env:GITHUB_ENV
+          echo "VIProductVersion=$vi" >> $env:GITHUB_ENV
+          echo "Extracted: SCMREVISION=$scmRevision, VIProductVersion=$vi"
+        shell: pwsh
+
+      - name: Generate custom.nsh and Deploy
+        run: |
+          cd "${{ github.workspace }}"
+          powershell.exe -ExecutionPolicy Bypass -File scripts\generate-custom-nsh.ps1 -Architecture ARM64 -OutputPath "scripts\postprocess-windows\custom.nsh"
+
           cd generated
-          windeployqt6.exe --release --compiler-runtime Release\LibreCAD.exe
-          dir *.*
-          pushd "${{ github.workspace }}\scripts"
-          call build-win-setup.bat
+          windeployqt6.exe --release --compiler-runtime ARM64\Release\LibreCAD.exe
+          cd ..
+          xcopy /E /Y /I generated\ARM64\Release windows
+          for /r generated %%f in (librecad_*.qm) do copy "%%f" librecad\ts\
+          for /r generated %%f in (plugins_*.qm) do copy "%%f" plugins\ts\
+          set LC_ARCH=ARM64
+          call "${{ github.workspace }}\scripts\build-nsis.bat"
         shell: cmd
-        
+
       - name: Rename installer
         run: |
-          mv LibreCAD-Installer.exe LibreCAD-`git describe --always`-winARM64.exe
+          mv generated/LibreCAD-*.exe LibreCAD-`git describe --always`-win-arm64.exe
         shell: bash
 
       - name: Upload artifact

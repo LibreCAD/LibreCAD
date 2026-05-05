@@ -2,6 +2,7 @@
 **
 ** This file is part of the LibreCAD project, a 2D CAD program
 **
+** Copyright (C) 2026 LibreCAD www.librecad.org
 ** Copyright (C) 2018 A. Stebich (librecad@mail.lordofbikes.de)
 ** Copyright (C) 2018 Simon Wells <simonrwells@gmail.com>
 ** Copyright (C) 2020 Nikita Letov <letovnn@gmail.com>
@@ -26,7 +27,13 @@
 ** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
-#include "main.h"
+#include <clocale>
+#include <cstdio>
+#include <cstddef>
+#include <cstdint>
+#include <ctime>
+#include <cstdlib>
+#include <cstring>
 
 #include <QApplication>
 #include <QByteArray>
@@ -46,6 +53,9 @@
 #include "console_dxf2pdf.h"
 #include "console_dxf2png.h"
 #include "lc_application.h"
+#include "lc_crash_handler.h"
+#include "main.h"
+
 #include "lc_iconcolorsoptions.h"
 #include "qc_applicationwindow.h"
 #include "qg_dlginitial.h"
@@ -160,7 +170,7 @@ void initSystem(char** argv, LC_Application& app) {
 
 void loadFilesOnStartup(QSplashScreen *splash, const QC_ApplicationWindow& appWin, [[maybe_unused]]LC_Application& app, QStringList fileList) {
     RS_DEBUG->print("main: loading files..");
-#ifdef Q_OS_MAC
+#ifdef __APPLE__
     // get the file list from LC_Application
     fileList << app.fileList();
 #endif
@@ -249,14 +259,16 @@ int main(int argc, char** argv) {
 
 #    else
 
+    LC_CrashHandler::install();
+
     // Create compilater's error: this QT macros may be in .pro file only.
     //QT_REQUIRE_VERSION(argc, argv, "6.4");
-    
+
     // May be this code must be on begin of main.cpp?
     #if QT_VERSION < QT_VERSION_CHECK(6, 4, 0)
         #error "This programm requires Qt6 ver.6.4.0 or higher."
     #endif
-    
+
     // Check first two arguments in order to decide if we want to run librecad
     // as console dxf2pdf or dxf2png tools. On Linux we can create a link to
     // librecad executable and  name it dxf2pdf. So, we can run either:
@@ -379,7 +391,7 @@ int main(int argc, char** argv) {
     if (appWindow != nullptr) {
         appWindow->fireIconsRefresh();
     }
-#ifdef Q_OS_MAC
+#ifdef __APPLE__
     app.installEventFilter(&appWin);
 #endif
     RS_DEBUG->print("main: setting caption");
@@ -397,7 +409,7 @@ int main(int argc, char** argv) {
     QSettings settings; // fixme - direct invocation of settings
     settings.beginGroup("Defaults");
     if( !settings.contains("UseQtFileOpenDialog")) {
-#ifdef Q_OS_LINUX
+#ifdef __linux__
         // on Linux don't use native file dialog
         // because of case insensitive filters (issue #791)
         settings.setValue("UseQtFileOpenDialog", QVariant(1));

@@ -78,10 +78,8 @@ void LC_Lattice::calcDeltas(const double angleX, const double angleY, const RS_V
 
 void LC_Lattice::init([[maybe_unused]] int projectedPointsCount) {
     m_pointsX.clear();
-    //    pointsX.resize(projectedPointsCount);
     m_pointsX.resize(0);
     m_pointsY.clear();
-    //    pointsY.resize(projectedPointsCount);
     m_pointsY.resize(0);
 }
 

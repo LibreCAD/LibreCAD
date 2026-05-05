@@ -41,6 +41,7 @@ struct LC_ParabolaData{
     /**
     * Default constructor. Leaves the data object uninitialized.
     */
+    // fixme - sand - move outside of entity to creation utility
     static std::vector<LC_ParabolaData> From4Points(const std::vector<RS_Vector>& points);
     static LC_ParabolaData FromEndPointsTangents(
             const std::array<RS_Vector, 2>& endPoints,
@@ -169,7 +170,24 @@ public:
  * @author Dongxu Li
  */
     double areaLineIntegral() const override;
+    /**
+     * @brief firstMomentLineIntegral - computes the first-order moments of area
+     *        via Green's theorem contour integrals.
+     *
+     * @return LC_FirstMoment containing mx and my.
+     * @note Exact closed-form using quadratic Bézier parametrization in local frame,
+     *       then transformed to world coordinates.
+     */
+    LC_FirstMoment firstMomentLineIntegral() const override;
 
+    /**
+     * @brief secondMomentLineIntegral - computes the second-order moments of area
+     *        via Green's theorem contour integrals.
+     *
+     * @return LC_SecondMoment {ixx, iyy, ixy}.
+     * @note Exact closed-form (replaces previous Gauss quadrature).
+     */
+    LC_SecondMoment secondMomentLineIntegral() const override;
 
     /**
      * @brief approximateOffset - approximate offset by a parabola
@@ -186,6 +204,10 @@ private:
     // rotate a point around the parabola vertex so, the parabola is y= ax^2 + bx + c, with a > 0 after the
     // same rotation
     RS_Vector rotateToQuadratic(RS_Vector vp) const;
+    // Exact local antiderivatives (Green's theorem)
+    double computeLocalArea(double t1, double t2) const;
+    LC_FirstMoment computeLocalFirstMoment(double t1, double t2) const;
+    LC_SecondMoment computeLocalSecondMoment(double t1, double t2) const;
     LC_ParabolaData m_data;
 };
 

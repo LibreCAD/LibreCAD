@@ -87,10 +87,15 @@ std::ostream& operator<<(std::ostream& os, const RS_HatchData& td) {
 // RS_Hatch implementation
 RS_Hatch::RS_Hatch(RS_EntityContainer* parent, const RS_HatchData& d)
     : RS_EntityContainer(parent)
-    , m_data(d), m_orderedLoops{std::make_shared<std::vector<LC_LoopUtils::LC_Loops>>()}
-    , m_solidPath{std::make_shared<std::vector<QPainterPath>>()} {
-    // Initialize caches
-
+    , m_data(d)
+    , m_area(RS_MAXDOUBLE)
+    , m_updateError(HATCH_UNDEFINED)
+    , m_updateRunning(false)
+    , m_needOptimization(true)
+    , m_updated(false)
+    , m_orderedLoops{std::make_shared<std::vector<LC_LoopUtils::LC_Loops>>()}
+    , m_boundaryContainers()
+{
     setOwner(true);
 }
 
@@ -105,6 +110,8 @@ RS_Entity* RS_Hatch::clone() const {
     // Force re-optimization and update to deep-copy caches and subcontainers
     cloneHatch->m_needOptimization = true;
     cloneHatch->m_area = RS_MAXDOUBLE;
+    cloneHatch->m_firstMoment = LC_FirstMoment{};
+    cloneHatch->m_secondMomentValid = false;
     cloneHatch->m_updated = false;
     cloneHatch->m_boundaryContainers.clear();  // Will be regenerated
     cloneHatch->update();
@@ -113,18 +120,6 @@ RS_Entity* RS_Hatch::clone() const {
     return cloneHatch;
 }
 
-/**
- * Validates the hatch boundaries by optimizing them into ordered loops and subcontainers.
- * This step is crucial for both solid and pattern hatches to ensure valid contours.
- *
- * @return true if validation succeeds, false otherwise.
- */
-/**
- * Validates the hatch boundaries by optimizing them into ordered loops and subcontainers.
- * This step is crucial for both solid and pattern hatches to ensure valid contours.
- *
- * @return true if validation succeeds, false otherwise.
- */
 bool RS_Hatch::validate() {
     bool success = true;
 
@@ -133,8 +128,8 @@ bool RS_Hatch::validate() {
     }
 
     try {
-        // Flatten container to atomic entities only by cloning to avoid ownership issues
-        std::set<RS_Entity*> contourEdges;  // Use const to track uniques safely
+        // Collect atomic entities from loop subcontainers into a deduplicated set
+        std::set<RS_Entity*> contourEdges;
         std::vector<RS_Entity*> loops;
         for(RS_Entity* en: std::as_const(*this)) {
             if (en == nullptr || ! en->isContainer()) {
@@ -159,16 +154,23 @@ bool RS_Hatch::validate() {
         // Clean up zero-length entities in the flat container
         avoidZeroLength(contourEdges);
 
-        // Optimize into loops
-        RS_EntityContainer edgeContainer{nullptr, false};
-        std::copy(contourEdges.cbegin(), contourEdges.cend(), std::back_inserter(edgeContainer));
+        // Build a working copy of the contour edges (owned clones) so that any
+        // coordinate transforms applied for pattern alignment do not mutate the
+        // original boundary entities stored in *this.
+        RS_EntityContainer edgeContainer{nullptr, true};
+        for (RS_Entity* e : contourEdges)
+            edgeContainer.addEntity(e->clone());
         edgeContainer.forcedCalculateBorders();
 
-        // simulate pattern rotation: rotate contour by -angle;
-        // tiling the pattern;
-        // rotate the contour and tiles by angle
-        const RS_Vector center = (edgeContainer.getMin() + edgeContainer.getMax()) * 0.5;
-        edgeContainer.rotate(center, - m_data.angle);
+        // For pattern hatches: rotate the working copy by -angle so that tiling
+        // can be done in an axis-aligned frame; updatePatternHatch rotates the
+        // trimmed lines back by +angle.  Solid hatches keep WCS coordinates so
+        // that solid-fill paths and moments are computed correctly.
+        if (!isSolid()) {
+            const RS_Vector center = (edgeContainer.getMin() + edgeContainer.getMax()) * 0.5;
+            edgeContainer.rotate(center, -m_data.angle);
+        }
+
         const LC_LoopUtils::LoopOptimizer optimizer{edgeContainer};
         const auto results = optimizer.getResults();
 
@@ -179,9 +181,8 @@ bool RS_Hatch::validate() {
         m_orderedLoops = results;
         m_needOptimization = false;
 
-        // Create subcontainers for each loop's boundaries by cloning entities
+        // Collect all loops (outer + holes) into flat boundary container list
         m_boundaryContainers = collectLoops(results);
-        m_boundaryContainers.reserve(results->size());
     } catch (const std::exception& e) {
         RS_DEBUG->print(RS_Debug::D_ERROR, "Hatch validation error: %s", e.what());
         m_updateError = HATCH_INVALID_CONTOUR;
@@ -199,7 +200,7 @@ bool RS_Hatch::validate() {
  * @return Number of loops.
  */
 int RS_Hatch::countLoops() const {
-    return m_orderedLoops ? static_cast<int>(m_orderedLoops->size()) : static_cast<int>(m_boundaryContainers.size());
+    return static_cast<int>(m_orderedLoops->size());
 }
 
 /**
@@ -250,12 +251,13 @@ void RS_Hatch::update() {
     m_updateError = HATCH_OK;
 
     // Reset caches
-    m_solidPath = std::make_shared<std::vector<QPainterPath>>();
     m_area = RS_MAXDOUBLE;
+    m_secondMomentValid = false;
 
     // Validate and optimize loops (moves boundaries to subcontainers)
     if (!validate()) {
         RS_DEBUG->print(RS_Debug::D_ERROR, "RS_Hatch::update: Validation failed");
+        activateContour(false);
         m_updateRunning = false;
         return;
     }
@@ -270,11 +272,16 @@ void RS_Hatch::update() {
         updatePatternHatch(layer, pen);
     }
 
-    // Compute total area from loops
-    m_area = std::accumulate(m_orderedLoops->begin(), m_orderedLoops->end(), 0.0,
-                             [](const double accum, const LC_LoopUtils::LC_Loops& loop) {
-                                 return accum + loop.getTotalArea();
-                             });
+    // Compute 0th, 1st, and 2nd moments from loops
+    m_area = 0.0;
+    m_firstMoment = LC_FirstMoment{};
+    m_secondMoment = LC_SecondMoment{};
+    for (const auto& loop : *m_orderedLoops) {
+        m_area         += loop.getTotalArea();
+        m_firstMoment  += loop.getTotalFirstMoment();
+        m_secondMoment += loop.getTotalSecondMoment();
+    }
+    m_secondMomentValid = true;
 
     forcedCalculateBorders();
     activateContour(false);  // Hide boundaries by default
@@ -287,18 +294,9 @@ void RS_Hatch::update() {
 /**
  * Helper: Generates and caches QPainterPaths for solid fill from optimized loops.
  */
-void RS_Hatch::updateSolidHatch([[maybe_unused]] RS_Layer* layer, [[maybe_unused]] const RS_Pen& pen) const {
-    RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Hatch::updateSolidHatch");
-
-    // // Transform loops into painter paths
-    // std::transform(m_orderedLoops->begin(), m_orderedLoops->end(),
-    //                std::back_inserter(*m_solidPath),
-    //                [](const LC_LoopUtils::LC_Loops &loop) {
-    //                  return loop.getPainterPath();
-    //                });
-
-    RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Hatch::updateSolidHatch: Cached %zu paths",
-                    m_solidPath->size());
+void RS_Hatch::updateSolidHatch([[maybe_unused]] RS_Layer* layer, [[maybe_unused]] const RS_Pen& pen) const{
+    // Solid-fill paths are viewport-dependent (world→screen transform varies per
+    // draw call), so they are built lazily in drawSolidFill() rather than cached here.
 }
 
 /**
@@ -326,9 +324,7 @@ void RS_Hatch::updatePatternHatch(RS_Layer* layer, const RS_Pen& pen) {
     }
     pattern->setOwner(true);
 
-    // Apply transformations
     pattern->scale((pattern->getMin() + pattern->getMax()) * 0.5, RS_Vector{m_data.scale, m_data.scale});
-    //pattern->rotate(center, data.angle);
     pattern->calculateBorders();
     forcedCalculateBorders();
 
@@ -354,13 +350,11 @@ void RS_Hatch::updatePatternHatch(RS_Layer* layer, const RS_Pen& pen) {
         return;
     }
 
-    // pattern rotation
-    // simulate pattern tiling has been done with the contour rotated by -angle;
-    // After pattern tiling, need to rotate the tiles by angle
+    // The contour was optimized in a frame rotated by -data.angle (see validate()).
+    // Rotate the trimmed pattern lines back to WCS by +data.angle.
     const RS_Vector center = (getMin() + getMax()) * 0.5;
     const RS_Vector rotationVector{m_data.angle};
     int addedCount = 0;
-    // Trim pattern lines to each loop and add directly to RS_Hatch
     for (size_t i = 0; i < m_orderedLoops->size(); ++i) {
         const auto& loop = (*m_orderedLoops)[i];
         auto trimmedEntities = loop.trimPatternEntities(*pattern);
@@ -411,49 +405,31 @@ void RS_Hatch::activateContour(const bool visible) const {
  * @param painter The painter to draw with.
  */
 void RS_Hatch::draw(RS_Painter* painter) {
-    painter->save();
-
-    if (isSolid()) {
+    if (isSolid())
         drawSolidFill(painter);
-    } else {
+    else
         drawPatternLines(painter);
-    }
-
-    painter->restore();
 }
 
 /**
  * Helper: Draws solid fill using cached QPainterPaths.
  */
 void RS_Hatch::drawSolidFill(RS_Painter* painter) const {
-    if (!m_orderedLoops || m_orderedLoops->empty()) {
-        LC_ERR << __func__ << "(): No cached paths for solid fill";
+    if (m_orderedLoops->empty()){
         return;
     }
 
     painter->save();
-    const QBrush originalBrush = painter->brush();
-    const RS_Pen originalPen = painter->getPen();
-
-    // Use pen color for solid fill
-    QBrush fillBrush = originalBrush;
-    fillBrush.setColor(originalPen.getColor());
+    QBrush fillBrush = painter->brush();
+    fillBrush.setColor(painter->getPen().getColor());
     fillBrush.setStyle(Qt::SolidPattern);
-
     painter->setBrush(fillBrush);
-    // Transform loops into painter paths
-    m_solidPath->clear();
-    std::transform(m_orderedLoops->begin(), m_orderedLoops->end(),
-                   std::back_inserter(*m_solidPath),
-                   [painter](const LC_LoopUtils::LC_Loops& loop) {
-                     return loop.getPainterPath(painter);
-                   });
 
-    for (const QPainterPath& path : *m_solidPath) {
+    for (const LC_LoopUtils::LC_Loops& loop : *m_orderedLoops) {
+        QPainterPath path = loop.getPainterPath(painter);
         painter->drawPath(path);
     }
 
-    // Restore original
     painter->restore();
 }
 
@@ -473,30 +449,24 @@ void RS_Hatch::drawPatternLines(RS_Painter* painter) const {
 }
 
 /**
- * Debug: Outputs path elements to log.
- */
-void RS_Hatch::debugOutPath(const QPainterPath& path) const {
-    const int elementCount = path.elementCount();
-    for (int i = 0; i < elementCount; ++i) {
-        const QPainterPath::Element& element = path.elementAt(i);
-        LC_ERR << "Element " << i << " (" << element.x << "," << element.y << ") "
-               << "LineTo: " << static_cast<int>(element.isLineTo())
-               << " MoveTo: " << static_cast<int>(element.isMoveTo())
-               << " Curve: " << static_cast<int>(element.isCurveTo()) << "\n";
-    }
-}
-
-/**
- * Computes the total enclosed area from all optimized loops.
- * Caches the result for efficiency.
- *
- * @return Total area, or 0 if unoptimized/invalid.
+ * @return Total enclosed area, or RS_MAXDOUBLE if update() has not run.
  */
 double RS_Hatch::getTotalArea() const {
-    if (m_area < RS_MAXDOUBLE - RS_Math::ulp(m_area)) {  // fixme - sand - it's a very strange logic there.... returning the same value?
-        return m_area;
-    }
     return m_area;
+}
+
+RS_Vector RS_Hatch::getCentroid() const {
+    if (!m_secondMomentValid || m_area < RS_TOLERANCE)
+        return RS_Vector(false);
+    return RS_Vector(m_firstMoment.mx / m_area, m_firstMoment.my / m_area);
+}
+
+LC_SecondMoment RS_Hatch::getMomentOfInertia() const {
+    if (!m_secondMomentValid || m_area < RS_TOLERANCE)
+        return {};
+    const double cx = m_firstMoment.mx / m_area;
+    const double cy = m_firstMoment.my / m_area;
+    return m_secondMoment.getCentral(m_area, cx, cy);
 }
 
 
@@ -513,13 +483,6 @@ double RS_Hatch::doGetDistanceToPoint(const RS_Vector& coord, RS_Entity** entity
     }
     return RS_MAXDOUBLE;
 }
-
-void RS_Hatch::prepareUpdate()
-{
-    // called before foreced update
-
-}
-
 
 void RS_Hatch::move(const RS_Vector& offset) {
     m_needOptimization = true;
@@ -553,9 +516,7 @@ void RS_Hatch::scale(const RS_Vector& center, const RS_Vector& factor) {
             en->scale(center, factor);
         }
     }
-    m_data.scale *= factor.x;  // Assume uniform scaling
-    m_needOptimization = true;
-    m_updated = false;
+    m_data.scale *= factor.x;
     update();
 }
 
@@ -566,8 +527,9 @@ void RS_Hatch::mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2) 
             en->mirror(axisPoint1, axisPoint2);
         }
     }
-    const double mirrorAngle = axisPoint1.angleTo(axisPoint2);
-    m_data.angle = RS_Math::correctAngle(m_data.angle + (mirrorAngle * 2.0));
+    // Reflecting a direction α across an axis at angle θ maps it to 2θ − α.
+    double mirrorAngle = axisPoint1.angleTo(axisPoint2);
+    m_data.angle = RS_Math::correctAngle(2.0 * mirrorAngle - m_data.angle);
     update();
 }
 

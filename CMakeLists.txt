@@ -836,7 +836,7 @@ set (SHARED_SOURCES
      librecad/src/lib/engine/document/entities/lc_parabola.cpp
      librecad/src/lib/engine/document/entities/lc_rect.cpp
      librecad/src/lib/engine/document/entities/lc_rect.h
-     librecad/src/lib/engine/document/entities/lc_splinehelper.cpp
+     librecad/src/lib/engine/document/entities/lc_secondmoment.hlibrecad/src/lib/engine/document/entities/lc_splinehelper.cpp
      librecad/src/lib/engine/document/entities/lc_splinehelper.h
      librecad/src/lib/engine/document/entities/lc_splinepoints.cpp
      librecad/src/lib/engine/document/entities/lc_splinepoints.h
@@ -1197,7 +1197,8 @@ set (SHARED_SOURCES
      librecad/src/main/doc_plugin_interface.cpp
      librecad/src/main/doc_plugin_interface.h
      librecad/src/main/lc_application.cpp
-     librecad/src/main/lc_application.h
+     librecad/src/main/lc_application.hlibrecad/src/main/lc_crash_handler.cpp
+    librecad/src/main/lc_crash_handler.h
      librecad/src/main/qc_dialogfactory.cpp
      librecad/src/main/qc_dialogfactory.h
      librecad/src/plugins/document_interface.h
@@ -1429,6 +1430,8 @@ set (SHARED_SOURCES
      librecad/src/ui/dialogs/entity/lc_dlg_tolerance.h
      librecad/src/ui/dialogs/entity/lc_propertieseditingwidget_ellipse.cpp
      librecad/src/ui/dialogs/entity/lc_propertieseditingwidget_ellipse.h
+    librecad/src/ui/dialogs/entity/lc_hatchpropertieseditingwidget.cpp
+    librecad/src/ui/dialogs/entity/lc_hatchpropertieseditingwidget.h
      librecad/src/ui/dialogs/entity/lc_entitypropertiesdlg.cpp
      librecad/src/ui/dialogs/entity/lc_entitypropertiesdlg.h
      librecad/src/ui/dialogs/entity/lc_entitypropertieseditor.cpp
@@ -2282,7 +2285,7 @@ if (BUILD_TESTS)
                        librecad/src/lib/engine/document/entities/tests/lc_hyperbola_tests.cpp
                        librecad/src/lib/engine/document/entities/tests/rs_ellipse_tests.cpp
                        librecad/src/lib/engine/document/entities/tests/rs_spline_tests.cpp
-                       librecad/src/lib/math/tests/rs_math_tests.cpp
+                       librecad/src/lib/engine/document/entities/tests/rs_hatch_tests.cpplibrecad/src/lib/math/tests/rs_math_tests.cpp
                        librecad/src/lib/math/tests/lc_quadratic_tests.cpp
     )
 

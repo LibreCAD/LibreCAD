@@ -36,6 +36,7 @@
 #include "rs_debug.h"
 #include "rs_entitycontainer.h"
 #include "rs_information.h"
+#include "lc_splinepoints.h"
 #include "rs_line.h"
 #include "rs_math.h"
 #include "rs_painter.h"
@@ -868,15 +869,13 @@ RS_Vector RS_Ellipse::dualLineTangentPoint(const RS_Vector& line) const {
 
 void RS_Ellipse::move(const RS_Vector& offset) {
     m_data.move(offset);
-    //calculateEndpoints();
-    //    minV.move(offset);
-    //    maxV.move(offset);
     moveBorders(offset);
 }
 
-void RS_Ellipse::rotate(const RS_Vector& center, const double angle) {
-    m_data.rotate(center, angle);
-    //calculateEndpoints();
+void RS_Ellipse::rotate(const RS_Vector& center, double angle) {
+    RS_Vector angleVector(angle);
+    m_data.center.rotate(center, angleVector);
+    m_data.majorP.rotate(angleVector);
     calculateBorders();
 }
 
@@ -886,6 +885,177 @@ void RS_Ellipse::revertDirection() {
         m_data.reversed = !m_data.reversed;
         calculateBorders();
     }
+}
+
+std::vector<RS_Entity*> RS_Ellipse::createOffset(const RS_Vector& coord,
+                                                 const double& distance) const {
+    const double a = getMajorRadius();
+    const double b = getMinorRadius();
+    if (a < RS_TOLERANCE || b < RS_TOLERANCE) {
+        return {};
+    }
+    if (std::abs(distance) < RS_TOLERANCE) {
+        return {};
+    }
+
+    // Sign convention: positive when `coord` is outside the ellipse.
+    // Use the implicit form in the ellipse-aligned frame: q = (u/a)^2 + (v/b)^2.
+    // q > 1 ⇒ outside, q < 1 ⇒ inside.
+    const RS_Vector center = getCenter();
+    const RS_Vector majorP = getMajorP();
+    const double majorAngle = majorP.angle();
+    RS_Vector local = coord - center;
+    local.rotate(-majorAngle);
+    const double q = (local.x / a) * (local.x / a)
+                   + (local.y / b) * (local.y / b);
+    const double signedD = (q >= 1.0) ? std::abs(distance) : -std::abs(distance);
+
+    // Cusp / self-intersection rejection: inward offset cusps when |d| ≥ b²/a.
+    // Reject with a 1% safety margin.
+    if (signedD < 0.0) {
+        const double cuspLimit = (b * b) / a;
+        if (std::abs(signedD) >= 0.99 * cuspLimit) {
+            return {};
+        }
+    }
+
+    // Parameter range.
+    const bool isArc = isEllipticArc();
+    double angleStart;
+    double angleEnd;
+    if (isArc) {
+        angleStart = getAngle1();
+        angleEnd = getAngle2();
+        if (isReversed()) {
+            // Sweep from angle1 down to angle2 (CW). Normalize so end > start
+            // by adding 2π if needed; we then walk negatively.
+            if (angleEnd > angleStart) {
+                angleEnd -= 2.0 * M_PI;
+            }
+        } else {
+            if (angleEnd < angleStart) {
+                angleEnd += 2.0 * M_PI;
+            }
+        }
+    } else {
+        angleStart = 0.0;
+        angleEnd = 2.0 * M_PI;
+    }
+    const double sweep = angleEnd - angleStart;
+    const double sweepLen = std::abs(sweep);
+    if (sweepLen < RS_TOLERANCE_ANGLE) {
+        return {};
+    }
+    const double dir = (sweep >= 0.0) ? 1.0 : -1.0;
+
+    // Adaptive sagitta-based sampling on the offset curve.
+    // Tolerance: 0.1% of major radius, with an absolute floor.
+    const double epsilon = std::max(a * 1.0e-3, RS_TOLERANCE * 100.0);
+
+    // Per-revolution caps (scaled to the actual sweep below).
+    constexpr int kNMinFull = 16;
+    constexpr int kNMaxFull = 512;
+    const double sweepFraction = sweepLen / (2.0 * M_PI);
+    const int nMin = std::max(2, static_cast<int>(std::ceil(kNMinFull * sweepFraction)));
+    const int nMax = std::max(nMin + 1, static_cast<int>(std::ceil(kNMaxFull * sweepFraction)));
+
+    // Sagitta-bounded step size in the ellipse parameter θ. For the ellipse
+    // p(θ) = (a cosθ, b sinθ):
+    //   |p_ell'(θ)|² = a²sin²θ + b²cos²θ ≡ T(θ)
+    //   ρ_ell(θ) = T(θ)^(3/2) / (a·b)
+    // Offsetting by signedD along the outward unit normal:
+    //   ρ_off(θ) = ρ_ell(θ) + signedD      (signedD>0 outward, <0 inward)
+    //   |p_off'(θ)| = (ρ_off / ρ_ell) · |p_ell'(θ)|     ← key correction
+    // The offset curve's parametric speed differs from the ellipse's; for
+    // inner offsets it slows down, vanishing at a cusp (ρ_off→0). Bounding
+    // sagitta h ≈ chord_off²/(8 ρ_off) ≤ ε with chord_off = |p_off'|·Δθ:
+    //   Δθ = (ρ_ell / √T) · √(8 ε / ρ_off) = (T / (a·b)) · √(8 ε / ρ_off)
+    // Result: uniform sagitta along the offset curve regardless of offset
+    // direction. Sample density on the offset is 1/√(8ε ρ_off) per unit arc
+    // length — high at sharp regions, low at shallow ones, in both inner and
+    // outer offsets.
+    auto stepTheta = [&](double theta) {
+        const double s = std::sin(theta);
+        const double c = std::cos(theta);
+        const double term = (a * s) * (a * s) + (b * c) * (b * c);
+        const double rhoEll = std::pow(term, 1.5) / (a * b);
+        const double rhoOff = std::max(rhoEll + signedD, RS_TOLERANCE);
+        return (term / (a * b)) * std::sqrt(8.0 * epsilon / rhoOff);
+    };
+
+    // Hard caps on per-step Δθ regardless of curvature.
+    const double dThetaMax = M_PI / 8.0;                // 22.5°
+    const double dThetaMin = sweepLen / static_cast<double>(nMax);
+
+    std::vector<RS_Vector> offsetPoints;
+    offsetPoints.reserve(64);
+
+    auto pushSample = [&](double theta) {
+        // Work in the ellipse-aligned local frame, then transform once to world.
+        // p_local(θ) = (a cosθ, b sinθ); tangent ∝ (-a sinθ, b cosθ); rotating
+        // the tangent by -90° gives the outward normal (b cosθ, a sinθ), which
+        // is always outward since dot(n, p_local) = a·b > 0.
+        const double s = std::sin(theta);
+        const double c = std::cos(theta);
+        RS_Vector n(b * c, a * s);
+        n.normalize();
+        RS_Vector p = RS_Vector(a * c, b * s) + signedD * n;
+        p.rotate(majorAngle);
+        p += center;
+        offsetPoints.push_back(p);
+    };
+
+    double theta = angleStart;
+    pushSample(theta);
+    while (true) {
+        double dTheta = stepTheta(theta);
+        if (!std::isfinite(dTheta) || dTheta < dThetaMin) {
+            dTheta = dThetaMin;
+        }
+        if (dTheta > dThetaMax) {
+            dTheta = dThetaMax;
+        }
+
+        const double remaining = std::abs(angleEnd - theta);
+        if (remaining <= dTheta) {
+            if (isArc) {
+                // Open spline: include exact endpoint.
+                theta = angleEnd;
+                pushSample(theta);
+            }
+            // Closed spline: omit the duplicate endpoint (LC_SplinePoints
+            // closes implicitly).
+            break;
+        }
+        theta += dir * dTheta;
+        pushSample(theta);
+    }
+
+    // Bounds: ensure at least nMin points (e.g. for very low-curvature
+    // shallow arcs where the adaptive step is huge).
+    if (static_cast<int>(offsetPoints.size()) < nMin) {
+        offsetPoints.clear();
+        const int n = nMin;
+        for (int i = 0; i < n; ++i) {
+            const double t = angleStart + sweep * (static_cast<double>(i) / (n - (isArc ? 1 : 0)));
+            pushSample(t);
+        }
+        if (!isArc && !offsetPoints.empty()){
+            offsetPoints.pop_back();  // drop duplicate wrap point
+        }
+    }
+
+    if (offsetPoints.size() < 3) {
+        return {};
+    }
+
+    LC_SplinePointsData spd(/*closed=*/!isArc, /*cut=*/false);
+    spd.splinePoints = std::move(offsetPoints);
+    auto* sp = new LC_SplinePoints(nullptr, spd);
+    sp->setPen(getPen(false));
+    sp->setLayer(getLayer());
+    sp->calculateBorders();
+    return { sp };
 }
 
 void RS_Ellipse::rotate(const RS_Vector& center, const RS_Vector& angleVector) {
@@ -1150,6 +1320,13 @@ RS_Entity& RS_Ellipse::shear(const double k) {
     return *this;
 }
 
+double RS_Ellipse::computeLocalArea(double t1, double t2) const {
+    auto F = [&](double t) {
+        return (getMajorRadius() * getMinorRadius() / 2.0) * (t + 0.5 * std::sin(2.0 * t));
+    };
+    return F(t2) - F(t1);
+}
+
 /**
  * is the Ellipse an Arc
  * @return false, if both angle1/angle2 are zero
@@ -1356,6 +1533,33 @@ LC_Quadratic RS_Ellipse::getQuadratic() const {
     return ret;
 }
 
+LC_SecondMoment RS_Ellipse::computeLocalSecondMoment(double t1, double t2) const {
+    const double a = getMajorRadius();
+    const double b = getMinorRadius();
+
+    auto F_ixx = [&](double t) {
+        const double s2 = std::sin(2.0 * t);
+        const double s4 = std::sin(4.0 * t);
+        return (a * a * a * b / 24.0) * (3.0 * t + 2.0 * s2 + 0.25 * s4);
+    };
+
+    auto F_iyy = [&](double t) {
+        const double s2 = std::sin(2.0 * t);
+        const double s4 = std::sin(4.0 * t);
+        return (a * b * b * b / 24.0) * (3.0 * t - 2.0 * s2 + 0.25 * s4);
+    };
+
+    auto F_ixy = [&](double t) {
+        return -(a * a * b * b / 8.0) * std::pow(std::cos(t), 4);
+    };
+
+    LC_SecondMoment m;
+    m.ixx = F_ixx(t2) - F_ixx(t1);
+    m.iyy = F_iyy(t2) - F_iyy(t1);
+    m.ixy = F_ixy(t2) - F_ixy(t1);
+    return m;
+}
+
 /**
  * @brief areaLineIntegral, line integral for contour area calculation by Green's Theorem
  * Contour Area =\oint x dy
@@ -1393,6 +1597,78 @@ bool RS_Ellipse::isReversed() const {
 void RS_Ellipse::setReversed(const bool r) {
     m_data.reversed = r;
 }
+
+LC_FirstMoment RS_Ellipse::computeLocalFirstMoment(double t0, double t1) const {
+    const double a = getMajorRadius();
+    const double b = getMinorRadius();
+    // mx = (a²b/2) ∫ cos³t dt = (a²b/2)[sin t − sin³t/3]
+    // my = (ab²/2) ∫ sin³t dt = (ab²/2)[−cos t + cos³t/3]
+    auto F_mx = [&](double t) {
+        const double st = std::sin(t);
+        return (a * a * b / 2.0) * (st - st * st * st / 3.0);
+    };
+    auto F_my = [&](double t) {
+        const double ct = std::cos(t);
+        return (a * b * b / 2.0) * (-ct + ct * ct * ct / 3.0);
+    };
+    return {F_mx(t1) - F_mx(t0), F_my(t1) - F_my(t0)};
+}
+
+/**
+ * @brief firstMomentLineIntegral – exact 1st-order moments via Green's theorem
+ *        (local aligned frame + rotation + parallel-axis shift)
+ */
+LC_FirstMoment RS_Ellipse::firstMomentLineIntegral() const {
+    if (!isEllipticArc()) {
+        const double area = M_PI * getMajorRadius() * getMinorRadius();
+        return {m_data.center.x * area, m_data.center.y * area};
+    }
+
+    const double phi = getAngle();
+    const double cx  = m_data.center.x;
+    const double cy  = m_data.center.y;
+
+    double t0 = m_data.angle1;
+    double t1 = isReversed() ? t0 - getAngleLength() : t0 + getAngleLength();
+
+    const auto local = computeLocalFirstMoment(t0, t1);
+    const double area = computeLocalArea(t0, t1);
+
+    return local.rotated(phi).shifted(-cx, -cy, area);
+}
+
+/**
+ * @brief secondMomentLineIntegral – exact 2nd-order moments via Green's theorem
+ *        (local aligned frame + rotation + parallel-axis shift)
+ */
+LC_SecondMoment RS_Ellipse::secondMomentLineIntegral() const {
+    const double cx  = m_data.center.x;
+    const double cy  = m_data.center.y;
+    const double phi = getAngle();
+    if (!isEllipticArc()) {
+        // Full ellipse – exact closed-form (original fast formula kept)
+        const double a   = getMajorRadius();
+        const double b   = getMinorRadius();
+        const double cosP = std::cos(phi);
+        const double sinP = std::sin(phi);
+        const double piab = M_PI * a * b;
+
+        return {
+            piab * (cx*cx + (a*a*cosP*cosP + b*b*sinP*sinP) / 4.0),
+            piab * (cy*cy + (a*a*sinP*sinP + b*b*cosP*cosP) / 4.0),
+            piab * (cx*cy + (a*a - b*b) * cosP * sinP / 4.0)
+        };
+    }
+
+    double t0 = m_data.angle1;
+    double t1 = isReversed() ? t0 - getAngleLength() : t0 + getAngleLength();
+
+    const auto local = computeLocalSecondMoment(t0, t1);
+    const double area = computeLocalArea(t0, t1);
+
+    return local.rotated(phi).shifted(-cx, -cy, area);
+}
+
 
 double RS_Ellipse::getAngle() const {
     return m_data.majorP.angle();

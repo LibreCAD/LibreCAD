@@ -186,25 +186,5 @@
  <resources>
   <include location="../../../../res/icons/icons.qrc"/>
  </resources>
- <connections>
-  <connection>
-   <sender>leDist</sender>
-   <signal>textChanged(QString)</signal>
-   <receiver>LC_OffsetOptionsWidget</receiver>
-   <slot>updateDist(QString)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>20</x>
-     <y>20</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>55</x>
-     <y>10</y>
-    </hint>
-   </hints>
-  </connection>
- </connections>
- <slots>
-  <slot>updateDist(QString)</slot>
- </slots>
+ <connections/>
 </ui>

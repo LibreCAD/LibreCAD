@@ -285,8 +285,39 @@ LC_Quadratic RS_Line::getQuadratic() const {
     return LC_Quadratic(ce);
 }
 
+/* =====================================================================
+   Exact moment support for RS_Line (Green's theorem - polynomial antiderivatives)
+   ===================================================================== */
+
 double RS_Line::areaLineIntegral() const {
-    return 0.5 * (m_data.endpoint.y - m_data.startpoint.y) * (m_data.startpoint.x + m_data.endpoint.x);
+  // Original implementation (kept unchanged)
+  return 0.5 * (m_data.endpoint.y - m_data.startpoint.y) * (m_data.startpoint.x + m_data.endpoint.x);
+}
+
+LC_FirstMoment RS_Line::firstMomentLineIntegral() const {
+  const double x0 = m_data.startpoint.x;
+  const double y0 = m_data.startpoint.y;
+  const double x1 = m_data.endpoint.x;
+  const double y1 = m_data.endpoint.y;
+  const double dx = x1 - x0;
+  const double dy = y1 - y0;
+
+  return {
+      dy * (x0*x0 + x0*x1 + x1*x1) / 6.0,   // mx = ∬ x dA
+      -dx * (y0*y0 + y0*y1 + y1*y1) / 6.0   // my = ∬ y dA
+  };
+}
+
+LC_SecondMoment RS_Line::secondMomentLineIntegral() const {
+    const double x0 = m_data.startpoint.x, y0 = m_data.startpoint.y;
+    const double x1 = m_data.endpoint.x,   y1 = m_data.endpoint.y;
+    const double dy = y1 - y0;
+    const double dx = x1 - x0;
+    return {
+        dy / 12.0 * (x0 + x1) * (x0*x0 + x1*x1),
+        -dx / 12.0 * (y0 + y1) * (y0*y0 + y1*y1),
+        dy / 24.0 * (x0*x0*(3.0*y0 + y1) + 2.0*x0*x1*(y0 + y1) + x1*x1*(y0 + 3.0*y1))
+    };
 }
 
 RS_Vector RS_Line::getTangentDirection(const RS_Vector& /*point*/) const {

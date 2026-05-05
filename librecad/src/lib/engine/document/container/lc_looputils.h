@@ -21,8 +21,7 @@
 ** Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 **
 **********************************************************************************
- */
-// File: lc_looputils.h
+*/
 #ifndef LC_LOOPUTILS_H
 #define LC_LOOPUTILS_H
 
@@ -31,6 +30,7 @@
 #include <vector>
 
 #include "rs_entitycontainer.h"
+#include "lc_secondmoment.h"
 
 class QPainterPath;
 class RS_AtomicEntity;
@@ -94,7 +94,6 @@ public:
   int getContainingDepth(const RS_Vector& point) const;
   /**
    * @brief Generates a QPainterPath for this loop and its children up to the specified level.
-   * @param painter
    * @param level Recursion level for path building (default: 0).
    * @return The combined QPainterPath with OddEvenFill rule.
    */
@@ -110,6 +109,27 @@ public:
    * @return The net area as a double.
    */
   double getTotalArea() const;
+  /**
+   * @brief getTotalFirstMoment - recursively computes the first moments of area
+   * (∬ x dA, ∬ y dA) for this loop hierarchy using the same hole-subtraction
+   * logic as getTotalArea():
+   *
+   *   totalMoment = outerMoment - ∑(child.getTotalFirstMoment())
+   *
+   * Divide by getTotalArea() to get the centroid (cx, cy).
+   */
+  LC_FirstMoment getTotalFirstMoment() const;
+  /**
+   * @brief getTotalSecondMoment - recursively computes the three second moments
+   * of area for this loop hierarchy using the same hole-subtraction logic as
+   * getTotalArea():
+   *
+   *   totalMoment = outerMoment - ∑(child.getTotalSecondMoment())
+   *
+   * @return LC_SecondMoment with ixx=∬x²dA, iyy=∬y²dA, ixy=∬xydA for the
+   *         net region (outer shape minus holes, plus islands, etc.)
+   */
+  LC_SecondMoment getTotalSecondMoment() const;
   /**
    * @brief Checks if this loop overlaps with a given rectangle.
    * @param other The rectangle to check against.
@@ -340,11 +360,6 @@ private:
    */
   void sortAndBuild();
   /**
-   * @brief Initializes data structures.
-   */
-  void init();
-
-  /**
    * @brief Finds and assigns the parent for a loop.
    * @param loop The child loop.
    * @param sorted Sorted list of all loops.
@@ -388,4 +403,4 @@ private:
 };
 }
 
-#endif
+#endif // LC_LOOPUTILS_H

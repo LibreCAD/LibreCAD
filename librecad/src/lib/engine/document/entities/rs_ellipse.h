@@ -99,8 +99,6 @@ struct RS_EllipseData {
 
 std::ostream& operator << (std::ostream& os, const RS_EllipseData& ed);
 
-// fixme - add support of offset operation for ellipse entity!
-
 /**
  * Class for an ellipse entity. All angles are in Rad.
  *
@@ -237,6 +235,15 @@ public:
     void moveRef(const RS_Vector& ref, const RS_Vector& offset) override;
     void revertDirection() override;
 
+    /**
+     * Produce a true equidistant offset of this ellipse approximated by an
+     * `LC_SplinePoints` (the offset of an ellipse is not itself an ellipse).
+     * Returns one spline (full ellipse → closed; elliptic arc → open) wrapped
+     * in a vector, or empty for degenerate/cusp inputs.
+     */
+    std::vector<RS_Entity*> createOffset(const RS_Vector& coord,
+                                         const double& distance) const override;
+
     void draw(RS_Painter* painter) override;
     void createPainterPath(RS_Painter* painter, QPainterPath& path) const;
 
@@ -265,6 +272,18 @@ a quadratic contains coefficients for quadratic:
 */
     double areaLineIntegral() const override;
 
+    /**
+     * @brief firstMomentLineIntegral – exact closed-form 1st-order moments
+     *        via Green's theorem contour integrals (local aligned frame + transform)
+     */
+    LC_FirstMoment firstMomentLineIntegral() const override;
+
+    /**
+     * @brief secondMomentLineIntegral – exact closed-form 2nd-order moments
+     *        via Green's theorem contour integrals (local aligned frame + transform)
+     */
+    LC_SecondMoment secondMomentLineIntegral() const override;
+
 protected:
     RS_EllipseData m_data; // fixme - renderperf - cache major and minor radiuses!
     void updateLength() override;
@@ -285,6 +304,9 @@ private:
      */
     void mergeBoundingBox(LC_Rect& boundingBox, const RS_Vector& direction) const;
     RS_Vector doGetNearestCenter(const RS_Vector& coord, double* dist, RS_Entity** centerEntity) const override;
+    double computeLocalArea(double t1, double t2) const;
+    LC_FirstMoment computeLocalFirstMoment(double t1, double t2) const;
+    LC_SecondMoment computeLocalSecondMoment(double t1, double t2) const;
 };
 
 #endif
