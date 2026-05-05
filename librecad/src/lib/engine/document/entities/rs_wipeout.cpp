@@ -70,13 +70,13 @@ void RS_Wipeout::draw(RS_Painter* painter) {
     painter->fillPolygonUI(uiPoly);
     painter->setPen(savedPen);
 
-    if (data.frame) {
-        // Draw the outline using the entity's own pen (already set by the renderer).
-        for (size_t i = 0; i < data.vertices.size(); ++i) {
-            const RS_Vector& a = data.vertices[i];
-            const RS_Vector& b = data.vertices[(i + 1) % data.vertices.size()];
-            painter->drawLineWCS(a, b);
-        }
+    // Per-entity frame flag does not exist (ODA spec §20.4.80; WIPEOUTFRAME is
+    // a global drawing variable, not per-entity).  Always draw the outline,
+    // matching AutoCAD's default WIPEOUTFRAME=1 behavior.
+    for (size_t i = 0; i < data.vertices.size(); ++i) {
+        const RS_Vector& a = data.vertices[i];
+        const RS_Vector& b = data.vertices[(i + 1) % data.vertices.size()];
+        painter->drawLineWCS(a, b);
     }
 }
 

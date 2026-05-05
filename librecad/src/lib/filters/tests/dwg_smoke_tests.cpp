@@ -140,8 +140,13 @@ public:
         wipeouts++;
         wipeoutVertices += static_cast<int>(e->clipPath.size());
     }
+    void addMLeader(const DRW_MLeader* e) override {
+        track(*e);
+        mleaders++;
+    }
     int wipeouts = 0;
     int wipeoutVertices = 0;
+    int mleaders = 0;
     void linkImage(const DRW_ImageDef*) override {}
     void addComment(const char*) override {}
     void addPlotSettings(const DRW_PlotSettings*) override {}
@@ -316,6 +321,7 @@ public:
     void addHatch(const DRW_Hatch* e)                   override { trackT(*e, "HATCH"); }
     void addViewport(const DRW_Viewport& e)             override { trackT(e, "VIEWPORT"); }
     void addImage(const DRW_Image* e)                   override { trackT(*e, "IMAGE"); }
+    void addMLeader(const DRW_MLeader* e)               override { trackT(*e, "MLEADER"); }
     void addWipeout(const DRW_Image* e)                 override {
         trackT(*e, "WIPEOUT");
         // Surface the polygon size so tests can sanity-check that the boundary
@@ -1482,5 +1488,53 @@ TEST_CASE("DWG corpus: WIPEOUT entity inventory", "[.dwg_wipeout]") {
               << totalWipeouts << " entities across "
               << filesWithWipeout << " files, "
               << totalVertices << " vertices\n";
+    SUCCEED();
+}
+
+// MULTILEADER (MLEADER) inventory.  Pre-fix the dispatcher logged WipeoutVar /
+// MLEADER as [custom-class-skipped]; with Phase 2 in place, MLEADERs reach
+// addMLeader() and get counted.  Phases 3-4 add structural assertions
+// (entity-level fields populated, AnnotContext roots/lines non-empty).
+TEST_CASE("DWG corpus: MULTILEADER entity inventory", "[.dwg_mleader]") {
+    const char* home = getenv("HOME");
+    if (!home) { SUCCEED("HOME not set; skipping"); return; }
+    const std::array<std::string, 2> dirs = {
+        std::string(home) + "/doc/dwg/",   // primary corpus (has the
+                                            // architectural multileaders file)
+        std::string(home) + "/doc/dwg2/",  // secondary corpus
+    };
+
+    int totalMLeaders = 0;
+    int filesWithMLeader = 0;
+
+    for (const auto& dir : dirs) {
+        if (!std::filesystem::is_directory(dir)) continue;
+        for (const auto& entry : std::filesystem::directory_iterator(dir)) {
+            if (!entry.is_regular_file()) continue;
+            const auto& p = entry.path();
+            const std::string ext = p.extension().string();
+            if (ext != ".dwg" && ext != ".DWG") continue;
+            if (p.filename().string().front() == '#') continue;
+
+            CountingIface iface;
+            try {
+                dwgR reader(p.string().c_str());
+                reader.read(&iface, true);
+            } catch (...) {
+                continue;
+            }
+
+            if (iface.mleaders > 0) {
+                ++filesWithMLeader;
+                totalMLeaders += iface.mleaders;
+                std::cout << "  " << p.filename().string()
+                          << ": " << iface.mleaders << " MLEADERs\n";
+            }
+        }
+    }
+
+    std::cout << "\nCorpus MLEADER summary: "
+              << totalMLeaders << " entities across "
+              << filesWithMLeader << " files\n";
     SUCCEED();
 }

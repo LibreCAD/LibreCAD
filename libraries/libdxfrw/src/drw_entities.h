@@ -59,7 +59,7 @@ namespace DRW {
 //        MESH,
 //        MLINE,
 //        MLEADERSTYLE,
-//        MLEADER,
+        MLEADER,
         MTEXT,
 //        OLEFRAME,
 //        OLE2FRAME,
@@ -1081,9 +1081,11 @@ public:
        or DWG image-clip block).  Populated for both raster IMAGEs (when a clip
        is set) and WIPEOUTs (where this is the only meaningful payload). */
     std::vector<DRW_Coord> clipPath;
-    /* WIPEOUT-only: render the polygon outline (DXF code 290).  Ignored for
-       non-wipeout IMAGEs.  Defaults to true for round-trip safety. */
-    bool wipeoutFrame = true;
+    /* R2010+ Clip mode (ODA spec §20.4.80, DXF group 290): 0 = outside the
+       polygon is masked (typical WIPEOUT), 1 = inside is masked. NOT a frame
+       display flag — the WIPEOUTFRAME concept is a global drawing variable in
+       the WIPEOUTVARIABLES OBJECTS-section object, not per-entity. */
+    bool clipMode = false;
 
 };
 
@@ -1457,6 +1459,188 @@ private:
     std::shared_ptr<DRW_Coord> vertexpoint;   /*!< current control point to add data */
     dwgHandle dimStyleH;
     dwgHandle AnnotH;
+};
+
+//! Helper: a single leader-line within an MLEADER root.
+/*!
+ *  ODA spec §20.4.86 — describes one polyline emanating from a leader-root
+ *  connection point.  Owned by DRW_MLeaderRoot.
+ */
+struct DRW_MLeaderLeaderLine {
+    std::vector<DRW_Coord> points;                                  /*!< code 10 each */
+    std::vector<std::pair<DRW_Coord, DRW_Coord>> breaks;            /*!< 11/12 pairs */
+    dint32 segmentIndex = 0;                                        /*!< code 90 */
+    dint32 leaderLineIndex = 0;                                     /*!< code 91 */
+    /* R2010+ override block: present when the line overrides the style. */
+    duint16 overrideFlags = 0;                                      /*!< code 93 */
+    duint16 leaderType = 1;                                         /*!< 0=invisible, 1=line, 2=spline */
+    int color = 0;                                                  /*!< code 92 */
+    duint16 lineWeight = 0;                                         /*!< code 171 */
+    double arrowSize = 0.0;                                         /*!< code 40 */
+    dwgHandle lineTypeHandle{};                                     /*!< code 340 */
+    dwgHandle arrowHandle{};                                        /*!< code 341 */
+};
+
+//! Helper: one root attachment of an MLEADER, with its leader lines.
+struct DRW_MLeaderRoot {
+    bool isContentValid = true;                                     /*!< code 290 */
+    bool unknown291 = true;                                         /*!< code 291, ODA writes true */
+    DRW_Coord connectionPoint;                                      /*!< code 10 */
+    DRW_Coord direction;                                            /*!< code 11 */
+    std::vector<std::pair<DRW_Coord, DRW_Coord>> breaks;            /*!< 12/13 pairs */
+    dint32 leaderIndex = 0;                                         /*!< code 90 */
+    double landingDistance = 0.0;                                   /*!< code 40 */
+    std::vector<DRW_MLeaderLeaderLine> leaderLines;
+    duint16 attachmentDirection = 0;                                /*!< R2010, code 271 */
+};
+
+//! Helper: full annotation-context payload (AcDbMLeaderObjectContextData).
+/*!
+ *  ODA spec §20.4.86.  Embedded inside a DRW_MLeader; carries the leader
+ *  geometry (roots & lines) and either text or block content.
+ */
+struct DRW_MLeaderAnnotContext {
+    std::vector<DRW_MLeaderRoot> roots;
+    /* common content fields */
+    double overallScale = 1.0;                                      /*!< code 40 */
+    DRW_Coord contentBasePoint;                                     /*!< code 10 */
+    double textHeight = 0.0;                                        /*!< code 41 */
+    double arrowHeadSize = 0.0;                                     /*!< code 140 */
+    double landingGap = 0.0;                                        /*!< code 145 */
+    duint16 styleLeftAttach = 0;                                    /*!< code 174 */
+    duint16 styleRightAttach = 0;                                   /*!< code 175 */
+    duint16 textAlignType = 0;                                      /*!< code 176 */
+    duint16 attachmentType = 0;                                     /*!< code 177 */
+    bool hasTextContents = false;                                   /*!< code 290 */
+    /* text-content branch */
+    UTF8STRING textLabel;                                           /*!< code 304 */
+    DRW_Coord textNormal;                                           /*!< code 11 */
+    dwgHandle textStyleHandle{};                                    /*!< code 340 */
+    DRW_Coord textLocation;                                         /*!< code 12 */
+    DRW_Coord textDirection;                                        /*!< code 13 */
+    double textRotation = 0.0;                                      /*!< code 42 */
+    double boundaryWidth = 0.0;                                     /*!< code 43 */
+    double boundaryHeight = 0.0;                                    /*!< code 44 */
+    double lineSpacingFactor = 1.0;                                 /*!< code 45 */
+    duint16 lineSpacingStyle = 0;                                   /*!< code 170 */
+    int textColor = 0;                                              /*!< code 90 */
+    duint16 alignment = 0;                                          /*!< code 171 */
+    duint16 flowDirection = 0;                                      /*!< code 172 */
+    int bgFillColor = 0;                                            /*!< code 91 */
+    double bgScaleFactor = 1.5;                                     /*!< code 141 */
+    int bgTransparency = 0;                                         /*!< code 92 */
+    bool bgFillEnabled = false;                                     /*!< code 291 */
+    bool bgMaskFillOn = false;                                      /*!< code 292 */
+    duint16 columnType = 0;                                         /*!< code 173 */
+    bool textHeightAuto = false;                                    /*!< code 293 */
+    double columnWidth = 0.0;                                       /*!< code 142 */
+    double columnGutter = 0.0;                                      /*!< code 143 */
+    bool columnFlowReversed = false;                                /*!< code 294 */
+    std::vector<double> columnSizes;                                /*!< code 144 repeated */
+    bool wordBreak = false;                                         /*!< code 295 */
+    /* block-content branch */
+    bool hasContentsBlock = false;                                  /*!< code 296 */
+    dwgHandle blockTableRecordHandle{};                             /*!< code 341 */
+    DRW_Coord blockNormal;                                          /*!< code 14 */
+    DRW_Coord blockLocation;                                        /*!< code 15 */
+    DRW_Coord blockScale;                                           /*!< code 16 */
+    double blockRotation = 0.0;                                     /*!< code 46 */
+    int blockColor = 0;                                             /*!< code 93 */
+    /* 16 doubles forming the complete transformation matrix; rotation -> OCS->WCS
+       (using normal) -> scaling (using scale vector) -> translation (using location) */
+    std::array<double, 16> blockTransform{};                        /*!< code 47 */
+    /* common tail */
+    DRW_Coord basePoint;                                            /*!< code 110 */
+    DRW_Coord baseDirection;                                        /*!< code 111 */
+    DRW_Coord baseVertical;                                         /*!< code 112 */
+    bool isNormalReversed = false;                                  /*!< code 297 */
+    duint16 styleTopAttach = 0;                                     /*!< R2010, code 273 */
+    duint16 styleBottomAttach = 0;                                  /*!< R2010, code 272 */
+};
+
+//! Class to handle MULTILEADER (MLEADER) entity.
+/*!
+ *  Modern callout entity (AutoCAD 2008+).  AcDbMLeader subclass.  Combines
+ *  a multi-leader path geometry (roots → lines → points + breaks) with text
+ *  or block content.  ODA spec §20.4.48.
+ *
+ *  In DWG this is a custom-class object (oType >= 500) looked up by
+ *  classesmap recName == "MULTILEADER"; routed via dwgreader.cpp dispatch.
+ *
+ *  Style overrides: each entity carries an `overrideFlags` bitfield (code 90)
+ *  + the style handle (code 340); fields whose bits are set in overrideFlags
+ *  shadow the corresponding values from the referenced MLEADERSTYLE.
+ */
+class DRW_MLeader : public DRW_Entity {
+    SETENTFRIENDS
+public:
+    DRW_MLeader() {
+        eType = DRW::MLEADER;
+    }
+
+    virtual void applyExtrusion() override {}
+
+protected:
+    bool parseCode(int code, const std::unique_ptr<dxfReader>& reader) override;
+    virtual bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) override;
+
+public:
+    DRW_MLeaderAnnotContext context;
+
+    /* Entity-level fields per §20.4.48.  Overrides the corresponding
+       MLEADERSTYLE field iff the matching bit is set in `overrideFlags`. */
+    dwgHandle styleHandle{};                                        /*!< code 340 */
+    dint32 overrideFlags = 0;                                       /*!< code 90 — bit-field, 1<<0 .. 1<<29 */
+    duint16 leaderType = 1;                                         /*!< code 170: 0=invisible, 1=line, 2=spline */
+    int leaderColor = 0;                                            /*!< code 91 */
+    dwgHandle leaderLineTypeHandle{};                               /*!< code 341 */
+    dint32 leaderLineWeight = 0;                                    /*!< code 171 */
+    bool landingEnabled = true;                                     /*!< code 290 */
+    bool doglegEnabled = true;                                      /*!< code 291 */
+    double landingDistance = 0.0;                                   /*!< code 41 */
+    dwgHandle arrowHeadHandle{};                                    /*!< code 342 */
+    double defaultArrowHeadSize = 0.0;                              /*!< code 42 */
+    duint16 styleContentType = 2;                                   /*!< code 172: 0=None, 1=Block, 2=MTEXT, 3=TOLERANCE */
+    dwgHandle styleTextStyleHandle{};                               /*!< code 343 */
+    duint16 styleLeftAttach = 0;                                    /*!< code 173 */
+    duint16 styleRightAttach = 0;                                   /*!< code 95 */
+    duint16 styleTextAngleType = 0;                                 /*!< code 174 */
+    duint16 unknown175 = 0;                                         /*!< code 175 */
+    int styleTextColor = 0;                                         /*!< code 92 */
+    bool styleTextFrameEnabled = false;                             /*!< code 292 */
+    dwgHandle styleBlockHandle{};                                   /*!< code 344 (optional) */
+    int styleBlockColor = 0;                                        /*!< code 93 */
+    DRW_Coord styleBlockScale{1, 1, 1};                             /*!< code 10 */
+    double styleBlockRotation = 0.0;                                /*!< code 43 */
+    duint16 styleAttachmentType = 0;                                /*!< code 176 */
+    bool isAnnotative = false;                                      /*!< code 293 */
+
+    /* R2007 array fields (pre-R2010 only). */
+    struct ArrowHeadEntry {
+        bool isDefault = true;                                      /*!< code 94 */
+        dwgHandle handle{};                                         /*!< code 345 */
+    };
+    struct BlockLabelEntry {
+        dwgHandle attDefHandle{};                                   /*!< code 330 */
+        UTF8STRING labelText;                                       /*!< code 302 */
+        duint16 uiIndex = 0;                                        /*!< code 177 */
+        double width = 0.0;                                         /*!< code 44 */
+    };
+    std::vector<ArrowHeadEntry> arrowHeads;                         /*!< pre-R2010 */
+    std::vector<BlockLabelEntry> blockLabels;                       /*!< pre-R2010 */
+
+    bool isTextDirectionNegative = false;                           /*!< code 294 */
+    duint16 ipeAlign = 0;                                           /*!< code 178 */
+    duint16 justification = 0;                                      /*!< code 179: 1=left, 2=center, 3=right */
+    double scaleFactor = 1.0;                                       /*!< code 45 */
+
+    /* R2010+ */
+    duint16 attachmentDirection = 0;                                /*!< code 271 */
+    duint16 styleTopAttach = 0;                                     /*!< code 273 */
+    duint16 styleBottomAttach = 0;                                  /*!< code 272 */
+
+    /* R2013+ */
+    bool leaderExtendedToText = false;                              /*!< code 295 */
 };
 
 //! Class to handle viewport entity

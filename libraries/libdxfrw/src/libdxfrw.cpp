@@ -1492,7 +1492,10 @@ bool dxfRW::writeWipeout(DRW_Image *ent){
         writer->writeDouble(14, v.x);
         writer->writeDouble(24, v.y);
     }
-    writer->writeBool(290, ent->wipeoutFrame);
+    // Group 290 is the R2010+ Clip mode (0 = mask outside, 1 = mask inside);
+    // this is shared with IMAGE and is NOT a frame-display flag.  WIPEOUTFRAME
+    // (whether the polygon outline is drawn) is global, in WIPEOUTVARIABLES.
+    writer->writeBool(290, ent->clipMode);
     return true;
 }
 

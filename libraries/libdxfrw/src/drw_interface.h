@@ -201,6 +201,13 @@ public:
     virtual void addWipeout(const DRW_Image *data) { (void) data; }
 
     /**
+     * Called for every MULTILEADER (MLEADER) entity.  AcDbMLeader subclass,
+     * a custom-class object in DWG (oType >= 500 with classesmap recName
+     * "MULTILEADER").  Default no-op for back-compat.
+     */
+    virtual void addMLeader(const DRW_MLeader *data) { (void) data; }
+
+    /**
      * Called for every comment in the DXF file (code 999).
      */
     virtual void addComment(const char* comment) = 0;

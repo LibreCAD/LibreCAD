@@ -1494,24 +1494,33 @@ DRW_Attrib::DRW_Attrib(DRW_Attrib&&) noexcept = default;
 DRW_Attrib& DRW_Attrib::operator=(DRW_Attrib&&) noexcept = default;
 
 bool DRW_Attrib::parseCode(int code, const std::unique_ptr<dxfReader>& reader){
-    // Once we've seen the AcDbMText nested subclass marker, route group codes
-    // to the embedded MText so its formatted-text payload (group 1, rect width
-    // 41, attachment point 71, etc.) is captured in `mtext` instead of being
-    // mis-applied to the outer ATTRIB.  This is how multi-line ATTRIBs preserve
-    // their formatting through DXF round-trips.
+    // Multi-line ATTRIB (R2018+, ODA spec §20.4.4): an embedded MTEXT object
+    // is introduced by the DXF subclass marker `100 / Embedded Object` (NOT
+    // `AcDbMText`).  After the marker, the standard MTEXT group codes follow
+    // (10/20/30 insertion, 11/21/31 X-axis, 40 height, 41 rect width, 71
+    // attachment point, 72 drawing direction, 1 formatted text, etc.), then
+    // the ATTRIB-specific tail (tag=2, prompt=3 for ATTDEF, flags=70,
+    // lock-position=280) which we must NOT route into the embedded MText.
     if (code == 100) {
         const std::string sub = reader->getString();
-        if (sub == "AcDbMText" && !mtext) {
+        if (sub == "Embedded Object" && !mtext) {
             mtext = std::make_unique<DRW_MText>();
-            // attVersion may not have been set by the file (DXF doesn't have a
-            // direct equivalent of the DWG version byte); stamp it so other
-            // consumers can branch on the same predicate.
             if (attVersion == 0) attVersion = 1;
         }
         return true;
     }
+    // Inside the embedded MText scope, route MTEXT-owned codes to mtext but
+    // keep ATTRIB-specific tail codes for ATTRIB / ATTDEF handling below.
     if (mtext) {
-        return mtext->parseCode(code, reader);
+        switch (code) {
+        case 2:    // tag (ATTRIB-specific; group 1 in MText is text body)
+        case 3:    // prompt (ATTDEF-specific)
+        case 70:   // ATTRIB flags
+        case 280:  // ATTRIB lock-position
+            break; // fall through to ATTRIB handling below
+        default:
+            return mtext->parseCode(code, reader);
+        }
     }
     switch (code) {
     case 2:
@@ -2573,8 +2582,9 @@ bool DRW_Image::parseCode(int code, const std::unique_ptr<dxfReader>& reader){
         }
         break;
     case 290:
-        // WIPEOUT frame display flag.
-        wipeoutFrame = reader->getBool();
+        // R2010+ Clip mode (IMAGE/WIPEOUT, ODA spec §20.4.80):
+        // 0 = mask outside the polygon, 1 = mask inside.
+        clipMode = reader->getBool();
         break;
     default:
         return DRW_Line::parseCode(code, reader);
@@ -3223,6 +3233,33 @@ bool DRW_Leader::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
     DRW_DBG("Remaining bytes: "); DRW_DBG(buf->numRemainingBytes()); DRW_DBG("\n");
 //    RS crc;   //RS */
     return buf->isGood();
+}
+
+// Phase 1 placeholder: skeleton class is in place but no parser yet.
+// Phase 3 will replace this with the §20.4.48 entity-level parser; Phase 4
+// will add the embedded MLeaderAnnotContext.  Until then the dispatcher
+// short-circuits to addMLeader() with the entity in default-constructed state.
+bool DRW_MLeader::parseCode(int code, const std::unique_ptr<dxfReader>& reader){
+    return DRW_Entity::parseCode(code, reader);
+}
+
+bool DRW_MLeader::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
+    // Common entity preamble must always be read so the stream stays aligned
+    // with the next entity even if the body parse is unimplemented.  Follows
+    // the R2007+ separate-string-buffer convention used by every other
+    // entity's parseDwg (cf. DRW_Image, DRW_Leader, etc.).
+    dwgBuffer sBuff = *buf;
+    dwgBuffer *sBuf = buf;
+    if (version > DRW::AC1018) {  // 2007+
+        sBuf = &sBuff;
+    }
+    bool ret = DRW_Entity::parseDwg(version, buf, sBuf, bs);
+    if (!ret) return ret;
+    DRW_DBG("\n*** parsing MLEADER (Phase 2 stub: body skipped) ***\n");
+    // Phase 3 will fill in the body parser.  Until then return true so the
+    // dispatcher delivers the entity (in default-constructed state) rather
+    // than rejecting the whole entity stream.
+    return true;
 }
 
 bool DRW_Viewport::parseCode(int code, const std::unique_ptr<dxfReader>& reader){

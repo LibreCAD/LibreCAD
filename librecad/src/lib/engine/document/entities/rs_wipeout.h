@@ -19,16 +19,20 @@
 
 /**
  * Holds the data that defines a wipeout polygon.
+ *
+ * Note: WIPEOUT does NOT carry a per-entity frame-display flag in the
+ * file format (per ODA spec §20.4.80 — group 290 there is the IMAGE
+ * Clip mode, not a frame flag).  Whether the polygon outline is rendered
+ * is a global drawing setting (WIPEOUTFRAME in the WIPEOUTVARIABLES
+ * object), out of scope here; outline is drawn unconditionally for now.
  */
 struct RS_WipeoutData {
     RS_WipeoutData() = default;
-    RS_WipeoutData(std::vector<RS_Vector> verts, bool frame)
-        : vertices(std::move(verts)), frame(frame) {}
+    explicit RS_WipeoutData(std::vector<RS_Vector> verts)
+        : vertices(std::move(verts)) {}
 
     /** Polygon vertices in WCS, ordered around the polygon. */
     std::vector<RS_Vector> vertices;
-    /** Whether the outline is drawn around the masked region. */
-    bool frame = true;
 };
 
 /**
@@ -50,8 +54,6 @@ public:
 
     const RS_WipeoutData& getData() const { return data; }
     const std::vector<RS_Vector>& getVertices() const { return data.vertices; }
-    bool getFrame() const { return data.frame; }
-    void setFrame(bool f) { data.frame = f; }
 
     void calculateBorders() override;
     void draw(RS_Painter* painter) override;

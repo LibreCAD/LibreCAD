@@ -1303,6 +1303,18 @@ bool dwgReader::readDwgEntity(dwgBuffer *dbuf, objHandle& obj, DRW_Interface& in
                     }
                     break;
                 }
+                if (cit != classesmap.end() && cit->second
+                    && cit->second->recName == "MULTILEADER") {
+                    // MULTILEADER (AcDbMLeader, ODA spec §20.4.48).  Phase 2
+                    // delivers the entity in a stub-parsed state so consumers
+                    // can count it; Phase 3 fills in the entity-level fields,
+                    // Phase 4 the embedded MLeaderAnnotContext.
+                    DRW_MLeader e;
+                    if (entryParse(e, buff, bs, ret)) {
+                        intfa.addMLeader(&e);
+                    }
+                    break;
+                }
                 const char* className = (cit != classesmap.end() && cit->second)
                                           ? cit->second->recName.c_str()
                                           : "(unknown)";

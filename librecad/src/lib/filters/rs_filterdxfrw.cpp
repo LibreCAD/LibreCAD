@@ -991,11 +991,11 @@ void RS_FilterDXFRW::addInsert(const DRW_Insert& data) {
         if (!att || (att->attribFlags & 0x1) != 0)
             continue;
 
-        // MText-style ATTRIB (R2010+): the AcDbMText nested subclass parsed in
-        // libdxfrw populated att->mtext.  Render it as RS_MText so the
-        // multi-line content + formatting codes survive.  The plain `text`
-        // field is kept as a single-line fallback by libdxfrw, but ignored
-        // here when the MText payload is present.
+        // Multi-line ATTRIB (R2018+, ODA spec §20.4.4 Attribute type 2/4):
+        // libdxfrw saw the `100 / Embedded Object` DXF subclass marker on the
+        // ATTRIB and populated att->mtext from the embedded MTEXT body.
+        // Render it as RS_MText so the multi-line content + formatting codes
+        // survive; the plain `text` field is the single-line fallback.
         if (att->mtext) {
             auto* mt = mtextEntityFromDRW(*att->mtext);
             mt->setParent(m_currentContainer);
@@ -1054,8 +1054,8 @@ void RS_FilterDXFRW::prepareTextStyleName(QString& sty) const {
  * Builds an RS_MText entity from a DRW_MText payload, applying the same
  * alignment/drawing-direction/line-spacing/legacy-correction logic that
  * addMText() uses.  Shared between addMText() (standalone MTEXT entities) and
- * addInsert() (block attributes whose AcDbMText nested subclass produced an
- * att->mtext payload).  Returns a freshly-constructed entity not yet attached
+ * addInsert() (block attributes whose `100 / Embedded Object` DXF subclass
+ * produced an att->mtext payload).  Returns a freshly-constructed entity not yet attached
  * to any container; the caller is responsible for setEntityAttributes() and
  * appending.
  */
@@ -2495,8 +2495,7 @@ void RS_FilterDXFRW::addWipeout(const DRW_Image *data) {
     }
 
     auto* w = new RS_Wipeout(m_currentContainer,
-                             RS_WipeoutData(std::move(wcsVerts),
-                                            data->wipeoutFrame));
+                             RS_WipeoutData(std::move(wcsVerts)));
     setEntityAttributes(w, data);
     m_currentContainer->appendEntity(w);
 }
@@ -4672,7 +4671,7 @@ void RS_FilterDXFRW::writeWipeout(RS_Wipeout *w) {
     img.brightness = 50;
     img.contrast = 50;
     img.fade = 0;
-    img.wipeoutFrame = w->getFrame();
+    img.clipMode = false;  // 0 = mask outside the polygon (typical WIPEOUT)
     img.clipPath.clear();
     img.clipPath.reserve(w->getVertices().size());
     for (const RS_Vector& v : w->getVertices()) {
