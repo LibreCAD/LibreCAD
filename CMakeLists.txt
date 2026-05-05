@@ -797,6 +797,8 @@ set(SHARED_SOURCES
     librecad/src/lib/engine/document/entities/rs_insert.h
     librecad/src/lib/engine/document/entities/rs_leader.cpp
     librecad/src/lib/engine/document/entities/rs_leader.h
+    librecad/src/lib/engine/document/entities/lc_mleader.cpp
+    librecad/src/lib/engine/document/entities/lc_mleader.h
     librecad/src/lib/engine/document/entities/rs_line.cpp
     librecad/src/lib/engine/document/entities/rs_line.h
     librecad/src/lib/engine/document/entities/rs_mtext.cpp
@@ -1283,6 +1285,10 @@ set(SHARED_SOURCES
     librecad/src/ui/dialogs/entity/lc_ellipsepropertieseditingwidget.h
     librecad/src/ui/dialogs/entity/lc_hatchpropertieseditingwidget.cpp
     librecad/src/ui/dialogs/entity/lc_hatchpropertieseditingwidget.h
+    librecad/src/ui/dialogs/entity/lc_mtextpropertieseditingwidget.cpp
+    librecad/src/ui/dialogs/entity/lc_mtextpropertieseditingwidget.h
+    librecad/src/ui/dialogs/entity/lc_textpropertieseditingwidget.cpp
+    librecad/src/ui/dialogs/entity/lc_textpropertieseditingwidget.h
     librecad/src/ui/dialogs/entity/lc_entitypropertiesdlg.cpp
     librecad/src/ui/dialogs/entity/lc_entitypropertiesdlg.h
     librecad/src/ui/dialogs/entity/lc_entitypropertieseditor.cpp
@@ -1706,6 +1712,8 @@ if(BUILD_TESTS)
         librecad/src/lib/engine/document/entities/tests/rs_ellipse_tests.cpp
         librecad/src/lib/engine/document/entities/tests/rs_spline_tests.cpp
         librecad/src/lib/engine/document/entities/tests/rs_hatch_tests.cpp
+        librecad/src/lib/engine/document/entities/tests/rs_mtext_bidi_tests.cpp
+        librecad/src/lib/engine/document/entities/tests/rs_text_bidi_tests.cpp
         librecad/src/lib/math/tests/rs_math_tests.cpp
         librecad/src/lib/math/tests/lc_quadratic_tests.cpp
         librecad/src/lib/filters/tests/dwg_smoke_tests.cpp

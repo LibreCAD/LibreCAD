@@ -151,12 +151,14 @@ public:
             }
         }
     }
+    void addMLeaderStyle(const DRW_MLeaderStyle*) override { ++mleaderStyles; }
     int wipeouts = 0;
     int wipeoutVertices = 0;
     int mleaders = 0;
     int mleaderRoots = 0;
     int mleaderLines = 0;
     int mleaderPoints = 0;
+    int mleaderStyles = 0;
     void linkImage(const DRW_ImageDef*) override {}
     void addComment(const char*) override {}
     void addPlotSettings(const DRW_PlotSettings*) override {}
@@ -1009,6 +1011,61 @@ TEST_CASE("DWG Cover.dwg: verbose reader trace", "[.dwg_cover_verbose]") {
 // 3D-only or otherwise legitimately produce 0 2D entities.
 // Skips cleanly when the directory is absent.
 // ---------------------------------------------------------------------------
+// Hidden tag [.dwg3]: one-shot diagnostic load of ~/doc/dwg3/ so failures
+// can be enumerated without polluting the default test run. Run with:
+//   ./librecad_tests "[.dwg3]" -s
+TEST_CASE("DWG corpus: load all files in ~/doc/dwg3/", "[.dwg3]") {
+    const char* home = getenv("HOME");
+    if (!home) { SUCCEED("HOME not set; skipping"); return; }
+    const std::string dir = std::string(home) + "/doc/dwg3/";
+    if (!std::filesystem::is_directory(dir)) {
+        SUCCEED("~/doc/dwg3/ not found; skipping");
+        return;
+    }
+
+    std::vector<std::string> paths;
+    for (const auto& entry : std::filesystem::directory_iterator(dir)) {
+        if (!entry.is_regular_file()) continue;
+        const auto& p = entry.path();
+        const std::string ext = p.extension().string();
+        if (ext != ".dwg" && ext != ".DWG") continue;
+        if (p.filename().string().front() == '#') continue;
+        paths.push_back(p.string());
+    }
+    std::sort(paths.begin(), paths.end());
+    if (paths.empty()) {
+        SUCCEED("No .dwg files in ~/doc/dwg3/; skipping");
+        return;
+    }
+
+    std::cout << "\n"
+              << std::left
+              << std::setw(46) << "File"
+              << std::setw(16) << "Version"
+              << std::setw(24) << "Error"
+              << std::setw(10) << "Entities"
+              << std::setw(8)  << "Blocks"
+              << "Layers\n"
+              << std::string(110, '-') << "\n";
+
+    int passed = 0, failed = 0;
+    for (const auto& path : paths) {
+        const std::string name = std::filesystem::path(path).filename().string();
+        const DwgResult r = readDwg(path);
+        std::cout << std::left
+                  << std::setw(46) << name
+                  << std::setw(16) << versionStr(r.version)
+                  << std::setw(24) << errorStr(r.error)
+                  << std::setw(10) << r.entities
+                  << std::setw(8)  << r.blocks
+                  << r.layers << "\n";
+        if (r.error != DRW::BAD_NONE) ++failed; else ++passed;
+    }
+    std::cout << std::string(110, '-') << "\n";
+    std::cout << "Passed: " << passed << "  Failed: " << failed
+              << "  Total: " << paths.size() << "\n";
+}
+
 TEST_CASE("DWG corpus: load all files in ~/doc/dwg2/") {
     const char* home = getenv("HOME");
     if (!home) { SUCCEED("HOME not set; skipping"); return; }
@@ -1541,7 +1598,8 @@ TEST_CASE("DWG corpus: MULTILEADER entity inventory", "[.dwg_mleader]") {
                           << ": " << iface.mleaders << " MLEADERs, "
                           << iface.mleaderRoots << " roots, "
                           << iface.mleaderLines << " leader lines, "
-                          << iface.mleaderPoints << " points\n";
+                          << iface.mleaderPoints << " points, "
+                          << iface.mleaderStyles << " styles\n";
             }
         }
     }

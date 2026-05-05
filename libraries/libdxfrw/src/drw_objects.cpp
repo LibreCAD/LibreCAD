@@ -1548,3 +1548,81 @@ bool DRW_MLineStyle::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
     DRW_DBG("mlinestyle name: "); DRW_DBG(name); DRW_DBG("\n");
     return buf->isGood();
 }
+
+// MLEADERSTYLE per ODA spec §20.4.87.  Defensive parser following the
+// MLEADER convention: bound-check counts, treat misalignment as
+// non-fatal so the OBJECTS-section scan stays aligned even if a
+// particular style record drifts.  Handle slots are deferred to the
+// trailing handle stream and resolved by the LibreCAD-side filter.
+bool DRW_MLeaderStyle::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
+    dwgBuffer sBuff = *buf;
+    dwgBuffer *sBuf = buf;
+    if (version > DRW::AC1018) {  // 2007+
+        sBuf = &sBuff;
+    }
+    bool ret = DRW_TableEntry::parseDwg(version, buf, sBuf, bs);
+    DRW_DBG("\n***************************** parsing MLeaderStyle ***************\n");
+    if (!ret) return ret;
+
+    // Per spec page 217: R2010 adds a leading style version (BS 179, expected
+    // value 2).  Earlier files don't write it.  The IsNewFormat predicate the
+    // spec mentions also flips on with an ACAD_MLEADERVER appid extension —
+    // that's read via EED, which is already consumed by the entity preamble.
+    if (version >= DRW::AC1024) {
+        styleVersion = buf->getBitShort();
+    }
+    contentType         = buf->getBitShort();
+    drawMLeaderOrder    = buf->getBitShort();
+    drawLeaderOrder     = buf->getBitShort();
+    maxLeaderPoints     = buf->getBitLong();
+    firstSegmentAngle   = buf->getBitDouble();
+    secondSegmentAngle  = buf->getBitDouble();
+    leaderType          = buf->getBitShort();
+    leaderColor         = buf->getCmColor(version);
+    // leaderLineTypeHandle 340 — handle stream
+    leaderLineWeight    = buf->getBitLong();
+    landingEnabled      = buf->getBit();
+    landingGap          = buf->getBitDouble();
+    autoIncludeLanding  = buf->getBit();
+    landingDistance     = buf->getBitDouble();
+    description         = sBuf->getVariableText(version, false);
+    // arrowHeadBlockHandle 341 — handle stream
+    arrowHeadSize       = buf->getBitDouble();
+    textDefault         = sBuf->getVariableText(version, false);
+    // textStyleHandle 342 — handle stream
+    leftAttachment      = buf->getBitShort();
+    rightAttachment     = buf->getBitShort();
+    // R2010+ adds text angle type BS 175 between the attachments and the
+    // alignment type — gated by the spec's "IsNewFormat OR DXF" predicate.
+    if (version >= DRW::AC1024) {
+        textAngleType   = buf->getBitShort();
+    }
+    textAlignmentType   = buf->getBitShort();
+    textColor           = buf->getCmColor(version);
+    textHeight          = buf->getBitDouble();
+    textFrameEnabled    = buf->getBit();
+    if (version >= DRW::AC1024) {
+        alwaysAlignTextLeft = buf->getBit();
+    }
+    alignSpace          = buf->getBitDouble();
+    // blockHandle 343 — handle stream
+    blockColor          = buf->getCmColor(version);
+    blockScale          = buf->get3BitDouble();
+    blockScaleEnabled   = buf->getBit();
+    blockRotation       = buf->getBitDouble();
+    blockRotationEnabled = buf->getBit();
+    blockConnectionType = buf->getBitShort();
+    scaleFactor         = buf->getBitDouble();
+    propertyChanged     = buf->getBit();
+    isAnnotative        = buf->getBit();
+    breakSize           = buf->getBitDouble();
+    if (version >= DRW::AC1024) {
+        attachmentDirection = buf->getBitShort();
+        topAttachment       = buf->getBitShort();
+        bottomAttachment    = buf->getBitShort();
+    }
+    DRW_DBG("mleader style version: "); DRW_DBG(styleVersion);
+    DRW_DBG(" contentType: "); DRW_DBG(contentType);
+    DRW_DBG(" name: "); DRW_DBG(name); DRW_DBG("\n");
+    return true;
+}

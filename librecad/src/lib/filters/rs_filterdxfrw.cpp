@@ -49,6 +49,7 @@
 #include "rs_hatch.h"
 #include "rs_image.h"
 #include "rs_wipeout.h"
+#include "lc_mleader.h"
 #include "rs_insert.h"
 #include "rs_layer.h"
 #include "rs_leader.h"
@@ -2498,6 +2499,93 @@ void RS_FilterDXFRW::addWipeout(const DRW_Image *data) {
                              RS_WipeoutData(std::move(wcsVerts)));
     setEntityAttributes(w, data);
     m_currentContainer->appendEntity(w);
+}
+
+/**
+ * Build an LC_MLeader from a parsed DRW_MLeader (ODA spec §20.4.48).
+ *
+ * MLEADER carries a multi-root callout structure plus either text or block
+ * content.  This conversion captures the geometric structure (roots →
+ * leader lines → points) and content reference.  Style-handle resolution
+ * (against LC_MLeaderStyleList) is deferred to Phase 7; for now we copy
+ * the entity-level overrides as effective values.
+ */
+void RS_FilterDXFRW::addMLeader(const DRW_MLeader *data) {
+    RS_DEBUG->print("RS_FilterDXFRW::addMLeader");
+    if (data == nullptr) return;
+
+    LC_MLeaderData md;
+    md.roots.reserve(data->context.roots.size());
+    for (const auto& r : data->context.roots) {
+        LC_MLeaderRoot root;
+        root.connectionPoint = RS_Vector(r.connectionPoint.x, r.connectionPoint.y);
+        root.direction       = RS_Vector(r.direction.x, r.direction.y);
+        root.landingDistance = r.landingDistance;
+        root.attachmentDirection = r.attachmentDirection;
+        root.leaderLines.reserve(r.leaderLines.size());
+        for (const auto& ll : r.leaderLines) {
+            LC_MLeaderLine line;
+            line.leaderLineIndex = ll.leaderLineIndex;
+            line.points.reserve(ll.points.size());
+            for (const auto& p : ll.points) {
+                line.points.emplace_back(p.x, p.y);
+            }
+            root.leaderLines.push_back(std::move(line));
+        }
+        md.roots.push_back(std::move(root));
+    }
+
+    md.contentBasePoint = RS_Vector(data->context.contentBasePoint.x,
+                                    data->context.contentBasePoint.y);
+    md.basePoint        = RS_Vector(data->context.basePoint.x,
+                                    data->context.basePoint.y);
+
+    md.hasTextContents  = data->context.hasTextContents;
+    md.hasBlockContents = !data->context.hasTextContents && data->context.hasContentsBlock;
+    if (md.hasTextContents) {
+        md.textLabel    = toNativeString(QString::fromUtf8(data->context.textLabel.c_str()));
+        md.textLocation = RS_Vector(data->context.textLocation.x,
+                                    data->context.textLocation.y);
+        md.textHeight    = data->context.textHeight;
+        md.textRotation  = data->context.textRotation;
+        md.boundaryWidth = data->context.boundaryWidth;
+        md.boundaryHeight = data->context.boundaryHeight;
+        md.textColor     = data->context.textColor;
+    }
+    if (md.hasBlockContents) {
+        md.blockLocation = RS_Vector(data->context.blockLocation.x,
+                                     data->context.blockLocation.y);
+        md.blockScale    = RS_Vector(data->context.blockScale.x,
+                                     data->context.blockScale.y,
+                                     data->context.blockScale.z);
+        md.blockRotation = data->context.blockRotation;
+        // blockName resolved from blockTableRecordHandle when block lookup
+        // is wired via the document — Phase 7 follow-up.
+    }
+
+    md.leaderType      = data->leaderType;
+    md.leaderColor     = data->leaderColor;
+    md.landingDistance = data->landingDistance;
+    md.arrowSize       = data->defaultArrowHeadSize;
+    md.landingEnabled  = data->landingEnabled;
+    md.doglegEnabled   = data->doglegEnabled;
+    md.contentType     = data->styleContentType;
+    md.scaleFactor     = data->scaleFactor;
+
+    auto* m = new LC_MLeader(m_currentContainer, std::move(md));
+    setEntityAttributes(m, data);
+    m_currentContainer->appendEntity(m);
+}
+
+/**
+ * MLEADERSTYLE dictionary entry capture.  Phase 5 currently just logs
+ * receipt; Phase 7 will store the styles in an LC_MLeaderStyleList on
+ * the document so MLEADERs can resolve their style references.
+ */
+void RS_FilterDXFRW::addMLeaderStyle(const DRW_MLeaderStyle *data) {
+    if (data == nullptr) return;
+    RS_DEBUG->print("RS_FilterDXFRW::addMLeaderStyle: %s",
+                    data->name.empty() ? "(unnamed)" : data->name.c_str());
 }
 
 /**

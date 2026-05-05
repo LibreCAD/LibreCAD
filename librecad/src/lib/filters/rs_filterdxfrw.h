@@ -52,6 +52,7 @@ class RS_Text;
 class RS_Hatch;
 class RS_Image;
 class RS_Wipeout;
+class LC_MLeader;
 class RS_Leader;
 class RS_Polyline;
 class DL_WriterA;
@@ -134,6 +135,8 @@ public:
     void addImage(const DRW_Image* data) override;
     void linkImage(const DRW_ImageDef* data) override;
     void addWipeout(const DRW_Image* data) override;
+    void addMLeader(const DRW_MLeader* data) override;
+    void addMLeaderStyle(const DRW_MLeaderStyle* data) override;
 
     void add3dFace(const DRW_3Dface& data) override;
     void addComment(const char*) override;

@@ -43,7 +43,8 @@ namespace DRW {
          UCS,
          MLINESTYLE,
          LAYOUT,
-         DICTIONARY
+         DICTIONARY,
+         MLEADERSTYLE
      };
 
 //pending VP_ENT_HDR, GROUP, LONG_TRANSACTION, XRECORD,
@@ -718,6 +719,69 @@ public:
     double startAngle;  /*!< start angle (BD) */
     double endAngle;    /*!< end angle (BD) */
     //future: description, fillColor, lines vector per ODA 19.4.73
+};
+
+//! Class to handle MLEADERSTYLE (ODA spec §20.4.87, AcDbMLeaderStyle).
+/*!
+ *  MLEADER style dictionary entry.  Lives under the root ACAD_MLEADERSTYLE
+ *  dictionary; each MLEADER entity carries a style handle that resolves to
+ *  one of these.  Override flags on the MLEADER (BL 90) shadow individual
+ *  fields here.
+ */
+class DRW_MLeaderStyle : public DRW_TableEntry {
+    SETOBJFRIENDS
+public:
+    DRW_MLeaderStyle() {
+        tType = DRW::MLEADERSTYLE;
+    }
+protected:
+    bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) override;
+public:
+    /* Per §20.4.87.  Names follow the spec column for traceability. */
+    duint16 styleVersion = 2;          /*!< code 179, R2010+ */
+    duint16 contentType = 2;           /*!< code 170: 0=None,1=Block,2=MText,3=Tolerance */
+    duint16 drawMLeaderOrder = 0;      /*!< code 171: 0=content first,1=leader head first */
+    duint16 drawLeaderOrder = 0;       /*!< code 172 */
+    dint32 maxLeaderPoints = 0;        /*!< code 90 */
+    double firstSegmentAngle = 0.0;    /*!< code 40 (radians) */
+    double secondSegmentAngle = 0.0;   /*!< code 41 (radians) */
+    duint16 leaderType = 1;            /*!< code 173 */
+    int leaderColor = 0;               /*!< code 91 (CMC) */
+    dwgHandle leaderLineTypeHandle{};  /*!< code 340 (handle stream) */
+    dint32 leaderLineWeight = 0;       /*!< code 92 */
+    bool landingEnabled = true;        /*!< code 290 */
+    double landingGap = 0.0;           /*!< code 42 */
+    bool autoIncludeLanding = true;    /*!< code 291 */
+    double landingDistance = 0.0;      /*!< code 43 */
+    UTF8STRING description;            /*!< code 3 */
+    dwgHandle arrowHeadBlockHandle{};  /*!< code 341 */
+    double arrowHeadSize = 0.0;        /*!< code 44 */
+    UTF8STRING textDefault;            /*!< code 300 */
+    dwgHandle textStyleHandle{};       /*!< code 342 */
+    duint16 leftAttachment = 0;        /*!< code 174 */
+    duint16 rightAttachment = 0;       /*!< code 178 */
+    duint16 textAngleType = 0;         /*!< code 175 (R2010+) */
+    duint16 textAlignmentType = 0;     /*!< code 176 */
+    int textColor = 0;                 /*!< code 93 */
+    double textHeight = 0.0;           /*!< code 45 */
+    bool textFrameEnabled = false;     /*!< code 292 */
+    bool alwaysAlignTextLeft = false;  /*!< code 297 */
+    double alignSpace = 0.0;           /*!< code 46 */
+    dwgHandle blockHandle{};           /*!< code 343 */
+    int blockColor = 0;                /*!< code 94 */
+    DRW_Coord blockScale{1, 1, 1};     /*!< code 47/49/140 */
+    bool blockScaleEnabled = false;    /*!< code 293 */
+    double blockRotation = 0.0;        /*!< code 141 (radians) */
+    bool blockRotationEnabled = false; /*!< code 294 */
+    duint16 blockConnectionType = 0;   /*!< code 177 */
+    double scaleFactor = 1.0;          /*!< code 142 */
+    bool propertyChanged = false;      /*!< code 295 */
+    bool isAnnotative = false;         /*!< code 296 */
+    double breakSize = 0.0;            /*!< code 143 */
+    /* R2010+ */
+    duint16 attachmentDirection = 0;   /*!< code 271 */
+    duint16 topAttachment = 0;         /*!< code 273 */
+    duint16 bottomAttachment = 0;      /*!< code 272 */
 };
 
 /** Holds per-write-session maps populated during DXF writing. */

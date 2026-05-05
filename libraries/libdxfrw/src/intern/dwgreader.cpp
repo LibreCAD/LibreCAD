@@ -1411,6 +1411,20 @@ bool dwgReader::readDwgObject(dwgBuffer *dbuf, objHandle& obj, DRW_Interface& in
             intfa.linkImage(&e);
             break; }
         default:
+            // Custom-class objects (oType >= 500) — look up by classesmap
+            // recName.  MLEADERSTYLE lives here (ODA spec §20.4.87) and
+            // mirrors the WIPEOUT-from-entity dispatch pattern added in
+            // commit a05908400 / 8e6730e5b.
+            if (oType >= 500) {
+                auto cit = classesmap.find(oType);
+                if (cit != classesmap.end() && cit->second
+                    && cit->second->recName == "MLEADERSTYLE") {
+                    DRW_MLeaderStyle e;
+                    ret = e.parseDwg(version, &buff, bs);
+                    intfa.addMLeaderStyle(&e);
+                    break;
+                }
+            }
             //not supported object or entity add to remaining map for debug
             remainingMap[obj.handle]= obj;
             break;

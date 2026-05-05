@@ -208,6 +208,13 @@ public:
     virtual void addMLeader(const DRW_MLeader *data) { (void) data; }
 
     /**
+     * Called for every MLEADERSTYLE dictionary object (AcDbMLeaderStyle).
+     * Lives in the OBJECTS section, referenced by MLEADER entities via
+     * their style handle.  ODA spec §20.4.87.  Default no-op for back-compat.
+     */
+    virtual void addMLeaderStyle(const DRW_MLeaderStyle *data) { (void) data; }
+
+    /**
      * Called for every comment in the DXF file (code 999).
      */
     virtual void addComment(const char* comment) = 0;
