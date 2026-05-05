@@ -1011,6 +1011,39 @@ TEST_CASE("DWG Cover.dwg: verbose reader trace", "[.dwg_cover_verbose]") {
 // 3D-only or otherwise legitimately produce 0 2D entities.
 // Skips cleanly when the directory is absent.
 // ---------------------------------------------------------------------------
+// Hidden tag [.dwg3_verbose]: full debug trace of the example_2007/2010/2013/
+// 2018.dwg series in ~/doc/dwg3/ so the R2010+ entity reader regression can
+// be diagnosed by side-by-side compare. Run with:
+//   ./librecad_tests "[.dwg3_verbose]" -s
+TEST_CASE("DWG verbose: example_*.dwg in ~/doc/dwg3/", "[.dwg3_verbose]") {
+    const char* home = getenv("HOME");
+    if (!home) { SUCCEED("HOME not set"); return; }
+    const std::string dir = std::string(home) + "/doc/dwg3/";
+    if (!std::filesystem::is_directory(dir)) {
+        SUCCEED("~/doc/dwg3/ not found"); return;
+    }
+    const char* names[] = {
+        "example_2007.dwg",
+        "example_2010.dwg",
+        "example_2013.dwg",
+        "example_2018.dwg",
+    };
+    for (const auto* name : names) {
+        const std::string path = dir + name;
+        if (!std::filesystem::is_regular_file(path)) {
+            std::cout << "\n=== " << name << " (missing) ===\n";
+            continue;
+        }
+        std::cout << "\n=== " << name << " ===\n";
+        const DwgResult r = readDwg(path, /*verbose=*/true);
+        std::cout << "Result: " << errorStr(r.error)
+                  << "  version=" << versionStr(r.version)
+                  << "  entities=" << r.entities
+                  << "  blocks=" << r.blocks
+                  << "  layers=" << r.layers << "\n";
+    }
+}
+
 // Hidden tag [.dwg3]: one-shot diagnostic load of ~/doc/dwg3/ so failures
 // can be enumerated without polluting the default test run. Run with:
 //   ./librecad_tests "[.dwg3]" -s

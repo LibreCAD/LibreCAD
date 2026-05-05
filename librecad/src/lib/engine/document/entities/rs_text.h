@@ -66,6 +66,19 @@ struct RS_TextData {
     };
 
     /**
+     * Bidirectional layout direction. Drives the UAX#9 base direction used
+     * by RS_Text::update(); does not roundtrip through DXF (TEXT entities
+     * have no canonical direction group), so it is a session-only layout
+     * property. Default is ByContent: detect from the first strong
+     * character in the text, falling back to LeftToRight.
+     */
+    enum DrawingDirection {
+        LeftToRight, /**< Force LTR base direction */
+        RightToLeft, /**< Force RTL base direction */
+        ByContent    /**< Detect from first strong character (UAX#9 P-rules) */
+    };
+
+    /**
      * Default constructor. Leaves the data object uninitialized.
      */
 	RS_TextData() = default;
@@ -115,6 +128,8 @@ struct RS_TextData {
     HAlign halign = HALeft;
     /** Text Generation */
     TextGeneration textGeneration = None;
+    /** Bidi layout direction (session-only) */
+    DrawingDirection drawingDirection = ByContent;
     /** Text string */
     QString text;
     /** Text style name */
@@ -193,6 +208,12 @@ public:
     }
     RS_TextData::TextGeneration getTextGeneration() {
         return data.textGeneration;
+    }
+    RS_TextData::DrawingDirection getDrawingDirection() const {
+        return data.drawingDirection;
+    }
+    void setDrawingDirection(RS_TextData::DrawingDirection direction) {
+        data.drawingDirection = direction;
     }
     void setText(const QString& t);
     QString getText() {
