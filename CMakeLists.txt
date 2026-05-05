@@ -5,8 +5,8 @@ set (CMAKE_CXX_STANDARD 17)
 set (CMAKE_CXX_STANDARD_REQUIRED ON)
 set (Boost_DEBUG OFF)
 
-set (LOCAL_BUILD "sand1024_")
 #LOCAL -----
+set (LOCAL_BUILD "sand1024_")
 if (LOCAL_BUILD STREQUAL "sand1024")
     set (CMAKE_VERBOSE_MAKEFILE ON)
     set (MIN_GW_PATH_PREFIX "d:\\Qt\\QT6\\6.9.0\\msvc2022_64")
@@ -836,7 +836,8 @@ set (SHARED_SOURCES
      librecad/src/lib/engine/document/entities/lc_parabola.cpp
      librecad/src/lib/engine/document/entities/lc_rect.cpp
      librecad/src/lib/engine/document/entities/lc_rect.h
-     librecad/src/lib/engine/document/entities/lc_secondmoment.hlibrecad/src/lib/engine/document/entities/lc_splinehelper.cpp
+     librecad/src/lib/engine/document/entities/lc_secondmoment.h
+     librecad/src/lib/engine/document/entities/lc_splinehelper.cpp
      librecad/src/lib/engine/document/entities/lc_splinehelper.h
      librecad/src/lib/engine/document/entities/lc_splinepoints.cpp
      librecad/src/lib/engine/document/entities/lc_splinepoints.h
@@ -1197,8 +1198,9 @@ set (SHARED_SOURCES
      librecad/src/main/doc_plugin_interface.cpp
      librecad/src/main/doc_plugin_interface.h
      librecad/src/main/lc_application.cpp
-     librecad/src/main/lc_application.hlibrecad/src/main/lc_crash_handler.cpp
-    librecad/src/main/lc_crash_handler.h
+     librecad/src/main/lc_application.h
+     librecad/src/main/lc_crash_handler.cpp
+     librecad/src/main/lc_crash_handler.h
      librecad/src/main/qc_dialogfactory.cpp
      librecad/src/main/qc_dialogfactory.h
      librecad/src/plugins/document_interface.h
