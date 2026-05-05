@@ -233,7 +233,9 @@ std::vector<std::unique_ptr<RS_EntityContainer>> LoopExtractor::extract()const {
           break;
         }
         if (findNext()) {
-          if (m_data->endPoint.distanceTo(m_data->targetPoint) <= ENDPOINT_TOLERANCE) break;
+          if (m_data->endPoint.distanceTo(m_data->targetPoint) <= ENDPOINT_TOLERANCE) {
+              break;
+          }
         } else {
           break;
         }
@@ -276,17 +278,19 @@ bool LoopExtractor::validate() const {
   if (n == 1) {
     RS_Entity* e = m_loop->entityAt(0);
     const RS2::EntityType type = e->rtti();
-    if (type == RS2::EntityCircle) return true;
+    if (type == RS2::EntityCircle) {
+        return true;
+    }
     if (type == RS2::EntityEllipse) {
         const auto* ell = static_cast<RS_Ellipse*>(e);
         return ell->getAngleLength() >= 2 * M_PI - RS_TOLERANCE;
     }
     if (type == RS2::EntitySpline || type == RS2::EntitySplinePoints) {  // Closed spline
-      LC_SplinePoints* spl = static_cast<LC_SplinePoints*>(e);
+      auto spl = static_cast<LC_SplinePoints*>(e);
       return spl->isClosed();
     }
     if (type == RS2::EntityParabola) {  // Valid primitive
-      LC_Parabola* para = static_cast<LC_Parabola*>(e);
+      auto para = static_cast<LC_Parabola*>(e);
       return para->getData().m_valid;
     }
     // Fallback: check self-closure
@@ -336,8 +340,9 @@ bool LoopExtractor::validate() const {
  */
 RS_Entity* LoopExtractor::findFirst() const
 {
-  if (m_data->unprocessed.empty())
-    return nullptr;
+  if (m_data->unprocessed.empty()) {
+      return nullptr;
+  }
 
   // Fixed-seed RNG: deterministic across runs, yet never axis-aligned
   static std::mt19937 gen(12345);
@@ -369,7 +374,9 @@ RS_Entity* LoopExtractor::findFirst() const
       pts.push_back((e->getMin() + e->getMax()) * 0.5);
     } else {
       for (const RS_Vector& p : {e->getStartpoint(), e->getEndpoint(), e->getMiddlePoint()}) {
-        if (p.valid) pts.push_back(p);
+        if (p.valid) {
+            pts.push_back(p);
+        }
       }
     }
     for (const RS_Vector& p : pts) {
@@ -392,8 +399,9 @@ RS_Entity* LoopExtractor::findFirst() const
 
   for (RS_Entity* e : m_data->unprocessed) {
     RS_VectorSolutions sol = RS_Information::getIntersection(&testLine, e, true);
-    if (!sol.hasValid())
-      continue;
+    if (!sol.hasValid()) {
+        continue;
+    }
 
     for (const RS_Vector& v : sol) {
       // Parameter along the ray (positive = ahead of rayStart)
@@ -414,12 +422,14 @@ RS_Entity* LoopExtractor::findFirst() const
  */
 RS_Entity* LoopExtractor::findOutermost(std::vector<RS_Entity*> edges) const
 {
-  if (edges.empty())
-    return nullptr;
-  if (edges.size() == 1)
-    return edges[0];
+  if (edges.empty()) {
+      return nullptr;
+  }
+  if (edges.size() == 1) {
+      return edges[0];
+  }
 
-         // Incoming direction (how we arrived at the junction)
+  // Incoming direction (how we arrived at the junction)
   const double incoming = m_data->current->getDirection2();
 
   std::vector<std::pair<double, RS_Entity*>> candidates;
@@ -440,8 +450,9 @@ RS_Entity* LoopExtractor::findOutermost(std::vector<RS_Entity*> edges) const
 
            // Signed turn angle in [-π, π]. Positive = left turn (CCW)
     double turn = RS_Math::correctAngle(outgoing - incoming);
-    if (turn > M_PI)
-      turn -= 2.0 * M_PI;
+    if (turn > M_PI) {
+        turn -= 2.0 * M_PI;
+    }
 
     candidates.emplace_back(turn, e);
   }
@@ -479,7 +490,9 @@ std::vector<RS_Entity*> LoopExtractor::getConnected() const {
  */
 bool LoopExtractor::findNext() const {
   const std::vector<RS_Entity*> connected = getConnected();
-  if (connected.empty()) return false;
+  if (connected.empty()) {
+      return false;
+  }
 
   RS_Entity* next = (connected.size() == 1) ? connected[0] : findOutermost(connected);
 
@@ -582,18 +595,21 @@ struct LoopSorter::Data {
  * Processes small-to-large to ensure immediate (direct) parent.
  */
 void LoopSorter::findParent(RS_EntityContainer* loop, const std::multimap<double, RS_EntityContainer*>& sorted) {
-  if (sorted.size() <= 1)
-    return;
+  if (sorted.size() <= 1) {
+      return;
+  }
   LC_Rect childBox{loop->getMin(), loop->getMax()};
   double childArea = std::abs(loop->areaLineIntegral());
   RS_Vector testPoint = (loop->getMin() + loop->getMax()) / 2.0;
   for (auto it = sorted.begin(); it != sorted.end(); ++it) {
     auto* potentialParent = it->second;
-    if (potentialParent == loop)
-      continue;
+    if (potentialParent == loop) {
+        continue;
+    }
     double parentArea = it->first;
-    if (parentArea <= childArea + RS_TOLERANCE)
-      continue;
+    if (parentArea <= childArea + RS_TOLERANCE) {
+        continue;
+    }
     LC_Rect parentBox{potentialParent->getMin(), potentialParent->getMax()};
 
             if (childBox.numCornersInside(parentBox) != 4) {
@@ -820,8 +836,9 @@ LC_SecondMoment LC_Loops::getTotalSecondMoment() const {
     if (e->isAtomic()) {
       RS_Vector start = e->getStartpoint();
       if (!path.isEmpty() && RS_DEBUG->getLevel() >= RS_Debug::D_INFORMATIONAL) {
-        if ((path.currentPosition() - builder.toGuiPoint({start.x, start.y})).manhattanLength() >= 3.)
-          LC_ERR << __func__ << "(): gap before (" << start.x << ", " << start.y << ")";
+        if ((path.currentPosition() - builder.toGuiPoint({start.x, start.y})).manhattanLength() >= 3.) {
+            LC_ERR << __func__ << "(): gap before (" << start.x << ", " << start.y << ")";
+        }
       }
       builder.append(e);
     }
@@ -927,7 +944,7 @@ bool LC_Loops::isEntityClosed(const RS_Entity* e) const {
      * For RS_Line: extends to bbox, dedups tiles by perpendicular intercept.
      */
     std::unique_ptr<RS_EntityContainer> LC_Loops::trimPatternEntities(const RS_Pattern& pattern) const {
-        std::unique_ptr<RS_EntityContainer> trimmed = std::make_unique<RS_EntityContainer>();
+        auto trimmed = std::make_unique<RS_EntityContainer>();
         std::vector<RS_Vector> tiles = createTiles(pattern);
         auto boundaries = getAllBoundaries();
         std::map<const RS_Entity*, std::set<double, DoublePredicate>> savedIntercepts;
@@ -941,14 +958,15 @@ bool LC_Loops::isEntityClosed(const RS_Entity* e) const {
                 cloned->move(tile);
 
       if (e->rtti() == RS2::EntityLine) {
-        RS_Line* cline = static_cast<RS_Line*>(cloned.get());
+        auto cline = static_cast<RS_Line*>(cloned.get());
         RS_Vector normal = cline->getNormalVector();
         double intr = normal.dotP(cline->getStartpoint());
         constexpr double TOL = 1e-6;
         double key = std::round(intr / TOL) * TOL;
         std::set<double, DoublePredicate>& sset = savedIntercepts[e];
-        if (sset.find(key) != sset.end())
-          continue;
+        if (sset.find(key) != sset.end()) {
+            continue;
+        }
         sset.insert(key);
         // Extend to bbox
         extendLineToBBox(*cline, bBox);
@@ -992,8 +1010,9 @@ bool LC_Loops::isEntityClosed(const RS_Entity* e) const {
       for (size_t i = 0; i < points.size() - 1; ++i) {
         RS_Vector p1 = points[i];
         RS_Vector p2 = points[i + 1];
-        if (p1.distanceTo(p2) < RS_TOLERANCE)
-          continue;
+        if (p1.distanceTo(p2) < RS_TOLERANCE) {
+            continue;
+        }
         auto sub = std::unique_ptr<RS_Entity>(createSubEntity(cloned.get(), p1, p2));
         // Filter short subs and add if inside
         if (sub && sub->getLength() > RS_TOLERANCE && isPointInside(sub->getMiddlePoint())) {
@@ -1026,19 +1045,19 @@ RS_Entity* LC_Loops::createSubEntity(RS_Entity* e, const RS_Vector& p1, const RS
   if (type == RS2::EntityLine) {
     return new RS_Line(nullptr, RS_LineData(p1, p2));
   } else if (type == RS2::EntityArc) {
-    RS_Arc* arc = static_cast<RS_Arc*>(e);
+    auto arc = static_cast<RS_Arc*>(e);
     RS_Vector center = arc->getCenter();
     double ang1 = (p1 - center).angle();
     double ang2 = (p2 - center).angle();
     return new RS_Arc(nullptr, RS_ArcData(center, arc->getRadius(), ang1, ang2, arc->isReversed()));
   } else if (type == RS2::EntityCircle) {
-    RS_Circle* circle = static_cast<RS_Circle*>(e);
+    auto circle = static_cast<RS_Circle*>(e);
     RS_Vector center = circle->getCenter();
     double ang1 = (p1 - center).angle();
     double ang2 = (p2 - center).angle();
     return new RS_Arc(nullptr, RS_ArcData(center, circle->getRadius(), ang1, ang2, false));
   } else if (type == RS2::EntityEllipse) {
-    RS_Ellipse* ell = static_cast<RS_Ellipse*>(e);
+    auto ell = static_cast<RS_Ellipse*>(e);
     RS_Vector center = ell->getCenter();
     double rot = ell->getAngle();
     RS_Vector lp1 = (p1 - center).rotate(-rot);
@@ -1047,16 +1066,22 @@ RS_Entity* LC_Loops::createSubEntity(RS_Entity* e, const RS_Vector& p1, const RS
     double lang2 = std::atan2(lp2.y / ell->getMinorRadius(), lp2.x / ell->getMajorRadius());
     return new RS_Ellipse(nullptr, {center, ell->getMajorP(), ell->getRatio(), lang1, lang2, ell->isReversed()});
   } else if (type == RS2::EntitySpline) {
-    LC_SplinePoints* spl = static_cast<LC_SplinePoints*>(e);
+    auto spl = static_cast<LC_SplinePoints*>(e);
     double total_len = spl->getLength();
-    if (total_len < RS_TOLERANCE) return nullptr;
+    if (total_len < RS_TOLERANCE) {
+        return nullptr;
+    }
     double t1 = spl->getDistanceToPoint(p1) / total_len;
     double t2 = spl->getDistanceToPoint(p2) / total_len;
-    if (t1 > t2) std::swap(t1, t2);  // Ensure order
+    if (t1 > t2) {
+        std::swap(t1, t2); // Ensure order
+    }
     LC_SplinePoints* seg1 = spl->cut(p1);  // Trims original to start-p1
     if (seg1) {
       LC_SplinePoints* sub = seg1->cut(p2);  // Further trim p1-p2
-      if (sub && sub->getLength() > RS_TOLERANCE) return sub;
+      if (sub && sub->getLength() > RS_TOLERANCE) {
+          return sub;
+      }
       delete seg1;  // Cleanup
     }
     // Fallback: Resample splinePoints between nearest indices
@@ -1069,12 +1094,14 @@ RS_Entity* LC_Loops::createSubEntity(RS_Entity* e, const RS_Vector& p1, const RS
       d = points[i].distanceTo(p2);
       if (d < min_d2) { min_d2 = d; i2 = i; }
     }
-    if (i1 > i2) std::swap(i1, i2);
+    if (i1 > i2) {
+        std::swap(i1, i2);
+    }
     LC_SplinePointsData sub_data;
     sub_data.splinePoints.assign(points.begin() + i1, points.begin() + i2 + 1);
     return new LC_SplinePoints(nullptr, sub_data);
   } else if (type == RS2::EntityParabola) {
-    LC_Parabola* para = static_cast<LC_Parabola*>(e);
+    auto para = static_cast<LC_Parabola*>(e);
     RS_Vector tan1 = para->getTangentDirection(p1).normalize();
     RS_Vector tan2 = para->getTangentDirection(p2).normalize();
     std::array<RS_Vector, 2> ends = {p1, p2};
@@ -1087,13 +1114,22 @@ RS_Entity* LC_Loops::createSubEntity(RS_Entity* e, const RS_Vector& p1, const RS
     auto cps = para->getData().m_controlPoints;
     std::sort(cps.begin(), cps.end(), [](const RS_Vector& a, const RS_Vector& b){ return a.x < b.x; });
     double x1 = p1.x, x2 = p2.x;
-    if (x1 > x2) std::swap(x1, x2);
+    if (x1 > x2) {
+        std::swap(x1, x2);
+    }
     std::array<RS_Vector, 3> sub_cps;
     double range = x2 - x1;
-    if (range < RS_TOLERANCE) return nullptr;
+    if (range < RS_TOLERANCE) {
+        return nullptr;
+    }
     for (int i = 0; i < 3; ++i) {
       double ratio = (cps[i].x - x1) / range;
-      if (ratio < 0) ratio = 0; else if (ratio > 1) ratio = 1;
+      if (ratio < 0) {
+          ratio = 0;
+      }
+      else if (ratio > 1) {
+          ratio = 1;
+      }
       sub_cps[i] = RS_Vector{x1 + ratio * range, cps[i].y};  // Preserve y for parabolic shape
     }
     return new LC_Parabola(nullptr, LC_ParabolaData{sub_cps});
@@ -1108,18 +1144,22 @@ std::vector<RS_Vector> LC_Loops::sortPointsAlongEntity(RS_Entity* e, std::vector
   std::vector<std::pair<double, RS_Vector>> param_points;
   RS2::EntityType type = e->rtti();
   if (type == RS2::EntityLine) {
-    RS_Line* line = static_cast<RS_Line*>(e);
+    auto line = static_cast<RS_Line*>(e);
     RS_Vector start = line->getStartpoint();
     RS_Vector dir = line->getEndpoint() - start;
     double len = dir.magnitude();
-    if (len < RS_TOLERANCE) return {};
+    if (len < RS_TOLERANCE) {
+        return {};
+    }
     RS_Vector unit = dir / len;
     for (RS_Vector v : inters) {
       double t = (v - start).dotP(unit);
-      if (t >= 0 - RS_TOLERANCE && t <= len + RS_TOLERANCE) param_points.emplace_back(t, v);
+      if (t >= 0 - RS_TOLERANCE && t <= len + RS_TOLERANCE) {
+          param_points.emplace_back(t, v);
+      }
     }
   } else if (type == RS2::EntityArc) {
-    RS_Arc* arc = static_cast<RS_Arc*>(e);
+    auto arc = static_cast<RS_Arc*>(e);
     RS_Vector center = arc->getCenter();
     double a1 = arc->getAngle1();
     bool reversed = arc->isReversed();
@@ -1129,7 +1169,7 @@ std::vector<RS_Vector> LC_Loops::sortPointsAlongEntity(RS_Entity* e, std::vector
       param_points.emplace_back(diff, v);
     }
   } else if (type == RS2::EntityCircle) {
-    RS_Circle* circle = static_cast<RS_Circle*>(e);
+    auto circle = static_cast<RS_Circle*>(e);
     RS_Vector center = circle->getCenter();
     if (!inters.empty()) {
       double ref_ang = (inters[0] - center).angle();
@@ -1140,7 +1180,7 @@ std::vector<RS_Vector> LC_Loops::sortPointsAlongEntity(RS_Entity* e, std::vector
       }
     }
   } else if (type == RS2::EntityEllipse) {
-    RS_Ellipse* ell = static_cast<RS_Ellipse*>(e);
+    auto ell = static_cast<RS_Ellipse*>(e);
     RS_Vector center = ell->getCenter();
     double rot = ell->getAngle();
     double a1 = ell->getAngle1();
@@ -1152,23 +1192,29 @@ std::vector<RS_Vector> LC_Loops::sortPointsAlongEntity(RS_Entity* e, std::vector
       param_points.emplace_back(diff, v);
     }
   } else if (type == RS2::EntitySpline) {
-    LC_SplinePoints* spl = static_cast<LC_SplinePoints*>(e);
+    auto spl = static_cast<LC_SplinePoints*>(e);
     double total_len = spl->getLength();
-    if (total_len < RS_TOLERANCE) return {};
+    if (total_len < RS_TOLERANCE) {
+        return {};
+    }
     for (RS_Vector v : inters) {
       double dist = spl->getDistanceToPoint(v);
       param_points.emplace_back(dist / total_len, v);
     }
   } else if (type == RS2::EntityParabola) {
-    LC_Parabola* para = static_cast<LC_Parabola*>(e);
+    auto para = static_cast<LC_Parabola*>(e);
     LC_ParabolaData& d = para->getData();
-    if (!d.m_valid) return {};
+    if (!d.m_valid) {
+        return {};
+    }
     double x_min = std::min({d.m_controlPoints[0].x, d.m_controlPoints[1].x, d.m_controlPoints[2].x});
     double x_max = std::max({d.m_controlPoints[0].x, d.m_controlPoints[1].x, d.m_controlPoints[2].x});
     double x_range = x_max - x_min;
-    if (x_range < RS_TOLERANCE) return {};
+    if (x_range < RS_TOLERANCE) {
+        return {};
+    }
     for (RS_Vector v : inters) {
-      double x_param = d.FindX(v);
+      double x_param = d.findX(v);
       double norm_param = (x_param - x_min) / x_range;  // [0,1]
       param_points.emplace_back(norm_param, v);
     }
@@ -1177,7 +1223,9 @@ std::vector<RS_Vector> LC_Loops::sortPointsAlongEntity(RS_Entity* e, std::vector
     return a.first < b.first;
   });
   std::vector<RS_Vector> sorted;
-  for (auto& p : param_points) sorted.push_back(p.second);
+  for (auto& p : param_points) {
+      sorted.push_back(p.second);
+  }
   return sorted;
 }
 

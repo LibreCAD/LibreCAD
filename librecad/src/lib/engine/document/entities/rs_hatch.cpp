@@ -158,8 +158,9 @@ bool RS_Hatch::validate() {
         // coordinate transforms applied for pattern alignment do not mutate the
         // original boundary entities stored in *this.
         RS_EntityContainer edgeContainer{nullptr, true};
-        for (RS_Entity* e : contourEdges)
+        for (RS_Entity* e : contourEdges) {
             edgeContainer.addEntity(e->clone());
+        }
         edgeContainer.forcedCalculateBorders();
 
         // For pattern hatches: rotate the working copy by -angle so that tiling
@@ -405,10 +406,12 @@ void RS_Hatch::activateContour(const bool visible) const {
  * @param painter The painter to draw with.
  */
 void RS_Hatch::draw(RS_Painter* painter) {
-    if (isSolid())
+    if (isSolid()) {
         drawSolidFill(painter);
-    else
+    }
+    else {
         drawPatternLines(painter);
+    }
 }
 
 /**
@@ -456,14 +459,16 @@ double RS_Hatch::getTotalArea() const {
 }
 
 RS_Vector RS_Hatch::getCentroid() const {
-    if (!m_secondMomentValid || m_area < RS_TOLERANCE)
+    if (!m_secondMomentValid || m_area < RS_TOLERANCE) {
         return RS_Vector(false);
+    }
     return RS_Vector(m_firstMoment.mx / m_area, m_firstMoment.my / m_area);
 }
 
 LC_SecondMoment RS_Hatch::getMomentOfInertia() const {
-    if (!m_secondMomentValid || m_area < RS_TOLERANCE)
+    if (!m_secondMomentValid || m_area < RS_TOLERANCE) {
         return {};
+    }
     const double cx = m_firstMoment.mx / m_area;
     const double cy = m_firstMoment.my / m_area;
     return m_secondMoment.getCentral(m_area, cx, cy);

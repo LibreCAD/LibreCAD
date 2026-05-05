@@ -1755,10 +1755,12 @@ LC_FirstMoment RS_EntityContainer::firstMomentLineIntegral() const {
     for (unsigned i = 0; i < count(); ++i) {
         RS_Entity* e = m_entities.at(i);
         if (isClosedLoop(*e)) {
-            if (e->isContainer())
+            if (e->isContainer()) {
                 subMoment += e->firstMomentLineIntegral();
-            else
+            }
+            else {
                 closedMoment += e->firstMomentLineIntegral();
+            }
             continue;
         }
         e->setLayer(getLayer());
@@ -1788,8 +1790,9 @@ LC_FirstMoment RS_EntityContainer::firstMomentLineIntegral() const {
             }
         }
     }
-    if (contourArea < 0.0)
+    if (contourArea < 0.0) {
         contourMoment = -contourMoment;
+    }
 
     return contourMoment + closedMoment - subMoment;
 }
@@ -1806,10 +1809,12 @@ LC_SecondMoment RS_EntityContainer::secondMomentLineIntegral() const {
     for (unsigned i = 0; i < count(); ++i) {
         RS_Entity* e = m_entities.at(i);
         if (isClosedLoop(*e)) {
-            if (e->isContainer())
+            if (e->isContainer()) {
                 subMoment += e->secondMomentLineIntegral();
-            else
+            }
+            else {
                 closedMoment += e->secondMomentLineIntegral();
+            }
             continue;
         }
         e->setLayer(getLayer());
@@ -1840,8 +1845,9 @@ LC_SecondMoment RS_EntityContainer::secondMomentLineIntegral() const {
         }
     }
     // Match the abs-value convention of areaLineIntegral()
-    if (contourArea < 0.0)
+    if (contourArea < 0.0) {
         contourMoment = -contourMoment;
+    }
 
     return contourMoment + closedMoment - subMoment;
 }

@@ -469,7 +469,9 @@ double signedDistanceToEllipse(const RS_Ellipse& ellipse, const RS_Vector& p) {
         q.rotate(majorAngle);
         q += ellipse.getCenter();
         const double d = q.distanceTo(p);
-        if (d < best) best = d;
+        if (d < best) {
+            best = d;
+        }
     }
 
     // Sign from the implicit form in the local frame.

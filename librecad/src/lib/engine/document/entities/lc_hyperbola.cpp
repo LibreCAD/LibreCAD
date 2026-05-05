@@ -1849,7 +1849,9 @@ double LC_Hyperbola::areaLineIntegral() const {
 }
 
 double LC_Hyperbola::computeLocalArea(double phi1, double phi2) const {
-  if (isInfinite()) return 0.0;
+  if (isInfinite()) {
+      return 0.0;
+  }
   const double a = getMajorRadius();
   const double b = getMinorRadius();
   auto F = [&](double phi) {
@@ -1859,7 +1861,9 @@ double LC_Hyperbola::computeLocalArea(double phi1, double phi2) const {
 }
 
 LC_FirstMoment LC_Hyperbola::computeLocalFirstMoment(double phi1, double phi2) const {
-  if (isInfinite()) return {};
+  if (isInfinite()) {
+      return {};
+  }
   const double a = getMajorRadius();
   const double b = getMinorRadius();
   auto F_mx = [&](double phi) {
@@ -1876,7 +1880,9 @@ LC_FirstMoment LC_Hyperbola::computeLocalFirstMoment(double phi1, double phi2) c
 }
 
 LC_SecondMoment LC_Hyperbola::computeLocalSecondMoment(double phi1, double phi2) const {
-  if (isInfinite()) return {};
+  if (isInfinite()) {
+      return {};
+  }
   const double a = getMajorRadius();
   const double b = getMinorRadius();
   auto F_ixx = [&](double phi) {
@@ -1904,14 +1910,18 @@ LC_SecondMoment LC_Hyperbola::computeLocalSecondMoment(double phi1, double phi2)
 }
 
 LC_FirstMoment LC_Hyperbola::firstMomentLineIntegral() const {
-  if (!m_bValid || isInfinite()) return {};
+  if (!m_bValid || isInfinite()) {
+      return {};
+  }
   const double phi = getAngle();
   const double cx  = data.center.x;
   const double cy  = data.center.y;
 
   double t0 = data.angle1;
   double t1 = data.angle2;
-  if (data.reversed) std::swap(t0, t1);
+  if (data.reversed) {
+      std::swap(t0, t1);
+  }
 
   const auto local = computeLocalFirstMoment(t0, t1);
   const double area = computeLocalArea(t0, t1);
@@ -1920,14 +1930,18 @@ LC_FirstMoment LC_Hyperbola::firstMomentLineIntegral() const {
 }
 
 LC_SecondMoment LC_Hyperbola::secondMomentLineIntegral() const {
-  if (!m_bValid || isInfinite()) return {};
+  if (!m_bValid || isInfinite()) {
+      return {};
+  }
   const double phi = getAngle();
   const double cx  = data.center.x;
   const double cy  = data.center.y;
 
   double t0 = data.angle1;
   double t1 = data.angle2;
-  if (data.reversed) std::swap(t0, t1);
+  if (data.reversed) {
+      std::swap(t0, t1);
+  }
 
   const auto local = computeLocalSecondMoment(t0, t1);
   const double area = computeLocalArea(t0, t1);

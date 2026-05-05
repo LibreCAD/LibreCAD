@@ -46,7 +46,9 @@ PathBuilder::PathBuilder(RS_Painter* painter)
 }
 
 void PathBuilder::append(RS_Entity* entity) {
-  if (!entity || entity->isDeleted()) return;
+  if (!entity || entity->isDeleted()) {
+      return;
+  }
 
   RS_Vector startp = entity->getStartpoint();
   if (startp.valid) {
@@ -121,12 +123,16 @@ QPointF PathBuilder::toGuiPoint(const RS_Vector& vp) const {
 }
 
 void PathBuilder::appendLine(RS_Line* line) {
-  if (!line) return;
+  if (!line) {
+      return;
+  }
   m_path.lineTo(toGuiPoint(line->getEndpoint()));
 }
 
 void PathBuilder::appendArc(RS_Arc* arc) {
-  if (!arc || !m_painter) return;
+  if (!arc || !m_painter) {
+      return;
+  }
   const double radius = arc->getRadius();
   RS_Vector uiCenter = m_painter->toGui(arc->getCenter());
   RS_Vector uiRadii{m_painter->toGuiDX(radius), m_painter->toGuiDY(radius)};
@@ -139,21 +145,29 @@ void PathBuilder::appendArc(RS_Arc* arc) {
 }
 
 void PathBuilder::appendCircle(RS_Circle* circle) {
-  if (!circle || !m_painter) return;
+  if (!circle || !m_painter) {
+      return;
+  }
   circle->createPainterPath(m_painter, m_path);
 }
 
 void PathBuilder::appendEllipse(RS_Ellipse* ellipse) {
-  if (!ellipse || !m_painter) return;
+  if (!ellipse || !m_painter) {
+      return;
+  }
 
   ellipse->createPainterPath(m_painter, m_path);
 }
 
 void PathBuilder::appendSplinePoints(LC_SplinePoints* spline) {
-  if (!spline || !m_painter) return;
+  if (!spline || !m_painter) {
+      return;
+  }
 
   const auto& points = spline->getPoints();
-  if (points.empty()) return;
+  if (points.empty()) {
+      return;
+  }
 
   const size_t n_points = points.size();
   const size_t num_segs = spline->isClosed() ? n_points : n_points - 1;
@@ -175,7 +189,9 @@ void PathBuilder::appendSplinePoints(LC_SplinePoints* spline) {
 }
 
 void PathBuilder::appendParabola(LC_Parabola* parabola) {
-  if (!parabola) return;
+  if (!parabola) {
+      return;
+  }
   // Parabolas delegate to spline logic (quadratic Beziers)
   appendSplinePoints(parabola);
 }

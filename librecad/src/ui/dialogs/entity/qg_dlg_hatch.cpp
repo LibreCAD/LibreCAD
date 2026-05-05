@@ -165,7 +165,6 @@ void QG_DlgHatch::updatePreview() {
         return;
     }
 
-    const QString patName = cbPattern->currentText();
     const bool isSolid = cbSolid->isChecked();
     const double scale = toWCSValue(leScale, 1.0);
     const double angle = toWCSAngle(leAngle, 0.0);
@@ -174,8 +173,9 @@ void QG_DlgHatch::updatePreview() {
 
     if (!isSolid) {
         m_pattern = cbPattern->getPattern();
-        if (!m_pattern || m_pattern->countDeep() == 0)
+        if (!m_pattern || m_pattern->countDeep() == 0) {
             return;
+        }
         m_pattern->calculateBorders();
         prevSize = std::max(prevSize, m_pattern->getSize().magnitude());
     }

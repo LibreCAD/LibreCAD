@@ -3442,14 +3442,15 @@ LC_SecondMoment LC_SplinePoints::secondMomentLineIntegral() const {
     };
 
     // Replicate the segment decomposition from areaLineIntegral()
-    size_t n = data.controlPoints.size();
-    if (n < 2)
+    size_t n = m_data.controlPoints.size();
+    if (n < 2) {
         return {};
+    }
 
     LC_SecondMoment res;
     RS_Vector vStart, vControl, vEnd;
 
-    if (!data.closed) {
+    if (!m_data.closed) {
         if (n == 2) {
             // Degenerate: straight line
             RS_Vector s = getStartpoint();
@@ -3457,42 +3458,43 @@ LC_SecondMoment LC_SplinePoints::secondMomentLineIntegral() const {
             RS_Line line(nullptr, RS_LineData{s, e});
             return line.secondMomentLineIntegral();
         }
-        vStart   = data.controlPoints[0];
-        vControl = data.controlPoints[1];
+        vStart   = m_data.controlPoints[0];
+        vControl = m_data.controlPoints[1];
         if (n == 3) {
-            vEnd = data.controlPoints[2];
+            vEnd = m_data.controlPoints[2];
             return segMoment(vStart, vControl, vEnd);
         }
-        vEnd = (data.controlPoints[1] + data.controlPoints[2]) / 2.0;
+        vEnd = (m_data.controlPoints[1] + m_data.controlPoints[2]) / 2.0;
         res += segMoment(vStart, vControl, vEnd);
 
         for (size_t i = 2; i < n - 2; ++i) {
             vStart   = vEnd;
-            vControl = data.controlPoints[i];
-            vEnd     = (data.controlPoints[i] + data.controlPoints[i+1]) / 2.0;
+            vControl = m_data.controlPoints[i];
+            vEnd     = (m_data.controlPoints[i] + m_data.controlPoints[i+1]) / 2.0;
             res += segMoment(vStart, vControl, vEnd);
         }
         vStart   = vEnd;
-        vControl = data.controlPoints[n-2];
-        vEnd     = data.controlPoints[n-1];
+        vControl = m_data.controlPoints[n-2];
+        vEnd     = m_data.controlPoints[n-1];
         res += segMoment(vStart, vControl, vEnd);
     } else {
-        if (n < 3)
+        if (n < 3) {
             return {};
-        vStart   = (data.controlPoints[n-1] + data.controlPoints[0]) / 2.0;
-        vControl = data.controlPoints[0];
-        vEnd     = (data.controlPoints[0]   + data.controlPoints[1]) / 2.0;
+        }
+        vStart   = (m_data.controlPoints[n-1] + m_data.controlPoints[0]) / 2.0;
+        vControl = m_data.controlPoints[0];
+        vEnd     = (m_data.controlPoints[0]   + m_data.controlPoints[1]) / 2.0;
         res += segMoment(vStart, vControl, vEnd);
 
         for (size_t i = 1; i < n - 1; ++i) {
             vStart   = vEnd;
-            vControl = data.controlPoints[i];
-            vEnd     = (data.controlPoints[i] + data.controlPoints[i+1]) / 2.0;
+            vControl = m_data.controlPoints[i];
+            vEnd     = (m_data.controlPoints[i] + m_data.controlPoints[i+1]) / 2.0;
             res += segMoment(vStart, vControl, vEnd);
         }
         vStart   = vEnd;
-        vControl = data.controlPoints[n-1];
-        vEnd     = (data.controlPoints[n-1] + data.controlPoints[0]) / 2.0;
+        vControl = m_data.controlPoints[n-1];
+        vEnd     = (m_data.controlPoints[n-1] + m_data.controlPoints[0]) / 2.0;
         res += segMoment(vStart, vControl, vEnd);
     }
     return res;

@@ -34,7 +34,7 @@
 
 LC_ActionModifyOffset::LC_ActionModifyOffset(LC_ActionContext *actionContext)
     :LC_ActionModifyBase("ActionModifyOffset", actionContext,RS2::ActionModifyOffset,
-                         {RS2::EntityArc, RS2::EntityCircle, RS2::EntityLine, RS2::EntityPolyline})
+                         {RS2::EntityArc, RS2::EntityCircle, RS2::EntityEllipse, RS2::EntityLine, RS2::EntityPolyline})
     , m_offsetData(new RS_OffsetData()){
 
     m_offsetData->distance = 0.;
@@ -47,7 +47,7 @@ LC_ActionModifyOffset::LC_ActionModifyOffset(LC_ActionContext *actionContext)
 // fixme - number of copies support
 // fixme - support attributes support
 // todo - basically, it seems that this action should be re-thought in general. There are several limitations (say,
-// todo - some entities like ellipse or splines do not support offset.
+// todo - some entities like splines do not support offset.
 // todo - also, it seems that it's related to parallel/equidistant polyline actions...
 // todo - so probably either this action should be reworked, or existing actions should be extended to support
 // todo - selection and better offset operations...
@@ -250,7 +250,7 @@ void LC_ActionModifyOffset::updateActionPromptForSelected(const int status) {
 }
 
 void LC_ActionModifyOffset::updateActionPromptForSelection() {
-    updatePromptTRCancel(tr("Select line, polyline, circle or arc to create offset") + getSelectionCompletionHintMsg(),
+    updatePromptTRCancel(tr("Select line, polyline, ellipse, circle or arc to create offset") + getSelectionCompletionHintMsg(),
                               MOD_SHIFT_AND_CTRL(tr("Select contour"), tr("Offset immediately after selection")));
 }
 
