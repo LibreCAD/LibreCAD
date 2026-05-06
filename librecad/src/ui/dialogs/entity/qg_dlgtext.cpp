@@ -70,7 +70,6 @@ void QG_DlgText::init() {
     m_font=nullptr;
     entity = nullptr;
     m_isNew = false;
-    leOblique->setDisabled(true);
     updateUniCharComboBox(0);
     updateUniCharButton(0);
 
@@ -87,8 +86,7 @@ void QG_DlgText::init() {
     QWidget::setTabOrder(wPen, cbFont); // Pen compound widget -> Font widget
     QWidget::setTabOrder(cbFont, leHeight); // etc
     QWidget::setTabOrder(leHeight, leAngle);
-    QWidget::setTabOrder(leAngle, leOblique);
-    QWidget::setTabOrder(leOblique, leWidthRel);
+    QWidget::setTabOrder(leAngle, leWidthRel);
     QWidget::setTabOrder(leWidthRel, bTL);
     QWidget::setTabOrder(bTL, bTC);
     QWidget::setTabOrder(bTC, bTR);
@@ -228,29 +226,25 @@ void QG_DlgText::setEntity(RS_Text* t, bool isNew) {
  * Updates the text entity represented by the dialog to fit the choices of the user.
  */
 void QG_DlgText::updateEntity() {
-    if (entity) {
-        entity->setStyle(cbFont->currentText());
-        entity->setHeight(leHeight->text().toDouble());
-        entity->setWidthRel(leWidthRel->text().toDouble());
+    if (entity == nullptr) return;
 
-        entity->setText(teText->text());
-        entity->setAlignment(getAlignment());
-        double wcsAngle = toWCSAngle(leAngle, entity->getAngle());
-        entity->setAngle(wcsAngle);
-    }
-    if (entity && !m_isNew) {
+    entity->setStyle(cbFont->currentText());
+    entity->setHeight(leHeight->text().toDouble());
+    entity->setWidthRel(leWidthRel->text().toDouble());
+
+    entity->setText(teText->text());
+    entity->setAlignment(getAlignment());
+    double wcsAngle = toWCSAngle(leAngle, entity->getAngle());
+    entity->setAngle(wcsAngle);
+
+    if (!m_isNew) {
         entity->setPen(wPen->getPen());
         entity->setLayer(cbLayer->getLayer());
-        entity->update();
     }
 
     entity->update();
 }
 
-
-/*void QG_DlgText::setwidthRel(double rel) {
-    lWidthRel->setText(rel);
-}*/
 
 void QG_DlgText::setAlignmentTL() {
     setAlignment(1);
@@ -426,15 +420,7 @@ void QG_DlgText::setFont(const QString& f) {
         cbFont->setCurrentIndex(index);
         m_font = cbFont->getFont();
     }
-//    defaultChanged(false);
 }
-
-/*void QG_DlgText::defaultChanged(bool) {
-    if (cbDefault->isChecked() && font) {
-        leLineSpacingFactor->setText(
-                        QString("%1").arg(font->getLineSpacingFactor()));
-    }
-}*/
 
 void QG_DlgText::loadText() {
     QString fn = QFileDialog::getOpenFileName( this, QString(), QString());

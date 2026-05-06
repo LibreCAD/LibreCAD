@@ -41,8 +41,10 @@ public:
 protected slots:
     void onTextEditingFinished();
     void onHeightEditingFinished();
+    void onWidthRelEditingFinished();
     void onAngleEditingFinished();
     void onStyleEditingFinished();
+    void onAlignmentChanged(int index);
     void onDirectionToggled(bool checked);
 private:
     void applyDirectionToEditor();

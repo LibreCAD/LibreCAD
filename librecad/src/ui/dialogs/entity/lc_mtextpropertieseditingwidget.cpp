@@ -23,11 +23,17 @@
 
 #include "lc_mtextpropertieseditingwidget.h"
 
+#include <QTextBlock>
+#include <QTextBlockFormat>
+#include <QTextCursor>
 #include <QTextDocument>
 #include <QTextOption>
 
+#include "lc_textbidi.h"
 #include "rs_mtext.h"
 #include "ui_lc_mtextpropertieseditingwidget.h"
+
+using lc::textbidi::mirrorByLine;
 
 LC_MTextPropertiesEditingWidget::LC_MTextPropertiesEditingWidget(QWidget *parent)
     : LC_EntityPropertiesEditorWidget(parent)
@@ -59,11 +65,15 @@ LC_MTextPropertiesEditingWidget::~LC_MTextPropertiesEditingWidget() {
 void LC_MTextPropertiesEditingWidget::setEntity(RS_Entity *entity) {
     m_entity = static_cast<RS_MText *>(entity);
 
+    const bool ltr =
+        m_entity->getDrawingDirection() != RS_MTextData::RightToLeft;
+
     // Block textChanged so populating the editor doesn't loop back into the
     // entity. We do not need to block the QLineEdits — editingFinished only
     // fires on user interaction.
     QSignalBlocker textBlocker(ui->teText);
-    ui->teText->setPlainText(m_entity->getText());
+    ui->teText->setPlainText(ltr ? m_entity->getText()
+                                 : mirrorByLine(m_entity->getText()));
 
     toUIValue(m_entity->getHeight(), ui->leHeight);
     toUIValue(m_entity->getWidth(), ui->leWidth);
@@ -71,8 +81,6 @@ void LC_MTextPropertiesEditingWidget::setEntity(RS_Entity *entity) {
     toUIValue(m_entity->getLineSpacingFactor(), ui->leLineSpacing);
     ui->leStyle->setText(m_entity->getStyle());
 
-    const bool ltr =
-        m_entity->getDrawingDirection() != RS_MTextData::RightToLeft;
     QSignalBlocker dirBlockerL(ui->rbLeftToRight);
     QSignalBlocker dirBlockerR(ui->rbRightToLeft);
     ui->rbLeftToRight->setChecked(ltr);
@@ -87,17 +95,36 @@ void LC_MTextPropertiesEditingWidget::applyDirectionToEditor() {
     const Qt::LayoutDirection direction =
         ltr ? Qt::LeftToRight : Qt::RightToLeft;
     ui->teText->setLayoutDirection(direction);
-    if (QTextDocument *doc = ui->teText->document()) {
-        QTextOption option = doc->defaultTextOption();
-        option.setTextDirection(direction);
-        doc->setDefaultTextOption(option);
-    }
+
+    QTextDocument *doc = ui->teText->document();
+    if (doc == nullptr) return;
+
+    QTextOption option = doc->defaultTextOption();
+    option.setTextDirection(direction);
+    doc->setDefaultTextOption(option);
+
+    // setDefaultTextOption only governs future relayout, so existing blocks
+    // keep their old direction until something else triggers them. Stamp the
+    // direction onto every block format so already-typed text flips now.
+    QSignalBlocker textBlocker(ui->teText);
+    QTextCursor cursor(doc);
+    cursor.beginEditBlock();
+    cursor.movePosition(QTextCursor::Start);
+    do {
+        QTextBlockFormat fmt = cursor.blockFormat();
+        fmt.setLayoutDirection(direction);
+        cursor.setBlockFormat(fmt);
+    } while (cursor.movePosition(QTextCursor::NextBlock));
+    cursor.endEditBlock();
+
     ui->teText->update();
 }
 
 void LC_MTextPropertiesEditingWidget::onTextChanged() {
     if (m_entity == nullptr) return;
-    m_entity->setText(ui->teText->toPlainText());
+    const QString widgetText = ui->teText->toPlainText();
+    const bool ltr = ui->rbLeftToRight->isChecked();
+    m_entity->setText(ltr ? widgetText : mirrorByLine(widgetText));
 }
 
 void LC_MTextPropertiesEditingWidget::onHeightEditingFinished() {
@@ -126,11 +153,55 @@ void LC_MTextPropertiesEditingWidget::onStyleEditingFinished() {
     m_entity->setStyle(ui->leStyle->text());
 }
 
-void LC_MTextPropertiesEditingWidget::onDirectionToggled(
-    [[maybe_unused]] bool checked) {
-    if (m_entity == nullptr) return;
+void LC_MTextPropertiesEditingWidget::onDirectionToggled(bool checked) {
+    // Each user click fires twice (one button goes off, the other comes on).
+    // Skip the off-edge so we mirror the buffer exactly once per actual flip.
+    if (!checked) return;
+
     const bool ltr = ui->rbLeftToRight->isChecked();
-    m_entity->setDrawingDirection(
-        ltr ? RS_MTextData::LeftToRight : RS_MTextData::RightToLeft);
+
+    // Capture cursor (anchor + position) so we can flip the column index
+    // within its block after the mirror. Block structure is preserved by
+    // per-line mirroring; only the column flips.
+    auto capture = [](const QTextDocument *doc, int pos) {
+        const QTextBlock block = doc->findBlock(pos);
+        const int blockNum = block.blockNumber();
+        int blockLen = block.length();
+        if (block.next().isValid()) --blockLen;
+        return std::tuple<int, int, int>{blockNum, pos - block.position(),
+                                          blockLen};
+    };
+    const QTextCursor oldCursor = ui->teText->textCursor();
+    const auto anchorInfo = capture(ui->teText->document(), oldCursor.anchor());
+    const auto posInfo = capture(ui->teText->document(), oldCursor.position());
+
+    // Flip the displayed buffer so the same logical text now reads in the
+    // newly selected direction. The entity's text is unchanged — only the
+    // widget's visual layout flips.
+    {
+        QSignalBlocker textBlocker(ui->teText);
+        const QString current = ui->teText->toPlainText();
+        ui->teText->setPlainText(mirrorByLine(current));
+    }
+
+    auto restore = [](const QTextDocument *doc,
+                      const std::tuple<int, int, int> &info) -> int {
+        const auto [blockNum, col, blockLen] = info;
+        const QTextBlock block = doc->findBlockByNumber(blockNum);
+        if (!block.isValid()) return 0;
+        return block.position() + (blockLen - col);
+    };
+    {
+        QTextCursor c = ui->teText->textCursor();
+        c.setPosition(restore(ui->teText->document(), anchorInfo));
+        c.setPosition(restore(ui->teText->document(), posInfo),
+                      QTextCursor::KeepAnchor);
+        ui->teText->setTextCursor(c);
+    }
+
+    if (m_entity != nullptr) {
+        m_entity->setDrawingDirection(
+            ltr ? RS_MTextData::LeftToRight : RS_MTextData::RightToLeft);
+    }
     applyDirectionToEditor();
 }

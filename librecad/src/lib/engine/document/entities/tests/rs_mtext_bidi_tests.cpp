@@ -53,6 +53,14 @@ std::vector<int> visualOrder(const QString &s,
     return RS_MText::computeBidiVisualOrder(s, base);
 }
 
+/** Find visual position of @p logIdx, or -1 if absent. */
+int positionOf(const std::vector<int> &visual, int logIdx) {
+    for (size_t k = 0; k < visual.size(); ++k) {
+        if (visual[k] == logIdx) return static_cast<int>(k);
+    }
+    return -1;
+}
+
 /**
  * Returns true if @p result is a permutation of [0, n).
  */
@@ -200,5 +208,94 @@ TEST_CASE("computeBidiVisualOrder: result is always a permutation",
             auto v = visualOrder(s, dir);
             REQUIRE(isPermutationOf(v, s.size()));
         }
+    }
+}
+
+// UAX#9 N0 — bracket pair with strong-LTR content in LTR paragraph: brackets
+// stay visually adjacent to their content (i.e. don't drift apart).
+TEST_CASE("computeBidiVisualOrder: N0 — LTR pair stays put",
+          "[mtext][bidi][n0]") {
+    // "abc(def)ghi" — pure LTR, brackets just identity-permuted.
+    const QString s("abc(def)ghi");
+    auto v = visualOrder(s, Qt::LeftToRight);
+    REQUIRE(v.size() == 11);
+    for (size_t k = 0; k < v.size(); ++k) {
+        REQUIRE(v[k] == static_cast<int>(k));
+    }
+}
+
+// UAX#9 N0 — strong-RTL content inside parens with LTR base. Without N0 the
+// brackets could resolve via N1 to base direction; with N0 they pair as the
+// preceding-context direction (L) since context==strong-inside is false.
+TEST_CASE("computeBidiVisualOrder: N0 — RTL content in LTR parens",
+          "[mtext][bidi][n0]") {
+    // "(שלום)" with LTR base.
+    // Logical: '(' [4xHebrew] ')'.
+    // The Hebrew run gets reversed; brackets should stay at the outside.
+    const QString s = QString("(") + QString::fromUtf8(u8"שלום") + QString(")");
+    REQUIRE(s.size() == 6);
+    auto v = visualOrder(s, Qt::LeftToRight);
+    REQUIRE(v.size() == 6);
+    // Open bracket (logical 0) should be visually first; close (logical 5)
+    // should be visually last. Hebrew (logical 1..4) is reversed in between.
+    REQUIRE(positionOf(v, 0) == 0);
+    REQUIRE(positionOf(v, 5) == 5);
+    REQUIRE(positionOf(v, 4) == 1);  // last Hebrew char visually first inside
+    REQUIRE(positionOf(v, 1) == 4);  // first Hebrew char visually last inside
+}
+
+// Unmatched closing bracket — pair detection must not crash or reorder text.
+TEST_CASE("computeBidiVisualOrder: N0 — unmatched bracket is harmless",
+          "[mtext][bidi][n0]") {
+    const QString s("abc)def");
+    auto v = visualOrder(s, Qt::LeftToRight);
+    REQUIRE(v.size() == 7);
+    for (size_t k = 0; k < v.size(); ++k) {
+        REQUIRE(v[k] == static_cast<int>(k));
+    }
+}
+
+// Nested matching pairs — both pairs identified; no algorithmic explosion.
+TEST_CASE("computeBidiVisualOrder: N0 — nested pairs",
+          "[mtext][bidi][n0]") {
+    // "a([b])c" — pure LTR with nested ASCII brackets.
+    const QString s("a([b])c");
+    auto v = visualOrder(s, Qt::LeftToRight);
+    REQUIRE(v.size() == 7);
+    for (size_t k = 0; k < v.size(); ++k) {
+        REQUIRE(v[k] == static_cast<int>(k));
+    }
+}
+
+// Non-ASCII bracket pairs from BidiBrackets.txt: fullwidth parens FF08/FF09
+// and CJK angle brackets 3008/3009. The pair detector must recognise these
+// just like the ASCII pairs.
+TEST_CASE("computeBidiVisualOrder: N0 — fullwidth and CJK brackets",
+          "[mtext][bidi][n0]") {
+    // U+FF08 ( + U+FF09 ) wrapping ASCII; LTR base. Pair must be detected,
+    // identity result.
+    {
+        QString s;
+        s.append(QChar(0xFF08));
+        s.append(QChar('a'));
+        s.append(QChar(0xFF09));
+        auto v = visualOrder(s, Qt::LeftToRight);
+        REQUIRE(v.size() == 3);
+        for (size_t k = 0; k < v.size(); ++k) {
+            REQUIRE(v[k] == static_cast<int>(k));
+        }
+    }
+    // U+3008 〈 + U+3009 〉 around Hebrew with LTR base — brackets stay
+    // outside the reversed Hebrew run.
+    {
+        QString s;
+        s.append(QChar(0x3008));
+        s.append(QString::fromUtf8(u8"שלום"));
+        s.append(QChar(0x3009));
+        REQUIRE(s.size() == 6);
+        auto v = visualOrder(s, Qt::LeftToRight);
+        REQUIRE(v.size() == 6);
+        REQUIRE(positionOf(v, 0) == 0);  // open at visual 0
+        REQUIRE(positionOf(v, 5) == 5);  // close at visual 5
     }
 }

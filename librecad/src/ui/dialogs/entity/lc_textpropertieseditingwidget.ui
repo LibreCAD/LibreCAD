@@ -85,10 +85,14 @@
      <layout class="QGridLayout" name="glGeometry" columnstretch="0,5">
       <item row="0" column="0"><widget class="QLabel" name="lHeight"><property name="text"><string>Height:</string></property></widget></item>
       <item row="0" column="1"><widget class="QLineEdit" name="leHeight"><property name="toolTip"><string>Nominal text height</string></property></widget></item>
-      <item row="1" column="0"><widget class="QLabel" name="lAngle"><property name="text"><string>Angle (°):</string></property></widget></item>
-      <item row="1" column="1"><widget class="QLineEdit" name="leAngle"><property name="toolTip"><string>Rotation angle in degrees (UCS)</string></property></widget></item>
-      <item row="2" column="0"><widget class="QLabel" name="lStyle"><property name="text"><string>Style:</string></property></widget></item>
-      <item row="2" column="1"><widget class="QLineEdit" name="leStyle"><property name="toolTip"><string>Text style / font name</string></property></widget></item>
+      <item row="1" column="0"><widget class="QLabel" name="lWidthRel"><property name="text"><string>Width factor:</string></property></widget></item>
+      <item row="1" column="1"><widget class="QLineEdit" name="leWidthRel"><property name="toolTip"><string>Relative width factor (1.0 = nominal)</string></property></widget></item>
+      <item row="2" column="0"><widget class="QLabel" name="lAngle"><property name="text"><string>Angle (°):</string></property></widget></item>
+      <item row="2" column="1"><widget class="QLineEdit" name="leAngle"><property name="toolTip"><string>Rotation angle in degrees (UCS)</string></property></widget></item>
+      <item row="3" column="0"><widget class="QLabel" name="lAlignment"><property name="text"><string>Alignment:</string></property></widget></item>
+      <item row="3" column="1"><widget class="QComboBox" name="cbAlignment"><property name="toolTip"><string>Justification / anchor point for the text</string></property></widget></item>
+      <item row="4" column="0"><widget class="QLabel" name="lStyle"><property name="text"><string>Style:</string></property></widget></item>
+      <item row="4" column="1"><widget class="QLineEdit" name="leStyle"><property name="toolTip"><string>Text style / font name</string></property></widget></item>
      </layout>
     </widget>
    </item>

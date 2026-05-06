@@ -799,6 +799,8 @@ set(SHARED_SOURCES
     librecad/src/lib/engine/document/entities/rs_leader.h
     librecad/src/lib/engine/document/entities/lc_mleader.cpp
     librecad/src/lib/engine/document/entities/lc_mleader.h
+    librecad/src/lib/engine/document/entities/lc_textbidi.cpp
+    librecad/src/lib/engine/document/entities/lc_textbidi.h
     librecad/src/lib/engine/document/entities/rs_line.cpp
     librecad/src/lib/engine/document/entities/rs_line.h
     librecad/src/lib/engine/document/entities/rs_mtext.cpp
@@ -1712,6 +1714,7 @@ if(BUILD_TESTS)
         librecad/src/lib/engine/document/entities/tests/rs_ellipse_tests.cpp
         librecad/src/lib/engine/document/entities/tests/rs_spline_tests.cpp
         librecad/src/lib/engine/document/entities/tests/rs_hatch_tests.cpp
+        librecad/src/lib/engine/document/entities/tests/lc_textbidi_tests.cpp
         librecad/src/lib/engine/document/entities/tests/rs_mtext_bidi_tests.cpp
         librecad/src/lib/engine/document/entities/tests/rs_text_bidi_tests.cpp
         librecad/src/lib/math/tests/rs_math_tests.cpp

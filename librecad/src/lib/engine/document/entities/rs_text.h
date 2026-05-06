@@ -212,9 +212,7 @@ public:
     RS_TextData::DrawingDirection getDrawingDirection() const {
         return data.drawingDirection;
     }
-    void setDrawingDirection(RS_TextData::DrawingDirection direction) {
-        data.drawingDirection = direction;
-    }
+    void setDrawingDirection(RS_TextData::DrawingDirection direction);
     void setText(const QString& t);
     QString getText() {
         return data.text;

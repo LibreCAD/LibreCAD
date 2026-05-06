@@ -1388,6 +1388,9 @@ bool dxfRW::writeMText(DRW_MText *ent){
         writer->writeInt16(73, ent->alignV);
         writer->writeDouble(44, ent->interlin);
 //RLZ ... 11, 21, 31 needed?
+        if (!ent->extData.empty()) {
+            writeExtData(ent->extData);
+        }
     } else {
         //RLZ: TODO convert mtext in text lines (not exist in acad 12)
     }
@@ -2027,6 +2030,18 @@ bool dxfRW::writeObjects() {
     iface->writeObjects();
 
     return true;
+}
+
+bool dxfRW::writeExtData(
+    const std::vector<std::shared_ptr<DRW_Variant>> &ed) {
+    // Re-pack as raw pointers so we share the existing implementation. The
+    // raw pointers do not own — same lifetime as the shared_ptrs in @p ed.
+    std::vector<DRW_Variant*> raw;
+    raw.reserve(ed.size());
+    for (const auto &sp : ed) {
+        if (sp) raw.push_back(sp.get());
+    }
+    return writeExtData(raw);
 }
 
 bool dxfRW::writeExtData(const std::vector<DRW_Variant*> &ed){

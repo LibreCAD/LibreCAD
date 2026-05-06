@@ -1126,21 +1126,34 @@ RS_MText* RS_FilterDXFRW::mtextEntityFromDRW(const DRW_MText& data) {
         }
     }
 
+    // drawingDirection was resolved above (1→LeftToRight, 3→TopToBottom,
+    // else→ByStyle), matching the DXF MTEXT group 72 spec. There is no DXF
+    // value for RightToLeft; that flag round-trips via XDATA below — when
+    // an MTEXT carries a "LibreCad" + 1071 marker, restore the RTL setting.
+    bool wantRTL = false;
+    for (size_t k = 0; k + 1 < data.extData.size(); ++k) {
+        const auto &appTag = data.extData[k];
+        if (!appTag || appTag->code() != 1001
+            || appTag->type() != DRW_Variant::STRING
+            || appTag->content.s == nullptr
+            || *appTag->content.s != "LibreCad") continue;
+        // Walk subsequent entries until the next 1001 (next app block).
+        for (size_t j = k + 1; j < data.extData.size(); ++j) {
+            const auto &v = data.extData[j];
+            if (!v) continue;
+            if (v->code() == 1001) break;
+            if (v->code() == 1071 && v->type() == DRW_Variant::INTEGER
+                && v->content.i != 0) {
+                wantRTL = true;
+            }
+        }
+        if (wantRTL) break;
+    }
+    if (wantRTL) dir = RS_MTextData::RightToLeft;
+
     RS_MTextData d(ip, data.height, data.widthscale,
                    valign, halign, dir, lss, interlin,
                    mtext, sty, angle, RS2::NoUpdate);
-    switch (data.alignH) {
-        default:
-            d.drawingDirection = RS_MTextData::MTextDrawingDirection::LeftToRight;
-            break;
-        case 3:
-            d.drawingDirection = RS_MTextData::MTextDrawingDirection::TopToBottom;
-            break;
-        case 5:
-            // FIXME: add style support
-            d.drawingDirection = RS_MTextData::MTextDrawingDirection::RightToLeft;
-            break;
-    }
     return new RS_MText(nullptr, d);
 }
 
@@ -4309,14 +4322,27 @@ void RS_FilterDXFRW::writeMText(RS_MText* t) {
         } else if (t->getVAlign()==RS_MTextData::VABottom) {
             text->textgen += 6;
         }
-        if (t->getDrawingDirection() == RS_MTextData::LeftToRight) {
-            text->alignH = static_cast<DRW_Text::HAlign>(1);
+        // DXF MTEXT group 72: 1=LeftToRight, 3=TopToBottom, 5=ByStyle.
+        // RightToLeft has no DXF encoding — fall through to LeftToRight so
+        // other readers see a well-defined direction. The RTL preference is
+        // round-tripped via XDATA (app id "LibreCad", code 1071) below; on
+        // re-import we restore the flag if the marker is present, otherwise
+        // the entity reads as LTR.
+        switch (t->getDrawingDirection()) {
+        case RS_MTextData::TopToBottom:
+            text->alignH = static_cast<DRW_Text::HAlign>(3); break;
+        case RS_MTextData::ByStyle:
+            text->alignH = static_cast<DRW_Text::HAlign>(5); break;
+        case RS_MTextData::LeftToRight:
+        case RS_MTextData::RightToLeft:
+        default:
+            text->alignH = static_cast<DRW_Text::HAlign>(1); break;
         }
-        else if (t->getDrawingDirection() == RS_MTextData::TopToBottom) {
-            text->alignH = static_cast<DRW_Text::HAlign>(3);
-        }
-        else {
-            text->alignH = static_cast<DRW_Text::HAlign>(5);
+        if (t->getDrawingDirection() == RS_MTextData::RightToLeft) {
+            text->extData.push_back(std::make_shared<DRW_Variant>(
+                1001, std::string("LibreCad")));
+            text->extData.push_back(
+                std::make_shared<DRW_Variant>(1071, dint32{1}));
         }
 		if (t->getLineSpacingStyle() == RS_MTextData::AtLeast) {
 		    text->alignV = static_cast<DRW_Text::VAlign>(1);

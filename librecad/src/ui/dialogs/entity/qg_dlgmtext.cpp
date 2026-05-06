@@ -26,7 +26,11 @@
 
 
 #include <QFileDialog>
+#include <QTextBlock>
+#include <QTextBlockFormat>
+#include <QTextCursor>
 
+#include "lc_textbidi.h"
 #include "qg_dlgmtext.h"
 #include "rs_dialogfactory.h"
 #include "rs_font.h"
@@ -34,6 +38,8 @@
 #include "rs_graphic.h"
 #include "rs_settings.h"
 #include "rs_system.h"
+
+using lc::textbidi::mirrorByLine;
 
 /*
  *  Constructs a QG_DlgMText as a child of 'parent', with the
@@ -145,11 +151,13 @@ void QG_DlgMText::destroy() {
             //RS_SETTINGS->writeEntry("/TextLetterSpacing", leLetterSpacing->text());
             //RS_SETTINGS->writeEntry("/TextWordSpacing", leWordSpacing->text());
             LC_SET("TextLineSpacingFactor", leLineSpacingFactor->text());
-            LC_SET("TextString", teText->toPlainText());
+            const bool ltr = rbLeftToRight->isChecked();
+            const QString visible = teText->toPlainText();
+            LC_SET("TextString", ltr ? visible : mirrorByLine(visible));
             //RS_SETTINGS->writeEntry("/TextShape", getShape());
             LC_SET("TextAngle", leAngle->text());
             //RS_SETTINGS->writeEntry("/TextRadius", leRadius->text());
-            LC_SET("TextLeftToRight", rbLeftToRight->isChecked());
+            LC_SET("TextLeftToRight", ltr);
         }
     }
 }
@@ -193,7 +201,7 @@ void QG_DlgMText::setEntity(RS_MText* t, bool isNew) {
             //shape = RS_SETTINGS->readEntry("/TextShape", "0");
             angle = LC_GET_STR("TextAngle", "0");
             //radius = RS_SETTINGS->readEntry("/TextRadius", "10");
-            // leftToRight = RS_SETTINGS->readNumEntry("/TextLeftToRight", 1);
+            leftToRight = LC_GET_BOOL("TextLeftToRight", true);
         }
     } else {
         font = m_entity->getStyle();
@@ -257,29 +265,105 @@ void QG_DlgMText::setEntity(RS_MText* t, bool isNew) {
         leLineSpacingFactor->setText(
             QString::number(m_font->getLineSpacingFactor()));
     }
-    teText->setText(str);
+    teText->setText(leftToRight ? str : mirrorByLine(str));
     //setShape(shape.toInt());
     leAngle->setText(angle);
     //leRadius->setText(radius);
     teText->setFocus();
     teText->selectAll();
-    rbLeftToRight->setChecked(leftToRight);
-    layoutDirectionChanged();
+    // Block the radio buttons' toggled signal: layoutDirectionChanged is
+    // wired to rbLeftToRight and would re-mirror the buffer we just set.
+    {
+        QSignalBlocker bL(rbLeftToRight);
+        QSignalBlocker bR(rbRightToLeft);
+        rbLeftToRight->setChecked(leftToRight);
+        rbRightToLeft->setChecked(!leftToRight);
+    }
+    applyDirectionVisuals();
 }
 
 void QG_DlgMText::layoutDirectionChanged()
 {
-    bool leftToRight = rbLeftToRight->isChecked();
+    const bool leftToRight = rbLeftToRight->isChecked();
     rbRightToLeft->setChecked(!leftToRight);
-    Qt::LayoutDirection direction =  leftToRight ? Qt::LeftToRight : Qt::RightToLeft;
-    teText->setLayoutDirection(direction);
-    m_entity->setDrawingDirection(leftToRight ? RS_MTextData::LeftToRight : RS_MTextData::RightToLeft);
-    QTextDocument* doc = teText->document();
-    if (doc) {
-        QTextOption option = doc->defaultTextOption();
-        option.setTextDirection(direction);
-        doc->setDefaultTextOption(option);
+
+    // Capture the cursor's (block, column, blockLength) BEFORE the mirror so
+    // we can map back to the mirrored column afterwards. Block structure is
+    // preserved by per-line mirroring (newlines unchanged), so block number
+    // and length stay the same — only the column flips within its block.
+    auto capture = [](const QTextDocument *doc, int pos) {
+        const QTextBlock block = doc->findBlock(pos);
+        const int blockNum = block.blockNumber();
+        int blockLen = block.length();
+        if (block.next().isValid()) --blockLen;  // strip trailing newline
+        const int col = pos - block.position();
+        return std::tuple<int, int, int>{blockNum, col, blockLen};
+    };
+    const QTextCursor oldCursor = teText->textCursor();
+    const auto anchorInfo = capture(teText->document(), oldCursor.anchor());
+    const auto posInfo = capture(teText->document(), oldCursor.position());
+
+    // Flip the visible buffer so the same logical text now reads in the
+    // newly-selected direction. The entity's text field is unchanged here;
+    // it gets rewritten in updateEntity() from the (mirrored-back) buffer.
+    {
+        QSignalBlocker textBlocker(teText);
+        const QString visible = teText->toPlainText();
+        teText->setPlainText(mirrorByLine(visible));
     }
+
+    // Restore cursor: the column index flips within its block (length is
+    // identical pre- and post-mirror, so col → blockLen - col).
+    auto restore = [](const QTextDocument *doc,
+                      const std::tuple<int, int, int> &info) -> int {
+        const auto [blockNum, col, blockLen] = info;
+        const QTextBlock block = doc->findBlockByNumber(blockNum);
+        if (!block.isValid()) return 0;
+        return block.position() + (blockLen - col);
+    };
+    {
+        QTextCursor c = teText->textCursor();
+        c.setPosition(restore(teText->document(), anchorInfo));
+        c.setPosition(restore(teText->document(), posInfo),
+                      QTextCursor::KeepAnchor);
+        teText->setTextCursor(c);
+    }
+
+    if (m_entity != nullptr) {
+        m_entity->setDrawingDirection(
+            leftToRight ? RS_MTextData::LeftToRight
+                        : RS_MTextData::RightToLeft);
+    }
+    applyDirectionVisuals();
+}
+
+void QG_DlgMText::applyDirectionVisuals()
+{
+    const bool leftToRight = rbLeftToRight->isChecked();
+    const Qt::LayoutDirection direction =
+        leftToRight ? Qt::LeftToRight : Qt::RightToLeft;
+    teText->setLayoutDirection(direction);
+
+    QTextDocument* doc = teText->document();
+    if (doc == nullptr) return;
+
+    QTextOption option = doc->defaultTextOption();
+    option.setTextDirection(direction);
+    doc->setDefaultTextOption(option);
+
+    // Stamp per-block layout direction so already-typed blocks reflow now —
+    // setDefaultTextOption alone only governs future content.
+    QSignalBlocker textBlocker(teText);
+    QTextCursor cursor(doc);
+    cursor.beginEditBlock();
+    cursor.movePosition(QTextCursor::Start);
+    do {
+        QTextBlockFormat fmt = cursor.blockFormat();
+        fmt.setLayoutDirection(direction);
+        cursor.setBlockFormat(fmt);
+    } while (cursor.movePosition(QTextCursor::NextBlock));
+    cursor.endEditBlock();
+
     teText->update();
 }
 
@@ -302,7 +386,11 @@ void QG_DlgMText::updateEntity() {
             )
         );
 #else*/
-    m_entity->setText(teText->toPlainText());
+    {
+        const bool ltr = rbLeftToRight->isChecked();
+        const QString visible = teText->toPlainText();
+        m_entity->setText(ltr ? visible : mirrorByLine(visible));
+    }
     //#endif
     //text->setLetterSpacing(leLetterSpacing.toDouble());
     m_entity->setLineSpacingFactor(leLineSpacingFactor->text().toDouble());
@@ -407,7 +495,9 @@ void QG_DlgMText::load(const QString& fn) {
     }
 
     QTextStream ts(&f);
-    teText->setText(ts.readAll());
+    const QString contents = ts.readAll();
+    const bool ltr = rbLeftToRight->isChecked();
+    teText->setText(ltr ? contents : mirrorByLine(contents));
 }
 
 void QG_DlgMText::saveText() {
@@ -418,7 +508,9 @@ void QG_DlgMText::saveText() {
 }
 
 void QG_DlgMText::save(const QString& fn) {
-    QString text = teText->toPlainText();
+    const bool ltr = rbLeftToRight->isChecked();
+    const QString visible = teText->toPlainText();
+    const QString text = ltr ? visible : mirrorByLine(visible);
     QFile f(fn);
     if (f.open(QIODevice::WriteOnly)) {
         QTextStream t(&f);

@@ -89,10 +89,127 @@ std::vector<int> RS_MText::computeBidiVisualOrder(
         }
     }
 
+    // ---------- Step 1.5: UAX#9 N0 — bracket-pair handling ----------------
+    // Identify Unicode bidi paired brackets (BD16). When both brackets in a
+    // pair end up in the same direction context, N0 keeps them as a unit
+    // so they don't drift apart under N1/N2 fallback. Pair table is the
+    // Unicode 15.x BidiBrackets.txt set (~65 pairs); canonical equivalents
+    // (e.g. U+2329 ↔ U+27E8) are handled by direct enumeration rather than
+    // a runtime canonical-decomposition pass.
+    {
+        // Sorted by `open`. Binary search keeps the per-character lookup
+        // O(log n); n is small enough that linear would also be fine but
+        // the tabular form documents the data clearly.
+        struct BracketPairCP { ushort open; ushort close; };
+        constexpr BracketPairCP kBracketPairs[] = {
+            {0x0028, 0x0029}, {0x005B, 0x005D}, {0x007B, 0x007D},
+            {0x0F3A, 0x0F3B}, {0x0F3C, 0x0F3D},
+            {0x169B, 0x169C},
+            {0x2045, 0x2046}, {0x207D, 0x207E}, {0x208D, 0x208E},
+            {0x2308, 0x2309}, {0x230A, 0x230B}, {0x2329, 0x232A},
+            {0x2768, 0x2769}, {0x276A, 0x276B}, {0x276C, 0x276D},
+            {0x276E, 0x276F}, {0x2770, 0x2771}, {0x2772, 0x2773},
+            {0x2774, 0x2775},
+            {0x27C5, 0x27C6}, {0x27E6, 0x27E7}, {0x27E8, 0x27E9},
+            {0x27EA, 0x27EB}, {0x27EC, 0x27ED}, {0x27EE, 0x27EF},
+            {0x2983, 0x2984}, {0x2985, 0x2986}, {0x2987, 0x2988},
+            {0x2989, 0x298A}, {0x298B, 0x298C}, {0x298D, 0x298E},
+            {0x298F, 0x2990}, {0x2991, 0x2992}, {0x2993, 0x2994},
+            {0x2995, 0x2996}, {0x2997, 0x2998},
+            {0x29D8, 0x29D9}, {0x29DA, 0x29DB}, {0x29FC, 0x29FD},
+            {0x2E22, 0x2E23}, {0x2E24, 0x2E25}, {0x2E26, 0x2E27},
+            {0x2E28, 0x2E29}, {0x2E55, 0x2E56}, {0x2E57, 0x2E58},
+            {0x2E59, 0x2E5A}, {0x2E5B, 0x2E5C},
+            {0x3008, 0x3009}, {0x300A, 0x300B}, {0x300C, 0x300D},
+            {0x300E, 0x300F}, {0x3010, 0x3011}, {0x3014, 0x3015},
+            {0x3016, 0x3017}, {0x3018, 0x3019}, {0x301A, 0x301B},
+            {0xFE59, 0xFE5A}, {0xFE5B, 0xFE5C}, {0xFE5D, 0xFE5E},
+            {0xFF08, 0xFF09}, {0xFF3B, 0xFF3D}, {0xFF5B, 0xFF5D},
+            {0xFF5F, 0xFF60}, {0xFF62, 0xFF63},
+        };
+        constexpr int kBracketPairsCount =
+            sizeof(kBracketPairs) / sizeof(kBracketPairs[0]);
+
+        auto matchingClose = [&](QChar c) -> ushort {
+            const ushort u = c.unicode();
+            // Binary search by open codepoint.
+            int lo = 0, hi = kBracketPairsCount;
+            while (lo < hi) {
+                const int mid = (lo + hi) / 2;
+                if (kBracketPairs[mid].open == u) return kBracketPairs[mid].close;
+                if (kBracketPairs[mid].open < u) lo = mid + 1;
+                else hi = mid;
+            }
+            return 0;
+        };
+        auto isClose = [&](QChar c) -> bool {
+            const ushort u = c.unicode();
+            for (int k = 0; k < kBracketPairsCount; ++k) {
+                if (kBracketPairs[k].close == u) return true;
+            }
+            return false;
+        };
+        // BD16 stack: (matching-close codepoint, opening position).
+        std::vector<std::pair<ushort, int>> stack;
+        struct BracketPair { int open; int close; };
+        std::vector<BracketPair> pairs;
+        for (int k = 0; k < n; ++k) {
+            const QChar c = text.at(k);
+            const ushort u = c.unicode();
+            const ushort closer = matchingClose(c);
+            if (closer != 0) {
+                if (stack.size() < 63) {  // UAX#9 BD16 limit
+                    stack.emplace_back(closer, k);
+                }
+            } else if (isClose(c)) {
+                for (int s = static_cast<int>(stack.size()) - 1; s >= 0; --s) {
+                    if (stack[s].first == u) {
+                        pairs.push_back({stack[s].second, k});
+                        stack.resize(s);  // pop everything above too
+                        break;
+                    }
+                }
+            }
+        }
+        const int embeddingLevel = baseLevel;
+        for (const auto &p : pairs) {
+            // Find first strong type (L vs R/AL) inside the pair.
+            int strongInside = LVL_UNKNOWN;          // 0 (L) or 1 (R)
+            bool matchedEmbedding = false;
+            for (int k = p.open + 1; k < p.close && !matchedEmbedding; ++k) {
+                const QChar::Direction d = text.at(k).direction();
+                int s;
+                if (d == QChar::DirL) s = 0;
+                else if (d == QChar::DirR || d == QChar::DirAL) s = 1;
+                else continue;
+                if (strongInside == LVL_UNKNOWN) strongInside = s;
+                if (s == embeddingLevel) matchedEmbedding = true;
+            }
+            int bracketLevel;
+            if (matchedEmbedding) {
+                bracketLevel = embeddingLevel;
+            } else if (strongInside != LVL_UNKNOWN) {
+                // Strong-but-opposite inside; check preceding strong context.
+                int context = embeddingLevel;
+                for (int k = p.open - 1; k >= 0; --k) {
+                    const QChar::Direction d = text.at(k).direction();
+                    if (d == QChar::DirL) { context = 0; break; }
+                    if (d == QChar::DirR || d == QChar::DirAL) { context = 1; break; }
+                }
+                bracketLevel = (context == strongInside) ? strongInside
+                                                         : embeddingLevel;
+            } else {
+                continue;  // no strong inside — leave as ON for N1/N2.
+            }
+            level[p.open] = bracketLevel;
+            level[p.close] = bracketLevel;
+        }
+    }
+
     // ---------- Step 2: resolve neutrals via surrounding strong context ----
     // A run of unresolved characters takes the level of the strong character
     // before it if that matches the strong character after it; otherwise it
-    // takes the paragraph base level. This collapses UAX#9 rules N0/N1/N2
+    // takes the paragraph base level. This collapses UAX#9 rules N1/N2
     // into one pass, sufficient for our MText inputs.
     int i = 0;
     while (i < n) {
@@ -284,6 +401,15 @@ void RS_MText::setText(QString t) {
         data.valign = RS_MTextData::VATop;
     }
 
+    if (data.updateMode == RS2::Update) {
+        update();
+    }
+}
+
+void RS_MText::setDrawingDirection(
+    RS_MTextData::MTextDrawingDirection direction) {
+    if (data.drawingDirection == direction) return;
+    data.drawingDirection = direction;
     if (data.updateMode == RS2::Update) {
         update();
     }
@@ -581,11 +707,30 @@ void RS_MText::flushBidiLine(LC_TextLine &oneLine,
     }
   }
 
-  const Qt::LayoutDirection baseDir =
-      (data.drawingDirection == RS_MTextData::RightToLeft)
-          ? Qt::RightToLeft
-          : Qt::LeftToRight;
-  const std::vector<int> visualOrder = computeBidiVisualOrder(plainText, baseDir);
+  // For an explicit RightToLeft setting, lay out characters in pure
+  // positional reverse — matching AutoCAD's `drawingDirection` semantics and
+  // the property-panel/dialog widget mirrors. UAX#9 leaves EN digits
+  // direction-immune, so a UAX#9 pass would render "1234" identically in LTR
+  // and RTL on the canvas while the widget shows "4321" — diverging from the
+  // user's edited buffer. The other settings (LeftToRight, TopToBottom,
+  // ByStyle) keep going through UAX#9 with an LTR base so embedded
+  // strong-RTL runs (Hebrew/Arabic) still display correctly.
+  //
+  // Surrogate-pair caveat: segments are built one QChar each, so a non-BMP
+  // codepoint already arrives as two adjacent segments. Reversal swaps the
+  // halves; rendering then fails the font lookup on each half and falls
+  // back to U+FFFD anyway (addLetter is QChar-scoped). Fixing this needs
+  // grapheme-aware segment building plus codepoint-based font lookup —
+  // broader rendering work, not bidi.
+  std::vector<int> visualOrder;
+  if (data.drawingDirection == RS_MTextData::RightToLeft) {
+    visualOrder.resize(segments.size());
+    for (size_t i = 0; i < segments.size(); ++i) {
+      visualOrder[i] = static_cast<int>(segments.size() - 1 - i);
+    }
+  } else {
+    visualOrder = computeBidiVisualOrder(plainText, Qt::LeftToRight);
+  }
 
   for (int logIdx : visualOrder) {
     const auto &seg = segments[logIdx];

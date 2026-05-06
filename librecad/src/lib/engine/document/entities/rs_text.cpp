@@ -145,6 +145,14 @@ void RS_Text::setText(const QString& t) {
     }
 }
 
+void RS_Text::setDrawingDirection(RS_TextData::DrawingDirection direction) {
+    if (data.drawingDirection == direction) return;
+    data.drawingDirection = direction;
+    if (data.updateMode == RS2::Update) {
+        update();
+    }
+}
+
 /**
  * Gets the alignment as an int.
  *
@@ -240,6 +248,9 @@ void RS_Text::setAlignment(int a) {
             data.halign = RS_TextData::HAMiddle;
         }
     }
+    if (data.updateMode == RS2::Update) {
+        update();
+    }
 }
 
 /**
@@ -289,13 +300,24 @@ void RS_Text::update() {
     //   height: 9.0
     // Rotation, scaling and centering is done later
 
-    // Run UAX#9 bidi over the logical text and emit characters in visual L→R
-    // order. Pure-ASCII text is unaffected (visual == logical), so this is a
-    // no-op for the legacy LTR path.
-    const Qt::LayoutDirection baseDir =
-        resolveTextBaseDirection(data.text, data.drawingDirection);
-    const std::vector<int> visual =
-        RS_MText::computeBidiVisualOrder(data.text, baseDir);
+    // Visual ordering depends on the drawingDirection setting:
+    //   * RightToLeft: pure positional reversal — matches AutoCAD semantics
+    //     and the editor mirror. UAX#9 alone leaves EN digits direction-
+    //     immune, so widget and canvas would diverge for "1234" otherwise.
+    //   * ByContent (and the other settings): UAX#9 with first-strong base
+    //     detection so embedded strong-RTL runs (Hebrew/Arabic) still
+    //     display in correct visual order.
+    std::vector<int> visual;
+    if (data.drawingDirection == RS_TextData::RightToLeft) {
+        visual.resize(data.text.size());
+        for (int i = 0; i < data.text.size(); ++i) {
+            visual[i] = data.text.size() - 1 - i;
+        }
+    } else {
+        const Qt::LayoutDirection baseDir =
+            resolveTextBaseDirection(data.text, data.drawingDirection);
+        visual = RS_MText::computeBidiVisualOrder(data.text, baseDir);
+    }
 
     for (int logIdx : visual) {
         const QChar ch = data.text.at(logIdx);

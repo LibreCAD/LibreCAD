@@ -1774,9 +1774,12 @@ bool DRW_MText::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
     }
     height = buf->getBitDouble();/* Text height BD 40 Undocumented */
     textgen = buf->getBitShort(); /* Attachment BS 71 Similar to justification; */
-    /* Drawing dir BS 72 Left to right, etc.; see DXF doc */
-    dint16 draw_dir = buf->getBitShort();
-    DRW_UNUSED(draw_dir);
+    /* Drawing dir BS 72 Left to right, etc.; see DXF doc. Reuse the
+     * inherited alignH slot — for MTEXT this field carries the DXF group 72
+     * "drawing direction" code (1=LtoR, 3=TtoB, 5=ByStyle), not the TEXT
+     * horizontal-alignment values the HAlign enum was named for. The integer
+     * round-trips cleanly; consumers compare against the raw integer. */
+    alignH = static_cast<HAlign>(buf->getBitShort());
     /* Extents ht BD Undocumented and not present in DXF or entget */
     double ext_ht = buf->getBitDouble();
     DRW_UNUSED(ext_ht);
