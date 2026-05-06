@@ -237,9 +237,9 @@ INCLUDEPATH += \
     ui/dialogs/file/export \
     ui/dialogs/file/export/layers \
     ui/dialogs/file/export/image \
-    ui/dialogs/file/export/makercam \        
+    ui/dialogs/file/export/makercam \
     ui/dialogs/main \
-    ui/dialogs/settings \    
+    ui/dialogs/settings \
     ui/dialogs/settings/dimstyles \
     ui/dialogs/settings/dimstyles/dimstyle_manager \
     ui/dialogs/settings/dimstyles/dimstyle_manager/support \
@@ -429,6 +429,7 @@ HEADERS += \
     lib/engine/document/entities/lc_hyperbola.h \
     lib/engine/document/entities/rs_insert.h \
     lib/engine/document/entities/rs_image.h \
+    lib/engine/document/entities/lc_wipeout.h \
     lib/engine/document/layers/rs_layer.h \
     lib/engine/document/layers/rs_layerlist.h \
     lib/engine/document/layers/rs_layerlistlistener.h \
@@ -837,6 +838,7 @@ SOURCES += \
     lib/engine/document/entities/lc_hyperbola.cpp \
     lib/engine/document/entities/rs_insert.cpp \
     lib/engine/document/entities/rs_image.cpp \
+    lib/engine/document/entities/lc_wipeout.cpp \
     lib/engine/document/layers/rs_layer.cpp \
     lib/engine/document/layers/rs_layerlist.cpp \
     lib/engine/document/entities/rs_leader.cpp \
@@ -1359,7 +1361,7 @@ HEADERS += ui/action_options/lc_actionoptionsmanager.h \
     ui/components/comboboxes/qg_widthbox.h \
     ui/components/containers/lc_optionswidgetsholder.h \
     ui/components/containers/lc_snapoptionswidgetsholder.h \
-    ui/components/creators/actionlist.h \    
+    ui/components/creators/actionlist.h \
     ui/components/layouts/lc_flexlayout.h \
     ui/components/lc_plaintextedit.h \
     ui/components/pen/qg_widgetpen.h \
@@ -1551,7 +1553,7 @@ SOURCES +=ui/action_options/lc_actionoptionsmanager.cpp \
     ui/components/comboboxes/qg_widthbox.cpp \
     ui/components/containers/lc_optionswidgetsholder.cpp \
     ui/components/containers/lc_snapoptionswidgetsholder.cpp \
-    ui/components/creators/actionlist.cpp \    
+    ui/components/creators/actionlist.cpp \
     ui/components/layouts/lc_flexlayout.cpp \
     ui/components/pen/qg_widgetpen.cpp \
     ui/components/status_bar/qg_activelayername.cpp \

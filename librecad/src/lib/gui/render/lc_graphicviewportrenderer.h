@@ -63,7 +63,7 @@ class LC_GraphicViewportRenderer{
         return m_scaleLineWidth;
     }
 
-    /** Active drawing background color, used by entities (e.g. RS_Wipeout)
+    /** Active drawing background color, used by entities (e.g. LC_Wipeout)
      *  that need to mask using the viewport background.  Tracks setBackgroundColor()
      *  in concrete renderer subclasses. */
     RS_Color getBackgroundColor() const { return m_colorBackground; }

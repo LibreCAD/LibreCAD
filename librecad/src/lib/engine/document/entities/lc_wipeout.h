@@ -1,58 +1,55 @@
-/****************************************************************************
-**
-** This file is part of the LibreCAD project, a 2D CAD program
-**
-** Copyright (C) 2026 LibreCAD contributors
-**
-** This file may be distributed and/or modified under the terms of the
-** GNU General Public License version 2 as published by the Free Software
-** Foundation and appearing in the file gpl-2.0.txt included in the
-** packaging of this file.
-**
-**********************************************************************/
-#ifndef RS_WIPEOUT_H
-#define RS_WIPEOUT_H
+// File: lc_wipeout.h
+
+/*
+ * ********************************************************************************
+ * This file is part of the LibreCAD project, a 2D CAD program
+ *
+ * Copyright (C) 2026 LibreCAD.org
+ * Copyright (C) 2026 Dongxu Li (github.com/dxli)
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 2
+ * of the License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ * ********************************************************************************
+ */
+
+#ifndef LC_WIPEOUT_H
+#define LC_WIPEOUT_H
 
 #include <vector>
 
 #include "rs_atomicentity.h"
 
-/**
- * Holds the data that defines a wipeout polygon.
- *
- * Note: WIPEOUT does NOT carry a per-entity frame-display flag in the
- * file format (per ODA spec §20.4.80 — group 290 there is the IMAGE
- * Clip mode, not a frame flag).  Whether the polygon outline is rendered
- * is a global drawing setting (WIPEOUTFRAME in the WIPEOUTVARIABLES
- * object), out of scope here; outline is drawn unconditionally for now.
- */
-struct RS_WipeoutData {
-    RS_WipeoutData() = default;
-    explicit RS_WipeoutData(std::vector<RS_Vector> verts)
+struct LC_WipeoutData {
+    LC_WipeoutData() = default;
+    explicit LC_WipeoutData(std::vector<RS_Vector> verts)
         : vertices(std::move(verts)) {}
 
-    /** Polygon vertices in WCS, ordered around the polygon. */
     std::vector<RS_Vector> vertices;
 };
 
-/**
- * Class for a WIPEOUT entity — a polygon filled with the viewport background
- * color, used to mask underlying entities.  Format-wise WIPEOUT inherits from
- * IMAGE in DXF/DWG, but in LibreCAD it's modeled as its own atomic entity
- * because it carries no raster data.
- */
-class RS_Wipeout : public RS_AtomicEntity {
+class LC_Wipeout : public RS_AtomicEntity {
 public:
-    RS_Wipeout(RS_EntityContainer* parent, RS_WipeoutData d);
+    LC_Wipeout(RS_EntityContainer* parent, LC_WipeoutData d);
 
     RS_Entity* clone() const override;
 
-    /** @return RS2::EntityWipeout */
     RS2::EntityType rtti() const override {
         return RS2::EntityWipeout;
     }
 
-    const RS_WipeoutData& getData() const { return data; }
+    const LC_WipeoutData& getData() const { return data; }
     const std::vector<RS_Vector>& getVertices() const { return data.vertices; }
 
     void calculateBorders() override;
@@ -85,7 +82,7 @@ public:
     RS_Entity& shear([[maybe_unused]] double k) override { return *this; }
 
 protected:
-    RS_WipeoutData data;
+    LC_WipeoutData data;
 };
 
-#endif // RS_WIPEOUT_H
+#endif // LC_WIPEOUT_H

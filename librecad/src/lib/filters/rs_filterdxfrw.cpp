@@ -48,7 +48,7 @@
 #include "rs_ellipse.h"
 #include "rs_hatch.h"
 #include "rs_image.h"
-#include "rs_wipeout.h"
+#include "lc_wipeout.h"
 #include "lc_mleader.h"
 #include "rs_insert.h"
 #include "rs_layer.h"
@@ -2495,8 +2495,8 @@ void RS_FilterDXFRW::addWipeout(const DRW_Image *data) {
         wcsVerts.push_back(base + u * (fx * sizeU) + v * (fy * sizeV));
     }
 
-    auto* w = new RS_Wipeout(m_currentContainer,
-                             RS_WipeoutData(std::move(wcsVerts)));
+    auto* w = new LC_Wipeout(m_currentContainer,
+                             LC_WipeoutData(std::move(wcsVerts)));
     setEntityAttributes(w, data);
     m_currentContainer->appendEntity(w);
 }
@@ -3148,40 +3148,40 @@ void RS_FilterDXFRW::writeViews() {
         vie.reset();
         LC_View* view = vl->at(i);
         vie.name = view->getName().toUtf8().data();
-        vie.center.x = view->getCenter().x; 
-        vie.center.y = view->getCenter().y; 
+        vie.center.x = view->getCenter().x;
+        vie.center.y = view->getCenter().y;
         vie.center.z = view->getCenter().z;
 
         vie.targetPoint.x = view->getTargetPoint().x;
         vie.targetPoint.y = view->getTargetPoint().y;
         vie.targetPoint.z = view->getTargetPoint().z;
-        
+
         vie.size.x = view->getSize().x;
         vie.size.y = view->getSize().y;
-        vie.size.z = view->getSize().z;        
-        
+        vie.size.z = view->getSize().z;
+
         vie.frontClippingPlaneOffset = view->getFrontClippingPlaneOffset();
         vie.backClippingPlaneOffset = view->getBackClippingPlaneOffset();
         vie.lensLen = view->getLensLen();
         vie.flags = view->getFlags();
         vie.viewMode = view->getViewMode();
-                
+
         vie.viewDirectionFromTarget.x = view->getViewDirection().x;
         vie.viewDirectionFromTarget.y = view->getViewDirection().y;
         vie.viewDirectionFromTarget.z = view->getViewDirection().z;
-        
+
         vie.cameraPlottable = view->isCameraPlottable();
         vie.renderMode = view->getRenderMode();
-        
-        vie.twistAngle = view->getTwistAngle();        
-        
+
+        vie.twistAngle = view->getTwistAngle();
+
         if (view->isHasUCS()){
             vie.hasUCS = true;
             LC_UCS *ucs = view->getUCS();
             vie.ucsOrigin.x = ucs->getOrigin().x;
             vie.ucsOrigin.y = ucs->getOrigin().y;
             vie.ucsOrigin.z = ucs->getOrigin().z;
-            
+
             vie.ucsOrthoType = ucs->getOrthoType();
             vie.ucsElevation = ucs->getElevation();
 
@@ -3845,7 +3845,7 @@ void RS_FilterDXFRW::writeEntity(RS_Entity* e){
         writeImage(static_cast<RS_Image*>(e));
         break;
     case RS2::EntityWipeout:
-        writeWipeout(static_cast<RS_Wipeout*>(e));
+        writeWipeout(static_cast<LC_Wipeout*>(e));
         break;
     case RS2::EntityMLeader:
         writeMLeader(static_cast<LC_MLeader*>(e));
@@ -4140,7 +4140,7 @@ void RS_FilterDXFRW::writeSplinePoints(LC_SplinePoints *s){
     sp.nfit = data.splinePoints.size();
 
     auto const& fitPoints = data.splinePoints;
-    
+
 	// write spline knots:
 	for(int i = 1; i <= sp.nknots; i++){
 		if(i <= 3){
@@ -4739,11 +4739,11 @@ void RS_FilterDXFRW::writeImage(RS_Image * i) {
     }
 }
 
-void RS_FilterDXFRW::writeWipeout(RS_Wipeout *w) {
+void RS_FilterDXFRW::writeWipeout(LC_Wipeout *w) {
     if (w == nullptr) {
         return;
     }
-    // RS_Wipeout stores the polygon already resolved to WCS, not as
+    // LC_Wipeout stores the polygon already resolved to WCS, not as
     // image-pixel coords + basis.  On write we pick a trivial basis
     //     basePoint=(0,0), u=(1,0), v=(0,1), sizeU=sizeV=1
     // so that the inverse transform px = v.x - 0.5 / py = v.y - 0.5
@@ -6236,4 +6236,3 @@ void RS_FilterDXFRW::applyParsedDimStyleExtData(LC_DimStyle* dimStyle, const QSt
 }
 
 #endif // DWGSUPPORT
-

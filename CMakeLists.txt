@@ -791,8 +791,8 @@ set(SHARED_SOURCES
     librecad/src/lib/engine/document/entities/rs_hatch.h
     librecad/src/lib/engine/document/entities/rs_image.cpp
     librecad/src/lib/engine/document/entities/rs_image.h
-    librecad/src/lib/engine/document/entities/rs_wipeout.cpp
-    librecad/src/lib/engine/document/entities/rs_wipeout.h
+    librecad/src/lib/engine/document/entities/lc_wipeout.cpp
+    librecad/src/lib/engine/document/entities/lc_wipeout.h
     librecad/src/lib/engine/document/entities/rs_insert.cpp
     librecad/src/lib/engine/document/entities/rs_insert.h
     librecad/src/lib/engine/document/entities/rs_leader.cpp
@@ -1559,7 +1559,7 @@ set(MUPARSER_SOURCES
 )
 
 # Static library from shared sources
-qt_add_library(librecad_lib STATIC 
+qt_add_library(librecad_lib STATIC
 	${MUPARSER_SOURCES}
 	${SHARED_SOURCES}
 )

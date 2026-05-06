@@ -51,7 +51,7 @@ class RS_MText;
 class RS_Text;
 class RS_Hatch;
 class RS_Image;
-class RS_Wipeout;
+class LC_Wipeout;
 class LC_MLeader;
 class RS_Leader;
 class RS_Polyline;
@@ -195,7 +195,7 @@ public:
     void writeText(RS_Text* t);
     void writeHatch(RS_Hatch* h);
     void writeImage(RS_Image* i);
-    void writeWipeout(RS_Wipeout* w);
+    void writeWipeout(LC_Wipeout* w);
     void writeMLeader(LC_MLeader* m);
     void writeLeader(RS_Leader* l);
     void writeDimension(RS_Dimension* d);
@@ -203,7 +203,7 @@ public:
 
 /*	void writeEntityContainer(DL_WriterA& dw, RS_EntityContainer* con,
                 const DRW_Entity& attrib);
-	void writeAtomicEntities(DL_WriterA& dw, RS_EntityContainer* c, 
+	void writeAtomicEntities(DL_WriterA& dw, RS_EntityContainer* c,
                 const DRW_Entity& attrib, RS2::ResolveLevel level);*/
 
 
