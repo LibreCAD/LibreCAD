@@ -1632,6 +1632,13 @@ QC_MDIWindow* QC_ApplicationWindow::slotFileNew(RS_Document* doc) {
 
         // Link the block list to the block widget
         graphic->addBlockListListener(blockWidget);
+
+        // Let the MDI sub-window observe layer/block list changes too,
+        // so its windowModified state (the "[*]" in the title) reflects
+        // any modification — including entity adds, which propagate to
+        // the layer list via RS_Graphic::setModified.
+        graphic->addLayerListListener(w);
+        graphic->addBlockListListener(w);
     }
 	// Link the dialog factory to the coordinate widget:
 	if( coordinateWidget){
