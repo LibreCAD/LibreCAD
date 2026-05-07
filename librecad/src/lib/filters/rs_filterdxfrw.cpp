@@ -801,6 +801,31 @@ void RS_FilterDXFRW::addMText(const DRW_MText& data) {
         }
     }
 
+    // RightToLeft has no DXF group-72 encoding. If the source file was
+    // written by LibreCAD with the XDATA marker (app id "LibreCad",
+    // code 1071), restore the RTL setting here.
+    {
+        bool wantRTL = false;
+        for (size_t k = 0; k + 1 < data.extData.size(); ++k) {
+            const auto& appTag = data.extData[k];
+            if (!appTag || appTag->code() != 1001
+                || appTag->type() != DRW_Variant::STRING
+                || appTag->content.s == nullptr
+                || *appTag->content.s != "LibreCad") continue;
+            for (size_t j = k + 1; j < data.extData.size(); ++j) {
+                const auto& v = data.extData[j];
+                if (!v) continue;
+                if (v->code() == 1001) break;
+                if (v->code() == 1071 && v->type() == DRW_Variant::INTEGER
+                    && v->content.i != 0) {
+                    wantRTL = true;
+                }
+            }
+            if (wantRTL) break;
+        }
+        if (wantRTL) dir = RS_MTextData::RightToLeft;
+    }
+
     RS_MTextData d(ip, data.height, data.widthscale,
                   valign, halign,
                   dir, lss,
@@ -2571,11 +2596,26 @@ void RS_FilterDXFRW::writeMText(RS_MText* t) {
         } else if (t->getVAlign()==RS_MTextData::VABottom) {
             text->textgen += 6;
         }
-        if (t->getDrawingDirection() == RS_MTextData::LeftToRight)
-            text->alignH = (DRW_Text::HAlign)1;
-        else if (t->getDrawingDirection() == RS_MTextData::TopToBottom)
-            text->alignH = (DRW_Text::HAlign)3;
-        else text->alignH = (DRW_Text::HAlign)5;
+        // DXF MTEXT group 72: 1=LeftToRight, 3=TopToBottom, 5=ByStyle.
+        // RightToLeft has no DXF encoding — emit LeftToRight so other
+        // readers see a defined direction; the RTL flag round-trips via
+        // XDATA (LibreCad app id, code 1071) appended below.
+        switch (t->getDrawingDirection()) {
+        case RS_MTextData::TopToBottom:
+            text->alignH = (DRW_Text::HAlign)3; break;
+        case RS_MTextData::ByStyle:
+            text->alignH = (DRW_Text::HAlign)5; break;
+        case RS_MTextData::LeftToRight:
+        case RS_MTextData::RightToLeft:
+        default:
+            text->alignH = (DRW_Text::HAlign)1; break;
+        }
+        if (t->getDrawingDirection() == RS_MTextData::RightToLeft) {
+            text->extData.push_back(std::make_shared<DRW_Variant>(
+                1001, std::string("LibreCad")));
+            text->extData.push_back(
+                std::make_shared<DRW_Variant>(1071, dint32{1}));
+        }
 		if (t->getLineSpacingStyle() == RS_MTextData::AtLeast)
             text->alignV = (DRW_Text::VAlign)1;
         else text->alignV = (DRW_Text::VAlign)2;

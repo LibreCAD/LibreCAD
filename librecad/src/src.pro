@@ -195,6 +195,7 @@ HEADERS += \
     lib/engine/rs_leader.h \
     lib/engine/rs_line.h \
     lib/engine/rs_mtext.h \
+    lib/engine/lc_textbidi.h \
     lib/engine/rs_overlayline.h \
     lib/engine/rs_overlaybox.h \
     lib/engine/rs_pattern.h \
@@ -349,6 +350,7 @@ SOURCES += \
     lib/engine/rs_leader.cpp \
     lib/engine/rs_line.cpp \
     lib/engine/rs_mtext.cpp \
+    lib/engine/lc_textbidi.cpp \
     lib/engine/rs_overlayline.cpp \
     lib/engine/rs_overlaybox.cpp \
     lib/engine/rs_pattern.cpp \

@@ -170,9 +170,7 @@ public:
   RS_MTextData::MTextDrawingDirection getDrawingDirection() const {
     return data.drawingDirection;
   }
-  void setDrawingDirection(RS_MTextData::MTextDrawingDirection direction) {
-    data.drawingDirection = direction;
-  }
+  void setDrawingDirection(RS_MTextData::MTextDrawingDirection direction);
   RS_MTextData::MTextLineSpacingStyle getLineSpacingStyle() const {
     return data.lineSpacingStyle;
   }
