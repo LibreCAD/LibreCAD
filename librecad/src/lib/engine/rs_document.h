@@ -114,7 +114,7 @@ public:
 	/**
 	 * Sets the documents modified status to 'm'.
 	 */
-    void setModified(bool m) {
+    virtual void setModified(bool m) {
 		//std::cout << "RS_Document::setModified: %d" << (int)m << std::endl;
 		modified = m;
 	}
@@ -123,7 +123,7 @@ public:
 	 * @retval true The document has been modified since it was last saved.
 	 * @retval false The document has not been modified since it was last saved.
 	 */
-    bool isModified() const {
+    virtual bool isModified() const {
         return modified;
     }
 

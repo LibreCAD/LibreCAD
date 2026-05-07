@@ -66,8 +66,10 @@ public slots:
 
 protected slots:
     virtual void languageChange();
+    void layoutDirectionChanged();
 
 private:
+    void applyDirectionVisuals();
     bool isNew = false;
     bool saveSettings = true;
     RS_MText* text = nullptr;

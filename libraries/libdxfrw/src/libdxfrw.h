@@ -125,6 +125,9 @@ private:
     bool writeBlocks();
     bool writeObjects();
     bool writeExtData(const std::vector<DRW_Variant*> &ed);
+    /* Entity-flavoured overload: entities own extData via shared_ptr, table
+     * records own raw pointers. Same DXF codes, different storage. */
+    bool writeExtData(const std::vector<std::shared_ptr<DRW_Variant>> &ed);
     /*use version from dwgutil.h*/
     std::string toHexStr(int n);//RLZ removeme
     bool writeAppData(const std::list<std::list<DRW_Variant>> &appData);

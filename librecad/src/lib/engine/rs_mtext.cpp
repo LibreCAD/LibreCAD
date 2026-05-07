@@ -99,6 +99,15 @@ void RS_MText::setText(QString t) {
   }
 }
 
+void RS_MText::setDrawingDirection(
+    RS_MTextData::MTextDrawingDirection direction) {
+  if (data.drawingDirection == direction) return;
+  data.drawingDirection = direction;
+  if (data.updateMode == RS2::Update) {
+    update();
+  }
+}
+
 /**
  * Gets the alignment as an int.
  *

@@ -196,6 +196,7 @@ librecad/src/lib/debug/lc_crashhandler.cpp
 librecad/src/lib/engine/rs_flags.cpp
 librecad/src/lib/engine/rs_pen.cpp
 librecad/src/lib/engine/lc_rect.cpp
+librecad/src/lib/engine/lc_textbidi.cpp
 librecad/src/lib/engine/rs_leader.cpp
 librecad/src/lib/engine/rs_overlaybox.cpp
 librecad/src/lib/engine/rs_overlayline.cpp

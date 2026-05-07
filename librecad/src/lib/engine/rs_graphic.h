@@ -264,14 +264,14 @@ public:
      * @retval true The document has been modified since it was last saved.
      * @retval false The document has not been modified since it was last saved.
      */
-    virtual bool isModified() const {
+    bool isModified() const override {
         return modified || layerList.isModified() || blockList.isModified();
     }
 
     /**
      * Sets the documents modified status to 'm'.
      */
-    virtual void setModified(bool m) {
+    void setModified(bool m) override {
         modified = m;
         layerList.setModified(m);
         blockList.setModified(m);
