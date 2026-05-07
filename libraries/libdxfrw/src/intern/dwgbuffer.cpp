@@ -15,6 +15,7 @@
 #include "../libdwgr.h"
 #include "drw_textcodec.h"
 #include "drw_dbg.h"
+#include <cstring>
 //#include <bitset>
 /*#include <fstream>
 #include <algorithm>
@@ -242,7 +243,7 @@ bool dwgBuffer::getBoolBit(){
 
 /**Reads two Bits returns a char (BB) **/
 duint8 dwgBuffer::get2Bits(){
-    duint8 buffer;
+    duint8 buffer = 0;
     duint8 ret = 0;
     if (bitPos == 0){
         filestr->read (&buffer,1);
@@ -265,10 +266,9 @@ duint8 dwgBuffer::get2Bits(){
     return ret;
 }
 
-/**Reads thee Bits returns a char (3B) **/
-//RLZ: todo verify this
+/**Reads three Bits returns a char (3B) **/
 duint8 dwgBuffer::get3Bits(){
-    duint8 buffer;
+    duint8 buffer = 0;
     duint8 ret = 0;
     if (bitPos == 0){
         filestr->read (&buffer,1);
@@ -348,15 +348,16 @@ double dwgBuffer::getBitDouble(){
     if (b == 1)
         return 1.0;
     else if (b == 0){
-        duint8 buffer[8];
+        duint8 buffer[8] = {0};
         if (bitPos != 0) {
             for (int i = 0; i < 8; i++)
                 buffer[i] = getRawChar8();
         } else {
-        filestr->read (buffer,8);
+            filestr->read (buffer,8);
         }
-        double* ret = reinterpret_cast<double*>( buffer );
-        return *ret;
+        double ret = 0.0;
+        std::memcpy(&ret, buffer, 8);
+        return ret;
     }
     //    if (b == 2)
     return 0.0;
@@ -394,31 +395,31 @@ duint16 dwgBuffer::getRawShort16(){
     filestr->read (buffer,2);
     if (bitPos == 0) {
         /* no offset directly swap bytes for little-endian */
-        ret = (buffer[1] << 8) | (buffer[0] & 0x00FF);
+        ret = static_cast<duint16>((static_cast<duint32>(buffer[1]) << 8) | buffer[0]);
     } else {
-        ret = (buffer[0] << 8) | (buffer[1] & 0x00FF);
-        /* apply offset */
-        ret = ret >> (8 - bitPos);
-        ret = ret | (currByte << (8 + bitPos));
+        ret = static_cast<duint16>((static_cast<duint32>(buffer[0]) << 8) | buffer[1]);
+        /* apply offset; promote currByte to duint32 to avoid implicit-int shift surprises */
+        ret = static_cast<duint16>(ret >> (8 - bitPos));
+        ret = static_cast<duint16>(ret | (static_cast<duint32>(currByte) << (8 + bitPos)));
         currByte = buffer[1];
         /* swap bytes for little-endian */
-        ret = (ret << 8) | (ret >> 8);
+        ret = static_cast<duint16>((ret << 8) | (ret >> 8));
     }
     return ret;
 }
 
 /**Reads raw double IEEE standard 64 bits returns a double (RD) **/
 double dwgBuffer::getRawDouble(){
-    duint8 buffer[8];
-    memset(buffer,0,sizeof(buffer));
+    duint8 buffer[8] = {0};
     if (bitPos == 0)
         filestr->read (buffer,8);
     else {
         for (int i = 0; i < 8; i++)
             buffer[i] = getRawChar8();
     }
-    double* nOffset = reinterpret_cast<double*>( buffer );
-    return *nOffset;
+    double ret = 0.0;
+    std::memcpy(&ret, buffer, 8);
+    return ret;
 }
 
 /**Reads 2 raw double IEEE standard 64 bits returns a DRW_Coord of floating point double 64 bits (2RD) **/
@@ -802,7 +803,7 @@ duint32 dwgBuffer::getEnColor(DRW::Version v) {
     duint16 idx = getBitShort();
     DRW_DBG("idx reads COLOR: "); DRW_DBGH(idx);
     duint16 flags = idx>>8;
-    idx = idx & 0x1FF; //RLZ: warning this is correct?
+    idx = idx & 0xFF; //§2.7: index is the low byte; flags occupy the high byte
     DRW_DBG("\nflag COLOR: "); DRW_DBGH(flags);
     DRW_DBG(", index COLOR: "); DRW_DBGH(idx);
 //    if (flags & 0x80) {

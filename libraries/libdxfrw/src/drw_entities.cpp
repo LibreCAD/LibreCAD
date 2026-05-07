@@ -324,39 +324,32 @@ bool DRW_Entity::parseDwg(DRW::Version version, dwgBuffer *buf, dwgBuffer* strBu
     ltypeScale = buf->getBitDouble(); //BD
     DRW_DBG(" entity color: "); DRW_DBG(color);
     DRW_DBG(" ltScale: "); DRW_DBG(ltypeScale); DRW_DBG("\n");
-    if (version > DRW::AC1014) {//2000+
-        UTF8STRING plotStyleName;
-        for (duint8 i = 0; i<2;++i) { //two flags in one
-            plotFlags = buf->get2Bits(); //BB
-            if (plotFlags == 1)
-                plotStyleName = "byblock";
-            else if (plotFlags == 2)
-                plotStyleName = "continuous";
-            else if (plotFlags == 0)
-                plotStyleName = "bylayer";
-            else //handle at end
-                plotStyleName = "";
-            if (i == 0) {
-                ltFlags = plotFlags;
-                lineType = plotStyleName; //RLZ: howto solve? if needed plotStyleName;
-                DRW_DBG("ltFlags: "); DRW_DBG(ltFlags);
-                DRW_DBG(" lineType: "); DRW_DBG(lineType.c_str());
-            } else {
-                DRW_DBG(", plotFlags: "); DRW_DBG(plotFlags);
-            }
-        }
+    if (version > DRW::AC1014) {//2000+ — §19.4.1: linetype-flags BB then plot-flags BB
+        ltFlags = buf->get2Bits(); //BB
+        if (ltFlags == 0)      lineType = "BYLAYER";
+        else if (ltFlags == 1) lineType = "BYBLOCK";
+        else if (ltFlags == 2) lineType = "CONTINUOUS";
+        else                   lineType = ""; //3 → handle at end
+        DRW_DBG("ltFlags: "); DRW_DBG(ltFlags);
+        DRW_DBG(" lineType: "); DRW_DBG(lineType.c_str());
+
+        plotFlags = buf->get2Bits(); //BB
+        DRW_DBG(", plotFlags: "); DRW_DBG(plotFlags);
     }
     if (version > DRW::AC1018) {//2007+
         materialFlag = buf->get2Bits(); //BB
         DRW_DBG("materialFlag: "); DRW_DBG(materialFlag);
-        shadowFlag = buf->getRawChar8(); //RC
+        shadowFlag = buf->getRawChar8(); //RC, low 2 bits is shadow mode 0..3
         DRW_DBG("shadowFlag: "); DRW_DBG(shadowFlag); DRW_DBG("\n");
+        shadow = static_cast<DRW::ShadowMode>(shadowFlag & 0x3);
     }
     if (version > DRW::AC1021) {//2010+
-        duint8 visualFlags = buf->get2Bits(); //full & face visual style
-        DRW_DBG("shadowFlag 2: "); DRW_DBG(visualFlags); DRW_DBG("\n");
-        duint8 unk = buf->getBit(); //edge visual style
-        DRW_DBG("unknown bit: "); DRW_DBG(unk); DRW_DBG("\n");
+        // Same 3-bit shape as upstream: BB (full/face visual style) + B (edge).
+        // Stored on the entity for downstream handle-section consumers.
+        visualFullFlag = buf->get2Bits(); //BB
+        edgeStyleFlag  = buf->getBit();   //B
+        DRW_DBG("visualFullFlag: "); DRW_DBG(visualFullFlag);
+        DRW_DBG(" edgeStyleFlag: "); DRW_DBG(edgeStyleFlag); DRW_DBG("\n");
     }
     dint16 invisibleFlag = buf->getBitShort(); //BS
     DRW_DBG(" invisibleFlag: "); DRW_DBG(invisibleFlag);
@@ -459,7 +452,17 @@ bool DRW_Entity::parseDwgEntHandle(DRW::Version version, dwgBuffer *buf){
             DRW_DBG("\n Remaining bytes: "); DRW_DBG(buf->numRemainingBytes()); DRW_DBG("\n");
         }
     }
-    DRW_DBG("\n DRW_Entity::parseDwgEntHandle Remaining bytes: "); DRW_DBG(buf->numRemainingBytes()); DRW_DBG("\n");
+    const int rb = buf->numRemainingBytes();
+    DRW_DBG("\n DRW_Entity::parseDwgEntHandle Remaining bytes: "); DRW_DBG(rb); DRW_DBG("\n");
+    if (rb > 4) {  // 2-byte CRC + slack
+        DRW_DBG("\n*** parseDwgEntHandle leftover ");
+        DRW_DBG(rb);
+        DRW_DBG(" bytes; entity handle ");
+        DRW_DBGH(handle);
+        DRW_DBG(" oType ");
+        DRW_DBG(oType);
+        DRW_DBG(" — possible bit-stream misalignment ***\n");
+    }
     return buf->isGood();
 }
 

@@ -160,7 +160,9 @@ protected: //only for read dwg
     duint8 plotFlags; //presence of plot style //BB
     duint8 ltFlags; //presence of linetype handle //BB
     duint8 materialFlag; //presence of material handle //BB
-    duint8 shadowFlag; //presence of shadow handle ?? (in dwg may be plotflag)//RC
+    duint8 shadowFlag; //R2007+ shadow mode 0..3 (cast/receive/both/ignore) //RC
+    duint8 visualFullFlag{0}; //R2010+ full+face visual-style flag //BB
+    duint8 edgeStyleFlag{0};  //R2010+ edge visual-style flag //B
     dwgHandle lTypeH;
     dwgHandle layerH;
 	duint32 nextEntLink = 0;

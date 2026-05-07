@@ -39,8 +39,9 @@ std::string toHexStr(int n){
  * @param out : output data (at least 239*blk bytes)
  * @param blk number of codewords ( 1 cw == 255 bytes)
  */
-void dwgRSCodec::decode239I(unsigned char *in, unsigned char *out, duint32 blk){
+bool dwgRSCodec::decode239I(unsigned char *in, unsigned char *out, duint32 blk){
     int k=0;
+    bool allOk = true;
     unsigned char data[255];
     RScodec rsc(0x96, 8, 8); //(255, 239)
     for (duint32 i=0; i<blk; i++){
@@ -50,13 +51,16 @@ void dwgRSCodec::decode239I(unsigned char *in, unsigned char *out, duint32 blk){
             k +=blk;
         }
         int r = rsc.decode(data);
-        if (r<0)
+        if (r<0) {
             DRW_DBG("\nWARNING: dwgRSCodec::decode239I, can't correct all errors");
+            allOk = false;
+        }
         k = i*239;
         for (int j=0; j<239; j++) {
             out[k++] = data[j];
         }
     }
+    return allOk;
 }
 
 /**
@@ -65,8 +69,9 @@ void dwgRSCodec::decode239I(unsigned char *in, unsigned char *out, duint32 blk){
  * @param out : output data (at least 251*blk bytes)
  * @param blk number of codewords ( 1 cw == 255 bytes)
  */
-void dwgRSCodec::decode251I(unsigned char *in, unsigned char *out, duint32 blk){
+bool dwgRSCodec::decode251I(unsigned char *in, unsigned char *out, duint32 blk){
     int k=0;
+    bool allOk = true;
     unsigned char data[255];
     RScodec rsc(0xB8, 8, 2); //(255, 251)
     for (duint32 i=0; i<blk; i++){
@@ -76,13 +81,16 @@ void dwgRSCodec::decode251I(unsigned char *in, unsigned char *out, duint32 blk){
             k +=blk;
         }
         int r = rsc.decode(data);
-        if (r<0)
+        if (r<0) {
             DRW_DBG("\nWARNING: dwgRSCodec::decode251I, can't correct all errors");
+            allOk = false;
+        }
         k = i*251;
         for (int j=0; j<251; j++) {
             out[k++] = data[j];
         }
     }
+    return allOk;
 }
 
 duint8 *dwgCompressor::compressedBuffer {nullptr};
