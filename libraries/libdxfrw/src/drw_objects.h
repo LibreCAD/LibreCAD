@@ -44,14 +44,16 @@ namespace DRW {
          MLINESTYLE,
          LAYOUT,
          DICTIONARY,
-         MLEADERSTYLE
+         MLEADERSTYLE,
+         DBCOLOR,
+         VISUALSTYLE
      };
 
 //pending VP_ENT_HDR, GROUP, LONG_TRANSACTION, XRECORD,
-//ACDBPLACEHOLDER, VBA_PROJECT, ACAD_TABLE, CELLSTYLEMAP, DBCOLOR, DICTIONARYVAR,
+//ACDBPLACEHOLDER, VBA_PROJECT, ACAD_TABLE, CELLSTYLEMAP, DICTIONARYVAR,
 //DICTIONARYWDFLT, FIELD, IDBUFFER, IMAGEDEF, IMAGEDEFREACTOR, LAYER_INDEX,
 //MATERIAL, PLACEHOLDER, PLOTSETTINGS, RASTERVARIABLES, SCALE, SORTENTSTABLE,
-//SPATIAL_INDEX, SPATIAL_FILTER, TABLEGEOMETRY, TABLESTYLES,VISUALSTYLE,
+//SPATIAL_INDEX, SPATIAL_FILTER, TABLEGEOMETRY, TABLESTYLES,
 }
 
 #define SETOBJFRIENDS  friend class dxfRW; \
@@ -328,6 +330,7 @@ public:
     UTF8STRING lineType;            /*!< line type, code 6 */
     int color;                      /*!< layer color, code 62 */
     int color24;                    /*!< 24-bit color, code 420 */
+    UTF8STRING colorName;           /*!< color book name, code 430 ("BOOK$ENTRY") */
     bool plotF;                     /*!< Plot flag, code 290 */
     enum DRW_LW_Conv::lineWidth lWeight; /*!< layer lineweight, code 370 */
     std::string handlePlotS;        /*!< Hard-pointer ID/handle of plotstyle, code 390 */
@@ -469,6 +472,7 @@ public:
     * bit 3 (4) allow subdivision
     * bit 4 (8) follow dynamic SCP
     **/
+    duint32 visualStyleHandle = 0; /*!< R2007+ visual-style ref (DWG-only) */
 };
 
 
@@ -782,6 +786,61 @@ public:
     duint16 attachmentDirection = 0;   /*!< code 271 */
     duint16 topAttachment = 0;         /*!< code 273 */
     duint16 bottomAttachment = 0;      /*!< code 272 */
+};
+
+//! Class to handle DBCOLOR (AcDbColor) — custom-class object §20.4.
+/*!
+ *  Named/true-color reference target. R2004+ entities with the ENC flag bit
+ *  0x40 set carry a hard-pointer handle to one of these instead of an inline
+ *  RGB value. Holds the resolved RGB plus the optional book/color names.
+ *
+ *  Layout (libreDWG dwg2.spec:2404-2408):
+ *    - Common entity preamble
+ *    - FIELD_CMC color  : §2.7 CMC = BS index, BL rgb (high byte = method),
+ *                          RC method-byte, optional TV color name (bit 1),
+ *                          optional TV book name (bit 2)
+ *    - START_OBJECT_HANDLE_STREAM  (parent dictionary, reactors, xdic)
+ */
+class DRW_DbColor : public DRW_TableEntry {
+    SETOBJFRIENDS
+public:
+    DRW_DbColor() { reset(); }
+    void reset(){
+        tType = DRW::DBCOLOR;
+        rgb = -1;
+        colorIndex = 0;
+        colorMethod = 0;
+        name.clear();
+        bookName.clear();
+    }
+protected:
+    bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) override;
+public:
+    int rgb = -1;            /*!< 24-bit RGB value, code 420 (or -1 if not RGB type) */
+    duint16 colorIndex = 0;  /*!< ACI fallback when method=0xC3, code 62 */
+    duint8 colorMethod = 0;  /*!< 0xC0 ByLayer / 0xC1 ByBlock / 0xC2 RGB / 0xC3 ACI */
+    UTF8STRING bookName;     /*!< color book name, code 430 prefix */
+    // name (inherited from DRW_TableEntry) is the entry name within the book
+};
+
+//! Class to handle VISUALSTYLE (AcDbVisualStyle) — custom-class object §20.4.95.
+/*!
+ *  Stub: full ODA spec lists 60+ fields for visual styles, but LibreCAD is 2D
+ *  and never consumes them. We only need round-trip identity at the OBJECTS-
+ *  section dispatch boundary so the file's class table doesn't drop a phantom
+ *  entry. Each object is parsed from a size-bounded buffer so misalignment
+ *  within parseDwg can't propagate to neighbors.
+ */
+class DRW_VisualStyle : public DRW_TableEntry {
+    SETOBJFRIENDS
+public:
+    DRW_VisualStyle() { reset(); }
+    void reset() { tType = DRW::VISUALSTYLE; desc.clear(); type = 0; }
+protected:
+    bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) override;
+public:
+    UTF8STRING desc;       /*!< description (TV in DWG) */
+    duint16 type = 0;      /*!< visual-style type code (BS in DWG) */
 };
 
 /** Holds per-write-session maps populated during DXF writing. */

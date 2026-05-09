@@ -215,6 +215,23 @@ public:
     virtual void addMLeaderStyle(const DRW_MLeaderStyle *data) { (void) data; }
 
     /**
+     * Called for every DBCOLOR (AcDbColor) object encountered in the OBJECTS
+     * section.  ODA spec §20.4.  Default no-op for back-compat — most
+     * implementers don't need a per-object hook because the reader patches
+     * referencing entities' color24/colorName via dbColorMap before
+     * delivering them.  This hook is for filters that want to track the
+     * full set of named colors (e.g., to emit a layer book-color map).
+     */
+    virtual void addDbColor(const DRW_DbColor& data) { (void) data; }
+
+    /**
+     * Called for every VISUALSTYLE (AcDbVisualStyle) object encountered in
+     * the OBJECTS section. ODA spec §20.4.95. Default no-op — LibreCAD has
+     * no 3D rendering and treats these as opaque round-trip metadata.
+     */
+    virtual void addVisualStyle(const DRW_VisualStyle& data) { (void) data; }
+
+    /**
      * Called for every comment in the DXF file (code 999).
      */
     virtual void addComment(const char* comment) = 0;

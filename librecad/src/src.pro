@@ -348,6 +348,7 @@ HEADERS += \
     lib/engine/document/dimstyles/lc_dimarrowregistry.h \
     lib/engine/document/dimstyles/lc_dimstyletovariablesmapper.h \
     lib/engine/document/entities/lc_extentitydata.h \
+    lib/engine/document/entities/lc_textbidi.h \
     lib/engine/document/container/lc_containertraverser.h \
     lib/engine/document/entities/lc_mleader.h \
     lib/engine/document/entities/lc_splinehelper.h \
@@ -671,6 +672,7 @@ SOURCES += \
     lib/engine/document/dimstyles/lc_dimarrowregistry.cpp \
     lib/engine/document/dimstyles/lc_dimstyletovariablesmapper.cpp \
     lib/engine/document/entities/lc_extentitydata.cpp \
+    lib/engine/document/entities/lc_textbidi.cpp \
     lib/engine/document/container/lc_containertraverser.cpp \
     lib/engine/document/entities/lc_mleader.cpp \
     lib/engine/document/entities/lc_splinehelper.cpp \

@@ -111,6 +111,8 @@ public:
 
 	void reset() {
 		extData.clear();
+		pendingAppIdResolutions.clear();
+		pendingLayerRefResolutions.clear();
 		curr.reset();
 	}
 
@@ -152,8 +154,22 @@ public:
 	int transparency = DRW::Opaque;          /*!< transparency, code 440 */
 	int plotStyle = DRW::DefaultPlotStyle;             /*!< hard pointer id to plot style object, code 390 */
 	DRW::ShadowMode shadow = DRW::CastAndReceieveShadows;    /*!< shadow mode, code 284 */
+    duint32 fullVisualStyleHandle{0}; /*!< R2010+ full visual-style ref, ODA §19.4.2 (DWG-only) */
+    duint32 faceVisualStyleHandle{0}; /*!< R2010+ face visual-style ref */
+    duint32 edgeVisualStyleHandle{0}; /*!< R2010+ edge visual-style ref */
 	bool haveExtrusion = false;        /*!< set to true if the entity have extrusion*/
 	std::vector<std::shared_ptr<DRW_Variant>> extData; /*!< FIFO list of extended data, codes 1000 to 1071*/
+
+    /*!< Pending DWG-EED handle resolutions, populated by parseDwg() and
+     *   drained by dwgReader::parseAttribs(). Each entry records the
+     *   index of a placeholder variant in @ref extData that needs to be
+     *   replaced with a name resolved from the appid / layer maps. */
+    struct PendingHandleRef {
+        size_t indexInExtData;
+        duint32 handleRef;
+    };
+    std::vector<PendingHandleRef> pendingAppIdResolutions;
+    std::vector<PendingHandleRef> pendingLayerRefResolutions;
 
 protected: //only for read dwg
     duint8 haveNextLinks; //aka nolinks //B
@@ -161,8 +177,11 @@ protected: //only for read dwg
     duint8 ltFlags; //presence of linetype handle //BB
     duint8 materialFlag; //presence of material handle //BB
     duint8 shadowFlag; //R2007+ shadow mode 0..3 (cast/receive/both/ignore) //RC
-    duint8 visualFullFlag{0}; //R2010+ full+face visual-style flag //BB
-    duint8 edgeStyleFlag{0};  //R2010+ edge visual-style flag //B
+    duint8 hasFullVisualStyle{0}; //R2010+ full visual-style handle present //B
+    duint8 hasFaceVisualStyle{0}; //R2010+ face visual-style handle present //B
+    duint8 hasEdgeVisualStyle{0}; //R2010+ edge visual-style handle present //B
+    bool   hasAcDbColorH{false};  //ENC flag 0x40 set: AcDbColor handle in hdl_dat
+    duint32 acDbColorHandle{0};   //resolved offset handle if hasAcDbColorH
     dwgHandle lTypeH;
     dwgHandle layerH;
 	duint32 nextEntLink = 0;
@@ -971,6 +990,17 @@ public:
         clearEntities();
     }
 
+    /*!
+     * Per-stop gradient color entry. Populated when isGradient != 0.
+     * 'value' is the position (group 463), 'rgb' is 24-bit color
+     * (group 421); 'aciColor' (group 63) is preserved when present.
+     */
+    struct GradientStop {
+        double  value {0.0};
+        int     rgb {0};
+        int     aciColor {0};
+    };
+
     void appendLoop (std::shared_ptr<DRW_HatchLoop> const& v) {
         looplist.push_back(v);
     }
@@ -992,6 +1022,19 @@ public:
     int deflines;              /*!< number of pattern definition lines, code 78 */
 
     std::vector<std::shared_ptr<DRW_HatchLoop>> looplist;  /*!< polyline list */
+
+    /* Gradient (R2004+; DXF group codes 450..470, 421/63 per stop). */
+    int    isGradient {0};     /*!< 0 = solid/pattern hatch, 1 = gradient fill, code 450 */
+    int    gradReserved {0};   /*!< reserved gradient field, code 451 */
+    double gradAngle {0.0};    /*!< gradient angle in radians, code 460 */
+    double gradShift {0.0};    /*!< gradient shift (centered=0), code 461 */
+    int    singleColor {0};    /*!< 1 = single-color gradient + tint, code 452 */
+    double gradTint {0.0};     /*!< single-color tint, code 462 */
+    UTF8STRING gradName;       /*!< gradient pattern name, code 470 (e.g. "LINEAR") */
+    std::vector<GradientStop> gradColors; /*!< per-stop colors, count = code 453 */
+
+    /* Seed points (DXF code 98 = count, then 10/20 pairs). */
+    std::vector<DRW_Coord> seedPoints;
 
 private:
     void clearEntities(){

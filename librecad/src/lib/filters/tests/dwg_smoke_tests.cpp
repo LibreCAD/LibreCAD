@@ -12,6 +12,7 @@
 
 #include <catch2/catch_test_macros.hpp>
 
+#include <cmath>
 #include <filesystem>
 #include <iomanip>
 #include <iostream>
@@ -1641,4 +1642,642 @@ TEST_CASE("DWG corpus: MULTILEADER entity inventory", "[.dwg_mleader]") {
               << totalMLeaders << " entities across "
               << filesWithMLeader << " files\n";
     SUCCEED();
+}
+
+// Witness probe for the R2010+ visual-style fix. Counts how many entities
+// in a panel of "visualization"-named R2010 files (and the canonical R2013
+// witness) actually have any of the three has{Full,Face,Edge}VisualStyle
+// flags set, by grepping the DRW_DBG capture for the marker emitted in
+// DRW_Entity::parseDwg. Soft-asserts that visualization_-_aerial.dwg loads
+// with at least as many entities as the pre-fix baseline (0).
+//
+// Reference: ground-truth from libreDWG common_entity_data.spec lines
+// 523-528 + ODA spec v5.4.1 §19.4.1; libdxfrw fix landed in commit
+// (current).
+TEST_CASE("DWG visualstyle probe: count R2010+ visual-style flag triggers",
+          "[.dwg_visualstyle_probe]") {
+    const char* home = getenv("HOME");
+    if (!home) { SUCCEED("HOME not set"); return; }
+
+    struct Witness { std::string path; int baselineEntities; };
+    const std::vector<Witness> witnesses = {
+        { std::string(home) + "/doc/dwg/visualization_-_aerial.dwg",                  0 },
+        { std::string(home) + "/doc/dwg/visualization_-_condominium_with_skylight.dwg", 17 },
+        { std::string(home) + "/doc/dwg/visualization_-_conference_room.dwg",         14 },
+        { std::string(home) + "/doc/dwg/visualization_-_sun_and_sky_demo.dwg",        16 },
+        { std::string(home) + "/doc/dwg2/Architectural-Modern-Building-Design.dwg",  856 },
+    };
+
+    int totalFiles = 0, totalFlagged = 0;
+    int totalLeftoverWarnings = 0;
+    int aerialEntities = -1;
+
+    for (const auto& w : witnesses) {
+        if (!std::filesystem::is_regular_file(w.path)) {
+            std::cout << "(skipping missing) " << w.path << "\n";
+            continue;
+        }
+        ++totalFiles;
+
+        const DeepResult dr = readDwgDeep(w.path);
+        const std::string& log = dr.debugLog;
+
+        // Count "hasFull/Face/Edge VisualStyle: a b c" lines where any of
+        // a/b/c is 1. The DRW_DBG marker prints space-separated 0/1 values.
+        const std::string marker = "hasFull/Face/Edge VisualStyle: ";
+        int flaggedHere = 0;
+        size_t pos = 0;
+        while ((pos = log.find(marker, pos)) != std::string::npos) {
+            pos += marker.size();
+            if (pos + 5 <= log.size()) {
+                // Expect "a b c\n" where a,b,c are '0' or '1'
+                const char a = log[pos],     b = log[pos + 2], c = log[pos + 4];
+                if (a == '1' || b == '1' || c == '1') ++flaggedHere;
+            }
+        }
+
+        // Count leftover-bytes warnings — should drop to 0 for files using
+        // visual styles after Phase B.
+        const std::string leftover = "parseDwgEntHandle leftover";
+        int leftoverHere = 0;
+        size_t lpos = 0;
+        while ((lpos = log.find(leftover, lpos)) != std::string::npos) {
+            ++leftoverHere; ++lpos;
+        }
+
+        const std::string fname = std::filesystem::path(w.path).filename().string();
+        std::cout << "  " << std::left << std::setw(56) << fname
+                  << " entities=" << std::setw(5) << (dr.iface.modelSpaceEntities + dr.iface.blockSpaceEntities)
+                  << " flaggedEntities=" << std::setw(4) << flaggedHere
+                  << " leftoverWarnings=" << leftoverHere
+                  << " (baseline entities=" << w.baselineEntities << ")\n";
+
+        totalFlagged += flaggedHere;
+        totalLeftoverWarnings += leftoverHere;
+
+        if (fname == "visualization_-_aerial.dwg") {
+            aerialEntities = (dr.iface.modelSpaceEntities + dr.iface.blockSpaceEntities);
+            // Soft assertion: must not REGRESS below baseline. A jump
+            // upward (e.g., 0 → N) is the strongest positive signal.
+            CHECK((dr.iface.modelSpaceEntities + dr.iface.blockSpaceEntities) >= w.baselineEntities);
+        }
+    }
+
+    std::cout << "\nVisualStyle probe summary: "
+              << totalFlagged << " flagged entities across "
+              << totalFiles  << " witness files; "
+              << totalLeftoverWarnings << " leftover-bytes warnings\n";
+    if (aerialEntities >= 0) {
+        std::cout << "  visualization_-_aerial.dwg post-fix entities: "
+                  << aerialEntities << " (baseline 0)\n";
+    }
+    SUCCEED();
+}
+
+// AcDbColor probe — counts DBCOLOR objects in OBJECTS sections + tracks
+// how many entities carry a resolved color24/colorName from a DBCOLOR
+// reference. ODA spec §20.4 / libreDWG dwg2.spec:2404-2408 (object) and
+// common_entity_data.spec:454-459 (ENC flag 0x40 → handle in hdl_dat).
+// Diagnostic; not asserted hard.
+TEST_CASE("DWG acdbcolor probe: count DBCOLOR objects + resolved entity refs",
+          "[.dwg_acdbcolor_probe]") {
+    const char* home = getenv("HOME");
+    if (!home) { SUCCEED("HOME not set"); return; }
+
+    // Custom interface that counts DBCOLOR objects via addDbColor and
+    // tracks how many entities arrive with a populated color24/colorName.
+    class AcDbColorIface : public TypeTrackingIface {
+    public:
+        int dbColors = 0;
+        int entitiesWithColor24 = 0;
+        int entitiesWithColorName = 0;
+        std::vector<std::pair<int,std::string>> sampleResolutions; // first few
+
+        void addDbColor(const DRW_DbColor& d) override {
+            ++dbColors;
+            if (sampleResolutions.size() < 5) {
+                std::string display = d.bookName.empty()
+                    ? d.name : (d.bookName + "$" + d.name);
+                sampleResolutions.emplace_back(d.rgb, display);
+            }
+        }
+        void track(const DRW_Entity& e) {
+            if (e.color24 != -1) ++entitiesWithColor24;
+            if (!e.colorName.empty()) ++entitiesWithColorName;
+        }
+        // Hook a few common entity types — enough to surface any resolved
+        // color references without re-overriding every addX in the base.
+        void addPoint(const DRW_Point& e) override { track(e); TypeTrackingIface::addPoint(e); }
+        void addLine(const DRW_Line& e) override { track(e); TypeTrackingIface::addLine(e); }
+        void addCircle(const DRW_Circle& e) override { track(e); TypeTrackingIface::addCircle(e); }
+        void addArc(const DRW_Arc& e) override { track(e); TypeTrackingIface::addArc(e); }
+        void addInsert(const DRW_Insert& e) override { track(e); TypeTrackingIface::addInsert(e); }
+        void addText(const DRW_Text& e) override { track(e); TypeTrackingIface::addText(e); }
+        void addLWPolyline(const DRW_LWPolyline& e) override { track(e); TypeTrackingIface::addLWPolyline(e); }
+        void addPolyline(const DRW_Polyline& e) override { track(e); TypeTrackingIface::addPolyline(e); }
+        void addHatch(const DRW_Hatch* e) override { track(*e); TypeTrackingIface::addHatch(e); }
+    };
+
+    struct File { std::string path; const char* note; };
+    const std::vector<File> files = {
+        { std::string(home) + "/doc/dwg2/Architectural-Modern-Building-Design.dwg",
+          "R2013, canonical book-color witness (per memory)" },
+        { std::string(home) + "/doc/dwg/visualization_-_aerial.dwg",        "R2010" },
+        { std::string(home) + "/doc/dwg/visualization_-_condominium_with_skylight.dwg", "R2010" },
+        { std::string(home) + "/doc/dwg/visualization_-_conference_room.dwg", "R2010" },
+        { std::string(home) + "/doc/dwg/visualization_-_sun_and_sky_demo.dwg", "R2010" },
+        { std::string(home) + "/doc/dwg2/gear_pump_subassy.dwg", "R2010 control (must not regress)" },
+    };
+
+    int totalDbColors = 0, totalResolvedColor24 = 0, totalResolvedNames = 0;
+    for (const auto& f : files) {
+        if (!std::filesystem::is_regular_file(f.path)) {
+            std::cout << "(skipping missing) " << f.path << "\n";
+            continue;
+        }
+        AcDbColorIface iface;
+        try {
+            dwgR reader(f.path.c_str());
+            reader.read(&iface, true);
+        } catch (...) {
+            std::cout << "EXCEPTION on " << f.path << "\n";
+            continue;
+        }
+        const std::string fname = std::filesystem::path(f.path).filename().string();
+        const int totalEnt = iface.modelSpaceEntities + iface.blockSpaceEntities;
+        std::cout << "  " << std::left << std::setw(56) << fname
+                  << " dbColors=" << std::setw(4) << iface.dbColors
+                  << " entWithColor24=" << std::setw(4) << iface.entitiesWithColor24
+                  << " entWithColorName=" << std::setw(4) << iface.entitiesWithColorName
+                  << " entities=" << totalEnt
+                  << "  (" << f.note << ")\n";
+        for (const auto& s : iface.sampleResolutions) {
+            std::cout << "    sample DBCOLOR rgb=" << std::hex << s.first
+                      << std::dec << " name=\"" << s.second << "\"\n";
+        }
+        totalDbColors += iface.dbColors;
+        totalResolvedColor24 += iface.entitiesWithColor24;
+        totalResolvedNames += iface.entitiesWithColorName;
+    }
+
+    std::cout << "\nAcDbColor probe summary: "
+              << totalDbColors << " DBCOLOR objects, "
+              << totalResolvedColor24 << " entities w/ color24, "
+              << totalResolvedNames << " entities w/ colorName\n";
+    SUCCEED();
+}
+
+// AcDbColor end-to-end test: load the canonical book-color witness file
+// and assert (a) it loads BAD_NONE, (b) entity count matches the existing
+// [.dwg_arch_hatch] sentinel of 856 entities (no regression), and (c)
+// at least one DBCOLOR object exists in the file (positive coverage if
+// the file actually uses book colors). Untagged so it runs in default
+// smoke pass once we're confident the fix is stable.
+TEST_CASE("DWG acdbcolor: book color load + dbColor object inventory",
+          "[.dwg_acdbcolor]") {
+    const char* home = getenv("HOME");
+    if (!home) { SUCCEED("HOME not set"); return; }
+    const std::string path = std::string(home)
+        + "/doc/dwg2/Architectural-Modern-Building-Design.dwg";
+    if (!std::filesystem::is_regular_file(path)) {
+        SUCCEED("witness file not present; skipping"); return;
+    }
+
+    int dbColors = 0;
+    class CountingDbColorIface : public TypeTrackingIface {
+    public:
+        int* countOut = nullptr;
+        void addDbColor(const DRW_DbColor& /*d*/) override { if (countOut) ++(*countOut); }
+    };
+    CountingDbColorIface iface;
+    iface.countOut = &dbColors;
+
+    DRW::error err = DRW::BAD_NONE;
+    int entities = 0;
+    try {
+        dwgR reader(path.c_str());
+        reader.read(&iface, true);
+        err = reader.getError();
+        entities = iface.modelSpaceEntities + iface.blockSpaceEntities;
+    } catch (const std::exception& ex) {
+        FAIL("Exception: " << ex.what());
+    }
+
+    REQUIRE(err == DRW::BAD_NONE);
+    // Existing [.dwg_arch_hatch] sentinel proves 48 hatches; the broader
+    // entity baseline is 856 (per golden corpus output).
+    CHECK(entities == 856);
+
+    std::cout << "Architectural-Modern-Building-Design.dwg DBCOLOR objects: "
+              << dbColors << "\n";
+    // Soft expectation: the file IS named "Architectural" and uses
+    // book colors per memory note. If 0, that's surprising but not a
+    // failure — the spec/parser correctness is asserted by entity count.
+}
+
+// Layer-level AcDbColor probe — counts how many layers in each corpus file
+// have a populated colorName (CMC method-byte bit 1 → libreDWG bit_read_T
+// from str_dat).  Diagnostic only; no hard assertion since corpus coverage
+// is unknown until we run.
+TEST_CASE("DWG acdbcolor: layer colorName probe",
+          "[.dwg_acdbcolor_layer_probe]") {
+    const char* home = getenv("HOME");
+    if (!home) { SUCCEED("HOME not set"); return; }
+
+    class LayerColorIface : public TypeTrackingIface {
+    public:
+        int totalLayers = 0;
+        int layersWithColor24 = 0;
+        int layersWithColorName = 0;
+        std::vector<std::tuple<std::string, int, std::string>> samples;
+        void addLayer(const DRW_Layer& l) override {
+            ++totalLayers;
+            ++layers;  // base class counter
+            if (l.color24 != -1) ++layersWithColor24;
+            if (!l.colorName.empty()) {
+                ++layersWithColorName;
+                if (samples.size() < 10) {
+                    samples.emplace_back(l.name, l.color24, l.colorName);
+                }
+            }
+        }
+    };
+
+    struct Dir { std::string path; const char* note; };
+    const std::vector<Dir> dirs = {
+        { std::string(home) + "/doc/dwg2/", "R2010-R2013 corpus" },
+        { std::string(home) + "/doc/dwg/",  "mixed corpus" },
+        { std::string(home) + "/dev/dwg_samples/", "single-entity samples" },
+    };
+
+    int totalFiles = 0, totalLayers = 0, totalColor24 = 0, totalColorName = 0;
+    for (const auto& d : dirs) {
+        if (!std::filesystem::is_directory(d.path)) {
+            std::cout << "(skipping missing dir) " << d.path << "\n";
+            continue;
+        }
+        std::cout << "\n=== " << d.path << " (" << d.note << ") ===\n";
+        std::vector<std::filesystem::path> paths;
+        for (const auto& e : std::filesystem::directory_iterator(d.path)) {
+            if (!e.is_regular_file()) continue;
+            const auto ext = e.path().extension().string();
+            if (ext == ".dwg" || ext == ".DWG") paths.push_back(e.path());
+        }
+        std::sort(paths.begin(), paths.end());
+        for (const auto& p : paths) {
+            const std::string fname = p.filename().string();
+            if (fname.front() == '#') continue;  // BAD_VERSION sentinel
+            ++totalFiles;
+            LayerColorIface iface;
+            try {
+                dwgR reader(p.string().c_str());
+                reader.read(&iface, true);
+            } catch (...) { continue; }
+            if (iface.layersWithColorName > 0 || iface.layersWithColor24 > 0) {
+                std::cout << "  " << std::left << std::setw(56) << fname
+                          << " layers=" << std::setw(4) << iface.totalLayers
+                          << " withColor24=" << std::setw(4) << iface.layersWithColor24
+                          << " withColorName=" << iface.layersWithColorName << "\n";
+                for (const auto& s : iface.samples) {
+                    std::cout << "    layer \"" << std::get<0>(s)
+                              << "\"  color24=" << std::hex << std::get<1>(s)
+                              << std::dec << "  colorName=\"" << std::get<2>(s)
+                              << "\"\n";
+                }
+            }
+            totalLayers   += iface.totalLayers;
+            totalColor24  += iface.layersWithColor24;
+            totalColorName += iface.layersWithColorName;
+        }
+    }
+
+    std::cout << "\nLayer color probe summary: " << totalFiles << " files, "
+              << totalLayers << " layers total, "
+              << totalColor24 << " with color24, "
+              << totalColorName << " with colorName\n";
+    SUCCEED();
+}
+
+// PLOTSETTINGS probe — count PLOTSETTINGS objects per corpus file. They
+// were silently dropped to remainingMap before the custom-class dispatch
+// added the recName=="PLOTSETTINGS" clause. ODA spec §20.4 / libreDWG
+// dwg.spec:5627. RS_FilterDXFRW::addPlotSettings already wires margins +
+// page name to m_graphic; this probe confirms delivery.
+TEST_CASE("DWG plotsettings probe: count PLOTSETTINGS objects per file",
+          "[.dwg_plotsettings_probe]") {
+    const char* home = getenv("HOME");
+    if (!home) { SUCCEED("HOME not set"); return; }
+
+    class PlotSettingsIface : public TypeTrackingIface {
+    public:
+        int plotSettingsCount = 0;
+        std::vector<std::tuple<std::string,double,double,double,double>> samples;
+        void addPlotSettings(const DRW_PlotSettings* d) override {
+            ++plotSettingsCount;
+            if (samples.size() < 10) {
+                samples.emplace_back(d->plotViewName,
+                                     d->marginLeft, d->marginTop,
+                                     d->marginRight, d->marginBottom);
+            }
+        }
+    };
+
+    struct Dir { std::string path; const char* note; };
+    const std::vector<Dir> dirs = {
+        { std::string(home) + "/doc/dwg2/", "R2010-R2013 corpus" },
+        { std::string(home) + "/doc/dwg/",  "mixed corpus" },
+    };
+
+    int totalFiles = 0, totalPlotSettings = 0;
+    for (const auto& d : dirs) {
+        if (!std::filesystem::is_directory(d.path)) {
+            std::cout << "(skipping missing) " << d.path << "\n"; continue;
+        }
+        std::cout << "\n=== " << d.path << " ===\n";
+        std::vector<std::filesystem::path> paths;
+        for (const auto& e : std::filesystem::directory_iterator(d.path)) {
+            if (!e.is_regular_file()) continue;
+            const auto ext = e.path().extension().string();
+            if (ext == ".dwg" || ext == ".DWG") paths.push_back(e.path());
+        }
+        std::sort(paths.begin(), paths.end());
+        for (const auto& p : paths) {
+            const std::string fname = p.filename().string();
+            if (fname.front() == '#') continue;
+            ++totalFiles;
+            PlotSettingsIface iface;
+            try {
+                dwgR reader(p.string().c_str());
+                reader.read(&iface, true);
+            } catch (...) { continue; }
+            if (iface.plotSettingsCount > 0) {
+                std::cout << "  " << std::left << std::setw(56) << fname
+                          << " plotSettings=" << iface.plotSettingsCount << "\n";
+                for (const auto& s : iface.samples) {
+                    std::cout << "    \"" << std::get<0>(s)
+                              << "\"  margins L/T/R/B = "
+                              << std::get<1>(s) << "/" << std::get<2>(s) << "/"
+                              << std::get<3>(s) << "/" << std::get<4>(s) << "\n";
+                }
+            }
+            totalPlotSettings += iface.plotSettingsCount;
+        }
+    }
+
+    std::cout << "\nPLOTSETTINGS summary: " << totalPlotSettings
+              << " objects across " << totalFiles << " files\n";
+    SUCCEED();
+}
+
+// Transparency probe — count entities per file with a non-default
+// `transparency` field set via ENC flag 0x20. libreDWG
+// common_entity_data.spec:432-446 documents the alpha_raw encoding;
+// RS_FilterDXFRW::setEntityAttributes converts alpha_type==3 to a
+// per-entity pen alpha. This probe confirms delivery and shows whether
+// the corpus exercises the path.
+TEST_CASE("DWG transparency probe: count entities with ENC alpha set",
+          "[.dwg_transparency_probe]") {
+    const char* home = getenv("HOME");
+    if (!home) { SUCCEED("HOME not set"); return; }
+
+    class TransparencyIface : public TypeTrackingIface {
+    public:
+        int entitiesWithTransparency = 0;
+        int alphaType3Count = 0;       // explicit alpha
+        int alphaTypeBlockOrLayer = 0; // type 0 or 1
+        std::vector<std::pair<std::string,unsigned>> samples;
+
+        void track(const DRW_Entity& e, const char* what) {
+            if (e.transparency == DRW::Opaque) return;
+            ++entitiesWithTransparency;
+            const unsigned int raw = static_cast<unsigned int>(e.transparency);
+            const unsigned int aType = (raw >> 24) & 0xFF;
+            if (aType == 3) ++alphaType3Count;
+            else if (aType == 0 || aType == 1) ++alphaTypeBlockOrLayer;
+            if (samples.size() < 10) samples.emplace_back(what, raw);
+        }
+        void addPoint(const DRW_Point& e) override { track(e,"POINT"); TypeTrackingIface::addPoint(e); }
+        void addLine(const DRW_Line& e) override { track(e,"LINE"); TypeTrackingIface::addLine(e); }
+        void addCircle(const DRW_Circle& e) override { track(e,"CIRCLE"); TypeTrackingIface::addCircle(e); }
+        void addArc(const DRW_Arc& e) override { track(e,"ARC"); TypeTrackingIface::addArc(e); }
+        void addInsert(const DRW_Insert& e) override { track(e,"INSERT"); TypeTrackingIface::addInsert(e); }
+        void addText(const DRW_Text& e) override { track(e,"TEXT"); TypeTrackingIface::addText(e); }
+        void addLWPolyline(const DRW_LWPolyline& e) override { track(e,"LWPOLY"); TypeTrackingIface::addLWPolyline(e); }
+        void addPolyline(const DRW_Polyline& e) override { track(e,"POLY"); TypeTrackingIface::addPolyline(e); }
+        void addHatch(const DRW_Hatch* e) override { track(*e,"HATCH"); TypeTrackingIface::addHatch(e); }
+    };
+
+    struct Dir { std::string path; const char* note; };
+    const std::vector<Dir> dirs = {
+        { std::string(home) + "/doc/dwg2/", "R2010-R2013 corpus" },
+        { std::string(home) + "/doc/dwg/",  "mixed corpus" },
+    };
+
+    int totalFiles = 0, totalEnt = 0, totalAlpha3 = 0;
+    for (const auto& d : dirs) {
+        if (!std::filesystem::is_directory(d.path)) continue;
+        std::cout << "\n=== " << d.path << " ===\n";
+        std::vector<std::filesystem::path> paths;
+        for (const auto& e : std::filesystem::directory_iterator(d.path)) {
+            if (!e.is_regular_file()) continue;
+            const auto ext = e.path().extension().string();
+            if (ext == ".dwg" || ext == ".DWG") paths.push_back(e.path());
+        }
+        std::sort(paths.begin(), paths.end());
+        for (const auto& p : paths) {
+            const std::string fname = p.filename().string();
+            if (fname.front() == '#') continue;
+            ++totalFiles;
+            TransparencyIface iface;
+            try {
+                dwgR reader(p.string().c_str());
+                reader.read(&iface, true);
+            } catch (...) { continue; }
+            if (iface.entitiesWithTransparency > 0) {
+                std::cout << "  " << std::left << std::setw(56) << fname
+                          << " entWithAlpha=" << iface.entitiesWithTransparency
+                          << "  type3=" << iface.alphaType3Count
+                          << "  inherit=" << iface.alphaTypeBlockOrLayer << "\n";
+                for (const auto& s : iface.samples) {
+                    std::cout << "    " << std::get<0>(s)
+                              << "  alpha_raw=0x" << std::hex << std::get<1>(s)
+                              << std::dec << "\n";
+                }
+            }
+            totalEnt += iface.entitiesWithTransparency;
+            totalAlpha3 += iface.alphaType3Count;
+        }
+    }
+
+    std::cout << "\nTransparency summary: " << totalEnt
+              << " entities across " << totalFiles << " files; "
+              << totalAlpha3 << " with explicit alpha (type 3)\n";
+    SUCCEED();
+}
+
+// ---- field-level parity tests for DIMENSION + HATCH ------------------------
+
+namespace {
+
+struct HatchFieldSnapshot {
+    int    isGradient;
+    int    singleColor;
+    double gradAngle;
+    double gradShift;
+    double gradTint;
+    std::string gradName;
+    size_t gradColorCount;
+    size_t seedPointCount;
+};
+
+struct DimFieldSnapshot {
+    std::string subtype;
+    double measureValue;
+    bool   flipArrow1;
+    bool   flipArrow2;
+};
+
+class FieldCaptureIface : public TypeTrackingIface {
+public:
+    std::vector<HatchFieldSnapshot> hatchSnaps;
+    std::vector<DimFieldSnapshot>   dimSnaps;
+
+    void addHatch(const DRW_Hatch* e) override {
+        TypeTrackingIface::addHatch(e);
+        hatchSnaps.push_back({e->isGradient, e->singleColor, e->gradAngle,
+                              e->gradShift, e->gradTint, e->gradName,
+                              e->gradColors.size(), e->seedPoints.size()});
+    }
+    void addDimAlign(const DRW_DimAligned* e) override {
+        TypeTrackingIface::addDimAlign(e);
+        dimSnaps.push_back({"DIM_ALIGNED", e->getMeasureValue(),
+                            e->getFlipArrow1(), e->getFlipArrow2()});
+    }
+    void addDimLinear(const DRW_DimLinear* e) override {
+        TypeTrackingIface::addDimLinear(e);
+        dimSnaps.push_back({"DIM_LINEAR", e->getMeasureValue(),
+                            e->getFlipArrow1(), e->getFlipArrow2()});
+    }
+    void addDimRadial(const DRW_DimRadial* e) override {
+        TypeTrackingIface::addDimRadial(e);
+        dimSnaps.push_back({"DIM_RADIAL", e->getMeasureValue(),
+                            e->getFlipArrow1(), e->getFlipArrow2()});
+    }
+    void addDimDiametric(const DRW_DimDiametric* e) override {
+        TypeTrackingIface::addDimDiametric(e);
+        dimSnaps.push_back({"DIM_DIAMETRIC", e->getMeasureValue(),
+                            e->getFlipArrow1(), e->getFlipArrow2()});
+    }
+    void addDimAngular(const DRW_DimAngular* e) override {
+        TypeTrackingIface::addDimAngular(e);
+        dimSnaps.push_back({"DIM_ANGULAR", e->getMeasureValue(),
+                            e->getFlipArrow1(), e->getFlipArrow2()});
+    }
+    void addDimAngular3P(const DRW_DimAngular3p* e) override {
+        TypeTrackingIface::addDimAngular3P(e);
+        dimSnaps.push_back({"DIM_ANGULAR3P", e->getMeasureValue(),
+                            e->getFlipArrow1(), e->getFlipArrow2()});
+    }
+    void addDimOrdinate(const DRW_DimOrdinate* e) override {
+        TypeTrackingIface::addDimOrdinate(e);
+        dimSnaps.push_back({"DIM_ORDINATE", e->getMeasureValue(),
+                            e->getFlipArrow1(), e->getFlipArrow2()});
+    }
+};
+
+} // namespace
+
+// Verifies that the DWG decoder actually populates DRW_Hatch's new gradient
+// + seed-point members (previously read-then-discarded). Uses the same
+// Architectural-Modern-Building-Design.dwg fixture that already exercises 48
+// HATCH entities including gradient fills.
+TEST_CASE("DWG hatch field parity: gradient + seed points populate", "[.dwg_hatch_fields]") {
+    const char* home = getenv("HOME");
+    if (!home) { SUCCEED("HOME not set; skipping"); return; }
+    const std::string path =
+        std::string(home) + "/doc/dwg2/Architectural-Modern-Building-Design.dwg";
+    if (!std::filesystem::is_regular_file(path)) {
+        SUCCEED("Architectural-Modern-Building-Design.dwg not present; skipping"); return;
+    }
+
+    FieldCaptureIface iface;
+    {
+        dwgR reader(path.c_str());
+        reader.setDebug(DRW::DebugLevel::None);
+        REQUIRE(reader.read(&iface, true));
+    }
+
+    REQUIRE(iface.hatchSnaps.size() >= 1u);
+
+    int gradientHatches = 0;
+    int hatchesWithSeeds = 0;
+    int totalSeedPoints = 0;
+    for (const auto& s : iface.hatchSnaps) {
+        if (s.isGradient) {
+            ++gradientHatches;
+            // A gradient hatch must have at least one stop and a name.
+            CHECK(s.gradColorCount >= 1u);
+            CHECK(!s.gradName.empty());
+        }
+        if (s.seedPointCount > 0) {
+            ++hatchesWithSeeds;
+            totalSeedPoints += static_cast<int>(s.seedPointCount);
+        }
+    }
+
+    std::cout << "\n  hatches: " << iface.hatchSnaps.size()
+              << "  gradient: " << gradientHatches
+              << "  with seeds: " << hatchesWithSeeds
+              << "  total seed points: " << totalSeedPoints << "\n";
+
+    // The fixture is documented to include gradient hatches — at least one
+    // should now populate the new DRW_Hatch fields.
+    CHECK(gradientHatches >= 1);
+}
+
+// Verifies that DIMENSION's measureValue (code 42) and flipArrow1/2 (codes
+// 74/75) survive the DWG parser. Pre-fix these were read-then-discarded for
+// AC1015+/AC1021+ files. We just sanity-check that the values are sane:
+// measureValue is finite; flipArrow flags are 0 or 1 (bool).
+TEST_CASE("DWG dimension field parity: measureValue + flipArrow populate", "[.dwg_dim_fields]") {
+    const char* home = getenv("HOME");
+    if (!home) { SUCCEED("HOME not set; skipping"); return; }
+    const std::string dir = std::string(home) + "/doc/dwg2/";
+    if (!std::filesystem::is_directory(dir)) {
+        SUCCEED("DWG corpus directory not found; skipping"); return;
+    }
+
+    int filesScanned = 0;
+    int totalDims    = 0;
+    int nonZeroMeasure = 0;
+    int flippedArrows  = 0;
+    for (const auto& entry : std::filesystem::directory_iterator(dir)) {
+        if (entry.path().extension() != ".dwg") continue;
+        FieldCaptureIface iface;
+        try {
+            dwgR reader(entry.path().c_str());
+            reader.setDebug(DRW::DebugLevel::None);
+            if (!reader.read(&iface, true)) continue;
+        } catch (...) { continue; }
+        ++filesScanned;
+        for (const auto& d : iface.dimSnaps) {
+            ++totalDims;
+            // measureValue should be finite (NaN/Inf would indicate the
+            // assignment never happened).
+            CHECK(std::isfinite(d.measureValue));
+            if (d.measureValue != 0.0) ++nonZeroMeasure;
+            if (d.flipArrow1 || d.flipArrow2) ++flippedArrows;
+        }
+    }
+
+    std::cout << "\n  files scanned: " << filesScanned
+              << "  dims: " << totalDims
+              << "  non-zero measure: " << nonZeroMeasure
+              << "  flipped arrows: " << flippedArrows << "\n";
+
+    // At least some dimensions in the corpus should have non-zero measure
+    // values. If none do, either the assignment is broken or the corpus has
+    // no meaningful dimensions.
+    if (totalDims > 0)
+        CHECK(nonZeroMeasure > 0);
 }

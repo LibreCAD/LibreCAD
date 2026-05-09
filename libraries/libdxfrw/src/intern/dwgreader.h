@@ -169,6 +169,14 @@ public:
     std::unordered_map<duint32, DRW_Dimstyle*> dimstylemap;
     std::unordered_map<duint32, DRW_Vport*> vportmap;
     std::unordered_map<duint32, DRW_Block_Record*> blockRecordmap;
+
+    /// Resolved DBCOLOR (AcDbColor) lookup, populated as the OBJECTS section
+    /// is decoded.  Key: handle of the AcDbColor object.  Value: pair of
+    /// (24-bit RGB, display name) — entities referencing this handle (via
+    /// ENC flag 0x40) get color24 + colorName patched from this map after
+    /// their parseDwg returns.  Names are formatted as "BOOK$ENTRY" when a
+    /// book name is present, otherwise just the entry name.
+    std::unordered_map<duint32, std::pair<dint32, std::string>> dbColorMap;
     std::unordered_map<duint32, DRW_AppId*> appIdmap;
     std::unordered_map<duint32, DRW_View*> viewmap;
     std::unordered_map<duint32, DRW_UCS*> ucsmap;
@@ -211,6 +219,26 @@ private:
             parseAttribs(&e);
             nextEntLink = e.nextEntLink;
             prevEntLink = e.prevEntLink;
+            // Resolve AcDbColor reference (ENC flag 0x40) against the
+            // OBJECTS-section DBCOLOR map populated by readDwgObject.
+            // Patches color24 and colorName onto the entity for downstream
+            // filters (DXF code 420 / 430).  Non-entity Ts that lack these
+            // fields are still accepted because every T derives from
+            // DRW_Entity which exposes them.
+            if (e.acDbColorHandle != 0) {
+                auto it = dbColorMap.find(e.acDbColorHandle);
+                if (it != dbColorMap.end()) {
+                    // color24 patched only if not already inline-set by
+                    // ENC RGB (flag 0x80 path). Inline ENC name (flags
+                    // 0x41/0x42) takes precedence over the DBCOLOR target's
+                    // name — libreDWG model: these are entity-level
+                    // overrides distinct from the DBCOLOR's own name.
+                    if (it->second.first >= 0 && e.color24 == -1)
+                        e.color24 = it->second.first;
+                    if (!it->second.second.empty() && e.colorName.empty())
+                        e.colorName = it->second.second;
+                }
+            }
         }
 
         return ret;

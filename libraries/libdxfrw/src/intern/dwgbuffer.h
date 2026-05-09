@@ -128,7 +128,23 @@ public:
     /// Returns the indexed color value (or sentinel for ByLayer/ByBlock/RGB).
     /// If rgb24 is non-null, also populates the 24-bit RGB component for
     /// type-0xC2 (true color) entries; otherwise leaves rgb24 untouched.
-    duint32 getCmColor(DRW::Version v, dint32* rgb24 = nullptr); //CMC
+    /// CMC color decoder. R15 and earlier: directly BS as ACIS. R2004+:
+    /// BS index, BL rgb-with-method, RC method byte, optional name + book
+    /// name from str_dat (R2007+) or dat (earlier).  See libreDWG
+    /// bits.c:3704-3743 for the canonical layout.
+    ///
+    /// @param v        version
+    /// @param rgb24    out: 24-bit RGB for type 0xC2 (true color)
+    /// @param strBuf   string buffer for R2007+ name/book reads (separate
+    ///                 string area).  If null, falls back to *this — wrong
+    ///                 for R2007+ but matches the historical behavior.
+    /// @param outName  out: color name (when method byte bit 1 set)
+    /// @param outBookName out: book name (when method byte bit 2 set)
+    duint32 getCmColor(DRW::Version v,
+                       dint32* rgb24 = nullptr,
+                       dwgBuffer* strBuf = nullptr,
+                       UTF8STRING* outName = nullptr,
+                       UTF8STRING* outBookName = nullptr); //CMC
     duint32 getEnColor(DRW::Version v); //ENC
     //TC
 
@@ -143,6 +159,32 @@ public:
 
 //    duint8 getCurrByte(){return currByte;}
     DRW_TextCodec *decoder{nullptr};
+
+    /// Side-channel: getEnColor() sets this true when the ENC field's flag
+    /// byte has bit 0x40 (AcDbColor reference). Caller (DRW_Entity::parseDwg)
+    /// captures it immediately, then DRW_Entity::parseDwgEntHandle consumes
+    /// the corresponding offset handle at the START of the handle stream
+    /// (libreDWG common_entity_data.spec:454-459 — read from hdl_dat).
+    bool lastEnColorHadDbColorRef{false};
+
+    /// Side-channel: ENC inline color/book names. Populated by getEnColor()
+    /// when flags & 0x41 == 0x41 (color name) or flags & 0x42 == 0x42
+    /// (book name). libreDWG common_entity_data.spec:468-475 reads these as
+    /// 8-bit TV from the data stream (FIELD_TV — deliberately 8-bit even on
+    /// R2007+; spec quirk verified against real files). Caller in
+    /// DRW_Entity::parseDwg captures these and populates entity.colorName
+    /// as "BOOK$ENTRY"; the inline ENC name takes precedence over the
+    /// dbColorMap-resolved DBCOLOR name (entity-level override).
+    UTF8STRING lastEnColorName;
+    UTF8STRING lastEnColorBookName;
+
+    /// Side-channel: ENC alpha-raw (DXF code 440). Populated by getEnColor()
+    /// when flag 0x20 is set. libreDWG common_entity_data.spec:439 — the
+    /// BL alpha_raw packs alpha_type in the high byte (0=ByLayer, 1=ByBlock,
+    /// 3=explicit alpha) and alpha 0..255 in the low byte. Stored raw;
+    /// DRW_Entity::parseDwg copies into transparency for the filter to
+    /// interpret.  0 = "not set" (default for entities without flag 0x20).
+    duint32 lastEnColorAlphaRaw{0};
 
 private:
     std::unique_ptr<dwgBasicStream> filestr;

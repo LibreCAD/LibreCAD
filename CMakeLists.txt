@@ -1720,6 +1720,9 @@ if(BUILD_TESTS)
         librecad/src/lib/math/tests/rs_math_tests.cpp
         librecad/src/lib/math/tests/lc_quadratic_tests.cpp
         librecad/src/lib/filters/tests/dwg_smoke_tests.cpp
+        librecad/src/lib/filters/tests/eed_tests.cpp
+        librecad/src/lib/filters/tests/dbcolor_tests.cpp
+        librecad/src/lib/filters/tests/entity_metadata_tests.cpp
     )
 
     # Include directories for rs_math.h and other dependencies

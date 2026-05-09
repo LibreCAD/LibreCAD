@@ -51,17 +51,51 @@
 #include "rs_text.h"
 #include "rs_vector.h"
 #include "lc_quadratic.h"
+#include "drw_base.h"
 
 
 struct RS_Entity::Impl {
     //! pen (attributes) for this entity
     RS_Pen pen{};
     std::map<QString, QString> varList;
+    /// Raw XDATA / EED from libdxfrw, preserved verbatim across an
+    /// import → save cycle. Each shared_ptr<DRW_Variant> is a single
+    /// group-code/value pair (see DRW_Entity::extData for the exact
+    /// schema). Empty for the common case of entities without XDATA.
+    std::vector<std::shared_ptr<DRW_Variant>> drwExtData;
+
+    // Passive metadata sidecars (DBCOLOR-style). All defaults map to
+    // libdxfrw "ByLayer / no override" sentinels — round-trip skips
+    // these on write when unchanged.
+    quint32 m_materialHandle = 0;        // DXF 347
+    quint32 m_plotStyleHandle = 0;       // DXF 390
+    int     m_shadowMode = 0;            // DXF 284, DRW::CastAndReceieveShadows
+    quint32 m_fullVisualStyleH = 0;      // DWG R2010+
+    quint32 m_faceVisualStyleH = 0;
+    quint32 m_edgeVisualStyleH = 0;
 
     void fromOther(Impl* other) {
         if (other != nullptr) {
             pen = other->pen;
             varList = other->varList;
+            // Deep-copy so the destination owns independent DRW_Variants;
+            // shared_ptrs would otherwise alias, which is correct only
+            // for read-only consumers.
+            drwExtData.clear();
+            drwExtData.reserve(other->drwExtData.size());
+            for (const auto& sp : other->drwExtData) {
+                if (sp) {
+                    drwExtData.push_back(std::make_shared<DRW_Variant>(*sp));
+                } else {
+                    drwExtData.push_back(nullptr);
+                }
+            }
+            m_materialHandle = other->m_materialHandle;
+            m_plotStyleHandle = other->m_plotStyleHandle;
+            m_shadowMode = other->m_shadowMode;
+            m_fullVisualStyleH = other->m_fullVisualStyleH;
+            m_faceVisualStyleH = other->m_faceVisualStyleH;
+            m_edgeVisualStyleH = other->m_edgeVisualStyleH;
         }
     }
 };
@@ -1007,6 +1041,33 @@ std::vector<QString> RS_Entity::getAllKeys() const{
         ret.push_back(key);
     }
     return ret;
+}
+
+const std::vector<std::shared_ptr<DRW_Variant>>& RS_Entity::getDrwExtData() const {
+    return m_pImpl->drwExtData;
+}
+
+void RS_Entity::setDrwExtData(std::vector<std::shared_ptr<DRW_Variant>> extData) {
+    m_pImpl->drwExtData = std::move(extData);
+}
+
+bool RS_Entity::hasDrwExtData() const {
+    return !m_pImpl->drwExtData.empty();
+}
+
+quint32 RS_Entity::materialHandle() const { return m_pImpl->m_materialHandle; }
+void RS_Entity::setMaterialHandle(quint32 h) { m_pImpl->m_materialHandle = h; }
+quint32 RS_Entity::plotStyleHandle() const { return m_pImpl->m_plotStyleHandle; }
+void RS_Entity::setPlotStyleHandle(quint32 h) { m_pImpl->m_plotStyleHandle = h; }
+int RS_Entity::shadowMode() const { return m_pImpl->m_shadowMode; }
+void RS_Entity::setShadowMode(int mode) { m_pImpl->m_shadowMode = mode; }
+quint32 RS_Entity::fullVisualStyleHandle() const { return m_pImpl->m_fullVisualStyleH; }
+quint32 RS_Entity::faceVisualStyleHandle() const { return m_pImpl->m_faceVisualStyleH; }
+quint32 RS_Entity::edgeVisualStyleHandle() const { return m_pImpl->m_edgeVisualStyleH; }
+void RS_Entity::setVisualStyleHandles(quint32 full, quint32 face, quint32 edge) {
+    m_pImpl->m_fullVisualStyleH = full;
+    m_pImpl->m_faceVisualStyleH = face;
+    m_pImpl->m_edgeVisualStyleH = edge;
 }
 
 //! constructionLayer contains entities of infinite length, constructionLayer doesn't show up in print

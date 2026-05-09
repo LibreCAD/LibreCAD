@@ -1307,6 +1307,18 @@ void RS_FilterDXFRW::fillEntityExtData(std::vector<std::shared_ptr<DRW_Variant>>
                     auto variable = tag->var();
                     int code = variable->getCode();
                     extData.push_back(std::make_shared<DRW_Variant>(1070, code)); // code of variable
+                    if (tag->isBinary()) {
+                        // Wrap the QByteArray bytes in a BINARY DRW_Variant
+                        // (DXF group 1004). The DXF writer hex-encodes them
+                        // on emit; the DWG path will use the raw bytes.
+                        const QByteArray& bytes = tag->bytes();
+                        std::vector<duint8> raw(bytes.size());
+                        for (int i = 0; i < bytes.size(); ++i) {
+                            raw[i] = static_cast<duint8>(bytes[i]);
+                        }
+                        extData.push_back(std::make_shared<DRW_Variant>(1004, std::move(raw)));
+                        continue;
+                    }
                     auto varType = variable->getType();
                     switch (varType) {
                         case RS2::VariableInt: {
@@ -1318,12 +1330,19 @@ void RS_FilterDXFRW::fillEntityExtData(std::vector<std::shared_ptr<DRW_Variant>>
                             break;
                         }
                         case RS2::VariableString: {
-                            // int code = 1003;
-                            // if (tag->isRef()) {
-                                // code = 1005;
-                            // }
-                            // extData.push_back(std::make_shared<DRW_Variant>(code, variable->getString().toStdString())); // string value
-                            extData.push_back(std::make_shared<DRW_Variant>((tag->isRef() ? 1005 : 1003), variable->getString().toStdString())); // string value
+                            if (tag->isLayerRef()) {
+                                // DXF code 1003 — layer name reference. The
+                                // isLayerRef flag rides on the variant so that
+                                // the DWG path (when written) can resolve the
+                                // name back to a layer-table handle.
+                                extData.push_back(std::make_shared<DRW_Variant>(
+                                    1003, variable->getString().toStdString(),
+                                    /*isLayerRef=*/true));
+                            } else {
+                                extData.push_back(std::make_shared<DRW_Variant>(
+                                    (tag->isRef() ? 1005 : 1003),
+                                    variable->getString().toStdString())); // string value
+                            }
                             break;
                         }
                         case RS2::VariableVector: {
@@ -1382,11 +1401,34 @@ LC_ExtEntityData* RS_FilterDXFRW::extractEntityExtData(const std::vector<std::sh
                 }
                 break;
             }
-            case 1003:
-            case 1004:{
-                QString val = v->c_str();
+            case 1003:{
                 if (currentGroup != nullptr) {
-                    currentGroup->add(currentValType, val);
+                    if (v->isLayerRef()) {
+                        currentGroup->addLayerRef(currentValType, QString{v->c_str()});
+                    } else {
+                        currentGroup->add(currentValType, QString{v->c_str()});
+                    }
+                }
+                break;
+            }
+            case 1004:{
+                if (currentGroup != nullptr) {
+                    if (v->type() == DRW_Variant::BINARY) {
+                        const auto* bytes = v->binary();
+                        if (bytes != nullptr) {
+                            currentGroup->add(currentValType,
+                                QByteArray(reinterpret_cast<const char*>(bytes->data()),
+                                           static_cast<int>(bytes->size())));
+                        } else {
+                            currentGroup->add(currentValType, QByteArray{});
+                        }
+                    } else {
+                        // DXF round-trip path: 1004 arrives as a hex-encoded
+                        // string. Decode back to raw bytes so the in-memory
+                        // representation is consistent regardless of source.
+                        QByteArray hex(v->c_str());
+                        currentGroup->add(currentValType, QByteArray::fromHex(hex));
+                    }
                 }
                 break;
             }
@@ -4910,14 +4952,19 @@ void RS_FilterDXFRW::setEntityAttributes(RS_Entity* entity,
     entity->setLayer(layName);
 
     // Color:
+    RS_Color col;
     if (attrib->color24 >= 0) {
-        pen.setColor(RS_Color(attrib->color24 >> 16,
-                              attrib->color24 >> 8 & 0xFF,
-                              attrib->color24 & 0xFF));
+        col = RS_Color(attrib->color24 >> 16,
+                       attrib->color24 >> 8 & 0xFF,
+                       attrib->color24 & 0xFF);
     }
     else {
-        pen.setColor(numberToColor(attrib->color));
+        col = numberToColor(attrib->color);
     }
+    if (!attrib->colorName.empty()) {
+        col.setColorName(QString::fromUtf8(attrib->colorName.c_str()));
+    }
+    pen.setColor(col);
 
     // Linetype:
     pen.setLineType(nameToLineType( QString::fromUtf8(attrib->lineType.c_str()) ));
@@ -4925,7 +4972,46 @@ void RS_FilterDXFRW::setEntityAttributes(RS_Entity* entity,
     // Width:
     pen.setWidth(numberToWidth(attrib->lWeight));
 
+    // Transparency (DXF code 440): alpha_raw packs alpha_type in high byte
+    // (0/1 = ByLayer/ByBlock, inherits parent), 3 = explicit alpha (low
+    // byte 0..255). RS_Pen.alpha is a float 0..1 where 1.0 is opaque.
+    // libreDWG common_entity_data.spec:432-446 documents the encoding.
+    // Only override the pen default when alpha_type == 3.
+    if (attrib->transparency != DRW::Opaque) {
+        const unsigned int rawAlpha = static_cast<unsigned int>(attrib->transparency);
+        const unsigned int alphaType = (rawAlpha >> 24) & 0xFF;
+        const unsigned int alphaByte = rawAlpha & 0xFF;
+        if (alphaType == 3) {
+            pen.setAlpha(static_cast<float>(alphaByte) / 255.0f);
+        }
+    }
+
     entity->setPen(pen);
+
+    // Passive metadata sidecars — DXF/DWG fields that don't affect
+    // rendering or equality but must round-trip on save. Skip the
+    // default sentinels so unset entities stay unchanged.
+    if (attrib->material != DRW::MaterialByLayer)
+        entity->setMaterialHandle(attrib->material);
+    if (attrib->plotStyle != DRW::DefaultPlotStyle)
+        entity->setPlotStyleHandle(static_cast<quint32>(attrib->plotStyle));
+    if (attrib->shadow != DRW::CastAndReceieveShadows)
+        entity->setShadowMode(static_cast<int>(attrib->shadow));
+    // Visual-style handles (DWG R2010+ only; libdxfrw's DXF reader has no
+    // codes for these, so they round-trip from DWG only).
+    entity->setVisualStyleHandles(
+        attrib->fullVisualStyleHandle,
+        attrib->faceVisualStyleHandle,
+        attrib->edgeVisualStyleHandle);
+
+    // Preserve any XDATA / EED that came in with the entity. Stored
+    // verbatim on RS_Entity so a later getEntityAttributes() can spit
+    // it back out unchanged. The dimension-style override path reads
+    // the same source independently and is unaffected.
+    if (!attrib->extData.empty()) {
+        entity->setDrwExtData(attrib->extData);
+    }
+
     RS_DEBUG->print("RS_FilterDXF::setEntityAttributes: OK");
 }
 
@@ -4960,8 +5046,34 @@ void RS_FilterDXFRW::getEntityAttributes(DRW_Entity* ent, const RS_Entity* entit
     ent->layer = toDxfString(layerName).toUtf8().data();
     ent->color = color;
     ent->color24 = exact_rgb;
+    if (pen.getColor().hasColorName()) {
+        ent->colorName = pen.getColor().colorName().toUtf8().data();
+    }
     ent->lWeight = width;
     ent->lineType = lineType.toUtf8().data();
+
+    // Transparency export: encode pen alpha < 1.0 as DXF code 440
+    // (alpha_raw). High byte 0x03 = "explicit alpha", low byte = 0..255.
+    // Mirrors the import decoder above.
+    if (pen.getAlpha() < 1.0f) {
+        int alphaByte = static_cast<int>(pen.getAlpha() * 255.0f + 0.5f);
+        ent->transparency = (0x03 << 24) | (alphaByte & 0xFF);
+    }
+
+    // Passive metadata sidecars — emit only when overridden.
+    if (entity->materialHandle() != 0)
+        ent->material = entity->materialHandle();
+    if (entity->plotStyleHandle() != 0)
+        ent->plotStyle = static_cast<int>(entity->plotStyleHandle());
+    if (entity->shadowMode() != 0)
+        ent->shadow = static_cast<DRW::ShadowMode>(entity->shadowMode());
+
+    // Re-emit any XDATA / EED that was attached on import. Skipped if
+    // the dimension-export path (or any other caller) already populated
+    // ent->extData with its own structured override.
+    if (entity->hasDrwExtData() && ent->extData.empty()) {
+        ent->extData = entity->getDrwExtData();
+    }
 }
 
 /**
@@ -4977,6 +5089,9 @@ RS_Pen RS_FilterDXFRW::attributesToPen(const DRW_Layer* att) const {
     }
     else {
         col = numberToColor(att->color);
+    }
+    if (!att->colorName.empty()) {
+        col.setColorName(QString::fromUtf8(att->colorName.c_str()));
     }
 
     RS_Pen pen(col, numberToWidth(att->lWeight),

@@ -750,7 +750,10 @@ double dwgBuffer::getThickness(bool b_R2000_style) {
 * For R2004+, can be CMC or ENC
 * RGB value, first 4bits 0xC0 => ByLayer, 0xC1 => ByBlock, 0xC2 => RGB,  0xC3 => last 4 are ACIS
 */
-duint32 dwgBuffer::getCmColor(DRW::Version v, dint32* rgb24) {
+duint32 dwgBuffer::getCmColor(DRW::Version v, dint32* rgb24,
+                              dwgBuffer* strBuf,
+                              UTF8STRING* outName,
+                              UTF8STRING* outBookName) {
     if (v < DRW::AC1018) //2000-
         return getSBitShort();
     duint16 idx = getBitShort();
@@ -761,13 +764,20 @@ duint32 dwgBuffer::getCmColor(DRW::Version v, dint32* rgb24) {
     DRW_DBG("\nindex COLOR: "); DRW_DBGH(idx);
     DRW_DBG("\nRGB COLOR: "); DRW_DBGH(rgb);
     DRW_DBG("\nbyte COLOR: "); DRW_DBGH(cb);
+    // libreDWG bits.c:3722-3724 reads color.name / book_name via bit_read_T
+    // from str_dat — for R2007+ that's the separate string stream, for
+    // earlier versions it's the same buffer. We mirror that: read from the
+    // strBuf if provided, otherwise from this (matches historical behavior).
+    dwgBuffer* nameSource = strBuf ? strBuf : this;
     if (cb&1){
-        std::string colorName = getVariableText(v, false);
+        UTF8STRING colorName = nameSource->getVariableText(v, false);
         DRW_DBG("\ncolorName: "); DRW_DBG(colorName);
+        if (outName) *outName = std::move(colorName);
     }
     if (cb&2){
-        std::string bookName = getVariableText(v, false);
+        UTF8STRING bookName = nameSource->getVariableText(v, false);
         DRW_DBG("\nbookName: "); DRW_DBG(bookName);
+        if (outBookName) *outBookName = std::move(bookName);
     }
     switch (type) {
     case 0xC0:
@@ -803,24 +813,52 @@ duint32 dwgBuffer::getEnColor(DRW::Version v) {
     duint16 idx = getBitShort();
     DRW_DBG("idx reads COLOR: "); DRW_DBGH(idx);
     duint16 flags = idx>>8;
-    idx = idx & 0xFF; //§2.7: index is the low byte; flags occupy the high byte
+    // libreDWG common_entity_data.spec:424 uses 0x1ff because index 256 (ByLayer)
+    // requires bit 8. Bit 8 is shared between flag's LSB and index's MSB; the
+    // encoder ORs them at write time. We replicate the decoder mask exactly.
+    idx = idx & 0x1FF;
     DRW_DBG("\nflag COLOR: "); DRW_DBGH(flags);
     DRW_DBG(", index COLOR: "); DRW_DBGH(idx);
 //    if (flags & 0x80) {
 //        rgb = getBitLong();
 //        DRW_DBG("\nRGB COLOR: "); DRW_DBGH(rgb);
 //    }
+    // libreDWG common_entity_data.spec:432-453 — when flag 0x20 set, BL
+    // alpha_raw follows. High byte is alpha_type (0/1/3), low byte is
+    // alpha 0..255. Stored in side-channel for DRW_Entity::parseDwg.
+    lastEnColorAlphaRaw = 0;
     if (flags & 0x20) {
-        cb = getBitLong();
-        DRW_DBG("\nTransparency COLOR: "); DRW_DBGH(cb);
+        lastEnColorAlphaRaw = static_cast<duint32>(getBitLong());
+        cb = lastEnColorAlphaRaw; // keep cb for legacy DRW_DBG below
+        DRW_DBG("\nTransparency COLOR (alpha_raw): "); DRW_DBGH(lastEnColorAlphaRaw);
     }
-    if (flags & 0x40)
-        DRW_DBG("\nacdbColor COLOR are present");
-    else {
-        if (flags & 0x80) {
-            rgb = getBitLong();
-            DRW_DBG("\nRGB COLOR: "); DRW_DBGH(rgb);
-        }
+    // libreDWG common_entity_data.spec:454-466: when 0x40 set, an AcDbColor
+    // handle reference follows in hdl_dat — set side-channel flag for
+    // DRW_Entity::parseDwg / parseDwgEntHandle to consume it from the handle
+    // stream. When 0x40 NOT set but 0x80 IS set, an inline RGB BL follows.
+    lastEnColorHadDbColorRef = false;
+    if (flags & 0x40) {
+        DRW_DBG("\nacdbColor COLOR ref (handle in hdl_dat)");
+        lastEnColorHadDbColorRef = true;
+    } else if (flags & 0x80) {
+        rgb = getBitLong();
+        DRW_DBG("\nRGB COLOR: "); DRW_DBGH(rgb);
+    }
+    // libreDWG common_entity_data.spec:468-475 — when 0x41/0x42 set
+    // (i.e., 0x40 + bit 0/1), inline 8-bit TV strings follow. libreDWG
+    // explicitly uses FIELD_TV (8-bit from dat), not FIELD_T (which would
+    // dispatch to TU/str_dat for R2007+) — deliberate spec quirk verified
+    // against real files. We use getCP8Text which reads 8-bit length-
+    // prefixed and codepage-decodes to UTF-8.
+    lastEnColorName.clear();
+    lastEnColorBookName.clear();
+    if ((flags & 0x41) == 0x41) {
+        lastEnColorName = getCP8Text();
+        DRW_DBG("\nENC color name: "); DRW_DBG(lastEnColorName);
+    }
+    if ((flags & 0x42) == 0x42) {
+        lastEnColorBookName = getCP8Text();
+        DRW_DBG("\nENC book name: "); DRW_DBG(lastEnColorBookName);
     }
 
 /*    if (flags & 0x80)

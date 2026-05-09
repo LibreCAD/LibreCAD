@@ -204,8 +204,23 @@ bool dxfRW::writeEntity(DRW_Entity *ent) {
     if (version > DRW::AC1015 && ent->color24 >= 0) {
         writer->writeInt32(420, ent->color24);
     }
+    if (version > DRW::AC1015 && !ent->colorName.empty()) {
+        writer->writeUtf8String(430, ent->colorName);
+    }
+    if (version > DRW::AC1018 && ent->shadow != DRW::CastAndReceieveShadows) {
+        writer->writeInt16(284, static_cast<int>(ent->shadow));
+    }
+    if (version > DRW::AC1015 && ent->material != DRW::MaterialByLayer) {
+        writer->writeUtf8String(347, toHexStr(static_cast<int>(ent->material)));
+    }
     if (version > DRW::AC1014) {
         writer->writeInt16(370, DRW_LW_Conv::lineWidth2dxfInt(ent->lWeight));
+    }
+    if (version > DRW::AC1015 && ent->plotStyle != DRW::DefaultPlotStyle) {
+        writer->writeUtf8String(390, toHexStr(ent->plotStyle));
+    }
+    if (version > DRW::AC1015 && ent->transparency != DRW::Opaque) {
+        writer->writeInt32(440, ent->transparency);
     }
     if (version >= DRW::AC1014) {
         writeAppData(ent->appData);
@@ -1142,10 +1157,30 @@ bool dxfRW::writeHatch(DRW_Hatch *ent){
             writer->writeInt16(77, ent->doubleflag);
             writer->writeInt16(78, ent->deflines);
         }
-/*        if (ent->deflines > 0){
-            writer->writeInt16(78, ent->deflines);
-        }*/
-        writer->writeInt32(98, 0);
+        // Seed points (group 98 = count, then 10/20 pairs).
+        const int seedCount = static_cast<int>(ent->seedPoints.size());
+        writer->writeInt32(98, seedCount);
+        for (const DRW_Coord &pt : ent->seedPoints) {
+            writer->writeDouble(10, pt.x);
+            writer->writeDouble(20, pt.y);
+        }
+        // Gradient block (R2004+ DXF; codes 450-470 + 463/421/63 per stop).
+        if (ent->isGradient) {
+            writer->writeInt32(450, ent->isGradient);
+            writer->writeInt32(451, ent->gradReserved);
+            writer->writeDouble(460, ent->gradAngle);
+            writer->writeDouble(461, ent->gradShift);
+            writer->writeInt32(452, ent->singleColor);
+            writer->writeDouble(462, ent->gradTint);
+            writer->writeInt32(453, static_cast<int>(ent->gradColors.size()));
+            for (const DRW_Hatch::GradientStop &stop : ent->gradColors) {
+                writer->writeDouble(463, stop.value);
+                writer->writeInt32(421, stop.rgb);
+                if (stop.aciColor != 0)
+                    writer->writeInt32(63, stop.aciColor);
+            }
+            writer->writeUtf8String(470, ent->gradName);
+        }
     } else {
         //RLZ: TODO verify in acad12
     }
@@ -2051,13 +2086,33 @@ bool dxfRW::writeExtData(const std::vector<DRW_Variant*> &ed){
         case 1001:
         case 1002:
         case 1003:
-        case 1004:
         case 1005:
         {int cc = (*it)->code();
             if ((*it)->type() == DRW_Variant::STRING)
                 writer->writeUtf8String(cc, *(*it)->content.s);
 //            writer->writeUtf8String((*it)->code, (*it)->content.s);
             break;}
+        case 1004:
+            // DXF code 1004 is binary chunk data; emitted as a hex-encoded
+            // string. Both BINARY (from DWG path) and STRING (from a DXF
+            // round-trip that already hex-encoded the bytes) variants are
+            // accepted.
+            if ((*it)->type() == DRW_Variant::BINARY) {
+                const std::vector<duint8>* bytes = (*it)->binary();
+                std::string hex;
+                if (bytes != nullptr) {
+                    static const char hexDigits[] = "0123456789ABCDEF";
+                    hex.reserve(bytes->size() * 2);
+                    for (duint8 b : *bytes) {
+                        hex.push_back(hexDigits[(b >> 4) & 0xF]);
+                        hex.push_back(hexDigits[b & 0xF]);
+                    }
+                }
+                writer->writeUtf8String(1004, hex);
+            } else if ((*it)->type() == DRW_Variant::STRING) {
+                writer->writeUtf8String(1004, *(*it)->content.s);
+            }
+            break;
         case 1010:
         case 1011:
         case 1012:

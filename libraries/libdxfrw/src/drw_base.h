@@ -19,6 +19,7 @@
 #include <string>
 #include <cmath>
 #include <unordered_map>
+#include <vector>
 
 #ifdef DRW_ASSERTS
 # define drw_assert(a) assert(a)
@@ -262,48 +263,60 @@ public:
         INTEGER,
         DOUBLE,
         COORD,
+        BINARY,
         INVALID
     };
 //TODO: add INT64 support
-    DRW_Variant(): sdata(std::string()), vdata(), content(0), vType(INVALID), vCode(0) {}
+    DRW_Variant(): sdata(std::string()), vdata(), bdata(), content(0), vType(INVALID), vCode(0) {}
 
-    DRW_Variant(int c, dint32 i): sdata(std::string()), vdata(), content(i), vType(INTEGER), vCode(c){}
+    DRW_Variant(int c, dint32 i): sdata(std::string()), vdata(), bdata(), content(i), vType(INTEGER), vCode(c){}
 
-    DRW_Variant(int c, duint32 i): sdata(std::string()), vdata(), content(static_cast<dint32>(i)), vType(INTEGER), vCode(c) {}
+    DRW_Variant(int c, duint32 i): sdata(std::string()), vdata(), bdata(), content(static_cast<dint32>(i)), vType(INTEGER), vCode(c) {}
 
-    DRW_Variant(int c, double d): sdata(std::string()), vdata(), content(d), vType(DOUBLE), vCode(c) {}
+    DRW_Variant(int c, double d): sdata(std::string()), vdata(), bdata(), content(d), vType(DOUBLE), vCode(c) {}
 
-    DRW_Variant(int c, UTF8STRING s): sdata(s), vdata(), content(&sdata), vType(STRING), vCode(c) {}
+    DRW_Variant(int c, UTF8STRING s): sdata(s), vdata(), bdata(), content(&sdata), vType(STRING), vCode(c) {}
 
-    DRW_Variant(int c, DRW_Coord crd): sdata(std::string()), vdata(crd), content(&vdata), vType(COORD), vCode(c) {}
+    DRW_Variant(int c, UTF8STRING s, bool isLayerRef): sdata(s), vdata(), bdata(), content(&sdata), vType(STRING), vCode(c), sIsLayerRef(isLayerRef) {}
 
-    DRW_Variant(const DRW_Variant& d): sdata(d.sdata), vdata(d.vdata), content(d.content), vType(d.vType), vCode(d.vCode) {
+    DRW_Variant(int c, DRW_Coord crd): sdata(std::string()), vdata(crd), bdata(), content(&vdata), vType(COORD), vCode(c) {}
+
+    DRW_Variant(int c, std::vector<duint8> b): sdata(std::string()), vdata(), bdata(std::move(b)), content(&bdata), vType(BINARY), vCode(c) {}
+
+    DRW_Variant(const DRW_Variant& d): sdata(d.sdata), vdata(d.vdata), bdata(d.bdata), content(d.content), vType(d.vType), vCode(d.vCode), sIsLayerRef(d.sIsLayerRef) {
         if (d.vType == COORD)
             content.v = &vdata;
         if (d.vType == STRING)
             content.s = &sdata;
+        if (d.vType == BINARY)
+            content.b = &bdata;
     }
 
     ~DRW_Variant() {
     }
 
-    void addString(int c, UTF8STRING s) {vType = STRING; sdata = s; content.s = &sdata; vCode=c;}
+    void addString(int c, UTF8STRING s) {vType = STRING; sdata = s; content.s = &sdata; vCode=c; sIsLayerRef=false;}
     void addInt(int c, int i) {vType = INTEGER; content.i = i; vCode=c;}
     void addDouble(int c, double d) {vType = DOUBLE; content.d = d; vCode=c;}
     void addCoord(int c, DRW_Coord v) {vType = COORD; vdata = v; content.v = &vdata; vCode=c;}
+    void addBinary(int c, std::vector<duint8> b) {vType = BINARY; bdata = std::move(b); content.b = &bdata; vCode=c;}
     void setCoordX(double d) { if (vType == COORD) vdata.x = d;}
     void setCoordY(double d) { if (vType == COORD) vdata.y = d;}
     void setCoordZ(double d) { if (vType == COORD) vdata.z = d;}
+    void setLayerRefName(const UTF8STRING& s) { if (vType == STRING) { sdata = s; content.s = &sdata; sIsLayerRef = true; } }
     enum TYPE type() const { return vType;}
     int code() const { return vCode;}       /*!< returns dxf code of this value*/
+    bool isLayerRef() const { return sIsLayerRef && vType == STRING; }
     const char* c_str() const { return content.s->c_str(); }
     double d_val() const { return content.d; }
     dint32 i_val() const { return content.i; }
     DRW_Coord* coord() const { return content.v; }
+    const std::vector<duint8>* binary() const { return &bdata; }
 
 private:
     std::string sdata;
     DRW_Coord vdata;
+    std::vector<duint8> bdata;
 
 private:
     union DRW_VarContent{
@@ -311,11 +324,13 @@ private:
         dint32 i;
         double d;
         DRW_Coord *v;
+        std::vector<duint8> *b;
 
         DRW_VarContent(UTF8STRING *sd):s(sd){}
         DRW_VarContent(dint32 id):i(id){}
         DRW_VarContent(double dd):d(dd){}
         DRW_VarContent(DRW_Coord *vd):v(vd){}
+        DRW_VarContent(std::vector<duint8> *bd):b(bd){}
     };
 
 public:
@@ -323,6 +338,7 @@ public:
 private:
     enum TYPE vType;
     int vCode;            /*!< dxf code of this value*/
+    bool sIsLayerRef{false}; /*!< when type==STRING, marks code 1003 layer-name references */
 
 };
 

@@ -10,6 +10,7 @@
 **  along with this program.  If not, see <http://www.gnu.org/licenses/>.    **
 ******************************************************************************/
 
+#include <cstdio>
 #include <cstdlib>
 #include <iostream>
 #include <fstream>
@@ -58,6 +59,34 @@ void dwgReader::parseAttribs(DRW_Entity* e) {
     if (ly_it != layermap.end()) {
         e->layer = (ly_it->second)->name;
     }
+
+    // Drain any deferred EED handle lookups now that the symbol tables
+    // are populated. parseDwg() pushed placeholder DRW_Variants for
+    // APPID names (DXF 1001) and layer-table refs (DXF 1003 with the
+    // isLayerRef flag); fill in their string content here.
+    for (const auto& p : e->pendingAppIdResolutions) {
+        if (p.indexInExtData >= e->extData.size()) continue;
+        auto& v = e->extData[p.indexInExtData];
+        if (!v) continue;
+        auto it = appIdmap.find(p.handleRef);
+        if (it != appIdmap.end() && it->second != nullptr) {
+            v->addString(1001, it->second->name);
+        } else {
+            char fallback[24];
+            std::snprintf(fallback, sizeof(fallback), "ACAD_%X", p.handleRef);
+            v->addString(1001, std::string{fallback});
+        }
+    }
+    e->pendingAppIdResolutions.clear();
+
+    for (const auto& p : e->pendingLayerRefResolutions) {
+        if (p.indexInExtData >= e->extData.size()) continue;
+        auto& v = e->extData[p.indexInExtData];
+        if (!v) continue;
+        std::string name = findTableName(DRW::LAYER, p.handleRef);
+        v->setLayerRefName(name);
+    }
+    e->pendingLayerRefResolutions.clear();
 }
 
 std::string dwgReader::findTableName(DRW::TTYPE table, dint32 handle){
@@ -1417,12 +1446,59 @@ bool dwgReader::readDwgObject(dwgBuffer *dbuf, objHandle& obj, DRW_Interface& in
             // commit a05908400 / 8e6730e5b.
             if (oType >= 500) {
                 auto cit = classesmap.find(oType);
-                if (cit != classesmap.end() && cit->second
-                    && cit->second->recName == "MLEADERSTYLE") {
-                    DRW_MLeaderStyle e;
-                    ret = e.parseDwg(version, &buff, bs);
-                    intfa.addMLeaderStyle(&e);
-                    break;
+                if (cit != classesmap.end() && cit->second) {
+                    const std::string& rn = cit->second->recName;
+                    if (rn == "MLEADERSTYLE") {
+                        DRW_MLeaderStyle e;
+                        ret = e.parseDwg(version, &buff, bs);
+                        intfa.addMLeaderStyle(&e);
+                        break;
+                    }
+                    // recName is the DXF CLASSES section record name (code 1),
+                    // not the C++ className (code 2 = "AcDbColor").  Match the
+                    // DXF spelling "DBCOLOR" — same convention as MLEADERSTYLE
+                    // above.  Populate dbColorMap so entity-side resolution in
+                    // entryParse (dwgreader.h) can patch color24 + colorName
+                    // onto entities referencing this DBCOLOR via the ENC flag
+                    // 0x40 handle.
+                    if (rn == "DBCOLOR" || cit->second->className == "AcDbColor") {
+                        DRW_DbColor e;
+                        ret = e.parseDwg(version, &buff, bs);
+                        if (ret) {
+                            std::string formatted = e.bookName.empty()
+                                ? e.name
+                                : (e.bookName + "$" + e.name);
+                            dbColorMap[obj.handle] = { e.rgb, formatted };
+                            intfa.addDbColor(e);
+                        }
+                        break;
+                    }
+                    // PLOTSETTINGS — plot configuration object (paper size,
+                    // margins, plotter name, etc.). DXF dispatches via
+                    // libdxfrw.cpp; the DWG path used to drop these into
+                    // remainingMap. libreDWG dwg.spec:5627 confirms
+                    // `DWG_OBJECT (PLOTSETTINGS)`; objects.in:321 marks the
+                    // dxfname as "PLOTSETTINGS".  RS_FilterDXFRW already
+                    // implements addPlotSettings (margins → m_graphic).
+                    if (rn == "PLOTSETTINGS"
+                        || cit->second->className == "AcDbPlotSettings") {
+                        DRW_PlotSettings e;
+                        ret = e.parseDwg(version, &buff, bs);
+                        if (ret) intfa.addPlotSettings(&e);
+                        break;
+                    }
+                    // VISUALSTYLE — AcDbVisualStyle (ODA spec §20.4.95).
+                    // Stub-parsed for round-trip identity; LibreCAD has
+                    // no 3D consumer. recName "ACDB_VISUALSTYLE_CLASS"
+                    // per spec; className fallback for files using the
+                    // C++ class spelling.
+                    if (rn == "ACDB_VISUALSTYLE_CLASS"
+                        || cit->second->className == "AcDbVisualStyle") {
+                        DRW_VisualStyle e;
+                        ret = e.parseDwg(version, &buff, bs);
+                        if (ret) intfa.addVisualStyle(e);
+                        break;
+                    }
                 }
             }
             //not supported object or entity add to remaining map for debug

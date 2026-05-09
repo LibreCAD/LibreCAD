@@ -11,10 +11,13 @@
 **  along with this program.  If not, see <http://www.gnu.org/licenses/>.    **
 ******************************************************************************/
 
+#include <cstdio>
 #include <cstdlib>
+#include <vector>
 #include "drw_entities.h"
 #include "intern/dxfreader.h"
 #include "intern/dwgbuffer.h"
+#include "intern/drw_textcodec.h"
 #include "intern/drw_dbg.h"
 #include "intern/drw_reserve.h"
 
@@ -104,6 +107,18 @@ bool DRW_Entity::parseCode(int code, const std::unique_ptr<dxfReader>& reader){
         break;
     case 102:
         parseDxfGroups(code, reader);
+        break;
+    case 284:
+        shadow = static_cast<DRW::ShadowMode>(reader->getInt32() & 0x3);
+        break;
+    case 347:
+        material = static_cast<duint32>(reader->getHandleString());
+        break;
+    case 390:
+        plotStyle = reader->getHandleString();
+        break;
+    case 440:
+        transparency = reader->getInt32();
         break;
     case 1000:
     case 1001:
@@ -233,33 +248,155 @@ bool DRW_Entity::parseDwg(DRW::Version version, dwgBuffer *buf, dwgBuffer* strBu
     dwgHandle ho = buf->getHandle();
     handle = ho.ref;
     DRW_DBG("Entity Handle: "); DRW_DBGHL(ho.code, ho.size, ho.ref);
+    // ODA DWG spec §28 "Extended Entity Data". The outer loop yields one
+    // BS-prefixed byte chunk per APPID-attached group; size==0 terminates.
+    // Each chunk's payload is a sequence of (1-byte type code + value)
+    // items; we walk it with a nested loop and push DRW_Variant entries
+    // into @ref extData. Handle-typed items (type 3 layer-ref, type 5
+    // entity-ref) and the per-chunk APPID handle are resolved post-hoc
+    // in dwgReader::parseAttribs once the symbol tables are available.
     dint16 extDataSize = buf->getBitShort(); //BS
     DRW_DBG(" ext data size: "); DRW_DBG(extDataSize);
     while (extDataSize>0 && buf->isGood()) {
-        /* RLZ: TODO */
         dwgHandle ah = buf->getHandle();
         DRW_DBG("App Handle: "); DRW_DBGHL(ah.code, ah.size, ah.ref);
         duint8 *tmpExtData = new duint8[extDataSize];
         buf->getBytes(tmpExtData, extDataSize);
         dwgBuffer tmpExtDataBuf(tmpExtData, extDataSize, buf->decoder);
 
-        duint8 dxfCode = tmpExtDataBuf.getRawChar8();
-        DRW_DBG(" dxfCode: "); DRW_DBG(dxfCode);
-        switch (dxfCode){
-        case 0:{
-            duint8 strLength = tmpExtDataBuf.getRawChar8();
-            DRW_DBG(" strLength: "); DRW_DBG(strLength);
-            duint16 cp = tmpExtDataBuf.getBERawShort16();
-            DRW_DBG(" str codepage: "); DRW_DBG(cp);
-            for (int i=0;i< strLength+1;i++) {//string length + null terminating char
-                duint8 dxfChar = tmpExtDataBuf.getRawChar8();
-                DRW_DBG(" dxfChar: "); DRW_DBG(dxfChar);
+        // Placeholder for the APPID name (DXF group 1001). Filled in by
+        // parseAttribs from appIdmap; falls back to ACAD_<hex> if unknown.
+        extData.push_back(std::make_shared<DRW_Variant>(1001, std::string{}));
+        pendingAppIdResolutions.push_back({extData.size() - 1, ah.ref});
+
+        while (tmpExtDataBuf.numRemainingBytes() > 0 && tmpExtDataBuf.isGood()) {
+            duint8 dxfCode = tmpExtDataBuf.getRawChar8();
+            DRW_DBG(" eed type: "); DRW_DBG(dxfCode);
+            switch (dxfCode){
+            case 0: { //string
+                std::string s;
+                if (version > DRW::AC1018) { //R2007+: 2-byte char count + UTF-16LE
+                    if (tmpExtDataBuf.numRemainingBytes() < 2) break;
+                    duint16 nChars = tmpExtDataBuf.getRawShort16();
+                    if (nChars > 0) {
+                        duint64 byteLen = static_cast<duint64>(nChars) * 2;
+                        if ((duint64)tmpExtDataBuf.numRemainingBytes() < byteLen) break;
+                        std::vector<duint8> bytes(byteLen);
+                        tmpExtDataBuf.getBytes(bytes.data(), byteLen);
+                        // Inline UTF-16LE → UTF-8 conversion.
+                        for (duint16 i = 0; i < nChars; ++i) {
+                            duint16 c = static_cast<duint16>(bytes[2*i]) |
+                                       (static_cast<duint16>(bytes[2*i+1]) << 8);
+                            if (c < 0x80) {
+                                s.push_back(static_cast<char>(c));
+                            } else if (c < 0x800) {
+                                s.push_back(static_cast<char>(0xC0 | (c >> 6)));
+                                s.push_back(static_cast<char>(0x80 | (c & 0x3F)));
+                            } else {
+                                s.push_back(static_cast<char>(0xE0 | (c >> 12)));
+                                s.push_back(static_cast<char>(0x80 | ((c >> 6) & 0x3F)));
+                                s.push_back(static_cast<char>(0x80 | (c & 0x3F)));
+                            }
+                        }
+                    }
+                } else { //R13–R2004: 1-byte len + 2-byte BE codepage hint + bytes (+NUL)
+                    if (tmpExtDataBuf.numRemainingBytes() < 3) break;
+                    duint8 strLength = tmpExtDataBuf.getRawChar8();
+                    duint16 cp = tmpExtDataBuf.getBERawShort16();
+                    (void)cp; //per-string codepage hint dropped; file-level codec used
+                    if (strLength > 0 && tmpExtDataBuf.numRemainingBytes() >= strLength) {
+                        std::string raw(strLength, '\0');
+                        tmpExtDataBuf.getBytes(reinterpret_cast<duint8*>(&raw[0]), strLength);
+                        s = tmpExtDataBuf.decoder ? tmpExtDataBuf.decoder->toUtf8(raw) : raw;
+                    }
+                    //consume the optional trailing NUL terminator if present
+                    if (tmpExtDataBuf.numRemainingBytes() > 0) {
+                        tmpExtDataBuf.getRawChar8();
+                    }
+                }
+                extData.push_back(std::make_shared<DRW_Variant>(1000, s));
+                break;
             }
-            break;
-        }
-        default:
-            /* RLZ: TODO */
-            break;
+            case 2: { //control character: 0 = '{', 1 = '}'
+                if (tmpExtDataBuf.numRemainingBytes() < 1) break;
+                duint8 ctrl = tmpExtDataBuf.getRawChar8();
+                extData.push_back(std::make_shared<DRW_Variant>(
+                    1002, std::string(ctrl == 0 ? "{" : "}")));
+                break;
+            }
+            case 3: { //layer-table reference (8 raw BE bytes -> handle)
+                if (tmpExtDataBuf.numRemainingBytes() < 8) break;
+                duint8 hb[8];
+                tmpExtDataBuf.getBytes(hb, 8);
+                duint64 ref = 0;
+                for (int i = 0; i < 8; ++i) {
+                    ref = (ref << 8) | hb[i];
+                }
+                // Placeholder layer-ref string; resolved post-hoc.
+                extData.push_back(std::make_shared<DRW_Variant>(
+                    1003, std::string{}, /*isLayerRef=*/true));
+                pendingLayerRefResolutions.push_back(
+                    {extData.size() - 1, static_cast<duint32>(ref)});
+                break;
+            }
+            case 4: { //binary chunk: 1-byte length + bytes
+                if (tmpExtDataBuf.numRemainingBytes() < 1) break;
+                duint8 binLen = tmpExtDataBuf.getRawChar8();
+                std::vector<duint8> bytes(binLen);
+                if (binLen > 0 && tmpExtDataBuf.numRemainingBytes() >= binLen) {
+                    tmpExtDataBuf.getBytes(bytes.data(), binLen);
+                }
+                extData.push_back(std::make_shared<DRW_Variant>(1004, std::move(bytes)));
+                break;
+            }
+            case 5: { //entity-handle reference (8 raw BE bytes -> hex string)
+                if (tmpExtDataBuf.numRemainingBytes() < 8) break;
+                duint8 hb[8];
+                tmpExtDataBuf.getBytes(hb, 8);
+                duint64 ref = 0;
+                for (int i = 0; i < 8; ++i) {
+                    ref = (ref << 8) | hb[i];
+                }
+                char tmp[24];
+                std::snprintf(tmp, sizeof(tmp), "%llX",
+                              static_cast<unsigned long long>(ref));
+                extData.push_back(std::make_shared<DRW_Variant>(1005, std::string{tmp}));
+                break;
+            }
+            case 10: case 11: case 12: case 13: { //3-double point
+                if (tmpExtDataBuf.numRemainingBytes() < 24) break;
+                DRW_Coord c;
+                c.x = tmpExtDataBuf.getRawDouble();
+                c.y = tmpExtDataBuf.getRawDouble();
+                c.z = tmpExtDataBuf.getRawDouble();
+                extData.push_back(std::make_shared<DRW_Variant>(1000 + dxfCode, c));
+                break;
+            }
+            case 40: case 41: case 42: { //real
+                if (tmpExtDataBuf.numRemainingBytes() < 8) break;
+                double d = tmpExtDataBuf.getRawDouble();
+                extData.push_back(std::make_shared<DRW_Variant>(1000 + dxfCode, d));
+                break;
+            }
+            case 70: { //int16
+                if (tmpExtDataBuf.numRemainingBytes() < 2) break;
+                dint16 i = static_cast<dint16>(tmpExtDataBuf.getRawShort16());
+                extData.push_back(std::make_shared<DRW_Variant>(1070, static_cast<dint32>(i)));
+                break;
+            }
+            case 71: { //int32
+                if (tmpExtDataBuf.numRemainingBytes() < 4) break;
+                dint32 i = static_cast<dint32>(tmpExtDataBuf.getRawLong32());
+                extData.push_back(std::make_shared<DRW_Variant>(1071, i));
+                break;
+            }
+            default:
+                DRW_DBG(" unknown EED type: "); DRW_DBG(dxfCode); DRW_DBG("\n");
+                // Unknown type — bail on this app's chunk; we cannot
+                // know how many bytes the rest of the item occupies.
+                tmpExtDataBuf.setPosition(tmpExtDataBuf.size());
+                break;
+            }
         }
         delete[]tmpExtData;
         extDataSize = buf->getBitShort(); //BS
@@ -321,6 +458,26 @@ bool DRW_Entity::parseDwg(DRW::Version version, dwgBuffer *buf, dwgBuffer* strBu
     }
 //ENC color
     color = buf->getEnColor(version); //BS or CMC //ok for R14 or negate
+    // Capture the AcDbColor side-channel BEFORE any subsequent ENC read.
+    // libreDWG common_entity_data.spec:454-459 — the corresponding handle
+    // is consumed at the start of the handle stream in parseDwgEntHandle.
+    hasAcDbColorH = buf->lastEnColorHadDbColorRef;
+    // libreDWG common_entity_data.spec:432-453 — ENC alpha_raw (DXF code
+    // 440) is encoded as (alpha_type<<24) | alpha. Stored verbatim; the
+    // filter (RS_FilterDXFRW::setEntityAttributes) decodes alpha_type==3
+    // into a per-entity pen alpha, otherwise inherits from layer/block.
+    if (buf->lastEnColorAlphaRaw != 0) {
+        transparency = static_cast<int>(buf->lastEnColorAlphaRaw);
+    }
+    // libreDWG common_entity_data.spec:468-475 — inline TV name/book name
+    // (flags 0x41/0x42) override any dbColorMap-resolved name. Captured
+    // immediately; entryParse will skip the override only if colorName is
+    // already populated here.
+    if (!buf->lastEnColorName.empty()) {
+        colorName = buf->lastEnColorBookName.empty()
+            ? buf->lastEnColorName
+            : (buf->lastEnColorBookName + "$" + buf->lastEnColorName);
+    }
     ltypeScale = buf->getBitDouble(); //BD
     DRW_DBG(" entity color: "); DRW_DBG(color);
     DRW_DBG(" ltScale: "); DRW_DBG(ltypeScale); DRW_DBG("\n");
@@ -343,13 +500,20 @@ bool DRW_Entity::parseDwg(DRW::Version version, dwgBuffer *buf, dwgBuffer* strBu
         DRW_DBG("shadowFlag: "); DRW_DBG(shadowFlag); DRW_DBG("\n");
         shadow = static_cast<DRW::ShadowMode>(shadowFlag & 0x3);
     }
-    if (version > DRW::AC1021) {//2010+
-        // Same 3-bit shape as upstream: BB (full/face visual style) + B (edge).
-        // Stored on the entity for downstream handle-section consumers.
-        visualFullFlag = buf->get2Bits(); //BB
-        edgeStyleFlag  = buf->getBit();   //B
-        DRW_DBG("visualFullFlag: "); DRW_DBG(visualFullFlag);
-        DRW_DBG(" edgeStyleFlag: "); DRW_DBG(edgeStyleFlag); DRW_DBG("\n");
+    if (version > DRW::AC1021) {//2010+ — §19.4.1: three single-bit flags
+        // Ground-truth: libreDWG common_entity_data.spec lines 523-528
+        // and ODA spec v5.4.1 §19.4.1 both define three FIELD_B (single bit)
+        // flags here, one each for full/face/edge visual style. Total bit
+        // consumption (3 bits) is identical to the historical BB+B shape;
+        // only the semantics differ. The corresponding handles are read
+        // conditionally in parseDwgEntHandle after the plotstyle handle.
+        hasFullVisualStyle = buf->getBit(); //B
+        hasFaceVisualStyle = buf->getBit(); //B
+        hasEdgeVisualStyle = buf->getBit(); //B
+        DRW_DBG("hasFull/Face/Edge VisualStyle: ");
+        DRW_DBG(hasFullVisualStyle); DRW_DBG(" ");
+        DRW_DBG(hasFaceVisualStyle); DRW_DBG(" ");
+        DRW_DBG(hasEdgeVisualStyle); DRW_DBG("\n");
     }
     dint16 invisibleFlag = buf->getBitShort(); //BS
     DRW_DBG(" invisibleFlag: "); DRW_DBG(invisibleFlag);
@@ -369,6 +533,19 @@ bool DRW_Entity::parseDwgEntHandle(DRW::Version version, dwgBuffer *buf){
     if (version > DRW::AC1018) {//2007+ skip string area
         buf->setPosition(objSize >> 3);
         buf->setBitPos(objSize & 7);
+    }
+
+    // libreDWG common_entity_data.spec:454-459: when ENC flag 0x40 is set,
+    // an AcDbColor reference handle is the FIRST item in the handle stream
+    // — read before owner / reactors / xdic / etc.  Set in parseDwg via
+    // dwgBuffer::lastEnColorHadDbColorRef. The dwgReader resolves this
+    // handle against dbColorMap after parseDwg returns and patches
+    // color24 + colorName onto the entity.
+    if (hasAcDbColorH && version > DRW::AC1015 && buf->numRemainingBytes() >= 4) {
+        dwgHandle dbcH = buf->getOffsetHandle(handle);
+        acDbColorHandle = dbcH.ref;
+        DRW_DBG(" AcDbColor Handle: ");
+        DRW_DBGHL(dbcH.code, dbcH.size, dbcH.ref); DRW_DBG("\n");
     }
 
     if(ownerHandle){//entity are in block or in a polyline
@@ -437,10 +614,14 @@ bool DRW_Entity::parseDwgEntHandle(DRW::Version version, dwgBuffer *buf){
         if (version > DRW::AC1018) {//2007+
             if (materialFlag == 3) {
                 dwgHandle materialH = buf->getOffsetHandle(handle);
+                material = materialH.ref;
                 DRW_DBG(" material Handle: "); DRW_DBGHL(materialH.code, materialH.size, materialH.ref); DRW_DBG("\n");
                 DRW_DBG("\n Remaining bytes: "); DRW_DBG(buf->numRemainingBytes()); DRW_DBG("\n");
             }
             if (shadowFlag == 3) {
+                // AcDbShadow object handle (separate from entity shadow mode
+                // populated from shadowFlag & 0x3 above). LibreCAD has no
+                // shadow object consumer; leave discarding.
                 dwgHandle shadowH = buf->getOffsetHandle(handle);
                 DRW_DBG(" shadow Handle: "); DRW_DBGHL(shadowH.code, shadowH.size, shadowH.ref); DRW_DBG("\n");
                 DRW_DBG("\n Remaining bytes: "); DRW_DBG(buf->numRemainingBytes()); DRW_DBG("\n");
@@ -448,8 +629,35 @@ bool DRW_Entity::parseDwgEntHandle(DRW::Version version, dwgBuffer *buf){
         }
         if (plotFlags == 3) {
             dwgHandle plotStyleH = buf->getOffsetHandle(handle);
+            plotStyle = static_cast<int>(plotStyleH.ref);
             DRW_DBG(" plot style Handle: "); DRW_DBGHL(plotStyleH.code, plotStyleH.size, plotStyleH.ref); DRW_DBG("\n");
             DRW_DBG("\n Remaining bytes: "); DRW_DBG(buf->numRemainingBytes()); DRW_DBG("\n");
+        }
+        if (version > DRW::AC1021) {//2010+ — §19.4.2: visual-style handles
+            // Ground-truth: libreDWG common_entity_handle_data.spec lines
+            // 141-150 and ODA spec v5.4.1 §19.4.2. Order matches: full,
+            // face, edge — each conditional on its single-bit flag from
+            // §19.4.1 (set in parseDwg above). All three are hard pointers
+            // (libreDWG FIELD_HANDLE code 5), matching the existing
+            // material/shadow/plotstyle handles in this block.
+            if (hasFullVisualStyle) {
+                dwgHandle h = buf->getOffsetHandle(handle);
+                fullVisualStyleHandle = h.ref;
+                DRW_DBG(" full visual-style H: ");
+                DRW_DBGHL(h.code, h.size, h.ref); DRW_DBG("\n");
+            }
+            if (hasFaceVisualStyle) {
+                dwgHandle h = buf->getOffsetHandle(handle);
+                faceVisualStyleHandle = h.ref;
+                DRW_DBG(" face visual-style H: ");
+                DRW_DBGHL(h.code, h.size, h.ref); DRW_DBG("\n");
+            }
+            if (hasEdgeVisualStyle) {
+                dwgHandle h = buf->getOffsetHandle(handle);
+                edgeVisualStyleHandle = h.ref;
+                DRW_DBG(" edge visual-style H: ");
+                DRW_DBGHL(h.code, h.size, h.ref); DRW_DBG("\n");
+            }
         }
     }
     const int rb = buf->numRemainingBytes();
@@ -1280,10 +1488,18 @@ bool DRW_LWPolyline::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
         widthsnum = buf->getBitLong();
     DRW_DBG("\nvertex num: "); DRW_DBG(vertexnum); DRW_DBG(" bulges num: "); DRW_DBG(bulgesnum);
     DRW_DBG(" vertexIdCount: "); DRW_DBG(vertexIdCount); DRW_DBG(" widths num: "); DRW_DBG(widthsnum);
-    //clear all bit except 128 = plinegen and set 1 to open/close //RLZ:verify plinegen & open
-    //dxf: plinegen 128 & open 1
-    flags = (flags & 512)? (flags | 1):(flags | 0);
-    flags &= 129;
+    // Translate DWG LWPLINE flag bits to DXF group 70 bits.
+    // Per ODA spec 20.4.85 + libreDWG dwg.spec (DWG_ENTITY LWPOLYLINE):
+    //   DWG bit  9 (0x200, 512) -> DXF bit 0 (closed,   value 1)
+    //   DWG bit  8 (0x100, 256) -> DXF bit 7 (plinegen, value 128)
+    // All other DWG flag bits indicate which optional fields are present
+    // and have no DXF equivalent in group 70.
+    int dxfFlags = 0;
+    if (flags & 512)
+        dxfFlags |= 1;
+    if (flags & 256)
+        dxfFlags |= 128;
+    flags = dxfFlags;
     DRW_DBG("end flags value: "); DRW_DBG(flags);
 
     if (vertexnum > 0) { //verify if is lwpol without vertex (empty)
@@ -2071,11 +2287,19 @@ bool DRW_Hatch::parseCode(int code, const std::unique_ptr<dxfReader>& reader){
         else if (pline) {
             plvert = pline->addVertex();
             plvert->x = reader->getDouble();
+        } else {
+            // After group 98 the boundary path is closed; seed-point
+            // coords arrive as group-10/20 pairs.
+            DRW_Coord seed;
+            seed.x = reader->getDouble();
+            seedPoints.push_back(seed);
         }
         break;
     case 20:
         if (pt) pt->basePoint.y = reader->getDouble();
         else if (plvert) plvert ->y = reader->getDouble();
+        else if (!seedPoints.empty())
+            seedPoints.back().y = reader->getDouble();
         break;
     case 11:
         if (line) line->secPoint.x = reader->getDouble();
@@ -2139,8 +2363,55 @@ bool DRW_Hatch::parseCode(int code, const std::unique_ptr<dxfReader>& reader){
         if (pline) pline->vertexnum = reader->getInt32();
         else if (loop) loop->numedges = reader->getInt32();//aqui reserve
         break;
-    case 98: //seed points ??
+    case 98: { // seed-point count; coords follow as group-10/20 pairs
         clearEntities();
+        const int count = reader->getInt32();
+        if (count > 0)
+            DRW::reserve(seedPoints, count);
+        break;
+    }
+    case 450:
+        isGradient = reader->getInt32();
+        break;
+    case 451:
+        gradReserved = reader->getInt32();
+        break;
+    case 452:
+        singleColor = reader->getInt32();
+        break;
+    case 453: {
+        const int n = reader->getInt32();
+        if (n > 0)
+            DRW::reserve(gradColors, n);
+        break;
+    }
+    case 460:
+        gradAngle = reader->getDouble();
+        break;
+    case 461:
+        gradShift = reader->getDouble();
+        break;
+    case 462:
+        gradTint = reader->getDouble();
+        break;
+    case 463: { // gradient stop value
+        DRW_Hatch::GradientStop stop;
+        stop.value = reader->getDouble();
+        gradColors.push_back(stop);
+        break;
+    }
+    case 421:
+        if (!gradColors.empty())
+            gradColors.back().rgb = reader->getInt32();
+        break;
+    case 63:
+        if (!gradColors.empty())
+            gradColors.back().aciColor = reader->getInt32();
+        else
+            return DRW_Point::parseCode(code, reader);
+        break;
+    case 470:
+        gradName = reader->getUtf8String();
         break;
     default:
         return DRW_Point::parseCode(code, reader);
@@ -2165,31 +2436,37 @@ bool DRW_Hatch::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
 
     //Gradient data, RLZ: is ok or if grad > 0 continue read ?
     if (version > DRW::AC1015) { //2004+
-        dint32 isGradient = buf->getBitLong();
+        isGradient = buf->getBitLong();
         DRW_DBG("is Gradient: "); DRW_DBG(isGradient);
-        dint32 res = buf->getBitLong();
-        DRW_DBG(" reserved: "); DRW_DBG(res);
-        double gradAngle = buf->getBitDouble();
+        gradReserved = buf->getBitLong();
+        DRW_DBG(" reserved: "); DRW_DBG(gradReserved);
+        gradAngle = buf->getBitDouble();
         DRW_DBG(" Gradient angle: "); DRW_DBG(gradAngle);
-        double gradShift = buf->getBitDouble();
+        gradShift = buf->getBitDouble();
         DRW_DBG(" Gradient shift: "); DRW_DBG(gradShift);
-        dint32 singleCol = buf->getBitLong();
-        DRW_DBG("\nsingle color Grad: "); DRW_DBG(singleCol);
-        double gradTint = buf->getBitDouble();
+        singleColor = buf->getBitLong();
+        DRW_DBG("\nsingle color Grad: "); DRW_DBG(singleColor);
+        gradTint = buf->getBitDouble();
         DRW_DBG(" Gradient tint: "); DRW_DBG(gradTint);
         dint32 numCol = buf->getBitLong();
         DRW_DBG(" num colors: "); DRW_DBG(numCol);
+        if (numCol > 0)
+            DRW::reserve(gradColors, numCol);
         for (dint32 i = 0 ; i < numCol; ++i){
-            double unkDouble = buf->getBitDouble();
-            DRW_DBG("\nunkDouble: "); DRW_DBG(unkDouble);
+            GradientStop stop;
+            // First field is the stop position (per libreDWG: BD/unkDouble holds
+            // the stop value in [0,1]); falls back to even spacing if missing.
+            stop.value = buf->getBitDouble();
+            DRW_DBG("\nstop value: "); DRW_DBG(stop.value);
             duint16 unkShort = buf->getBitShort();
             DRW_DBG(" unkShort: "); DRW_DBG(unkShort);
-            dint32 rgbCol = buf->getBitLong();
-            DRW_DBG(" rgb color: "); DRW_DBG(rgbCol);
+            stop.rgb = buf->getBitLong();
+            DRW_DBG(" rgb color: "); DRW_DBG(stop.rgb);
             duint8 ignCol = buf->getRawChar8();
             DRW_DBG(" ignored color: "); DRW_DBG(ignCol);
+            gradColors.push_back(stop);
         }
-        UTF8STRING gradName = sBuf->getVariableText(version, false);
+        gradName = sBuf->getVariableText(version, false);
         DRW_DBG("\ngradient name: "); DRW_DBG(gradName.c_str()); DRW_DBG("\n");
     }
     basePoint.z = buf->getBitDouble();
@@ -2325,12 +2602,14 @@ bool DRW_Hatch::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
     }
     dint32 numSeedPoints = buf->getBitLong();
     DRW_DBG("\nnum Seed Points  "); DRW_DBG(numSeedPoints);
-    //read Seed Points
-    DRW_Coord seedPt;
+    if (numSeedPoints > 0)
+        DRW::reserve(seedPoints, numSeedPoints);
     for (dint32 i = 0 ; i < numSeedPoints; ++i){
+        DRW_Coord seedPt;
         seedPt.x = buf->getRawDouble();
         seedPt.y = buf->getRawDouble();
         DRW_DBG("\n  "); DRW_DBG(seedPt.x); DRW_DBG(","); DRW_DBG(seedPt.y);
+        seedPoints.push_back(seedPt);
     }
 
     DRW_DBG("\n");
@@ -2839,13 +3118,13 @@ bool DRW_Dimension::parseDwg(DRW::Version version, dwgBuffer *buf, dwgBuffer *sB
         align = buf->getBitShort();
         linesty = buf->getBitShort();
         linefactor = buf->getBitDouble();
-        double actMeas = buf->getBitDouble();
-        DRW_DBG("\n  actMeas_code42: "); DRW_DBG(actMeas);
+        measureValue = buf->getBitDouble();
+        DRW_DBG("\n  actMeas_code42: "); DRW_DBG(measureValue);
         if (version > DRW::AC1018) { //2007+
             bool unk = buf->getBit();
-            bool flip1 = buf->getBit();
-            bool flip2 = buf->getBit();
-            DRW_DBG("\n2007, unk, flip1, flip2: "); DRW_DBG(unk); DRW_DBG(flip1); DRW_DBG(flip2);
+            flipArrow1 = buf->getBit();
+            flipArrow2 = buf->getBit();
+            DRW_DBG("\n2007, unk, flip1, flip2: "); DRW_DBG(unk); DRW_DBG(flipArrow1); DRW_DBG(flipArrow2);
         }
     }
     clonePoint.x = buf->getRawDouble();

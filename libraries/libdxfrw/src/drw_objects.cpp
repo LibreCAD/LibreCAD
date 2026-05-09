@@ -658,7 +658,19 @@ bool DRW_Layer::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
         plotF = ( f>> 4) & 0x0001;
         lWeight = DRW_LW_Conv::dwgInt2lineWidth( (f & 0x03E0) >> 5 );
     }
-    color = buf->getCmColor(version, &color24); //BS or CMC; color24 set for true-RGB
+    {
+        UTF8STRING cmcName, cmcBookName;
+        color = buf->getCmColor(version, &color24, sBuf, &cmcName, &cmcBookName);
+        if (!cmcName.empty()) {
+            // libreDWG-style join: "BOOK$ENTRY" when book name is present,
+            // otherwise just the entry name. Matches the format used by
+            // dwgReader::dbColorMap / DRW_DbColor's bookName + "$" + name.
+            colorName = cmcBookName.empty()
+                ? cmcName
+                : (cmcBookName + "$" + cmcName);
+            DRW_DBG(" CMC name resolved: "); DRW_DBG(colorName.c_str()); DRW_DBG("\n");
+        }
+    }
     DRW_DBG(", entity color: "); DRW_DBG(color); DRW_DBG(", color24: "); DRW_DBG(color24); DRW_DBG("\n");
 
     if (version > DRW::AC1018) {//2007+ skip string area
@@ -1133,6 +1145,7 @@ bool DRW_Vport::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
             DRW_DBG(" background Handle: "); DRW_DBGHL(bkgrdH.code, bkgrdH.size, bkgrdH.ref);
             DRW_DBG("\nRemaining bytes: "); DRW_DBG(buf->numRemainingBytes());
             dwgHandle visualStH = buf->getHandle();
+            visualStyleHandle = visualStH.ref;
             DRW_DBG(" visual style Handle: "); DRW_DBGHL(visualStH.code, visualStH.size, visualStH.ref);
             DRW_DBG("\nRemaining bytes: "); DRW_DBG(buf->numRemainingBytes());
             dwgHandle sunH = buf->getHandle();
@@ -1625,4 +1638,60 @@ bool DRW_MLeaderStyle::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs
     DRW_DBG(" contentType: "); DRW_DBG(contentType);
     DRW_DBG(" name: "); DRW_DBG(name); DRW_DBG("\n");
     return true;
+}
+
+// VISUALSTYLE (AcDbVisualStyle) — stub parser per ODA spec §20.4.95.
+// Reads only what's needed for round-trip identity; full visual-style
+// data (60+ fields) is irrelevant to LibreCAD's 2D rendering. Each
+// object is parsed from a size-bounded buffer so any unread tail is
+// safely discarded by the caller.
+bool DRW_VisualStyle::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
+    dwgBuffer sBuff = *buf;
+    dwgBuffer *sBuf = buf;
+    if (version > DRW::AC1018) {  // 2007+ uses separate string stream
+        sBuf = &sBuff;
+    }
+    bool ret = DRW_TableEntry::parseDwg(version, buf, sBuf, bs);
+    DRW_DBG("\n***************************** parsing VISUALSTYLE *********************\n");
+    if (!ret) return ret;
+    // No further field reads — the stub delivers an entry to addVisualStyle
+    // so the file's class table doesn't lose phantom entries.
+    return buf->isGood();
+}
+
+// DBCOLOR (AcDbColor) per ODA spec §20.4 / libreDWG dwg2.spec:2404-2408.
+// Layout: common preamble + FIELD_CMC + START_OBJECT_HANDLE_STREAM.
+bool DRW_DbColor::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
+    dwgBuffer sBuff = *buf;
+    dwgBuffer *sBuf = buf;
+    if (version > DRW::AC1018) {  // 2007+ uses separate string stream
+        sBuf = &sBuff;
+    }
+    bool ret = DRW_TableEntry::parseDwg(version, buf, sBuf, bs);
+    DRW_DBG("\n***************************** parsing DBCOLOR (AcDbColor) ***************\n");
+    if (!ret) return ret;
+
+    // Single FIELD_CMC per the spec — let getCmColor handle the bit layout
+    // (BS index, BL rgb-with-method, RC method byte, optional TV name +
+    // book name from sBuf). Out-params populate our fields directly.
+    dint32 rgb24 = -1;
+    UTF8STRING cmcName, cmcBookName;
+    duint32 colorRet = buf->getCmColor(version, &rgb24, sBuf, &cmcName, &cmcBookName);
+    colorIndex = static_cast<duint16>(colorRet);
+    if (rgb24 != -1) rgb = rgb24;
+    name = std::move(cmcName);
+    bookName = std::move(cmcBookName);
+    // colorMethod isn't directly returned by getCmColor; deduce from rgb24
+    // presence (true RGB) or fall back to ByLayer/ByBlock per colorRet.
+    if (rgb24 != -1)        colorMethod = 0xC2;  // true color
+    else if (colorRet == 0) colorMethod = 0xC1;  // ByBlock
+    else if (colorRet == 256) colorMethod = 0xC0;  // ByLayer
+    else                    colorMethod = 0xC3;  // ACIS index
+    DRW_DBG("DBCOLOR method: "); DRW_DBGH(colorMethod);
+    DRW_DBG(" idx: "); DRW_DBG(colorIndex);
+    DRW_DBG(" rgb: "); DRW_DBGH(rgb); DRW_DBG("\n");
+    // START_OBJECT_HANDLE_STREAM follows — the parent/reactors/xdic handles.
+    // libdxfrw's object dispatch hands us a slice; the OBJECTS section
+    // parser stays aligned regardless of remainder.
+    return buf->isGood();
 }
