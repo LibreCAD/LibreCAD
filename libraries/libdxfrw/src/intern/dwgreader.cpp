@@ -823,6 +823,7 @@ bool dwgReader::readDwgBlocks(DRW_Interface& intfa, dwgBuffer *dbuf){
         //complete block entity with block record data
         bk.basePoint = bkr->basePoint;
         bk.flags = bkr->flags;
+        bk.xrefPath = bkr->xrefPath;
         intfa.addBlock(bk);
         //and update block record name
         bkr->name = bk.name;

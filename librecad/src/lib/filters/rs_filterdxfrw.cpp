@@ -27,6 +27,7 @@
 #include <stack>
 #include<utility>
 
+#include <QDir>
 #include <QRegularExpression>
 #include <QStringList>
 #include <QStringConverter>
@@ -553,6 +554,17 @@ void RS_FilterDXFRW::addBlock(const DRW_Block& data) {
             if (m_graphic->addBlock(block)) {
                 m_currentContainer = block;
                 m_blockHash.insert(data.parentHandle, m_currentContainer);
+
+                // Bound/unbound XREF: load the external file and embed its
+                // modelspace contents into this block. Layers are namespaced
+                // `<blockName>|<layerName>` per AutoCAD BIND convention.
+                // Bit 0x04 = XREF, bit 0x08 = XREF overlay.
+                const bool isXref = (data.flags & 0x0c) != 0;
+                if (isXref && !data.xrefPath.empty()) {
+                    embedXref(block,
+                              QString::fromUtf8(data.xrefPath.c_str()),
+                              name);
+                }
             } else
                 m_blockHash.insert(data.parentHandle, m_dummyContainer);
     } else {
@@ -562,6 +574,145 @@ void RS_FilterDXFRW::addBlock(const DRW_Block& data) {
             m_blockHash.insert(data.parentHandle, m_dummyContainer);
         }
     }
+}
+
+QString RS_FilterDXFRW::resolveXrefPath(const QString& xrefPath) const {
+    if (xrefPath.isEmpty()) return {};
+
+    // Normalize separators: XREFs authored on Windows store backslashes
+    // that QFileInfo doesn't recognize on Unix.
+    QString normalized = xrefPath;
+    normalized.replace('\\', '/');
+
+    // 1. Try the stored path verbatim (could be absolute on this host).
+    if (QFileInfo::exists(normalized)) return QFileInfo(normalized).absoluteFilePath();
+
+    QFileInfo host(m_file);
+    const QString hostDir = host.absolutePath();
+
+    // 2. Treat stored path as relative to host file's directory.
+    {
+        const QString f = hostDir + "/" + normalized;
+        if (QFileInfo::exists(f)) return QFileInfo(f).absoluteFilePath();
+    }
+
+    // 3. host-dir + basename (most common: XREF was authored on a
+    //    different machine but file shipped alongside the host).
+    const QString basename = QFileInfo(normalized).fileName();
+    {
+        const QString f = hostDir + "/" + basename;
+        if (QFileInfo::exists(f)) return QFileInfo(f).absoluteFilePath();
+    }
+
+    // 4-5. Tolerant match in host-dir: case-insensitive + space-to-underscore
+    //      normalization on the stem; accept .dwg or .dxf extension.
+    const QString basenameNorm = basename.toLower().replace(' ', '_');
+    QFileInfo basenameInfo(basenameNorm);
+    const QString stemNorm = basenameInfo.completeBaseName();
+    QDir dir(hostDir);
+    const QStringList entries = dir.entryList(
+        {QStringLiteral("*.dwg"), QStringLiteral("*.DWG"),
+         QStringLiteral("*.dxf"), QStringLiteral("*.DXF")},
+        QDir::Files);
+    for (const QString& entry : entries) {
+        const QString entryNorm = entry.toLower().replace(' ', '_');
+        if (entryNorm == basenameNorm) {
+            return dir.absoluteFilePath(entry);
+        }
+        QFileInfo entryInfo(entry);
+        const QString entryStemNorm =
+            entryInfo.completeBaseName().toLower().replace(' ', '_');
+        if (entryStemNorm == stemNorm) {
+            return dir.absoluteFilePath(entry);
+        }
+    }
+
+    return {};
+}
+
+bool RS_FilterDXFRW::embedXref(RS_Block* block, const QString& xrefPath,
+                               const QString& blockName) {
+    if (!block) return false;
+    RS_DEBUG->print("RS_FilterDXFRW::embedXref: %s -> %s",
+                    qPrintable(blockName), qPrintable(xrefPath));
+
+    const QString resolved = resolveXrefPath(xrefPath);
+    if (resolved.isEmpty()) {
+        RS_DIALOGFACTORY->commandMessage(QObject::tr(
+            "XREF not resolved for block \"%1\": %2 (file not found in "
+            "host directory). The block will render as empty.")
+            .arg(blockName, xrefPath));
+        return false;
+    }
+
+    if (m_xrefStack.count(resolved) > 0) {
+        RS_DEBUG->print("  XREF cycle detected, skipping: %s",
+                        qPrintable(resolved));
+        return false;
+    }
+    if (m_xrefStack.size() >= 8) {
+        RS_DEBUG->print("  XREF depth limit reached at %s",
+                        qPrintable(resolved));
+        return false;
+    }
+    m_xrefStack.insert(resolved);
+
+    RS_Graphic ext;
+    RS_FilterDXFRW xrefFilter;
+    xrefFilter.m_xrefStack = m_xrefStack;  // propagate cycle guard
+    const bool isDwg = resolved.endsWith(QStringLiteral(".dwg"),
+                                         Qt::CaseInsensitive);
+    const RS2::FormatType fmt = isDwg ? RS2::FormatDWG : RS2::FormatDXFRW;
+    const bool ok = xrefFilter.fileImport(ext, resolved, fmt);
+
+    m_xrefStack.erase(resolved);
+
+    if (!ok) {
+        RS_DIALOGFACTORY->commandMessage(QObject::tr(
+            "XREF load failed for block \"%1\": %2")
+            .arg(blockName, resolved));
+        return false;
+    }
+
+    // Layer namespacing: copy the XREF's layers into the host with prefix.
+    RS_LayerList* extLayers = ext.getLayerList();
+    RS_LayerList* hostLayers = m_graphic ? m_graphic->getLayerList() : nullptr;
+    if (extLayers && hostLayers) {
+        for (unsigned i = 0; i < extLayers->count(); ++i) {
+            RS_Layer* extLyr = extLayers->at(i);
+            if (!extLyr) continue;
+            const QString nsName = blockName + "|" + extLyr->getName();
+            if (!hostLayers->find(nsName)) {
+                RS_Layer* clone = extLyr->clone();
+                clone->setName(nsName);
+                hostLayers->add(clone);
+            }
+        }
+    }
+
+    // Move modelspace entities (top-level) into the local block, with
+    // their layer pointers redirected to the namespaced layers.
+    int moved = 0;
+    QList<RS_Entity*> snapshot;
+    for (auto* e : ext) snapshot.push_back(e);
+    for (RS_Entity* e : snapshot) {
+        if (!e) continue;
+        RS_Entity* cloned = e->clone();
+        if (!cloned) continue;
+        cloned->setParent(block);
+        // Redirect to namespaced layer in host's layer list.
+        if (hostLayers && cloned->getLayer()) {
+            const QString nsName = blockName + "|" + cloned->getLayer()->getName();
+            RS_Layer* hostLyr = hostLayers->find(nsName);
+            if (hostLyr) cloned->setLayer(hostLyr);
+        }
+        block->addEntity(cloned);
+        ++moved;
+    }
+
+    RS_DEBUG->print("  XREF embedded: %d entities into block \"%s\"",
+                    moved, qPrintable(blockName));
+    return true;
 }
 
 void RS_FilterDXFRW::setBlock(const int handle){

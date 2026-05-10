@@ -1226,6 +1226,9 @@ bool DRW_Tolerance::parseDwg(DRW::Version v, dwgBuffer *buf, duint32 bs){
 
 bool DRW_Block::parseCode(int code, const std::unique_ptr<dxfReader>& reader){
     switch (code) {
+    case 1:
+        xrefPath = reader->getUtf8String();
+        break;
     case 2:
         name = reader->getUtf8String();
         break;

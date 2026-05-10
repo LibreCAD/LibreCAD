@@ -616,28 +616,34 @@ RS_Vector RS_Ellipse::getNearestPointOnEntity(const RS_Vector& coord,
     //double ea;
     std::vector<std::pair<double, double>> directions;
     for(double cosTheta: roots) {
-        if (std::abs(twoax-twoa2b2*cosTheta) > RS_TOLERANCE) {
-            double const sinTheta=twoby*cosTheta/(twoax-twoa2b2*cosTheta); //sine
-            directions.emplace_back(cosTheta, sinTheta);
+        // Skip spurious roots from squaring during the quartic derivation —
+        // they have |cos| > 1 and do not correspond to any real angle on the
+        // ellipse. Without this filter, plugging such a root into the
+        // (cosTheta, sinTheta) → (a*cos, b*sin) mapping would yield an
+        // off-ellipse point that could undercut the true minimum distance.
+        if (std::abs(cosTheta) > 1.0 + RS_TOLERANCE)
+            continue;
+        double const c = std::clamp(cosTheta, -1.0, 1.0);
+        if (std::abs(twoax - twoa2b2*c) > RS_TOLERANCE) {
+            double const sinTheta = twoby*c / (twoax - twoa2b2*c);
+            directions.emplace_back(c, sinTheta);
         } else {
             directions.emplace_back(0., 1.);
             directions.emplace_back(0., -1.);
         }
     }
+    // The quartic yields every critical point of the squared distance — both
+    // minima and maxima. The global minimum is the critical point with the
+    // smallest squared distance, so simply compare distances and keep the
+    // smallest; no second-derivative test is needed.
+    RS_Vector const query = ret;
     for(const auto &[cosTheta, sinTheta]: directions) {
-        //I don't understand the reason yet, but I can do without checking whether sine/cosine are valid
-        //if (std::abs(s) > 1. ) continue;
-        double const d2=twoa2b2+(twoax-2.*cosTheta*twoa2b2)*cosTheta+twoby*sinTheta;
-        if (std::signbit(d2))
-            continue; // fartherest
         RS_Vector vp3{a*cosTheta, b*sinTheta};
-        double d=(vp3-ret).squared();
-//        std::cout<<i<<" Checking: cos= "<<roots[i]<<" sin= "<<s<<" angle= "<<atan2(roots[i],s)<<" ds2= "<<d<<" d="<<d2<<std::endl;
-        if( ret.valid && d>dDistance)
+        double d = (vp3 - query).squared();
+        if (d >= dDistance)
             continue;
-        ret=vp3;
-        dDistance=d;
-//			ea=atan2(roots[i],s);
+        ret = vp3;
+        dDistance = d;
     }
     if( ! ret.valid ) {
         //this should not happen

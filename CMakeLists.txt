@@ -1748,5 +1748,5 @@ if(BUILD_TESTS)
     # Enable C++17 for the test target (matching LibreCAD's standard)
     target_compile_features(librecad_tests PRIVATE cxx_std_17)
     # compiling time defines
-    target_compile_definitions(librecad_tests PRIVATE BUILD_TESTS=1)
+    target_compile_definitions(librecad_tests PRIVATE BUILD_TESTS=1 DWGSUPPORT)
 endif()

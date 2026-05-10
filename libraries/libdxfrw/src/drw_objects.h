@@ -363,6 +363,7 @@ public:
 //Note:    int DRW_TableEntry::flags; contains code 70 of block
     int insUnits;             /*!< block insertion units, code 70 of block_record*/
     DRW_Coord basePoint;      /*!<  block insertion base point dwg only */
+    UTF8STRING xrefPath;      /*!< Xref path name for XREF block_records (DWG: parsed from BLOCK_HEADER, DXF: code 1) */
 protected:
     //dwg parser
 private:

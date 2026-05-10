@@ -276,6 +276,25 @@ private:
      *  want the filename for a given underlay. Cleared per import. */
     std::map<duint32, DRW_UnderlayDefinition> m_underlayDefMap;
 
+    /** Recursion guard for embedXref. Holds the absolute paths of files
+     *  currently being loaded (the host file plus any in-progress XREF
+     *  embeds). Refuses re-entry on circular references. */
+    std::set<QString> m_xrefStack;
+    /** Resolve an XREF path stored in DRW_Block::xrefPath. Tries:
+     *  (1) the stored path as absolute, (2) host-dir + stored path,
+     *  (3) host-dir + basename, (4) host-dir + basename with case-
+     *  insensitive + space-to-underscore matching, (5) same as (4)
+     *  but accepting .dxf in place of .dwg. Returns absolute path on
+     *  success, empty QString on failure. */
+    QString resolveXrefPath(const QString& xrefPath) const;
+    /** Embed external file's modelspace contents into @p block as a
+     *  read-only XREF resolution. Layers are namespaced
+     *  `<blockName>|<layerName>`. Recursion guarded by m_xrefStack.
+     *  Returns true on success (block populated), false on failure
+     *  (block left as it was). */
+    bool embedXref(RS_Block* block, const QString& xrefPath,
+                   const QString& blockName);
+
     /** DWG file format version recognized at openFile() time. Set even
      *  on the BAD_VERSION error path so the user-facing error message
      *  can name which version was found and which range is supported.

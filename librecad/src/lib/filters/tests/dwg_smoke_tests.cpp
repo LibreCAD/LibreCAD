@@ -31,14 +31,23 @@
 
 // LibreCAD entity headers for end-to-end DRW→RS_Hatch pipeline tests.
 #include "lc_containertraverser.h"
+#include <QCoreApplication>
+
 #include "rs_arc.h"
 #include "rs_circle.h"
 #include "rs_ellipse.h"
 #include "rs_entitycontainer.h"
+#include "rs_block.h"
+#include "rs_blocklist.h"
+#include "rs_filterdxfrw.h"
+#include "rs_graphic.h"
 #include "rs_hatch.h"
+#include "rs_insert.h"
+#include "rs_layer.h"
 #include "rs_line.h"
 #include "rs_math.h"
 #include "rs_polyline.h"
+#include "rs_settings.h"
 
 namespace {
 
@@ -1413,6 +1422,455 @@ TEST_CASE("DWG gear_pump_subassy: entity population", "[.dwg_gear_pump]") {
         CHECK(dr.iface.typeCounts.at("ATTRIB") >= 14);
 
     printDeepReport("gear_pump_subassy.dwg", dr);
+}
+
+// Deep diagnostic for lever_detail.dwg (AC1024/R2010, ~241 entities,
+// 18 blocks, 29 layers).  Smoke loader reports OK, but user-observed
+// partial render means some entity types are silently dropped.  This
+// probe enumerates handled vs. unhandled oTypes so we can target the fix.
+//   ./librecad_tests "[.dwg_lever]" -s 2>/tmp/lever_trace.txt
+TEST_CASE("DWG lever_detail: entity population", "[.dwg_lever]") {
+    const char* home = getenv("HOME");
+    if (!home) { SUCCEED("HOME not set; skipping"); return; }
+    const std::string path =
+        std::string(home) + "/doc/dwg2/lever_detail.dwg";
+    if (!std::filesystem::is_regular_file(path)) {
+        SUCCEED("lever_detail.dwg not present; skipping"); return;
+    }
+
+    const DeepResult dr = readDwgDeep(path);
+
+    REQUIRE(dr.ok);
+    REQUIRE(dr.error == DRW::BAD_NONE);
+    REQUIRE(dr.iface.total() > 0);
+
+    printDeepReport("lever_detail.dwg", dr);
+}
+
+// Helper: human-readable name for RS2::EntityType.
+const char* rttiName(RS2::EntityType t) {
+    switch (t) {
+    case RS2::EntityUnknown:        return "Unknown";
+    case RS2::EntityContainer:      return "Container";
+    case RS2::EntityBlock:          return "Block";
+    case RS2::EntityFontChar:       return "FontChar";
+    case RS2::EntityInsert:         return "Insert";
+    case RS2::EntityGraphic:        return "Graphic";
+    case RS2::EntityPoint:          return "Point";
+    case RS2::EntityLine:           return "Line";
+    case RS2::EntityPolyline:       return "Polyline";
+    case RS2::EntityVertex:         return "Vertex";
+    case RS2::EntityArc:            return "Arc";
+    case RS2::EntityCircle:         return "Circle";
+    case RS2::EntityEllipse:        return "Ellipse";
+    case RS2::EntitySolid:          return "Solid";
+    case RS2::EntityMText:          return "MText";
+    case RS2::EntityText:           return "Text";
+    case RS2::EntityDimAligned:     return "DimAligned";
+    case RS2::EntityDimLinear:      return "DimLinear";
+    case RS2::EntityDimRadial:      return "DimRadial";
+    case RS2::EntityDimDiametric:   return "DimDiametric";
+    case RS2::EntityDimAngular:     return "DimAngular";
+    case RS2::EntityDimOrdinate:    return "DimOrdinate";
+    case RS2::EntityDimLeader:      return "DimLeader";
+    case RS2::EntityHatch:          return "Hatch";
+    case RS2::EntityImage:          return "Image";
+    case RS2::EntityWipeout:        return "Wipeout";
+    case RS2::EntityMLeader:        return "MLeader";
+    case RS2::EntitySpline:         return "Spline";
+    case RS2::EntitySplinePoints:   return "SplinePoints";
+    case RS2::EntityParabola:       return "Parabola";
+    case RS2::EntityHyperbola:      return "Hyperbola";
+    default:                        return "(other)";
+    }
+}
+
+// Filter-pipeline diagnostic for lever_detail.dwg.  The libdxfrw side
+// delivers 252 entities cleanly (see [.dwg_lever]), but the user observes
+// a partial render in LibreCAD.  This probe loads the file via the full
+// RS_FilterDXFRW pipeline and reports the resulting RS_Entity tree, broken
+// down by RTTI type, layer membership, and layer visibility.  Designed to
+// surface entities that are delivered, attached to a layer, but not visible
+// (frozen / off / lineweight=invisible / etc.).
+//   ./librecad_tests "[.dwg_lever_filter]" -s
+TEST_CASE("DWG lever_detail: filter pipeline + visibility audit",
+          "[.dwg_lever_filter]") {
+    const char* home = getenv("HOME");
+    if (!home) { SUCCEED("HOME not set; skipping"); return; }
+    const std::string path =
+        std::string(home) + "/doc/dwg2/lever_detail.dwg";
+    if (!std::filesystem::is_regular_file(path)) {
+        SUCCEED("lever_detail.dwg not present; skipping"); return;
+    }
+
+    // Bootstrap a minimal Qt app context so RS_Graphic ctor's
+    // LC_GROUP_GUARD ("Defaults") + RS_Settings paths don't dereference null.
+    static int qargc = 1;
+    static char qarg0[] = "librecad_tests";
+    static char* qargv[] = { qarg0, nullptr };
+    static QCoreApplication* qapp = QCoreApplication::instance()
+        ? QCoreApplication::instance()
+        : new QCoreApplication(qargc, qargv);
+    static bool settingsReady = []{
+        QCoreApplication::setOrganizationName("LibreCAD");
+        QCoreApplication::setApplicationName("LibreCAD-tests");
+        RS_Settings::init("LibreCAD", "LibreCAD-tests");
+        return true;
+    }();
+    (void)qapp; (void)settingsReady;
+
+    RS_Graphic graphic;
+    RS_FilterDXFRW filter;
+    const bool imported = filter.fileImport(graphic,
+                                            QString::fromStdString(path),
+                                            RS2::FormatDWG);
+    REQUIRE(imported);
+
+    // RTTI counts at top level (model space).
+    std::map<RS2::EntityType, int> typeCount;
+    std::map<QString, int> layerCount;
+    std::map<RS2::EntityType, int> typeOnHiddenLayer;
+    int totalTopLevel = 0;
+
+    for (auto* e : graphic) {
+        if (!e) continue;
+        ++totalTopLevel;
+        const RS2::EntityType t = e->rtti();
+        typeCount[t]++;
+        const QString lyrName = e->getLayer() ? e->getLayer()->getName() : "(none)";
+        layerCount[lyrName]++;
+        if (e->getLayer() && e->getLayer()->isFrozen()) {
+            typeOnHiddenLayer[t]++;
+        }
+    }
+
+    std::cout << "\n=== lever_detail.dwg (post-filter, model space) ===\n";
+    std::cout << "Top-level RS_Entity count: " << totalTopLevel << "\n";
+    std::cout << "Container countDeep():     " << graphic.countDeep() << "\n\n";
+
+    std::cout << "RTTI type distribution (top level):\n";
+    for (const auto& [t, n] : typeCount) {
+        std::cout << "  " << std::left << std::setw(18) << rttiName(t)
+                  << " " << n << "\n";
+    }
+
+    if (!typeOnHiddenLayer.empty()) {
+        std::cout << "\nEntities on FROZEN/INVISIBLE layers:\n";
+        int hiddenTotal = 0;
+        for (const auto& [t, n] : typeOnHiddenLayer) {
+            std::cout << "  " << std::left << std::setw(18) << rttiName(t)
+                      << " " << n << "\n";
+            hiddenTotal += n;
+        }
+        std::cout << "  TOTAL hidden: " << hiddenTotal << "\n";
+    } else {
+        std::cout << "\n(no entities on hidden layers)\n";
+    }
+
+    std::cout << "\nLayer distribution (top level):\n";
+    std::vector<std::pair<int, QString>> layers;
+    for (const auto& [name, n] : layerCount) layers.emplace_back(n, name);
+    std::sort(layers.rbegin(), layers.rend());
+    for (const auto& [n, name] : layers) {
+        std::cout << "  " << std::left << std::setw(30)
+                  << name.toStdString() << " " << n << "\n";
+    }
+
+    // Top-level INSERT block-name breakdown (which block each modelspace
+    // INSERT references). Useful to see if the XREF block is instantiated.
+    std::cout << "\nTop-level INSERTs by referenced block:\n";
+    for (auto* e : graphic) {
+        if (e && e->rtti() == RS2::EntityInsert) {
+            auto* ins = static_cast<RS_Insert*>(e);
+            std::cout << "  ref=\"" << ins->getName().toStdString()
+                      << "\" pos=(" << ins->getInsertionPoint().x
+                      << "," << ins->getInsertionPoint().y << ")\n";
+        }
+    }
+
+    // Block-list breakdown: per-block direct + deep counts.
+    auto* blockList = graphic.getBlockList();
+    if (blockList) {
+        std::cout << "\nBlock definitions (" << blockList->count() << " blocks):\n";
+        std::map<RS2::EntityType, int> blockTypeCount;
+        int blockEntityTotal = 0;
+        for (unsigned i = 0; i < blockList->count(); ++i) {
+            RS_Block* bk = blockList->at(i);
+            if (!bk) continue;
+            const unsigned direct = bk->count();
+            const unsigned deep   = bk->countDeep();
+            blockEntityTotal += direct;
+            std::cout << "  " << std::left << std::setw(28)
+                      << bk->getName().toStdString()
+                      << " count=" << std::setw(4) << direct
+                      << " deep=" << deep << "\n";
+            for (auto* e : *bk) {
+                if (e) blockTypeCount[e->rtti()]++;
+            }
+        }
+        std::cout << "Block direct-entity total: " << blockEntityTotal << "\n";
+        std::cout << "Block RTTI distribution:\n";
+        for (const auto& [t, n] : blockTypeCount) {
+            std::cout << "  " << std::left << std::setw(18) << rttiName(t)
+                      << " " << n << "\n";
+        }
+
+        const int grandTotal = totalTopLevel + blockEntityTotal;
+        std::cout << "\n*** Filter accepted total: "
+                  << grandTotal << " RS_Entities "
+                  << "(model-space=" << totalTopLevel
+                  << ", in-blocks=" << blockEntityTotal << ")\n";
+        std::cout << "*** libdxfrw delivered (per [.dwg_lever]): 252\n";
+    }
+
+    SUCCEED();
+}
+
+// Regression: lever_detail.dwg references gripper_assembly_new.dwg as an
+// unresolved XREF (DRW_Block::flags & 0x04, xrefPath populated). The filter
+// must detect this, resolve the path (handling Windows backslashes,
+// case-insensitive + space-to-underscore basename match), recursively load
+// the external file, and embed its modelspace entities into the local
+// `GRIPPER ASSEMBLY NEW` block. Pre-fix the block was empty (count=0);
+// post-fix it carries the lever assembly geometry (~900+ entities).
+//   ./librecad_tests "[.dwg_lever_xref_resolve]"
+TEST_CASE("DWG lever_detail: XREF resolution embeds external geometry",
+          "[.dwg_lever_xref_resolve]") {
+    const char* home = getenv("HOME");
+    if (!home) { SUCCEED("HOME not set; skipping"); return; }
+    const std::string hostPath =
+        std::string(home) + "/doc/dwg2/lever_detail.dwg";
+    const std::string xrefPath =
+        std::string(home) + "/doc/dwg2/gripper_assembly_new.dwg";
+    if (!std::filesystem::is_regular_file(hostPath)) {
+        SUCCEED("lever_detail.dwg not present; skipping"); return;
+    }
+    if (!std::filesystem::is_regular_file(xrefPath)) {
+        SUCCEED("gripper_assembly_new.dwg (XREF source) not present; "
+                "skipping"); return;
+    }
+
+    static int qargc = 1;
+    static char qarg0[] = "librecad_tests";
+    static char* qargv[] = { qarg0, nullptr };
+    static QCoreApplication* qapp = QCoreApplication::instance()
+        ? QCoreApplication::instance()
+        : new QCoreApplication(qargc, qargv);
+    static bool settingsReady = []{
+        QCoreApplication::setOrganizationName("LibreCAD");
+        QCoreApplication::setApplicationName("LibreCAD-tests");
+        RS_Settings::init("LibreCAD", "LibreCAD-tests");
+        return true;
+    }();
+    (void)qapp; (void)settingsReady;
+
+    RS_Graphic graphic;
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileImport(graphic,
+                              QString::fromStdString(hostPath),
+                              RS2::FormatDWG));
+
+    auto* blockList = graphic.getBlockList();
+    REQUIRE(blockList);
+    RS_Block* xrefBlock = blockList->find("GRIPPER ASSEMBLY NEW");
+    REQUIRE(xrefBlock);
+
+    INFO("XREF block direct-entity count = " << xrefBlock->count());
+    CHECK(xrefBlock->count() >= 900);
+
+    // Layer namespacing should also be in place: a layer like
+    // "GRIPPER ASSEMBLY NEW|AM_5" must exist on the host's layer list,
+    // populated by the XREF source's "AM_5" layer.
+    auto* layers = graphic.getLayerList();
+    REQUIRE(layers);
+    CHECK(layers->find("GRIPPER ASSEMBLY NEW|AM_5") != nullptr);
+    CHECK(layers->find("GRIPPER ASSEMBLY NEW|0") != nullptr);
+
+    // After embedding, all entities in the block must hold a layer pointer
+    // pointing at a host-graphic layer (not a dangling external pointer).
+    int correctlyNamespaced = 0;
+    for (auto* e : *xrefBlock) {
+        if (!e || !e->getLayer()) continue;
+        const QString lyrName = e->getLayer()->getName();
+        if (lyrName.startsWith("GRIPPER ASSEMBLY NEW|")) {
+            ++correctlyNamespaced;
+        }
+    }
+    INFO("Entities with namespaced layer: " << correctlyNamespaced);
+    CHECK(correctlyNamespaced >= 900);
+}
+
+// Cross-check: load the source XREF (gripper_assembly_new.dwg) and report
+// the entity count.  Confirms whether the lever assembly drawing actually
+// lives in the standalone XREF source vs. having been baked into
+// lever_detail.dwg's local block (which appears empty).
+TEST_CASE("DWG gripper_assembly_new: XREF source population",
+          "[.dwg_gripper_xref]") {
+    const char* home = getenv("HOME");
+    if (!home) { SUCCEED("HOME not set; skipping"); return; }
+    const std::string path =
+        std::string(home) + "/doc/dwg2/gripper_assembly_new.dwg";
+    if (!std::filesystem::is_regular_file(path)) {
+        SUCCEED("gripper_assembly_new.dwg not present; skipping"); return;
+    }
+    const DeepResult dr = readDwgDeep(path);
+    REQUIRE(dr.ok);
+    printDeepReport("gripper_assembly_new.dwg", dr);
+}
+
+namespace {
+class BlockTrackingIface : public TypeTrackingIface {
+public:
+    struct BlockEvent {
+        std::string name;
+        int handle = 0;
+        int parentHandle = 0;
+        int flags = 0;
+        int entityCount = 0;
+        std::map<std::string, int> layerCount;
+        std::string xrefPath;
+    };
+    std::vector<BlockEvent> events;
+    BlockEvent* current = nullptr;
+    int entitiesBeforeAnyBlock = 0;
+    int entitiesAfterEndBlock  = 0;
+    int blockDepth = 0;
+    std::map<std::string, int> postBlockLayerCount;
+
+    void addBlock(const DRW_Block& b) override {
+        TypeTrackingIface::addBlock(b);
+        events.push_back({b.name, static_cast<int>(b.handle),
+                          static_cast<int>(b.parentHandle),
+                          b.flags, 0, {}});
+        events.back().xrefPath = b.xrefPath;
+        current = &events.back();
+        ++blockDepth;
+    }
+    void endBlock() override {
+        TypeTrackingIface::endBlock();
+        --blockDepth;
+        current = nullptr;
+    }
+    void countEntity(const std::string& layer = "") {
+        if (current) {
+            ++current->entityCount;
+            current->layerCount[layer]++;
+        } else if (blockDepth == 0) {
+            (events.empty() ? entitiesBeforeAnyBlock : entitiesAfterEndBlock)++;
+            postBlockLayerCount[layer]++;
+        }
+    }
+    void addPoint(const DRW_Point& e)        override { countEntity(e.layer); TypeTrackingIface::addPoint(e); }
+    void addLine(const DRW_Line& e)          override { countEntity(e.layer); TypeTrackingIface::addLine(e); }
+    void addArc(const DRW_Arc& e)            override { countEntity(e.layer); TypeTrackingIface::addArc(e); }
+    void addCircle(const DRW_Circle& e)      override { countEntity(e.layer); TypeTrackingIface::addCircle(e); }
+    void addEllipse(const DRW_Ellipse& e)    override { countEntity(e.layer); TypeTrackingIface::addEllipse(e); }
+    void addLWPolyline(const DRW_LWPolyline& e) override { countEntity(e.layer); TypeTrackingIface::addLWPolyline(e); }
+    void addPolyline(const DRW_Polyline& e)  override { countEntity(e.layer); TypeTrackingIface::addPolyline(e); }
+    void addInsert(const DRW_Insert& e)      override { countEntity(e.layer); TypeTrackingIface::addInsert(e); }
+    void addText(const DRW_Text& e)          override { countEntity(e.layer); TypeTrackingIface::addText(e); }
+    void addMText(const DRW_MText& e)        override { countEntity(e.layer); TypeTrackingIface::addMText(e); }
+    void addSolid(const DRW_Solid& e)        override { countEntity(e.layer); TypeTrackingIface::addSolid(e); }
+    void add3dFace(const DRW_3Dface& e)      override { countEntity(e.layer); TypeTrackingIface::add3dFace(e); }
+    void addTrace(const DRW_Trace& e)        override { countEntity(e.layer); TypeTrackingIface::addTrace(e); }
+    void addDimAlign(const DRW_DimAligned* e)        override { countEntity(e->layer); TypeTrackingIface::addDimAlign(e); }
+    void addDimLinear(const DRW_DimLinear* e)        override { countEntity(e->layer); TypeTrackingIface::addDimLinear(e); }
+    void addDimRadial(const DRW_DimRadial* e)        override { countEntity(e->layer); TypeTrackingIface::addDimRadial(e); }
+    void addDimDiametric(const DRW_DimDiametric* e)  override { countEntity(e->layer); TypeTrackingIface::addDimDiametric(e); }
+    void addDimAngular(const DRW_DimAngular* e)      override { countEntity(e->layer); TypeTrackingIface::addDimAngular(e); }
+    void addDimAngular3P(const DRW_DimAngular3p* e)  override { countEntity(e->layer); TypeTrackingIface::addDimAngular3P(e); }
+    void addDimOrdinate(const DRW_DimOrdinate* e)    override { countEntity(e->layer); TypeTrackingIface::addDimOrdinate(e); }
+    void addLeader(const DRW_Leader* e)              override { countEntity(e->layer); TypeTrackingIface::addLeader(e); }
+    void addHatch(const DRW_Hatch* e)                override { countEntity(e->layer); TypeTrackingIface::addHatch(e); }
+    void addSpline(const DRW_Spline* e)              override { countEntity(e->layer); TypeTrackingIface::addSpline(e); }
+    void addImage(const DRW_Image* e)                override { countEntity(e->layer); TypeTrackingIface::addImage(e); }
+    void addViewport(const DRW_Viewport& e)          override { countEntity(e.layer); TypeTrackingIface::addViewport(e); }
+};
+} // anon
+
+// Per-block delivery tracker for lever_detail.dwg.  Enumerates every
+// addBlock event with name + handle + entity count, so duplicate-name
+// blocks (RS_BlockList::add returns false → entities silently dropped)
+// stand out at a glance.
+//   ./librecad_tests "[.dwg_lever_blocks]" -s
+TEST_CASE("DWG lever_detail: per-block entity delivery",
+          "[.dwg_lever_blocks]") {
+    const char* home = getenv("HOME");
+    if (!home) { SUCCEED("HOME not set; skipping"); return; }
+    const std::string path =
+        std::string(home) + "/doc/dwg2/lever_detail.dwg";
+    if (!std::filesystem::is_regular_file(path)) {
+        SUCCEED("lever_detail.dwg not present; skipping"); return;
+    }
+
+    BlockTrackingIface iface;
+    {
+        dwgR reader(path.c_str());
+        reader.setDebug(DRW::DebugLevel::None);
+        REQUIRE(reader.read(&iface, true));
+    }
+
+    std::cout << "\n=== lever_detail.dwg block delivery (libdxfrw) ===\n";
+    std::cout << "Pre-block: "  << iface.entitiesBeforeAnyBlock
+              << "  Post-block: " << iface.entitiesAfterEndBlock << "\n";
+    std::cout << "addBlock events: " << iface.events.size() << "\n";
+
+    std::map<std::string, std::vector<int>> nameToCounts;
+    int totalInBlocks = 0;
+    for (const auto& ev : iface.events) {
+        const bool isXref = (ev.flags & 0x04) != 0;
+        const bool isXrefOverlay = (ev.flags & 0x08) != 0;
+        const bool isAnonymous = (ev.flags & 0x01) != 0;
+        std::cout << "  " << std::setw(3) << ev.handle << "/"
+                  << std::setw(3) << ev.parentHandle
+                  << "  flags=0x" << std::hex << std::setw(2) << ev.flags << std::dec
+                  << "  count=" << std::setw(4) << ev.entityCount
+                  << "  name=" << ev.name;
+        if (isXref) std::cout << "  [XREF]";
+        if (isXrefOverlay) std::cout << "  [XREF-OVERLAY]";
+        if (isAnonymous) std::cout << "  [anonymous]";
+        if (!ev.xrefPath.empty())
+            std::cout << "  xrefPath=\"" << ev.xrefPath << "\"";
+        if (!ev.layerCount.empty()) {
+            std::cout << "  layers={";
+            bool first = true;
+            for (const auto& [lyr, n] : ev.layerCount) {
+                if (!first) std::cout << ", ";
+                std::cout << lyr << ":" << n;
+                first = false;
+            }
+            std::cout << "}";
+        }
+        std::cout << "\n";
+        nameToCounts[ev.name].push_back(ev.entityCount);
+        totalInBlocks += ev.entityCount;
+    }
+    std::cout << "Total entities seen inside blocks: " << totalInBlocks << "\n";
+
+    std::cout << "\nPost-block (modelspace) layer distribution:\n";
+    for (const auto& [lyr, n] : iface.postBlockLayerCount) {
+        std::cout << "  " << lyr << ": " << n << "\n";
+    }
+
+    std::cout << "\nDuplicate block names (lose entities at filter):\n";
+    int dupCount = 0;
+    for (const auto& [name, counts] : nameToCounts) {
+        if (counts.size() > 1) {
+            std::cout << "  " << name << " appears " << counts.size()
+                      << " times: ";
+            int sumDup = 0;
+            for (size_t i = 0; i < counts.size(); ++i) {
+                std::cout << counts[i];
+                if (i + 1 < counts.size()) std::cout << ", ";
+                if (i > 0) sumDup += counts[i];
+            }
+            std::cout << "  (extra entities lost: " << sumDup << ")\n";
+            dupCount += static_cast<int>(counts.size()) - 1;
+        }
+    }
+    std::cout << "Total duplicate block events: " << dupCount << "\n";
+
+    SUCCEED();
 }
 
 // End-to-end pipeline test: load gear_pump_subassy.dwg via the full

@@ -752,8 +752,8 @@ bool DRW_Block_Record::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs
     basePoint.y = buf->getBitDouble();
     basePoint.z = buf->getBitDouble();
     DRW_DBG("insertion point: "); DRW_DBGPT(basePoint.x, basePoint.y, basePoint.z); DRW_DBG("\n");
-    UTF8STRING path = sBuf->getVariableText(version, false);
-    DRW_DBG("XRef path name: "); DRW_DBG(path.c_str()); DRW_DBG("\n");
+    xrefPath = sBuf->getVariableText(version, false);
+    DRW_DBG("XRef path name: "); DRW_DBG(xrefPath.c_str()); DRW_DBG("\n");
 
     if (version > DRW::AC1014) {//2000+
         insertCount = 0;
