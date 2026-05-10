@@ -57,7 +57,7 @@ namespace DRW {
         LINE,
         LWPOLYLINE,
 //        MESH,
-//        MLINE,
+        MLINE,
 //        MLEADERSTYLE,
         MLEADER,
         MTEXT,
@@ -636,6 +636,61 @@ public:
     DRW_Coord extPoint;       /*!<  Dir extrusion normal vector, code 210, 220 & 230 */
 	std::shared_ptr<DRW_Vertex2D> vertex;       /*!< current vertex to add data */
 	std::vector<std::shared_ptr<DRW_Vertex2D>> vertlist;  /*!< vertex list */
+};
+
+//! One MLINE vertex carries a baseline point plus per-line segment params.
+struct DRW_MLineVertex {
+    DRW_Coord position;       /*!< 3BD — centerline (baseline) vertex */
+    DRW_Coord vertexDir;      /*!< 3BD — direction along baseline at this vertex */
+    DRW_Coord miterDir;       /*!< 3BD — perpendicular for offset (per-vertex) */
+    /*!< Per parallel line in style: list of segment parameters (DXF code 41) */
+    std::vector<std::vector<double>> segParms;
+    /*!< Per parallel line: list of area-fill parameters (DXF code 42) */
+    std::vector<std::vector<double>> areaFillParms;
+};
+
+//! Class to handle MLINE entity (ODA spec §19.4.78, fixed type 0x2F = 47).
+/*!
+ *  Multiline: N parallel lines defined by an MLINESTYLE, with shared
+ *  baseline vertex array. LibreCAD has no native multiline; the DXF
+ *  filter decomposes each MLINE into N RS_Polyline children carrying
+ *  XDATA round-trip metadata. See plan §"Round-trip schema".
+ */
+class DRW_MLine : public DRW_Entity {
+    SETENTFRIENDS
+public:
+    DRW_MLine() {
+        eType = DRW::MLINE;
+        scale = 1.0;
+        justification = 0;
+        openClosed = 1;
+        numLines = 0;
+        numVerts = 0;
+        styleHandle = 0;
+        m_currentVertexIdx = -1;
+        m_currentElementIdx = 0;
+        m_currentSegFillCount = 0;
+    }
+    void applyExtrusion() override {}
+protected:
+    bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) override;
+public:
+    bool parseCode(int code, const std::unique_ptr<dxfReader>& reader) override;
+    double scale;                  /*!< BD / DXF 40 */
+    duint8 justification;          /*!< RC / DXF 70 — 0=top, 1=zero, 2=bottom */
+    DRW_Coord basePoint;           /*!< 3BD / DXF 10 20 30 */
+    DRW_Coord extPoint{0,0,1};     /*!< BE / DXF 210 220 230 */
+    int openClosed;                /*!< BS / DXF 71 — bit 0 closed */
+    duint8 numLines;               /*!< RC / DXF 73 — element count */
+    duint16 numVerts;              /*!< BS / DXF 72 */
+    UTF8STRING styleName;          /*!< DXF code 2 — resolved from styleHandle */
+    duint32 styleHandle;           /*!< H / DXF 340 */
+    std::vector<DRW_MLineVertex> vertlist;
+private:
+    // Transient state for DXF parseCode multi-vertex/multi-element walk.
+    int m_currentVertexIdx;
+    int m_currentElementIdx;
+    int m_currentSegFillCount;
 };
 
 //! Class to handle insert entries

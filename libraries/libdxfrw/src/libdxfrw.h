@@ -87,6 +87,7 @@ public:
     bool writeBlock(DRW_Block *ent);
     bool writeInsert(DRW_Insert *ent);
     bool writeMText(DRW_MText *ent);
+    bool writeMLine(DRW_MLine *ent);
     bool writeText(DRW_Text *ent);
     bool writeHatch(DRW_Hatch *ent);
     bool writeViewport(DRW_Viewport *ent);
@@ -140,6 +141,7 @@ private:
     bool processVertex(DRW_Polyline* pl);
     bool processText();
     bool processMText();
+    bool processMLine();
     bool processHatch();
     bool processSpline();
     bool process3dface();

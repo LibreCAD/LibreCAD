@@ -702,9 +702,20 @@ public:
     //future: minLim/maxLim, insertionBase, ucsOrigin, etc. per ODA 19.4.85
 };
 
+//! One parallel line element within a MLineStyle (ODA §19.4.73).
+struct DRW_MLineElement {
+    double offset = 0.0;        /*!< BD — perpendicular offset from centerline */
+    int    color  = 256;        /*!< CMC index — 256 = ByLayer */
+    int    color24 = -1;        /*!< true-color RGB (-1 = none) */
+    duint32 linetypeHandle = 0; /*!< H — linetype object reference */
+    UTF8STRING linetype;        /*!< resolved linetype name (DXF 6) */
+};
+
 //! Class to handle MLineStyle (ODA spec sec 19.4.73 fixed type 73)
 /*!
-*  Minimal carrier for multiline styles; per-line parsing pending.
+*  Carrier for multiline styles. Per-line `elements` define each parallel
+*  line's offset, color and linetype. The MLINE entity references this
+*  style by handle; entries are populated in addMLineStyle on import.
 */
 class DRW_MLineStyle : public DRW_TableEntry {
     SETOBJFRIENDS
@@ -714,15 +725,20 @@ public:
         tType = DRW::MLINESTYLE;
         flags = 0;
         startAngle = endAngle = 0.0;
+        fillColor = 256;
         name.clear();
+        description.clear();
+        elements.clear();
     }
 protected:
     bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) override;
 public:
-    int flags;          /*!< style flags (BS) */
-    double startAngle;  /*!< start angle (BD) */
-    double endAngle;    /*!< end angle (BD) */
-    //future: description, fillColor, lines vector per ODA 19.4.73
+    int flags;                  /*!< style flags (BS) */
+    double startAngle;          /*!< start angle (BD) */
+    double endAngle;            /*!< end angle (BD) */
+    UTF8STRING description;     /*!< description (TV / DXF 3) */
+    int fillColor = 256;        /*!< CMC fill color / DXF 62 (256 = ByLayer) */
+    std::vector<DRW_MLineElement> elements;
 };
 
 //! Class to handle MLEADERSTYLE (ODA spec §20.4.87, AcDbMLeaderStyle).

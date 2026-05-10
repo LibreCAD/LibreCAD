@@ -1554,11 +1554,47 @@ bool DRW_MLineStyle::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
         sBuf = &sBuff;
     }
     bool ret = DRW_TableEntry::parseDwg(version, buf, sBuf, bs);
-    DRW_DBG("\n***************************** parsing MLineStyle (base) ***************************************\n");
-    if (!ret)
-        return ret;
+    DRW_DBG("\n***************************** parsing MLineStyle ***************************************\n");
+    if (!ret) return ret;
+    // Per ODA spec §19.4.73 / libreDWG dwg_decode_MLINESTYLE:
+    //   TV name, TV description, BS flags, CMC fill_color, BD start_angle,
+    //   BD end_angle, RC num_lines, then per-line: BD offset, CMC color,
+    //   BS lt_index OR H lt_handle (handle in handle stream R2007+).
     name = sBuf->getVariableText(version, false);
-    DRW_DBG("mlinestyle name: "); DRW_DBG(name); DRW_DBG("\n");
+    description = sBuf->getVariableText(version, false);
+    flags = buf->getBitShort();
+    // Fill color: read as CMC. The reader returns the index; rgb stays
+    // -1 unless CMC method is RGB. We only keep the index for now.
+    dint32 fillRgb = -1;
+    UTF8STRING dummyName, dummyBook;
+    fillColor = static_cast<int>(buf->getCmColor(version, &fillRgb, sBuf, &dummyName, &dummyBook));
+    startAngle = buf->getBitDouble();
+    endAngle = buf->getBitDouble();
+    duint8 numLines = buf->getRawChar8();
+    DRW_DBG("mlinestyle name: "); DRW_DBG(name);
+    DRW_DBG(" desc: "); DRW_DBG(description);
+    DRW_DBG(" flags: "); DRW_DBG(flags);
+    DRW_DBG(" fill: "); DRW_DBG(fillColor);
+    DRW_DBG(" lines: "); DRW_DBG(numLines); DRW_DBG("\n");
+    if (numLines > 100) return true;  // sanity, preserve alignment
+    elements.reserve(numLines);
+    for (int i = 0; i < numLines; ++i) {
+        DRW_MLineElement e;
+        e.offset = buf->getBitDouble();
+        dint32 elRgb = -1;
+        UTF8STRING n2, b2;
+        e.color = static_cast<int>(buf->getCmColor(version, &elRgb, sBuf, &n2, &b2));
+        if (elRgb != -1) e.color24 = elRgb;
+        // Per ODA, R2018+ stores lt_index as BS here; older versions defer
+        // the linetype to a handle in the trailing handle stream. We read
+        // the handle there (parseDwgEntHandle) but skip the index field.
+        if (version >= DRW::AC1032) {  // R2018+
+            buf->getBitShort();        // lt_index, ignored — handle wins
+        }
+        elements.push_back(std::move(e));
+    }
+    // Linetype handles in the handle stream — skip resolving here; the
+    // dwgReader's table-entry handle pass populates them via the linetype map.
     return buf->isGood();
 }
 

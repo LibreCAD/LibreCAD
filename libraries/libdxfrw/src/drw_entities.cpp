@@ -1566,6 +1566,202 @@ bool DRW_LWPolyline::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
 }
 
 
+// ----------------------------------------------------------------------------
+// DRW_MLine — multiline entity (ODA §19.4.78, fixed type 0x2F = 47).
+// ----------------------------------------------------------------------------
+
+bool DRW_MLine::parseCode(int code, const std::unique_ptr<dxfReader>& reader){
+    switch (code) {
+    case 2:
+        styleName = reader->getString();
+        break;
+    case 340:
+        styleHandle = static_cast<duint32>(reader->getHandleString());
+        break;
+    case 40:
+        scale = reader->getDouble();
+        break;
+    case 70:
+        justification = static_cast<duint8>(reader->getInt32() & 0x3);
+        break;
+    case 71:
+        openClosed = reader->getInt32();
+        break;
+    case 72:
+        numVerts = static_cast<duint16>(reader->getInt32());
+        break;
+    case 73:
+        numLines = static_cast<duint8>(reader->getInt32());
+        break;
+    case 10:
+        basePoint.x = reader->getDouble();
+        break;
+    case 20:
+        basePoint.y = reader->getDouble();
+        break;
+    case 30:
+        basePoint.z = reader->getDouble();
+        break;
+    case 210:
+        extPoint.x = reader->getDouble();
+        break;
+    case 220:
+        extPoint.y = reader->getDouble();
+        break;
+    case 230:
+        extPoint.z = reader->getDouble();
+        break;
+    // Per-vertex block: code 11 starts a new vertex; 12/13 follow.
+    case 11:
+        ++m_currentVertexIdx;
+        m_currentElementIdx = 0;
+        if (m_currentVertexIdx >= static_cast<int>(vertlist.size())) {
+            vertlist.resize(m_currentVertexIdx + 1);
+        }
+        vertlist[m_currentVertexIdx].position.x = reader->getDouble();
+        break;
+    case 21:
+        if (m_currentVertexIdx >= 0)
+            vertlist[m_currentVertexIdx].position.y = reader->getDouble();
+        break;
+    case 31:
+        if (m_currentVertexIdx >= 0)
+            vertlist[m_currentVertexIdx].position.z = reader->getDouble();
+        break;
+    case 12:
+        if (m_currentVertexIdx >= 0)
+            vertlist[m_currentVertexIdx].vertexDir.x = reader->getDouble();
+        break;
+    case 22:
+        if (m_currentVertexIdx >= 0)
+            vertlist[m_currentVertexIdx].vertexDir.y = reader->getDouble();
+        break;
+    case 32:
+        if (m_currentVertexIdx >= 0)
+            vertlist[m_currentVertexIdx].vertexDir.z = reader->getDouble();
+        break;
+    case 13:
+        if (m_currentVertexIdx >= 0)
+            vertlist[m_currentVertexIdx].miterDir.x = reader->getDouble();
+        break;
+    case 23:
+        if (m_currentVertexIdx >= 0)
+            vertlist[m_currentVertexIdx].miterDir.y = reader->getDouble();
+        break;
+    case 33:
+        if (m_currentVertexIdx >= 0)
+            vertlist[m_currentVertexIdx].miterDir.z = reader->getDouble();
+        break;
+    // 74 = segment-param count for current element. Sets up the inner
+    // vector and resets the running param count. 41 reads each param.
+    // 75 = fill-param count; 42 reads each. After fills are consumed,
+    // advance to the next element. AutoCAD emits 74/41*/75/42* per element.
+    case 74:
+        if (m_currentVertexIdx >= 0) {
+            auto& v = vertlist[m_currentVertexIdx];
+            if (static_cast<int>(v.segParms.size()) < numLines) {
+                v.segParms.resize(numLines);
+                v.areaFillParms.resize(numLines);
+            }
+            (void)reader->getInt32();   // expected count, used only as a marker
+            m_currentSegFillCount = 0;
+        }
+        break;
+    case 41:
+        if (m_currentVertexIdx >= 0
+            && m_currentElementIdx < static_cast<int>(vertlist[m_currentVertexIdx].segParms.size())) {
+            vertlist[m_currentVertexIdx].segParms[m_currentElementIdx]
+                .push_back(reader->getDouble());
+        }
+        break;
+    case 75:
+        if (m_currentVertexIdx >= 0) {
+            m_currentSegFillCount = reader->getInt32();
+            // After fills are emitted (or count==0 immediate), advance element.
+            if (m_currentSegFillCount == 0
+                && m_currentElementIdx + 1 < numLines) {
+                ++m_currentElementIdx;
+            }
+        }
+        break;
+    case 42:
+        if (m_currentVertexIdx >= 0
+            && m_currentElementIdx < static_cast<int>(vertlist[m_currentVertexIdx].areaFillParms.size())) {
+            vertlist[m_currentVertexIdx].areaFillParms[m_currentElementIdx]
+                .push_back(reader->getDouble());
+            if (static_cast<int>(vertlist[m_currentVertexIdx]
+                                 .areaFillParms[m_currentElementIdx].size())
+                >= m_currentSegFillCount
+                && m_currentElementIdx + 1 < numLines) {
+                ++m_currentElementIdx;
+            }
+        }
+        break;
+    default:
+        return DRW_Entity::parseCode(code, reader);
+    }
+    return true;
+}
+
+bool DRW_MLine::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
+    if (!DRW_Entity::parseDwg(version, buf, nullptr, bs)) return false;
+    DRW_DBG("\n***************************** parsing MLINE *********************\n");
+    // Per ODA §19.4.78 / libreDWG dwg_decode_MLINE:
+    //   BD scale, RC justification, 3BD basePoint, BE extrusion,
+    //   BS open/closed flag, RC num_lines, BS num_verts,
+    //   then per-vertex: 3BD pos, 3BD vdir, 3BD mdir,
+    //     per-line: BS num_segparms × BD parm, BS num_areafillparms × BD parm.
+    scale         = buf->getBitDouble();
+    justification = buf->getRawChar8();
+    basePoint     = buf->get3BitDouble();
+    extPoint      = buf->getExtrusion(false);
+    openClosed    = buf->getBitShort();
+    numLines      = buf->getRawChar8();
+    numVerts      = buf->getBitShort();
+    DRW_DBG(" mline scale: "); DRW_DBG(scale);
+    DRW_DBG(" just: "); DRW_DBG(static_cast<int>(justification));
+    DRW_DBG(" openClosed: "); DRW_DBG(openClosed);
+    DRW_DBG(" lines: "); DRW_DBG(static_cast<int>(numLines));
+    DRW_DBG(" verts: "); DRW_DBG(numVerts); DRW_DBG("\n");
+    // Sanity: numLines / numVerts are RC and BS so already small types,
+    // but guard against pathological values anyway.
+    if (numLines > 100) return true;
+    vertlist.reserve(numVerts);
+    for (int vi = 0; vi < numVerts; ++vi) {
+        DRW_MLineVertex vtx;
+        vtx.position  = buf->get3BitDouble();
+        vtx.vertexDir = buf->get3BitDouble();
+        vtx.miterDir  = buf->get3BitDouble();
+        vtx.segParms.resize(numLines);
+        vtx.areaFillParms.resize(numLines);
+        for (int li = 0; li < numLines; ++li) {
+            duint16 nSeg = buf->getBitShort();
+            vtx.segParms[li].reserve(nSeg);
+            for (int s = 0; s < nSeg; ++s) {
+                vtx.segParms[li].push_back(buf->getBitDouble());
+            }
+            duint16 nFill = buf->getBitShort();
+            vtx.areaFillParms[li].reserve(nFill);
+            for (int f = 0; f < nFill; ++f) {
+                vtx.areaFillParms[li].push_back(buf->getBitDouble());
+            }
+        }
+        vertlist.push_back(std::move(vtx));
+    }
+    if (!DRW_Entity::parseDwgEntHandle(version, buf)) return false;
+    // MLINE has one extra handle in the handle stream after the standard
+    // entity handles: the MLINESTYLE reference. Read if available — some
+    // older files (R14) store the style name inline instead.
+    if (version > DRW::AC1014 && buf->numRemainingBytes() >= 2) {
+        dwgHandle styleH = buf->getOffsetHandle(handle);
+        styleHandle = styleH.ref;
+        DRW_DBG(" MLINE style handle: ");
+        DRW_DBGHL(styleH.code, styleH.size, styleH.ref); DRW_DBG("\n");
+    }
+    return buf->isGood();
+}
+
+
 bool DRW_Text::parseCode(int code, const std::unique_ptr<dxfReader>& reader){
     switch (code) {
     case 40:

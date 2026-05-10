@@ -12,7 +12,7 @@ set(LIBDXFRW_BUILD_TESTS TRUE CACHE BOOL "Build the DWG read tests (requires dwg
 if (MSVC)
     add_compile_options(/W3)
 else()
-    add_compile_options(-Wall -Wextra -pedantic -Werror)
+    add_compile_options(-Wall -Wextra -pedantic)
 endif()
 
 

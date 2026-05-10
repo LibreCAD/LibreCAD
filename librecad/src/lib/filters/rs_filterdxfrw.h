@@ -109,6 +109,8 @@ public:
     void addArc(const DRW_Arc& data) override;
     void addEllipse(const DRW_Ellipse& data) override;
     void addLWPolyline(const DRW_LWPolyline& data) override;
+    void addMLine(const DRW_MLine* data) override;
+    void addMLineStyle(const DRW_MLineStyle& data) override;
     void addText(const DRW_Text& data) override;
     void addPolyline(const DRW_Polyline& data) override;
     void addSpline(const DRW_Spline* data) override;
@@ -261,6 +263,24 @@ private:
     QString m_file;
     /** Pointer to current entity container (either block or graphic) */
     RS_EntityContainer* m_currentContainer = nullptr;
+    /** MLINESTYLE cache: name → style data. Populated by addMLineStyle as
+     *  the OBJECTS section is decoded; consumed by addMLine to compute
+     *  per-element offsets when decomposing the MLINE into N polylines. */
+    std::map<QString, DRW_MLineStyle> m_mlineStyleCache;
+
+    /** DWG file format version recognized at openFile() time. Set even
+     *  on the BAD_VERSION error path so the user-facing error message
+     *  can name which version was found and which range is supported.
+     *  UNKNOWNV when the magic header isn't recognized at all. */
+    DRW::Version m_dwgVersion = DRW::UNKNOWNV;
+
+    /** Scan @p container for RS_Polyline entities carrying LibreCAD_MLINE
+     *  XDATA and reconstruct DRW_MLine entities by grouping siblings.
+     *  Consumed polylines are written into @p consumed so the normal
+     *  entity-write loop skips them. Polylines without metadata, or
+     *  groups missing siblings, are left for plain LWPOLYLINE export. */
+    void reconstructMLines(RS_EntityContainer* container,
+                           std::set<RS_Entity*>& consumed);
     /** File m_codePage. Used to find the text coder. */
     QString m_codePage;
     /** File version. */

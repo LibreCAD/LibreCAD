@@ -1711,6 +1711,7 @@ if(BUILD_TESTS)
 	### The actual tests
         librecad/src/lib/engine/document/entities/tests/lc_splinehelper_tests.cpp
         librecad/src/lib/engine/document/entities/tests/lc_hyperbola_tests.cpp
+        librecad/src/lib/engine/document/entities/tests/lc_parabola_tests.cpp
         librecad/src/lib/engine/document/entities/tests/rs_ellipse_tests.cpp
         librecad/src/lib/engine/document/entities/tests/rs_spline_tests.cpp
         librecad/src/lib/engine/document/entities/tests/rs_hatch_tests.cpp
@@ -1723,6 +1724,7 @@ if(BUILD_TESTS)
         librecad/src/lib/filters/tests/eed_tests.cpp
         librecad/src/lib/filters/tests/dbcolor_tests.cpp
         librecad/src/lib/filters/tests/entity_metadata_tests.cpp
+        librecad/src/lib/filters/tests/mline_tests.cpp
     )
 
     # Include directories for rs_math.h and other dependencies

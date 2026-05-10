@@ -259,7 +259,10 @@ void RS_ActionModifyTrim::previewRefTrimmedEntity(RS_Entity *trimmed, RS_Entity*
             break;
         }
         case RS2::EntityParabola:{
-            // fixme - check trimming of parabola and drawing part that will be trimmed
+            // Parabola has no reversed-direction toggle; just preview the
+            // resulting (already-trimmed) entity.
+            previewEntity(trimmed);
+            break;
         }
         default:{
             previewEntity(trimmed);

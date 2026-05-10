@@ -157,6 +157,12 @@ protected:
     bool readDwgEntities(DRW_Interface& intfa, dwgBuffer *dbuf);
     bool readDwgObjects(DRW_Interface& intfa, dwgBuffer *dbuf);
     bool readPlineVertex(DRW_Polyline& pline, dwgBuffer *dbuf);
+    // Walk a block_record's child entities in firstEH..lastEH chain (pre-2004)
+    // or entMap order (2004+) and dispatch each via readDwgEntity.  Used for
+    // both named blocks (entities go into the active block) and modelspace /
+    // paperspace (called post-endBlock so entities go into the interface's
+    // modelspace container).
+    bool walkBlockRecordEntities(DRW_Block_Record* bkr, dwgBuffer *dbuf, DRW_Interface& intfa);
 
 public:
     std::unordered_map<duint32, objHandle>ObjectMap;
@@ -177,6 +183,11 @@ public:
     /// their parseDwg returns.  Names are formatted as "BOOK$ENTRY" when a
     /// book name is present, otherwise just the entry name.
     std::unordered_map<duint32, std::pair<dint32, std::string>> dbColorMap;
+    /// MLINESTYLE handle → style name. Populated as MLINESTYLE objects are
+    /// parsed; consumed by the entryParse template hook to stamp
+    /// styleName onto each MLINE entity post-parse (DXF code 2 / DWG 340
+    /// resolves to a name only after the OBJECTS section is read).
+    std::unordered_map<duint32, std::string> mlineStyleNameMap;
     std::unordered_map<duint32, DRW_AppId*> appIdmap;
     std::unordered_map<duint32, DRW_View*> viewmap;
     std::unordered_map<duint32, DRW_UCS*> ucsmap;

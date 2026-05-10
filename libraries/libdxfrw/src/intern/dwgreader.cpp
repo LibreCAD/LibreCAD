@@ -828,49 +828,19 @@ bool dwgReader::readDwgBlocks(DRW_Interface& intfa, dwgBuffer *dbuf){
         bkr->name = bk.name;
 
         /**read & send block entities**/
-        // in dwg code 330 are not set like dxf in ModelSpace & PaperSpace, set it (RLZ: only tested in 2000)
-        if (bk.parentHandle == DRW::NoHandle) {
-            // in dwg code 330 are not set like dxf in ModelSpace & PaperSpace, set it
-            bk.parentHandle= bkr->handle;
-            //and do not send block entities like dxf
+        // Modelspace / paperspace block_records have no DWG-side parent
+        // handle (the legacy "330 not set like dxf in ModelSpace & PaperSpace"
+        // case).  Their entities are still walked here, but post-endBlock so
+        // they land in the interface's modelspace container rather than in
+        // the just-opened addBlock scope.  Walking in entMap / firstEH..lastEH
+        // order also guarantees POLYLINE parents precede their VERTEX
+        // children, which readPlineVertex's ObjectMap.find() lookup requires.
+        const bool deferredEntityWalk = (bk.parentHandle == DRW::NoHandle);
+        if (deferredEntityWalk) {
+            bk.parentHandle = bkr->handle;
         } else {
-            if (version < DRW::AC1018) { //pre 2004
-                duint32 nextH = bkr->firstEH;
-                while (nextH != 0){
-                    mit = ObjectMap.find(nextH);
-                    if (mit==ObjectMap.end()) {
-                        nextH = 0;//end while if entity not found
-                        DRW_DBG("\nWARNING: Entity of block not found\n");
-                        ret = false;
-                        continue;
-                    } else {//foud entity reads it
-                        oc = mit->second;
-                        ObjectMap.erase(mit);
-                        ret2 = readDwgEntity(dbuf, oc, intfa);
-                        ret = ret && ret2;
-                    }
-                    if (nextH == bkr->lastEH)
-                        nextH = 0; //redundant, but prevent read errors
-                    else
-                        nextH = nextEntLink;
-                }
-            } else {//2004+
-                for (std::vector<duint32>::iterator it = bkr->entMap.begin() ; it != bkr->entMap.end(); ++it){
-                    duint32 nextH = *it;
-                    mit = ObjectMap.find(nextH);
-                    if (mit==ObjectMap.end()) {
-                        DRW_DBG("\nWARNING: Entity of block not found\n");
-                        ret = false;
-                        continue;
-                    } else {//foud entity reads it
-                        oc = mit->second;
-                        ObjectMap.erase(mit);
-                        DRW_DBG("\nBlocks, parsing entity: "); DRW_DBGH(oc.handle); DRW_DBG(", pos: "); DRW_DBG(oc.loc); DRW_DBG("\n");
-                        ret2 = readDwgEntity(dbuf, oc, intfa);
-                        ret = ret && ret2;
-                    }
-                }
-            }//end 2004+
+            ret2 = walkBlockRecordEntities(bkr, dbuf, intfa);
+            ret = ret && ret2;
         }
 
         //end block entity, really needed to parse a dummy entity??
@@ -899,8 +869,57 @@ bool dwgReader::readDwgBlocks(DRW_Interface& intfa, dwgBuffer *dbuf){
         if (bk.parentHandle == DRW::NoHandle) bk.parentHandle= bkr->handle;
         parseAttribs(&end);
         intfa.endBlock();
+
+        if (deferredEntityWalk) {
+            // currentBlock has just been reset to the interface's modelspace
+            // container; dispatched entities flow there.
+            ret2 = walkBlockRecordEntities(bkr, dbuf, intfa);
+            ret = ret && ret2;
+        }
     }
 
+    return ret;
+}
+
+bool dwgReader::walkBlockRecordEntities(DRW_Block_Record* bkr, dwgBuffer *dbuf, DRW_Interface& intfa){
+    bool ret = true;
+    bool ret2 = true;
+    objHandle oc;
+
+    if (version < DRW::AC1018) { //pre 2004
+        duint32 nextH = bkr->firstEH;
+        while (nextH != 0) {
+            auto mit = ObjectMap.find(nextH);
+            if (mit == ObjectMap.end()) {
+                DRW_DBG("\nWARNING: Entity of block not found\n");
+                ret = false;
+                break;
+            }
+            oc = mit->second;
+            ObjectMap.erase(mit);
+            ret2 = readDwgEntity(dbuf, oc, intfa);
+            ret = ret && ret2;
+            if (nextH == bkr->lastEH)
+                nextH = 0; //redundant, but prevent read errors
+            else
+                nextH = nextEntLink;
+        }
+    } else { //2004+
+        for (auto it = bkr->entMap.begin(); it != bkr->entMap.end(); ++it) {
+            duint32 nextH = *it;
+            auto mit = ObjectMap.find(nextH);
+            if (mit == ObjectMap.end()) {
+                DRW_DBG("\nWARNING: Entity of block not found\n");
+                ret = false;
+                continue;
+            }
+            oc = mit->second;
+            ObjectMap.erase(mit);
+            DRW_DBG("\nBlocks, parsing entity: "); DRW_DBGH(oc.handle); DRW_DBG(", pos: "); DRW_DBG(oc.loc); DRW_DBG("\n");
+            ret2 = readDwgEntity(dbuf, oc, intfa);
+            ret = ret && ret2;
+        }
+    }
     return ret;
 }
 
@@ -909,6 +928,13 @@ bool dwgReader::readPlineVertex(DRW_Polyline& pline, dwgBuffer *dbuf){
     bool ret2 = true;
     objHandle oc;
     duint32 bs = 0;
+
+    // Vertex chain walking must not clobber the outer block-walk's
+    // nextEntLink/prevEntLink — readDwgBlocks reads them after readPlineVertex
+    // returns to advance to the polyline's next sibling.  Save/restore so the
+    // caller's iteration survives.
+    const duint32 savedNext = nextEntLink;
+    const duint32 savedPrev = prevEntLink;
 
     if (version < DRW::AC1018) { //pre 2004
         duint32 nextH = pline.firstEH;
@@ -937,14 +963,12 @@ bool dwgReader::readPlineVertex(DRW_Polyline& pline, dwgBuffer *dbuf){
                 DRW_DBG(" object type= "); DRW_DBG(oType); DRW_DBG("\n");
                 ret2 = vt.parseDwg(version, &buff, bs, pline.basePoint.z);
                 pline.addVertex(vt);
-                nextEntLink = vt.nextEntLink; \
-                prevEntLink = vt.prevEntLink;
                 ret = ret && ret2;
+                if (nextH == pline.lastEH)
+                    nextH = 0; //redundant, but prevent read errors
+                else
+                    nextH = vt.nextEntLink;
             }
-            if (nextH == pline.lastEH)
-                nextH = 0; //redundant, but prevent read errors
-            else
-                nextH = nextEntLink;
         }
     } else {//2004+
         for (std::list<duint32>::iterator it = pline.hadlesList.begin() ; it != pline.hadlesList.end(); ++it){
@@ -973,12 +997,13 @@ bool dwgReader::readPlineVertex(DRW_Polyline& pline, dwgBuffer *dbuf){
                 DRW_DBG(" object type= "); DRW_DBG(oType); DRW_DBG("\n");
                 ret2 = vt.parseDwg(version, &buff, bs, pline.basePoint.z);
                 pline.addVertex(vt);
-                nextEntLink = vt.nextEntLink; \
-                prevEntLink = vt.prevEntLink;
                 ret = ret && ret2;
             }
         }
     }//end 2004+
+
+    nextEntLink = savedNext;
+    prevEntLink = savedPrev;
     DRW_DBG("\nRemoved SEQEND entity: "); DRW_DBGH(pline.seqEndH.ref);DRW_DBG("\n");
     ObjectMap.erase(pline.seqEndH.ref);
 
@@ -1184,6 +1209,20 @@ bool dwgReader::readDwgEntity(dwgBuffer *dbuf, objHandle& obj, DRW_Interface& in
             if (entryParse( e, buff, bs, ret)) {
                 e.style = findTableName(DRW::STYLE, e.styleH.ref);
                 intfa.addMText(e);
+            }
+            break; }
+        case 47: { // MLINE (ODA fixed type 0x2F)
+            DRW_MLine e;
+            if (entryParse(e, buff, bs, ret)) {
+                // Resolve MLINESTYLE handle → name from the map populated
+                // when the OBJECTS section's MLINESTYLE entries were read.
+                if (e.styleHandle != 0) {
+                    auto it = mlineStyleNameMap.find(e.styleHandle);
+                    if (it != mlineStyleNameMap.end() && e.styleName.empty()) {
+                        e.styleName = it->second;
+                    }
+                }
+                intfa.addMLine(&e);
             }
             break; }
         case 28: {
@@ -1427,6 +1466,13 @@ bool dwgReader::readDwgObject(dwgBuffer *dbuf, objHandle& obj, DRW_Interface& in
         case 73: { //MLINESTYLE (ODA fixed type 73)
             DRW_MLineStyle e;
             ret = e.parseDwg(version, &buff, bs);
+            if (ret) {
+                // Cache name by handle so DRW_MLine entities can resolve
+                // their styleHandle → styleName after the OBJECTS section
+                // is fully parsed (entries usually appear before OBJECTS,
+                // so this map is consulted in case 47 dispatch).
+                mlineStyleNameMap[obj.handle] = e.name;
+            }
             intfa.addMLineStyle(e);
             break; }
         case 82: { //LAYOUT (ODA fixed type 82)

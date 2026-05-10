@@ -122,6 +122,34 @@ RS_FilterDXFRW::~RS_FilterDXFRW() {
     RS_DEBUG->print("RS_FilterDXFRW::~RS_FilterDXFRW(): OK");
 }
 
+// Human-readable display for a DRW::Version. Year suffixes anchor users
+// in time so they can decide whether to convert (pre-R13) or update their
+// install (post-R2018 future versions).
+static QString dwgVersionDisplay(DRW::Version v) {
+    switch (v) {
+        case DRW::MC00:   return QStringLiteral("R1.1 (1982)");
+        case DRW::AC12:   return QStringLiteral("R1.2 (1983)");
+        case DRW::AC14:   return QStringLiteral("R1.4 (1983)");
+        case DRW::AC150:  return QStringLiteral("R2.0 (1984)");
+        case DRW::AC210:  return QStringLiteral("R2.10 (1986)");
+        case DRW::AC1002: return QStringLiteral("R2.5 (1986)");
+        case DRW::AC1003: return QStringLiteral("R2.6 (1987)");
+        case DRW::AC1004: return QStringLiteral("R9 (1987)");
+        case DRW::AC1006: return QStringLiteral("R10 (1988)");
+        case DRW::AC1009: return QStringLiteral("R11/R12 (1990)");
+        case DRW::AC1012: return QStringLiteral("R13 (1994)");
+        case DRW::AC1014: return QStringLiteral("R14 (1997)");
+        case DRW::AC1015: return QStringLiteral("AutoCAD 2000");
+        case DRW::AC1018: return QStringLiteral("AutoCAD 2004");
+        case DRW::AC1021: return QStringLiteral("AutoCAD 2007");
+        case DRW::AC1024: return QStringLiteral("AutoCAD 2010");
+        case DRW::AC1027: return QStringLiteral("AutoCAD 2013");
+        case DRW::AC1032: return QStringLiteral("AutoCAD 2018");
+        case DRW::UNKNOWNV:
+        default:          return QStringLiteral("unknown");
+    }
+}
+
 QString RS_FilterDXFRW::lastError() const{
     switch (errorCode) {
     case DRW::BAD_NONE:
@@ -129,6 +157,15 @@ QString RS_FilterDXFRW::lastError() const{
     case DRW::BAD_OPEN:
         return (QObject::tr( "error opening DXF/DWG file", "RS_FilterDXFRW"));
     case DRW::BAD_VERSION:
+        if (m_dwgVersion != DRW::UNKNOWNV) {
+            return QObject::tr(
+                "Cannot open DWG: file is %1; LibreCAD supports %2 and newer. "
+                "Convert with GNU LibreDWG (dwgread / dwg2dxf) or re-save "
+                "from a recent CAD tool.",
+                "RS_FilterDXFRW")
+                .arg(dwgVersionDisplay(m_dwgVersion))
+                .arg(dwgVersionDisplay(DRW::AC1012));
+        }
         return (QObject::tr( "unsupported DXF/DWG file version", "RS_FilterDXFRW"));
     case DRW::BAD_READ_METADATA:
         return (QObject::tr( "error reading DXF/DWG meta data", "RS_FilterDXFRW"));
@@ -192,6 +229,11 @@ bool RS_FilterDXFRW::fileImport(RS_Graphic& g, const QString& file, [[maybe_unus
         if (RS_DEBUG->getLevel()== RS_Debug::D_DEBUGGING)
             dwgr.setDebug(DRW::DebugLevel::Debug);
         bool success = dwgr.read(this, true);
+        // Capture the recognized version BEFORE acting on the result so
+        // BAD_VERSION error reporting (printDwgError / lastError) can
+        // name the format the user supplied. dwgR::version is set by
+        // openFile() even on the BAD_VERSION fork.
+        m_dwgVersion = dwgr.getVersion();
         RS_DEBUG->print("RS_FilterDXFRW::fileImport: reading DWG file: OK");
         RS_DIALOGFACTORY->commandMessage(QObject::tr("Opened dwg file version %1.").arg(printDwgVersion(dwgr.getVersion())));
         RS_DEBUG->print("DWG read summary: %d entities, %d blocks, error=%d",
@@ -722,6 +764,113 @@ void RS_FilterDXFRW::addLWPolyline(const DRW_LWPolyline& data) {
 
     polyline->appendVertexs(verList);
     m_currentContainer->addEntity(polyline);
+}
+
+/**
+ * Implementation of the method which handles MLINESTYLE table entries.
+ * Cache by name so a later addMLine can resolve element offsets/colors.
+ */
+void RS_FilterDXFRW::addMLineStyle(const DRW_MLineStyle& data) {
+    RS_DEBUG->print("RS_FilterDXFRW::addMLineStyle: %s (%zu elements)",
+                    data.name.c_str(), data.elements.size());
+    QString key = QString::fromUtf8(data.name.c_str());
+    if (!key.isEmpty()) {
+        m_mlineStyleCache[key] = data;
+    }
+}
+
+/**
+ * Implementation of the method which handles MLINE entities.
+ *
+ * LibreCAD has no native multiline. Decompose each MLINE into N parallel
+ * RS_Polylines (one per element in the referenced MLINESTYLE), with
+ * round-trip metadata stored on each polyline's drwExtData so the export
+ * path can reconstruct an MLINE on save.
+ */
+void RS_FilterDXFRW::addMLine(const DRW_MLine* data) {
+    RS_DEBUG->print("RS_FilterDXFRW::addMLine");
+    if (!data || data->vertlist.empty() || data->numLines == 0) return;
+
+    const int N = data->numLines;
+    QString styleName = QString::fromUtf8(data->styleName.c_str());
+    auto styleIt = m_mlineStyleCache.find(styleName);
+    const DRW_MLineStyle* style = (styleIt != m_mlineStyleCache.end())
+                                      ? &styleIt->second : nullptr;
+
+    // Compute effective per-element offsets after justification + scale.
+    // Justification: 0=top, 1=zero/middle, 2=bottom. The reference offset
+    // is removed from each element's offset so the chosen line aligns
+    // with the baseline polyline path.
+    std::vector<double> effOffsets(N, 0.0);
+    if (style && static_cast<int>(style->elements.size()) == N) {
+        double ref = 0.0;
+        if (data->justification == 0) {        // top
+            for (auto& e : style->elements) ref = std::max(ref, e.offset);
+        } else if (data->justification == 2) { // bottom
+            for (auto& e : style->elements) ref = std::min(ref, e.offset);
+        }
+        for (int i = 0; i < N; ++i) {
+            effOffsets[i] = (style->elements[i].offset - ref) * data->scale;
+        }
+    } else {
+        // Fallback: evenly spaced [-(N-1)/2 .. +(N-1)/2] * scale.
+        for (int i = 0; i < N; ++i) {
+            effOffsets[i] = (i - 0.5 * (N - 1)) * data->scale;
+        }
+    }
+
+    const QString mlineId = QStringLiteral("mline_%1").arg(data->handle);
+    const bool closed = (data->openClosed & 0x1) != 0;
+
+    for (int i = 0; i < N; ++i) {
+        RS_PolylineData pd(RS_Vector{}, RS_Vector{}, closed);
+        auto polyline = new RS_Polyline(m_currentContainer, pd);
+        setEntityAttributes(polyline, data);
+
+        for (const auto& v : data->vertlist) {
+            RS_Vector miter(v.miterDir.x, v.miterDir.y);
+            const double mlen = miter.magnitude();
+            RS_Vector pos;
+            if (mlen < RS_TOLERANCE) {
+                pos = RS_Vector{v.position.x, v.position.y};
+            } else {
+                miter /= mlen;
+                pos = RS_Vector{
+                    v.position.x + miter.x * effOffsets[i],
+                    v.position.y + miter.y * effOffsets[i]};
+            }
+            polyline->addVertex(pos, 0.0, false);
+        }
+
+        // Round-trip metadata as XDATA. Schema per the implementation plan:
+        //   1001 "LibreCAD_MLINE", 1000 mlineId, 1000 styleName,
+        //   1040 scale, 1070 justification, 1070 elementCount,
+        //   1070 elementIndex, 1040 offset, 1070 flags.
+        // Anchor (i==0) additionally stores per-vertex baseline + miter
+        // so the export side can reconstruct without averaging.
+        std::vector<std::shared_ptr<DRW_Variant>> ext;
+        ext.push_back(std::make_shared<DRW_Variant>(1001, std::string("LibreCAD_MLINE")));
+        ext.push_back(std::make_shared<DRW_Variant>(1000, mlineId.toStdString()));
+        ext.push_back(std::make_shared<DRW_Variant>(1000, data->styleName));
+        ext.push_back(std::make_shared<DRW_Variant>(1040, data->scale));
+        ext.push_back(std::make_shared<DRW_Variant>(1070, dint32{data->justification}));
+        ext.push_back(std::make_shared<DRW_Variant>(1070, dint32{N}));
+        ext.push_back(std::make_shared<DRW_Variant>(1070, dint32{i}));
+        ext.push_back(std::make_shared<DRW_Variant>(1040, effOffsets[i]));
+        ext.push_back(std::make_shared<DRW_Variant>(1070, dint32{data->openClosed}));
+        if (i == 0) {
+            // Anchor carries baseline + miter for each vertex.
+            for (const auto& v : data->vertlist) {
+                ext.push_back(std::make_shared<DRW_Variant>(
+                    1011, DRW_Coord(v.position.x, v.position.y, v.position.z)));
+                ext.push_back(std::make_shared<DRW_Variant>(
+                    1013, DRW_Coord(v.miterDir.x, v.miterDir.y, v.miterDir.z)));
+            }
+        }
+        polyline->setDrwExtData(std::move(ext));
+
+        m_currentContainer->addEntity(polyline);
+    }
 }
 
 /**
@@ -3832,10 +3981,173 @@ void RS_FilterDXFRW::writeAppId(){
 }
 
 void RS_FilterDXFRW::writeEntities(){
+    // Pre-pass: reconstruct MLINE entities from decomposed polylines that
+    // carry LibreCAD_MLINE XDATA. Consumed polylines are emitted as
+    // MLINE; the rest fall through to the normal write path.
+    std::set<RS_Entity*> consumed;
+    reconstructMLines(m_graphic, consumed);
     for(RS_Entity* e: lc::LC_ContainerTraverser{*m_graphic, RS2::ResolveNone}.entities()) {
-        if ( !(e->getFlag(RS2::FlagUndone)) ) {
-            writeEntity(e);
+        if (e->getFlag(RS2::FlagUndone)) continue;
+        if (consumed.find(e) != consumed.end()) continue;
+        writeEntity(e);
+    }
+}
+
+namespace {
+// Parsed view of one polyline's LibreCAD_MLINE XDATA.
+struct MLineEntry {
+    RS_Entity* entity = nullptr;
+    QString mlineId;
+    QString styleName;
+    double scale = 1.0;
+    int justification = 0;
+    int elementCount = 0;
+    int elementIndex = 0;
+    double offset = 0.0;
+    int openClosed = 1;
+    bool isAnchor = false;  // i==0 polyline carries baseline + miter
+    std::vector<DRW_Coord> baselineVerts;
+    std::vector<DRW_Coord> miterDirs;
+};
+
+// Walk the entity's drwExtData (XDATA stream) and extract LibreCAD_MLINE
+// metadata. Returns nullopt if the marker isn't present. The XDATA layout
+// matches RS_FilterDXFRW::addMLine's emission schema.
+std::optional<MLineEntry> extractMLineMeta(RS_Entity* e) {
+    if (!e || !e->hasDrwExtData()) return std::nullopt;
+    const auto& ext = e->getDrwExtData();
+    bool inGroup = false;
+    MLineEntry m;
+    int seen1000 = 0;  // 0 = mlineId, 1 = styleName
+    int seen1040 = 0;  // 0 = scale, 1 = offset
+    int seen1070 = 0;  // 0 = just, 1 = N, 2 = i, 3 = flags
+    int seen1011 = 0;  // baseline.x emitted as DRW_Coord
+    for (const auto& sp : ext) {
+        if (!sp) continue;
+        const int code = sp->code();
+        if (code == 1001) {
+            inGroup = (std::string{sp->c_str()} == "LibreCAD_MLINE");
+            continue;
         }
+        if (!inGroup) continue;
+        switch (code) {
+        case 1000: {
+            QString s = QString::fromStdString(std::string{sp->c_str()});
+            if (seen1000 == 0) m.mlineId = s;
+            else if (seen1000 == 1) m.styleName = s;
+            ++seen1000;
+            break;
+        }
+        case 1040: {
+            const double d = sp->d_val();
+            if (seen1040 == 0) m.scale = d;
+            else if (seen1040 == 1) m.offset = d;
+            ++seen1040;
+            break;
+        }
+        case 1070: {
+            const int v = static_cast<int>(sp->i_val());
+            if (seen1070 == 0) m.justification = v;
+            else if (seen1070 == 1) m.elementCount = v;
+            else if (seen1070 == 2) m.elementIndex = v;
+            else if (seen1070 == 3) m.openClosed = v;
+            ++seen1070;
+            break;
+        }
+        case 1011: {
+            // Anchor-only baseline vertex
+            const auto* c = sp->coord();
+            if (c) m.baselineVerts.push_back(*c);
+            m.isAnchor = true;
+            ++seen1011;
+            break;
+        }
+        case 1013: {
+            const auto* c = sp->coord();
+            if (c) m.miterDirs.push_back(*c);
+            break;
+        }
+        default:
+            break;
+        }
+    }
+    if (m.mlineId.isEmpty() || m.elementCount == 0) return std::nullopt;
+    m.entity = e;
+    return m;
+}
+} // anon
+
+void RS_FilterDXFRW::reconstructMLines(RS_EntityContainer* container,
+                                       std::set<RS_Entity*>& consumed) {
+    if (!container) return;
+
+    // First pass: collect all polylines carrying the MLINE marker.
+    std::map<QString, std::vector<MLineEntry>> groups;
+    for (RS_Entity* e : lc::LC_ContainerTraverser{*container, RS2::ResolveNone}.entities()) {
+        if (e->getFlag(RS2::FlagUndone)) continue;
+        if (e->rtti() != RS2::EntityPolyline) continue;
+        auto m = extractMLineMeta(e);
+        if (!m) continue;
+        groups[m->mlineId].push_back(std::move(*m));
+    }
+
+    // Second pass: reconstruct + emit each complete group.
+    for (auto& [mlineId, entries] : groups) {
+        if (entries.empty()) continue;
+        const int N = entries.front().elementCount;
+        if (static_cast<int>(entries.size()) != N) {
+            // Incomplete group (user deleted siblings) — leave for plain
+            // LWPOLYLINE export. Don't mark consumed.
+            continue;
+        }
+        // Sort by elementIndex.
+        std::sort(entries.begin(), entries.end(),
+                  [](const MLineEntry& a, const MLineEntry& b) {
+                      return a.elementIndex < b.elementIndex;
+                  });
+        // Find the anchor (elementIndex == 0).
+        const MLineEntry* anchor = nullptr;
+        for (const auto& m : entries) {
+            if (m.elementIndex == 0 && m.isAnchor && !m.baselineVerts.empty()) {
+                anchor = &m;
+                break;
+            }
+        }
+        if (!anchor) {
+            // No anchor found — group is malformed, fall through.
+            continue;
+        }
+
+        // Build DRW_MLine from anchor metadata + baseline vertices.
+        DRW_MLine ml;
+        ml.styleName = anchor->styleName.toStdString();
+        ml.scale = anchor->scale;
+        ml.justification = static_cast<duint8>(anchor->justification);
+        ml.openClosed = anchor->openClosed;
+        ml.numLines = static_cast<duint8>(N);
+        ml.numVerts = static_cast<duint16>(anchor->baselineVerts.size());
+        if (!anchor->baselineVerts.empty()) {
+            ml.basePoint = anchor->baselineVerts.front();
+        }
+        ml.layer = entries.front().entity->getLayer()
+                       ? entries.front().entity->getLayer()->getName().toStdString()
+                       : std::string{"0"};
+        const size_t V = anchor->baselineVerts.size();
+        const size_t M = anchor->miterDirs.size();
+        ml.vertlist.reserve(V);
+        for (size_t i = 0; i < V; ++i) {
+            DRW_MLineVertex v;
+            v.position = anchor->baselineVerts[i];
+            if (i < M) v.miterDir = anchor->miterDirs[i];
+            // Default segment params: a single zero parameter per element
+            // (sufficient for a continuous unbroken multiline).
+            v.segParms.assign(N, std::vector<double>{0.0});
+            v.areaFillParms.assign(N, std::vector<double>{});
+            ml.vertlist.push_back(std::move(v));
+        }
+
+        m_dxfW->writeMLine(&ml);
+        for (const auto& m : entries) consumed.insert(m.entity);
     }
 }
 
@@ -3861,6 +4173,7 @@ void RS_FilterDXFRW::writeEntity(RS_Entity* e){
         break;
     case RS2::EntityHyperbola:
         writeHyperbola(static_cast<LC_Hyperbola*>(e));
+        break;
     case RS2::EntityPolyline:
         writeLWPolyline(static_cast<RS_Polyline*>(e));
         break;
@@ -5870,8 +6183,20 @@ void RS_FilterDXFRW::printDwgError(int le){
             RS_DEBUG->print("RS_FilterDXFRW::printDwgError: DRW::BAD_OPEN");
             break;
         case DRW::BAD_VERSION:
-            RS_DIALOGFACTORY->commandMessage(QObject::tr("unsupported dwg version"));
-            RS_DEBUG->print("RS_FilterDXFRW::printDwgError: DRW::BAD_VERSION");
+            if (m_dwgVersion != DRW::UNKNOWNV) {
+                const QString actual = dwgVersionDisplay(m_dwgVersion);
+                RS_DIALOGFACTORY->commandMessage(QObject::tr(
+                    "Cannot open DWG: file is %1; LibreCAD supports %2 and newer. "
+                    "Convert with GNU LibreDWG (dwgread / dwg2dxf) or re-save "
+                    "from a recent CAD tool.")
+                    .arg(actual)
+                    .arg(dwgVersionDisplay(DRW::AC1012)));
+                RS_DEBUG->print("RS_FilterDXFRW::printDwgError: BAD_VERSION (%s)",
+                                actual.toUtf8().constData());
+            } else {
+                RS_DIALOGFACTORY->commandMessage(QObject::tr("unsupported dwg version"));
+                RS_DEBUG->print("RS_FilterDXFRW::printDwgError: DRW::BAD_VERSION");
+            }
             break;
         case DRW::BAD_READ_METADATA:
             RS_DIALOGFACTORY->commandMessage(QObject::tr("error reading file metadata in dwg file"));

@@ -105,6 +105,12 @@ public:
     /** Called for every lwpolyline */
     virtual void addLWPolyline(const DRW_LWPolyline& data) = 0;
 
+    /** Called for every multiline (MLINE) entity. Default no-op so
+     *  existing implementers compile unchanged; LibreCAD's filter
+     *  decomposes the entity into N parallel polylines.
+     */
+    virtual void addMLine(const DRW_MLine* data) { (void)data; }
+
     /** Called for every polyline start */
     virtual void addPolyline(const DRW_Polyline& data) = 0;
 

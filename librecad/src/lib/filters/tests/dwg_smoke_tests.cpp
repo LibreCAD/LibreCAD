@@ -116,6 +116,11 @@ public:
     void addCircle(const DRW_Circle& e) override { track(e); }
     void addEllipse(const DRW_Ellipse& e) override { track(e); }
     void addLWPolyline(const DRW_LWPolyline& e) override { track(e); }
+    void addMLine(const DRW_MLine* e) override {
+        track(*e);
+        ++mlines;
+        mlineVerts += static_cast<int>(e->vertlist.size());
+    }
     void addPolyline(const DRW_Polyline& e) override { track(e); }
     void addSpline(const DRW_Spline* e) override { track(*e); }
     void addKnot(const DRW_Entity&) override {}
@@ -155,6 +160,8 @@ public:
     void addMLeaderStyle(const DRW_MLeaderStyle*) override { ++mleaderStyles; }
     int wipeouts = 0;
     int wipeoutVertices = 0;
+    int mlines = 0;
+    int mlineVerts = 0;
     int mleaders = 0;
     int mleaderRoots = 0;
     int mleaderLines = 0;
@@ -229,6 +236,16 @@ const char* lWeightToMm(int lw) {
 
 const char* versionStr(DRW::Version v) {
     switch (v) {
+        case DRW::MC00:   return "MC0.0/R1.1";
+        case DRW::AC12:   return "AC1.2/R1.2";
+        case DRW::AC14:   return "AC1.4/R1.4";
+        case DRW::AC150:  return "AC1.50/R2.0";
+        case DRW::AC210:  return "AC2.10/R2.10";
+        case DRW::AC1002: return "AC1002/R2.5";
+        case DRW::AC1003: return "AC1003/R2.6";
+        case DRW::AC1004: return "AC1004/R9";
+        case DRW::AC1006: return "AC1006/R10";
+        case DRW::AC1009: return "AC1009/R11-R12";
         case DRW::AC1012: return "AC1012/R13";
         case DRW::AC1014: return "AC1014/R14";
         case DRW::AC1015: return "AC1015/R2000";
@@ -2280,4 +2297,25 @@ TEST_CASE("DWG dimension field parity: measureValue + flipArrow populate", "[.dw
     // no meaningful dimensions.
     if (totalDims > 0)
         CHECK(nonZeroMeasure > 0);
+}
+
+// ----------------------------------------------------------------------------
+// Pre-R13 detection: confirm the reader recognizes AC2.10 (1986) header,
+// classifies it as BAD_VERSION (no parser exists), and surfaces the
+// recognized version through dwgR::getVersion(). This is what powers the
+// improved user-facing error message in RS_FilterDXFRW.
+// ----------------------------------------------------------------------------
+TEST_CASE("DWG pre-R13 detection: ~/doc/dwg3/block.dwg classifies AC2.10",
+          "[.dwg_pre_r13]") {
+    const char* home = getenv("HOME");
+    if (!home) { SUCCEED("HOME not set"); return; }
+    const std::string path = std::string(home) + "/doc/dwg3/block.dwg";
+    if (!std::filesystem::is_regular_file(path)) {
+        SUCCEED("~/doc/dwg3/block.dwg not found"); return;
+    }
+    const DwgResult r = readDwg(path);
+    CHECK_FALSE(r.ok);
+    CHECK(r.error == DRW::BAD_VERSION);
+    CHECK(r.version == DRW::AC210);
+    INFO("recognized version: " << versionStr(r.version));
 }

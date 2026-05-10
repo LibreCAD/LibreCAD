@@ -1395,6 +1395,55 @@ bool dxfRW::writeText(DRW_Text *ent){
     return true;
 }
 
+bool dxfRW::writeMLine(DRW_MLine *ent) {
+    if (version <= DRW::AC1009) return true;  // MLINE is R13+
+    writer->writeString(0, "MLINE");
+    writeEntity(ent);
+    writer->writeString(100, "AcDbMline");
+    writer->writeUtf8String(2, ent->styleName);
+    if (ent->styleHandle != 0) {
+        writer->writeString(340, toHexStr(static_cast<int>(ent->styleHandle)));
+    }
+    writer->writeDouble(40, ent->scale);
+    writer->writeInt16(70, ent->justification);
+    writer->writeInt16(71, ent->openClosed);
+    writer->writeInt16(72, static_cast<int>(ent->vertlist.size()));
+    writer->writeInt16(73, static_cast<int>(ent->numLines));
+    writer->writeDouble(10, ent->basePoint.x);
+    writer->writeDouble(20, ent->basePoint.y);
+    writer->writeDouble(30, ent->basePoint.z);
+    if (ent->extPoint.x != 0.0 || ent->extPoint.y != 0.0 || ent->extPoint.z != 1.0) {
+        writer->writeDouble(210, ent->extPoint.x);
+        writer->writeDouble(220, ent->extPoint.y);
+        writer->writeDouble(230, ent->extPoint.z);
+    }
+    for (const auto& v : ent->vertlist) {
+        writer->writeDouble(11, v.position.x);
+        writer->writeDouble(21, v.position.y);
+        writer->writeDouble(31, v.position.z);
+        writer->writeDouble(12, v.vertexDir.x);
+        writer->writeDouble(22, v.vertexDir.y);
+        writer->writeDouble(32, v.vertexDir.z);
+        writer->writeDouble(13, v.miterDir.x);
+        writer->writeDouble(23, v.miterDir.y);
+        writer->writeDouble(33, v.miterDir.z);
+        for (int li = 0; li < ent->numLines; ++li) {
+            const auto& seg = (li < static_cast<int>(v.segParms.size()))
+                                  ? v.segParms[li] : std::vector<double>{};
+            const auto& fill = (li < static_cast<int>(v.areaFillParms.size()))
+                                   ? v.areaFillParms[li] : std::vector<double>{};
+            writer->writeInt16(74, static_cast<int>(seg.size()));
+            for (double p : seg) writer->writeDouble(41, p);
+            writer->writeInt16(75, static_cast<int>(fill.size()));
+            for (double p : fill) writer->writeDouble(42, p);
+        }
+    }
+    if (!ent->extData.empty()) {
+        writeExtData(ent->extData);
+    }
+    return true;
+}
+
 bool dxfRW::writeMText(DRW_MText *ent){
     if (version > DRW::AC1009) {
         writer->writeString(0, "MTEXT");
@@ -2653,6 +2702,8 @@ bool dxfRW::processEntities(bool isblock) {
             processed = processText();
         } else if (nextentity == "MTEXT") {
             processed = processMText();
+        } else if (nextentity == "MLINE") {
+            processed = processMLine();
         } else if (nextentity == "HATCH") {
             processed = processHatch();
         } else if (nextentity == "SPLINE") {
@@ -2840,6 +2891,25 @@ bool dxfRW::processLine() {
         }
     }
 
+    return setError(DRW::BAD_READ_ENTITIES);
+}
+
+bool dxfRW::processMLine() {
+    DRW_DBG("dxfRW::processMLine\n");
+    int code;
+    DRW_MLine mline;
+    while (reader->readRec(&code)) {
+        DRW_DBG(code); DRW_DBG("\n");
+        if (0 == code) {
+            nextentity = reader->getString();
+            DRW_DBG(nextentity); DRW_DBG("\n");
+            iface->addMLine(&mline);
+            return true;
+        }
+        if (!mline.parseCode(code, reader)) {
+            return setError(DRW::BAD_CODE_PARSED);
+        }
+    }
     return setError(DRW::BAD_READ_ENTITIES);
 }
 
