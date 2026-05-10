@@ -3120,12 +3120,27 @@ TEST_CASE("DWG arch_multileaders: deep fidelity probe",
     std::cout << "  parseDwgEntHandle leftover : " << countMarker("parseDwgEntHandle leftover") << "\n";
     std::cout << "  AnnotContext parse drift   : " << countMarker("AnnotContext parse drift") << "\n";
     std::cout << "  MLEADER: parseDwgEntHandle hiccup : " << countMarker("MLEADER: parseDwgEntHandle hiccup") << "\n";
+    std::cout << "  MLEADER: handle-stream tail unconsumed : " << countMarker("MLEADER: handle-stream tail") << "\n";
     std::cout << "  not implemented            : " << countMarker("not implemented") << "\n";
     std::cout << "  RLZ                        : " << countMarker("RLZ") << "\n";
     std::cout << "  unhandled-entity-type      : " << countMarker("[unhandled-entity-type") << "\n";
     std::cout << "  bad CRC                    : " << countMarker("CRC") << "\n";
     std::cout << "  read past end / not ok     : " << countMarker("not ok") << "\n";
     std::cout << "  ERROR/BAD                  : " << countMarker("BAD_") << "\n";
+
+    // MLEADER tail-rb distribution: "MLEADER tail rb=N" lines. With the
+    // entity-specific handle stream fully consumed, every entity should
+    // report rb in {0..4} (just the trailing CRC).
+    {
+        std::map<int,int> rbHist;
+        std::regex re(R"(MLEADER tail rb=(-?\d+))");
+        auto begin = std::sregex_iterator(log.begin(), log.end(), re);
+        auto end   = std::sregex_iterator();
+        for (auto it = begin; it != end; ++it) ++rbHist[std::stoi((*it)[1].str())];
+        std::cout << "\nMLEADER tail-rb histogram (bytes left after MLEADER handle stream):\n";
+        for (const auto& [rb, cnt] : rbHist)
+            std::cout << "  rb=" << std::setw(4) << rb << "  count=" << cnt << "\n";
+    }
 
     SUCCEED();
 }
@@ -3149,6 +3164,10 @@ TEST_CASE("DWG arch_multileaders: MLEADER body parser fidelity") {
         int    contentType;
         double scale;
         bool   hasText;
+        duint32 styleHandleRef;
+        duint32 textStyleHandleRef;       // ctx.textStyleHandle
+        duint32 leaderLineTypeHandleRef;
+        duint32 styleTextStyleHandleRef;
     };
 
     class Iface : public TypeTrackingIface {
@@ -3157,7 +3176,11 @@ TEST_CASE("DWG arch_multileaders: MLEADER body parser fidelity") {
         void addMLeader(const DRW_MLeader* e) override {
             TypeTrackingIface::addMLeader(e);
             snaps.push_back({e->layer, e->context.textLabel, e->styleContentType,
-                             e->context.overallScale, e->context.hasTextContents});
+                             e->context.overallScale, e->context.hasTextContents,
+                             e->styleHandle.ref,
+                             e->context.textStyleHandle.ref,
+                             e->leaderLineTypeHandle.ref,
+                             e->styleTextStyleHandle.ref});
         }
     };
 
@@ -3187,6 +3210,23 @@ TEST_CASE("DWG arch_multileaders: MLEADER body parser fidelity") {
     CHECK(countMarker("AnnotContext parse drift") == 0);
     CHECK(countMarker("MLEADER: parseDwgEntHandle hiccup") == 0);
     CHECK(countMarker("MLEADER: implausible classVersion") == 0);
+
+    // Tail handle stream fully consumed (Issue 2 fix). Per-MLEADER "tail
+    // rb=N" lines should all report 0 — the entity-level + per-line +
+    // per-arrowhead/blocklabel handles drain the remaining bits exactly.
+    CHECK(countMarker("MLEADER: handle-stream tail") == 0);
+    {
+        std::regex re(R"(MLEADER tail rb=(-?\d+))");
+        auto begin = std::sregex_iterator(log.begin(), log.end(), re);
+        auto end   = std::sregex_iterator();
+        int total = 0, nonzero = 0;
+        for (auto it = begin; it != end; ++it) {
+            ++total;
+            if (std::stoi((*it)[1].str()) != 0) ++nonzero;
+        }
+        CHECK(total == 36);
+        CHECK(nonzero == 0);
+    }
 
     // Per-entity assertions. Every MLEADER must have:
     //   - styleContentType in {0,1,2,3} — the 4 valid values
@@ -3219,4 +3259,25 @@ TEST_CASE("DWG arch_multileaders: MLEADER body parser fidelity") {
     for (const auto& s : iface.snaps)
         if (s.text.find("GYPSUM BOARD") != std::string::npos) { foundGypsum = true; break; }
     CHECK(foundGypsum);
+
+    // Issue 2: entity-specific handles populate from the trailing handle
+    // stream. Pre-fix these slots were declared but never read; after the
+    // fix every MLEADER must carry a non-null mleaderstyle handle (the
+    // file uses 3 MLEADERSTYLEs across the 36 entities).
+    int populatedStyleHandles = 0;
+    int populatedTextStyleHandles = 0;
+    int populatedLineLTypeHandles = 0;
+    std::set<duint32> distinctStyles;
+    for (const auto& s : iface.snaps) {
+        if (s.styleHandleRef != 0) { ++populatedStyleHandles; distinctStyles.insert(s.styleHandleRef); }
+        if (s.hasText && s.textStyleHandleRef != 0) ++populatedTextStyleHandles;
+        if (s.leaderLineTypeHandleRef != 0) ++populatedLineLTypeHandles;
+    }
+    CHECK(populatedStyleHandles == 36);
+    // The 36 entities reference more than one distinct MLEADERSTYLE; pre-fix
+    // every styleHandle.ref was 0 (slot was declared but never read).
+    CHECK(distinctStyles.size() >= 2u);
+    // The MTEXT-typed entities should reference an AcDbTextStyle handle
+    // via ctx.textStyleHandle. ≥20 matches the populatedText threshold.
+    CHECK(populatedTextStyleHandles >= 20);
 }

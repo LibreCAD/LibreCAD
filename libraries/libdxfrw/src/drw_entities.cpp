@@ -4122,16 +4122,71 @@ bool DRW_MLeader::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
         leaderExtendedToText = buf->getBit();
     }
 
-    // Trailing handle stream — resolved in Phase 7 by reading the handles
-    // in the order they were referenced above.  For Phase 3+4 we just call
-    // parseDwgEntHandle so the next entity in the stream is reached cleanly.
+    // Common entity handles first (owner/reactors/xdic/layer/ltype/...) —
+    // entity-specific handles follow in declared order from libreDWG
+    // dwg2.spec:1386-1453.  Read order in the trailing handle stream:
+    //   1. AnnotContext content handle (text_style 340 if hasTextContents,
+    //      else block_table 341 if hasContentsBlock).
+    //   2. (R2010b+ only) per-leader-line ltype + arrow handles, in the
+    //      same iteration order as the body block.
+    //   3. mleaderstyle (340), line_ltype (341), arrow_handle (342),
+    //      text_style (343), block_style (344) entity-level handles.
+    //   4. (R14-R2007 only) per-arrowhead + per-blocklabel handles.
     ret = DRW_Entity::parseDwgEntHandle(version, buf);
     if (!ret) {
-        // Don't fail the whole stream on a handle-decode hiccup — the body
-        // fields we care about are already populated.  The full handle
-        // resolution will land in Phase 7.
-        DRW_DBG("\nMLEADER: parseDwgEntHandle hiccup — proceeding with body fields\n");
+        DRW_DBG("\nMLEADER: parseDwgEntHandle hiccup — body fields kept\n");
+        return true;
     }
+
+    auto safeHandle = [&](dwgHandle& slot, const char* tag) {
+        if (buf->numRemainingBytes() < 1) return false;
+        slot = buf->getHandle();
+        DRW_DBG(" "); DRW_DBG(tag); DRW_DBG(": ");
+        DRW_DBGHL(slot.code, slot.size, slot.ref); DRW_DBG("\n");
+        return buf->isGood();
+    };
+
+    // 1. AnnotContext content handle.
+    if (context.hasTextContents) {
+        if (!safeHandle(context.textStyleHandle, "ctx.text_style")) return true;
+    } else if (context.hasContentsBlock) {
+        if (!safeHandle(context.blockTableRecordHandle, "ctx.block_table")) return true;
+    }
+
+    // 2. R2010b+ per-line handles, in body iteration order.
+    if (version >= DRW::AC1024) {
+        for (auto& root : context.roots) {
+            for (auto& line : root.leaderLines) {
+                if (!safeHandle(line.lineTypeHandle, "line.ltype")) return true;
+                if (!safeHandle(line.arrowHandle,    "line.arrow")) return true;
+            }
+        }
+    }
+
+    // 3. Entity-level handles.
+    if (!safeHandle(styleHandle,           "mleaderstyle")) return true;
+    if (!safeHandle(leaderLineTypeHandle,  "line_ltype"))   return true;
+    if (!safeHandle(arrowHeadHandle,       "arrow_handle")) return true;
+    if (!safeHandle(styleTextStyleHandle,  "text_style"))   return true;
+    if (!safeHandle(styleBlockHandle,      "block_style"))  return true;
+
+    // 4. R14-R2007 per-arrowhead + per-blocklabel handles (counts came
+    //    from the body-side arrays read earlier).
+    if (version < DRW::AC1024) {
+        for (auto& a  : arrowHeads)
+            if (!safeHandle(a.handle,        "arrowheads.handle"))      return true;
+        for (auto& bl : blockLabels)
+            if (!safeHandle(bl.attDefHandle, "blocklabels.attdef"))     return true;
+    }
+
+    const int rb = buf->numRemainingBytes();
+    DRW_DBG("\nMLEADER tail rb="); DRW_DBG(rb); DRW_DBG("\n");
+    if (rb > 4) {
+        DRW_DBG("MLEADER: handle-stream tail "); DRW_DBG(rb);
+        DRW_DBG(" bytes unconsumed (handle ");
+        DRW_DBGH(handle); DRW_DBG(") — review tail handle list\n");
+    }
+
     return true;
 }
 
