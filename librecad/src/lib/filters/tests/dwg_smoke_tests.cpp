@@ -12,7 +12,9 @@
 
 #include <catch2/catch_test_macros.hpp>
 
+#include <cctype>
 #include <cmath>
+#include <cstring>
 #include <filesystem>
 #include <iomanip>
 #include <iostream>
@@ -71,11 +73,15 @@ public:
         char tmp[96]; snprintf(tmp, sizeof(tmp), "(%.3f,%.3f,%.3f)", x, y, z); buf += tmp;
     }
 
-    // Parse [unhandled-entity-type N] tokens out of captured buffer.
-    // Returns map of oType -> count.
+    // Parse [entity-pass-defer N] tokens (formerly [unhandled-entity-type N])
+    // out of captured buffer.  These are oTypes the entity-pass switch did
+    // not dispatch and queued in objObjectMap for the OBJECTS pass; some
+    // (DICTIONARY/MLINESTYLE/LAYOUT/IMAGEDEF) are handled there, the rest
+    // are truly unhandled.  Field name is kept as `unhandledTypes` to
+    // preserve callsite assertions; semantically it's "deferred or lost".
     std::map<int,int> unhandledTypes() const {
         std::map<int,int> result;
-        std::regex re(R"(\[unhandled-entity-type (\d+)\])");
+        std::regex re(R"(\[entity-pass-defer (\d+)\])");
         auto begin = std::sregex_iterator(buf.begin(), buf.end(), re);
         auto end   = std::sregex_iterator();
         for (auto it = begin; it != end; ++it)
@@ -305,11 +311,35 @@ public:
     std::map<std::string, int> typeCounts; // entity type name -> count
     std::map<std::string, int> layerEntities; // layer name -> entity count
     int inBlock = 0;
+    std::string currentBlockName;          // empty when not inside any block
     int modelSpaceEntities = 0;
     int blockSpaceEntities = 0;
     int blocks = 0;
     int layers = 0;
     size_t wipeoutVertexCount = 0;
+
+    // Classify by the *current block's name*, not by block-stack depth.
+    // Entities inside *Model_Space / *Paper_Space (or arriving via the
+    // entity stream with no block context) are model/paper space; anything
+    // inside a real block is block-space. The previous heuristic (inBlock>1)
+    // assumed the first block opened was always *MODEL_SPACE, which fails
+    // for DWG files where model-space entities arrive via readDwgEntities
+    // (no addBlock for model-space) and the first addBlock opens a real
+    // block — those entities then mis-classified as model-space.
+    bool currentlyInRealBlock() const {
+        if (inBlock <= 0) return false;
+        // Case-insensitive prefix match against *Model_Space / *Paper_Space.
+        auto startsWithCi = [&](const char* prefix) {
+            const size_t n = std::strlen(prefix);
+            if (currentBlockName.size() < n) return false;
+            for (size_t i = 0; i < n; ++i)
+                if (std::tolower(static_cast<unsigned char>(currentBlockName[i]))
+                    != std::tolower(static_cast<unsigned char>(prefix[i])))
+                    return false;
+            return true;
+        };
+        return !(startsWithCi("*Model_Space") || startsWithCi("*Paper_Space"));
+    }
 
     void trackT(const DRW_Entity& e, const char* typeName) {
         typeCounts[typeName]++;
@@ -317,7 +347,7 @@ public:
             layerEntities["(no layer)"]++;
         else
             layerEntities[e.layer]++;
-        if (inBlock > 1)  // inBlock==1 means model-space (*MODEL_SPACE block)
+        if (currentlyInRealBlock())
             blockSpaceEntities++;
         else
             modelSpaceEntities++;
@@ -331,9 +361,14 @@ public:
     void addTextStyle(const DRW_Textstyle&) override {}
     void addAppId(const DRW_AppId&) override {}
 
-    void addBlock(const DRW_Block&) override { ++blocks; ++inBlock; }
+    void addBlock(const DRW_Block& b) override {
+        ++blocks; ++inBlock; currentBlockName = b.name;
+    }
     void setBlock(const int) override {}
-    void endBlock() override { if (inBlock > 0) --inBlock; }
+    void endBlock() override {
+        if (inBlock > 0) --inBlock;
+        if (inBlock == 0) currentBlockName.clear();
+    }
 
     void addPoint(const DRW_Point& e)                   override { trackT(e, "POINT"); }
     void addLine(const DRW_Line& e)                     override { trackT(e, "LINE"); }
@@ -552,7 +587,9 @@ void printDeepReport(const char* filename, const DeepResult& dr) {
     }
 
     if (!dr.unhandledTypes.empty()) {
-        std::cout << "\n  *** UNHANDLED entity types (silently skipped) ***\n";
+        std::cout << "\n  *** entity-pass-defer types"
+                  << " (DICTIONARY/MLINESTYLE/LAYOUT/IMAGEDEF land in OBJECTS pass;"
+                  << " other oTypes are silently skipped) ***\n";
         int totalSkipped = 0;
         for (const auto& [oType, count] : dr.unhandledTypes) {
             totalSkipped += count;
@@ -3123,7 +3160,7 @@ TEST_CASE("DWG arch_multileaders: deep fidelity probe",
     std::cout << "  MLEADER: handle-stream tail unconsumed : " << countMarker("MLEADER: handle-stream tail") << "\n";
     std::cout << "  not implemented            : " << countMarker("not implemented") << "\n";
     std::cout << "  RLZ                        : " << countMarker("RLZ") << "\n";
-    std::cout << "  unhandled-entity-type      : " << countMarker("[unhandled-entity-type") << "\n";
+    std::cout << "  entity-pass-defer          : " << countMarker("[entity-pass-defer") << "\n";
     std::cout << "  bad CRC                    : " << countMarker("CRC") << "\n";
     std::cout << "  read past end / not ok     : " << countMarker("not ok") << "\n";
     std::cout << "  ERROR/BAD                  : " << countMarker("BAD_") << "\n";

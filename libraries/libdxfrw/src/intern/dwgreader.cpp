@@ -1418,7 +1418,12 @@ bool dwgReader::readDwgEntity(dwgBuffer *dbuf, objHandle& obj, DRW_Interface& in
                 ++m_skippedCustomClasses[className];
             } else {
                 objObjectMap[obj.handle]= obj;
-                DRW_DBG("[unhandled-entity-type "); DRW_DBG(oType); DRW_DBG("]\n");
+                // Fixed oType (<500) not handled by the entity-pass switch
+                // but queued in objObjectMap for the OBJECTS pass; the
+                // OBJECTS switch dispatches case 42 DICTIONARY, 73 MLINESTYLE,
+                // 82 LAYOUT, 102 IMAGEDEF etc.  Older code logged this as
+                // "unhandled" which was misleading.
+                DRW_DBG("[entity-pass-defer "); DRW_DBG(oType); DRW_DBG("]\n");
             }
             break;
     }
