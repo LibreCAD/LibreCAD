@@ -3129,3 +3129,94 @@ TEST_CASE("DWG arch_multileaders: deep fidelity probe",
 
     SUCCEED();
 }
+
+// Regression guard for the MLEADER body parser fix
+// (parseMLeaderRoot rewritten to libreDWG dwg2.spec parity, 2026-05-10).
+// Asserts on real per-entity content, not just counts — without the fix
+// most fields read as denormalized garbage even though the file loads OK.
+TEST_CASE("DWG arch_multileaders: MLEADER body parser fidelity") {
+    const char* home = getenv("HOME");
+    if (!home) { SUCCEED("HOME not set"); return; }
+    const std::string path = std::string(home)
+        + "/doc/dwg/architectural_-_annotation_scaling_and_multileaders.dwg";
+    if (!std::filesystem::is_regular_file(path)) {
+        SUCCEED("fixture not present; skipping"); return;
+    }
+
+    struct Snap {
+        std::string layer;
+        std::string text;
+        int    contentType;
+        double scale;
+        bool   hasText;
+    };
+
+    class Iface : public TypeTrackingIface {
+    public:
+        std::vector<Snap> snaps;
+        void addMLeader(const DRW_MLeader* e) override {
+            TypeTrackingIface::addMLeader(e);
+            snaps.push_back({e->layer, e->context.textLabel, e->styleContentType,
+                             e->context.overallScale, e->context.hasTextContents});
+        }
+    };
+
+    auto* capture = new CapturingPrinter();
+    DRW::setCustomDebugPrinter(capture);
+
+    Iface iface;
+    {
+        dwgR reader(path.c_str());
+        reader.setDebug(DRW::DebugLevel::Debug);
+        REQUIRE(reader.read(&iface, true));
+        REQUIRE(reader.getError() == DRW::BAD_NONE);
+    }
+    const std::string log = std::move(capture->buf);
+    DRW::setCustomDebugPrinter(new DRW::DebugPrinter());
+
+    // The fixture is documented to carry 36 MLEADERs.
+    REQUIRE(iface.snaps.size() == 36u);
+
+    // No body-parse drift markers in the trace — these were 8 + 12
+    // pre-fix and would silently corrupt every subsequent field.
+    auto countMarker = [&](const std::string& m) {
+        int c = 0; size_t pos = 0;
+        while ((pos = log.find(m, pos)) != std::string::npos) { ++c; ++pos; }
+        return c;
+    };
+    CHECK(countMarker("AnnotContext parse drift") == 0);
+    CHECK(countMarker("MLEADER: parseDwgEntHandle hiccup") == 0);
+    CHECK(countMarker("MLEADER: implausible classVersion") == 0);
+
+    // Per-entity assertions. Every MLEADER must have:
+    //   - styleContentType in {0,1,2,3} — the 4 valid values
+    //   - overallScale finite and >0; for THIS fixture, ∈ {4, 24, 48}
+    //     (the file's annotation scales)
+    //   - layer name resolved via the trailing handle stream, NOT "0"
+    //     (pre-fix, ~13/36 landed on "0" because the body left the
+    //     handle stream mid-byte and the layer handle resolved wrong)
+    int textHits = 0;
+    for (const auto& s : iface.snaps) {
+        CAPTURE(s.layer, s.text, s.contentType, s.scale);
+        CHECK(s.contentType >= 0);
+        CHECK(s.contentType <= 3);
+        CHECK(std::isfinite(s.scale));
+        CHECK(s.scale > 0.0);
+        // This fixture: only annotation scales 4, 24, 48 are used.
+        CHECK((s.scale == 4.0 || s.scale == 24.0 || s.scale == 48.0));
+        // Layer must come from the file's annotation-scale layer naming
+        // ("Mleader @ 4/24/48"); pre-fix many MLEADERs misresolved to "0".
+        CHECK(s.layer.rfind("Mleader", 0) == 0);
+        if (s.hasText && !s.text.empty()) ++textHits;
+    }
+    // Most MLEADERs in this file carry MTEXT content. Pre-fix, only 7/36
+    // had non-empty text; post-fix all 24 MTEXT-typed entities populate.
+    CHECK(textHits >= 20);
+
+    // Spot-check a known string survives end-to-end (this MLEADER labels
+    // a 1/2" gypsum-board callout — appears verbatim in the file).
+    bool foundGypsum = false;
+    for (const auto& s : iface.snaps)
+        if (s.text.find("GYPSUM BOARD") != std::string::npos) { foundGypsum = true; break; }
+    CHECK(foundGypsum);
+}

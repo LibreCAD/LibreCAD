@@ -3855,13 +3855,19 @@ bool DRW_MLeader::parseCode(int code, const std::unique_ptr<dxfReader>& reader){
 // are deferred to the entity-level handle stream and not stored here.
 static bool parseMLeaderRoot(DRW::Version version, dwgBuffer *buf,
                              DRW_MLeaderRoot& root) {
-    root.isContentValid = buf->getBit();
-    root.unknown291    = buf->getBit();
-    root.connectionPoint = buf->get3BitDouble();
-    root.direction       = buf->get3BitDouble();
+    // Layout per libreDWG dwg2.spec:1316-1366 (Dwg_LEADER_Node + Dwg_LEADER_Line).
+    // The two 3BD coords at the head of the node are conditional on the
+    // preceding B flags; reading them unconditionally drifts the bit stream
+    // when either flag is 0.
+    bool hasLastPt = buf->getBit();   // 290 has_lastleaderlinepoint
+    bool hasDogleg = buf->getBit();   // 291 has_dogleg
+    root.isContentValid = hasLastPt;
+    root.unknown291     = hasDogleg;
+    if (hasLastPt) root.connectionPoint = buf->get3BitDouble();
+    if (hasDogleg) root.direction       = buf->get3BitDouble();
 
     dint32 nBreaks = buf->getBitLong();
-    if (nBreaks < 0 || nBreaks > 1000000) return false; // sanity
+    if (nBreaks < 0 || nBreaks > 5000) return false; // libreDWG MAX_LEADER_NUMBER
     root.breaks.reserve(static_cast<size_t>(nBreaks));
     for (dint32 i = 0; i < nBreaks; ++i) {
         DRW_Coord a = buf->get3BitDouble();
@@ -3869,32 +3875,32 @@ static bool parseMLeaderRoot(DRW::Version version, dwgBuffer *buf,
         root.breaks.emplace_back(a, b);
     }
 
-    root.leaderIndex     = buf->getBitLong();
-    root.landingDistance = buf->getBitDouble();
+    root.leaderIndex     = buf->getBitLong();   // 90 branch_index
+    root.landingDistance = buf->getBitDouble(); // 40 dogleg_length
 
     dint32 nLines = buf->getBitLong();
-    if (nLines < 0 || nLines > 1000000) return false; // sanity
+    if (nLines < 0 || nLines > 5000) return false;
     root.leaderLines.reserve(static_cast<size_t>(nLines));
     for (dint32 i = 0; i < nLines; ++i) {
         DRW_MLeaderLeaderLine line;
+        // Per libreDWG: BL num_points, points, BL num_breaks, breaks, BL line_index.
+        // The previous 5-BL layout (brkInfoCount + segmentIndex + nPairs +
+        // pairs + leaderLineIndex) inserted two spurious BL reads, drifting
+        // every subsequent entity-level field (overallScale, contentType, …).
         dint32 nPts = buf->getBitLong();
-        if (nPts < 0 || nPts > 1000000) return false;
+        if (nPts < 0 || nPts > 5000) return false;
         line.points.reserve(static_cast<size_t>(nPts));
         for (dint32 j = 0; j < nPts; ++j) {
             line.points.push_back(buf->get3BitDouble());
         }
-        dint32 brkInfoCount = buf->getBitLong();
-        DRW_UNUSED(brkInfoCount);
-        line.segmentIndex = buf->getBitLong();
-
-        dint32 nPairs = buf->getBitLong();
-        if (nPairs < 0 || nPairs > 1000000) return false;
-        for (dint32 j = 0; j < nPairs; ++j) {
+        dint32 nLineBreaks = buf->getBitLong();
+        if (nLineBreaks < 0 || nLineBreaks > 5000) return false;
+        for (dint32 j = 0; j < nLineBreaks; ++j) {
             DRW_Coord a = buf->get3BitDouble();
             DRW_Coord b = buf->get3BitDouble();
             line.breaks.emplace_back(a, b);
         }
-        line.leaderLineIndex = buf->getBitLong();
+        line.leaderLineIndex = buf->getBitLong();   // 91 line_index
 
         // R2010+ per-line override block.  The spec marks this block "R2010"
         // (§20.4.86 page 215); the override flags BL 93 says which fields
@@ -4026,6 +4032,18 @@ bool DRW_MLeader::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
     bool ret = DRW_Entity::parseDwg(version, buf, sBuf, bs);
     if (!ret) return ret;
     DRW_DBG("\n***************************** parsing MLEADER ***************\n");
+
+    // R2010b+ class version (BS, default 2; <=R2004 was 1). libreDWG
+    // dwg2.spec:1303-1306. Absent in R2007 streams; reading it would drift.
+    if (version >= DRW::AC1024) {
+        classVersion = buf->getBitShort();
+        if (classVersion > 10) {
+            DRW_DBG("\nMLEADER: implausible classVersion=");
+            DRW_DBG(static_cast<int>(classVersion));
+            DRW_DBG(", aborting body\n");
+            return true;
+        }
+    }
 
     // Phase 4 — embedded AcDbMLeaderObjectContextData / MLeaderAnnotContext.
     // Body misalignment is local to this entity's buffer (each entity gets a

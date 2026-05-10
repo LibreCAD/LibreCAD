@@ -1724,6 +1724,10 @@ protected:
 public:
     DRW_MLeaderAnnotContext context;
 
+    /* R2010b+ class version (BS, code 270; default 2). Per libreDWG
+       dwg2.spec:1303-1306; the field is absent in pre-R2010b streams. */
+    duint16 classVersion = 2;                                       /*!< code 270, R2010b+ */
+
     /* Entity-level fields per §20.4.48.  Overrides the corresponding
        MLEADERSTYLE field iff the matching bit is set in `overrideFlags`. */
     dwgHandle styleHandle{};                                        /*!< code 340 */
