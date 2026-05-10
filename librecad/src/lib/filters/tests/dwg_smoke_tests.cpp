@@ -933,6 +933,7 @@ TEST_CASE("DWG Cover.dwg: deep entity/type breakdown", "[.dwg_cover]") {
     printDeepReport("Cover.dwg", dr);
 }
 
+
 // ---------------------------------------------------------------------------
 // dwg_samples corpus: 42 minimal single-entity files across 6 DWG versions.
 // Auto-discovers every *.dwg in ~/dev/dwg_samples/ and asserts each one
@@ -2947,4 +2948,184 @@ TEST_CASE("DWG pre-R13 detection: ~/doc/dwg3/block.dwg classifies AC2.10",
     CHECK(r.error == DRW::BAD_VERSION);
     CHECK(r.version == DRW::AC210);
     INFO("recognized version: " << versionStr(r.version));
+}
+
+// Deep troubleshooting probe for ~/doc/dwg/architectural_-_annotation_scaling_and_multileaders.dwg.
+// Reports MLEADER fidelity (per-entity points, breaks, text content), MLEADER style count,
+// per-block entity delivery, dimension subtype coverage, and any debug-trace warnings
+// that suggest parse drift (leftover bytes, alignment hiccups, DBG markers).
+// Run: ./librecad_tests "[.dwg_arch_mleader_probe]" -s
+TEST_CASE("DWG arch_multileaders: deep fidelity probe",
+          "[.dwg_arch_mleader_probe]") {
+    const char* home = getenv("HOME");
+    if (!home) { SUCCEED("HOME not set"); return; }
+    const std::string path = std::string(home)
+        + "/doc/dwg/architectural_-_annotation_scaling_and_multileaders.dwg";
+    if (!std::filesystem::is_regular_file(path)) {
+        SUCCEED("file not present; skipping"); return;
+    }
+
+    class Probe : public TypeTrackingIface {
+    public:
+        struct MLeaderSnap {
+            int    rootCount;
+            int    leaderLineCount;
+            int    pointCount;       // sum across all leader lines
+            int    breakCount;       // sum: root-level + line-level
+            bool   hasTextContents;
+            std::string textLabel;
+            int    styleContentType;
+            double overallScale;
+            bool   hasContentsBlock;
+            std::string layer;
+        };
+        std::vector<MLeaderSnap> mleaderSnaps;
+        std::map<std::string,int> blockEntityCounts; // block_idx-name -> count when inBlock>0
+        int currentBlockIdx = -1;
+        std::string currentBlockName;
+        int mleaderStyles = 0;
+
+        void addBlock(const DRW_Block& b) override {
+            TypeTrackingIface::addBlock(b);
+            ++currentBlockIdx;
+            currentBlockName = b.name;
+        }
+        void endBlock() override {
+            TypeTrackingIface::endBlock();
+        }
+
+        void trackInBlock() {
+            if (inBlock > 0) {
+                ++blockEntityCounts[std::to_string(currentBlockIdx) + ":" + currentBlockName];
+            }
+        }
+
+        void addLine(const DRW_Line& e) override { TypeTrackingIface::addLine(e); trackInBlock(); }
+        void addArc(const DRW_Arc& e) override { TypeTrackingIface::addArc(e); trackInBlock(); }
+        void addCircle(const DRW_Circle& e) override { TypeTrackingIface::addCircle(e); trackInBlock(); }
+        void addLWPolyline(const DRW_LWPolyline& e) override { TypeTrackingIface::addLWPolyline(e); trackInBlock(); }
+        void addPolyline(const DRW_Polyline& e) override { TypeTrackingIface::addPolyline(e); trackInBlock(); }
+        void addInsert(const DRW_Insert& e) override { TypeTrackingIface::addInsert(e); trackInBlock(); }
+        void addText(const DRW_Text& e) override { TypeTrackingIface::addText(e); trackInBlock(); }
+        void addMText(const DRW_MText& e) override { TypeTrackingIface::addMText(e); trackInBlock(); }
+        void addPoint(const DRW_Point& e) override { TypeTrackingIface::addPoint(e); trackInBlock(); }
+        void addHatch(const DRW_Hatch* e) override { TypeTrackingIface::addHatch(e); trackInBlock(); }
+        void addEllipse(const DRW_Ellipse& e) override { TypeTrackingIface::addEllipse(e); trackInBlock(); }
+        void addSpline(const DRW_Spline* e) override { TypeTrackingIface::addSpline(e); trackInBlock(); }
+
+        void addMLeader(const DRW_MLeader* e) override {
+            TypeTrackingIface::addMLeader(e);
+            trackInBlock();
+            int pts = 0, brks = 0;
+            for (const auto& r : e->context.roots) {
+                brks += static_cast<int>(r.breaks.size());
+                for (const auto& ll : r.leaderLines) {
+                    pts  += static_cast<int>(ll.points.size());
+                    brks += static_cast<int>(ll.breaks.size());
+                }
+            }
+            mleaderSnaps.push_back({static_cast<int>(e->context.roots.size()),
+                                    [&]{int n=0; for(auto&r:e->context.roots) n+=r.leaderLines.size(); return n;}(),
+                                    pts, brks,
+                                    e->context.hasTextContents,
+                                    e->context.textLabel,
+                                    e->styleContentType,
+                                    e->context.overallScale,
+                                    e->context.hasContentsBlock,
+                                    e->layer});
+        }
+        void addMLeaderStyle(const DRW_MLeaderStyle*) override { ++mleaderStyles; }
+    };
+
+    auto* capture = new CapturingPrinter();
+    DRW::setCustomDebugPrinter(capture);
+
+    Probe p;
+    {
+        dwgR reader(path.c_str());
+        reader.setDebug(DRW::DebugLevel::Debug);
+        bool ok = reader.read(&p, true);
+        REQUIRE(ok);
+        REQUIRE(reader.getError() == DRW::BAD_NONE);
+    }
+    std::string log = std::move(capture->buf);
+    DRW::setCustomDebugPrinter(new DRW::DebugPrinter());
+
+    std::cout << "\n=== arch multileaders: probe ===\n";
+    std::cout << "blocks=" << p.blocks
+              << " layers=" << p.layers
+              << " modelspaceEnt=" << p.modelSpaceEntities
+              << " inBlocksEnt=" << p.blockSpaceEntities << "\n";
+
+    std::cout << "\nHandled type counts:\n";
+    for (const auto& [k,v] : p.typeCounts)
+        std::cout << "  " << std::left << std::setw(16) << k << " " << v << "\n";
+
+    std::cout << "\nMLEADER styles delivered: " << p.mleaderStyles << "\n";
+    std::cout << "MLEADER snapshots (" << p.mleaderSnaps.size() << "):\n";
+    int degenerate = 0, missingText = 0;
+    int totalRoots = 0, totalLines = 0, totalPts = 0;
+    for (size_t i = 0; i < p.mleaderSnaps.size(); ++i) {
+        const auto& m = p.mleaderSnaps[i];
+        totalRoots += m.rootCount;
+        totalLines += m.leaderLineCount;
+        totalPts += m.pointCount;
+        bool isDegenerate = (m.pointCount < 2 * m.leaderLineCount);
+        bool isMissingText = (m.styleContentType == 2 /*MTEXT*/ && m.textLabel.empty());
+        if (isDegenerate) ++degenerate;
+        if (isMissingText) ++missingText;
+        if (i < 8 || isDegenerate || isMissingText) {
+            std::cout << "  #" << i << " layer=" << std::setw(28) << m.layer
+                      << " roots=" << m.rootCount
+                      << " lines=" << m.leaderLineCount
+                      << " pts=" << m.pointCount
+                      << " brks=" << m.breakCount
+                      << " hasText=" << m.hasTextContents
+                      << " contentType=" << m.styleContentType
+                      << " scale=" << m.overallScale
+                      << " text=\"" << m.textLabel.substr(0, 40) << "\""
+                      << (isDegenerate ? "  [DEGENERATE]" : "")
+                      << (isMissingText ? "  [MISSING_TEXT]" : "")
+                      << "\n";
+        }
+    }
+    std::cout << "MLEADER aggregate: roots=" << totalRoots
+              << " lines=" << totalLines
+              << " pts=" << totalPts
+              << " degenerate=" << degenerate
+              << " missingText=" << missingText << "\n";
+
+    std::cout << "\nPer-block entity delivery (top 20):\n";
+    std::vector<std::pair<int,std::string>> blockSorted;
+    for (const auto& [k,v] : p.blockEntityCounts) blockSorted.emplace_back(v,k);
+    std::sort(blockSorted.rbegin(), blockSorted.rend());
+    int shown = 0;
+    int blocksWithEntities = 0;
+    for (const auto& [v,k] : blockSorted) {
+        if (v > 0) ++blocksWithEntities;
+        if (shown < 20) {
+            std::cout << "  " << std::left << std::setw(40) << k << " " << v << "\n";
+            ++shown;
+        }
+    }
+    std::cout << "Blocks with delivered entities: " << blocksWithEntities
+              << " / " << p.blocks << "\n";
+
+    auto countMarker = [&](const std::string& m) {
+        int c = 0; size_t pos = 0;
+        while ((pos = log.find(m, pos)) != std::string::npos) { ++c; ++pos; }
+        return c;
+    };
+    std::cout << "\nDebug-trace warnings:\n";
+    std::cout << "  parseDwgEntHandle leftover : " << countMarker("parseDwgEntHandle leftover") << "\n";
+    std::cout << "  AnnotContext parse drift   : " << countMarker("AnnotContext parse drift") << "\n";
+    std::cout << "  MLEADER: parseDwgEntHandle hiccup : " << countMarker("MLEADER: parseDwgEntHandle hiccup") << "\n";
+    std::cout << "  not implemented            : " << countMarker("not implemented") << "\n";
+    std::cout << "  RLZ                        : " << countMarker("RLZ") << "\n";
+    std::cout << "  unhandled-entity-type      : " << countMarker("[unhandled-entity-type") << "\n";
+    std::cout << "  bad CRC                    : " << countMarker("CRC") << "\n";
+    std::cout << "  read past end / not ok     : " << countMarker("not ok") << "\n";
+    std::cout << "  ERROR/BAD                  : " << countMarker("BAD_") << "\n";
+
+    SUCCEED();
 }

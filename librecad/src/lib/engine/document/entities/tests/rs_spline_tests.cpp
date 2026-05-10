@@ -171,3 +171,104 @@ TEST_CASE("Non-uniform knot vectors - validation and type handling", "[RS_Spline
         REQUIRE(s.validate());
     }
 }
+
+// Regression: setFitPoints with num == p+1 (single Bezier patch) used to
+// short-circuit before solving the interior system, leaving interior control
+// points as RS_Vector(false) (which read back as (0,0)).
+//
+// Reproduces the bug seen in ~/doc/dwg/Pool_Detail.dwg where a degree-3
+// scenario-2 spline with 4 fit points rendered with control-point list
+// [(223.754,152.933), (0,0), (0,0), (221.427,150.761)].
+TEST_CASE("RS_Spline::setFitPoints fills interior CPs for num == p+1",
+          "[RS_Spline][regression][fitpoints]")
+{
+    SECTION("Pool_Detail.dwg cubic, 4 fit points")
+    {
+        RS_SplineData d(3, false);
+        RS_Spline spline(nullptr, d);
+
+        std::vector<RS_Vector> fps = {
+            {223.754, 152.933},
+            {221.937, 153.336},
+            {221.244, 152.653},
+            {221.427, 150.761}
+        };
+        spline.setFitPoints(fps);
+
+        REQUIRE(spline.getNumberOfControlPoints() == 4);
+        const auto& cps = spline.getData().controlPoints;
+
+        // Endpoints: must equal the first/last fit points.
+        REQUIRE(compareVector(cps.front(), fps.front()));
+        REQUIRE(compareVector(cps.back(),  fps.back()));
+
+        // Interior: must be valid (was the bug — left as RS_Vector(false))
+        // and must lie within a reasonable bounding box of the fit points.
+        for (size_t i = 1; i + 1 < cps.size(); ++i) {
+            REQUIRE(cps[i].valid);
+            REQUIRE(std::abs(cps[i].x) > 1.0);   // definitely not (0, 0)
+            REQUIRE(std::abs(cps[i].y) > 1.0);
+        }
+
+        // Spline must actually pass through every fit point.
+        for (const auto& fp : fps) {
+            const RS_Vector nearest = spline.getNearestPointOnEntity(fp, true);
+            REQUIRE(compareVector(nearest, fp, 1e-3));
+        }
+    }
+
+    SECTION("Quadratic, 3 fit points (num == p+1)")
+    {
+        RS_SplineData d(2, false);
+        RS_Spline spline(nullptr, d);
+
+        std::vector<RS_Vector> fps = {
+            {0.0, 0.0}, {5.0, 10.0}, {10.0, 0.0}
+        };
+        spline.setFitPoints(fps);
+
+        const auto& cps = spline.getData().controlPoints;
+        REQUIRE(cps.size() == 3);
+        REQUIRE(cps[1].valid);
+        // Was the bug: interior CP left as RS_Vector(false) → (0,0).
+        REQUIRE(!compareVector(cps[1], RS_Vector(0,0)));
+    }
+
+    // Degenerate inputs: degree higher than num-1.  Without the
+    // degree-clamping in setFitPoints, the basis-function loop indexes
+    // A[row][idx-1] past sys=num-2 and corrupts memory / segfaults.
+    SECTION("Cubic, 3 fit points (num == p) — degree clamped to 2")
+    {
+        RS_SplineData d(3, false);
+        RS_Spline spline(nullptr, d);
+
+        std::vector<RS_Vector> fps = {
+            {0.0, 0.0}, {5.0, 10.0}, {10.0, 0.0}
+        };
+        spline.setFitPoints(fps);
+
+        // Degree must have been lowered so the spline is well-formed.
+        REQUIRE(spline.getDegree() == 2);
+        const auto& cps = spline.getData().controlPoints;
+        REQUIRE(cps.size() == 3);
+        REQUIRE(compareVector(cps.front(), fps.front()));
+        REQUIRE(compareVector(cps.back(),  fps.back()));
+        REQUIRE(cps[1].valid);
+        REQUIRE(!compareVector(cps[1], RS_Vector(0,0)));
+    }
+
+    SECTION("Cubic, 2 fit points (num < p) — degree clamped to 1")
+    {
+        RS_SplineData d(3, false);
+        RS_Spline spline(nullptr, d);
+
+        std::vector<RS_Vector> fps = {{0.0, 0.0}, {10.0, 5.0}};
+        spline.setFitPoints(fps);
+
+        REQUIRE(spline.getDegree() == 1);
+        const auto& cps = spline.getData().controlPoints;
+        REQUIRE(cps.size() == 2);
+        REQUIRE(compareVector(cps.front(), fps.front()));
+        REQUIRE(compareVector(cps.back(),  fps.back()));
+    }
+}
