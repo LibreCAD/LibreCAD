@@ -801,13 +801,16 @@ bool DRW_Block_Record::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs
     DRW_DBG(" blockH Handle: "); DRW_DBGHL(blockH.code, blockH.size, blockH.ref); DRW_DBG("\n");
     block = blockH.ref;
 
-    if (version > DRW::AC1015) {//2004+
+    // Per ODA spec / libreDWG dwg.spec — entities handle vector is gated on
+    // num_owned, which itself is only present for non-XREF blocks. Mirror the
+    // num_owned guard above so the loop is skipped explicitly for XREFs.
+    if (version > DRW::AC1015 && !blockIsXref && !xrefOverlaid) {//2004+, non-XREF
         for (unsigned int i=0; i< objectCount; i++){
             dwgHandle entityH = buf->getHandle();
             DRW_DBG(" entityH Handle #"); DRW_DBG(i); DRW_DBG(": "); DRW_DBGHL(entityH.code, entityH.size, entityH.ref); DRW_DBG("\n");
             entMap.push_back(entityH.ref);
         }
-    } else {//2000-
+    } else if (version <= DRW::AC1015) {//2000-
         if(!blockIsXref && !xrefOverlaid){
             dwgHandle firstH = buf->getHandle();
             DRW_DBG(" firstH entity Handle: "); DRW_DBGHL(firstH.code, firstH.size, firstH.ref); DRW_DBG("\n");
