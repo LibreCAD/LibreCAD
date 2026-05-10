@@ -88,6 +88,7 @@ public:
     bool writeInsert(DRW_Insert *ent);
     bool writeMText(DRW_MText *ent);
     bool writeMLine(DRW_MLine *ent);
+    bool writeUnderlay(DRW_Underlay *ent);
     bool writeText(DRW_Text *ent);
     bool writeHatch(DRW_Hatch *ent);
     bool writeViewport(DRW_Viewport *ent);
@@ -142,6 +143,7 @@ private:
     bool processText();
     bool processMText();
     bool processMLine();
+    bool processUnderlay(const std::string& kind);
     bool processHatch();
     bool processSpline();
     bool process3dface();

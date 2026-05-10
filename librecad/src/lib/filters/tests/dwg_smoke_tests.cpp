@@ -121,6 +121,14 @@ public:
         ++mlines;
         mlineVerts += static_cast<int>(e->vertlist.size());
     }
+    void addUnderlay(const DRW_Underlay* e) override {
+        track(*e);
+        ++underlays;
+        underlayClipVerts += static_cast<int>(e->clipBoundary.size());
+    }
+    void linkUnderlay(const DRW_UnderlayDefinition*) override {
+        ++underlayDefs;
+    }
     void addPolyline(const DRW_Polyline& e) override { track(e); }
     void addSpline(const DRW_Spline* e) override { track(*e); }
     void addKnot(const DRW_Entity&) override {}
@@ -162,6 +170,9 @@ public:
     int wipeoutVertices = 0;
     int mlines = 0;
     int mlineVerts = 0;
+    int underlays = 0;
+    int underlayClipVerts = 0;
+    int underlayDefs = 0;
     int mleaders = 0;
     int mleaderRoots = 0;
     int mleaderLines = 0;

@@ -882,8 +882,11 @@ bool dwgReader::readDwgBlocks(DRW_Interface& intfa, dwgBuffer *dbuf){
 }
 
 bool dwgReader::walkBlockRecordEntities(DRW_Block_Record* bkr, dwgBuffer *dbuf, DRW_Interface& intfa){
+    // Per-entity parseDwg failures are warnings, not section failures —
+    // we keep walking so a single bad entity doesn't drop the rest of
+    // the block. Structural failures (entity-not-found in ObjectMap)
+    // remain in `ret` so the caller knows the block walk was incomplete.
     bool ret = true;
-    bool ret2 = true;
     objHandle oc;
 
     if (version < DRW::AC1018) { //pre 2004
@@ -897,8 +900,7 @@ bool dwgReader::walkBlockRecordEntities(DRW_Block_Record* bkr, dwgBuffer *dbuf, 
             }
             oc = mit->second;
             ObjectMap.erase(mit);
-            ret2 = readDwgEntity(dbuf, oc, intfa);
-            ret = ret && ret2;
+            if (!readDwgEntity(dbuf, oc, intfa)) ++m_entityParseFailures;
             if (nextH == bkr->lastEH)
                 nextH = 0; //redundant, but prevent read errors
             else
@@ -916,8 +918,7 @@ bool dwgReader::walkBlockRecordEntities(DRW_Block_Record* bkr, dwgBuffer *dbuf, 
             oc = mit->second;
             ObjectMap.erase(mit);
             DRW_DBG("\nBlocks, parsing entity: "); DRW_DBGH(oc.handle); DRW_DBG(", pos: "); DRW_DBG(oc.loc); DRW_DBG("\n");
-            ret2 = readDwgEntity(dbuf, oc, intfa);
-            ret = ret && ret2;
+            if (!readDwgEntity(dbuf, oc, intfa)) ++m_entityParseFailures;
         }
     }
     return ret;
@@ -963,7 +964,7 @@ bool dwgReader::readPlineVertex(DRW_Polyline& pline, dwgBuffer *dbuf){
                 DRW_DBG(" object type= "); DRW_DBG(oType); DRW_DBG("\n");
                 ret2 = vt.parseDwg(version, &buff, bs, pline.basePoint.z);
                 pline.addVertex(vt);
-                ret = ret && ret2;
+                if (!ret2) ++m_entityParseFailures; // per-vertex parse failure: warning, not section failure
                 if (nextH == pline.lastEH)
                     nextH = 0; //redundant, but prevent read errors
                 else
@@ -997,7 +998,7 @@ bool dwgReader::readPlineVertex(DRW_Polyline& pline, dwgBuffer *dbuf){
                 DRW_DBG(" object type= "); DRW_DBG(oType); DRW_DBG("\n");
                 ret2 = vt.parseDwg(version, &buff, bs, pline.basePoint.z);
                 pline.addVertex(vt);
-                ret = ret && ret2;
+                if (!ret2) ++m_entityParseFailures; // per-vertex parse failure: warning, not section failure
             }
         }
     }//end 2004+
@@ -1011,18 +1012,24 @@ bool dwgReader::readPlineVertex(DRW_Polyline& pline, dwgBuffer *dbuf){
 }
 
 bool dwgReader::readDwgEntities(DRW_Interface& intfa, dwgBuffer *dbuf){
-    bool ret = true;
-
     DRW_DBG("\nobject map total size= "); DRW_DBG(ObjectMap.size());
+    // Per-entity parseDwg failures are warnings, not section failures.
+    // Continue parsing the rest of the ObjectMap so a single bad entity
+    // doesn't drop the rest of the modelspace. m_entityParseFailures
+    // accumulates the count for caller reporting (see dwgR::getEntityParseFailures).
+    size_t failures = 0;
     auto itB=ObjectMap.begin();
     auto itE=ObjectMap.end();
     while (itB != itE) {
-        if (ret) {
-            // once readDwgEntity() failed, just clear the ObjectMap
-            ret = readDwgEntity( dbuf, itB->second, intfa);
-        }
-        ObjectMap.erase( itB);
+        if (!readDwgEntity(dbuf, itB->second, intfa)) ++failures;
+        ObjectMap.erase(itB);
         itB = ObjectMap.begin();
+    }
+    if (failures > 0) {
+        DRW_DBG("readDwgEntities: ");
+        DRW_DBG(failures);
+        DRW_DBG(" entities failed to parse (warnings, not section failure)\n");
+        m_entityParseFailures += failures;
     }
 
     // Flush any INSERTs still awaiting ATTRIB children (defensive — handles
@@ -1035,7 +1042,7 @@ bool dwgReader::readDwgEntities(DRW_Interface& intfa, dwgBuffer *dbuf){
         m_orphanAttribs.clear();
     }
 
-    return ret;
+    return true;
 }
 
 /**
@@ -1383,12 +1390,31 @@ bool dwgReader::readDwgEntity(dwgBuffer *dbuf, objHandle& obj, DRW_Interface& in
                     }
                     break;
                 }
+                if (cit != classesmap.end() && cit->second) {
+                    const std::string& rn = cit->second->recName;
+                    const std::string& cn = cit->second->className;
+                    if (rn == "PDFUNDERLAY" || rn == "DGNUNDERLAY" || rn == "DWFUNDERLAY"
+                        || cn == "AcDbPdfReference" || cn == "AcDbDgnReference"
+                        || cn == "AcDbDwfReference") {
+                        DRW_Underlay e;
+                        if (rn == "DGNUNDERLAY" || cn == "AcDbDgnReference")
+                            e.kind = DRW_Underlay::DGN;
+                        else if (rn == "DWFUNDERLAY" || cn == "AcDbDwfReference")
+                            e.kind = DRW_Underlay::DWF;
+                        // else default PDF
+                        if (entryParse(e, buff, bs, ret)) {
+                            intfa.addUnderlay(&e);
+                        }
+                        break;
+                    }
+                }
                 const char* className = (cit != classesmap.end() && cit->second)
                                           ? cit->second->recName.c_str()
                                           : "(unknown)";
                 objObjectMap[obj.handle]= obj;
                 DRW_DBG("[custom-class-skipped "); DRW_DBG(oType);
                 DRW_DBG(" "); DRW_DBG(className); DRW_DBG("]\n");
+                ++m_skippedCustomClasses[className];
             } else {
                 objObjectMap[obj.handle]= obj;
                 DRW_DBG("[unhandled-entity-type "); DRW_DBG(oType); DRW_DBG("]\n");
@@ -1544,6 +1570,27 @@ bool dwgReader::readDwgObject(dwgBuffer *dbuf, objHandle& obj, DRW_Interface& in
                         ret = e.parseDwg(version, &buff, bs);
                         if (ret) intfa.addVisualStyle(e);
                         break;
+                    }
+                    // UNDERLAYDEFINITION — AcDb{Pdf,Dgn,Dwf}Definition.
+                    // Three flavors share one parser; routed by recName.
+                    // Object lives in OBJECTS section AFTER entities are
+                    // parsed; LibreCAD filter caches by handle for matching.
+                    {
+                        const std::string& cn = cit->second->className;
+                        if (rn == "PDFDEFINITION" || rn == "DGNDEFINITION"
+                            || rn == "DWFDEFINITION"
+                            || cn == "AcDbPdfDefinition"
+                            || cn == "AcDbDgnDefinition"
+                            || cn == "AcDbDwfDefinition") {
+                            DRW_UnderlayDefinition e;
+                            if (rn == "DGNDEFINITION" || cn == "AcDbDgnDefinition")
+                                e.kind = DRW_UnderlayDefinition::DGN;
+                            else if (rn == "DWFDEFINITION" || cn == "AcDbDwfDefinition")
+                                e.kind = DRW_UnderlayDefinition::DWF;
+                            ret = e.parseDwg(version, &buff, bs);
+                            if (ret) intfa.linkUnderlay(&e);
+                            break;
+                        }
                     }
                 }
             }

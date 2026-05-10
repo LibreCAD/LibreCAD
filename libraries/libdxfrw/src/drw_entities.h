@@ -693,6 +693,42 @@ private:
     int m_currentSegFillCount;
 };
 
+//! Class to handle UNDERLAY entity (PDFUNDERLAY/DGNUNDERLAY/DWFUNDERLAY).
+/*!
+ *  Three flavors share one class: PDF, DGN, DWF. References an external
+ *  file via definitionHandle. LibreCAD has no PDF/DGN/DWF rendering;
+ *  the filter decomposes each underlay into a single RS_Polyline showing
+ *  the clip boundary as a placeholder.
+ */
+class DRW_Underlay : public DRW_Entity {
+    SETENTFRIENDS
+public:
+    enum Kind { PDF, DGN, DWF };
+    DRW_Underlay() {
+        eType = DRW::UNDERLAY;
+        scale = DRW_Coord(1.0, 1.0, 1.0);
+        m_currentClipVertexIdx = -1;
+    }
+    void applyExtrusion() override {}
+protected:
+    bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) override;
+public:
+    bool parseCode(int code, const std::unique_ptr<dxfReader>& reader) override;
+public:
+    Kind kind = PDF;
+    DRW_Coord position;
+    DRW_Coord scale{1,1,1};
+    double rotation = 0.0;          /*!< BD radians (DWG) / DXF 50 degrees */
+    DRW_Coord extPoint{0,0,1};
+    duint8 flags = 2;               /*!< RC / DXF 280 — default 2 = visible */
+    duint8 contrast = 100;          /*!< RC / DXF 281 (0..100) */
+    duint8 fade = 0;                /*!< RC / DXF 282 (0..100) */
+    duint32 definitionHandle = 0;   /*!< H / DXF 340 */
+    std::vector<DRW_Coord> clipBoundary;  /*!< 2D clip in OCS */
+private:
+    int m_currentClipVertexIdx;
+};
+
 //! Class to handle insert entries
 /*!
 *  Class to handle insert entries

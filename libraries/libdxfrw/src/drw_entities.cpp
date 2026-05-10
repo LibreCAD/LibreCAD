@@ -1762,6 +1762,88 @@ bool DRW_MLine::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
 }
 
 
+// ----------------------------------------------------------------------------
+// DRW_Underlay — UNDERLAY entity (PDFUNDERLAY/DGNUNDERLAY/DWFUNDERLAY).
+// libreDWG UNDERLAYREFERENCE.spec field order:
+//   extrusion (BE) -> position (3BD) -> angle (BD radians) -> scale (3BD)
+//   -> flags (RC) -> contrast (RC) -> fade (RC) -> num_clip (BL)
+//   -> clip_verts (2RD × num_clip).
+// Handle stream after standard entity handles: definition_id (H).
+// ----------------------------------------------------------------------------
+
+bool DRW_Underlay::parseCode(int code, const std::unique_ptr<dxfReader>& reader){
+    switch (code) {
+    case 340:
+        definitionHandle = static_cast<duint32>(reader->getHandleString());
+        break;
+    case 10: position.x = reader->getDouble(); break;
+    case 20: position.y = reader->getDouble(); break;
+    case 30: position.z = reader->getDouble(); break;
+    case 41: scale.x = reader->getDouble(); break;
+    case 42: scale.y = reader->getDouble(); break;
+    case 43: scale.z = reader->getDouble(); break;
+    case 50: rotation = reader->getDouble(); break;  // degrees in DXF
+    case 210: extPoint.x = reader->getDouble(); break;
+    case 220: extPoint.y = reader->getDouble(); break;
+    case 230: extPoint.z = reader->getDouble(); break;
+    case 280: flags    = static_cast<duint8>(reader->getInt32() & 0xFF); break;
+    case 281: contrast = static_cast<duint8>(reader->getInt32() & 0xFF); break;
+    case 282: fade     = static_cast<duint8>(reader->getInt32() & 0xFF); break;
+    case 11: {
+        ++m_currentClipVertexIdx;
+        if (m_currentClipVertexIdx >= static_cast<int>(clipBoundary.size())) {
+            clipBoundary.resize(m_currentClipVertexIdx + 1);
+        }
+        clipBoundary[m_currentClipVertexIdx].x = reader->getDouble();
+        break;
+    }
+    case 21:
+        if (m_currentClipVertexIdx >= 0
+            && m_currentClipVertexIdx < static_cast<int>(clipBoundary.size())) {
+            clipBoundary[m_currentClipVertexIdx].y = reader->getDouble();
+        }
+        break;
+    default:
+        return DRW_Entity::parseCode(code, reader);
+    }
+    return true;
+}
+
+bool DRW_Underlay::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
+    if (!DRW_Entity::parseDwg(version, buf, nullptr, bs)) return false;
+    DRW_DBG("\n***************************** parsing UNDERLAY ***************\n");
+    extPoint = buf->getExtrusion(false);
+    position = buf->get3BitDouble();
+    rotation = buf->getBitDouble();   // angle (radians) BEFORE scale
+    scale    = buf->get3BitDouble();
+    flags    = buf->getRawChar8();
+    contrast = buf->getRawChar8();
+    fade     = buf->getRawChar8();
+    duint32 nClip = buf->getBitLong();
+    DRW_DBG(" UNDERLAY pos: "); DRW_DBG(position.x); DRW_DBG(",");
+    DRW_DBG(position.y); DRW_DBG(" rot: "); DRW_DBG(rotation);
+    DRW_DBG(" flags: "); DRW_DBGH(flags);
+    DRW_DBG(" nClip: "); DRW_DBG(nClip); DRW_DBG("\n");
+    if (nClip > 100000) return true;  // sanity
+    clipBoundary.reserve(nClip);
+    for (duint32 i = 0; i < nClip; ++i) {
+        DRW_Coord p;
+        p.x = buf->getRawDouble();
+        p.y = buf->getRawDouble();
+        p.z = 0.0;
+        clipBoundary.push_back(p);
+    }
+    if (!DRW_Entity::parseDwgEntHandle(version, buf)) return false;
+    if (version > DRW::AC1014 && buf->numRemainingBytes() >= 2) {
+        dwgHandle defH = buf->getOffsetHandle(handle);
+        definitionHandle = defH.ref;
+        DRW_DBG(" UNDERLAY definitionHandle: ");
+        DRW_DBGHL(defH.code, defH.size, defH.ref); DRW_DBG("\n");
+    }
+    return buf->isGood();
+}
+
+
 bool DRW_Text::parseCode(int code, const std::unique_ptr<dxfReader>& reader){
     switch (code) {
     case 40:

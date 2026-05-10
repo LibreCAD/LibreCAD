@@ -159,6 +159,11 @@ bool dwgR::read(DRW_Interface *interface_, bool ext){
 
     filestr.close();
     if (reader) {
+        // Capture per-entity failure count + skipped custom-class breakdown
+        // before destroying the reader so the public getters (post-read) can
+        // still surface them.
+        m_entityParseFailures = reader->m_entityParseFailures;
+        m_skippedCustomClasses = reader->m_skippedCustomClasses;
         reader.reset();
     }
 
@@ -170,6 +175,17 @@ bool dwgR::read(DRW_Interface *interface_, bool ext){
  *
  * \returns nullptr if version is not supported.
 */
+size_t dwgR::getEntityParseFailures() const {
+    // Prefer the dwgR-side cache (survives reader.reset() at end of
+    // read()). Fall back to live reader for the unusual case of a
+    // caller querying mid-read.
+    return reader ? reader->m_entityParseFailures : m_entityParseFailures;
+}
+
+std::unordered_map<std::string, size_t> dwgR::getSkippedCustomClasses() const {
+    return reader ? reader->m_skippedCustomClasses : m_skippedCustomClasses;
+}
+
 std::unique_ptr<dwgReader> dwgR::createReaderForVersion(DRW::Version version, std::ifstream *stream, dwgR *p )
 {
     switch ( version ) {

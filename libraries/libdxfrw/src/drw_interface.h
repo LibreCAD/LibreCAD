@@ -111,6 +111,19 @@ public:
      */
     virtual void addMLine(const DRW_MLine* data) { (void)data; }
 
+    /** Called for every UNDERLAY entity (PDFUNDERLAY/DGNUNDERLAY/DWFUNDERLAY).
+     *  Default no-op. Note: entities arrive during readDwgEntities, BEFORE
+     *  the matching UNDERLAYDEFINITION objects (linkUnderlay) — implementers
+     *  must defer filename resolution.
+     */
+    virtual void addUnderlay(const DRW_Underlay* data) { (void)data; }
+
+    /** Called for every UNDERLAYDEFINITION (Pdf/Dgn/Dwf) object.
+     *  Carries the filename + sheet name that UNDERLAY entities reference
+     *  via definitionHandle. Default no-op. Mirrors addImage/linkImage.
+     */
+    virtual void linkUnderlay(const DRW_UnderlayDefinition* data) { (void)data; }
+
     /** Called for every polyline start */
     virtual void addPolyline(const DRW_Polyline& data) = 0;
 

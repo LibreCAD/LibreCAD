@@ -188,6 +188,21 @@ public:
     /// styleName onto each MLINE entity post-parse (DXF code 2 / DWG 340
     /// resolves to a name only after the OBJECTS section is read).
     std::unordered_map<duint32, std::string> mlineStyleNameMap;
+
+    /// Per-entity parseDwg failures accumulated across readDwgBlocks /
+    /// readDwgEntities / walkBlockRecordEntities / readPlineVertex.
+    /// These are reported as warnings — they do not fail the section.
+    /// Section-level (structural) failures still propagate via the
+    /// bool return from each section method.
+    size_t m_entityParseFailures = 0;
+    /// Custom-class entities (oType >= 500, recName not in our hardcoded
+    /// dwgType map) that fell through readDwgEntity's default branch and
+    /// got stuffed into objObjectMap.  Keyed by the DXF recName (eg
+    /// "STDPART2D", "ACDBVISUALSTYLE", "ACMBOMROW").  These are
+    /// vendor-extension entities — typically AutoCAD Mechanical / Civil
+    /// proxy-capable graphics — whose geometry never reaches the
+    /// renderer.  Surface to the user so they know what's missing.
+    std::unordered_map<std::string, size_t> m_skippedCustomClasses;
     std::unordered_map<duint32, DRW_AppId*> appIdmap;
     std::unordered_map<duint32, DRW_View*> viewmap;
     std::unordered_map<duint32, DRW_UCS*> ucsmap;

@@ -46,7 +46,8 @@ namespace DRW {
          DICTIONARY,
          MLEADERSTYLE,
          DBCOLOR,
-         VISUALSTYLE
+         VISUALSTYLE,
+         UNDERLAYDEFINITION
      };
 
 //pending VP_ENT_HDR, GROUP, LONG_TRANSACTION, XRECORD,
@@ -857,6 +858,31 @@ protected:
 public:
     UTF8STRING desc;       /*!< description (TV in DWG) */
     duint16 type = 0;      /*!< visual-style type code (BS in DWG) */
+};
+
+//! Class to handle UNDERLAYDEFINITION (AcDb*Definition) — custom-class object.
+/*!
+ *  Three flavors share one class: PDF, DGN, DWF (Pdf/Dgn/DwfDefinition).
+ *  Lives in the OBJECTS section. Each carries a filename + sheet/layout name
+ *  that the matching UNDERLAY entity references via its definitionHandle.
+ */
+class DRW_UnderlayDefinition : public DRW_TableEntry {
+    SETOBJFRIENDS
+public:
+    enum Kind { PDF, DGN, DWF };
+    DRW_UnderlayDefinition() { reset(); }
+    void reset() {
+        tType = DRW::UNDERLAYDEFINITION;
+        kind = PDF;
+        filename.clear();
+        sheetName.clear();
+    }
+protected:
+    bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) override;
+public:
+    Kind kind = PDF;
+    UTF8STRING filename;
+    UTF8STRING sheetName;
 };
 
 /** Holds per-write-session maps populated during DXF writing. */

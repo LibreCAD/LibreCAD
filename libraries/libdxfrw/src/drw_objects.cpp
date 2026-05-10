@@ -739,7 +739,10 @@ bool DRW_Block_Record::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs
         flags |= buf->getBit() << 5; //if is a loaded Xref, block code 70, bit 6 (32)
     }
     DRW_DBG("flags: "); DRW_DBG(flags); DRW_DBG(", ");
-    if (version > DRW::AC1015) {//2004+ fails in 2007
+    // Per ODA spec / libreDWG dwg.spec (SINCE R_2004a), num_owned is only
+    // present when the block_record is neither an xref nor an overlaid xref.
+    // Reading it unconditionally for XREFs misaligns the rest of the parse.
+    if (version > DRW::AC1015 && !blockIsXref && !xrefOverlaid) {
         objectCount = buf->getBitLong(); //Number of objects owned by this block
         if (!DRW::reserve( entMap, objectCount)) {
             return false;
@@ -1674,6 +1677,24 @@ bool DRW_MLeaderStyle::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs
     DRW_DBG(" contentType: "); DRW_DBG(contentType);
     DRW_DBG(" name: "); DRW_DBG(name); DRW_DBG("\n");
     return true;
+}
+
+// UNDERLAYDEFINITION (AcDb{Pdf,Dgn,Dwf}Definition) — custom-class object.
+// Layout: common preamble + TV filename + TV sheetName.
+bool DRW_UnderlayDefinition::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
+    dwgBuffer sBuff = *buf;
+    dwgBuffer *sBuf = buf;
+    if (version > DRW::AC1018) {
+        sBuf = &sBuff;
+    }
+    bool ret = DRW_TableEntry::parseDwg(version, buf, sBuf, bs);
+    DRW_DBG("\n***************************** parsing UNDERLAYDEFINITION ***************\n");
+    if (!ret) return ret;
+    filename  = sBuf->getVariableText(version, false);
+    sheetName = sBuf->getVariableText(version, false);
+    DRW_DBG(" filename: "); DRW_DBG(filename);
+    DRW_DBG(" sheet: "); DRW_DBG(sheetName); DRW_DBG("\n");
+    return buf->isGood();
 }
 
 // VISUALSTYLE (AcDbVisualStyle) — stub parser per ODA spec §20.4.95.

@@ -111,6 +111,8 @@ public:
     void addLWPolyline(const DRW_LWPolyline& data) override;
     void addMLine(const DRW_MLine* data) override;
     void addMLineStyle(const DRW_MLineStyle& data) override;
+    void addUnderlay(const DRW_Underlay* data) override;
+    void linkUnderlay(const DRW_UnderlayDefinition* data) override;
     void addText(const DRW_Text& data) override;
     void addPolyline(const DRW_Polyline& data) override;
     void addSpline(const DRW_Spline* data) override;
@@ -268,6 +270,12 @@ private:
      *  per-element offsets when decomposing the MLINE into N polylines. */
     std::map<QString, DRW_MLineStyle> m_mlineStyleCache;
 
+    /** UNDERLAYDEFINITION cache: handle → definition (filename, sheet, kind).
+     *  Populated by linkUnderlay (OBJECTS section, after entities are
+     *  parsed). Consumed at export time + by future UI surfaces that
+     *  want the filename for a given underlay. Cleared per import. */
+    std::map<duint32, DRW_UnderlayDefinition> m_underlayDefMap;
+
     /** DWG file format version recognized at openFile() time. Set even
      *  on the BAD_VERSION error path so the user-facing error message
      *  can name which version was found and which range is supported.
@@ -281,6 +289,15 @@ private:
      *  groups missing siblings, are left for plain LWPOLYLINE export. */
     void reconstructMLines(RS_EntityContainer* container,
                            std::set<RS_Entity*>& consumed);
+
+    /** Scan @p container for RS_Polyline entities carrying
+     *  LibreCAD_UNDERLAY XDATA and reconstruct DRW_Underlay entities.
+     *  Each polyline maps 1:1 to an underlay (no group). Consumed
+     *  polylines are written into @p consumed so the normal
+     *  entity-write loop skips them. Polylines without metadata fall
+     *  through as plain LWPOLYLINEs. */
+    void reconstructUnderlays(RS_EntityContainer* container,
+                              std::set<RS_Entity*>& consumed);
     /** File m_codePage. Used to find the text coder. */
     QString m_codePage;
     /** File version. */

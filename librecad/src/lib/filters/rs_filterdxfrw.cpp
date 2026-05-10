@@ -236,6 +236,44 @@ bool RS_FilterDXFRW::fileImport(RS_Graphic& g, const QString& file, [[maybe_unus
         m_dwgVersion = dwgr.getVersion();
         RS_DEBUG->print("RS_FilterDXFRW::fileImport: reading DWG file: OK");
         RS_DIALOGFACTORY->commandMessage(QObject::tr("Opened dwg file version %1.").arg(printDwgVersion(dwgr.getVersion())));
+        const size_t parseFailures = dwgr.getEntityParseFailures();
+        if (parseFailures > 0) {
+            RS_DIALOGFACTORY->commandMessage(QObject::tr(
+                "DWG load: %1 %2 had parse errors and were skipped. "
+                "Drawing loaded with the rest.")
+                .arg(parseFailures)
+                .arg(parseFailures == 1
+                     ? QObject::tr("entity")
+                     : QObject::tr("entities")));
+        }
+        // Vendor-extension custom classes (AutoCAD Mechanical AmgStdPart aka
+        // STDPART2D, AcmBomRow, etc.) whose proprietary geometry libdxfrw
+        // can't decode.  Surface the top breakdown so the user knows what's
+        // missing rather than silently rendering a partial drawing.
+        const auto skipped = dwgr.getSkippedCustomClasses();
+        if (!skipped.empty()) {
+            size_t totalSkipped = 0;
+            std::vector<std::pair<QString, size_t>> sorted;
+            sorted.reserve(skipped.size());
+            for (const auto& kv : skipped) {
+                totalSkipped += kv.second;
+                sorted.emplace_back(QString::fromStdString(kv.first), kv.second);
+            }
+            std::sort(sorted.begin(), sorted.end(),
+                      [](const auto& a, const auto& b) { return a.second > b.second; });
+            QStringList top;
+            const size_t showN = std::min<size_t>(3, sorted.size());
+            for (size_t i = 0; i < showN; ++i)
+                top << QString("%1×%2").arg(sorted[i].second).arg(sorted[i].first);
+            QString breakdown = top.join(QLatin1String(", "));
+            if (sorted.size() > showN)
+                breakdown += QObject::tr(", and %n more class(es)", "", static_cast<int>(sorted.size() - showN));
+            RS_DIALOGFACTORY->commandMessage(QObject::tr(
+                "DWG load: %1 vendor-extension entities not rendered (%2). "
+                "These are typically AutoCAD Mechanical or other vertical-product "
+                "custom classes that libdxfrw cannot decode.")
+                .arg(totalSkipped).arg(breakdown));
+        }
         RS_DEBUG->print("DWG read summary: %d entities, %d blocks, error=%d",
                         m_graphic ? m_graphic->count() : -1,
                         m_graphic ? m_graphic->countBlocks() : -1,
@@ -871,6 +909,99 @@ void RS_FilterDXFRW::addMLine(const DRW_MLine* data) {
 
         m_currentContainer->addEntity(polyline);
     }
+}
+
+/**
+ * Implementation of the UNDERLAYDEFINITION callback.
+ * Caches by handle so addUnderlay (entities arrive earlier) and the
+ * export reconstruction can resolve filename + sheet on demand.
+ */
+void RS_FilterDXFRW::linkUnderlay(const DRW_UnderlayDefinition* d) {
+    if (!d) return;
+    RS_DEBUG->print("RS_FilterDXFRW::linkUnderlay: %s",
+                    d->filename.c_str());
+    m_underlayDefMap[d->handle] = *d;
+}
+
+/**
+ * Implementation of the UNDERLAY entity callback (PDFUNDERLAY/DGNUNDERLAY/
+ * DWFUNDERLAY).  Decomposes the underlay into a single closed RS_Polyline
+ * showing the clip-boundary placeholder.  The filename + kind ride along
+ * in XDATA so the export side can reconstruct the original UNDERLAY entity.
+ *
+ * Filename resolution: OBJECTS are parsed AFTER ENTITIES in libdxfrw, so
+ * m_underlayDefMap may be empty here.  We store the definitionHandle in
+ * XDATA only; on-demand lookups (UI tooltip, export reconstruction) use
+ * the cache once it's populated by linkUnderlay.
+ */
+void RS_FilterDXFRW::addUnderlay(const DRW_Underlay* data) {
+    RS_DEBUG->print("RS_FilterDXFRW::addUnderlay");
+    if (!data) return;
+
+    // Build clip polygon in WCS. clipBoundary is in OCS-2D; for a typical
+    // 2D extrusion (extPoint == (0,0,1)), OCS == WCS modulo position +
+    // scale + rotation. LibreCAD is 2D so we project z-up regardless.
+    std::vector<RS_Vector> verts;
+    if (data->clipBoundary.size() >= 3) {
+        verts.reserve(data->clipBoundary.size());
+        for (const auto& v : data->clipBoundary) {
+            verts.emplace_back(v.x, v.y);
+        }
+    } else if (data->clipBoundary.size() == 2) {
+        // Two corners of an axis-aligned rectangle (in OCS).
+        const auto& a = data->clipBoundary[0];
+        const auto& b = data->clipBoundary[1];
+        verts.emplace_back(a.x, a.y);
+        verts.emplace_back(b.x, a.y);
+        verts.emplace_back(b.x, b.y);
+        verts.emplace_back(a.x, b.y);
+    } else {
+        // No clip — synthesize a unit-square placeholder centered on origin.
+        // Real underlay sizes need PDF page dims we don't have access to.
+        verts.emplace_back(-0.5, -0.5);
+        verts.emplace_back( 0.5, -0.5);
+        verts.emplace_back( 0.5,  0.5);
+        verts.emplace_back(-0.5,  0.5);
+    }
+
+    // Apply scale, rotation, translation (rotation is in radians per DWG).
+    const double cs = std::cos(data->rotation);
+    const double sn = std::sin(data->rotation);
+    for (auto& p : verts) {
+        const double sx = p.x * data->scale.x;
+        const double sy = p.y * data->scale.y;
+        const double rx = sx * cs - sy * sn;
+        const double ry = sx * sn + sy * cs;
+        p = RS_Vector{rx + data->position.x, ry + data->position.y};
+    }
+
+    RS_PolylineData pd(RS_Vector{}, RS_Vector{}, /*closed=*/true);
+    auto polyline = new RS_Polyline(m_currentContainer, pd);
+    setEntityAttributes(polyline, data);
+    for (const auto& p : verts) polyline->addVertex(p, 0.0, false);
+
+    // Round-trip metadata as XDATA. App marker LibreCAD_UNDERLAY.
+    const QString underlayId =
+        QStringLiteral("underlay_%1").arg(data->handle);
+    const char* kindStr = (data->kind == DRW_Underlay::DGN) ? "DGN"
+                        : (data->kind == DRW_Underlay::DWF) ? "DWF"
+                        : "PDF";
+    std::vector<std::shared_ptr<DRW_Variant>> ext;
+    ext.push_back(std::make_shared<DRW_Variant>(1001, std::string("LibreCAD_UNDERLAY")));
+    ext.push_back(std::make_shared<DRW_Variant>(1000, underlayId.toStdString()));
+    ext.push_back(std::make_shared<DRW_Variant>(1000, std::string(kindStr)));
+    ext.push_back(std::make_shared<DRW_Variant>(1071, dint32{static_cast<int>(data->definitionHandle)}));
+    ext.push_back(std::make_shared<DRW_Variant>(
+        1010, DRW_Coord(data->position.x, data->position.y, data->position.z)));
+    ext.push_back(std::make_shared<DRW_Variant>(1040, data->scale.x));
+    ext.push_back(std::make_shared<DRW_Variant>(1040, data->scale.y));
+    ext.push_back(std::make_shared<DRW_Variant>(1040, data->rotation));
+    ext.push_back(std::make_shared<DRW_Variant>(1070, dint32{data->flags}));
+    ext.push_back(std::make_shared<DRW_Variant>(1070, dint32{data->contrast}));
+    ext.push_back(std::make_shared<DRW_Variant>(1070, dint32{data->fade}));
+    polyline->setDrwExtData(std::move(ext));
+
+    m_currentContainer->addEntity(polyline);
 }
 
 /**
@@ -3986,6 +4117,7 @@ void RS_FilterDXFRW::writeEntities(){
     // MLINE; the rest fall through to the normal write path.
     std::set<RS_Entity*> consumed;
     reconstructMLines(m_graphic, consumed);
+    reconstructUnderlays(m_graphic, consumed);
     for(RS_Entity* e: lc::LC_ContainerTraverser{*m_graphic, RS2::ResolveNone}.entities()) {
         if (e->getFlag(RS2::FlagUndone)) continue;
         if (consumed.find(e) != consumed.end()) continue;
@@ -4220,6 +4352,101 @@ void RS_FilterDXFRW::writeEntity(RS_Entity* e){
         break;
     default:
         break;
+    }
+}
+
+void RS_FilterDXFRW::reconstructUnderlays(RS_EntityContainer* container,
+                                          std::set<RS_Entity*>& consumed) {
+    if (!container) return;
+    // Single-pass: each polyline carrying LibreCAD_UNDERLAY XDATA
+    // reconstructs ONE DRW_Underlay (no group/sibling matching like MLINE).
+    for (RS_Entity* e :
+         lc::LC_ContainerTraverser{*container, RS2::ResolveNone}.entities()) {
+        if (e->getFlag(RS2::FlagUndone)) continue;
+        if (e->rtti() != RS2::EntityPolyline) continue;
+        if (!e->hasDrwExtData()) continue;
+
+        const auto& ext = e->getDrwExtData();
+        bool inGroup = false;
+        DRW_Underlay u;
+        DRW_Coord position;
+        bool gotPosition = false;
+        int seen1000 = 0;   // 0=id, 1=kind
+        int seen1040 = 0;   // 0=scale.x, 1=scale.y, 2=rotation
+        int seen1070 = 0;   // 0=flags, 1=contrast, 2=fade
+
+        for (const auto& sp : ext) {
+            if (!sp) continue;
+            const int code = sp->code();
+            if (code == 1001) {
+                inGroup = (std::string{sp->c_str()} == "LibreCAD_UNDERLAY");
+                continue;
+            }
+            if (!inGroup) continue;
+            switch (code) {
+            case 1000: {
+                const std::string s = sp->c_str();
+                if (seen1000 == 1) {
+                    // kind
+                    if (s == "DGN") u.kind = DRW_Underlay::DGN;
+                    else if (s == "DWF") u.kind = DRW_Underlay::DWF;
+                }
+                ++seen1000;
+                break;
+            }
+            case 1071:
+                u.definitionHandle = static_cast<duint32>(sp->i_val());
+                break;
+            case 1010: {
+                const auto* c = sp->coord();
+                if (c) { position = *c; gotPosition = true; }
+                break;
+            }
+            case 1040: {
+                const double d = sp->d_val();
+                if (seen1040 == 0) u.scale.x = d;
+                else if (seen1040 == 1) u.scale.y = d;
+                else if (seen1040 == 2) u.rotation = d;
+                ++seen1040;
+                break;
+            }
+            case 1070: {
+                const int v = static_cast<int>(sp->i_val());
+                if (seen1070 == 0) u.flags    = static_cast<duint8>(v);
+                else if (seen1070 == 1) u.contrast = static_cast<duint8>(v);
+                else if (seen1070 == 2) u.fade     = static_cast<duint8>(v);
+                ++seen1070;
+                break;
+            }
+            default: break;
+            }
+        }
+
+        if (!gotPosition) continue;        // not a real LibreCAD_UNDERLAY block
+        u.position = position;
+
+        // Reverse-transform polyline vertices back to OCS clip coordinates:
+        //   poly_v = position + R(rotation) * scale * clip_v
+        // → clip_v = scale^-1 * R^-T * (poly_v - position)
+        const auto* pl = static_cast<const RS_Polyline*>(e);
+        const double cs = std::cos(u.rotation);
+        const double sn = std::sin(u.rotation);
+        const double sx = (std::abs(u.scale.x) > RS_TOLERANCE) ? u.scale.x : 1.0;
+        const double sy = (std::abs(u.scale.y) > RS_TOLERANCE) ? u.scale.y : 1.0;
+        u.clipBoundary.clear();
+        for (RS_Entity* sub : *pl) {
+            // Polyline sub-entities are line segments; first endpoint of each
+            // gives the polygon vertex.
+            const RS_Vector p = sub->getStartpoint();
+            const double dx = p.x - u.position.x;
+            const double dy = p.y - u.position.y;
+            const double rx = (dx * cs + dy * sn) / sx;
+            const double ry = (-dx * sn + dy * cs) / sy;
+            u.clipBoundary.emplace_back(rx, ry, 0.0);
+        }
+
+        m_dxfW->writeUnderlay(&u);
+        consumed.insert(e);
     }
 }
 

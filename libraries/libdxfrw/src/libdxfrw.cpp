@@ -1444,6 +1444,44 @@ bool dxfRW::writeMLine(DRW_MLine *ent) {
     return true;
 }
 
+bool dxfRW::writeUnderlay(DRW_Underlay *ent) {
+    if (version <= DRW::AC1009) return true;  // R13+ only
+    const char* tag = (ent->kind == DRW_Underlay::DGN) ? "DGNUNDERLAY"
+                    : (ent->kind == DRW_Underlay::DWF) ? "DWFUNDERLAY"
+                    : "PDFUNDERLAY";
+    writer->writeString(0, tag);
+    writeEntity(ent);
+    writer->writeString(100, "AcDbUnderlayReference");
+    if (ent->definitionHandle != 0) {
+        writer->writeString(340, toHexStr(static_cast<int>(ent->definitionHandle)));
+    }
+    writer->writeDouble(10, ent->position.x);
+    writer->writeDouble(20, ent->position.y);
+    writer->writeDouble(30, ent->position.z);
+    if (ent->scale.x != 1.0 || ent->scale.y != 1.0 || ent->scale.z != 1.0) {
+        writer->writeDouble(41, ent->scale.x);
+        writer->writeDouble(42, ent->scale.y);
+        writer->writeDouble(43, ent->scale.z);
+    }
+    writer->writeDouble(50, ent->rotation);
+    if (ent->extPoint.x != 0.0 || ent->extPoint.y != 0.0 || ent->extPoint.z != 1.0) {
+        writer->writeDouble(210, ent->extPoint.x);
+        writer->writeDouble(220, ent->extPoint.y);
+        writer->writeDouble(230, ent->extPoint.z);
+    }
+    writer->writeInt16(280, ent->flags);
+    writer->writeInt16(281, ent->contrast);
+    writer->writeInt16(282, ent->fade);
+    for (const auto& v : ent->clipBoundary) {
+        writer->writeDouble(11, v.x);
+        writer->writeDouble(21, v.y);
+    }
+    if (!ent->extData.empty()) {
+        writeExtData(ent->extData);
+    }
+    return true;
+}
+
 bool dxfRW::writeMText(DRW_MText *ent){
     if (version > DRW::AC1009) {
         writer->writeString(0, "MTEXT");
@@ -2704,6 +2742,10 @@ bool dxfRW::processEntities(bool isblock) {
             processed = processMText();
         } else if (nextentity == "MLINE") {
             processed = processMLine();
+        } else if (nextentity == "PDFUNDERLAY"
+                   || nextentity == "DGNUNDERLAY"
+                   || nextentity == "DWFUNDERLAY") {
+            processed = processUnderlay(nextentity);
         } else if (nextentity == "HATCH") {
             processed = processHatch();
         } else if (nextentity == "SPLINE") {
@@ -2907,6 +2949,27 @@ bool dxfRW::processMLine() {
             return true;
         }
         if (!mline.parseCode(code, reader)) {
+            return setError(DRW::BAD_CODE_PARSED);
+        }
+    }
+    return setError(DRW::BAD_READ_ENTITIES);
+}
+
+bool dxfRW::processUnderlay(const std::string& kind) {
+    DRW_DBG("dxfRW::processUnderlay\n");
+    int code;
+    DRW_Underlay u;
+    if (kind == "DGNUNDERLAY") u.kind = DRW_Underlay::DGN;
+    else if (kind == "DWFUNDERLAY") u.kind = DRW_Underlay::DWF;
+    while (reader->readRec(&code)) {
+        DRW_DBG(code); DRW_DBG("\n");
+        if (0 == code) {
+            nextentity = reader->getString();
+            DRW_DBG(nextentity); DRW_DBG("\n");
+            iface->addUnderlay(&u);
+            return true;
+        }
+        if (!u.parseCode(code, reader)) {
             return setError(DRW::BAD_CODE_PARSED);
         }
     }
