@@ -39,6 +39,7 @@
 #include "lc_hyperbola.h"
 #include "lc_hyperbolaspline.h"
 #include "lc_parabola.h"
+#include "lc_parabolaspline.h"
 #include "rs_arc.h"
 #include "rs_circle.h"
 #include "rs_dimaligned.h"
@@ -565,8 +566,15 @@ void RS_FilterDXFRW::addBlock(const DRW_Block& data) {
                               QString::fromUtf8(data.xrefPath.c_str()),
                               name);
                 }
-            } else
+            } else {
+                // RS_BlockList::add returns false on name collision and
+                // deletes the block. Without updating m_currentContainer,
+                // subsequent addEntity calls would leak into whatever the
+                // previous endBlock left behind (typically m_graphic). Route
+                // them to m_dummyContainer so the failure is contained.
                 m_blockHash.insert(data.parentHandle, m_dummyContainer);
+                m_currentContainer = m_dummyContainer;
+            }
     } else {
         if (mid.toLower() == "model_space") {
             m_blockHash.insert(data.parentHandle, m_graphic);
@@ -1282,16 +1290,23 @@ bool RS_FilterDXFRW::handleQuadraticConicSpline(const DRW_Spline* data) {
         return false;
     }
 
-    // Try hyperbola first
-    std::unique_ptr<RS_Entity> en = LC_HyperbolaSpline::splineToHyperbola(*data, m_currentContainer);
+    // Three explicit branches by middle weight: hyperbola (w>1), parabola
+    // (weights absent or w=1), or fall-through for ellipse arc (w<1) and
+    // anything else the dispatcher can't classify cleanly.
+    std::unique_ptr<RS_Entity> en =
+        LC_HyperbolaSpline::splineToHyperbola(*data, m_currentContainer);
     if (en == nullptr) {
-        // Fallback to parabola
-        LC_ParabolaData pd{{
-                coordToVector(data->controllist.at(0)),
-                coordToVector(data->controllist.at(1)),
-                coordToVector(data->controllist.at(2))
-               }};
-        en = std::make_unique<LC_Parabola>(m_currentContainer, pd);
+        en = LC_ParabolaSpline::splineToParabola(*data, m_currentContainer);
+    }
+    if (en == nullptr) {
+        // Not a hyperbola or parabola — likely an ellipse arc (w<1), a
+        // collinear/degenerate spline, or a non-canonical knot vector. Let
+        // the caller fall through to the generic addSpline path so the
+        // entity isn't silently mis-classified as a parabola.
+        RS_DEBUG->print("RS_FilterDXFRW::handleQuadraticConicSpline: "
+                        "degree-2/3-control spline not classified as "
+                        "parabola or hyperbola; falling through to addSpline");
+        return false;
     }
     setEntityAttributes(en.get(), data);
     en->update();

@@ -1626,6 +1626,166 @@ TEST_CASE("DWG lever_detail: filter pipeline + visibility audit",
     SUCCEED();
 }
 
+// Same as [.dwg_lever_filter] but for ~/doc/dwg2/gear_pump_subassy.dwg, which
+// is the witness for the "no visible entity, blocks empty after insert" bug:
+// the GUI shows a single rendered POINT and DIN_A3 (the A3 sheet frame block)
+// is empty.  The libdxfrw smoke counter reports 521 entities + 26 blocks
+// loaded, and dwg2dxf produces a DXF where DIN_A3 has 166 entities — proving
+// libdxfrw delivers the data.  This test runs the actual RS_FilterDXFRW path
+// to pinpoint where they go in the LibreCAD container tree, plus reports any
+// duplicate block names that may have made `RS_BlockList::add()` return false
+// (which deletes the block and leaves `m_currentContainer` stale, leaking
+// subsequent addEntity calls into model space).
+//   ./librecad_tests "[.dwg_gear_pump_filter]" -s
+TEST_CASE("DWG gear_pump_subassy: filter pipeline + block routing audit",
+          "[.dwg_gear_pump_filter]") {
+    const char* home = getenv("HOME");
+    if (!home) { SUCCEED("HOME not set; skipping"); return; }
+    const std::string path =
+        std::string(home) + "/doc/dwg2/gear_pump_subassy.dwg";
+    if (!std::filesystem::is_regular_file(path)) {
+        SUCCEED("gear_pump_subassy.dwg not present; skipping"); return;
+    }
+
+    static int qargc = 1;
+    static char qarg0[] = "librecad_tests";
+    static char* qargv[] = { qarg0, nullptr };
+    static QCoreApplication* qapp = QCoreApplication::instance()
+        ? QCoreApplication::instance()
+        : new QCoreApplication(qargc, qargv);
+    static bool settingsReady = []{
+        QCoreApplication::setOrganizationName("LibreCAD");
+        QCoreApplication::setApplicationName("LibreCAD-tests");
+        RS_Settings::init("LibreCAD", "LibreCAD-tests");
+        return true;
+    }();
+    (void)qapp; (void)settingsReady;
+
+    RS_Graphic graphic;
+    RS_FilterDXFRW filter;
+    const bool imported = filter.fileImport(graphic,
+                                            QString::fromStdString(path),
+                                            RS2::FormatDWG);
+    REQUIRE(imported);
+
+    std::map<RS2::EntityType, int> typeCount;
+    std::map<QString, int> layerCount;
+    int totalTopLevel = 0;
+    int topLevelInserts = 0;
+    for (auto* e : graphic) {
+        if (!e) continue;
+        ++totalTopLevel;
+        const RS2::EntityType t = e->rtti();
+        typeCount[t]++;
+        const QString lyrName = e->getLayer() ? e->getLayer()->getName() : "(none)";
+        layerCount[lyrName]++;
+        if (t == RS2::EntityInsert) ++topLevelInserts;
+    }
+
+    std::cout << "\n=== gear_pump_subassy.dwg (post-filter) ===\n";
+    std::cout << "Top-level RS_Entity count: " << totalTopLevel << "\n";
+    std::cout << "Container countDeep():     " << graphic.countDeep() << "\n";
+    std::cout << "Top-level INSERTs:         " << topLevelInserts << "\n\n";
+
+    std::cout << "RTTI type distribution (top level):\n";
+    for (const auto& [t, n] : typeCount) {
+        std::cout << "  " << std::left << std::setw(18) << rttiName(t)
+                  << " " << n << "\n";
+    }
+
+    std::cout << "\nLayer distribution (top level):\n";
+    std::vector<std::pair<int, QString>> layers;
+    for (const auto& [name, n] : layerCount) layers.emplace_back(n, name);
+    std::sort(layers.rbegin(), layers.rend());
+    for (const auto& [n, name] : layers) {
+        std::cout << "  " << std::left << std::setw(34)
+                  << name.toStdString() << " " << n << "\n";
+    }
+
+    std::cout << "\nTop-level INSERTs by referenced block:\n";
+    for (auto* e : graphic) {
+        if (e && e->rtti() == RS2::EntityInsert) {
+            auto* ins = static_cast<RS_Insert*>(e);
+            std::cout << "  ref=\"" << ins->getName().toStdString()
+                      << "\" pos=(" << ins->getInsertionPoint().x
+                      << "," << ins->getInsertionPoint().y << ")\n";
+        }
+    }
+
+    auto* blockList = graphic.getBlockList();
+    REQUIRE(blockList != nullptr);
+    std::cout << "\nBlock definitions (" << blockList->count() << " blocks):\n";
+    std::map<RS2::EntityType, int> blockTypeCount;
+    int blockEntityTotal = 0;
+    for (unsigned i = 0; i < blockList->count(); ++i) {
+        RS_Block* bk = blockList->at(i);
+        if (!bk) continue;
+        const unsigned direct = bk->count();
+        const unsigned deep   = bk->countDeep();
+        blockEntityTotal += direct;
+        std::cout << "  " << std::left << std::setw(28)
+                  << bk->getName().toStdString()
+                  << " count=" << std::setw(4) << direct
+                  << " deep=" << deep << "\n";
+        for (auto* e : *bk) {
+            if (e) blockTypeCount[e->rtti()]++;
+        }
+    }
+    std::cout << "Block direct-entity total: " << blockEntityTotal << "\n";
+    std::cout << "Block RTTI distribution:\n";
+    for (const auto& [t, n] : blockTypeCount) {
+        std::cout << "  " << std::left << std::setw(18) << rttiName(t)
+                  << " " << n << "\n";
+    }
+
+    const int grandTotal = totalTopLevel + blockEntityTotal;
+    std::cout << "\n*** Filter accepted total: " << grandTotal
+              << " RS_Entities (model-space=" << totalTopLevel
+              << ", in-blocks=" << blockEntityTotal << ")\n";
+    std::cout << "*** libdxfrw delivered (per [.dwg_gear_pump]): 535\n";
+    const int leaked = grandTotal - 535;
+    std::cout << "*** Surplus (model-space leakage if positive, lost if negative): "
+              << leaked << "\n";
+
+    // RS_FilterDXFRW intentionally does NOT register *Model_Space,
+    // *Paper_Space, *Paper_Space0 in the visible block list (see
+    // RS_FilterDXFRW::addBlock paper_space/model_space branch); subtract them
+    // before flagging an unexpected loss.
+    constexpr int kSpecialBlocks = 3; // *Model_Space, *Paper_Space, *Paper_Space0
+    constexpr int kLibdxfrwAddBlockCount = 26;
+    const int expected = kLibdxfrwAddBlockCount - kSpecialBlocks;
+    std::cout << "*** libdxfrw addBlock count: " << kLibdxfrwAddBlockCount
+              << "; blockList->count(): " << blockList->count()
+              << " (expect " << expected
+              << " after dropping 3 model/paper-space blocks)\n";
+    if (static_cast<int>(blockList->count()) < expected) {
+        std::cout << "*** ⚠ unexpected block loss: "
+                  << (expected - blockList->count())
+                  << " block(s) missing from the visible block list\n";
+    }
+
+    // Regression assertions — these are the symptoms the user reported.
+    // Pre-fix: DIN_A3 (count=0), GENAXEH (count=0).  Post-fix: both populated.
+    auto blockEntityCount = [&](const QString& name) -> int {
+        for (unsigned i = 0; i < blockList->count(); ++i) {
+            RS_Block* bk = blockList->at(i);
+            if (bk && bk->getName() == name) return static_cast<int>(bk->count());
+        }
+        return -1;
+    };
+    const int din_a3    = blockEntityCount("DIN_A3");
+    const int din_title = blockEntityCount("DIN_TITLE");
+    const int genaxeh   = blockEntityCount("GENAXEH");
+    std::cout << "\nNamed-block check:\n";
+    std::cout << "  DIN_A3:    " << din_a3 << " entities (expect > 0)\n";
+    std::cout << "  DIN_TITLE: " << din_title << " entities (expect > 0)\n";
+    std::cout << "  GENAXEH:   " << genaxeh << " entities (expect > 0)\n";
+
+    CHECK(din_a3 > 0);
+    CHECK(din_title > 0);
+    CHECK(genaxeh > 0);
+}
+
 // Regression: lever_detail.dwg references gripper_assembly_new.dwg as an
 // unresolved XREF (DRW_Block::flags & 0x04, xrefPath populated). The filter
 // must detect this, resolve the path (handling Windows backslashes,

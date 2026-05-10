@@ -30,7 +30,9 @@
 #include <catch2/catch_approx.hpp>
 #include <catch2/catch_test_macros.hpp>
 
+#include "drw_entities.h"
 #include "lc_parabola.h"
+#include "lc_parabolaspline.h"
 #include "lc_quadratic.h"
 #include "lc_secondmoment.h"
 #include "rs_line.h"
@@ -255,4 +257,151 @@ TEST_CASE("LC_Parabola: revertDirection preserves area-magnitude / shape",
     REQUIRE(c1[0].distanceTo(c2[2]) < 1e-12);
     REQUIRE(c1[2].distanceTo(c2[0]) < 1e-12);
     REQUIRE(c1[1].distanceTo(c2[1]) < 1e-12);
+}
+
+// ---- LC_ParabolaSpline roundtrip + rejection ------------------------------
+
+namespace {
+
+LC_ParabolaData parabolaFromControlPoints(const std::array<RS_Vector, 3>& cps)
+{
+    return LC_ParabolaData{cps};
+}
+
+// Encode-then-decode a parabola via parabolaToSpline / splineToParabola and
+// assert that the reconstructed control points coincide with the originals.
+void assertRoundtrip(const std::array<RS_Vector, 3>& cps)
+{
+    LC_ParabolaData pd0{cps};
+    REQUIRE(pd0.isValid());
+
+    DRW_Spline spl;
+    REQUIRE(LC_ParabolaSpline::parabolaToSpline(pd0, spl));
+    REQUIRE(spl.degree == 2);
+    REQUIRE(spl.controllist.size() == 3u);
+    // Per project decision the encoder emits a non-rational quadratic (no
+    // weights) — mathematically equivalent to weights {1,1,1}.
+    REQUIRE(spl.weightlist.empty());
+    REQUIRE(spl.knotslist.size() == 6u);
+
+    auto pPtr = LC_ParabolaSpline::splineToParabola(spl, nullptr);
+    REQUIRE(pPtr != nullptr);
+
+    const auto& cps2 = pPtr->getData().m_controlPoints;
+    for (size_t i = 0; i < 3; ++i) {
+        REQUIRE(cps[i].distanceTo(cps2[i]) < 1e-9);
+    }
+
+    // Focus / vertex / axis recovery must agree within tolerance.
+    REQUIRE(pd0.m_focus.distanceTo(pPtr->getData().m_focus) < 1e-9);
+    REQUIRE(pd0.m_vertex.distanceTo(pPtr->getData().m_vertex) < 1e-9);
+    REQUIRE(pd0.m_axis.distanceTo(pPtr->getData().m_axis) < 1e-9);
+}
+
+} // namespace
+
+TEST_CASE("LC_ParabolaSpline: encode/decode roundtrip preserves geometry",
+          "[parabola][spline][roundtrip]")
+{
+    SECTION("vertex at origin, axis +Y, symmetric") {
+        assertRoundtrip({RS_Vector{-1.0, 1.0},
+                         RS_Vector{0.0, -1.0},
+                         RS_Vector{1.0, 1.0}});
+    }
+
+    SECTION("vertex offset, axis rotated 30°") {
+        // Take the canonical parabola, then rotate+translate every control
+        // point so the parabola has a non-trivial axis direction and origin.
+        const double a = 30.0 * M_PI / 180.0;
+        const double cs = std::cos(a), sn = std::sin(a);
+        auto rot = [cs, sn](RS_Vector v) {
+            return RS_Vector{v.x * cs - v.y * sn, v.x * sn + v.y * cs};
+        };
+        const RS_Vector off{2.5, -1.25};
+        std::array<RS_Vector, 3> base{
+            RS_Vector{-2.0, 4.0}, RS_Vector{0.0, -4.0}, RS_Vector{2.0, 4.0}};
+        std::array<RS_Vector, 3> cps{rot(base[0]) + off,
+                                     rot(base[1]) + off,
+                                     rot(base[2]) + off};
+        assertRoundtrip(cps);
+    }
+
+    SECTION("very flat parabola (large axis magnitude)") {
+        assertRoundtrip({RS_Vector{-10.0, 0.01},
+                         RS_Vector{0.0, -0.01},
+                         RS_Vector{10.0, 0.01}});
+    }
+
+    SECTION("tight parabola (small axis magnitude)") {
+        assertRoundtrip({RS_Vector{-0.1, 1.0},
+                         RS_Vector{0.0, -1.0},
+                         RS_Vector{0.1, 1.0}});
+    }
+}
+
+TEST_CASE("LC_ParabolaSpline: rejects non-parabola splines",
+          "[parabola][spline][rejection]")
+{
+    auto makeSpline = [](int degree, std::vector<RS_Vector> cps,
+                         std::vector<double> weights = {},
+                         std::vector<double> knots = {0,0,0,1,1,1}) {
+        DRW_Spline s;
+        s.degree = degree;
+        s.knotslist = std::move(knots);
+        s.weightlist = std::move(weights);
+        for (auto& v : cps) {
+            s.controllist.push_back(std::make_shared<DRW_Coord>(v.x, v.y, 0.0));
+        }
+        s.ncontrol = static_cast<int>(s.controllist.size());
+        s.nknots = static_cast<int>(s.knotslist.size());
+        return s;
+    };
+
+    SECTION("rational with w=0.5 (ellipse arc) → not a parabola") {
+        DRW_Spline s = makeSpline(2,
+            {RS_Vector{-1, 0}, RS_Vector{0, 1}, RS_Vector{1, 0}},
+            {1.0, 0.5, 1.0});
+        REQUIRE_FALSE(LC_ParabolaSpline::isParabolaSpline(s));
+        REQUIRE(LC_ParabolaSpline::splineToParabola(s, nullptr) == nullptr);
+    }
+
+    SECTION("rational with w=2 (hyperbola) → not a parabola") {
+        DRW_Spline s = makeSpline(2,
+            {RS_Vector{-1, 0}, RS_Vector{0, 1}, RS_Vector{1, 0}},
+            {1.0, 2.0, 1.0});
+        REQUIRE_FALSE(LC_ParabolaSpline::isParabolaSpline(s));
+        REQUIRE(LC_ParabolaSpline::splineToParabola(s, nullptr) == nullptr);
+    }
+
+    SECTION("collinear control points → degenerate, not a parabola") {
+        DRW_Spline s = makeSpline(2,
+            {RS_Vector{0, 0}, RS_Vector{1, 0}, RS_Vector{2, 0}});
+        REQUIRE_FALSE(LC_ParabolaSpline::isParabolaSpline(s));
+        REQUIRE(LC_ParabolaSpline::splineToParabola(s, nullptr) == nullptr);
+    }
+
+    SECTION("degree 3 → not a quadratic conic") {
+        DRW_Spline s = makeSpline(3,
+            {RS_Vector{0, 0}, RS_Vector{1, 1}, RS_Vector{2, 1}, RS_Vector{3, 0}},
+            {}, {0,0,0,0,1,1,1,1});
+        REQUIRE_FALSE(LC_ParabolaSpline::isParabolaSpline(s));
+        REQUIRE(LC_ParabolaSpline::splineToParabola(s, nullptr) == nullptr);
+    }
+
+    SECTION("rational with w=1 explicitly → still a parabola (accepted)") {
+        DRW_Spline s = makeSpline(2,
+            {RS_Vector{-1, 1}, RS_Vector{0, -1}, RS_Vector{1, 1}},
+            {1.0, 1.0, 1.0});
+        REQUIRE(LC_ParabolaSpline::isParabolaSpline(s));
+        auto p = LC_ParabolaSpline::splineToParabola(s, nullptr);
+        REQUIRE(p != nullptr);
+        REQUIRE(p->getData().isValid());
+    }
+
+    SECTION("non-canonical knot vector → not a single-segment quadratic Bézier") {
+        DRW_Spline s = makeSpline(2,
+            {RS_Vector{-1, 1}, RS_Vector{0, -1}, RS_Vector{1, 1}},
+            {}, {0, 0, 0, 0.5, 1, 1});
+        REQUIRE_FALSE(LC_ParabolaSpline::isParabolaSpline(s));
+    }
 }

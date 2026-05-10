@@ -953,6 +953,8 @@ set(SHARED_SOURCES
     librecad/src/lib/fileio/rs_fileio.h
     librecad/src/lib/filters/lc_hyperbolaspline.cpp
     librecad/src/lib/filters/lc_hyperbolaspline.h
+    librecad/src/lib/filters/lc_parabolaspline.cpp
+    librecad/src/lib/filters/lc_parabolaspline.h
     librecad/src/lib/filters/rs_filtercxf.cpp
     librecad/src/lib/filters/rs_filterdxf1.cpp
     librecad/src/lib/filters/rs_filterdxf1.h
