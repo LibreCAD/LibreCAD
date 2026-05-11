@@ -47,13 +47,14 @@ namespace DRW {
          MLEADERSTYLE,
          DBCOLOR,
          VISUALSTYLE,
-         UNDERLAYDEFINITION
+         UNDERLAYDEFINITION,
+         SCALE
      };
 
 //pending VP_ENT_HDR, GROUP, LONG_TRANSACTION, XRECORD,
 //ACDBPLACEHOLDER, VBA_PROJECT, ACAD_TABLE, CELLSTYLEMAP, DICTIONARYVAR,
 //DICTIONARYWDFLT, FIELD, IDBUFFER, IMAGEDEF, IMAGEDEFREACTOR, LAYER_INDEX,
-//MATERIAL, PLACEHOLDER, PLOTSETTINGS, RASTERVARIABLES, SCALE, SORTENTSTABLE,
+//MATERIAL, PLACEHOLDER, PLOTSETTINGS, RASTERVARIABLES, SORTENTSTABLE,
 //SPATIAL_INDEX, SPATIAL_FILTER, TABLEGEOMETRY, TABLESTYLES,
 }
 
@@ -839,6 +840,46 @@ public:
     duint8 colorMethod = 0;  /*!< 0xC0 ByLayer / 0xC1 ByBlock / 0xC2 RGB / 0xC3 ACI */
     UTF8STRING bookName;     /*!< color book name, code 430 prefix */
     // name (inherited from DRW_TableEntry) is the entry name within the book
+};
+
+//! Class to handle SCALE (AcDbScale) — annotation-scale entry, custom-class object.
+/*!
+ *  Lives in the OBJECTS section under the named-object-dictionary
+ *  ACAD_SCALELIST. Each entry maps a scale name like "1:48" to a
+ *  paper-units / drawing-units ratio that consumers (MTEXT, MLEADER,
+ *  DIMENSION, ATTRIB) reference via their AcDbAnnotScaleObjectContextData
+ *  per-scale ctx data.  ODA spec §20.4.93; libreDWG dwg2.spec:1195-1203
+ *  (DWG_OBJECT (SCALE)).
+ *
+ *  Body fields after the AcDbScale subclass marker:
+ *    BS  flag           always 0
+ *    TV  name           e.g., "1:48"
+ *    BD  paperUnits     numerator (paper space)
+ *    BD  drawingUnits   denominator (drawing/model space)
+ *    B   isUnitScale    true when ratio is 1:1
+ *
+ *  Scale factor used at render time = drawingUnits / paperUnits
+ *  (e.g., "1:48" → drawingUnits=48, paperUnits=1 → factor=48).
+ */
+class DRW_Scale : public DRW_TableEntry {
+    SETOBJFRIENDS
+public:
+    DRW_Scale() {
+        tType = DRW::SCALE;
+    }
+
+    double scaleFactor() const {
+        return paperUnits == 0.0 ? 1.0 : drawingUnits / paperUnits;
+    }
+
+protected:
+    bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) override;
+public:
+    duint16 flag = 0;            /*!< always 0, code 70 */
+    double  paperUnits = 1.0;    /*!< numerator,  code 140 */
+    double  drawingUnits = 1.0;  /*!< denominator, code 141 */
+    bool    isUnitScale = false; /*!< true for the 1:1 entry, code 290 */
+    // name (inherited from DRW_TableEntry) carries the user-visible label, code 300
 };
 
 //! Class to handle VISUALSTYLE (AcDbVisualStyle) — custom-class object §20.4.95.

@@ -189,6 +189,13 @@ public:
     /// resolves to a name only after the OBJECTS section is read).
     std::unordered_map<duint32, std::string> mlineStyleNameMap;
 
+    /// SCALE (AcDbScale) handle → entry. Populated as SCALE objects are
+    /// parsed in the OBJECTS section. Foundation for per-viewport-scale
+    /// resolution: annotation-scaled MLEADER/MTEXT/DIMENSION entities
+    /// reference these handles via their AcDbAnnotScaleObjectContextData
+    /// chain.  scaleFactor() == drawingUnits / paperUnits.
+    std::unordered_map<duint32, DRW_Scale> scaleMap;
+
     /// Per-entity parseDwg failures accumulated across readDwgBlocks /
     /// readDwgEntities / walkBlockRecordEntities / readPlineVertex.
     /// These are reported as warnings — they do not fail the section.

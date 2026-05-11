@@ -1700,6 +1700,42 @@ bool DRW_UnderlayDefinition::parseDwg(DRW::Version version, dwgBuffer *buf, duin
     return buf->isGood();
 }
 
+// SCALE (AcDbScale) — annotation-scale entry, ODA §20.4.93,
+// libreDWG dwg2.spec:1195-1203:
+//   BS  flag           (always 0, group code 70)
+//   T   name           (e.g. "1:48", group code 300)
+//   BD  paperUnits     (numerator,  group code 140)
+//   BD  drawingUnits   (denominator, group code 141)
+//   B   isUnitScale    (true for the 1:1 entry, group code 290)
+//   START_OBJECT_HANDLE_STREAM (parent dictionary, reactors, xdic)
+bool DRW_Scale::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
+    dwgBuffer sBuff = *buf;
+    dwgBuffer *sBuf = buf;
+    if (version > DRW::AC1018) {  // 2007+ uses separate string stream
+        sBuf = &sBuff;
+    }
+    bool ret = DRW_TableEntry::parseDwg(version, buf, sBuf, bs);
+    DRW_DBG("\n***************************** parsing SCALE (AcDbScale) ******************\n");
+    if (!ret) return ret;
+
+    flag         = buf->getBitShort();
+    name         = sBuf->getVariableText(version, false);
+    paperUnits   = buf->getBitDouble();
+    drawingUnits = buf->getBitDouble();
+    isUnitScale  = buf->getBit();
+
+    DRW_DBG("SCALE name='"); DRW_DBG(name.c_str());
+    DRW_DBG("' paper="); DRW_DBG(paperUnits);
+    DRW_DBG(" drawing="); DRW_DBG(drawingUnits);
+    DRW_DBG(" factor="); DRW_DBG(scaleFactor());
+    DRW_DBG(" unitScale="); DRW_DBG(isUnitScale ? 1 : 0);
+    DRW_DBG("\n");
+
+    // Trailing handle stream (parent dictionary, reactors, xdic) — left to
+    // the caller; the OBJECTS dispatch hands us a size-bounded slice.
+    return buf->isGood();
+}
+
 // VISUALSTYLE (AcDbVisualStyle) — stub parser per ODA spec §20.4.95.
 // Reads only what's needed for round-trip identity; full visual-style
 // data (60+ fields) is irrelevant to LibreCAD's 2D rendering. Each

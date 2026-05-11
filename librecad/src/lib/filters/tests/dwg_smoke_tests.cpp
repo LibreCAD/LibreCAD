@@ -3318,3 +3318,60 @@ TEST_CASE("DWG arch_multileaders: MLEADER body parser fidelity") {
     // via ctx.textStyleHandle. ≥20 matches the populatedText threshold.
     CHECK(populatedTextStyleHandles >= 20);
 }
+
+// Regression for Issue 3 (SCALE / AcDbScale parsing).
+// The architectural fixture's annotation scaling layers are named
+// "Mleader @ 4", "@ 24", "@ 48" — the file's ACAD_SCALELIST should
+// contain matching scale entries. Pre-fix, SCALE objects fell into
+// the "[entity-pass-defer 706]" bucket and were never parsed.
+TEST_CASE("DWG arch_multileaders: SCALE table delivery") {
+    const char* home = getenv("HOME");
+    if (!home) { SUCCEED("HOME not set"); return; }
+    const std::string path = std::string(home)
+        + "/doc/dwg/architectural_-_annotation_scaling_and_multileaders.dwg";
+    if (!std::filesystem::is_regular_file(path)) {
+        SUCCEED("fixture not present; skipping"); return;
+    }
+
+    class ScaleIface : public TypeTrackingIface {
+    public:
+        std::vector<DRW_Scale> scales;
+        void addScale(const DRW_Scale& s) override { scales.push_back(s); }
+    };
+
+    ScaleIface iface;
+    {
+        dwgR reader(path.c_str());
+        REQUIRE(reader.read(&iface, true));
+        REQUIRE(reader.getError() == DRW::BAD_NONE);
+    }
+
+    // The file declares at least the three annotation scales referenced by
+    // its layers (1:48, 1:24, 1:4) plus typically a 1:1 unit-scale entry.
+    CHECK(iface.scales.size() >= 3u);
+    std::cout << "\n  SCALE entries delivered: " << iface.scales.size() << "\n";
+    for (const auto& s : iface.scales) {
+        std::cout << "    name='" << s.name
+                  << "' paper=" << s.paperUnits
+                  << " drawing=" << s.drawingUnits
+                  << " factor=" << s.scaleFactor()
+                  << " unitScale=" << (s.isUnitScale ? 1 : 0) << "\n";
+    }
+
+    // Build a {factor → name} index and verify the three layer-named factors
+    // (4, 24, 48) all appear in the SCALE table.
+    std::map<double,std::string> byFactor;
+    bool foundUnit = false;
+    for (const auto& s : iface.scales) {
+        byFactor[s.scaleFactor()] = s.name;
+        if (s.isUnitScale) foundUnit = true;
+        // Sanity: every entry has a name and finite ratio.
+        CHECK(!s.name.empty());
+        CHECK(std::isfinite(s.scaleFactor()));
+        CHECK(s.scaleFactor() > 0.0);
+    }
+    CHECK(byFactor.count(4.0)  == 1u);
+    CHECK(byFactor.count(24.0) == 1u);
+    CHECK(byFactor.count(48.0) == 1u);
+    CHECK(foundUnit);  // at least one 1:1 entry present
+}

@@ -1565,6 +1565,23 @@ bool dwgReader::readDwgObject(dwgBuffer *dbuf, objHandle& obj, DRW_Interface& in
                         if (ret) intfa.addPlotSettings(&e);
                         break;
                     }
+                    // SCALE (AcDbScale) — annotation-scale entry, ODA §20.4.93.
+                    // Lives under ACAD_SCALELIST in the named-object dictionary.
+                    // libreDWG dwg2.spec:1195 (DWG_OBJECT (SCALE)).  recName
+                    // "SCALE" or className "AcDbScale".  RS_FilterDXFRW currently
+                    // discards (no annotation-scale-aware viewport) but the
+                    // parser foundation lands so future per-scale resolution
+                    // can build on a populated handle map.
+                    if (rn == "SCALE"
+                        || cit->second->className == "AcDbScale") {
+                        DRW_Scale e;
+                        ret = e.parseDwg(version, &buff, bs);
+                        if (ret) {
+                            scaleMap[obj.handle] = e;
+                            intfa.addScale(e);
+                        }
+                        break;
+                    }
                     // VISUALSTYLE — AcDbVisualStyle (ODA spec §20.4.95).
                     // Stub-parsed for round-trip identity; LibreCAD has
                     // no 3D consumer. recName "ACDB_VISUALSTYLE_CLASS"

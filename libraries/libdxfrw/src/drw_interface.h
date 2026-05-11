@@ -251,6 +251,16 @@ public:
     virtual void addVisualStyle(const DRW_VisualStyle& data) { (void) data; }
 
     /**
+     * Called for every SCALE (AcDbScale) annotation-scale entry encountered
+     * in the OBJECTS section.  Lives under ACAD_SCALELIST in the named-object
+     * dictionary.  ODA §20.4.93 / libreDWG dwg2.spec:1195.  Default no-op;
+     * the foundation for per-viewport-scale resolution of MLEADER/DIMENSION/
+     * MTEXT/ATTRIB at render time.  scaleFactor() returns the design factor
+     * (drawingUnits / paperUnits, e.g. "1:48" → 48).
+     */
+    virtual void addScale(const DRW_Scale& data) { (void) data; }
+
+    /**
      * Called for every comment in the DXF file (code 999).
      */
     virtual void addComment(const char* comment) = 0;
