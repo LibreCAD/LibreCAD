@@ -280,6 +280,12 @@ private:
      *  currently being loaded (the host file plus any in-progress XREF
      *  embeds). Refuses re-entry on circular references. */
     std::set<QString> m_xrefStack;
+    /** Names of XREF blocks recorded by addBlock() for the current import.
+     *  Used after fileImport finishes to warn the user about XREF blocks
+     *  that no modelspace INSERT references (orphan XREFs that AutoCAD
+     *  typically renders through a paper-space layout viewport, which
+     *  LibreCAD doesn't support). */
+    std::set<QString> m_xrefBlockNames;
     /** Resolve an XREF path stored in DRW_Block::xrefPath. Tries:
      *  (1) the stored path as absolute, (2) host-dir + stored path,
      *  (3) host-dir + basename, (4) host-dir + basename with case-

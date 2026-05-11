@@ -52,6 +52,8 @@
 #include "rs_image.h"
 #include "lc_wipeout.h"
 #include "lc_mleader.h"
+#include "rs_block.h"
+#include "rs_blocklist.h"
 #include "rs_insert.h"
 #include "rs_layer.h"
 #include "rs_leader.h"
@@ -215,6 +217,19 @@ bool RS_FilterDXFRW::fileImport(RS_Graphic& g, const QString& file, [[maybe_unus
     m_dummyContainer = new RS_EntityContainer(nullptr, true);
 
     this->m_file = file;
+    // Register the file being loaded into the XREF recursion guard so
+    // A → B → A cycles are detected at depth 2 rather than depth 4.
+    // Done via QFileInfo::absoluteFilePath() to match resolveXrefPath()
+    // (which returns absolute paths). RAII-erased on return so failure
+    // paths (BAD_VERSION, parse failure, etc.) don't leak the entry.
+    const QString thisFileAbs = QFileInfo(file).absoluteFilePath();
+    const bool stackInsertedSelf = m_xrefStack.insert(thisFileAbs).second;
+    struct XrefStackGuard {
+        std::set<QString>* stack;
+        QString key;
+        bool owned;
+        ~XrefStackGuard() { if (stack && owned) stack->erase(key); }
+    } stackGuard{&m_xrefStack, thisFileAbs, stackInsertedSelf};
     // add some variables that need to be there for DXF drawings:
     m_graphic->addVariable("$DIMSTYLE", "Standard", 2);
     m_dimStyle = "Standard";
@@ -334,6 +349,36 @@ bool RS_FilterDXFRW::fileImport(RS_Graphic& g, const QString& file, [[maybe_unus
     }
     RS_DEBUG->print("RS_FilterDXFRW::fileImport: updating inserts");
     m_graphic->updateInserts();
+
+    // Orphan XREF detection. An XREF block whose contents were embedded
+    // is still invisible in modelspace unless something INSERTs it.
+    // AutoCAD typically renders these through a paper-space layout
+    // viewport, which LibreCAD doesn't implement, so the user should
+    // know why the externally-referenced geometry isn't visible.
+    // Only run for the outer fileImport (m_xrefStack empty); skip when
+    // recursively loading an XREF source.
+    if (m_xrefStack.empty() && !m_xrefBlockNames.empty()) {
+        std::set<QString> referenced;
+        for (auto* e : *m_graphic) {
+            if (e && e->rtti() == RS2::EntityInsert) {
+                referenced.insert(static_cast<RS_Insert*>(e)->getName());
+            }
+        }
+        QStringList orphans;
+        for (const QString& xrefName : m_xrefBlockNames) {
+            if (!referenced.count(xrefName)) orphans << xrefName;
+        }
+        if (!orphans.isEmpty()) {
+            RS_DIALOGFACTORY->commandMessage(QObject::tr(
+                "DWG/DXF load: %1 XREF block(s) (%2) loaded but not "
+                "INSERTed into modelspace. Their externally-referenced "
+                "geometry won't be visible — AutoCAD typically renders "
+                "these through a paper-space layout viewport, which "
+                "LibreCAD doesn't render.")
+                .arg(orphans.size())
+                .arg(orphans.join(QStringLiteral(", "))));
+        }
+    }
 
     RS_DEBUG->print("RS_FilterDXFRW::fileImport OK");
     return true;
@@ -561,10 +606,13 @@ void RS_FilterDXFRW::addBlock(const DRW_Block& data) {
                 // `<blockName>|<layerName>` per AutoCAD BIND convention.
                 // Bit 0x04 = XREF, bit 0x08 = XREF overlay.
                 const bool isXref = (data.flags & 0x0c) != 0;
-                if (isXref && !data.xrefPath.empty()) {
-                    embedXref(block,
-                              QString::fromUtf8(data.xrefPath.c_str()),
-                              name);
+                if (isXref) {
+                    m_xrefBlockNames.insert(name);
+                    if (!data.xrefPath.empty()) {
+                        embedXref(block,
+                                  QString::fromUtf8(data.xrefPath.c_str()),
+                                  name);
+                    }
                 }
             } else {
                 // RS_BlockList::add returns false on name collision and
@@ -698,28 +746,89 @@ bool RS_FilterDXFRW::embedXref(RS_Block* block, const QString& xrefPath,
         }
     }
 
+    // Per-entity clone helper: clone @p src, redirect layer pointer to the
+    // host's namespaced layer, and (if it's an INSERT) rewrite its block
+    // name reference to the namespaced form. Returns the cloned entity
+    // owned by no parent yet; caller adds it to the target container.
+    auto cloneAndRedirect = [&](const RS_Entity* src,
+                                RS_EntityContainer* target) -> RS_Entity* {
+        if (!src) return nullptr;
+        RS_Entity* cloned = src->clone();
+        if (!cloned) return nullptr;
+        cloned->setParent(target);
+        if (hostLayers && cloned->getLayer()) {
+            const QString lyrNs = blockName + "|" + cloned->getLayer()->getName();
+            if (auto* hostLyr = hostLayers->find(lyrNs)) {
+                cloned->setLayer(hostLyr);
+            }
+        }
+        if (cloned->rtti() == RS2::EntityInsert) {
+            auto* ins = static_cast<RS_Insert*>(cloned);
+            const QString ref = ins->getName();
+            // Don't rewrite if the reference is already namespaced (defensive
+            // — shouldn't happen for a freshly-loaded XREF source, but harmless).
+            if (!ref.startsWith(blockName + "|")) {
+                ins->setName(blockName + "|" + ref);
+            }
+        }
+        return cloned;
+    };
+
+    // Block-def propagation: clone every block definition from the XREF
+    // source into the host's blockList with namespaced name. Without this,
+    // any cloned RS_Insert (whether at modelspace top-level or inside a
+    // cloned block def) would reference a block name that doesn't exist
+    // in the host, leaving a dangling reference.
+    RS_BlockList* extBlocks = ext.getBlockList();
+    RS_BlockList* hostBlocks = m_graphic ? m_graphic->getBlockList() : nullptr;
+    int blockDefsCopied = 0;
+    if (extBlocks && hostBlocks) {
+        for (int i = 0; i < extBlocks->count(); ++i) {
+            RS_Block* extBk = extBlocks->at(i);
+            if (!extBk) continue;
+            const QString origName = extBk->getName();
+            // Skip special blocks — *MODEL_SPACE/*PAPER_SPACE aren't in
+            // blockList anyway, but be defensive.
+            if (origName.startsWith(QLatin1String("*Model_Space"),
+                                    Qt::CaseInsensitive) ||
+                origName.startsWith(QLatin1String("*Paper_Space"),
+                                    Qt::CaseInsensitive)) {
+                continue;
+            }
+            const QString nsName = blockName + "|" + origName;
+            if (hostBlocks->find(nsName)) continue;  // already present
+
+            auto* nsBlock = new RS_Block(
+                m_graphic, RS_BlockData(nsName, extBk->getBasePoint(), false));
+            for (auto* e : *extBk) {
+                if (auto* cloned = cloneAndRedirect(e, nsBlock)) {
+                    nsBlock->addEntity(cloned);
+                }
+            }
+            if (!hostBlocks->add(nsBlock)) {
+                // Name collision against an existing host block — RS_BlockList::add
+                // deletes nsBlock on failure. Nothing else to clean up.
+            } else {
+                ++blockDefsCopied;
+            }
+        }
+    }
+
     // Move modelspace entities (top-level) into the local block, with
-    // their layer pointers redirected to the namespaced layers.
+    // their layer pointers + INSERT block-name references redirected.
     int moved = 0;
     QList<RS_Entity*> snapshot;
     for (auto* e : ext) snapshot.push_back(e);
     for (RS_Entity* e : snapshot) {
-        if (!e) continue;
-        RS_Entity* cloned = e->clone();
-        if (!cloned) continue;
-        cloned->setParent(block);
-        // Redirect to namespaced layer in host's layer list.
-        if (hostLayers && cloned->getLayer()) {
-            const QString nsName = blockName + "|" + cloned->getLayer()->getName();
-            RS_Layer* hostLyr = hostLayers->find(nsName);
-            if (hostLyr) cloned->setLayer(hostLyr);
+        if (auto* cloned = cloneAndRedirect(e, block)) {
+            block->addEntity(cloned);
+            ++moved;
         }
-        block->addEntity(cloned);
-        ++moved;
     }
 
-    RS_DEBUG->print("  XREF embedded: %d entities into block \"%s\"",
-                    moved, qPrintable(blockName));
+    RS_DEBUG->print("  XREF embedded: %d entities + %d block defs into "
+                    "block \"%s\"",
+                    moved, blockDefsCopied, qPrintable(blockName));
     return true;
 }
 

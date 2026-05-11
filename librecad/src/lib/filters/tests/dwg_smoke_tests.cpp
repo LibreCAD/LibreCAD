@@ -16,6 +16,7 @@
 #include <cmath>
 #include <cstring>
 #include <filesystem>
+#include <fstream>
 #include <iomanip>
 #include <iostream>
 #include <map>
@@ -951,6 +952,91 @@ TEST_CASE("DWG deep diagnostic: entity type breakdown for target files", "[.dwg_
         }
         const DeepResult dr = readDwgDeep(path);
         printDeepReport(name, dr);
+    }
+}
+
+// Pool_Detail.dwg circle dump — diagnostic for the spurious circle reported at
+// center (512.3864, 333.9300), r=0.1.  Captures DRW_Circle metadata that the
+// production filter discards (space, extrusion, owner) so we can tell whether
+// a spurious circle is paper-space, invisible, or layer-frozen.
+//
+// Run:
+//   ./librecad_tests "[.dwg_pool_circles]" -s
+TEST_CASE("DWG Pool_Detail.dwg: dump every circle", "[.dwg_pool_circles]") {
+    const char* home = getenv("HOME");
+    if (!home) { SUCCEED("HOME not set; skipping"); return; }
+    const std::string path = std::string(home) + "/doc/dwg/Pool_Detail.dwg";
+    if (!std::filesystem::is_regular_file(path)) {
+        SUCCEED("Pool_Detail.dwg not present; skipping"); return;
+    }
+
+    struct CircleCollector : public TypeTrackingIface {
+        struct CInfo {
+            double cx, cy, cz, r;
+            std::string layer;
+            duint32 handle;
+            duint32 parentHandle;
+            int space;          // 0=Model, 1=Paper
+            bool visible;
+            double ex, ey, ez;
+            double thickness;
+        };
+        std::vector<CInfo> circles;
+        std::map<std::string, int> layerFlags;
+        void addLayer(const DRW_Layer& e) override {
+            TypeTrackingIface::addLayer(e);
+            layerFlags[e.name] = e.flags;
+        }
+        void addCircle(const DRW_Circle& e) override {
+            TypeTrackingIface::addCircle(e);
+            circles.push_back({
+                e.basePoint.x, e.basePoint.y, e.basePoint.z, e.radious,
+                e.layer, e.handle, e.parentHandle,
+                static_cast<int>(e.space), e.visible,
+                e.extPoint.x, e.extPoint.y, e.extPoint.z,
+                e.thickness
+            });
+        }
+    } iface;
+
+    DRW::setCustomDebugPrinter(new DRW::DebugPrinter()); // silent
+    dwgR reader(path.c_str());
+    REQUIRE(reader.read(&iface, true));
+
+    // Sort: paper-space first, then by layer, then by handle, so leaks group.
+    std::sort(iface.circles.begin(), iface.circles.end(),
+        [](const auto& a, const auto& b){
+            if (a.space != b.space) return a.space > b.space;
+            if (a.layer != b.layer) return a.layer < b.layer;
+            return a.handle < b.handle;
+        });
+
+    std::cout << "\nLayer flags (per ODA: bit0=frozen bit1=off bit2=frozen-in-new bit3=locked, bit6=hasEntity):\n";
+    for (const auto& [name, flags] : iface.layerFlags) {
+        std::cout << "  layer=\"" << name << "\""
+                  << " flags=0x" << std::hex << flags << std::dec
+                  << " frozen=" << ((flags & 0x1) ? "1" : "0")
+                  << " hasEnt=" << ((flags & 0x40) ? "1" : "0") << "\n";
+    }
+
+    std::cout << "\nFound " << iface.circles.size() << " circle(s):\n";
+    std::cout << std::fixed << std::setprecision(7);
+    int idx = 0;
+    for (const auto& c : iface.circles) {
+        int lf = iface.layerFlags.count(c.layer) ? iface.layerFlags.at(c.layer) : -1;
+        const char* spaceName = c.space == 0 ? "MODEL" :
+                                c.space == 1 ? "PAPER" : "ENT3?";
+        std::cout << "  [" << idx++ << "] "
+                  << spaceName << "(" << c.space << ")"
+                  << " center=(" << c.cx << ", " << c.cy << ", " << c.cz << ")"
+                  << " r=" << c.r
+                  << " layer=\"" << c.layer << "\" layerFlags=0x" << std::hex << lf << std::dec
+                  << " visible=" << (c.visible ? "1" : "0")
+                  << " handle=0x" << std::hex << c.handle
+                  << " parent=0x" << c.parentHandle << std::dec
+                  << std::fixed << std::setprecision(7)
+                  << " ext=(" << c.ex << "," << c.ey << "," << c.ez << ")"
+                  << " thick=" << c.thickness << "\n";
     }
 }
 
@@ -1896,6 +1982,103 @@ TEST_CASE("DWG lever_detail: XREF resolution embeds external geometry",
     }
     INFO("Entities with namespaced layer: " << correctlyNamespaced);
     CHECK(correctlyNamespaced >= 900);
+}
+
+namespace {
+
+// Build a minimal DXF buffer that defines a single XREF block referring
+// to @p xrefTarget. Only the structural minimum needed for libdxfrw to
+// parse cleanly: HEADER (ACADVER), TABLES (one LAYER), BLOCKS (the XREF
+// block), ENTITIES (empty). Flag 70/4 is the XREF bit; group 1 carries
+// the xrefPath that filter-side embedXref will try to resolve.
+std::string buildCycleDxf(const std::string& blockName,
+                          const std::string& xrefTarget) {
+    std::ostringstream s;
+    s << "0\nSECTION\n2\nHEADER\n"
+         "9\n$ACADVER\n1\nAC1015\n"
+         "9\n$INSBASE\n10\n0.0\n20\n0.0\n30\n0.0\n"
+         "0\nENDSEC\n"
+         "0\nSECTION\n2\nTABLES\n"
+         "0\nTABLE\n2\nLAYER\n70\n1\n"
+         "0\nLAYER\n2\n0\n70\n0\n62\n7\n6\nCONTINUOUS\n"
+         "0\nENDTAB\n"
+         "0\nENDSEC\n"
+         "0\nSECTION\n2\nBLOCKS\n"
+         "0\nBLOCK\n8\n0\n2\n" << blockName << "\n70\n4\n"
+         "10\n0.0\n20\n0.0\n30\n0.0\n"
+         "3\n" << blockName << "\n"
+         "1\n" << xrefTarget << "\n"
+         "0\nENDBLK\n8\n0\n"
+         "0\nENDSEC\n"
+         "0\nSECTION\n2\nENTITIES\n"
+         "0\nENDSEC\n"
+         "0\nEOF\n";
+    return s.str();
+}
+
+void writeFile(const std::string& path, const std::string& content) {
+    std::ofstream out(path);
+    out << content;
+}
+
+} // anon
+
+// Synthetic A→B→A cycle test for the XREF recursion guard. Writes two
+// minimal DXF files referencing each other, loads A.dxf, and verifies
+// the load completes (no infinite recursion) AND both XREF blocks are
+// present on the host. The cycle guard's RAII insert at fileImport
+// start means the cycle is detected at depth 2 (when B's XREF→A is
+// processed: m_xrefStack already contains A's absolute path).
+TEST_CASE("RS_FilterDXFRW: XREF A->B->A cycle terminates",
+          "[xref][filter]") {
+    // Bootstrap Qt + RS_Settings once, like the other filter tests.
+    static int qargc = 1;
+    static char qarg0[] = "librecad_tests";
+    static char* qargv[] = { qarg0, nullptr };
+    static QCoreApplication* qapp = QCoreApplication::instance()
+        ? QCoreApplication::instance()
+        : new QCoreApplication(qargc, qargv);
+    static bool settingsReady = []{
+        QCoreApplication::setOrganizationName("LibreCAD");
+        QCoreApplication::setApplicationName("LibreCAD-tests");
+        RS_Settings::init("LibreCAD", "LibreCAD-tests");
+        return true;
+    }();
+    (void)qapp; (void)settingsReady;
+
+    const auto pathA = std::filesystem::temp_directory_path()
+                     / "librecad_xref_cycle_a.dxf";
+    const auto pathB = std::filesystem::temp_directory_path()
+                     / "librecad_xref_cycle_b.dxf";
+    std::filesystem::remove(pathA);
+    std::filesystem::remove(pathB);
+
+    // A references B, B references A — perfect cycle.
+    writeFile(pathA.string(), buildCycleDxf("XREF_TO_B", pathB.string()));
+    writeFile(pathB.string(), buildCycleDxf("XREF_TO_A", pathA.string()));
+
+    RS_Graphic graphic;
+    RS_FilterDXFRW filter;
+    // If the guard misbehaves, fileImport never returns (infinite
+    // recursion until stack overflow). Catch2 would still see a SIGSEGV
+    // rather than hang, so this is a useful test even without a timeout.
+    const bool imported = filter.fileImport(
+        graphic, QString::fromStdString(pathA.string()), RS2::FormatDXFRW);
+    REQUIRE(imported);
+
+    // Both XREF blocks should have been added to A's blockList by the
+    // addBlock dispatcher, regardless of whether the embed succeeded.
+    auto* blockList = graphic.getBlockList();
+    REQUIRE(blockList);
+    CHECK(blockList->find("XREF_TO_B") != nullptr);
+    // XREF_TO_A came in transitively via the embedXref of B. With the
+    // cycle guard active, B's embed must have succeeded (refusing to
+    // recurse back into A), so its blocks reach A's blockList with the
+    // namespaced prefix `XREF_TO_B|`.
+    CHECK(blockList->find("XREF_TO_B|XREF_TO_A") != nullptr);
+
+    std::filesystem::remove(pathA);
+    std::filesystem::remove(pathB);
 }
 
 // Cross-check: load the source XREF (gripper_assembly_new.dwg) and report
