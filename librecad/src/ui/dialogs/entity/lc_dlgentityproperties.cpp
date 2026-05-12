@@ -34,7 +34,9 @@
 #include "lc_imagepropertieseditingwidget.h"
 #include "lc_insertpropertieseditingwidget.h"
 #include "lc_linepropertieseditingwidget.h"
+#include "lc_mtextpropertieseditingwidget.h"
 #include "lc_parabolapropertieseditingwidget.h"
+#include "lc_textpropertieseditingwidget.h"
 #include "lc_pointpropertieseditingwidget.h"
 #include "lc_polylinepropertieseditingwidget.h"
 #include "lc_splinepointspropertieseditingwidget.h"
@@ -239,10 +241,16 @@ void LC_DlgEntityProperties::prepareTypeSpecificUI(LC_EntityPropertiesEditorWidg
             dlgName = "DlgInsertProperties";
             break;
         }
-        case RS2::EntityText:
+        case RS2::EntityText: {
+            primaryWidget = new LC_TextPropertiesEditingWidget(this);
+            windowTitle = tr("Text Properties");
+            dlgName = "DlgTextProperties";
+            break;
+        }
         case RS2::EntityMText: {
-            windowTitle = tr("Properties?");
-            dlgName = "DlgLineProperties";
+            primaryWidget = new LC_MTextPropertiesEditingWidget(this);
+            windowTitle = tr("MText Properties");
+            dlgName = "DlgMTextProperties";
             break;
         }
         case RS2::EntityHatch: {

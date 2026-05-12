@@ -160,8 +160,9 @@ int console_dxf2pdf(int argc, char* argv[])
 
     for (auto arg : args) {
         QFileInfo dxfFileInfo(arg);
-        if (dxfFileInfo.suffix().toLower() != "dxf")
-            continue; // Skip files without .dxf extension
+        const QString sfx = dxfFileInfo.suffix().toLower();
+        if (sfx != "dxf" && sfx != "dwg")
+            continue; // Skip files without .dxf/.dwg extension
         params.dxfFiles.append(arg);
     }
 

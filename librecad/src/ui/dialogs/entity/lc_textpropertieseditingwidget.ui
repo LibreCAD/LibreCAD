@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>LC_TextPropertiesEditingWidget</class>
+ <widget class="QWidget" name="LC_TextPropertiesEditingWidget">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>320</width>
+    <height>320</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <property name="leftMargin"><number>0</number></property>
+   <property name="topMargin"><number>0</number></property>
+   <property name="rightMargin"><number>0</number></property>
+   <property name="bottomMargin"><number>0</number></property>
+   <property name="spacing"><number>0</number></property>
+   <item>
+    <widget class="QGroupBox" name="gbContent">
+     <property name="title">
+      <string>Content</string>
+     </property>
+     <layout class="QVBoxLayout" name="vlContent">
+      <item>
+       <widget class="QLineEdit" name="leText">
+        <property name="toolTip">
+         <string>Single-line text content</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <widget class="QGroupBox" name="gbDirection">
+     <property name="title">
+      <string>Direction</string>
+     </property>
+     <layout class="QHBoxLayout" name="hlDirection">
+      <item>
+       <widget class="QRadioButton" name="rbAuto">
+        <property name="toolTip">
+         <string>Detect base direction from first strong character (UAX#9 P-rules)</string>
+        </property>
+        <property name="text">
+         <string>Auto</string>
+        </property>
+        <property name="checked">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QRadioButton" name="rbLeftToRight">
+        <property name="toolTip">
+         <string>Force left-to-right base direction</string>
+        </property>
+        <property name="text">
+         <string>LTR</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QRadioButton" name="rbRightToLeft">
+        <property name="toolTip">
+         <string>Force right-to-left base direction</string>
+        </property>
+        <property name="text">
+         <string>RTL</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <widget class="QGroupBox" name="gbGeometry">
+     <property name="title">
+      <string>Geometry</string>
+     </property>
+     <layout class="QGridLayout" name="glGeometry" columnstretch="0,5">
+      <item row="0" column="0"><widget class="QLabel" name="lHeight"><property name="text"><string>Height:</string></property></widget></item>
+      <item row="0" column="1"><widget class="QLineEdit" name="leHeight"><property name="toolTip"><string>Nominal text height</string></property></widget></item>
+      <item row="1" column="0"><widget class="QLabel" name="lWidthRel"><property name="text"><string>Width factor:</string></property></widget></item>
+      <item row="1" column="1"><widget class="QLineEdit" name="leWidthRel"><property name="toolTip"><string>Relative width factor (1.0 = nominal)</string></property></widget></item>
+      <item row="2" column="0"><widget class="QLabel" name="lAngle"><property name="text"><string>Angle (°):</string></property></widget></item>
+      <item row="2" column="1"><widget class="QLineEdit" name="leAngle"><property name="toolTip"><string>Rotation angle in degrees (UCS)</string></property></widget></item>
+      <item row="3" column="0"><widget class="QLabel" name="lAlignment"><property name="text"><string>Alignment:</string></property></widget></item>
+      <item row="3" column="1"><widget class="QComboBox" name="cbAlignment"><property name="toolTip"><string>Justification / anchor point for the text</string></property></widget></item>
+      <item row="4" column="0"><widget class="QLabel" name="lStyle"><property name="text"><string>Style:</string></property></widget></item>
+      <item row="4" column="1"><widget class="QLineEdit" name="leStyle"><property name="toolTip"><string>Text style / font name</string></property></widget></item>
+     </layout>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

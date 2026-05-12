@@ -28,6 +28,9 @@
 #ifndef RS_ENTITY_H
 #define RS_ENTITY_H
 
+#include <memory>
+#include <vector>
+
 #include <QString>
 
 #include "lc_drawable.h"
@@ -44,6 +47,7 @@ class RS_Block;
 class RS_Graphic;
 class RS_EntityContainer;
 class LC_Quadratic;
+class DRW_Variant;
 
 /**
  * Base class for an entity (line, arc, circle, ...)
@@ -554,6 +558,30 @@ public:
     std::vector<QString> getAllKeys() const;
     void setUserDefVar(QString key, QString val);
     void delUserDefVar(QString key);
+
+    /// Extended Entity Data (XDATA / EED) — opaque DRW_Variant stream as
+    /// loaded from DXF/DWG. Stored verbatim so the import → save cycle
+    /// preserves application-defined data on every entity type. Empty
+    /// for entities that didn't carry any XDATA.
+    const std::vector<std::shared_ptr<DRW_Variant>>& getDrwExtData() const;
+    void setDrwExtData(std::vector<std::shared_ptr<DRW_Variant>> extData);
+    bool hasDrwExtData() const;
+
+    // Passive metadata sidecars — DXF/DWG fields that round-trip through
+    // LibreCAD without affecting equality, rendering, or any in-app
+    // behavior. Defaults are 0 = "ByLayer / no override" matching the
+    // libdxfrw sentinels (DRW::MaterialByLayer, DefaultPlotStyle, etc.).
+    quint32 materialHandle() const;
+    void setMaterialHandle(quint32 h);
+    quint32 plotStyleHandle() const;
+    void setPlotStyleHandle(quint32 h);
+    int shadowMode() const;
+    void setShadowMode(int mode);
+    quint32 fullVisualStyleHandle() const;
+    quint32 faceVisualStyleHandle() const;
+    quint32 edgeVisualStyleHandle() const;
+    void setVisualStyleHandles(quint32 full, quint32 face, quint32 edge);
+
     friend std::ostream &operator<<(std::ostream &os, RS_Entity &e);
     /** Recalculates the borders of this entity. */
     virtual void calculateBorders() = 0;

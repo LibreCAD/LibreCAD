@@ -115,7 +115,10 @@ bool isClosed(const RS_Entity& en) {
     const auto& arc = static_cast<const RS_Arc&>(en);
     return std::abs(arc.getAngleLength() - 2.0 * M_PI) < RS_TOLERANCE_ANGLE;
   }
-  case RS2::EntitySpline: {
+  case RS2::EntitySplinePoints: {
+    // Only LC_SplinePoints is atomic and reaches here. RS_Spline (rtti
+    // EntitySpline) is a container and is rejected by LoopExtractor's
+    // isAtomic() filter before it gets to isClosed().
     const auto& spline = static_cast<const LC_SplinePoints&>(en);
     return spline.isClosed();
   }
@@ -281,7 +284,7 @@ bool LoopExtractor::validate() const {
       RS_Ellipse* ell = static_cast<RS_Ellipse*>(e);
       return ell->getAngleLength() >= 2 * M_PI - RS_TOLERANCE;
     }
-    if (type == RS2::EntitySpline || type == RS2::EntitySplinePoints) {  // Closed spline
+    if (type == RS2::EntitySplinePoints) {  // Closed spline (LC_SplinePoints only)
       LC_SplinePoints* spl = static_cast<LC_SplinePoints*>(e);
       return spl->isClosed();
     }
@@ -321,7 +324,18 @@ bool LoopExtractor::validate() const {
   const double area = m_loop->areaLineIntegral();
   constexpr double MIN_AREA = ENDPOINT_TOLERANCE * ENDPOINT_TOLERANCE;
   if (std::abs(area) < MIN_AREA) {
-    RS_DEBUG->print(RS_Debug::D_WARNING, "LoopExtractor::validate: Degenerate zero-area loop");
+    RS_DEBUG->print(RS_Debug::D_WARNING,
+                    "LoopExtractor::validate: Degenerate zero-area loop (n=%zu, area=%.4e, MIN=%.4e)",
+                    n, area, MIN_AREA);
+    for (size_t i = 0; i < n; ++i) {
+      RS_Entity* e = m_loop->entityAt(i);
+      if (!e) continue;
+      RS_Vector s = e->getStartpoint();
+      RS_Vector ep = e->getEndpoint();
+      RS_DEBUG->print(RS_Debug::D_WARNING,
+                      "  entity[%zu] type=%d start=(%.8f,%.8f) end=(%.8f,%.8f) len=%.4e",
+                      i, static_cast<int>(e->rtti()), s.x, s.y, ep.x, ep.y, e->getLength());
+    }
     return false;
   }
 
@@ -1031,7 +1045,7 @@ RS_Entity* LC_Loops::createSubEntity(RS_Entity* e, const RS_Vector& p1, const RS
     RS_Vector lp2 = (p2 - center).rotate(-rot);
     double lang2 = std::atan2(lp2.y / ell->getMinorRadius(), lp2.x / ell->getMajorRadius());
     return new RS_Ellipse(nullptr, {center, ell->getMajorP(), ell->getRatio(), lang1, lang2, ell->isReversed()});
-  } else if (type == RS2::EntitySpline) {
+  } else if (type == RS2::EntitySplinePoints) {
     LC_SplinePoints* spl = static_cast<LC_SplinePoints*>(e);
     double total_len = spl->getLength();
     if (total_len < RS_TOLERANCE) return nullptr;
@@ -1136,7 +1150,7 @@ std::vector<RS_Vector> LC_Loops::sortPointsAlongEntity(RS_Entity* e, std::vector
       double diff = RS_Math::getAngleDifference(a1, ang, reversed);
       param_points.emplace_back(diff, v);
     }
-  } else if (type == RS2::EntitySpline) {
+  } else if (type == RS2::EntitySplinePoints) {
     LC_SplinePoints* spl = static_cast<LC_SplinePoints*>(e);
     double total_len = spl->getLength();
     if (total_len < RS_TOLERANCE) return {};

@@ -27,6 +27,7 @@
 #include <stack>
 #include<utility>
 
+#include <QDir>
 #include <QRegularExpression>
 #include <QStringList>
 #include <QStringConverter>
@@ -38,6 +39,7 @@
 #include "lc_hyperbola.h"
 #include "lc_hyperbolaspline.h"
 #include "lc_parabola.h"
+#include "lc_parabolaspline.h"
 #include "rs_arc.h"
 #include "rs_circle.h"
 #include "rs_dimaligned.h"
@@ -48,6 +50,10 @@
 #include "rs_ellipse.h"
 #include "rs_hatch.h"
 #include "rs_image.h"
+#include "lc_wipeout.h"
+#include "lc_mleader.h"
+#include "rs_block.h"
+#include "rs_blocklist.h"
 #include "rs_insert.h"
 #include "rs_layer.h"
 #include "rs_leader.h"
@@ -120,6 +126,34 @@ RS_FilterDXFRW::~RS_FilterDXFRW() {
     RS_DEBUG->print("RS_FilterDXFRW::~RS_FilterDXFRW(): OK");
 }
 
+// Human-readable display for a DRW::Version. Year suffixes anchor users
+// in time so they can decide whether to convert (pre-R13) or update their
+// install (post-R2018 future versions).
+static QString dwgVersionDisplay(DRW::Version v) {
+    switch (v) {
+        case DRW::MC00:   return QStringLiteral("R1.1 (1982)");
+        case DRW::AC12:   return QStringLiteral("R1.2 (1983)");
+        case DRW::AC14:   return QStringLiteral("R1.4 (1983)");
+        case DRW::AC150:  return QStringLiteral("R2.0 (1984)");
+        case DRW::AC210:  return QStringLiteral("R2.10 (1986)");
+        case DRW::AC1002: return QStringLiteral("R2.5 (1986)");
+        case DRW::AC1003: return QStringLiteral("R2.6 (1987)");
+        case DRW::AC1004: return QStringLiteral("R9 (1987)");
+        case DRW::AC1006: return QStringLiteral("R10 (1988)");
+        case DRW::AC1009: return QStringLiteral("R11/R12 (1990)");
+        case DRW::AC1012: return QStringLiteral("R13 (1994)");
+        case DRW::AC1014: return QStringLiteral("R14 (1997)");
+        case DRW::AC1015: return QStringLiteral("AutoCAD 2000");
+        case DRW::AC1018: return QStringLiteral("AutoCAD 2004");
+        case DRW::AC1021: return QStringLiteral("AutoCAD 2007");
+        case DRW::AC1024: return QStringLiteral("AutoCAD 2010");
+        case DRW::AC1027: return QStringLiteral("AutoCAD 2013");
+        case DRW::AC1032: return QStringLiteral("AutoCAD 2018");
+        case DRW::UNKNOWNV:
+        default:          return QStringLiteral("unknown");
+    }
+}
+
 QString RS_FilterDXFRW::lastError() const{
     switch (errorCode) {
     case DRW::BAD_NONE:
@@ -127,6 +161,15 @@ QString RS_FilterDXFRW::lastError() const{
     case DRW::BAD_OPEN:
         return (QObject::tr( "error opening DXF/DWG file", "RS_FilterDXFRW"));
     case DRW::BAD_VERSION:
+        if (m_dwgVersion != DRW::UNKNOWNV) {
+            return QObject::tr(
+                "Cannot open DWG: file is %1; LibreCAD supports %2 and newer. "
+                "Convert with GNU LibreDWG (dwgread / dwg2dxf) or re-save "
+                "from a recent CAD tool.",
+                "RS_FilterDXFRW")
+                .arg(dwgVersionDisplay(m_dwgVersion))
+                .arg(dwgVersionDisplay(DRW::AC1012));
+        }
         return (QObject::tr( "unsupported DXF/DWG file version", "RS_FilterDXFRW"));
     case DRW::BAD_READ_METADATA:
         return (QObject::tr( "error reading DXF/DWG meta data", "RS_FilterDXFRW"));
@@ -174,6 +217,19 @@ bool RS_FilterDXFRW::fileImport(RS_Graphic& g, const QString& file, [[maybe_unus
     m_dummyContainer = new RS_EntityContainer(nullptr, true);
 
     this->m_file = file;
+    // Register the file being loaded into the XREF recursion guard so
+    // A → B → A cycles are detected at depth 2 rather than depth 4.
+    // Done via QFileInfo::absoluteFilePath() to match resolveXrefPath()
+    // (which returns absolute paths). RAII-erased on return so failure
+    // paths (BAD_VERSION, parse failure, etc.) don't leak the entry.
+    const QString thisFileAbs = QFileInfo(file).absoluteFilePath();
+    const bool stackInsertedSelf = m_xrefStack.insert(thisFileAbs).second;
+    struct XrefStackGuard {
+        std::set<QString>* stack;
+        QString key;
+        bool owned;
+        ~XrefStackGuard() { if (stack && owned) stack->erase(key); }
+    } stackGuard{&m_xrefStack, thisFileAbs, stackInsertedSelf};
     // add some variables that need to be there for DXF drawings:
     m_graphic->addVariable("$DIMSTYLE", "Standard", 2);
     m_dimStyle = "Standard";
@@ -190,8 +246,55 @@ bool RS_FilterDXFRW::fileImport(RS_Graphic& g, const QString& file, [[maybe_unus
         if (RS_DEBUG->getLevel()== RS_Debug::D_DEBUGGING)
             dwgr.setDebug(DRW::DebugLevel::Debug);
         bool success = dwgr.read(this, true);
+        // Capture the recognized version BEFORE acting on the result so
+        // BAD_VERSION error reporting (printDwgError / lastError) can
+        // name the format the user supplied. dwgR::version is set by
+        // openFile() even on the BAD_VERSION fork.
+        m_dwgVersion = dwgr.getVersion();
         RS_DEBUG->print("RS_FilterDXFRW::fileImport: reading DWG file: OK");
         RS_DIALOGFACTORY->commandMessage(QObject::tr("Opened dwg file version %1.").arg(printDwgVersion(dwgr.getVersion())));
+        const size_t parseFailures = dwgr.getEntityParseFailures();
+        if (parseFailures > 0) {
+            RS_DIALOGFACTORY->commandMessage(QObject::tr(
+                "DWG load: %1 %2 had parse errors and were skipped. "
+                "Drawing loaded with the rest.")
+                .arg(parseFailures)
+                .arg(parseFailures == 1
+                     ? QObject::tr("entity")
+                     : QObject::tr("entities")));
+        }
+        // Vendor-extension custom classes (AutoCAD Mechanical AmgStdPart aka
+        // STDPART2D, AcmBomRow, etc.) whose proprietary geometry libdxfrw
+        // can't decode.  Surface the top breakdown so the user knows what's
+        // missing rather than silently rendering a partial drawing.
+        const auto skipped = dwgr.getSkippedCustomClasses();
+        if (!skipped.empty()) {
+            size_t totalSkipped = 0;
+            std::vector<std::pair<QString, size_t>> sorted;
+            sorted.reserve(skipped.size());
+            for (const auto& kv : skipped) {
+                totalSkipped += kv.second;
+                sorted.emplace_back(QString::fromStdString(kv.first), kv.second);
+            }
+            std::sort(sorted.begin(), sorted.end(),
+                      [](const auto& a, const auto& b) { return a.second > b.second; });
+            QStringList top;
+            const size_t showN = std::min<size_t>(3, sorted.size());
+            for (size_t i = 0; i < showN; ++i)
+                top << QString("%1×%2").arg(sorted[i].second).arg(sorted[i].first);
+            QString breakdown = top.join(QLatin1String(", "));
+            if (sorted.size() > showN)
+                breakdown += QObject::tr(", and %n more class(es)", "", static_cast<int>(sorted.size() - showN));
+            RS_DIALOGFACTORY->commandMessage(QObject::tr(
+                "DWG load: %1 vendor-extension entities not rendered (%2). "
+                "These are typically AutoCAD Mechanical or other vertical-product "
+                "custom classes that libdxfrw cannot decode.")
+                .arg(totalSkipped).arg(breakdown));
+        }
+        RS_DEBUG->print("DWG read summary: %d entities, %d blocks, error=%d",
+                        m_graphic ? m_graphic->count() : -1,
+                        m_graphic ? m_graphic->countBlocks() : -1,
+                        dwgr.getError());
         int  lastError = dwgr.getError();
         if (false == success) {
             printDwgError(lastError);
@@ -246,6 +349,36 @@ bool RS_FilterDXFRW::fileImport(RS_Graphic& g, const QString& file, [[maybe_unus
     }
     RS_DEBUG->print("RS_FilterDXFRW::fileImport: updating inserts");
     m_graphic->updateInserts();
+
+    // Orphan XREF detection. An XREF block whose contents were embedded
+    // is still invisible in modelspace unless something INSERTs it.
+    // AutoCAD typically renders these through a paper-space layout
+    // viewport, which LibreCAD doesn't implement, so the user should
+    // know why the externally-referenced geometry isn't visible.
+    // Only run for the outer fileImport (m_xrefStack empty); skip when
+    // recursively loading an XREF source.
+    if (m_xrefStack.empty() && !m_xrefBlockNames.empty()) {
+        std::set<QString> referenced;
+        for (auto* e : *m_graphic) {
+            if (e && e->rtti() == RS2::EntityInsert) {
+                referenced.insert(static_cast<RS_Insert*>(e)->getName());
+            }
+        }
+        QStringList orphans;
+        for (const QString& xrefName : m_xrefBlockNames) {
+            if (!referenced.count(xrefName)) orphans << xrefName;
+        }
+        if (!orphans.isEmpty()) {
+            RS_DIALOGFACTORY->commandMessage(QObject::tr(
+                "DWG/DXF load: %1 XREF block(s) (%2) loaded but not "
+                "INSERTed into modelspace. Their externally-referenced "
+                "geometry won't be visible — AutoCAD typically renders "
+                "these through a paper-space layout viewport, which "
+                "LibreCAD doesn't render.")
+                .arg(orphans.size())
+                .arg(orphans.join(QStringLiteral(", "))));
+        }
+    }
 
     RS_DEBUG->print("RS_FilterDXFRW::fileImport OK");
     return true;
@@ -467,8 +600,29 @@ void RS_FilterDXFRW::addBlock(const DRW_Block& data) {
             if (m_graphic->addBlock(block)) {
                 m_currentContainer = block;
                 m_blockHash.insert(data.parentHandle, m_currentContainer);
-            } else
+
+                // Bound/unbound XREF: load the external file and embed its
+                // modelspace contents into this block. Layers are namespaced
+                // `<blockName>|<layerName>` per AutoCAD BIND convention.
+                // Bit 0x04 = XREF, bit 0x08 = XREF overlay.
+                const bool isXref = (data.flags & 0x0c) != 0;
+                if (isXref) {
+                    m_xrefBlockNames.insert(name);
+                    if (!data.xrefPath.empty()) {
+                        embedXref(block,
+                                  QString::fromUtf8(data.xrefPath.c_str()),
+                                  name);
+                    }
+                }
+            } else {
+                // RS_BlockList::add returns false on name collision and
+                // deletes the block. Without updating m_currentContainer,
+                // subsequent addEntity calls would leak into whatever the
+                // previous endBlock left behind (typically m_graphic). Route
+                // them to m_dummyContainer so the failure is contained.
                 m_blockHash.insert(data.parentHandle, m_dummyContainer);
+                m_currentContainer = m_dummyContainer;
+            }
     } else {
         if (mid.toLower() == "model_space") {
             m_blockHash.insert(data.parentHandle, m_graphic);
@@ -476,6 +630,206 @@ void RS_FilterDXFRW::addBlock(const DRW_Block& data) {
             m_blockHash.insert(data.parentHandle, m_dummyContainer);
         }
     }
+}
+
+QString RS_FilterDXFRW::resolveXrefPath(const QString& xrefPath) const {
+    if (xrefPath.isEmpty()) return {};
+
+    // Normalize separators: XREFs authored on Windows store backslashes
+    // that QFileInfo doesn't recognize on Unix.
+    QString normalized = xrefPath;
+    normalized.replace('\\', '/');
+
+    // 1. Try the stored path verbatim (could be absolute on this host).
+    if (QFileInfo::exists(normalized)) return QFileInfo(normalized).absoluteFilePath();
+
+    QFileInfo host(m_file);
+    const QString hostDir = host.absolutePath();
+
+    // 2. Treat stored path as relative to host file's directory.
+    {
+        const QString f = hostDir + "/" + normalized;
+        if (QFileInfo::exists(f)) return QFileInfo(f).absoluteFilePath();
+    }
+
+    // 3. host-dir + basename (most common: XREF was authored on a
+    //    different machine but file shipped alongside the host).
+    const QString basename = QFileInfo(normalized).fileName();
+    {
+        const QString f = hostDir + "/" + basename;
+        if (QFileInfo::exists(f)) return QFileInfo(f).absoluteFilePath();
+    }
+
+    // 4-5. Tolerant match in host-dir: case-insensitive + space-to-underscore
+    //      normalization on the stem; accept .dwg or .dxf extension.
+    const QString basenameNorm = basename.toLower().replace(' ', '_');
+    QFileInfo basenameInfo(basenameNorm);
+    const QString stemNorm = basenameInfo.completeBaseName();
+    QDir dir(hostDir);
+    const QStringList entries = dir.entryList(
+        {QStringLiteral("*.dwg"), QStringLiteral("*.DWG"),
+         QStringLiteral("*.dxf"), QStringLiteral("*.DXF")},
+        QDir::Files);
+    for (const QString& entry : entries) {
+        const QString entryNorm = entry.toLower().replace(' ', '_');
+        if (entryNorm == basenameNorm) {
+            return dir.absoluteFilePath(entry);
+        }
+        QFileInfo entryInfo(entry);
+        const QString entryStemNorm =
+            entryInfo.completeBaseName().toLower().replace(' ', '_');
+        if (entryStemNorm == stemNorm) {
+            return dir.absoluteFilePath(entry);
+        }
+    }
+
+    return {};
+}
+
+bool RS_FilterDXFRW::embedXref(RS_Block* block, const QString& xrefPath,
+                               const QString& blockName) {
+    if (!block) return false;
+    RS_DEBUG->print("RS_FilterDXFRW::embedXref: %s -> %s",
+                    qPrintable(blockName), qPrintable(xrefPath));
+
+    const QString resolved = resolveXrefPath(xrefPath);
+    if (resolved.isEmpty()) {
+        RS_DIALOGFACTORY->commandMessage(QObject::tr(
+            "XREF not resolved for block \"%1\": %2 (file not found in "
+            "host directory). The block will render as empty.")
+            .arg(blockName, xrefPath));
+        return false;
+    }
+
+    if (m_xrefStack.count(resolved) > 0) {
+        RS_DEBUG->print("  XREF cycle detected, skipping: %s",
+                        qPrintable(resolved));
+        return false;
+    }
+    if (m_xrefStack.size() >= 8) {
+        RS_DEBUG->print("  XREF depth limit reached at %s",
+                        qPrintable(resolved));
+        return false;
+    }
+    m_xrefStack.insert(resolved);
+
+    RS_Graphic ext;
+    RS_FilterDXFRW xrefFilter;
+    xrefFilter.m_xrefStack = m_xrefStack;  // propagate cycle guard
+    const bool isDwg = resolved.endsWith(QStringLiteral(".dwg"),
+                                         Qt::CaseInsensitive);
+    const RS2::FormatType fmt = isDwg ? RS2::FormatDWG : RS2::FormatDXFRW;
+    const bool ok = xrefFilter.fileImport(ext, resolved, fmt);
+
+    m_xrefStack.erase(resolved);
+
+    if (!ok) {
+        RS_DIALOGFACTORY->commandMessage(QObject::tr(
+            "XREF load failed for block \"%1\": %2")
+            .arg(blockName, resolved));
+        return false;
+    }
+
+    // Layer namespacing: copy the XREF's layers into the host with prefix.
+    RS_LayerList* extLayers = ext.getLayerList();
+    RS_LayerList* hostLayers = m_graphic ? m_graphic->getLayerList() : nullptr;
+    if (extLayers && hostLayers) {
+        for (unsigned i = 0; i < extLayers->count(); ++i) {
+            RS_Layer* extLyr = extLayers->at(i);
+            if (!extLyr) continue;
+            const QString nsName = blockName + "|" + extLyr->getName();
+            if (!hostLayers->find(nsName)) {
+                RS_Layer* clone = extLyr->clone();
+                clone->setName(nsName);
+                hostLayers->add(clone);
+            }
+        }
+    }
+
+    // Per-entity clone helper: clone @p src, redirect layer pointer to the
+    // host's namespaced layer, and (if it's an INSERT) rewrite its block
+    // name reference to the namespaced form. Returns the cloned entity
+    // owned by no parent yet; caller adds it to the target container.
+    auto cloneAndRedirect = [&](const RS_Entity* src,
+                                RS_EntityContainer* target) -> RS_Entity* {
+        if (!src) return nullptr;
+        RS_Entity* cloned = src->clone();
+        if (!cloned) return nullptr;
+        cloned->setParent(target);
+        if (hostLayers && cloned->getLayer()) {
+            const QString lyrNs = blockName + "|" + cloned->getLayer()->getName();
+            if (auto* hostLyr = hostLayers->find(lyrNs)) {
+                cloned->setLayer(hostLyr);
+            }
+        }
+        if (cloned->rtti() == RS2::EntityInsert) {
+            auto* ins = static_cast<RS_Insert*>(cloned);
+            const QString ref = ins->getName();
+            // Don't rewrite if the reference is already namespaced (defensive
+            // — shouldn't happen for a freshly-loaded XREF source, but harmless).
+            if (!ref.startsWith(blockName + "|")) {
+                ins->setName(blockName + "|" + ref);
+            }
+        }
+        return cloned;
+    };
+
+    // Block-def propagation: clone every block definition from the XREF
+    // source into the host's blockList with namespaced name. Without this,
+    // any cloned RS_Insert (whether at modelspace top-level or inside a
+    // cloned block def) would reference a block name that doesn't exist
+    // in the host, leaving a dangling reference.
+    RS_BlockList* extBlocks = ext.getBlockList();
+    RS_BlockList* hostBlocks = m_graphic ? m_graphic->getBlockList() : nullptr;
+    int blockDefsCopied = 0;
+    if (extBlocks && hostBlocks) {
+        for (int i = 0; i < extBlocks->count(); ++i) {
+            RS_Block* extBk = extBlocks->at(i);
+            if (!extBk) continue;
+            const QString origName = extBk->getName();
+            // Skip special blocks — *MODEL_SPACE/*PAPER_SPACE aren't in
+            // blockList anyway, but be defensive.
+            if (origName.startsWith(QLatin1String("*Model_Space"),
+                                    Qt::CaseInsensitive) ||
+                origName.startsWith(QLatin1String("*Paper_Space"),
+                                    Qt::CaseInsensitive)) {
+                continue;
+            }
+            const QString nsName = blockName + "|" + origName;
+            if (hostBlocks->find(nsName)) continue;  // already present
+
+            auto* nsBlock = new RS_Block(
+                m_graphic, RS_BlockData(nsName, extBk->getBasePoint(), false));
+            for (auto* e : *extBk) {
+                if (auto* cloned = cloneAndRedirect(e, nsBlock)) {
+                    nsBlock->addEntity(cloned);
+                }
+            }
+            if (!hostBlocks->add(nsBlock)) {
+                // Name collision against an existing host block — RS_BlockList::add
+                // deletes nsBlock on failure. Nothing else to clean up.
+            } else {
+                ++blockDefsCopied;
+            }
+        }
+    }
+
+    // Move modelspace entities (top-level) into the local block, with
+    // their layer pointers + INSERT block-name references redirected.
+    int moved = 0;
+    QList<RS_Entity*> snapshot;
+    for (auto* e : ext) snapshot.push_back(e);
+    for (RS_Entity* e : snapshot) {
+        if (auto* cloned = cloneAndRedirect(e, block)) {
+            block->addEntity(cloned);
+            ++moved;
+        }
+    }
+
+    RS_DEBUG->print("  XREF embedded: %d entities + %d block defs into "
+                    "block \"%s\"",
+                    moved, blockDefsCopied, qPrintable(blockName));
+    return true;
 }
 
 void RS_FilterDXFRW::setBlock(const int handle){
@@ -719,6 +1073,206 @@ void RS_FilterDXFRW::addLWPolyline(const DRW_LWPolyline& data) {
 }
 
 /**
+ * Implementation of the method which handles MLINESTYLE table entries.
+ * Cache by name so a later addMLine can resolve element offsets/colors.
+ */
+void RS_FilterDXFRW::addMLineStyle(const DRW_MLineStyle& data) {
+    RS_DEBUG->print("RS_FilterDXFRW::addMLineStyle: %s (%zu elements)",
+                    data.name.c_str(), data.elements.size());
+    QString key = QString::fromUtf8(data.name.c_str());
+    if (!key.isEmpty()) {
+        m_mlineStyleCache[key] = data;
+    }
+}
+
+/**
+ * Implementation of the method which handles MLINE entities.
+ *
+ * LibreCAD has no native multiline. Decompose each MLINE into N parallel
+ * RS_Polylines (one per element in the referenced MLINESTYLE), with
+ * round-trip metadata stored on each polyline's drwExtData so the export
+ * path can reconstruct an MLINE on save.
+ */
+void RS_FilterDXFRW::addMLine(const DRW_MLine* data) {
+    RS_DEBUG->print("RS_FilterDXFRW::addMLine");
+    if (!data || data->vertlist.empty() || data->numLines == 0) return;
+
+    const int N = data->numLines;
+    QString styleName = QString::fromUtf8(data->styleName.c_str());
+    auto styleIt = m_mlineStyleCache.find(styleName);
+    const DRW_MLineStyle* style = (styleIt != m_mlineStyleCache.end())
+                                      ? &styleIt->second : nullptr;
+
+    // Compute effective per-element offsets after justification + scale.
+    // Justification: 0=top, 1=zero/middle, 2=bottom. The reference offset
+    // is removed from each element's offset so the chosen line aligns
+    // with the baseline polyline path.
+    std::vector<double> effOffsets(N, 0.0);
+    if (style && static_cast<int>(style->elements.size()) == N) {
+        double ref = 0.0;
+        if (data->justification == 0) {        // top
+            for (auto& e : style->elements) ref = std::max(ref, e.offset);
+        } else if (data->justification == 2) { // bottom
+            for (auto& e : style->elements) ref = std::min(ref, e.offset);
+        }
+        for (int i = 0; i < N; ++i) {
+            effOffsets[i] = (style->elements[i].offset - ref) * data->scale;
+        }
+    } else {
+        // Fallback: evenly spaced [-(N-1)/2 .. +(N-1)/2] * scale.
+        for (int i = 0; i < N; ++i) {
+            effOffsets[i] = (i - 0.5 * (N - 1)) * data->scale;
+        }
+    }
+
+    const QString mlineId = QStringLiteral("mline_%1").arg(data->handle);
+    const bool closed = (data->openClosed & 0x1) != 0;
+
+    for (int i = 0; i < N; ++i) {
+        RS_PolylineData pd(RS_Vector{}, RS_Vector{}, closed);
+        auto polyline = new RS_Polyline(m_currentContainer, pd);
+        setEntityAttributes(polyline, data);
+
+        for (const auto& v : data->vertlist) {
+            RS_Vector miter(v.miterDir.x, v.miterDir.y);
+            const double mlen = miter.magnitude();
+            RS_Vector pos;
+            if (mlen < RS_TOLERANCE) {
+                pos = RS_Vector{v.position.x, v.position.y};
+            } else {
+                miter /= mlen;
+                pos = RS_Vector{
+                    v.position.x + miter.x * effOffsets[i],
+                    v.position.y + miter.y * effOffsets[i]};
+            }
+            polyline->addVertex(pos, 0.0, false);
+        }
+
+        // Round-trip metadata as XDATA. Schema per the implementation plan:
+        //   1001 "LibreCAD_MLINE", 1000 mlineId, 1000 styleName,
+        //   1040 scale, 1070 justification, 1070 elementCount,
+        //   1070 elementIndex, 1040 offset, 1070 flags.
+        // Anchor (i==0) additionally stores per-vertex baseline + miter
+        // so the export side can reconstruct without averaging.
+        std::vector<std::shared_ptr<DRW_Variant>> ext;
+        ext.push_back(std::make_shared<DRW_Variant>(1001, std::string("LibreCAD_MLINE")));
+        ext.push_back(std::make_shared<DRW_Variant>(1000, mlineId.toStdString()));
+        ext.push_back(std::make_shared<DRW_Variant>(1000, data->styleName));
+        ext.push_back(std::make_shared<DRW_Variant>(1040, data->scale));
+        ext.push_back(std::make_shared<DRW_Variant>(1070, dint32{data->justification}));
+        ext.push_back(std::make_shared<DRW_Variant>(1070, dint32{N}));
+        ext.push_back(std::make_shared<DRW_Variant>(1070, dint32{i}));
+        ext.push_back(std::make_shared<DRW_Variant>(1040, effOffsets[i]));
+        ext.push_back(std::make_shared<DRW_Variant>(1070, dint32{data->openClosed}));
+        if (i == 0) {
+            // Anchor carries baseline + miter for each vertex.
+            for (const auto& v : data->vertlist) {
+                ext.push_back(std::make_shared<DRW_Variant>(
+                    1011, DRW_Coord(v.position.x, v.position.y, v.position.z)));
+                ext.push_back(std::make_shared<DRW_Variant>(
+                    1013, DRW_Coord(v.miterDir.x, v.miterDir.y, v.miterDir.z)));
+            }
+        }
+        polyline->setDrwExtData(std::move(ext));
+
+        m_currentContainer->addEntity(polyline);
+    }
+}
+
+/**
+ * Implementation of the UNDERLAYDEFINITION callback.
+ * Caches by handle so addUnderlay (entities arrive earlier) and the
+ * export reconstruction can resolve filename + sheet on demand.
+ */
+void RS_FilterDXFRW::linkUnderlay(const DRW_UnderlayDefinition* d) {
+    if (!d) return;
+    RS_DEBUG->print("RS_FilterDXFRW::linkUnderlay: %s",
+                    d->filename.c_str());
+    m_underlayDefMap[d->handle] = *d;
+}
+
+/**
+ * Implementation of the UNDERLAY entity callback (PDFUNDERLAY/DGNUNDERLAY/
+ * DWFUNDERLAY).  Decomposes the underlay into a single closed RS_Polyline
+ * showing the clip-boundary placeholder.  The filename + kind ride along
+ * in XDATA so the export side can reconstruct the original UNDERLAY entity.
+ *
+ * Filename resolution: OBJECTS are parsed AFTER ENTITIES in libdxfrw, so
+ * m_underlayDefMap may be empty here.  We store the definitionHandle in
+ * XDATA only; on-demand lookups (UI tooltip, export reconstruction) use
+ * the cache once it's populated by linkUnderlay.
+ */
+void RS_FilterDXFRW::addUnderlay(const DRW_Underlay* data) {
+    RS_DEBUG->print("RS_FilterDXFRW::addUnderlay");
+    if (!data) return;
+
+    // Build clip polygon in WCS. clipBoundary is in OCS-2D; for a typical
+    // 2D extrusion (extPoint == (0,0,1)), OCS == WCS modulo position +
+    // scale + rotation. LibreCAD is 2D so we project z-up regardless.
+    std::vector<RS_Vector> verts;
+    if (data->clipBoundary.size() >= 3) {
+        verts.reserve(data->clipBoundary.size());
+        for (const auto& v : data->clipBoundary) {
+            verts.emplace_back(v.x, v.y);
+        }
+    } else if (data->clipBoundary.size() == 2) {
+        // Two corners of an axis-aligned rectangle (in OCS).
+        const auto& a = data->clipBoundary[0];
+        const auto& b = data->clipBoundary[1];
+        verts.emplace_back(a.x, a.y);
+        verts.emplace_back(b.x, a.y);
+        verts.emplace_back(b.x, b.y);
+        verts.emplace_back(a.x, b.y);
+    } else {
+        // No clip — synthesize a unit-square placeholder centered on origin.
+        // Real underlay sizes need PDF page dims we don't have access to.
+        verts.emplace_back(-0.5, -0.5);
+        verts.emplace_back( 0.5, -0.5);
+        verts.emplace_back( 0.5,  0.5);
+        verts.emplace_back(-0.5,  0.5);
+    }
+
+    // Apply scale, rotation, translation (rotation is in radians per DWG).
+    const double cs = std::cos(data->rotation);
+    const double sn = std::sin(data->rotation);
+    for (auto& p : verts) {
+        const double sx = p.x * data->scale.x;
+        const double sy = p.y * data->scale.y;
+        const double rx = sx * cs - sy * sn;
+        const double ry = sx * sn + sy * cs;
+        p = RS_Vector{rx + data->position.x, ry + data->position.y};
+    }
+
+    RS_PolylineData pd(RS_Vector{}, RS_Vector{}, /*closed=*/true);
+    auto polyline = new RS_Polyline(m_currentContainer, pd);
+    setEntityAttributes(polyline, data);
+    for (const auto& p : verts) polyline->addVertex(p, 0.0, false);
+
+    // Round-trip metadata as XDATA. App marker LibreCAD_UNDERLAY.
+    const QString underlayId =
+        QStringLiteral("underlay_%1").arg(data->handle);
+    const char* kindStr = (data->kind == DRW_Underlay::DGN) ? "DGN"
+                        : (data->kind == DRW_Underlay::DWF) ? "DWF"
+                        : "PDF";
+    std::vector<std::shared_ptr<DRW_Variant>> ext;
+    ext.push_back(std::make_shared<DRW_Variant>(1001, std::string("LibreCAD_UNDERLAY")));
+    ext.push_back(std::make_shared<DRW_Variant>(1000, underlayId.toStdString()));
+    ext.push_back(std::make_shared<DRW_Variant>(1000, std::string(kindStr)));
+    ext.push_back(std::make_shared<DRW_Variant>(1071, dint32{static_cast<int>(data->definitionHandle)}));
+    ext.push_back(std::make_shared<DRW_Variant>(
+        1010, DRW_Coord(data->position.x, data->position.y, data->position.z)));
+    ext.push_back(std::make_shared<DRW_Variant>(1040, data->scale.x));
+    ext.push_back(std::make_shared<DRW_Variant>(1040, data->scale.y));
+    ext.push_back(std::make_shared<DRW_Variant>(1040, data->rotation));
+    ext.push_back(std::make_shared<DRW_Variant>(1070, dint32{data->flags}));
+    ext.push_back(std::make_shared<DRW_Variant>(1070, dint32{data->contrast}));
+    ext.push_back(std::make_shared<DRW_Variant>(1070, dint32{data->fade}));
+    polyline->setDrwExtData(std::move(ext));
+
+    m_currentContainer->addEntity(polyline);
+}
+
+/**
  * Implementation of the method which handles polyline entities.
  */
 void RS_FilterDXFRW::addPolyline(const DRW_Polyline& data) {
@@ -845,16 +1399,23 @@ bool RS_FilterDXFRW::handleQuadraticConicSpline(const DRW_Spline* data) {
         return false;
     }
 
-    // Try hyperbola first
-    std::unique_ptr<RS_Entity> en = LC_HyperbolaSpline::splineToHyperbola(*data, m_currentContainer);
+    // Three explicit branches by middle weight: hyperbola (w>1), parabola
+    // (weights absent or w=1), or fall-through for ellipse arc (w<1) and
+    // anything else the dispatcher can't classify cleanly.
+    std::unique_ptr<RS_Entity> en =
+        LC_HyperbolaSpline::splineToHyperbola(*data, m_currentContainer);
     if (en == nullptr) {
-        // Fallback to parabola
-        LC_ParabolaData pd{{
-                coordToVector(data->controllist.at(0)),
-                coordToVector(data->controllist.at(1)),
-                coordToVector(data->controllist.at(2))
-               }};
-        en = std::make_unique<LC_Parabola>(m_currentContainer, pd);
+        en = LC_ParabolaSpline::splineToParabola(*data, m_currentContainer);
+    }
+    if (en == nullptr) {
+        // Not a hyperbola or parabola — likely an ellipse arc (w<1), a
+        // collinear/degenerate spline, or a non-canonical knot vector. Let
+        // the caller fall through to the generic addSpline path so the
+        // entity isn't silently mis-classified as a parabola.
+        RS_DEBUG->print("RS_FilterDXFRW::handleQuadraticConicSpline: "
+                        "degree-2/3-control spline not classified as "
+                        "parabola or hyperbola; falling through to addSpline");
+        return false;
     }
     setEntityAttributes(en.get(), data);
     en->update();
@@ -922,11 +1483,13 @@ void RS_FilterDXFRW::addSpline(const DRW_Spline* data) {
     setEntityAttributes(spline, data);
     m_currentContainer->addEntity(spline);
 
-    // Control points and weights
+    // Control points and weights. Non-rational B-splines have no weight array
+    // (weight=1.0 implied); only warn for rational splines (flag bit 2).
     size_t numCtrl = data->controllist.size();
-    if (numCtrl != data->weightlist.size()) {
+    bool isRational = (data->flags & 0x4) != 0;
+    if (isRational && numCtrl != data->weightlist.size()) {
         RS_DEBUG->print(RS_Debug::D_WARNING,
-                        "RS_FilterDXFRW::addSpline: control points (%zu) != weights (%zu)",
+                        "RS_FilterDXFRW::addSpline: rational spline control points (%zu) != weights (%zu)",
                         numCtrl, data->weightlist.size());
     }
 
@@ -975,6 +1538,58 @@ void RS_FilterDXFRW::addInsert(const DRW_Insert& data) {
     RS_DEBUG->print("  id: %lu", entity->getId());
 //    entity->update();
     m_currentContainer->addEntity(entity);
+
+    // Render visible block attributes (ATTRIB) attached to this INSERT.
+    // ATTRIB coordinates are in world space (per AutoCAD convention), so
+    // each becomes an independent RS_Text in the current container.
+    // Bit 1 of attribFlags marks the attribute as invisible.
+    for (const auto& att : data.attlist) {
+        if (!att || (att->attribFlags & 0x1) != 0)
+            continue;
+
+        // Multi-line ATTRIB (R2018+, ODA spec §20.4.4 Attribute type 2/4):
+        // libdxfrw saw the `100 / Embedded Object` DXF subclass marker on the
+        // ATTRIB and populated att->mtext from the embedded MTEXT body.
+        // Render it as RS_MText so the multi-line content + formatting codes
+        // survive; the plain `text` field is the single-line fallback.
+        if (att->mtext) {
+            auto* mt = mtextEntityFromDRW(*att->mtext);
+            mt->setParent(m_currentContainer);
+            setEntityAttributes(mt, att.get());
+            mt->update();
+            m_currentContainer->addEntity(mt);
+            continue;
+        }
+
+        RS_Vector refPoint(att->basePoint.x, att->basePoint.y);
+        RS_Vector secPoint(att->secPoint.x, att->secPoint.y);
+        if (att->alignV != 0 || att->alignH != 0 || att->alignH == DRW_Text::HMiddle) {
+            if (att->alignH != DRW_Text::HAligned && att->alignH != DRW_Text::HFit) {
+                secPoint = RS_Vector(att->basePoint.x, att->basePoint.y);
+                refPoint = RS_Vector(att->secPoint.x, att->secPoint.y);
+            }
+        }
+
+        RS_TextData::VAlign valign = (RS_TextData::VAlign)att->alignV;
+        RS_TextData::HAlign halign = (RS_TextData::HAlign)att->alignH;
+        RS_TextData::TextGeneration dir;
+        if (att->textgen == 2)      dir = RS_TextData::Backward;
+        else if (att->textgen == 4) dir = RS_TextData::UpsideDown;
+        else                        dir = RS_TextData::None;
+
+        QString sty = QString::fromUtf8(att->style.c_str());
+        prepareTextStyleName(sty);
+        QString text = toNativeString(QString::fromUtf8(att->text.c_str()));
+
+        RS_TextData td(refPoint, secPoint, att->height, att->widthscale,
+                       valign, halign, dir,
+                       text, sty, att->angle * M_PI / 180,
+                       RS2::NoUpdate);
+        auto* textEntity = new RS_Text(m_currentContainer, td);
+        setEntityAttributes(textEntity, att.get());
+        textEntity->update();
+        m_currentContainer->addEntity(textEntity);
+    }
 }
 
 void RS_FilterDXFRW::prepareTextStyleName(QString& sty) const {
@@ -992,17 +1607,19 @@ void RS_FilterDXFRW::prepareTextStyleName(QString& sty) const {
 }
 
 /**
- * Implementation of the method which handles
- * multi texts (MTEXT).
+ * Builds an RS_MText entity from a DRW_MText payload, applying the same
+ * alignment/drawing-direction/line-spacing/legacy-correction logic that
+ * addMText() uses.  Shared between addMText() (standalone MTEXT entities) and
+ * addInsert() (block attributes whose `100 / Embedded Object` DXF subclass
+ * produced an att->mtext payload).  Returns a freshly-constructed entity not yet attached
+ * to any container; the caller is responsible for setEntityAttributes() and
+ * appending.
  */
-void RS_FilterDXFRW::addMText(const DRW_MText& data) {
-    RS_DEBUG->print("RS_FilterDXF::addMText: %s", data.text.c_str());
-
+RS_MText* RS_FilterDXFRW::mtextEntityFromDRW(const DRW_MText& data) {
     RS_MTextData::VAlign valign;
     RS_MTextData::HAlign halign;
     RS_MTextData::MTextDrawingDirection dir;
     RS_MTextData::MTextLineSpacingStyle lss;
-
 
     if (data.textgen<=3) {
         valign=RS_MTextData::VATop;
@@ -1037,13 +1654,10 @@ void RS_FilterDXFRW::addMText(const DRW_MText& data) {
     QString sty = QString::fromUtf8(data.style.c_str());
     prepareTextStyleName(sty);
 
-    RS_DEBUG->print("Text as unicode:");
-    RS_DEBUG->printUnicode(mtext);
     double interlin = data.interlin;
     double angle = data.angle*M_PI/180.;
     RS_Vector ip = RS_Vector(data.basePoint.x, data.basePoint.y);
 
-//Correct bad alignment of older dxflib or libdxfrw < 0.5.4
     if (m_oldMText) {
         interlin = data.interlin*0.96;
         if (valign == RS_MTextData::VABottom) {
@@ -1055,11 +1669,10 @@ void RS_FilterDXFRW::addMText(const DRW_MText& data) {
             if (!tl.isEmpty()) {
                 QString txt = tl.at(tl.size()-1);
                 RS_TextData d(RS_Vector(0.,0.,0.), RS_Vector(0.,0.,0.),
-
                               data.height, 1, RS_TextData::VABaseline, RS_TextData::HALeft,
                               RS_TextData::None, txt, sty, 0,
                               RS2::Update);
-				auto entity = new RS_Text(nullptr, d);
+                auto entity = new RS_Text(nullptr, d);
                 double textTail = entity->getMin().y;
                 delete entity;
                 auto ot = RS_Vector(0.0,textTail).rotate(angle);
@@ -1068,26 +1681,45 @@ void RS_FilterDXFRW::addMText(const DRW_MText& data) {
         }
     }
 
-    RS_MTextData d(ip, data.height, data.widthscale,
-                  valign, halign,
-                  dir, lss,
-                  interlin,
-                  mtext, sty, angle,
-                  RS2::NoUpdate);
-    switch (data.alignH) {
-        //case DRW_Text::DrawingDirection::LeftToRight:
-        default:
-            d.drawingDirection = RS_MTextData::MTextDrawingDirection::LeftToRight;
-            break;
-        case 3:
-            d.drawingDirection = RS_MTextData::MTextDrawingDirection::TopToBottom;
-            break;
-        case 5:
-            // FIXME: add style support
-            d.drawingDirection = RS_MTextData::MTextDrawingDirection::RightToLeft;
-            break;
+    // drawingDirection was resolved above (1→LeftToRight, 3→TopToBottom,
+    // else→ByStyle), matching the DXF MTEXT group 72 spec. There is no DXF
+    // value for RightToLeft; that flag round-trips via XDATA below — when
+    // an MTEXT carries a "LibreCad" + 1071 marker, restore the RTL setting.
+    bool wantRTL = false;
+    for (size_t k = 0; k + 1 < data.extData.size(); ++k) {
+        const auto &appTag = data.extData[k];
+        if (!appTag || appTag->code() != 1001
+            || appTag->type() != DRW_Variant::STRING
+            || appTag->content.s == nullptr
+            || *appTag->content.s != "LibreCad") continue;
+        // Walk subsequent entries until the next 1001 (next app block).
+        for (size_t j = k + 1; j < data.extData.size(); ++j) {
+            const auto &v = data.extData[j];
+            if (!v) continue;
+            if (v->code() == 1001) break;
+            if (v->code() == 1071 && v->type() == DRW_Variant::INTEGER
+                && v->content.i != 0) {
+                wantRTL = true;
+            }
+        }
+        if (wantRTL) break;
     }
-    auto entity = new RS_MText(m_currentContainer, d);
+    if (wantRTL) dir = RS_MTextData::RightToLeft;
+
+    RS_MTextData d(ip, data.height, data.widthscale,
+                   valign, halign, dir, lss, interlin,
+                   mtext, sty, angle, RS2::NoUpdate);
+    return new RS_MText(nullptr, d);
+}
+
+/**
+ * Implementation of the method which handles
+ * multi texts (MTEXT).
+ */
+void RS_FilterDXFRW::addMText(const DRW_MText& data) {
+    RS_DEBUG->print("RS_FilterDXF::addMText: %s", data.text.c_str());
+    auto* entity = mtextEntityFromDRW(data);
+    entity->setParent(m_currentContainer);
     setEntityAttributes(entity, &data);
     entity->update();
     m_currentContainer->addEntity(entity);
@@ -1230,6 +1862,18 @@ void RS_FilterDXFRW::fillEntityExtData(std::vector<std::shared_ptr<DRW_Variant>>
                     auto variable = tag->var();
                     int code = variable->getCode();
                     extData.push_back(std::make_shared<DRW_Variant>(1070, code)); // code of variable
+                    if (tag->isBinary()) {
+                        // Wrap the QByteArray bytes in a BINARY DRW_Variant
+                        // (DXF group 1004). The DXF writer hex-encodes them
+                        // on emit; the DWG path will use the raw bytes.
+                        const QByteArray& bytes = tag->bytes();
+                        std::vector<duint8> raw(bytes.size());
+                        for (int i = 0; i < bytes.size(); ++i) {
+                            raw[i] = static_cast<duint8>(bytes[i]);
+                        }
+                        extData.push_back(std::make_shared<DRW_Variant>(1004, std::move(raw)));
+                        continue;
+                    }
                     auto varType = variable->getType();
                     switch (varType) {
                         case RS2::VariableInt: {
@@ -1241,12 +1885,19 @@ void RS_FilterDXFRW::fillEntityExtData(std::vector<std::shared_ptr<DRW_Variant>>
                             break;
                         }
                         case RS2::VariableString: {
-                            // int code = 1003;
-                            // if (tag->isRef()) {
-                                // code = 1005;
-                            // }
-                            // extData.push_back(std::make_shared<DRW_Variant>(code, variable->getString().toStdString())); // string value
-                            extData.push_back(std::make_shared<DRW_Variant>((tag->isRef() ? 1005 : 1003), variable->getString().toStdString())); // string value
+                            if (tag->isLayerRef()) {
+                                // DXF code 1003 — layer name reference. The
+                                // isLayerRef flag rides on the variant so that
+                                // the DWG path (when written) can resolve the
+                                // name back to a layer-table handle.
+                                extData.push_back(std::make_shared<DRW_Variant>(
+                                    1003, variable->getString().toStdString(),
+                                    /*isLayerRef=*/true));
+                            } else {
+                                extData.push_back(std::make_shared<DRW_Variant>(
+                                    (tag->isRef() ? 1005 : 1003),
+                                    variable->getString().toStdString())); // string value
+                            }
                             break;
                         }
                         case RS2::VariableVector: {
@@ -1305,11 +1956,34 @@ LC_ExtEntityData* RS_FilterDXFRW::extractEntityExtData(const std::vector<std::sh
                 }
                 break;
             }
-            case 1003:
-            case 1004:{
-                QString val = v->c_str();
+            case 1003:{
                 if (currentGroup != nullptr) {
-                    currentGroup->add(currentValType, val);
+                    if (v->isLayerRef()) {
+                        currentGroup->addLayerRef(currentValType, QString{v->c_str()});
+                    } else {
+                        currentGroup->add(currentValType, QString{v->c_str()});
+                    }
+                }
+                break;
+            }
+            case 1004:{
+                if (currentGroup != nullptr) {
+                    if (v->type() == DRW_Variant::BINARY) {
+                        const auto* bytes = v->binary();
+                        if (bytes != nullptr) {
+                            currentGroup->add(currentValType,
+                                QByteArray(reinterpret_cast<const char*>(bytes->data()),
+                                           static_cast<int>(bytes->size())));
+                        } else {
+                            currentGroup->add(currentValType, QByteArray{});
+                        }
+                    } else {
+                        // DXF round-trip path: 1004 arrives as a hex-encoded
+                        // string. Decode back to raw bytes so the in-memory
+                        // representation is consistent regardless of source.
+                        QByteArray hex(v->c_str());
+                        currentGroup->add(currentValType, QByteArray::fromHex(hex));
+                    }
                 }
                 break;
             }
@@ -2247,6 +2921,176 @@ void RS_FilterDXFRW::addLeader(const DRW_Leader *data) {
     m_currentContainer->addEntity(leader);
 }
 
+namespace {
+// Sample count for the cubic-NURBS → quadratic spline-points sampling branch
+// in buildHatchSplineEdge. See plan §C.2.
+constexpr int kHatchSplineSamples = 64;
+}  // namespace
+
+/**
+ * Build an LC_SplinePoints from a DRW_Spline hatch-boundary edge.
+ * All degrees converge to a quadratic spline-points representation:
+ *   degree==2 fit-points-only          → pass-through as splinePoints
+ *   degree==2 control-net              → pass-through as controlPoints
+ *   degree==1 or degree==3             → sample 64 points via a throwaway
+ *                                        RS_Spline evaluator
+ * Returns nullptr on degenerate input. See plan §C.1-§C.3.
+ */
+LC_SplinePoints* RS_FilterDXFRW::buildHatchSplineEdge(
+        RS_EntityContainer* hatchLoop, const DRW_Spline* s) {
+    if (s == nullptr) return nullptr;
+    if (s->degree < 1 || s->degree > 3) {
+        RS_DEBUG->print(RS_Debug::D_WARNING,
+            "buildHatchSplineEdge: unsupported degree %d", s->degree);
+        return nullptr;
+    }
+    if (s->controllist.empty() && s->fitlist.empty()) {
+        RS_DEBUG->print(RS_Debug::D_WARNING,
+            "buildHatchSplineEdge: spline edge has neither control nor fit points");
+        return nullptr;
+    }
+
+    // DXF entity-level splines store "closed" in bit 0; DWG hatch-boundary
+    // streams store "periodic" in bit 1 and never set bit 0 (see
+    // libraries/libdxfrw/src/drw_entities.cpp parseDwg at lines 2799-2800).
+    // Either bit implies a closed curve.
+    const bool closed = (s->flags & 0x3) != 0;
+    LC_SplinePointsData sd(closed, /*cut*/false);
+
+    if (s->degree == 2 && s->controllist.empty() && !s->fitlist.empty()) {
+        // Branch 1: degree==2 with fit points only — pass through.
+        sd.useControlPoints = false;
+        for (const auto& fp : s->fitlist) {
+            if (fp) sd.splinePoints.push_back(RS_Vector{fp->x, fp->y});
+        }
+    } else if (s->degree == 2 && !s->controllist.empty()) {
+        // Branch 2: degree==2 with control net — pass through.
+        sd.useControlPoints = true;
+        for (const auto& cp : s->controllist) {
+            if (cp) sd.controlPoints.push_back(RS_Vector{cp->x, cp->y});
+        }
+    } else {
+        // Branch 3: degree==1 or degree==3. Sample the NURBS at 64 points
+        // via a throwaway RS_Spline; the samples become fit points.
+        // Fall back to treating control points as a polyline if the knot
+        // vector is missing or short.
+        const size_t needKnots = s->controllist.size() + size_t(s->degree) + 1;
+        if (s->knotslist.size() < needKnots) {
+            RS_DEBUG->print(RS_Debug::D_WARNING,
+                "buildHatchSplineEdge: short knot vector (%zu < %zu); "
+                "treating control points as polyline",
+                s->knotslist.size(), needKnots);
+            sd.useControlPoints = false;
+            for (const auto& cp : s->controllist) {
+                if (cp) sd.splinePoints.push_back(RS_Vector{cp->x, cp->y});
+            }
+        } else {
+            RS_SplineData td(s->degree, closed);
+            td.type = closed ? RS_SplineData::SplineType::Standard
+                             : RS_SplineData::SplineType::ClampedOpen;
+            const double tolknot = (s->tolknot > 0.0) ? s->tolknot : 1e-7;
+            for (double k : s->knotslist) {
+                td.knotslist.push_back(RS_Math::round(k, tolknot));
+            }
+
+            auto tmp = std::make_unique<RS_Spline>(nullptr, td);
+            const bool isRational = (s->flags & 0x4) != 0;
+            for (size_t i = 0; i < s->controllist.size(); ++i) {
+                const auto& cp = s->controllist[i];
+                if (!cp) continue;
+                // DXF stores rational weights in weightlist; DWG hatch-
+                // boundary stream stores them on controllist[i]->z. Check
+                // both. See plan §C.3.
+                double w = 1.0;
+                if (isRational) {
+                    if (i < s->weightlist.size()) w = s->weightlist[i];
+                    else                          w = cp->z;
+                }
+                tmp->addControlPointRaw({cp->x, cp->y}, w);
+            }
+            if (closed) tmp->setClosed(true);
+            tmp->update();
+
+            sd.useControlPoints = false;
+            sd.splinePoints.reserve(kHatchSplineSamples);
+            tmp->fillStrokePoints(kHatchSplineSamples - 1, sd.splinePoints);
+        }
+    }
+
+    if (sd.splinePoints.size() < 2 && sd.controlPoints.size() < 2) {
+        RS_DEBUG->print(RS_Debug::D_WARNING,
+            "buildHatchSplineEdge: degenerate spline edge (too few points)");
+        return nullptr;
+    }
+
+    // Some DWG hatch boundaries encode a geometrically-closed spline with
+    // both flag bits unset (and an accompanying 0-length line as a closure
+    // marker). Detect endpoint coincidence in the populated point list and
+    // flip the closed flag so LoopExtractor treats it as a single closed
+    // loop instead of an open edge whose start==end. Closed LC_SplinePoints
+    // expects a periodic point list without an explicit closing repeat —
+    // drop the duplicate tail when present.
+    if (!sd.closed) {
+        if (!sd.splinePoints.empty()
+            && sd.splinePoints.front().distanceTo(sd.splinePoints.back()) <= 1e-8) {
+            sd.closed = true;
+            if (sd.splinePoints.size() > 2) sd.splinePoints.pop_back();
+        } else if (!sd.controlPoints.empty()
+                   && sd.controlPoints.front().distanceTo(sd.controlPoints.back()) <= 1e-8) {
+            sd.closed = true;
+            if (sd.controlPoints.size() > 2) sd.controlPoints.pop_back();
+        }
+    }
+
+    return new LC_SplinePoints(hatchLoop, std::move(sd));
+}
+
+/**
+ * Snap LC_SplinePoints endpoints inside hatchLoop to neighboring line-like
+ * edge endpoints when the gap is within 10× ENDPOINT_TOLERANCE (1e-7) but
+ * non-zero. Boundary-stream float drift can leave ~1e-9 to ~1e-8 gaps that
+ * break LoopExtractor's endpoint-chaining. The 10× window is small enough
+ * that geometrically distinct edges never stitch.
+ */
+void RS_FilterDXFRW::snapSplineEdgeEndpoints(RS_EntityContainer* hatchLoop) {
+    if (hatchLoop == nullptr || hatchLoop->count() < 2) return;
+    constexpr double kSnapWindow = 1e-7;  // 10× ENDPOINT_TOLERANCE
+    const unsigned int n = hatchLoop->count();
+
+    auto setSplineEnd = [](LC_SplinePoints* sp, bool atFront, const RS_Vector& v) {
+        auto& d = sp->getData();
+        if (d.useControlPoints && !d.controlPoints.empty()) {
+            if (atFront) d.controlPoints.front() = v;
+            else         d.controlPoints.back()  = v;
+        } else if (!d.splinePoints.empty()) {
+            if (atFront) d.splinePoints.front() = v;
+            else         d.splinePoints.back()  = v;
+        }
+        sp->update();
+    };
+
+    for (unsigned int i = 0; i < n; ++i) {
+        RS_Entity* cur = hatchLoop->entityAt(i);
+        RS_Entity* nxt = hatchLoop->entityAt((i + 1) % n);
+        if (cur == nullptr || nxt == nullptr) continue;
+
+        const bool curSpline = cur->rtti() == RS2::EntitySplinePoints;
+        const bool nxtSpline = nxt->rtti() == RS2::EntitySplinePoints;
+        if (curSpline == nxtSpline) continue;  // line-line or spline-spline
+
+        const RS_Vector curEnd = cur->getEndpoint();
+        const RS_Vector nxtBeg = nxt->getStartpoint();
+        const double gap = curEnd.distanceTo(nxtBeg);
+        if (gap <= 0.0 || gap >= kSnapWindow) continue;
+
+        if (curSpline) {
+            setSplineEnd(static_cast<LC_SplinePoints*>(cur), /*atFront*/false, nxtBeg);
+        } else {
+            setSplineEnd(static_cast<LC_SplinePoints*>(nxt), /*atFront*/true, curEnd);
+        }
+    }
+}
+
 /**
  * Implementation of the method which handles hatch entities.
  */
@@ -2357,6 +3201,11 @@ void RS_FilterDXFRW::addHatch(const DRW_Hatch *data) {
                                             e2->ratio, ang1, ang2, !e2->isccw}};
                         break;
                     }
+                    case DRW::SPLINE: {
+                        e = buildHatchSplineEdge(
+                                hatchLoop, static_cast<DRW_Spline*>(ent.get()));
+                        break;
+                    }
                     default:
                         break;
                 }
@@ -2365,6 +3214,11 @@ void RS_FilterDXFRW::addHatch(const DRW_Hatch *data) {
                     hatchLoop->addEntity(e);
                 }
             }
+            // After all explicit-segment edges are attached, snap spline
+            // endpoints to neighboring line endpoints if a tiny float gap
+            // is the only thing standing between LoopExtractor and a closed
+            // chain. See plan §C.1.
+            snapSplineEdgeEndpoints(hatchLoop);
         }
 
     }
@@ -2396,6 +3250,132 @@ void RS_FilterDXFRW::addImage(const DRW_Image *data) {
 
     setEntityAttributes(image, data);
     m_currentContainer->appendEntity(image);
+}
+
+/**
+ * Implementation of the method which handles WIPEOUT entities.
+ *
+ * WIPEOUT shares the IMAGE binary layout but only the polygon (clipPath) and
+ * the IMAGE's frame parameters (basePoint, secPoint=uVector, vVector,
+ * sizeu/sizev) are meaningful — there's no raster file behind it.
+ *
+ * AutoCAD stores the polygon vertices in normalized image-pixel coordinates,
+ * with a half-pixel origin offset.  The WCS transform is:
+ *     P_wcs = basePoint + (px + 0.5) * sizeu * uVector
+ *                       + (py + 0.5) * sizev * vVector
+ * (cf. ODA Open Design Specification §20.4.96; verify on samples — see plan.)
+ */
+void RS_FilterDXFRW::addWipeout(const DRW_Image *data) {
+    RS_DEBUG->print("RS_FilterDXFRW::addWipeout");
+    if (data == nullptr || data->clipPath.empty()) {
+        return;
+    }
+
+    const RS_Vector base(data->basePoint.x, data->basePoint.y);
+    const RS_Vector u(data->secPoint.x, data->secPoint.y);
+    const RS_Vector v(data->vVector.x, data->vVector.y);
+    const double sizeU = data->sizeu;
+    const double sizeV = data->sizev;
+
+    std::vector<RS_Vector> wcsVerts;
+    wcsVerts.reserve(data->clipPath.size());
+    for (const DRW_Coord& c : data->clipPath) {
+        const double fx = c.x + 0.5;
+        const double fy = c.y + 0.5;
+        wcsVerts.push_back(base + u * (fx * sizeU) + v * (fy * sizeV));
+    }
+
+    auto* w = new LC_Wipeout(m_currentContainer,
+                             LC_WipeoutData(std::move(wcsVerts)));
+    setEntityAttributes(w, data);
+    m_currentContainer->appendEntity(w);
+}
+
+/**
+ * Build an LC_MLeader from a parsed DRW_MLeader (ODA spec §20.4.48).
+ *
+ * MLEADER carries a multi-root callout structure plus either text or block
+ * content.  This conversion captures the geometric structure (roots →
+ * leader lines → points) and content reference.  Style-handle resolution
+ * (against LC_MLeaderStyleList) is deferred to Phase 7; for now we copy
+ * the entity-level overrides as effective values.
+ */
+void RS_FilterDXFRW::addMLeader(const DRW_MLeader *data) {
+    RS_DEBUG->print("RS_FilterDXFRW::addMLeader");
+    if (data == nullptr) return;
+
+    LC_MLeaderData md;
+    md.roots.reserve(data->context.roots.size());
+    for (const auto& r : data->context.roots) {
+        LC_MLeaderRoot root;
+        root.connectionPoint = RS_Vector(r.connectionPoint.x, r.connectionPoint.y);
+        root.direction       = RS_Vector(r.direction.x, r.direction.y);
+        root.landingDistance = r.landingDistance;
+        root.attachmentDirection = r.attachmentDirection;
+        root.leaderLines.reserve(r.leaderLines.size());
+        for (const auto& ll : r.leaderLines) {
+            LC_MLeaderLine line;
+            line.leaderLineIndex = ll.leaderLineIndex;
+            line.points.reserve(ll.points.size());
+            for (const auto& p : ll.points) {
+                line.points.emplace_back(p.x, p.y);
+            }
+            root.leaderLines.push_back(std::move(line));
+        }
+        md.roots.push_back(std::move(root));
+    }
+
+    md.contentBasePoint = RS_Vector(data->context.contentBasePoint.x,
+                                    data->context.contentBasePoint.y);
+    md.basePoint        = RS_Vector(data->context.basePoint.x,
+                                    data->context.basePoint.y);
+
+    md.hasTextContents  = data->context.hasTextContents;
+    md.hasBlockContents = !data->context.hasTextContents && data->context.hasContentsBlock;
+    if (md.hasTextContents) {
+        md.textLabel    = toNativeString(QString::fromUtf8(data->context.textLabel.c_str()));
+        md.textLocation = RS_Vector(data->context.textLocation.x,
+                                    data->context.textLocation.y);
+        md.textHeight    = data->context.textHeight;
+        md.textRotation  = data->context.textRotation;
+        md.boundaryWidth = data->context.boundaryWidth;
+        md.boundaryHeight = data->context.boundaryHeight;
+        md.textColor     = data->context.textColor;
+    }
+    if (md.hasBlockContents) {
+        md.blockLocation = RS_Vector(data->context.blockLocation.x,
+                                     data->context.blockLocation.y);
+        md.blockScale    = RS_Vector(data->context.blockScale.x,
+                                     data->context.blockScale.y,
+                                     data->context.blockScale.z);
+        md.blockRotation = data->context.blockRotation;
+        // blockName resolved from blockTableRecordHandle when block lookup
+        // is wired via the document — Phase 7 follow-up.
+    }
+
+    md.leaderType      = data->leaderType;
+    md.leaderColor     = data->leaderColor;
+    md.landingDistance = data->landingDistance;
+    md.arrowSize       = data->defaultArrowHeadSize;
+    md.landingEnabled  = data->landingEnabled;
+    md.doglegEnabled   = data->doglegEnabled;
+    md.contentType     = data->styleContentType;
+    md.scaleFactor     = data->scaleFactor;
+
+    auto* m = new LC_MLeader(m_currentContainer, std::move(md));
+    setEntityAttributes(m, data);
+    m_currentContainer->appendEntity(m);
+}
+
+/**
+ * MLEADERSTYLE dictionary entry capture.  Phase 5 currently just logs
+ * receipt; Phase 7 will store the styles in an LC_MLeaderStyleList on
+ * the document so MLEADERs can resolve their style references.
+ */
+void RS_FilterDXFRW::addMLeaderStyle(const DRW_MLeaderStyle *data) {
+    if (data == nullptr) return;
+    RS_DEBUG->print("RS_FilterDXFRW::addMLeaderStyle: %s",
+                    data->name.empty() ? "(unnamed)" : data->name.c_str());
 }
 
 /**
@@ -2958,40 +3938,40 @@ void RS_FilterDXFRW::writeViews() {
         vie.reset();
         LC_View* view = vl->at(i);
         vie.name = view->getName().toUtf8().data();
-        vie.center.x = view->getCenter().x; 
-        vie.center.y = view->getCenter().y; 
+        vie.center.x = view->getCenter().x;
+        vie.center.y = view->getCenter().y;
         vie.center.z = view->getCenter().z;
 
         vie.targetPoint.x = view->getTargetPoint().x;
         vie.targetPoint.y = view->getTargetPoint().y;
         vie.targetPoint.z = view->getTargetPoint().z;
-        
+
         vie.size.x = view->getSize().x;
         vie.size.y = view->getSize().y;
-        vie.size.z = view->getSize().z;        
-        
+        vie.size.z = view->getSize().z;
+
         vie.frontClippingPlaneOffset = view->getFrontClippingPlaneOffset();
         vie.backClippingPlaneOffset = view->getBackClippingPlaneOffset();
         vie.lensLen = view->getLensLen();
         vie.flags = view->getFlags();
         vie.viewMode = view->getViewMode();
-                
+
         vie.viewDirectionFromTarget.x = view->getViewDirection().x;
         vie.viewDirectionFromTarget.y = view->getViewDirection().y;
         vie.viewDirectionFromTarget.z = view->getViewDirection().z;
-        
+
         vie.cameraPlottable = view->isCameraPlottable();
         vie.renderMode = view->getRenderMode();
-        
-        vie.twistAngle = view->getTwistAngle();        
-        
+
+        vie.twistAngle = view->getTwistAngle();
+
         if (view->isHasUCS()){
             vie.hasUCS = true;
             LC_UCS *ucs = view->getUCS();
             vie.ucsOrigin.x = ucs->getOrigin().x;
             vie.ucsOrigin.y = ucs->getOrigin().y;
             vie.ucsOrigin.z = ucs->getOrigin().z;
-            
+
             vie.ucsOrthoType = ucs->getOrthoType();
             vie.ucsElevation = ucs->getElevation();
 
@@ -3587,10 +4567,174 @@ void RS_FilterDXFRW::writeAppId(){
 }
 
 void RS_FilterDXFRW::writeEntities(){
+    // Pre-pass: reconstruct MLINE entities from decomposed polylines that
+    // carry LibreCAD_MLINE XDATA. Consumed polylines are emitted as
+    // MLINE; the rest fall through to the normal write path.
+    std::set<RS_Entity*> consumed;
+    reconstructMLines(m_graphic, consumed);
+    reconstructUnderlays(m_graphic, consumed);
     for(RS_Entity* e: lc::LC_ContainerTraverser{*m_graphic, RS2::ResolveNone}.entities()) {
-        if ( !(e->getFlag(RS2::FlagUndone)) ) {
-            writeEntity(e);
+        if (e->getFlag(RS2::FlagUndone)) continue;
+        if (consumed.find(e) != consumed.end()) continue;
+        writeEntity(e);
+    }
+}
+
+namespace {
+// Parsed view of one polyline's LibreCAD_MLINE XDATA.
+struct MLineEntry {
+    RS_Entity* entity = nullptr;
+    QString mlineId;
+    QString styleName;
+    double scale = 1.0;
+    int justification = 0;
+    int elementCount = 0;
+    int elementIndex = 0;
+    double offset = 0.0;
+    int openClosed = 1;
+    bool isAnchor = false;  // i==0 polyline carries baseline + miter
+    std::vector<DRW_Coord> baselineVerts;
+    std::vector<DRW_Coord> miterDirs;
+};
+
+// Walk the entity's drwExtData (XDATA stream) and extract LibreCAD_MLINE
+// metadata. Returns nullopt if the marker isn't present. The XDATA layout
+// matches RS_FilterDXFRW::addMLine's emission schema.
+std::optional<MLineEntry> extractMLineMeta(RS_Entity* e) {
+    if (!e || !e->hasDrwExtData()) return std::nullopt;
+    const auto& ext = e->getDrwExtData();
+    bool inGroup = false;
+    MLineEntry m;
+    int seen1000 = 0;  // 0 = mlineId, 1 = styleName
+    int seen1040 = 0;  // 0 = scale, 1 = offset
+    int seen1070 = 0;  // 0 = just, 1 = N, 2 = i, 3 = flags
+    int seen1011 = 0;  // baseline.x emitted as DRW_Coord
+    for (const auto& sp : ext) {
+        if (!sp) continue;
+        const int code = sp->code();
+        if (code == 1001) {
+            inGroup = (std::string{sp->c_str()} == "LibreCAD_MLINE");
+            continue;
         }
+        if (!inGroup) continue;
+        switch (code) {
+        case 1000: {
+            QString s = QString::fromStdString(std::string{sp->c_str()});
+            if (seen1000 == 0) m.mlineId = s;
+            else if (seen1000 == 1) m.styleName = s;
+            ++seen1000;
+            break;
+        }
+        case 1040: {
+            const double d = sp->d_val();
+            if (seen1040 == 0) m.scale = d;
+            else if (seen1040 == 1) m.offset = d;
+            ++seen1040;
+            break;
+        }
+        case 1070: {
+            const int v = static_cast<int>(sp->i_val());
+            if (seen1070 == 0) m.justification = v;
+            else if (seen1070 == 1) m.elementCount = v;
+            else if (seen1070 == 2) m.elementIndex = v;
+            else if (seen1070 == 3) m.openClosed = v;
+            ++seen1070;
+            break;
+        }
+        case 1011: {
+            // Anchor-only baseline vertex
+            const auto* c = sp->coord();
+            if (c) m.baselineVerts.push_back(*c);
+            m.isAnchor = true;
+            ++seen1011;
+            break;
+        }
+        case 1013: {
+            const auto* c = sp->coord();
+            if (c) m.miterDirs.push_back(*c);
+            break;
+        }
+        default:
+            break;
+        }
+    }
+    if (m.mlineId.isEmpty() || m.elementCount == 0) return std::nullopt;
+    m.entity = e;
+    return m;
+}
+} // anon
+
+void RS_FilterDXFRW::reconstructMLines(RS_EntityContainer* container,
+                                       std::set<RS_Entity*>& consumed) {
+    if (!container) return;
+
+    // First pass: collect all polylines carrying the MLINE marker.
+    std::map<QString, std::vector<MLineEntry>> groups;
+    for (RS_Entity* e : lc::LC_ContainerTraverser{*container, RS2::ResolveNone}.entities()) {
+        if (e->getFlag(RS2::FlagUndone)) continue;
+        if (e->rtti() != RS2::EntityPolyline) continue;
+        auto m = extractMLineMeta(e);
+        if (!m) continue;
+        groups[m->mlineId].push_back(std::move(*m));
+    }
+
+    // Second pass: reconstruct + emit each complete group.
+    for (auto& [mlineId, entries] : groups) {
+        if (entries.empty()) continue;
+        const int N = entries.front().elementCount;
+        if (static_cast<int>(entries.size()) != N) {
+            // Incomplete group (user deleted siblings) — leave for plain
+            // LWPOLYLINE export. Don't mark consumed.
+            continue;
+        }
+        // Sort by elementIndex.
+        std::sort(entries.begin(), entries.end(),
+                  [](const MLineEntry& a, const MLineEntry& b) {
+                      return a.elementIndex < b.elementIndex;
+                  });
+        // Find the anchor (elementIndex == 0).
+        const MLineEntry* anchor = nullptr;
+        for (const auto& m : entries) {
+            if (m.elementIndex == 0 && m.isAnchor && !m.baselineVerts.empty()) {
+                anchor = &m;
+                break;
+            }
+        }
+        if (!anchor) {
+            // No anchor found — group is malformed, fall through.
+            continue;
+        }
+
+        // Build DRW_MLine from anchor metadata + baseline vertices.
+        DRW_MLine ml;
+        ml.styleName = anchor->styleName.toStdString();
+        ml.scale = anchor->scale;
+        ml.justification = static_cast<duint8>(anchor->justification);
+        ml.openClosed = anchor->openClosed;
+        ml.numLines = static_cast<duint8>(N);
+        ml.numVerts = static_cast<duint16>(anchor->baselineVerts.size());
+        if (!anchor->baselineVerts.empty()) {
+            ml.basePoint = anchor->baselineVerts.front();
+        }
+        ml.layer = entries.front().entity->getLayer()
+                       ? entries.front().entity->getLayer()->getName().toStdString()
+                       : std::string{"0"};
+        const size_t V = anchor->baselineVerts.size();
+        const size_t M = anchor->miterDirs.size();
+        ml.vertlist.reserve(V);
+        for (size_t i = 0; i < V; ++i) {
+            DRW_MLineVertex v;
+            v.position = anchor->baselineVerts[i];
+            if (i < M) v.miterDir = anchor->miterDirs[i];
+            // Default segment params: a single zero parameter per element
+            // (sufficient for a continuous unbroken multiline).
+            v.segParms.assign(N, std::vector<double>{0.0});
+            v.areaFillParms.assign(N, std::vector<double>{});
+            ml.vertlist.push_back(std::move(v));
+        }
+
+        m_dxfW->writeMLine(&ml);
+        for (const auto& m : entries) consumed.insert(m.entity);
     }
 }
 
@@ -3616,6 +4760,7 @@ void RS_FilterDXFRW::writeEntity(RS_Entity* e){
         break;
     case RS2::EntityHyperbola:
         writeHyperbola(static_cast<LC_Hyperbola*>(e));
+        break;
     case RS2::EntityPolyline:
         writeLWPolyline(static_cast<RS_Polyline*>(e));
         break;
@@ -3654,8 +4799,109 @@ void RS_FilterDXFRW::writeEntity(RS_Entity* e){
     case RS2::EntityImage:
         writeImage(static_cast<RS_Image*>(e));
         break;
+    case RS2::EntityWipeout:
+        writeWipeout(static_cast<LC_Wipeout*>(e));
+        break;
+    case RS2::EntityMLeader:
+        writeMLeader(static_cast<LC_MLeader*>(e));
+        break;
     default:
         break;
+    }
+}
+
+void RS_FilterDXFRW::reconstructUnderlays(RS_EntityContainer* container,
+                                          std::set<RS_Entity*>& consumed) {
+    if (!container) return;
+    // Single-pass: each polyline carrying LibreCAD_UNDERLAY XDATA
+    // reconstructs ONE DRW_Underlay (no group/sibling matching like MLINE).
+    for (RS_Entity* e :
+         lc::LC_ContainerTraverser{*container, RS2::ResolveNone}.entities()) {
+        if (e->getFlag(RS2::FlagUndone)) continue;
+        if (e->rtti() != RS2::EntityPolyline) continue;
+        if (!e->hasDrwExtData()) continue;
+
+        const auto& ext = e->getDrwExtData();
+        bool inGroup = false;
+        DRW_Underlay u;
+        DRW_Coord position;
+        bool gotPosition = false;
+        int seen1000 = 0;   // 0=id, 1=kind
+        int seen1040 = 0;   // 0=scale.x, 1=scale.y, 2=rotation
+        int seen1070 = 0;   // 0=flags, 1=contrast, 2=fade
+
+        for (const auto& sp : ext) {
+            if (!sp) continue;
+            const int code = sp->code();
+            if (code == 1001) {
+                inGroup = (std::string{sp->c_str()} == "LibreCAD_UNDERLAY");
+                continue;
+            }
+            if (!inGroup) continue;
+            switch (code) {
+            case 1000: {
+                const std::string s = sp->c_str();
+                if (seen1000 == 1) {
+                    // kind
+                    if (s == "DGN") u.kind = DRW_Underlay::DGN;
+                    else if (s == "DWF") u.kind = DRW_Underlay::DWF;
+                }
+                ++seen1000;
+                break;
+            }
+            case 1071:
+                u.definitionHandle = static_cast<duint32>(sp->i_val());
+                break;
+            case 1010: {
+                const auto* c = sp->coord();
+                if (c) { position = *c; gotPosition = true; }
+                break;
+            }
+            case 1040: {
+                const double d = sp->d_val();
+                if (seen1040 == 0) u.scale.x = d;
+                else if (seen1040 == 1) u.scale.y = d;
+                else if (seen1040 == 2) u.rotation = d;
+                ++seen1040;
+                break;
+            }
+            case 1070: {
+                const int v = static_cast<int>(sp->i_val());
+                if (seen1070 == 0) u.flags    = static_cast<duint8>(v);
+                else if (seen1070 == 1) u.contrast = static_cast<duint8>(v);
+                else if (seen1070 == 2) u.fade     = static_cast<duint8>(v);
+                ++seen1070;
+                break;
+            }
+            default: break;
+            }
+        }
+
+        if (!gotPosition) continue;        // not a real LibreCAD_UNDERLAY block
+        u.position = position;
+
+        // Reverse-transform polyline vertices back to OCS clip coordinates:
+        //   poly_v = position + R(rotation) * scale * clip_v
+        // → clip_v = scale^-1 * R^-T * (poly_v - position)
+        const auto* pl = static_cast<const RS_Polyline*>(e);
+        const double cs = std::cos(u.rotation);
+        const double sn = std::sin(u.rotation);
+        const double sx = (std::abs(u.scale.x) > RS_TOLERANCE) ? u.scale.x : 1.0;
+        const double sy = (std::abs(u.scale.y) > RS_TOLERANCE) ? u.scale.y : 1.0;
+        u.clipBoundary.clear();
+        for (RS_Entity* sub : *pl) {
+            // Polyline sub-entities are line segments; first endpoint of each
+            // gives the polygon vertex.
+            const RS_Vector p = sub->getStartpoint();
+            const double dx = p.x - u.position.x;
+            const double dy = p.y - u.position.y;
+            const double rx = (dx * cs + dy * sn) / sx;
+            const double ry = (-dx * sn + dy * cs) / sy;
+            u.clipBoundary.emplace_back(rx, ry, 0.0);
+        }
+
+        m_dxfW->writeUnderlay(&u);
+        consumed.insert(e);
     }
 }
 
@@ -3944,7 +5190,7 @@ void RS_FilterDXFRW::writeSplinePoints(LC_SplinePoints *s){
     sp.nfit = data.splinePoints.size();
 
     auto const& fitPoints = data.splinePoints;
-    
+
 	// write spline knots:
 	for(int i = 1; i <= sp.nknots; i++){
 		if(i <= 3){
@@ -4113,14 +5359,27 @@ void RS_FilterDXFRW::writeMText(RS_MText* t) {
         } else if (t->getVAlign()==RS_MTextData::VABottom) {
             text->textgen += 6;
         }
-        if (t->getDrawingDirection() == RS_MTextData::LeftToRight) {
-            text->alignH = static_cast<DRW_Text::HAlign>(1);
+        // DXF MTEXT group 72: 1=LeftToRight, 3=TopToBottom, 5=ByStyle.
+        // RightToLeft has no DXF encoding — fall through to LeftToRight so
+        // other readers see a well-defined direction. The RTL preference is
+        // round-tripped via XDATA (app id "LibreCad", code 1071) below; on
+        // re-import we restore the flag if the marker is present, otherwise
+        // the entity reads as LTR.
+        switch (t->getDrawingDirection()) {
+        case RS_MTextData::TopToBottom:
+            text->alignH = static_cast<DRW_Text::HAlign>(3); break;
+        case RS_MTextData::ByStyle:
+            text->alignH = static_cast<DRW_Text::HAlign>(5); break;
+        case RS_MTextData::LeftToRight:
+        case RS_MTextData::RightToLeft:
+        default:
+            text->alignH = static_cast<DRW_Text::HAlign>(1); break;
         }
-        else if (t->getDrawingDirection() == RS_MTextData::TopToBottom) {
-            text->alignH = static_cast<DRW_Text::HAlign>(3);
-        }
-        else {
-            text->alignH = static_cast<DRW_Text::HAlign>(5);
+        if (t->getDrawingDirection() == RS_MTextData::RightToLeft) {
+            text->extData.push_back(std::make_shared<DRW_Variant>(
+                1001, std::string("LibreCad")));
+            text->extData.push_back(
+                std::make_shared<DRW_Variant>(1071, dint32{1}));
         }
 		if (t->getLineSpacingStyle() == RS_MTextData::AtLeast) {
 		    text->alignV = static_cast<DRW_Text::VAlign>(1);
@@ -4358,6 +5617,73 @@ void RS_FilterDXFRW::writeLeader(RS_Leader* l) {
     m_dxfW->writeLeader(&leader);
 }
 
+namespace {
+
+// Emit an LC_SplinePoints boundary edge as a degree-2 DRW_Spline. Either
+// the control net or the fit points are populated depending on the
+// LC_SplinePointsData mode. Knotslist is left empty; the libdxfrw reader
+// re-derives a clamped uniform knot vector when consuming this struct
+// (see drw_entities.cpp parseDwg). See plan §B.1.
+std::shared_ptr<DRW_Spline>
+makeDrwSplineFromSplinePoints(const LC_SplinePoints* sp) {
+    auto drw = std::make_shared<DRW_Spline>();
+    drw->degree = 2;
+    // Closed boundary edges set BOTH bit 0 (DXF entity-level "closed")
+    // AND bit 1 (DWG-boundary / DXF group code 74 "periodic"). The hatch
+    // boundary read path accepts either bit; this keeps cross-format
+    // round-trip consistent.
+    drw->flags  = sp->isClosed() ? 0x3 : 0x0;
+    const auto& d = sp->getData();
+    if (d.useControlPoints && !d.controlPoints.empty()) {
+        for (const auto& v : d.controlPoints)
+            drw->controllist.push_back(
+                std::make_shared<DRW_Coord>(v.x, v.y, 0.0));
+        drw->ncontrol = static_cast<dint32>(d.controlPoints.size());
+    } else {
+        for (const auto& v : d.splinePoints)
+            drw->fitlist.push_back(
+                std::make_shared<DRW_Coord>(v.x, v.y, 0.0));
+        drw->nfit = static_cast<dint32>(d.splinePoints.size());
+    }
+    return drw;
+}
+
+// Emit an RS_Spline (general NURBS, degree 1-3, possibly rational) boundary
+// edge as a DRW_Spline carrying its full data. Mirrors weight into both
+// drw->weightlist[i] AND drw->controllist[i]->z so both DXF and DWG
+// consumers can read it correctly. See plan §C.3.
+std::shared_ptr<DRW_Spline>
+makeDrwSplineFromRSSpline(const RS_Spline* sp) {
+    auto drw = std::make_shared<DRW_Spline>();
+    const auto& sd = sp->getData();
+    drw->degree = static_cast<dint32>(sd.degree);
+
+    const auto cps = sp->getControlPoints();
+    const auto ws  = sp->getWeights();
+    const bool weightsAlign = (ws.size() == cps.size());
+    const bool isRational = weightsAlign &&
+        std::any_of(ws.begin(), ws.end(),
+                    [](double w){ return std::abs(w - 1.0) > 1e-9; });
+    // Set both DXF entity-level closed (bit 0) and hatch-boundary
+    // periodic (bit 1) for cross-format consistency. See helper above.
+    drw->flags = (sp->isClosed() ? 0x3 : 0x0) | (isRational ? 0x4 : 0x0);
+
+    for (size_t i = 0; i < cps.size(); ++i) {
+        const double w = (isRational && i < ws.size()) ? ws[i] : 1.0;
+        drw->controllist.push_back(
+            std::make_shared<DRW_Coord>(cps[i].x, cps[i].y, w));
+    }
+    drw->ncontrol = static_cast<dint32>(cps.size());
+    if (isRational) {
+        drw->weightlist = ws;
+    }
+    drw->knotslist = sd.knotslist;
+    drw->nknots    = static_cast<dint32>(sd.knotslist.size());
+    return drw;
+}
+
+}  // namespace
+
 /**
  * Writes the given hatch entity to the file.
  */
@@ -4478,6 +5804,12 @@ void RS_FilterDXFRW::writeHatch(RS_Hatch * h) {
                     ell->endparam = endAng;
                     ell->isccw = !el->isReversed();
                     lData->objlist.push_back(ell);
+                } else if (ed->rtti()==RS2::EntitySplinePoints) {
+                    lData->objlist.push_back(
+                        makeDrwSplineFromSplinePoints(static_cast<LC_SplinePoints*>(ed)));
+                } else if (ed->rtti()==RS2::EntitySpline) {
+                    lData->objlist.push_back(
+                        makeDrwSplineFromRSSpline(static_cast<RS_Spline*>(ed)));
                 }
             }
             lData->update(); //change to DRW_HatchLoop
@@ -4541,6 +5873,67 @@ void RS_FilterDXFRW::writeImage(RS_Image * i) {
         imgDef->vp = 1;
         imgDef->resolution = 0;
     }
+}
+
+void RS_FilterDXFRW::writeWipeout(LC_Wipeout *w) {
+    if (w == nullptr) {
+        return;
+    }
+    // LC_Wipeout stores the polygon already resolved to WCS, not as
+    // image-pixel coords + basis.  On write we pick a trivial basis
+    //     basePoint=(0,0), u=(1,0), v=(0,1), sizeU=sizeV=1
+    // so that the inverse transform px = v.x - 0.5 / py = v.y - 0.5
+    // (chosen so that the reader's `(p + 0.5) * size * axis + base` round-trips
+    // back to v) yields exactly the original WCS vertices.  This trades
+    // byte-identical round-trip of the original IMAGE-frame fields for a
+    // simpler entity model in LibreCAD; the rendered geometry is preserved.
+    DRW_Image img;
+    getEntityAttributes(&img, w);
+    img.basePoint = DRW_Coord(0.0, 0.0, 0.0);
+    img.secPoint = DRW_Coord(1.0, 0.0, 0.0);
+    img.vVector = DRW_Coord(0.0, 1.0, 0.0);
+    img.sizeu = 1.0;
+    img.sizev = 1.0;
+    img.clip = 1;
+    img.brightness = 50;
+    img.contrast = 50;
+    img.fade = 0;
+    img.clipMode = false;  // 0 = mask outside the polygon (typical WIPEOUT)
+    img.clipPath.clear();
+    img.clipPath.reserve(w->getVertices().size());
+    for (const RS_Vector& v : w->getVertices()) {
+        img.clipPath.emplace_back(v.x - 0.5, v.y - 0.5);
+    }
+    m_dxfW->writeWipeout(&img);
+}
+
+/**
+ * Serialize an LC_MLeader to DXF MULTILEADER.  Phase 9 emits the
+ * entity-level scalar fields (override flags, leader type/color/weight,
+ * landing/dogleg, attachment types, content type, etc.).  The full
+ * AcDbMLeaderObjectContextData CONTEXT_DATA{} block (root → leader
+ * line → point hierarchy + content branch) is NOT emitted yet — a
+ * full faithful round-trip needs the control-flow group-code state
+ * machine.  Read-side parser can recover what was written; consumers
+ * that depend on geometric round-trip will need the follow-up.
+ */
+void RS_FilterDXFRW::writeMLeader(LC_MLeader *m) {
+    if (m == nullptr) return;
+    DRW_MLeader e;
+    getEntityAttributes(&e, m);
+    const auto& d = m->getData();
+    e.overrideFlags         = 0;  // Phase 9 doesn't track override bits;
+                                  // emit defaults so a re-read picks the
+                                  // entity-level values as authoritative.
+    e.leaderType            = d.leaderType;
+    e.leaderColor           = d.leaderColor;
+    e.landingDistance       = d.landingDistance;
+    e.defaultArrowHeadSize  = d.arrowSize;
+    e.landingEnabled        = d.landingEnabled;
+    e.doglegEnabled         = d.doglegEnabled;
+    e.styleContentType      = d.contentType;
+    e.scaleFactor           = d.scaleFactor;
+    m_dxfW->writeMultiLeader(&e);
 }
 
 /*void RS_FilterDXFRW::writeEntityContainer(DL_WriterA& dw, RS_EntityContainer* con,
@@ -4627,14 +6020,19 @@ void RS_FilterDXFRW::setEntityAttributes(RS_Entity* entity,
     entity->setLayer(layName);
 
     // Color:
+    RS_Color col;
     if (attrib->color24 >= 0) {
-        pen.setColor(RS_Color(attrib->color24 >> 16,
-                              attrib->color24 >> 8 & 0xFF,
-                              attrib->color24 & 0xFF));
+        col = RS_Color(attrib->color24 >> 16,
+                       attrib->color24 >> 8 & 0xFF,
+                       attrib->color24 & 0xFF);
     }
     else {
-        pen.setColor(numberToColor(attrib->color));
+        col = numberToColor(attrib->color);
     }
+    if (!attrib->colorName.empty()) {
+        col.setColorName(QString::fromUtf8(attrib->colorName.c_str()));
+    }
+    pen.setColor(col);
 
     // Linetype:
     pen.setLineType(nameToLineType( QString::fromUtf8(attrib->lineType.c_str()) ));
@@ -4642,7 +6040,46 @@ void RS_FilterDXFRW::setEntityAttributes(RS_Entity* entity,
     // Width:
     pen.setWidth(numberToWidth(attrib->lWeight));
 
+    // Transparency (DXF code 440): alpha_raw packs alpha_type in high byte
+    // (0/1 = ByLayer/ByBlock, inherits parent), 3 = explicit alpha (low
+    // byte 0..255). RS_Pen.alpha is a float 0..1 where 1.0 is opaque.
+    // libreDWG common_entity_data.spec:432-446 documents the encoding.
+    // Only override the pen default when alpha_type == 3.
+    if (attrib->transparency != DRW::Opaque) {
+        const unsigned int rawAlpha = static_cast<unsigned int>(attrib->transparency);
+        const unsigned int alphaType = (rawAlpha >> 24) & 0xFF;
+        const unsigned int alphaByte = rawAlpha & 0xFF;
+        if (alphaType == 3) {
+            pen.setAlpha(static_cast<float>(alphaByte) / 255.0f);
+        }
+    }
+
     entity->setPen(pen);
+
+    // Passive metadata sidecars — DXF/DWG fields that don't affect
+    // rendering or equality but must round-trip on save. Skip the
+    // default sentinels so unset entities stay unchanged.
+    if (attrib->material != DRW::MaterialByLayer)
+        entity->setMaterialHandle(attrib->material);
+    if (attrib->plotStyle != DRW::DefaultPlotStyle)
+        entity->setPlotStyleHandle(static_cast<quint32>(attrib->plotStyle));
+    if (attrib->shadow != DRW::CastAndReceieveShadows)
+        entity->setShadowMode(static_cast<int>(attrib->shadow));
+    // Visual-style handles (DWG R2010+ only; libdxfrw's DXF reader has no
+    // codes for these, so they round-trip from DWG only).
+    entity->setVisualStyleHandles(
+        attrib->fullVisualStyleHandle,
+        attrib->faceVisualStyleHandle,
+        attrib->edgeVisualStyleHandle);
+
+    // Preserve any XDATA / EED that came in with the entity. Stored
+    // verbatim on RS_Entity so a later getEntityAttributes() can spit
+    // it back out unchanged. The dimension-style override path reads
+    // the same source independently and is unaffected.
+    if (!attrib->extData.empty()) {
+        entity->setDrwExtData(attrib->extData);
+    }
+
     RS_DEBUG->print("RS_FilterDXF::setEntityAttributes: OK");
 }
 
@@ -4677,8 +6114,34 @@ void RS_FilterDXFRW::getEntityAttributes(DRW_Entity* ent, const RS_Entity* entit
     ent->layer = toDxfString(layerName).toUtf8().data();
     ent->color = color;
     ent->color24 = exact_rgb;
+    if (pen.getColor().hasColorName()) {
+        ent->colorName = pen.getColor().colorName().toUtf8().data();
+    }
     ent->lWeight = width;
     ent->lineType = lineType.toUtf8().data();
+
+    // Transparency export: encode pen alpha < 1.0 as DXF code 440
+    // (alpha_raw). High byte 0x03 = "explicit alpha", low byte = 0..255.
+    // Mirrors the import decoder above.
+    if (pen.getAlpha() < 1.0f) {
+        int alphaByte = static_cast<int>(pen.getAlpha() * 255.0f + 0.5f);
+        ent->transparency = (0x03 << 24) | (alphaByte & 0xFF);
+    }
+
+    // Passive metadata sidecars — emit only when overridden.
+    if (entity->materialHandle() != 0)
+        ent->material = entity->materialHandle();
+    if (entity->plotStyleHandle() != 0)
+        ent->plotStyle = static_cast<int>(entity->plotStyleHandle());
+    if (entity->shadowMode() != 0)
+        ent->shadow = static_cast<DRW::ShadowMode>(entity->shadowMode());
+
+    // Re-emit any XDATA / EED that was attached on import. Skipped if
+    // the dimension-export path (or any other caller) already populated
+    // ent->extData with its own structured override.
+    if (entity->hasDrwExtData() && ent->extData.empty()) {
+        ent->extData = entity->getDrwExtData();
+    }
 }
 
 /**
@@ -4694,6 +6157,9 @@ RS_Pen RS_FilterDXFRW::attributesToPen(const DRW_Layer* att) const {
     }
     else {
         col = numberToColor(att->color);
+    }
+    if (!att->colorName.empty()) {
+        col.setColorName(QString::fromUtf8(att->colorName.c_str()));
     }
 
     RS_Pen pen(col, numberToWidth(att->lWeight),
@@ -5472,8 +6938,20 @@ void RS_FilterDXFRW::printDwgError(int le){
             RS_DEBUG->print("RS_FilterDXFRW::printDwgError: DRW::BAD_OPEN");
             break;
         case DRW::BAD_VERSION:
-            RS_DIALOGFACTORY->commandMessage(QObject::tr("unsupported dwg version"));
-            RS_DEBUG->print("RS_FilterDXFRW::printDwgError: DRW::BAD_VERSION");
+            if (m_dwgVersion != DRW::UNKNOWNV) {
+                const QString actual = dwgVersionDisplay(m_dwgVersion);
+                RS_DIALOGFACTORY->commandMessage(QObject::tr(
+                    "Cannot open DWG: file is %1; LibreCAD supports %2 and newer. "
+                    "Convert with GNU LibreDWG (dwgread / dwg2dxf) or re-save "
+                    "from a recent CAD tool.")
+                    .arg(actual)
+                    .arg(dwgVersionDisplay(DRW::AC1012)));
+                RS_DEBUG->print("RS_FilterDXFRW::printDwgError: BAD_VERSION (%s)",
+                                actual.toUtf8().constData());
+            } else {
+                RS_DIALOGFACTORY->commandMessage(QObject::tr("unsupported dwg version"));
+                RS_DEBUG->print("RS_FilterDXFRW::printDwgError: DRW::BAD_VERSION");
+            }
             break;
         case DRW::BAD_READ_METADATA:
             RS_DIALOGFACTORY->commandMessage(QObject::tr("error reading file metadata in dwg file"));
@@ -5979,4 +7457,3 @@ void RS_FilterDXFRW::applyParsedDimStyleExtData(LC_DimStyle* dimStyle, const QSt
 }
 
 #endif // DWGSUPPORT
-

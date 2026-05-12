@@ -15,6 +15,7 @@
 #include "../libdwgr.h"
 #include "drw_textcodec.h"
 #include "drw_dbg.h"
+#include <cstring>
 //#include <bitset>
 /*#include <fstream>
 #include <algorithm>
@@ -219,6 +220,7 @@ bool dwgBuffer::moveBitPos(dint32 size){
 
 /**Reads one Bit returns a char with value 0/1 (B) **/
 duint8 dwgBuffer::getBit(){
+    if (!isGood()) return 0;
     duint8 buffer;
     duint8 ret = 0;
     if (bitPos == 0){
@@ -241,7 +243,7 @@ bool dwgBuffer::getBoolBit(){
 
 /**Reads two Bits returns a char (BB) **/
 duint8 dwgBuffer::get2Bits(){
-    duint8 buffer;
+    duint8 buffer = 0;
     duint8 ret = 0;
     if (bitPos == 0){
         filestr->read (&buffer,1);
@@ -264,10 +266,9 @@ duint8 dwgBuffer::get2Bits(){
     return ret;
 }
 
-/**Reads thee Bits returns a char (3B) **/
-//RLZ: todo verify this
+/**Reads three Bits returns a char (3B) **/
 duint8 dwgBuffer::get3Bits(){
-    duint8 buffer;
+    duint8 buffer = 0;
     duint8 ret = 0;
     if (bitPos == 0){
         filestr->read (&buffer,1);
@@ -347,15 +348,16 @@ double dwgBuffer::getBitDouble(){
     if (b == 1)
         return 1.0;
     else if (b == 0){
-        duint8 buffer[8];
+        duint8 buffer[8] = {0};
         if (bitPos != 0) {
             for (int i = 0; i < 8; i++)
                 buffer[i] = getRawChar8();
         } else {
-        filestr->read (buffer,8);
+            filestr->read (buffer,8);
         }
-        double* ret = reinterpret_cast<double*>( buffer );
-        return *ret;
+        double ret = 0.0;
+        std::memcpy(&ret, buffer, 8);
+        return ret;
     }
     //    if (b == 2)
     return 0.0;
@@ -393,31 +395,31 @@ duint16 dwgBuffer::getRawShort16(){
     filestr->read (buffer,2);
     if (bitPos == 0) {
         /* no offset directly swap bytes for little-endian */
-        ret = (buffer[1] << 8) | (buffer[0] & 0x00FF);
+        ret = static_cast<duint16>((static_cast<duint32>(buffer[1]) << 8) | buffer[0]);
     } else {
-        ret = (buffer[0] << 8) | (buffer[1] & 0x00FF);
-        /* apply offset */
-        ret = ret >> (8 - bitPos);
-        ret = ret | (currByte << (8 + bitPos));
+        ret = static_cast<duint16>((static_cast<duint32>(buffer[0]) << 8) | buffer[1]);
+        /* apply offset; promote currByte to duint32 to avoid implicit-int shift surprises */
+        ret = static_cast<duint16>(ret >> (8 - bitPos));
+        ret = static_cast<duint16>(ret | (static_cast<duint32>(currByte) << (8 + bitPos)));
         currByte = buffer[1];
         /* swap bytes for little-endian */
-        ret = (ret << 8) | (ret >> 8);
+        ret = static_cast<duint16>((ret << 8) | (ret >> 8));
     }
     return ret;
 }
 
 /**Reads raw double IEEE standard 64 bits returns a double (RD) **/
 double dwgBuffer::getRawDouble(){
-    duint8 buffer[8];
-    memset(buffer,0,sizeof(buffer));
+    duint8 buffer[8] = {0};
     if (bitPos == 0)
         filestr->read (buffer,8);
     else {
         for (int i = 0; i < 8; i++)
             buffer[i] = getRawChar8();
     }
-    double* nOffset = reinterpret_cast<double*>( buffer );
-    return *nOffset;
+    double ret = 0.0;
+    std::memcpy(&ret, buffer, 8);
+    return ret;
 }
 
 /**Reads 2 raw double IEEE standard 64 bits returns a DRW_Coord of floating point double 64 bits (2RD) **/
@@ -429,7 +431,7 @@ DRW_Coord dwgBuffer::get2RawDouble(){
 }
 
 
-/**Reads raw int 32 bits little-endian order, returns a unsigned (RL) **/
+/**Reads raw int 32 bits little-endian order, returns a unsigned int (RL) **/
 duint32 dwgBuffer::getRawLong32(){
     duint16 tmp1 = getRawShort16();
     duint16 tmp2 = getRawShort16();
@@ -447,7 +449,7 @@ duint64 dwgBuffer::getRawLong64(){
     return ret;
 }
 
-/**Reads modular unsigner int, char based, compressed form, little-endian order, returns a unsigned (U-MC) **/
+/**Reads modular unsigner int, char based, compressed form, little-endian order, returns a unsigned int (U-MC) **/
 duint32 dwgBuffer::getUModularChar(){
     std::vector<duint8> buffer;
     duint32 result =0;
@@ -495,7 +497,7 @@ dint32 dwgBuffer::getModularChar(){
     return result;
 }
 
-/**Reads modular int, short based, compressed form, little-endian order, returns a unsigned (MC) **/
+/**Reads modular int, short based, compressed form, little-endian order, returns a unsigned int (MC) **/
 dint32 dwgBuffer::getModularShort(){
 //    bool negative = false;
     std::vector<dint16> buffer;
@@ -578,7 +580,10 @@ std::string dwgBuffer::get8bitStr(){
     }*/
     std::string str(reinterpret_cast<char*>(tmpBuffer), textSize);
     delete[]tmpBuffer;
-
+    // R13/R14 TV strings include the null terminator in the length field;
+    // strip it so comparisons like recName == "LWPOLYLINE" work correctly.
+    while (!str.empty() && str.back() == '\0')
+        str.pop_back();
     return str;
 }
 
@@ -745,7 +750,10 @@ double dwgBuffer::getThickness(bool b_R2000_style) {
 * For R2004+, can be CMC or ENC
 * RGB value, first 4bits 0xC0 => ByLayer, 0xC1 => ByBlock, 0xC2 => RGB,  0xC3 => last 4 are ACIS
 */
-duint32 dwgBuffer::getCmColor(DRW::Version v) {
+duint32 dwgBuffer::getCmColor(DRW::Version v, dint32* rgb24,
+                              dwgBuffer* strBuf,
+                              UTF8STRING* outName,
+                              UTF8STRING* outBookName) {
     if (v < DRW::AC1018) //2000-
         return getSBitShort();
     duint16 idx = getBitShort();
@@ -756,13 +764,20 @@ duint32 dwgBuffer::getCmColor(DRW::Version v) {
     DRW_DBG("\nindex COLOR: "); DRW_DBGH(idx);
     DRW_DBG("\nRGB COLOR: "); DRW_DBGH(rgb);
     DRW_DBG("\nbyte COLOR: "); DRW_DBGH(cb);
+    // libreDWG bits.c:3722-3724 reads color.name / book_name via bit_read_T
+    // from str_dat — for R2007+ that's the separate string stream, for
+    // earlier versions it's the same buffer. We mirror that: read from the
+    // strBuf if provided, otherwise from this (matches historical behavior).
+    dwgBuffer* nameSource = strBuf ? strBuf : this;
     if (cb&1){
-        std::string colorName = getVariableText(v, false);
+        UTF8STRING colorName = nameSource->getVariableText(v, false);
         DRW_DBG("\ncolorName: "); DRW_DBG(colorName);
+        if (outName) *outName = std::move(colorName);
     }
     if (cb&2){
-        std::string bookName = getVariableText(v, false);
+        UTF8STRING bookName = nameSource->getVariableText(v, false);
         DRW_DBG("\nbookName: "); DRW_DBG(bookName);
+        if (outBookName) *outBookName = std::move(bookName);
     }
     switch (type) {
     case 0xC0:
@@ -770,7 +785,12 @@ duint32 dwgBuffer::getCmColor(DRW::Version v) {
     case 0xC1:
         return 0;//ByBlock
     case 0xC2:
-        return 256;//RGB RLZ TODO
+        //true RGB: expose the 24-bit color via out-param for callers that
+        //track DXF code 420 (DRW_Layer.color24, etc.); return ByLayer
+        //sentinel for the indexed-color slot.
+        if (rgb24)
+            *rgb24 = static_cast<dint32>(rgb & 0xFFFFFF);
+        return 256;
     case 0xC3:
         return rgb&0xFF;//ACIS
     default:
@@ -793,24 +813,52 @@ duint32 dwgBuffer::getEnColor(DRW::Version v) {
     duint16 idx = getBitShort();
     DRW_DBG("idx reads COLOR: "); DRW_DBGH(idx);
     duint16 flags = idx>>8;
-    idx = idx & 0x1FF; //RLZ: warning this is correct?
+    // libreDWG common_entity_data.spec:424 uses 0x1ff because index 256 (ByLayer)
+    // requires bit 8. Bit 8 is shared between flag's LSB and index's MSB; the
+    // encoder ORs them at write time. We replicate the decoder mask exactly.
+    idx = idx & 0x1FF;
     DRW_DBG("\nflag COLOR: "); DRW_DBGH(flags);
     DRW_DBG(", index COLOR: "); DRW_DBGH(idx);
 //    if (flags & 0x80) {
 //        rgb = getBitLong();
 //        DRW_DBG("\nRGB COLOR: "); DRW_DBGH(rgb);
 //    }
+    // libreDWG common_entity_data.spec:432-453 — when flag 0x20 set, BL
+    // alpha_raw follows. High byte is alpha_type (0/1/3), low byte is
+    // alpha 0..255. Stored in side-channel for DRW_Entity::parseDwg.
+    lastEnColorAlphaRaw = 0;
     if (flags & 0x20) {
-        cb = getBitLong();
-        DRW_DBG("\nTransparency COLOR: "); DRW_DBGH(cb);
+        lastEnColorAlphaRaw = static_cast<duint32>(getBitLong());
+        cb = lastEnColorAlphaRaw; // keep cb for legacy DRW_DBG below
+        DRW_DBG("\nTransparency COLOR (alpha_raw): "); DRW_DBGH(lastEnColorAlphaRaw);
     }
-    if (flags & 0x40)
-        DRW_DBG("\nacdbColor COLOR are present");
-    else {
-        if (flags & 0x80) {
-            rgb = getBitLong();
-            DRW_DBG("\nRGB COLOR: "); DRW_DBGH(rgb);
-        }
+    // libreDWG common_entity_data.spec:454-466: when 0x40 set, an AcDbColor
+    // handle reference follows in hdl_dat — set side-channel flag for
+    // DRW_Entity::parseDwg / parseDwgEntHandle to consume it from the handle
+    // stream. When 0x40 NOT set but 0x80 IS set, an inline RGB BL follows.
+    lastEnColorHadDbColorRef = false;
+    if (flags & 0x40) {
+        DRW_DBG("\nacdbColor COLOR ref (handle in hdl_dat)");
+        lastEnColorHadDbColorRef = true;
+    } else if (flags & 0x80) {
+        rgb = getBitLong();
+        DRW_DBG("\nRGB COLOR: "); DRW_DBGH(rgb);
+    }
+    // libreDWG common_entity_data.spec:468-475 — when 0x41/0x42 set
+    // (i.e., 0x40 + bit 0/1), inline 8-bit TV strings follow. libreDWG
+    // explicitly uses FIELD_TV (8-bit from dat), not FIELD_T (which would
+    // dispatch to TU/str_dat for R2007+) — deliberate spec quirk verified
+    // against real files. We use getCP8Text which reads 8-bit length-
+    // prefixed and codepage-decodes to UTF-8.
+    lastEnColorName.clear();
+    lastEnColorBookName.clear();
+    if ((flags & 0x41) == 0x41) {
+        lastEnColorName = getCP8Text();
+        DRW_DBG("\nENC color name: "); DRW_DBG(lastEnColorName);
+    }
+    if ((flags & 0x42) == 0x42) {
+        lastEnColorBookName = getCP8Text();
+        DRW_DBG("\nENC book name: "); DRW_DBG(lastEnColorBookName);
     }
 
 /*    if (flags & 0x80)

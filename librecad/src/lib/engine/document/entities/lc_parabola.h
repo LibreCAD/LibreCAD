@@ -91,7 +91,7 @@ std::ostream& operator << (std::ostream& os, const LC_ParabolaData& ld);
 class LC_Parabola : public LC_SplinePoints // RS_EntityContainer
 {
 private:
-    LC_ParabolaData data;
+    LC_ParabolaData m_data;
 
 public:
     LC_Parabola(RS_EntityContainer* parent, const LC_ParabolaData& d);
@@ -101,7 +101,7 @@ public:
     /**	@return RS2::EntityParabola */
     RS2::EntityType rtti() const override;
 
-    /** @return false */
+    /** @return true */
     bool isEdge() const override
     {
         return true;
@@ -110,11 +110,11 @@ public:
     /** @return Copy of data that defines the spline. */
     LC_ParabolaData const& getData() const
     {
-        return data;
+        return m_data;
     }
     LC_ParabolaData& getData()
     {
-        return data;
+        return m_data;
     }
 
     /** \brief return the equation of the entity

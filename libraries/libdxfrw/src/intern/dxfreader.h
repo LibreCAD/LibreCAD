@@ -31,11 +31,11 @@ public:
         filestr = stream;
         type = INVALID;
     }
-    virtual ~dxfReader() = default;
+    virtual ~dxfReader(){}
     bool readRec(int *code);
 
     std::string getString() {return strData;}
-    int getHandleId();//Convert hex string to int
+    int getHandleString();//Convert hex string to int
     std::string toUtf8String(std::string t) {return decoder.toUtf8(t);}
     std::string getUtf8String() {return decoder.toUtf8(strData);}
     double getDouble() {return doubleData;}
@@ -74,29 +74,31 @@ private:
 class dxfReaderBinary : public dxfReader {
 public:
     dxfReaderBinary(std::istream *stream):dxfReader(stream){skip = false; }
-    bool readCode(int *code) override;
-    bool readString(std::string *text) override;
-    bool readString() override;
-    bool readBinary() override;
-    bool readInt16() override;
-    bool readInt32() override;
-    bool readInt64() override;
-    bool readDouble() override;
-    bool readBool() override;
+    virtual ~dxfReaderBinary() {}
+    virtual bool readCode(int *code);
+    virtual bool readString(std::string *text);
+    virtual bool readString();
+    virtual bool readBinary();
+    virtual bool readInt16();
+    virtual bool readInt32();
+    virtual bool readInt64();
+    virtual bool readDouble();
+    virtual bool readBool();
 };
 
 class dxfReaderAscii : public dxfReader {
 public:
     dxfReaderAscii(std::istream *stream):dxfReader(stream){skip = true; }
-    bool readCode(int *code) override;
-    bool readString(std::string *text) override;
-    bool readString() override;
-    bool readBinary() override;
-    bool readInt16() override;
-    bool readDouble() override;
-    bool readInt32() override;
-    bool readInt64() override;
-    bool readBool() override;
+    virtual ~dxfReaderAscii(){}
+    virtual bool readCode(int *code);
+    virtual bool readString(std::string *text);
+    virtual bool readString();
+    virtual bool readBinary();
+    virtual bool readInt16();
+    virtual bool readDouble();
+    virtual bool readInt32();
+    virtual bool readInt64();
+    virtual bool readBool();
 };
 
 #endif // DXFREADER_H

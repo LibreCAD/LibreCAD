@@ -110,6 +110,16 @@ struct LC_SecondMoment {
 
     /**
      * @brief Shift origin to new point using the parallel-axis theorem.
+     *
+     * FIXME: This formula is wrong for the documented `ixx = ∬x²dA` /
+     * `iyy = ∬y²dA` convention. The correct parallel-axis shift for ixx is
+     * `+area*dx*dx`, not `+area*dy*dy` (and vice versa for iyy). This
+     * matches `getCentral` below, which uses the right formula. New callers
+     * should NOT use `shifted`; perform the shift inline (see
+     * `LC_Hyperbola::firstMomentLineIntegral` for an example). Existing
+     * callers (RS_Ellipse arc moments, lc_parabola) are deferred — they
+     * have the same bug and will be fixed in a follow-up that swaps the
+     * formula here and audits all callers together.
      */
     LC_SecondMoment shifted(double dx, double dy, double area) const {
         return {

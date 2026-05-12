@@ -24,13 +24,19 @@
 #ifndef LC_EXTENTITYDATA_H
 #define LC_EXTENTITYDATA_H
 
+#include <memory>
+
+#include <QByteArray>
+
 #include "rs_variable.h"
 
 class LC_ExtDataTag {
     enum TYPE {
         VAR,
         LIST,
-        REF
+        REF,        // entity-handle reference (DXF code 1005)
+        LAYERREF,   // layer-table name reference (DXF code 1003 / DWG EED type 3)
+        BIN         // binary chunk (DXF code 1004 / DWG EED type 4)
     };
 public:
     LC_ExtDataTag();
@@ -38,18 +44,24 @@ public:
     LC_ExtDataTag(int code, int value);
     LC_ExtDataTag(int code, double value);
     LC_ExtDataTag(int code, const QString& value, bool asReference = false);
+    LC_ExtDataTag(int code, const QString& value, bool asReference, bool asLayerRef);
+    LC_ExtDataTag(int code, const QByteArray& bytes);
     explicit LC_ExtDataTag(RS_Variable* var);
     ~LC_ExtDataTag();
     void add(RS_Variable* v);
     void add(LC_ExtDataTag* tag);
     bool isAtomic() const;
     bool isRef() const;
+    bool isLayerRef() const;
+    bool isBinary() const;
     RS_Variable* var() const;
+    const QByteArray& bytes() const { return m_bytes; }
     std::vector<LC_ExtDataTag*>* list();
 private:
     void clear();
     RS_Variable* m_var{nullptr};
     std::vector<LC_ExtDataTag*> m_list;
+    QByteArray m_bytes;
     TYPE type {VAR};
 };
 
@@ -61,6 +73,8 @@ public:
     void add(int code, double value);
     void add(int code, const QString& value);
     void addRef(int code, const QString& value);
+    void addLayerRef(int code, const QString& layerName);
+    void add(int code, const QByteArray& bytes);
     void add(int code, const RS_Vector& value);
     void add(int code, LC_ExtDataTag* tagData);
     QString getName();
@@ -92,6 +106,8 @@ public:
     LC_ExtDataAppData* getAppDataByName(const QString& groupName);
     LC_ExtDataGroup* getGroupByName(const QString& appName, const QString& groupName);
     std::vector<LC_ExtDataAppData*>* getAppData();
+    /// Deep-copy clone for ownership transfer (e.g. RS_Entity copy ctor).
+    std::unique_ptr<LC_ExtEntityData> clone() const;
 private:
     std::vector<LC_ExtDataAppData*> m_appData;
 };

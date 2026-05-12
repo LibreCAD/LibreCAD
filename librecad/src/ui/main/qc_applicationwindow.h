@@ -32,6 +32,8 @@
 #include "lc_actioncontext.h"
 #include "lc_mdiapplicationwindow.h"
 
+class RS_Graphic;
+class RS_GraphicView;
 class LC_ActionFactory;
 class LC_ActionGroupManager;
 class LC_ActionGroup;
@@ -306,6 +308,12 @@ public:
     void changeDrawingOptions(int tabIndex);
     void closeWindow(QC_MDIWindow* w) override;
     QG_LibraryWidget* getLibraryWidget() const {return m_libraryWidget;}
+    // If a freshly opened drawing has empty modelspace but at least one
+    // user-named block (i.e. not a *Model_Space / *Paper_Space variant)
+    // contains geometry, raise the Blocks dock so the user can see what's
+    // there.  Returns the count of non-empty user blocks (0 means trigger
+    // didn't fire and the dock is left alone).
+    int maybeSurfaceBlocksDock(RS_Graphic* graphic);
     LC_ActionGroup* getActionGroup(const QString &groupName) const;
     LC_ActionContext* getActionContext() const;
 protected:

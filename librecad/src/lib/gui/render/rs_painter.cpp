@@ -255,6 +255,10 @@ void RS_Painter::drawPointEntityUI(const RS_Vector& uiPos, int pdmode, int pdsiz
     }
 }
 
+RS_Color RS_Painter::getBackgroundColor() const {
+    return renderer ? renderer->getBackgroundColor() : RS_Color{};
+}
+
 void RS_Painter::drawSolidWCS(const RS_VectorSolutions& wcsVertices) {
     QPolygonF uiPolygon;
     for (const RS_Vector& wcsVertex : wcsVertices) {
@@ -755,6 +759,15 @@ void RS_Painter::drawEllipseUI(const RS_Vector& uiCenter, const RS_Vector& uiRad
 
         if (uiRadii.y < minEllipseMinorRadius) {//ellipse too small
             QPainter::drawLine( - radii, radii);
+        } else if (std::max(uiRadii.x, uiRadii.y) > getMaximumArcNonErrorRadius()) {
+            // Qt's drawEllipse uses 4 cubic Bezier curves with ~3e-4 relative error;
+            // beyond getMaximumArcNonErrorRadius() this exceeds 1 pixel. Fall back to
+            // the same quadratic-spline scheme used by drawEllipseArcUI for consistency.
+            // RS_Ellipse::draw filters on the smaller radius, so very flat ellipses
+            // (small minor, large major) can still reach this branch.
+            QPainterPath path;
+            drawEllipseSegmentBySplinePointsUI(uiRadii, 0., 2. * M_PI, path, true);
+            QPainter::drawPath(path);
         } else {
             QPainter::drawEllipse(QRectF{- radii, radii});
         }
@@ -801,8 +814,11 @@ void RS_Painter::drawEllipseArcUI(const RS_Vector& uiCenter, const RS_Vector& ui
 
 void RS_Painter::addEllipseArcToPath(QPainterPath& localPath, const RS_Vector& uiRadii, double startAngleDeg, double angularLengthDeg, bool useSpline) {
     if (useSpline) {
-        double startRad = RS_Math::deg2rad(toUCSAngleDegrees(startAngleDeg));
-        double lenRad = RS_Math::deg2rad(toUCSAngleDegrees(angularLengthDeg));
+        // The active QTransform already accounts for the ellipse's major-axis rotation,
+        // so startAngleDeg / angularLengthDeg are in the canonical (axis-aligned) frame.
+        // toUCSAngleDegrees would double-apply the UCS rotation and is meaningless on a delta length.
+        double startRad = RS_Math::deg2rad(startAngleDeg);
+        double lenRad = RS_Math::deg2rad(angularLengthDeg);
         drawEllipseSegmentBySplinePointsUI(uiRadii, startRad, lenRad, localPath, false);
     } else {
         QRectF rect(-uiRadii.x, -uiRadii.y, 2 * uiRadii.x, 2 * uiRadii.y);
@@ -813,14 +829,20 @@ void RS_Painter::addEllipseArcToPath(QPainterPath& localPath, const RS_Vector& u
 
 void RS_Painter::drawEllipseSegmentBySplinePointsUI(const RS_Vector& uiRadii, double startRad, double lenRad, QPainterPath &path, bool closed)
 {
-    double r = std::max(uiRadii.x, uiRadii.y);
-    // maximum angular step size: using this angular step size keeps the maximum
-    // deviation of an arc from its parabola fitting
-    const double dParam = std::pow(1./32. / r, 1. / 4.);
+    // The interpolating-quadratic-spline error for samples taken uniformly in the
+    // ellipse angle parameter is e_max = max(a,b)^3 * h^4 / (24 * min(a,b)^2)
+    // (derivation in RS_Ellipse::createPainterPath). Using just max(a,b) as in a
+    // circle approximation drastically undercounts segments for flat ellipses; for
+    // a 100:1 ellipse with a=10000 px, b=100 px, the true worst-case error at h=2pi/24
+    // is ~20000 px. Calibrate against the curvature-aware r so the per-segment error
+    // tracks ~0.5 px regardless of axis ratio, matching pathForParametricCurve.
+    const double maxSemi = std::max(uiRadii.x, uiRadii.y);
+    const double minSemi = std::min(uiRadii.x, uiRadii.y);
+    const double r = (minSemi > RS_TOLERANCE)
+        ? (maxSemi * maxSemi * maxSemi) / (minSemi * minSemi)
+        : maxSemi;
+    const double dParam = std::pow(12. / r, 1. / 4.);
     int numSegments = std::max(1, int(std::ceil(std::abs(lenRad) / dParam)));
-  // Avoid performance issue: too many points when zoomed in
-  // The maximum rendering error is relaxed
-    numSegments = std::min(24, numSegments);
     // Don't duplicate first point for closed
     int numPoints = closed ? numSegments : numSegments + 1;
     double delta = lenRad / numSegments;
@@ -837,44 +859,15 @@ void RS_Painter::drawEllipseSegmentBySplinePointsUI(const RS_Vector& uiRadii, do
     }
 
     LC_SplinePoints spline(nullptr, data);
-    addSplinePointsToPath(spline.getData().controlPoints, closed, path);
-}
-
-
-void RS_Painter::drawEllipseBySplinePointsUI(const RS_Ellipse& ellipse, QPainterPath &path)
-{
-  RS_Vector uiRadii{toGuiDX(ellipse.getMajorRadius()), toGuiDY(ellipse.getMinorRadius())};
-  double r = std::max(uiRadii.x, uiRadii.y);
-  // maximum angular step size: using this angular step size keeps the maximum
-  // deviation of an arc from its parabola fitting
-  const double dParam = std::pow(1./32. / r, 1. / 4.);
-  double lenRad = ellipse.getAngleLength();
-  int numSegments = std::max(1, int(std::ceil(std::abs(lenRad) / dParam)));
-  // Avoid performance issue: too many points when zoomed in
-  // The maximum rendering error is relaxed
-  numSegments = std::min(numSegments, 24);
-  // Don't duplicate first point for closed
-  const bool closed = !ellipse.isEllipticArc();
-  int numPoints = closed ? numSegments : numSegments + 1;
-  double delta = ellipse.isReversed() ? - lenRad / numSegments : lenRad / numSegments;
-
-  LC_SplinePointsData data;
-  data.closed = closed;
-
-  double param = ellipse.getAngle1();
-  RS_Vector rotation{ellipse.getMajorP().angle()};
-  RS_Vector center = ellipse.getCenter();
-
-  const RS_Vector scaleXY(ellipse.getMajorRadius(), ellipse.getMinorRadius());
-  for (int i = 0; i < numPoints; ++i) {
-    const RS_Vector ellipsePoint = RS_Vector{param}.scale(scaleXY).rotate(rotation).move(center);
-    data.splinePoints.push_back(toGui(ellipsePoint));
-    LC_ERR<<"Ellipse Point: param="<<param<<" , "<<ellipsePoint;
-    param += delta;
-  }
-
-  LC_SplinePoints spline(nullptr, data);
-  addSplinePointsToPath(spline.getData().controlPoints, ellipse.isEllipticArc(), path);
+    const auto& controlPoints = spline.getData().controlPoints;
+    // For the open case, addSplinePointsToPath relies on the caller having positioned
+    // the path at controlPoints[0]; the closed case does its own moveTo. Since this
+    // helper is invoked with a fresh empty path from drawEllipseArcUI, we must seed
+    // the start position here to avoid a phantom segment from (0,0).
+    if (!closed && !controlPoints.empty()) {
+        path.moveTo(QPointF(controlPoints.front().x, controlPoints.front().y));
+    }
+    addSplinePointsToPath(controlPoints, closed, path);
 }
 
 void RS_Painter::addSplinePointsToPath(const std::vector<RS_Vector> &uiControlPoints, bool closed, QPainterPath &qPath) const
@@ -1731,9 +1724,6 @@ void RS_Painter::pathForParametricCurve(
     double approxRadius
 ) const
 {
-  LC_LOG<<__func__<<"(): begin";
-
-    const LC_Rect& vpRect = getWcsBoundingRect();
     double scale = toGuiDX(1.);
     double maxErrorPx = 0.5; // Max approximation error in pixels
     // Normalized error e_r = maxErrorPx / (approxRadius * scale)
@@ -1749,21 +1739,16 @@ void RS_Painter::pathForParametricCurve(
         double segmentLength = d2 - d1;
         if (segmentLength < RS_TOLERANCE_ANGLE) continue;
 
-        double midP = (d1 + d2) / 2.0;
-        RS_Vector midPoint = getPointAtParam(midP);
-        bool visible = vpRect.inArea(midPoint, RS_TOLERANCE);
-
         if (!std::isnormal(theta) || theta < RS_TOLERANCE_ANGLE)
             theta = M_PI / 12; // Fallback ~15 deg
         int numSamples = static_cast<int>(std::ceil(segmentLength / theta));
         numSamples = std::max(numSamples, 2);
-        if (!visible) {
-          // TODO: replace this with a more efficient and error-proof algorithm
-          // The QPainterPath for an invisible segment should never run into the
-          // viewport. If the number of sampling points is small, the path may
-          // become partially visible, causing artifacts in rendering.
-          numSamples = std::min(numSamples, 9);
-        }
+        // Off-screen segments must use the same calibrated sample count as visible ones.
+        // Capping them coarse causes the chord-style approximation to wander into the
+        // viewport, which corrupts hatch fill regions (the chord between two off-screen
+        // endpoints can cut across the viewport even when the actual arc stays outside).
+        // The per-sample cost is just a getPointAtParam() call, so even off-screen
+        // full ellipses at extreme zoom only add ~hundreds of FP ops per frame.
 
         std::vector<RS_Vector> samples;
         double step = segmentLength / numSamples;
@@ -1788,7 +1773,6 @@ void RS_Painter::pathForParametricCurve(
         }
         addSplinePointsToPath(uiCps, false, path);
     }
-  LC_LOG<<__func__<<"(): end";
 }
 
 void RS_Painter::pathForEntity(
