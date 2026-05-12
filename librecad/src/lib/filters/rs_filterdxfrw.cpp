@@ -2921,6 +2921,176 @@ void RS_FilterDXFRW::addLeader(const DRW_Leader *data) {
     m_currentContainer->addEntity(leader);
 }
 
+namespace {
+// Sample count for the cubic-NURBS → quadratic spline-points sampling branch
+// in buildHatchSplineEdge. See plan §C.2.
+constexpr int kHatchSplineSamples = 64;
+}  // namespace
+
+/**
+ * Build an LC_SplinePoints from a DRW_Spline hatch-boundary edge.
+ * All degrees converge to a quadratic spline-points representation:
+ *   degree==2 fit-points-only          → pass-through as splinePoints
+ *   degree==2 control-net              → pass-through as controlPoints
+ *   degree==1 or degree==3             → sample 64 points via a throwaway
+ *                                        RS_Spline evaluator
+ * Returns nullptr on degenerate input. See plan §C.1-§C.3.
+ */
+LC_SplinePoints* RS_FilterDXFRW::buildHatchSplineEdge(
+        RS_EntityContainer* hatchLoop, const DRW_Spline* s) {
+    if (s == nullptr) return nullptr;
+    if (s->degree < 1 || s->degree > 3) {
+        RS_DEBUG->print(RS_Debug::D_WARNING,
+            "buildHatchSplineEdge: unsupported degree %d", s->degree);
+        return nullptr;
+    }
+    if (s->controllist.empty() && s->fitlist.empty()) {
+        RS_DEBUG->print(RS_Debug::D_WARNING,
+            "buildHatchSplineEdge: spline edge has neither control nor fit points");
+        return nullptr;
+    }
+
+    // DXF entity-level splines store "closed" in bit 0; DWG hatch-boundary
+    // streams store "periodic" in bit 1 and never set bit 0 (see
+    // libraries/libdxfrw/src/drw_entities.cpp parseDwg at lines 2799-2800).
+    // Either bit implies a closed curve.
+    const bool closed = (s->flags & 0x3) != 0;
+    LC_SplinePointsData sd(closed, /*cut*/false);
+
+    if (s->degree == 2 && s->controllist.empty() && !s->fitlist.empty()) {
+        // Branch 1: degree==2 with fit points only — pass through.
+        sd.useControlPoints = false;
+        for (const auto& fp : s->fitlist) {
+            if (fp) sd.splinePoints.push_back(RS_Vector{fp->x, fp->y});
+        }
+    } else if (s->degree == 2 && !s->controllist.empty()) {
+        // Branch 2: degree==2 with control net — pass through.
+        sd.useControlPoints = true;
+        for (const auto& cp : s->controllist) {
+            if (cp) sd.controlPoints.push_back(RS_Vector{cp->x, cp->y});
+        }
+    } else {
+        // Branch 3: degree==1 or degree==3. Sample the NURBS at 64 points
+        // via a throwaway RS_Spline; the samples become fit points.
+        // Fall back to treating control points as a polyline if the knot
+        // vector is missing or short.
+        const size_t needKnots = s->controllist.size() + size_t(s->degree) + 1;
+        if (s->knotslist.size() < needKnots) {
+            RS_DEBUG->print(RS_Debug::D_WARNING,
+                "buildHatchSplineEdge: short knot vector (%zu < %zu); "
+                "treating control points as polyline",
+                s->knotslist.size(), needKnots);
+            sd.useControlPoints = false;
+            for (const auto& cp : s->controllist) {
+                if (cp) sd.splinePoints.push_back(RS_Vector{cp->x, cp->y});
+            }
+        } else {
+            RS_SplineData td(s->degree, closed);
+            td.type = closed ? RS_SplineData::SplineType::Standard
+                             : RS_SplineData::SplineType::ClampedOpen;
+            const double tolknot = (s->tolknot > 0.0) ? s->tolknot : 1e-7;
+            for (double k : s->knotslist) {
+                td.knotslist.push_back(RS_Math::round(k, tolknot));
+            }
+
+            auto tmp = std::make_unique<RS_Spline>(nullptr, td);
+            const bool isRational = (s->flags & 0x4) != 0;
+            for (size_t i = 0; i < s->controllist.size(); ++i) {
+                const auto& cp = s->controllist[i];
+                if (!cp) continue;
+                // DXF stores rational weights in weightlist; DWG hatch-
+                // boundary stream stores them on controllist[i]->z. Check
+                // both. See plan §C.3.
+                double w = 1.0;
+                if (isRational) {
+                    if (i < s->weightlist.size()) w = s->weightlist[i];
+                    else                          w = cp->z;
+                }
+                tmp->addControlPointRaw({cp->x, cp->y}, w);
+            }
+            if (closed) tmp->setClosed(true);
+            tmp->update();
+
+            sd.useControlPoints = false;
+            sd.splinePoints.reserve(kHatchSplineSamples);
+            tmp->fillStrokePoints(kHatchSplineSamples - 1, sd.splinePoints);
+        }
+    }
+
+    if (sd.splinePoints.size() < 2 && sd.controlPoints.size() < 2) {
+        RS_DEBUG->print(RS_Debug::D_WARNING,
+            "buildHatchSplineEdge: degenerate spline edge (too few points)");
+        return nullptr;
+    }
+
+    // Some DWG hatch boundaries encode a geometrically-closed spline with
+    // both flag bits unset (and an accompanying 0-length line as a closure
+    // marker). Detect endpoint coincidence in the populated point list and
+    // flip the closed flag so LoopExtractor treats it as a single closed
+    // loop instead of an open edge whose start==end. Closed LC_SplinePoints
+    // expects a periodic point list without an explicit closing repeat —
+    // drop the duplicate tail when present.
+    if (!sd.closed) {
+        if (!sd.splinePoints.empty()
+            && sd.splinePoints.front().distanceTo(sd.splinePoints.back()) <= 1e-8) {
+            sd.closed = true;
+            if (sd.splinePoints.size() > 2) sd.splinePoints.pop_back();
+        } else if (!sd.controlPoints.empty()
+                   && sd.controlPoints.front().distanceTo(sd.controlPoints.back()) <= 1e-8) {
+            sd.closed = true;
+            if (sd.controlPoints.size() > 2) sd.controlPoints.pop_back();
+        }
+    }
+
+    return new LC_SplinePoints(hatchLoop, std::move(sd));
+}
+
+/**
+ * Snap LC_SplinePoints endpoints inside hatchLoop to neighboring line-like
+ * edge endpoints when the gap is within 10× ENDPOINT_TOLERANCE (1e-7) but
+ * non-zero. Boundary-stream float drift can leave ~1e-9 to ~1e-8 gaps that
+ * break LoopExtractor's endpoint-chaining. The 10× window is small enough
+ * that geometrically distinct edges never stitch.
+ */
+void RS_FilterDXFRW::snapSplineEdgeEndpoints(RS_EntityContainer* hatchLoop) {
+    if (hatchLoop == nullptr || hatchLoop->count() < 2) return;
+    constexpr double kSnapWindow = 1e-7;  // 10× ENDPOINT_TOLERANCE
+    const unsigned int n = hatchLoop->count();
+
+    auto setSplineEnd = [](LC_SplinePoints* sp, bool atFront, const RS_Vector& v) {
+        auto& d = sp->getData();
+        if (d.useControlPoints && !d.controlPoints.empty()) {
+            if (atFront) d.controlPoints.front() = v;
+            else         d.controlPoints.back()  = v;
+        } else if (!d.splinePoints.empty()) {
+            if (atFront) d.splinePoints.front() = v;
+            else         d.splinePoints.back()  = v;
+        }
+        sp->update();
+    };
+
+    for (unsigned int i = 0; i < n; ++i) {
+        RS_Entity* cur = hatchLoop->entityAt(i);
+        RS_Entity* nxt = hatchLoop->entityAt((i + 1) % n);
+        if (cur == nullptr || nxt == nullptr) continue;
+
+        const bool curSpline = cur->rtti() == RS2::EntitySplinePoints;
+        const bool nxtSpline = nxt->rtti() == RS2::EntitySplinePoints;
+        if (curSpline == nxtSpline) continue;  // line-line or spline-spline
+
+        const RS_Vector curEnd = cur->getEndpoint();
+        const RS_Vector nxtBeg = nxt->getStartpoint();
+        const double gap = curEnd.distanceTo(nxtBeg);
+        if (gap <= 0.0 || gap >= kSnapWindow) continue;
+
+        if (curSpline) {
+            setSplineEnd(static_cast<LC_SplinePoints*>(cur), /*atFront*/false, nxtBeg);
+        } else {
+            setSplineEnd(static_cast<LC_SplinePoints*>(nxt), /*atFront*/true, curEnd);
+        }
+    }
+}
+
 /**
  * Implementation of the method which handles hatch entities.
  */
@@ -3031,6 +3201,11 @@ void RS_FilterDXFRW::addHatch(const DRW_Hatch *data) {
                                             e2->ratio, ang1, ang2, !e2->isccw}};
                         break;
                     }
+                    case DRW::SPLINE: {
+                        e = buildHatchSplineEdge(
+                                hatchLoop, static_cast<DRW_Spline*>(ent.get()));
+                        break;
+                    }
                     default:
                         break;
                 }
@@ -3039,6 +3214,11 @@ void RS_FilterDXFRW::addHatch(const DRW_Hatch *data) {
                     hatchLoop->addEntity(e);
                 }
             }
+            // After all explicit-segment edges are attached, snap spline
+            // endpoints to neighboring line endpoints if a tiny float gap
+            // is the only thing standing between LoopExtractor and a closed
+            // chain. See plan §C.1.
+            snapSplineEdgeEndpoints(hatchLoop);
         }
 
     }
@@ -5437,6 +5617,73 @@ void RS_FilterDXFRW::writeLeader(RS_Leader* l) {
     m_dxfW->writeLeader(&leader);
 }
 
+namespace {
+
+// Emit an LC_SplinePoints boundary edge as a degree-2 DRW_Spline. Either
+// the control net or the fit points are populated depending on the
+// LC_SplinePointsData mode. Knotslist is left empty; the libdxfrw reader
+// re-derives a clamped uniform knot vector when consuming this struct
+// (see drw_entities.cpp parseDwg). See plan §B.1.
+std::shared_ptr<DRW_Spline>
+makeDrwSplineFromSplinePoints(const LC_SplinePoints* sp) {
+    auto drw = std::make_shared<DRW_Spline>();
+    drw->degree = 2;
+    // Closed boundary edges set BOTH bit 0 (DXF entity-level "closed")
+    // AND bit 1 (DWG-boundary / DXF group code 74 "periodic"). The hatch
+    // boundary read path accepts either bit; this keeps cross-format
+    // round-trip consistent.
+    drw->flags  = sp->isClosed() ? 0x3 : 0x0;
+    const auto& d = sp->getData();
+    if (d.useControlPoints && !d.controlPoints.empty()) {
+        for (const auto& v : d.controlPoints)
+            drw->controllist.push_back(
+                std::make_shared<DRW_Coord>(v.x, v.y, 0.0));
+        drw->ncontrol = static_cast<dint32>(d.controlPoints.size());
+    } else {
+        for (const auto& v : d.splinePoints)
+            drw->fitlist.push_back(
+                std::make_shared<DRW_Coord>(v.x, v.y, 0.0));
+        drw->nfit = static_cast<dint32>(d.splinePoints.size());
+    }
+    return drw;
+}
+
+// Emit an RS_Spline (general NURBS, degree 1-3, possibly rational) boundary
+// edge as a DRW_Spline carrying its full data. Mirrors weight into both
+// drw->weightlist[i] AND drw->controllist[i]->z so both DXF and DWG
+// consumers can read it correctly. See plan §C.3.
+std::shared_ptr<DRW_Spline>
+makeDrwSplineFromRSSpline(const RS_Spline* sp) {
+    auto drw = std::make_shared<DRW_Spline>();
+    const auto& sd = sp->getData();
+    drw->degree = static_cast<dint32>(sd.degree);
+
+    const auto cps = sp->getControlPoints();
+    const auto ws  = sp->getWeights();
+    const bool weightsAlign = (ws.size() == cps.size());
+    const bool isRational = weightsAlign &&
+        std::any_of(ws.begin(), ws.end(),
+                    [](double w){ return std::abs(w - 1.0) > 1e-9; });
+    // Set both DXF entity-level closed (bit 0) and hatch-boundary
+    // periodic (bit 1) for cross-format consistency. See helper above.
+    drw->flags = (sp->isClosed() ? 0x3 : 0x0) | (isRational ? 0x4 : 0x0);
+
+    for (size_t i = 0; i < cps.size(); ++i) {
+        const double w = (isRational && i < ws.size()) ? ws[i] : 1.0;
+        drw->controllist.push_back(
+            std::make_shared<DRW_Coord>(cps[i].x, cps[i].y, w));
+    }
+    drw->ncontrol = static_cast<dint32>(cps.size());
+    if (isRational) {
+        drw->weightlist = ws;
+    }
+    drw->knotslist = sd.knotslist;
+    drw->nknots    = static_cast<dint32>(sd.knotslist.size());
+    return drw;
+}
+
+}  // namespace
+
 /**
  * Writes the given hatch entity to the file.
  */
@@ -5557,6 +5804,12 @@ void RS_FilterDXFRW::writeHatch(RS_Hatch * h) {
                     ell->endparam = endAng;
                     ell->isccw = !el->isReversed();
                     lData->objlist.push_back(ell);
+                } else if (ed->rtti()==RS2::EntitySplinePoints) {
+                    lData->objlist.push_back(
+                        makeDrwSplineFromSplinePoints(static_cast<LC_SplinePoints*>(ed)));
+                } else if (ed->rtti()==RS2::EntitySpline) {
+                    lData->objlist.push_back(
+                        makeDrwSplineFromRSSpline(static_cast<RS_Spline*>(ed)));
                 }
             }
             lData->update(); //change to DRW_HatchLoop

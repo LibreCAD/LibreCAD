@@ -217,6 +217,18 @@ public:
     static QString toDxfString(const QString& str);
     static QString toNativeString(const QString& data);
 
+    /** Build an LC_SplinePoints from a DRW_Spline boundary edge of a hatch
+     *  loop. Degrees 1, 2, and 3 all converge to a quadratic spline-points
+     *  representation; cubic input is approximated by 64-point sampling.
+     *  Returns nullptr on degenerate input. Exposed for unit tests. */
+    static LC_SplinePoints* buildHatchSplineEdge(RS_EntityContainer* hatchLoop,
+                                                 const DRW_Spline* s);
+
+    /** Snap LC_SplinePoints endpoints inside hatchLoop to neighboring
+     *  line-like edge endpoints when within 10× ENDPOINT_TOLERANCE.
+     *  Counters boundary-stream float drift in mixed loops. */
+    static void snapSplineEdgeEndpoints(RS_EntityContainer* hatchLoop);
+
 public:
     RS_Pen attributesToPen(const DRW_Layer* att) const;
 

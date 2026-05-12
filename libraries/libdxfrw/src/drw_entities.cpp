@@ -2564,6 +2564,11 @@ bool DRW_Hatch::parseCode(int code, const std::unique_ptr<dxfReader>& reader){
         }
         break;
     case 10:
+        // Spline edge: 10 is a control-point x-coord.
+        if (spline) {
+            spline->controllist.push_back(std::make_shared<DRW_Coord>(reader->getDouble(), 0.0, 0.0));
+            break;
+        }
         if (pt) pt->basePoint.x = reader->getDouble();
         else if (pline) {
             plvert = pline->addVertex();
@@ -2577,20 +2582,50 @@ bool DRW_Hatch::parseCode(int code, const std::unique_ptr<dxfReader>& reader){
         }
         break;
     case 20:
+        if (spline && !spline->controllist.empty()) {
+            spline->controllist.back()->y = reader->getDouble();
+            break;
+        }
         if (pt) pt->basePoint.y = reader->getDouble();
         else if (plvert) plvert ->y = reader->getDouble();
         else if (!seedPoints.empty())
             seedPoints.back().y = reader->getDouble();
         break;
     case 11:
+        // Spline edge: 11 is a fit-point x-coord.
+        if (spline) {
+            spline->fitlist.push_back(std::make_shared<DRW_Coord>(reader->getDouble(), 0.0, 0.0));
+            break;
+        }
         if (line) line->secPoint.x = reader->getDouble();
         else if (ellipse) ellipse->secPoint.x = reader->getDouble();
         break;
     case 21:
+        if (spline && !spline->fitlist.empty()) {
+            spline->fitlist.back()->y = reader->getDouble();
+            break;
+        }
         if (line) line->secPoint.y = reader->getDouble();
         else if (ellipse) ellipse->secPoint.y = reader->getDouble();
         break;
+    case 12:
+        if (spline) { spline->tgStart.x = reader->getDouble(); break; }
+        break;
+    case 22:
+        if (spline) { spline->tgStart.y = reader->getDouble(); break; }
+        break;
+    case 13:
+        if (spline) { spline->tgEnd.x = reader->getDouble(); break; }
+        break;
+    case 23:
+        if (spline) { spline->tgEnd.y = reader->getDouble(); break; }
+        break;
     case 40:
+        // Spline edge: 40 is a knot value (occurs nknots times).
+        if (spline) {
+            spline->knotslist.push_back(reader->getDouble());
+            break;
+        }
         if (arc) arc->radious = reader->getDouble();
         else if (ellipse) ellipse->ratio = reader->getDouble();
         break;
@@ -2598,6 +2633,11 @@ bool DRW_Hatch::parseCode(int code, const std::unique_ptr<dxfReader>& reader){
         scale = reader->getDouble();
         break;
     case 42:
+        // Spline edge: 42 is a per-control-point weight.
+        if (spline) {
+            spline->weightlist.push_back(reader->getDouble());
+            break;
+        }
         if (plvert) plvert ->bulge = reader->getDouble();
         break;
     case 50:
@@ -2612,8 +2652,36 @@ bool DRW_Hatch::parseCode(int code, const std::unique_ptr<dxfReader>& reader){
         angle = reader->getDouble();
         break;
     case 73:
+        // Spline edge: 73 is the rational flag (1 = rational).
+        if (spline) {
+            if (reader->getInt32()) spline->flags |= 0x4;
+            break;
+        }
         if (arc) arc->isccw = reader->getInt32();
         else if (pline) pline->flags = reader->getInt32();
+        break;
+    case 74:
+        // Spline edge: 74 is the periodic flag (1 = periodic/closed).
+        if (spline) {
+            if (reader->getInt32()) spline->flags |= 0x2;
+        }
+        break;
+    case 94:
+        // Spline edge degree.
+        if (spline) spline->degree = reader->getInt32();
+        break;
+    case 95:
+        // Spline edge number of knots.
+        if (spline) spline->nknots = reader->getInt32();
+        break;
+    case 96:
+        // Spline edge number of control points.
+        if (spline) spline->ncontrol = reader->getInt32();
+        break;
+    case 97:
+        // Spline edge number of fit points (also used as terminator for
+        // non-spline edges — only consume when spline is current).
+        if (spline) spline->nfit = reader->getInt32();
         break;
     case 75:
         hstyle = reader->getInt32();

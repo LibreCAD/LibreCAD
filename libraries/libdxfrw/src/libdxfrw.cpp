@@ -1138,10 +1138,37 @@ bool dxfRW::writeHatch(DRW_Hatch *ent){
                         writer->writeDouble(51, a->endparam*ARAD);
                         writer->writeInt16(73, a->isccw);
                         break; }
-                    case DRW::SPLINE:
-                        //RLZ: spline boundary writeme
-//                        writer->writeInt16(72, 4);
+                    case DRW::SPLINE: {
+                        writer->writeInt16(72, 4);
+                        DRW_Spline* sp = (DRW_Spline*)loop->objlist.at(j).get();
+                        writer->writeInt32(94, sp->degree);
+                        const bool rational = (sp->flags & 0x4) != 0;
+                        const bool periodic = (sp->flags & 0x2) != 0;
+                        writer->writeInt16(73, rational ? 1 : 0);
+                        writer->writeInt16(74, periodic ? 1 : 0);
+                        writer->writeInt32(95, static_cast<int>(sp->knotslist.size()));
+                        writer->writeInt32(96, static_cast<int>(sp->controllist.size()));
+                        for (double k : sp->knotslist) {
+                            writer->writeDouble(40, k);
+                        }
+                        for (size_t k = 0; k < sp->controllist.size(); ++k) {
+                            const auto& cp = sp->controllist[k];
+                            if (!cp) continue;
+                            writer->writeDouble(10, cp->x);
+                            writer->writeDouble(20, cp->y);
+                            if (rational) {
+                                double w = (k < sp->weightlist.size()) ? sp->weightlist[k] : 1.0;
+                                writer->writeDouble(42, w);
+                            }
+                        }
+                        writer->writeInt32(97, static_cast<int>(sp->fitlist.size()));
+                        for (const auto& fp : sp->fitlist) {
+                            if (!fp) continue;
+                            writer->writeDouble(11, fp->x);
+                            writer->writeDouble(21, fp->y);
+                        }
                         break;
+                    }
                     default:
                         break;
                     }

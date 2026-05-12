@@ -34,6 +34,7 @@
 
 // LibreCAD entity headers for end-to-end DRW→RS_Hatch pipeline tests.
 #include "lc_containertraverser.h"
+#include "lc_splinepoints.h"
 #include <QCoreApplication>
 
 #include "rs_arc.h"
@@ -683,7 +684,9 @@ RS_Hatch* buildRS_Hatch(const DRW_Hatch* data) {
                 hatchLoop->addEntity(tmp);
             }
         } else {
-            // Explicit-segment boundary: line, arc, ellipse (spline skipped same as filter).
+            // Explicit-segment boundary: line, arc, ellipse, spline.
+            // Mirrors RS_FilterDXFRW::addHatch dispatch including the
+            // DRW::SPLINE arm — keep this in lock-step.
             for (const auto& seg : loop->objlist) {
                 RS_Entity* e = nullptr;
                 switch (seg->eType) {
@@ -733,11 +736,19 @@ RS_Hatch* buildRS_Hatch(const DRW_Hatch* data) {
                          el->ratio, a1, a2, !el->isccw});
                     break;
                 }
+                case DRW::SPLINE: {
+                    e = RS_FilterDXFRW::buildHatchSplineEdge(
+                            hatchLoop, static_cast<DRW_Spline*>(seg.get()));
+                    break;
+                }
                 default:
                     break;
                 }
                 if (e) { e->setLayer(nullptr); hatchLoop->addEntity(e); }
             }
+            // Snap spline endpoints to neighboring line endpoints if a
+            // tiny float gap is the only thing blocking LoopExtractor.
+            RS_FilterDXFRW::snapSplineEdgeEndpoints(hatchLoop);
         }
     }
     return hatch;
@@ -1427,6 +1438,103 @@ TEST_CASE("DWG Architectural-Modern-Building-Design: hatch fill pipeline", "[.dw
               << "  Contour errors: " << contourErrors
               << "  Loop-loss hatches: " << loopLoss
               << "  Total: " << iface.hatches.size() << "\n";
+}
+
+// Verifies the spline-bordered SOLID hatch regression on ~/doc/dwg2/Sport-Man-Signs.dwg
+// (AC1021/R2007, 216 SOLID hatches, 272 spline boundary edges across 290 loops).
+// Before the DRW::SPLINE arm was added to addHatch, every spline boundary edge
+// was silently dropped and these fills rendered as slivers or vanished entirely.
+// Run:  ./librecad_tests "[.dwg_sport_signs]" -s
+TEST_CASE("DWG Sport-Man-Signs: SOLID hatches render with positive area",
+          "[.dwg_sport_signs]") {
+    const char* home = getenv("HOME");
+    if (!home) { SUCCEED("HOME not set; skipping"); return; }
+    const std::string path =
+        std::string(home) + "/doc/dwg2/Sport-Man-Signs.dwg";
+    if (!std::filesystem::is_regular_file(path)) {
+        SUCCEED("Sport-Man-Signs.dwg not present; skipping"); return;
+    }
+
+    HatchFillIface iface;
+    {
+        dwgR reader(path.c_str());
+        reader.setDebug(DRW::DebugLevel::None);
+        bool ok = reader.read(&iface, true);
+        REQUIRE(ok);
+    }
+
+    // libreDWG JSON ground truth: 216 HATCH entities, all SOLID, name "SOLID".
+    REQUIRE(iface.typeCounts.at("HATCH") == 216);
+
+    int solidCount        = 0;
+    int positiveAreaCount = 0;
+    int contourErrors     = 0;
+    int patternMissing    = 0;
+    int zeroAreaOk        = 0;
+    int declaredLoopLoss  = 0;
+    for (const auto& r : iface.hatches) {
+        if (!r.solid) continue;
+        ++solidCount;
+        if (r.error == RS_Hatch::HATCH_INVALID_CONTOUR) ++contourErrors;
+        if (r.error == RS_Hatch::HATCH_PATTERN_NOT_FOUND) ++patternMissing;
+        if (r.error == RS_Hatch::HATCH_OK && r.area == 0.0) ++zeroAreaOk;
+        if (r.allLoops < r.declaredLoops) ++declaredLoopLoss;
+        if (r.error == RS_Hatch::HATCH_OK && r.area > 0.0) ++positiveAreaCount;
+    }
+    REQUIRE(solidCount == 216);
+
+    std::cout << "\n  Sport-Man-Signs SOLID positive-area hatches: "
+              << positiveAreaCount << "/" << solidCount
+              << "  (contour errors: " << contourErrors
+              << ", zero-area OK: " << zeroAreaOk
+              << ", declared-loop loss: " << declaredLoopLoss << ")\n";
+
+    // Per-hatch dump: spot loops where rootLoops < declaredLoops or
+    // allLoops < declaredLoops — those are the geometrically-incorrect
+    // renders even when m_area > 0.
+    int idx = 0;
+    int lossy = 0;
+    for (const auto& r : iface.hatches) {
+        if (!r.solid) { ++idx; continue; }
+        if (r.allLoops < r.declaredLoops
+            || r.rootLoops < 1
+            || (r.error != RS_Hatch::HATCH_OK)) {
+            std::cout << "    [#" << idx << "] decl=" << r.declaredLoops
+                      << " root=" << r.rootLoops
+                      << " all=" << r.allLoops
+                      << " err=" << r.error
+                      << " area=" << r.area << "\n";
+            ++lossy;
+        }
+        ++idx;
+    }
+    std::cout << "  Lossy/error hatches: " << lossy << "\n";
+
+    // Area distribution: tiny positive areas suggest degenerate-but-non-empty
+    // boundaries; correct glyph fills should be O(10^2)–O(10^4).
+    int tiny = 0, small_a = 0, mid = 0, big = 0;
+    double areaMin = 1e30, areaMax = -1e30;
+    for (const auto& r : iface.hatches) {
+        if (!r.solid || r.error != RS_Hatch::HATCH_OK || r.area <= 0.0) continue;
+        if (r.area < areaMin) areaMin = r.area;
+        if (r.area > areaMax) areaMax = r.area;
+        if (r.area < 1.0)              ++tiny;
+        else if (r.area < 100.0)       ++small_a;
+        else if (r.area < 10000.0)     ++mid;
+        else                           ++big;
+    }
+    std::cout << "  Area buckets (positive only):"
+              << " <1: " << tiny
+              << ", 1-100: " << small_a
+              << ", 100-10k: " << mid
+              << ", >10k: " << big
+              << "  (min=" << areaMin << ", max=" << areaMax << ")\n";
+
+    // Before the fix this number is ~0; after the fix it should be near 216.
+    // Threshold of 200 leaves slack for a handful of legitimately
+    // self-intersecting glyph loops that fail validate() — refine after
+    // observing the first successful run.
+    CHECK(positiveAreaCount >= 200);
 }
 
 // Verifies that trolley_structure.dwg (AC1024/R2010, ~3218 entities, 79 blocks,
