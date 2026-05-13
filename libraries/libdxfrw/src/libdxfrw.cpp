@@ -79,7 +79,10 @@ bool dxfRW::read(DRW_Interface *interface_, bool ext){
     filestr.close();
     iface = interface_;
     DRW_DBG("dxfRW::read 2\n");
-    if (strcmp(line, line2) == 0) {
+    // `line` is filled by an unterminated 22-byte read; compare by exact
+    // length to avoid strcmp reading past the buffer when the sentinel
+    // bytes don't include an embedded NUL.
+    if (std::memcmp(line, line2, sizeof(line)) == 0) {
         filestr.open (fileName.c_str(), std::ios_base::in | std::ios::binary);
         binFile = true;
         //skip sentinel
