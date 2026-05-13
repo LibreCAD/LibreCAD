@@ -116,8 +116,9 @@ public:
     int countLoops() const;
 
     /**
-     * @return Total number of boundary containers (roots + all nested children).
-     * This counts every loop in the hierarchy, whereas countLoops() counts only roots.
+     * @return Total number of boundary containers (roots + all nested
+     * children). This counts every loop in the hierarchy, whereas countLoops()
+     * counts only roots.
      */
     int countAllLoops() const;
 

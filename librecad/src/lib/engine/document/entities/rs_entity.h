@@ -563,7 +563,7 @@ public:
     /// loaded from DXF/DWG. Stored verbatim so the import → save cycle
     /// preserves application-defined data on every entity type. Empty
     /// for entities that didn't carry any XDATA.
-    const std::vector<std::shared_ptr<DRW_Variant>>& getDrwExtData() const;
+    const std::vector<std::shared_ptr<DRW_Variant>> &getDrwExtData() const;
     void setDrwExtData(std::vector<std::shared_ptr<DRW_Variant>> extData);
     bool hasDrwExtData() const;
 

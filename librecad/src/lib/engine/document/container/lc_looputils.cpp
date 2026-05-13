@@ -284,7 +284,8 @@ bool LoopExtractor::validate() const {
       RS_Ellipse* ell = static_cast<RS_Ellipse*>(e);
       return ell->getAngleLength() >= 2 * M_PI - RS_TOLERANCE;
     }
-    if (type == RS2::EntitySplinePoints) {  // Closed spline (LC_SplinePoints only)
+    if (type ==
+        RS2::EntitySplinePoints) { // Closed spline (LC_SplinePoints only)
       LC_SplinePoints* spl = static_cast<LC_SplinePoints*>(e);
       return spl->isClosed();
     }
@@ -325,16 +326,19 @@ bool LoopExtractor::validate() const {
   constexpr double MIN_AREA = ENDPOINT_TOLERANCE * ENDPOINT_TOLERANCE;
   if (std::abs(area) < MIN_AREA) {
     RS_DEBUG->print(RS_Debug::D_WARNING,
-                    "LoopExtractor::validate: Degenerate zero-area loop (n=%zu, area=%.4e, MIN=%.4e)",
+                    "LoopExtractor::validate: Degenerate zero-area loop "
+                    "(n=%zu, area=%.4e, MIN=%.4e)",
                     n, area, MIN_AREA);
     for (size_t i = 0; i < n; ++i) {
-      RS_Entity* e = m_loop->entityAt(i);
-      if (!e) continue;
+      RS_Entity *e = m_loop->entityAt(i);
+      if (!e)
+        continue;
       RS_Vector s = e->getStartpoint();
       RS_Vector ep = e->getEndpoint();
-      RS_DEBUG->print(RS_Debug::D_WARNING,
-                      "  entity[%zu] type=%d start=(%.8f,%.8f) end=(%.8f,%.8f) len=%.4e",
-                      i, static_cast<int>(e->rtti()), s.x, s.y, ep.x, ep.y, e->getLength());
+      RS_DEBUG->print(
+          RS_Debug::D_WARNING,
+          "  entity[%zu] type=%d start=(%.8f,%.8f) end=(%.8f,%.8f) len=%.4e", i,
+          static_cast<int>(e->rtti()), s.x, s.y, ep.x, ep.y, e->getLength());
     }
     return false;
   }

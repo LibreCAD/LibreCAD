@@ -118,13 +118,13 @@ public:
 
     // Optional named-color tag, e.g. DWG/DXF AcDbColor "BOOK$ENTRY".
     // Passive metadata: not part of equality, not used by rendering.
-    const QString& colorName() const { return m_colorName; }
-    void setColorName(const QString& n) { m_colorName = n; }
+    const QString &colorName() const { return m_colorName; }
+    void setColorName(const QString &n) { m_colorName = n; }
     bool hasColorName() const { return !m_colorName.isEmpty(); }
 
     friend std::ostream& operator << (std::ostream& os, const RS_Color& c);
 
-private:
+  private:
     QString m_colorName;
 };
 

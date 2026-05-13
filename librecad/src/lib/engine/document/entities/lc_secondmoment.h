@@ -101,10 +101,10 @@ struct LC_SecondMoment {
         return *this;
     }
     LC_SecondMoment operator+(const LC_SecondMoment& o) const {
-        return {ixx+o.ixx, iyy+o.iyy, ixy+o.ixy};
+        return {ixx + o.ixx, iyy + o.iyy, ixy + o.ixy};
     }
     LC_SecondMoment operator-(const LC_SecondMoment& o) const {
-        return {ixx-o.ixx, iyy-o.iyy, ixy-o.ixy};
+        return {ixx - o.ixx, iyy - o.iyy, ixy - o.ixy};
     }
     LC_SecondMoment operator-() const { return {-ixx, -iyy, -ixy}; }
 

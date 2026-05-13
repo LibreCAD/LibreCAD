@@ -23,24 +23,24 @@
 
 #include <QToolButton>
 
-#include "lc_dlgentityproperties.h"
 #include "lc_arcpropertieseditingwidget.h"
 #include "lc_circlepropertieseditingwidget.h"
 #include "lc_dlgdimension.h"
+#include "lc_dlgentityproperties.h"
 #include "lc_ellipsepropertieseditingwidget.h"
-#include "lc_hatchpropertieseditingwidget.h"
 #include "lc_entitypropertieseditorwidget.h"
+#include "lc_hatchpropertieseditingwidget.h"
 #include "lc_hyperbolapropertieseditingwidget.h"
 #include "lc_imagepropertieseditingwidget.h"
 #include "lc_insertpropertieseditingwidget.h"
 #include "lc_linepropertieseditingwidget.h"
 #include "lc_mtextpropertieseditingwidget.h"
 #include "lc_parabolapropertieseditingwidget.h"
-#include "lc_textpropertieseditingwidget.h"
 #include "lc_pointpropertieseditingwidget.h"
 #include "lc_polylinepropertieseditingwidget.h"
 #include "lc_splinepointspropertieseditingwidget.h"
 #include "lc_splinepropertieseditingwidget.h"
+#include "lc_textpropertieseditingwidget.h"
 #include "rs_layer.h"
 #include "rs_settings.h"
 #include "ui_lc_dlgentityproperties.h"
@@ -242,16 +242,16 @@ void LC_DlgEntityProperties::prepareTypeSpecificUI(LC_EntityPropertiesEditorWidg
             break;
         }
         case RS2::EntityText: {
-            primaryWidget = new LC_TextPropertiesEditingWidget(this);
-            windowTitle = tr("Text Properties");
-            dlgName = "DlgTextProperties";
-            break;
+          primaryWidget = new LC_TextPropertiesEditingWidget(this);
+          windowTitle = tr("Text Properties");
+          dlgName = "DlgTextProperties";
+          break;
         }
         case RS2::EntityMText: {
-            primaryWidget = new LC_MTextPropertiesEditingWidget(this);
-            windowTitle = tr("MText Properties");
-            dlgName = "DlgMTextProperties";
-            break;
+          primaryWidget = new LC_MTextPropertiesEditingWidget(this);
+          windowTitle = tr("MText Properties");
+          dlgName = "DlgMTextProperties";
+          break;
         }
         case RS2::EntityHatch: {
             primaryWidget = new LC_HatchPropertiesEditingWidget(this);

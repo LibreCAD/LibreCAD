@@ -313,7 +313,7 @@ public:
     // contains geometry, raise the Blocks dock so the user can see what's
     // there.  Returns the count of non-empty user blocks (0 means trigger
     // didn't fire and the dock is left alone).
-    int maybeSurfaceBlocksDock(RS_Graphic* graphic);
+    int maybeSurfaceBlocksDock(RS_Graphic *graphic);
     LC_ActionGroup* getActionGroup(const QString &groupName) const;
     LC_ActionContext* getActionContext() const;
 protected:

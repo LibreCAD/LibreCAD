@@ -34,9 +34,9 @@
 
 namespace {
     //this holds a list of entity types which supports tangent
-    const auto g_supportedEntityTypes = EntityTypeList{
-                {RS2::EntityArc, RS2::EntityCircle, RS2::EntityLine, RS2::EntityParabola/*, RS2::EntitySplinePoints*/}
-    };
+const auto g_supportedEntityTypes =
+    EntityTypeList{{RS2::EntityArc, RS2::EntityCircle, RS2::EntityLine,
+                    RS2::EntityParabola /*, RS2::EntitySplinePoints*/}};
 }
 
 RS_ActionDrawLineParallelThrough::RS_ActionDrawLineParallelThrough(LC_ActionContext *actionContext)

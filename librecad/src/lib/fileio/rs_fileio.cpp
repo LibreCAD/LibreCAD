@@ -32,15 +32,15 @@
 #include <QMessageBox>
 #include <QApplication>
 #endif
+#include "rs_debug.h"
+#include "rs_dialogfactory.h"
+#include "rs_dialogfactoryinterface.h"
 #include "rs_fileio.h"
 #include "rs_filtercxf.h"
 #include "rs_filterdxf1.h"
+#include "rs_filterdxfrw.h"
 #include "rs_filterjww.h"
 #include "rs_filterlff.h"
-#include "rs_filterdxfrw.h"
-#include "rs_dialogfactory.h"
-#include "rs_dialogfactoryinterface.h"
-#include "rs_debug.h"
 
 /**
  * Calls the import method of the filter responsible for the format
@@ -70,8 +70,9 @@ bool RS_FileIO::fileImport(RS_Graphic& graphic, const QString& file,
 #ifdef DWGSUPPORT
             bool isDwg {file.endsWith( ".dwg", Qt::CaseInsensitive)};
             if (isDwg) {
-                RS_DIALOGFACTORY->commandMessage(
-                    QObject::tr("DWG support is not complete; if this file fails to open try an older DWG format or convert it to DXF."));
+              RS_DIALOGFACTORY->commandMessage(QObject::tr(
+                  "DWG support is not complete; if this file fails to open try "
+                  "an older DWG format or convert it to DXF."));
             }
 #endif
             bool bImported {filter->fileImport(graphic, file, t)};

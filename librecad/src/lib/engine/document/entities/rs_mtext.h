@@ -147,10 +147,10 @@ public:
   RS_MText(RS_EntityContainer *parent, const RS_MTextData &d);
   virtual ~RS_MText() = default;
 
-   RS_Entity *clone() const override;
+  RS_Entity *clone() const override;
 
   /**	@return RS2::EntityText */
-   RS2::EntityType rtti() const override { return RS2::EntityMText; }
+  RS2::EntityType rtti() const override { return RS2::EntityMText; }
 
   /** @return Copy of data that defines the text. */
   RS_MTextData getData() const { return data; }
@@ -165,8 +165,9 @@ public:
    * as neutral placeholders so callers can substitute embedded objects after
    * reordering.
    */
-  static std::vector<int> computeBidiVisualOrder(
-      const QString &text, Qt::LayoutDirection baseDirection);
+  static std::vector<int>
+  computeBidiVisualOrder(const QString &text,
+                         Qt::LayoutDirection baseDirection);
 
   int getNumberOfLines();
 
@@ -207,18 +208,18 @@ public:
    */
   virtual RS_Vector getNearestEndpoint(const RS_Vector &coord,
                                        double *dist = NULL) const override;
-   RS_VectorSolutions getRefPoints() const override;
+  RS_VectorSolutions getRefPoints() const override;
 
-   void move(const RS_Vector &offset) override;
-   void rotate(const RS_Vector &center, double angle) override;
+  void move(const RS_Vector &offset) override;
+  void rotate(const RS_Vector &center, double angle) override;
   virtual void rotate(const RS_Vector &center,
                       const RS_Vector &angleVector) override;
-   void scale(const RS_Vector &center, const RS_Vector &factor) override;
+  void scale(const RS_Vector &center, const RS_Vector &factor) override;
   virtual void mirror(const RS_Vector &axisPoint1,
                       const RS_Vector &axisPoint2) override;
   virtual bool hasEndpointsWithinWindow(const RS_Vector &v1,
-                                         const RS_Vector &v2) const override;
-   virtual void stretch(const RS_Vector &firstCorner,
+                                        const RS_Vector &v2) const override;
+  virtual void stretch(const RS_Vector &firstCorner,
                        const RS_Vector &secondCorner,
                        const RS_Vector &offset) override;
 
@@ -258,13 +259,13 @@ protected:
      * flushBidiLine() in visual order after Unicode bidi reordering.
      */
     struct LC_BidiSegment {
-        enum Kind { Char, Space, Stack };
-        Kind kind = Char;
-        QChar codepoint;       ///< for Char
-        RS_Font *font = nullptr; ///< for Char: active font when parsed
-        double width = 0.0;    ///< for Space: advance width
-        QString upperText;     ///< for Stack: upper text (super-/numerator)
-        QString lowerText;     ///< for Stack: lower text (sub-/denominator)
+      enum Kind { Char, Space, Stack };
+      Kind kind = Char;
+      QChar codepoint;         ///< for Char
+      RS_Font *font = nullptr; ///< for Char: active font when parsed
+      double width = 0.0;      ///< for Space: advance width
+      QString upperText;       ///< for Stack: upper text (super-/numerator)
+      QString lowerText;       ///< for Stack: lower text (sub-/denominator)
     };
 
     double updateAddLine(LC_TextLine *textLine, int lineCounter);
@@ -274,8 +275,8 @@ protected:
                        std::vector<LC_BidiSegment> &segments,
                        const RS_Vector &letterSpace, RS_Vector &letterPosition);
     void alignVertically();
-   static RS_MText *createUpperLower(QString text, const RS_MTextData &data,
-                                    const RS_Vector &position);
+    static RS_MText *createUpperLower(QString text, const RS_MTextData &data,
+                                      const RS_Vector &position);
     RS_MTextData data;
 
     /**

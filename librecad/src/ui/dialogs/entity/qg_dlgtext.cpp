@@ -226,25 +226,25 @@ void QG_DlgText::setEntity(RS_Text* t, bool isNew) {
  * Updates the text entity represented by the dialog to fit the choices of the user.
  */
 void QG_DlgText::updateEntity() {
-    if (entity == nullptr) return;
+  if (entity == nullptr)
+    return;
 
-    entity->setStyle(cbFont->currentText());
-    entity->setHeight(leHeight->text().toDouble());
-    entity->setWidthRel(leWidthRel->text().toDouble());
+  entity->setStyle(cbFont->currentText());
+  entity->setHeight(leHeight->text().toDouble());
+  entity->setWidthRel(leWidthRel->text().toDouble());
 
-    entity->setText(teText->text());
-    entity->setAlignment(getAlignment());
-    double wcsAngle = toWCSAngle(leAngle, entity->getAngle());
-    entity->setAngle(wcsAngle);
+  entity->setText(teText->text());
+  entity->setAlignment(getAlignment());
+  double wcsAngle = toWCSAngle(leAngle, entity->getAngle());
+  entity->setAngle(wcsAngle);
 
-    if (!m_isNew) {
-        entity->setPen(wPen->getPen());
-        entity->setLayer(cbLayer->getLayer());
-    }
+  if (!m_isNew) {
+    entity->setPen(wPen->getPen());
+    entity->setLayer(cbLayer->getLayer());
+  }
 
     entity->update();
 }
-
 
 void QG_DlgText::setAlignmentTL() {
     setAlignment(1);

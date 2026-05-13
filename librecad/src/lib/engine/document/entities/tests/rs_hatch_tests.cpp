@@ -1009,154 +1009,147 @@ TEST_CASE("RS_Hatch solid fill - arc boundary (half-disk) interior is painted", 
 // ============================================================
 
 TEST_CASE("buildHatchSplineEdge: open cubic samples 64 points",
-          "[rs_hatch][filter][spline]")
-{
-    DRW_Spline s;
-    s.degree = 3;
-    s.flags  = 0;          // open, non-rational
-    s.controllist.push_back(std::make_shared<DRW_Coord>(0.0, 0.0, 0.0));
-    s.controllist.push_back(std::make_shared<DRW_Coord>(1.0, 1.0, 0.0));
-    s.controllist.push_back(std::make_shared<DRW_Coord>(2.0, 1.0, 0.0));
-    s.controllist.push_back(std::make_shared<DRW_Coord>(3.0, 0.0, 0.0));
-    s.ncontrol = 4;
-    // Clamped uniform open knot vector: [0,0,0,0, 1,1,1,1]
-    s.knotslist = {0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 1.0};
-    s.nknots = 8;
+          "[rs_hatch][filter][spline]") {
+  DRW_Spline s;
+  s.degree = 3;
+  s.flags = 0; // open, non-rational
+  s.controllist.push_back(std::make_shared<DRW_Coord>(0.0, 0.0, 0.0));
+  s.controllist.push_back(std::make_shared<DRW_Coord>(1.0, 1.0, 0.0));
+  s.controllist.push_back(std::make_shared<DRW_Coord>(2.0, 1.0, 0.0));
+  s.controllist.push_back(std::make_shared<DRW_Coord>(3.0, 0.0, 0.0));
+  s.ncontrol = 4;
+  // Clamped uniform open knot vector: [0,0,0,0, 1,1,1,1]
+  s.knotslist = {0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 1.0};
+  s.nknots = 8;
 
-    RS_EntityContainer host{nullptr, true};
-    LC_SplinePoints* sp = RS_FilterDXFRW::buildHatchSplineEdge(&host, &s);
-    REQUIRE(sp != nullptr);
-    REQUIRE(sp->rtti() == RS2::EntitySplinePoints);
-    REQUIRE_FALSE(sp->isClosed());
-    REQUIRE(sp->getPoints().size() == 64);
+  RS_EntityContainer host{nullptr, true};
+  LC_SplinePoints *sp = RS_FilterDXFRW::buildHatchSplineEdge(&host, &s);
+  REQUIRE(sp != nullptr);
+  REQUIRE(sp->rtti() == RS2::EntitySplinePoints);
+  REQUIRE_FALSE(sp->isClosed());
+  REQUIRE(sp->getPoints().size() == 64);
 
-    // Clamped B-spline: first sample must equal first control point and
-    // last sample must equal last control point — endpoint invariant
-    // that LoopExtractor's chain builder relies on (plan §C.1).
-    const auto& pts = sp->getPoints();
-    REQUIRE_THAT(pts.front().x, Catch::Matchers::WithinAbs(0.0, 1e-9));
-    REQUIRE_THAT(pts.front().y, Catch::Matchers::WithinAbs(0.0, 1e-9));
-    REQUIRE_THAT(pts.back().x,  Catch::Matchers::WithinAbs(3.0, 1e-9));
-    REQUIRE_THAT(pts.back().y,  Catch::Matchers::WithinAbs(0.0, 1e-9));
+  // Clamped B-spline: first sample must equal first control point and
+  // last sample must equal last control point — endpoint invariant
+  // that LoopExtractor's chain builder relies on (plan §C.1).
+  const auto &pts = sp->getPoints();
+  REQUIRE_THAT(pts.front().x, Catch::Matchers::WithinAbs(0.0, 1e-9));
+  REQUIRE_THAT(pts.front().y, Catch::Matchers::WithinAbs(0.0, 1e-9));
+  REQUIRE_THAT(pts.back().x, Catch::Matchers::WithinAbs(3.0, 1e-9));
+  REQUIRE_THAT(pts.back().y, Catch::Matchers::WithinAbs(0.0, 1e-9));
 
-    delete sp;
+  delete sp;
 }
 
 TEST_CASE("buildHatchSplineEdge: degree-2 fit-points pass through unchanged",
-          "[rs_hatch][filter][spline]")
-{
-    DRW_Spline s;
-    s.degree = 2;
-    s.flags  = 0x1;   // closed
-    s.fitlist.push_back(std::make_shared<DRW_Coord>( 1.0,  0.0, 0.0));
-    s.fitlist.push_back(std::make_shared<DRW_Coord>( 0.0,  1.0, 0.0));
-    s.fitlist.push_back(std::make_shared<DRW_Coord>(-1.0,  0.0, 0.0));
-    s.fitlist.push_back(std::make_shared<DRW_Coord>( 0.0, -1.0, 0.0));
-    s.nfit = 4;
+          "[rs_hatch][filter][spline]") {
+  DRW_Spline s;
+  s.degree = 2;
+  s.flags = 0x1; // closed
+  s.fitlist.push_back(std::make_shared<DRW_Coord>(1.0, 0.0, 0.0));
+  s.fitlist.push_back(std::make_shared<DRW_Coord>(0.0, 1.0, 0.0));
+  s.fitlist.push_back(std::make_shared<DRW_Coord>(-1.0, 0.0, 0.0));
+  s.fitlist.push_back(std::make_shared<DRW_Coord>(0.0, -1.0, 0.0));
+  s.nfit = 4;
 
-    RS_EntityContainer host{nullptr, true};
-    LC_SplinePoints* sp = RS_FilterDXFRW::buildHatchSplineEdge(&host, &s);
-    REQUIRE(sp != nullptr);
-    REQUIRE(sp->isClosed());
-    // No sampling on this branch: 4 fit points in → 4 fit points out.
-    REQUIRE(sp->getPoints().size() == 4);
+  RS_EntityContainer host{nullptr, true};
+  LC_SplinePoints *sp = RS_FilterDXFRW::buildHatchSplineEdge(&host, &s);
+  REQUIRE(sp != nullptr);
+  REQUIRE(sp->isClosed());
+  // No sampling on this branch: 4 fit points in → 4 fit points out.
+  REQUIRE(sp->getPoints().size() == 4);
 
-    delete sp;
+  delete sp;
 }
 
-TEST_CASE("buildHatchSplineEdge: closed cubic in a hatch loop has positive area",
-          "[rs_hatch][filter][spline]")
-{
-    // 8 control points on the unit circle, closed flag set. After the
-    // helper samples 64 points, the resulting LC_SplinePoints quadratic
-    // interpolant should enclose ~π area.
-    DRW_Spline s;
-    s.degree = 3;
-    s.flags  = 0x1;   // closed
-    constexpr int N = 8;
-    for (int i = 0; i < N; ++i) {
-        double a = 2.0 * M_PI * i / N;
-        s.controllist.push_back(
-            std::make_shared<DRW_Coord>(std::cos(a), std::sin(a), 0.0));
-    }
-    s.ncontrol = N;
-    // Uniform knot vector of length ncontrol + degree + 1 = 12.
-    s.knotslist = {0,1,2,3,4,5,6,7,8,9,10,11};
-    s.nknots = 12;
+TEST_CASE(
+    "buildHatchSplineEdge: closed cubic in a hatch loop has positive area",
+    "[rs_hatch][filter][spline]") {
+  // 8 control points on the unit circle, closed flag set. After the
+  // helper samples 64 points, the resulting LC_SplinePoints quadratic
+  // interpolant should enclose ~π area.
+  DRW_Spline s;
+  s.degree = 3;
+  s.flags = 0x1; // closed
+  constexpr int N = 8;
+  for (int i = 0; i < N; ++i) {
+    double a = 2.0 * M_PI * i / N;
+    s.controllist.push_back(
+        std::make_shared<DRW_Coord>(std::cos(a), std::sin(a), 0.0));
+  }
+  s.ncontrol = N;
+  // Uniform knot vector of length ncontrol + degree + 1 = 12.
+  s.knotslist = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11};
+  s.nknots = 12;
 
-    auto* hatch = new RS_Hatch(nullptr, RS_HatchData(true, 1.0, 0.0, "SOLID"));
-    auto* loop  = new RS_EntityContainer(hatch);
-    hatch->addEntity(loop);
-    LC_SplinePoints* sp = RS_FilterDXFRW::buildHatchSplineEdge(loop, &s);
-    REQUIRE(sp != nullptr);
-    REQUIRE(sp->isClosed());
-    loop->addEntity(sp);
+  auto *hatch = new RS_Hatch(nullptr, RS_HatchData(true, 1.0, 0.0, "SOLID"));
+  auto *loop = new RS_EntityContainer(hatch);
+  hatch->addEntity(loop);
+  LC_SplinePoints *sp = RS_FilterDXFRW::buildHatchSplineEdge(loop, &s);
+  REQUIRE(sp != nullptr);
+  REQUIRE(sp->isClosed());
+  loop->addEntity(sp);
 
-    std::unique_ptr<RS_Hatch> owned(hatch);
-    owned->update();
-    REQUIRE(owned->getUpdateError() == RS_Hatch::HATCH_OK);
-    // Unit-circle-ish disk area is ~π; allow wide latitude since the
-    // 8-CP control polygon is itself a polygon inside the circle.
-    REQUIRE(owned->getTotalArea() > 1.5);
+  std::unique_ptr<RS_Hatch> owned(hatch);
+  owned->update();
+  REQUIRE(owned->getUpdateError() == RS_Hatch::HATCH_OK);
+  // Unit-circle-ish disk area is ~π; allow wide latitude since the
+  // 8-CP control polygon is itself a polygon inside the circle.
+  REQUIRE(owned->getTotalArea() > 1.5);
 }
 
 TEST_CASE("buildHatchSplineEdge: degenerate input returns nullptr",
-          "[rs_hatch][filter][spline]")
-{
-    RS_EntityContainer host{nullptr, true};
+          "[rs_hatch][filter][spline]") {
+  RS_EntityContainer host{nullptr, true};
 
-    // Null pointer.
-    REQUIRE(RS_FilterDXFRW::buildHatchSplineEdge(&host, nullptr) == nullptr);
+  // Null pointer.
+  REQUIRE(RS_FilterDXFRW::buildHatchSplineEdge(&host, nullptr) == nullptr);
 
-    // No control points, no fit points.
-    {
-        DRW_Spline s;
-        s.degree = 3;
-        REQUIRE(RS_FilterDXFRW::buildHatchSplineEdge(&host, &s) == nullptr);
-    }
+  // No control points, no fit points.
+  {
+    DRW_Spline s;
+    s.degree = 3;
+    REQUIRE(RS_FilterDXFRW::buildHatchSplineEdge(&host, &s) == nullptr);
+  }
 
-    // Unsupported degree.
-    {
-        DRW_Spline s;
-        s.degree = 5;
-        s.controllist.push_back(std::make_shared<DRW_Coord>(0.0, 0.0, 0.0));
-        REQUIRE(RS_FilterDXFRW::buildHatchSplineEdge(&host, &s) == nullptr);
-    }
+  // Unsupported degree.
+  {
+    DRW_Spline s;
+    s.degree = 5;
+    s.controllist.push_back(std::make_shared<DRW_Coord>(0.0, 0.0, 0.0));
+    REQUIRE(RS_FilterDXFRW::buildHatchSplineEdge(&host, &s) == nullptr);
+  }
 }
 
 // Mixed boundary loop: an LC_SplinePoints quadratic arc closed by a single
 // straight line. Exercises LoopExtractor's endpoint-chaining across
 // heterogeneous edge types. Plan §E.2.
 TEST_CASE("RS_Hatch validate - mixed line + LC_SplinePoints loop",
-          "[rs_hatch][validate][spline]")
-{
-    auto* hatch = new RS_Hatch(nullptr, RS_HatchData(true, 1.0, 0.0, "SOLID"));
-    auto* loop  = new RS_EntityContainer(hatch);
-    hatch->addEntity(loop);
+          "[rs_hatch][validate][spline]") {
+  auto *hatch = new RS_Hatch(nullptr, RS_HatchData(true, 1.0, 0.0, "SOLID"));
+  auto *loop = new RS_EntityContainer(hatch);
+  hatch->addEntity(loop);
 
-    // Upper arc: open quadratic interpolating through 5 fit points along
-    // y = 1 - x^2 between x = -1 and x = 1.  Five points keeps the spline
-    // well-conditioned (the 3-point internal control fitter has a
-    // degenerate-arc edge case for symmetric apex inputs).
-    LC_SplinePointsData sd(/*closed*/false, /*cut*/false);
-    sd.useControlPoints = false;
-    sd.splinePoints = {
-        RS_Vector(-1.0,  0.0),
-        RS_Vector(-0.5,  0.75),
-        RS_Vector( 0.0,  1.0),
-        RS_Vector( 0.5,  0.75),
-        RS_Vector( 1.0,  0.0),
-    };
-    loop->addEntity(new LC_SplinePoints(loop, std::move(sd)));
+  // Upper arc: open quadratic interpolating through 5 fit points along
+  // y = 1 - x^2 between x = -1 and x = 1.  Five points keeps the spline
+  // well-conditioned (the 3-point internal control fitter has a
+  // degenerate-arc edge case for symmetric apex inputs).
+  LC_SplinePointsData sd(/*closed*/ false, /*cut*/ false);
+  sd.useControlPoints = false;
+  sd.splinePoints = {
+      RS_Vector(-1.0, 0.0), RS_Vector(-0.5, 0.75), RS_Vector(0.0, 1.0),
+      RS_Vector(0.5, 0.75), RS_Vector(1.0, 0.0),
+  };
+  loop->addEntity(new LC_SplinePoints(loop, std::move(sd)));
 
-    // Closing chord along the bottom: (1,0) → (-1,0).
-    loop->addEntity(new RS_Line(loop, RS_Vector(1.0, 0.0), RS_Vector(-1.0, 0.0)));
+  // Closing chord along the bottom: (1,0) → (-1,0).
+  loop->addEntity(new RS_Line(loop, RS_Vector(1.0, 0.0), RS_Vector(-1.0, 0.0)));
 
-    std::unique_ptr<RS_Hatch> owned(hatch);
-    owned->update();
-    REQUIRE(owned->getUpdateError() == RS_Hatch::HATCH_OK);
-    REQUIRE(owned->countAllLoops() >= 1);
-    REQUIRE(owned->getTotalArea() > 0.0);
+  std::unique_ptr<RS_Hatch> owned(hatch);
+  owned->update();
+  REQUIRE(owned->getUpdateError() == RS_Hatch::HATCH_OK);
+  REQUIRE(owned->countAllLoops() >= 1);
+  REQUIRE(owned->getTotalArea() > 0.0);
 }
 
 // Solid-fill rendering test for spline-bordered hatch.
@@ -1165,33 +1158,32 @@ TEST_CASE("RS_Hatch validate - mixed line + LC_SplinePoints loop",
 // boundary edge hits the "Unsupported entity type" default arm. This test
 // fails with zero painted pixels before the fix.
 TEST_CASE("RS_Hatch solid fill - LC_SplinePoints boundary paints pixels",
-          "[rs_hatch][solidfill][spline]")
-{
-    // Build the diamond fixture but enlarged to span ~120 wcs units so the
-    // shape is visible on the 256×256 TestPainter canvas centred at (128,128).
-    auto* hatch = new RS_Hatch(nullptr, RS_HatchData(true, 1.0, 0.0, "SOLID"));
-    auto* loop  = new RS_EntityContainer(hatch);
-    hatch->addEntity(loop);
-    LC_SplinePointsData sd(/*closed*/true, /*cut*/false);
-    sd.useControlPoints = true;
-    sd.controlPoints = {
-        RS_Vector(180.0, 128.0),
-        RS_Vector(128.0, 180.0),
-        RS_Vector( 76.0, 128.0),
-        RS_Vector(128.0,  76.0),
-    };
-    loop->addEntity(new LC_SplinePoints(loop, std::move(sd)));
-    std::unique_ptr<RS_Hatch> owned(hatch);
-    owned->update();
-    REQUIRE(owned->getUpdateError() == RS_Hatch::HATCH_OK);
+          "[rs_hatch][solidfill][spline]") {
+  // Build the diamond fixture but enlarged to span ~120 wcs units so the
+  // shape is visible on the 256×256 TestPainter canvas centred at (128,128).
+  auto *hatch = new RS_Hatch(nullptr, RS_HatchData(true, 1.0, 0.0, "SOLID"));
+  auto *loop = new RS_EntityContainer(hatch);
+  hatch->addEntity(loop);
+  LC_SplinePointsData sd(/*closed*/ true, /*cut*/ false);
+  sd.useControlPoints = true;
+  sd.controlPoints = {
+      RS_Vector(180.0, 128.0),
+      RS_Vector(128.0, 180.0),
+      RS_Vector(76.0, 128.0),
+      RS_Vector(128.0, 76.0),
+  };
+  loop->addEntity(new LC_SplinePoints(loop, std::move(sd)));
+  std::unique_ptr<RS_Hatch> owned(hatch);
+  owned->update();
+  REQUIRE(owned->getUpdateError() == RS_Hatch::HATCH_OK);
 
-    TestPainter tp;
-    owned->draw(&tp.painter);
+  TestPainter tp;
+  owned->draw(&tp.painter);
 
-    // Interior of the diamond must be painted; far corners must not.
-    CHECK(tp.filledAt(128.0, 128.0));   // dead centre
-    CHECK_FALSE(tp.filledAt(  5.0,   5.0));
-    CHECK_FALSE(tp.filledAt(250.0, 250.0));
+  // Interior of the diamond must be painted; far corners must not.
+  CHECK(tp.filledAt(128.0, 128.0)); // dead centre
+  CHECK_FALSE(tp.filledAt(5.0, 5.0));
+  CHECK_FALSE(tp.filledAt(250.0, 250.0));
 }
 
 // DXF round-trip with a spline-bordered hatch. Confirms libdxfrw's
@@ -1200,109 +1192,108 @@ TEST_CASE("RS_Hatch solid fill - LC_SplinePoints boundary paints pixels",
 // reconstitutes the boundary. Before the libdxfrw fix, writeHatch silently
 // dropped spline boundaries (`//RLZ: spline boundary writeme`).
 TEST_CASE("RS_FilterDXFRW: DXF round-trip preserves spline-bordered hatch",
-          "[rs_hatch][filter][spline][roundtrip]")
-{
-    // Bootstrap a minimal Qt app + RS_Settings context (RS_Graphic ctor
-    // needs LC_GROUP_GUARD and RS_Settings paths initialized).
-    static int qargc = 1;
-    static char qarg0[] = "librecad_tests";
-    static char* qargv[] = { qarg0, nullptr };
-    static QCoreApplication* qapp = QCoreApplication::instance()
-        ? QCoreApplication::instance()
-        : new QCoreApplication(qargc, qargv);
-    static bool settingsReady = []{
-        QCoreApplication::setOrganizationName("LibreCAD");
-        QCoreApplication::setApplicationName("LibreCAD-tests");
-        RS_Settings::init("LibreCAD", "LibreCAD-tests");
-        return true;
-    }();
-    (void)qapp; (void)settingsReady;
+          "[rs_hatch][filter][spline][roundtrip]") {
+  // Bootstrap a minimal Qt app + RS_Settings context (RS_Graphic ctor
+  // needs LC_GROUP_GUARD and RS_Settings paths initialized).
+  static int qargc = 1;
+  static char qarg0[] = "librecad_tests";
+  static char *qargv[] = {qarg0, nullptr};
+  static QCoreApplication *qapp = QCoreApplication::instance()
+                                      ? QCoreApplication::instance()
+                                      : new QCoreApplication(qargc, qargv);
+  static bool settingsReady = [] {
+    QCoreApplication::setOrganizationName("LibreCAD");
+    QCoreApplication::setApplicationName("LibreCAD-tests");
+    RS_Settings::init("LibreCAD", "LibreCAD-tests");
+    return true;
+  }();
+  (void)qapp;
+  (void)settingsReady;
 
-    // Build a graphic with a single closed-quadratic LC_SplinePoints hatch.
-    RS_Graphic g;
-    auto* hatch = new RS_Hatch(&g, RS_HatchData(true, 1.0, 0.0, "SOLID"));
-    auto* loop  = new RS_EntityContainer(hatch);
-    hatch->addEntity(loop);
-    LC_SplinePointsData sd(/*closed*/true, /*cut*/false);
-    sd.useControlPoints = true;
-    sd.controlPoints = {
-        RS_Vector( 1.0,  0.0),
-        RS_Vector( 0.0,  1.0),
-        RS_Vector(-1.0,  0.0),
-        RS_Vector( 0.0, -1.0),
-    };
-    loop->addEntity(new LC_SplinePoints(loop, std::move(sd)));
-    g.addEntity(hatch);
-    hatch->update();
-    const double areaBefore = hatch->getTotalArea();
-    REQUIRE(areaBefore > 0.0);
+  // Build a graphic with a single closed-quadratic LC_SplinePoints hatch.
+  RS_Graphic g;
+  auto *hatch = new RS_Hatch(&g, RS_HatchData(true, 1.0, 0.0, "SOLID"));
+  auto *loop = new RS_EntityContainer(hatch);
+  hatch->addEntity(loop);
+  LC_SplinePointsData sd(/*closed*/ true, /*cut*/ false);
+  sd.useControlPoints = true;
+  sd.controlPoints = {
+      RS_Vector(1.0, 0.0),
+      RS_Vector(0.0, 1.0),
+      RS_Vector(-1.0, 0.0),
+      RS_Vector(0.0, -1.0),
+  };
+  loop->addEntity(new LC_SplinePoints(loop, std::move(sd)));
+  g.addEntity(hatch);
+  hatch->update();
+  const double areaBefore = hatch->getTotalArea();
+  REQUIRE(areaBefore > 0.0);
 
-    // Write to a temp file then re-read into a fresh graphic.
-    const auto tmpPath = std::filesystem::temp_directory_path() /
-                         "rs_hatch_spline_roundtrip.dxf";
-    {
-        RS_FilterDXFRW filter;
-        REQUIRE(filter.fileExport(g, QString::fromStdString(tmpPath.string()),
-                                  RS2::FormatDXFRW));
+  // Write to a temp file then re-read into a fresh graphic.
+  const auto tmpPath =
+      std::filesystem::temp_directory_path() / "rs_hatch_spline_roundtrip.dxf";
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileExport(g, QString::fromStdString(tmpPath.string()),
+                              RS2::FormatDXFRW));
+  }
+  REQUIRE(std::filesystem::file_size(tmpPath) > 0);
+
+  RS_Graphic g2;
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileImport(g2, QString::fromStdString(tmpPath.string()),
+                              RS2::FormatDXFRW));
+  }
+
+  // Find the hatch anywhere in the reloaded graphic.
+  RS_Hatch *reloaded = nullptr;
+  for (RS_Entity *e :
+       lc::LC_ContainerTraverser{g2, RS2::ResolveAll}.entities()) {
+    if (e && e->rtti() == RS2::EntityHatch && !reloaded) {
+      reloaded = static_cast<RS_Hatch *>(e);
     }
-    REQUIRE(std::filesystem::file_size(tmpPath) > 0);
+  }
+  REQUIRE(reloaded != nullptr);
+  const double areaAfter = reloaded->getTotalArea();
+  // Quadratic interpolant area is invariant to sample density — should
+  // match within a few percent. Allow ±10% latitude for re-sampling
+  // artifacts (the writer emits a 4-point control net; the reader
+  // re-derives knots).
+  REQUIRE(areaAfter > 0.0);
+  REQUIRE_THAT(areaAfter, Catch::Matchers::WithinRel(areaBefore, 0.10));
 
-    RS_Graphic g2;
-    {
-        RS_FilterDXFRW filter;
-        REQUIRE(filter.fileImport(g2, QString::fromStdString(tmpPath.string()),
-                                  RS2::FormatDXFRW));
-    }
-
-    // Find the hatch anywhere in the reloaded graphic.
-    RS_Hatch* reloaded = nullptr;
-    for (RS_Entity* e : lc::LC_ContainerTraverser{g2, RS2::ResolveAll}.entities()) {
-        if (e && e->rtti() == RS2::EntityHatch && !reloaded) {
-            reloaded = static_cast<RS_Hatch*>(e);
-        }
-    }
-    REQUIRE(reloaded != nullptr);
-    const double areaAfter = reloaded->getTotalArea();
-    // Quadratic interpolant area is invariant to sample density — should
-    // match within a few percent. Allow ±10% latitude for re-sampling
-    // artifacts (the writer emits a 4-point control net; the reader
-    // re-derives knots).
-    REQUIRE(areaAfter > 0.0);
-    REQUIRE_THAT(areaAfter,
-                 Catch::Matchers::WithinRel(areaBefore, 0.10));
-
-    std::filesystem::remove(tmpPath);
+  std::filesystem::remove(tmpPath);
 }
 
 // snapSplineEdgeEndpoints: a tiny float drift (5e-9) at the seam between a
 // spline and a neighboring line must be snapped before LoopExtractor sees
 // it; otherwise the chain breaks at ENDPOINT_TOLERANCE = 1e-8. Plan §C.1.
 TEST_CASE("snapSplineEdgeEndpoints - tiny gap closes",
-          "[rs_hatch][filter][spline]")
-{
-    RS_EntityContainer host{nullptr, true};
+          "[rs_hatch][filter][spline]") {
+  RS_EntityContainer host{nullptr, true};
 
-    // Spline ends at exactly (1.0, 0.0) but the next line starts at
-    // (1.0 + 5e-9, 0.0) — a sub-tolerance drift that LoopExtractor would
-    // otherwise reject.
-    LC_SplinePointsData sd(false, false);
-    sd.splinePoints = {
-        RS_Vector(-1.0, 0.0),
-        RS_Vector( 0.0, 0.5),
-        RS_Vector( 1.0, 0.0),
-    };
-    auto* spline = new LC_SplinePoints(&host, std::move(sd));
-    host.addEntity(spline);
+  // Spline ends at exactly (1.0, 0.0) but the next line starts at
+  // (1.0 + 5e-9, 0.0) — a sub-tolerance drift that LoopExtractor would
+  // otherwise reject.
+  LC_SplinePointsData sd(false, false);
+  sd.splinePoints = {
+      RS_Vector(-1.0, 0.0),
+      RS_Vector(0.0, 0.5),
+      RS_Vector(1.0, 0.0),
+  };
+  auto *spline = new LC_SplinePoints(&host, std::move(sd));
+  host.addEntity(spline);
 
-    const double drift = 5e-9;
-    auto* line = new RS_Line(&host,
-        RS_Vector(1.0 + drift, 0.0), RS_Vector(-1.0, 0.0));
-    host.addEntity(line);
+  const double drift = 5e-9;
+  auto *line =
+      new RS_Line(&host, RS_Vector(1.0 + drift, 0.0), RS_Vector(-1.0, 0.0));
+  host.addEntity(line);
 
-    REQUIRE(spline->getEndpoint().distanceTo(line->getStartpoint()) > 0.0);
+  REQUIRE(spline->getEndpoint().distanceTo(line->getStartpoint()) > 0.0);
 
-    RS_FilterDXFRW::snapSplineEdgeEndpoints(&host);
+  RS_FilterDXFRW::snapSplineEdgeEndpoints(&host);
 
-    // After the snap, the seam is exactly zero.
-    REQUIRE(spline->getEndpoint().distanceTo(line->getStartpoint()) == 0.0);
+  // After the snap, the seam is exactly zero.
+  REQUIRE(spline->getEndpoint().distanceTo(line->getStartpoint()) == 0.0);
 }

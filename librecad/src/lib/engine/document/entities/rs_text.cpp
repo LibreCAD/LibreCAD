@@ -47,18 +47,23 @@ namespace {
  * scans the string for the first strong-directional character and uses that
  * (UAX#9 P-rules), defaulting to LTR when there is no strong character.
  */
-Qt::LayoutDirection resolveTextBaseDirection(
-    const QString &text, RS_TextData::DrawingDirection setting) {
-    if (setting == RS_TextData::LeftToRight) return Qt::LeftToRight;
-    if (setting == RS_TextData::RightToLeft) return Qt::RightToLeft;
-    for (int i = 0; i < text.size(); ++i) {
-        const QChar::Direction d = text.at(i).direction();
-        if (d == QChar::DirL) return Qt::LeftToRight;
-        if (d == QChar::DirR || d == QChar::DirAL) return Qt::RightToLeft;
-    }
+Qt::LayoutDirection
+resolveTextBaseDirection(const QString &text,
+                         RS_TextData::DrawingDirection setting) {
+  if (setting == RS_TextData::LeftToRight)
     return Qt::LeftToRight;
+  if (setting == RS_TextData::RightToLeft)
+    return Qt::RightToLeft;
+  for (int i = 0; i < text.size(); ++i) {
+    const QChar::Direction d = text.at(i).direction();
+    if (d == QChar::DirL)
+      return Qt::LeftToRight;
+    if (d == QChar::DirR || d == QChar::DirAL)
+      return Qt::RightToLeft;
+  }
+  return Qt::LeftToRight;
 }
-}  // namespace
+} // namespace
 
 class RS_Font;
 
@@ -146,11 +151,12 @@ void RS_Text::setText(const QString& t) {
 }
 
 void RS_Text::setDrawingDirection(RS_TextData::DrawingDirection direction) {
-    if (data.drawingDirection == direction) return;
-    data.drawingDirection = direction;
-    if (data.updateMode == RS2::Update) {
-        update();
-    }
+  if (data.drawingDirection == direction)
+    return;
+  data.drawingDirection = direction;
+  if (data.updateMode == RS2::Update) {
+    update();
+  }
 }
 
 /**
@@ -249,7 +255,7 @@ void RS_Text::setAlignment(int a) {
         }
     }
     if (data.updateMode == RS2::Update) {
-        update();
+      update();
     }
 }
 
@@ -309,55 +315,55 @@ void RS_Text::update() {
     //     display in correct visual order.
     std::vector<int> visual;
     if (data.drawingDirection == RS_TextData::RightToLeft) {
-        visual.resize(data.text.size());
-        for (int i = 0; i < data.text.size(); ++i) {
-            visual[i] = data.text.size() - 1 - i;
-        }
+      visual.resize(data.text.size());
+      for (int i = 0; i < data.text.size(); ++i) {
+        visual[i] = data.text.size() - 1 - i;
+      }
     } else {
-        const Qt::LayoutDirection baseDir =
-            resolveTextBaseDirection(data.text, data.drawingDirection);
-        visual = RS_MText::computeBidiVisualOrder(data.text, baseDir);
+      const Qt::LayoutDirection baseDir =
+          resolveTextBaseDirection(data.text, data.drawingDirection);
+      visual = RS_MText::computeBidiVisualOrder(data.text, baseDir);
     }
 
     for (int logIdx : visual) {
-        const QChar ch = data.text.at(logIdx);
-        // Space:
-        if (ch.unicode() == 0x20) {
-            letterPos+=space;
-        } else {
-            // One Letter:
-            QString letterText = QString(ch);
-            if (font->findLetter(letterText) == nullptr) {
-                RS_DEBUG->print("RS_Text::update: missing font for letter( %s ), replaced it with QChar(0xfffd)",qPrintable(letterText));
-                letterText = QChar(0xfffd);
-            }
-            RS_DEBUG->print("RS_Text::update: insert a "
-                            "letter at pos: %f/%f", letterPos.x, letterPos.y);
-
-            RS_InsertData d(letterText,
-                            letterPos,
-                            RS_Vector(1.0, 1.0),
-                            0.0,
-                            1,1, RS_Vector(0.0,0.0),
-                            font->getLetterList(), RS2::NoUpdate);
-
-            auto* letter = new RS_Insert(this, d);
-            RS_Vector letterWidth;
-            letter->setPen(RS_Pen(RS2::FlagInvalid));
-            letter->setLayer(nullptr);
-            letter->update();
-            letter->forcedCalculateBorders();
-
-            letterWidth = RS_Vector(letter->getMax().x-letterPos.x, 0.0);
-            if (letterWidth.x < 0) {
-                letterWidth.x = -letterSpace.x;
-            }
-            addEntity(letter);
-
-            // next letter position:
-            letterPos += letterWidth;
-            letterPos += letterSpace;
+      const QChar ch = data.text.at(logIdx);
+      // Space:
+      if (ch.unicode() == 0x20) {
+        letterPos += space;
+      } else {
+        // One Letter:
+        QString letterText = QString(ch);
+        if (font->findLetter(letterText) == nullptr) {
+          RS_DEBUG->print("RS_Text::update: missing font for letter( %s ), "
+                          "replaced it with QChar(0xfffd)",
+                          qPrintable(letterText));
+          letterText = QChar(0xfffd);
         }
+        RS_DEBUG->print("RS_Text::update: insert a "
+                        "letter at pos: %f/%f",
+                        letterPos.x, letterPos.y);
+
+        RS_InsertData d(letterText, letterPos, RS_Vector(1.0, 1.0), 0.0, 1, 1,
+                        RS_Vector(0.0, 0.0), font->getLetterList(),
+                        RS2::NoUpdate);
+
+        auto *letter = new RS_Insert(this, d);
+        RS_Vector letterWidth;
+        letter->setPen(RS_Pen(RS2::FlagInvalid));
+        letter->setLayer(nullptr);
+        letter->update();
+        letter->forcedCalculateBorders();
+
+        letterWidth = RS_Vector(letter->getMax().x - letterPos.x, 0.0);
+        if (letterWidth.x < 0) {
+          letterWidth.x = -letterSpace.x;
+        }
+        addEntity(letter);
+
+        // next letter position:
+        letterPos += letterWidth;
+        letterPos += letterSpace;
+      }
     }
 
     if (!getAutoUpdateBorders()) {

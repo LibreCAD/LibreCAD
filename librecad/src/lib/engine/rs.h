@@ -132,53 +132,52 @@ namespace RS2 {
               line starting 'if ((entity->rtti() >= EntityDimAligned) ...'.
     */
     enum EntityType : unsigned {
-        EntityUnknown,      /**< Unknown */
-        EntityContainer,    /**< Container */
-        EntityBlock,        /**< Block (Group definition) */
-        EntityFontChar,     /**< Font character */
-        EntityInsert,       /**< Insert (Group instance) */
-        EntityGraphic,      /**< Graphic with layers */
-        EntityPoint,        /**< Point */
-        EntityLine,         /**< Line */
-        EntityPolyline,     /**< Polyline */
-        EntityVertex,       /**< Vertex (part of a polyline) */
-        EntityArc,          /**< Arc */
-        EntityCircle,       /**< Circle */
-        EntityEllipse,      /**< Ellipse */
-        EntityHyperbola,      /**< Hyperbola */
-        EntitySolid,        /**< Solid */
-        EntityConstructionLine, /**< Construction line */
-        EntityMText,         /**< Multi-line Text */
-        EntityText,         /**< Single-line Text */
-        EntityDimAligned,   /**< Aligned Dimension */
-        EntityDimLinear,    /**< Linear Dimension */
-        EntityDimRadial,    /**< Radial Dimension */
-        EntityDimDiametric, /**< Diametric Dimension */
-        EntityDimAngular,   /**< Angular Dimension */
-        EntityDimArc,       /**< Arc Dimension */
-        EntityDimOrdinate,
-        EntityTolerance,
-        EntityDimLeader,    /**< Leader Dimension */
-        EntityHatch,        /**< Hatch */
-        EntityImage,        /**< Image */
-        EntityWipeout,      /**< Wipeout (background-masking polygon) */
-        EntityMLeader,      /**< Multi-leader (callout with text/block content) */
-        EntitySpline,       /**< Spline */
-        EntitySplinePoints,       /**< SplinePoints */
-        EntityParabola,       /**< Parabola */
-        EntityOverlayBox,    /**< OverlayBox */
-        EntityPreview,    /**< Preview Container */
-        EntityPattern,
-        EntityOverlayLine,
-        EntityRefPoint,
-        EntityRefLine,
-        EntityRefConstructionLine,
-        EntityRefArc,
-        EntityRefCircle,
-        EntityRefEllipse,
-        EntityDimArrowBlock
+      EntityUnknown,          /**< Unknown */
+      EntityContainer,        /**< Container */
+      EntityBlock,            /**< Block (Group definition) */
+      EntityFontChar,         /**< Font character */
+      EntityInsert,           /**< Insert (Group instance) */
+      EntityGraphic,          /**< Graphic with layers */
+      EntityPoint,            /**< Point */
+      EntityLine,             /**< Line */
+      EntityPolyline,         /**< Polyline */
+      EntityVertex,           /**< Vertex (part of a polyline) */
+      EntityArc,              /**< Arc */
+      EntityCircle,           /**< Circle */
+      EntityEllipse,          /**< Ellipse */
+      EntityHyperbola,        /**< Hyperbola */
+      EntitySolid,            /**< Solid */
+      EntityConstructionLine, /**< Construction line */
+      EntityMText,            /**< Multi-line Text */
+      EntityText,             /**< Single-line Text */
+      EntityDimAligned,       /**< Aligned Dimension */
+      EntityDimLinear,        /**< Linear Dimension */
+      EntityDimRadial,        /**< Radial Dimension */
+      EntityDimDiametric,     /**< Diametric Dimension */
+      EntityDimAngular,       /**< Angular Dimension */
+      EntityDimArc,           /**< Arc Dimension */
+      EntityDimOrdinate,
+      EntityTolerance,
+      EntityDimLeader,    /**< Leader Dimension */
+      EntityHatch,        /**< Hatch */
+      EntityImage,        /**< Image */
+      EntityWipeout,      /**< Wipeout (background-masking polygon) */
+      EntityMLeader,      /**< Multi-leader (callout with text/block content) */
+      EntitySpline,       /**< Spline */
+      EntitySplinePoints, /**< SplinePoints */
+      EntityParabola,     /**< Parabola */
+      EntityOverlayBox,   /**< OverlayBox */
+      EntityPreview,      /**< Preview Container */
+      EntityPattern,
+      EntityOverlayLine,
+      EntityRefPoint,
+      EntityRefLine,
+      EntityRefConstructionLine,
+      EntityRefArc,
+      EntityRefCircle,
+      EntityRefEllipse,
+      EntityDimArrowBlock
     };
-
 
     inline bool isDimensionalEntity(EntityType type)  {
         return (type >= EntityDimAligned) && (type <= EntityDimLeader);

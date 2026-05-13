@@ -25,8 +25,8 @@
  * the renderer connects with straight or spline segments per leader type.
  */
 struct LC_MLeaderLine {
-    std::vector<RS_Vector> points;
-    int leaderLineIndex = 0;
+  std::vector<RS_Vector> points;
+  int leaderLineIndex = 0;
 };
 
 /**
@@ -34,11 +34,11 @@ struct LC_MLeaderLine {
  * one or more leader lines.
  */
 struct LC_MLeaderRoot {
-    RS_Vector connectionPoint;
-    RS_Vector direction;
-    double landingDistance = 0.0;
-    std::vector<LC_MLeaderLine> leaderLines;
-    int attachmentDirection = 0;  // 0=horizontal, 1=vertical
+  RS_Vector connectionPoint;
+  RS_Vector direction;
+  double landingDistance = 0.0;
+  std::vector<LC_MLeaderLine> leaderLines;
+  int attachmentDirection = 0; // 0=horizontal, 1=vertical
 };
 
 /**
@@ -49,40 +49,40 @@ struct LC_MLeaderRoot {
  * the entity-level overrides.
  */
 struct LC_MLeaderData {
-    LC_MLeaderData() = default;
+  LC_MLeaderData() = default;
 
-    /* AnnotContext geometry. */
-    std::vector<LC_MLeaderRoot> roots;
-    RS_Vector contentBasePoint;
-    RS_Vector basePoint;
+  /* AnnotContext geometry. */
+  std::vector<LC_MLeaderRoot> roots;
+  RS_Vector contentBasePoint;
+  RS_Vector basePoint;
 
-    /* Content branch: either text label or block reference. */
-    bool hasTextContents = false;
-    bool hasBlockContents = false;
-    QString textLabel;             /*!< MText body when hasTextContents */
-    QString textStyleName;         /*!< resolved at parse time if available */
-    RS_Vector textLocation;
-    double textHeight = 0.0;
-    double textRotation = 0.0;
-    double boundaryWidth = 0.0;
-    double boundaryHeight = 0.0;
-    int textColor = 0;
-    QString blockName;             /*!< when hasBlockContents */
-    RS_Vector blockLocation;
-    RS_Vector blockScale{1, 1, 1};
-    double blockRotation = 0.0;
+  /* Content branch: either text label or block reference. */
+  bool hasTextContents = false;
+  bool hasBlockContents = false;
+  QString textLabel;     /*!< MText body when hasTextContents */
+  QString textStyleName; /*!< resolved at parse time if available */
+  RS_Vector textLocation;
+  double textHeight = 0.0;
+  double textRotation = 0.0;
+  double boundaryWidth = 0.0;
+  double boundaryHeight = 0.0;
+  int textColor = 0;
+  QString blockName; /*!< when hasBlockContents */
+  RS_Vector blockLocation;
+  RS_Vector blockScale{1, 1, 1};
+  double blockRotation = 0.0;
 
-    /* Entity-level fields (also serve as effective values until style
-     * resolution is wired). */
-    QString styleName;             /*!< MLEADERSTYLE referenced */
-    int leaderType = 1;            /*!< 0=invisible, 1=line, 2=spline */
-    int leaderColor = 0;
-    double landingDistance = 0.0;
-    double arrowSize = 0.0;
-    bool landingEnabled = true;
-    bool doglegEnabled = true;
-    int contentType = 2;           /*!< 0=None,1=Block,2=MText,3=Tolerance */
-    double scaleFactor = 1.0;
+  /* Entity-level fields (also serve as effective values until style
+   * resolution is wired). */
+  QString styleName;  /*!< MLEADERSTYLE referenced */
+  int leaderType = 1; /*!< 0=invisible, 1=line, 2=spline */
+  int leaderColor = 0;
+  double landingDistance = 0.0;
+  double arrowSize = 0.0;
+  bool landingEnabled = true;
+  bool doglegEnabled = true;
+  int contentType = 2; /*!< 0=None,1=Block,2=MText,3=Tolerance */
+  double scaleFactor = 1.0;
 };
 
 /**
@@ -93,49 +93,46 @@ struct LC_MLeaderData {
 class LC_MLeader : public RS_AtomicEntity {
 public:
     LC_MLeader();
-    LC_MLeader(RS_EntityContainer* parent, LC_MLeaderData d);
+    LC_MLeader(RS_EntityContainer *parent, LC_MLeaderData d);
 
-    RS_Entity* clone() const override;
+    RS_Entity *clone() const override;
 
     /** @return RS2::EntityMLeader */
-    RS2::EntityType rtti() const override {
-        return RS2::EntityMLeader;
-    }
+    RS2::EntityType rtti() const override { return RS2::EntityMLeader; }
 
-    const LC_MLeaderData& getData() const { return data; }
-    const std::vector<LC_MLeaderRoot>& getRoots() const { return data.roots; }
+    const LC_MLeaderData &getData() const { return data; }
+    const std::vector<LC_MLeaderRoot> &getRoots() const { return data.roots; }
     QString getStyleName() const { return data.styleName; }
 
     void calculateBorders() override;
-    void draw(RS_Painter* painter) override;
+    void draw(RS_Painter *painter) override;
 
-    RS_Vector getNearestEndpoint(const RS_Vector& coord,
-                                 double* dist = nullptr) const override;
-    RS_Vector getNearestPointOnEntity(const RS_Vector& coord,
-                                      bool onEntity = true,
-                                      double* dist = nullptr,
-                                      RS_Entity** entity = nullptr) const override;
-    RS_Vector getNearestCenter(const RS_Vector& coord,
-                               double* dist = nullptr) const override;
-    RS_Vector getNearestMiddle(const RS_Vector& coord,
-                               double* dist = nullptr,
+    RS_Vector getNearestEndpoint(const RS_Vector &coord,
+                                 double *dist = nullptr) const override;
+    RS_Vector
+    getNearestPointOnEntity(const RS_Vector &coord, bool onEntity = true,
+                            double *dist = nullptr,
+                            RS_Entity **entity = nullptr) const override;
+    RS_Vector getNearestCenter(const RS_Vector &coord,
+                               double *dist = nullptr) const override;
+    RS_Vector getNearestMiddle(const RS_Vector &coord, double *dist = nullptr,
                                int middlePoints = 1) const override;
-    RS_Vector getNearestDist(double distance,
-                             const RS_Vector& coord,
-                             double* dist = nullptr) const override;
-    double getDistanceToPoint(const RS_Vector& coord,
-                              RS_Entity** entity = nullptr,
+    RS_Vector getNearestDist(double distance, const RS_Vector &coord,
+                             double *dist = nullptr) const override;
+    double getDistanceToPoint(const RS_Vector &coord,
+                              RS_Entity **entity = nullptr,
                               RS2::ResolveLevel level = RS2::ResolveNone,
                               double solidDist = RS_MAXDOUBLE) const override;
 
-    void move(const RS_Vector& offset) override;
-    void rotate(const RS_Vector& center, double angle) override;
-    void rotate(const RS_Vector& center, const RS_Vector& angleVector) override;
-    void scale(const RS_Vector& center, const RS_Vector& factor) override;
-    void mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2) override;
-    RS_Entity& shear([[maybe_unused]] double k) override { return *this; }
+    void move(const RS_Vector &offset) override;
+    void rotate(const RS_Vector &center, double angle) override;
+    void rotate(const RS_Vector &center, const RS_Vector &angleVector) override;
+    void scale(const RS_Vector &center, const RS_Vector &factor) override;
+    void mirror(const RS_Vector &axisPoint1,
+                const RS_Vector &axisPoint2) override;
+    RS_Entity &shear([[maybe_unused]] double k) override { return *this; }
 
-protected:
+  protected:
     LC_MLeaderData data;
 };
 

@@ -17,7 +17,8 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
  * ********************************************************************************
  */
 
@@ -29,27 +30,28 @@
 class RS_MText;
 
 namespace Ui {
-    class LC_MTextPropertiesEditingWidget;
+class LC_MTextPropertiesEditingWidget;
 }
 
 class LC_MTextPropertiesEditingWidget : public LC_EntityPropertiesEditorWidget {
-    Q_OBJECT
+  Q_OBJECT
 public:
-    explicit LC_MTextPropertiesEditingWidget(QWidget *parent = nullptr);
-    ~LC_MTextPropertiesEditingWidget() override;
-    void setEntity(RS_Entity *entity) override;
+  explicit LC_MTextPropertiesEditingWidget(QWidget *parent = nullptr);
+  ~LC_MTextPropertiesEditingWidget() override;
+  void setEntity(RS_Entity *entity) override;
 protected slots:
-    void onTextChanged();
-    void onHeightEditingFinished();
-    void onWidthEditingFinished();
-    void onAngleEditingFinished();
-    void onLineSpacingEditingFinished();
-    void onStyleEditingFinished();
-    void onDirectionToggled(bool checked);
+  void onTextChanged();
+  void onHeightEditingFinished();
+  void onWidthEditingFinished();
+  void onAngleEditingFinished();
+  void onLineSpacingEditingFinished();
+  void onStyleEditingFinished();
+  void onDirectionToggled(bool checked);
+
 private:
-    void applyDirectionToEditor();
-    Ui::LC_MTextPropertiesEditingWidget *ui;
-    RS_MText *m_entity{nullptr};
+  void applyDirectionToEditor();
+  Ui::LC_MTextPropertiesEditingWidget *ui;
+  RS_MText *m_entity{nullptr};
 };
 
 #endif // LC_MTEXTPROPERTIESEDITINGWIDGET_H

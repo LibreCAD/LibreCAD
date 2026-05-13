@@ -314,7 +314,8 @@ public:
 
   /**
    * @brief Arc length of the hyperbola between parameter values phi1 and phi2.
-   * @param phi1  Start hyperbolic parameter (dimensionless; argument of cosh/sinh).
+   * @param phi1  Start hyperbolic parameter (dimensionless; argument of
+   * cosh/sinh).
    * @param phi2  End hyperbolic parameter.
    * @return Signed arc length: positive when phi2 > phi1, negative otherwise.
    */

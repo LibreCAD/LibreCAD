@@ -125,12 +125,12 @@ bool RS_Hatch::validate() {
     }
 
     try {
-        // Collect child loop containers and rebuild the container list.
-        std::vector<RS_Entity*> loops;
-        for (RS_Entity* en : std::as_const(*this)) {
-            if (en != nullptr && en->isContainer())
-                loops.push_back(en);
-        }
+      // Collect child loop containers and rebuild the container list.
+      std::vector<RS_Entity *> loops;
+      for (RS_Entity *en : std::as_const(*this)) {
+        if (en != nullptr && en->isContainer())
+          loops.push_back(en);
+      }
         setOwner(false);
         clear();
         setOwner(true);
@@ -139,15 +139,15 @@ bool RS_Hatch::validate() {
         // Compute the combined bounding box of all boundary edges (for the
         // pattern-rotation centre, which must be the same for every container
         // so that all loops rotate into the same axis-aligned frame).
-        RS_Vector bbMin(RS_MAXDOUBLE,  RS_MAXDOUBLE);
+        RS_Vector bbMin(RS_MAXDOUBLE, RS_MAXDOUBLE);
         RS_Vector bbMax(-RS_MAXDOUBLE, -RS_MAXDOUBLE);
-        for (RS_Entity* en : loops) {
-            auto* cont = static_cast<RS_EntityContainer*>(en);
-            cont->forcedCalculateBorders();
-            bbMin.x = std::min(bbMin.x, cont->getMin().x);
-            bbMin.y = std::min(bbMin.y, cont->getMin().y);
-            bbMax.x = std::max(bbMax.x, cont->getMax().x);
-            bbMax.y = std::max(bbMax.y, cont->getMax().y);
+        for (RS_Entity *en : loops) {
+          auto *cont = static_cast<RS_EntityContainer *>(en);
+          cont->forcedCalculateBorders();
+          bbMin.x = std::min(bbMin.x, cont->getMin().x);
+          bbMin.y = std::min(bbMin.y, cont->getMin().y);
+          bbMax.x = std::max(bbMax.x, cont->getMax().x);
+          bbMax.y = std::max(bbMax.y, cont->getMax().y);
         }
         const RS_Vector rotCenter = (bbMin + bbMax) * 0.5;
 
@@ -158,34 +158,36 @@ bool RS_Hatch::validate() {
         // paths that consume edge references and silently discard real loops.
         std::vector<std::unique_ptr<RS_EntityContainer>> allExtracted;
 
-        for (RS_Entity* en : loops) {
-            std::set<RS_Entity*> edges;
-            lc::LC_ContainerTraverser traverser{
-                *static_cast<RS_EntityContainer*>(en), RS2::ResolveAll};
-            for (RS_Entity* entity : traverser.entities()) {
-                if (entity != nullptr && entity->isAtomic())
-                    edges.insert(entity);
-            }
-            avoidZeroLength(edges);
-            if (edges.empty()) continue;
+        for (RS_Entity *en : loops) {
+          std::set<RS_Entity *> edges;
+          lc::LC_ContainerTraverser traverser{
+              *static_cast<RS_EntityContainer *>(en), RS2::ResolveAll};
+          for (RS_Entity *entity : traverser.entities()) {
+            if (entity != nullptr && entity->isAtomic())
+              edges.insert(entity);
+          }
+          avoidZeroLength(edges);
+          if (edges.empty())
+            continue;
 
-            RS_EntityContainer perLoopCont{nullptr, true};
-            for (RS_Entity* e : edges)
-                perLoopCont.addEntity(e->clone());
+          RS_EntityContainer perLoopCont{nullptr, true};
+          for (RS_Entity *e : edges)
+            perLoopCont.addEntity(e->clone());
 
-            // For pattern hatches apply the rotation before extraction so the
-            // extracted loop coordinates are in the axis-aligned tiling frame.
-            if (!isSolid())
-                perLoopCont.rotate(rotCenter, -data.angle);
+          // For pattern hatches apply the rotation before extraction so the
+          // extracted loop coordinates are in the axis-aligned tiling frame.
+          if (!isSolid())
+            perLoopCont.rotate(rotCenter, -data.angle);
 
-            LC_LoopUtils::LoopExtractor extractor{perLoopCont};
-            auto extracted = extractor.extract();
-            for (auto& loop : extracted)
-                allExtracted.push_back(std::move(loop));
+          LC_LoopUtils::LoopExtractor extractor{perLoopCont};
+          auto extracted = extractor.extract();
+          for (auto &loop : extracted)
+            allExtracted.push_back(std::move(loop));
         }
 
         if (allExtracted.empty())
-            throw std::runtime_error("Loop optimization failed: no loops generated");
+          throw std::runtime_error(
+              "Loop optimization failed: no loops generated");
 
         LC_LoopUtils::LoopSorter sorter{std::move(allExtracted)};
         auto results = sorter.getResults();
@@ -219,7 +221,7 @@ int RS_Hatch::countLoops() const {
 }
 
 int RS_Hatch::countAllLoops() const {
-    return static_cast<int>(m_boundaryContainers.size());
+  return static_cast<int>(m_boundaryContainers.size());
 }
 
 /**

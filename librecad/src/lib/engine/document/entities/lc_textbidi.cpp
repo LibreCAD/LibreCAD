@@ -23,26 +23,26 @@
 
 namespace lc::textbidi {
 
-QString mirrorByLine(const QString& input) {
-    QStringList lines = input.split(QLatin1Char('\n'));
-    for (QString& line : lines) {
-        QString out;
-        out.reserve(line.size());
-        int i = line.size();
-        while (i > 0) {
-            --i;
-            if (i > 0 && line.at(i).isLowSurrogate()
-                && line.at(i - 1).isHighSurrogate()) {
-                out.append(line.at(i - 1));
-                out.append(line.at(i));
-                --i;
-            } else {
-                out.append(line.at(i));
-            }
-        }
-        line = out;
+QString mirrorByLine(const QString &input) {
+  QStringList lines = input.split(QLatin1Char('\n'));
+  for (QString &line : lines) {
+    QString out;
+    out.reserve(line.size());
+    int i = line.size();
+    while (i > 0) {
+      --i;
+      if (i > 0 && line.at(i).isLowSurrogate() &&
+          line.at(i - 1).isHighSurrogate()) {
+        out.append(line.at(i - 1));
+        out.append(line.at(i));
+        --i;
+      } else {
+        out.append(line.at(i));
+      }
     }
-    return lines.join(QLatin1Char('\n'));
+    line = out;
+  }
+  return lines.join(QLatin1Char('\n'));
 }
 
-}  // namespace lc::textbidi
+} // namespace lc::textbidi

@@ -162,7 +162,7 @@ int console_dxf2pdf(int argc, char* argv[])
         QFileInfo dxfFileInfo(arg);
         const QString sfx = dxfFileInfo.suffix().toLower();
         if (sfx != "dxf" && sfx != "dwg")
-            continue; // Skip files without .dxf/.dwg extension
+          continue; // Skip files without .dxf/.dwg extension
         params.dxfFiles.append(arg);
     }
 

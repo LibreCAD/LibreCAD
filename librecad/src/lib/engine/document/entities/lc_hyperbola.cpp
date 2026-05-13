@@ -314,10 +314,10 @@ RS_VectorSolutions LC_Hyperbola::getRefPoints() const {
   // user expects to snap to either vertex (analogous to the two endpoints
   // of an ellipse's major axis). For a bounded arc this is still meaningful
   // as an algebraic landmark.
-  RS_Vector secondaryVertex = m_data.reversed
-                                  ? m_data.center + m_data.majorP
-                                  : m_data.center - m_data.majorP;
-  if (secondaryVertex.valid && secondaryVertex.distanceTo(primaryVertex) > RS_TOLERANCE) {
+  RS_Vector secondaryVertex = m_data.reversed ? m_data.center + m_data.majorP
+                                              : m_data.center - m_data.majorP;
+  if (secondaryVertex.valid &&
+      secondaryVertex.distanceTo(primaryVertex) > RS_TOLERANCE) {
     sol.push_back(secondaryVertex);
   }
 
@@ -387,9 +387,9 @@ RS_Vector LC_Hyperbola::getMiddlePoint() const
   }
 
          // Unbounded hyperbola has infinite length → no meaningful midpoint
-  if (isInfinite()) {
-    return RS_Vector(false);
-  }
+         if (isInfinite()) {
+           return RS_Vector(false);
+         }
 
   double totalLength = getLength();
   if (std::isinf(totalLength) || totalLength <= 0.0) {
@@ -567,7 +567,7 @@ double LC_Hyperbola::getParamFromPoint(const RS_Vector& p,
          // - Translate so center is at origin
          // - Rotate so majorP aligns with positive x-axis
   RS_Vector local = p - m_data.center;
-  local.rotate(-m_data.majorP.angle());  // inverse rotation
+  local.rotate(-m_data.majorP.angle()); // inverse rotation
 
   // Branch sign: getPoint(phi, true) emits local x = -a·cosh(phi), so the
   // left branch lives in local.x < 0. Recover phi from |local.x| / a (cosh)
@@ -576,7 +576,7 @@ double LC_Hyperbola::getParamFromPoint(const RS_Vector& p,
   // caller (moveRef, moveStartpoint/moveEndpoint, scale, mirror, prepareTrim,
   // getNearestPointOnEntity initial guess) actually needs.
 
-         // Primary recovery: φ from y-coordinate (sinh is odd and strictly increasing)
+  // Primary recovery: φ from y-coordinate (sinh is odd and strictly increasing)
   double y_local = local.y;
   double sinh_phi = y_local / b;
   double phi = std::asinh(sinh_phi);
@@ -586,7 +586,8 @@ double LC_Hyperbola::getParamFromPoint(const RS_Vector& p,
   // double x_expected = a * cosh_phi;
 
   //        // Determine which branch the point belongs to by sign of x_local
-  //        // m_data.reversed == true means left branch (x negative in local coords)
+  //        // m_data.reversed == true means left branch (x negative in local
+  //        coords)
   // //bool pointOnLeftBranch = (x_local < 0.0);
 
   //        // Expected x sign based on m_data.reversed
@@ -659,7 +660,8 @@ void LC_Hyperbola::draw(RS_Painter *painter) {
           LC_Quadratic::getIntersection(getQuadratic(), line.getQuadratic());
       for (const RS_Vector &intersection : sol) {
         double phiCur = getParamFromPoint(intersection);
-        if (std::isnan(phiCur) || phiCur < m_data.angle1 || phiCur > m_data.angle2)
+        if (std::isnan(phiCur) || phiCur < m_data.angle1 ||
+            phiCur > m_data.angle2)
           continue;
         if (isInClipRect(intersection, clip)) {
           params.push_back(phiCur);
@@ -944,8 +946,7 @@ RS_Vector LC_Hyperbola::getNearestOrthTan(const RS_Vector& /*coord*/,
 
 bool LC_Hyperbola::isInfinite() const
 {
-  return RS_Math::equal(m_data.angle1, 0.) &&
-         RS_Math::equal(m_data.angle2, 0.);
+  return RS_Math::equal(m_data.angle1, 0.) && RS_Math::equal(m_data.angle2, 0.);
 }
 
 
@@ -1008,14 +1009,16 @@ RS_Vector LC_Hyperbola::getNearestDist(double distance,
                                        const RS_Vector& coord,
                                        double* dist) const
 {
-  if (!m_valid || isInfinite()) return RS_Vector(false);
+  if (!m_valid || isInfinite())
+    return RS_Vector(false);
 
   double totalLength = getLength();
   if (totalLength <= std::abs(distance))
     return RS_Vector(false);
 
   double phi0 = getParamFromPoint(coord, m_data.reversed);
-  const bool fromStart = std::abs(phi0 - m_data.angle1) <= std::abs(phi0 - m_data.angle2);
+  const bool fromStart =
+      std::abs(phi0 - m_data.angle1) <= std::abs(phi0 - m_data.angle2);
 
   double targetArcFromStart = fromStart ? distance : totalLength - distance;
 
@@ -1031,7 +1034,9 @@ RS_Vector LC_Hyperbola::getNearestDist(double distance,
          // Initial guess from nearest point on curve
 
   using std::asinh, std::cosh, std::sinh;
-  double phi = asinh(sinh(m_data.angle1) + targetArcFromStart / totalLength * (sinh(m_data.angle2) - sinh(m_data.angle1)));
+  double phi = asinh(sinh(m_data.angle1) +
+                     targetArcFromStart / totalLength *
+                         (sinh(m_data.angle2) - sinh(m_data.angle1)));
   if (std::isnan(phi))
     phi = m_data.angle1;
 
@@ -1063,8 +1068,14 @@ RS_Vector LC_Hyperbola::getNearestDist(double distance,
     double sLow = getArcLength(m_data.angle1, phiLow);
     double sHigh = getArcLength(m_data.angle1, phiHigh);
 
-    while (sLow > targetArcFromStart) { phiLow -= 30.0; sLow = getArcLength(m_data.angle1, phiLow); }
-    while (sHigh < targetArcFromStart) { phiHigh += 30.0; sHigh = getArcLength(m_data.angle1, phiHigh); }
+    while (sLow > targetArcFromStart) {
+      phiLow -= 30.0;
+      sLow = getArcLength(m_data.angle1, phiLow);
+    }
+    while (sHigh < targetArcFromStart) {
+      phiHigh += 30.0;
+      sHigh = getArcLength(m_data.angle1, phiHigh);
+    }
 
     for (int i = 0; i < 80; ++i) {
       phi = 0.5 * (phiLow + phiHigh);
@@ -1109,22 +1120,25 @@ void LC_Hyperbola::scale(const RS_Vector &center, const RS_Vector &factor) {
   // hyperbola through the scaled foci + scaled start point.
   RS_VectorSolutions foci = getFoci();
   RS_Vector vpStart = isInfinite() ? getPrimaryVertex() : getStartpoint();
-  RS_Vector vpEnd   = isInfinite() ? RS_Vector{false}    : getEndpoint();
+  RS_Vector vpEnd = isInfinite() ? RS_Vector{false} : getEndpoint();
   foci.scale(center, factor);
   vpStart.scale(center, factor);
-  if (vpEnd.valid) vpEnd.scale(center, factor);
+  if (vpEnd.valid)
+    vpEnd.scale(center, factor);
 
   LC_HyperbolaData newData{foci[0], foci[1], vpStart};
   if (newData.majorP.squared() < RS_TOLERANCE2)
-    return;  // degenerate scaling result (e.g. collinear foci) — leave unchanged
+    return; // degenerate scaling result (e.g. collinear foci) — leave unchanged
   m_data = newData;
   m_valid = true;
 
   if (vpEnd.valid) {
     const double phiStart = getParamFromPoint(vpStart, m_data.reversed);
-    const double phiEnd   = getParamFromPoint(vpEnd,   m_data.reversed);
-    if (!std::isnan(phiStart)) m_data.angle1 = phiStart;
-    if (!std::isnan(phiEnd))   m_data.angle2 = phiEnd;
+    const double phiEnd = getParamFromPoint(vpEnd, m_data.reversed);
+    if (!std::isnan(phiStart))
+      m_data.angle1 = phiStart;
+    if (!std::isnan(phiEnd))
+      m_data.angle2 = phiEnd;
     if (m_data.angle1 > m_data.angle2)
       std::swap(m_data.angle1, m_data.angle2);
   }
@@ -1178,10 +1192,12 @@ void LC_Hyperbola::revertDirection() {
 RS_Vector LC_Hyperbola::getNearestCenter(const RS_Vector &coord,
                                          double *dist) const {
   if (!m_valid || !coord.valid) {
-    if (dist) *dist = RS_MAXDOUBLE;
+    if (dist)
+      *dist = RS_MAXDOUBLE;
     return RS_Vector(false);
   }
-  if (dist) *dist = coord.distanceTo(m_data.center);
+  if (dist)
+    *dist = coord.distanceTo(m_data.center);
   return m_data.center;
 }
 
@@ -1243,9 +1259,10 @@ RS_Vector LC_Hyperbola::getNearestPointOnEntity(const RS_Vector &coord,
     phiGuess = unbounded ? 0.0 : (m_data.angle1 + m_data.angle2) * 0.5;
   }
 
-  // Effective arc range: real bounds for arcs, wide finite range for full curves.
+  // Effective arc range: real bounds for arcs, wide finite range for full
+  // curves.
   double phiMin = unbounded ? -30.0 : std::min(m_data.angle1, m_data.angle2);
-  double phiMax = unbounded ?  30.0 : std::max(m_data.angle1, m_data.angle2);
+  double phiMax = unbounded ? 30.0 : std::max(m_data.angle1, m_data.angle2);
   phiGuess = std::max(phiMin, std::min(phiMax, phiGuess));
 
   // Evaluate distance squared at endpoints and initial guess
@@ -1503,7 +1520,7 @@ void LC_Hyperbola::setFocus1(const RS_Vector &f1) {
   // resets angle1/angle2 to 0, so without this the bounded arc would be
   // silently widened to the full unbounded hyperbola.
   const RS_Vector originalStart = getStartpoint();
-  const RS_Vector originalEnd   = getEndpoint();
+  const RS_Vector originalEnd = getEndpoint();
   const bool hadBounds = originalStart.valid && originalEnd.valid;
 
   RS_Vector f2 = m_data.getFocus2();
@@ -1520,9 +1537,11 @@ void LC_Hyperbola::setFocus1(const RS_Vector &f1) {
     m_valid = true;
     if (hadBounds) {
       const double phiStart = getParamFromPoint(originalStart, m_data.reversed);
-      const double phiEnd   = getParamFromPoint(originalEnd,   m_data.reversed);
-      if (!std::isnan(phiStart)) m_data.angle1 = phiStart;
-      if (!std::isnan(phiEnd))   m_data.angle2 = phiEnd;
+      const double phiEnd = getParamFromPoint(originalEnd, m_data.reversed);
+      if (!std::isnan(phiStart))
+        m_data.angle1 = phiStart;
+      if (!std::isnan(phiEnd))
+        m_data.angle2 = phiEnd;
       if (m_data.angle1 > m_data.angle2)
         std::swap(m_data.angle1, m_data.angle2);
     }
@@ -1536,7 +1555,7 @@ void LC_Hyperbola::setFocus2(const RS_Vector &f2) {
     return;
 
   const RS_Vector originalStart = getStartpoint();
-  const RS_Vector originalEnd   = getEndpoint();
+  const RS_Vector originalEnd = getEndpoint();
   const bool hadBounds = originalStart.valid && originalEnd.valid;
 
   RS_Vector f1 = m_data.getFocus1();
@@ -1553,9 +1572,11 @@ void LC_Hyperbola::setFocus2(const RS_Vector &f2) {
     m_valid = true;
     if (hadBounds) {
       const double phiStart = getParamFromPoint(originalStart, m_data.reversed);
-      const double phiEnd   = getParamFromPoint(originalEnd,   m_data.reversed);
-      if (!std::isnan(phiStart)) m_data.angle1 = phiStart;
-      if (!std::isnan(phiEnd))   m_data.angle2 = phiEnd;
+      const double phiEnd = getParamFromPoint(originalEnd, m_data.reversed);
+      if (!std::isnan(phiStart))
+        m_data.angle1 = phiStart;
+      if (!std::isnan(phiEnd))
+        m_data.angle2 = phiEnd;
       if (m_data.angle1 > m_data.angle2)
         std::swap(m_data.angle1, m_data.angle2);
     }
@@ -1569,7 +1590,7 @@ void LC_Hyperbola::setPointOnCurve(const RS_Vector &p) {
     return;
 
   const RS_Vector originalStart = getStartpoint();
-  const RS_Vector originalEnd   = getEndpoint();
+  const RS_Vector originalEnd = getEndpoint();
   const bool hadBounds = originalStart.valid && originalEnd.valid;
 
   RS_Vector f1 = m_data.getFocus1();
@@ -1581,9 +1602,11 @@ void LC_Hyperbola::setPointOnCurve(const RS_Vector &p) {
     m_valid = true;
     if (hadBounds) {
       const double phiStart = getParamFromPoint(originalStart, m_data.reversed);
-      const double phiEnd   = getParamFromPoint(originalEnd,   m_data.reversed);
-      if (!std::isnan(phiStart)) m_data.angle1 = phiStart;
-      if (!std::isnan(phiEnd))   m_data.angle2 = phiEnd;
+      const double phiEnd = getParamFromPoint(originalEnd, m_data.reversed);
+      if (!std::isnan(phiStart))
+        m_data.angle1 = phiStart;
+      if (!std::isnan(phiEnd))
+        m_data.angle2 = phiEnd;
       if (m_data.angle1 > m_data.angle2)
         std::swap(m_data.angle1, m_data.angle2);
     }
@@ -1666,14 +1689,12 @@ void LC_Hyperbola::moveRef(const RS_Vector& ref, const RS_Vector& offset)
 
   if (ref.distanceTo(m_data.center) < RS_TOLERANCE) {
     m_data.center = newRef;
-  }
-  else if (ref.distanceTo(getPrimaryVertex()) < RS_TOLERANCE) {
+  } else if (ref.distanceTo(getPrimaryVertex()) < RS_TOLERANCE) {
     RS_Vector dir = newRef - m_data.center;
     if (dir.magnitude() > RS_TOLERANCE) {
       m_data.majorP = dir.normalized() * getMajorRadius();
     }
-  }
-  else if (!isInfinite()) {
+  } else if (!isInfinite()) {
     // Start or end point movement
     if (ref.distanceTo(originalStart) < RS_TOLERANCE) {
       double phi = getParamFromPoint(newRef, m_data.reversed);
@@ -1714,12 +1735,15 @@ void LC_Hyperbola::moveRef(const RS_Vector& ref, const RS_Vector& offset)
              // Re-project original endpoints after focus move
       if (hadBounds) {
         double phiStart = getParamFromPoint(originalStart, m_data.reversed);
-        double phiEnd   = getParamFromPoint(originalEnd, m_data.reversed);
+        double phiEnd = getParamFromPoint(originalEnd, m_data.reversed);
 
-        if (!std::isnan(phiStart)) m_data.angle1 = phiStart;
-        if (!std::isnan(phiEnd))   m_data.angle2 = phiEnd;
+        if (!std::isnan(phiStart))
+          m_data.angle1 = phiStart;
+        if (!std::isnan(phiEnd))
+          m_data.angle2 = phiEnd;
 
-        if (m_data.angle1 > m_data.angle2) std::swap(m_data.angle1, m_data.angle2);
+        if (m_data.angle1 > m_data.angle2)
+          std::swap(m_data.angle1, m_data.angle2);
       }
     }
   }
@@ -1818,7 +1842,8 @@ void LC_Hyperbola::moveEndpoint(const RS_Vector &pos) {
  */
 double LC_Hyperbola::areaLineIntegral() const
 {
-  if (!m_valid || isInfinite()) return 0.0;
+  if (!m_valid || isInfinite())
+    return 0.0;
 
   double phi1 = m_data.angle1;
   double phi2 = m_data.angle2;
@@ -1828,7 +1853,7 @@ double LC_Hyperbola::areaLineIntegral() const
   double a2 = a*a;
   double b2 = b*b;
   double cx = m_data.center.x;
-  //double cy = m_data.center.y;
+  // double cy = m_data.center.y;
   double cos_th = std::cos(m_data.majorP.angle());
   double sin_th = std::sin(m_data.majorP.angle());
   double cos2_th = cos_th*cos_th - sin_th*sin_th;
@@ -1842,10 +1867,12 @@ double LC_Hyperbola::areaLineIntegral() const
   double c3 = a * b /2.;
 
   // The undetermined integral function for \(\int x\,dy\) is
-//  \(\mathbf{F(t)=}\frac{\mathbf{a}^{\mathbf{2}}\mathbf{-b}^{\mathbf{2}}}{\mathbf{8}}\sin \mathbf{(2\alpha )}\cosh \mathbf{(2t)+
-// }\frac{\mathbf{ab}}{\mathbf{4}}\cos \mathbf{(2\alpha )}\sinh \mathbf{(2t)+
-// }\frac{\mathbf{ab}}{\mathbf{2}}\mathbf{t+
-  //c}_{\mathbf{x}}\mathbf{(a}\sin \mathbf{\alpha }\cosh \mathbf{t+b}\cos \mathbf{\alpha }\sinh \mathbf{t)+C}\)
+  //  \(\mathbf{F(t)=}\frac{\mathbf{a}^{\mathbf{2}}\mathbf{-b}^{\mathbf{2}}}{\mathbf{8}}\sin
+  //  \mathbf{(2\alpha )}\cosh \mathbf{(2t)+
+  // }\frac{\mathbf{ab}}{\mathbf{4}}\cos \mathbf{(2\alpha )}\sinh \mathbf{(2t)+
+  // }\frac{\mathbf{ab}}{\mathbf{2}}\mathbf{t+
+  // c}_{\mathbf{x}}\mathbf{(a}\sin \mathbf{\alpha }\cosh \mathbf{t+b}\cos
+  // \mathbf{\alpha }\sinh \mathbf{t)+C}\)
   // Reversed branch: x_local = -a·cosh φ flips the sign of every term that
   // carries a single power of `a` from the local x coordinate. The cxTerm
   // also flips because R/S sit in front of the local-x and local-y
@@ -1876,8 +1903,9 @@ double LC_Hyperbola::computeLocalArea(double phi1, double phi2) const {
 
 LC_FirstMoment LC_Hyperbola::computeLocalFirstMoment(double phi1, double phi2) const {
   // First moments via Green's theorem with x = a·cosh φ, y = b·sinh φ:
-  //   mx = ½ ∫ x² dy = (a²b/2) ∫ cosh³ φ dφ      = (a²b/2)·(sinh φ + sinh³ φ / 3)
-  //   my = -½ ∫ y² dx = -(ab²/2) ∫ sinh³ φ dφ    = -(ab²/2)·(cosh³ φ / 3 − cosh φ)
+  //   mx = ½ ∫ x² dy = (a²b/2) ∫ cosh³ φ dφ      = (a²b/2)·(sinh φ + sinh³ φ /
+  //   3) my = -½ ∫ y² dx = -(ab²/2) ∫ sinh³ φ dφ    = -(ab²/2)·(cosh³ φ / 3 −
+  //   cosh φ)
   // For the reversed (left) branch x_local = -a·cosh, so x² is unchanged
   // (mx unaffected) and x doesn't appear in my (also unaffected).
   if (isInfinite()) return {};
@@ -1935,27 +1963,25 @@ LC_SecondMoment LC_Hyperbola::computeLocalSecondMoment(double phi1, double phi2)
 // hyperbola pipeline correct without dragging the other entities (ellipse
 // arcs, parabola) along.
 namespace {
-LC_FirstMoment shiftFirstMomentToOrigin(const LC_FirstMoment &local,
-                                        double cx, double cy, double area) {
+LC_FirstMoment shiftFirstMomentToOrigin(const LC_FirstMoment &local, double cx,
+                                        double cy, double area) {
   // local moments are about a frame centered at world (cx, cy). To express
   // them about the world origin: ∫(x_local + cx) dA = ∫ x_local dA + cx·A.
   return {local.mx + cx * area, local.my + cy * area};
 }
 LC_SecondMoment shiftSecondMomentToOrigin(const LC_SecondMoment &local,
                                           double cx, double cy, double area) {
-  return {
-      local.ixx + area * cx * cx,
-      local.iyy + area * cy * cy,
-      local.ixy + area * cx * cy
-  };
+  return {local.ixx + area * cx * cx, local.iyy + area * cy * cy,
+          local.ixy + area * cx * cy};
 }
 } // namespace
 
 LC_FirstMoment LC_Hyperbola::firstMomentLineIntegral() const {
-  if (!m_valid || isInfinite()) return {};
+  if (!m_valid || isInfinite())
+    return {};
   const double phi = getAngle();
-  const double cx  = m_data.center.x;
-  const double cy  = m_data.center.y;
+  const double cx = m_data.center.x;
+  const double cy = m_data.center.y;
 
   // No t0/t1 swap for reversed branches: the helpers already apply the
   // x-sign factor (`effectiveSignX = -1`) so a single source of truth
@@ -1971,10 +1997,11 @@ LC_FirstMoment LC_Hyperbola::firstMomentLineIntegral() const {
 }
 
 LC_SecondMoment LC_Hyperbola::secondMomentLineIntegral() const {
-  if (!m_valid || isInfinite()) return {};
+  if (!m_valid || isInfinite())
+    return {};
   const double phi = getAngle();
-  const double cx  = m_data.center.x;
-  const double cy  = m_data.center.y;
+  const double cx = m_data.center.x;
+  const double cy = m_data.center.y;
 
   const double t0 = m_data.angle1;
   const double t1 = m_data.angle2;
@@ -2115,7 +2142,7 @@ RS_Vector LC_Hyperbola::prepareTrim(const RS_Vector& trimCoord,
 
   double newPhi = getParamFromPoint(bestSol, m_data.reversed);
 
-         // Use getTrimPoint() with the chosen intersection to decide which end to move
+  // Use getTrimPoint() with the chosen intersection to decide which end to move
   RS2::Ending side = getTrimPoint(trimCoord, bestSol);
 
   if (side == RS2::EndingStart) {

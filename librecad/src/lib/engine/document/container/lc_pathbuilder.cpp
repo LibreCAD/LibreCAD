@@ -165,7 +165,8 @@ void PathBuilder::appendSplinePoints(LC_SplinePoints* spline) {
   // (UpdateControlPoints regenerates them either way), so iterating over
   // controlPoints is correct for both modes.
   const size_t n = spline->getData().controlPoints.size();
-  if (n < 2) return;
+  if (n < 2)
+    return;
 
   const bool closed = spline->isClosed();
   const size_t iSplines = closed ? n : (n >= 3 ? n - 2 : 0);

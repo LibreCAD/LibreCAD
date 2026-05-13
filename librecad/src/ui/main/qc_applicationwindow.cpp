@@ -984,38 +984,38 @@ void QC_ApplicationWindow::autoZoomAfterLoad(QG_GraphicView *graphicView){
     }
 }
 
-int QC_ApplicationWindow::maybeSurfaceBlocksDock(RS_Graphic* graphic) {
-    if (graphic == nullptr || m_blockWidget == nullptr)
-        return 0;
-    if (graphic->countDeep() != 0)
-        return 0;
+int QC_ApplicationWindow::maybeSurfaceBlocksDock(RS_Graphic *graphic) {
+  if (graphic == nullptr || m_blockWidget == nullptr)
+    return 0;
+  if (graphic->countDeep() != 0)
+    return 0;
 
-    RS_BlockList* blockList = m_blockWidget->getBlockList();
-    if (blockList == nullptr)
-        return 0;
+  RS_BlockList *blockList = m_blockWidget->getBlockList();
+  if (blockList == nullptr)
+    return 0;
 
-    int hits = 0;
-    for (int i = 0; i < blockList->count(); ++i) {
-        RS_Block* block = blockList->at(i);
-        if (block == nullptr || block->isUndone())
-            continue;
-        // *Model_Space / *Paper_Space[N] are pseudo-blocks that mirror the
-        // ENTITIES section; surfacing them is pointless.
-        if (block->getName().startsWith('*'))
-            continue;
-        if (block->countDeep() > 0)
-            ++hits;
-    }
-    if (hits == 0)
-        return 0;
+  int hits = 0;
+  for (int i = 0; i < blockList->count(); ++i) {
+    RS_Block *block = blockList->at(i);
+    if (block == nullptr || block->isUndone())
+      continue;
+    // *Model_Space / *Paper_Space[N] are pseudo-blocks that mirror the
+    // ENTITIES section; surfacing them is pointless.
+    if (block->getName().startsWith('*'))
+      continue;
+    if (block->countDeep() > 0)
+      ++hits;
+  }
+  if (hits == 0)
+    return 0;
 
-    if (auto* dock = qobject_cast<QDockWidget*>(m_blockWidget->parentWidget())) {
-        dock->show();
-        dock->raise();
-        if (dock->isFloating())
-            dock->activateWindow();
-    }
-    return hits;
+  if (auto *dock = qobject_cast<QDockWidget *>(m_blockWidget->parentWidget())) {
+    dock->show();
+    dock->raise();
+    if (dock->isFloating())
+      dock->activateWindow();
+  }
+  return hits;
 }
 
 void QC_ApplicationWindow::openFile(const QString &fileName, RS2::FormatType type) {
@@ -1079,14 +1079,16 @@ void QC_ApplicationWindow::openFile(const QString &fileName, RS2::FormatType typ
 
     int blocksWithGeometry = maybeSurfaceBlocksDock(w->getGraphic());
     QString message;
-    int messageTimeout;
+    int messageTimeout = 0;
     if (blocksWithGeometry > 0) {
-        message = tr("Loaded %1 — modelspace is empty; %n block(s) in the Blocks dock contain geometry.",
-                     "", blocksWithGeometry).arg(fileName);
-        messageTimeout = 8000;
+      message = tr("Loaded %1 — modelspace is empty; %n block(s) in the Blocks "
+                   "dock contain geometry.",
+                   "", blocksWithGeometry)
+                    .arg(fileName);
+      messageTimeout = 8000;
     } else {
-        message = tr("Loaded document: ") + fileName;
-        messageTimeout = 2000;
+      message = tr("Loaded document: ") + fileName;
+      messageTimeout = 2000;
     }
     notificationMessage(message, messageTimeout);
 

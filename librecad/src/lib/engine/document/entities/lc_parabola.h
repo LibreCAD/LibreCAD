@@ -81,7 +81,7 @@ struct LC_ParabolaData
     bool m_valid = false;
 };
 
-std::ostream& operator << (std::ostream& os, const LC_ParabolaData& ld);
+std::ostream& operator<<(std::ostream& os, const LC_ParabolaData& ld);
 
 /**
  * Class for a parabola entity.
@@ -91,7 +91,7 @@ std::ostream& operator << (std::ostream& os, const LC_ParabolaData& ld);
 class LC_Parabola : public LC_SplinePoints // RS_EntityContainer
 {
 private:
-    LC_ParabolaData m_data;
+  LC_ParabolaData m_data;
 
 public:
     LC_Parabola(RS_EntityContainer* parent, const LC_ParabolaData& d);
@@ -108,14 +108,8 @@ public:
     }
 
     /** @return Copy of data that defines the spline. */
-    LC_ParabolaData const& getData() const
-    {
-        return m_data;
-    }
-    LC_ParabolaData& getData()
-    {
-        return m_data;
-    }
+    LC_ParabolaData const &getData() const { return m_data; }
+    LC_ParabolaData &getData() { return m_data; }
 
     /** \brief return the equation of the entity
     a quadratic contains coefficients for quadratic:
@@ -127,7 +121,7 @@ public:
     LC_Quadratic getQuadratic() const override;
     RS_VectorSolutions getRefPoints() const override;
 
-    RS_Vector getTangentDirection(const RS_Vector& point)const override;
+    RS_Vector getTangentDirection(const RS_Vector& point) const override;
     //find the tangential points seeing from given point
     RS_VectorSolutions getTangentPoint(const RS_Vector& point) const override;
 
@@ -140,8 +134,8 @@ public:
       *@author: Dongxu Li
       */
     RS_Vector getNearestOrthTan(const RS_Vector& coord,
-                                            const RS_Line& normal,
-                                            bool onEntity ) const override;
+                                const RS_Line& normal,
+                                bool onEntity) const override;
 
     RS_Vector dualLineTangentPoint(const RS_Vector& line) const override;
     RS2::Ending getTrimPoint(const RS_Vector& trimCoord,
@@ -207,10 +201,10 @@ private:
     // same rotation
     RS_Vector rotateToQuadratic(RS_Vector vp) const;
 
-         // Exact local antiderivatives (Green's theorem)
-  double computeLocalArea(double t1, double t2) const;
-  LC_FirstMoment computeLocalFirstMoment(double t1, double t2) const;
-  LC_SecondMoment computeLocalSecondMoment(double t1, double t2) const;
+    // Exact local antiderivatives (Green's theorem)
+    double computeLocalArea(double t1, double t2) const;
+    LC_FirstMoment computeLocalFirstMoment(double t1, double t2) const;
+    LC_SecondMoment computeLocalSecondMoment(double t1, double t2) const;
 };
 
 #endif

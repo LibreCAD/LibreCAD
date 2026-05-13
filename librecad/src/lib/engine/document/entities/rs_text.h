@@ -73,15 +73,15 @@ struct RS_TextData {
      * character in the text, falling back to LeftToRight.
      */
     enum DrawingDirection {
-        LeftToRight, /**< Force LTR base direction */
-        RightToLeft, /**< Force RTL base direction */
-        ByContent    /**< Detect from first strong character (UAX#9 P-rules) */
+      LeftToRight, /**< Force LTR base direction */
+      RightToLeft, /**< Force RTL base direction */
+      ByContent    /**< Detect from first strong character (UAX#9 P-rules) */
     };
 
     /**
      * Default constructor. Leaves the data object uninitialized.
      */
-	RS_TextData() = default;
+    RS_TextData() = default;
 
     /**
      * Constructor with initialisation.
@@ -112,7 +112,7 @@ struct RS_TextData {
                 const QString& text,
                 const QString& style,
                 double angle,
-				RS2::UpdateMode updateMode = RS2::Update);
+                RS2::UpdateMode updateMode = RS2::Update);
 
     /** Insertion point */
     RS_Vector insertionPoint;
@@ -140,7 +140,7 @@ struct RS_TextData {
     RS2::UpdateMode updateMode = RS2::NoUpdate;
 };
 
-std::ostream& operator << (std::ostream& os, const RS_TextData& td);
+std::ostream& operator<<(std::ostream& os, const RS_TextData& td);
 
 /**
  * Class for a text entity.
@@ -210,7 +210,7 @@ public:
         return data.textGeneration;
     }
     RS_TextData::DrawingDirection getDrawingDirection() const {
-        return data.drawingDirection;
+      return data.drawingDirection;
     }
     void setDrawingDirection(RS_TextData::DrawingDirection direction);
     void setText(const QString& t);
@@ -223,9 +223,9 @@ public:
     QString getStyle() {
         return data.style;
     }
-        void setAngle(double a) {
-                data.angle = a;
-        }
+    void setAngle(double a) {
+        data.angle = a;
+    }
     double getAngle() {
         return data.angle;
     }
@@ -257,7 +257,7 @@ public:
                          const RS_Vector& secondCorner,
                          const RS_Vector& offset) override;
 
-    friend std::ostream& operator << (std::ostream& os, const RS_Text& p);
+    friend std::ostream& operator<<(std::ostream& os, const RS_Text& p);
     void draw(RS_Painter* painter) override;
     void drawDraft(RS_Painter *painter) override;
     RS_Entity *cloneProxy() const override;

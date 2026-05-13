@@ -109,10 +109,10 @@ public:
     void addArc(const DRW_Arc& data) override;
     void addEllipse(const DRW_Ellipse& data) override;
     void addLWPolyline(const DRW_LWPolyline& data) override;
-    void addMLine(const DRW_MLine* data) override;
-    void addMLineStyle(const DRW_MLineStyle& data) override;
-    void addUnderlay(const DRW_Underlay* data) override;
-    void linkUnderlay(const DRW_UnderlayDefinition* data) override;
+    void addMLine(const DRW_MLine *data) override;
+    void addMLineStyle(const DRW_MLineStyle &data) override;
+    void addUnderlay(const DRW_Underlay *data) override;
+    void linkUnderlay(const DRW_UnderlayDefinition *data) override;
     void addText(const DRW_Text& data) override;
     void addPolyline(const DRW_Polyline& data) override;
     void addSpline(const DRW_Spline* data) override;
@@ -125,7 +125,7 @@ public:
     /** Build an RS_MText from a DRW_MText payload, handling alignment / drawing
      *  direction / line spacing / oldMText legacy correction.  Caller takes
      *  ownership of the returned entity (parent is null). */
-    RS_MText* mtextEntityFromDRW(const DRW_MText& data);
+    RS_MText *mtextEntityFromDRW(const DRW_MText &data);
     void addDimAlign(const DRW_DimAligned *data) override;
     void addDimLinear(const DRW_DimLinear *data) override;
     void addDimRadial(const DRW_DimRadial *data) override;
@@ -138,9 +138,9 @@ public:
     void addViewport(const DRW_Viewport& /*data*/) override{}
     void addImage(const DRW_Image* data) override;
     void linkImage(const DRW_ImageDef* data) override;
-    void addWipeout(const DRW_Image* data) override;
-    void addMLeader(const DRW_MLeader* data) override;
-    void addMLeaderStyle(const DRW_MLeaderStyle* data) override;
+    void addWipeout(const DRW_Image *data) override;
+    void addMLeader(const DRW_MLeader *data) override;
+    void addMLeaderStyle(const DRW_MLeaderStyle *data) override;
 
     void add3dFace(const DRW_3Dface& data) override;
     void addComment(const char*) override;
@@ -199,17 +199,16 @@ public:
     void writeText(RS_Text* t);
     void writeHatch(RS_Hatch* h);
     void writeImage(RS_Image* i);
-    void writeWipeout(LC_Wipeout* w);
-    void writeMLeader(LC_MLeader* m);
+    void writeWipeout(LC_Wipeout *w);
+    void writeMLeader(LC_MLeader *m);
     void writeLeader(RS_Leader* l);
     void writeDimension(RS_Dimension* d);
     void writePolyline(RS_Polyline* p);
 
-/*	void writeEntityContainer(DL_WriterA& dw, RS_EntityContainer* con,
-                const DRW_Entity& attrib);
-	void writeAtomicEntities(DL_WriterA& dw, RS_EntityContainer* c,
-                const DRW_Entity& attrib, RS2::ResolveLevel level);*/
-
+    /*	void writeEntityContainer(DL_WriterA& dw, RS_EntityContainer* con,
+                    const DRW_Entity& attrib);
+            void writeAtomicEntities(DL_WriterA& dw, RS_EntityContainer* c,
+                    const DRW_Entity& attrib, RS2::ResolveLevel level);*/
 
     void setEntityAttributes(RS_Entity* entity, const DRW_Entity* attrib);
     void getEntityAttributes(DRW_Entity* ent, const RS_Entity* entity);
@@ -221,15 +220,15 @@ public:
      *  loop. Degrees 1, 2, and 3 all converge to a quadratic spline-points
      *  representation; cubic input is approximated by 64-point sampling.
      *  Returns nullptr on degenerate input. Exposed for unit tests. */
-    static LC_SplinePoints* buildHatchSplineEdge(RS_EntityContainer* hatchLoop,
-                                                 const DRW_Spline* s);
+    static LC_SplinePoints *buildHatchSplineEdge(RS_EntityContainer *hatchLoop,
+                                                 const DRW_Spline *s);
 
     /** Snap LC_SplinePoints endpoints inside hatchLoop to neighboring
      *  line-like edge endpoints when within 10× ENDPOINT_TOLERANCE.
      *  Counters boundary-stream float drift in mixed loops. */
-    static void snapSplineEdgeEndpoints(RS_EntityContainer* hatchLoop);
+    static void snapSplineEdgeEndpoints(RS_EntityContainer *hatchLoop);
 
-public:
+  public:
     RS_Pen attributesToPen(const DRW_Layer* att) const;
 
     static RS_Color numberToColor(int num);
@@ -304,14 +303,14 @@ private:
      *  insensitive + space-to-underscore matching, (5) same as (4)
      *  but accepting .dxf in place of .dwg. Returns absolute path on
      *  success, empty QString on failure. */
-    QString resolveXrefPath(const QString& xrefPath) const;
+    QString resolveXrefPath(const QString &xrefPath) const;
     /** Embed external file's modelspace contents into @p block as a
      *  read-only XREF resolution. Layers are namespaced
      *  `<blockName>|<layerName>`. Recursion guarded by m_xrefStack.
      *  Returns true on success (block populated), false on failure
      *  (block left as it was). */
-    bool embedXref(RS_Block* block, const QString& xrefPath,
-                   const QString& blockName);
+    bool embedXref(RS_Block *block, const QString &xrefPath,
+                   const QString &blockName);
 
     /** DWG file format version recognized at openFile() time. Set even
      *  on the BAD_VERSION error path so the user-facing error message
@@ -324,8 +323,8 @@ private:
      *  Consumed polylines are written into @p consumed so the normal
      *  entity-write loop skips them. Polylines without metadata, or
      *  groups missing siblings, are left for plain LWPOLYLINE export. */
-    void reconstructMLines(RS_EntityContainer* container,
-                           std::set<RS_Entity*>& consumed);
+    void reconstructMLines(RS_EntityContainer *container,
+                           std::set<RS_Entity *> &consumed);
 
     /** Scan @p container for RS_Polyline entities carrying
      *  LibreCAD_UNDERLAY XDATA and reconstruct DRW_Underlay entities.
@@ -333,8 +332,8 @@ private:
      *  polylines are written into @p consumed so the normal
      *  entity-write loop skips them. Polylines without metadata fall
      *  through as plain LWPOLYLINEs. */
-    void reconstructUnderlays(RS_EntityContainer* container,
-                              std::set<RS_Entity*>& consumed);
+    void reconstructUnderlays(RS_EntityContainer *container,
+                              std::set<RS_Entity *> &consumed);
     /** File m_codePage. Used to find the text coder. */
     QString m_codePage;
     /** File version. */

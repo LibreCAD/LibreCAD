@@ -17,7 +17,8 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
  * ********************************************************************************
  */
 
@@ -43,23 +44,22 @@ struct LC_ParabolaData;
  * (weights omitted) — equivalent to weights {1,1,1} per NURBS definition.
  * The reader accepts both forms.
  */
-namespace LC_ParabolaSpline
-{
-  /** True if the spline is a degree-2 / 3-control-point quadratic Bézier
-   *  whose weights are absent or all 1 (within tolerance), with the standard
-   *  open-uniform knot vector {0,0,0,1,1,1}. Returns false for ellipse arcs
-   *  (w<1) or any conic that is not a parabola. */
-  bool isParabolaSpline(const DRW_Spline& s);
+namespace LC_ParabolaSpline {
+/** True if the spline is a degree-2 / 3-control-point quadratic Bézier
+ *  whose weights are absent or all 1 (within tolerance), with the standard
+ *  open-uniform knot vector {0,0,0,1,1,1}. Returns false for ellipse arcs
+ *  (w<1) or any conic that is not a parabola. */
+bool isParabolaSpline(const DRW_Spline &s);
 
-  /** Decode the spline as a parabola. Returns nullptr if isParabolaSpline
-   *  is false or if the 3 control points are collinear (degenerate). */
-  std::unique_ptr<LC_Parabola> splineToParabola(const DRW_Spline& s,
-                                                RS_EntityContainer* parent = nullptr);
+/** Decode the spline as a parabola. Returns nullptr if isParabolaSpline
+ *  is false or if the 3 control points are collinear (degenerate). */
+std::unique_ptr<LC_Parabola>
+splineToParabola(const DRW_Spline &s, RS_EntityContainer *parent = nullptr);
 
-  /** Encode a parabola as a non-rational degree-2 spline with 3 control
-   *  points and the standard open-uniform knot vector. weightlist is left
-   *  empty (the rational flag is cleared). */
-  bool parabolaToSpline(const LC_ParabolaData& pd, DRW_Spline& spl);
-}
+/** Encode a parabola as a non-rational degree-2 spline with 3 control
+ *  points and the standard open-uniform knot vector. weightlist is left
+ *  empty (the rational flag is cleared). */
+bool parabolaToSpline(const LC_ParabolaData &pd, DRW_Spline &spl);
+} // namespace LC_ParabolaSpline
 
 #endif // LC_PARABOLASPLINE_H

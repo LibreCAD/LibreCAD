@@ -23,9 +23,6 @@
 
 #include "lc_extentitydata.h"
 
-LC_ExtDataTag::LC_ExtDataTag() {
-}
-
 LC_ExtDataTag::LC_ExtDataTag(int code, const RS_Vector &value) {
     RS_Variable* v = new RS_Variable(value, code);
     add(v);
@@ -49,23 +46,24 @@ LC_ExtDataTag::LC_ExtDataTag(int code, const QString& value, bool asReference) {
     }
 }
 
-LC_ExtDataTag::LC_ExtDataTag(int code, const QString& value, bool asReference, bool asLayerRef) {
-    RS_Variable* v = new RS_Variable(value, code);
-    add(v);
-    if (asLayerRef) {
-        type = LAYERREF;
-    } else if (asReference) {
-        type = REF;
-    }
+LC_ExtDataTag::LC_ExtDataTag(int code, const QString &value, bool asReference,
+                             bool asLayerRef) {
+  RS_Variable *v = new RS_Variable(value, code);
+  add(v);
+  if (asLayerRef) {
+    type = LAYERREF;
+  } else if (asReference) {
+    type = REF;
+  }
 }
 
-LC_ExtDataTag::LC_ExtDataTag(int code, const QByteArray& bytes) :
-    m_bytes(bytes) {
-    // Keep a code-only RS_Variable so consumers that read var()->getCode()
-    // see the right group code; the value field is unused for binary tags.
-    RS_Variable* v = new RS_Variable(QString{}, code);
-    add(v);
-    type = BIN;
+LC_ExtDataTag::LC_ExtDataTag(int code, const QByteArray &bytes)
+    : m_bytes(bytes) {
+  // Keep a code-only RS_Variable so consumers that read var()->getCode()
+  // see the right group code; the value field is unused for binary tags.
+  RS_Variable *v = new RS_Variable(QString{}, code);
+  add(v);
+  type = BIN;
 }
 
 LC_ExtDataTag::LC_ExtDataTag(RS_Variable* var) {
@@ -79,9 +77,11 @@ LC_ExtDataTag::~LC_ExtDataTag() {
 void LC_ExtDataTag::clear() {
     if (type == VAR) {
         delete m_var;
-    }
-    else {
-        m_list.clear();
+    } else {
+      for (auto *tag : m_list) {
+        delete tag;
+      }
+      m_list.clear();
     }
 }
 
@@ -103,13 +103,9 @@ bool LC_ExtDataTag::isRef() const {
     return type == REF;
 }
 
-bool LC_ExtDataTag::isLayerRef() const {
-    return type == LAYERREF;
-}
+bool LC_ExtDataTag::isLayerRef() const { return type == LAYERREF; }
 
-bool LC_ExtDataTag::isBinary() const {
-    return type == BIN;
-}
+bool LC_ExtDataTag::isBinary() const { return type == BIN; }
 
 RS_Variable* LC_ExtDataTag::var() const {
     return m_var;
@@ -119,7 +115,7 @@ std::vector<LC_ExtDataTag*>* LC_ExtDataTag::list() {
     return &m_list;
 }
 
-LC_ExtDataGroup::LC_ExtDataGroup(const QString& groupName):m_name{groupName} {
+LC_ExtDataGroup::LC_ExtDataGroup(const QString& groupName) : m_name{groupName} {
 }
 
 void LC_ExtDataGroup::add(int code, int value) {
@@ -142,14 +138,15 @@ void LC_ExtDataGroup::addRef(int code, const QString& value) {
     m_tagData.add(tagData);
 }
 
-void LC_ExtDataGroup::addLayerRef(int code, const QString& layerName) {
-    auto tagData = new LC_ExtDataTag(code, layerName, /*asReference=*/false, /*asLayerRef=*/true);
-    m_tagData.add(tagData);
+void LC_ExtDataGroup::addLayerRef(int code, const QString &layerName) {
+  auto tagData = new LC_ExtDataTag(code, layerName, /*asReference=*/false,
+                                   /*asLayerRef=*/true);
+  m_tagData.add(tagData);
 }
 
-void LC_ExtDataGroup::add(int code, const QByteArray& bytes) {
-    auto tagData = new LC_ExtDataTag(code, bytes);
-    m_tagData.add(tagData);
+void LC_ExtDataGroup::add(int code, const QByteArray &bytes) {
+  auto tagData = new LC_ExtDataTag(code, bytes);
+  m_tagData.add(tagData);
 }
 
 void LC_ExtDataGroup::add(int code, const RS_Vector& value) {
@@ -157,7 +154,7 @@ void LC_ExtDataGroup::add(int code, const RS_Vector& value) {
     m_tagData.add(tagData);
 }
 
-void LC_ExtDataGroup::add([[maybe_unused]]int code, LC_ExtDataTag* tagData) {
+void LC_ExtDataGroup::add([[maybe_unused]] int code, LC_ExtDataTag* tagData) {
     m_tagData.add(tagData);
 }
 
@@ -173,11 +170,13 @@ std::vector<LC_ExtDataTag*>* LC_ExtDataGroup::getTagsList() {
     return m_tagData.list();
 }
 
-LC_ExtDataAppData::LC_ExtDataAppData(const QString& appName):m_applicationName{appName} {
+LC_ExtDataAppData::LC_ExtDataAppData(const QString& appName) : m_applicationName{appName} {
 }
 
 LC_ExtDataAppData::~LC_ExtDataAppData() {
-    m_groups.clear();
+  for (auto *group : m_groups) {
+    delete group;
+  }
 }
 
 LC_ExtDataGroup* LC_ExtDataAppData::addGroup(const QString& groupName) {
@@ -211,7 +210,9 @@ QString LC_ExtDataAppData::getName() {
 LC_ExtEntityData::LC_ExtEntityData() = default;
 
 LC_ExtEntityData::~LC_ExtEntityData() {
-    m_appData.clear();
+  for (auto *app : m_appData) {
+    delete app;
+  }
 }
 
 LC_ExtDataAppData* LC_ExtEntityData::addAppData(const QString& appName) {
@@ -251,48 +252,52 @@ std::vector<LC_ExtDataAppData*>* LC_ExtEntityData::getAppData() {
 }
 
 std::unique_ptr<LC_ExtEntityData> LC_ExtEntityData::clone() const {
-    auto out = std::make_unique<LC_ExtEntityData>();
-    for (auto* app : m_appData) {
-        if (app == nullptr) continue;
-        auto* dstApp = out->addAppData(app->getName());
-        for (auto* group : *app->getGroups()) {
-            if (group == nullptr) continue;
-            auto* dstGroup = dstApp->addGroup(group->getName());
-            for (auto* tag : *group->getTagsList()) {
-                if (tag == nullptr || !tag->isAtomic()) continue;
-                auto* var = tag->var();
-                if (var == nullptr) continue;
-                int code = var->getCode();
-                if (tag->isBinary()) {
-                    dstGroup->add(code, tag->bytes());
-                    continue;
-                }
-                if (tag->isLayerRef()) {
-                    dstGroup->addLayerRef(code, var->getString());
-                    continue;
-                }
-                if (tag->isRef()) {
-                    dstGroup->addRef(code, var->getString());
-                    continue;
-                }
-                switch (var->getType()) {
-                case RS2::VariableInt:
-                    dstGroup->add(code, var->getInt());
-                    break;
-                case RS2::VariableDouble:
-                    dstGroup->add(code, var->getDouble());
-                    break;
-                case RS2::VariableString:
-                    dstGroup->add(code, var->getString());
-                    break;
-                case RS2::VariableVector:
-                    dstGroup->add(code, var->getVector());
-                    break;
-                case RS2::VariableVoid:
-                    break;
-                }
-            }
+  auto out = std::make_unique<LC_ExtEntityData>();
+  for (auto *app : m_appData) {
+    if (app == nullptr)
+      continue;
+    auto *dstApp = out->addAppData(app->getName());
+    for (auto *group : *app->getGroups()) {
+      if (group == nullptr)
+        continue;
+      auto *dstGroup = dstApp->addGroup(group->getName());
+      for (auto *tag : *group->getTagsList()) {
+        if (tag == nullptr || !tag->isAtomic())
+          continue;
+        auto *var = tag->var();
+        if (var == nullptr)
+          continue;
+        int code = var->getCode();
+        if (tag->isBinary()) {
+          dstGroup->add(code, tag->bytes());
+          continue;
         }
+        if (tag->isLayerRef()) {
+          dstGroup->addLayerRef(code, var->getString());
+          continue;
+        }
+        if (tag->isRef()) {
+          dstGroup->addRef(code, var->getString());
+          continue;
+        }
+        switch (var->getType()) {
+        case RS2::VariableInt:
+          dstGroup->add(code, var->getInt());
+          break;
+        case RS2::VariableDouble:
+          dstGroup->add(code, var->getDouble());
+          break;
+        case RS2::VariableString:
+          dstGroup->add(code, var->getString());
+          break;
+        case RS2::VariableVector:
+          dstGroup->add(code, var->getVector());
+          break;
+        case RS2::VariableVoid:
+          break;
+        }
+      }
     }
-    return out;
+  }
+  return out;
 }

@@ -40,8 +40,8 @@ namespace lc::textbidi {
  * Single-line input is supported transparently — without a newline the
  * function reduces to a whole-string mirror.
  */
-QString mirrorByLine(const QString& input);
+QString mirrorByLine(const QString &input);
 
-}  // namespace lc::textbidi
+} // namespace lc::textbidi
 
-#endif  // LC_TEXTBIDI_H
+#endif // LC_TEXTBIDI_H

@@ -616,34 +616,34 @@ RS_Vector RS_Ellipse::getNearestPointOnEntity(const RS_Vector& coord,
     //double ea;
     std::vector<std::pair<double, double>> directions;
     for(double cosTheta: roots) {
-        // Skip spurious roots from squaring during the quartic derivation —
-        // they have |cos| > 1 and do not correspond to any real angle on the
-        // ellipse. Without this filter, plugging such a root into the
-        // (cosTheta, sinTheta) → (a*cos, b*sin) mapping would yield an
-        // off-ellipse point that could undercut the true minimum distance.
-        if (std::abs(cosTheta) > 1.0 + RS_TOLERANCE)
-            continue;
-        double const c = std::clamp(cosTheta, -1.0, 1.0);
-        if (std::abs(twoax - twoa2b2*c) > RS_TOLERANCE) {
-            double const sinTheta = twoby*c / (twoax - twoa2b2*c);
-            directions.emplace_back(c, sinTheta);
-        } else {
-            directions.emplace_back(0., 1.);
-            directions.emplace_back(0., -1.);
-        }
+      // Skip spurious roots from squaring during the quartic derivation —
+      // they have |cos| > 1 and do not correspond to any real angle on the
+      // ellipse. Without this filter, plugging such a root into the
+      // (cosTheta, sinTheta) → (a*cos, b*sin) mapping would yield an
+      // off-ellipse point that could undercut the true minimum distance.
+      if (std::abs(cosTheta) > 1.0 + RS_TOLERANCE)
+        continue;
+      double const c = std::clamp(cosTheta, -1.0, 1.0);
+      if (std::abs(twoax - twoa2b2 * c) > RS_TOLERANCE) {
+        double const sinTheta = twoby * c / (twoax - twoa2b2 * c);
+        directions.emplace_back(c, sinTheta);
+      } else {
+        directions.emplace_back(0., 1.);
+        directions.emplace_back(0., -1.);
+      }
     }
     // The quartic yields every critical point of the squared distance — both
     // minima and maxima. The global minimum is the critical point with the
     // smallest squared distance, so simply compare distances and keep the
     // smallest; no second-derivative test is needed.
     RS_Vector const query = ret;
-    for(const auto &[cosTheta, sinTheta]: directions) {
-        RS_Vector vp3{a*cosTheta, b*sinTheta};
-        double d = (vp3 - query).squared();
-        if (d >= dDistance)
-            continue;
-        ret = vp3;
-        dDistance = d;
+    for (const auto &[cosTheta, sinTheta] : directions) {
+      RS_Vector vp3{a * cosTheta, b * sinTheta};
+      double d = (vp3 - query).squared();
+      if (d >= dDistance)
+        continue;
+      ret = vp3;
+      dDistance = d;
     }
     if( ! ret.valid ) {
         //this should not happen
@@ -2166,10 +2166,12 @@ void RS_Ellipse::createPainterPath(RS_Painter* painter, QPainterPath& path) cons
     const double b = getMinorRadius();
     const double maxSemi = std::max(a, b);
     const double minSemi = std::min(a, b);
-    const double approxRadius = (minSemi > RS_TOLERANCE)
-        ? (maxSemi * maxSemi * maxSemi) / (minSemi * minSemi)
-        : maxSemi;
-    painter->pathForEntity(path, this, baseAngle, fullAngleLength, getParamFunc, getPointFunc, approxRadius);
+    const double approxRadius =
+        (minSemi > RS_TOLERANCE)
+            ? (maxSemi * maxSemi * maxSemi) / (minSemi * minSemi)
+            : maxSemi;
+    painter->pathForEntity(path, this, baseAngle, fullAngleLength, getParamFunc,
+                           getPointFunc, approxRadius);
 }
 
 /**

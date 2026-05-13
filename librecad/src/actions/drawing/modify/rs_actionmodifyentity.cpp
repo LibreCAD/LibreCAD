@@ -148,12 +148,15 @@ void RS_ActionModifyEntity::doTrigger() {
                 case RS2::EntityHatch:
                 case RS2::EntityText:
                 case RS2::EntityMText: {
-                    // editing via delayed invocation in editor to support interactive input
-                    m_propertiesEditor = new LC_EntityPropertiesEditor(m_actionContext, this);
-                    m_allowExternalTermination = false;
-                    m_propertiesEditor->editEntity(parent, m_clonedEntity, m_viewport);
-                    hasDialog = false;
-                    break;
+                  // editing via delayed invocation in editor to support
+                  // interactive input
+                  m_propertiesEditor =
+                      new LC_EntityPropertiesEditor(m_actionContext, this);
+                  m_allowExternalTermination = false;
+                  m_propertiesEditor->editEntity(parent, m_clonedEntity,
+                                                 m_viewport);
+                  hasDialog = false;
+                  break;
                 }
                 case RS2::EntityDimAligned:
                 case RS2::EntityDimAngular:

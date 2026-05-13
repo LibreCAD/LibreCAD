@@ -64,10 +64,11 @@ class LC_GraphicViewportRenderer{
     }
 
     /** Active drawing background color, used by entities (e.g. LC_Wipeout)
-     *  that need to mask using the viewport background.  Tracks setBackgroundColor()
-     *  in concrete renderer subclasses. */
+     *  that need to mask using the viewport background.  Tracks
+     * setBackgroundColor() in concrete renderer subclasses. */
     RS_Color getBackgroundColor() const { return m_colorBackground; }
-protected:
+
+  protected:
     QPaintDevice* pd = nullptr;
     LC_GraphicViewport* viewport = nullptr;
     RS_Graphic* graphic = nullptr;

@@ -40,7 +40,9 @@
 namespace {
     //list of entity types supported by current action. In general, entities that has proper implementation of trimStartpoint() and trimEndpoint()
     // might be supported. For now, we'll support Line and Arc
-    const auto g_enTypeList = EntityTypeList{RS2::EntityLine, RS2::EntityArc, RS2::EntityParabola/*, RS2::EntityEllipse*/};
+const auto g_enTypeList =
+    EntityTypeList{RS2::EntityLine, RS2::EntityArc,
+                   RS2::EntityParabola /*, RS2::EntityEllipse*/};
 }
 
 RS_ActionModifyTrimAmount::RS_ActionModifyTrimAmount(LC_ActionContext *actionContext)
