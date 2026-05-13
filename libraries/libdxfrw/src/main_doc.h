@@ -9,6 +9,6 @@
  * Dwg support (only read) are work in progress.<p>
  * 
  * the complete documentation and examples are pending to free time,
- * but to start see DRW_Interface, dxfRW & dwgR, classes
+ * but to start see DRW_Interface, dxfRW & dwgRW, classes
   */
 

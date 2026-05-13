@@ -20,7 +20,7 @@
 
 class dwgReader32 : public dwgReader27 {
 public:
-    dwgReader32(std::ifstream *stream, dwgR *p):dwgReader27(stream, p){ }
+    dwgReader32(std::ifstream *stream, dwgRW *p):dwgReader27(stream, p){ }
     bool readFileHeader() override;
     bool readDwgHeader(DRW_Header& hdr) override;
     bool readDwgClasses() override;

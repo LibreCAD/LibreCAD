@@ -23,13 +23,28 @@
 #include "drw_interface.h"
 
 class dwgReader;
+class dwgWriter;
 
-class dwgR {
+/// Public DWG read/write API.  Renamed from `class dwgR` (read-only)
+/// to `class dwgRW` (read + write) on 2026-05-14 to mirror the
+/// combined `class dxfRW` for DXF.  The legacy name `dwgR` remains
+/// available via a `using dwgR = dwgRW;` alias at the bottom of this
+/// header so existing call sites compile unchanged.
+class dwgRW {
 public:
-    explicit dwgR(const char* name);
-    ~dwgR();
+    explicit dwgRW(const char* name);
+    ~dwgRW();
     //read: return true if all ok
     bool read(DRW_Interface *interface_, bool ext);
+
+    /// Write the in-memory model (driven via DRW_Interface callbacks)
+    /// out to the file named at construction.  v1 supports `DRW::AC1015`
+    /// (R2000) only; other versions return false with `BAD_VERSION`.
+    /// The `bin` parameter is ignored — DWG is always binary — but
+    /// kept for API symmetry with `dxfRW::write`.  Returns true on
+    /// success, false on error; error code accessible via `getError()`.
+    bool write(DRW_Interface *interface_, DRW::Version ver, bool bin);
+
     bool getPreview();
     DRW::Version getVersion(){return version;}
     DRW::error getError(){return error;}
@@ -52,7 +67,7 @@ bool testReader();
 private:
     bool openFile(std::ifstream *filestr);
     bool processDwg();
-    static std::unique_ptr< dwgReader > createReaderForVersion(DRW::Version version, std::ifstream *stream, dwgR *p);
+    static std::unique_ptr< dwgReader > createReaderForVersion(DRW::Version version, std::ifstream *stream, dwgRW *p);
 
 private:
     DRW::Version version { DRW::UNKNOWNV };
@@ -62,6 +77,7 @@ private:
     std::string codePage;
     DRW_Interface *iface { nullptr };
     std::unique_ptr< dwgReader > reader;
+    std::unique_ptr< dwgWriter > writer;
     /// Captured from reader->m_entityParseFailures before reader.reset()
     /// so getEntityParseFailures() works post-read.
     size_t m_entityParseFailures { 0 };
@@ -70,5 +86,9 @@ private:
     std::unordered_map<std::string, size_t> m_skippedCustomClasses;
 
 };
+
+/// Deprecated alias: existing call sites continue to compile.  Remove
+/// after one release cycle once internal renames are propagated.
+using dwgR = dwgRW;
 
 #endif // LIBDWGR_H

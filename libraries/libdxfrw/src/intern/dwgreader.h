@@ -115,9 +115,11 @@ public:
 
 
 class dwgReader {
-    friend class dwgR;
+    // friend the real class (not the legacy `using dwgR = dwgRW;` alias —
+    // C++ does not allow `friend class <typedef-name>;`).
+    friend class dwgRW;
 public:
-    dwgReader(std::ifstream *stream, dwgR *p)
+    dwgReader(std::ifstream *stream, dwgRW *p)
        :fileBuf{ new dwgBuffer(stream) }
        ,parent{p}
     {
@@ -226,7 +228,7 @@ public:
 
 protected:
     std::unique_ptr<dwgBuffer> fileBuf;
-    dwgR *parent{nullptr};
+    dwgRW *parent{nullptr};
     DRW::Version version{DRW::UNKNOWNV};
 
 //seeker (position) for the beginning sentinel of the image data (R13 to R15)
