@@ -27,35 +27,36 @@
 #ifndef RS_FILTERDXFRW_H
 #define RS_FILTERDXFRW_H
 
-#include "rs_filterinterface.h"
+#include <set>
 
-#include "rs_color.h"
-#include "rs_dimension.h"
 #include "drw_interface.h"
 #include "lc_extentitydata.h"
 #include "libdxfrw.h"
+#include "rs_color.h"
+#include "rs_dimension.h"
+#include "rs_filterinterface.h"
 
+class DL_WriterA;
 class LC_DimStyle;
 class LC_Hyperbola;
-class RS_Point;
-class RS_Line;
-class RS_Circle;
-class RS_Arc;
-class RS_Ellipse;
-class RS_Solid;
-class RS_Polyline;
-class RS_Spline;
+class LC_MLeader;
 class LC_SplinePoints;
-class RS_Insert;
-class RS_MText;
-class RS_Text;
+class LC_Wipeout;
+class RS_Arc;
+class RS_Circle;
+class RS_Ellipse;
 class RS_Hatch;
 class RS_Image;
-class LC_Wipeout;
-class LC_MLeader;
+class RS_Insert;
 class RS_Leader;
+class RS_Line;
+class RS_MText;
+class RS_Point;
 class RS_Polyline;
-class DL_WriterA;
+class RS_Polyline;
+class RS_Solid;
+class RS_Spline;
+class RS_Text;
 
 /**
  * This format filter class can import and export DXF files.
