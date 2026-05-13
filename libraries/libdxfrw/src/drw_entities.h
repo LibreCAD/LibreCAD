@@ -15,6 +15,7 @@
 #define DRW_ENTITIES_H
 
 
+#include <array>
 #include <list>
 #include <memory>
 #include <string>
