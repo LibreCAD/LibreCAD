@@ -833,16 +833,17 @@ bool RS_FilterDXFRW::embedXref(RS_Block *block, const QString &xrefPath,
       if (hostBlocks->find(nsName))
         continue; // already present
 
-      auto *nsBlock = new RS_Block(
+      auto nsBlock = std::make_unique<RS_Block>(
           m_graphic, RS_BlockData(nsName, extBk->getBasePoint(), false));
       for (auto *e : *extBk) {
-        if (auto *cloned = cloneAndRedirect(e, nsBlock)) {
+        if (auto *cloned = cloneAndRedirect(e, nsBlock.get())) {
           nsBlock->addEntity(cloned);
         }
       }
-      if (!hostBlocks->add(nsBlock)) {
-        // Name collision against an existing host block — RS_BlockList::add
-        // deletes nsBlock on failure. Nothing else to clean up.
+      // RS_BlockList::add takes ownership on success and deletes on failure,
+      // so either way the raw pointer is consumed once released here.
+      if (!hostBlocks->add(nsBlock.release())) {
+        // Name collision against an existing host block — already deleted.
       } else {
         ++blockDefsCopied;
       }
@@ -1096,8 +1097,8 @@ void RS_FilterDXFRW::addLWPolyline(const DRW_LWPolyline& data) {
     RS_PolylineData d(RS_Vector{},
                       RS_Vector{},
                       data.flags&0x1);
-    auto polyline = new RS_Polyline(m_currentContainer, d);
-    setEntityAttributes(polyline, &data);
+    auto polyline = std::make_unique<RS_Polyline>(m_currentContainer, d);
+    setEntityAttributes(polyline.get(), &data);
 
     std::vector<std::pair<RS_Vector, double> > verList;
     for (auto const& v: data.vertlist) {
@@ -1105,7 +1106,7 @@ void RS_FilterDXFRW::addLWPolyline(const DRW_LWPolyline& data) {
     }
 
     polyline->appendVertexs(verList);
-    m_currentContainer->addEntity(polyline);
+    m_currentContainer->addEntity(polyline.release());
 }
 
 /**
@@ -1169,8 +1170,8 @@ void RS_FilterDXFRW::addMLine(const DRW_MLine *data) {
 
   for (int i = 0; i < N; ++i) {
     RS_PolylineData pd(RS_Vector{}, RS_Vector{}, closed);
-    auto polyline = new RS_Polyline(m_currentContainer, pd);
-    setEntityAttributes(polyline, data);
+    auto polyline = std::make_unique<RS_Polyline>(m_currentContainer, pd);
+    setEntityAttributes(polyline.get(), data);
 
     for (const auto &v : data->vertlist) {
       RS_Vector miter(v.miterDir.x, v.miterDir.y);
@@ -1216,7 +1217,7 @@ void RS_FilterDXFRW::addMLine(const DRW_MLine *data) {
     }
     polyline->setDrwExtData(std::move(ext));
 
-    m_currentContainer->addEntity(polyline);
+    m_currentContainer->addEntity(polyline.release());
   }
 }
 
@@ -1634,10 +1635,10 @@ void RS_FilterDXFRW::addInsert(const DRW_Insert& data) {
       RS_TextData td(refPoint, secPoint, att->height, att->widthscale, valign,
                      halign, dir, text, sty, att->angle * M_PI / 180,
                      RS2::NoUpdate);
-      auto *textEntity = new RS_Text(m_currentContainer, td);
-      setEntityAttributes(textEntity, att.get());
+      auto textEntity = std::make_unique<RS_Text>(m_currentContainer, td);
+      setEntityAttributes(textEntity.get(), att.get());
       textEntity->update();
-      m_currentContainer->addEntity(textEntity);
+      m_currentContainer->addEntity(textEntity.release());
     }
 }
 
@@ -3367,10 +3368,10 @@ void RS_FilterDXFRW::addWipeout(const DRW_Image *data) {
     wcsVerts.push_back(base + u * (fx * sizeU) + v * (fy * sizeV));
   }
 
-  auto *w =
-      new LC_Wipeout(m_currentContainer, LC_WipeoutData(std::move(wcsVerts)));
-  setEntityAttributes(w, data);
-  m_currentContainer->appendEntity(w);
+  auto w = std::make_unique<LC_Wipeout>(
+      m_currentContainer, LC_WipeoutData(std::move(wcsVerts)));
+  setEntityAttributes(w.get(), data);
+  m_currentContainer->appendEntity(w.release());
 }
 
 /**
@@ -3447,9 +3448,9 @@ void RS_FilterDXFRW::addMLeader(const DRW_MLeader *data) {
   md.contentType = data->styleContentType;
   md.scaleFactor = data->scaleFactor;
 
-  auto *m = new LC_MLeader(m_currentContainer, std::move(md));
-  setEntityAttributes(m, data);
-  m_currentContainer->appendEntity(m);
+  auto m = std::make_unique<LC_MLeader>(m_currentContainer, std::move(md));
+  setEntityAttributes(m.get(), data);
+  m_currentContainer->appendEntity(m.release());
 }
 
 /**

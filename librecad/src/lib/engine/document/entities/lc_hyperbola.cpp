@@ -79,12 +79,15 @@ LC_HyperbolaData::LC_HyperbolaData(const RS_Vector &f0, const RS_Vector &f1,
   // |d1 - d2| = 2a
   double a = diff * 0.5;
   double c = dc * 0.5; // distance from center to each focus
-  double b = std::sqrt(c * c - a * a);
-
-  if (b < RS_TOLERANCE) {
+  // For a real hyperbola we need c > a (focal distance > semi-major axis).
+  // Guard before sqrt so c*c - a*a < 0 doesn't propagate as NaN; NaN escapes
+  // the `b < RS_TOLERANCE` check below because NaN comparisons are false.
+  double inside = c * c - a * a;
+  if (inside < RS_TOLERANCE2 || a < RS_TOLERANCE) {
     majorP = {};
     return;
   }
+  double b = std::sqrt(inside);
 
   ratio = b / a;
   majorP = majorP.normalized() * a;
@@ -461,8 +464,11 @@ RS_VectorSolutions LC_Hyperbola::getTangentPoint(const RS_Vector &point) const {
     return RS_VectorSolutions();
   }
 
+  // Pick the larger-magnitude coefficient as the denominator to avoid
+  // catastrophic cancellation / division-by-zero when one of polarA, polarB
+  // is near zero but the other is not.
   RS_Vector p1, p2;
-  if (std::abs(polarA) >= std::abs(polarB)) {
+  if (std::abs(polarB) >= std::abs(polarA)) {
     p1 = RS_Vector(0.0, -polarK / polarB);
     p2 = RS_Vector(1.0, (-polarK - polarA) / polarB);
   } else {

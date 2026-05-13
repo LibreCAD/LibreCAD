@@ -133,6 +133,11 @@ std::vector<RS_Vector> getAxisVectors(std::vector<RS_Vector> pts)
 
 LC_ParabolaData fromPointsAxis(const std::vector<RS_Vector>& points, const RS_Vector& axis)
 {
+    // points.size() must be exactly 4 — the std::array below is fixed-size
+    // and std::transform would write past its end (or leave slots
+    // uninitialized) if the input size were different.
+    if (points.size() != 4)
+        return {};
     // rotate y-axis to axis around points.front()
     const auto& rCenter = points.front();
     std::array<RS_Vector, 4> rotated;
@@ -244,6 +249,8 @@ LC_ParabolaData LC_ParabolaData::FromEndPointsTangents(
 
 std::vector<LC_ParabolaData> LC_ParabolaData::From4Points(const std::vector<RS_Vector>& points)
 {
+    if (points.size() != 4)
+        return {};
     std::vector<RS_Vector> axes = getAxisVectors(points);
 
     std::vector<LC_ParabolaData> ret;

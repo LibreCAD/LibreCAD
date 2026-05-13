@@ -171,6 +171,8 @@ RS_Entity *LC_ActionSplineAppendPoint::createModifiedSplineEntity(RS_Entity *e, 
     switch (e->rtti()){
         case RS2::EntitySplinePoints:{
             auto* splinePoints = dynamic_cast<LC_SplinePoints *>(e->clone());
+            if (splinePoints == nullptr)
+                break;
             LC_SplinePointsData &data = splinePoints->getData();
             bool hasSplinePoints = data.splinePoints.size() > 0; // handle spline point data magic :(
             if (fromStart){
@@ -196,6 +198,8 @@ RS_Entity *LC_ActionSplineAppendPoint::createModifiedSplineEntity(RS_Entity *e, 
         }
         case RS2::EntitySpline:{
             auto* spline = dynamic_cast<RS_Spline *>(e);
+            if (spline == nullptr)
+                break;
             RS_SplineData data = spline->getData();
             if (fromStart){
                 data.controlPoints.insert(data.controlPoints.begin(), controlPoint);
@@ -214,6 +218,8 @@ RS_Entity *LC_ActionSplineAppendPoint::createModifiedSplineEntity(RS_Entity *e, 
           // mathematical parabola. Convert to a generic quadratic
           // LC_SplinePoints (control-point representation) and append.
           auto *parabola = dynamic_cast<LC_Parabola *>(e);
+          if (parabola == nullptr)
+            break;
           const auto &cps = parabola->getData().m_controlPoints;
           LC_SplinePointsData newData;
           newData.useControlPoints = true;
