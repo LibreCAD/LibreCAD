@@ -109,6 +109,12 @@ public:
     void write(const std::unique_ptr<dxfWriter>& writer, DRW::Version ver);
     void addComment(std::string c);
 
+    /// HANDSEED accessors.  The DWG writer uses these to propagate the
+    /// document's high-water-mark handle so AutoCAD does not refresh
+    /// HANDSEED on first save.  See [Risk 4j] in the writer plan.
+    duint32 getHandSeed() const { return handSeed; }
+    void    setHandSeed(duint32 h) { handSeed = h; }
+
 protected:
     bool parseCode(int code, const std::unique_ptr<dxfReader>& reader);
     bool parseDwg(DRW::Version version, dwgBuffer *buf, dwgBuffer *hBbuf, duint8 mv=0);
@@ -150,6 +156,13 @@ private:
     duint32 ucsCtrl;
     duint32 vportCtrl;
     duint32 vpEntHeaderCtrl;
+    /// HANDSEED: the document's high-water-mark allocated handle.
+    /// parseDwg captures it from the data stream; encodeDwg writes it
+    /// back.  Default 0 means "fresh document — encoder emits null and
+    /// AutoCAD will refresh it on first save".  For round-trip
+    /// preservation, populate via the captured value from the source
+    /// file.
+    duint32 handSeed {0};
 
     int measurement(const int unit);
 };

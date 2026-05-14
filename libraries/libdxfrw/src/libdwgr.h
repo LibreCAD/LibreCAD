@@ -45,6 +45,20 @@ public:
     /// success, false on error; error code accessible via `getError()`.
     bool write(DRW_Interface *interface_, DRW::Version ver, bool bin);
 
+    /// Per-entity write API — invoked from the caller's `writeEntities`
+    /// iface callback.  Each method allocates a handle, populates the
+    /// entity's `handle` + `layerH.ref` fields, encodes the entity to
+    /// the object stream, and records the `(handle, offset)` pair so
+    /// the HANDLES section emit later finds it.  Returns true on
+    /// success.  Layer-by-name resolution lands in Phase 4d; for now
+    /// every entity is placed on layer "0" (handle 0x12).
+    bool writePoint(DRW_Point *ent);
+    bool writeLine(DRW_Line *ent);
+    bool writeCircle(DRW_Circle *ent);
+    bool writeArc(DRW_Arc *ent);
+    bool writeEllipse(DRW_Ellipse *ent);
+    bool writeText(DRW_Text *ent);
+
     bool getPreview();
     DRW::Version getVersion(){return version;}
     DRW::error getError(){return error;}
@@ -78,6 +92,10 @@ private:
     DRW_Interface *iface { nullptr };
     std::unique_ptr< dwgReader > reader;
     std::unique_ptr< dwgWriter > writer;
+    /// Caller-populated on write via `iface->writeHeader(header)` —
+    /// mirrors `dxfRW`'s local `DRW_Header header;` at the top of
+    /// `dxfRW::write`.  Owned for the lifetime of the writer instance.
+    DRW_Header header;
     /// Captured from reader->m_entityParseFailures before reader.reset()
     /// so getEntityParseFailures() works post-read.
     size_t m_entityParseFailures { 0 };

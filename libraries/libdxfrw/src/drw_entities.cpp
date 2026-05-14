@@ -17,6 +17,7 @@
 #include "drw_entities.h"
 #include "intern/dxfreader.h"
 #include "intern/dwgbuffer.h"
+#include "intern/dwgbufferw.h"
 #include "intern/drw_textcodec.h"
 #include "intern/drw_dbg.h"
 #include "intern/drw_reserve.h"
@@ -705,6 +706,137 @@ bool DRW_Point::parseCode(int code, const std::unique_ptr<dxfReader>& reader){
     return true;
 }
 
+// ---------------------------------------------------------------------------
+// Phase 4a (drafted 2026-05-15)
+// ---------------------------------------------------------------------------
+// `DRW_Entity::encodeDwgCommon` and `encodeDwgEntHandle` are R2000-only
+// inverses of the corresponding parseDwg fragments above.  The version
+// conditionals collapse: all `version > AC1014` branches fire (R2000 is
+// AC1015 > AC1014), all `version > AC1015` and `version > AC1018` and
+// `version > AC1021` branches skip.  Likewise `version < AC1015` skips.
+//
+// Discarded fields (Risk 4i):
+//   - graphFlag B + optional graphData — we always emit graphFlag=0.
+//   - haveNextLinks B — we emit 1 (no prev/next chain).
+//   - acDbColorH — only fires when ENC flag 0x40 set; R2000 entity
+//     encoders don't emit DBCOLOR refs yet.
+//
+// We always emit:
+//   - entmode = 2 (modelspace, no owner-handle in stream — caller can
+//     override before calling encodeDwgCommon if entity needs an owner).
+//   - numReactors = 0
+//   - ltFlags = 0 (BYLAYER), plotFlags = 0 (BYLAYER)
+//   - invisibleFlag = 0 (visible)
+//
+// Caller must:
+//   - Pre-populate `eType`, `handle`, `color`, `ltypeScale`, `lWeight`,
+//     `layerH.ref` (handle of the layer this entity belongs to).
+//   - The body emit between encodeDwgCommon and encodeDwgEntHandle is
+//     per-entity (3BD basePoint for Point, etc.).
+
+bool DRW_Entity::encodeDwgCommon(DRW::Version version, dwgBufferW *buf) {
+    if (version != DRW::AC1015) return false;
+
+    buf->putBitShort(static_cast<duint16>(oType));
+    // objSize: precise value would require two-pass encode; R2000 reader
+    // stores but does not validate it.  Emit 0 — see [Risk 4g, 4i].
+    buf->putRawLong32(0);
+
+    // The own handle: hard-pointer code 4.
+    dwgHandle ownH;
+    ownH.code = 4;
+    ownH.ref  = handle;
+    ownH.size = 0;
+    if (handle != 0) {
+        duint32 t = handle;
+        while (t != 0) { t >>= 8; ++ownH.size; }
+    } else {
+        ownH.code = 0;
+    }
+    buf->putHandle(ownH);
+
+    // No EED yet.
+    buf->putBitShort(0);  // extDataSize=0
+
+    // No graphics data.
+    buf->putBit(0);  // graphFlag=0
+
+    // entmode: 2 = modelspace, no owner-handle in stream.
+    buf->put2Bits(2);
+
+    // numReactors=0
+    buf->putBitShort(0);
+
+    // haveNextLinks=1 (no prev/next chain — entity is standalone)
+    buf->putBit(1);
+
+    // ENC color (BS for R2000 — putEnColor delegates to putBitShort).
+    buf->putEnColor(version, static_cast<duint16>(color));
+
+    // ltypeScale BD.
+    buf->putBitDouble(ltypeScale);
+
+    // ltFlags BB (0 = BYLAYER), plotFlags BB (0 = BYLAYER).
+    buf->put2Bits(0);
+    buf->put2Bits(0);
+
+    // invisibleFlag BS.
+    buf->putBitShort(0);
+
+    // lWeight RC (0 = byLayer per DRW_LW_Conv).
+    buf->putRawChar8(static_cast<duint8>(lWeight));
+
+    return true;
+}
+
+bool DRW_Entity::encodeDwgEntHandle(DRW::Version version, dwgBufferW *buf) {
+    if (version != DRW::AC1015) return false;
+
+    // ownerHandle skipped — entmode=2 above.
+    // No reactor handles (numReactors=0).
+    // XDic handle — for R2000, xDictFlag is uninitialized in the reader,
+    // so the reader's `xDictFlag != 1` branch fires and expects a null
+    // XDic handle here.
+    dwgHandle xDicNull;
+    xDicNull.code = 3;
+    xDicNull.ref  = 0;
+    xDicNull.size = 0;
+    buf->putHandle(xDicNull);
+
+    // Layer handle (R2000+ unconditional).  Hard pointer.
+    dwgHandle lH;
+    lH.code = layerH.ref == 0 ? 0 : 5;  // 5 = hard pointer for layer ref
+    lH.ref  = layerH.ref;
+    lH.size = 0;
+    if (lH.ref != 0) {
+        duint32 t = lH.ref;
+        while (t != 0) { t >>= 8; ++lH.size; }
+    }
+    buf->putHandle(lH);
+
+    // ltFlags=0 → no separate lTypeH (BYLAYER).
+    // plotFlags=0 → no plotStyleH (BYLAYER).
+    // No 2007+ material/shadow handles, no 2010+ visualStyle handles.
+
+    return true;
+}
+
+bool DRW_Point::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs) {
+    (void)bs;
+    oType = 27;  // POINT class id — see dwgreader.cpp:1111 dispatch
+    if (!encodeDwgCommon(version, buf)) return false;
+
+    // Point body — mirror of DRW_Point::parseDwg below.
+    buf->putBitDouble(basePoint.x);
+    buf->putBitDouble(basePoint.y);
+    buf->putBitDouble(basePoint.z);
+    buf->putThickness(thickness, /*b_R2000_style=*/true);
+    buf->putExtrusion(extPoint, /*b_R2000_style=*/true);
+    buf->putBitDouble(0.0);  // x-axis rotation; libdxfrw does not store it
+
+    return encodeDwgEntHandle(version, buf);
+}
+
 bool DRW_Point::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
     bool ret = DRW_Entity::parseDwg(version, buf, NULL, bs);
     if (!ret)
@@ -746,6 +878,128 @@ bool DRW_Line::parseCode(int code, const std::unique_ptr<dxfReader>& reader){
     }
 
     return true;
+}
+
+bool DRW_Line::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs) {
+    (void)bs;
+    oType = 19;  // LINE class id — see dwgreader.cpp:1105
+    if (!encodeDwgCommon(version, buf)) return false;
+
+    // R2000+ Line body — zIsZero shortcut: if both z's are 0, omit the
+    // z fields entirely.  Reader reads `zIsZero` first, then RD x +
+    // DD secX (default = x), RD y + DD secY (default = y), and
+    // conditionally RD z + DD secZ.  Our putDefaultDouble always emits
+    // the full RD via code 0b11; reader's getDefaultDouble with code
+    // 0b11 returns the raw double.
+    bool zIsZero = (basePoint.z == 0.0 && secPoint.z == 0.0);
+    buf->putBit(zIsZero ? 1 : 0);
+    buf->putRawDouble(basePoint.x);
+    buf->putDefaultDouble(basePoint.x, secPoint.x);
+    buf->putRawDouble(basePoint.y);
+    buf->putDefaultDouble(basePoint.y, secPoint.y);
+    if (!zIsZero) {
+        buf->putRawDouble(basePoint.z);
+        buf->putDefaultDouble(basePoint.z, secPoint.z);
+    }
+    buf->putThickness(thickness, /*b_R2000_style=*/true);
+    buf->putExtrusion(extPoint, /*b_R2000_style=*/true);
+
+    return encodeDwgEntHandle(version, buf);
+}
+
+bool DRW_Circle::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs) {
+    (void)bs;
+    oType = 18;  // CIRCLE class id — see dwgreader.cpp:1099
+    if (!encodeDwgCommon(version, buf)) return false;
+
+    // Circle body — mirror of DRW_Circle::parseDwg.
+    buf->putBitDouble(basePoint.x);
+    buf->putBitDouble(basePoint.y);
+    buf->putBitDouble(basePoint.z);
+    buf->putBitDouble(radious);
+    buf->putThickness(thickness, /*b_R2000_style=*/true);
+    buf->putExtrusion(extPoint, /*b_R2000_style=*/true);
+
+    return encodeDwgEntHandle(version, buf);
+}
+
+bool DRW_Text::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs) {
+    (void)bs;
+    oType = 1;  // TEXT class id — see dwgreader.cpp:1208
+    if (!encodeDwgCommon(version, buf)) return false;
+
+    // R2000+ TEXT body — mirror of DRW_Text::parseDwg.  We emit
+    // data_flags=0 so the reader sees every optional field rather than
+    // substituting defaults — keeps the encoder simple, costs ~30 bytes
+    // per TEXT versus the most compressed form.
+    buf->putRawChar8(0);                              // data_flags=0
+    buf->putRawDouble(basePoint.z);                   // elevation RD
+    buf->putRawDouble(basePoint.x);                   // insertion 2RD
+    buf->putRawDouble(basePoint.y);
+    buf->putDefaultDouble(basePoint.x, secPoint.x);   // alignment 2DD
+    buf->putDefaultDouble(basePoint.y, secPoint.y);
+    buf->putExtrusion(extPoint, /*b_R2000_style=*/true);
+    buf->putThickness(thickness, /*b_R2000_style=*/true);
+    buf->putRawDouble(oblique);                       // oblique angle
+    // Angle: struct holds degrees; on-disk format is radians.  Reader
+    // does `angle *= ARAD` (180/π) after read.  Inverse: divide here.
+    buf->putRawDouble(angle / ARAD);
+    buf->putRawDouble(height);                        // text height
+    buf->putRawDouble(widthscale);                    // width factor
+    buf->putVariableText(version, text);              // text string
+    buf->putBitShort(static_cast<duint16>(textgen));
+    buf->putBitShort(static_cast<duint16>(alignH));
+    buf->putBitShort(static_cast<duint16>(alignV));
+
+    if (!encodeDwgEntHandle(version, buf)) return false;
+
+    // styleH — hard pointer to STYLE table record.  Default points at
+    // the STANDARD textstyle (handle 0x13) if caller hasn't set one.
+    dwgHandle sH;
+    duint32 sref = (styleH.ref == 0) ? 0x13 : styleH.ref;
+    sH.code = 5;  // hard pointer
+    sH.ref  = sref;
+    sH.size = 0;
+    {
+        duint32 t = sref;
+        while (t != 0) { t >>= 8; ++sH.size; }
+    }
+    buf->putHandle(sH);
+    return true;
+}
+
+bool DRW_Ellipse::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs) {
+    (void)bs;
+    oType = 35;  // ELLIPSE class id — see dwgreader.cpp:1117
+    if (!encodeDwgCommon(version, buf)) return false;
+
+    // Ellipse body — mirror of DRW_Ellipse::parseDwg.
+    buf->put3BitDouble(basePoint);       // center
+    buf->put3BitDouble(secPoint);        // major axis vector
+    buf->put3BitDouble(extPoint);        // extrusion
+    buf->putBitDouble(ratio);            // minor/major ratio
+    buf->putBitDouble(staparam);         // start parameter
+    buf->putBitDouble(endparam);         // end parameter
+
+    return encodeDwgEntHandle(version, buf);
+}
+
+bool DRW_Arc::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs) {
+    (void)bs;
+    oType = 17;  // ARC class id — see dwgreader.cpp:1093
+    if (!encodeDwgCommon(version, buf)) return false;
+
+    // Arc body — Circle body + 2 BD angles.
+    buf->putBitDouble(basePoint.x);
+    buf->putBitDouble(basePoint.y);
+    buf->putBitDouble(basePoint.z);
+    buf->putBitDouble(radious);
+    buf->putThickness(thickness, /*b_R2000_style=*/true);
+    buf->putExtrusion(extPoint, /*b_R2000_style=*/true);
+    buf->putBitDouble(staangle);
+    buf->putBitDouble(endangle);
+
+    return encodeDwgEntHandle(version, buf);
 }
 
 bool DRW_Line::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){

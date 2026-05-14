@@ -1915,14 +1915,14 @@ bool DRW_Header::parseDwg(DRW::Version version, dwgBuffer *buf, dwgBuffer *hBbuf
     ddouble64 msec, day;
     day = buf->getBitLong();
     msec = buf->getBitLong();
-    while (msec > 0)
+    while (msec >= 1)
         msec /=10;
     vars["TDCREATE"]=new DRW_Variant(40, day+msec);//RLZ: TODO convert to day.msec
 //    vars["TDCREATE"]=new DRW_Variant(40, buf->getBitLong());//RLZ: TODO convert to day.msec
 //    vars["TDCREATE"]=new DRW_Variant(40, buf->getBitLong());
     day = buf->getBitLong();
     msec = buf->getBitLong();
-    while (msec > 0)
+    while (msec >= 1)
         msec /=10;
     vars["TDUPDATE"]=new DRW_Variant(40, day+msec);//RLZ: TODO convert to day.msec
 //    vars["TDUPDATE"]=new DRW_Variant(40, buf->getBitLong());//RLZ: TODO convert to day.msec
@@ -1934,14 +1934,14 @@ bool DRW_Header::parseDwg(DRW::Version version, dwgBuffer *buf, dwgBuffer *hBbuf
     }
     day = buf->getBitLong();
     msec = buf->getBitLong();
-    while (msec > 0)
+    while (msec >= 1)
         msec /=10;
     vars["TDINDWG"]=new DRW_Variant(40, day+msec);//RLZ: TODO convert to day.msec
 //    vars["TDINDWG"]=new DRW_Variant(40, buf->getBitLong());//RLZ: TODO convert to day.msec
 //    vars["TDINDWG"]=new DRW_Variant(40, buf->getBitLong());//RLZ: TODO convert to day.msec
     day = buf->getBitLong();
     msec = buf->getBitLong();
-    while (msec > 0)
+    while (msec >= 1)
         msec /=10;
     vars["TDUSRTIMER"]=new DRW_Variant(40, day+msec);//RLZ: TODO convert to day.msec
 //    vars["TDUSRTIMER"]=new DRW_Variant(40, buf->getBitLong());//RLZ: TODO convert to day.msec
@@ -1949,6 +1949,7 @@ bool DRW_Header::parseDwg(DRW::Version version, dwgBuffer *buf, dwgBuffer *hBbuf
     vars["CECOLOR"]=new DRW_Variant(62, buf->getCmColor(version));//RLZ: TODO read CMC or EMC color
     dwgHandle HANDSEED = buf->getHandle();//always present in data stream
     DRW_DBG("\nHANDSEED: "); DRW_DBGHL(HANDSEED.code, HANDSEED.size, HANDSEED.ref);
+    handSeed = HANDSEED.ref;
     dwgHandle CLAYER = hBbuf->getHandle();
     DRW_DBG("\nCLAYER: "); DRW_DBGHL(CLAYER.code, CLAYER.size, CLAYER.ref);
     dwgHandle TEXTSTYLE = hBbuf->getHandle();
@@ -2541,7 +2542,7 @@ namespace {
     /// Decompose a stored double (TDCREATE-style "day.msec_fraction") back
     /// into the two BLs parseDwg reads.  Inverse of:
     ///   day = getBitLong(); msec = getBitLong();
-    ///   while (msec > 0) msec /= 10;
+    ///   while (msec >= 1) msec /= 10;
     ///   stored = day + msec;
     /// For an empty header (stored == 0.0) the result is (0, 0).  Real
     /// fixture defaults still round-trip exactly because msec is always
@@ -2702,10 +2703,14 @@ bool DRW_Header::encodeDwg(DRW::Version version, dwgBufferW *buf, dwgBufferW *hB
 
     // -------- CECOLOR + first handle block (parseDwg:1947-1963) -------------
     buf->putCmColor(version, static_cast<duint16>(intVar(*this, "CECOLOR", 256)));
-    // HANDSEED — emitted into the DATA stream (`buf`), not hBbuf.  For
-    // a fresh empty doc this is the high-water of the allocator; the
-    // dwgWriter15 caller will populate it via setter before emit (Phase 3b/c).
-    buf->putHandle(makeHardPtr(0));  // placeholder; back-patched by caller if needed
+    // HANDSEED — emitted into the DATA stream (`buf`), not hBbuf.
+    // Stored in DRW_Header::handSeed (set by parseDwg on read; settable
+    // by the writer caller from the HandleAllocator's high-water mark
+    // for fresh documents).  A zero value emits as a null handle —
+    // libdxfrw round-trip tolerates it, but AutoCAD will refresh
+    // HANDSEED to `max(handle)+1` on first save and mark the file
+    // modified.  See Risk 4j.
+    buf->putHandle(makeHardPtr(handSeed));
     // The following 5 handles emit to the HANDLE stream.  For R2000 the
     // handle stream is inline (buf == hBbuf in our usage).
     hBbuf->putHandle(makeHardPtr(0));  // CLAYER

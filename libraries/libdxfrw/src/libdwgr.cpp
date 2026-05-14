@@ -212,23 +212,85 @@ bool dwgRW::write(DRW_Interface *interface_, DRW::Version ver, bool bin) {
         return false;
     }
 
-    // Phase 2 MVP: build a minimal empty R2000 file without consulting
-    // the interface_ callbacks.  Tables/entities/objects emission lands
-    // in Phase 3+; for now we just produce a syntactically valid empty
-    // DWG that the reader and ODA File Converter accept.
-    DRW_Header dummyHeader;
-    writer = std::make_unique<dwgWriter15>(&filestr, &dummyHeader);
+    // Let the caller populate the header vars first.  Mirror of
+    // dxfRW::write at libdxfrw.cpp:152-153.  The iface is allowed to
+    // ignore the callback — in that case `header` keeps its default
+    // (empty) state and the encoder emits per-var defaults.
+    iface->writeHeader(header);
 
+    writer = std::make_unique<dwgWriter15>(&filestr, &header);
+
+    // If the caller did not set HANDSEED explicitly, seed it from the
+    // writer's HandleAllocator high-water mark.  A null HANDSEED is
+    // legal but causes AutoCAD to mark the file modified on first open.
+    if (header.getHandSeed() == 0) {
+        header.setHandSeed(writer->highWaterHandle());
+    }
+
+    // Section emit order (mirror of dxfRW::write).  Per-section helpers
+    // emit framing; the iface callbacks drive caller-side enumeration
+    // of entities/blocks/objects into the object stream between
+    // writeDwgObjects (control objects + table records) and
+    // writeDwgHandles (object map).
     bool ok = writer->writeFileHeaderStub() &&
               writer->writeDwgHeader() &&
               writer->writeDwgClasses() &&
-              writer->writeDwgHandles() &&
-              writer->writeSecondHeader() &&
-              writer->finalize();
+              writer->writeDwgObjects();
+    if (ok) {
+        // Caller-driven object-stream content.  iface callbacks are
+        // expected to call back into dwgRW::writePoint/writeLine/...
+        // which use writer->encodeEntity to record (handle, offset)
+        // pairs in m_objectMap.  Phase 4b: only the writeEntities
+        // path is fully wired (modelspace entities); writeBlocks and
+        // writeObjects fire so caller hooks run but the underlying
+        // dwgRW::writeBlock/writeImage/etc. methods are still stubs
+        // (Phase 4c/5 work).
+        iface->writeBlocks();
+        iface->writeEntities();
+        iface->writeObjects();
+    }
+    ok = ok &&
+         writer->writeDwgHandles() &&
+         writer->writeSecondHeader() &&
+         writer->finalize();
     writer.reset();
     filestr.close();
     if (!ok) error = DRW::BAD_OPEN;
     return ok;
+}
+
+// Per-entity write API — invoked from the caller's `writeEntities`
+// iface callback.  Each forwards to the writer's `encodeEntity` (a
+// virtual on the base `dwgWriter`).  Returns false if the writer isn't
+// ready (e.g., caller invoked outside `writeEntities`).
+bool dwgRW::writePoint(DRW_Point *ent) {
+    if (writer == nullptr || ent == nullptr) return false;
+    return writer->encodeEntity(ent);
+}
+
+bool dwgRW::writeLine(DRW_Line *ent) {
+    if (writer == nullptr || ent == nullptr) return false;
+    return writer->encodeEntity(ent);
+}
+
+bool dwgRW::writeCircle(DRW_Circle *ent) {
+    if (writer == nullptr || ent == nullptr) return false;
+    return writer->encodeEntity(ent);
+}
+
+bool dwgRW::writeArc(DRW_Arc *ent) {
+    if (writer == nullptr || ent == nullptr) return false;
+    return writer->encodeEntity(ent);
+}
+
+bool dwgRW::writeEllipse(DRW_Ellipse *ent) {
+    if (writer == nullptr || ent == nullptr) return false;
+    return writer->encodeEntity(ent);
+}
+
+bool dwgRW::writeText(DRW_Text *ent) {
+    if (writer == nullptr || ent == nullptr) return false;
+    return writer->encodeEntity(ent);
 }
 
 std::unique_ptr<dwgReader> dwgRW::createReaderForVersion(DRW::Version version, std::ifstream *stream, dwgRW *p )

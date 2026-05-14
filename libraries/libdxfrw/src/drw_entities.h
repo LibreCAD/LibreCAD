@@ -91,8 +91,14 @@ namespace DRW {
 //only in DWG: MINSERT, 5 types of vertex, 4 types of polylines: 2d, 3d, pface & mesh
 //shape, dictionary, MLEADER, MLEADERSTYLE
 
+class dwgBufferW;
+class DrwEntityEncodeTestAccess;  // test-only friend; defined in
+                                  // dwg_entity_encode_round_trip_tests.cpp
+
 #define SETENTFRIENDS  friend class dxfRW; \
-                       friend class dwgReader;
+                       friend class dwgReader; \
+                       friend class dwgWriter15; \
+                       friend class DrwEntityEncodeTestAccess;
 
 //! Base class for entities
 /*!
@@ -131,6 +137,17 @@ protected:
     virtual bool parseDwg(DRW::Version version, dwgBuffer *buf, dwgBuffer* strBuf, duint32 bs=0);
     //parses dwg common handles part to read entity
     bool parseDwgEntHandle(DRW::Version version, dwgBuffer *buf);
+
+    //R2000-only writer-side inverses of parseDwg / parseDwgEntHandle.
+    //Each per-entity encodeDwg overrides this, calls the base to emit
+    //the common preamble, emits the entity-specific body, then calls
+    //encodeDwgEntHandle to emit the trailing handle stream.  See [Risk
+    //4i] for fields parseDwg discards that the encoder cannot replay.
+    virtual bool encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs=0) { (void)version; (void)buf; (void)bs; return false; }
+    //emits dwg common start part for an entity
+    bool encodeDwgCommon(DRW::Version version, dwgBufferW *buf);
+    //emits dwg common handles part for an entity
+    bool encodeDwgEntHandle(DRW::Version version, dwgBufferW *buf);
 
     //parses dxf 102 groups to read entity
     bool parseDxfGroups(int code, const std::unique_ptr<dxfReader>& reader);
@@ -222,6 +239,7 @@ public:
 protected:
     bool parseCode(int code, const std::unique_ptr<dxfReader>& reader) override;
     virtual bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) override;
+    virtual bool encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs=0) override;
 
 public:
     DRW_Coord basePoint;      /*!<  base point, code 10, 20 & 30 */
@@ -247,6 +265,7 @@ public:
 protected:
     bool parseCode(int code, const std::unique_ptr<dxfReader>& reader) override;
     virtual bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) override;
+    virtual bool encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs=0) override;
 
 public:
     DRW_Coord secPoint;        /*!< second point, code 11, 21 & 31 */
@@ -296,6 +315,7 @@ public:
 protected:
     bool parseCode(int code, const std::unique_ptr<dxfReader>& reader) override;
     virtual bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) override;
+    virtual bool encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs=0) override;
 
 public:
     double radious;                 /*!< radius, code 40 */
@@ -334,6 +354,7 @@ protected:
     bool parseCode(int code, const std::unique_ptr<dxfReader>& reader) override;
     //! interpret dwg data (was already determined to be part of this object)
     virtual bool parseDwg(DRW::Version v, dwgBuffer *buf, duint32 bs=0) override;
+    virtual bool encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs=0) override;
 
 public:
     double staangle;            /*!< start angle, code 50 in radians*/
@@ -364,6 +385,7 @@ protected:
     bool parseCode(int code, const std::unique_ptr<dxfReader>& reader) override;
     //! interpret dwg data (was already determined to be part of this object)
     virtual bool parseDwg(DRW::Version v, dwgBuffer *buf, duint32 bs=0) override;
+    virtual bool encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs=0) override;
 
 private:
     void correctAxis();
@@ -773,6 +795,7 @@ public:
 protected:
     bool parseCode(int code, const std::unique_ptr<dxfReader>& reader) override;
     virtual bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) override;
+    virtual bool encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs=0) override;
 
 public:
     double height;             /*!< height text, code 40 */
