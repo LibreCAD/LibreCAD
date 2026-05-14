@@ -284,6 +284,7 @@ public:
     }
 protected:
     virtual bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) override;
+    virtual bool encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs=0) override;
 };
 
 //! Class to handle xline entity
@@ -416,6 +417,7 @@ public:
 protected:
     bool parseCode(int code, const std::unique_ptr<dxfReader>& reader) override;
     virtual bool parseDwg(DRW::Version v, dwgBuffer *buf, duint32 bs=0) override;
+    virtual bool encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs=0) override;
 
 public:
     DRW_Coord thirdPoint;        /*!< third point, code 12, 22 & 32 */
@@ -437,6 +439,7 @@ public:
 protected:
     //! interpret dwg data (was already determined to be part of this object)
     virtual bool parseDwg(DRW::Version v, dwgBuffer *buf, duint32 bs=0) override;
+    virtual bool encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs=0) override;
 
 public:
     //! first corner (2D)
@@ -494,6 +497,7 @@ protected:
     bool parseCode(int code, const std::unique_ptr<dxfReader>& reader) override;
     //! interpret dwg data (was already determined to be part of this object)
     virtual bool parseDwg(DRW::Version v, dwgBuffer *buf, duint32 bs=0) override;
+    virtual bool encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs=0) override;
 
 public:
     int invisibleflag;       /*!< invisible edge flag, code 70 */
@@ -656,6 +660,7 @@ public:
 protected:
     bool parseCode(int code, const std::unique_ptr<dxfReader>& reader) override;
     virtual bool parseDwg(DRW::Version v, dwgBuffer *buf, duint32 bs=0) override;
+    virtual bool encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs=0) override;
 
 public:
     int vertexnum;            /*!< number of vertex, code 90 */

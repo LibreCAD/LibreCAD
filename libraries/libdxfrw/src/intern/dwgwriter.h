@@ -71,6 +71,14 @@ public:
         m_reserved.insert(0x16);  // VPORT "*ACTIVE"
         m_reserved.insert(0x17);  // BLOCK_RECORD "*MODEL_SPACE"
         m_reserved.insert(0x18);  // BLOCK_RECORD "*PAPER_SPACE"
+        // Phase 4d Block + ENDBLK entities for *Model_Space / *Paper_Space.
+        // Master plan calls 0x19-0x1E "reserved but unused"; we use 0x1B-0x1E
+        // for the four Block entities the BLOCK_CONTROL phantom-handle pair
+        // points at via their Block_Records.
+        m_reserved.insert(0x1B);  // BLOCK "*Model_Space"
+        m_reserved.insert(0x1C);  // ENDBLK "*Model_Space"
+        m_reserved.insert(0x1D);  // BLOCK "*Paper_Space"
+        m_reserved.insert(0x1E);  // ENDBLK "*Paper_Space"
     }
 
     /// Mark a specific handle as in-use.  Used during read-then-write

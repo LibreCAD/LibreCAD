@@ -58,6 +58,12 @@ public:
     bool writeArc(DRW_Arc *ent);
     bool writeEllipse(DRW_Ellipse *ent);
     bool writeText(DRW_Text *ent);
+    bool writeLWPolyline(DRW_LWPolyline *ent);
+    bool writeRay(DRW_Ray *ent);
+    bool writeXline(DRW_Xline *ent);
+    bool writeTrace(DRW_Trace *ent);
+    bool writeSolid(DRW_Solid *ent);
+    bool write3dface(DRW_3Dface *ent);
 
     bool getPreview();
     DRW::Version getVersion(){return version;}

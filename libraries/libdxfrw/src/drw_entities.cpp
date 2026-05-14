@@ -923,6 +923,163 @@ bool DRW_Circle::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs) {
     return encodeDwgEntHandle(version, buf);
 }
 
+bool DRW_Ray::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs) {
+    (void)bs;
+    // Ray = 40, Xline = 41 — derive from runtime type so DRW_Xline can
+    // share this encoder (it inherits from DRW_Ray).
+    oType = (eType == DRW::XLINE) ? 41 : 40;
+    if (!encodeDwgCommon(version, buf)) return false;
+
+    // 3 BD basePoint + 3 BD vector — same layout as parseDwg.
+    buf->putBitDouble(basePoint.x);
+    buf->putBitDouble(basePoint.y);
+    buf->putBitDouble(basePoint.z);
+    buf->putBitDouble(secPoint.x);
+    buf->putBitDouble(secPoint.y);
+    buf->putBitDouble(secPoint.z);
+
+    return encodeDwgEntHandle(version, buf);
+}
+
+bool DRW_Trace::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs) {
+    (void)bs;
+    oType = 32;  // TRACE = 32 — see dwgreader.cpp:1317
+    if (!encodeDwgCommon(version, buf)) return false;
+
+    // Trace body — mirror of parseDwg.  Note the unusual layout:
+    // thickness FIRST, then elevation (basePoint.z) as BD, then 4
+    // corners as 2RD (z values share basePoint.z).
+    buf->putThickness(thickness, /*b_R2000_style=*/true);
+    buf->putBitDouble(basePoint.z);
+    buf->putRawDouble(basePoint.x);
+    buf->putRawDouble(basePoint.y);
+    buf->putRawDouble(secPoint.x);
+    buf->putRawDouble(secPoint.y);
+    buf->putRawDouble(thirdPoint.x);
+    buf->putRawDouble(thirdPoint.y);
+    buf->putRawDouble(fourPoint.x);
+    buf->putRawDouble(fourPoint.y);
+    buf->putExtrusion(extPoint, /*b_R2000_style=*/true);
+
+    return encodeDwgEntHandle(version, buf);
+}
+
+bool DRW_3Dface::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs) {
+    (void)bs;
+    oType = 28;  // 3DFACE class id — see dwgreader.cpp:1237
+    if (!encodeDwgCommon(version, buf)) return false;
+
+    // R2000+ 3DFACE body — mirror of parseDwg's z_is_zero / has_no_flag
+    // optimization.  Reader checks `invisibleflag != NoEdge`; if NoEdge,
+    // emit has_no_flag=1 to suppress the BS read.
+    bool hasNoFlag = (invisibleflag == /*NoEdge*/0);
+    bool zIsZero   = (basePoint.z == 0.0);
+    buf->putBit(hasNoFlag ? 1 : 0);
+    buf->putBit(zIsZero ? 1 : 0);
+    buf->putRawDouble(basePoint.x);
+    buf->putRawDouble(basePoint.y);
+    if (!zIsZero) buf->putRawDouble(basePoint.z);
+    buf->putDefaultDouble(basePoint.x, secPoint.x);
+    buf->putDefaultDouble(basePoint.y, secPoint.y);
+    buf->putDefaultDouble(basePoint.z, secPoint.z);
+    buf->putDefaultDouble(secPoint.x, thirdPoint.x);
+    buf->putDefaultDouble(secPoint.y, thirdPoint.y);
+    buf->putDefaultDouble(secPoint.z, thirdPoint.z);
+    buf->putDefaultDouble(thirdPoint.x, fourPoint.x);
+    buf->putDefaultDouble(thirdPoint.y, fourPoint.y);
+    buf->putDefaultDouble(thirdPoint.z, fourPoint.z);
+    if (!hasNoFlag) buf->putBitShort(static_cast<duint16>(invisibleflag));
+
+    return encodeDwgEntHandle(version, buf);
+}
+
+bool DRW_Solid::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs) {
+    (void)bs;
+    oType = 31;  // SOLID class id — see dwgreader.cpp:1305
+    if (!encodeDwgCommon(version, buf)) return false;
+
+    // Same body layout as TRACE (4 corners + extrusion).  Duplicated
+    // here rather than delegating to DRW_Trace::encodeDwg because that
+    // hardcodes oType=32.
+    buf->putThickness(thickness, /*b_R2000_style=*/true);
+    buf->putBitDouble(basePoint.z);
+    buf->putRawDouble(basePoint.x);
+    buf->putRawDouble(basePoint.y);
+    buf->putRawDouble(secPoint.x);
+    buf->putRawDouble(secPoint.y);
+    buf->putRawDouble(thirdPoint.x);
+    buf->putRawDouble(thirdPoint.y);
+    buf->putRawDouble(fourPoint.x);
+    buf->putRawDouble(fourPoint.y);
+    buf->putExtrusion(extPoint, /*b_R2000_style=*/true);
+
+    return encodeDwgEntHandle(version, buf);
+}
+
+bool DRW_LWPolyline::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs) {
+    (void)bs;
+    oType = 77;  // LWPOLYLINE class id — see dwgreader.cpp:1202
+    if (!encodeDwgCommon(version, buf)) return false;
+
+    // DRW_LWPolyline::flags carries DXF-side bits (1=closed, 128=plinegen).
+    // DWG-side flags are different: they signal which optional fields are
+    // present.  Per parseDwg, bit 9 (0x200) = closed, bit 8 (0x100) =
+    // plinegen.  Build the DWG flags from the DXF flags plus the data.
+    duint16 dwgFlags = 0;
+    if (flags & 1)   dwgFlags |= 0x200;   // closed
+    if (flags & 128) dwgFlags |= 0x100;   // plinegen
+    if (thickness != 0.0) dwgFlags |= 0x2;
+    if (width     != 0.0) dwgFlags |= 0x4;
+    if (elevation != 0.0) dwgFlags |= 0x8;
+    bool defaultExt = (extPoint.x == 0.0 && extPoint.y == 0.0 && extPoint.z == 1.0);
+    if (!defaultExt) dwgFlags |= 0x1;
+    // Detect per-vertex bulge / width data.
+    bool anyBulge = false;
+    bool anyWidth = false;
+    for (const auto& v : vertlist) {
+        if (v && v->bulge    != 0.0) anyBulge = true;
+        if (v && (v->stawidth != 0.0 || v->endwidth != 0.0)) anyWidth = true;
+    }
+    if (anyBulge) dwgFlags |= 0x10;
+    if (anyWidth) dwgFlags |= 0x20;
+
+    buf->putBitShort(dwgFlags);
+    if (dwgFlags & 0x4)  buf->putBitDouble(width);
+    if (dwgFlags & 0x8)  buf->putBitDouble(elevation);
+    if (dwgFlags & 0x2)  buf->putBitDouble(thickness);
+    if (dwgFlags & 0x1)  buf->putExtrusion(extPoint, /*b_R2000_style=*/false);
+
+    const dint32 numVerts = static_cast<dint32>(vertlist.size());
+    buf->putBitLong(numVerts);
+    if (dwgFlags & 0x10) buf->putBitLong(numVerts);  // bulgesnum
+    if (dwgFlags & 0x20) buf->putBitLong(numVerts);  // widthsnum
+    // (R2010+ vertexIdCount: not emitted for R2000)
+
+    if (numVerts > 0) {
+        // First vertex as 2RD.  Subsequent vertices as 2DD relative to
+        // the previous, with putDefaultDouble always emitting code 0b11
+        // (full RD); the reader's getDefaultDouble returns the raw value.
+        buf->putRawDouble(vertlist[0]->x);
+        buf->putRawDouble(vertlist[0]->y);
+        for (size_t i = 1; i < vertlist.size(); ++i) {
+            buf->putDefaultDouble(vertlist[i-1]->x, vertlist[i]->x);
+            buf->putDefaultDouble(vertlist[i-1]->y, vertlist[i]->y);
+        }
+        if (dwgFlags & 0x10) {
+            for (const auto& v : vertlist)
+                buf->putBitDouble(v->bulge);
+        }
+        if (dwgFlags & 0x20) {
+            for (const auto& v : vertlist) {
+                buf->putBitDouble(v->stawidth);
+                buf->putBitDouble(v->endwidth);
+            }
+        }
+    }
+
+    return encodeDwgEntHandle(version, buf);
+}
+
 bool DRW_Block::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs) {
     (void)bs;
     // BLOCK = 4, ENDBLK = 5 per DWG spec.  isEnd controls which.

@@ -271,6 +271,197 @@ TEST_CASE("DRW_Text::encodeDwg round-trips string + position + style",
     REQUIRE(std::abs(dst.angle - 45.0) < 1e-9);
 }
 
+TEST_CASE("DRW_Ray::encodeDwg round-trips base + direction",
+          "[dwg-write][entity-encode]") {
+    DRW_Ray src;
+    src.handle = 0xB0;
+    src.color = 7;
+    src.basePoint = DRW_Coord{1.0, 2.0, 3.0};
+    src.secPoint  = DRW_Coord{4.0, 5.0, 6.0};
+    DrwEntityEncodeTestAccess::layerH(src).ref = 0x12;
+
+    dwgBufferW w;
+    REQUIRE(DrwEntityEncodeTestAccess::encode(src, DRW::AC1015, &w));
+    auto bytes = snapshot(w);
+    dwgBuffer r(bytes.data(), bytes.size());
+    DRW_Ray dst;
+    REQUIRE(DrwEntityEncodeTestAccess::parse(dst, DRW::AC1015, &r));
+
+    REQUIRE(dst.basePoint.x == 1.0);
+    REQUIRE(dst.basePoint.y == 2.0);
+    REQUIRE(dst.basePoint.z == 3.0);
+    REQUIRE(dst.secPoint.x  == 4.0);
+    REQUIRE(dst.secPoint.y  == 5.0);
+    REQUIRE(dst.secPoint.z  == 6.0);
+}
+
+TEST_CASE("DRW_3Dface::encodeDwg round-trips four corners + invisibility flags",
+          "[dwg-write][entity-encode]") {
+    // Case 1: no invisible edges, z=0 (both bit shortcuts on).
+    {
+        DRW_3Dface src;
+        src.handle = 0xD0;
+        src.color = 7;
+        src.basePoint = DRW_Coord{0.0, 0.0, 0.0};
+        src.secPoint  = DRW_Coord{1.0, 0.0, 0.0};
+        src.thirdPoint = DRW_Coord{1.0, 1.0, 0.0};
+        src.fourPoint  = DRW_Coord{0.0, 1.0, 0.0};
+        src.invisibleflag = 0;  // NoEdge
+        DrwEntityEncodeTestAccess::layerH(src).ref = 0x12;
+
+        dwgBufferW w;
+        REQUIRE(DrwEntityEncodeTestAccess::encode(src, DRW::AC1015, &w));
+        dwgBuffer r(w.data().data(), w.data().size());
+        DRW_3Dface dst;
+        REQUIRE(DrwEntityEncodeTestAccess::parse(dst, DRW::AC1015, &r));
+
+        REQUIRE(dst.basePoint.x  == 0.0);
+        REQUIRE(dst.secPoint.x   == 1.0);
+        REQUIRE(dst.thirdPoint.y == 1.0);
+        REQUIRE(dst.fourPoint.y  == 1.0);
+        REQUIRE(dst.invisibleflag == 0);
+    }
+    // Case 2: invisible flag set + non-zero z (both bit shortcuts off).
+    {
+        DRW_3Dface src;
+        src.handle = 0xD1;
+        src.basePoint = DRW_Coord{0.0, 0.0, 5.0};
+        src.secPoint  = DRW_Coord{2.0, 0.0, 5.0};
+        src.thirdPoint = DRW_Coord{2.0, 2.0, 5.0};
+        src.fourPoint  = DRW_Coord{0.0, 2.0, 5.0};
+        src.invisibleflag = 0xF;  // AllEdges
+        DrwEntityEncodeTestAccess::layerH(src).ref = 0x12;
+
+        dwgBufferW w;
+        REQUIRE(DrwEntityEncodeTestAccess::encode(src, DRW::AC1015, &w));
+        dwgBuffer r(w.data().data(), w.data().size());
+        DRW_3Dface dst;
+        REQUIRE(DrwEntityEncodeTestAccess::parse(dst, DRW::AC1015, &r));
+
+        REQUIRE(dst.basePoint.z   == 5.0);
+        REQUIRE(dst.thirdPoint.z  == 5.0);
+        REQUIRE(dst.invisibleflag == 0xF);
+    }
+}
+
+TEST_CASE("DRW_Trace::encodeDwg round-trips four corners",
+          "[dwg-write][entity-encode]") {
+    DRW_Trace src;
+    src.handle = 0xBA;
+    src.color = 4;
+    src.basePoint = DRW_Coord{1.0, 2.0, 0.5};  // base.z is the elevation
+    src.secPoint  = DRW_Coord{11.0, 2.0, 0.5};
+    src.thirdPoint = DRW_Coord{1.0, 12.0, 0.5};
+    src.fourPoint = DRW_Coord{11.0, 12.0, 0.5};
+    src.extPoint = DRW_Coord{0.0, 0.0, 1.0};
+    src.thickness = 0.0;
+    DrwEntityEncodeTestAccess::layerH(src).ref = 0x12;
+
+    dwgBufferW w;
+    REQUIRE(DrwEntityEncodeTestAccess::encode(src, DRW::AC1015, &w));
+    auto bytes = snapshot(w);
+    dwgBuffer r(bytes.data(), bytes.size());
+    DRW_Trace dst;
+    REQUIRE(DrwEntityEncodeTestAccess::parse(dst, DRW::AC1015, &r));
+
+    REQUIRE(dst.basePoint.x  == 1.0);
+    REQUIRE(dst.basePoint.z  == 0.5);
+    REQUIRE(dst.secPoint.x   == 11.0);
+    REQUIRE(dst.thirdPoint.y == 12.0);
+    REQUIRE(dst.fourPoint.x  == 11.0);
+    REQUIRE(dst.fourPoint.y  == 12.0);
+}
+
+TEST_CASE("DRW_Solid::encodeDwg round-trips four corners",
+          "[dwg-write][entity-encode]") {
+    DRW_Solid src;
+    src.handle = 0xC0;
+    src.color = 3;
+    src.basePoint = DRW_Coord{0.0, 0.0, 0.0};
+    src.secPoint  = DRW_Coord{10.0, 0.0, 0.0};
+    src.thirdPoint = DRW_Coord{0.0, 10.0, 0.0};
+    src.fourPoint = DRW_Coord{10.0, 10.0, 0.0};
+    src.extPoint = DRW_Coord{0.0, 0.0, 1.0};
+    src.thickness = 0.0;
+    DrwEntityEncodeTestAccess::layerH(src).ref = 0x12;
+
+    dwgBufferW w;
+    REQUIRE(DrwEntityEncodeTestAccess::encode(src, DRW::AC1015, &w));
+    auto bytes = snapshot(w);
+    dwgBuffer r(bytes.data(), bytes.size());
+    DRW_Solid dst;
+    REQUIRE(DrwEntityEncodeTestAccess::parse(dst, DRW::AC1015, &r));
+
+    REQUIRE(dst.basePoint.x  == 0.0);
+    REQUIRE(dst.secPoint.x   == 10.0);
+    REQUIRE(dst.thirdPoint.y == 10.0);
+    REQUIRE(dst.fourPoint.x  == 10.0);
+    REQUIRE(dst.fourPoint.y  == 10.0);
+}
+
+TEST_CASE("DRW_LWPolyline::encodeDwg round-trips closed quad with no bulges",
+          "[dwg-write][entity-encode]") {
+    DRW_LWPolyline src;
+    src.handle = 0xA0;
+    src.color = 1;
+    src.flags = 1;  // closed (DXF bit 0)
+    src.extPoint = DRW_Coord{0.0, 0.0, 1.0};
+
+    auto v0 = src.addVertex(); v0->x = 0.0;  v0->y = 0.0;
+    auto v1 = src.addVertex(); v1->x = 10.0; v1->y = 0.0;
+    auto v2 = src.addVertex(); v2->x = 10.0; v2->y = 10.0;
+    auto v3 = src.addVertex(); v3->x = 0.0;  v3->y = 10.0;
+    DrwEntityEncodeTestAccess::layerH(src).ref = 0x12;
+
+    dwgBufferW w;
+    REQUIRE(DrwEntityEncodeTestAccess::encode(src, DRW::AC1015, &w));
+    auto bytes = snapshot(w);
+    dwgBuffer r(bytes.data(), bytes.size());
+    DRW_LWPolyline dst;
+    REQUIRE(DrwEntityEncodeTestAccess::parse(dst, DRW::AC1015, &r));
+
+    REQUIRE(dst.handle == 0xA0u);
+    REQUIRE(dst.flags  == 1);  // closed bit survives the DWG-flag round-trip
+    REQUIRE(dst.vertlist.size() == 4);
+    REQUIRE(dst.vertlist[0]->x == 0.0);
+    REQUIRE(dst.vertlist[0]->y == 0.0);
+    REQUIRE(dst.vertlist[1]->x == 10.0);
+    REQUIRE(dst.vertlist[2]->x == 10.0);
+    REQUIRE(dst.vertlist[2]->y == 10.0);
+    REQUIRE(dst.vertlist[3]->x == 0.0);
+    REQUIRE(dst.vertlist[3]->y == 10.0);
+}
+
+TEST_CASE("DRW_LWPolyline::encodeDwg round-trips bulges + widths",
+          "[dwg-write][entity-encode]") {
+    DRW_LWPolyline src;
+    src.handle = 0xA1;
+    src.color = 2;
+    src.flags = 0;
+    src.extPoint = DRW_Coord{0.0, 0.0, 1.0};
+
+    auto v0 = src.addVertex(); v0->x = 0.0; v0->y = 0.0;
+        v0->bulge = 0.5;  v0->stawidth = 0.1; v0->endwidth = 0.2;
+    auto v1 = src.addVertex(); v1->x = 5.0; v1->y = 0.0;
+        v1->bulge = -0.5; v1->stawidth = 0.2; v1->endwidth = 0.1;
+    auto v2 = src.addVertex(); v2->x = 5.0; v2->y = 5.0;
+    DrwEntityEncodeTestAccess::layerH(src).ref = 0x12;
+
+    dwgBufferW w;
+    REQUIRE(DrwEntityEncodeTestAccess::encode(src, DRW::AC1015, &w));
+    auto bytes = snapshot(w);
+    dwgBuffer r(bytes.data(), bytes.size());
+    DRW_LWPolyline dst;
+    REQUIRE(DrwEntityEncodeTestAccess::parse(dst, DRW::AC1015, &r));
+
+    REQUIRE(dst.vertlist.size() == 3);
+    REQUIRE(dst.vertlist[0]->bulge    == 0.5);
+    REQUIRE(dst.vertlist[1]->bulge    == -0.5);
+    REQUIRE(dst.vertlist[0]->stawidth == 0.1);
+    REQUIRE(dst.vertlist[0]->endwidth == 0.2);
+    REQUIRE(dst.vertlist[1]->stawidth == 0.2);
+}
+
 TEST_CASE("DRW_Ellipse::encodeDwg round-trips center + axis + ratio + params",
           "[dwg-write][entity-encode]") {
     DRW_Ellipse src;
