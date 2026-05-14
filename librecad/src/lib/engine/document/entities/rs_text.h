@@ -243,8 +243,8 @@ public:
     /**
      * @return The insertion point as endpoint.
      */
-    virtual RS_Vector getNearestEndpoint(const RS_Vector& coord,
-                                         double* dist = NULL)const override;
+    RS_Vector getNearestEndpoint(const RS_Vector& coord,
+                                 double* dist = NULL)const override;
      RS_VectorSolutions getRefPoints() const override;
 
      void move(const RS_Vector& offset) override;
@@ -253,9 +253,9 @@ public:
      void scale(const RS_Vector& center, const RS_Vector& factor) override;
      void mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2) override;
      bool hasEndpointsWithinWindow(const RS_Vector& v1, const RS_Vector& v2) const override;
-    virtual void stretch(const RS_Vector& firstCorner,
-                         const RS_Vector& secondCorner,
-                         const RS_Vector& offset) override;
+    void stretch(const RS_Vector& firstCorner,
+                 const RS_Vector& secondCorner,
+                 const RS_Vector& offset) override;
 
     friend std::ostream& operator<<(std::ostream& os, const RS_Text& p);
     void draw(RS_Painter* painter) override;
