@@ -19,8 +19,7 @@
 #include <string>
 #include <cmath>
 #include <unordered_map>
-
-class dxfReader;
+#include <vector>
 
 #ifdef DRW_ASSERTS
 # define drw_assert(a) assert(a)
@@ -149,6 +148,7 @@ public:
     virtual void printB(int i){(void)i;}
     virtual void printHL(int c, int s, int h){(void)c;(void)s;(void)h;}
     virtual void printPT(double x, double y, double z){(void)x;(void)y;(void)z;}
+    DebugPrinter()=default;
     virtual ~DebugPrinter()=default;
 };
 
@@ -210,17 +210,14 @@ enum TransparencyCodes {
 class DRW_Coord {
 public:
     DRW_Coord()=default;
-    DRW_Coord(double ix, double iy): x(ix), y(iy){}
+    DRW_Coord(double ix, double iy): x(ix), y(iy), z(0.0){}
     DRW_Coord(double ix, double iy, double iz): x(ix), y(iy),z(iz){}
 
 /*!< convert to unitary vector */
     void unitize(){
-#if __cplusplus < 201703
-        double dist = std::hypot(std::hypot(x, y), z);
-#else
-        double dist = std::hypot(x, y, z);
-#endif
-        if (std::isnormal(dist)) {
+        double dist;
+        dist = hypot(hypot(x, y), z);
+        if (dist > 0.0) {
             x= x/dist;
             y= y/dist;
             z= z/dist;
@@ -234,12 +231,6 @@ public:
 };
 
 
-class DRW_ParseableEntity {
-public:
-    virtual ~DRW_ParseableEntity() = default;
-    virtual bool parseCode(int code, dxfReader *reader) = 0;
-};
-
 //! Class to handle vertex
 /*!
 *  Class to handle vertex for lwpolyline entity
@@ -252,11 +243,11 @@ public:
     DRW_Vertex2D(double sx, double sy, double b): x(sx), y(sy), stawidth(0), endwidth(0), bulge(b) {}
 
 public:
-    double x=0.;                 /*!< x coordinate, code 10 */
-    double y=0.;                 /*!< y coordinate, code 20 */
-    double stawidth=0.;          /*!< Start width, code 40 */
-    double endwidth=0.;          /*!< End width, code 41 */
-    double bulge=0.;             /*!< bulge, code 42 */
+    double x;                 /*!< x coordinate, code 10 */
+    double y;                 /*!< y coordinate, code 20 */
+    double stawidth;          /*!< Start width, code 40 */
+    double endwidth;          /*!< End width, code 41 */
+    double bulge;             /*!< bulge, code 42 */
 };
 
 
@@ -272,44 +263,60 @@ public:
         INTEGER,
         DOUBLE,
         COORD,
+        BINARY,
         INVALID
     };
 //TODO: add INT64 support
-    DRW_Variant(): sdata(std::string()), vdata(), content(0), vType(INVALID), vCode(0) {}
+    DRW_Variant(): sdata(std::string()), vdata(), bdata(), content(0), vType(INVALID), vCode(0) {}
 
-    DRW_Variant(int c, dint32 i): sdata(std::string()), vdata(), content(i), vType(INTEGER), vCode(c){}
+    DRW_Variant(int c, dint32 i): sdata(std::string()), vdata(), bdata(), content(i), vType(INTEGER), vCode(c){}
 
-    DRW_Variant(int c, duint32 i): sdata(std::string()), vdata(), content(static_cast<dint32>(i)), vType(INTEGER), vCode(c) {}
+    DRW_Variant(int c, duint32 i): sdata(std::string()), vdata(), bdata(), content(static_cast<dint32>(i)), vType(INTEGER), vCode(c) {}
 
-    DRW_Variant(int c, double d): sdata(std::string()), vdata(), content(d), vType(DOUBLE), vCode(c) {}
+    DRW_Variant(int c, double d): sdata(std::string()), vdata(), bdata(), content(d), vType(DOUBLE), vCode(c) {}
 
-    DRW_Variant(int c, UTF8STRING s): sdata(s), vdata(), content(&sdata), vType(STRING), vCode(c) {}
+    DRW_Variant(int c, UTF8STRING s): sdata(s), vdata(), bdata(), content(&sdata), vType(STRING), vCode(c) {}
 
-    DRW_Variant(int c, DRW_Coord crd): sdata(std::string()), vdata(crd), content(&vdata), vType(COORD), vCode(c) {}
+    DRW_Variant(int c, UTF8STRING s, bool isLayerRef): sdata(s), vdata(), bdata(), content(&sdata), vType(STRING), vCode(c), sIsLayerRef(isLayerRef) {}
 
-    DRW_Variant(const DRW_Variant& d): sdata(d.sdata), vdata(d.vdata), content(d.content), vType(d.vType), vCode(d.vCode) {
+    DRW_Variant(int c, DRW_Coord crd): sdata(std::string()), vdata(crd), bdata(), content(&vdata), vType(COORD), vCode(c) {}
+
+    DRW_Variant(int c, std::vector<duint8> b): sdata(std::string()), vdata(), bdata(std::move(b)), content(&bdata), vType(BINARY), vCode(c) {}
+
+    DRW_Variant(const DRW_Variant& d): sdata(d.sdata), vdata(d.vdata), bdata(d.bdata), content(d.content), vType(d.vType), vCode(d.vCode), sIsLayerRef(d.sIsLayerRef) {
         if (d.vType == COORD)
             content.v = &vdata;
         if (d.vType == STRING)
             content.s = &sdata;
+        if (d.vType == BINARY)
+            content.b = &bdata;
     }
 
-    void addString(int c, UTF8STRING s) {vType = STRING; sdata = s; content.s = &sdata; vCode=c;}
+    ~DRW_Variant() {
+    }
+
+    void addString(int c, UTF8STRING s) {vType = STRING; sdata = s; content.s = &sdata; vCode=c; sIsLayerRef=false;}
     void addInt(int c, int i) {vType = INTEGER; content.i = i; vCode=c;}
     void addDouble(int c, double d) {vType = DOUBLE; content.d = d; vCode=c;}
     void addCoord(int c, DRW_Coord v) {vType = COORD; vdata = v; content.v = &vdata; vCode=c;}
+    void addBinary(int c, std::vector<duint8> b) {vType = BINARY; bdata = std::move(b); content.b = &bdata; vCode=c;}
     void setCoordX(double d) { if (vType == COORD) vdata.x = d;}
     void setCoordY(double d) { if (vType == COORD) vdata.y = d;}
     void setCoordZ(double d) { if (vType == COORD) vdata.z = d;}
+    void setLayerRefName(const UTF8STRING& s) { if (vType == STRING) { sdata = s; content.s = &sdata; sIsLayerRef = true; } }
     enum TYPE type() const { return vType;}
-    int code() const { return vCode;}            /*!< returns dxf code of this value*/
-    const char* c_str() const  {return content.s->c_str();}
-    double d_val() const  {return content.d;}
-    dint32 i_val() const  {return content.i;}
-    DRW_Coord* coord() const  {return content.v;}
+    int code() const { return vCode;}       /*!< returns dxf code of this value*/
+    bool isLayerRef() const { return sIsLayerRef && vType == STRING; }
+    const char* c_str() const { return content.s->c_str(); }
+    double d_val() const { return content.d; }
+    dint32 i_val() const { return content.i; }
+    DRW_Coord* coord() const { return content.v; }
+    const std::vector<duint8>* binary() const { return &bdata; }
+
 private:
     std::string sdata;
     DRW_Coord vdata;
+    std::vector<duint8> bdata;
 
 private:
     union DRW_VarContent{
@@ -317,18 +324,21 @@ private:
         dint32 i;
         double d;
         DRW_Coord *v;
+        std::vector<duint8> *b;
 
         DRW_VarContent(UTF8STRING *sd):s(sd){}
         DRW_VarContent(dint32 id):i(id){}
         DRW_VarContent(double dd):d(dd){}
         DRW_VarContent(DRW_Coord *vd):v(vd){}
+        DRW_VarContent(std::vector<duint8> *bd):b(bd){}
     };
 
 public:
     DRW_VarContent content;
 private:
-    enum TYPE vType = INVALID;
-    int vCode = 0;            /*!< dxf code of this value*/
+    enum TYPE vType;
+    int vCode;            /*!< dxf code of this value*/
+    bool sIsLayerRef{false}; /*!< when type==STRING, marks code 1003 layer-name references */
 
 };
 
@@ -337,10 +347,14 @@ private:
 *  Class to handle dwg handles
 *  @author Rallaz
 */
-struct dwgHandle{
-    duint8 code = 0;
-    duint8 size = 0;
-    duint32 ref = 0;
+class dwgHandle{
+public:
+    dwgHandle(): code(0), size(0), ref(0){}
+
+    ~dwgHandle(){}
+    duint8 code;
+    duint8 size;
+    duint32 ref;
 };
 
 //! Class to convert between line width and integer
@@ -519,3 +533,6 @@ public:
 };
 
 #endif
+
+// EOF
+

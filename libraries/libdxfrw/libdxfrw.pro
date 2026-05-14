@@ -45,7 +45,8 @@ SOURCES += \
     src/intern/dwgutil.cpp \
     src/intern/rscodec.cpp \
     src/intern/dwgreader27.cpp \
-    src/intern/dwgreader24.cpp
+    src/intern/dwgreader24.cpp \
+    src/intern/dwgreader32.cpp
 
 HEADERS += \
     src/libdxfrw.h \
@@ -73,5 +74,5 @@ HEADERS += \
     src/intern/dwgutil.h \
     src/intern/rscodec.h \
     src/intern/dwgreader27.h \
-    src/intern/dwgreader24.h
-
+    src/intern/dwgreader24.h \
+    src/intern/dwgreader32.h

@@ -115,6 +115,13 @@ public:
      */
     int countLoops() const;
 
+    /**
+     * @return Total number of boundary containers (roots + all nested
+     * children). This counts every loop in the hierarchy, whereas countLoops()
+     * counts only roots.
+     */
+    int countAllLoops() const;
+
     /** @return true if solid hatch (either flag set or pattern name is "SOLID"). */
     bool isSolid() const { return data.solid || data.pattern.compare("SOLID", Qt::CaseInsensitive) == 0; }
     void setSolid(bool solid) { data.solid = solid; }

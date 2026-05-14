@@ -66,9 +66,22 @@ struct RS_TextData {
     };
 
     /**
+     * Bidirectional layout direction. Drives the UAX#9 base direction used
+     * by RS_Text::update(); does not roundtrip through DXF (TEXT entities
+     * have no canonical direction group), so it is a session-only layout
+     * property. Default is ByContent: detect from the first strong
+     * character in the text, falling back to LeftToRight.
+     */
+    enum DrawingDirection {
+      LeftToRight, /**< Force LTR base direction */
+      RightToLeft, /**< Force RTL base direction */
+      ByContent    /**< Detect from first strong character (UAX#9 P-rules) */
+    };
+
+    /**
      * Default constructor. Leaves the data object uninitialized.
      */
-	RS_TextData() = default;
+    RS_TextData() = default;
 
     /**
      * Constructor with initialisation.
@@ -99,7 +112,7 @@ struct RS_TextData {
                 const QString& text,
                 const QString& style,
                 double angle,
-				RS2::UpdateMode updateMode = RS2::Update);
+                RS2::UpdateMode updateMode = RS2::Update);
 
     /** Insertion point */
     RS_Vector insertionPoint;
@@ -115,6 +128,8 @@ struct RS_TextData {
     HAlign halign = HALeft;
     /** Text Generation */
     TextGeneration textGeneration = None;
+    /** Bidi layout direction (session-only) */
+    DrawingDirection drawingDirection = ByContent;
     /** Text string */
     QString text;
     /** Text style name */
@@ -125,7 +140,7 @@ struct RS_TextData {
     RS2::UpdateMode updateMode = RS2::NoUpdate;
 };
 
-std::ostream& operator << (std::ostream& os, const RS_TextData& td);
+std::ostream& operator<<(std::ostream& os, const RS_TextData& td);
 
 /**
  * Class for a text entity.
@@ -194,6 +209,10 @@ public:
     RS_TextData::TextGeneration getTextGeneration() {
         return data.textGeneration;
     }
+    RS_TextData::DrawingDirection getDrawingDirection() const {
+      return data.drawingDirection;
+    }
+    void setDrawingDirection(RS_TextData::DrawingDirection direction);
     void setText(const QString& t);
     QString getText() {
         return data.text;
@@ -204,9 +223,9 @@ public:
     QString getStyle() {
         return data.style;
     }
-        void setAngle(double a) {
-                data.angle = a;
-        }
+    void setAngle(double a) {
+        data.angle = a;
+    }
     double getAngle() {
         return data.angle;
     }
@@ -224,8 +243,8 @@ public:
     /**
      * @return The insertion point as endpoint.
      */
-    virtual RS_Vector getNearestEndpoint(const RS_Vector& coord,
-                                         double* dist = NULL)const override;
+    RS_Vector getNearestEndpoint(const RS_Vector& coord,
+                                 double* dist = NULL)const override;
      RS_VectorSolutions getRefPoints() const override;
 
      void move(const RS_Vector& offset) override;
@@ -234,11 +253,11 @@ public:
      void scale(const RS_Vector& center, const RS_Vector& factor) override;
      void mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2) override;
      bool hasEndpointsWithinWindow(const RS_Vector& v1, const RS_Vector& v2) const override;
-    virtual void stretch(const RS_Vector& firstCorner,
-                         const RS_Vector& secondCorner,
-                         const RS_Vector& offset) override;
+    void stretch(const RS_Vector& firstCorner,
+                 const RS_Vector& secondCorner,
+                 const RS_Vector& offset) override;
 
-    friend std::ostream& operator << (std::ostream& os, const RS_Text& p);
+    friend std::ostream& operator<<(std::ostream& os, const RS_Text& p);
     void draw(RS_Painter* painter) override;
     void drawDraft(RS_Painter *painter) override;
     RS_Entity *cloneProxy() const override;

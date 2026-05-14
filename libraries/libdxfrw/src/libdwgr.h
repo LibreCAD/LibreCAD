@@ -33,6 +33,19 @@ public:
     bool getPreview();
     DRW::Version getVersion(){return version;}
     DRW::error getError(){return error;}
+    /// Per-entity parseDwg failures accumulated during the load. These
+    /// are warnings — the file still loads with the surviving entities.
+    /// Zero on a clean load. Surface alongside the entity count so users
+    /// know how many entities were skipped.
+    size_t getEntityParseFailures() const;
+    /// Vendor-extension custom-class entities (oType >= 500) silently
+    /// dropped because libdxfrw has no parser for their proprietary
+    /// binary layout — typically AutoCAD Mechanical (AmgStdPart aka
+    /// STDPART2D, AcmBomRow, etc.) or other vertical-product classes.
+    /// Their geometry, if any, never reaches the renderer.  Keyed by
+    /// DXF recName, value is the instance count.  Empty on a stock
+    /// AutoCAD file.  Caller can format a user-facing summary.
+    std::unordered_map<std::string, size_t> getSkippedCustomClasses() const;
 bool testReader();
     void setDebug(DRW::DebugLevel lvl);
 
@@ -49,6 +62,12 @@ private:
     std::string codePage;
     DRW_Interface *iface { nullptr };
     std::unique_ptr< dwgReader > reader;
+    /// Captured from reader->m_entityParseFailures before reader.reset()
+    /// so getEntityParseFailures() works post-read.
+    size_t m_entityParseFailures { 0 };
+    /// Captured from reader->m_skippedCustomClasses before reader.reset()
+    /// so getSkippedCustomClasses() works post-read.
+    std::unordered_map<std::string, size_t> m_skippedCustomClasses;
 
 };
 

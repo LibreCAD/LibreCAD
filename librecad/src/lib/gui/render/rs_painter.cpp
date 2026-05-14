@@ -255,6 +255,10 @@ void RS_Painter::drawPointEntityUI(const RS_Vector& uiPos, int pdmode, int pdsiz
     }
 }
 
+RS_Color RS_Painter::getBackgroundColor() const {
+  return renderer ? renderer->getBackgroundColor() : RS_Color{};
+}
+
 void RS_Painter::drawSolidWCS(const RS_VectorSolutions& wcsVertices) {
     QPolygonF uiPolygon;
     for (const RS_Vector& wcsVertex : wcsVertices) {
@@ -755,8 +759,20 @@ void RS_Painter::drawEllipseUI(const RS_Vector& uiCenter, const RS_Vector& uiRad
 
         if (uiRadii.y < minEllipseMinorRadius) {//ellipse too small
             QPainter::drawLine( - radii, radii);
+        } else if (std::max(uiRadii.x, uiRadii.y) >
+                   getMaximumArcNonErrorRadius()) {
+          // Qt's drawEllipse uses 4 cubic Bezier curves with ~3e-4 relative
+          // error; beyond getMaximumArcNonErrorRadius() this exceeds 1 pixel.
+          // Fall back to the same quadratic-spline scheme used by
+          // drawEllipseArcUI for consistency. RS_Ellipse::draw filters on the
+          // smaller radius, so very flat ellipses (small minor, large major)
+          // can still reach this branch.
+          QPainterPath path;
+          drawEllipseSegmentBySplinePointsUI(uiRadii, 0., 2. * M_PI, path,
+                                             true);
+          QPainter::drawPath(path);
         } else {
-            QPainter::drawEllipse(QRectF{- radii, radii});
+          QPainter::drawEllipse(QRectF{-radii, radii});
         }
     }
 }
@@ -801,9 +817,14 @@ void RS_Painter::drawEllipseArcUI(const RS_Vector& uiCenter, const RS_Vector& ui
 
 void RS_Painter::addEllipseArcToPath(QPainterPath& localPath, const RS_Vector& uiRadii, double startAngleDeg, double angularLengthDeg, bool useSpline) {
     if (useSpline) {
-        double startRad = RS_Math::deg2rad(toUCSAngleDegrees(startAngleDeg));
-        double lenRad = RS_Math::deg2rad(toUCSAngleDegrees(angularLengthDeg));
-        drawEllipseSegmentBySplinePointsUI(uiRadii, startRad, lenRad, localPath, false);
+      // The active QTransform already accounts for the ellipse's major-axis
+      // rotation, so startAngleDeg / angularLengthDeg are in the canonical
+      // (axis-aligned) frame. toUCSAngleDegrees would double-apply the UCS
+      // rotation and is meaningless on a delta length.
+      double startRad = RS_Math::deg2rad(startAngleDeg);
+      double lenRad = RS_Math::deg2rad(angularLengthDeg);
+      drawEllipseSegmentBySplinePointsUI(uiRadii, startRad, lenRad, localPath,
+                                         false);
     } else {
         QRectF rect(-uiRadii.x, -uiRadii.y, 2 * uiRadii.x, 2 * uiRadii.y);
         localPath.arcMoveTo(rect, startAngleDeg);
@@ -813,68 +834,47 @@ void RS_Painter::addEllipseArcToPath(QPainterPath& localPath, const RS_Vector& u
 
 void RS_Painter::drawEllipseSegmentBySplinePointsUI(const RS_Vector& uiRadii, double startRad, double lenRad, QPainterPath &path, bool closed)
 {
-    double r = std::max(uiRadii.x, uiRadii.y);
-    // maximum angular step size: using this angular step size keeps the maximum
-    // deviation of an arc from its parabola fitting
-    const double dParam = std::pow(1./32. / r, 1. / 4.);
-    int numSegments = std::max(1, int(std::ceil(std::abs(lenRad) / dParam)));
-  // Avoid performance issue: too many points when zoomed in
-  // The maximum rendering error is relaxed
-    numSegments = std::min(24, numSegments);
-    // Don't duplicate first point for closed
-    int numPoints = closed ? numSegments : numSegments + 1;
-    double delta = lenRad / numSegments;
-
-    LC_SplinePointsData data;
-    data.closed = closed;
-
-    double param = startRad;
-
-    const RS_Vector scaleXY{uiRadii.x, - uiRadii.y};
-    for (int i = 0; i < numPoints; ++i) {
-        data.splinePoints.push_back(RS_Vector{param}.scale(scaleXY));
-        param += delta;
-    }
-
-    LC_SplinePoints spline(nullptr, data);
-    addSplinePointsToPath(spline.getData().controlPoints, closed, path);
-}
-
-
-void RS_Painter::drawEllipseBySplinePointsUI(const RS_Ellipse& ellipse, QPainterPath &path)
-{
-  RS_Vector uiRadii{toGuiDX(ellipse.getMajorRadius()), toGuiDY(ellipse.getMinorRadius())};
-  double r = std::max(uiRadii.x, uiRadii.y);
-  // maximum angular step size: using this angular step size keeps the maximum
-  // deviation of an arc from its parabola fitting
-  const double dParam = std::pow(1./32. / r, 1. / 4.);
-  double lenRad = ellipse.getAngleLength();
+  // The interpolating-quadratic-spline error for samples taken uniformly in the
+  // ellipse angle parameter is e_max = max(a,b)^3 * h^4 / (24 * min(a,b)^2)
+  // (derivation in RS_Ellipse::createPainterPath). Using just max(a,b) as in a
+  // circle approximation drastically undercounts segments for flat ellipses;
+  // for a 100:1 ellipse with a=10000 px, b=100 px, the true worst-case error at
+  // h=2pi/24 is ~20000 px. Calibrate against the curvature-aware r so the
+  // per-segment error tracks ~0.5 px regardless of axis ratio, matching
+  // pathForParametricCurve.
+  const double maxSemi = std::max(uiRadii.x, uiRadii.y);
+  const double minSemi = std::min(uiRadii.x, uiRadii.y);
+  const double r = (minSemi > RS_TOLERANCE)
+                       ? (maxSemi * maxSemi * maxSemi) / (minSemi * minSemi)
+                       : maxSemi;
+  const double dParam = std::pow(12. / r, 1. / 4.);
   int numSegments = std::max(1, int(std::ceil(std::abs(lenRad) / dParam)));
-  // Avoid performance issue: too many points when zoomed in
-  // The maximum rendering error is relaxed
-  numSegments = std::min(numSegments, 24);
   // Don't duplicate first point for closed
-  const bool closed = !ellipse.isEllipticArc();
   int numPoints = closed ? numSegments : numSegments + 1;
-  double delta = ellipse.isReversed() ? - lenRad / numSegments : lenRad / numSegments;
+  double delta = lenRad / numSegments;
 
   LC_SplinePointsData data;
   data.closed = closed;
 
-  double param = ellipse.getAngle1();
-  RS_Vector rotation{ellipse.getMajorP().angle()};
-  RS_Vector center = ellipse.getCenter();
+  double param = startRad;
 
-  const RS_Vector scaleXY(ellipse.getMajorRadius(), ellipse.getMinorRadius());
+  const RS_Vector scaleXY{uiRadii.x, -uiRadii.y};
   for (int i = 0; i < numPoints; ++i) {
-    const RS_Vector ellipsePoint = RS_Vector{param}.scale(scaleXY).rotate(rotation).move(center);
-    data.splinePoints.push_back(toGui(ellipsePoint));
-    LC_ERR<<"Ellipse Point: param="<<param<<" , "<<ellipsePoint;
+    data.splinePoints.push_back(RS_Vector{param}.scale(scaleXY));
     param += delta;
   }
 
-  LC_SplinePoints spline(nullptr, data);
-  addSplinePointsToPath(spline.getData().controlPoints, ellipse.isEllipticArc(), path);
+    LC_SplinePoints spline(nullptr, data);
+    const auto &controlPoints = spline.getData().controlPoints;
+    // For the open case, addSplinePointsToPath relies on the caller having
+    // positioned the path at controlPoints[0]; the closed case does its own
+    // moveTo. Since this helper is invoked with a fresh empty path from
+    // drawEllipseArcUI, we must seed the start position here to avoid a phantom
+    // segment from (0,0).
+    if (!closed && !controlPoints.empty()) {
+      path.moveTo(QPointF(controlPoints.front().x, controlPoints.front().y));
+    }
+    addSplinePointsToPath(controlPoints, closed, path);
 }
 
 void RS_Painter::addSplinePointsToPath(const std::vector<RS_Vector> &uiControlPoints, bool closed, QPainterPath &qPath) const
@@ -1725,70 +1725,62 @@ const LC_Rect &RS_Painter::getWcsBoundingRect() const {
 }
 
 void RS_Painter::pathForParametricCurve(
-    QPainterPath& path,
-    const std::vector<double>& paramPoints,
-    const std::function<RS_Vector(double)>& getPointAtParam,
-    double approxRadius
-) const
-{
-  LC_LOG<<__func__<<"(): begin";
+    QPainterPath &path, const std::vector<double> &paramPoints,
+    const std::function<RS_Vector(double)> &getPointAtParam,
+    double approxRadius) const {
+  double scale = toGuiDX(1.);
+  double maxErrorPx = 0.5; // Max approximation error in pixels
+  // Normalized error e_r = maxErrorPx / (approxRadius * scale)
+  double e_r = maxErrorPx / (approxRadius * scale);
+  // Step angle for quadratic approx: theta ≈ pow(24 * e_r, 0.25) (from error ≈
+  // (theta^4)/24 * r)
+  double theta = std::pow(24 * e_r, 0.25);
 
-    const LC_Rect& vpRect = getWcsBoundingRect();
-    double scale = toGuiDX(1.);
-    double maxErrorPx = 0.5; // Max approximation error in pixels
-    // Normalized error e_r = maxErrorPx / (approxRadius * scale)
-    double e_r = maxErrorPx / (approxRadius * scale);
-    // Step angle for quadratic approx: theta ≈ pow(24 * e_r, 0.25) (from error ≈ (theta^4)/24 * r)
-    double theta = std::pow(24 * e_r, 0.25);
+  RS_Vector startPos = toGui(getPointAtParam(paramPoints.front()));
+  path.moveTo({startPos.x, startPos.y});
+  for (size_t i = 1; i < paramPoints.size(); ++i) {
+    double d1 = paramPoints[i - 1];
+    double d2 = paramPoints[i];
+    double segmentLength = d2 - d1;
+    if (segmentLength < RS_TOLERANCE_ANGLE)
+      continue;
 
-    RS_Vector startPos = toGui(getPointAtParam(paramPoints.front()));
-    path.moveTo({startPos.x, startPos.y});
-    for (size_t i = 1; i < paramPoints.size(); ++i) {
-        double d1 = paramPoints[i - 1];
-        double d2 = paramPoints[i];
-        double segmentLength = d2 - d1;
-        if (segmentLength < RS_TOLERANCE_ANGLE) continue;
+    if (!std::isnormal(theta) || theta < RS_TOLERANCE_ANGLE)
+      theta = M_PI / 12; // Fallback ~15 deg
+    int numSamples = static_cast<int>(std::ceil(segmentLength / theta));
+    numSamples = std::max(numSamples, 2);
+    // Off-screen segments must use the same calibrated sample count as visible
+    // ones. Capping them coarse causes the chord-style approximation to wander
+    // into the viewport, which corrupts hatch fill regions (the chord between
+    // two off-screen endpoints can cut across the viewport even when the actual
+    // arc stays outside). The per-sample cost is just a getPointAtParam() call,
+    // so even off-screen full ellipses at extreme zoom only add ~hundreds of FP
+    // ops per frame.
 
-        double midP = (d1 + d2) / 2.0;
-        RS_Vector midPoint = getPointAtParam(midP);
-        bool visible = vpRect.inArea(midPoint, RS_TOLERANCE);
-
-        if (!std::isnormal(theta) || theta < RS_TOLERANCE_ANGLE)
-            theta = M_PI / 12; // Fallback ~15 deg
-        int numSamples = static_cast<int>(std::ceil(segmentLength / theta));
-        numSamples = std::max(numSamples, 2);
-        if (!visible) {
-          // TODO: replace this with a more efficient and error-proof algorithm
-          // The QPainterPath for an invisible segment should never run into the
-          // viewport. If the number of sampling points is small, the path may
-          // become partially visible, causing artifacts in rendering.
-          numSamples = std::min(numSamples, 9);
-        }
-
-        std::vector<RS_Vector> samples;
-        double step = segmentLength / numSamples;
-        for (int j = 0; j <= numSamples; ++j) {
-            double param = d1 + j * step;
-            samples.push_back(getPointAtParam(param));
-        }
-
-        // Approximate with LC_SplinePoints (quadratic Bezier chain)
-        LC_SplinePointsData spd(false, false); // Open, not cut
-        spd.splinePoints = samples;
-        spd.useControlPoints = false;
-        LC_SplinePoints approx(nullptr, spd);
-        approx.update(); // Generates quadratic control points
-
-        const auto& cps = approx.getControlPoints();
-        if (cps.empty()) continue;
-
-        std::vector<RS_Vector> uiCps;
-        for (const auto& cp : cps) {
-            uiCps.push_back(toGui(cp));
-        }
-        addSplinePointsToPath(uiCps, false, path);
+    std::vector<RS_Vector> samples;
+    double step = segmentLength / numSamples;
+    for (int j = 0; j <= numSamples; ++j) {
+      double param = d1 + j * step;
+      samples.push_back(getPointAtParam(param));
     }
-  LC_LOG<<__func__<<"(): end";
+
+    // Approximate with LC_SplinePoints (quadratic Bezier chain)
+    LC_SplinePointsData spd(false, false); // Open, not cut
+    spd.splinePoints = samples;
+    spd.useControlPoints = false;
+    LC_SplinePoints approx(nullptr, spd);
+    approx.update(); // Generates quadratic control points
+
+    const auto &cps = approx.getControlPoints();
+    if (cps.empty())
+      continue;
+
+    std::vector<RS_Vector> uiCps;
+    for (const auto &cp : cps) {
+      uiCps.push_back(toGui(cp));
+    }
+    addSplinePointsToPath(uiCps, false, path);
+  }
 }
 
 void RS_Painter::pathForEntity(

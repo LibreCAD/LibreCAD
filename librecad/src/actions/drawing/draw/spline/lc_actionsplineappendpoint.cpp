@@ -21,13 +21,16 @@
  ******************************************************************************/
 #include "lc_actionsplineappendpoint.h"
 
+#include "lc_parabola.h"
 #include "lc_splinepoints.h"
 #include "rs_entity.h"
 #include "rs_spline.h"
 
 namespace {
-    // fixme - sand - think about support parabola as other splines
-    const EntityTypeList g_enTypeList = {RS2::EntitySpline, RS2::EntitySplinePoints/*, RS2::EntityParabola*/};
+// Appending a 4th control point breaks parabola identity, so the
+// operation converts the parabola to a generic quadratic LC_SplinePoints.
+const EntityTypeList g_enTypeList = {RS2::EntitySpline, RS2::EntitySplinePoints,
+                                     RS2::EntityParabola};
 }
 
 LC_ActionSplineAppendPoint::LC_ActionSplineAppendPoint(LC_ActionContext *actionContext)
@@ -168,6 +171,8 @@ RS_Entity *LC_ActionSplineAppendPoint::createModifiedSplineEntity(RS_Entity *e, 
     switch (e->rtti()){
         case RS2::EntitySplinePoints:{
             auto* splinePoints = dynamic_cast<LC_SplinePoints *>(e->clone());
+            if (splinePoints == nullptr)
+                break;
             LC_SplinePointsData &data = splinePoints->getData();
             bool hasSplinePoints = data.splinePoints.size() > 0; // handle spline point data magic :(
             if (fromStart){
@@ -193,6 +198,8 @@ RS_Entity *LC_ActionSplineAppendPoint::createModifiedSplineEntity(RS_Entity *e, 
         }
         case RS2::EntitySpline:{
             auto* spline = dynamic_cast<RS_Spline *>(e);
+            if (spline == nullptr)
+                break;
             RS_SplineData data = spline->getData();
             if (fromStart){
                 data.controlPoints.insert(data.controlPoints.begin(), controlPoint);
@@ -207,8 +214,29 @@ RS_Entity *LC_ActionSplineAppendPoint::createModifiedSplineEntity(RS_Entity *e, 
             break;
         }
         case RS2::EntityParabola:{
-            // fixme - sand - complete - there should be ordinary spline instead of parabola?
+          // Adding a 4th control point makes the curve no longer a
+          // mathematical parabola. Convert to a generic quadratic
+          // LC_SplinePoints (control-point representation) and append.
+          auto *parabola = dynamic_cast<LC_Parabola *>(e);
+          if (parabola == nullptr)
             break;
+          const auto &cps = parabola->getData().m_controlPoints;
+          LC_SplinePointsData newData;
+          newData.useControlPoints = true;
+          newData.closed = false;
+          newData.controlPoints = {cps.cbegin(), cps.cend()};
+          if (fromStart) {
+            newData.controlPoints.insert(newData.controlPoints.begin(),
+                                         controlPoint);
+          } else {
+            newData.controlPoints.push_back(controlPoint);
+          }
+          auto *splinePoints = new LC_SplinePoints(nullptr, newData);
+          splinePoints->setLayer(parabola->getLayer());
+          splinePoints->setPen(parabola->getPen(false));
+          splinePoints->update();
+          result = splinePoints;
+          break;
         }
         default:
             break;

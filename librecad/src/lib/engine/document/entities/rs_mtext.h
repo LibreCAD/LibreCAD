@@ -27,6 +27,8 @@
 #ifndef RS_MTEXT_H
 #define RS_MTEXT_H
 
+#include <vector>
+
 #include "rs_entitycontainer.h"
 
 class RS_Text;
@@ -145,15 +147,27 @@ public:
   RS_MText(RS_EntityContainer *parent, const RS_MTextData &d);
   virtual ~RS_MText() = default;
 
-   RS_Entity *clone() const override;
+  RS_Entity *clone() const override;
 
   /**	@return RS2::EntityText */
-   RS2::EntityType rtti() const override { return RS2::EntityMText; }
+  RS2::EntityType rtti() const override { return RS2::EntityMText; }
 
   /** @return Copy of data that defines the text. */
   RS_MTextData getData() const { return data; }
 
   void update() override;
+
+  /**
+   * Run the Unicode Bidirectional Algorithm (UAX#9) on @p text and return the
+   * visual-order permutation: @c result[k] is the logical index of the
+   * character that should be rendered at the k-th visual position (left to
+   * right). Uses Qt's text engine. Object-replacement characters (U+FFFC) act
+   * as neutral placeholders so callers can substitute embedded objects after
+   * reordering.
+   */
+  static std::vector<int>
+  computeBidiVisualOrder(const QString &text,
+                         Qt::LayoutDirection baseDirection);
 
   int getNumberOfLines();
 
@@ -170,9 +184,7 @@ public:
   RS_MTextData::MTextDrawingDirection getDrawingDirection() const {
     return data.drawingDirection;
   }
-  void setDrawingDirection(RS_MTextData::MTextDrawingDirection direction) {
-    data.drawingDirection = direction;
-  }
+  void setDrawingDirection(RS_MTextData::MTextDrawingDirection direction);
   RS_MTextData::MTextLineSpacingStyle getLineSpacingStyle() const {
     return data.lineSpacingStyle;
   }
@@ -194,22 +206,22 @@ public:
   /**
    * @return The insertion point as endpoint.
    */
-  virtual RS_Vector getNearestEndpoint(const RS_Vector &coord,
-                                       double *dist = NULL) const override;
-   RS_VectorSolutions getRefPoints() const override;
+  RS_Vector getNearestEndpoint(const RS_Vector &coord,
+                               double *dist = NULL) const override;
+  RS_VectorSolutions getRefPoints() const override;
 
-   void move(const RS_Vector &offset) override;
-   void rotate(const RS_Vector &center, double angle) override;
-  virtual void rotate(const RS_Vector &center,
-                      const RS_Vector &angleVector) override;
-   void scale(const RS_Vector &center, const RS_Vector &factor) override;
-  virtual void mirror(const RS_Vector &axisPoint1,
-                      const RS_Vector &axisPoint2) override;
-  virtual bool hasEndpointsWithinWindow(const RS_Vector &v1,
-                                         const RS_Vector &v2) const override;
-   virtual void stretch(const RS_Vector &firstCorner,
-                       const RS_Vector &secondCorner,
-                       const RS_Vector &offset) override;
+  void move(const RS_Vector &offset) override;
+  void rotate(const RS_Vector &center, double angle) override;
+  void rotate(const RS_Vector &center,
+              const RS_Vector &angleVector) override;
+  void scale(const RS_Vector &center, const RS_Vector &factor) override;
+  void mirror(const RS_Vector &axisPoint1,
+              const RS_Vector &axisPoint2) override;
+  bool hasEndpointsWithinWindow(const RS_Vector &v1,
+                                const RS_Vector &v2) const override;
+  void stretch(const RS_Vector &firstCorner,
+               const RS_Vector &secondCorner,
+               const RS_Vector &offset) override;
 
     friend std::ostream &operator<<(std::ostream &os, const RS_Text &p);
 
@@ -242,12 +254,29 @@ protected:
         RS_Vector baselineEnd;
     };
 
+    /**
+     * Per-character record built during the logical-order pass and consumed by
+     * flushBidiLine() in visual order after Unicode bidi reordering.
+     */
+    struct LC_BidiSegment {
+      enum Kind { Char, Space, Stack };
+      Kind kind = Char;
+      QChar codepoint;         ///< for Char
+      RS_Font *font = nullptr; ///< for Char: active font when parsed
+      double width = 0.0;      ///< for Space: advance width
+      QString upperText;       ///< for Stack: upper text (super-/numerator)
+      QString lowerText;       ///< for Stack: lower text (sub-/denominator)
+    };
+
     double updateAddLine(LC_TextLine *textLine, int lineCounter);
     void addLetter(LC_TextLine &oneLine, QChar letter, RS_Font &font,
                    const RS_Vector &letterSpace, RS_Vector &letterPosition);
+    void flushBidiLine(LC_TextLine &oneLine,
+                       std::vector<LC_BidiSegment> &segments,
+                       const RS_Vector &letterSpace, RS_Vector &letterPosition);
     void alignVertically();
-   static RS_MText *createUpperLower(QString text, const RS_MTextData &data,
-                                    const RS_Vector &position);
+    static RS_MText *createUpperLower(QString text, const RS_MTextData &data,
+                                      const RS_Vector &position);
     RS_MTextData data;
 
     /**

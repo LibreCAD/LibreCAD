@@ -240,6 +240,8 @@ void RS_ActionModifyTrim::previewRefTrimmedEntity(RS_Entity *trimmed, RS_Entity*
         }
         case RS2::EntityArc:{
             auto* arc = dynamic_cast<RS_Arc *>(trimmed);
+            if (arc == nullptr)
+                break;
             RS_ArcData data = arc->getData();
             data.reversed = !data.reversed;
             previewRefArc(data);
@@ -253,13 +255,18 @@ void RS_ActionModifyTrim::previewRefTrimmedEntity(RS_Entity *trimmed, RS_Entity*
         }
         case RS2::EntityEllipse:{
             auto* ellipse = dynamic_cast<RS_Ellipse *>(trimmed);
+            if (ellipse == nullptr)
+                break;
             auto data = ellipse->getData();
             data.reversed = !data.reversed;
             previewRefEllipse(data);
             break;
         }
         case RS2::EntityParabola:{
-            // fixme - check trimming of parabola and drawing part that will be trimmed
+          // Parabola has no reversed-direction toggle; just preview the
+          // resulting (already-trimmed) entity.
+          previewEntity(trimmed);
+          break;
         }
         default:{
             previewEntity(trimmed);

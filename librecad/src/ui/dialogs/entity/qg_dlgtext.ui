@@ -249,13 +249,6 @@
         <property name="spacing">
          <number>2</number>
         </property>
-        <item row="4" column="2">
-         <widget class="QLineEdit" name="leOblique">
-          <property name="toolTip">
-           <string>Obligue of text</string>
-          </property>
-         </widget>
-        </item>
         <item row="3" column="2">
          <widget class="QLineEdit" name="leAngle">
           <property name="sizePolicy">
@@ -371,13 +364,6 @@
          <widget class="QLabel" name="lFont">
           <property name="text">
            <string>Font:</string>
-          </property>
-         </widget>
-        </item>
-        <item row="4" column="1">
-         <widget class="QLabel" name="lOblique">
-          <property name="text">
-           <string>Oblique:</string>
           </property>
          </widget>
         </item>
@@ -1711,7 +1697,6 @@
   <tabstop>teText</tabstop>
   <tabstop>leHeight</tabstop>
   <tabstop>leAngle</tabstop>
-  <tabstop>leOblique</tabstop>
   <tabstop>leWidthRel</tabstop>
   <tabstop>bTL</tabstop>
   <tabstop>bTC</tabstop>

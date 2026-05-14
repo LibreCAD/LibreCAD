@@ -1,0 +1,17 @@
+language: cpp
+
+matrix:
+  include:
+    - os: linux
+      dist: trusty
+      sudo: false
+      compiler: gcc
+
+cache: ccache
+
+
+script:
+  - mkdir -p build
+  - cd build
+  - cmake ..
+  - make -j2

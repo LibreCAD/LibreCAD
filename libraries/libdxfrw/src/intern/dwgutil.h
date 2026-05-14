@@ -20,8 +20,12 @@ namespace DRW {
 }
 
 namespace dwgRSCodec {
-    void decode239I(duint8 *in, duint8 *out, duint32 blk);
-    void decode251I(duint8 *in, duint8 *out, duint32 blk);
+    /// Returns true if all codewords decoded cleanly; false if any block had
+    /// uncorrectable Reed-Solomon errors. Output buffer is still populated
+    /// with whatever the codec recovered, so callers can decide whether to
+    /// bail or continue best-effort.
+    bool decode239I(duint8 *in, duint8 *out, duint32 blk);
+    bool decode251I(duint8 *in, duint8 *out, duint32 blk);
 }
 
 class dwgCompressor {

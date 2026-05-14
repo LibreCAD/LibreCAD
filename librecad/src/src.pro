@@ -237,9 +237,9 @@ INCLUDEPATH += \
     ui/dialogs/file/export \
     ui/dialogs/file/export/layers \
     ui/dialogs/file/export/image \
-    ui/dialogs/file/export/makercam \        
+    ui/dialogs/file/export/makercam \
     ui/dialogs/main \
-    ui/dialogs/settings \    
+    ui/dialogs/settings \
     ui/dialogs/settings/dimstyles \
     ui/dialogs/settings/dimstyles/dimstyle_manager \
     ui/dialogs/settings/dimstyles/dimstyle_manager/support \
@@ -348,6 +348,7 @@ HEADERS += \
     lib/engine/document/dimstyles/lc_dimarrowregistry.h \
     lib/engine/document/dimstyles/lc_dimstyletovariablesmapper.h \
     lib/engine/document/entities/lc_extentitydata.h \
+    lib/engine/document/entities/lc_textbidi.h \
     lib/engine/document/container/lc_containertraverser.h \
     lib/engine/document/entities/lc_mleader.h \
     lib/engine/document/entities/lc_splinehelper.h \
@@ -429,6 +430,7 @@ HEADERS += \
     lib/engine/document/entities/lc_hyperbola.h \
     lib/engine/document/entities/rs_insert.h \
     lib/engine/document/entities/rs_image.h \
+    lib/engine/document/entities/lc_wipeout.h \
     lib/engine/document/layers/rs_layer.h \
     lib/engine/document/layers/rs_layerlist.h \
     lib/engine/document/layers/rs_layerlistlistener.h \
@@ -464,6 +466,7 @@ HEADERS += \
     lib/fileio/rs_fileio.h \
     lib/fileio/lc_filenameselectionservice.h \
     lib/filters/lc_hyperbolaspline.h \
+    lib/filters/lc_parabolaspline.h \
     lib/filters/rs_filtercxf.h \
     lib/filters/rs_filterdxfrw.h \
     lib/filters/rs_filterdxf1.h \
@@ -495,6 +498,8 @@ HEADERS += \
     ui/dialogs/entity/lc_dlgentityproperties.h \
     ui/dialogs/entity/lc_ellipsepropertieseditingwidget.h \
     ui/dialogs/entity/lc_hatchpropertieseditingwidget.h \
+    ui/dialogs/entity/lc_mtextpropertieseditingwidget.h \
+    ui/dialogs/entity/lc_textpropertieseditingwidget.h \
     ui/dialogs/entity/lc_entitypropertieseditor.h \
     ui/dialogs/entity/lc_entitypropertieseditorsupport.h \
     ui/dialogs/entity/lc_entitypropertieseditorwidget.h \
@@ -668,6 +673,7 @@ SOURCES += \
     lib/engine/document/dimstyles/lc_dimarrowregistry.cpp \
     lib/engine/document/dimstyles/lc_dimstyletovariablesmapper.cpp \
     lib/engine/document/entities/lc_extentitydata.cpp \
+    lib/engine/document/entities/lc_textbidi.cpp \
     lib/engine/document/container/lc_containertraverser.cpp \
     lib/engine/document/entities/lc_mleader.cpp \
     lib/engine/document/entities/lc_splinehelper.cpp \
@@ -702,6 +708,7 @@ SOURCES += \
     lib/engine/undo/lc_undoablerelzero.cpp \
     lib/engine/utils/lc_rectregion.cpp \
     lib/filters/lc_hyperbolaspline.cpp \
+    lib/filters/lc_parabolaspline.cpp \
     lib/generators/layers/lc_layersexporter.cpp \
     lib/generators/image/lc_imageexporter.cpp \
     lib/gui/lc_coordinates_parser.cpp \
@@ -727,6 +734,8 @@ SOURCES += \
     ui/dialogs/entity/lc_dlgtolerance.cpp \
     ui/dialogs/entity/lc_ellipsepropertieseditingwidget.cpp \
     ui/dialogs/entity/lc_hatchpropertieseditingwidget.cpp \
+    ui/dialogs/entity/lc_mtextpropertieseditingwidget.cpp \
+    ui/dialogs/entity/lc_textpropertieseditingwidget.cpp \
     ui/dialogs/entity/lc_entitypropertieseditor.cpp \
     ui/dialogs/entity/lc_entitypropertieseditorsupport.cpp \
     ui/dialogs/entity/lc_entitypropertieseditorwidget.cpp \
@@ -833,6 +842,7 @@ SOURCES += \
     lib/engine/document/entities/lc_hyperbola.cpp \
     lib/engine/document/entities/rs_insert.cpp \
     lib/engine/document/entities/rs_image.cpp \
+    lib/engine/document/entities/lc_wipeout.cpp \
     lib/engine/document/layers/rs_layer.cpp \
     lib/engine/document/layers/rs_layerlist.cpp \
     lib/engine/document/entities/rs_leader.cpp \
@@ -1355,7 +1365,7 @@ HEADERS += ui/action_options/lc_actionoptionsmanager.h \
     ui/components/comboboxes/qg_widthbox.h \
     ui/components/containers/lc_optionswidgetsholder.h \
     ui/components/containers/lc_snapoptionswidgetsholder.h \
-    ui/components/creators/actionlist.h \    
+    ui/components/creators/actionlist.h \
     ui/components/layouts/lc_flexlayout.h \
     ui/components/lc_plaintextedit.h \
     ui/components/pen/qg_widgetpen.h \
@@ -1547,7 +1557,7 @@ SOURCES +=ui/action_options/lc_actionoptionsmanager.cpp \
     ui/components/comboboxes/qg_widthbox.cpp \
     ui/components/containers/lc_optionswidgetsholder.cpp \
     ui/components/containers/lc_snapoptionswidgetsholder.cpp \
-    ui/components/creators/actionlist.cpp \    
+    ui/components/creators/actionlist.cpp \
     ui/components/layouts/lc_flexlayout.cpp \
     ui/components/pen/qg_widgetpen.cpp \
     ui/components/status_bar/qg_activelayername.cpp \
@@ -1760,6 +1770,8 @@ FORMS = ui/action_options/circle/lc_circlebyarcoptions.ui \
        #ui/dialogs/entity/lc_dlgsplinepoints.ui \
        ui/dialogs/entity/lc_ellipsepropertieseditingwidget.ui \
        ui/dialogs/entity/lc_hatchpropertieseditingwidget.ui \
+       ui/dialogs/entity/lc_mtextpropertieseditingwidget.ui \
+       ui/dialogs/entity/lc_textpropertieseditingwidget.ui \
        ui/dialogs/entity/lc_hyperbolapropertieseditingwidget.ui \
        ui/dialogs/entity/lc_imagepropertieseditingwidget.ui \
        ui/dialogs/entity/lc_insertpropertieseditingwidget.ui \

@@ -897,3 +897,226 @@ TEST_CASE("LC_Hyperbola areaLineIntegral() analytical correctness", "[hyperbola]
         REQUIRE(analytical == Approx(numerical).epsilon(TOL));
     }
 }
+
+//============================================================================
+// Regression tests for the deep-review fixes A1-A17, B1.
+//============================================================================
+
+namespace {
+// Build a canonical axis-aligned right-branch hyperbola at origin.
+LC_Hyperbola makeCanonicalHyperbola(double a, double b, double phi1,
+                                    double phi2, bool reversed = false) {
+  LC_HyperbolaData d;
+  d.center = RS_Vector{0.0, 0.0};
+  d.majorP = RS_Vector{a, 0.0};
+  d.ratio = b / a;
+  d.angle1 = phi1;
+  d.angle2 = phi2;
+  d.reversed = reversed;
+  return LC_Hyperbola{nullptr, d};
+}
+} // namespace
+
+TEST_CASE("LC_Hyperbola: local moments match analytic reference (A1-A4)",
+          "[hyperbola][moments][regression]") {
+  // Canonical right-branch hyperbola at origin, a=2, b=1, phi in [-1,1].
+  // Analytic values (verified by direct integration with x=a cosh φ,
+  // y=b sinh φ):
+  //   area =  ab·(φ + sinh 2φ / 2) / 2 evaluated [-1,1] ≈ 5.627
+  //   mx   = (a²b/2)(sinh + sinh³/3)   eval [-1,1] ≈ 6.864
+  //   my   = 0  (symmetry)
+  //   ixx  = (a³b/24)(3φ + 2 sinh 2φ + ¼ sinh 4φ) eval [-1,1] ≈ 11.385
+  //   iyy  = -(ab³/24)(3φ - 2 sinh 2φ + ¼ sinh 4φ) eval [-1,1] ≈ -0.428
+  //   ixy  = 0  (symmetry — cosh⁴ is even)
+  auto hb = makeCanonicalHyperbola(2.0, 1.0, -1.0, 1.0);
+
+  REQUIRE(hb.areaLineIntegral() == Approx(5.6269).margin(1e-3));
+
+  const auto m1 = hb.firstMomentLineIntegral();
+  REQUIRE(m1.mx == Approx(6.8649).margin(1e-3));
+  REQUIRE(m1.my == Approx(0.0).margin(1e-12));
+
+  const auto m2 = hb.secondMomentLineIntegral();
+  REQUIRE(m2.ixx == Approx(11.3841).margin(1e-2));
+  REQUIRE(m2.iyy == Approx(-0.4282).margin(1e-2));
+  REQUIRE(m2.ixy == Approx(0.0).margin(1e-12));
+}
+
+TEST_CASE("LC_Hyperbola: reversed branch flips area / odd-x moments (A12)",
+          "[hyperbola][reversed][regression]") {
+  auto rb = makeCanonicalHyperbola(2.0, 1.0, -1.0, 1.0, /*reversed=*/false);
+  auto lb = makeCanonicalHyperbola(2.0, 1.0, -1.0, 1.0, /*reversed=*/true);
+
+  // Area integral and odd-x moments flip sign on the left branch (x → -x).
+  REQUIRE(lb.areaLineIntegral() == Approx(-rb.areaLineIntegral()).margin(1e-9));
+  // mx (∫ x² dy) is x², so unchanged.
+  REQUIRE(lb.firstMomentLineIntegral().mx ==
+          Approx(rb.firstMomentLineIntegral().mx).margin(1e-9));
+  // my (-∫ y² dx) — x doesn't appear, unchanged.
+  REQUIRE(lb.firstMomentLineIntegral().my ==
+          Approx(rb.firstMomentLineIntegral().my).margin(1e-9));
+  // ixx (∫ x³ dy) flips sign.
+  REQUIRE(lb.secondMomentLineIntegral().ixx ==
+          Approx(-rb.secondMomentLineIntegral().ixx).margin(1e-9));
+}
+
+TEST_CASE("LC_Hyperbola: getParamFromPoint round-trips on both branches (A17)",
+          "[hyperbola][param][regression]") {
+  for (bool reversed : {false, true}) {
+    auto hb = makeCanonicalHyperbola(2.0, 1.0, -1.0, 1.0, reversed);
+    for (double phi : {-1.0, -0.5, 0.0, 0.5, 1.0}) {
+      const RS_Vector p = hb.getPoint(phi, reversed);
+      REQUIRE(p.valid);
+      const double phiBack = hb.getParamFromPoint(p, reversed);
+      REQUIRE_FALSE(std::isnan(phiBack));
+      REQUIRE(phiBack == Approx(phi).margin(1e-9));
+    }
+  }
+}
+
+TEST_CASE("LC_Hyperbola: moveStartpoint is trim, not drag (A6)",
+          "[hyperbola][trim][regression]") {
+  auto hb = makeCanonicalHyperbola(2.0, 1.0, -1.0, 1.0);
+  const double originalAngle2 = hb.getData().angle2;
+
+  // Move start to a point at phi=0 (the vertex). End must NOT move.
+  const RS_Vector newStart = hb.getPoint(0.0, false);
+  hb.moveStartpoint(newStart);
+
+  REQUIRE(hb.getData().angle2 == Approx(originalAngle2).margin(1e-9));
+  REQUIRE(hb.getData().angle1 == Approx(0.0).margin(1e-6));
+}
+
+TEST_CASE("LC_Hyperbola: moveEndpoint is trim, not drag (A6)",
+          "[hyperbola][trim][regression]") {
+  auto hb = makeCanonicalHyperbola(2.0, 1.0, -1.0, 1.0);
+  const double originalAngle1 = hb.getData().angle1;
+
+  const RS_Vector newEnd = hb.getPoint(0.0, false);
+  hb.moveEndpoint(newEnd);
+
+  REQUIRE(hb.getData().angle1 == Approx(originalAngle1).margin(1e-9));
+  REQUIRE(hb.getData().angle2 == Approx(0.0).margin(1e-6));
+}
+
+TEST_CASE("LC_Hyperbola: getNearestPointOnEntity for unbounded uses parametric "
+          "search (A7)",
+          "[hyperbola][nearest][regression]") {
+  LC_HyperbolaData d;
+  d.center = RS_Vector{0.0, 0.0};
+  d.majorP = RS_Vector{2.0, 0.0};
+  d.ratio = 1.0;
+  d.angle1 = 0.0;
+  d.angle2 = 0.0; // unbounded
+  LC_Hyperbola hb{nullptr, d};
+
+  // Probe at (4, 5): the analytic nearest point is somewhere on the right
+  // branch with x > 2. Verify the result is closer than the vertex (2,0)
+  // — the previous code always returned the vertex regardless of input.
+  const RS_Vector probe{4.0, 5.0};
+  const RS_Vector vertex = d.center + d.majorP;
+  const RS_Vector nearest = hb.getNearestPointOnEntity(probe, true);
+  REQUIRE(nearest.valid);
+  REQUIRE(probe.distanceTo(nearest) < probe.distanceTo(vertex) - 1e-6);
+}
+
+TEST_CASE("LC_Hyperbola: setFocus1 preserves arc bounds (A15)",
+          "[hyperbola][setFocus][regression]") {
+  auto hb = makeCanonicalHyperbola(2.0, 1.0, -0.5, 0.5);
+  const RS_Vector originalStart = hb.getStartpoint();
+  const RS_Vector originalEnd = hb.getEndpoint();
+
+  // Slightly shift focus1; the new hyperbola should still be bounded.
+  const RS_Vector newF1 = hb.getFocus1() + RS_Vector{0.01, 0.0};
+  hb.setFocus1(newF1);
+
+  const RS_Vector newStart = hb.getStartpoint();
+  const RS_Vector newEnd = hb.getEndpoint();
+  // Endpoints must remain valid (i.e., not collapsed to unbounded 0,0).
+  REQUIRE(newStart.valid);
+  REQUIRE(newEnd.valid);
+  // For a small focus shift, the new endpoints stay close to the original.
+  REQUIRE(originalStart.distanceTo(newStart) < 0.5);
+  REQUIRE(originalEnd.distanceTo(newEnd) < 0.5);
+}
+
+TEST_CASE(
+    "LC_Hyperbola: getRefPoints includes both vertices for unbounded (A16)",
+    "[hyperbola][refpoints][regression]") {
+  LC_HyperbolaData d;
+  d.center = RS_Vector{0.0, 0.0};
+  d.majorP = RS_Vector{2.0, 0.0};
+  d.ratio = 1.0;
+  d.angle1 = 0.0;
+  d.angle2 = 0.0;
+  LC_Hyperbola hb{nullptr, d};
+
+  const RS_VectorSolutions refs = hb.getRefPoints();
+  bool sawPositive = false;
+  bool sawNegative = false;
+  for (size_t i = 0; i < refs.size(); ++i) {
+    const RS_Vector &v = refs.get(i);
+    if (vectorsApproxEqual(v, RS_Vector{2.0, 0.0}))
+      sawPositive = true;
+    if (vectorsApproxEqual(v, RS_Vector{-2.0, 0.0}))
+      sawNegative = true;
+  }
+  REQUIRE(sawPositive);
+  REQUIRE(sawNegative);
+}
+
+TEST_CASE("LC_Hyperbola: missing virtual overrides (B1)",
+          "[hyperbola][overrides][regression]") {
+  auto hb = makeCanonicalHyperbola(2.0, 1.0, -1.0, 1.0);
+
+  SECTION("getNearestCenter returns center") {
+    double dist = -1.0;
+    const RS_Vector c = hb.getNearestCenter(RS_Vector{10.0, 20.0}, &dist);
+    REQUIRE(vectorsApproxEqual(c, hb.getCenter()));
+    REQUIRE(dist == Approx(RS_Vector{10.0, 20.0}.distanceTo(hb.getCenter())));
+  }
+  SECTION("revertDirection swaps angles") {
+    const double a1 = hb.getData().angle1;
+    const double a2 = hb.getData().angle2;
+    hb.revertDirection();
+    REQUIRE(hb.getData().angle1 == Approx(a2));
+    REQUIRE(hb.getData().angle2 == Approx(a1));
+  }
+  SECTION("shear returns *this and modifies majorP when y-component nonzero") {
+    // RS_Vector::shear(k) does x += k*y; needs y!=0 to see a change.
+    LC_HyperbolaData d;
+    d.center = RS_Vector{1.0, 1.0};
+    d.majorP = RS_Vector{1.0, 1.0}; // 45° axis, y nonzero
+    d.ratio = 1.0;
+    d.angle1 = -0.5;
+    d.angle2 = 0.5;
+    LC_Hyperbola sheared{nullptr, d};
+    const RS_Vector originalMajorP = sheared.getMajorP();
+    RS_Entity &result = sheared.shear(0.5);
+    REQUIRE(&result == &sheared);
+    REQUIRE_FALSE(vectorsApproxEqual(sheared.getMajorP(), originalMajorP));
+  }
+}
+
+TEST_CASE("LC_Hyperbola: isInfinite() and getStartpoint stay consistent (A9)",
+          "[hyperbola][isinfinite][regression]") {
+  LC_HyperbolaData d;
+  d.center = RS_Vector{0.0, 0.0};
+  d.majorP = RS_Vector{2.0, 0.0};
+  d.ratio = 1.0;
+  d.angle1 = 0.0;
+  d.angle2 = 0.0;
+  LC_Hyperbola hb{nullptr, d};
+
+  REQUIRE(hb.isInfinite());
+  REQUIRE_FALSE(hb.getStartpoint().valid);
+  REQUIRE_FALSE(hb.getEndpoint().valid);
+
+  // Set a tiny non-zero arc → no longer unbounded.
+  d.angle1 = 1e-6;
+  d.angle2 = 0.5;
+  LC_Hyperbola hb2{nullptr, d};
+  REQUIRE_FALSE(hb2.isInfinite());
+  REQUIRE(hb2.getStartpoint().valid);
+  REQUIRE(hb2.getEndpoint().valid);
+}

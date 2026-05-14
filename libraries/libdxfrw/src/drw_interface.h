@@ -44,14 +44,22 @@ public:
     virtual void addDimStyle(const DRW_Dimstyle& data) = 0;
     /** Called for every VPORT table. */
     virtual void addVport(const DRW_Vport& data) = 0;
-    /** Called for every VIEW table. */
-    virtual void addView(const DRW_View& data) = 0;
-    /** Called for every UCS table. */
-    virtual void addUCS(const DRW_UCS& data) = 0;
     /** Called for every text style. */
     virtual void addTextStyle(const DRW_Textstyle& data) = 0;
     /** Called for every AppId entry. */
     virtual void addAppId(const DRW_AppId& data) = 0;
+    /** Called for every named UCS table entry. */
+    virtual void addUCS(const DRW_UCS& data) { (void) data; }
+    /** Called for every VIEW table entry. */
+    virtual void addView(const DRW_View& data) { (void) data; }
+    /** Called for every TOLERANCE entity. */
+    virtual void addTolerance(const DRW_Tolerance& data) { (void) data; }
+    /** Called for every Dictionary (named-object container, ODA fixed type 42). */
+    virtual void addDictionary(const DRW_Dictionary& data) { (void) data; }
+    /** Called for every Layout (paperspace, ODA fixed type 82). */
+    virtual void addLayout(const DRW_Layout& data) { (void) data; }
+    /** Called for every MLineStyle (ODA fixed type 73). */
+    virtual void addMLineStyle(const DRW_MLineStyle& data) { (void) data; }
 
     /**
      * Called for every block. Note: all entities added after this
@@ -97,6 +105,25 @@ public:
     /** Called for every lwpolyline */
     virtual void addLWPolyline(const DRW_LWPolyline& data) = 0;
 
+    /** Called for every multiline (MLINE) entity. Default no-op so
+     *  existing implementers compile unchanged; LibreCAD's filter
+     *  decomposes the entity into N parallel polylines.
+     */
+    virtual void addMLine(const DRW_MLine* data) { (void)data; }
+
+    /** Called for every UNDERLAY entity (PDFUNDERLAY/DGNUNDERLAY/DWFUNDERLAY).
+     *  Default no-op. Note: entities arrive during readDwgEntities, BEFORE
+     *  the matching UNDERLAYDEFINITION objects (linkUnderlay) — implementers
+     *  must defer filename resolution.
+     */
+    virtual void addUnderlay(const DRW_Underlay* data) { (void)data; }
+
+    /** Called for every UNDERLAYDEFINITION (Pdf/Dgn/Dwf) object.
+     *  Carries the filename + sheet name that UNDERLAY entities reference
+     *  via definitionHandle. Default no-op. Mirrors addImage/linkImage.
+     */
+    virtual void linkUnderlay(const DRW_UnderlayDefinition* data) { (void)data; }
+
     /** Called for every polyline start */
     virtual void addPolyline(const DRW_Polyline& data) = 0;
 
@@ -124,8 +151,6 @@ public:
 
     /** Called for every Text entity. */
     virtual void addText(const DRW_Text& data) = 0;
-
-    virtual void addTolerance(const DRW_Tolerance& tol) = 0;
 
     /**
      * Called for every aligned dimension entity. 
@@ -177,7 +202,7 @@ public:
     virtual void addViewport(const DRW_Viewport& data) = 0;
 
     /**
-	 * Called for every image entity. 
+	 * Called for every image entity.
 	 */
     virtual void addImage(const DRW_Image *data) = 0;
 
@@ -185,6 +210,55 @@ public:
 	 * Called for every image definition.
 	 */
     virtual void linkImage(const DRW_ImageDef *data) = 0;
+
+    /**
+     * Called for every WIPEOUT entity.  WIPEOUT shares the binary layout of
+     * IMAGE (subclass AcDbWipeout); the meaningful payload is the polygon
+     * stored in DRW_Image::clipPath.  Default no-op so existing implementers
+     * compile unchanged; override to consume.
+     */
+    virtual void addWipeout(const DRW_Image *data) { (void) data; }
+
+    /**
+     * Called for every MULTILEADER (MLEADER) entity.  AcDbMLeader subclass,
+     * a custom-class object in DWG (oType >= 500 with classesmap recName
+     * "MULTILEADER").  Default no-op for back-compat.
+     */
+    virtual void addMLeader(const DRW_MLeader *data) { (void) data; }
+
+    /**
+     * Called for every MLEADERSTYLE dictionary object (AcDbMLeaderStyle).
+     * Lives in the OBJECTS section, referenced by MLEADER entities via
+     * their style handle.  ODA spec §20.4.87.  Default no-op for back-compat.
+     */
+    virtual void addMLeaderStyle(const DRW_MLeaderStyle *data) { (void) data; }
+
+    /**
+     * Called for every DBCOLOR (AcDbColor) object encountered in the OBJECTS
+     * section.  ODA spec §20.4.  Default no-op for back-compat — most
+     * implementers don't need a per-object hook because the reader patches
+     * referencing entities' color24/colorName via dbColorMap before
+     * delivering them.  This hook is for filters that want to track the
+     * full set of named colors (e.g., to emit a layer book-color map).
+     */
+    virtual void addDbColor(const DRW_DbColor& data) { (void) data; }
+
+    /**
+     * Called for every VISUALSTYLE (AcDbVisualStyle) object encountered in
+     * the OBJECTS section. ODA spec §20.4.95. Default no-op — LibreCAD has
+     * no 3D rendering and treats these as opaque round-trip metadata.
+     */
+    virtual void addVisualStyle(const DRW_VisualStyle& data) { (void) data; }
+
+    /**
+     * Called for every SCALE (AcDbScale) annotation-scale entry encountered
+     * in the OBJECTS section.  Lives under ACAD_SCALELIST in the named-object
+     * dictionary.  ODA §20.4.93 / libreDWG dwg2.spec:1195.  Default no-op;
+     * the foundation for per-viewport-scale resolution of MLEADER/DIMENSION/
+     * MTEXT/ATTRIB at render time.  scaleFactor() returns the design factor
+     * (drawingUnits / paperUnits, e.g. "1:48" → 48).
+     */
+    virtual void addScale(const DRW_Scale& data) { (void) data; }
 
     /**
      * Called for every comment in the DXF file (code 999).
@@ -202,13 +276,18 @@ public:
     virtual void writeEntities() = 0;
     virtual void writeLTypes() = 0;
     virtual void writeLayers() = 0;
-    virtual void writeViews() = 0;
-    virtual void writeUCSs() = 0;
     virtual void writeTextstyles() = 0;
     virtual void writeVports() = 0;
     virtual void writeDimstyles() = 0;
     virtual void writeObjects() = 0;
     virtual void writeAppId() = 0;
+    /** Called when the writer wants the implementation to emit named VIEW
+     * records. Default-empty for ABI compatibility with consumers (LibreCAD_3,
+     * dx_iface) that don't carry View data. */
+    virtual void writeViews() {}
+    /** Called when the writer wants the implementation to emit named UCS
+     * records. Default-empty (same rationale as writeViews). */
+    virtual void writeUCSs() {}
 };
 
 #endif
