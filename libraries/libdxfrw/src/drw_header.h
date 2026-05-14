@@ -22,9 +22,13 @@
 class dxfReader;
 class dxfWriter;
 class dwgBuffer;
+class dwgBufferW;
+class DrwHeaderEncodeTestAccess;  // test-only friend; defined in tests/dwg_header_encode_round_trip_tests.cpp
 
 #define SETHDRFRIENDS  friend class dxfRW; \
-                       friend class dwgReader;
+                       friend class dwgReader; \
+                       friend class dwgWriter15; \
+                       friend class DrwHeaderEncodeTestAccess;
 
 //! Class to handle header entries
 /*!
@@ -108,6 +112,11 @@ public:
 protected:
     bool parseCode(int code, const std::unique_ptr<dxfReader>& reader);
     bool parseDwg(DRW::Version version, dwgBuffer *buf, dwgBuffer *hBbuf, duint8 mv=0);
+    /// Inverse of parseDwg: emits the bit-packed body of the HEADER
+    /// section.  For R2000 (AC1015), `buf` and `hBbuf` may alias the
+    /// same accumulator since the handle stream is inline.  Order of
+    /// emission matches parseDwg byte-for-byte.
+    bool encodeDwg(DRW::Version version, dwgBufferW *buf, dwgBufferW *hBbuf);
 private:
     bool getDouble(std::string key, double *varDouble);
     bool getInt(std::string key, int *varInt);

@@ -12,10 +12,12 @@
 ******************************************************************************/
 
 #include "drw_header.h"
+#include <cmath>
 #include "intern/dxfreader.h"
 #include "intern/dxfwriter.h"
 #include "intern/drw_dbg.h"
 #include "intern/dwgbuffer.h"
+#include "intern/dwgbufferw.h"
 
 DRW_Header::DRW_Header() {
     linetypeCtrl = layerCtrl = styleCtrl = dimstyleCtrl = appidCtrl = 0;
@@ -2452,6 +2454,436 @@ bool DRW_Header::parseDwg(DRW::Version version, dwgBuffer *buf, dwgBuffer *hBbuf
     }
 
     return result;
+}
+
+// ---------------------------------------------------------------------------
+// DRW_Header::encodeDwg — Phase 3a (drafted 2026-05-14)
+// ---------------------------------------------------------------------------
+// Inverse of parseDwg.  Emits the bit-packed HEADER section body for R2000
+// (AC1015).  The caller (dwgWriter15::writeDwgHeader) has already emitted
+// the 16-byte begin sentinel + 4-byte RL section-size placeholder; this
+// function appends the variable stream starting right after them.  The
+// caller appends the 16-byte end sentinel + 2-byte CRC16 LE after we return
+// and back-patches the size placeholder.
+//
+// For R2000 the handle stream is INLINE with the data stream — buf and
+// hBbuf are the same accumulator.  Future versions will diverge.
+//
+// Order of emission must match parseDwg EXACTLY.  See deep-review notes
+// in /Users/dli/.claude/plans/dwg-write-phase3-tables-objects.md for the
+// 13-handle control-handle block and the conditional layout.
+
+namespace {
+    /// Look up a 1-bit boolean var in DRW_Header::vars; default 0.
+    duint8 boolVar(const DRW_Header& hdr, const std::string& name) {
+        auto it = hdr.vars.find(name);
+        if (it == hdr.vars.end() || !it->second) return 0;
+        return static_cast<duint8>(it->second->i_val() & 1);
+    }
+    /// Look up a BS/BL int var; default 0 (or caller-supplied default).
+    dint32 intVar(const DRW_Header& hdr, const std::string& name, dint32 def = 0) {
+        auto it = hdr.vars.find(name);
+        if (it == hdr.vars.end() || !it->second) return def;
+        return it->second->i_val();
+    }
+    /// Look up a BD float var; default 0.0 (or caller-supplied).
+    double dblVar(const DRW_Header& hdr, const std::string& name, double def = 0.0) {
+        auto it = hdr.vars.find(name);
+        if (it == hdr.vars.end() || !it->second) return def;
+        return it->second->d_val();
+    }
+    /// Look up a 3BD coord var; default {0,0,0}.
+    DRW_Coord coordVar(const DRW_Header& hdr, const std::string& name) {
+        auto it = hdr.vars.find(name);
+        if (it == hdr.vars.end() || !it->second
+            || it->second->type() != DRW_Variant::COORD
+            || it->second->coord() == nullptr) {
+            return {0.0, 0.0, 0.0};
+        }
+        return *it->second->coord();
+    }
+    /// Look up a TV string var; default empty.
+    UTF8STRING strVar(const DRW_Header& hdr, const std::string& name) {
+        auto it = hdr.vars.find(name);
+        if (it == hdr.vars.end() || !it->second
+            || it->second->type() != DRW_Variant::STRING) {
+            return {};
+        }
+        return UTF8STRING(it->second->c_str());
+    }
+    /// Build a hard-pointer handle (code 4) referring to `ref`.  Returns
+    /// the null handle when ref==0, which matches what parseDwg sees in
+    /// an empty document.
+    dwgHandle makeHardPtr(duint32 ref) {
+        dwgHandle h;
+        h.code = (ref == 0) ? 0 : 4;
+        h.ref  = ref;
+        h.size = 0;
+        if (ref != 0) {
+            duint32 t = ref;
+            while (t != 0) { t >>= 8; ++h.size; }
+        }
+        return h;
+    }
+    /// Build a soft-owner handle (code 3) — used for the XDic-style
+    /// owner references in the HEADER's control-handle block.
+    dwgHandle makeSoftOwner(duint32 ref) {
+        dwgHandle h;
+        h.code = (ref == 0) ? 0 : 3;
+        h.ref  = ref;
+        h.size = 0;
+        if (ref != 0) {
+            duint32 t = ref;
+            while (t != 0) { t >>= 8; ++h.size; }
+        }
+        return h;
+    }
+    /// Decompose a stored double (TDCREATE-style "day.msec_fraction") back
+    /// into the two BLs parseDwg reads.  Inverse of:
+    ///   day = getBitLong(); msec = getBitLong();
+    ///   while (msec > 0) msec /= 10;
+    ///   stored = day + msec;
+    /// For an empty header (stored == 0.0) the result is (0, 0).  Real
+    /// fixture defaults still round-trip exactly because msec is always
+    /// represented as fractional part * 10^k for some k.
+    void splitTimeVar(double stored, dint32& day, dint32& msecOut) {
+        day = static_cast<dint32>(stored);
+        double frac = stored - static_cast<double>(day);
+        if (frac == 0.0) { msecOut = 0; return; }
+        // Reverse the divide-by-10 loop: multiply by 10 until the result
+        // is integer (the original msec value).  Cap at 10 iterations to
+        // avoid pathological FP cases.
+        for (int i = 0; i < 10; ++i) {
+            frac *= 10.0;
+            double rounded = std::round(frac);
+            if (std::abs(frac - rounded) < 1e-9 && rounded != 0.0) {
+                msecOut = static_cast<dint32>(rounded);
+                return;
+            }
+        }
+        msecOut = static_cast<dint32>(std::round(frac));
+    }
+} // namespace
+
+bool DRW_Header::encodeDwg(DRW::Version version, dwgBufferW *buf, dwgBufferW *hBbuf) {
+    if (version != DRW::AC1015) return false;  // R2000 only for v1
+
+    // -------- Unknown 4 BDs (parseDwg:1789-1792) ----------------------------
+    buf->putBitDouble(0.0);
+    buf->putBitDouble(0.0);
+    buf->putBitDouble(0.0);
+    buf->putBitDouble(0.0);
+
+    // -------- 4 CP8 string unknowns (parseDwg:1793-1798) --------------------
+    // Gated on `version < AC1021` (2007-).  R2000 hits this branch — emit
+    // four empty CP8 strings (BS length=0).
+    buf->putCP8Text(std::string());
+    buf->putCP8Text(std::string());
+    buf->putCP8Text(std::string());
+    buf->putCP8Text(std::string());
+
+    // -------- Unknown longs (parseDwg:1799-1800) ----------------------------
+    // parseDwg comments call these "Unknown long1 (24L)" and "(0L)".  Real
+    // R2000 files have 24 and 0 respectively.
+    buf->putBitLong(24);
+    buf->putBitLong(0);
+
+    // -------- Current-view handle (parseDwg:1804-1807) ----------------------
+    // Gated on `version < AC1018` (pre-R2004).  R2000 hits this branch —
+    // emit a null handle.  Reads from the handle stream (== buf for R2000).
+    hBbuf->putHandle(makeHardPtr(0));
+
+    // -------- 9 single-bit vars (parseDwg:1808-1819; R2000-relevant set) ----
+    buf->putBit(boolVar(*this, "DIMASO"));
+    buf->putBit(boolVar(*this, "DIMSHO"));
+    buf->putBit(boolVar(*this, "PLINEGEN"));
+    buf->putBit(boolVar(*this, "ORTHOMODE"));
+    buf->putBit(boolVar(*this, "REGENMODE"));
+    buf->putBit(boolVar(*this, "FILLMODE"));
+    buf->putBit(boolVar(*this, "QTEXTMODE"));
+    buf->putBit(boolVar(*this, "PSLTSCALE"));
+    buf->putBit(boolVar(*this, "LIMCHECK"));
+
+    // -------- 11 more single-bit vars (parseDwg:1824-1844) ------------------
+    buf->putBit(boolVar(*this, "USRTIMER"));
+    buf->putBit(boolVar(*this, "SKPOLY"));
+    buf->putBit(boolVar(*this, "ANGDIR"));
+    buf->putBit(boolVar(*this, "SPLFRAME"));
+    buf->putBit(boolVar(*this, "MIRRTEXT"));
+    buf->putBit(boolVar(*this, "WORLDVIEW"));
+    buf->putBit(boolVar(*this, "TILEMODE"));
+    buf->putBit(boolVar(*this, "PLIMCHECK"));
+    buf->putBit(boolVar(*this, "VISRETAIN"));
+    buf->putBit(boolVar(*this, "DISPSILH"));
+    buf->putBit(boolVar(*this, "PELLIPSE"));
+
+    // -------- PROXIGRAPHICS through PDMODE (parseDwg:1845-1861) -------------
+    buf->putBitShort(static_cast<duint16>(intVar(*this, "PROXIGRAPHICS", 1)));
+    buf->putBitShort(static_cast<duint16>(intVar(*this, "TREEDEPTH", 3020)));
+    buf->putBitShort(static_cast<duint16>(intVar(*this, "LUNITS", 2)));
+    buf->putBitShort(static_cast<duint16>(intVar(*this, "LUPREC", 4)));
+    buf->putBitShort(static_cast<duint16>(intVar(*this, "AUNITS", 0)));
+    buf->putBitShort(static_cast<duint16>(intVar(*this, "AUPREC", 0)));
+    buf->putBitShort(static_cast<duint16>(intVar(*this, "ATTMODE", 1)));
+    buf->putBitShort(static_cast<duint16>(intVar(*this, "PDMODE", 0)));
+
+    // -------- USERI1..5 + spline/surface family (parseDwg:1870-1888) --------
+    buf->putBitShort(static_cast<duint16>(intVar(*this, "USERI1")));
+    buf->putBitShort(static_cast<duint16>(intVar(*this, "USERI2")));
+    buf->putBitShort(static_cast<duint16>(intVar(*this, "USERI3")));
+    buf->putBitShort(static_cast<duint16>(intVar(*this, "USERI4")));
+    buf->putBitShort(static_cast<duint16>(intVar(*this, "USERI5")));
+    buf->putBitShort(static_cast<duint16>(intVar(*this, "SPLINESEGS", 8)));
+    buf->putBitShort(static_cast<duint16>(intVar(*this, "SURFU", 6)));
+    buf->putBitShort(static_cast<duint16>(intVar(*this, "SURFV", 6)));
+    buf->putBitShort(static_cast<duint16>(intVar(*this, "SURFTYPE", 6)));
+    buf->putBitShort(static_cast<duint16>(intVar(*this, "SURFTAB1", 6)));
+    buf->putBitShort(static_cast<duint16>(intVar(*this, "SURFTAB2", 6)));
+    buf->putBitShort(static_cast<duint16>(intVar(*this, "SPLINETYPE", 6)));
+    buf->putBitShort(static_cast<duint16>(intVar(*this, "SHADEDGE", 3)));
+    buf->putBitShort(static_cast<duint16>(intVar(*this, "SHADEDIF", 70)));
+    buf->putBitShort(static_cast<duint16>(intVar(*this, "UNITMODE")));
+    buf->putBitShort(static_cast<duint16>(intVar(*this, "MAXACTVP", 64)));
+    buf->putBitShort(static_cast<duint16>(intVar(*this, "ISOLINES", 4)));
+    buf->putBitShort(static_cast<duint16>(intVar(*this, "CMLJUST")));
+    buf->putBitShort(static_cast<duint16>(intVar(*this, "TEXTQLTY", 50)));
+
+    // -------- LTSCALE through CELTSCALE (parseDwg:1889-1909) ----------------
+    buf->putBitDouble(dblVar(*this, "LTSCALE", 1.0));
+    buf->putBitDouble(dblVar(*this, "TEXTSIZE", 2.5));
+    buf->putBitDouble(dblVar(*this, "TRACEWID", 1.0));
+    buf->putBitDouble(dblVar(*this, "SKETCHINC", 1.0));
+    buf->putBitDouble(dblVar(*this, "FILLETRAD", 0.0));
+    buf->putBitDouble(dblVar(*this, "THICKNESS", 0.0));
+    buf->putBitDouble(dblVar(*this, "ANGBASE", 0.0));
+    buf->putBitDouble(dblVar(*this, "PDSIZE", 0.0));
+    buf->putBitDouble(dblVar(*this, "PLINEWID", 0.0));
+    buf->putBitDouble(dblVar(*this, "USERR1", 0.0));
+    buf->putBitDouble(dblVar(*this, "USERR2", 0.0));
+    buf->putBitDouble(dblVar(*this, "USERR3", 0.0));
+    buf->putBitDouble(dblVar(*this, "USERR4", 0.0));
+    buf->putBitDouble(dblVar(*this, "USERR5", 0.0));
+    buf->putBitDouble(dblVar(*this, "CHAMFERA", 0.0));
+    buf->putBitDouble(dblVar(*this, "CHAMFERB", 0.0));
+    buf->putBitDouble(dblVar(*this, "CHAMFERC", 0.0));
+    buf->putBitDouble(dblVar(*this, "CHAMFERD", 0.0));
+    buf->putBitDouble(dblVar(*this, "FACETRES", 0.5));
+    buf->putBitDouble(dblVar(*this, "CMLSCALE", 1.0));
+    buf->putBitDouble(dblVar(*this, "CELTSCALE", 1.0));
+
+    // -------- MENU string (R2004-, including R2000) -------------------------
+    buf->putCP8Text(strVar(*this, "MENU"));
+
+    // -------- TDCREATE / TDUPDATE / TDINDWG / TDUSRTIMER (4 pairs of BLs) ---
+    {
+        dint32 day, msec;
+        splitTimeVar(dblVar(*this, "TDCREATE"), day, msec);
+        buf->putBitLong(day);
+        buf->putBitLong(msec);
+    }
+    {
+        dint32 day, msec;
+        splitTimeVar(dblVar(*this, "TDUPDATE"), day, msec);
+        buf->putBitLong(day);
+        buf->putBitLong(msec);
+    }
+    {
+        dint32 day, msec;
+        splitTimeVar(dblVar(*this, "TDINDWG"), day, msec);
+        buf->putBitLong(day);
+        buf->putBitLong(msec);
+    }
+    {
+        dint32 day, msec;
+        splitTimeVar(dblVar(*this, "TDUSRTIMER"), day, msec);
+        buf->putBitLong(day);
+        buf->putBitLong(msec);
+    }
+
+    // -------- CECOLOR + first handle block (parseDwg:1947-1963) -------------
+    buf->putCmColor(version, static_cast<duint16>(intVar(*this, "CECOLOR", 256)));
+    // HANDSEED — emitted into the DATA stream (`buf`), not hBbuf.  For
+    // a fresh empty doc this is the high-water of the allocator; the
+    // dwgWriter15 caller will populate it via setter before emit (Phase 3b/c).
+    buf->putHandle(makeHardPtr(0));  // placeholder; back-patched by caller if needed
+    // The following 5 handles emit to the HANDLE stream.  For R2000 the
+    // handle stream is inline (buf == hBbuf in our usage).
+    hBbuf->putHandle(makeHardPtr(0));  // CLAYER
+    hBbuf->putHandle(makeHardPtr(0));  // TEXTSTYLE
+    hBbuf->putHandle(makeHardPtr(0));  // CELTYPE
+    hBbuf->putHandle(makeHardPtr(0));  // DIMSTYLE
+    hBbuf->putHandle(makeHardPtr(0));  // CMLSTYLE
+
+    // -------- Paper-space view block (parseDwg:1965-1989) -------------------
+    buf->putBitDouble(dblVar(*this, "PSVPSCALE", 1.0));
+    buf->put3BitDouble(coordVar(*this, "PINSBASE"));
+    buf->put3BitDouble(coordVar(*this, "PEXTMIN"));
+    buf->put3BitDouble(coordVar(*this, "PEXTMAX"));
+    buf->put2RawDouble(coordVar(*this, "PLIMMIN"));
+    buf->put2RawDouble(coordVar(*this, "PLIMMAX"));
+    buf->putBitDouble(dblVar(*this, "PELEVATION"));
+    buf->put3BitDouble(coordVar(*this, "PUCSORG"));
+    buf->put3BitDouble(coordVar(*this, "PUCSXDIR"));
+    buf->put3BitDouble(coordVar(*this, "PUCSYDIR"));
+    hBbuf->putHandle(makeHardPtr(0));  // PUCSNAME
+    hBbuf->putHandle(makeHardPtr(0));  // PUCSORTHOREF
+    buf->putBitShort(static_cast<duint16>(intVar(*this, "PUCSORTHOVIEW")));
+    hBbuf->putHandle(makeHardPtr(0));  // PUCSBASE
+    buf->put3BitDouble(coordVar(*this, "PUCSORGTOP"));
+    buf->put3BitDouble(coordVar(*this, "PUCSORGBOTTOM"));
+    buf->put3BitDouble(coordVar(*this, "PUCSORGLEFT"));
+    buf->put3BitDouble(coordVar(*this, "PUCSORGRIGHT"));
+    buf->put3BitDouble(coordVar(*this, "PUCSORGFRONT"));
+    buf->put3BitDouble(coordVar(*this, "PUCSORGBACK"));
+
+    // -------- Model-space view block (parseDwg:1991-2018) -------------------
+    buf->put3BitDouble(coordVar(*this, "INSBASE"));
+    buf->put3BitDouble(coordVar(*this, "EXTMIN"));
+    buf->put3BitDouble(coordVar(*this, "EXTMAX"));
+    buf->put2RawDouble(coordVar(*this, "LIMMIN"));
+    buf->put2RawDouble(coordVar(*this, "LIMMAX"));
+    buf->putBitDouble(dblVar(*this, "ELEVATION"));
+    buf->put3BitDouble(coordVar(*this, "UCSORG"));
+    buf->put3BitDouble(coordVar(*this, "UCSXDIR"));
+    buf->put3BitDouble(coordVar(*this, "UCSYDIR"));
+    hBbuf->putHandle(makeHardPtr(0));  // UCSNAME
+    hBbuf->putHandle(makeHardPtr(0));  // UCSORTHOREF
+    buf->putBitShort(static_cast<duint16>(intVar(*this, "UCSORTHOVIEW")));
+    hBbuf->putHandle(makeHardPtr(0));  // UCSBASE
+    buf->put3BitDouble(coordVar(*this, "UCSORGTOP"));
+    buf->put3BitDouble(coordVar(*this, "UCSORGBOTTOM"));
+    buf->put3BitDouble(coordVar(*this, "UCSORGLEFT"));
+    buf->put3BitDouble(coordVar(*this, "UCSORGRIGHT"));
+    buf->put3BitDouble(coordVar(*this, "UCSORGFRONT"));
+    buf->put3BitDouble(coordVar(*this, "UCSORGBACK"));
+    buf->putCP8Text(strVar(*this, "DIMPOST"));
+    buf->putCP8Text(strVar(*this, "DIMAPOST"));
+
+    // -------- DIM* values for R2000 (parseDwg:2053-2129; R14 branch dropped)
+    buf->putBitDouble(dblVar(*this, "DIMSCALE", 1.0));
+    buf->putBitDouble(dblVar(*this, "DIMASZ", 0.18));
+    buf->putBitDouble(dblVar(*this, "DIMEXO", 0.0625));
+    buf->putBitDouble(dblVar(*this, "DIMDLI", 0.38));
+    buf->putBitDouble(dblVar(*this, "DIMEXE", 0.18));
+    buf->putBitDouble(dblVar(*this, "DIMRND", 0.0));
+    buf->putBitDouble(dblVar(*this, "DIMDLE", 0.0));
+    buf->putBitDouble(dblVar(*this, "DIMTP", 0.0));
+    buf->putBitDouble(dblVar(*this, "DIMTM", 0.0));
+    // R2000+: 6 bits then 3 BS
+    buf->putBit(boolVar(*this, "DIMTOL"));
+    buf->putBit(boolVar(*this, "DIMLIM"));
+    buf->putBit(boolVar(*this, "DIMTIH"));
+    buf->putBit(boolVar(*this, "DIMTOH"));
+    buf->putBit(boolVar(*this, "DIMSE1"));
+    buf->putBit(boolVar(*this, "DIMSE2"));
+    buf->putBitShort(static_cast<duint16>(intVar(*this, "DIMTAD")));
+    buf->putBitShort(static_cast<duint16>(intVar(*this, "DIMZIN")));
+    buf->putBitShort(static_cast<duint16>(intVar(*this, "DIMAZIN")));
+    buf->putBitDouble(dblVar(*this, "DIMTXT", 0.18));
+    buf->putBitDouble(dblVar(*this, "DIMCEN", 0.09));
+    buf->putBitDouble(dblVar(*this, "DIMTSZ", 0.0));
+    buf->putBitDouble(dblVar(*this, "DIMALTF", 25.4));
+    buf->putBitDouble(dblVar(*this, "DIMLFAC", 1.0));
+    buf->putBitDouble(dblVar(*this, "DIMTVP", 0.0));
+    buf->putBitDouble(dblVar(*this, "DIMTFAC", 1.0));
+    buf->putBitDouble(dblVar(*this, "DIMGAP", 0.09));
+    // R2000+: DIMALTRND + 5 more DIM bits
+    buf->putBitDouble(dblVar(*this, "DIMALTRND", 0.0));
+    buf->putBit(boolVar(*this, "DIMALT"));
+    buf->putBitShort(static_cast<duint16>(intVar(*this, "DIMALTD", 2)));
+    buf->putBit(boolVar(*this, "DIMTOFL"));
+    buf->putBit(boolVar(*this, "DIMSAH"));
+    buf->putBit(boolVar(*this, "DIMTIX"));
+    buf->putBit(boolVar(*this, "DIMSOXD"));
+    // 3 CMC colors
+    buf->putCmColor(version, static_cast<duint16>(intVar(*this, "DIMCLRD")));
+    buf->putCmColor(version, static_cast<duint16>(intVar(*this, "DIMCLRE")));
+    buf->putCmColor(version, static_cast<duint16>(intVar(*this, "DIMCLRT")));
+    // R2000+ DIM BS family
+    buf->putBitShort(static_cast<duint16>(intVar(*this, "DIAMDEC")));
+    buf->putBitShort(static_cast<duint16>(intVar(*this, "DIMDEC", 4)));
+    buf->putBitShort(static_cast<duint16>(intVar(*this, "DIMTDEC", 4)));
+    buf->putBitShort(static_cast<duint16>(intVar(*this, "DIMALTU", 2)));
+    buf->putBitShort(static_cast<duint16>(intVar(*this, "DIMALTTD", 2)));
+    buf->putBitShort(static_cast<duint16>(intVar(*this, "DIMAUNIT")));
+    buf->putBitShort(static_cast<duint16>(intVar(*this, "DIMFAC")));
+    buf->putBitShort(static_cast<duint16>(intVar(*this, "DIMLUNIT", 2)));
+    buf->putBitShort(static_cast<duint16>(intVar(*this, "DIMDSEP", '.')));
+    buf->putBitShort(static_cast<duint16>(intVar(*this, "DIMTMOVE")));
+    buf->putBitShort(static_cast<duint16>(intVar(*this, "DIMJUST")));
+    buf->putBit(boolVar(*this, "DIMSD1"));
+    buf->putBit(boolVar(*this, "DIMSD2"));
+    buf->putBitShort(static_cast<duint16>(intVar(*this, "DIMTOLJ", 1)));
+    buf->putBitShort(static_cast<duint16>(intVar(*this, "DIMTZIN")));
+    buf->putBitShort(static_cast<duint16>(intVar(*this, "DIMALTZ")));
+    buf->putBitShort(static_cast<duint16>(intVar(*this, "DIMALTTZ")));
+    buf->putBit(boolVar(*this, "DIMUPT"));
+    buf->putBitShort(static_cast<duint16>(intVar(*this, "DIMATFIT", 3)));
+
+    // -------- DIM handles (R2000+: 5 handles) (parseDwg:2139-2148) ----------
+    hBbuf->putHandle(makeHardPtr(0));  // DIMTXSTY
+    hBbuf->putHandle(makeHardPtr(0));  // DIMLDRBLK
+    hBbuf->putHandle(makeHardPtr(0));  // DIMBLK
+    hBbuf->putHandle(makeHardPtr(0));  // DIMBLK1
+    hBbuf->putHandle(makeHardPtr(0));  // DIMBLK2
+
+    // -------- DIMLWD, DIMLWE (R2000+: 2 BS) (parseDwg:2159-2160) ------------
+    buf->putBitShort(static_cast<duint16>(intVar(*this, "DIMLWD", -2)));
+    buf->putBitShort(static_cast<duint16>(intVar(*this, "DIMLWE", -2)));
+
+    // -------- Control-handle block (parseDwg:2162-2199, 13 handles) ---------
+    // For R2000, version < AC1018 is true so vpEntHeaderCtrl IS emitted.
+    // The trailing 3 NOD dict handles are emitted as null per Phase 3 sub-plan.
+    hBbuf->putHandle(makeHardPtr(blockCtrl));           // BLOCK_CONTROL  (0x01)
+    hBbuf->putHandle(makeHardPtr(layerCtrl));           // LAYER_CONTROL  (0x02)
+    hBbuf->putHandle(makeHardPtr(styleCtrl));           // STYLE_CONTROL  (0x03)
+    hBbuf->putHandle(makeHardPtr(linetypeCtrl));        // LTYPE_CONTROL  (0x05)
+    hBbuf->putHandle(makeHardPtr(viewCtrl));            // VIEW_CONTROL   (0x06)
+    hBbuf->putHandle(makeHardPtr(ucsCtrl));             // UCS_CONTROL    (0x07)
+    hBbuf->putHandle(makeHardPtr(vportCtrl));           // VPORT_CONTROL  (0x08)
+    hBbuf->putHandle(makeHardPtr(appidCtrl));           // APPID_CONTROL  (0x09)
+    hBbuf->putHandle(makeHardPtr(dimstyleCtrl));        // DIMSTYLE_CONTROL (0x0A)
+    hBbuf->putHandle(makeHardPtr(vpEntHeaderCtrl));     // VPORT_ENTITY_HEADER_CONTROL (R2000 only, 0x0B)
+    hBbuf->putHandle(makeSoftOwner(0));                 // DICT ACAD_GROUP (Phase 3.5: 0x0D)
+    hBbuf->putHandle(makeSoftOwner(0));                 // DICT ACAD_MLINESTYLE (Phase 3.5: 0x0E)
+    hBbuf->putHandle(makeSoftOwner(0));                 // DICT NAMED OBJS (Phase 3.5: 0x0C)
+
+    // -------- Post-control TSTACKALIGN/TSTACKSIZE + 3 NOD-related dict handles
+    buf->putBitShort(static_cast<duint16>(intVar(*this, "TSTACKALIGN", 1)));
+    buf->putBitShort(static_cast<duint16>(intVar(*this, "TSTACKSIZE", 70)));
+    buf->putCP8Text(strVar(*this, "HYPERLINKBASE"));
+    buf->putCP8Text(strVar(*this, "STYLESHEET"));
+    hBbuf->putHandle(makeSoftOwner(0));  // DICT LAYOUTS    (Phase 3.5)
+    hBbuf->putHandle(makeSoftOwner(0));  // DICT PLOTSETTINGS (Phase 3.5)
+    hBbuf->putHandle(makeSoftOwner(0));  // DICT PLOTSTYLES   (Phase 3.5)
+
+    // -------- Flags (BL) + INSUNITS (BS) + CEPSNTYPE (BS) -------------------
+    buf->putBitLong(0);  // Flags — 8 sub-fields per parseDwg comment; defaults to 0
+    buf->putBitShort(static_cast<duint16>(intVar(*this, "INSUNITS")));
+    duint16 cepsntype = static_cast<duint16>(intVar(*this, "CEPSNTYPE"));
+    buf->putBitShort(cepsntype);
+    if (cepsntype == 3) {
+        hBbuf->putHandle(makeHardPtr(0));  // CPSNID
+    }
+    buf->putCP8Text(strVar(*this, "FINGERPRINTGUID"));
+    buf->putCP8Text(strVar(*this, "VERSIONGUID"));
+
+    // -------- 5 reserved-block handles (parseDwg:2258-2267) -----------------
+    // PAPER_SPACE, MODEL_SPACE block headers + BYLAYER, BYBLOCK, CONTINUOUS
+    // linetype records.  Reserved handles 0x18, 0x17, 0x10, 0x0F, 0x11.
+    hBbuf->putHandle(makeHardPtr(0x18));  // BLOCK PAPER_SPACE
+    hBbuf->putHandle(makeHardPtr(0x17));  // BLOCK MODEL_SPACE
+    hBbuf->putHandle(makeHardPtr(0x10));  // LTYPE BYLAYER
+    hBbuf->putHandle(makeHardPtr(0x0F));  // LTYPE BYBLOCK
+    hBbuf->putHandle(makeHardPtr(0x11));  // LTYPE CONTINUOUS
+
+    // -------- R14+ trailing 4 BS unknowns (parseDwg:2307-2312) --------------
+    buf->putBitShort(0);
+    buf->putBitShort(0);
+    buf->putBitShort(0);
+    buf->putBitShort(0);
+
+    return true;
 }
 
 int DRW_Header::measurement(const int unit) {
