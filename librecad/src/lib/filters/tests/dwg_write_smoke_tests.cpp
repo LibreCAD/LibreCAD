@@ -339,6 +339,7 @@ public:
     std::vector<DRW_Circle>  m_circles;
     std::vector<DRW_Arc>     m_arcs;
     std::vector<DRW_Ellipse> m_ellipses;
+    std::vector<std::string> m_blocks;
 
     void writeEntities() override {
         if (m_writer == nullptr) return;
@@ -384,6 +385,7 @@ public:
     void addCircle(const DRW_Circle& c)  override { m_circles.push_back(c); }
     void addArc(const DRW_Arc& a)        override { m_arcs.push_back(a); }
     void addEllipse(const DRW_Ellipse& e) override { m_ellipses.push_back(e); }
+    void addBlock(const DRW_Block& b)    override { m_blocks.push_back(b.name); }
 };
 
 } // namespace
@@ -435,6 +437,19 @@ TEST_CASE("dwgRW writes POINT/LINE/CIRCLE/ARC and reader recovers them",
     REQUIRE(readIface.m_ellipses[0].secPoint.x  == 30.0);
     REQUIRE(readIface.m_ellipses[0].ratio       == 0.5);
     REQUIRE(readIface.m_ellipses[0].color       == 4);
+
+    // Phase 4d milestone: addBlock fires for *Model_Space and
+    // *Paper_Space — the BLOCK_CONTROL +2 phantom handles resolve
+    // through the Block_Record + DRW_Block emission rather than the
+    // pre-4d silent warnings.
+    bool sawModel = false;
+    bool sawPaper = false;
+    for (const auto& n : readIface.m_blocks) {
+        if (n == "*Model_Space") sawModel = true;
+        if (n == "*Paper_Space") sawPaper = true;
+    }
+    REQUIRE(sawModel);
+    REQUIRE(sawPaper);
 
     std::remove(path.c_str());
 }

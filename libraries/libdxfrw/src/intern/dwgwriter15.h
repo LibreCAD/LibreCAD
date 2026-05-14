@@ -84,6 +84,21 @@ protected:
     void emitTableRecord(duint16 oType, duint32 handle,
                          const std::string& name);
 
+    /// Phase 4d helper: emit a full Block_Record at `handle` with the
+    /// `block`/`endBlock` handles pointing at DRW_Block entities the
+    /// caller has already emitted.  Empty body — firstEH/lastEH=0,
+    /// no inserts, no layout.  Needed so `readDwgBlocks` can resolve
+    /// the BLOCK_CONTROL `+2` phantom handles (0x17, 0x18) without
+    /// failing the block walk.
+    void emitBlockRecord(duint32 handle, const std::string& name,
+                         duint32 blockHandle, duint32 endBlockHandle);
+
+    /// Phase 4d helper: emit a Block entity at `handle`.  `isEnd=true`
+    /// suppresses the name field and emits an ENDBLK (oType=5) rather
+    /// than a BLOCK (oType=4).
+    void emitBlockEntity(duint32 handle, const std::string& name,
+                         bool isEnd);
+
 private:
     /// File offset of the first section-locator record byte.  Used by
     /// `finalize()` to back-patch addresses + sizes.  Set during

@@ -547,11 +547,17 @@ public:
 protected:
     bool parseCode(int code, const std::unique_ptr<dxfReader>& reader) override;
     virtual bool parseDwg(DRW::Version v, dwgBuffer *buf, duint32 bs=0) override;
+    virtual bool encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs=0) override;
 
 public:
     UTF8STRING name;             /*!< block name, code 2 */
     int flags;                   /*!< block type, code 70 */
     UTF8STRING xrefPath;         /*!< Xref path name, code 1 (DXF) / copied from BLOCK_RECORD (DWG) */
+
+    /// Set externally before encodeDwg to emit an ENDBLK rather than a
+    /// BLOCK entity (suppresses the name field and uses oType=5).
+    void setIsEnd(bool e) { isEnd = e; }
+    bool getIsEnd() const { return isEnd; }
 private:
     bool isEnd; //for dwg parsing
 };

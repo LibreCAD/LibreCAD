@@ -322,6 +322,69 @@ void dwgWriter15::emitControlObject(
     finishObject();
 }
 
+void dwgWriter15::emitBlockEntity(duint32 handle, const std::string& name,
+                                  bool isEnd) {
+    DRW_Block bk;
+    bk.handle = handle;
+    bk.layerH.ref = 0x12;
+    bk.color = 256;  // BYLAYER
+    bk.name = name;
+    bk.setIsEnd(isEnd);
+    dwgBufferW& body = beginObject(handle);
+    bk.encodeDwg(DRW::AC1015, &body, /*bs=*/0);
+    finishObject();
+}
+
+void dwgWriter15::emitBlockRecord(duint32 handle, const std::string& name,
+                                  duint32 blockHandle,
+                                  duint32 endBlockHandle) {
+    dwgBufferW& body = beginObject(handle);
+
+    // Common table-entry preamble (R2000, no xDictFlag).
+    body.putBitShort(oType::BLOCK_RECORD);
+    body.putRawLong32(0);                  // objSize stub
+    body.putHandle(makeHardPtr(handle));
+    body.putBitShort(0);                   // extDataSize
+    body.putBitLong(0);                    // numReactors
+
+    // R2000 Block_Record body.  Mirror of DRW_Block_Record::parseDwg
+    // at drw_objects.cpp:709-840 — collapsed for our empty/canonical
+    // *Model_Space / *Paper_Space records.
+    body.putVariableText(DRW::AC1015, name);
+    body.putBit(0);                        // flags bit 6 (xref-ref)
+    body.putBitShort(0);                   // xrefindex BS (R2004-)
+    body.putBit(0);                        // flags bit 4 (xref dep)
+    body.putBit(0);                        // anon (*U bit)
+    body.putBit(0);                        // attdefs
+    body.putBit(0);                        // xref
+    body.putBit(0);                        // overlaid xref
+    body.putBit(0);                        // R2000+ loaded-xref
+    // (R2004+ objectCount BL omitted for R2000.)
+    DRW_Coord origin;
+    origin.x = origin.y = origin.z = 0.0;
+    body.put3BitDouble(origin);            // basePoint 3BD
+    body.putVariableText(DRW::AC1015, std::string{});  // xrefPath empty
+    // R2000+ insertCount loop: emit terminating 0 byte.
+    body.putRawChar8(0);
+    body.putVariableText(DRW::AC1015, std::string{});  // bkdesc empty
+    body.putBitLong(0);                    // prevData BL = 0 (no bytes)
+    // (R2007+ insUnits/canExplode/bkScaling omitted.)
+
+    // Handle stream.
+    body.putHandle(makeHardPtr(reservedHandle::BLOCK_CONTROL));  // parent
+    body.putHandle(makeSoftOwner(0));                            // XDic null
+    body.putHandle(makeNullHandle());                            // NullH
+    body.putHandle(makeHardPtr(blockHandle));                    // block ref
+    // R2000- non-xref: emit firstEH + lastEH (both null = empty).
+    body.putHandle(makeNullHandle());
+    body.putHandle(makeNullHandle());
+    body.putHandle(makeHardPtr(endBlockHandle));                 // endBlock
+    // R2000+ insertCount=0 → no inserts handles in the loop body.
+    body.putHandle(makeSoftOwner(0));                            // layoutH null
+
+    finishObject();
+}
+
 void dwgWriter15::emitTableRecord(duint16 typeCode, duint32 handle,
                                   const std::string& name) {
     dwgBufferW& body = beginObject(handle);
@@ -446,6 +509,24 @@ bool dwgWriter15::writeDwgObjects() {
     emitTableRecord(oType::APPID,    0x14, "ACAD");
     emitTableRecord(oType::DIMSTYLE, 0x15, "STANDARD");
     emitTableRecord(oType::VPORT,    0x16, "*ACTIVE");
+
+    // Phase 4d: emit Block_Record records for *Model_Space and
+    // *Paper_Space + the BLOCK + ENDBLK entities they own.  Handles
+    // 0x1B-0x1E come from the master plan's reserved-but-unused range.
+    constexpr duint32 BLK_MODEL_START  = 0x1B;
+    constexpr duint32 BLK_MODEL_END    = 0x1C;
+    constexpr duint32 BLK_PAPER_START  = 0x1D;
+    constexpr duint32 BLK_PAPER_END    = 0x1E;
+
+    emitBlockEntity(BLK_MODEL_START, "*Model_Space", /*isEnd=*/false);
+    emitBlockEntity(BLK_MODEL_END,   std::string{},   /*isEnd=*/true);
+    emitBlockEntity(BLK_PAPER_START, "*Paper_Space", /*isEnd=*/false);
+    emitBlockEntity(BLK_PAPER_END,   std::string{},   /*isEnd=*/true);
+
+    emitBlockRecord(reservedHandle::BLOCK_MODEL_SPACE, "*Model_Space",
+                    BLK_MODEL_START, BLK_MODEL_END);
+    emitBlockRecord(reservedHandle::BLOCK_PAPER_SPACE, "*Paper_Space",
+                    BLK_PAPER_START, BLK_PAPER_END);
 
     return true;
 }

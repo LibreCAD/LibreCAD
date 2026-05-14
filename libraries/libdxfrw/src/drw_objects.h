@@ -58,8 +58,11 @@ namespace DRW {
 //SPATIAL_INDEX, SPATIAL_FILTER, TABLEGEOMETRY, TABLESTYLES,
 }
 
+class dwgBufferW;
+
 #define SETOBJFRIENDS  friend class dxfRW; \
-                       friend class dwgReader;
+                       friend class dwgReader; \
+                       friend class dwgWriter15;
 
 //! Base class for tables entries
 /*!

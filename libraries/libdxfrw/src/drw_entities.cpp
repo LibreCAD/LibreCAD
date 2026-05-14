@@ -923,6 +923,18 @@ bool DRW_Circle::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs) {
     return encodeDwgEntHandle(version, buf);
 }
 
+bool DRW_Block::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs) {
+    (void)bs;
+    // BLOCK = 4, ENDBLK = 5 per DWG spec.  isEnd controls which.
+    oType = isEnd ? 5 : 4;
+    if (!encodeDwgCommon(version, buf)) return false;
+    if (!isEnd) {
+        buf->putVariableText(version, name);
+    }
+    // (R2007+ unknown bit skipped for R2000.)
+    return encodeDwgEntHandle(version, buf);
+}
+
 bool DRW_Text::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs) {
     (void)bs;
     oType = 1;  // TEXT class id — see dwgreader.cpp:1208
