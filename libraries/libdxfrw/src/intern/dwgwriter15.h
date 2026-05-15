@@ -44,6 +44,10 @@ public:
     /// dwgWriter::encodeEntity for the contract.
     bool encodeEntity(DRW_Entity *ent) override;
 
+    duint32 defineBlock(const std::string& name,
+                        const DRW_Coord& basePoint) override;
+    bool emitDeferredBlockControl() override;
+
 protected:
     /// Begin a new object in the object stream (the unsentinel'd byte
     /// region between CLASSES and HANDLES).  Records the offset of
@@ -133,6 +137,12 @@ private:
     /// the object's MS prefix in m_buf)`.  Sorted by handle in
     /// `writeDwgHandles` before page emission for monotonic deltas.
     std::vector<std::pair<duint32, duint32>> m_objectMap;
+
+    /// Block_Record handles for user-defined blocks (from defineBlock).
+    /// Consumed by emitDeferredBlockControl to populate BLOCK_CONTROL's
+    /// numEntries + child handle list.  +2 phantom handles for
+    /// MODEL_SPACE and PAPER_SPACE are added on top.
+    std::vector<duint32> m_userBlockRecordHandles;
 };
 
 #endif // DWGWRITER15_H

@@ -64,6 +64,22 @@ public:
     bool writeTrace(DRW_Trace *ent);
     bool writeSolid(DRW_Solid *ent);
     bool write3dface(DRW_3Dface *ent);
+    bool writeInsert(DRW_Insert *ent);
+    bool writeMText(DRW_MText *ent);
+    bool writeSpline(DRW_Spline *ent);
+    bool writeAttrib(DRW_Attrib *ent);
+    bool writeAttdef(DRW_Attdef *ent);
+    bool writeHatch(DRW_Hatch *ent);
+    bool writeDimension(DRW_Dimension *ent);
+
+    /// Define an empty user-block.  Allocates fresh Block_Record + Block
+    /// + ENDBLK handles, emits all three into the object stream, and
+    /// appends the new Block_Record to BLOCK_CONTROL's child list.
+    /// Returns the Block_Record handle, which callers use as the
+    /// `blockRecH.ref` on subsequent `DRW_Insert` entities.  Must be
+    /// invoked from the iface's `writeBlocks()` callback (before
+    /// `writeEntities`); returns 0 if invoked outside that window.
+    duint32 defineBlock(const std::string& name, const DRW_Coord& basePoint);
 
     bool getPreview();
     DRW::Version getVersion(){return version;}

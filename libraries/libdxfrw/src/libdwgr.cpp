@@ -237,15 +237,15 @@ bool dwgRW::write(DRW_Interface *interface_, DRW::Version ver, bool bin) {
               writer->writeDwgClasses() &&
               writer->writeDwgObjects();
     if (ok) {
-        // Caller-driven object-stream content.  iface callbacks are
-        // expected to call back into dwgRW::writePoint/writeLine/...
-        // which use writer->encodeEntity to record (handle, offset)
-        // pairs in m_objectMap.  Phase 4b: only the writeEntities
-        // path is fully wired (modelspace entities); writeBlocks and
-        // writeObjects fire so caller hooks run but the underlying
-        // dwgRW::writeBlock/writeImage/etc. methods are still stubs
-        // (Phase 4c/5 work).
+        // Caller-driven object-stream content.  writeBlocks fires
+        // first so the caller can `defineBlock(...)` for any user
+        // blocks; we then emit BLOCK_CONTROL with the collected user
+        // block_record handles + the 2 canonical phantoms.  Only after
+        // that can the reader's findTableName resolve INSERT block
+        // names.  writeEntities is where modelspace geometry flows;
+        // writeObjects is reserved for NOD-dictionary objects (Phase 5).
         iface->writeBlocks();
+        writer->emitDeferredBlockControl();
         iface->writeEntities();
         iface->writeObjects();
     }
@@ -321,6 +321,46 @@ bool dwgRW::writeSolid(DRW_Solid *ent) {
 bool dwgRW::write3dface(DRW_3Dface *ent) {
     if (writer == nullptr || ent == nullptr) return false;
     return writer->encodeEntity(ent);
+}
+
+bool dwgRW::writeInsert(DRW_Insert *ent) {
+    if (writer == nullptr || ent == nullptr) return false;
+    return writer->encodeEntity(ent);
+}
+
+bool dwgRW::writeMText(DRW_MText *ent) {
+    if (writer == nullptr || ent == nullptr) return false;
+    return writer->encodeEntity(ent);
+}
+
+bool dwgRW::writeSpline(DRW_Spline *ent) {
+    if (writer == nullptr || ent == nullptr) return false;
+    return writer->encodeEntity(ent);
+}
+
+bool dwgRW::writeAttrib(DRW_Attrib *ent) {
+    if (writer == nullptr || ent == nullptr) return false;
+    return writer->encodeEntity(ent);
+}
+
+bool dwgRW::writeAttdef(DRW_Attdef *ent) {
+    if (writer == nullptr || ent == nullptr) return false;
+    return writer->encodeEntity(ent);
+}
+
+bool dwgRW::writeHatch(DRW_Hatch *ent) {
+    if (writer == nullptr || ent == nullptr) return false;
+    return writer->encodeEntity(ent);
+}
+
+bool dwgRW::writeDimension(DRW_Dimension *ent) {
+    if (writer == nullptr || ent == nullptr) return false;
+    return writer->encodeEntity(ent);
+}
+
+duint32 dwgRW::defineBlock(const std::string& name, const DRW_Coord& basePoint) {
+    if (writer == nullptr) return 0;
+    return writer->defineBlock(name, basePoint);
 }
 
 std::unique_ptr<dwgReader> dwgRW::createReaderForVersion(DRW::Version version, std::ifstream *stream, dwgRW *p )

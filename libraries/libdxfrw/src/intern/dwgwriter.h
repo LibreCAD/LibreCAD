@@ -166,6 +166,21 @@ public:
     /// calling.  Returns true on success.
     virtual bool encodeEntity(DRW_Entity *ent) = 0;
 
+    /// Define an empty user-block.  Allocates fresh handles for the
+    /// Block_Record + Block + ENDBLK trio and emits all three to the
+    /// object stream.  Appends the block_record handle to the deferred
+    /// BLOCK_CONTROL list so a later `emitDeferredBlockControl` call
+    /// includes it.  Returns the Block_Record handle (suitable for
+    /// `DRW_Insert::blockRecH.ref`).  Returns 0 on failure.
+    virtual duint32 defineBlock(const std::string& name,
+                                const DRW_Coord& basePoint) = 0;
+
+    /// Emit BLOCK_CONTROL with the user-block list captured by all
+    /// prior `defineBlock` calls.  Invoked by the orchestrator after
+    /// `iface->writeBlocks()` so the BLOCK_CONTROL.numEntries reflects
+    /// user blocks (+ the canonical 2 phantom modelspace/paperspace).
+    virtual bool emitDeferredBlockControl() = 0;
+
     /// Accumulator (exposed for tests + for sibling classes that
     /// need byte-level inspection).  Reserved unless a test asks.
     const std::vector<duint8>& buffer() const { return m_buf.data(); }

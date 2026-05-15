@@ -322,6 +322,99 @@ void dwgWriter15::emitControlObject(
     finishObject();
 }
 
+duint32 dwgWriter15::defineBlock(const std::string& name,
+                                 const DRW_Coord& basePoint) {
+    // Allocate a fresh handle trio.
+    duint32 blockRecH  = m_handles.next();
+    duint32 blockH     = m_handles.next();
+    duint32 endBlockH  = m_handles.next();
+
+    // Block entity for the start of the block body.
+    DRW_Block bk;
+    bk.handle = blockH;
+    bk.layerH.ref = 0x12;
+    bk.color = 256;  // BYLAYER
+    bk.name = name;
+    bk.setIsEnd(false);
+    {
+        dwgBufferW& body = beginObject(blockH);
+        bk.encodeDwg(DRW::AC1015, &body, /*bs=*/0);
+        finishObject();
+    }
+
+    // ENDBLK entity.
+    DRW_Block endBlk;
+    endBlk.handle = endBlockH;
+    endBlk.layerH.ref = 0x12;
+    endBlk.color = 256;
+    endBlk.setIsEnd(true);
+    {
+        dwgBufferW& body = beginObject(endBlockH);
+        endBlk.encodeDwg(DRW::AC1015, &body, /*bs=*/0);
+        finishObject();
+    }
+
+    // Block_Record (with the caller's basePoint).
+    {
+        dwgBufferW& body = beginObject(blockRecH);
+        body.putBitShort(oType::BLOCK_RECORD);
+        body.putRawLong32(0);                  // objSize stub
+        body.putHandle(makeHardPtr(blockRecH));
+        body.putBitShort(0);                   // extDataSize
+        body.putBitLong(0);                    // numReactors
+        body.putVariableText(DRW::AC1015, name);
+        body.putBit(0);                        // flags bit 6 (xref-ref)
+        body.putBitShort(0);                   // xrefindex BS (R2004-)
+        body.putBit(0);                        // xdep
+        body.putBit(0);                        // anon
+        body.putBit(0);                        // attdefs
+        body.putBit(0);                        // xref
+        body.putBit(0);                        // overlaid
+        body.putBit(0);                        // R2000+ loaded-xref
+        body.put3BitDouble(basePoint);
+        body.putVariableText(DRW::AC1015, std::string{});  // xrefPath
+        body.putRawChar8(0);                   // insertCount terminator
+        body.putVariableText(DRW::AC1015, std::string{});  // bkdesc
+        body.putBitLong(0);                    // prevData BL
+        body.putHandle(makeHardPtr(reservedHandle::BLOCK_CONTROL));
+        body.putHandle(makeSoftOwner(0));      // XDic null
+        body.putHandle(makeNullHandle());      // NullH
+        body.putHandle(makeHardPtr(blockH));   // block
+        body.putHandle(makeNullHandle());      // firstEH (empty body)
+        body.putHandle(makeNullHandle());      // lastEH
+        body.putHandle(makeHardPtr(endBlockH));// endBlock
+        body.putHandle(makeSoftOwner(0));      // layoutH null
+        finishObject();
+    }
+
+    m_userBlockRecordHandles.push_back(blockRecH);
+    return blockRecH;
+}
+
+bool dwgWriter15::emitDeferredBlockControl() {
+    // BLOCK_CONTROL: numEntries = user blocks count; +2 phantoms for
+    // MODEL_SPACE + PAPER_SPACE are appended to the child handle list.
+    std::vector<duint32> children;
+    children.reserve(m_userBlockRecordHandles.size() + 2);
+    for (duint32 h : m_userBlockRecordHandles) children.push_back(h);
+    children.push_back(reservedHandle::BLOCK_MODEL_SPACE);
+    children.push_back(reservedHandle::BLOCK_PAPER_SPACE);
+
+    dwgBufferW& body = beginObject(reservedHandle::BLOCK_CONTROL);
+    body.putBitShort(oType::BLOCK_CONTROL);
+    body.putRawLong32(0);  // objSize stub
+    body.putHandle(makeHardPtr(reservedHandle::BLOCK_CONTROL));
+    body.putBitShort(0);  // extDataSize
+    body.putBitLong(0);   // numReactors
+    body.putBitLong(static_cast<dint32>(m_userBlockRecordHandles.size()));
+    body.putHandle(makeNullHandle());  // NullH
+    body.putHandle(makeSoftOwner(0));  // XDic null
+    for (duint32 h : children)
+        body.putHandle(makeHardPtr(h));
+    finishObject();
+    return true;
+}
+
 void dwgWriter15::emitBlockEntity(duint32 handle, const std::string& name,
                                   bool isEnd) {
     DRW_Block bk;
@@ -441,13 +534,12 @@ bool dwgWriter15::writeDwgObjects() {
     // each carry 2 phantom child handles because the reader applies
     // `numEntries += 2` for those types (see Risk 4f).
 
-    // BLOCK_CONTROL: numEntries=0, +2 phantoms (MODEL_SPACE+PAPER_SPACE)
-    //   resolve in the reader's child loop.  We don't emit the Block_Record
-    //   records yet (Phase 4), so the lookups are silent warnings.
-    emitControlObject(oType::BLOCK_CONTROL, reservedHandle::BLOCK_CONTROL,
-                      0,
-                      {reservedHandle::BLOCK_MODEL_SPACE,
-                       reservedHandle::BLOCK_PAPER_SPACE});
+    // BLOCK_CONTROL is deferred to emitDeferredBlockControl().  Without
+    // deferral, BLOCK_CONTROL's numEntries can't include user-defined
+    // blocks added later via iface->writeBlocks() — and the reader's
+    // findTableName uses blockRecordmap (populated only for records
+    // walked from BLOCK_CONTROL.handlesList), so INSERTs referencing
+    // user blocks would lose their name resolution.  See Phase 4f-INSERT.
 
     // LAYER_CONTROL: 1 real entry (layer "0").
     emitControlObject(oType::LAYER_CONTROL, reservedHandle::LAYER_CONTROL,

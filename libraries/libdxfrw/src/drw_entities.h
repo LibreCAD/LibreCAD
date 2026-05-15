@@ -592,6 +592,7 @@ public:
 protected:
     bool parseCode(int code, const std::unique_ptr<dxfReader>& reader) override;
     virtual bool parseDwg(DRW::Version v, dwgBuffer *buf, duint32 bs=0) override;
+    virtual bool encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs=0) override;
 
 public:
     UTF8STRING name;         /*!< block name, code 2 */
@@ -848,6 +849,7 @@ public:
 protected:
     bool parseCode(int code, const std::unique_ptr<dxfReader>& reader) override;
     virtual bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) override;
+    virtual bool encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs=0) override;
 
 public:
     UTF8STRING tag;            /*!< attribute tag, code 2 */
@@ -877,6 +879,7 @@ public:
 protected:
     bool parseCode(int code, const std::unique_ptr<dxfReader>& reader) override;
     virtual bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) override;
+    virtual bool encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs=0) override;
 
 public:
     UTF8STRING prompt;         /*!< prompt string, code 3 */
@@ -919,6 +922,7 @@ protected:
     bool parseCode(int code, const std::unique_ptr<dxfReader>& reader) override;
     void updateAngle();    // recalculate angle if 'hasXAxisVec' is true
     virtual bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) override;
+    virtual bool encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs=0) override;
 
 public:
     double interlin;     /*!< width factor, code 44 */
@@ -1041,6 +1045,7 @@ public:
 protected:
     bool parseCode(int code, const std::unique_ptr<dxfReader>& reader) override;
     virtual bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) override;
+    virtual bool encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs=0) override;
 
 public:
 //    double ex;                /*!< normal vector x coordinate, code 210 */
@@ -1135,6 +1140,7 @@ public:
 protected:
     bool parseCode(int code, const std::unique_ptr<dxfReader>& reader) override;
     virtual bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) override;
+    virtual bool encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs=0) override;
 
 public:
     UTF8STRING name;           /*!< hatch pattern name, code 2 */
@@ -1315,6 +1321,7 @@ protected:
     bool parseCode(int code, const std::unique_ptr<dxfReader>& reader) override;
     virtual bool parseDwg(DRW::Version version, dwgBuffer *buf, dwgBuffer *sBuf, duint32 bs = 0) override;
     virtual bool parseDwg(DRW::Version version, dwgBuffer* buf, duint32 bs=0) override;
+    bool encodeDwgDimBase(DRW::Version version, dwgBufferW *buf) const;
 
 public:
     DRW_Coord getDefPoint() const {return defPoint;}      /*!< Definition point, code 10, 20 & 30 */
@@ -1425,6 +1432,7 @@ public:
 
 protected:
     virtual bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) override;
+    virtual bool encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs=0) override;
 };
 
 //! Class to handle  linear or rotated dimension entity
@@ -1445,6 +1453,9 @@ public:
     void setAngle(const double d) {setAn50(d);}
     double getOblique() const {return getOb52();}      /*!< oblique angle, code 52 */
     void setOblique(const double d) {setOb52(d);}
+
+protected:
+    virtual bool encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs=0) override;
 };
 
 //! Class to handle radial dimension entity
@@ -1471,6 +1482,7 @@ public:
 
 protected:
     virtual bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) override;
+    virtual bool encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs=0) override;
 };
 
 //! Class to handle radial dimension entity
@@ -1497,6 +1509,7 @@ public:
 
 protected:
     virtual bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) override;
+    virtual bool encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs=0) override;
 };
 
 //! Class to handle angular dimension entity
@@ -1527,6 +1540,7 @@ public:
 
 protected:
     virtual bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) override;
+    virtual bool encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs=0) override;
 };
 
 
@@ -1556,6 +1570,7 @@ public:
 
 protected:
     virtual bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) override;
+    virtual bool encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs=0) override;
 };
 
 //! Class to handle ordinate dimension entity
@@ -1582,6 +1597,7 @@ public:
 
 protected:
     virtual bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) override;
+    virtual bool encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs=0) override;
 };
 
 

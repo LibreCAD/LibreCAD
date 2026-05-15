@@ -292,6 +292,84 @@ TEST_CASE("dwgRW::write invokes writeHeader and the values reach the file",
 
 namespace {
 
+/// Iface for the INSERT smoke test.  Defines a user block in
+/// writeBlocks(), captures the returned block_record handle, then
+/// writes a single INSERT entity referencing it.  On read, captures
+/// the addBlock + addInsert callbacks and verifies the name resolution
+/// works end-to-end.
+class InsertRoundTripIface : public EmptyIface {
+public:
+    dwgRW *m_writer {nullptr};
+    duint32 m_blockRecH {0};
+    std::vector<std::string> m_blocks;
+    std::vector<DRW_Insert>  m_inserts;
+
+    void writeBlocks() override {
+        if (m_writer == nullptr) return;
+        m_blockRecH = m_writer->defineBlock("MySymbol", DRW_Coord{0.0, 0.0, 0.0});
+    }
+    void writeEntities() override {
+        if (m_writer == nullptr || m_blockRecH == 0) return;
+        DRW_Insert ins;
+        ins.basePoint = DRW_Coord{50.0, 75.0, 0.0};
+        ins.xscale = 2.0;
+        ins.yscale = 2.0;
+        ins.zscale = 2.0;
+        ins.angle = 0.0;
+        ins.color = 3;
+        ins.blockRecH.ref = m_blockRecH;
+        m_writer->writeInsert(&ins);
+    }
+    void addBlock(const DRW_Block& b)  override { m_blocks.push_back(b.name); }
+    void addInsert(const DRW_Insert& i) override { m_inserts.push_back(i); }
+};
+
+} // namespace
+
+TEST_CASE("dwgRW INSERT round-trips via defineBlock + writeInsert",
+          "[dwg-write][smoke]") {
+    const std::string path = tempPath("insert.dwg");
+
+    {
+        dwgRW writer(path.c_str());
+        InsertRoundTripIface iface;
+        iface.m_writer = &writer;
+        REQUIRE(writer.write(&iface, DRW::AC1015, /*bin=*/false));
+        REQUIRE(iface.m_blockRecH != 0);
+    }
+
+    InsertRoundTripIface readIface;
+    {
+        dwgRW reader(path.c_str());
+        REQUIRE(reader.read(&readIface, /*ext=*/false));
+        REQUIRE(reader.getError() == DRW::BAD_NONE);
+    }
+
+    // addBlock fires for the user block plus the canonical
+    // *Model_Space / *Paper_Space.
+    bool sawUserBlock = false;
+    for (const auto& n : readIface.m_blocks) {
+        if (n == "MySymbol") sawUserBlock = true;
+    }
+    REQUIRE(sawUserBlock);
+
+    // The INSERT entity makes it through with the right block name +
+    // position + scale.  findTableName resolves blockRecH.ref to the
+    // user block_record's name only because BLOCK_CONTROL now lists it.
+    REQUIRE(readIface.m_inserts.size() == 1);
+    REQUIRE(readIface.m_inserts[0].name        == "MySymbol");
+    REQUIRE(readIface.m_inserts[0].basePoint.x == 50.0);
+    REQUIRE(readIface.m_inserts[0].basePoint.y == 75.0);
+    REQUIRE(readIface.m_inserts[0].xscale      == 2.0);
+    REQUIRE(readIface.m_inserts[0].yscale      == 2.0);
+    REQUIRE(readIface.m_inserts[0].zscale      == 2.0);
+    REQUIRE(readIface.m_inserts[0].color       == 3);
+
+    std::remove(path.c_str());
+}
+
+namespace {
+
 /// Iface that captures names from every table-record callback.  Used
 /// to prove the Phase 3e milestone — the standard layer "0", linetype
 /// "CONTINUOUS", textstyle "STANDARD", appid "ACAD", dimstyle
