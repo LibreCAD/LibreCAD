@@ -32,6 +32,9 @@
 #include "drw_interface.h"
 #include "lc_extentitydata.h"
 #include "libdxfrw.h"
+#ifdef DWGSUPPORT
+#include "libdwgr.h"
+#endif
 #include "rs_color.h"
 #include "rs_dimension.h"
 #include "rs_filterinterface.h"
@@ -78,6 +81,9 @@ public:
     }
 
     bool canExport(const QString &/*fileName*/, RS2::FormatType t) const override {
+#ifdef DWGSUPPORT
+        if (t == RS2::FormatDWG) return true;
+#endif
         return (t==RS2::FormatDXFRW || t==RS2::FormatDXFRW2004 || t==RS2::FormatDXFRW2000
                 || t==RS2::FormatDXFRW14 || t==RS2::FormatDXFRW12);
     }
@@ -354,6 +360,9 @@ private:
     bool m_oldMText = false;
     dxfRW *m_dxfW {nullptr};
     dxfRW *m_dxfR {nullptr};
+#ifdef DWGSUPPORT
+    dwgRW *m_dwgW {nullptr};
+#endif
     /** If saved version are 2004 or above can save color in RGB value. */
     bool m_exactColor = false;
     /** hash of block containers and handleBlock numbers to read dwg files */

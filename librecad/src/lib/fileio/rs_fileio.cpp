@@ -151,8 +151,7 @@ RS2::FormatType RS_FileIO::detectFormat(QString const& file, bool forRead)
         {"cxf", RS2::FormatCXF},
         {"lff", RS2::FormatLFF}
     };
-// only read support for dwg
-    if(forRead) list["dwg"]=RS2::FormatDWG;
+    list["dwg"] = RS2::FormatDWG;
 
     QString const extension = QFileInfo(file).suffix().toLower();
     RS2::FormatType type=(list.find(extension)!=

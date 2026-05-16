@@ -64,7 +64,11 @@ QString getExtension (RS2::FormatType type)
 bool hasExtension(const QString& fileName, RS2::FormatType ftype)
 {
     QString extension = getExtension(ftype);
+#ifdef DWGSUPPORT
+    QStringList supported = {".cxf", ".dxf", ".lff", ".dwg"};
+#else
     QStringList supported = {".cxf", ".dxf", ".lff"};
+#endif
     auto testExt = [&fileName, ftype](const QString& ext) {
         return getExtension(ftype) == ext && fileName.endsWith(ext, Qt::CaseInsensitive);};
     return std::any_of(supported.cbegin(), supported.cend(), testExt);
@@ -216,6 +220,9 @@ QString QG_FileDialog::getSaveFile(RS2::FormatType* type, const QString& current
     filters << fDxfrw2007 << fDxfrw2004 << fDxfrw2000 << fDxfrw14 << fDxfrw12 << fJww << fLff << fCxf;
 #else
     filters << fDxfrw2007 << fDxfrw2004 << fDxfrw2000 << fDxfrw14 << fDxfrw12 << fLff << fCxf;
+#endif
+#ifdef DWGSUPPORT
+    filters << fDwg;
 #endif
 
     ftype = RS2::FormatDXFRW;

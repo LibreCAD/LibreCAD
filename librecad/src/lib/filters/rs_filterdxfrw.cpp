@@ -3655,6 +3655,18 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic& g, const QString& file, RS2::FormatT
     //
 #endif
 
+#ifdef DWGSUPPORT
+    if (type == RS2::FormatDWG) {
+        m_version = 1015;
+        m_exactColor = false;
+        m_dwgW = new dwgRW(QFile::encodeName(file).constData());
+        bool success = m_dwgW->write(this, DRW::AC1015, false);
+        delete m_dwgW;
+        m_dwgW = nullptr;
+        return success;
+    }
+#endif
+
     // set version for DXF filter:
     m_exactColor = false;
     DRW::Version exportVersion;
@@ -3794,6 +3806,21 @@ void RS_FilterDXFRW::writeBlockRecords(){
  * Writes blocks.
  */
 void RS_FilterDXFRW::writeBlocks() {
+#ifdef DWGSUPPORT
+    if (m_dwgW) {
+        // Register each user block so INSERT entities can reference them by name.
+        for (unsigned i = 0; i < m_graphic->countBlocks(); i++) {
+            RS_Block *blk = m_graphic->blockAt(i);
+            if (!blk->isUndone()) {
+                DRW_Coord bp{blk->getBasePoint().x, blk->getBasePoint().y,
+                             blk->getBasePoint().z};
+                m_dwgW->defineBlock(blk->getName().toUtf8().constData(), bp);
+            }
+        }
+        return;
+    }
+#endif
+
     RS_Block *blk;
 
     //write unnamed blocks
@@ -5044,6 +5071,7 @@ void RS_FilterDXFRW::writePoint(RS_Point* p) {
     getEntityAttributes(&point, p);
     point.basePoint.x = p->getStartpoint().x;
     point.basePoint.y = p->getStartpoint().y;
+    if (m_dwgW) { m_dwgW->writePoint(&point); return; }
     m_dxfW->writePoint(&point);
 }
 
@@ -5057,6 +5085,7 @@ void RS_FilterDXFRW::writeLine(RS_Line* l) {
     line.basePoint.y = l->getStartpoint().y;
     line.secPoint.x = l->getEndpoint().x;
     line.secPoint.y = l->getEndpoint().y;
+    if (m_dwgW) { m_dwgW->writeLine(&line); return; }
     m_dxfW->writeLine(&line);
 }
 
@@ -5069,6 +5098,7 @@ void RS_FilterDXFRW::writeCircle(RS_Circle* c) {
     circle.basePoint.x = c->getCenter().x;
     circle.basePoint.y = c->getCenter().y;
     circle.radious = c->getRadius();
+    if (m_dwgW) { m_dwgW->writeCircle(&circle); return; }
     m_dxfW->writeCircle(&circle);
 }
 
@@ -5088,6 +5118,7 @@ void RS_FilterDXFRW::writeArc(RS_Arc* a) {
         arc.staangle = a->getAngle1();
         arc.endangle = a->getAngle2();
     }
+    if (m_dwgW) { m_dwgW->writeArc(&arc); return; }
     m_dxfW->writeArc(&arc);
 }
 
@@ -5152,6 +5183,7 @@ void RS_FilterDXFRW::writeLWPolyline(RS_Polyline* l) {
     }
     pol.vertexnum = pol.vertlist.size();
     getEntityAttributes(&pol, l);
+    if (m_dwgW) { m_dwgW->writeLWPolyline(&pol); return; }
     m_dxfW->writeLWPolyline(&pol);
 }
 
@@ -5264,6 +5296,7 @@ void RS_FilterDXFRW::writeSpline(RS_Spline *s) {
     sp.nknots = sp.knotslist.size();
 
     getEntityAttributes(&sp, s);
+    if (m_dwgW) { m_dwgW->writeSpline(&sp); return; }
     m_dxfW->writeSpline(&sp);
 }
 
@@ -5271,6 +5304,7 @@ void RS_FilterDXFRW::writeSpline(RS_Spline *s) {
  * Writes the given spline entity to the file.
  */
 void RS_FilterDXFRW::writeSplinePoints(LC_SplinePoints *s){
+    if (m_dwgW) return;
 	int nCtrls = s->getNumberOfControlPoints();
 	auto const& cp = s->getControlPoints();
 
@@ -5369,6 +5403,7 @@ void RS_FilterDXFRW::writeEllipse(RS_Ellipse* s) {
         el.staparam = s->getAngle1();
         el.endparam = s->getAngle2();
     }
+    if (m_dwgW) { m_dwgW->writeEllipse(&el); return; }
     m_dxfW->writeEllipse(&el);
 }
 
@@ -5378,6 +5413,7 @@ void RS_FilterDXFRW::writeEllipse(RS_Ellipse* s) {
  * Uses LC_HyperbolaSpline to create the standard SPLINE representation.
  */
 void RS_FilterDXFRW::writeHyperbola(LC_Hyperbola* h) {
+    if (m_dwgW) return;
     if (h == nullptr || !h->isValid() || m_dxfW == nullptr) {
         return;
     }
@@ -5408,6 +5444,7 @@ void RS_FilterDXFRW::writeInsert(RS_Insert* i) {
     in.rowcount = i->getRows();
     in.colspace = i->getSpacing().x;
     in.rowspace =i->getSpacing().y;
+    if (m_dwgW) { m_dwgW->writeInsert(&in); return; }
     m_dxfW->writeInsert(&in);
 }
 
@@ -5527,6 +5564,7 @@ void RS_FilterDXFRW::writeMText(RS_MText* t) {
         text->widthscale =t->getUsedTextWidth(); //getSize().x;
 		txt2.interlin = t->getLineSpacingFactor();
 
+        if (m_dwgW) { m_dwgW->writeMText(static_cast<DRW_MText*>(text)); return; }
         m_dxfW->writeMText(static_cast<DRW_MText*>(text));
     }
 }
@@ -5566,6 +5604,7 @@ void RS_FilterDXFRW::writeText(RS_Text* t){
 
     if (!t->getText().isEmpty()) {
         text.text = toDxfString(t->getText()).toUtf8().data();
+        if (m_dwgW) { m_dwgW->writeText(&text); return; }
         m_dxfW->writeText(&text);
     }
 }
@@ -5714,6 +5753,7 @@ void RS_FilterDXFRW::writeDimension(RS_Dimension* d) {
         addDimStyleOverrideToExtendedData(&extEntityData, override);
         fillEntityExtData(dim->extData, &extEntityData);
     }
+    if (m_dwgW) { m_dwgW->writeDimension(dim); delete dim; return; }
     m_dxfW->writeDimension(dim);
     delete dim;
 }
@@ -5722,6 +5762,7 @@ void RS_FilterDXFRW::writeDimension(RS_Dimension* d) {
  * Writes the given leader entity to the file.
  */
 void RS_FilterDXFRW::writeLeader(RS_Leader* l) {
+    if (m_dwgW) return;
     if (l->count() <= 0) {
         RS_DEBUG->print(RS_Debug::D_WARNING, "dropping leader with no vertices");
     }
@@ -5948,6 +5989,7 @@ void RS_FilterDXFRW::writeHatch(RS_Hatch * h) {
             ha.appendLoop(lData);
         }
     }
+    if (m_dwgW) { m_dwgW->writeHatch(&ha); return; }
     m_dxfW->writeHatch(&ha);
 }
 
@@ -5976,11 +6018,13 @@ void RS_FilterDXFRW::writeSolid(RS_Solid* s) {
         solid.fourPoint.x = corner.x;
         solid.fourPoint.y = corner.y;
     }
+    if (m_dwgW) { m_dwgW->writeSolid(&solid); return; }
     m_dxfW->writeSolid(&solid);
 }
 
 
 void RS_FilterDXFRW::writeImage(RS_Image * i) {
+    if (m_dwgW) return;
     DRW_Image image;
     getEntityAttributes(&image, i);
 
@@ -6008,6 +6052,7 @@ void RS_FilterDXFRW::writeImage(RS_Image * i) {
 }
 
 void RS_FilterDXFRW::writeWipeout(LC_Wipeout *w) {
+  if (m_dwgW) return;
   if (w == nullptr) {
     return;
   }
@@ -6050,6 +6095,7 @@ void RS_FilterDXFRW::writeWipeout(LC_Wipeout *w) {
  * that depend on geometric round-trip will need the follow-up.
  */
 void RS_FilterDXFRW::writeMLeader(LC_MLeader *m) {
+  if (m_dwgW) return;
   if (m == nullptr)
     return;
   DRW_MLeader e;
