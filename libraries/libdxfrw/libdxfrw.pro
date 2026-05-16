@@ -46,7 +46,9 @@ SOURCES += \
     src/intern/rscodec.cpp \
     src/intern/dwgreader27.cpp \
     src/intern/dwgreader24.cpp \
-    src/intern/dwgreader32.cpp
+    src/intern/dwgreader32.cpp \
+    src/intern/dwgbufferw.cpp \
+    src/intern/dwgwriter15.cpp
 
 HEADERS += \
     src/libdxfrw.h \
@@ -75,4 +77,8 @@ HEADERS += \
     src/intern/rscodec.h \
     src/intern/dwgreader27.h \
     src/intern/dwgreader24.h \
-    src/intern/dwgreader32.h
+    src/intern/dwgreader32.h \
+    src/intern/drw_reserve.h \
+    src/intern/dwgbufferw.h \
+    src/intern/dwgwriter.h \
+    src/intern/dwgwriter15.h
