@@ -5309,7 +5309,6 @@ void RS_FilterDXFRW::writeSpline(RS_Spline *s) {
  * Writes the given spline entity to the file.
  */
 void RS_FilterDXFRW::writeSplinePoints(LC_SplinePoints *s){
-    if (m_dwgW) return;
 	int nCtrls = s->getNumberOfControlPoints();
 	auto const& cp = s->getControlPoints();
 
@@ -5321,6 +5320,7 @@ void RS_FilterDXFRW::writeSplinePoints(LC_SplinePoints *s){
 			line.secPoint.x = cp.at(1).x;
 			line.secPoint.y = cp.at(1).y;
 			getEntityAttributes(&line, s);
+            if (m_dwgW) { m_dwgW->writeLine(&line); return; }
             m_dxfW->writeLine(&line);
 		}
 		return;
@@ -5385,6 +5385,12 @@ void RS_FilterDXFRW::writeSplinePoints(LC_SplinePoints *s){
     }
 
     getEntityAttributes(&sp, s);
+    if (m_dwgW) {
+        sp.fitlist.clear();  // DWG scenario 1 only: encoder picks scenario 2 when fitlist
+        sp.nfit = 0;         // is non-empty, corrupting the stream; control pts are exact.
+        m_dwgW->writeSpline(&sp);
+        return;
+    }
     m_dxfW->writeSpline(&sp);
 }
 
@@ -5418,16 +5424,12 @@ void RS_FilterDXFRW::writeEllipse(RS_Ellipse* s) {
  * Uses LC_HyperbolaSpline to create the standard SPLINE representation.
  */
 void RS_FilterDXFRW::writeHyperbola(LC_Hyperbola* h) {
-    if (m_dwgW) return;
-    if (h == nullptr || !h->isValid() || m_dxfW == nullptr) {
-        return;
-    }
-
+    if (h == nullptr || !h->isValid()) return;
     DRW_Spline spl;
     getEntityAttributes(&spl, h);
-
     if (LC_HyperbolaSpline::hyperbolaToSpline(h->getData(), spl)) {
-        m_dxfW->writeSpline(&spl);
+        if (m_dwgW) { m_dwgW->writeSpline(&spl); return; }
+        if (m_dxfW) m_dxfW->writeSpline(&spl);
     }
 }
 
