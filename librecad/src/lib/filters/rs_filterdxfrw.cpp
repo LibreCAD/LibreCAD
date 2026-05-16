@@ -4650,6 +4650,7 @@ void RS_FilterDXFRW::prepareDRWDimStyle(DRW_Dimstyle &d, LC_DimStyle* ds) {
 }
 
 void RS_FilterDXFRW::writeObjects() {
+    if (m_dwgW) return;  // DWG writer handles object section internally
     /* PLOTSETTINGS */
     DRW_PlotSettings ps;
     QString horizXvert = QString("%1x%2").arg(m_graphic->getPagesNumHoriz())
@@ -4684,9 +4685,12 @@ void RS_FilterDXFRW::writeEntities(){
   // Pre-pass: reconstruct MLINE entities from decomposed polylines that
   // carry LibreCAD_MLINE XDATA. Consumed polylines are emitted as
   // MLINE; the rest fall through to the normal write path.
+  // DWG writer has no MLINE/UNDERLAY — skip reconstruction passes.
   std::set<RS_Entity *> consumed;
-  reconstructMLines(m_graphic, consumed);
-  reconstructUnderlays(m_graphic, consumed);
+  if (!m_dwgW) {
+    reconstructMLines(m_graphic, consumed);
+    reconstructUnderlays(m_graphic, consumed);
+  }
   for (RS_Entity *e :
        lc::LC_ContainerTraverser{*m_graphic, RS2::ResolveNone}.entities()) {
     if (e->getFlag(RS2::FlagUndone))
@@ -5191,6 +5195,7 @@ void RS_FilterDXFRW::writeLWPolyline(RS_Polyline* l) {
  * Writes the given polyline entity to the file (old style).
  */
 void RS_FilterDXFRW::writePolyline(RS_Polyline* p) {
+    if (m_dwgW) return;  // DWG has no old-style POLYLINE entity
     if (p == nullptr)
         return;
 
@@ -5747,13 +5752,13 @@ void RS_FilterDXFRW::writeDimension(RS_Dimension* d) {
     if (!blkName.isEmpty()) {
         dim->setName(blkName.toStdString());
     }
+    if (m_dwgW) { m_dwgW->writeDimension(dim); delete dim; return; }
     LC_DimStyle* override = d->getDimStyleOverride();
     if (override != nullptr) {
         LC_ExtEntityData extEntityData;
         addDimStyleOverrideToExtendedData(&extEntityData, override);
         fillEntityExtData(dim->extData, &extEntityData);
     }
-    if (m_dwgW) { m_dwgW->writeDimension(dim); delete dim; return; }
     m_dxfW->writeDimension(dim);
     delete dim;
 }
