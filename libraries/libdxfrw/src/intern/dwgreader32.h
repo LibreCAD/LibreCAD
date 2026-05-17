@@ -3,7 +3,7 @@
 **                                                                           **
 **  Copyright (C) 2011-2015 José F. Soriano, rallazz@gmail.com               **
 **  Copyright (C) 2022 Michał Grzybowski, michal@grzybowscy.org              **
-**  Copyright (C) 2026 LibreCAD.org                                           **
+**  Copyright (C) 2026 LibreCAD (librecad.org)                                **
 **                                                                           **
 **  This library is free software, licensed under the terms of the GNU       **
 **  General Public License as published by the Free Software Foundation,     **
