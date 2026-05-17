@@ -432,7 +432,7 @@ bool DRW_Entity::parseDwg(DRW::Version version, dwgBuffer *buf, dwgBuffer* strBu
         entmode = 0;
     space = (DRW::Space)entmode; //RLZ verify cast values
     DRW_DBG("entmode: "); DRW_DBG(entmode);
-    numReactors = buf->getBitShort(); //BS
+    numReactors = buf->getBitLong(); //BL per spec §20.4.1
     DRW_DBG(", numReactors: "); DRW_DBG(numReactors);
 
     if (version < DRW::AC1015) {//14-
@@ -743,16 +743,14 @@ bool DRW_Entity::encodeDwgCommon(DRW::Version version, dwgBufferW *buf) {
     // stores but does not validate it.  Emit 0 — see [Risk 4g, 4i].
     buf->putRawLong32(0);
 
-    // The own handle: hard-pointer code 4.
+    // Own handle: code 0 per spec §20.4.1.
     dwgHandle ownH;
-    ownH.code = 4;
+    ownH.code = 0;
     ownH.ref  = handle;
     ownH.size = 0;
     if (handle != 0) {
         duint32 t = handle;
         while (t != 0) { t >>= 8; ++ownH.size; }
-    } else {
-        ownH.code = 0;
     }
     buf->putHandle(ownH);
 
@@ -765,8 +763,8 @@ bool DRW_Entity::encodeDwgCommon(DRW::Version version, dwgBufferW *buf) {
     // entmode: 2 = modelspace, no owner-handle in stream.
     buf->put2Bits(2);
 
-    // numReactors=0
-    buf->putBitShort(0);
+    // numReactors=0 (BL per spec §20.4.1)
+    buf->putBitLong(0);
 
     // haveNextLinks=1 (no prev/next chain — entity is standalone)
     buf->putBit(1);

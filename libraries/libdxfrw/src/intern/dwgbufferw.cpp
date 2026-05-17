@@ -393,7 +393,7 @@ void dwgBufferW::putCmColor(DRW::Version v, duint16 colorIndex) {
 
 void dwgBufferW::putEnColor(DRW::Version v, duint16 colorIndex) {
     (void)v;
-    putBitShort(colorIndex);
+    putSBitShort(static_cast<dint16>(colorIndex));
 }
 
 // ---- CRC ------------------------------------------------------------------

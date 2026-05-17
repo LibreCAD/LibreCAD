@@ -108,6 +108,19 @@ dwgHandle makeHardPtr(duint32 ref) {
     return h;
 }
 
+/// Build an own-handle entry (code 0) — the form used for an object's own handle.
+dwgHandle makeOwnHandle(duint32 ref) {
+    dwgHandle h;
+    h.code = 0;
+    h.ref  = ref;
+    h.size = 0;
+    if (ref != 0) {
+        duint32 t = ref;
+        while (t != 0) { t >>= 8; ++h.size; }
+    }
+    return h;
+}
+
 /// Build a null handle (code 0).
 dwgHandle makeNullHandle() {
     dwgHandle h;
@@ -209,13 +222,11 @@ void dwgWriter15::endSentinelSection(size_t sectionStart, size_t sizeOffset,
         static_cast<duint32>(m_buf.size()) - static_cast<duint32>(sizeOffset + 4);
     m_buf.patchRawLong32(sizeOffset, payloadSize);
 
-    // Emit the END sentinel.
-    m_buf.putBytes(endSentinel, 16);
-
-    // CRC16 LE over bytes [sectionStart .. cursor).  Seed 0xC0C1, then
-    // appended as RS LE (no shift).
-    duint16 crc = m_buf.crc16(0xC0C1, sectionStart, m_buf.size());
-    m_buf.putRawShort16(crc);
+    // CRC covers RL-size + data only — spec §9: "covers the stepper and the
+    // data"; sectionStart+16 skips the 16-byte beginning sentinel.
+    duint16 crc = m_buf.crc16(0xC0C1, sectionStart + 16, m_buf.size());
+    m_buf.putRawShort16(crc);        // CRC BEFORE end sentinel
+    m_buf.putBytes(endSentinel, 16); // end sentinel AFTER CRC
 }
 
 bool dwgWriter15::writeDwgHeader() {
@@ -299,7 +310,7 @@ void dwgWriter15::emitControlObject(
     // reader stores the value but never uses it; ODA validators do.
     // Phase 3d ships with 0 and revisits if ODA cross-check flags it.
     body.putRawLong32(0);
-    body.putHandle(makeHardPtr(handle));
+    body.putHandle(makeOwnHandle(handle)); // code 0 per spec §20.4.1
     body.putBitShort(0);  // extDataSize
     body.putBitLong(0);   // numReactors
 
@@ -645,10 +656,9 @@ void dwgWriter15::finishObject() {
     size_t bodyStartOffset = m_buf.size();
     m_buf.putBytes(m_objectBody.data().data(), bodyBytes);
 
-    // CRC16 LE seed=0xC0C1 over the body bytes (no MS prefix).  The
-    // libdxfrw reader does not validate object CRCs (it just consumes
-    // `size` bytes via getBytes), so this is for ODA/AutoCAD validators.
-    duint16 crc = m_buf.crc16(0xC0C1, bodyStartOffset,
+    // CRC covers MS prefix + body — spec §20.2: "The CRC includes the size
+    // bytes."  frameStart was recorded before putModularShort.
+    duint16 crc = m_buf.crc16(0xC0C1, static_cast<size_t>(frameStart),
                               bodyStartOffset + bodyBytes);
     m_buf.putRawShort16(crc);
 
