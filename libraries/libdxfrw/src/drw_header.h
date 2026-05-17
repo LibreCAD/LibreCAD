@@ -3,6 +3,7 @@
 **                                                                           **
 **  Copyright (C) 2016-2022 A. Stebich (librecad@mail.lordofbikes.de)        **
 **  Copyright (C) 2011-2015 José F. Soriano, rallazz@gmail.com               **
+**  Copyright (C) 2026 LibreCAD.org                                           **
 **                                                                           **
 **  This library is free software, licensed under the terms of the GNU       **
 **  General Public License as published by the Free Software Foundation,     **

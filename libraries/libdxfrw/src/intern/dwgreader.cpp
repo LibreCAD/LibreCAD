@@ -2,6 +2,7 @@
 **  libDXFrw - Library to read/write DXF files (ascii & binary)              **
 **                                                                           **
 **  Copyright (C) 2011-2015 José F. Soriano, rallazz@gmail.com               **
+**  Copyright (C) 2026 LibreCAD.org                                           **
 **                                                                           **
 **  This library is free software, licensed under the terms of the GNU       **
 **  General Public License as published by the Free Software Foundation,     **

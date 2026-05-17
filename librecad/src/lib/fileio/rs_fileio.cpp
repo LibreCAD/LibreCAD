@@ -5,6 +5,7 @@
 ** Copyright (C) 2021 A. Stebich (librecad@mail.lordofbikes.de)
 ** Copyright (C) 2010 R. van Twisk (librecad@rvt.dds.nl)
 ** Copyright (C) 2001-2003 RibbonSoft. All rights reserved.
+** Copyright (C) 2026 LibreCAD.org
 **
 **
 ** This file may be distributed and/or modified under the terms of the
