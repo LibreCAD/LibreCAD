@@ -47,21 +47,7 @@ void dwgReader18::genMagicNumber(){
 }
 
 duint32 dwgReader18::checksum(duint32 seed, duint8* data, duint64 sz){
-    duint64 size = sz;
-    duint32 sum1 = seed & 0xffff;
-    duint32 sum2 = seed >> 0x10;
-    while (size != 0) {
-//        duint32 chunkSize = min(0x15b0, size);
-        duint64 chunkSize = 0x15b0 < size? 0x15b0:size;
-        size -= chunkSize;
-        for (duint64 i = 0; i < chunkSize; i++) {
-            sum1 += *data++;
-            sum2 += sum1;
-        }
-        sum1 %= 0xFFF1;
-        sum2 %= 0xFFF1;
-    }
-    return (sum2 << 0x10) | (sum1 & 0xffff);
+    return dwgUtil::checksum18(seed, data, sz);
 }
 
 //called: Section page map: 0x41630e3b
@@ -69,12 +55,17 @@ bool dwgReader18::parseSysPage(duint8 *decompSec, duint32 decompSize){
     DRW_DBG("\nparseSysPage:\n ");
     duint32 compSize = fileBuf->getRawLong32();
     DRW_DBG("Compressed size= "); DRW_DBG(compSize); DRW_DBG(", "); DRW_DBGH(compSize);
-    DRW_DBG("\nCompression type= "); DRW_DBGH(fileBuf->getRawLong32());
+    duint32 compType = fileBuf->getRawLong32();
+    DRW_DBG("\nCompression type= "); DRW_DBGH(compType);
     DRW_DBG("\nSection page checksum= "); DRW_DBGH(fileBuf->getRawLong32()); DRW_DBG("\n");
 
     duint8 hdrData[20];
     fileBuf->moveBitPos(-160);
     fileBuf->getBytes(hdrData, 20);
+    duint32 storedChecksum = static_cast<duint32>(hdrData[16])
+                           | (static_cast<duint32>(hdrData[17]) << 8)
+                           | (static_cast<duint32>(hdrData[18]) << 16)
+                           | (static_cast<duint32>(hdrData[19]) << 24);
     for (duint8 i= 16; i<20; ++i)
         hdrData[i]=0;
     duint32 calcsH = checksum(0, hdrData, 20);
@@ -83,28 +74,26 @@ bool dwgReader18::parseSysPage(duint8 *decompSec, duint32 decompSize){
     fileBuf->getBytes(tmpCompSec.data(), compSize);
     duint32 calcsD = checksum(calcsH, tmpCompSec.data(), compSize);
     DRW_DBG("\nCalc data checksum= "); DRW_DBGH(calcsD); DRW_DBG("\n");
-
-#ifdef DRW_DBG_DUMP
-    for (unsigned int i=0, j=0; i< compSize;i++) {
-        DRW_DBGH( (unsigned char)compSec[i]);
-        if (j == 7) { DRW_DBG("\n"); j = 0;
-        } else { DRW_DBG(", "); j++; }
-    } DRW_DBG("\n");
-#endif
-    DRW_DBG("decompressing "); DRW_DBG(compSize); DRW_DBG(" bytes in "); DRW_DBG(decompSize); DRW_DBG(" bytes\n");
-    dwgCompressor comp;
-    if (!comp.decompress18(tmpCompSec.data(), decompSec, compSize, decompSize)) {
+    if (calcsD != storedChecksum) {
+        DRW_DBG("parseSysPage: checksum mismatch: stored="); DRW_DBGH(storedChecksum);
+        DRW_DBG(" computed="); DRW_DBGH(calcsD); DRW_DBG("\n");
         return false;
     }
 
-#ifdef DRW_DBG_DUMP
-    for (unsigned int i=0, j=0; i< decompSize;i++) {
-        DRW_DBGH( decompSec[i]);
-        if (j == 7) { DRW_DBG("\n"); j = 0;
-        } else { DRW_DBG(", "); j++; }
-    } DRW_DBG("\n");
-#endif
-
+    if (compType == 1) {
+        // type 1 = store (no compression): size must match
+        if (compSize != decompSize) {
+            DRW_DBG("parseSysPage: stored page compSize != decompSize\n");
+            return false;
+        }
+        std::copy(tmpCompSec.begin(), tmpCompSec.end(), decompSec);
+    } else {
+        DRW_DBG("decompressing "); DRW_DBG(compSize); DRW_DBG(" bytes in "); DRW_DBG(decompSize); DRW_DBG(" bytes\n");
+        dwgCompressor comp;
+        if (!comp.decompress18(tmpCompSec.data(), decompSec, compSize, decompSize)) {
+            return false;
+        }
+    }
     return true;
 }
 
@@ -158,19 +147,39 @@ bool dwgReader18::parseDataPage(const dwgSectionInfo &si/*, duint8 *dData*/){
         fileBuf->getBytes(cData.data(), pi.cSize);
 
         //calculate checksum
+        duint32 storedHdrCk = static_cast<duint32>(hdrData[24])
+                            | (static_cast<duint32>(hdrData[25]) << 8)
+                            | (static_cast<duint32>(hdrData[26]) << 16)
+                            | (static_cast<duint32>(hdrData[27]) << 24);
+        duint32 storedDataCk = static_cast<duint32>(hdrData[28])
+                             | (static_cast<duint32>(hdrData[29]) << 8)
+                             | (static_cast<duint32>(hdrData[30]) << 16)
+                             | (static_cast<duint32>(hdrData[31]) << 24);
         duint32 calcsD = checksum(0, cData.data(), pi.cSize);
         for (duint8 i= 24; i<28; ++i)
             hdrData[i]=0;
         duint32 calcsH = checksum(calcsD, hdrData, 32);
         DRW_DBG("Calc header checksum= "); DRW_DBGH(calcsH);
         DRW_DBG("\nCalc data checksum= "); DRW_DBGH(calcsD); DRW_DBG("\n");
+        if (calcsD != storedDataCk || calcsH != storedHdrCk) {
+            DRW_DBG("parseDataPage: checksum mismatch: storedHdr="); DRW_DBGH(storedHdrCk);
+            DRW_DBG(" calcsH="); DRW_DBGH(calcsH);
+            DRW_DBG(" storedData="); DRW_DBGH(storedDataCk);
+            DRW_DBG(" calcsD="); DRW_DBGH(calcsD); DRW_DBG("\n");
+            return false;
+        }
 
         duint8* oData = objData.get() + pi.startOffset;
         pi.uSize = si.maxSize;
-        DRW_DBG("decompressing "); DRW_DBG(pi.cSize); DRW_DBG(" bytes in "); DRW_DBG(pi.uSize); DRW_DBG(" bytes\n");
-        dwgCompressor comp;
-        if (!comp.decompress18(cData.data(), oData, pi.cSize, pi.uSize)) {
-            return false;
+        if (si.compressed == 1) {
+            // type 1 = store (no compression)
+            std::copy(cData.begin(), cData.end(), oData);
+        } else {
+            DRW_DBG("decompressing "); DRW_DBG(pi.cSize); DRW_DBG(" bytes in "); DRW_DBG(pi.uSize); DRW_DBG(" bytes\n");
+            dwgCompressor comp;
+            if (!comp.decompress18(cData.data(), oData, pi.cSize, pi.uSize)) {
+                return false;
+            }
         }
     }
     return true;

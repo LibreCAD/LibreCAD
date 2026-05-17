@@ -173,7 +173,7 @@
      <item>
       <widget class="QLabel" name="label_5">
        <property name="text">
-        <string>On double click on table item</string>
+        <string>On double-click:</string>
        </property>
       </widget>
      </item>
@@ -295,7 +295,7 @@
    <item row="2" column="0">
     <widget class="QCheckBox" name="cbShowMessageForNoSelection">
      <property name="toolTip">
-      <string>If selected, additional messages will be show as part of pen related operations</string>
+      <string>If selected, additional messages will be shown as part of pen related operations</string>
      </property>
      <property name="text">
       <string>Show info message if no entities may be selected by pen</string>

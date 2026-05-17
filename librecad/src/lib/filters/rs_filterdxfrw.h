@@ -83,10 +83,10 @@ public:
 
     bool canExport(const QString &/*fileName*/, RS2::FormatType t) const override {
 #ifdef DWGSUPPORT
-        if (t == RS2::FormatDWG) return true;
+        if (t == RS2::FormatDWG || t == RS2::FormatDWG2004) return true;
 #endif
-        return (t==RS2::FormatDXFRW || t==RS2::FormatDXFRW2004 || t==RS2::FormatDXFRW2000
-                || t==RS2::FormatDXFRW14 || t==RS2::FormatDXFRW12);
+        return (t==RS2::FormatDXFRW2018 || t==RS2::FormatDXFRW || t==RS2::FormatDXFRW2004
+                || t==RS2::FormatDXFRW2000 || t==RS2::FormatDXFRW14 || t==RS2::FormatDXFRW12);
     }
 
     // Error messages

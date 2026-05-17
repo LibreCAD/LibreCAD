@@ -137,11 +137,35 @@ bool dwgReader::readDwgHeader(DRW_Header& hdr, dwgBuffer *buf, dwgBuffer *hBuf){
     return ret;
 }
 
-//RLZ: TODO add check instead print
-bool dwgReader::checkSentinel(dwgBuffer *buf, enum secEnum::DWGSection, bool start){
-    DRW_UNUSED(start);
-    for (int i=0; i<16;i++) {
-        DRW_DBGH(buf->getRawChar8()); DRW_DBG(" ");
+bool dwgReader::checkSentinel(dwgBuffer *buf, enum secEnum::DWGSection sec, bool start){
+    duint8 readBytes[16];
+    for (int i = 0; i < 16; i++) {
+        readBytes[i] = buf->getRawChar8();
+        DRW_DBGH(readBytes[i]); DRW_DBG(" ");
+    }
+    const duint8* expected = nullptr;
+    switch (sec) {
+        case secEnum::FILEHEADER:
+            if (!start) expected = dwgSentinels::FILE_HEADER_END;
+            break;
+        case secEnum::HEADER:
+            expected = start ? dwgSentinels::HEADER_BEGIN : dwgSentinels::HEADER_END;
+            break;
+        case secEnum::CLASSES:
+            expected = start ? dwgSentinels::CLASSES_BEGIN : dwgSentinels::CLASSES_END;
+            break;
+        default:
+            break;
+    }
+    if (expected != nullptr) {
+        for (int i = 0; i < 16; i++) {
+            if (readBytes[i] != expected[i]) {
+                DRW_DBG("\ncheckSentinel: mismatch at byte "); DRW_DBG(i);
+                DRW_DBG(" got "); DRW_DBGH(readBytes[i]);
+                DRW_DBG(" expected "); DRW_DBGH(expected[i]); DRW_DBG("\n");
+                return false;
+            }
+        }
     }
     return true;
 }

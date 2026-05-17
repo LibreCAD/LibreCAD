@@ -27,12 +27,10 @@
 **********************************************************************/
 
 #include <cstddef>
-#include <QFileInfo>
-#include <QTextStream>
-#ifdef DWGSUPPORT
-#include <QMessageBox>
 #include <QApplication>
-#endif
+#include <QFileInfo>
+#include <QMessageBox>
+#include <QTextStream>
 #include "rs_debug.h"
 #include "rs_dialogfactory.h"
 #include "rs_dialogfactoryinterface.h"
@@ -53,7 +51,8 @@
  * @param file Path and name of the file to import.
  */
 bool RS_FileIO::fileImport(RS_Graphic& graphic, const QString& file,
-                           RS2::FormatType type) {
+                           RS2::FormatType type,
+                           std::function<bool(bool, const QString&)> errorCallback) {
 
     RS_DEBUG->print("Trying to import file '%s'...", file.toLatin1().data());
 
@@ -78,7 +77,11 @@ bool RS_FileIO::fileImport(RS_Graphic& graphic, const QString& file,
 #endif
             bool bImported {filter->fileImport(graphic, file, t)};
             if (!bImported) {
-                QApplication::restoreOverrideCursor();  // disable WaitCursor for massagebox
+                if (errorCallback != nullptr) {
+                    return errorCallback(!graphic.isEmpty(), filter->lastError());
+                }
+
+                QApplication::restoreOverrideCursor();  // disable WaitCursor for messagebox
 
                 QString strTitle {QObject::tr("Error", "fileImport")};
                 QString strError {QObject::tr("Import error:", "fileImport")};

@@ -278,6 +278,8 @@ set(SHARED_SOURCES
     libraries/libdxfrw/src/intern/dwgwriter.h
     libraries/libdxfrw/src/intern/dwgwriter15.cpp
     libraries/libdxfrw/src/intern/dwgwriter15.h
+    libraries/libdxfrw/src/intern/dwgwriter18.cpp
+    libraries/libdxfrw/src/intern/dwgwriter18.h
     libraries/libdxfrw/src/intern/dwgreader.cpp
     libraries/libdxfrw/src/intern/dwgreader.h
     libraries/libdxfrw/src/intern/dwgreader15.cpp
@@ -1593,6 +1595,8 @@ endif()
 
 set(MAIN_SOURCES
     librecad/src/main/main.cpp
+    librecad/src/main/console_dxf2dwg.cpp
+    librecad/src/main/console_dxf2dwg.h
     librecad/src/main/console_dxf2pdf/console_dxf2pdf.cpp
     librecad/src/main/console_dxf2pdf/console_dxf2pdf.h
     librecad/src/main/console_dxf2pdf/pdf_print_loop.cpp
@@ -1611,7 +1615,9 @@ qt_add_executable(librecad
 target_include_directories(librecad PRIVATE
         ${SHARED_INCLUDES}
 )
-
+target_compile_definitions(librecad PRIVATE
+    DWGSUPPORT
+)
 target_link_libraries(librecad PRIVATE
    librecad_lib
    Qt6::Core Qt6::Widgets Qt6::Gui Qt6::PrintSupport Qt6::Svg Qt6::Network

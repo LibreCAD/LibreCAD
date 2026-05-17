@@ -357,6 +357,41 @@ bool dwgCompressor::buffersGood(void)
     return compressedGood && decompGood;
 }
 
+duint32 dwgUtil::checksum18(duint32 seed, const duint8* data, duint64 sz) {
+    duint32 sum1 = seed & 0xffff;
+    duint32 sum2 = seed >> 0x10;
+    while (sz != 0) {
+        duint64 chunk = sz < 0x15b0 ? sz : 0x15b0;
+        sz -= chunk;
+        for (duint64 i = 0; i < chunk; ++i) {
+            sum1 += *data++;
+            sum2 += sum1;
+        }
+        sum1 %= 0xFFF1;
+        sum2 %= 0xFFF1;
+    }
+    return (sum2 << 0x10) | (sum1 & 0xffff);
+}
+
+duint32 dwgUtil::crc32(duint32 seed, const duint8* data, duint32 sz) {
+    // Standard CRC-32/ISO-HDLC, polynomial 0xEDB88320 (matches dwgBuffer::crc32).
+    static duint32 kTable[256];
+    static bool kInit = false;
+    if (!kInit) {
+        for (int i = 0; i < 256; ++i) {
+            duint32 c = static_cast<duint32>(i);
+            for (int j = 0; j < 8; ++j)
+                c = (c & 1u) ? (0xEDB88320u ^ (c >> 1)) : (c >> 1);
+            kTable[i] = c;
+        }
+        kInit = true;
+    }
+    duint32 crc = ~seed;
+    while (sz-- > 0)
+        crc = (crc >> 8) ^ kTable[(crc ^ *data++) & 0xFF];
+    return ~crc;
+}
+
 void dwgCompressor::decrypt18Hdr(duint8 *buf, duint64 size, duint64 offset){
     duint8 max = size / 4;
     duint32 secMask = 0x4164536b ^ offset;

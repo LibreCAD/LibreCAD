@@ -736,11 +736,11 @@ bool DRW_Point::parseCode(int code, const std::unique_ptr<dxfReader>& reader){
 //     per-entity (3BD basePoint for Point, etc.).
 
 bool DRW_Entity::encodeDwgCommon(DRW::Version version, dwgBufferW *buf) {
-    if (version != DRW::AC1015) return false;
+    if (version != DRW::AC1015 && version != DRW::AC1018) return false;
 
     buf->putBitShort(static_cast<duint16>(oType));
-    // objSize: precise value would require two-pass encode; R2000 reader
-    // stores but does not validate it.  Emit 0 — see [Risk 4g, 4i].
+    // objSize stub — back-patched by dwgWriter15::finishObject() via
+    // patchRawLong32AtBit once the full body bit count is known.
     buf->putRawLong32(0);
 
     // Own handle: code 0 per spec §20.4.1.
@@ -766,10 +766,18 @@ bool DRW_Entity::encodeDwgCommon(DRW::Version version, dwgBufferW *buf) {
     // numReactors=0 (BL per spec §20.4.1)
     buf->putBitLong(0);
 
-    // haveNextLinks=1 (no prev/next chain — entity is standalone)
-    buf->putBit(1);
+    // R2004 (AC1018): reader reads xDictFlag bit (version > AC1015) then
+    // forces haveNextLinks=1 (no bit in stream).  xDictFlag=0 means the
+    // reader will expect a null XDicObj handle in the handle section.
+    // R2000 (AC1015): no xDictFlag bit; reader reads haveNextLinks bit.
+    // haveNextLinks=1 means no prev/next links — no extra handles in stream.
+    if (version == DRW::AC1015) {
+        buf->putBit(1);  // haveNextLinks=1 (no prev/next chain)
+    } else {
+        buf->putBit(0);  // xDictFlag=0 (entity has no xdict; null handle follows)
+    }
 
-    // ENC color (BS for R2000 — putEnColor delegates to putBitShort).
+    // ENC color (BS for R2000/R2004 — putEnColor delegates to putBitShort).
     buf->putEnColor(version, static_cast<duint16>(color));
 
     // ltypeScale BD.
@@ -789,7 +797,7 @@ bool DRW_Entity::encodeDwgCommon(DRW::Version version, dwgBufferW *buf) {
 }
 
 bool DRW_Entity::encodeDwgEntHandle(DRW::Version version, dwgBufferW *buf) {
-    if (version != DRW::AC1015) return false;
+    if (version != DRW::AC1015 && version != DRW::AC1018) return false;
 
     // ownerHandle skipped — entmode=2 above.
     // No reactor handles (numReactors=0).
@@ -1038,7 +1046,9 @@ bool DRW_MText::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs) {
     buf->putBitShort(0);                    // linespacing style BS (1 = at least)
     buf->putBitDouble(interlin);            // linespacing factor BD
     buf->putBit(0);                         // unknown bit
-    // (R2004+ background flags BL omitted — reader reads 0 → no background)
+    if (version > DRW::AC1015) {            // R2004+: background flags BL
+        buf->putBitLong(0);                 // 0 = no background fill
+    }
 
     if (!encodeDwgEntHandle(version, buf)) return false;
 
@@ -3630,9 +3640,20 @@ bool DRW_Hatch::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs) {
     oType = 78;  // HATCH class id — see dwgreader.cpp:1380
     if (!encodeDwgCommon(version, buf)) return false;
 
-    // R2004+ gradient section omitted — targeting R2000 only.
-    // Callers with isGradient != 0 will produce a non-gradient DWG record;
-    // this is acceptable for R2000 files which have no gradient hatch support.
+    // R2004+ gradient section (parser reads this for version > AC1015).
+    // We always write non-gradient (isGradient=0) with 0 colors.
+    // For R2004, the gradient name is a TV in the same buf; for R2007+ it
+    // would be in a separate string buffer — not yet supported.
+    if (version > DRW::AC1015) {
+        buf->putBitLong(0);               // isGradient = 0
+        buf->putBitLong(0);               // gradReserved
+        buf->putBitDouble(0.0);           // gradAngle
+        buf->putBitDouble(0.0);           // gradShift
+        buf->putBitLong(0);               // singleColor
+        buf->putBitDouble(0.0);           // gradTint
+        buf->putBitLong(0);               // numColors = 0
+        buf->putVariableText(version, std::string{});  // gradName ""
+    }
 
     buf->putBitDouble(basePoint.z);            // BD: elevation
     buf->put3BitDouble(extPoint);              // 3BD: extrusion (NOT BE-style for HATCH)
@@ -4273,7 +4294,7 @@ bool DRW_DimAligned::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
     pt = buf->get3BitDouble();
     setDefPoint(pt);
     DRW_DBG("\ndefPoint: "); DRW_DBGPT(pt.x, pt.y, pt.z);
-    setOb52(buf->getBitDouble());
+    setOb52(buf->getBitDouble() * ARAD);  // radians → degrees
     if (oType == 0x15)
         setAn50(buf->getBitDouble() * ARAD);
     else
@@ -4534,7 +4555,7 @@ bool DRW_DimAligned::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs
     buf->put3BitDouble(getPt3());      // def1
     buf->put3BitDouble(getPt4());      // def2
     buf->put3BitDouble(getDefPoint()); // defPoint
-    buf->putBitDouble(getOb52());      // oblique
+    buf->putBitDouble(getOb52() / ARAD);  // oblique: degrees → radians
     if (!encodeDwgEntHandle(version, buf)) return false;
     putDimHandles(buf, dimStyleH, blockH);
     return true;
@@ -4551,7 +4572,7 @@ bool DRW_DimLinear::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs)
     buf->put3BitDouble(getPt3());      // def1
     buf->put3BitDouble(getPt4());      // def2
     buf->put3BitDouble(getDefPoint()); // defPoint
-    buf->putBitDouble(getOb52());      // oblique
+    buf->putBitDouble(getOb52() / ARAD);  // oblique: degrees → radians
     buf->putBitDouble(getAn50() / ARAD);  // rotation angle: degrees → radians
     if (!encodeDwgEntHandle(version, buf)) return false;
     putDimHandles(buf, dimStyleH, blockH);

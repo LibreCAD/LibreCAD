@@ -66,7 +66,8 @@ public:
 										RS2::FormatType t) const;
 
     bool fileImport(RS_Graphic& graphic, const QString& file,
-		RS2::FormatType type = RS2::FormatUnknown);
+        RS2::FormatType type = RS2::FormatUnknown,
+        std::function<bool(bool /*partial*/, const QString& /*errorMsg*/)> errorCallback = nullptr);
 		
     bool fileExport(RS_Graphic& graphic, const QString& file,
 		RS2::FormatType type = RS2::FormatUnknown);

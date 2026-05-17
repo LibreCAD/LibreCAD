@@ -113,7 +113,8 @@ namespace RS2 {
         FormatDXFRW14,           /**< DXF format. v14. */
         FormatDXFRW12,           /**< DXF format. v12. */
 #ifdef DWGSUPPORT
-        FormatDWG,           /**< DWG format. */
+        FormatDWG,           /**< DWG format (R2000, AC1015). */
+        FormatDWG2004,       /**< DWG format (R2004, AC1018). */
 #endif
         FormatLFF,           /**< LibreCAD Font File format. */
         FormatCXF,           /**< CAM Expert Font format. */

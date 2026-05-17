@@ -82,11 +82,12 @@ namespace {
 /// Encode `h` into a stream that begins with the 4-byte RL section-size
 /// (matching what parseDwg expects to consume first), with the size
 /// back-patched once the body is known.  Returns the accumulated bytes.
-std::vector<duint8> encodeWithSizePrefix(DRW_Header& h) {
+std::vector<duint8> encodeWithSizePrefix(DRW_Header& h,
+                                         DRW::Version v = DRW::AC1015) {
     dwgBufferW w;
     // Reserve 4 bytes for the size_RL placeholder that parseDwg reads first.
     w.putRawLong32(0);
-    REQUIRE(DrwHeaderEncodeTestAccess::encode(h, DRW::AC1015, &w, &w));
+    REQUIRE(DrwHeaderEncodeTestAccess::encode(h, v, &w, &w));
     w.alignToByte();
     // Patch the size field: body bytes after the 4-byte size prefix.
     duint32 bodySize = static_cast<duint32>(w.size()) - 4;
@@ -487,4 +488,44 @@ TEST_CASE("DRW_Header::encodeDwg replays a real fixture header round-trip",
     // bound is looser than the upper.
     REQUIRE(reBodySize >= bodySizeOnDisk / 2);
     REQUIRE(reBodySize <= bodySizeOnDisk * 3 / 2);
+}
+
+// R2004 (AC1018) omits vpEntHeaderCtrl from the control-handle block.
+// Verify that encoding with AC1018 drops that handle so the parser sees
+// the correct offset for all subsequent handles (linetypeCtrl, layerCtrl, …).
+TEST_CASE("DRW_Header::encodeDwg R2004 omits vpEntHeaderCtrl",
+          "[dwg-write][header-encode]") {
+    DRW_Header src;
+
+    HA::blockCtrl(src)       = 0x01;
+    HA::layerCtrl(src)       = 0x02;
+    HA::styleCtrl(src)       = 0x03;
+    HA::linetypeCtrl(src)    = 0x05;
+    HA::viewCtrl(src)        = 0x06;
+    HA::ucsCtrl(src)         = 0x07;
+    HA::vportCtrl(src)       = 0x08;
+    HA::appidCtrl(src)       = 0x09;
+    HA::dimstyleCtrl(src)    = 0x0A;
+    HA::vpEntHeaderCtrl(src) = 0x0B;  // R2000-only; must NOT survive AC1018 round-trip
+    HA::handSeed(src)        = 0x66;
+
+    auto bytes = encodeWithSizePrefix(src, DRW::AC1018);
+
+    dwgBuffer r(bytes.data(), bytes.size());
+    DRW_Header dst;
+    REQUIRE(DrwHeaderEncodeTestAccess::parse(dst, DRW::AC1018, &r, &r));
+
+    // All 9 R2004 control handles must round-trip correctly.
+    REQUIRE(HA::blockCtrl(dst)    == 0x01u);
+    REQUIRE(HA::layerCtrl(dst)    == 0x02u);
+    REQUIRE(HA::styleCtrl(dst)    == 0x03u);
+    REQUIRE(HA::linetypeCtrl(dst) == 0x05u);
+    REQUIRE(HA::viewCtrl(dst)     == 0x06u);
+    REQUIRE(HA::ucsCtrl(dst)      == 0x07u);
+    REQUIRE(HA::vportCtrl(dst)    == 0x08u);
+    REQUIRE(HA::appidCtrl(dst)    == 0x09u);
+    REQUIRE(HA::dimstyleCtrl(dst) == 0x0Au);
+    REQUIRE(HA::handSeed(dst)     == 0x66u);
+    // vpEntHeaderCtrl is not written or read for AC1018 — dst must stay zero.
+    REQUIRE(HA::vpEntHeaderCtrl(dst) == 0u);
 }

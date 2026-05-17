@@ -21,6 +21,7 @@
 #include "intern/dwgreader.h"
 #include "intern/dwgwriter.h"
 #include "intern/dwgwriter15.h"
+#include "intern/dwgwriter18.h"
 #include "intern/dwgreader15.h"
 #include "intern/dwgreader18.h"
 #include "intern/dwgreader21.h"
@@ -193,7 +194,7 @@ bool dwgRW::write(DRW_Interface *interface_, DRW::Version ver, bool bin) {
     // The 'bin' parameter is accepted only for signature symmetry with
     // dxfRW::write — DWG is always binary on disk.
     (void)bin;
-    if (ver != DRW::AC1015) {
+    if (ver != DRW::AC1015 && ver != DRW::AC1018) {
         error = DRW::BAD_VERSION;
         return false;
     }
@@ -219,7 +220,10 @@ bool dwgRW::write(DRW_Interface *interface_, DRW::Version ver, bool bin) {
     // (empty) state and the encoder emits per-var defaults.
     iface->writeHeader(header);
 
-    writer = std::make_unique<dwgWriter15>(&filestr, &header);
+    if (ver == DRW::AC1018)
+        writer = std::make_unique<dwgWriter18>(&filestr, &header);
+    else
+        writer = std::make_unique<dwgWriter15>(&filestr, &header);
 
     // If the caller did not set HANDSEED explicitly, seed it from the
     // writer's HandleAllocator high-water mark.  A null HANDSEED is

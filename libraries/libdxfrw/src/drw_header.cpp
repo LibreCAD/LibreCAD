@@ -2568,7 +2568,7 @@ namespace {
 } // namespace
 
 bool DRW_Header::encodeDwg(DRW::Version version, dwgBufferW *buf, dwgBufferW *hBbuf) {
-    if (version != DRW::AC1015) return false;  // R2000 only for v1
+    if (version != DRW::AC1015 && version != DRW::AC1018) return false;
 
     // -------- Unknown 4 BDs (parseDwg:1789-1792) ----------------------------
     buf->putBitDouble(0.0);
@@ -2591,9 +2591,10 @@ bool DRW_Header::encodeDwg(DRW::Version version, dwgBufferW *buf, dwgBufferW *hB
     buf->putBitLong(0);
 
     // -------- Current-view handle (parseDwg:1804-1807) ----------------------
-    // Gated on `version < AC1018` (pre-R2004).  R2000 hits this branch —
-    // emit a null handle.  Reads from the handle stream (== buf for R2000).
-    hBbuf->putHandle(makeHardPtr(0));
+    // R2000 and earlier only (parseDwg skips this for AC1018+).
+    if (version < DRW::AC1018) {
+        hBbuf->putHandle(makeHardPtr(0));
+    }
 
     // -------- 9 single-bit vars (parseDwg:1808-1819; R2000-relevant set) ----
     buf->putBit(boolVar(*this, "DIMASO"));
@@ -2605,8 +2606,11 @@ bool DRW_Header::encodeDwg(DRW::Version version, dwgBufferW *buf, dwgBufferW *hB
     buf->putBit(boolVar(*this, "QTEXTMODE"));
     buf->putBit(boolVar(*this, "PSLTSCALE"));
     buf->putBit(boolVar(*this, "LIMCHECK"));
+    if (version > DRW::AC1015) {   // R2004+: undocumented bit (parseDwg:1824-1826)
+        buf->putBit(0);
+    }
 
-    // -------- 11 more single-bit vars (parseDwg:1824-1844) ------------------
+    // -------- 11 more single-bit vars (parseDwg:1827-1847) ------------------
     buf->putBit(boolVar(*this, "USRTIMER"));
     buf->putBit(boolVar(*this, "SKPOLY"));
     buf->putBit(boolVar(*this, "ANGDIR"));
@@ -2628,8 +2632,13 @@ bool DRW_Header::encodeDwg(DRW::Version version, dwgBufferW *buf, dwgBufferW *hB
     buf->putBitShort(static_cast<duint16>(intVar(*this, "AUPREC", 0)));
     buf->putBitShort(static_cast<duint16>(intVar(*this, "ATTMODE", 1)));
     buf->putBitShort(static_cast<duint16>(intVar(*this, "PDMODE", 0)));
+    if (version > DRW::AC1015) {  // R2004+: 3 unknown BLs (parseDwg:1868-1872)
+        buf->putBitLong(0);
+        buf->putBitLong(0);
+        buf->putBitLong(0);
+    }
 
-    // -------- USERI1..5 + spline/surface family (parseDwg:1870-1888) --------
+    // -------- USERI1..5 + spline/surface family (parseDwg:1873-1888) --------
     buf->putBitShort(static_cast<duint16>(intVar(*this, "USERI1")));
     buf->putBitShort(static_cast<duint16>(intVar(*this, "USERI2")));
     buf->putBitShort(static_cast<duint16>(intVar(*this, "USERI3")));
@@ -2688,6 +2697,11 @@ bool DRW_Header::encodeDwg(DRW::Version version, dwgBufferW *buf, dwgBufferW *hB
         splitTimeVar(dblVar(*this, "TDUPDATE"), day, msec);
         buf->putBitLong(day);
         buf->putBitLong(msec);
+    }
+    if (version > DRW::AC1015) {  // R2004+: 3 unknown BLs (parseDwg:1931-1935)
+        buf->putBitLong(0);
+        buf->putBitLong(0);
+        buf->putBitLong(0);
     }
     {
         dint32 day, msec;
@@ -2837,9 +2851,8 @@ bool DRW_Header::encodeDwg(DRW::Version version, dwgBufferW *buf, dwgBufferW *hB
     buf->putBitShort(static_cast<duint16>(intVar(*this, "DIMLWD", -2)));
     buf->putBitShort(static_cast<duint16>(intVar(*this, "DIMLWE", -2)));
 
-    // -------- Control-handle block (parseDwg:2162-2199, 13 handles) ---------
-    // For R2000, version < AC1018 is true so vpEntHeaderCtrl IS emitted.
-    // The trailing 3 NOD dict handles are emitted as null per Phase 3 sub-plan.
+    // -------- Control-handle block (parseDwg:2162-2199, 12 or 13 handles) ---------
+    // vpEntHeaderCtrl is R2000 and earlier only (parseDwg skips it for AC1018+).
     hBbuf->putHandle(makeHardPtr(blockCtrl));           // BLOCK_CONTROL  (0x01)
     hBbuf->putHandle(makeHardPtr(layerCtrl));           // LAYER_CONTROL  (0x02)
     hBbuf->putHandle(makeHardPtr(styleCtrl));           // STYLE_CONTROL  (0x03)
@@ -2849,7 +2862,9 @@ bool DRW_Header::encodeDwg(DRW::Version version, dwgBufferW *buf, dwgBufferW *hB
     hBbuf->putHandle(makeHardPtr(vportCtrl));           // VPORT_CONTROL  (0x08)
     hBbuf->putHandle(makeHardPtr(appidCtrl));           // APPID_CONTROL  (0x09)
     hBbuf->putHandle(makeHardPtr(dimstyleCtrl));        // DIMSTYLE_CONTROL (0x0A)
-    hBbuf->putHandle(makeHardPtr(vpEntHeaderCtrl));     // VPORT_ENTITY_HEADER_CONTROL (R2000 only, 0x0B)
+    if (version < DRW::AC1018) {                        // R2000 and earlier only
+        hBbuf->putHandle(makeHardPtr(vpEntHeaderCtrl)); // VPORT_ENTITY_HEADER_CONTROL (0x0B)
+    }
     hBbuf->putHandle(makeSoftOwner(0));                 // DICT ACAD_GROUP (Phase 3.5: 0x0D)
     hBbuf->putHandle(makeSoftOwner(0));                 // DICT ACAD_MLINESTYLE (Phase 3.5: 0x0E)
     hBbuf->putHandle(makeSoftOwner(0));                 // DICT NAMED OBJS (Phase 3.5: 0x0C)
@@ -2862,6 +2877,10 @@ bool DRW_Header::encodeDwg(DRW::Version version, dwgBufferW *buf, dwgBufferW *hB
     hBbuf->putHandle(makeSoftOwner(0));  // DICT LAYOUTS    (Phase 3.5)
     hBbuf->putHandle(makeSoftOwner(0));  // DICT PLOTSETTINGS (Phase 3.5)
     hBbuf->putHandle(makeSoftOwner(0));  // DICT PLOTSTYLES   (Phase 3.5)
+    if (version > DRW::AC1015) {         // R2004+: 2 extra dict handles (parseDwg:2219-2223)
+        hBbuf->putHandle(makeSoftOwner(0)); // DICT MATERIALS
+        hBbuf->putHandle(makeSoftOwner(0)); // DICT COLORS
+    }
 
     // -------- Flags (BL) + INSUNITS (BS) + CEPSNTYPE (BS) -------------------
     buf->putBitLong(0);  // Flags — 8 sub-fields per parseDwg comment; defaults to 0
@@ -2874,7 +2893,24 @@ bool DRW_Header::encodeDwg(DRW::Version version, dwgBufferW *buf, dwgBufferW *hB
     buf->putCP8Text(strVar(*this, "FINGERPRINTGUID"));
     buf->putCP8Text(strVar(*this, "VERSIONGUID"));
 
-    // -------- 5 reserved-block handles (parseDwg:2258-2267) -----------------
+    // -------- R2004+ RC/BS vars (parseDwg:2247-2261, version > AC1015) -------
+    if (version > DRW::AC1015) {
+        buf->putRawChar8(static_cast<duint8>(intVar(*this, "SORTENTS")));
+        buf->putRawChar8(static_cast<duint8>(intVar(*this, "INDEXCTL")));
+        buf->putRawChar8(static_cast<duint8>(intVar(*this, "HIDETEXT")));
+        buf->putRawChar8(static_cast<duint8>(intVar(*this, "XCLIPFRAME")));
+        buf->putRawChar8(static_cast<duint8>(intVar(*this, "DIMASSOC")));
+        buf->putRawChar8(static_cast<duint8>(intVar(*this, "HALOGAP")));
+        buf->putBitShort(static_cast<duint16>(intVar(*this, "OBSCUREDCOLOR")));
+        buf->putBitShort(static_cast<duint16>(intVar(*this, "INTERSECTIONCOLOR")));
+        buf->putRawChar8(static_cast<duint8>(intVar(*this, "OBSCUREDLTYPE")));
+        buf->putRawChar8(static_cast<duint8>(intVar(*this, "INTERSECTIONDISPLAY")));
+        if (version < DRW::AC1021) {  // R2004 only (not R2007+)
+            buf->putCP8Text(strVar(*this, "PROJECTNAME"));
+        }
+    }
+
+    // -------- 5 reserved-block handles (parseDwg:2262-2271) -----------------
     // PAPER_SPACE, MODEL_SPACE block headers + BYLAYER, BYBLOCK, CONTINUOUS
     // linetype records.  Reserved handles 0x18, 0x17, 0x10, 0x0F, 0x11.
     hBbuf->putHandle(makeHardPtr(0x18));  // BLOCK PAPER_SPACE

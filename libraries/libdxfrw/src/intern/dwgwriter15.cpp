@@ -38,14 +38,6 @@ duint16 seedXorForCount(duint8 numSections) {
 /// enum indices, which sort alphabetically and put HEADER at 2,
 /// HANDLES at 14, etc.).  Reader maps recno → secEnum at
 /// dwgreader15.cpp:60-83.
-namespace recno {
-    constexpr duint8 HEADER    = 0;
-    constexpr duint8 CLASSES   = 1;
-    constexpr duint8 HANDLES   = 2;
-    constexpr duint8 UNKNOWN   = 3;
-    constexpr duint8 TEMPLATE  = 4;
-    constexpr duint8 AUXHEADER = 5;
-}
 
 /// Canonical reserved-handle table for R2000 control objects.  Matches
 /// `HandleAllocator::seedReserved` and the Phase 3 sub-plan §"Reserved
@@ -259,7 +251,7 @@ bool dwgWriter15::writeDwgHeader() {
     // For R2000 the handle stream is inline with the data stream — pass
     // the same accumulator for both buf and hBbuf.
     if (m_header != nullptr) {
-        m_header->encodeDwg(DRW::AC1015, &m_buf, &m_buf);
+        m_header->encodeDwg(m_version, &m_buf, &m_buf);
     }
 
     endSentinelSection(sectionStart, sizeOffset, dwgSentinels::HEADER_END);
@@ -305,14 +297,14 @@ void dwgWriter15::emitControlObject(
     //   (no xDictFlag bit on R2000 — DRW_TableEntry::parseDwg only
     //    reads it for version > AC1015)
     body.putBitShort(typeCode);
-    // objSize precise value would require a two-pass encode (count the
-    // bits after the RL placeholder, then back-patch).  For R2000 the
-    // reader stores the value but never uses it; ODA validators do.
-    // Phase 3d ships with 0 and revisits if ODA cross-check flags it.
+    // objSize stub — back-patched by finishObject().
     body.putRawLong32(0);
     body.putHandle(makeOwnHandle(handle)); // code 0 per spec §20.4.1
     body.putBitShort(0);  // extDataSize
     body.putBitLong(0);   // numReactors
+    if (m_version > DRW::AC1015) {
+        body.putBit(0);   // xDictFlag=0 (R2004+)
+    }
 
     // DRW_ObjControl body (mirror of dwgreader.cpp:1633-1680 for R2000):
     //   BL  numEntries
@@ -350,7 +342,7 @@ duint32 dwgWriter15::defineBlock(const std::string& name,
     bk.setIsEnd(false);
     {
         dwgBufferW& body = beginObject(blockH);
-        bk.encodeDwg(DRW::AC1015, &body, /*bs=*/0);
+        bk.encodeDwg(m_version, &body, /*bs=*/0);
         finishObject();
     }
 
@@ -362,7 +354,7 @@ duint32 dwgWriter15::defineBlock(const std::string& name,
     endBlk.setIsEnd(true);
     {
         dwgBufferW& body = beginObject(endBlockH);
-        endBlk.encodeDwg(DRW::AC1015, &body, /*bs=*/0);
+        endBlk.encodeDwg(m_version, &body, /*bs=*/0);
         finishObject();
     }
 
@@ -374,7 +366,10 @@ duint32 dwgWriter15::defineBlock(const std::string& name,
         body.putHandle(makeHardPtr(blockRecH));
         body.putBitShort(0);                   // extDataSize
         body.putBitLong(0);                    // numReactors
-        body.putVariableText(DRW::AC1015, name);
+        if (m_version > DRW::AC1015) {
+            body.putBit(0);                    // xDictFlag=0 (R2004+)
+        }
+        body.putVariableText(m_version, name);
         body.putBit(0);                        // flags bit 6 (xref-ref)
         body.putBitShort(0);                   // xrefindex BS (R2004-)
         body.putBit(0);                        // xdep
@@ -383,17 +378,23 @@ duint32 dwgWriter15::defineBlock(const std::string& name,
         body.putBit(0);                        // xref
         body.putBit(0);                        // overlaid
         body.putBit(0);                        // R2000+ loaded-xref
+        if (m_version > DRW::AC1015) {
+            body.putBitLong(0);                // R2004+: objectCount = 0 (empty block)
+        }
         body.put3BitDouble(basePoint);
-        body.putVariableText(DRW::AC1015, std::string{});  // xrefPath
+        body.putVariableText(m_version, std::string{});  // xrefPath
         body.putRawChar8(0);                   // insertCount terminator
-        body.putVariableText(DRW::AC1015, std::string{});  // bkdesc
+        body.putVariableText(m_version, std::string{});  // bkdesc
         body.putBitLong(0);                    // prevData BL
         body.putHandle(makeHardPtr(reservedHandle::BLOCK_CONTROL));
         body.putHandle(makeSoftOwner(0));      // XDic null
         body.putHandle(makeNullHandle());      // NullH
         body.putHandle(makeHardPtr(blockH));   // block
-        body.putHandle(makeNullHandle());      // firstEH (empty body)
-        body.putHandle(makeNullHandle());      // lastEH
+        if (m_version <= DRW::AC1015) {
+            body.putHandle(makeNullHandle());  // firstEH (R2000- chain)
+            body.putHandle(makeNullHandle());  // lastEH
+        }
+        // R2004+: objectCount=0, no entity handles.
         body.putHandle(makeHardPtr(endBlockH));// endBlock
         body.putHandle(makeSoftOwner(0));      // layoutH null
         finishObject();
@@ -418,6 +419,9 @@ bool dwgWriter15::emitDeferredBlockControl() {
     body.putHandle(makeHardPtr(reservedHandle::BLOCK_CONTROL));
     body.putBitShort(0);  // extDataSize
     body.putBitLong(0);   // numReactors
+    if (m_version > DRW::AC1015) {
+        body.putBit(0);   // xDictFlag=0 (R2004+)
+    }
     body.putBitLong(static_cast<dint32>(m_userBlockRecordHandles.size()));
     body.putHandle(makeNullHandle());  // NullH
     body.putHandle(makeSoftOwner(0));  // XDic null
@@ -436,7 +440,7 @@ void dwgWriter15::emitBlockEntity(duint32 handle, const std::string& name,
     bk.name = name;
     bk.setIsEnd(isEnd);
     dwgBufferW& body = beginObject(handle);
-    bk.encodeDwg(DRW::AC1015, &body, /*bs=*/0);
+    bk.encodeDwg(m_version, &body, /*bs=*/0);
     finishObject();
 }
 
@@ -445,17 +449,20 @@ void dwgWriter15::emitBlockRecord(duint32 handle, const std::string& name,
                                   duint32 endBlockHandle) {
     dwgBufferW& body = beginObject(handle);
 
-    // Common table-entry preamble (R2000, no xDictFlag).
+    // Common table-entry preamble (R2000/R2004).
     body.putBitShort(oType::BLOCK_RECORD);
     body.putRawLong32(0);                  // objSize stub
     body.putHandle(makeHardPtr(handle));
     body.putBitShort(0);                   // extDataSize
     body.putBitLong(0);                    // numReactors
+    if (m_version > DRW::AC1015) {
+        body.putBit(0);                    // xDictFlag=0 (R2004+)
+    }
 
-    // R2000 Block_Record body.  Mirror of DRW_Block_Record::parseDwg
+    // R2000/R2004 Block_Record body.  Mirror of DRW_Block_Record::parseDwg
     // at drw_objects.cpp:709-840 — collapsed for our empty/canonical
     // *Model_Space / *Paper_Space records.
-    body.putVariableText(DRW::AC1015, name);
+    body.putVariableText(m_version, name);
     body.putBit(0);                        // flags bit 6 (xref-ref)
     body.putBitShort(0);                   // xrefindex BS (R2004-)
     body.putBit(0);                        // flags bit 4 (xref dep)
@@ -464,7 +471,10 @@ void dwgWriter15::emitBlockRecord(duint32 handle, const std::string& name,
     body.putBit(0);                        // xref
     body.putBit(0);                        // overlaid xref
     body.putBit(0);                        // R2000+ loaded-xref
-    // (R2004+ objectCount BL omitted for R2000.)
+    // R2004+: objectCount BL (non-xref blocks only; we write 0 = empty block).
+    if (m_version > DRW::AC1015) {
+        body.putBitLong(0);                // objectCount = 0
+    }
     DRW_Coord origin;
     origin.x = origin.y = origin.z = 0.0;
     body.put3BitDouble(origin);            // basePoint 3BD
@@ -480,9 +490,12 @@ void dwgWriter15::emitBlockRecord(duint32 handle, const std::string& name,
     body.putHandle(makeSoftOwner(0));                            // XDic null
     body.putHandle(makeNullHandle());                            // NullH
     body.putHandle(makeHardPtr(blockHandle));                    // block ref
-    // R2000- non-xref: emit firstEH + lastEH (both null = empty).
-    body.putHandle(makeNullHandle());
-    body.putHandle(makeNullHandle());
+    if (m_version <= DRW::AC1015) {
+        // R2000-: firstEH + lastEH (null = empty block, entities chained).
+        body.putHandle(makeNullHandle());
+        body.putHandle(makeNullHandle());
+    }
+    // R2004+: objectCount=0, so zero entity handles follow here.
     body.putHandle(makeHardPtr(endBlockHandle));                 // endBlock
     // R2000+ insertCount=0 → no inserts handles in the loop body.
     body.putHandle(makeSoftOwner(0));                            // layoutH null
@@ -496,20 +509,22 @@ void dwgWriter15::emitTableRecord(duint16 typeCode, duint32 handle,
 
     // Common preamble — same as control objects.
     body.putBitShort(typeCode);
-    body.putRawLong32(0);  // objSize placeholder (informational on R2000)
+    body.putRawLong32(0);  // objSize placeholder (informational on R2000/R2004)
     body.putHandle(makeHardPtr(handle));
     body.putBitShort(0);   // extDataSize
     body.putBitLong(0);    // numReactors
-    // (No xDictFlag bit for R2000)
+    if (m_version > DRW::AC1015) {
+        body.putBit(0);    // xDictFlag=0 (R2004+)
+    }
 
     // Record name — this is the first field after the preamble that
     // every per-record parseDwg reads.  Reader uses
-    // `sBuf->getVariableText(version, false)` which for R2000 reads a
+    // `sBuf->getVariableText(version, false)` which for R2000/R2004 reads a
     // BS-length + bytes (CP8) pair.  Stopping here is enough: the
     // reader's subsequent reads return zeros/empty when it runs off
     // the end of the body and parseDwg returns false with a per-record
     // warning — the record is still stored in the map with `name` set.
-    body.putVariableText(DRW::AC1015, name);
+    body.putVariableText(m_version, name);
 
     finishObject();
 }
@@ -533,7 +548,7 @@ bool dwgWriter15::encodeEntity(DRW_Entity *ent) {
         ent->layerH.ref = 0x12;
     }
     dwgBufferW& body = beginObject(handle);
-    bool ok = ent->encodeDwg(DRW::AC1015, &body, /*bs=*/0);
+    bool ok = ent->encodeDwg(m_version, &body, /*bs=*/0);
     if (!ok) return false;
     finishObject();
     return true;
@@ -642,6 +657,21 @@ dwgBufferW& dwgWriter15::beginObject(duint32 handle) {
 }
 
 void dwgWriter15::finishObject() {
+    // Back-patch the RL objSize ("size of object in bits, not including CRC")
+    // at the correct stream-bit offset.  The offset equals the BS width for
+    // the oType, which we detect from the first 2 bits of the body:
+    //   code "01" → RC payload → 10-bit BS → RL at bit 10
+    //   code "00" → RS payload → 18-bit BS → RL at bit 18
+    //   code "10" or "11" → no payload → 2-bit BS → RL at bit 2
+    duint32 bitCount = static_cast<duint32>(m_objectBody.size()) * 8;
+    if (m_objectBody.bitPos() != 0)
+        bitCount -= static_cast<duint32>(8 - m_objectBody.bitPos());
+    if (!m_objectBody.data().empty()) {
+        duint8 bsCode = (m_objectBody.data()[0] >> 6) & 0x03;
+        size_t rlBitOffset = (bsCode == 0x01) ? 10 : (bsCode == 0x00) ? 18 : 2;
+        m_objectBody.patchRawLong32AtBit(rlBitOffset, bitCount);
+    }
+
     // Byte-align the body — the trailing CRC must start aligned and
     // the per-object frame size must be in whole bytes.
     m_objectBody.alignToByte();
@@ -703,10 +733,11 @@ bool dwgWriter15::writeDwgHandles() {
 
         duint32 prevHandle = 0;
         duint32 prevOffset = 0;
+        duint32 base = objectBaseOffset();
         size_t entryEnd = entryStart;
         while (entryEnd < m_objectMap.size()) {
             duint32 h = m_objectMap[entryEnd].first;
-            duint32 off = m_objectMap[entryEnd].second;
+            duint32 off = m_objectMap[entryEnd].second - base;
 
             // Cheap upper-bound check: UMC + MC are each ≤5 bytes; if
             // adding 10 bytes would overflow the page, close it now.

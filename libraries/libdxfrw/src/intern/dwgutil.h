@@ -29,6 +29,17 @@ namespace dwgRSCodec {
     bool decode251I(duint8 *in, duint8 *out, duint32 blk);
 }
 
+namespace dwgUtil {
+    /// Adler-32-variant checksum used by R2004 (AC1018) section pages
+    /// and their headers.  Extracted from the private dwgReader18::checksum
+    /// so the R2004 writer can produce matching checksums without subclassing.
+    duint32 checksum18(duint32 seed, const duint8* data, duint64 sz);
+
+    /// Standard CRC-32/ISO-HDLC (same table as dwgBuffer::crc32).  Used
+    /// by the R2004 writer to compute the encrypted variable-header CRC.
+    duint32 crc32(duint32 seed, const duint8* data, duint32 sz);
+}
+
 class dwgCompressor {
     enum R21Consts {
         MaxBlock21Length = 32,

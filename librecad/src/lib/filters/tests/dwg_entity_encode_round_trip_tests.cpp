@@ -26,6 +26,10 @@
  * relevant fields field-by-field.  Any bit-stream desync in the
  * common preamble or per-entity body shifts every following bit and
  * trips a downstream assertion.
+ *
+ * Each test runs for both AC1015 (R2000) and AC1018 (R2004) to cover the
+ * version-specific preamble path (xDictFlag bit vs haveNextLinks bit) and
+ * the unconditional null XDicObjH handle emitted by encodeDwgEntHandle.
  */
 
 #include <catch2/catch_approx.hpp>
@@ -78,27 +82,29 @@ TEST_CASE("DRW_Point::encodeDwg round-trips coordinates and thickness",
     src.extPoint = DRW_Coord{0.0, 0.0, 1.0};  // BE shortcut path
     DrwEntityEncodeTestAccess::layerH(src).ref = 0x12;  // layer "0"
 
-    dwgBufferW w;
-    REQUIRE(DrwEntityEncodeTestAccess::encode(src, DRW::AC1015, &w));
+    for (DRW::Version ver : {DRW::AC1015, DRW::AC1018}) {
+        dwgBufferW w;
+        REQUIRE(DrwEntityEncodeTestAccess::encode(src, ver, &w));
 
-    auto bytes = snapshot(w);
-    REQUIRE(bytes.size() > 0);
+        auto bytes = snapshot(w);
+        REQUIRE(bytes.size() > 0);
 
-    dwgBuffer r(bytes.data(), bytes.size());
-    DRW_Point dst;
-    REQUIRE(DrwEntityEncodeTestAccess::parse(dst, DRW::AC1015, &r));
+        dwgBuffer r(bytes.data(), bytes.size());
+        DRW_Point dst;
+        REQUIRE(DrwEntityEncodeTestAccess::parse(dst, ver, &r));
 
-    REQUIRE(dst.handle        == 0x33u);
-    REQUIRE(dst.color         == 7);
-    REQUIRE(dst.ltypeScale    == 1.0);
-    REQUIRE(dst.basePoint.x   == 12.5);
-    REQUIRE(dst.basePoint.y   == -34.75);
-    REQUIRE(dst.basePoint.z   == 100.0);
-    REQUIRE(dst.thickness     == 0.0);
-    REQUIRE(dst.extPoint.x    == 0.0);
-    REQUIRE(dst.extPoint.y    == 0.0);
-    REQUIRE(dst.extPoint.z    == 1.0);
-    REQUIRE(DrwEntityEncodeTestAccess::layerH(dst).ref == 0x12u);
+        REQUIRE(dst.handle        == 0x33u);
+        REQUIRE(dst.color         == 7);
+        REQUIRE(dst.ltypeScale    == 1.0);
+        REQUIRE(dst.basePoint.x   == 12.5);
+        REQUIRE(dst.basePoint.y   == -34.75);
+        REQUIRE(dst.basePoint.z   == 100.0);
+        REQUIRE(dst.thickness     == 0.0);
+        REQUIRE(dst.extPoint.x    == 0.0);
+        REQUIRE(dst.extPoint.y    == 0.0);
+        REQUIRE(dst.extPoint.z    == 1.0);
+        REQUIRE(DrwEntityEncodeTestAccess::layerH(dst).ref == 0x12u);
+    }
 }
 
 TEST_CASE("DRW_Point::encodeDwg round-trips non-default thickness + extrusion",
@@ -112,24 +118,26 @@ TEST_CASE("DRW_Point::encodeDwg round-trips non-default thickness + extrusion",
     src.extPoint = DRW_Coord{0.1, 0.2, 0.97};  // forces full BE emit
     DrwEntityEncodeTestAccess::layerH(src).ref = 0x12;
 
-    dwgBufferW w;
-    REQUIRE(DrwEntityEncodeTestAccess::encode(src, DRW::AC1015, &w));
+    for (DRW::Version ver : {DRW::AC1015, DRW::AC1018}) {
+        dwgBufferW w;
+        REQUIRE(DrwEntityEncodeTestAccess::encode(src, ver, &w));
 
-    auto bytes = snapshot(w);
-    dwgBuffer r(bytes.data(), bytes.size());
-    DRW_Point dst;
-    REQUIRE(DrwEntityEncodeTestAccess::parse(dst, DRW::AC1015, &r));
+        auto bytes = snapshot(w);
+        dwgBuffer r(bytes.data(), bytes.size());
+        DRW_Point dst;
+        REQUIRE(DrwEntityEncodeTestAccess::parse(dst, ver, &r));
 
-    REQUIRE(dst.handle      == 0x4Au);
-    REQUIRE(dst.color       == 256);
-    REQUIRE(dst.ltypeScale  == 2.5);
-    REQUIRE(dst.basePoint.x == 0.5);
-    REQUIRE(dst.basePoint.y == 0.25);
-    REQUIRE(dst.basePoint.z == -1.0);
-    REQUIRE(dst.thickness   == 0.125);
-    REQUIRE(dst.extPoint.x  == 0.1);
-    REQUIRE(dst.extPoint.y  == 0.2);
-    REQUIRE(dst.extPoint.z  == 0.97);
+        REQUIRE(dst.handle      == 0x4Au);
+        REQUIRE(dst.color       == 256);
+        REQUIRE(dst.ltypeScale  == 2.5);
+        REQUIRE(dst.basePoint.x == 0.5);
+        REQUIRE(dst.basePoint.y == 0.25);
+        REQUIRE(dst.basePoint.z == -1.0);
+        REQUIRE(dst.thickness   == 0.125);
+        REQUIRE(dst.extPoint.x  == 0.1);
+        REQUIRE(dst.extPoint.y  == 0.2);
+        REQUIRE(dst.extPoint.z  == 0.97);
+    }
 }
 
 TEST_CASE("DRW_Line::encodeDwg round-trips both Z paths",
@@ -146,19 +154,21 @@ TEST_CASE("DRW_Line::encodeDwg round-trips both Z paths",
         src.extPoint  = DRW_Coord{0.0, 0.0, 1.0};
         DrwEntityEncodeTestAccess::layerH(src).ref = 0x12;
 
-        dwgBufferW w;
-        REQUIRE(DrwEntityEncodeTestAccess::encode(src, DRW::AC1015, &w));
-        auto bytes = snapshot(w);
-        dwgBuffer r(bytes.data(), bytes.size());
-        DRW_Line dst;
-        REQUIRE(DrwEntityEncodeTestAccess::parse(dst, DRW::AC1015, &r));
+        for (DRW::Version ver : {DRW::AC1015, DRW::AC1018}) {
+            dwgBufferW w;
+            REQUIRE(DrwEntityEncodeTestAccess::encode(src, ver, &w));
+            auto bytes = snapshot(w);
+            dwgBuffer r(bytes.data(), bytes.size());
+            DRW_Line dst;
+            REQUIRE(DrwEntityEncodeTestAccess::parse(dst, ver, &r));
 
-        REQUIRE(dst.basePoint.x == 1.0);
-        REQUIRE(dst.basePoint.y == 2.0);
-        REQUIRE(dst.basePoint.z == 0.0);
-        REQUIRE(dst.secPoint.x  == 10.0);
-        REQUIRE(dst.secPoint.y  == 20.0);
-        REQUIRE(dst.secPoint.z  == 0.0);
+            REQUIRE(dst.basePoint.x == 1.0);
+            REQUIRE(dst.basePoint.y == 2.0);
+            REQUIRE(dst.basePoint.z == 0.0);
+            REQUIRE(dst.secPoint.x  == 10.0);
+            REQUIRE(dst.secPoint.y  == 20.0);
+            REQUIRE(dst.secPoint.z  == 0.0);
+        }
     }
     // Z!=0 full path: zIsZero=0, RD z + DD secZ.
     {
@@ -169,19 +179,21 @@ TEST_CASE("DRW_Line::encodeDwg round-trips both Z paths",
         src.secPoint  = DRW_Coord{6.0, 7.0, 8.0};
         DrwEntityEncodeTestAccess::layerH(src).ref = 0x12;
 
-        dwgBufferW w;
-        REQUIRE(DrwEntityEncodeTestAccess::encode(src, DRW::AC1015, &w));
-        auto bytes = snapshot(w);
-        dwgBuffer r(bytes.data(), bytes.size());
-        DRW_Line dst;
-        REQUIRE(DrwEntityEncodeTestAccess::parse(dst, DRW::AC1015, &r));
+        for (DRW::Version ver : {DRW::AC1015, DRW::AC1018}) {
+            dwgBufferW w;
+            REQUIRE(DrwEntityEncodeTestAccess::encode(src, ver, &w));
+            auto bytes = snapshot(w);
+            dwgBuffer r(bytes.data(), bytes.size());
+            DRW_Line dst;
+            REQUIRE(DrwEntityEncodeTestAccess::parse(dst, ver, &r));
 
-        REQUIRE(dst.basePoint.x == 3.0);
-        REQUIRE(dst.basePoint.y == 4.0);
-        REQUIRE(dst.basePoint.z == 5.0);
-        REQUIRE(dst.secPoint.x  == 6.0);
-        REQUIRE(dst.secPoint.y  == 7.0);
-        REQUIRE(dst.secPoint.z  == 8.0);
+            REQUIRE(dst.basePoint.x == 3.0);
+            REQUIRE(dst.basePoint.y == 4.0);
+            REQUIRE(dst.basePoint.z == 5.0);
+            REQUIRE(dst.secPoint.x  == 6.0);
+            REQUIRE(dst.secPoint.y  == 7.0);
+            REQUIRE(dst.secPoint.z  == 8.0);
+        }
     }
 }
 
@@ -196,17 +208,19 @@ TEST_CASE("DRW_Circle::encodeDwg round-trips center + radius",
     src.extPoint = DRW_Coord{0.0, 0.0, 1.0};
     DrwEntityEncodeTestAccess::layerH(src).ref = 0x12;
 
-    dwgBufferW w;
-    REQUIRE(DrwEntityEncodeTestAccess::encode(src, DRW::AC1015, &w));
-    auto bytes = snapshot(w);
-    dwgBuffer r(bytes.data(), bytes.size());
-    DRW_Circle dst;
-    REQUIRE(DrwEntityEncodeTestAccess::parse(dst, DRW::AC1015, &r));
+    for (DRW::Version ver : {DRW::AC1015, DRW::AC1018}) {
+        dwgBufferW w;
+        REQUIRE(DrwEntityEncodeTestAccess::encode(src, ver, &w));
+        auto bytes = snapshot(w);
+        dwgBuffer r(bytes.data(), bytes.size());
+        DRW_Circle dst;
+        REQUIRE(DrwEntityEncodeTestAccess::parse(dst, ver, &r));
 
-    REQUIRE(dst.handle      == 0x60u);
-    REQUIRE(dst.basePoint.x == 50.0);
-    REQUIRE(dst.basePoint.y == 50.0);
-    REQUIRE(dst.radious     == 12.5);
+        REQUIRE(dst.handle      == 0x60u);
+        REQUIRE(dst.basePoint.x == 50.0);
+        REQUIRE(dst.basePoint.y == 50.0);
+        REQUIRE(dst.radious     == 12.5);
+    }
 }
 
 TEST_CASE("DRW_Arc::encodeDwg round-trips center + radius + angles",
@@ -222,19 +236,21 @@ TEST_CASE("DRW_Arc::encodeDwg round-trips center + radius + angles",
     src.extPoint = DRW_Coord{0.0, 0.0, 1.0};
     DrwEntityEncodeTestAccess::layerH(src).ref = 0x12;
 
-    dwgBufferW w;
-    REQUIRE(DrwEntityEncodeTestAccess::encode(src, DRW::AC1015, &w));
-    auto bytes = snapshot(w);
-    dwgBuffer r(bytes.data(), bytes.size());
-    DRW_Arc dst;
-    REQUIRE(DrwEntityEncodeTestAccess::parse(dst, DRW::AC1015, &r));
+    for (DRW::Version ver : {DRW::AC1015, DRW::AC1018}) {
+        dwgBufferW w;
+        REQUIRE(DrwEntityEncodeTestAccess::encode(src, ver, &w));
+        auto bytes = snapshot(w);
+        dwgBuffer r(bytes.data(), bytes.size());
+        DRW_Arc dst;
+        REQUIRE(DrwEntityEncodeTestAccess::parse(dst, ver, &r));
 
-    REQUIRE(dst.handle      == 0x70u);
-    REQUIRE(dst.basePoint.x == -10.0);
-    REQUIRE(dst.basePoint.y == 25.5);
-    REQUIRE(dst.radious     == 8.0);
-    REQUIRE(dst.staangle    == 0.0);
-    REQUIRE(dst.endangle    == 1.5707963267948966);
+        REQUIRE(dst.handle      == 0x70u);
+        REQUIRE(dst.basePoint.x == -10.0);
+        REQUIRE(dst.basePoint.y == 25.5);
+        REQUIRE(dst.radious     == 8.0);
+        REQUIRE(dst.staangle    == 0.0);
+        REQUIRE(dst.endangle    == 1.5707963267948966);
+    }
 }
 
 TEST_CASE("DRW_Text::encodeDwg round-trips string + position + style",
@@ -256,24 +272,26 @@ TEST_CASE("DRW_Text::encodeDwg round-trips string + position + style",
     src.alignV = DRW_Text::VBaseLine;
     DrwEntityEncodeTestAccess::layerH(src).ref = 0x12;
 
-    dwgBufferW w;
-    REQUIRE(DrwEntityEncodeTestAccess::encode(src, DRW::AC1015, &w));
-    auto bytes = snapshot(w);
-    dwgBuffer r(bytes.data(), bytes.size());
-    DRW_Text dst;
-    REQUIRE(DrwEntityEncodeTestAccess::parse(dst, DRW::AC1015, &r));
+    for (DRW::Version ver : {DRW::AC1015, DRW::AC1018}) {
+        dwgBufferW w;
+        REQUIRE(DrwEntityEncodeTestAccess::encode(src, ver, &w));
+        auto bytes = snapshot(w);
+        dwgBuffer r(bytes.data(), bytes.size());
+        DRW_Text dst;
+        REQUIRE(DrwEntityEncodeTestAccess::parse(dst, ver, &r));
 
-    REQUIRE(dst.handle      == 0x90u);
-    REQUIRE(dst.basePoint.x == 100.0);
-    REQUIRE(dst.basePoint.y == 50.0);
-    REQUIRE(dst.height      == 2.5);
-    REQUIRE(dst.text        == "HELLO");
-    REQUIRE(dst.widthscale  == 1.0);
-    REQUIRE(dst.oblique     == 0.0);
-    // angle round-trips degrees → radians on disk → degrees on read.
-    // Floating-point exact match holds for the canonical π/4 conversion
-    // path, but allow a tiny epsilon for safety.
-    REQUIRE(std::abs(dst.angle - 45.0) < 1e-9);
+        REQUIRE(dst.handle      == 0x90u);
+        REQUIRE(dst.basePoint.x == 100.0);
+        REQUIRE(dst.basePoint.y == 50.0);
+        REQUIRE(dst.height      == 2.5);
+        REQUIRE(dst.text        == "HELLO");
+        REQUIRE(dst.widthscale  == 1.0);
+        REQUIRE(dst.oblique     == 0.0);
+        // angle round-trips degrees → radians on disk → degrees on read.
+        // Floating-point exact match holds for the canonical π/4 conversion
+        // path, but allow a tiny epsilon for safety.
+        REQUIRE(std::abs(dst.angle - 45.0) < 1e-9);
+    }
 }
 
 TEST_CASE("DRW_Spline::encodeDwg round-trips a control-point cubic",
@@ -294,22 +312,24 @@ TEST_CASE("DRW_Spline::encodeDwg round-trips a control-point cubic",
     src.ncontrol = 4;
     DrwEntityEncodeTestAccess::layerH(src).ref = 0x12;
 
-    dwgBufferW w;
-    REQUIRE(DrwEntityEncodeTestAccess::encode(src, DRW::AC1015, &w));
-    auto bytes = snapshot(w);
-    dwgBuffer r(bytes.data(), bytes.size());
-    DRW_Spline dst;
-    REQUIRE(DrwEntityEncodeTestAccess::parse(dst, DRW::AC1015, &r));
+    for (DRW::Version ver : {DRW::AC1015, DRW::AC1018}) {
+        dwgBufferW w;
+        REQUIRE(DrwEntityEncodeTestAccess::encode(src, ver, &w));
+        auto bytes = snapshot(w);
+        dwgBuffer r(bytes.data(), bytes.size());
+        DRW_Spline dst;
+        REQUIRE(DrwEntityEncodeTestAccess::parse(dst, ver, &r));
 
-    REQUIRE(dst.degree            == 3);
-    REQUIRE(dst.nknots            == 8);
-    REQUIRE(dst.ncontrol          == 4);
-    REQUIRE(dst.knotslist.size()  == 8);
-    REQUIRE(dst.controllist.size() == 4);
-    REQUIRE(dst.knotslist[0]      == 0.0);
-    REQUIRE(dst.knotslist[7]      == 1.0);
-    REQUIRE(dst.controllist[0]->x == 0.0);
-    REQUIRE(dst.controllist[3]->x == 3.0);
+        REQUIRE(dst.degree            == 3);
+        REQUIRE(dst.nknots            == 8);
+        REQUIRE(dst.ncontrol          == 4);
+        REQUIRE(dst.knotslist.size()  == 8);
+        REQUIRE(dst.controllist.size() == 4);
+        REQUIRE(dst.knotslist[0]      == 0.0);
+        REQUIRE(dst.knotslist[7]      == 1.0);
+        REQUIRE(dst.controllist[0]->x == 0.0);
+        REQUIRE(dst.controllist[3]->x == 3.0);
+    }
 }
 
 TEST_CASE("DRW_Spline::encodeDwg round-trips a fit-point spline",
@@ -328,20 +348,22 @@ TEST_CASE("DRW_Spline::encodeDwg round-trips a fit-point spline",
     src.nfit = 3;
     DrwEntityEncodeTestAccess::layerH(src).ref = 0x12;
 
-    dwgBufferW w;
-    REQUIRE(DrwEntityEncodeTestAccess::encode(src, DRW::AC1015, &w));
-    auto bytes = snapshot(w);
-    dwgBuffer r(bytes.data(), bytes.size());
-    DRW_Spline dst;
-    REQUIRE(DrwEntityEncodeTestAccess::parse(dst, DRW::AC1015, &r));
+    for (DRW::Version ver : {DRW::AC1015, DRW::AC1018}) {
+        dwgBufferW w;
+        REQUIRE(DrwEntityEncodeTestAccess::encode(src, ver, &w));
+        auto bytes = snapshot(w);
+        dwgBuffer r(bytes.data(), bytes.size());
+        DRW_Spline dst;
+        REQUIRE(DrwEntityEncodeTestAccess::parse(dst, ver, &r));
 
-    REQUIRE(dst.degree         == 3);
-    REQUIRE(dst.nfit           == 3);
-    REQUIRE(dst.fitlist.size() == 3);
-    REQUIRE(dst.fitlist[1]->x  == 5.0);
-    REQUIRE(dst.fitlist[1]->y  == 5.0);
-    REQUIRE(dst.tgStart.x      == 1.0);
-    REQUIRE(dst.tgEnd.y        == 1.0);
+        REQUIRE(dst.degree         == 3);
+        REQUIRE(dst.nfit           == 3);
+        REQUIRE(dst.fitlist.size() == 3);
+        REQUIRE(dst.fitlist[1]->x  == 5.0);
+        REQUIRE(dst.fitlist[1]->y  == 5.0);
+        REQUIRE(dst.tgStart.x      == 1.0);
+        REQUIRE(dst.tgEnd.y        == 1.0);
+    }
 }
 
 TEST_CASE("DRW_MText::encodeDwg round-trips multi-line text",
@@ -360,26 +382,28 @@ TEST_CASE("DRW_MText::encodeDwg round-trips multi-line text",
     src.interlin = 1.5;
     DrwEntityEncodeTestAccess::layerH(src).ref = 0x12;
 
-    dwgBufferW w;
-    REQUIRE(DrwEntityEncodeTestAccess::encode(src, DRW::AC1015, &w));
-    auto bytes = snapshot(w);
-    dwgBuffer r(bytes.data(), bytes.size());
-    DRW_MText dst;
-    REQUIRE(DrwEntityEncodeTestAccess::parse(dst, DRW::AC1015, &r));
+    for (DRW::Version ver : {DRW::AC1015, DRW::AC1018}) {
+        dwgBufferW w;
+        REQUIRE(DrwEntityEncodeTestAccess::encode(src, ver, &w));
+        auto bytes = snapshot(w);
+        dwgBuffer r(bytes.data(), bytes.size());
+        DRW_MText dst;
+        REQUIRE(DrwEntityEncodeTestAccess::parse(dst, ver, &r));
 
-    REQUIRE(dst.handle      == 0xE0u);
-    REQUIRE(dst.basePoint.x == 10.0);
-    REQUIRE(dst.basePoint.y == 20.0);
-    REQUIRE(dst.widthscale  == 100.0);
-    REQUIRE(dst.height      == 3.5);
-    REQUIRE(dst.textgen     == 1);  // TopLeft
-    REQUIRE(dst.text        == "Line one\\PLine two\\PLine three");
-    // Note: DRW_MText::parseDwg reads the linespacing factor (BD code 44)
-    // but discards it — it never stores into `interlin`.  The encoder
-    // emits a sensible value; the reader-side struct stays at its
-    // constructor default (1.0).  This is a reader-side gap, not an
-    // encoder bug.  When the reader is fixed, change this test.
-    REQUIRE(dst.interlin    == 1.0);
+        REQUIRE(dst.handle      == 0xE0u);
+        REQUIRE(dst.basePoint.x == 10.0);
+        REQUIRE(dst.basePoint.y == 20.0);
+        REQUIRE(dst.widthscale  == 100.0);
+        REQUIRE(dst.height      == 3.5);
+        REQUIRE(dst.textgen     == 1);  // TopLeft
+        REQUIRE(dst.text        == "Line one\\PLine two\\PLine three");
+        // Note: DRW_MText::parseDwg reads the linespacing factor (BD code 44)
+        // but discards it — it never stores into `interlin`.  The encoder
+        // emits a sensible value; the reader-side struct stays at its
+        // constructor default (1.0).  This is a reader-side gap, not an
+        // encoder bug.  When the reader is fixed, change this test.
+        REQUIRE(dst.interlin    == 1.0);
+    }
 }
 
 TEST_CASE("DRW_Ray::encodeDwg round-trips base + direction",
@@ -391,19 +415,21 @@ TEST_CASE("DRW_Ray::encodeDwg round-trips base + direction",
     src.secPoint  = DRW_Coord{4.0, 5.0, 6.0};
     DrwEntityEncodeTestAccess::layerH(src).ref = 0x12;
 
-    dwgBufferW w;
-    REQUIRE(DrwEntityEncodeTestAccess::encode(src, DRW::AC1015, &w));
-    auto bytes = snapshot(w);
-    dwgBuffer r(bytes.data(), bytes.size());
-    DRW_Ray dst;
-    REQUIRE(DrwEntityEncodeTestAccess::parse(dst, DRW::AC1015, &r));
+    for (DRW::Version ver : {DRW::AC1015, DRW::AC1018}) {
+        dwgBufferW w;
+        REQUIRE(DrwEntityEncodeTestAccess::encode(src, ver, &w));
+        auto bytes = snapshot(w);
+        dwgBuffer r(bytes.data(), bytes.size());
+        DRW_Ray dst;
+        REQUIRE(DrwEntityEncodeTestAccess::parse(dst, ver, &r));
 
-    REQUIRE(dst.basePoint.x == 1.0);
-    REQUIRE(dst.basePoint.y == 2.0);
-    REQUIRE(dst.basePoint.z == 3.0);
-    REQUIRE(dst.secPoint.x  == 4.0);
-    REQUIRE(dst.secPoint.y  == 5.0);
-    REQUIRE(dst.secPoint.z  == 6.0);
+        REQUIRE(dst.basePoint.x == 1.0);
+        REQUIRE(dst.basePoint.y == 2.0);
+        REQUIRE(dst.basePoint.z == 3.0);
+        REQUIRE(dst.secPoint.x  == 4.0);
+        REQUIRE(dst.secPoint.y  == 5.0);
+        REQUIRE(dst.secPoint.z  == 6.0);
+    }
 }
 
 TEST_CASE("DRW_3Dface::encodeDwg round-trips four corners + invisibility flags",
@@ -420,17 +446,19 @@ TEST_CASE("DRW_3Dface::encodeDwg round-trips four corners + invisibility flags",
         src.invisibleflag = 0;  // NoEdge
         DrwEntityEncodeTestAccess::layerH(src).ref = 0x12;
 
-        dwgBufferW w;
-        REQUIRE(DrwEntityEncodeTestAccess::encode(src, DRW::AC1015, &w));
-        dwgBuffer r(w.data().data(), w.data().size());
-        DRW_3Dface dst;
-        REQUIRE(DrwEntityEncodeTestAccess::parse(dst, DRW::AC1015, &r));
+        for (DRW::Version ver : {DRW::AC1015, DRW::AC1018}) {
+            dwgBufferW w;
+            REQUIRE(DrwEntityEncodeTestAccess::encode(src, ver, &w));
+            dwgBuffer r(w.data().data(), w.data().size());
+            DRW_3Dface dst;
+            REQUIRE(DrwEntityEncodeTestAccess::parse(dst, ver, &r));
 
-        REQUIRE(dst.basePoint.x  == 0.0);
-        REQUIRE(dst.secPoint.x   == 1.0);
-        REQUIRE(dst.thirdPoint.y == 1.0);
-        REQUIRE(dst.fourPoint.y  == 1.0);
-        REQUIRE(dst.invisibleflag == 0);
+            REQUIRE(dst.basePoint.x  == 0.0);
+            REQUIRE(dst.secPoint.x   == 1.0);
+            REQUIRE(dst.thirdPoint.y == 1.0);
+            REQUIRE(dst.fourPoint.y  == 1.0);
+            REQUIRE(dst.invisibleflag == 0);
+        }
     }
     // Case 2: invisible flag set + non-zero z (both bit shortcuts off).
     {
@@ -443,15 +471,17 @@ TEST_CASE("DRW_3Dface::encodeDwg round-trips four corners + invisibility flags",
         src.invisibleflag = 0xF;  // AllEdges
         DrwEntityEncodeTestAccess::layerH(src).ref = 0x12;
 
-        dwgBufferW w;
-        REQUIRE(DrwEntityEncodeTestAccess::encode(src, DRW::AC1015, &w));
-        dwgBuffer r(w.data().data(), w.data().size());
-        DRW_3Dface dst;
-        REQUIRE(DrwEntityEncodeTestAccess::parse(dst, DRW::AC1015, &r));
+        for (DRW::Version ver : {DRW::AC1015, DRW::AC1018}) {
+            dwgBufferW w;
+            REQUIRE(DrwEntityEncodeTestAccess::encode(src, ver, &w));
+            dwgBuffer r(w.data().data(), w.data().size());
+            DRW_3Dface dst;
+            REQUIRE(DrwEntityEncodeTestAccess::parse(dst, ver, &r));
 
-        REQUIRE(dst.basePoint.z   == 5.0);
-        REQUIRE(dst.thirdPoint.z  == 5.0);
-        REQUIRE(dst.invisibleflag == 0xF);
+            REQUIRE(dst.basePoint.z   == 5.0);
+            REQUIRE(dst.thirdPoint.z  == 5.0);
+            REQUIRE(dst.invisibleflag == 0xF);
+        }
     }
 }
 
@@ -468,19 +498,21 @@ TEST_CASE("DRW_Trace::encodeDwg round-trips four corners",
     src.thickness = 0.0;
     DrwEntityEncodeTestAccess::layerH(src).ref = 0x12;
 
-    dwgBufferW w;
-    REQUIRE(DrwEntityEncodeTestAccess::encode(src, DRW::AC1015, &w));
-    auto bytes = snapshot(w);
-    dwgBuffer r(bytes.data(), bytes.size());
-    DRW_Trace dst;
-    REQUIRE(DrwEntityEncodeTestAccess::parse(dst, DRW::AC1015, &r));
+    for (DRW::Version ver : {DRW::AC1015, DRW::AC1018}) {
+        dwgBufferW w;
+        REQUIRE(DrwEntityEncodeTestAccess::encode(src, ver, &w));
+        auto bytes = snapshot(w);
+        dwgBuffer r(bytes.data(), bytes.size());
+        DRW_Trace dst;
+        REQUIRE(DrwEntityEncodeTestAccess::parse(dst, ver, &r));
 
-    REQUIRE(dst.basePoint.x  == 1.0);
-    REQUIRE(dst.basePoint.z  == 0.5);
-    REQUIRE(dst.secPoint.x   == 11.0);
-    REQUIRE(dst.thirdPoint.y == 12.0);
-    REQUIRE(dst.fourPoint.x  == 11.0);
-    REQUIRE(dst.fourPoint.y  == 12.0);
+        REQUIRE(dst.basePoint.x  == 1.0);
+        REQUIRE(dst.basePoint.z  == 0.5);
+        REQUIRE(dst.secPoint.x   == 11.0);
+        REQUIRE(dst.thirdPoint.y == 12.0);
+        REQUIRE(dst.fourPoint.x  == 11.0);
+        REQUIRE(dst.fourPoint.y  == 12.0);
+    }
 }
 
 TEST_CASE("DRW_Solid::encodeDwg round-trips four corners",
@@ -496,18 +528,20 @@ TEST_CASE("DRW_Solid::encodeDwg round-trips four corners",
     src.thickness = 0.0;
     DrwEntityEncodeTestAccess::layerH(src).ref = 0x12;
 
-    dwgBufferW w;
-    REQUIRE(DrwEntityEncodeTestAccess::encode(src, DRW::AC1015, &w));
-    auto bytes = snapshot(w);
-    dwgBuffer r(bytes.data(), bytes.size());
-    DRW_Solid dst;
-    REQUIRE(DrwEntityEncodeTestAccess::parse(dst, DRW::AC1015, &r));
+    for (DRW::Version ver : {DRW::AC1015, DRW::AC1018}) {
+        dwgBufferW w;
+        REQUIRE(DrwEntityEncodeTestAccess::encode(src, ver, &w));
+        auto bytes = snapshot(w);
+        dwgBuffer r(bytes.data(), bytes.size());
+        DRW_Solid dst;
+        REQUIRE(DrwEntityEncodeTestAccess::parse(dst, ver, &r));
 
-    REQUIRE(dst.basePoint.x  == 0.0);
-    REQUIRE(dst.secPoint.x   == 10.0);
-    REQUIRE(dst.thirdPoint.y == 10.0);
-    REQUIRE(dst.fourPoint.x  == 10.0);
-    REQUIRE(dst.fourPoint.y  == 10.0);
+        REQUIRE(dst.basePoint.x  == 0.0);
+        REQUIRE(dst.secPoint.x   == 10.0);
+        REQUIRE(dst.thirdPoint.y == 10.0);
+        REQUIRE(dst.fourPoint.x  == 10.0);
+        REQUIRE(dst.fourPoint.y  == 10.0);
+    }
 }
 
 TEST_CASE("DRW_LWPolyline::encodeDwg round-trips closed quad with no bulges",
@@ -524,23 +558,25 @@ TEST_CASE("DRW_LWPolyline::encodeDwg round-trips closed quad with no bulges",
     auto v3 = src.addVertex(); v3->x = 0.0;  v3->y = 10.0;
     DrwEntityEncodeTestAccess::layerH(src).ref = 0x12;
 
-    dwgBufferW w;
-    REQUIRE(DrwEntityEncodeTestAccess::encode(src, DRW::AC1015, &w));
-    auto bytes = snapshot(w);
-    dwgBuffer r(bytes.data(), bytes.size());
-    DRW_LWPolyline dst;
-    REQUIRE(DrwEntityEncodeTestAccess::parse(dst, DRW::AC1015, &r));
+    for (DRW::Version ver : {DRW::AC1015, DRW::AC1018}) {
+        dwgBufferW w;
+        REQUIRE(DrwEntityEncodeTestAccess::encode(src, ver, &w));
+        auto bytes = snapshot(w);
+        dwgBuffer r(bytes.data(), bytes.size());
+        DRW_LWPolyline dst;
+        REQUIRE(DrwEntityEncodeTestAccess::parse(dst, ver, &r));
 
-    REQUIRE(dst.handle == 0xA0u);
-    REQUIRE(dst.flags  == 1);  // closed bit survives the DWG-flag round-trip
-    REQUIRE(dst.vertlist.size() == 4);
-    REQUIRE(dst.vertlist[0]->x == 0.0);
-    REQUIRE(dst.vertlist[0]->y == 0.0);
-    REQUIRE(dst.vertlist[1]->x == 10.0);
-    REQUIRE(dst.vertlist[2]->x == 10.0);
-    REQUIRE(dst.vertlist[2]->y == 10.0);
-    REQUIRE(dst.vertlist[3]->x == 0.0);
-    REQUIRE(dst.vertlist[3]->y == 10.0);
+        REQUIRE(dst.handle == 0xA0u);
+        REQUIRE(dst.flags  == 1);  // closed bit survives the DWG-flag round-trip
+        REQUIRE(dst.vertlist.size() == 4);
+        REQUIRE(dst.vertlist[0]->x == 0.0);
+        REQUIRE(dst.vertlist[0]->y == 0.0);
+        REQUIRE(dst.vertlist[1]->x == 10.0);
+        REQUIRE(dst.vertlist[2]->x == 10.0);
+        REQUIRE(dst.vertlist[2]->y == 10.0);
+        REQUIRE(dst.vertlist[3]->x == 0.0);
+        REQUIRE(dst.vertlist[3]->y == 10.0);
+    }
 }
 
 TEST_CASE("DRW_LWPolyline::encodeDwg round-trips bulges + widths",
@@ -558,19 +594,21 @@ TEST_CASE("DRW_LWPolyline::encodeDwg round-trips bulges + widths",
     auto v2 = src.addVertex(); v2->x = 5.0; v2->y = 5.0;
     DrwEntityEncodeTestAccess::layerH(src).ref = 0x12;
 
-    dwgBufferW w;
-    REQUIRE(DrwEntityEncodeTestAccess::encode(src, DRW::AC1015, &w));
-    auto bytes = snapshot(w);
-    dwgBuffer r(bytes.data(), bytes.size());
-    DRW_LWPolyline dst;
-    REQUIRE(DrwEntityEncodeTestAccess::parse(dst, DRW::AC1015, &r));
+    for (DRW::Version ver : {DRW::AC1015, DRW::AC1018}) {
+        dwgBufferW w;
+        REQUIRE(DrwEntityEncodeTestAccess::encode(src, ver, &w));
+        auto bytes = snapshot(w);
+        dwgBuffer r(bytes.data(), bytes.size());
+        DRW_LWPolyline dst;
+        REQUIRE(DrwEntityEncodeTestAccess::parse(dst, ver, &r));
 
-    REQUIRE(dst.vertlist.size() == 3);
-    REQUIRE(dst.vertlist[0]->bulge    == 0.5);
-    REQUIRE(dst.vertlist[1]->bulge    == -0.5);
-    REQUIRE(dst.vertlist[0]->stawidth == 0.1);
-    REQUIRE(dst.vertlist[0]->endwidth == 0.2);
-    REQUIRE(dst.vertlist[1]->stawidth == 0.2);
+        REQUIRE(dst.vertlist.size() == 3);
+        REQUIRE(dst.vertlist[0]->bulge    == 0.5);
+        REQUIRE(dst.vertlist[1]->bulge    == -0.5);
+        REQUIRE(dst.vertlist[0]->stawidth == 0.1);
+        REQUIRE(dst.vertlist[0]->endwidth == 0.2);
+        REQUIRE(dst.vertlist[1]->stawidth == 0.2);
+    }
 }
 
 TEST_CASE("DRW_Ellipse::encodeDwg round-trips center + axis + ratio + params",
@@ -586,19 +624,21 @@ TEST_CASE("DRW_Ellipse::encodeDwg round-trips center + axis + ratio + params",
     src.endparam = 6.283185307179586;  // 2π — full ellipse
     DrwEntityEncodeTestAccess::layerH(src).ref = 0x12;
 
-    dwgBufferW w;
-    REQUIRE(DrwEntityEncodeTestAccess::encode(src, DRW::AC1015, &w));
-    auto bytes = snapshot(w);
-    dwgBuffer r(bytes.data(), bytes.size());
-    DRW_Ellipse dst;
-    REQUIRE(DrwEntityEncodeTestAccess::parse(dst, DRW::AC1015, &r));
+    for (DRW::Version ver : {DRW::AC1015, DRW::AC1018}) {
+        dwgBufferW w;
+        REQUIRE(DrwEntityEncodeTestAccess::encode(src, ver, &w));
+        auto bytes = snapshot(w);
+        dwgBuffer r(bytes.data(), bytes.size());
+        DRW_Ellipse dst;
+        REQUIRE(DrwEntityEncodeTestAccess::parse(dst, ver, &r));
 
-    REQUIRE(dst.handle      == 0x80u);
-    REQUIRE(dst.basePoint.x == 0.0);
-    REQUIRE(dst.secPoint.x  == 10.0);
-    REQUIRE(dst.ratio       == 0.5);
-    REQUIRE(dst.staparam    == 0.0);
-    REQUIRE(dst.endparam    == 6.283185307179586);
+        REQUIRE(dst.handle      == 0x80u);
+        REQUIRE(dst.basePoint.x == 0.0);
+        REQUIRE(dst.secPoint.x  == 10.0);
+        REQUIRE(dst.ratio       == 0.5);
+        REQUIRE(dst.staparam    == 0.0);
+        REQUIRE(dst.endparam    == 6.283185307179586);
+    }
 }
 
 TEST_CASE("DRW_Attrib::encodeDwg round-trips basic single-line attribute",
@@ -623,23 +663,25 @@ TEST_CASE("DRW_Attrib::encodeDwg round-trips basic single-line attribute",
     src.attribFlags = 0;
     DrwEntityEncodeTestAccess::layerH(src).ref = 0x12;
 
-    dwgBufferW w;
-    REQUIRE(DrwEntityEncodeTestAccess::encode(src, DRW::AC1015, &w));
-    auto bytes = snapshot(w);
-    dwgBuffer r(bytes.data(), bytes.size());
-    DRW_Attrib dst;
-    REQUIRE(DrwEntityEncodeTestAccess::parse(dst, DRW::AC1015, &r));
+    for (DRW::Version ver : {DRW::AC1015, DRW::AC1018}) {
+        dwgBufferW w;
+        REQUIRE(DrwEntityEncodeTestAccess::encode(src, ver, &w));
+        auto bytes = snapshot(w);
+        dwgBuffer r(bytes.data(), bytes.size());
+        DRW_Attrib dst;
+        REQUIRE(DrwEntityEncodeTestAccess::parse(dst, ver, &r));
 
-    REQUIRE(dst.handle        == 0xA1u);
-    REQUIRE(dst.basePoint.x   == 3.0);
-    REQUIRE(dst.basePoint.y   == 7.5);
-    REQUIRE(dst.basePoint.z   == 0.0);
-    REQUIRE(dst.height        == 2.5);
-    REQUIRE(dst.widthscale    == 1.0);
-    REQUIRE(dst.text          == "HELLO");
-    REQUIRE(dst.tag           == "TAGNAME");
-    REQUIRE(dst.attribFlags   == 0);
-    REQUIRE(dst.styleH.ref    == 0x13u);  // STANDARD textstyle (default)
+        REQUIRE(dst.handle        == 0xA1u);
+        REQUIRE(dst.basePoint.x   == 3.0);
+        REQUIRE(dst.basePoint.y   == 7.5);
+        REQUIRE(dst.basePoint.z   == 0.0);
+        REQUIRE(dst.height        == 2.5);
+        REQUIRE(dst.widthscale    == 1.0);
+        REQUIRE(dst.text          == "HELLO");
+        REQUIRE(dst.tag           == "TAGNAME");
+        REQUIRE(dst.attribFlags   == 0);
+        REQUIRE(dst.styleH.ref    == 0x13u);  // STANDARD textstyle (default)
+    }
 }
 
 TEST_CASE("DRW_Attdef::encodeDwg round-trips tag + prompt",
@@ -665,19 +707,21 @@ TEST_CASE("DRW_Attdef::encodeDwg round-trips tag + prompt",
     src.attribFlags = 4;  // verify flag set
     DrwEntityEncodeTestAccess::layerH(src).ref = 0x12;
 
-    dwgBufferW w;
-    REQUIRE(DrwEntityEncodeTestAccess::encode(src, DRW::AC1015, &w));
-    auto bytes = snapshot(w);
-    dwgBuffer r(bytes.data(), bytes.size());
-    DRW_Attdef dst;
-    REQUIRE(DrwEntityEncodeTestAccess::parse(dst, DRW::AC1015, &r));
+    for (DRW::Version ver : {DRW::AC1015, DRW::AC1018}) {
+        dwgBufferW w;
+        REQUIRE(DrwEntityEncodeTestAccess::encode(src, ver, &w));
+        auto bytes = snapshot(w);
+        dwgBuffer r(bytes.data(), bytes.size());
+        DRW_Attdef dst;
+        REQUIRE(DrwEntityEncodeTestAccess::parse(dst, ver, &r));
 
-    REQUIRE(dst.handle       == 0xA2u);
-    REQUIRE(dst.text         == "DEFAULT");
-    REQUIRE(dst.tag          == "PARTNO");
-    REQUIRE(dst.prompt       == "Enter part number:");
-    REQUIRE(dst.attribFlags  == 4);
-    REQUIRE(dst.height       == 1.0);
+        REQUIRE(dst.handle       == 0xA2u);
+        REQUIRE(dst.text         == "DEFAULT");
+        REQUIRE(dst.tag          == "PARTNO");
+        REQUIRE(dst.prompt       == "Enter part number:");
+        REQUIRE(dst.attribFlags  == 4);
+        REQUIRE(dst.height       == 1.0);
+    }
 }
 
 TEST_CASE("DRW_Hatch::encodeDwg round-trips solid fill with polyline boundary",
@@ -708,29 +752,31 @@ TEST_CASE("DRW_Hatch::encodeDwg round-trips solid fill with polyline boundary",
     loop->objlist.push_back(pline);
     src.looplist.push_back(loop);
 
-    dwgBufferW w;
-    REQUIRE(DrwEntityEncodeTestAccess::encode(src, DRW::AC1015, &w));
-    auto bytes = snapshot(w);
-    dwgBuffer r(bytes.data(), bytes.size());
-    DRW_Hatch dst;
-    REQUIRE(DrwEntityEncodeTestAccess::parse(dst, DRW::AC1015, &r));
+    for (DRW::Version ver : {DRW::AC1015, DRW::AC1018}) {
+        dwgBufferW w;
+        REQUIRE(DrwEntityEncodeTestAccess::encode(src, ver, &w));
+        auto bytes = snapshot(w);
+        dwgBuffer r(bytes.data(), bytes.size());
+        DRW_Hatch dst;
+        REQUIRE(DrwEntityEncodeTestAccess::parse(dst, ver, &r));
 
-    REQUIRE(dst.handle     == 0xB0u);
-    REQUIRE(dst.name       == "SOLID");
-    REQUIRE(dst.solid      == 1);
-    REQUIRE(dst.associative == 0);
-    REQUIRE(dst.hstyle     == 1);
-    REQUIRE(dst.hpattern   == 1);
-    REQUIRE(dst.looplist.size() == 1);
-    // Polyline boundary: one object in objlist
-    REQUIRE(dst.looplist[0]->objlist.size() == 1);
-    const DRW_LWPolyline* rp = dynamic_cast<DRW_LWPolyline*>(
-        dst.looplist[0]->objlist[0].get());
-    REQUIRE(rp != nullptr);
-    REQUIRE(rp->vertlist.size() == 4);
-    REQUIRE(rp->vertlist[0]->x  == 0.0);
-    REQUIRE(rp->vertlist[1]->x  == 10.0);
-    REQUIRE(rp->vertlist[2]->y  == 5.0);
+        REQUIRE(dst.handle     == 0xB0u);
+        REQUIRE(dst.name       == "SOLID");
+        REQUIRE(dst.solid      == 1);
+        REQUIRE(dst.associative == 0);
+        REQUIRE(dst.hstyle     == 1);
+        REQUIRE(dst.hpattern   == 1);
+        REQUIRE(dst.looplist.size() == 1);
+        // Polyline boundary: one object in objlist
+        REQUIRE(dst.looplist[0]->objlist.size() == 1);
+        const DRW_LWPolyline* rp = dynamic_cast<DRW_LWPolyline*>(
+            dst.looplist[0]->objlist[0].get());
+        REQUIRE(rp != nullptr);
+        REQUIRE(rp->vertlist.size() == 4);
+        REQUIRE(rp->vertlist[0]->x  == 0.0);
+        REQUIRE(rp->vertlist[1]->x  == 10.0);
+        REQUIRE(rp->vertlist[2]->y  == 5.0);
+    }
 }
 
 TEST_CASE("DRW_Hatch::encodeDwg round-trips non-solid fill with line-segment boundary",
@@ -764,31 +810,33 @@ TEST_CASE("DRW_Hatch::encodeDwg round-trips non-solid fill with line-segment bou
     loop->objlist.push_back(l2);
     src.looplist.push_back(loop);
 
-    dwgBufferW w;
-    REQUIRE(DrwEntityEncodeTestAccess::encode(src, DRW::AC1015, &w));
-    auto bytes = snapshot(w);
-    dwgBuffer r(bytes.data(), bytes.size());
-    DRW_Hatch dst;
-    REQUIRE(DrwEntityEncodeTestAccess::parse(dst, DRW::AC1015, &r));
+    for (DRW::Version ver : {DRW::AC1015, DRW::AC1018}) {
+        dwgBufferW w;
+        REQUIRE(DrwEntityEncodeTestAccess::encode(src, ver, &w));
+        auto bytes = snapshot(w);
+        dwgBuffer r(bytes.data(), bytes.size());
+        DRW_Hatch dst;
+        REQUIRE(DrwEntityEncodeTestAccess::parse(dst, ver, &r));
 
-    REQUIRE(dst.handle  == 0xB1u);
-    REQUIRE(dst.name    == "ANSI31");
-    REQUIRE(dst.solid   == 0);
-    REQUIRE(dst.angle   == 45.0);
-    REQUIRE(dst.scale   == 1.0);
-    REQUIRE(dst.looplist.size() == 1);
-    REQUIRE(dst.looplist[0]->objlist.size() == 2);
-    // Two line edges
-    const DRW_Line* rl1 = dynamic_cast<DRW_Line*>(
-        dst.looplist[0]->objlist[0].get());
-    REQUIRE(rl1 != nullptr);
-    REQUIRE(rl1->basePoint.x == 0.0);
-    REQUIRE(rl1->secPoint.x  == 4.0);
-    const DRW_Line* rl2 = dynamic_cast<DRW_Line*>(
-        dst.looplist[0]->objlist[1].get());
-    REQUIRE(rl2 != nullptr);
-    REQUIRE(rl2->basePoint.x == 4.0);
-    REQUIRE(rl2->secPoint.y  == 3.0);
+        REQUIRE(dst.handle  == 0xB1u);
+        REQUIRE(dst.name    == "ANSI31");
+        REQUIRE(dst.solid   == 0);
+        REQUIRE(dst.angle   == 45.0);
+        REQUIRE(dst.scale   == 1.0);
+        REQUIRE(dst.looplist.size() == 1);
+        REQUIRE(dst.looplist[0]->objlist.size() == 2);
+        // Two line edges
+        const DRW_Line* rl1 = dynamic_cast<DRW_Line*>(
+            dst.looplist[0]->objlist[0].get());
+        REQUIRE(rl1 != nullptr);
+        REQUIRE(rl1->basePoint.x == 0.0);
+        REQUIRE(rl1->secPoint.x  == 4.0);
+        const DRW_Line* rl2 = dynamic_cast<DRW_Line*>(
+            dst.looplist[0]->objlist[1].get());
+        REQUIRE(rl2 != nullptr);
+        REQUIRE(rl2->basePoint.x == 4.0);
+        REQUIRE(rl2->secPoint.y  == 3.0);
+    }
 }
 
 TEST_CASE("DRW_DimAligned::encodeDwg round-trips definition points",
@@ -802,20 +850,22 @@ TEST_CASE("DRW_DimAligned::encodeDwg round-trips definition points",
     src.setTextPoint({3.0, 3.5, 0.0});
     src.setHDir(0.0);    // hdir not set by default ctor — must be explicit
 
-    dwgBufferW w;
-    REQUIRE(DrwEntityEncodeTestAccess::encode(src, DRW::AC1015, &w));
-    auto bytes = snapshot(w);
-    dwgBuffer r(bytes.data(), bytes.size());
-    DRW_DimAligned dst;
-    REQUIRE(DrwEntityEncodeTestAccess::parse(dst, DRW::AC1015, &r));
+    for (DRW::Version ver : {DRW::AC1015, DRW::AC1018}) {
+        dwgBufferW w;
+        REQUIRE(DrwEntityEncodeTestAccess::encode(src, ver, &w));
+        auto bytes = snapshot(w);
+        dwgBuffer r(bytes.data(), bytes.size());
+        DRW_DimAligned dst;
+        REQUIRE(DrwEntityEncodeTestAccess::parse(dst, ver, &r));
 
-    REQUIRE(DrwEntityEncodeTestAccess::oType(dst) == 22u);
-    REQUIRE(dst.type  == 1);
-    REQUIRE(dst.getDef1Point().x == 1.0);
-    REQUIRE(dst.getDef1Point().y == 2.0);
-    REQUIRE(dst.getDef2Point().x == 5.0);
-    REQUIRE(dst.getDimPoint().x  == 3.0);
-    REQUIRE(dst.getDimPoint().y  == 4.0);
+        REQUIRE(DrwEntityEncodeTestAccess::oType(dst) == 22u);
+        REQUIRE(dst.type  == 1);
+        REQUIRE(dst.getDef1Point().x == 1.0);
+        REQUIRE(dst.getDef1Point().y == 2.0);
+        REQUIRE(dst.getDef2Point().x == 5.0);
+        REQUIRE(dst.getDimPoint().x  == 3.0);
+        REQUIRE(dst.getDimPoint().y  == 4.0);
+    }
 }
 
 TEST_CASE("DRW_DimLinear::encodeDwg round-trips rotation angle and oblique",
@@ -831,20 +881,23 @@ TEST_CASE("DRW_DimLinear::encodeDwg round-trips rotation angle and oblique",
     src.setTextPoint({3.0, 2.5, 0.0});
     src.setHDir(0.0);
 
-    dwgBufferW w;
-    REQUIRE(DrwEntityEncodeTestAccess::encode(src, DRW::AC1015, &w));
-    auto bytes = snapshot(w);
-    dwgBuffer r(bytes.data(), bytes.size());
-    DRW_DimLinear dst;
-    REQUIRE(DrwEntityEncodeTestAccess::parse(dst, DRW::AC1015, &r));
+    for (DRW::Version ver : {DRW::AC1015, DRW::AC1018}) {
+        dwgBufferW w;
+        REQUIRE(DrwEntityEncodeTestAccess::encode(src, ver, &w));
+        auto bytes = snapshot(w);
+        dwgBuffer r(bytes.data(), bytes.size());
+        DRW_DimLinear dst;
+        REQUIRE(DrwEntityEncodeTestAccess::parse(dst, ver, &r));
 
-    REQUIRE(DrwEntityEncodeTestAccess::oType(dst) == 21u);
-    REQUIRE(dst.type  == 0);
-    REQUIRE(dst.getDef1Point().x == 0.0);
-    REQUIRE(dst.getDef2Point().x == 6.0);
-    REQUIRE(dst.getDimPoint().x  == 3.0);
-    REQUIRE(dst.getAngle()       == Approx(45.0).margin(1e-9));
-    REQUIRE(dst.getOblique()     == 10.0);
+        REQUIRE(DrwEntityEncodeTestAccess::oType(dst) == 21u);
+        REQUIRE(dst.type  == 0);
+        REQUIRE(dst.getDef1Point().x == 0.0);
+        REQUIRE(dst.getDef2Point().x == 6.0);
+        REQUIRE(dst.getDimPoint().x  == 3.0);
+        REQUIRE(dst.getAngle()       == Approx(45.0).margin(1e-9));
+        // oblique round-trips degrees → radians on disk → degrees on read
+        REQUIRE(dst.getOblique()     == Approx(10.0).margin(1e-9));
+    }
 }
 
 TEST_CASE("DRW_DimRadial::encodeDwg round-trips center, radius point, leader length",
@@ -858,19 +911,21 @@ TEST_CASE("DRW_DimRadial::encodeDwg round-trips center, radius point, leader len
     src.setTextPoint({3.5, 4.0, 0.0});
     src.setHDir(0.0);
 
-    dwgBufferW w;
-    REQUIRE(DrwEntityEncodeTestAccess::encode(src, DRW::AC1015, &w));
-    auto bytes = snapshot(w);
-    dwgBuffer r(bytes.data(), bytes.size());
-    DRW_DimRadial dst;
-    REQUIRE(DrwEntityEncodeTestAccess::parse(dst, DRW::AC1015, &r));
+    for (DRW::Version ver : {DRW::AC1015, DRW::AC1018}) {
+        dwgBufferW w;
+        REQUIRE(DrwEntityEncodeTestAccess::encode(src, ver, &w));
+        auto bytes = snapshot(w);
+        dwgBuffer r(bytes.data(), bytes.size());
+        DRW_DimRadial dst;
+        REQUIRE(DrwEntityEncodeTestAccess::parse(dst, ver, &r));
 
-    REQUIRE(DrwEntityEncodeTestAccess::oType(dst) == 25u);
-    REQUIRE(dst.type  == 4);
-    REQUIRE(dst.getCenterPoint().x   == 2.0);
-    REQUIRE(dst.getCenterPoint().y   == 3.0);
-    REQUIRE(dst.getDiameterPoint().x == 5.0);
-    REQUIRE(dst.getLeaderLength()    == 1.5);
+        REQUIRE(DrwEntityEncodeTestAccess::oType(dst) == 25u);
+        REQUIRE(dst.type  == 4);
+        REQUIRE(dst.getCenterPoint().x   == 2.0);
+        REQUIRE(dst.getCenterPoint().y   == 3.0);
+        REQUIRE(dst.getDiameterPoint().x == 5.0);
+        REQUIRE(dst.getLeaderLength()    == 1.5);
+    }
 }
 
 TEST_CASE("DRW_DimAngular::encodeDwg round-trips arc point and definition lines",
@@ -887,21 +942,23 @@ TEST_CASE("DRW_DimAngular::encodeDwg round-trips arc point and definition lines"
     src.setTextPoint({2.0, 1.5, 0.0});
     src.setHDir(0.0);
 
-    dwgBufferW w;
-    REQUIRE(DrwEntityEncodeTestAccess::encode(src, DRW::AC1015, &w));
-    auto bytes = snapshot(w);
-    dwgBuffer r(bytes.data(), bytes.size());
-    DRW_DimAngular dst;
-    REQUIRE(DrwEntityEncodeTestAccess::parse(dst, DRW::AC1015, &r));
+    for (DRW::Version ver : {DRW::AC1015, DRW::AC1018}) {
+        dwgBufferW w;
+        REQUIRE(DrwEntityEncodeTestAccess::encode(src, ver, &w));
+        auto bytes = snapshot(w);
+        dwgBuffer r(bytes.data(), bytes.size());
+        DRW_DimAngular dst;
+        REQUIRE(DrwEntityEncodeTestAccess::parse(dst, ver, &r));
 
-    REQUIRE(DrwEntityEncodeTestAccess::oType(dst) == 24u);
-    REQUIRE(dst.type  == 2);
-    REQUIRE(dst.getDimPoint().x    == 7.0);
-    REQUIRE(dst.getDimPoint().y    == 4.0);
-    REQUIRE(dst.getFirstLine1().x  == 1.0);
-    REQUIRE(dst.getFirstLine2().x  == 4.0);
-    REQUIRE(dst.getSecondLine1().x == 4.0);
-    REQUIRE(dst.getSecondLine1().y == 3.0);
+        REQUIRE(DrwEntityEncodeTestAccess::oType(dst) == 24u);
+        REQUIRE(dst.type  == 2);
+        REQUIRE(dst.getDimPoint().x    == 7.0);
+        REQUIRE(dst.getDimPoint().y    == 4.0);
+        REQUIRE(dst.getFirstLine1().x  == 1.0);
+        REQUIRE(dst.getFirstLine2().x  == 4.0);
+        REQUIRE(dst.getSecondLine1().x == 4.0);
+        REQUIRE(dst.getSecondLine1().y == 3.0);
+    }
 }
 
 TEST_CASE("DRW_DimAngular3p::encodeDwg round-trips vertex and line definition points",
@@ -916,21 +973,23 @@ TEST_CASE("DRW_DimAngular3p::encodeDwg round-trips vertex and line definition po
     src.setTextPoint({4.0, 4.0, 0.0});
     src.setHDir(0.0);
 
-    dwgBufferW w;
-    REQUIRE(DrwEntityEncodeTestAccess::encode(src, DRW::AC1015, &w));
-    auto bytes = snapshot(w);
-    dwgBuffer r(bytes.data(), bytes.size());
-    DRW_DimAngular3p dst;
-    REQUIRE(DrwEntityEncodeTestAccess::parse(dst, DRW::AC1015, &r));
+    for (DRW::Version ver : {DRW::AC1015, DRW::AC1018}) {
+        dwgBufferW w;
+        REQUIRE(DrwEntityEncodeTestAccess::encode(src, ver, &w));
+        auto bytes = snapshot(w);
+        dwgBuffer r(bytes.data(), bytes.size());
+        DRW_DimAngular3p dst;
+        REQUIRE(DrwEntityEncodeTestAccess::parse(dst, ver, &r));
 
-    REQUIRE(DrwEntityEncodeTestAccess::oType(dst) == 23u);
-    REQUIRE(dst.type  == 5);
-    REQUIRE(dst.getDimPoint().x  == 5.0);
-    REQUIRE(dst.getDimPoint().y  == 5.0);
-    REQUIRE(dst.getFirstLine().x  == 1.0);
-    REQUIRE(dst.getSecondLine().x == 6.0);
-    REQUIRE(dst.getVertexPoint().x == 3.0);
-    REQUIRE(dst.getVertexPoint().y == 3.0);
+        REQUIRE(DrwEntityEncodeTestAccess::oType(dst) == 23u);
+        REQUIRE(dst.type  == 5);
+        REQUIRE(dst.getDimPoint().x  == 5.0);
+        REQUIRE(dst.getDimPoint().y  == 5.0);
+        REQUIRE(dst.getFirstLine().x  == 1.0);
+        REQUIRE(dst.getSecondLine().x == 6.0);
+        REQUIRE(dst.getVertexPoint().x == 3.0);
+        REQUIRE(dst.getVertexPoint().y == 3.0);
+    }
 }
 
 TEST_CASE("DRW_DimOrdinate::encodeDwg round-trips origin and leader endpoints",
@@ -944,18 +1003,20 @@ TEST_CASE("DRW_DimOrdinate::encodeDwg round-trips origin and leader endpoints",
     src.setTextPoint  ({3.0, 5.5, 0.0});
     src.setHDir(0.0);
 
-    dwgBufferW w;
-    REQUIRE(DrwEntityEncodeTestAccess::encode(src, DRW::AC1015, &w));
-    auto bytes = snapshot(w);
-    dwgBuffer r(bytes.data(), bytes.size());
-    DRW_DimOrdinate dst;
-    REQUIRE(DrwEntityEncodeTestAccess::parse(dst, DRW::AC1015, &r));
+    for (DRW::Version ver : {DRW::AC1015, DRW::AC1018}) {
+        dwgBufferW w;
+        REQUIRE(DrwEntityEncodeTestAccess::encode(src, ver, &w));
+        auto bytes = snapshot(w);
+        dwgBuffer r(bytes.data(), bytes.size());
+        DRW_DimOrdinate dst;
+        REQUIRE(DrwEntityEncodeTestAccess::parse(dst, ver, &r));
 
-    REQUIRE(DrwEntityEncodeTestAccess::oType(dst) == 20u);
-    REQUIRE(dst.type  == 6);
-    REQUIRE(dst.getOriginPoint().x == 2.0);
-    REQUIRE(dst.getOriginPoint().y == 1.0);
-    REQUIRE(dst.getFirstLine().x   == 2.0);
-    REQUIRE(dst.getFirstLine().y   == 5.0);
-    REQUIRE(dst.getSecondLine().x  == 4.0);
+        REQUIRE(DrwEntityEncodeTestAccess::oType(dst) == 20u);
+        REQUIRE(dst.type  == 6);
+        REQUIRE(dst.getOriginPoint().x == 2.0);
+        REQUIRE(dst.getOriginPoint().y == 1.0);
+        REQUIRE(dst.getFirstLine().x   == 2.0);
+        REQUIRE(dst.getFirstLine().y   == 5.0);
+        REQUIRE(dst.getSecondLine().x  == 4.0);
+    }
 }

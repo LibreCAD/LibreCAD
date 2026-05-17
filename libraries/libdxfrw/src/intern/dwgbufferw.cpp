@@ -385,15 +385,18 @@ void dwgBufferW::putThickness(double t, bool b_R2000_style) {
 }
 
 void dwgBufferW::putCmColor(DRW::Version v, duint16 colorIndex) {
-    // R2000 emits raw BS index; AC1018+ adds RGB/method bytes which
-    // are deferred to Phase 5.
-    (void)v;
     putBitShort(colorIndex);
+    if (v >= DRW::AC1018) {  // R2004+: getCmColor reads BS + BL(rgb) + rawchar8(flags)
+        putBitLong(0);       // rgb = 0 (no RGB component, use color index)
+        putRawChar8(0);      // flags = 0 (no color name, no book name)
+    }
 }
 
 void dwgBufferW::putEnColor(DRW::Version v, duint16 colorIndex) {
-    (void)v;
-    putSBitShort(static_cast<dint16>(colorIndex));
+    if (v < DRW::AC1018)
+        putSBitShort(static_cast<dint16>(colorIndex));
+    else
+        putBitShort(colorIndex);  // R2004+: unsigned BS; reader uses getBitShort()
 }
 
 // ---- CRC ------------------------------------------------------------------
@@ -423,4 +426,27 @@ void dwgBufferW::patchRawLong32(size_t byteOffset, duint32 v) {
     m_buf[byteOffset + 1] = static_cast<duint8>((v >> 8) & 0xFF);
     m_buf[byteOffset + 2] = static_cast<duint8>((v >> 16) & 0xFF);
     m_buf[byteOffset + 3] = static_cast<duint8>((v >> 24) & 0xFF);
+}
+
+void dwgBufferW::patchRawLong32AtBit(size_t bitOffset, duint32 val) {
+    // Write 32 bits of val into the stream starting at stream-bit bitOffset.
+    // Precondition: bitOffset % 8 == 2 (all BS widths in our writer leave a
+    // 2-bit sub-byte remainder: "01"+RC = 10 bits, "00"+RS = 18 bits,
+    // "10"/"11" = 2 bits).
+    // In MSB-first packing each byte of val spreads across two adjacent output
+    // bytes, shifted 2 bits right relative to byte boundaries:
+    //   buf[byteIdx]  : high 2 bits preserved, low 6 = val_byte_hi_bits
+    //   buf[byteIdx+1..3]: full cross-byte blending
+    //   buf[byteIdx+4]: high 2 = remaining 2 bits, low 6 bits preserved
+    size_t byteIdx = bitOffset / 8;
+    if (byteIdx + 4 >= m_buf.size()) return;
+    duint8 b0 = static_cast<duint8>(val & 0xFF);
+    duint8 b1 = static_cast<duint8>((val >> 8) & 0xFF);
+    duint8 b2 = static_cast<duint8>((val >> 16) & 0xFF);
+    duint8 b3 = static_cast<duint8>((val >> 24) & 0xFF);
+    m_buf[byteIdx]     = (m_buf[byteIdx] & 0xC0) | static_cast<duint8>(b0 >> 2);
+    m_buf[byteIdx + 1] = static_cast<duint8>(b0 << 6) | static_cast<duint8>(b1 >> 2);
+    m_buf[byteIdx + 2] = static_cast<duint8>(b1 << 6) | static_cast<duint8>(b2 >> 2);
+    m_buf[byteIdx + 3] = static_cast<duint8>(b2 << 6) | static_cast<duint8>(b3 >> 2);
+    m_buf[byteIdx + 4] = (m_buf[byteIdx + 4] & 0x3F) | static_cast<duint8>(b3 << 6);
 }

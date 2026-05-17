@@ -186,6 +186,13 @@ public:
     /// need byte-level inspection).  Reserved unless a test asks.
     const std::vector<duint8>& buffer() const { return m_buf.data(); }
 
+    /// Byte offset of the start of the OBJECTS data region within m_buf.
+    /// writeDwgHandles subtracts this from each object's m_buf offset so
+    /// the HANDLES section stores section-relative positions.  For R2000
+    /// (whole-file buffer) the base is 0; R2004 overrides to point past
+    /// the HEADER + CLASSES sections that precede the object stream.
+    virtual duint32 objectBaseOffset() const { return 0; }
+
     /// First-available user handle from the allocator.  `dwgRW::write`
     /// uses this to auto-populate `DRW_Header::handSeed` for fresh
     /// documents where the caller did not set one explicitly — without
@@ -208,6 +215,11 @@ protected:
 
     std::ofstream *m_stream {nullptr};
     DRW_Header *m_header {nullptr};
+
+    /// Target write version.  Default AC1015 (R2000).  Subclasses for
+    /// higher versions set this in their constructor before any emit calls
+    /// so all inherited section-emit helpers use the correct format.
+    DRW::Version m_version {DRW::AC1015};
 
     /// Handle allocator pre-seeded with the canonical R2000 reserved
     /// set.  Subclasses call `m_handles.next()` for each user-emitted

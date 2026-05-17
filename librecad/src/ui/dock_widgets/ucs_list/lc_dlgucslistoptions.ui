@@ -136,14 +136,14 @@
          <string>If enabled, click on the table item will apply coordinates system. Otherwise, coordinates system should be applied explicitly.</string>
         </property>
         <property name="text">
-         <string>Restore UCS on single click by table item</string>
+         <string>Restore UCS on single click of table item</string>
         </property>
        </widget>
       </item>
       <item row="1" column="0">
        <widget class="QLabel" name="lblDoubleClick">
         <property name="text">
-         <string>On double-click on table item</string>
+         <string>On double-click:</string>
         </property>
        </widget>
       </item>

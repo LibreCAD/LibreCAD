@@ -567,3 +567,151 @@ TEST_CASE("dwgRW round-trip delivers the standard R2000 table records",
 
     std::remove(path.c_str());
 }
+
+// ---- R2004 (AC1018) write smoke tests ---------------------------------------
+
+TEST_CASE("dwgRW::write produces a syntactically valid empty R2004 file",
+          "[dwg-write][smoke][r2004]") {
+    const std::string path = tempPath("empty_r2004.dwg");
+
+    {
+        dwgRW writer(path.c_str());
+        EmptyIface iface;
+        REQUIRE(writer.write(&iface, DRW::AC1018, /*bin=*/false));
+    }
+
+    auto bytes = slurp(path);
+    // R2004 fixed file header is 0x100 bytes; data pages follow immediately.
+    REQUIRE(bytes.size() > 0x100);
+
+    // Version string at offset 0.
+    REQUIRE(std::memcmp(bytes.data(), "AC1018", 6) == 0);
+
+    // Bytes 6-10: five NUL padding bytes.
+    for (int i = 6; i <= 10; ++i)
+        REQUIRE(bytes[i] == 0x00);
+
+    // Bytes 19-20: codepage LE = 30 (ANSI_1252).
+    REQUIRE(bytes[19] == 30);
+    REQUIRE(bytes[20] == 0);
+
+    // Bytes 40-43: constant 0x00000080 LE.
+    REQUIRE(bytes[40] == 0x80);
+    REQUIRE(bytes[41] == 0x00);
+    REQUIRE(bytes[42] == 0x00);
+    REQUIRE(bytes[43] == 0x00);
+
+    std::remove(path.c_str());
+}
+
+TEST_CASE("dwgRW R2004 round-trip: write empty, reader returns true",
+          "[dwg-write][smoke][r2004]") {
+    const std::string path = tempPath("roundtrip_r2004.dwg");
+
+    {
+        dwgRW writer(path.c_str());
+        EmptyIface iface;
+        REQUIRE(writer.write(&iface, DRW::AC1018, /*bin=*/false));
+    }
+
+    {
+        dwgRW reader(path.c_str());
+        EmptyIface iface;
+        bool ok = reader.read(&iface, /*ext=*/false);
+        REQUIRE(reader.getVersion() == DRW::AC1018);
+        REQUIRE(reader.getError() == DRW::BAD_NONE);
+        REQUIRE(ok);
+    }
+
+    std::remove(path.c_str());
+}
+
+TEST_CASE("dwgRW R2004 writes POINT/LINE/CIRCLE/ARC and reader recovers them",
+          "[dwg-write][smoke][r2004]") {
+    const std::string path = tempPath("entities_r2004.dwg");
+
+    {
+        dwgRW writer(path.c_str());
+        EntityRoundTripIface iface;
+        iface.m_writer = &writer;
+        REQUIRE(writer.write(&iface, DRW::AC1018, /*bin=*/false));
+    }
+
+    EntityRoundTripIface readIface;
+    {
+        dwgRW reader(path.c_str());
+        REQUIRE(reader.read(&readIface, /*ext=*/false));
+        REQUIRE(reader.getVersion() == DRW::AC1018);
+        REQUIRE(reader.getError() == DRW::BAD_NONE);
+    }
+
+    REQUIRE(readIface.m_points.size()   == 1);
+    REQUIRE(readIface.m_lines.size()    == 1);
+    REQUIRE(readIface.m_circles.size()  == 1);
+    REQUIRE(readIface.m_arcs.size()     == 1);
+    REQUIRE(readIface.m_ellipses.size() == 1);
+
+    REQUIRE(readIface.m_points[0].basePoint.x == 1.5);
+    REQUIRE(readIface.m_points[0].basePoint.y == 2.5);
+    REQUIRE(readIface.m_points[0].color       == 2);
+
+    REQUIRE(readIface.m_lines[0].basePoint.x == 0.0);
+    REQUIRE(readIface.m_lines[0].secPoint.x  == 10.0);
+    REQUIRE(readIface.m_lines[0].secPoint.y  == 5.0);
+    REQUIRE(readIface.m_lines[0].color       == 3);
+
+    REQUIRE(readIface.m_circles[0].basePoint.x == 100.0);
+    REQUIRE(readIface.m_circles[0].radious     == 25.0);
+    REQUIRE(readIface.m_circles[0].color       == 5);
+
+    REQUIRE(readIface.m_arcs[0].basePoint.x == 50.0);
+    REQUIRE(readIface.m_arcs[0].radious     == 10.0);
+    REQUIRE(readIface.m_arcs[0].staangle    == 0.0);
+    REQUIRE(readIface.m_arcs[0].endangle    == 3.141592653589793);
+    REQUIRE(readIface.m_arcs[0].color       == 6);
+
+    REQUIRE(readIface.m_ellipses[0].basePoint.x == 200.0);
+    REQUIRE(readIface.m_ellipses[0].secPoint.x  == 30.0);
+    REQUIRE(readIface.m_ellipses[0].ratio       == 0.5);
+    REQUIRE(readIface.m_ellipses[0].color       == 4);
+
+    bool sawModel = false;
+    bool sawPaper = false;
+    for (const auto& n : readIface.m_blocks) {
+        if (n == "*Model_Space") sawModel = true;
+        if (n == "*Paper_Space") sawPaper = true;
+    }
+    REQUIRE(sawModel);
+    REQUIRE(sawPaper);
+
+    std::remove(path.c_str());
+}
+
+TEST_CASE("dwgRW R2004 round-trip delivers the standard table records",
+          "[dwg-write][smoke][r2004]") {
+    const std::string path = tempPath("standard_tables_r2004.dwg");
+
+    {
+        dwgRW writer(path.c_str());
+        EmptyIface iface;
+        REQUIRE(writer.write(&iface, DRW::AC1018, /*bin=*/false));
+    }
+
+    TableCaptureIface cap;
+    {
+        dwgRW reader(path.c_str());
+        REQUIRE(reader.read(&cap, /*ext=*/false));
+        REQUIRE(reader.getError() == DRW::BAD_NONE);
+    }
+
+    REQUIRE(containsName(cap.m_lTypes,    "BYBLOCK"));
+    REQUIRE(containsName(cap.m_lTypes,    "BYLAYER"));
+    REQUIRE(containsName(cap.m_lTypes,    "CONTINUOUS"));
+    REQUIRE(containsName(cap.m_layers,    "0"));
+    REQUIRE(containsName(cap.m_textStyles,"STANDARD"));
+    REQUIRE(containsName(cap.m_appIds,    "ACAD"));
+    REQUIRE(containsName(cap.m_dimStyles, "STANDARD"));
+    REQUIRE(containsName(cap.m_vports,    "*ACTIVE"));
+
+    std::remove(path.c_str());
+}

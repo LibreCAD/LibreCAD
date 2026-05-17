@@ -20,6 +20,16 @@
 
 class DRW_Entity;
 
+/// Section record indices used in m_sectionOffsets / m_sectionSizes.
+namespace recno {
+    constexpr duint8 HEADER    = 0;
+    constexpr duint8 CLASSES   = 1;
+    constexpr duint8 HANDLES   = 2;
+    constexpr duint8 UNKNOWN   = 3;
+    constexpr duint8 TEMPLATE  = 4;
+    constexpr duint8 AUXHEADER = 5;
+}
+
 /// R2000 (AC1015) concrete DWG writer.  Structural mirror of
 /// [dwgReader15](dwgreader15.h).
 ///
@@ -104,17 +114,7 @@ protected:
     void emitBlockEntity(duint32 handle, const std::string& name,
                          bool isEnd);
 
-private:
-    /// File offset of the first section-locator record byte.  Used by
-    /// `finalize()` to back-patch addresses + sizes.  Set during
-    /// `writeFileHeaderStub`.
-    duint32 m_recordsOffset {0};
-
-    /// Number of section-locator records emitted (typically 5 for an
-    /// empty document — HEADER, CLASSES, HANDLES, UNKNOWN, AUXHEADER —
-    /// or 6 if TEMPLATE present).  v1 emits 5.
-    duint8 m_numSections {5};
-
+protected:
     /// Per-section-frame helper: emit BEGIN sentinel + 4-byte RL size
     /// placeholder, mark the start offset.  Returns the byte offset of
     /// the placeholder RL so `endSentinelSection` can patch it.
@@ -125,6 +125,17 @@ private:
     /// the RL size at `sizeOffset` with the actual payload size.
     void endSentinelSection(size_t sectionStart, size_t sizeOffset,
                             const duint8 (&endSentinel)[16]);
+
+private:
+    /// File offset of the first section-locator record byte.  Used by
+    /// `finalize()` to back-patch addresses + sizes.  Set during
+    /// `writeFileHeaderStub`.
+    duint32 m_recordsOffset {0};
+
+    /// Number of section-locator records emitted (typically 5 for an
+    /// empty document — HEADER, CLASSES, HANDLES, UNKNOWN, AUXHEADER —
+    /// or 6 if TEMPLATE present).  v1 emits 5.
+    duint8 m_numSections {5};
 
     /// Scratch buffer for the in-flight object body.  Cleared at every
     /// `beginObject` call.

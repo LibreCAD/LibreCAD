@@ -167,6 +167,15 @@ public:
     /// Overwrite 32-bit little-endian at byte offset (no bit shift).
     void patchRawLong32(size_t byteOffset, duint32 v);
 
+    /// Back-patch the RL objSize field at the given stream-bit offset.
+    /// The RL straddles bytes [bitOffset/8 .. bitOffset/8+4], each shifted
+    /// `bitOffset % 8` bits to the right relative to byte boundaries.
+    /// Precondition: bitOffset % 8 == 2 (all BS forms that appear in our
+    /// writer leave a remainder of 2: "01"+RC = 10 bits, "00"+RS = 18 bits,
+    /// "10"/"11" = 2 bits — the byte+2-bit shift is always 2).
+    /// Call this BEFORE alignToByte().
+    void patchRawLong32AtBit(size_t bitOffset, duint32 val);
+
 private:
     /// Append a single byte assuming the cursor is byte-aligned.
     void appendAlignedByte(duint8 b);

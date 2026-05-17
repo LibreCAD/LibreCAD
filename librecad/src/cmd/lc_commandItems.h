@@ -206,7 +206,7 @@ const LC_CommandItem g_commandList[] = {
         },
         // draw circle by arc
         {
-            {{"circlebyarc", QObject::tr("criclebyarc", "draw circle by arc")}},
+            {{"circlebyarc", QObject::tr("circlebyarc", "draw circle by arc")}},
             {{"cba", QObject::tr("cba", "draw circle by arc")}},
             RS2::ActionDrawCircleByArc
         },

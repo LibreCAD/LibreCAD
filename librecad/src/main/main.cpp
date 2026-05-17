@@ -50,6 +50,7 @@
 #include <QTimer>
 #include <QToolBar>
 
+#include "console_dxf2dwg.h"
 #include "console_dxf2pdf.h"
 #include "console_dxf2png.h"
 #include "lc_application.h"
@@ -106,6 +107,8 @@ int showHelpMessage() {
     qDebug()<<"  dxf2pdf\tRun librecad as console dxf2pdf tool. Use -h for help.";
     qDebug()<<"  dxf2png\tRun librecad as console dxf2png tool. Use -h for help.";
     qDebug()<<"  dxf2svg\tRun librecad as console dxf2svg tool. Use -h for help.";
+    qDebug()<<"  dxf2dwg\tConvert DXF file(s) to DWG. Use -h for help.";
+    qDebug()<<"  dwg2dxf\tConvert DWG file(s) to DXF. Use -h for help.";
     qDebug()<<"";
     qDebug()<<"Options:";
     qDebug()<<"";
@@ -288,6 +291,12 @@ int main(int argc, char** argv) {
         }
         if (arg.compare("dxf2png") == 0 || arg == "dxf2svg") {
             return console_dxf2png(argc, argv);
+        }
+        if (arg.compare("dxf2dwg") == 0) {
+            return consoleDxf2dwg(argc, argv);
+        }
+        if (arg.compare("dwg2dxf") == 0) {
+            return consoleDwg2dxf(argc, argv);
         }
     }
 

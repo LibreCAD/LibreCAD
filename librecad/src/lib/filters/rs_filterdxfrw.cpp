@@ -196,7 +196,7 @@ QString RS_FilterDXFRW::lastError() const{
     case DRW::BAD_READ_FILE_HEADER:
         return (QObject::tr( "error reading DXF/DWG file header", "RS_FilterDXFRW"));
     case DRW::BAD_READ_HEADER:
-        return (QObject::tr( "error reading DXF/DWG header dara", "RS_FilterDXFRW"));
+        return (QObject::tr( "error reading DXF/DWG header data", "RS_FilterDXFRW"));
     case DRW::BAD_READ_HANDLES:
         return (QObject::tr( "error reading DXF/DWG object map", "RS_FilterDXFRW"));
     case DRW::BAD_READ_CLASSES:
@@ -275,7 +275,7 @@ bool RS_FilterDXFRW::fileImport(RS_Graphic& g, const QString& file, [[maybe_unus
         // openFile() even on the BAD_VERSION fork.
         m_dwgVersion = dwgr.getVersion();
         RS_DEBUG->print("RS_FilterDXFRW::fileImport: reading DWG file: OK");
-        RS_DIALOGFACTORY->commandMessage(QObject::tr("Opened dwg file version %1.").arg(printDwgVersion(dwgr.getVersion())));
+        RS_DIALOGFACTORY->commandMessage(QObject::tr("Opened DWG file version %1.").arg(printDwgVersion(dwgr.getVersion())));
         const size_t parseFailures = dwgr.getEntityParseFailures();
         if (parseFailures > 0) {
           RS_DIALOGFACTORY->commandMessage(
@@ -3657,11 +3657,12 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic& g, const QString& file, RS2::FormatT
 #endif
 
 #ifdef DWGSUPPORT
-    if (type == RS2::FormatDWG) {
-        m_version = 1015;
+    if (type == RS2::FormatDWG || type == RS2::FormatDWG2004) {
+        DRW::Version dwgVer = (type == RS2::FormatDWG2004) ? DRW::AC1018 : DRW::AC1015;
+        m_version = (dwgVer == DRW::AC1018) ? 1018 : 1015;
         m_exactColor = false;
         m_dwgW = new dwgRW(QFile::encodeName(file).constData());
-        bool success = m_dwgW->write(this, DRW::AC1015, false);
+        bool success = m_dwgW->write(this, dwgVer, false);
         delete m_dwgW;
         m_dwgW = nullptr;
         return success;
