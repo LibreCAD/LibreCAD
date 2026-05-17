@@ -5314,21 +5314,21 @@ void RS_FilterDXFRW::writeSplinePoints(LC_SplinePoints *s){
 	auto const& cp = s->getControlPoints();
 
 	if(nCtrls < 3){
-        if(nCtrls > 1){
+		if(nCtrls > 1){
 			DRW_Line line;
 			line.basePoint.x = cp.at(0).x;
 			line.basePoint.y = cp.at(0).y;
 			line.secPoint.x = cp.at(1).x;
 			line.secPoint.y = cp.at(1).y;
 			getEntityAttributes(&line, s);
-            if (m_dwgW) { m_dwgW->writeLine(&line); return; }
-            m_dxfW->writeLine(&line);
+			if (m_dwgW) { m_dwgW->writeLine(&line); return; }
+			m_dxfW->writeLine(&line);
 		}
 		return;
 	}
 
 	// version 12 do not support Spline write as polyline
-    if(m_version == 1009){
+	if(m_version == 1009){
 		DRW_Polyline pol;
 		auto const& sp = s->getStrokePoints();
 
@@ -5336,33 +5336,32 @@ void RS_FilterDXFRW::writeSplinePoints(LC_SplinePoints *s){
 			pol.addVertex(DRW_Vertex(sp.at(i).x, sp.at(i).y, 0.0, 0.0));
 		}
 
-        if (s->isClosed()) {
-            pol.flags = 1;
-        }
+		if (s->isClosed()) {
+			pol.flags = 1;
+		}
 
 		getEntityAttributes(&pol, s);
-        m_dxfW->writePolyline(&pol);
+		m_dxfW->writePolyline(&pol);
 		return;
 	}
 
 	DRW_Spline sp;
-    if (s->isClosed()) {
-        sp.flags = 11;
-    }
-    else {
-        sp.flags = 8;
-    }
+	if (s->isClosed()) {
+		sp.flags = 11;
+	}
+	else {
+		sp.flags = 8;
+	}
 
 	sp.ncontrol = nCtrls;
 	sp.degree = 2;
 	sp.nknots = nCtrls + 3;
 
-    LC_SplinePointsData &data = s->getData();
-    sp.nfit = data.splinePoints.size();
+	LC_SplinePointsData &data = s->getData();
+	sp.nfit = data.splinePoints.size();
+	auto const& fitPoints = data.splinePoints;
 
-    auto const& fitPoints = data.splinePoints;
-
-        // write spline knots:
+	// write spline knots:
 	for(int i = 1; i <= sp.nknots; i++){
 		if(i <= 3){
 			sp.knotslist.push_back(0.0);
@@ -5376,23 +5375,23 @@ void RS_FilterDXFRW::writeSplinePoints(LC_SplinePoints *s){
 	}
 
 	// write spline control points:
-    for (auto const& v : cp) {
-        sp.controllist.push_back(std::make_shared<DRW_Coord>(v.x, v.y));
-    }
+	for (auto const& v : cp) {
+		sp.controllist.push_back(std::make_shared<DRW_Coord>(v.x, v.y));
+	}
 
-    // fit points
-    for (auto const& v : fitPoints) {
-        sp.fitlist.push_back(std::make_shared<DRW_Coord>(v.x, v.y));
-    }
+	// fit points
+	for (auto const& v : fitPoints) {
+		sp.fitlist.push_back(std::make_shared<DRW_Coord>(v.x, v.y));
+	}
 
-    getEntityAttributes(&sp, s);
-    if (m_dwgW) {
-        sp.fitlist.clear();  // DWG scenario 1 only: encoder picks scenario 2 when fitlist
-        sp.nfit = 0;         // is non-empty, corrupting the stream; control pts are exact.
-        m_dwgW->writeSpline(&sp);
-        return;
-    }
-    m_dxfW->writeSpline(&sp);
+	getEntityAttributes(&sp, s);
+	if (m_dwgW) {
+		sp.fitlist.clear();  // DWG scenario 1 only: encoder picks scenario 2 when fitlist
+		sp.nfit = 0;         // is non-empty, corrupting the stream; control pts are exact.
+		m_dwgW->writeSpline(&sp);
+		return;
+	}
+	m_dxfW->writeSpline(&sp);
 }
 
 /**

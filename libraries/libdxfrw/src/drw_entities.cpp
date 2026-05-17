@@ -1050,7 +1050,7 @@ bool DRW_MText::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs) {
     sH.code = 5;
     sH.ref  = sref;
     sH.size = 0;
-    {
+    if (sref != 0) {
         duint32 t = sref;
         while (t != 0) { t >>= 8; ++sH.size; }
     }
@@ -1272,7 +1272,7 @@ bool DRW_Text::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs) {
     sH.code = 5;  // hard pointer
     sH.ref  = sref;
     sH.size = 0;
-    {
+    if (sref != 0) {
         duint32 t = sref;
         while (t != 0) { t >>= 8; ++sH.size; }
     }
@@ -2733,7 +2733,7 @@ bool DRW_Attrib::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs) {
     sH.code = 5;
     sH.ref  = sref;
     sH.size = 0;
-    { duint32 t = sref; while (t != 0) { t >>= 8; ++sH.size; } }
+    if (sref != 0) { duint32 t = sref; while (t != 0) { t >>= 8; ++sH.size; } }
     buf->putHandle(sH);
     return true;
 }
@@ -2870,7 +2870,7 @@ bool DRW_Attdef::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs) {
     sH.code = 5;
     sH.ref  = sref;
     sH.size = 0;
-    { duint32 t = sref; while (t != 0) { t >>= 8; ++sH.size; } }
+    if (sref != 0) { duint32 t = sref; while (t != 0) { t >>= 8; ++sH.size; } }
     buf->putHandle(sH);
     return true;
 }
@@ -4514,7 +4514,7 @@ static void putDimHandles(dwgBufferW *buf, const dwgHandle& dimStyleH, const dwg
     dsH.code = 5;
     dsH.ref  = (dimStyleH.ref == 0) ? 0x15 : dimStyleH.ref;
     dsH.size = 0;
-    { duint32 t = dsH.ref; while (t != 0) { t >>= 8; ++dsH.size; } }
+    if (dsH.ref != 0) { duint32 t = dsH.ref; while (t != 0) { t >>= 8; ++dsH.size; } }
     buf->putHandle(dsH);
 
     dwgHandle bhH;
