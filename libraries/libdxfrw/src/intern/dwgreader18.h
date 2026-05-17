@@ -2,6 +2,7 @@
 **  libDXFrw - Library to read/write DXF files (ascii & binary)              **
 **                                                                           **
 **  Copyright (C) 2011-2015 José F. Soriano, rallazz@gmail.com               **
+**  Copyright (C) 2026 LibreCAD (librecad.org)                                **
 **                                                                           **
 **  This library is free software, licensed under the terms of the GNU       **
 **  General Public License as published by the Free Software Foundation,     **
@@ -41,7 +42,7 @@ static const int DRW_magicNumEnd18[] = {
 
 class dwgReader18 : public dwgReader {
 public:
-    dwgReader18(std::ifstream *stream, dwgR *p):dwgReader(stream, p){
+    dwgReader18(std::ifstream *stream, dwgRW *p):dwgReader(stream, p){
     }
     bool readMetaData() override;
     bool readFileHeader() override;

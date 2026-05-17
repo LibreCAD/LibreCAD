@@ -5,6 +5,7 @@
 ** Copyright (C) 2015 A. Stebich (librecad@mail.lordofbikes.de)
 ** Copyright (C) 2011 Rallaz, rallazz@gmail.com
 ** Copyright (C) 2010 R. van Twisk (librecad@rvt.dds.nl)
+** Copyright (C) 2026 LibreCAD (librecad.org)
 **
 **
 ** This file may be distributed and/or modified under the terms of the
@@ -3655,6 +3656,18 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic& g, const QString& file, RS2::FormatT
     //
 #endif
 
+#ifdef DWGSUPPORT
+    if (type == RS2::FormatDWG) {
+        m_version = 1015;
+        m_exactColor = false;
+        m_dwgW = new dwgRW(QFile::encodeName(file).constData());
+        bool success = m_dwgW->write(this, DRW::AC1015, false);
+        delete m_dwgW;
+        m_dwgW = nullptr;
+        return success;
+    }
+#endif
+
     // set version for DXF filter:
     m_exactColor = false;
     DRW::Version exportVersion;
@@ -3794,6 +3807,21 @@ void RS_FilterDXFRW::writeBlockRecords(){
  * Writes blocks.
  */
 void RS_FilterDXFRW::writeBlocks() {
+#ifdef DWGSUPPORT
+    if (m_dwgW) {
+        // Register each user block so INSERT entities can reference them by name.
+        for (unsigned i = 0; i < m_graphic->countBlocks(); i++) {
+            RS_Block *blk = m_graphic->blockAt(i);
+            if (!blk->isUndone()) {
+                DRW_Coord bp{blk->getBasePoint().x, blk->getBasePoint().y,
+                             blk->getBasePoint().z};
+                m_dwgW->defineBlock(blk->getName().toUtf8().constData(), bp);
+            }
+        }
+        return;
+    }
+#endif
+
     RS_Block *blk;
 
     //write unnamed blocks
@@ -4623,6 +4651,7 @@ void RS_FilterDXFRW::prepareDRWDimStyle(DRW_Dimstyle &d, LC_DimStyle* ds) {
 }
 
 void RS_FilterDXFRW::writeObjects() {
+    if (m_dwgW) return;  // DWG writer handles object section internally
     /* PLOTSETTINGS */
     DRW_PlotSettings ps;
     QString horizXvert = QString("%1x%2").arg(m_graphic->getPagesNumHoriz())
@@ -4657,9 +4686,12 @@ void RS_FilterDXFRW::writeEntities(){
   // Pre-pass: reconstruct MLINE entities from decomposed polylines that
   // carry LibreCAD_MLINE XDATA. Consumed polylines are emitted as
   // MLINE; the rest fall through to the normal write path.
+  // DWG writer has no MLINE/UNDERLAY — skip reconstruction passes.
   std::set<RS_Entity *> consumed;
-  reconstructMLines(m_graphic, consumed);
-  reconstructUnderlays(m_graphic, consumed);
+  if (!m_dwgW) {
+    reconstructMLines(m_graphic, consumed);
+    reconstructUnderlays(m_graphic, consumed);
+  }
   for (RS_Entity *e :
        lc::LC_ContainerTraverser{*m_graphic, RS2::ResolveNone}.entities()) {
     if (e->getFlag(RS2::FlagUndone))
@@ -5044,6 +5076,7 @@ void RS_FilterDXFRW::writePoint(RS_Point* p) {
     getEntityAttributes(&point, p);
     point.basePoint.x = p->getStartpoint().x;
     point.basePoint.y = p->getStartpoint().y;
+    if (m_dwgW) { m_dwgW->writePoint(&point); return; }
     m_dxfW->writePoint(&point);
 }
 
@@ -5057,6 +5090,7 @@ void RS_FilterDXFRW::writeLine(RS_Line* l) {
     line.basePoint.y = l->getStartpoint().y;
     line.secPoint.x = l->getEndpoint().x;
     line.secPoint.y = l->getEndpoint().y;
+    if (m_dwgW) { m_dwgW->writeLine(&line); return; }
     m_dxfW->writeLine(&line);
 }
 
@@ -5069,6 +5103,7 @@ void RS_FilterDXFRW::writeCircle(RS_Circle* c) {
     circle.basePoint.x = c->getCenter().x;
     circle.basePoint.y = c->getCenter().y;
     circle.radious = c->getRadius();
+    if (m_dwgW) { m_dwgW->writeCircle(&circle); return; }
     m_dxfW->writeCircle(&circle);
 }
 
@@ -5088,6 +5123,7 @@ void RS_FilterDXFRW::writeArc(RS_Arc* a) {
         arc.staangle = a->getAngle1();
         arc.endangle = a->getAngle2();
     }
+    if (m_dwgW) { m_dwgW->writeArc(&arc); return; }
     m_dxfW->writeArc(&arc);
 }
 
@@ -5152,6 +5188,7 @@ void RS_FilterDXFRW::writeLWPolyline(RS_Polyline* l) {
     }
     pol.vertexnum = pol.vertlist.size();
     getEntityAttributes(&pol, l);
+    if (m_dwgW) { m_dwgW->writeLWPolyline(&pol); return; }
     m_dxfW->writeLWPolyline(&pol);
 }
 
@@ -5159,6 +5196,7 @@ void RS_FilterDXFRW::writeLWPolyline(RS_Polyline* l) {
  * Writes the given polyline entity to the file (old style).
  */
 void RS_FilterDXFRW::writePolyline(RS_Polyline* p) {
+    if (m_dwgW) return;  // DWG has no old-style POLYLINE entity
     if (p == nullptr)
         return;
 
@@ -5264,6 +5302,7 @@ void RS_FilterDXFRW::writeSpline(RS_Spline *s) {
     sp.nknots = sp.knotslist.size();
 
     getEntityAttributes(&sp, s);
+    if (m_dwgW) { m_dwgW->writeSpline(&sp); return; }
     m_dxfW->writeSpline(&sp);
 }
 
@@ -5275,20 +5314,21 @@ void RS_FilterDXFRW::writeSplinePoints(LC_SplinePoints *s){
 	auto const& cp = s->getControlPoints();
 
 	if(nCtrls < 3){
-        if(nCtrls > 1){
+		if(nCtrls > 1){
 			DRW_Line line;
 			line.basePoint.x = cp.at(0).x;
 			line.basePoint.y = cp.at(0).y;
 			line.secPoint.x = cp.at(1).x;
 			line.secPoint.y = cp.at(1).y;
 			getEntityAttributes(&line, s);
-            m_dxfW->writeLine(&line);
+			if (m_dwgW) { m_dwgW->writeLine(&line); return; }
+			m_dxfW->writeLine(&line);
 		}
 		return;
 	}
 
 	// version 12 do not support Spline write as polyline
-    if(m_version == 1009){
+	if(m_version == 1009){
 		DRW_Polyline pol;
 		auto const& sp = s->getStrokePoints();
 
@@ -5296,33 +5336,32 @@ void RS_FilterDXFRW::writeSplinePoints(LC_SplinePoints *s){
 			pol.addVertex(DRW_Vertex(sp.at(i).x, sp.at(i).y, 0.0, 0.0));
 		}
 
-        if (s->isClosed()) {
-            pol.flags = 1;
-        }
+		if (s->isClosed()) {
+			pol.flags = 1;
+		}
 
 		getEntityAttributes(&pol, s);
-        m_dxfW->writePolyline(&pol);
+		m_dxfW->writePolyline(&pol);
 		return;
 	}
 
 	DRW_Spline sp;
-    if (s->isClosed()) {
-        sp.flags = 11;
-    }
-    else {
-        sp.flags = 8;
-    }
+	if (s->isClosed()) {
+		sp.flags = 11;
+	}
+	else {
+		sp.flags = 8;
+	}
 
 	sp.ncontrol = nCtrls;
 	sp.degree = 2;
 	sp.nknots = nCtrls + 3;
 
-    LC_SplinePointsData &data = s->getData();
-    sp.nfit = data.splinePoints.size();
+	LC_SplinePointsData &data = s->getData();
+	sp.nfit = data.splinePoints.size();
+	auto const& fitPoints = data.splinePoints;
 
-    auto const& fitPoints = data.splinePoints;
-
-        // write spline knots:
+	// write spline knots:
 	for(int i = 1; i <= sp.nknots; i++){
 		if(i <= 3){
 			sp.knotslist.push_back(0.0);
@@ -5336,17 +5375,23 @@ void RS_FilterDXFRW::writeSplinePoints(LC_SplinePoints *s){
 	}
 
 	// write spline control points:
-    for (auto const& v : cp) {
-        sp.controllist.push_back(std::make_shared<DRW_Coord>(v.x, v.y));
-    }
+	for (auto const& v : cp) {
+		sp.controllist.push_back(std::make_shared<DRW_Coord>(v.x, v.y));
+	}
 
-    // fit points
-    for (auto const& v : fitPoints) {
-        sp.fitlist.push_back(std::make_shared<DRW_Coord>(v.x, v.y));
-    }
+	// fit points
+	for (auto const& v : fitPoints) {
+		sp.fitlist.push_back(std::make_shared<DRW_Coord>(v.x, v.y));
+	}
 
-    getEntityAttributes(&sp, s);
-    m_dxfW->writeSpline(&sp);
+	getEntityAttributes(&sp, s);
+	if (m_dwgW) {
+		sp.fitlist.clear();  // DWG scenario 1 only: encoder picks scenario 2 when fitlist
+		sp.nfit = 0;         // is non-empty, corrupting the stream; control pts are exact.
+		m_dwgW->writeSpline(&sp);
+		return;
+	}
+	m_dxfW->writeSpline(&sp);
 }
 
 /**
@@ -5369,6 +5414,7 @@ void RS_FilterDXFRW::writeEllipse(RS_Ellipse* s) {
         el.staparam = s->getAngle1();
         el.endparam = s->getAngle2();
     }
+    if (m_dwgW) { m_dwgW->writeEllipse(&el); return; }
     m_dxfW->writeEllipse(&el);
 }
 
@@ -5378,15 +5424,12 @@ void RS_FilterDXFRW::writeEllipse(RS_Ellipse* s) {
  * Uses LC_HyperbolaSpline to create the standard SPLINE representation.
  */
 void RS_FilterDXFRW::writeHyperbola(LC_Hyperbola* h) {
-    if (h == nullptr || !h->isValid() || m_dxfW == nullptr) {
-        return;
-    }
-
+    if (h == nullptr || !h->isValid()) return;
     DRW_Spline spl;
     getEntityAttributes(&spl, h);
-
     if (LC_HyperbolaSpline::hyperbolaToSpline(h->getData(), spl)) {
-        m_dxfW->writeSpline(&spl);
+        if (m_dwgW) { m_dwgW->writeSpline(&spl); return; }
+        if (m_dxfW) m_dxfW->writeSpline(&spl);
     }
 }
 
@@ -5408,6 +5451,7 @@ void RS_FilterDXFRW::writeInsert(RS_Insert* i) {
     in.rowcount = i->getRows();
     in.colspace = i->getSpacing().x;
     in.rowspace =i->getSpacing().y;
+    if (m_dwgW) { m_dwgW->writeInsert(&in); return; }
     m_dxfW->writeInsert(&in);
 }
 
@@ -5527,6 +5571,7 @@ void RS_FilterDXFRW::writeMText(RS_MText* t) {
         text->widthscale =t->getUsedTextWidth(); //getSize().x;
 		txt2.interlin = t->getLineSpacingFactor();
 
+        if (m_dwgW) { m_dwgW->writeMText(static_cast<DRW_MText*>(text)); return; }
         m_dxfW->writeMText(static_cast<DRW_MText*>(text));
     }
 }
@@ -5566,6 +5611,7 @@ void RS_FilterDXFRW::writeText(RS_Text* t){
 
     if (!t->getText().isEmpty()) {
         text.text = toDxfString(t->getText()).toUtf8().data();
+        if (m_dwgW) { m_dwgW->writeText(&text); return; }
         m_dxfW->writeText(&text);
     }
 }
@@ -5708,6 +5754,7 @@ void RS_FilterDXFRW::writeDimension(RS_Dimension* d) {
     if (!blkName.isEmpty()) {
         dim->setName(blkName.toStdString());
     }
+    if (m_dwgW) { m_dwgW->writeDimension(dim); delete dim; return; }
     LC_DimStyle* override = d->getDimStyleOverride();
     if (override != nullptr) {
         LC_ExtEntityData extEntityData;
@@ -5722,6 +5769,7 @@ void RS_FilterDXFRW::writeDimension(RS_Dimension* d) {
  * Writes the given leader entity to the file.
  */
 void RS_FilterDXFRW::writeLeader(RS_Leader* l) {
+    if (m_dwgW) return;
     if (l->count() <= 0) {
         RS_DEBUG->print(RS_Debug::D_WARNING, "dropping leader with no vertices");
     }
@@ -5948,6 +5996,7 @@ void RS_FilterDXFRW::writeHatch(RS_Hatch * h) {
             ha.appendLoop(lData);
         }
     }
+    if (m_dwgW) { m_dwgW->writeHatch(&ha); return; }
     m_dxfW->writeHatch(&ha);
 }
 
@@ -5976,11 +6025,13 @@ void RS_FilterDXFRW::writeSolid(RS_Solid* s) {
         solid.fourPoint.x = corner.x;
         solid.fourPoint.y = corner.y;
     }
+    if (m_dwgW) { m_dwgW->writeSolid(&solid); return; }
     m_dxfW->writeSolid(&solid);
 }
 
 
 void RS_FilterDXFRW::writeImage(RS_Image * i) {
+    if (m_dwgW) return;
     DRW_Image image;
     getEntityAttributes(&image, i);
 
@@ -6008,6 +6059,7 @@ void RS_FilterDXFRW::writeImage(RS_Image * i) {
 }
 
 void RS_FilterDXFRW::writeWipeout(LC_Wipeout *w) {
+  if (m_dwgW) return;
   if (w == nullptr) {
     return;
   }
@@ -6050,6 +6102,7 @@ void RS_FilterDXFRW::writeWipeout(LC_Wipeout *w) {
  * that depend on geometric round-trip will need the follow-up.
  */
 void RS_FilterDXFRW::writeMLeader(LC_MLeader *m) {
+  if (m_dwgW) return;
   if (m == nullptr)
     return;
   DRW_MLeader e;

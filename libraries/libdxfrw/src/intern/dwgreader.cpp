@@ -2,6 +2,7 @@
 **  libDXFrw - Library to read/write DXF files (ascii & binary)              **
 **                                                                           **
 **  Copyright (C) 2011-2015 José F. Soriano, rallazz@gmail.com               **
+**  Copyright (C) 2026 LibreCAD (librecad.org)                                **
 **                                                                           **
 **  This library is free software, licensed under the terms of the GNU       **
 **  General Public License as published by the Free Software Foundation,     **
@@ -1017,7 +1018,7 @@ bool dwgReader::readDwgEntities(DRW_Interface& intfa, dwgBuffer *dbuf){
     // Per-entity parseDwg failures are warnings, not section failures.
     // Continue parsing the rest of the ObjectMap so a single bad entity
     // doesn't drop the rest of the modelspace. m_entityParseFailures
-    // accumulates the count for caller reporting (see dwgR::getEntityParseFailures).
+    // accumulates the count for caller reporting (see dwgRW::getEntityParseFailures).
     size_t failures = 0;
     auto itB=ObjectMap.begin();
     auto itE=ObjectMap.end();

@@ -24,6 +24,7 @@
 
 #include <QApplication>
 
+#include "lc_filedialogservice.h"
 #include "qg_filedialog.h"
 #include "rs_dialogfactory.h"
 #include "rs_dialogfactoryinterface.h"
@@ -59,9 +60,12 @@ bool LC_DocumentsStorage::saveDocument(RS_Document* document, RS_GraphicView * g
 }
 
 bool LC_DocumentsStorage::doSaveGraphicAs(RS_Graphic* graphic, RS_GraphicView *graphicView, bool &cancelled, const QString& currentFileName){
-    RS2::FormatType saveFormat = RS2::FormatDXFRW;
-    QG_FileDialog dlg(graphicView);
-    QString fileName = dlg.getSaveFile(&saveFormat, currentFileName);
+    auto dialogResult = LC_FileDialogService::getFileDetails(
+        LC_FileDialogService::SaveDrawing, currentFileName);
+
+    QString fileName = dialogResult.filePath;
+    RS2::FormatType saveFormat = dialogResult.fileType;
+
     bool result;
     if (fileName.isEmpty()) {
         // cancel is not an error - returns true

@@ -5,6 +5,7 @@
 ** Copyright (C) 2021 A. Stebich (librecad@mail.lordofbikes.de)
 ** Copyright (C) 2010 R. van Twisk (librecad@rvt.dds.nl)
 ** Copyright (C) 2001-2003 RibbonSoft. All rights reserved.
+** Copyright (C) 2026 LibreCAD (librecad.org)
 **
 **
 ** This file may be distributed and/or modified under the terms of the
@@ -151,8 +152,7 @@ RS2::FormatType RS_FileIO::detectFormat(QString const& file, bool forRead)
         {"cxf", RS2::FormatCXF},
         {"lff", RS2::FormatLFF}
     };
-// only read support for dwg
-    if(forRead) list["dwg"]=RS2::FormatDWG;
+    list["dwg"] = RS2::FormatDWG;
 
     QString const extension = QFileInfo(file).suffix().toLower();
     RS2::FormatType type=(list.find(extension)!=

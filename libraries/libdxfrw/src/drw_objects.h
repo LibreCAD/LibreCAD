@@ -3,6 +3,7 @@
 **                                                                           **
 **  Copyright (C) 2016-2022 A. Stebich (librecad@mail.lordofbikes.de)        **
 **  Copyright (C) 2011-2015 José F. Soriano, rallazz@gmail.com               **
+**  Copyright (C) 2026 LibreCAD (librecad.org)                                **
 **                                                                           **
 **  This library is free software, licensed under the terms of the GNU       **
 **  General Public License as published by the Free Software Foundation,     **
@@ -58,8 +59,11 @@ namespace DRW {
 //SPATIAL_INDEX, SPATIAL_FILTER, TABLEGEOMETRY, TABLESTYLES,
 }
 
+class dwgBufferW;
+
 #define SETOBJFRIENDS  friend class dxfRW; \
-                       friend class dwgReader;
+                       friend class dwgReader; \
+                       friend class dwgWriter15;
 
 //! Base class for tables entries
 /*!

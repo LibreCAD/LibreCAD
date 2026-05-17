@@ -51,6 +51,7 @@ namespace LC_FileDialogService {
         RS2::FormatType fileType = RS2::FormatUnknown;
         int checkState = 0;
     };
-    FileDialogResult getFileDetails(FileDialogMode const &fileDialogMode);
+    FileDialogResult getFileDetails(FileDialogMode const &fileDialogMode,
+                                    const QString &currentFileName = QString{});
 }
 #endif // LC_FILEDIALOGSERVICE_H

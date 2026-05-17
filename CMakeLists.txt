@@ -273,6 +273,11 @@ set(SHARED_SOURCES
     libraries/libdxfrw/src/intern/drw_textcodec.h
     libraries/libdxfrw/src/intern/dwgbuffer.cpp
     libraries/libdxfrw/src/intern/dwgbuffer.h
+    libraries/libdxfrw/src/intern/dwgbufferw.cpp
+    libraries/libdxfrw/src/intern/dwgbufferw.h
+    libraries/libdxfrw/src/intern/dwgwriter.h
+    libraries/libdxfrw/src/intern/dwgwriter15.cpp
+    libraries/libdxfrw/src/intern/dwgwriter15.h
     libraries/libdxfrw/src/intern/dwgreader.cpp
     libraries/libdxfrw/src/intern/dwgreader.h
     libraries/libdxfrw/src/intern/dwgreader15.cpp
@@ -1722,7 +1727,11 @@ if(BUILD_TESTS)
         librecad/src/lib/engine/document/entities/tests/rs_text_bidi_tests.cpp
         librecad/src/lib/math/tests/rs_math_tests.cpp
         librecad/src/lib/math/tests/lc_quadratic_tests.cpp
+        librecad/src/lib/filters/tests/dwg_buffer_round_trip_tests.cpp
+        librecad/src/lib/filters/tests/dwg_entity_encode_round_trip_tests.cpp
+        librecad/src/lib/filters/tests/dwg_header_encode_round_trip_tests.cpp
         librecad/src/lib/filters/tests/dwg_smoke_tests.cpp
+        librecad/src/lib/filters/tests/dwg_write_smoke_tests.cpp
         librecad/src/lib/filters/tests/eed_tests.cpp
         librecad/src/lib/filters/tests/dbcolor_tests.cpp
         librecad/src/lib/filters/tests/entity_metadata_tests.cpp
