@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
+<?xml version='1.0' encoding='utf-8'?>
 <TS version="2.1" language="uk">
 <context>
     <name>ColorWizard</name>
@@ -356,7 +355,7 @@ or [%2]</source>
     </message>
     <message>
         <source>Select Entity</source>
-        <translation>Виберіть об&apos;єкт</translation>
+        <translation>Виберіть об'єкт</translation>
     </message>
     <message>
         <source>Select Window</source>
@@ -376,7 +375,7 @@ or [%2]</source>
     </message>
     <message>
         <source>Deselect Intersected Entities</source>
-        <translation>Скасувати вибір пересічних об&apos;єктів</translation>
+        <translation>Скасувати вибір пересічних об'єктів</translation>
     </message>
     <message>
         <source>(De-)Select Layer</source>
@@ -1155,7 +1154,7 @@ or [%2]</source>
         <translation>Дублювати</translation>
     </message>
     <message>
-        <source>Update Current Pen by Active Layer&apos; Pen</source>
+        <source>Update Current Pen by Active Layer' Pen</source>
         <translation>Оновити поточне перо пером активного шару</translation>
     </message>
 </context>
@@ -1169,7 +1168,7 @@ or [%2]</source>
 <context>
     <name>LC_ActionLayersExport</name>
     <message>
-        <source>Saving layer &quot;%1&quot; as &quot;%2&quot; </source>
+        <source>Saving layer "%1" as "%2" </source>
         <translation>Збереження шару «%1» як «%2» </translation>
     </message>
 </context>
@@ -1684,7 +1683,7 @@ or [%2]</source>
         <translation>Перетворити на звичайний шар</translation>
     </message>
     <message>
-        <source>&amp;Select Layer&apos;s Entities</source>
+        <source>&amp;Select Layer's Entities</source>
         <translation>&amp;Вибрати об’єкти шару</translation>
     </message>
     <message>
@@ -2199,11 +2198,11 @@ or [%2]</source>
         <translation>до поточного</translation>
     </message>
     <message>
-        <source>Update Current Pen by Active Layer&apos; Pen</source>
+        <source>Update Current Pen by Active Layer' Pen</source>
         <translation>Оновити поточне перо пером активного шару</translation>
     </message>
     <message>
-        <source>Fill Pen Editor from Active Layer&apos;s Pen</source>
+        <source>Fill Pen Editor from Active Layer's Pen</source>
         <translation>Заповнити редактор пером активного шару</translation>
     </message>
     <message>
@@ -2268,14 +2267,14 @@ or [%2]</source>
     </message>
     <message>
         <source>Location of pens file is changed, please restart the application so new pens file will be used.
-Please note that if you&apos;ll save pen via editor without restart, current pens from palette will be saved in the new file and therefore existing content of it will be overridden.</source>
+Please note that if you'll save pen via editor without restart, current pens from palette will be saved in the new file and therefore existing content of it will be overridden.</source>
         <translation type="vanished">Розташування файлу пер змінено, перезапустіть програму, щоб використовувати новий файл пер.
 Зауважте: якщо ви збережете перо через редактор без перезапуску, поточні пера з палітри буде збережено в новому файлі і наявний вміст буде перезаписано.</translation>
     </message>
     <message>
         <source>Location of pens file is changed, please restart the application so new pens file will be used.
 
-Please note that if you&apos;ll save pen via editor without restart, current pens from palette will be saved in the new file and therefore existing content of it will be overridden.</source>
+Please note that if you'll save pen via editor without restart, current pens from palette will be saved in the new file and therefore existing content of it will be overridden.</source>
         <translation>Розташування файлу стилів змінено, будь ласка, перезапустіть програму, щоб використати новий файл стилів.
 
 Зверніть увагу, що якщо ви збережете стиль через редактор без перезапуску, поточні стилі з палітри будуть збережені в новому файлі, і, отже, існуючий вміст буде перезаписано.</translation>
@@ -2788,12 +2787,12 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <translation>видалити праворуч</translation>
     </message>
     <message>
-        <source>remove 0&apos;</source>
-        <translation>видалити 0&apos;</translation>
+        <source>remove 0'</source>
+        <translation>видалити 0'</translation>
     </message>
     <message>
-        <source>remove 0&quot;</source>
-        <translation>видалити 0&quot;</translation>
+        <source>remove 0"</source>
+        <translation>видалити 0"</translation>
     </message>
 </context>
 <context>
@@ -2923,7 +2922,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <translation>Створення нового файлу …</translation>
     </message>
     <message>
-        <source>Block &apos;%1&apos;</source>
+        <source>Block '%1'</source>
         <translation>Блок „%1“</translation>
     </message>
     <message>
@@ -3121,7 +3120,7 @@ Please check its existence and permissions.</source>
 Перевірте наявність та права доступу.</translation>
     </message>
     <message>
-        <source>File &apos;%1&apos; does not exist. Opening aborted</source>
+        <source>File '%1' does not exist. Opening aborted</source>
         <translation>Файл «%1» не існує. Відкриття скасовано</translation>
     </message>
     <message>
@@ -3372,7 +3371,7 @@ Please check its existence and permissions.</source>
         <translation>&amp;Вікі</translation>
     </message>
     <message>
-        <source>User&apos;s &amp;Manual</source>
+        <source>User's &amp;Manual</source>
         <translation>&amp;Посібник користувача</translation>
     </message>
     <message>
@@ -3451,16 +3450,16 @@ Please check its existence and permissions.</source>
         <translation>Поточний шар</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+        <source>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Name of Current Active Layer&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Helvetica'; font-size:7pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;Name of Current Active Layer&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Назва поточного активного шару&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Helvetica'; font-size:7pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;Назва поточного активного шару&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
@@ -3478,7 +3477,7 @@ p, li { white-space: pre-wrap; }
         <translation>Перейменування блоку</translation>
     </message>
     <message>
-        <source>Could not name block. A block named &quot;%1&quot; already exists.</source>
+        <source>Could not name block. A block named "%1" already exists.</source>
         <translation>Перейменування блоку неможливе. Блок з назвою „%1“ вже існує. </translation>
     </message>
 </context>
@@ -4074,13 +4073,14 @@ This recursively modifies all entities of the Block itself.</source>
         <translation>Мова команд:</translation>
     </message>
     <message>
-        <source>&lt;font size=&quot;+1&quot;&gt;&lt;b&gt;Welcome to LibreCAD&lt;/b&gt;
+        <source>&lt;font size="+1"&gt;&lt;b&gt;Welcome to LibreCAD&lt;/b&gt;
 &lt;/font&gt;
 &lt;br&gt;
 Please choose the unit you want to use for new drawings and your preferred language.&lt;br&gt;
 (You can changes these settings later.)</source>
-        <translation>Ласкаво просимо до LibreCAD
-Будь ласка, виберіть одиниці вимірювання, які ви бажаєте використовувати для нових креслень, і бажану мову.
+        <translation>&lt;font size="+1"&gt;&lt;b&gt;Ласкаво просимо до LibreCAD&lt;/b&gt;&lt;/font&gt;
+&lt;br&gt;
+Будь ласка, виберіть одиниці вимірювання, які ви бажаєте використовувати для нових креслень, і бажану мову.&lt;br&gt;
 (Ви можете змінити ці налаштування пізніше.)</translation>
     </message>
 </context>
@@ -4977,7 +4977,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation>Градіани</translation>
     </message>
     <message>
-        <source>Surveyor&apos;s units</source>
+        <source>Surveyor's units</source>
         <translatorcomment>?</translatorcomment>
         <translation>Геометричні одиниці</translation>
     </message>
@@ -4986,7 +4986,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation>Параметри</translation>
     </message>
     <message>
-        <source>For the length formats &apos;Engineering&apos; and &apos;Architectural&apos;, the unit must be set to Inch.</source>
+        <source>For the length formats 'Engineering' and 'Architectural', the unit must be set to Inch.</source>
         <translation>Для форматів довжин „Інженерний“ та „Архітектурний“ як одиниць виміру повинні бути обрані дюйми.</translation>
     </message>
     <message>
@@ -5118,7 +5118,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation>Довжина засічки: </translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dimension Tick size. Set it to 0 will disable the dimension tick. Dimension arrow won&apos;t be drawn when dimension tick is enabled.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dimension Tick size. Set it to 0 will disable the dimension tick. Dimension arrow won't be drawn when dimension tick is enabled.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Засічки на розмірних лініях. Встановіть 0 для відключення засічок. Стрілок на кінцях розмірних ліній не буде, якщо засічки включені.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
@@ -5142,11 +5142,11 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation>Стиль тексту:</translation>
     </message>
     <message>
-        <source>&apos;.&apos; (Period)</source>
+        <source>'.' (Period)</source>
         <translation>translation 1</translation>
     </message>
     <message>
-        <source>&apos;,&apos; (Comma)</source>
+        <source>',' (Comma)</source>
         <translation>translation 2</translation>
     </message>
     <message>
@@ -5190,8 +5190,8 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation>Довжина для збільшення розміру над лінією розміру</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dimension arrow size. &lt;a name=&quot;result_box&quot;/&gt;without effect when tick size &lt;a name=&quot;result_box&quot;/&gt;is other than 0&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Розмір стрілки розміру. &lt;a name=&quot;result_box&quot;/&gt;не впливає, якщо розмір мітки &lt;a name=&quot;result_box&quot;/&gt;відрізняється від 0&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dimension arrow size. &lt;a name="result_box"/&gt;without effect when tick size &lt;a name="result_box"/&gt;is other than 0&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Розмір стрілки розміру. &lt;a name="result_box"/&gt;не впливає, якщо розмір мітки &lt;a name="result_box"/&gt;відрізняється від 0&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Width:</source>
@@ -5222,7 +5222,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation>Лінійна точність:</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Text alignment &lt;a name=&quot;result_box&quot;/&gt;relative to the dimension line.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Text alignment &lt;a name="result_box"/&gt;relative to the dimension line.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>Текст вирівнюється відносно розмірної лінії.</translation>
     </message>
     <message>
@@ -5326,7 +5326,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation>Архітектурний (метричний)</translation>
     </message>
     <message>
-        <source>For the length format &apos;Architectural (metric)&apos;, the unit must be set to Meter.</source>
+        <source>For the length format 'Architectural (metric)', the unit must be set to Meter.</source>
         <translation>Для формату довжини «Архітектурний (метричний)» одиницю вимірювання потрібно встановити на «Метр».</translation>
     </message>
     <message>
@@ -5573,7 +5573,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation>Кількість об’єктів для попереднього перегляду:</translation>
     </message>
     <message>
-        <source>Don&apos;t use native OS file open dialog</source>
+        <source>Don't use native OS file open dialog</source>
         <translation>Не використовувати стандартний діалог операційної системи для відкриття файлів</translation>
     </message>
     <message>
@@ -5649,8 +5649,8 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation>Автоматично масштабувати креслення під час відкриття</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-family:&apos;-apple-system&apos;,&apos;BlinkMacSystemFont&apos;,&apos;Segoe UI&apos;,&apos;Noto Sans&apos;,&apos;Helvetica&apos;,&apos;Arial&apos;,&apos;sans-serif&apos;,&apos;Apple Color Emoji&apos;,&apos;Segoe UI Emoji&apos;; font-size:14px; color:#1f2328; background-color:#ffffff;&quot;&gt;Part library folder. The symbol library dxf files must be located in the subdirectories of this folder. The subfolder names will be displayed in the Library Browser.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-family:&apos;-apple-system&apos;,&apos;BlinkMacSystemFont&apos;,&apos;Segoe UI&apos;,&apos;Noto Sans&apos;,&apos;Helvetica&apos;,&apos;Arial&apos;,&apos;sans-serif&apos;,&apos;Apple Color Emoji&apos;,&apos;Segoe UI Emoji&apos;; font-size:14px; color:#1f2328; background-color:#ffffff;&quot;&gt;( Menu: Widgets &amp;gt; Dock Widgets &amp;gt; Library Browser)&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-family:&apos;-apple-system&apos;,&apos;BlinkMacSystemFont&apos;,&apos;Segoe UI&apos;,&apos;Noto Sans&apos;,&apos;Helvetica&apos;,&apos;Arial&apos;,&apos;sans-serif&apos;,&apos;Apple Color Emoji&apos;,&apos;Segoe UI Emoji&apos;; font-size:14px; color:#1f2328; background-color:#ffffff;&quot;&gt;Папка бібліотеки деталей. Файли DXF бібліотеки символів повинні знаходитися в підкаталогах цієї папки. Назви підкаталогів відображатимуться в переглядачі бібліотеки.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-family:&apos;-apple-system&apos;,&apos;BlinkMacSystemFont&apos;,&apos;Segoe UI&apos;,&apos;Noto Sans&apos;,&apos;Helvetica&apos;,&apos;Arial&apos;,&apos;sans-serif&apos;,&apos;Apple Color Emoji&apos;,&apos;Segoe UI Emoji&apos;; font-size:14px; color:#1f2328; background-color:#ffffff;&quot;&gt;(Меню: Віджети &gt; Док-віджети &gt; Переглядач бібліотеки)&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=" font-family:'-apple-system','BlinkMacSystemFont','Segoe UI','Noto Sans','Helvetica','Arial','sans-serif','Apple Color Emoji','Segoe UI Emoji'; font-size:14px; color:#1f2328; background-color:#ffffff;"&gt;Part library folder. The symbol library dxf files must be located in the subdirectories of this folder. The subfolder names will be displayed in the Library Browser.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=" font-family:'-apple-system','BlinkMacSystemFont','Segoe UI','Noto Sans','Helvetica','Arial','sans-serif','Apple Color Emoji','Segoe UI Emoji'; font-size:14px; color:#1f2328; background-color:#ffffff;"&gt;( Menu: Widgets &amp;gt; Dock Widgets &amp;gt; Library Browser)&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=" font-family:'-apple-system','BlinkMacSystemFont','Segoe UI','Noto Sans','Helvetica','Arial','sans-serif','Apple Color Emoji','Segoe UI Emoji'; font-size:14px; color:#1f2328; background-color:#ffffff;"&gt;Папка бібліотеки деталей. Файли DXF бібліотеки символів повинні знаходитися в підкаталогах цієї папки. Назви підкаталогів відображатимуться в переглядачі бібліотеки.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=" font-family:'-apple-system','BlinkMacSystemFont','Segoe UI','Noto Sans','Helvetica','Arial','sans-serif','Apple Color Emoji','Segoe UI Emoji'; font-size:14px; color:#1f2328; background-color:#ffffff;"&gt;(Меню: Віджети &gt; Док-віджети &gt; Переглядач бібліотеки)&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Open last opened files</source>
@@ -5721,8 +5721,8 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>MakerCAM as of November 2014 does not hide SVG content 
-that has been set invisibe (&quot;display: none&quot; or &quot;visibility: hidden&quot;).</source>
-        <translation>MakerCAM, станом на листопад 2014 року, не приховує SVG-вміст, який було позначено як невидимий (&quot;display: none&quot; або &quot;visibility: hidden&quot;).</translation>
+that has been set invisibe ("display: none" or "visibility: hidden").</source>
+        <translation>MakerCAM, станом на листопад 2014 року, не приховує SVG-вміст, який було позначено як невидимий ("display: none" або "visibility: hidden").</translation>
     </message>
     <message>
         <source>MakerCAM as of November 2014 cannot correctly deal with blocks,
@@ -5737,16 +5737,16 @@ the &lt;transform&gt; attribute or as &lt;path&gt; using elliptic arc segments.<
     </message>
     <message>
         <source>Exported images can be useful in SVG editors (Inkscape, etc), 
-but avoided in some CAM&apos;s.</source>
+but avoided in some CAM's.</source>
         <translation>Експортовані зображення можуть бути корисними в SVG-редакторах (Inkscape тощо), але їх слід уникати в деяких CAM-програмах.</translation>
     </message>
     <message>
-        <source>Many CAM&apos;s(MakerCAM, EleskCAM, LaserWeb) ignore dashed/doted line style, 
+        <source>Many CAM's(MakerCAM, EleskCAM, LaserWeb) ignore dashed/doted line style, 
 which can be useful in lasercut of plywood or for papercraft. </source>
         <translation>Багато CAM-програм (MakerCAM, EleskCAM, LaserWeb) ігнорують пунктирний або точковий стиль ліній, що може бути корисним для лазерного різання фанери або для паперової графіки.</translation>
     </message>
     <message>
-        <source>Default width of elements can affect some CAM&apos;s/SVG Editors, 
+        <source>Default width of elements can affect some CAM's/SVG Editors, 
 but ignored by other</source>
         <translation>Стандартна ширина елементів може впливати на деякі CAM-програми/SVG-редактори, але інші їх ігнорують.</translation>
     </message>
@@ -7055,11 +7055,11 @@ The contents of a Construction Layer should not appear in printout.</source>
         <translation>Ліва</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+        <source>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Ubuntu&apos;; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Helvetica&apos;; font-size:9pt;&quot;&gt;Hint about left/right mouse button actions&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Ubuntu'; font-size:11pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;span style=" font-family:'Helvetica'; font-size:9pt;"&gt;Hint about left/right mouse button actions&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>Підказка щодо дій лівої/правої кнопки миші</translation>
     </message>
 </context>
@@ -7107,28 +7107,28 @@ p, li { white-space: pre-wrap; }
         <translation>Повна довжина</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+        <source>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Number of selected entities&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Helvetica'; font-size:7pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;Number of selected entities&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Число обраних об’єктів&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Helvetica'; font-size:7pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;Число обраних об’єктів&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+        <source>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Total length of selected entities&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Helvetica'; font-size:7pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;Total length of selected entities&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Сумарна довжина вибраних об’єктів&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Helvetica'; font-size:7pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;Сумарна довжина вибраних об’єктів&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
@@ -7407,7 +7407,7 @@ p, li { white-space: pre-wrap; }
         <translation>Вилучити шар</translation>
     </message>
     <message>
-        <source>Layer &quot;%1&quot; can never be removed.</source>
+        <source>Layer "%1" can never be removed.</source>
         <translation>Шар „%1“ ніколи не можна вилучати.</translation>
     </message>
     <message>
@@ -7419,7 +7419,7 @@ p, li { white-space: pre-wrap; }
         <translation>Вилучити блок</translation>
     </message>
     <message>
-        <source>Block &quot;%1&quot; and all its entities will be removed.</source>
+        <source>Block "%1" and all its entities will be removed.</source>
         <translation>Блок „%1“ та усі його об’єкти будуть вилучені.</translation>
     </message>
     <message>
@@ -7427,18 +7427,18 @@ p, li { white-space: pre-wrap; }
         <translation>Властивості шару</translation>
     </message>
     <message>
-        <source>Layer with a name &quot;%1&quot; already exists. Please specify a different name.</source>
+        <source>Layer with a name "%1" already exists. Please specify a different name.</source>
         <translation>Шар з назвою „%1“ вже існує. Вкажіть, будь ласка, іншу назву. </translation>
     </message>
     <message>
-        <source>Layer &quot;%1&quot; and all entities on it will be removed.
+        <source>Layer "%1" and all entities on it will be removed.
 This action can NOT be undone.</source>
-        <translation>Шар &quot;%1&quot; і всі об’єкти на ньому будуть видалені.
+        <translation>Шар "%1" і всі об’єкти на ньому будуть видалені.
 Цю дію неможливо скасувати.</translation>
     </message>
     <message>
-        <source>Layer &quot;0&quot; can never be removed.</source>
-        <translation>Шар &quot;0&quot; не можна видалити.</translation>
+        <source>Layer "0" can never be removed.</source>
+        <translation>Шар "0" не можна видалити.</translation>
     </message>
     <message numerus="yes">
         <source>Remove %n layer(s)</source>
@@ -7457,7 +7457,7 @@ This action can NOT be undone.</source>
         <translation>Увага: цю дію неможливо скасувати!</translation>
     </message>
     <message>
-        <source>Warning: layer &quot;0&quot; can never be removed.</source>
+        <source>Warning: layer "0" can never be removed.</source>
         <translation>Увага: шар «0» не можна видалити.</translation>
     </message>
     <message>
@@ -7555,9 +7555,9 @@ Please specify a different name.</source>
         <translation>Дублювати виділення</translation>
     </message>
     <message>
-        <source>Replace &quot;By Layer&quot; value to source layers values?
-If Yes - entities with &quot;By Layer&quot; pens will look on new layer exactly as on previous layers and &quot;By Layer&quot; value will be replaced by resolved pens.
-If No - &quot;By Layer&quot; values remains and so pen of target layer will define pen for such entities.</source>
+        <source>Replace "By Layer" value to source layers values?
+If Yes - entities with "By Layer" pens will look on new layer exactly as on previous layers and "By Layer" value will be replaced by resolved pens.
+If No - "By Layer" values remains and so pen of target layer will define pen for such entities.</source>
         <translation type="vanished">Замінити значення «За шаром» на значення шарів-джерел?
 Якщо «Так» — об’єкти з ручками «За шаром» виглядатимуть на новому шарі точно так само, як і на попередніх шарах, і значення «За шаром» буде замінено на визначені ручки.
 Якщо «Ні» — значення «За шаром» залишаться, і, отже, ручка цільового шару визначатиме ручку для таких об’єктів.</translation>
@@ -7589,7 +7589,7 @@ Please specify a different value.</source>
         <translation>Ручку буде видалено з палітри, об’єкти малювання не будуть змінені.</translation>
     </message>
     <message>
-        <source>Are you sure you&apos;d like to proceed?</source>
+        <source>Are you sure you'd like to proceed?</source>
         <translation>Ви впевнені, що хочете продовжити?</translation>
     </message>
     <message>
@@ -7655,16 +7655,16 @@ Clear filtering mask and repeat.</source>
 Очистіть маску фільтра та повторіть.</translation>
     </message>
     <message>
-        <source>Replace &quot;By Layer&quot; value to source layers values?
+        <source>Replace "By Layer" value to source layers values?
 
-If Yes - entities with &quot;By Layer&quot; pens will look on new layer exactly as on previous layers and &quot;By Layer&quot; value will be replaced by resolved pens.
+If Yes - entities with "By Layer" pens will look on new layer exactly as on previous layers and "By Layer" value will be replaced by resolved pens.
 
-If No - &quot;By Layer&quot; values remains and so pen of target layer will define pen for such entities.</source>
-        <translation>Замінити значення &quot;За шаром&quot; на значення шарів-джерел?
+If No - "By Layer" values remains and so pen of target layer will define pen for such entities.</source>
+        <translation>Замінити значення "За шаром" на значення шарів-джерел?
 
-Якщо &quot;Так&quot; - об’єкти з параметром &quot;За шаром&quot; відображатимуться на новому шарі так само, як і на попередніх шарах, а значення &quot;За шаром&quot; буде замінено на визначені параметри.
+Якщо "Так" - об’єкти з параметром "За шаром" відображатимуться на новому шарі так само, як і на попередніх шарах, а значення "За шаром" буде замінено на визначені параметри.
 
-Якщо &quot;Ні&quot; - значення &quot;За шаром&quot; залишиться, і, отже, параметр шару-призначення визначатиме параметр для таких об’єктів.</translation>
+Якщо "Ні" - значення "За шаром" залишиться, і, отже, параметр шару-призначення визначатиме параметр для таких об’єктів.</translation>
     </message>
 </context>
 <context>
@@ -7924,7 +7924,7 @@ Do you want to replace it?</source>
         <translation>невідома помилка при відкритті файлу DWG</translation>
     </message>
     <message>
-        <source>can&apos;t open this dwg file</source>
+        <source>can't open this dwg file</source>
         <translation>неможливо відкрити цей файл DWG</translation>
     </message>
     <message>
@@ -10084,8 +10084,8 @@ Do you want to replace it?</source>
         <translation>-o some.pdf *.dxf</translation>
     </message>
     <message>
-        <source>-- print all dxf files to &apos;some.pdf&apos; file.</source>
-        <translation>-- надрукувати всі файли DXF у файл &apos;some.pdf&apos;.</translation>
+        <source>-- print all dxf files to 'some.pdf' file.</source>
+        <translation>-- надрукувати всі файли DXF у файл 'some.pdf'.</translation>
     </message>
     <message>
         <source>Auto fit and center drawing to page.</source>
@@ -10159,8 +10159,8 @@ Do you want to replace it?</source>
         <translation>Об’єднати всі шари</translation>
     </message>
     <message>
-        <source>File &quot;%1&quot; already exists. Do you want to replace it?</source>
-        <translation>Файл &quot;%1&quot; вже існує. Чи бажаєте ви його замінити?</translation>
+        <source>File "%1" already exists. Do you want to replace it?</source>
+        <translation>Файл "%1" вже існує. Чи бажаєте ви його замінити?</translation>
     </message>
     <message>
         <source>/CustomColor%1</source>
@@ -10328,12 +10328,12 @@ Do you want to replace it?</source>
     <message>
         <source>linejoin</source>
         <comment>lines join</comment>
-        <translation>з&apos;єднання ліній</translation>
+        <translation>з'єднання ліній</translation>
     </message>
     <message>
         <source>lj</source>
         <comment>lines join</comment>
-        <translation>з&apos;єднання</translation>
+        <translation>з'єднання</translation>
     </message>
     <message>
         <source>breakdivide</source>
@@ -11306,23 +11306,23 @@ This block cannot be inserted.</source>
         <translation>Вкажіть центр дотичного кола</translation>
     </message>
     <message>
-        <source>Invalid expression &apos;%1&apos; for radius</source>
+        <source>Invalid expression '%1' for radius</source>
         <translation>Недійсний вираз «%1» для радіуса</translation>
     </message>
     <message>
-        <source>Invalid negative radius &apos;%1&apos;</source>
+        <source>Invalid negative radius '%1'</source>
         <translation>Недійсний від’ємний радіус «%1»</translation>
     </message>
     <message>
-        <source>Invalid zero radius &apos;%1&apos;</source>
+        <source>Invalid zero radius '%1'</source>
         <translation>Недійсний нульовий радіус «%1»</translation>
     </message>
     <message>
-        <source>No tangent circle possible for radius &apos;%1&apos;</source>
+        <source>No tangent circle possible for radius '%1'</source>
         <translation>Неможливо створити дотичне коло для радіуса «%1»</translation>
     </message>
     <message>
-        <source>No common tangential circle for radius &apos;%1&apos;</source>
+        <source>No common tangential circle for radius '%1'</source>
         <translation>Немає спільного дотичного кола для радіуса «%1»</translation>
     </message>
 </context>
@@ -12269,7 +12269,7 @@ This block cannot be inserted.</source>
         <translation>Вставити об’єкт з бібліотеки</translation>
     </message>
     <message>
-        <source>Cannot open file &apos;%1&apos;</source>
+        <source>Cannot open file '%1'</source>
         <translation>Не вдається відкрити файл „%1“</translation>
     </message>
     <message>
@@ -12669,7 +12669,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>The chosen Entity is not an atomic entity or cannot be trimmed.</source>
-        <translation>Обраний об&apos;єкт не є елементарним об’єктом чи його неможливо усікти.</translation>
+        <translation>Обраний об'єкт не є елементарним об’єктом чи його неможливо усікти.</translation>
     </message>
     <message>
         <source>Not a valid expression</source>
@@ -12726,7 +12726,7 @@ This block cannot be inserted.</source>
         <translation>Відміна</translation>
     </message>
     <message>
-        <source>Specify adding node&apos;s point</source>
+        <source>Specify adding node's point</source>
         <translation>Вкажіть нову точку вузла</translation>
     </message>
     <message>
@@ -12796,7 +12796,7 @@ This block cannot be inserted.</source>
         <translation>Відміна</translation>
     </message>
     <message>
-        <source>Specify deleting node&apos;s point</source>
+        <source>Specify deleting node's point</source>
         <translation>Вкажіть точки вузла для вилучення</translation>
     </message>
     <message>
@@ -12886,7 +12886,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Entity can not be a closed polyline.</source>
-        <translation>Об&apos;єкт не може бути замкнутою ламаною.</translation>
+        <translation>Об'єкт не може бути замкнутою ламаною.</translation>
     </message>
     <message>
         <source>Polyline created</source>
@@ -12964,7 +12964,7 @@ This block cannot be inserted.</source>
         <translation>введіть зміщення з командного рядка для зміщення друку</translation>
     </message>
     <message>
-        <source>Printout offset ignores relative zero. Ignoring &apos;@&apos;</source>
+        <source>Printout offset ignores relative zero. Ignoring '@'</source>
         <translation>Зміщення друку ігнорує відносний нуль. Ігнорується «@»</translation>
     </message>
     <message>
@@ -13032,15 +13032,15 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Select to copy</source>
-        <translation>Виберіть об&apos;єкти для копіювання</translation>
+        <translation>Виберіть об'єкти для копіювання</translation>
     </message>
     <message>
         <source>Select to cut</source>
-        <translation>Виберіть об&apos;єкти для вирізання</translation>
+        <translation>Виберіть об'єкти для вирізання</translation>
     </message>
     <message>
         <source>No entity selected!</source>
-        <translation>Немає вибраних об&apos;єктів!</translation>
+        <translation>Немає вибраних об'єктів!</translation>
     </message>
     <message>
         <source>Select to create offset</source>

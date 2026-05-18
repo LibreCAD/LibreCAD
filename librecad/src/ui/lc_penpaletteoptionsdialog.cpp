@@ -201,7 +201,7 @@ void LC_PenPaletteOptionsDialog::validate(){
 
     QString matchedColorName = cbColorMatchedItem->currentText();
     QColor matchedItemColor = QColor(matchedColorName);
-    if (!gridColor.isValid()){
+    if (!matchedItemColor.isValid()){
         showInvalidColorMessage("filter matched item");
         cbColorMatchedItem ->setFocus();
         doAccept = false;

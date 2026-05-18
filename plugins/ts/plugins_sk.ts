@@ -10,6 +10,15 @@
     </message>
 </context>
 <context>
+    <name>CircleToolsPlugin</name>
+    <message>
+        <location filename="../circletools/circletools.cpp" line="50" />
+        <location filename="../circletools/circletools.cpp" line="56" />
+        <source>CircleTools</source>
+        <translation>Nástroje kruhov</translation>
+    </message>
+</context>
+<context>
     <name>ExpTo_Csv</name>
     <message>
         <location filename="../pointstocsv/pointstocsv.cpp" line="34" />
@@ -609,12 +618,12 @@ Prvá méta, druhá méta, prvý cieľ, druhý cieľ.</translation>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="359" />
         <source>The file %1 not exist</source>
-        <translation>Súbor% 1 neexistuje</translation>
+        <translation>Súbor %1 neexistuje.</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="364" />
         <source>Can't open the file %1</source>
-        <translation>Nemôžem otvoriť súbor% 1</translation>
+        <translation>Nemôžem otvoriť súbor %1.</translation>
     </message>
 </context>
 <context>
@@ -1120,33 +1129,33 @@ proti smeru hodinových ručičiek.</translation>
     <message>
         <location filename="../picfile/picfile.cpp" line="132" />
         <source>The file %1 not exist</source>
-        <translation>Súbor% 1 neexistuje</translation>
+        <translation>Súbor %1 neexistuje.</translation>
     </message>
     <message>
         <location filename="../picfile/picfile.cpp" line="137" />
         <source>Can't open the file %1</source>
-        <translation>Nemôžem otvoriť súbor% 1</translation>
+        <translation>Nemôžem otvoriť súbor %1.</translation>
     </message>
     <message>
         <location filename="../picfile/picfile.cpp" line="144" />
         <source>%1 objects imported</source>
-        <translation>% 1 objekty importované</translation>
+        <translation>%1 objektov importovaných</translation>
     </message>
     <message>
         <location filename="../picfile/picfile.cpp" line="166" />
         <source>picPunto drawLine: first point is empty %1</source>
-        <translation>picPunto remízaLine: prvý bod je prázdny% 1</translation>
+        <translation>picPunto remízaLine: prvý bod je prázdny %1.</translation>
     </message>
     <message>
         <location filename="../picfile/picfile.cpp" line="179" />
         <source>picPunto drawLine: next point is empty %1</source>
-        <translation>picPunto remízaLine: ďalší bod je prázdny% 1</translation>
+        <translation>picPunto remízaLine: ďalší bod je prázdny %1.</translation>
     </message>
     <message>
         <location filename="../picfile/picfile.cpp" line="262" />
         <location filename="../picfile/picfile.cpp" line="271" />
         <source>format error in %1</source>
-        <translation>chyba formátu v% 1</translation>
+        <translation>chyba formátu v %1</translation>
     </message>
 </context>
 <context>

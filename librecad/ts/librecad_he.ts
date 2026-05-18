@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
+<?xml version='1.0' encoding='utf-8'?>
 <TS version="2.1" language="he">
 <context>
     <name>ColorWizard</name>
@@ -128,7 +127,7 @@
         <source>radius=%1 is too small for points selected
 distance between points=%2 is larger than diameter=%3</source>
         <translation>רדיוס=%1 קטן מדי עבור הנקודות שנבחרו
-מרחק בין נקודות =%2 גדול יותר מאשר קוטר=3%</translation>
+מרחק בין נקודות =%2 גדול יותר מאשר קוטר=%3</translation>
     </message>
     <message>
         <source>Select from two possible circle centers</source>
@@ -589,7 +588,7 @@ or [%2]</source>
     </message>
     <message>
         <source>&amp;Hatch</source>
-        <translation>&amp;האצ&apos;</translation>
+        <translation>&amp;האצ'</translation>
     </message>
     <message>
         <source>Insert &amp;Image</source>
@@ -951,7 +950,7 @@ or [%2]</source>
     </message>
     <message>
         <source>Widget Options</source>
-        <translation>אפשרויות ווידג&apos;ט</translation>
+        <translation>אפשרויות ווידג'ט</translation>
     </message>
     <message>
         <source>Left</source>
@@ -1056,7 +1055,7 @@ or [%2]</source>
     </message>
     <message>
         <source>Re-dock Widgets</source>
-        <translation>עגן מחדש ווידג&apos;טים</translation>
+        <translation>עגן מחדש ווידג'טים</translation>
     </message>
     <message>
         <source>Save A&amp;ll...</source>
@@ -1163,7 +1162,7 @@ or [%2]</source>
         <translation>שכפל</translation>
     </message>
     <message>
-        <source>Update Current Pen by Active Layer&apos; Pen</source>
+        <source>Update Current Pen by Active Layer' Pen</source>
         <translation>עדכן עט נוכחי בעט של השכבה הפעילה</translation>
     </message>
 </context>
@@ -1177,8 +1176,8 @@ or [%2]</source>
 <context>
     <name>LC_ActionLayersExport</name>
     <message>
-        <source>Saving layer &quot;%1&quot; as &quot;%2&quot; </source>
-        <translation>שמור שכבת &quot;%1&quot; כ&quot;%2&quot; </translation>
+        <source>Saving layer "%1" as "%2" </source>
+        <translation>שמור שכבת "%1" כ"%2" </translation>
     </message>
 </context>
 <context>
@@ -1692,7 +1691,7 @@ or [%2]</source>
         <translation>המר לשכבה רגילה</translation>
     </message>
     <message>
-        <source>&amp;Select Layer&apos;s Entities</source>
+        <source>&amp;Select Layer's Entities</source>
         <translation>&amp;בחר ישויות של שכבה</translation>
     </message>
     <message>
@@ -2191,11 +2190,11 @@ or [%2]</source>
         <translation>לנוכחי</translation>
     </message>
     <message>
-        <source>Update Current Pen by Active Layer&apos; Pen</source>
+        <source>Update Current Pen by Active Layer' Pen</source>
         <translation>עדכן עט נוכחי בעט שכבה פעילה</translation>
     </message>
     <message>
-        <source>Fill Pen Editor from Active Layer&apos;s Pen</source>
+        <source>Fill Pen Editor from Active Layer's Pen</source>
         <translation>מלא עורך עט מעט שכבה פעילה</translation>
     </message>
     <message>
@@ -2260,14 +2259,14 @@ or [%2]</source>
     </message>
     <message>
         <source>Location of pens file is changed, please restart the application so new pens file will be used.
-Please note that if you&apos;ll save pen via editor without restart, current pens from palette will be saved in the new file and therefore existing content of it will be overridden.</source>
+Please note that if you'll save pen via editor without restart, current pens from palette will be saved in the new file and therefore existing content of it will be overridden.</source>
         <translation type="vanished">מיקום קובץ העטים שונה, אנא הפעל מחדש את האפליקציה כדי להשתמש בקובץ עטים חדש.
 שימו לב שאם תשמרו עט דרך העורך ללא הפעלה מחדש, העטים הנוכחיים מהפלטה יישמרו בקובץ החדש ולכן התוכן הקיים יוחלף.</translation>
     </message>
     <message>
         <source>Location of pens file is changed, please restart the application so new pens file will be used.
 
-Please note that if you&apos;ll save pen via editor without restart, current pens from palette will be saved in the new file and therefore existing content of it will be overridden.</source>
+Please note that if you'll save pen via editor without restart, current pens from palette will be saved in the new file and therefore existing content of it will be overridden.</source>
         <translation>מיקום קובץ העטים שונה, אנא הפעל מחדש את היישום כדי להשתמש בקובץ העטים החדש.
 
 שימו לב שאם תשמרו עט באמצעות העורך מבלי להפעיל מחדש, העטים הנוכחיים מהפלטה יישמרו בקובץ החדש, ולכן התוכן הקיים בו יוחלף.</translation>
@@ -2714,7 +2713,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <name>LC_WidgetOptionsDialog</name>
     <message>
         <source>Widget Options</source>
-        <translation>אפשרויות ווידג&apos;ט</translation>
+        <translation>אפשרויות ווידג'ט</translation>
     </message>
     <message>
         <source>Toolbar</source>
@@ -2780,12 +2779,12 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <translation>הסר צד ימני</translation>
     </message>
     <message>
-        <source>remove 0&apos;</source>
-        <translation>הסר 0&apos;</translation>
+        <source>remove 0'</source>
+        <translation>הסר 0'</translation>
     </message>
     <message>
-        <source>remove 0&quot;</source>
-        <translation>הסר 0&quot;</translation>
+        <source>remove 0"</source>
+        <translation>הסר 0"</translation>
     </message>
 </context>
 <context>
@@ -2971,8 +2970,8 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <translation>שורת פקודה</translation>
     </message>
     <message>
-        <source>Block &apos;%1&apos;</source>
-        <translation>בלוק &apos;%1&apos;</translation>
+        <source>Block '%1'</source>
+        <translation>בלוק '%1'</translation>
     </message>
     <message>
         <source>Cannot open the file
@@ -3109,8 +3108,8 @@ Please check its existence and permissions.</source>
 בדוק את קיומו והרשאות.</translation>
     </message>
     <message>
-        <source>File &apos;%1&apos; does not exist. Opening aborted</source>
-        <translation>הקובץ &apos;%1&apos; לא קיים. פתיחה בוטלה</translation>
+        <source>File '%1' does not exist. Opening aborted</source>
+        <translation>הקובץ '%1' לא קיים. פתיחה בוטלה</translation>
     </message>
     <message>
         <source>Categories</source>
@@ -3186,7 +3185,7 @@ Please check its existence and permissions.</source>
     </message>
     <message>
         <source>Dockwidgets</source>
-        <translation>ווידג&apos;טים מעוגנים</translation>
+        <translation>ווידג'טים מעוגנים</translation>
     </message>
     <message>
         <source>Device Options</source>
@@ -3210,7 +3209,7 @@ Please check its existence and permissions.</source>
     </message>
     <message>
         <source>Dock Wid&amp;gets</source>
-        <translation>וויד&amp;ג&apos;טים מעוגנים</translation>
+        <translation>וויד&amp;ג'טים מעוגנים</translation>
     </message>
     <message>
         <source>Recent Files</source>
@@ -3364,7 +3363,7 @@ Please check its existence and permissions.</source>
         <translation>&amp;ויקי</translation>
     </message>
     <message>
-        <source>User&apos;s &amp;Manual</source>
+        <source>User's &amp;Manual</source>
         <translation>&amp;מדריך למשתמש</translation>
     </message>
     <message>
@@ -3377,7 +3376,7 @@ Please check its existence and permissions.</source>
     </message>
     <message>
         <source>Wid&amp;gets</source>
-        <translation>וויד&amp;ג&apos;טים</translation>
+        <translation>וויד&amp;ג'טים</translation>
     </message>
     <message>
         <source>&amp;Forum</source>
@@ -3385,7 +3384,7 @@ Please check its existence and permissions.</source>
     </message>
     <message>
         <source>Zulip &amp;Chat</source>
-        <translation>&amp;צ&apos;אט Zulip</translation>
+        <translation>&amp;צ'אט Zulip</translation>
     </message>
     <message>
         <source>&amp;Release Information</source>
@@ -3443,11 +3442,11 @@ Please check its existence and permissions.</source>
         <translation>שכבה נוכחית</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+        <source>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Name of Current Active Layer&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Helvetica'; font-size:7pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;Name of Current Active Layer&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>שם השכבה הפעילה הנוכחית</translation>
     </message>
 </context>
@@ -3466,8 +3465,8 @@ p, li { white-space: pre-wrap; }
         <translation>שכתוב בלוק</translation>
     </message>
     <message>
-        <source>Could not name block. A block named &quot;%1&quot; already exists.</source>
-        <translation>לא ניתן לתת שם לבלוק. כבר קיים בלוק בשם &quot;%1&quot;.</translation>
+        <source>Could not name block. A block named "%1" already exists.</source>
+        <translation>לא ניתן לתת שם לבלוק. כבר קיים בלוק בשם "%1".</translation>
     </message>
 </context>
 <context>
@@ -4060,12 +4059,12 @@ This recursively modifies all entities of the Block itself.</source>
         <translation>שפת פקודות:</translation>
     </message>
     <message>
-        <source>&lt;font size=&quot;+1&quot;&gt;&lt;b&gt;Welcome to LibreCAD&lt;/b&gt;
+        <source>&lt;font size="+1"&gt;&lt;b&gt;Welcome to LibreCAD&lt;/b&gt;
 &lt;/font&gt;
 &lt;br&gt;
 Please choose the unit you want to use for new drawings and your preferred language.&lt;br&gt;
 (You can changes these settings later.)</source>
-        <translation>&lt;font size=&quot;+1&quot;&gt;&lt;b&gt;ברוכים הבאים ל-LibreCAD&lt;/b&gt;\n&lt;/font&gt;\n&lt;br&gt;\nאנא בחרו את היחידה שברצונכם להשתמש בה עבור שרטוטים חדשים ואת השפה המועדפת עליכם.&lt;br&gt;\n(ניתן לשנות הגדרות אלו מאוחר יותר.)</translation>
+        <translation>&lt;font size="+1"&gt;&lt;b&gt;ברוכים הבאים ל-LibreCAD&lt;/b&gt;\n&lt;/font&gt;\n&lt;br&gt;\nאנא בחרו את היחידה שברצונכם להשתמש בה עבור שרטוטים חדשים ואת השפה המועדפת עליכם.&lt;br&gt;\n(ניתן לשנות הגדרות אלו מאוחר יותר.)</translation>
     </message>
 </context>
 <context>
@@ -4390,7 +4389,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>[0A80-0AFF] Gujarati</source>
-        <translation>[0A80-0AFF] 9. [CONTEXT: QG_DlgMText] [0A80-0AFF] גוג&apos;אראטית</translation>
+        <translation>[0A80-0AFF] 9. [CONTEXT: QG_DlgMText] [0A80-0AFF] גוג'אראטית</translation>
     </message>
     <message>
         <source>[0B00-0B7F] Oriya</source>
@@ -4446,11 +4445,11 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>[13A0-13FF] Cherokee</source>
-        <translation>[13A0-13FF] צ&apos;רוקי</translation>
+        <translation>[13A0-13FF] צ'רוקי</translation>
     </message>
     <message>
         <source>[1400-167F] Unified Canadian Aboriginal Syllabic</source>
-        <translation>[1400-167F] סילאבי קנדיאני אבוריג&apos;ינלי מאוחד</translation>
+        <translation>[1400-167F] סילאבי קנדיאני אבוריג'ינלי מאוחד</translation>
     </message>
     <message>
         <source>[1680-169F] Ogham</source>
@@ -4614,7 +4613,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>[3130-318F] Hangul Compatibility Jamo</source>
-        <translation>[3130-318F] ג&apos;אמו תאימות הנגול</translation>
+        <translation>[3130-318F] ג'אמו תאימות הנגול</translation>
     </message>
     <message>
         <source>[3190-319F] Kanbun</source>
@@ -4634,7 +4633,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>[3400-4DBF] CJK Unified Ideographs Extension A</source>
-        <translation>[3400-4DBF] הרחבת אידיוגראפיות מאוחדות CJK א&apos;</translation>
+        <translation>[3400-4DBF] הרחבת אידיוגראפיות מאוחדות CJK א'</translation>
     </message>
     <message>
         <source>[4E00-9FAF] CJK Unified Ideographs</source>
@@ -4714,7 +4713,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>[10400-1044F] Deseret</source>
-        <translation>[10400-1044F] דז&apos;רייט</translation>
+        <translation>[10400-1044F] דז'רייט</translation>
     </message>
     <message>
         <source>[1D000-1D0FF] Byzantine Musical Symbols</source>
@@ -4730,7 +4729,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>[20000-2A6DF] CJK Unified Ideographs Extension B</source>
-        <translation>[20000-2A6DF] הרחבה ב&apos; של אידיוגראפים המאוחדים CJK</translation>
+        <translation>[20000-2A6DF] הרחבה ב' של אידיוגראפים המאוחדים CJK</translation>
     </message>
     <message>
         <source>[2F800-2FA1F] CJK Compatibility Ideographs Supplement</source>
@@ -4961,7 +4960,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation>גרדיאנים</translation>
     </message>
     <message>
-        <source>Surveyor&apos;s units</source>
+        <source>Surveyor's units</source>
         <translation>יחידות סקר</translation>
     </message>
     <message>
@@ -4969,8 +4968,8 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation>אפשרויות</translation>
     </message>
     <message>
-        <source>For the length formats &apos;Engineering&apos; and &apos;Architectural&apos;, the unit must be set to Inch.</source>
-        <translation>עבור פורמטי האורך &apos;הנדסי&apos; ו&apos;ארכיטקטוני&apos;, היחידה חייבת להיות מוגדרת כאינץ&apos;.</translation>
+        <source>For the length formats 'Engineering' and 'Architectural', the unit must be set to Inch.</source>
+        <translation>עבור פורמטי האורך 'הנדסי' ו'ארכיטקטוני', היחידה חייבת להיות מוגדרת כאינץ'.</translation>
     </message>
     <message>
         <source>Arrow size:</source>
@@ -5050,7 +5049,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>Number of line segments per spline patch:</source>
-        <translation>מספר מקטעי קו לכל פטצ&apos; ספלאיין:</translation>
+        <translation>מספר מקטעי קו לכל פטצ' ספלאיין:</translation>
     </message>
     <message>
         <source>Crosshair</source>
@@ -5101,7 +5100,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation>גודל סימון:</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dimension Tick size. Set it to 0 will disable the dimension tick. Dimension arrow won&apos;t be drawn when dimension tick is enabled.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dimension Tick size. Set it to 0 will disable the dimension tick. Dimension arrow won't be drawn when dimension tick is enabled.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>גודל סימון מימד. קביעה ל-0 תבטל את סימון הממד. חץ הממד לא יצויר כאשר סימון הממד פעיל.</translation>
     </message>
     <message>
@@ -5125,11 +5124,11 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation>סגנון טקסט:</translation>
     </message>
     <message>
-        <source>&apos;.&apos; (Period)</source>
+        <source>'.' (Period)</source>
         <translation>.</translation>
     </message>
     <message>
-        <source>&apos;,&apos; (Comma)</source>
+        <source>',' (Comma)</source>
         <translation>,</translation>
     </message>
     <message>
@@ -5173,7 +5172,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation>אורך להגדלה מעל קו הממד</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dimension arrow size. &lt;a name=&quot;result_box&quot;/&gt;without effect when tick size &lt;a name=&quot;result_box&quot;/&gt;is other than 0&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dimension arrow size. &lt;a name="result_box"/&gt;without effect when tick size &lt;a name="result_box"/&gt;is other than 0&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>גודל חץ הממד. ללא השפעה כאשר גודל הסימן אינו 0</translation>
     </message>
     <message>
@@ -5205,7 +5204,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation>דיוק ליניארי:</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Text alignment &lt;a name=&quot;result_box&quot;/&gt;relative to the dimension line.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Text alignment &lt;a name="result_box"/&gt;relative to the dimension line.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>יישור טקסט ביחס לקו הממד.</translation>
     </message>
     <message>
@@ -5309,8 +5308,8 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation>אדריכלי (מטרי)</translation>
     </message>
     <message>
-        <source>For the length format &apos;Architectural (metric)&apos;, the unit must be set to Meter.</source>
-        <translation>עבור פורמט האורך &apos;אדריכלי (מטרי)&apos;, יש להגדיר את היחידה למטר.</translation>
+        <source>For the length format 'Architectural (metric)', the unit must be set to Meter.</source>
+        <translation>עבור פורמט האורך 'אדריכלי (מטרי)', יש להגדיר את היחידה למטר.</translation>
     </message>
     <message>
         <source>Screen %</source>
@@ -5521,7 +5520,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>Enable CAD dockwidgets</source>
-        <translation>הפעל ווידג&apos;טים עגינה CAD</translation>
+        <translation>הפעל ווידג'טים עגינה CAD</translation>
     </message>
     <message>
         <source>Enable CAD toolbars</source>
@@ -5541,7 +5540,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;When enabled, activating a layer would modify all selected entities to that new layer. To change layer of multiple entities: first select needed entities; activate a layer in the layer widget. This makes all selected entities modified to belong to the new layer.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;כאשר המאפשר מופעל, הפעלת שכבה תשנה את כל הישויות שנבחרו לשכבה החדשה הזו. כדי לשנות את השכבה של מספר ישויות: בחר תחילה את הישויות הנדרשות; הפעל שכבה בווידג&apos;ט השכבות. זה גורם לכל הישויות שנבחרו להיות משויכות לשכבה החדשה.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;כאשר המאפשר מופעל, הפעלת שכבה תשנה את כל הישויות שנבחרו לשכבה החדשה הזו. כדי לשנות את השכבה של מספר ישויות: בחר תחילה את הישויות הנדרשות; הפעל שכבה בווידג'ט השכבות. זה גורם לכל הישויות שנבחרו להיות משויכות לשכבה החדשה.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Variable File:</source>
@@ -5556,7 +5555,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation>מספר ישויות תצוגה:</translation>
     </message>
     <message>
-        <source>Don&apos;t use native OS file open dialog</source>
+        <source>Don't use native OS file open dialog</source>
         <translation>אין להשתמש בתיבת הדו-שיח הפתוחה המקורית של מערכת ההפעלה</translation>
     </message>
     <message>
@@ -5632,8 +5631,8 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation>מיקוד אוטומטי של הציור בעת פתיחה</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-family:&apos;-apple-system&apos;,&apos;BlinkMacSystemFont&apos;,&apos;Segoe UI&apos;,&apos;Noto Sans&apos;,&apos;Helvetica&apos;,&apos;Arial&apos;,&apos;sans-serif&apos;,&apos;Apple Color Emoji&apos;,&apos;Segoe UI Emoji&apos;; font-size:14px; color:#1f2328; background-color:#ffffff;&quot;&gt;Part library folder. The symbol library dxf files must be located in the subdirectories of this folder. The subfolder names will be displayed in the Library Browser.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-family:&apos;-apple-system&apos;,&apos;BlinkMacSystemFont&apos;,&apos;Segoe UI&apos;,&apos;Noto Sans&apos;,&apos;Helvetica&apos;,&apos;Arial&apos;,&apos;sans-serif&apos;,&apos;Apple Color Emoji&apos;,&apos;Segoe UI Emoji&apos;; font-size:14px; color:#1f2328; background-color:#ffffff;&quot;&gt;( Menu: Widgets &amp;gt; Dock Widgets &amp;gt; Library Browser)&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>תיקיית ספריית החלקים. קבצי ה-dxf של ספריית הסמלים חייבים להיות ממוקמים בתתי-התיקיות של תיקייה זו. שמות תתי-התיקיות יוצגו בדפדפן הספרייה. (תפריט: ווידג&apos;טים &gt; ווידג&apos;טים צף &gt; דפדפן ספרייה)</translation>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=" font-family:'-apple-system','BlinkMacSystemFont','Segoe UI','Noto Sans','Helvetica','Arial','sans-serif','Apple Color Emoji','Segoe UI Emoji'; font-size:14px; color:#1f2328; background-color:#ffffff;"&gt;Part library folder. The symbol library dxf files must be located in the subdirectories of this folder. The subfolder names will be displayed in the Library Browser.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=" font-family:'-apple-system','BlinkMacSystemFont','Segoe UI','Noto Sans','Helvetica','Arial','sans-serif','Apple Color Emoji','Segoe UI Emoji'; font-size:14px; color:#1f2328; background-color:#ffffff;"&gt;( Menu: Widgets &amp;gt; Dock Widgets &amp;gt; Library Browser)&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>תיקיית ספריית החלקים. קבצי ה-dxf של ספריית הסמלים חייבים להיות ממוקמים בתתי-התיקיות של תיקייה זו. שמות תתי-התיקיות יוצגו בדפדפן הספרייה. (תפריט: ווידג'טים &gt; ווידג'טים צף &gt; דפדפן ספרייה)</translation>
     </message>
     <message>
         <source>Open last opened files</source>
@@ -5680,7 +5679,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>Default width of elements, mm</source>
-        <translation>רוחב ברירת מחדל של אלמנטים, מ&quot;מ</translation>
+        <translation>רוחב ברירת מחדל של אלמנטים, מ"מ</translation>
     </message>
     <message>
         <source>Images</source>
@@ -5696,7 +5695,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>Length of the pattern, mm</source>
-        <translation>אורך התבנית, מ&quot;מ</translation>
+        <translation>אורך התבנית, מ"מ</translation>
     </message>
     <message>
         <source>Bake dash/dot lines to SVG path</source>
@@ -5704,8 +5703,8 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>MakerCAM as of November 2014 does not hide SVG content 
-that has been set invisibe (&quot;display: none&quot; or &quot;visibility: hidden&quot;).</source>
-        <translation>MakerCAM נכון לנובמבר 2014 אינו מסתיר תוכן SVG שהוגדר כבלתי נראה (&quot;display: none&quot; או &quot;visibility: hidden&quot;).</translation>
+that has been set invisibe ("display: none" or "visibility: hidden").</source>
+        <translation>MakerCAM נכון לנובמבר 2014 אינו מסתיר תוכן SVG שהוגדר כבלתי נראה ("display: none" או "visibility: hidden").</translation>
     </message>
     <message>
         <source>MakerCAM as of November 2014 cannot correctly deal with blocks,
@@ -5720,16 +5719,16 @@ the &lt;transform&gt; attribute or as &lt;path&gt; using elliptic arc segments.<
     </message>
     <message>
         <source>Exported images can be useful in SVG editors (Inkscape, etc), 
-but avoided in some CAM&apos;s.</source>
-        <translation>תמונות מופצות יכולות להיות שימושיות בעוררי SVG (Inkscape וכו&apos;), אך נמנעות מכך בחלק ממערכות CAM.</translation>
+but avoided in some CAM's.</source>
+        <translation>תמונות מופצות יכולות להיות שימושיות בעוררי SVG (Inkscape וכו'), אך נמנעות מכך בחלק ממערכות CAM.</translation>
     </message>
     <message>
-        <source>Many CAM&apos;s(MakerCAM, EleskCAM, LaserWeb) ignore dashed/doted line style, 
+        <source>Many CAM's(MakerCAM, EleskCAM, LaserWeb) ignore dashed/doted line style, 
 which can be useful in lasercut of plywood or for papercraft. </source>
         <translation>מערכות CAM רבות (MakerCAM, EleskCAM, LaserWeb) מתעלמות מסגנון קו מקווקווים/מנוקדים, דבר שיכול להיות שימושי בחיתוך לייזר של עץ פורניר או ליצירת עבודות נייר.</translation>
     </message>
     <message>
-        <source>Default width of elements can affect some CAM&apos;s/SVG Editors, 
+        <source>Default width of elements can affect some CAM's/SVG Editors, 
 but ignored by other</source>
         <translation>הרוחב המוגדר כברירת מחדל של האלמנטים יכול להשפיע על חלק ממערכות CAM/עוררי SVG, אך מתעלם ממנו אחרים.</translation>
     </message>
@@ -6176,7 +6175,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <source>[0A80-0AFF] Gujarati</source>
-        <translation>[0A80-0AFF] גוג&apos;אראתית</translation>
+        <translation>[0A80-0AFF] גוג'אראתית</translation>
     </message>
     <message>
         <source>[0B00-0B7F] Oriya</source>
@@ -6224,7 +6223,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <source>[1100-11FF] Hangul Jamo</source>
-        <translation>[1100-11FF] ג&apos;אמו הנגול</translation>
+        <translation>[1100-11FF] ג'אמו הנגול</translation>
     </message>
     <message>
         <source>[1200-137F] Ethiopic</source>
@@ -6232,7 +6231,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <source>[13A0-13FF] Cherokee</source>
-        <translation>[13A0-13FF] צ&apos;רוקי</translation>
+        <translation>[13A0-13FF] צ'רוקי</translation>
     </message>
     <message>
         <source>[1400-167F] Unified Canadian Aboriginal Syllabic</source>
@@ -6400,7 +6399,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <source>[3130-318F] Hangul Compatibility Jamo</source>
-        <translation>[3130-318F] ג&apos;אמו תאימות הנגול</translation>
+        <translation>[3130-318F] ג'אמו תאימות הנגול</translation>
     </message>
     <message>
         <source>[3190-319F] Kanbun</source>
@@ -6420,7 +6419,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <source>[3400-4DBF] CJK Unified Ideographs Extension A</source>
-        <translation>[3400-4DBF] אוהרוגיגרפיות מאוחדות CJK הרחבה א&apos;</translation>
+        <translation>[3400-4DBF] אוהרוגיגרפיות מאוחדות CJK הרחבה א'</translation>
     </message>
     <message>
         <source>[4E00-9FAF] CJK Unified Ideographs</source>
@@ -6500,7 +6499,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <source>[10400-1044F] Deseret</source>
-        <translation>[10400-1044F] דז&apos;רייט</translation>
+        <translation>[10400-1044F] דז'רייט</translation>
     </message>
     <message>
         <source>[1D000-1D0FF] Byzantine Musical Symbols</source>
@@ -6516,7 +6515,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <source>[20000-2A6DF] CJK Unified Ideographs Extension B</source>
-        <translation>[20000-2A6DF] אוהרוגידה אחידה CJK הרחבה ב&apos;</translation>
+        <translation>[20000-2A6DF] אוהרוגידה אחידה CJK הרחבה ב'</translation>
     </message>
     <message>
         <source>[2F800-2FA1F] CJK Compatibility Ideographs Supplement</source>
@@ -7040,11 +7039,11 @@ The contents of a Construction Layer should not appear in printout.</source>
         <translation>שמאל</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+        <source>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Ubuntu&apos;; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Helvetica&apos;; font-size:9pt;&quot;&gt;Hint about left/right mouse button actions&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Ubuntu'; font-size:11pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;span style=" font-family:'Helvetica'; font-size:9pt;"&gt;Hint about left/right mouse button actions&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>רמז לגבי פעולות כפתורי העכבר השמאלי/ימני</translation>
     </message>
 </context>
@@ -7092,28 +7091,28 @@ p, li { white-space: pre-wrap; }
         <translation>אורך כולל</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+        <source>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Number of selected entities&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Helvetica'; font-size:7pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;Number of selected entities&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;מספר הישויות שנבחרו&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Helvetica'; font-size:7pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;מספר הישויות שנבחרו&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+        <source>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Total length of selected entities&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Helvetica'; font-size:7pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;Total length of selected entities&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;האורך הכולל של הישויות שנבחרו&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Helvetica'; font-size:7pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;האורך הכולל של הישויות שנבחרו&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
@@ -7284,8 +7283,8 @@ p, li { white-space: pre-wrap; }
         <translation>הסרת שכבה</translation>
     </message>
     <message>
-        <source>Layer &quot;%1&quot; can never be removed.</source>
-        <translation>לא ניתן להסיר את השכבה &quot;%1&quot;.</translation>
+        <source>Layer "%1" can never be removed.</source>
+        <translation>לא ניתן להסיר את השכבה "%1".</translation>
     </message>
     <message>
         <source>Layer Dialog</source>
@@ -7296,26 +7295,26 @@ p, li { white-space: pre-wrap; }
         <translation>הסרת בלוק</translation>
     </message>
     <message>
-        <source>Block &quot;%1&quot; and all its entities will be removed.</source>
-        <translation>הבלוק &quot;%1&quot; וכל הישויות שלו יוסרו.</translation>
+        <source>Block "%1" and all its entities will be removed.</source>
+        <translation>הבלוק "%1" וכל הישויות שלו יוסרו.</translation>
     </message>
     <message>
         <source>Layer Properties</source>
         <translation>מאפייני שכבה</translation>
     </message>
     <message>
-        <source>Layer with a name &quot;%1&quot; already exists. Please specify a different name.</source>
-        <translation>כבר קיימת שכבה בשם &quot;%1&quot;. אנא ציין שם אחר.</translation>
+        <source>Layer with a name "%1" already exists. Please specify a different name.</source>
+        <translation>כבר קיימת שכבה בשם "%1". אנא ציין שם אחר.</translation>
     </message>
     <message>
-        <source>Layer &quot;%1&quot; and all entities on it will be removed.
+        <source>Layer "%1" and all entities on it will be removed.
 This action can NOT be undone.</source>
-        <translation>שכבת &quot;%1&quot; וכל הישויות עליה יוסרו.
+        <translation>שכבת "%1" וכל הישויות עליה יוסרו.
 פעולה זו אינה ניתנת לביטול.</translation>
     </message>
     <message>
-        <source>Layer &quot;0&quot; can never be removed.</source>
-        <translation>לא ניתן להסיר את השכבה &quot;0&quot;.</translation>
+        <source>Layer "0" can never be removed.</source>
+        <translation>לא ניתן להסיר את השכבה "0".</translation>
     </message>
     <message numerus="yes">
         <source>Remove %n layer(s)</source>
@@ -7333,8 +7332,8 @@ This action can NOT be undone.</source>
         <translation>אזהרה: פעולה זו אינה ניתנת לביטול!</translation>
     </message>
     <message>
-        <source>Warning: layer &quot;0&quot; can never be removed.</source>
-        <translation>אזהרה: לא ניתן להסיר את השכבה &quot;0&quot;.</translation>
+        <source>Warning: layer "0" can never be removed.</source>
+        <translation>אזהרה: לא ניתן להסיר את השכבה "0".</translation>
     </message>
     <message>
         <source>Layers for removal:</source>
@@ -7428,12 +7427,12 @@ Please specify a different name.</source>
         <translation>שכפול בחירה</translation>
     </message>
     <message>
-        <source>Replace &quot;By Layer&quot; value to source layers values?
-If Yes - entities with &quot;By Layer&quot; pens will look on new layer exactly as on previous layers and &quot;By Layer&quot; value will be replaced by resolved pens.
-If No - &quot;By Layer&quot; values remains and so pen of target layer will define pen for such entities.</source>
-        <translation type="vanished">להחליף את ערך &quot;לפי שכבה&quot; בערכי שכבות המקור?
-אם כן - ישויות עם עטים &quot;לפי שכבה&quot; ייראו בשכבה החדשה בדיוק כפי שהיו בשכבות הקודמות, וערך &quot;לפי שכבה&quot; יוחלף בעטים שנקבעו.
-אם לא - ערכי &quot;לפי שכבה&quot; נשארים, ולכן עט של השכבה הממוקדת יגדיר את העט עבור ישויות אלו.</translation>
+        <source>Replace "By Layer" value to source layers values?
+If Yes - entities with "By Layer" pens will look on new layer exactly as on previous layers and "By Layer" value will be replaced by resolved pens.
+If No - "By Layer" values remains and so pen of target layer will define pen for such entities.</source>
+        <translation type="vanished">להחליף את ערך "לפי שכבה" בערכי שכבות המקור?
+אם כן - ישויות עם עטים "לפי שכבה" ייראו בשכבה החדשה בדיוק כפי שהיו בשכבות הקודמות, וערך "לפי שכבה" יוחלף בעטים שנקבעו.
+אם לא - ערכי "לפי שכבה" נשארים, ולכן עט של השכבה הממוקדת יגדיר את העט עבור ישויות אלו.</translation>
     </message>
     <message>
         <source>Layer DialogEx</source>
@@ -7462,7 +7461,7 @@ Please specify a different value.</source>
         <translation>העט יוסר מהפלטה, וישויות הציור לא יושפעו.</translation>
     </message>
     <message>
-        <source>Are you sure you&apos;d like to proceed?</source>
+        <source>Are you sure you'd like to proceed?</source>
         <translation>האם אתה בטוח שברצונך להמשיך?</translation>
     </message>
     <message>
@@ -7528,16 +7527,16 @@ Clear filtering mask and repeat.</source>
 נקה את מסנן הסינון וחזור על הפעולה.</translation>
     </message>
     <message>
-        <source>Replace &quot;By Layer&quot; value to source layers values?
+        <source>Replace "By Layer" value to source layers values?
 
-If Yes - entities with &quot;By Layer&quot; pens will look on new layer exactly as on previous layers and &quot;By Layer&quot; value will be replaced by resolved pens.
+If Yes - entities with "By Layer" pens will look on new layer exactly as on previous layers and "By Layer" value will be replaced by resolved pens.
 
-If No - &quot;By Layer&quot; values remains and so pen of target layer will define pen for such entities.</source>
-        <translation>החלף את הערך &quot;לפי שכבה&quot; בערכי השכבות המקוריות?
+If No - "By Layer" values remains and so pen of target layer will define pen for such entities.</source>
+        <translation>החלף את הערך "לפי שכבה" בערכי השכבות המקוריות?
 
-אם כן - ישויות עם עטים &quot;לפי שכבה&quot; יופיעו בשכבה החדשה בדיוק כפי שהופיעו בשכבות הקודמות, והערך &quot;לפי שכבה&quot; יוחלף בעטים המוגדרים.
+אם כן - ישויות עם עטים "לפי שכבה" יופיעו בשכבה החדשה בדיוק כפי שהופיעו בשכבות הקודמות, והערך "לפי שכבה" יוחלף בעטים המוגדרים.
 
-אם לא - הערכים &quot;לפי שכבה&quot; יישארו, כך שהעט של השכבה החדשה יגדיר את העט עבור ישויות אלו.</translation>
+אם לא - הערכים "לפי שכבה" יישארו, כך שהעט של השכבה החדשה יגדיר את העט עבור ישויות אלו.</translation>
     </message>
 </context>
 <context>
@@ -7618,7 +7617,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Inch</source>
-        <translation>אינץ&apos;</translation>
+        <translation>אינץ'</translation>
     </message>
     <message>
         <source>Foot</source>
@@ -7646,7 +7645,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Microinch</source>
-        <translation>מיקרואינץ&apos;</translation>
+        <translation>מיקרואינץ'</translation>
     </message>
     <message>
         <source>Mil</source>
@@ -7793,7 +7792,7 @@ Do you want to replace it?</source>
         <translation>שגיאה לא ידועה בפתיחת קובץ dwg</translation>
     </message>
     <message>
-        <source>can&apos;t open this dwg file</source>
+        <source>can't open this dwg file</source>
         <translation>לא ניתן לפתוח קובץ dwg זה</translation>
     </message>
     <message>
@@ -8482,7 +8481,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>dpi</source>
-        <translation>נקודות לאינץ&apos;</translation>
+        <translation>נקודות לאינץ'</translation>
     </message>
     <message>
         <source>close</source>
@@ -8887,7 +8886,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Widgets</source>
-        <translation>ווידג&apos;טים</translation>
+        <translation>ווידג'טים</translation>
     </message>
     <message>
         <source>Creators</source>
@@ -9957,8 +9956,8 @@ Do you want to replace it?</source>
         <translation>-o some.pdf *.dxf</translation>
     </message>
     <message>
-        <source>-- print all dxf files to &apos;some.pdf&apos; file.</source>
-        <translation>הדפסת כל קובצי dxf לקובץ &apos;some.pdf&apos;.</translation>
+        <source>-- print all dxf files to 'some.pdf' file.</source>
+        <translation>הדפסת כל קובצי dxf לקובץ 'some.pdf'.</translation>
     </message>
     <message>
         <source>Auto fit and center drawing to page.</source>
@@ -10032,8 +10031,8 @@ Do you want to replace it?</source>
         <translation>שילוב כל השכבות</translation>
     </message>
     <message>
-        <source>File &quot;%1&quot; already exists. Do you want to replace it?</source>
-        <translation>הקובץ &quot;%1&quot; כבר קיים. האם ברצונך להחליפו?</translation>
+        <source>File "%1" already exists. Do you want to replace it?</source>
+        <translation>הקובץ "%1" כבר קיים. האם ברצונך להחליפו?</translation>
     </message>
     <message>
         <source>/CustomColor%1</source>
@@ -10693,8 +10692,8 @@ Do you want to replace it?</source>
         <translation>הזן זווית:</translation>
     </message>
     <message>
-        <source></source>
-        <translation></translation>
+        <source />
+        <translation />
     </message>
     <message>
         <source>Enter factor:</source>
@@ -11181,24 +11180,24 @@ This block cannot be inserted.</source>
         <translation>בחר את מרכז המעגל המשיק</translation>
     </message>
     <message>
-        <source>Invalid expression &apos;%1&apos; for radius</source>
-        <translation>ביטוי לא תקין &apos;%1&apos; עבור רדיוס</translation>
+        <source>Invalid expression '%1' for radius</source>
+        <translation>ביטוי לא תקין '%1' עבור רדיוס</translation>
     </message>
     <message>
-        <source>Invalid negative radius &apos;%1&apos;</source>
-        <translation>רדיוס שלילי לא תקין &apos;%1&apos;</translation>
+        <source>Invalid negative radius '%1'</source>
+        <translation>רדיוס שלילי לא תקין '%1'</translation>
     </message>
     <message>
-        <source>Invalid zero radius &apos;%1&apos;</source>
-        <translation>רדיוס אפס לא תקין &apos;%1&apos;</translation>
+        <source>Invalid zero radius '%1'</source>
+        <translation>רדיוס אפס לא תקין '%1'</translation>
     </message>
     <message>
-        <source>No tangent circle possible for radius &apos;%1&apos;</source>
-        <translation>לא ניתן ליצור מעגל משיק לרדיוס &apos;%1&apos;</translation>
+        <source>No tangent circle possible for radius '%1'</source>
+        <translation>לא ניתן ליצור מעגל משיק לרדיוס '%1'</translation>
     </message>
     <message>
-        <source>No common tangential circle for radius &apos;%1&apos;</source>
-        <translation>לא קיים מעגל משיק משותף לרדיוס &apos;%1&apos;</translation>
+        <source>No common tangential circle for radius '%1'</source>
+        <translation>לא קיים מעגל משיק משותף לרדיוס '%1'</translation>
     </message>
 </context>
 <context>
@@ -11468,8 +11467,8 @@ This block cannot be inserted.</source>
         <translation>הזן זווית:</translation>
     </message>
     <message>
-        <source></source>
-        <translation></translation>
+        <source />
+        <translation />
     </message>
     <message>
         <source>Enter factor:</source>
@@ -11684,8 +11683,8 @@ This block cannot be inserted.</source>
 <context>
     <name>RS_ActionDrawLinePolygon</name>
     <message>
-        <source></source>
-        <translation></translation>
+        <source />
+        <translation />
     </message>
 </context>
 <context>
@@ -12163,16 +12162,16 @@ This block cannot be inserted.</source>
         <translation>הזן זווית:</translation>
     </message>
     <message>
-        <source></source>
-        <translation></translation>
+        <source />
+        <translation />
     </message>
     <message>
         <source>Enter factor:</source>
         <translation>הזן מכפיל:</translation>
     </message>
     <message>
-        <source>Cannot open file &apos;%1&apos;</source>
-        <translation>לא ניתן לפתוח קובץ &apos;%1&apos;</translation>
+        <source>Cannot open file '%1'</source>
+        <translation>לא ניתן לפתוח קובץ '%1'</translation>
     </message>
 </context>
 <context>
@@ -12608,7 +12607,7 @@ This block cannot be inserted.</source>
         <translation>ביטול</translation>
     </message>
     <message>
-        <source>Specify adding node&apos;s point</source>
+        <source>Specify adding node's point</source>
         <translation>הגדר את נקודת הצומת</translation>
     </message>
     <message>
@@ -12678,7 +12677,7 @@ This block cannot be inserted.</source>
         <translation>ביטול</translation>
     </message>
     <message>
-        <source>Specify deleting node&apos;s point</source>
+        <source>Specify deleting node's point</source>
         <translation>לציין מחיקת נקודת הצומת</translation>
     </message>
     <message>
@@ -12845,8 +12844,8 @@ This block cannot be inserted.</source>
         <translation>הזן היסטה משורת הפקודה להזזת ההדפסה</translation>
     </message>
     <message>
-        <source>Printout offset ignores relative zero. Ignoring &apos;@&apos;</source>
-        <translation>היסטת ההדפסה מתעלמת מאפס יחסי. מתעלם מ&apos;@&apos;</translation>
+        <source>Printout offset ignores relative zero. Ignoring '@'</source>
+        <translation>היסטת ההדפסה מתעלמת מאפס יחסי. מתעלם מ'@'</translation>
     </message>
     <message>
         <source>Printout in Black/White</source>

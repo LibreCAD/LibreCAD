@@ -3759,7 +3759,7 @@ Ju lutemi vini re se nëse do të ruani stilin përmes editorit pa rinisje, stil
         <translation>&amp;Info</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3040"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3047"/>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="930"/>
         <source>About</source>
         <translation>Rreth</translation>
@@ -3780,7 +3780,7 @@ Ju lutemi vini re se nëse do të ruani stilin përmes editorit pa rinisje, stil
         <translation>Lista e Blloqeve</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3443"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3450"/>
         <source>Command line</source>
         <translation>Linja e komandës</translation>
     </message>
@@ -3825,12 +3825,12 @@ Ju lutemi vini re se nëse do të ruani stilin përmes editorit pa rinisje, stil
         <translation>dokument i paemërtuar %1</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1654"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1661"/>
         <source>New Drawing created.</source>
         <translation>U krijua vizatim i ri.</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1784"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1791"/>
         <source>Cannot open the file
 %1
 Please check the permissions.</source>
@@ -3839,12 +3839,12 @@ Please check the permissions.</source>
 Ju lutemi kontrolloni lejet.</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2008"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2015"/>
         <source>Loaded document: </source>
         <translation>Dokumenti i ngarkuar: </translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2014"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2021"/>
         <source>Opening aborted</source>
         <translation>Hapja u ndërpre</translation>
     </message>
@@ -3861,9 +3861,9 @@ Ju lutemi kontrolloni lejet.</translation>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="535"/>
         <location filename="../src/main/qc_applicationwindow.cpp" line="1593"/>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1992"/>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2875"/>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3248"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1999"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2882"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3255"/>
         <source>Draft Mode</source>
         <translation>Modaliteti i skicës</translation>
     </message>
@@ -3908,22 +3908,22 @@ Ju lutemi kontrolloni lejet.</translation>
         <translation>Eksporto</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1720"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1727"/>
         <source>New document from template: </source>
         <translation>Dokument i ri nga shablloni: </translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1768"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1775"/>
         <source>Select Template aborted</source>
         <translation>Zgjedhja e shabllonit u ndërpre</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1884"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1891"/>
         <source>Warning: File already opened : </source>
         <translation>Kujdes: Skedari tashmë i hapur : </translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1927"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1934"/>
         <source>Cannot open the file
 %1
 Please check its existence and permissions.</source>
@@ -3932,7 +3932,7 @@ Please check its existence and permissions.</source>
 Ju lutemi kontrolloni ekzistencën dhe lejet e tij.</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2013"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2020"/>
         <source>File &apos;%1&apos; does not exist. Opening aborted</source>
         <translation>Skedari &apos;%1&apos; nuk ekziston. Hapja u ndërpre</translation>
     </message>
@@ -4039,22 +4039,22 @@ Ju lutemi kontrolloni ekzistencën dhe lejet e tij.</translation>
         <translation>&amp;Maksimizuar</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2055"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2062"/>
         <source>Save All cancelled</source>
         <translation>Ruaj të gjitha u anulua</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2080"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2087"/>
         <source>Auto-saving drawing...</source>
         <translation>Duke ruajtur automatikisht vizatimin...</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2088"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2095"/>
         <source>Auto-saved drawing</source>
         <translation>Vizatimi i ruajtur automatikisht</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2093"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2100"/>
         <source>Cannot auto-save the file
 %1
 Please check the permissions.
@@ -4065,189 +4065,189 @@ Ju lutemi kontrolloni lejet.
 Ruajtja automatike është çaktivizuar.</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2098"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2105"/>
         <source>Auto-saving failed</source>
         <translation>Ruajtja automatike dështoi</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2111"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2118"/>
         <source>Exporting drawing...</source>
         <translation>Duke eksportuar vizatimin...</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2148"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2155"/>
         <source>Export as</source>
         <translation>Eksporto si</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2207"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2214"/>
         <source>Exported: %1</source>
         <translation>Eksportuar: %1</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2247"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2254"/>
         <source>Exporting...</source>
         <translation>Duke eksportuar...</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2320"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2327"/>
         <source>Export complete</source>
         <translation>Eksporti përfundoi
 </translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2322"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2329"/>
         <source>Export failed!</source>
         <translation>Eksportimi dështoi!</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2389"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2396"/>
         <source>Close All cancelled</source>
         <translation>Mbyll të gjitha u anulua</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2419"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2426"/>
         <source>Please adjust scaling and positioning in print preview first.</source>
         <translation>Ju lutemi rregulloni shkallëzimin dhe pozicionimin në parashikimin e shtypjes fillimisht.</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2431"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2438"/>
         <source>Printing...</source>
         <translation>Në printim...</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2483"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2490"/>
         <source>Export as PDF</source>
         <translation>Eksporto si PDF</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2677"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2684"/>
         <source>Printing complete</source>
         <translation>Printimi përfundoi</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2753"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2760"/>
         <source>Print preview for %1</source>
         <translation>Parashikim i shtypjes për %1</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2831"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2838"/>
         <source>Exiting application...</source>
         <translation>Duke mbyllur programin...</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3062"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3069"/>
         <source>Compiler: Microsoft Visual C++</source>
         <translation>Kompluesi: Microsoft Visual C++</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3066"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3073"/>
         <source>Boost Version: %1.%2.%3</source>
         <translation>Versioni Boost: %1.%2.%3</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3073"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3080"/>
         <source>Copy</source>
         <translation>Kopjo</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3084"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3091"/>
         <source>Contributors</source>
         <translation>Kontribues</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3085"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3092"/>
         <source>License</source>
         <translation>Licencë</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3086"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3093"/>
         <source>The Code</source>
         <translation>Kodi</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3095"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3102"/>
         <source>System</source>
         <translation>Sistem</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3540"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3547"/>
         <source>Toolbar Creator</source>
         <translation>Krijues i shiritit të veglave</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3606"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3613"/>
         <source>Menu Creator</source>
         <translation>Krijues i menysë</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3631"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3638"/>
         <source>Menu Assigner</source>
         <translation>Caktues i menysë</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3056"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3063"/>
         <source>Version: %1</source>
         <translation>Versioni: %1</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3058"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3065"/>
         <source>Compiler: Clang %1.%2.%3</source>
         <translation>Kompiluesi: Clang %1.%2.%3</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3060"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3067"/>
         <source>Compiler: GNU GCC %1.%2.%3</source>
         <translation>Kompiluesi: GNU GCC %1.%2.%3</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3065"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3072"/>
         <source>Qt Version: %1</source>
         <translation>Versioni Qt: %1</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3064"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3071"/>
         <source>Compiled on: %1</source>
         <translation>Kompiluar në: %1</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3288"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3295"/>
         <source>Toolbars</source>
         <translation>Shirita veglash</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3293"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3300"/>
         <source>Dockwidgets</source>
         <translation>Widgetet e dokimit</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3320"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3327"/>
         <source>Opening recent file...</source>
         <translation>Duke hapur skedarin e fundit...</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3443"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3450"/>
         <source>Cmd</source>
         <translation>Cmd</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3444"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3451"/>
         <source>Float</source>
         <translation>Fluturues</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3444"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3451"/>
         <source>Dock</source>
         <comment>Dock the command widget to the main window</comment>
         <translation>Dokiraj</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3502"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3509"/>
         <source>Device Options</source>
         <translation>Opsionet e pajisjes</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3505"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3512"/>
         <source>Device</source>
         <translation>Pajisje</translation>
     </message>
@@ -9079,9 +9079,9 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>QMessageBox</name>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1787"/>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1931"/>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2092"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1794"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1938"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2099"/>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="215"/>
         <source>Warning</source>
         <translation>Paralajmërim</translation>
@@ -10057,62 +10057,62 @@ A doni ta zëvendësoni?</translation>
         <translation>Fajli DWG u hap, versioni %1.</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4035"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4075"/>
         <source>unknown error opening dwg file</source>
         <translation>Gabim i panjohur gjatë hapjes së skedarit dwg</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4039"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4079"/>
         <source>can&apos;t open this dwg file</source>
         <translation>Nuk mund të hapet ky skedar dwg</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4043"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4083"/>
         <source>unsupported dwg version</source>
         <translation>Versioni dwg nuk mbështetet</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4047"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4087"/>
         <source>error reading file metadata in dwg file</source>
         <translation>Gabim gjatë leximit të metadatës së skedarit në skedarin dwg</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4051"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4091"/>
         <source>error reading file header in dwg file</source>
         <translation>Gabim gjatë leximit të kryqit të skedarit në skedarin dwg</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4055"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4095"/>
         <source>error reading header vars in dwg file</source>
         <translation>Gabim gjatë leximit të variablave të kryqit në skedarin dwg</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4059"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4099"/>
         <source>error reading classes in dwg file</source>
         <translation>Gabim gjatë leximit të klasave në skedarin dwg</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4063"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4103"/>
         <source>error reading offsets in dwg file</source>
         <translation>Gabim gjatë leximit të zhvendosjeve në skedarin dwg</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4067"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4107"/>
         <source>error reading tables in dwg file</source>
         <translation>Gabim gjatë leximit të tabelave në skedarin dwg</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4071"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4111"/>
         <source>error reading blocks in dwg file</source>
         <translation>Gabim gjatë leximit të blloqeve në skedarin dwg</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4075"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4115"/>
         <source>error reading entities in dwg file</source>
         <translation>Gabim gjatë leximit të entiteteve në skedarin DWG</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4079"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4119"/>
         <source>error reading objects in dwg file</source>
         <translation>Gabim gjatë leximit të objekteve në skedarin DWG</translation>
     </message>
@@ -12899,12 +12899,12 @@ A doni ta zëvendësoni?</translation>
         <translation>Mësuesi i stilove</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1961"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1968"/>
         <source>Invalid objects removed:</source>
         <translation>Objektet e pavlefshme u hoqën:</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3818"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3825"/>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="934"/>
         <source>License</source>
         <translation>Licencë</translation>

@@ -3554,9 +3554,9 @@ Tenga en cuenta que si guarda una pluma a través del editor sin reiniciar, las 
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="535"/>
         <location filename="../src/main/qc_applicationwindow.cpp" line="1593"/>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1992"/>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2875"/>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3248"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1999"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2882"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3255"/>
         <source>Draft Mode</source>
         <translation>Modo borrador</translation>
     </message>
@@ -3693,22 +3693,22 @@ Tenga en cuenta que si guarda una pluma a través del editor sin reiniciar, las 
         <translation>documento sin nombre %1</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1654"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1661"/>
         <source>New Drawing created.</source>
         <translation>Nuevo dibujo creado.</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1720"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1727"/>
         <source>New document from template: </source>
         <translation>Nuevo documento desde plantilla:</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1768"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1775"/>
         <source>Select Template aborted</source>
         <translation>Selección de plantilla cancelada</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1784"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1791"/>
         <source>Cannot open the file
 %1
 Please check the permissions.</source>
@@ -3717,12 +3717,12 @@ Please check the permissions.</source>
 Verifique los permisos.</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1884"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1891"/>
         <source>Warning: File already opened : </source>
         <translation>Advertencia: archivo ya abierto:</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1927"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1934"/>
         <source>Cannot open the file
 %1
 Please check its existence and permissions.</source>
@@ -3731,37 +3731,37 @@ Please check its existence and permissions.</source>
 Verifique que exista y los permisos.</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2008"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2015"/>
         <source>Loaded document: </source>
         <translation>Documento cargado:</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2013"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2020"/>
         <source>File &apos;%1&apos; does not exist. Opening aborted</source>
         <translation>El archivo &apos;%1&apos; no existe. Apertura cancelada</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2014"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2021"/>
         <source>Opening aborted</source>
         <translation>Apertura cancelada</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2055"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2062"/>
         <source>Save All cancelled</source>
         <translation>Guardar todos cancelados</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2080"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2087"/>
         <source>Auto-saving drawing...</source>
         <translation>Guardado automático del dibujo...</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2088"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2095"/>
         <source>Auto-saved drawing</source>
         <translation>Dibujo guardado automáticamente</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2093"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2100"/>
         <source>Cannot auto-save the file
 %1
 Please check the permissions.
@@ -3772,199 +3772,199 @@ Verifique los permisos.
 Guardado automático desactivado.</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2098"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2105"/>
         <source>Auto-saving failed</source>
         <translation>Guardado automático falló</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2111"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2118"/>
         <source>Exporting drawing...</source>
         <translation>Exportando dibujo...</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2148"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2155"/>
         <source>Export as</source>
         <translation>Exportar como</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2207"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2214"/>
         <source>Exported: %1</source>
         <translation>Exportado: %1</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2247"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2254"/>
         <source>Exporting...</source>
         <translation>Exportando...</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2320"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2327"/>
         <source>Export complete</source>
         <translation>Exportación completada</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2322"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2329"/>
         <source>Export failed!</source>
         <translation>¡Falló la exportación!</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2389"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2396"/>
         <source>Close All cancelled</source>
         <translation>Cerrar todos cancelados</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2419"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2426"/>
         <source>Please adjust scaling and positioning in print preview first.</source>
         <translation>Ajuste la escala y la posición en la vista previa de impresión primero.</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2431"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2438"/>
         <source>Printing...</source>
         <translation>Imprimiendo...</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2483"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2490"/>
         <source>Export as PDF</source>
         <translation>Exportar como PDF</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2677"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2684"/>
         <source>Printing complete</source>
         <translation>Impresión completada</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2753"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2760"/>
         <source>Print preview for %1</source>
         <translation>Vista previa de impresión para %1</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2831"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2838"/>
         <source>Exiting application...</source>
         <translation>Saliendo de la aplicación...</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3040"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3047"/>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="930"/>
         <source>About</source>
         <translation>Acerca de</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3056"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3063"/>
         <source>Version: %1</source>
         <translation>Versión: %1</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3058"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3065"/>
         <source>Compiler: Clang %1.%2.%3</source>
         <translation>Compilador: Clang %1.%2.%3</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3060"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3067"/>
         <source>Compiler: GNU GCC %1.%2.%3</source>
         <translation>Compilador: GNU GCC %1.%2.%3</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3062"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3069"/>
         <source>Compiler: Microsoft Visual C++</source>
         <translation>Compilador: Microsoft Visual C++</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3064"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3071"/>
         <source>Compiled on: %1</source>
         <translation>Compilado en: %1</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3065"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3072"/>
         <source>Qt Version: %1</source>
         <translation>Versión Qt: %1</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3066"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3073"/>
         <source>Boost Version: %1.%2.%3</source>
         <translation>Versión Boost: %1.%2.%3</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3073"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3080"/>
         <source>Copy</source>
         <translation>Copiar</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3084"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3091"/>
         <source>Contributors</source>
         <translation>Colaboradores</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3085"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3092"/>
         <source>License</source>
         <translation>Licencia</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3086"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3093"/>
         <source>The Code</source>
         <translation>El Código</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3095"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3102"/>
         <source>System</source>
         <translation>Sistema</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3288"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3295"/>
         <source>Toolbars</source>
         <translation>Barras de herramientas</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3293"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3300"/>
         <source>Dockwidgets</source>
         <translation>Widgets acoplables</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3320"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3327"/>
         <source>Opening recent file...</source>
         <translation>Abriendo archivo reciente...</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3443"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3450"/>
         <source>Cmd</source>
         <translation>Cmd</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3443"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3450"/>
         <source>Command line</source>
         <translation>Línea de comandos</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3444"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3451"/>
         <source>Float</source>
         <translation>Flotante</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3444"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3451"/>
         <source>Dock</source>
         <comment>Dock the command widget to the main window</comment>
         <translation>Panel</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3502"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3509"/>
         <source>Device Options</source>
         <translation>Opciones de dispositivo</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3505"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3512"/>
         <source>Device</source>
         <translation>Dispositivo</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3540"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3547"/>
         <source>Toolbar Creator</source>
         <translation>Creador de barras de herramientas</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3606"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3613"/>
         <source>Menu Creator</source>
         <translation>Creador de menús</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3631"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3638"/>
         <source>Menu Assigner</source>
         <translation>Asignador de menús</translation>
     </message>
@@ -9084,9 +9084,9 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>QMessageBox</name>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1787"/>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1931"/>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2092"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1794"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1938"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2099"/>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="215"/>
         <source>Warning</source>
         <translation>Advertencia</translation>
@@ -12494,62 +12494,62 @@ Esta acción NO se puede deshacer.</translation>
         <translation>Se abrió el archivo dwg versión %1.</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4035"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4075"/>
         <source>unknown error opening dwg file</source>
         <translation>Error desconocido al abrir el archivo dwg</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4039"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4079"/>
         <source>can&apos;t open this dwg file</source>
         <translation>No se puede abrir este archivo dwg.</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4043"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4083"/>
         <source>unsupported dwg version</source>
         <translation>Versión dwg no compatible.</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4047"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4087"/>
         <source>error reading file metadata in dwg file</source>
         <translation>Error al leer los metadatos del archivo dwg.</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4051"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4091"/>
         <source>error reading file header in dwg file</source>
         <translation>Error al leer el encabezado del archivo dwg.</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4055"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4095"/>
         <source>error reading header vars in dwg file</source>
         <translation>Error al leer las variables de encabezado en el archivo dwg.</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4059"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4099"/>
         <source>error reading classes in dwg file</source>
         <translation>Error al leer las clases en el archivo dwg.</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4063"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4103"/>
         <source>error reading offsets in dwg file</source>
         <translation>Error al leer los desvíos en el archivo dwg.</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4067"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4107"/>
         <source>error reading tables in dwg file</source>
         <translation>Error al leer las tablas en el archivo dwg.</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4071"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4111"/>
         <source>error reading blocks in dwg file</source>
         <translation>Error al leer los bloques en el archivo dwg.</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4075"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4115"/>
         <source>error reading entities in dwg file</source>
         <translation>Error al leer las entidades en el archivo dwg.</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4079"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4119"/>
         <source>error reading objects in dwg file</source>
         <translation>Error al leer objetos en el archivo dwg.</translation>
     </message>
@@ -12700,12 +12700,12 @@ Esta acción NO se puede deshacer.</translation>
         <translation>Asistente de Pluma</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1961"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1968"/>
         <source>Invalid objects removed:</source>
         <translation>Objetos inválidos eliminados:</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3818"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3825"/>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="934"/>
         <source>License</source>
         <translation>Licencia</translation>

@@ -153,7 +153,7 @@ LC_PenItem* LC_PenPaletteData::fromStringRepresentation(QString &str){
                         RS2::LineWidth lineWidth = static_cast<RS2::LineWidth>(width);
 
                         // here we'll parse color
-                        QString colorStr = stringParts.at(2), trimmed;
+                        QString colorStr = stringParts.at(2).trimmed();
                         RS_Color color = registry->getColorFromInternalString(colorStr);
                         bool colorValid = color.isValid();
                         if (!colorValid){

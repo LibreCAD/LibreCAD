@@ -898,7 +898,7 @@ anti-clockwise.</source>
   <message>
    <location filename="../divide/dividedlg.cpp" line="245" />
    <source>&lt;i&gt;"New"&lt;/i&gt;&lt;br&gt;Enter name&lt;br&gt;for a new layer&lt;br&gt;(if required?) to&lt;br&gt;draw ticks on.</source>
-   <translation>&lt;i&gt;Ново&lt;/i&gt;&lt;br&gt;Унесите име за нови слој (ако је потребно) на који ћете цртати ознаке.</translation>
+   <translation>&lt;i&gt;Ново&lt;/i&gt;&lt;br&gt;Унесите име за нови слој&lt;br&gt;(ако је потребно)&lt;br&gt;на који ћете&lt;br&gt;цртати ознаке.</translation>
   </message>
   <message>
    <location filename="../divide/dividedlg.cpp" line="251" />

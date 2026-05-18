@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
+<?xml version='1.0' encoding='utf-8'?>
 <TS version="2.1" language="tr">
 <context>
     <name>ColorWizard</name>
@@ -1171,7 +1170,7 @@ veya [%2]</translation>
         <translation>Çoğalt</translation>
     </message>
     <message>
-        <source>Update Current Pen by Active Layer&apos; Pen</source>
+        <source>Update Current Pen by Active Layer' Pen</source>
         <translation>Geçerli kalemi aktif katmanın kalemiyle güncelle</translation>
     </message>
 </context>
@@ -1185,8 +1184,8 @@ veya [%2]</translation>
 <context>
     <name>LC_ActionLayersExport</name>
     <message>
-        <source>Saving layer &quot;%1&quot; as &quot;%2&quot; </source>
-        <translation>&quot;%1&quot; &amp;katmanını &quot;%2&quot; olarak kaydet </translation>
+        <source>Saving layer "%1" as "%2" </source>
+        <translation>"%1" &amp;katmanını "%2" olarak kaydet </translation>
     </message>
 </context>
 <context>
@@ -1700,7 +1699,7 @@ veya [%2]</translation>
         <translation>Normal Katmana Dönüştür</translation>
     </message>
     <message>
-        <source>&amp;Select Layer&apos;s Entities</source>
+        <source>&amp;Select Layer's Entities</source>
         <translation>Katmanın &amp;Varlıklarını Seç</translation>
     </message>
     <message>
@@ -2231,11 +2230,11 @@ veya [%2]</translation>
         <translation>geçerliye</translation>
     </message>
     <message>
-        <source>Update Current Pen by Active Layer&apos; Pen</source>
+        <source>Update Current Pen by Active Layer' Pen</source>
         <translation>Geçerli Kalemi Aktif Katman Kalemiyle Güncelle</translation>
     </message>
     <message>
-        <source>Fill Pen Editor from Active Layer&apos;s Pen</source>
+        <source>Fill Pen Editor from Active Layer's Pen</source>
         <translation>Kalem Düzenleyicisini Aktif Katman Kaleminden Doldur</translation>
     </message>
     <message>
@@ -2300,14 +2299,14 @@ veya [%2]</translation>
     </message>
     <message>
         <source>Location of pens file is changed, please restart the application so new pens file will be used.
-Please note that if you&apos;ll save pen via editor without restart, current pens from palette will be saved in the new file and therefore existing content of it will be overridden.</source>
+Please note that if you'll save pen via editor without restart, current pens from palette will be saved in the new file and therefore existing content of it will be overridden.</source>
         <translation type="vanished">Kalem dosyası konumu değişti, yeni kalem dosyasının kullanılabilmesi için uygulamayı yeniden başlatın.
 Not: Düzenleyici üzerinden yeniden başlatmadan kalem kaydederseniz, paletten mevcut kalemler yeni dosyaya kaydedilecek ve mevcut içerik üzerine yazılacaktır.</translation>
     </message>
     <message>
         <source>Location of pens file is changed, please restart the application so new pens file will be used.
 
-Please note that if you&apos;ll save pen via editor without restart, current pens from palette will be saved in the new file and therefore existing content of it will be overridden.</source>
+Please note that if you'll save pen via editor without restart, current pens from palette will be saved in the new file and therefore existing content of it will be overridden.</source>
         <translation>Kalem dosyası konumu değiştirildi, lütfen uygulamayı yeniden başlatın, böylece yeni kalem dosyası kullanılabilir.
 
 Lütfen, yeniden başlatmadan düzenleyici aracılığıyla kalemi kaydederseniz, paletten mevcut kalemler yeni dosyaya kaydedilecek ve bu nedenle mevcut içeriği üzerine yazılacaktır.</translation>
@@ -2820,12 +2819,12 @@ Lütfen, yeniden başlatmadan düzenleyici aracılığıyla kalemi kaydederseniz
         <translation>sağı kaldır</translation>
     </message>
     <message>
-        <source>remove 0&apos;</source>
-        <translation>0&apos; kaldır</translation>
+        <source>remove 0'</source>
+        <translation>0' kaldır</translation>
     </message>
     <message>
-        <source>remove 0&quot;</source>
-        <translation>0&quot; kaldır</translation>
+        <source>remove 0"</source>
+        <translation>0" kaldır</translation>
     </message>
 </context>
 <context>
@@ -2971,8 +2970,8 @@ Lütfen, yeniden başlatmadan düzenleyici aracılığıyla kalemi kaydederseniz
         <translation>Yeni dosya oluşturuluyor...</translation>
     </message>
     <message>
-        <source>Block &apos;%1&apos;</source>
-        <translation>Blok &apos;%1&apos;</translation>
+        <source>Block '%1'</source>
+        <translation>Blok '%1'</translation>
     </message>
     <message>
         <source>unnamed document %1</source>
@@ -3157,8 +3156,8 @@ dosyası açılamıyor
 Lütfen varlığını ve izinlerini kontrol edin.</translation>
     </message>
     <message>
-        <source>File &apos;%1&apos; does not exist. Opening aborted</source>
-        <translation>&apos;%1&apos; dosyası yok. Açılış iptal edildi</translation>
+        <source>File '%1' does not exist. Opening aborted</source>
+        <translation>'%1' dosyası yok. Açılış iptal edildi</translation>
     </message>
     <message>
         <source>Categories</source>
@@ -3404,7 +3403,7 @@ Lütfen varlığını ve izinlerini kontrol edin.</translation>
         <translation>&amp;Viki</translation>
     </message>
     <message>
-        <source>User&apos;s &amp;Manual</source>
+        <source>User's &amp;Manual</source>
         <translation>&amp;Kullanıcı Kılavuzu</translation>
     </message>
     <message>
@@ -3483,16 +3482,16 @@ Lütfen varlığını ve izinlerini kontrol edin.</translation>
         <translation>Geçerli Katman</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+        <source>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Name of Current Active Layer&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Helvetica'; font-size:7pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;Name of Current Active Layer&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Geçerli Etkin Katmanın Adı&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Helvetica'; font-size:7pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;Geçerli Etkin Katmanın Adı&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
@@ -3510,8 +3509,8 @@ p, li { white-space: pre-wrap; }
         <translation>Blok İsimlendirme</translation>
     </message>
     <message>
-        <source>Could not name block. A block named &quot;%1&quot; already exists.</source>
-        <translation>Blok isimlendirilemedi. &quot;%1&quot; isminde bir blok zaten var.</translation>
+        <source>Could not name block. A block named "%1" already exists.</source>
+        <translation>Blok isimlendirilemedi. "%1" isminde bir blok zaten var.</translation>
     </message>
 </context>
 <context>
@@ -3884,7 +3883,7 @@ pencerede düzenle</translation>
     <message>
         <source>Apply attributes also to all sub-entities of selected INSERT.
 This recursively modifies all entities of the Block itself.</source>
-        <translation>Nitelikleri seçilen INSERT&apos;in tüm alt varlıklarına da uygulayın.
+        <translation>Nitelikleri seçilen INSERT'in tüm alt varlıklarına da uygulayın.
 Bu, Bloğun kendisinin tüm varlıklarını yinelemeli olarak değiştirir.</translation>
     </message>
     <message>
@@ -4105,12 +4104,12 @@ Bu, Bloğun kendisinin tüm varlıklarını yinelemeli olarak değiştirir.</tra
         <translation>Komut Dili:</translation>
     </message>
     <message>
-        <source>&lt;font size=&quot;+1&quot;&gt;&lt;b&gt;Welcome to LibreCAD&lt;/b&gt;
+        <source>&lt;font size="+1"&gt;&lt;b&gt;Welcome to LibreCAD&lt;/b&gt;
 &lt;/font&gt;
 &lt;br&gt;
 Please choose the unit you want to use for new drawings and your preferred language.&lt;br&gt;
 (You can changes these settings later.)</source>
-        <translation>&lt;font size=&quot;+1&quot;&gt;&lt;b&gt;LibreCAD&apos;e hoş geldiniz&lt;/b&gt;
+        <translation>&lt;font size="+1"&gt;&lt;b&gt;LibreCAD'e hoş geldiniz&lt;/b&gt;
 &lt;/font&gt;
 &lt;br&gt;
 Lütfen yeni çizimler için kullanmak istediğiniz birimi ve tercih ettiğiniz dili seçin.&lt;br&gt;
@@ -5078,7 +5077,7 @@ Lütfen yeni çizimler için kullanmak istediğiniz birimi ve tercih ettiğiniz 
         <translation>Radyan</translation>
     </message>
     <message>
-        <source>Surveyor&apos;s units</source>
+        <source>Surveyor's units</source>
         <translation>Haritacı birimleri</translation>
     </message>
     <message>
@@ -5090,8 +5089,8 @@ Lütfen yeni çizimler için kullanmak istediğiniz birimi ve tercih ettiğiniz 
         <translation>Seçenekler</translation>
     </message>
     <message>
-        <source>For the length formats &apos;Engineering&apos; and &apos;Architectural&apos;, the unit must be set to Inch.</source>
-        <translation>&apos;Mühendislik&apos; ve &apos;Mimari&apos; uzunluk biçimleri için birim İnç olarak ayarlanmalıdır.</translation>
+        <source>For the length formats 'Engineering' and 'Architectural', the unit must be set to Inch.</source>
+        <translation>'Mühendislik' ve 'Mimari' uzunluk biçimleri için birim İnç olarak ayarlanmalıdır.</translation>
     </message>
     <message>
         <source>&amp;Grid</source>
@@ -5150,8 +5149,8 @@ Lütfen yeni çizimler için kullanmak istediğiniz birimi ve tercih ettiğiniz 
         <translation>Tik büyüklüğü:</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dimension Tick size. Set it to 0 will disable the dimension tick. Dimension arrow won&apos;t be drawn when dimension tick is enabled.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Ölçülendirme tik boyutu. 0&apos;a ayarlamak ölçü tikini devre dışı bırakacaktır. Ölçü tiki etkinleştirildiğinde ölçü oku çizilmez.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dimension Tick size. Set it to 0 will disable the dimension tick. Dimension arrow won't be drawn when dimension tick is enabled.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Ölçülendirme tik boyutu. 0'a ayarlamak ölçü tikini devre dışı bırakacaktır. Ölçü tiki etkinleştirildiğinde ölçü oku çizilmez.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Horizontal</source>
@@ -5174,12 +5173,12 @@ Lütfen yeni çizimler için kullanmak istediğiniz birimi ve tercih ettiğiniz 
         <translation>Yazı stili:</translation>
     </message>
     <message>
-        <source>&apos;.&apos; (Period)</source>
-        <translation>&apos;.&apos; (Nokta)</translation>
+        <source>'.' (Period)</source>
+        <translation>'.' (Nokta)</translation>
     </message>
     <message>
-        <source>&apos;,&apos; (Comma)</source>
-        <translation>&apos;,&apos; (Virgül)</translation>
+        <source>',' (Comma)</source>
+        <translation>',' (Virgül)</translation>
     </message>
     <message>
         <source>Decimal separator:</source>
@@ -5222,8 +5221,8 @@ Lütfen yeni çizimler için kullanmak istediğiniz birimi ve tercih ettiğiniz 
         <translation>Ölçü çizgisi üzerinde büyütülecek uzunluk</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dimension arrow size. &lt;a name=&quot;result_box&quot;/&gt;without effect when tick size &lt;a name=&quot;result_box&quot;/&gt;is other than 0&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Ölçü oku boyutu. &lt;a name=&quot;result_box&quot;/&gt;tik boyutu &lt;a name=&quot;result_box&quot;/&gt;0&apos;dan büyük olduğunda etkisi yoktur&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dimension arrow size. &lt;a name="result_box"/&gt;without effect when tick size &lt;a name="result_box"/&gt;is other than 0&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Ölçü oku boyutu. &lt;a name="result_box"/&gt;tik boyutu &lt;a name="result_box"/&gt;0'dan büyük olduğunda etkisi yoktur&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Width:</source>
@@ -5254,8 +5253,8 @@ Lütfen yeni çizimler için kullanmak istediğiniz birimi ve tercih ettiğiniz 
         <translation>Doğrusal hassasiyet:</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Text alignment &lt;a name=&quot;result_box&quot;/&gt;relative to the dimension line.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Ölçü çizgisine göre &lt;a name=&quot;result_box&quot;/&gt;metin hizalaması.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Text alignment &lt;a name="result_box"/&gt;relative to the dimension line.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Ölçü çizgisine göre &lt;a name="result_box"/&gt;metin hizalaması.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Aligned</source>
@@ -5358,8 +5357,8 @@ Lütfen yeni çizimler için kullanmak istediğiniz birimi ve tercih ettiğiniz 
         <translation>Mimari (metrik)</translation>
     </message>
     <message>
-        <source>For the length format &apos;Architectural (metric)&apos;, the unit must be set to Meter.</source>
-        <translation>&apos;Mimari (metrik)&apos; uzunluk formatı için birim Metre olarak ayarlanmalıdır.</translation>
+        <source>For the length format 'Architectural (metric)', the unit must be set to Meter.</source>
+        <translation>'Mimari (metrik)' uzunluk formatı için birim Metre olarak ayarlanmalıdır.</translation>
     </message>
     <message>
         <source>Screen %</source>
@@ -5605,7 +5604,7 @@ Lütfen yeni çizimler için kullanmak istediğiniz birimi ve tercih ettiğiniz 
         <translation>&amp;Önizleme varlıklarının sayısı:</translation>
     </message>
     <message>
-        <source>Don&apos;t use native OS file open dialog</source>
+        <source>Don't use native OS file open dialog</source>
         <translation>İşletim sistemi dosya açma iletişim kutusunu kullanma</translation>
     </message>
     <message>
@@ -5685,8 +5684,8 @@ Lütfen yeni çizimler için kullanmak istediğiniz birimi ve tercih ettiğiniz 
         <translation>Dosyayı açarken çizimi sığdır</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-family:&apos;-apple-system&apos;,&apos;BlinkMacSystemFont&apos;,&apos;Segoe UI&apos;,&apos;Noto Sans&apos;,&apos;Helvetica&apos;,&apos;Arial&apos;,&apos;sans-serif&apos;,&apos;Apple Color Emoji&apos;,&apos;Segoe UI Emoji&apos;; font-size:14px; color:#1f2328; background-color:#ffffff;&quot;&gt;Part library folder. The symbol library dxf files must be located in the subdirectories of this folder. The subfolder names will be displayed in the Library Browser.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-family:&apos;-apple-system&apos;,&apos;BlinkMacSystemFont&apos;,&apos;Segoe UI&apos;,&apos;Noto Sans&apos;,&apos;Helvetica&apos;,&apos;Arial&apos;,&apos;sans-serif&apos;,&apos;Apple Color Emoji&apos;,&apos;Segoe UI Emoji&apos;; font-size:14px; color:#1f2328; background-color:#ffffff;&quot;&gt;( Menu: Widgets &amp;gt; Dock Widgets &amp;gt; Library Browser)&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-family:&apos;-apple-system&apos;,&apos;BlinkMacSystemFont&apos;,&apos;Segoe UI&apos;,&apos;Noto Sans&apos;,&apos;Helvetica&apos;,&apos;Arial&apos;,&apos;sans-serif&apos;,&apos;Apple Color Emoji&apos;,&apos;Segoe UI Emoji&apos;; font-size:14px; color:#1f2328; background-color:#ffffff;&quot;&gt;Sembol kitaplığı klasörü. Sembol kitaplığı dxf dosyaları bu klasörün alt dizinlerinde bulunmalıdır. Alt dizin adları Kitaplık Görüntüleyicisinde görüntülenecektir.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-family:&apos;-apple-system&apos;,&apos;BlinkMacSystemFont&apos;,&apos;Segoe UI&apos;,&apos;Noto Sans&apos;,&apos;Helvetica&apos;,&apos;Arial&apos;,&apos;sans-serif&apos;,&apos;Apple Color Emoji&apos;,&apos;Segoe UI Emoji&apos;; font-size:14px; color:#1f2328; background-color:#ffffff;&quot;&gt;(Menü: Araçlar &gt; Sabitlenmiş Paneller &gt; Kitaplık Görüntüleyicisi)&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=" font-family:'-apple-system','BlinkMacSystemFont','Segoe UI','Noto Sans','Helvetica','Arial','sans-serif','Apple Color Emoji','Segoe UI Emoji'; font-size:14px; color:#1f2328; background-color:#ffffff;"&gt;Part library folder. The symbol library dxf files must be located in the subdirectories of this folder. The subfolder names will be displayed in the Library Browser.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=" font-family:'-apple-system','BlinkMacSystemFont','Segoe UI','Noto Sans','Helvetica','Arial','sans-serif','Apple Color Emoji','Segoe UI Emoji'; font-size:14px; color:#1f2328; background-color:#ffffff;"&gt;( Menu: Widgets &amp;gt; Dock Widgets &amp;gt; Library Browser)&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=" font-family:'-apple-system','BlinkMacSystemFont','Segoe UI','Noto Sans','Helvetica','Arial','sans-serif','Apple Color Emoji','Segoe UI Emoji'; font-size:14px; color:#1f2328; background-color:#ffffff;"&gt;Sembol kitaplığı klasörü. Sembol kitaplığı dxf dosyaları bu klasörün alt dizinlerinde bulunmalıdır. Alt dizin adları Kitaplık Görüntüleyicisinde görüntülenecektir.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=" font-family:'-apple-system','BlinkMacSystemFont','Segoe UI','Noto Sans','Helvetica','Arial','sans-serif','Apple Color Emoji','Segoe UI Emoji'; font-size:14px; color:#1f2328; background-color:#ffffff;"&gt;(Menü: Araçlar &gt; Sabitlenmiş Paneller &gt; Kitaplık Görüntüleyicisi)&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Open last opened files</source>
@@ -5757,9 +5756,9 @@ Lütfen yeni çizimler için kullanmak istediğiniz birimi ve tercih ettiğiniz 
     </message>
     <message>
         <source>MakerCAM as of November 2014 does not hide SVG content 
-that has been set invisibe (&quot;display: none&quot; or &quot;visibility: hidden&quot;).</source>
+that has been set invisibe ("display: none" or "visibility: hidden").</source>
         <translation>MakerCAM, Kasım 2014 itibarıyla SVG içeriğini gizlemiyor 
-görünmez olarak ayarlanmış (&quot;görüntü: yok&quot; veya &quot;görünürlük: gizli&quot;).</translation>
+görünmez olarak ayarlanmış ("görüntü: yok" veya "görünürlük: gizli").</translation>
     </message>
     <message>
         <source>MakerCAM as of November 2014 cannot correctly deal with blocks,
@@ -5777,20 +5776,20 @@ the &lt;transform&gt; attribute or as &lt;path&gt; using elliptic arc segments.<
     </message>
     <message>
         <source>Exported images can be useful in SVG editors (Inkscape, etc), 
-but avoided in some CAM&apos;s.</source>
+but avoided in some CAM's.</source>
         <translation>Dışa aktarılan görüntüler SVG düzenleyicilerde (Inkscape vb.) kullanılabilir
-ancak bazı CAM&apos;larda bundan kaçınılır.</translation>
+ancak bazı CAM'larda bundan kaçınılır.</translation>
     </message>
     <message>
-        <source>Many CAM&apos;s(MakerCAM, EleskCAM, LaserWeb) ignore dashed/doted line style, 
+        <source>Many CAM's(MakerCAM, EleskCAM, LaserWeb) ignore dashed/doted line style, 
 which can be useful in lasercut of plywood or for papercraft. </source>
         <translation>Birçok CAM (MakerCAM, EleskCAM, LaserWeb) kesikli/noktalı çizgi stilini göz ardı eder, 
 kontrplağın lazer kesiminde veya kağıt işlerinde yararlı olabilir. </translation>
     </message>
     <message>
-        <source>Default width of elements can affect some CAM&apos;s/SVG Editors, 
+        <source>Default width of elements can affect some CAM's/SVG Editors, 
 but ignored by other</source>
-        <translation>Elemanların varsayılan genişliği bazı CAM&apos;leri/SVG Düzenleyicilerini etkileyebilir, 
+        <translation>Elemanların varsayılan genişliği bazı CAM'leri/SVG Düzenleyicilerini etkileyebilir, 
 ama başkaları tarafından görmezden gelindi</translation>
     </message>
     <message>
@@ -7110,16 +7109,16 @@ Yapı Katmanının içeriği çıktıda görünmemelidir.</translation>
         <translation>Sol</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+        <source>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Ubuntu&apos;; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Helvetica&apos;; font-size:9pt;&quot;&gt;Hint about left/right mouse button actions&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Ubuntu'; font-size:11pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;span style=" font-family:'Helvetica'; font-size:9pt;"&gt;Hint about left/right mouse button actions&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Ubuntu&apos;; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Helvetica&apos;; font-size:9pt;&quot;&gt;Sol/sağ fare düğmesi eylemleri hakkında ipucu&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Ubuntu'; font-size:11pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;span style=" font-family:'Helvetica'; font-size:9pt;"&gt;Sol/sağ fare düğmesi eylemleri hakkında ipucu&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
@@ -7166,28 +7165,28 @@ p, li { white-space: pre-wrap; }
         <translation>Toplam Uzunluk</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+        <source>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Number of selected entities&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Helvetica'; font-size:7pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;Number of selected entities&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Seçilen varlıkların sayısı&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Helvetica'; font-size:7pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;Seçilen varlıkların sayısı&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+        <source>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Total length of selected entities&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Helvetica'; font-size:7pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;Total length of selected entities&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Seçilen varlıkların toplam uzunluğu&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Helvetica'; font-size:7pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;Seçilen varlıkların toplam uzunluğu&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
@@ -7462,8 +7461,8 @@ p, li { white-space: pre-wrap; }
         <translation>Katman Özellikleri</translation>
     </message>
     <message>
-        <source>Layer with a name &quot;%1&quot; already exists. Please specify a different name.</source>
-        <translation>&quot;%1&quot; isminde bir katman var. Lütfen başka bir isim verin.</translation>
+        <source>Layer with a name "%1" already exists. Please specify a different name.</source>
+        <translation>"%1" isminde bir katman var. Lütfen başka bir isim verin.</translation>
     </message>
     <message>
         <source>Warning</source>
@@ -7474,8 +7473,8 @@ p, li { white-space: pre-wrap; }
         <translation>Katmanı Sil</translation>
     </message>
     <message>
-        <source>Layer &quot;%1&quot; can never be removed.</source>
-        <translation>&quot;%1&quot; katmanı silinemez.</translation>
+        <source>Layer "%1" can never be removed.</source>
+        <translation>"%1" katmanı silinemez.</translation>
     </message>
     <message>
         <source>Layer Dialog</source>
@@ -7486,24 +7485,24 @@ p, li { white-space: pre-wrap; }
         <translation>Bloğu Sil</translation>
     </message>
     <message>
-        <source>Block &quot;%1&quot; and all its entities will be removed.</source>
-        <translation>&quot;%1&quot; bloğu ve içerdiği tüm varlıklar silinecek.</translation>
+        <source>Block "%1" and all its entities will be removed.</source>
+        <translation>"%1" bloğu ve içerdiği tüm varlıklar silinecek.</translation>
     </message>
     <message>
-        <source>Layer &quot;%1&quot; and all entities on it will be removed.
+        <source>Layer "%1" and all entities on it will be removed.
 This action can NOT be undone.</source>
-        <translation>Katman &quot;%1&quot; ve üzerindeki tüm varlıklar kaldırılacak.
+        <translation>Katman "%1" ve üzerindeki tüm varlıklar kaldırılacak.
 Bu işlem geri alınamaz.</translation>
     </message>
     <message>
-        <source>Layer &quot;0&quot; can never be removed.</source>
-        <translation>&quot;0&quot; katmanı hiçbir zaman silinemez.</translation>
+        <source>Layer "0" can never be removed.</source>
+        <translation>"0" katmanı hiçbir zaman silinemez.</translation>
     </message>
     <message numerus="yes">
         <source>Remove %n layer(s)</source>
         <translation>
             <numerusform>%n katmanı sil</numerusform>
-        </translation>
+        <numerusform>%n katmanı silin</numerusform></translation>
     </message>
     <message>
         <source>Listed layers and all entities on them will be removed.</source>
@@ -7514,8 +7513,8 @@ Bu işlem geri alınamaz.</translation>
         <translation>Uyarı: Bu işlem geri alınamaz!</translation>
     </message>
     <message>
-        <source>Warning: layer &quot;0&quot; can never be removed.</source>
-        <translation>Uyarı: &quot;0&quot; katmanı hiçbir zaman kaldırılamaz.</translation>
+        <source>Warning: layer "0" can never be removed.</source>
+        <translation>Uyarı: "0" katmanı hiçbir zaman kaldırılamaz.</translation>
     </message>
     <message>
         <source>Layers for removal:</source>
@@ -7524,8 +7523,8 @@ Bu işlem geri alınamaz.</translation>
     <message numerus="yes">
         <source>Remove %n block(s)</source>
         <translation>
-            <numerusform>%n bloğu kaldır</numerusform>
-        </translation>
+            <numerusform>%n blok kaldır</numerusform>
+        <numerusform>%n blokları kaldır</numerusform></translation>
     </message>
     <message>
         <source>Listed blocks and all their entities will be removed.</source>
@@ -7607,12 +7606,12 @@ Lütfen farklı bir ad belirtin.</translation>
         <translation>Seçimi Kopyala</translation>
     </message>
     <message>
-        <source>Replace &quot;By Layer&quot; value to source layers values?
-If Yes - entities with &quot;By Layer&quot; pens will look on new layer exactly as on previous layers and &quot;By Layer&quot; value will be replaced by resolved pens.
-If No - &quot;By Layer&quot; values remains and so pen of target layer will define pen for such entities.</source>
-        <translation type="vanished">&quot;Katmana Göre&quot; değerini kaynak katmanların değerleriyle değiştirmek ister misiniz?
-Evet ise, &quot;Katmana Göre&quot; kalemlere sahip varlıklar yeni katmanda tam olarak önceki katmanlardaki gibi görünecek ve &quot;Katmana Göre&quot; değeri çözümlenmiş kalemlerle değiştirilecektir.
-Hayır ise, &quot;Katmana Göre&quot; değerleri korunacak ve böylece hedef katmanın kalemi bu tür varlıklar için kalemi tanımlayacaktır.</translation>
+        <source>Replace "By Layer" value to source layers values?
+If Yes - entities with "By Layer" pens will look on new layer exactly as on previous layers and "By Layer" value will be replaced by resolved pens.
+If No - "By Layer" values remains and so pen of target layer will define pen for such entities.</source>
+        <translation type="vanished">"Katmana Göre" değerini kaynak katmanların değerleriyle değiştirmek ister misiniz?
+Evet ise, "Katmana Göre" kalemlere sahip varlıklar yeni katmanda tam olarak önceki katmanlardaki gibi görünecek ve "Katmana Göre" değeri çözümlenmiş kalemlerle değiştirilecektir.
+Hayır ise, "Katmana Göre" değerleri korunacak ve böylece hedef katmanın kalemi bu tür varlıklar için kalemi tanımlayacaktır.</translation>
     </message>
     <message>
         <source>Layer DialogEx</source>
@@ -7641,7 +7640,7 @@ Lütfen farklı bir değer belirtin.</translation>
         <translation>Kalem paletten kaldırılacak, çizim varlıkları bundan etkilenmeyecektir.</translation>
     </message>
     <message>
-        <source>Are you sure you&apos;d like to proceed?</source>
+        <source>Are you sure you'd like to proceed?</source>
         <translation>Devam etmek istediğinizden emin misiniz?</translation>
     </message>
     <message>
@@ -7707,16 +7706,16 @@ Clear filtering mask and repeat.</source>
 Filtre maskesini temizleyin ve tekrarlayın.</translation>
     </message>
     <message>
-        <source>Replace &quot;By Layer&quot; value to source layers values?
+        <source>Replace "By Layer" value to source layers values?
 
-If Yes - entities with &quot;By Layer&quot; pens will look on new layer exactly as on previous layers and &quot;By Layer&quot; value will be replaced by resolved pens.
+If Yes - entities with "By Layer" pens will look on new layer exactly as on previous layers and "By Layer" value will be replaced by resolved pens.
 
-If No - &quot;By Layer&quot; values remains and so pen of target layer will define pen for such entities.</source>
-        <translation>Katman Bazlı&quot; değerini kaynak katmanların değerleriyle değiştir?
+If No - "By Layer" values remains and so pen of target layer will define pen for such entities.</source>
+        <translation>Katman Bazlı" değerini kaynak katmanların değerleriyle değiştir?
 
-Evet ise, &quot;Katman Bazlı&quot; kalemlere sahip nesneler yeni katmanda önceki katmanlardaki gibi görünecek ve &quot;Katman Bazlı&quot; değeri çözümlenmiş kalemlerle değiştirilecektir.
+Evet ise, "Katman Bazlı" kalemlere sahip nesneler yeni katmanda önceki katmanlardaki gibi görünecek ve "Katman Bazlı" değeri çözümlenmiş kalemlerle değiştirilecektir.
 
-Hayır ise, &quot;Katman Bazlı&quot; değerleri korunacak ve böylece hedef katmanın kalemi bu tür nesneler için kullanılacak kalem olacaktır.</translation>
+Hayır ise, "Katman Bazlı" değerleri korunacak ve böylece hedef katmanın kalemi bu tür nesneler için kullanılacak kalem olacaktır.</translation>
     </message>
 </context>
 <context>
@@ -7976,7 +7975,7 @@ Do you want to replace it?</source>
         <translation>dwg dosyasını açarken bilinmeyen hata</translation>
     </message>
     <message>
-        <source>can&apos;t open this dwg file</source>
+        <source>can't open this dwg file</source>
         <translation>bu dwg dosyası açılamıyor</translation>
     </message>
     <message>
@@ -10146,8 +10145,8 @@ Do you want to replace it?</source>
         <translation>2. [CONTEXT: QObject] -o some.pdf *.dxf</translation>
     </message>
     <message>
-        <source>-- print all dxf files to &apos;some.pdf&apos; file.</source>
-        <translation>-- tüm dxf dosyalarını &apos;some.pdf&apos; dosyasına yazdır.</translation>
+        <source>-- print all dxf files to 'some.pdf' file.</source>
+        <translation>-- tüm dxf dosyalarını 'some.pdf' dosyasına yazdır.</translation>
     </message>
     <message>
         <source>Auto fit and center drawing to page.</source>
@@ -10221,8 +10220,8 @@ Do you want to replace it?</source>
         <translation>Tüm katmanları birleştir</translation>
     </message>
     <message>
-        <source>File &quot;%1&quot; already exists. Do you want to replace it?</source>
-        <translation>&quot;%1&quot; dosyası zaten mevcut. Üzerine yazılsın mı?</translation>
+        <source>File "%1" already exists. Do you want to replace it?</source>
+        <translation>"%1" dosyası zaten mevcut. Üzerine yazılsın mı?</translation>
     </message>
     <message>
         <source>/CustomColor%1</source>
@@ -11368,24 +11367,24 @@ Bu blok eklenemez.</translation>
         <translation>Teğet çemberin merkezini seçin</translation>
     </message>
     <message>
-        <source>Invalid expression &apos;%1&apos; for radius</source>
-        <translation>Yarı çap için geçersiz &apos;%1&apos; ifadesi</translation>
+        <source>Invalid expression '%1' for radius</source>
+        <translation>Yarı çap için geçersiz '%1' ifadesi</translation>
     </message>
     <message>
-        <source>Invalid negative radius &apos;%1&apos;</source>
-        <translation>Geçersiz negatif yarı çap &apos;%1&apos;</translation>
+        <source>Invalid negative radius '%1'</source>
+        <translation>Geçersiz negatif yarı çap '%1'</translation>
     </message>
     <message>
-        <source>Invalid zero radius &apos;%1&apos;</source>
-        <translation>Geçersiz sıfır yarı çapı &apos;%1&apos;</translation>
+        <source>Invalid zero radius '%1'</source>
+        <translation>Geçersiz sıfır yarı çapı '%1'</translation>
     </message>
     <message>
-        <source>No tangent circle possible for radius &apos;%1&apos;</source>
-        <translation>&apos;%1&apos; yarıçapı için teğet çember mümkün değil</translation>
+        <source>No tangent circle possible for radius '%1'</source>
+        <translation>'%1' yarıçapı için teğet çember mümkün değil</translation>
     </message>
     <message>
-        <source>No common tangential circle for radius &apos;%1&apos;</source>
-        <translation>&apos;%1&apos; yarı çapı için ortak teğet çember yok</translation>
+        <source>No common tangential circle for radius '%1'</source>
+        <translation>'%1' yarı çapı için ortak teğet çember yok</translation>
     </message>
 </context>
 <context>
@@ -12072,7 +12071,7 @@ Bu blok eklenemez.</translation>
     </message>
     <message>
         <source>Enter the end point x</source>
-        <translation>Bitiş noktası x&apos;i girin</translation>
+        <translation>Bitiş noktası x'i girin</translation>
     </message>
     <message>
         <source>Enter number of polylines</source>
@@ -12092,7 +12091,7 @@ Bu blok eklenemez.</translation>
     </message>
     <message>
         <source>Enter the start point x</source>
-        <translation>Başlangıç noktası x&apos;i girin</translation>
+        <translation>Başlangıç noktası x'i girin</translation>
     </message>
     <message>
         <source>The entered x is invalid.</source>
@@ -12351,8 +12350,8 @@ Bu blok eklenemez.</translation>
         <translation>Çarpanı girin:</translation>
     </message>
     <message>
-        <source>Cannot open file &apos;%1&apos;</source>
-        <translation>&apos;%1&apos; dosyası açılamıyor</translation>
+        <source>Cannot open file '%1'</source>
+        <translation>'%1' dosyası açılamıyor</translation>
     </message>
 </context>
 <context>
@@ -12792,7 +12791,7 @@ Bu blok eklenemez.</translation>
         <translation>Düğüm eklenecek çoklu çizgiyi belirtin</translation>
     </message>
     <message>
-        <source>Specify adding node&apos;s point</source>
+        <source>Specify adding node's point</source>
         <translation>Düğüm ekleme noktasını belirtin</translation>
     </message>
 </context>
@@ -12862,7 +12861,7 @@ Bu blok eklenemez.</translation>
         <translation>Düğümü silmek için çoklu çizgiyi belirtin</translation>
     </message>
     <message>
-        <source>Specify deleting node&apos;s point</source>
+        <source>Specify deleting node's point</source>
         <translation>Silinecek düğüm noktasını belirtin</translation>
     </message>
     <message>
@@ -13025,8 +13024,8 @@ Bu blok eklenemez.</translation>
         <translation>ofset çıktısına komut satırından uzaklık yazın</translation>
     </message>
     <message>
-        <source>Printout offset ignores relative zero. Ignoring &apos;@&apos;</source>
-        <translation>Çıktı ofseti göreceli sıfırı yok sayar. &apos;@&apos; göz ardı ediliyor</translation>
+        <source>Printout offset ignores relative zero. Ignoring '@'</source>
+        <translation>Çıktı ofseti göreceli sıfırı yok sayar. '@' göz ardı ediliyor</translation>
     </message>
     <message>
         <source>Printout in Black/White</source>

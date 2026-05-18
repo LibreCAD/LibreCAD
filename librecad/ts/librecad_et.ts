@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
+<?xml version='1.0' encoding='utf-8'?>
 <TS version="2.1" language="et">
 <context>
     <name>ColorWizard</name>
@@ -1141,7 +1140,7 @@ või [%2]</translation>
         <translation>Duplikeeri</translation>
     </message>
     <message>
-        <source>Update Current Pen by Active Layer&apos; Pen</source>
+        <source>Update Current Pen by Active Layer' Pen</source>
         <translation>Uuenda praegune pliiats aktiivse kile pliiatsiga</translation>
     </message>
 </context>
@@ -1155,8 +1154,8 @@ või [%2]</translation>
 <context>
     <name>LC_ActionLayersExport</name>
     <message>
-        <source>Saving layer &quot;%1&quot; as &quot;%2&quot; </source>
-        <translation>Kile &quot;%1&quot; salvestamine kui &quot;%2&quot; </translation>
+        <source>Saving layer "%1" as "%2" </source>
+        <translation>Kile "%1" salvestamine kui "%2" </translation>
     </message>
 </context>
 <context>
@@ -1670,7 +1669,7 @@ või [%2]</translation>
         <translation>Muuda tavaliseks kileks</translation>
     </message>
     <message>
-        <source>&amp;Select Layer&apos;s Entities</source>
+        <source>&amp;Select Layer's Entities</source>
         <translation>&amp;Vali kile elemendid</translation>
     </message>
     <message>
@@ -2181,11 +2180,11 @@ või [%2]</translation>
         <translation>praeguseks</translation>
     </message>
     <message>
-        <source>Update Current Pen by Active Layer&apos; Pen</source>
+        <source>Update Current Pen by Active Layer' Pen</source>
         <translation>Uuenda praegune pliiats aktiivse kile pliiatsiga</translation>
     </message>
     <message>
-        <source>Fill Pen Editor from Active Layer&apos;s Pen</source>
+        <source>Fill Pen Editor from Active Layer's Pen</source>
         <translation>Täida pliiatsiredaktor aktiivse kile pliiatsist</translation>
     </message>
     <message>
@@ -2250,14 +2249,14 @@ või [%2]</translation>
     </message>
     <message>
         <source>Location of pens file is changed, please restart the application so new pens file will be used.
-Please note that if you&apos;ll save pen via editor without restart, current pens from palette will be saved in the new file and therefore existing content of it will be overridden.</source>
+Please note that if you'll save pen via editor without restart, current pens from palette will be saved in the new file and therefore existing content of it will be overridden.</source>
         <translation type="vanished">Pliiatsifaili asukoht on muutunud, palun taaskäivita rakendus, et kasutada uut pliiatsifaili.
 Pange tähele, et kui salvestate pliiatsi redaktori kaudu ilma taaskäivitamiseta, salvestatakse praegused paleti pliiatsid uude faili ja seega olemasolev sisu kirjutatakse üle.</translation>
     </message>
     <message>
         <source>Location of pens file is changed, please restart the application so new pens file will be used.
 
-Please note that if you&apos;ll save pen via editor without restart, current pens from palette will be saved in the new file and therefore existing content of it will be overridden.</source>
+Please note that if you'll save pen via editor without restart, current pens from palette will be saved in the new file and therefore existing content of it will be overridden.</source>
         <translation>Pliiatsete faili asukoht on muudetud, taaskäivitage rakendus, et uus pliiatsete fail saaks kasutusele võetud.
 
 Pange tähele, et kui salvestate pliiatse redaktoris ilma taaskäivitamiseta, salvestatakse praegused pliiatsed paletist uude faili ja seega kirjutatakse selle olemasolev sisu üle.</translation>
@@ -2770,12 +2769,12 @@ Pange tähele, et kui salvestate pliiatse redaktoris ilma taaskäivitamiseta, sa
         <translation>eemalda parem</translation>
     </message>
     <message>
-        <source>remove 0&apos;</source>
-        <translation>eemalda 0&apos;</translation>
+        <source>remove 0'</source>
+        <translation>eemalda 0'</translation>
     </message>
     <message>
-        <source>remove 0&quot;</source>
-        <translation>eemalda 0&quot;</translation>
+        <source>remove 0"</source>
+        <translation>eemalda 0"</translation>
     </message>
 </context>
 <context>
@@ -2985,8 +2984,8 @@ Pange tähele, et kui salvestate pliiatse redaktoris ilma taaskäivitamiseta, sa
         <translation>Käsurida</translation>
     </message>
     <message>
-        <source>Block &apos;%1&apos;</source>
-        <translation>Plokk &apos;%1&apos;</translation>
+        <source>Block '%1'</source>
+        <translation>Plokk '%1'</translation>
     </message>
     <message>
         <source>Cannot open the file
@@ -3107,8 +3106,8 @@ Please check its existence and permissions.</source>
 Palun kontrolli selle olemasolu ja õigusi.</translation>
     </message>
     <message>
-        <source>File &apos;%1&apos; does not exist. Opening aborted</source>
-        <translation>Fail &apos;%1&apos; ei ole olemas. Avamine katkestati</translation>
+        <source>File '%1' does not exist. Opening aborted</source>
+        <translation>Fail '%1' ei ole olemas. Avamine katkestati</translation>
     </message>
     <message>
         <source>Categories</source>
@@ -3354,7 +3353,7 @@ Palun kontrolli selle olemasolu ja õigusi.</translation>
         <translation>&amp;Viki</translation>
     </message>
     <message>
-        <source>User&apos;s &amp;Manual</source>
+        <source>User's &amp;Manual</source>
         <translation>Kasutaja &amp;juhend</translation>
     </message>
     <message>
@@ -3433,11 +3432,11 @@ Palun kontrolli selle olemasolu ja õigusi.</translation>
         <translation>Aruvad kiht</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+        <source>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Name of Current Active Layer&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Helvetica'; font-size:7pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;Name of Current Active Layer&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>Praeguse aktiivse kihi nimi</translation>
     </message>
 </context>
@@ -3456,8 +3455,8 @@ p, li { white-space: pre-wrap; }
         <translation>Ploki nime muutmine</translation>
     </message>
     <message>
-        <source>Could not name block. A block named &quot;%1&quot; already exists.</source>
-        <translation>Ploki nime muutmine ei õnnestunud. Plokk nimega &quot;%1&quot; on juba olemas.</translation>
+        <source>Could not name block. A block named "%1" already exists.</source>
+        <translation>Ploki nime muutmine ei õnnestunud. Plokk nimega "%1" on juba olemas.</translation>
     </message>
 </context>
 <context>
@@ -4050,12 +4049,15 @@ See muutmaks rekursiivselt kogu Bloki entiteete.</translation>
         <translation>Käskude keel:</translation>
     </message>
     <message>
-        <source>&lt;font size=&quot;+1&quot;&gt;&lt;b&gt;Welcome to LibreCAD&lt;/b&gt;
+        <source>&lt;font size="+1"&gt;&lt;b&gt;Welcome to LibreCAD&lt;/b&gt;
 &lt;/font&gt;
 &lt;br&gt;
 Please choose the unit you want to use for new drawings and your preferred language.&lt;br&gt;
 (You can changes these settings later.)</source>
-        <translation>Tervituses LibreCAD&apos;is. Palun valige ühik, mida soovite uute jooniste jaoks kasutada, ning oma eelistatud keel. (Sa võite neid seadistusi hiljem muuta.)</translation>
+        <translation>&lt;font size="+1"&gt;&lt;b&gt;Tere tulemast LibreCAD-i&lt;/b&gt;&lt;/font&gt;
+&lt;br&gt;
+Palun valige ühik, mida soovite uute jooniste jaoks kasutada, ning oma eelistatud keel.&lt;br&gt;
+(Sa võite neid seadistusi hiljem muuta.)</translation>
     </message>
 </context>
 <context>
@@ -4951,7 +4953,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation>Goonid</translation>
     </message>
     <message>
-        <source>Surveyor&apos;s units</source>
+        <source>Surveyor's units</source>
         <translation>Maamõõduühikud</translation>
     </message>
     <message>
@@ -4959,8 +4961,8 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation>Sätted</translation>
     </message>
     <message>
-        <source>For the length formats &apos;Engineering&apos; and &apos;Architectural&apos;, the unit must be set to Inch.</source>
-        <translation>Vormingute &apos;Inseneri&apos; ja &apos;Arhitekti&apos; puhul peab ühikuks olema toll.</translation>
+        <source>For the length formats 'Engineering' and 'Architectural', the unit must be set to Inch.</source>
+        <translation>Vormingute 'Inseneri' ja 'Arhitekti' puhul peab ühikuks olema toll.</translation>
     </message>
     <message>
         <source>Arrow size:</source>
@@ -5091,7 +5093,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation>Viivitus suuruse:</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dimension Tick size. Set it to 0 will disable the dimension tick. Dimension arrow won&apos;t be drawn when dimension tick is enabled.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dimension Tick size. Set it to 0 will disable the dimension tick. Dimension arrow won't be drawn when dimension tick is enabled.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>Viivitus suuruse määratlemine. Kui see on seadistatud 0-ks, on mõõtviivitus välja kadunud. Mõõtnuul ei rita, kui on mõõtviivitus sisse lülitatud.</translation>
     </message>
     <message>
@@ -5115,12 +5117,12 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation>Teksti stiil:</translation>
     </message>
     <message>
-        <source>&apos;.&apos; (Period)</source>
-        <translation>&apos;.&apos; (punkt)</translation>
+        <source>'.' (Period)</source>
+        <translation>'.' (punkt)</translation>
     </message>
     <message>
-        <source>&apos;,&apos; (Comma)</source>
-        <translation>&apos;,&apos; (virgemärgis)</translation>
+        <source>',' (Comma)</source>
+        <translation>',' (virgemärgis)</translation>
     </message>
     <message>
         <source>Decimal separator:</source>
@@ -5163,7 +5165,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation>Pikkus, mida suurendatakse mõõtlinja üle</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dimension arrow size. &lt;a name=&quot;result_box&quot;/&gt;without effect when tick size &lt;a name=&quot;result_box&quot;/&gt;is other than 0&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dimension arrow size. &lt;a name="result_box"/&gt;without effect when tick size &lt;a name="result_box"/&gt;is other than 0&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>Mõõtveeru suuruse. ei mõju, kui tikk suuruse on 0</translation>
     </message>
     <message>
@@ -5195,7 +5197,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation>Lineaarne täpsus:</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Text alignment &lt;a name=&quot;result_box&quot;/&gt;relative to the dimension line.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Text alignment &lt;a name="result_box"/&gt;relative to the dimension line.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>Teksti paigutus suhteutades mõõtlinjaga.</translation>
     </message>
     <message>
@@ -5299,8 +5301,8 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation>Arhitektuuriline (metri)</translation>
     </message>
     <message>
-        <source>For the length format &apos;Architectural (metric)&apos;, the unit must be set to Meter.</source>
-        <translation>Pikkuse formaati &apos;Arhitektuuriline (metri)&apos; puhul peab ühik olevat seadistatud metreks.</translation>
+        <source>For the length format 'Architectural (metric)', the unit must be set to Meter.</source>
+        <translation>Pikkuse formaati 'Arhitektuuriline (metri)' puhul peab ühik olevat seadistatud metreks.</translation>
     </message>
     <message>
         <source>Screen %</source>
@@ -5546,7 +5548,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation>Näevuse enimendid:</translation>
     </message>
     <message>
-        <source>Don&apos;t use native OS file open dialog</source>
+        <source>Don't use native OS file open dialog</source>
         <translation>Ära kasuta operatsüsteemi (OS) faili avamise dialoogi</translation>
     </message>
     <message>
@@ -5622,7 +5624,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation>Automaatilise zooma jooniste avamisel</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-family:&apos;-apple-system&apos;,&apos;BlinkMacSystemFont&apos;,&apos;Segoe UI&apos;,&apos;Noto Sans&apos;,&apos;Helvetica&apos;,&apos;Arial&apos;,&apos;sans-serif&apos;,&apos;Apple Color Emoji&apos;,&apos;Segoe UI Emoji&apos;; font-size:14px; color:#1f2328; background-color:#ffffff;&quot;&gt;Part library folder. The symbol library dxf files must be located in the subdirectories of this folder. The subfolder names will be displayed in the Library Browser.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-family:&apos;-apple-system&apos;,&apos;BlinkMacSystemFont&apos;,&apos;Segoe UI&apos;,&apos;Noto Sans&apos;,&apos;Helvetica&apos;,&apos;Arial&apos;,&apos;sans-serif&apos;,&apos;Apple Color Emoji&apos;,&apos;Segoe UI Emoji&apos;; font-size:14px; color:#1f2328; background-color:#ffffff;&quot;&gt;( Menu: Widgets &amp;gt; Dock Widgets &amp;gt; Library Browser)&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=" font-family:'-apple-system','BlinkMacSystemFont','Segoe UI','Noto Sans','Helvetica','Arial','sans-serif','Apple Color Emoji','Segoe UI Emoji'; font-size:14px; color:#1f2328; background-color:#ffffff;"&gt;Part library folder. The symbol library dxf files must be located in the subdirectories of this folder. The subfolder names will be displayed in the Library Browser.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=" font-family:'-apple-system','BlinkMacSystemFont','Segoe UI','Noto Sans','Helvetica','Arial','sans-serif','Apple Color Emoji','Segoe UI Emoji'; font-size:14px; color:#1f2328; background-color:#ffffff;"&gt;( Menu: Widgets &amp;gt; Dock Widgets &amp;gt; Library Browser)&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>Osateek kausta. Simbolite teekordid dxf failid peavad asuvakohas olema selle kausta allkaustades. Allkaustade nimetused kuvatakse Teekorditebrauses. (Menüü: Widgetid &gt; Dock Widgetid &gt; Teekorditebraus)</translation>
     </message>
     <message>
@@ -5694,8 +5696,8 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>MakerCAM as of November 2014 does not hide SVG content 
-that has been set invisibe (&quot;display: none&quot; or &quot;visibility: hidden&quot;).</source>
-        <translation>MakerCAM (November 2014) ei peita SVG sisulikt, mis on seadistatud nähtmatuks (&quot;display: none&quot; või &quot;visibility: hidden&quot;).</translation>
+that has been set invisibe ("display: none" or "visibility: hidden").</source>
+        <translation>MakerCAM (November 2014) ei peita SVG sisulikt, mis on seadistatud nähtmatuks ("display: none" või "visibility: hidden").</translation>
     </message>
     <message>
         <source>MakerCAM as of November 2014 cannot correctly deal with blocks,
@@ -5710,16 +5712,16 @@ the &lt;transform&gt; attribute or as &lt;path&gt; using elliptic arc segments.<
     </message>
     <message>
         <source>Exported images can be useful in SVG editors (Inkscape, etc), 
-but avoided in some CAM&apos;s.</source>
+but avoided in some CAM's.</source>
         <translation>Eksporteeritud pildid võivad olla kasulikud SVG redaktorites (Inkscape jne), kuid mõned CAM-programmiga ei toeta.</translation>
     </message>
     <message>
-        <source>Many CAM&apos;s(MakerCAM, EleskCAM, LaserWeb) ignore dashed/doted line style, 
+        <source>Many CAM's(MakerCAM, EleskCAM, LaserWeb) ignore dashed/doted line style, 
 which can be useful in lasercut of plywood or for papercraft. </source>
         <translation>Paljud CAM-programme (MakerCAM, EleskCAM, LaserWeb) ignoreerivad viiv/punktiliste viivade stiili, mis võib olla kasulik plaati laserlõikamisel või paberivõrgu jaoks.</translation>
     </message>
     <message>
-        <source>Default width of elements can affect some CAM&apos;s/SVG Editors, 
+        <source>Default width of elements can affect some CAM's/SVG Editors, 
 but ignored by other</source>
         <translation>Elementide vaikimäär võib mõjutada mõnda CAM/SVG redaktorit, kuid teised ignoreerivad seda.</translation>
     </message>
@@ -6346,7 +6348,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <source>[2800-28FF] Braille Patterns</source>
-        <translation>[2800-28FF] Braille&apos;i mustrid</translation>
+        <translation>[2800-28FF] Braille'i mustrid</translation>
     </message>
     <message>
         <source>[2900-297F] Supplemental Arrows-B</source>
@@ -7034,11 +7036,11 @@ The contents of a Construction Layer should not appear in printout.</source>
         <translation>Vasak</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+        <source>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Ubuntu&apos;; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Helvetica&apos;; font-size:9pt;&quot;&gt;Hint about left/right mouse button actions&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Ubuntu'; font-size:11pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;span style=" font-family:'Helvetica'; font-size:9pt;"&gt;Hint about left/right mouse button actions&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>Viide vasema/oakese hiire nuppu toimingut kohta</translation>
     </message>
 </context>
@@ -7086,19 +7088,19 @@ p, li { white-space: pre-wrap; }
         <translation>Kogus pikkus</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+        <source>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Number of selected entities&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Helvetica'; font-size:7pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;Number of selected entities&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>Valitud objektide arv</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+        <source>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Total length of selected entities&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Helvetica'; font-size:7pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;Total length of selected entities&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>Valitud objektide kogupikkus</translation>
     </message>
 </context>
@@ -7362,8 +7364,8 @@ p, li { white-space: pre-wrap; }
         <translation>Eemalda kile</translation>
     </message>
     <message>
-        <source>Layer &quot;%1&quot; can never be removed.</source>
-        <translation>Kilet &quot;%1&quot; ei saa kunagi eemaldada.</translation>
+        <source>Layer "%1" can never be removed.</source>
+        <translation>Kilet "%1" ei saa kunagi eemaldada.</translation>
     </message>
     <message>
         <source>Layer Dialog</source>
@@ -7374,26 +7376,26 @@ p, li { white-space: pre-wrap; }
         <translation>Eemalda plokk</translation>
     </message>
     <message>
-        <source>Block &quot;%1&quot; and all its entities will be removed.</source>
-        <translation>Plokk &quot;%1&quot; ja kõik tema elemendid eemaldatakse.</translation>
+        <source>Block "%1" and all its entities will be removed.</source>
+        <translation>Plokk "%1" ja kõik tema elemendid eemaldatakse.</translation>
     </message>
     <message>
         <source>Layer Properties</source>
         <translation>Kile omadused</translation>
     </message>
     <message>
-        <source>Layer with a name &quot;%1&quot; already exists. Please specify a different name.</source>
-        <translation>Kile nimega &quot;%1&quot; on juba olemas. Palun määra muu nimi.</translation>
+        <source>Layer with a name "%1" already exists. Please specify a different name.</source>
+        <translation>Kile nimega "%1" on juba olemas. Palun määra muu nimi.</translation>
     </message>
     <message>
-        <source>Layer &quot;%1&quot; and all entities on it will be removed.
+        <source>Layer "%1" and all entities on it will be removed.
 This action can NOT be undone.</source>
-        <translation>Tasandus &quot;%1&quot; ja kõik sellel olevad objektid eemaldatakse.
+        <translation>Tasandus "%1" ja kõik sellel olevad objektid eemaldatakse.
 Tegevust ei saa taastada.</translation>
     </message>
     <message>
-        <source>Layer &quot;0&quot; can never be removed.</source>
-        <translation>Tasandus &quot;0&quot; ei saa kunagi eemaldada.</translation>
+        <source>Layer "0" can never be removed.</source>
+        <translation>Tasandus "0" ei saa kunagi eemaldada.</translation>
     </message>
     <message numerus="yes">
         <source>Remove %n layer(s)</source>
@@ -7411,8 +7413,8 @@ Tegevust ei saa taastada.</translation>
         <translation>Hoiatus: tegevust ei saa taastada!</translation>
     </message>
     <message>
-        <source>Warning: layer &quot;0&quot; can never be removed.</source>
-        <translation>Hoiatus: Tasandus &quot;0&quot; ei saa kunagi eemaldada.</translation>
+        <source>Warning: layer "0" can never be removed.</source>
+        <translation>Hoiatus: Tasandus "0" ei saa kunagi eemaldada.</translation>
     </message>
     <message>
         <source>Layers for removal:</source>
@@ -7504,12 +7506,12 @@ Please specify a different name.</source>
         <translation>Duplikaat valik</translation>
     </message>
     <message>
-        <source>Replace &quot;By Layer&quot; value to source layers values?
-If Yes - entities with &quot;By Layer&quot; pens will look on new layer exactly as on previous layers and &quot;By Layer&quot; value will be replaced by resolved pens.
-If No - &quot;By Layer&quot; values remains and so pen of target layer will define pen for such entities.</source>
-        <translation type="vanished">Kas soovite &quot;Kihtile&quot; väärtuse asendada allikakihtide väärtustega?
-Kui Jah - &quot;Kihtile&quot; plumega entiteetid näev uuel kihtil täpselt nagu eelmiste kihtidel ja &quot;Kihtile&quot; väärtus asendatakse määratletud plumega.
-Kui Ei - &quot;Kihtile&quot; väärtused jäävad ja nii määrab sihtkiht selliste entiteetide plumi.</translation>
+        <source>Replace "By Layer" value to source layers values?
+If Yes - entities with "By Layer" pens will look on new layer exactly as on previous layers and "By Layer" value will be replaced by resolved pens.
+If No - "By Layer" values remains and so pen of target layer will define pen for such entities.</source>
+        <translation type="vanished">Kas soovite "Kihtile" väärtuse asendada allikakihtide väärtustega?
+Kui Jah - "Kihtile" plumega entiteetid näev uuel kihtil täpselt nagu eelmiste kihtidel ja "Kihtile" väärtus asendatakse määratletud plumega.
+Kui Ei - "Kihtile" väärtused jäävad ja nii määrab sihtkiht selliste entiteetide plumi.</translation>
     </message>
     <message>
         <source>Layer DialogEx</source>
@@ -7537,7 +7539,7 @@ Please specify a different value.</translation>
         <translation>Kaart eemaldatakse palettist, joonestuvad objektid ei ole mõjutatud.</translation>
     </message>
     <message>
-        <source>Are you sure you&apos;d like to proceed?</source>
+        <source>Are you sure you'd like to proceed?</source>
         <translation>Kas olete kindel, et soovite jätkata?</translation>
     </message>
     <message>
@@ -7603,16 +7605,16 @@ Clear filtering mask and repeat.</source>
 Tühjenda filtreerimismask ja korrata.</translation>
     </message>
     <message>
-        <source>Replace &quot;By Layer&quot; value to source layers values?
+        <source>Replace "By Layer" value to source layers values?
 
-If Yes - entities with &quot;By Layer&quot; pens will look on new layer exactly as on previous layers and &quot;By Layer&quot; value will be replaced by resolved pens.
+If Yes - entities with "By Layer" pens will look on new layer exactly as on previous layers and "By Layer" value will be replaced by resolved pens.
 
-If No - &quot;By Layer&quot; values remains and so pen of target layer will define pen for such entities.</source>
-        <translation>Asendada &quot;Kihi järgi&quot; väärtus lähtkihtide väärtustega?
+If No - "By Layer" values remains and so pen of target layer will define pen for such entities.</source>
+        <translation>Asendada "Kihi järgi" väärtus lähtkihtide väärtustega?
 
-Kui &quot;Jah&quot;, siis &quot;Kihi järgi&quot; stiilis objektid näevad uuel kihil välja täpselt nagu eelmistel kihtidel ja &quot;Kihi järgi&quot; väärtus asendatakse konkreetsete stiilidega.
+Kui "Jah", siis "Kihi järgi" stiilis objektid näevad uuel kihil välja täpselt nagu eelmistel kihtidel ja "Kihi järgi" väärtus asendatakse konkreetsete stiilidega.
 
-Kui &quot;Ei&quot;, siis &quot;Kihi järgi&quot; väärtus jääb samaks ja sihtkihi stiil määrab selliste objektide stiili.</translation>
+Kui "Ei", siis "Kihi järgi" väärtus jääb samaks ja sihtkihi stiil määrab selliste objektide stiili.</translation>
     </message>
 </context>
 <context>
@@ -7872,7 +7874,7 @@ Tahad sa seda asendada?</translation>
         <translation>teadaamata viga dwg faili avamisel</translation>
     </message>
     <message>
-        <source>can&apos;t open this dwg file</source>
+        <source>can't open this dwg file</source>
         <translation>ei saata seda dwg faili avada</translation>
     </message>
     <message>
@@ -10032,8 +10034,8 @@ Tahad sa seda asendada?</translation>
         <translation>translation 3</translation>
     </message>
     <message>
-        <source>-- print all dxf files to &apos;some.pdf&apos; file.</source>
-        <translation>Vendi kõik dxf failid &apos;some.pdf&apos; faili hulka.</translation>
+        <source>-- print all dxf files to 'some.pdf' file.</source>
+        <translation>Vendi kõik dxf failid 'some.pdf' faili hulka.</translation>
     </message>
     <message>
         <source>Auto fit and center drawing to page.</source>
@@ -10107,8 +10109,8 @@ Tahad sa seda asendada?</translation>
         <translation>Combineeri kõik kihmad</translation>
     </message>
     <message>
-        <source>File &quot;%1&quot; already exists. Do you want to replace it?</source>
-        <translation>Fail &quot;%1&quot; on juba olemas. Kas soovite selle asendada?</translation>
+        <source>File "%1" already exists. Do you want to replace it?</source>
+        <translation>Fail "%1" on juba olemas. Kas soovite selle asendada?</translation>
     </message>
     <message>
         <source>/CustomColor%1</source>
@@ -10788,8 +10790,8 @@ Tahad sa seda asendada?</translation>
         <translation>Sisesta ridade vahe:</translation>
     </message>
     <message>
-        <source></source>
-        <translation></translation>
+        <source />
+        <translation />
     </message>
     <message>
         <source>Block cannot contain an insert of itself.</source>
@@ -11258,24 +11260,24 @@ Seda plokki ei saa lisada.</translation>
         <translation>Vali puutuja ringjoone keskpunkt</translation>
     </message>
     <message>
-        <source>Invalid expression &apos;%1&apos; for radius</source>
-        <translation>Vigane avaldis &apos;%1&apos; raadiuse jaoks</translation>
+        <source>Invalid expression '%1' for radius</source>
+        <translation>Vigane avaldis '%1' raadiuse jaoks</translation>
     </message>
     <message>
-        <source>Invalid negative radius &apos;%1&apos;</source>
-        <translation>Vigane negatiivne raadius &apos;%1&apos;</translation>
+        <source>Invalid negative radius '%1'</source>
+        <translation>Vigane negatiivne raadius '%1'</translation>
     </message>
     <message>
-        <source>Invalid zero radius &apos;%1&apos;</source>
-        <translation>Vigane null-raadius &apos;%1&apos;</translation>
+        <source>Invalid zero radius '%1'</source>
+        <translation>Vigane null-raadius '%1'</translation>
     </message>
     <message>
-        <source>No tangent circle possible for radius &apos;%1&apos;</source>
-        <translation>Raadiusega &apos;%1&apos; ei saa puutujat ringjoont</translation>
+        <source>No tangent circle possible for radius '%1'</source>
+        <translation>Raadiusega '%1' ei saa puutujat ringjoont</translation>
     </message>
     <message>
-        <source>No common tangential circle for radius &apos;%1&apos;</source>
-        <translation>Raadiusega &apos;%1&apos; ei saa ühist puutujat ringjoont</translation>
+        <source>No common tangential circle for radius '%1'</source>
+        <translation>Raadiusega '%1' ei saa ühist puutujat ringjoont</translation>
     </message>
 </context>
 <context>
@@ -11549,8 +11551,8 @@ Seda plokki ei saa lisada.</translation>
         <translation>Sisesta tegur:</translation>
     </message>
     <message>
-        <source></source>
-        <translation></translation>
+        <source />
+        <translation />
     </message>
     <message>
         <source>Enter dpi:</source>
@@ -11761,8 +11763,8 @@ Seda plokki ei saa lisada.</translation>
 <context>
     <name>RS_ActionDrawLinePolygon</name>
     <message>
-        <source></source>
-        <translation></translation>
+        <source />
+        <translation />
     </message>
 </context>
 <context>
@@ -12244,12 +12246,12 @@ Seda plokki ei saa lisada.</translation>
         <translation>Sisesta tegur:</translation>
     </message>
     <message>
-        <source></source>
-        <translation></translation>
+        <source />
+        <translation />
     </message>
     <message>
-        <source>Cannot open file &apos;%1&apos;</source>
-        <translation>Ei saa avada faili &apos;%1&apos;</translation>
+        <source>Cannot open file '%1'</source>
+        <translation>Ei saa avada faili '%1'</translation>
     </message>
 </context>
 <context>
@@ -12689,7 +12691,7 @@ Seda plokki ei saa lisada.</translation>
         <translation>Määra liitjoon sõlmede lisamiseks</translation>
     </message>
     <message>
-        <source>Specify adding node&apos;s point</source>
+        <source>Specify adding node's point</source>
         <translation>Määra lisatava sõlme punkt</translation>
     </message>
 </context>
@@ -12759,7 +12761,7 @@ Seda plokki ei saa lisada.</translation>
         <translation>Määra liitjoon sõlme kustutamiseks</translation>
     </message>
     <message>
-        <source>Specify deleting node&apos;s point</source>
+        <source>Specify deleting node's point</source>
         <translation>Määra kustutatava sõlme punkt</translation>
     </message>
     <message>
@@ -12922,8 +12924,8 @@ Seda plokki ei saa lisada.</translation>
         <translation>sisesta käsurealt nihe trükiväljundi nihutamiseks</translation>
     </message>
     <message>
-        <source>Printout offset ignores relative zero. Ignoring &apos;@&apos;</source>
-        <translation>Trükiväljundi nihe eirab suhtelist nulli. Eirab &apos;@&apos;</translation>
+        <source>Printout offset ignores relative zero. Ignoring '@'</source>
+        <translation>Trükiväljundi nihe eirab suhtelist nulli. Eirab '@'</translation>
     </message>
     <message>
         <source>Printout in Black/White</source>

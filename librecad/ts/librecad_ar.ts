@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
+<?xml version='1.0' encoding='utf-8'?>
 <TS version="2.1" language="ar">
 <context>
     <name>ColorWizard</name>
@@ -311,7 +310,7 @@ or [%2]</source>
     </message>
     <message>
         <source>Specify next control point or [%1]</source>
-        <translation>حدد نقطة التحكم التالية أو [1%]</translation>
+        <translation>حدد نقطة التحكم التالية أو [%1]</translation>
     </message>
     <message>
         <source>Back</source>
@@ -1141,7 +1140,7 @@ or [%2]</source>
         <translation>تكرار</translation>
     </message>
     <message>
-        <source>Update Current Pen by Active Layer&apos; Pen</source>
+        <source>Update Current Pen by Active Layer' Pen</source>
         <translation>تحديث القلم الحالي بقلم الطبقة النشطة</translation>
     </message>
 </context>
@@ -1155,8 +1154,8 @@ or [%2]</source>
 <context>
     <name>LC_ActionLayersExport</name>
     <message>
-        <source>Saving layer &quot;%1&quot; as &quot;%2&quot; </source>
-        <translation>حفظ الطبقة &quot;%1&quot; كـ &quot;%2&quot;</translation>
+        <source>Saving layer "%1" as "%2" </source>
+        <translation>حفظ الطبقة "%1" كـ "%2"</translation>
     </message>
 </context>
 <context>
@@ -1670,7 +1669,7 @@ or [%2]</source>
         <translation>تحويل إلى طبقة عادية</translation>
     </message>
     <message>
-        <source>&amp;Select Layer&apos;s Entities</source>
+        <source>&amp;Select Layer's Entities</source>
         <translation>اختيار كيانات الطبقة</translation>
     </message>
     <message>
@@ -2173,11 +2172,11 @@ or [%2]</source>
         <translation>إلى الحالي</translation>
     </message>
     <message>
-        <source>Update Current Pen by Active Layer&apos; Pen</source>
+        <source>Update Current Pen by Active Layer' Pen</source>
         <translation>تحديث القلم الحالي بقلم الطبقة النشطة</translation>
     </message>
     <message>
-        <source>Fill Pen Editor from Active Layer&apos;s Pen</source>
+        <source>Fill Pen Editor from Active Layer's Pen</source>
         <translation>ملء محرر القلم من قلم الطبقة النشطة</translation>
     </message>
     <message>
@@ -2242,14 +2241,14 @@ or [%2]</source>
     </message>
     <message>
         <source>Location of pens file is changed, please restart the application so new pens file will be used.
-Please note that if you&apos;ll save pen via editor without restart, current pens from palette will be saved in the new file and therefore existing content of it will be overridden.</source>
+Please note that if you'll save pen via editor without restart, current pens from palette will be saved in the new file and therefore existing content of it will be overridden.</source>
         <translation type="vanished">تم تغيير موقع ملف الأقلام، يرجى إعادة تشغيل التطبيق حتى يتم استخدام ملف الأقلام الجديد.
 يرجى ملاحظة أنه إذا قمت بحفظ القلم عبر المحرر دون إعادة التشغيل، سيتم حفظ الأقلام الحالية من اللوحة في الملف الجديد وبالتالي سيتم تجاوز المحتوى الموجود فيه.</translation>
     </message>
     <message>
         <source>Location of pens file is changed, please restart the application so new pens file will be used.
 
-Please note that if you&apos;ll save pen via editor without restart, current pens from palette will be saved in the new file and therefore existing content of it will be overridden.</source>
+Please note that if you'll save pen via editor without restart, current pens from palette will be saved in the new file and therefore existing content of it will be overridden.</source>
         <translation>تم تغيير موقع ملف الأقلام، يرجى إعادة تشغيل التطبيق لاستخدام ملف الأقلام الجديد.
 
 يرجى ملاحظة أنه إذا قمت بحفظ القلم عبر المحرر دون إعادة التشغيل، فسيتم حفظ الأقلام الحالية من اللوحة في الملف الجديد، وبالتالي سيتم استبدال المحتوى الحالي فيه.</translation>
@@ -2762,12 +2761,12 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <translation>حذف اليمين</translation>
     </message>
     <message>
-        <source>remove 0&apos;</source>
-        <translation>حذف 0&apos;</translation>
+        <source>remove 0'</source>
+        <translation>حذف 0'</translation>
     </message>
     <message>
-        <source>remove 0&quot;</source>
-        <translation>حذف 0&quot;</translation>
+        <source>remove 0"</source>
+        <translation>حذف 0"</translation>
     </message>
 </context>
 <context>
@@ -2957,8 +2956,8 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <translation>سطر الأوامر</translation>
     </message>
     <message>
-        <source>Block &apos;%1&apos;</source>
-        <translation>كتلة &apos;%1&apos;</translation>
+        <source>Block '%1'</source>
+        <translation>كتلة '%1'</translation>
     </message>
     <message>
         <source>Cannot open the file
@@ -3095,8 +3094,8 @@ Please check its existence and permissions.</source>
 يرجى التحقق من وجوده والأذونات.</translation>
     </message>
     <message>
-        <source>File &apos;%1&apos; does not exist. Opening aborted</source>
-        <translation>الملف &apos;%1&apos; غير موجود. تم إلغاء الفتح</translation>
+        <source>File '%1' does not exist. Opening aborted</source>
+        <translation>الملف '%1' غير موجود. تم إلغاء الفتح</translation>
     </message>
     <message>
         <source>Categories</source>
@@ -3346,7 +3345,7 @@ Please check its existence and permissions.</source>
         <translation>ويكي</translation>
     </message>
     <message>
-        <source>User&apos;s &amp;Manual</source>
+        <source>User's &amp;Manual</source>
         <translation>دليل المستخدم</translation>
     </message>
     <message>
@@ -3425,16 +3424,16 @@ Please check its existence and permissions.</source>
         <translation>الطبقة الحالية</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+        <source>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Name of Current Active Layer&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Helvetica'; font-size:7pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;Name of Current Active Layer&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;اسم الطبقة النشطة الحالية&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Helvetica'; font-size:7pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;اسم الطبقة النشطة الحالية&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
@@ -3452,8 +3451,8 @@ p, li { white-space: pre-wrap; }
         <translation>إعادة تسمية الكتلة</translation>
     </message>
     <message>
-        <source>Could not name block. A block named &quot;%1&quot; already exists.</source>
-        <translation>تعذر تسمية الكتلة. توجد كتلة باسم &quot;%1&quot; بالفعل.</translation>
+        <source>Could not name block. A block named "%1" already exists.</source>
+        <translation>تعذر تسمية الكتلة. توجد كتلة باسم "%1" بالفعل.</translation>
     </message>
 </context>
 <context>
@@ -4047,12 +4046,12 @@ This recursively modifies all entities of the Block itself.</source>
         <translation>لغة الأمر:</translation>
     </message>
     <message>
-        <source>&lt;font size=&quot;+1&quot;&gt;&lt;b&gt;Welcome to LibreCAD&lt;/b&gt;
+        <source>&lt;font size="+1"&gt;&lt;b&gt;Welcome to LibreCAD&lt;/b&gt;
 &lt;/font&gt;
 &lt;br&gt;
 Please choose the unit you want to use for new drawings and your preferred language.&lt;br&gt;
 (You can changes these settings later.)</source>
-        <translation>&lt;font size=&quot;+1&quot;&gt;&lt;b&gt;أهلاً بك في LibreCAD&lt;/b&gt;&lt;/font&gt;
+        <translation>&lt;font size="+1"&gt;&lt;b&gt;أهلاً بك في LibreCAD&lt;/b&gt;&lt;/font&gt;
 &lt;br&gt;يرجى اختيار الوحدة التي تريد استخدامها للرسومات الجديدة ولغتك المفضلة.&lt;br&gt;(يمكنك تغيير هذه الإعدادات لاحقًا.)</translation>
     </message>
 </context>
@@ -4949,7 +4948,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation>الدرجات</translation>
     </message>
     <message>
-        <source>Surveyor&apos;s units</source>
+        <source>Surveyor's units</source>
         <translation>وحدات المساحة</translation>
     </message>
     <message>
@@ -4957,8 +4956,8 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation>الخيارات</translation>
     </message>
     <message>
-        <source>For the length formats &apos;Engineering&apos; and &apos;Architectural&apos;, the unit must be set to Inch.</source>
-        <translation>لتنسيق اﻷطول &quot;الهندسية&quot; و&quot;المعمارية&quot;، الوحدة يجب أن تعين بالبوصة.</translation>
+        <source>For the length formats 'Engineering' and 'Architectural', the unit must be set to Inch.</source>
+        <translation>لتنسيق اﻷطول "الهندسية" و"المعمارية"، الوحدة يجب أن تعين بالبوصة.</translation>
     </message>
     <message>
         <source>Arrow size:</source>
@@ -5089,7 +5088,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation>حجم العلامة:</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dimension Tick size. Set it to 0 will disable the dimension tick. Dimension arrow won&apos;t be drawn when dimension tick is enabled.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dimension Tick size. Set it to 0 will disable the dimension tick. Dimension arrow won't be drawn when dimension tick is enabled.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;حجم علامة البعد. تعيينه على 0 سيعطّل علامة البعد. لن يتم رسم سهم البعد عند تفعيل علامة البعد.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
@@ -5113,11 +5112,11 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation>نمط النص:</translation>
     </message>
     <message>
-        <source>&apos;.&apos; (Period)</source>
-        <translation>.&apos; (نقطة)</translation>
+        <source>'.' (Period)</source>
+        <translation>.' (نقطة)</translation>
     </message>
     <message>
-        <source>&apos;,&apos; (Comma)</source>
+        <source>',' (Comma)</source>
         <translation>فاصلة</translation>
     </message>
     <message>
@@ -5161,8 +5160,8 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation>الطول الذي سيتم تكبيره فوق خط البعد</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dimension arrow size. &lt;a name=&quot;result_box&quot;/&gt;without effect when tick size &lt;a name=&quot;result_box&quot;/&gt;is other than 0&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;حجم سهم البعد. &lt;a name=&quot;result_box&quot;/&gt;لا تأثير له عندما يكون حجم العلامة &lt;a name=&quot;result_box&quot;/&gt;لا يساوي 0&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dimension arrow size. &lt;a name="result_box"/&gt;without effect when tick size &lt;a name="result_box"/&gt;is other than 0&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;حجم سهم البعد. &lt;a name="result_box"/&gt;لا تأثير له عندما يكون حجم العلامة &lt;a name="result_box"/&gt;لا يساوي 0&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Width:</source>
@@ -5193,8 +5192,8 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation>الدقة الخطية:</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Text alignment &lt;a name=&quot;result_box&quot;/&gt;relative to the dimension line.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;محاذاة النص &lt;a name=&quot;result_box&quot;/&gt;بالنسبة لخط البعد.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Text alignment &lt;a name="result_box"/&gt;relative to the dimension line.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;محاذاة النص &lt;a name="result_box"/&gt;بالنسبة لخط البعد.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Aligned</source>
@@ -5297,8 +5296,8 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation>معماري (مترية)</translation>
     </message>
     <message>
-        <source>For the length format &apos;Architectural (metric)&apos;, the unit must be set to Meter.</source>
-        <translation>بالنسبة لتنسيق الطول &apos;معماري (مترية)&apos;، يجب تعيين الوحدة إلى المتر.</translation>
+        <source>For the length format 'Architectural (metric)', the unit must be set to Meter.</source>
+        <translation>بالنسبة لتنسيق الطول 'معماري (مترية)'، يجب تعيين الوحدة إلى المتر.</translation>
     </message>
     <message>
         <source>Screen %</source>
@@ -5544,7 +5543,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation>عدد الكيانات المعروضة:</translation>
     </message>
     <message>
-        <source>Don&apos;t use native OS file open dialog</source>
+        <source>Don't use native OS file open dialog</source>
         <translation>عدم استخدام مربع حوار فتح الملف الأصلي لنظام التشغيل</translation>
     </message>
     <message>
@@ -5620,8 +5619,8 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation>تكبير الرسم تلقائيًا عند الفتح</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-family:&apos;-apple-system&apos;,&apos;BlinkMacSystemFont&apos;,&apos;Segoe UI&apos;,&apos;Noto Sans&apos;,&apos;Helvetica&apos;,&apos;Arial&apos;,&apos;sans-serif&apos;,&apos;Apple Color Emoji&apos;,&apos;Segoe UI Emoji&apos;; font-size:14px; color:#1f2328; background-color:#ffffff;&quot;&gt;Part library folder. The symbol library dxf files must be located in the subdirectories of this folder. The subfolder names will be displayed in the Library Browser.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-family:&apos;-apple-system&apos;,&apos;BlinkMacSystemFont&apos;,&apos;Segoe UI&apos;,&apos;Noto Sans&apos;,&apos;Helvetica&apos;,&apos;Arial&apos;,&apos;sans-serif&apos;,&apos;Apple Color Emoji&apos;,&apos;Segoe UI Emoji&apos;; font-size:14px; color:#1f2328; background-color:#ffffff;&quot;&gt;( Menu: Widgets &amp;gt; Dock Widgets &amp;gt; Library Browser)&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-family:&apos;-apple-system&apos;,&apos;BlinkMacSystemFont&apos;,&apos;Segoe UI&apos;,&apos;Noto Sans&apos;,&apos;Helvetica&apos;,&apos;Arial&apos;,&apos;sans-serif&apos;,&apos;Apple Color Emoji&apos;,&apos;Segoe UI Emoji&apos;; font-size:14px; color:#1f2328; background-color:#ffffff;&quot;&gt;مجلد مكتبة الأجزاء. يجب أن تقع ملفات مكتبة الرموز dxf في المجلدات الفرعية لهذا المجلد. سيتم عرض أسماء المجلدات الفرعية في متصفح المكتبة.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-family:&apos;-apple-system&apos;,&apos;BlinkMacSystemFont&apos;,&apos;Segoe UI&apos;,&apos;Noto Sans&apos;,&apos;Helvetica&apos;,&apos;Arial&apos;,&apos;sans-serif&apos;,&apos;Apple Color Emoji&apos;,&apos;Segoe UI Emoji&apos;; font-size:14px; color:#1f2328; background-color:#ffffff;&quot;&gt;( القائمة: الأدوات &gt; أدوات الرصيف &gt; متصفح المكتبة)&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=" font-family:'-apple-system','BlinkMacSystemFont','Segoe UI','Noto Sans','Helvetica','Arial','sans-serif','Apple Color Emoji','Segoe UI Emoji'; font-size:14px; color:#1f2328; background-color:#ffffff;"&gt;Part library folder. The symbol library dxf files must be located in the subdirectories of this folder. The subfolder names will be displayed in the Library Browser.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=" font-family:'-apple-system','BlinkMacSystemFont','Segoe UI','Noto Sans','Helvetica','Arial','sans-serif','Apple Color Emoji','Segoe UI Emoji'; font-size:14px; color:#1f2328; background-color:#ffffff;"&gt;( Menu: Widgets &amp;gt; Dock Widgets &amp;gt; Library Browser)&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=" font-family:'-apple-system','BlinkMacSystemFont','Segoe UI','Noto Sans','Helvetica','Arial','sans-serif','Apple Color Emoji','Segoe UI Emoji'; font-size:14px; color:#1f2328; background-color:#ffffff;"&gt;مجلد مكتبة الأجزاء. يجب أن تقع ملفات مكتبة الرموز dxf في المجلدات الفرعية لهذا المجلد. سيتم عرض أسماء المجلدات الفرعية في متصفح المكتبة.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=" font-family:'-apple-system','BlinkMacSystemFont','Segoe UI','Noto Sans','Helvetica','Arial','sans-serif','Apple Color Emoji','Segoe UI Emoji'; font-size:14px; color:#1f2328; background-color:#ffffff;"&gt;( القائمة: الأدوات &gt; أدوات الرصيف &gt; متصفح المكتبة)&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Open last opened files</source>
@@ -5692,9 +5691,9 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>MakerCAM as of November 2014 does not hide SVG content 
-that has been set invisibe (&quot;display: none&quot; or &quot;visibility: hidden&quot;).</source>
+that has been set invisibe ("display: none" or "visibility: hidden").</source>
         <translation>لا يقوم MakerCAM اعتبارًا من نوفمبر 2014 بإخفاء محتوى SVG 
-الذي تم تعيينه كغير مرئي (&quot;display: none&quot; أو &quot;visibility: hidden&quot;).</translation>
+الذي تم تعيينه كغير مرئي ("display: none" أو "visibility: hidden").</translation>
     </message>
     <message>
         <source>MakerCAM as of November 2014 cannot correctly deal with blocks,
@@ -5711,18 +5710,18 @@ the &lt;transform&gt; attribute or as &lt;path&gt; using elliptic arc segments.<
     </message>
     <message>
         <source>Exported images can be useful in SVG editors (Inkscape, etc), 
-but avoided in some CAM&apos;s.</source>
+but avoided in some CAM's.</source>
         <translation>يمكن أن تكون الصور المُصدَّرة مفيدة في محررات SVG (Inkscape، إلخ)، 
 ولكن يجب تجنبها في بعض أنظمة CAM.</translation>
     </message>
     <message>
-        <source>Many CAM&apos;s(MakerCAM, EleskCAM, LaserWeb) ignore dashed/doted line style, 
+        <source>Many CAM's(MakerCAM, EleskCAM, LaserWeb) ignore dashed/doted line style, 
 which can be useful in lasercut of plywood or for papercraft. </source>
         <translation>تتجاهل العديد من أنظمة CAM (MakerCAM، EleskCAM، LaserWeb) نمط الخط المتقطع/المنقط، 
 وهو أمر قد يكون مفيدًا في القطع بالليزر للخشب الرقائقي أو للحرف الورقية.</translation>
     </message>
     <message>
-        <source>Default width of elements can affect some CAM&apos;s/SVG Editors, 
+        <source>Default width of elements can affect some CAM's/SVG Editors, 
 but ignored by other</source>
         <translation>قد يؤثر العرض الافتراضي للعناصر على بعض أنظمة CAM/محررات SVG، 
 ولكن يتم تجاهله من قبل الأنظمة الأخرى.</translation>
@@ -7035,16 +7034,16 @@ The contents of a Construction Layer should not appear in printout.</source>
         <translation>يسار</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+        <source>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Ubuntu&apos;; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Helvetica&apos;; font-size:9pt;&quot;&gt;Hint about left/right mouse button actions&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Ubuntu'; font-size:11pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;span style=" font-family:'Helvetica'; font-size:9pt;"&gt;Hint about left/right mouse button actions&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Ubuntu&apos;; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Helvetica&apos;; font-size:9pt;&quot;&gt;تلميح حول إجراءات زر الماوس الأيسر/الأيمن&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Ubuntu'; font-size:11pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;span style=" font-family:'Helvetica'; font-size:9pt;"&gt;تلميح حول إجراءات زر الماوس الأيسر/الأيمن&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
@@ -7091,19 +7090,19 @@ p, li { white-space: pre-wrap; }
         <translation>مجموع الأطوال</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+        <source>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Number of selected entities&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Helvetica'; font-size:7pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;Number of selected entities&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>عدد الكيانات المحددة</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+        <source>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Total length of selected entities&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Helvetica'; font-size:7pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;Total length of selected entities&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>الطول الإجمالي للكيانات المحددة</translation>
     </message>
 </context>
@@ -7275,8 +7274,8 @@ p, li { white-space: pre-wrap; }
         <translation>إزالة طبقة</translation>
     </message>
     <message>
-        <source>Layer &quot;%1&quot; can never be removed.</source>
-        <translation>لا يمكن إزالة الطبقة &quot;%1&quot; أبدًا.</translation>
+        <source>Layer "%1" can never be removed.</source>
+        <translation>لا يمكن إزالة الطبقة "%1" أبدًا.</translation>
     </message>
     <message>
         <source>Layer Dialog</source>
@@ -7287,26 +7286,26 @@ p, li { white-space: pre-wrap; }
         <translation>إزالة الكتلة</translation>
     </message>
     <message>
-        <source>Block &quot;%1&quot; and all its entities will be removed.</source>
-        <translation>سيتم حذف الكتلة &quot;%1&quot; وجميع الكيانات التابعة لها.</translation>
+        <source>Block "%1" and all its entities will be removed.</source>
+        <translation>سيتم حذف الكتلة "%1" وجميع الكيانات التابعة لها.</translation>
     </message>
     <message>
         <source>Layer Properties</source>
         <translation>خصائص الطبقة</translation>
     </message>
     <message>
-        <source>Layer with a name &quot;%1&quot; already exists. Please specify a different name.</source>
-        <translation>توجد بالفعل طبقة باسم &quot;%1&quot;. يرجى تحديد اسم مختلف.</translation>
+        <source>Layer with a name "%1" already exists. Please specify a different name.</source>
+        <translation>توجد بالفعل طبقة باسم "%1". يرجى تحديد اسم مختلف.</translation>
     </message>
     <message>
-        <source>Layer &quot;%1&quot; and all entities on it will be removed.
+        <source>Layer "%1" and all entities on it will be removed.
 This action can NOT be undone.</source>
-        <translation>سيتم حذف الطبقة &quot;%1&quot; وجميع الكيانات الموجودة عليها.
+        <translation>سيتم حذف الطبقة "%1" وجميع الكيانات الموجودة عليها.
 لا يمكن التراجع عن هذا الإجراء.</translation>
     </message>
     <message>
-        <source>Layer &quot;0&quot; can never be removed.</source>
-        <translation>لا يمكن إزالة الطبقة &quot;0&quot; أبدًا.</translation>
+        <source>Layer "0" can never be removed.</source>
+        <translation>لا يمكن إزالة الطبقة "0" أبدًا.</translation>
     </message>
     <message numerus="yes">
         <source>Remove %n layer(s)</source>
@@ -7328,8 +7327,8 @@ This action can NOT be undone.</source>
         <translation>تحذير: لا يمكن التراجع عن هذا الإجراء!</translation>
     </message>
     <message>
-        <source>Warning: layer &quot;0&quot; can never be removed.</source>
-        <translation>تحذير: لا يمكن إزالة الطبقة &quot;0&quot; أبدًا.</translation>
+        <source>Warning: layer "0" can never be removed.</source>
+        <translation>تحذير: لا يمكن إزالة الطبقة "0" أبدًا.</translation>
     </message>
     <message>
         <source>Layers for removal:</source>
@@ -7429,12 +7428,12 @@ Please specify a different name.</source>
         <translation>تكرار التحديد</translation>
     </message>
     <message>
-        <source>Replace &quot;By Layer&quot; value to source layers values?
-If Yes - entities with &quot;By Layer&quot; pens will look on new layer exactly as on previous layers and &quot;By Layer&quot; value will be replaced by resolved pens.
-If No - &quot;By Layer&quot; values remains and so pen of target layer will define pen for such entities.</source>
-        <translation type="vanished">هل تريد استبدال قيمة &quot;حسب الطبقة&quot; بقيم الطبقات المصدر؟
-إذا كانت الإجابة نعم - ستبدو الكيانات ذات أقلام &quot;حسب الطبقة&quot; على الطبقة الجديدة تمامًا كما كانت على الطبقات السابقة، وسيتم استبدال قيمة &quot;حسب الطبقة&quot; بأقلام محددة.
-إذا كانت الإجابة لا - ستبقى قيم &quot;حسب الطبقة&quot;، وبالتالي سيحدد قلم الطبقة الهدف القلم لهذه الكيانات.</translation>
+        <source>Replace "By Layer" value to source layers values?
+If Yes - entities with "By Layer" pens will look on new layer exactly as on previous layers and "By Layer" value will be replaced by resolved pens.
+If No - "By Layer" values remains and so pen of target layer will define pen for such entities.</source>
+        <translation type="vanished">هل تريد استبدال قيمة "حسب الطبقة" بقيم الطبقات المصدر؟
+إذا كانت الإجابة نعم - ستبدو الكيانات ذات أقلام "حسب الطبقة" على الطبقة الجديدة تمامًا كما كانت على الطبقات السابقة، وسيتم استبدال قيمة "حسب الطبقة" بأقلام محددة.
+إذا كانت الإجابة لا - ستبقى قيم "حسب الطبقة"، وبالتالي سيحدد قلم الطبقة الهدف القلم لهذه الكيانات.</translation>
     </message>
     <message>
         <source>Layer DialogEx</source>
@@ -7462,7 +7461,7 @@ Please specify a different value.</source>
         <translation>سيتم إزالة القلم من لوحة الألوان، ولن تتأثر الكيانات المرسومة.</translation>
     </message>
     <message>
-        <source>Are you sure you&apos;d like to proceed?</source>
+        <source>Are you sure you'd like to proceed?</source>
         <translation>هل أنت متأكد أنك تريد المتابعة؟</translation>
     </message>
     <message>
@@ -7528,16 +7527,16 @@ Clear filtering mask and repeat.</source>
 امسح قناع التصفية وحاول مرة أخرى.</translation>
     </message>
     <message>
-        <source>Replace &quot;By Layer&quot; value to source layers values?
+        <source>Replace "By Layer" value to source layers values?
 
-If Yes - entities with &quot;By Layer&quot; pens will look on new layer exactly as on previous layers and &quot;By Layer&quot; value will be replaced by resolved pens.
+If Yes - entities with "By Layer" pens will look on new layer exactly as on previous layers and "By Layer" value will be replaced by resolved pens.
 
-If No - &quot;By Layer&quot; values remains and so pen of target layer will define pen for such entities.</source>
-        <translation>استبدال قيمة &quot;حسب الطبقة&quot; بقيم طبقات المصدر؟
+If No - "By Layer" values remains and so pen of target layer will define pen for such entities.</source>
+        <translation>استبدال قيمة "حسب الطبقة" بقيم طبقات المصدر؟
 
-إذا كانت الإجابة &quot;نعم&quot; - سيتم عرض الكائنات ذات أقلام &quot;حسب الطبقة&quot; على الطبقة الجديدة تمامًا كما كانت على الطبقات السابقة، وسيتم استبدال قيمة &quot;حسب الطبقة&quot; بقيم الأقلام المحددة.
+إذا كانت الإجابة "نعم" - سيتم عرض الكائنات ذات أقلام "حسب الطبقة" على الطبقة الجديدة تمامًا كما كانت على الطبقات السابقة، وسيتم استبدال قيمة "حسب الطبقة" بقيم الأقلام المحددة.
 
-إذا كانت الإجابة &quot;لا&quot; - ستبقى قيم &quot;حسب الطبقة&quot;، وبالتالي سيحدد قلم الطبقة الهدف قلم الكائنات.</translation>
+إذا كانت الإجابة "لا" - ستبقى قيم "حسب الطبقة"، وبالتالي سيحدد قلم الطبقة الهدف قلم الكائنات.</translation>
     </message>
 </context>
 <context>
@@ -7702,7 +7701,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Loading File %1..</source>
-        <translation>تحميل ملف 1٪ ..</translation>
+        <translation>تحميل ملف %1 ..</translation>
     </message>
     <message>
         <source>Loading...</source>
@@ -7786,14 +7785,14 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Opened dwg file version %1.</source>
-        <translation>فتح ملف إصدار dwg 1%</translation>
+        <translation>فتح ملف إصدار dwg %1</translation>
     </message>
     <message>
         <source>unknown error opening dwg file</source>
         <translation>خطأ غير معروف عند فتح ملف dwg</translation>
     </message>
     <message>
-        <source>can&apos;t open this dwg file</source>
+        <source>can't open this dwg file</source>
         <translation>لا يمكن فتح هذا الملف dwg</translation>
     </message>
     <message>
@@ -7830,11 +7829,11 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>File on disk modified. Please save to another file to avoid data loss! File modified: %1</source>
-        <translation>الملف على القرص معدل. الرجاء حفظة في ملف آخر لتجنب فقدان البيانات! الملف المعدل: 1٪ </translation>
+        <translation>الملف على القرص معدل. الرجاء حفظة في ملف آخر لتجنب فقدان البيانات! الملف المعدل: %1</translation>
     </message>
     <message>
         <source>Hatch failed due to a gap=%1 between (%2, %3) and (%4, %5)</source>
-        <translation>فشل التضليل بسبب وجود فجوة =1٪ بين (2٪، 3٪) و (4٪، 5٪)</translation>
+        <translation>فشل التضليل بسبب وجود فجوة =%1 بين (%2، %3) و (%4، %5)</translation>
     </message>
     <message>
         <source>Warning</source>
@@ -9957,8 +9956,8 @@ Do you want to replace it?</source>
         <translation>-o some.pdf *.dxf</translation>
     </message>
     <message>
-        <source>-- print all dxf files to &apos;some.pdf&apos; file.</source>
-        <translation>طباعة جميع ملفات dxf إلى ملف &apos;some.pdf&apos;.</translation>
+        <source>-- print all dxf files to 'some.pdf' file.</source>
+        <translation>طباعة جميع ملفات dxf إلى ملف 'some.pdf'.</translation>
     </message>
     <message>
         <source>Auto fit and center drawing to page.</source>
@@ -10032,8 +10031,8 @@ Do you want to replace it?</source>
         <translation>دمج جميع الطبقات</translation>
     </message>
     <message>
-        <source>File &quot;%1&quot; already exists. Do you want to replace it?</source>
-        <translation>الملف &quot;%1&quot; موجود بالفعل. هل تريد استبداله؟</translation>
+        <source>File "%1" already exists. Do you want to replace it?</source>
+        <translation>الملف "%1" موجود بالفعل. هل تريد استبداله؟</translation>
     </message>
     <message>
         <source>/CustomColor%1</source>
@@ -10693,8 +10692,8 @@ Do you want to replace it?</source>
         <translation>ادخل الزاوية:</translation>
     </message>
     <message>
-        <source></source>
-        <translation></translation>
+        <source />
+        <translation />
     </message>
     <message>
         <source>Enter factor:</source>
@@ -11181,24 +11180,24 @@ This block cannot be inserted.</source>
         <translation>اختر مركز الدائرة المماسية</translation>
     </message>
     <message>
-        <source>Invalid expression &apos;%1&apos; for radius</source>
-        <translation>تعبير غير صالح &apos;%1&apos; لنصف القطر</translation>
+        <source>Invalid expression '%1' for radius</source>
+        <translation>تعبير غير صالح '%1' لنصف القطر</translation>
     </message>
     <message>
-        <source>Invalid negative radius &apos;%1&apos;</source>
-        <translation>نصف قطر سالب غير صالح &apos;%1&apos;</translation>
+        <source>Invalid negative radius '%1'</source>
+        <translation>نصف قطر سالب غير صالح '%1'</translation>
     </message>
     <message>
-        <source>Invalid zero radius &apos;%1&apos;</source>
-        <translation>نصف قطر صفر غير صالح &apos;%1&apos;</translation>
+        <source>Invalid zero radius '%1'</source>
+        <translation>نصف قطر صفر غير صالح '%1'</translation>
     </message>
     <message>
-        <source>No tangent circle possible for radius &apos;%1&apos;</source>
-        <translation>لا يمكن تحديد دائرة مماسية لنصف القطر &apos;%1&apos;</translation>
+        <source>No tangent circle possible for radius '%1'</source>
+        <translation>لا يمكن تحديد دائرة مماسية لنصف القطر '%1'</translation>
     </message>
     <message>
-        <source>No common tangential circle for radius &apos;%1&apos;</source>
-        <translation>لا توجد دائرة مماسية مشتركة لنصف القطر &apos;%1&apos;</translation>
+        <source>No common tangential circle for radius '%1'</source>
+        <translation>لا توجد دائرة مماسية مشتركة لنصف القطر '%1'</translation>
     </message>
 </context>
 <context>
@@ -11446,7 +11445,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Total hatch area = %1</source>
-        <translation>مجموع مساحة التظليل =1%</translation>
+        <translation>مجموع مساحة التظليل =%1</translation>
     </message>
 </context>
 <context>
@@ -11468,8 +11467,8 @@ This block cannot be inserted.</source>
         <translation>ادخل زاوية:</translation>
     </message>
     <message>
-        <source></source>
-        <translation></translation>
+        <source />
+        <translation />
     </message>
     <message>
         <source>Enter factor:</source>
@@ -11631,7 +11630,7 @@ This block cannot be inserted.</source>
     <name>RS_ActionDrawLineParallel</name>
     <message>
         <source>Specify Distance &lt;%1&gt; or select entity or [%2]</source>
-        <translation>حدد مسافة &lt;1٪&gt; أو حدد كيان أو [2٪]</translation>
+        <translation>حدد مسافة &lt;%1&gt; أو حدد كيان أو [%2]</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -11684,8 +11683,8 @@ This block cannot be inserted.</source>
 <context>
     <name>RS_ActionDrawLinePolygon</name>
     <message>
-        <source></source>
-        <translation></translation>
+        <source />
+        <translation />
     </message>
 </context>
 <context>
@@ -12030,7 +12029,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Angle: %1</source>
-        <translation>زاوية: 1%</translation>
+        <translation>زاوية: %1</translation>
     </message>
 </context>
 <context>
@@ -12091,7 +12090,7 @@ This block cannot be inserted.</source>
     <name>RS_ActionInfoDist2</name>
     <message>
         <source>Distance: %1</source>
-        <translation>المسافة: 1%</translation>
+        <translation>المسافة: %1</translation>
     </message>
     <message>
         <source>Specify entity</source>
@@ -12133,7 +12132,7 @@ This block cannot be inserted.</source>
     <name>RS_ActionInfoTotalLength</name>
     <message>
         <source>Total Length of selected entities: %1</source>
-        <translation>مجموع أطوال الكيانات المختارة: 1%</translation>
+        <translation>مجموع أطوال الكيانات المختارة: %1</translation>
     </message>
     <message>
         <source>At least one of the selected entities cannot be measured.</source>
@@ -12163,16 +12162,16 @@ This block cannot be inserted.</source>
         <translation>ادخل زاوية:</translation>
     </message>
     <message>
-        <source></source>
-        <translation></translation>
+        <source />
+        <translation />
     </message>
     <message>
         <source>Enter factor:</source>
         <translation>إدخال العامل:</translation>
     </message>
     <message>
-        <source>Cannot open file &apos;%1&apos;</source>
-        <translation>لا يمكن فتح الملف &apos;٪1&apos;</translation>
+        <source>Cannot open file '%1'</source>
+        <translation>لا يمكن فتح الملف '%1'.</translation>
     </message>
 </context>
 <context>
@@ -12360,7 +12359,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Invalid number of copies, use %1 </source>
-        <translation>عدد غير صالح من النسخ، استخدام 1٪</translation>
+        <translation>عدد غير صالح من النسخ، استخدام %1</translation>
     </message>
 </context>
 <context>
@@ -12608,7 +12607,7 @@ This block cannot be inserted.</source>
         <translation>إلغاء</translation>
     </message>
     <message>
-        <source>Specify adding node&apos;s point</source>
+        <source>Specify adding node's point</source>
         <translation>تحديد نقطة إضافة العقدة</translation>
     </message>
     <message>
@@ -12678,7 +12677,7 @@ This block cannot be inserted.</source>
         <translation>إلغاء</translation>
     </message>
     <message>
-        <source>Specify deleting node&apos;s point</source>
+        <source>Specify deleting node's point</source>
         <translation>تحديد نقطة حذف العقدة</translation>
     </message>
     <message>
@@ -12845,8 +12844,8 @@ This block cannot be inserted.</source>
         <translation>إدخال الإزاحة من سطر الأوامر لإزاحة الطباعة</translation>
     </message>
     <message>
-        <source>Printout offset ignores relative zero. Ignoring &apos;@&apos;</source>
-        <translation>يتجاهل إزاحة الطباعة الصفر النسبي. يتجاهل &apos;@&apos;</translation>
+        <source>Printout offset ignores relative zero. Ignoring '@'</source>
+        <translation>يتجاهل إزاحة الطباعة الصفر النسبي. يتجاهل '@'</translation>
     </message>
     <message>
         <source>Printout in Black/White</source>

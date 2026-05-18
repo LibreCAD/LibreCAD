@@ -401,17 +401,7 @@ void LC_PenPaletteWidget::invokeOptionsDialog(bool focusOnFile){
         if (!focusOnFile){ // this is normal invocation via settings button
             QString newFileName = options->pensFileName;
             if (oldFileName != newFileName){
-                // next time, we'll try to read pens from new file. It's safer to do this rather
-                // than save pen items to new file (yet this is still may be possible if the user will
-                // change pens data and so save attempt will be performed to new file...
-                // potentially, it is possible just to save new file in settings and use current file util restart
-                // yet this is also quite a messy way... So let's ask for restart.
-                QMessageBox::warning( this, tr("Pen palette"),
-                                      tr("Location of pens file is changed, please restart the application so new pens file will be used.\n\n"
-                                         "Please note that if you'll save pen via editor without restart, current pens from palette will be saved "
-                                         "in the new file and therefore existing content of it will be overridden."),
-                                      QMessageBox::Ok,
-                                      Qt::NoButton);
+                penPaletteData->saveItems();
             }
         }
     }

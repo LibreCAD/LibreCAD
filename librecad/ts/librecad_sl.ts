@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
+<?xml version='1.0' encoding='utf-8'?>
 <TS version="2.1" language="sl">
 <context>
     <name>ColorWizard</name>
@@ -1141,7 +1140,7 @@ ali [%2]</translation>
         <translation>Podvoji</translation>
     </message>
     <message>
-        <source>Update Current Pen by Active Layer&apos; Pen</source>
+        <source>Update Current Pen by Active Layer' Pen</source>
         <translation>Posodobi trenutni stil z stilom aktivne plasti</translation>
     </message>
 </context>
@@ -1155,8 +1154,8 @@ ali [%2]</translation>
 <context>
     <name>LC_ActionLayersExport</name>
     <message>
-        <source>Saving layer &quot;%1&quot; as &quot;%2&quot; </source>
-        <translation>Shranjevanje plasti &quot;%1&quot; kot &quot;%2&quot; </translation>
+        <source>Saving layer "%1" as "%2" </source>
+        <translation>Shranjevanje plasti "%1" kot "%2" </translation>
     </message>
 </context>
 <context>
@@ -1670,7 +1669,7 @@ ali [%2]</translation>
         <translation>Pretvori v običajno plast</translation>
     </message>
     <message>
-        <source>&amp;Select Layer&apos;s Entities</source>
+        <source>&amp;Select Layer's Entities</source>
         <translation>&amp;Izberi entite plasti</translation>
     </message>
     <message>
@@ -2162,11 +2161,11 @@ ali [%2]</translation>
         <translation>na trenutni</translation>
     </message>
     <message>
-        <source>Update Current Pen by Active Layer&apos; Pen</source>
+        <source>Update Current Pen by Active Layer' Pen</source>
         <translation>Posodobi trenutni stil z stilom aktivne plasti</translation>
     </message>
     <message>
-        <source>Fill Pen Editor from Active Layer&apos;s Pen</source>
+        <source>Fill Pen Editor from Active Layer's Pen</source>
         <translation>Napolni urejevalnik stila iz stila aktivne plasti</translation>
     </message>
     <message>
@@ -2231,14 +2230,14 @@ ali [%2]</translation>
     </message>
     <message>
         <source>Location of pens file is changed, please restart the application so new pens file will be used.
-Please note that if you&apos;ll save pen via editor without restart, current pens from palette will be saved in the new file and therefore existing content of it will be overridden.</source>
+Please note that if you'll save pen via editor without restart, current pens from palette will be saved in the new file and therefore existing content of it will be overridden.</source>
         <translation type="vanished">Lokacija datoteke stilov se je spremenila, prosimo ponovno zaženite aplikacijo, da se uporabi nova datoteka stilov.
 Opomba: če shranite stil prek urejevalnika brez ponovnega zagona, bodo trenutni stili iz palete shranjeni v novo datoteko in obstoječa vsebina bo prepisana.</translation>
     </message>
     <message>
         <source>Location of pens file is changed, please restart the application so new pens file will be used.
 
-Please note that if you&apos;ll save pen via editor without restart, current pens from palette will be saved in the new file and therefore existing content of it will be overridden.</source>
+Please note that if you'll save pen via editor without restart, current pens from palette will be saved in the new file and therefore existing content of it will be overridden.</source>
         <translation>Lokacija datoteke s peresi je spremenjena, prosimo, znova zaženite aplikacijo, da se uporabijo nove datoteke s peresi.
 
 Upoštevajte, da če boste peres shranili preko urejevalnika brez ponovnega zagona, se trenutne perse iz palete shranijo v novo datoteko in s tem se prepiše obstoječa vsebina.</translation>
@@ -2751,12 +2750,12 @@ Upoštevajte, da če boste peres shranili preko urejevalnika brez ponovnega zago
         <translation>odstrani desno</translation>
     </message>
     <message>
-        <source>remove 0&apos;</source>
-        <translation>odstrani 0&apos;</translation>
+        <source>remove 0'</source>
+        <translation>odstrani 0'</translation>
     </message>
     <message>
-        <source>remove 0&quot;</source>
-        <translation>odstrani 0&quot;</translation>
+        <source>remove 0"</source>
+        <translation>odstrani 0"</translation>
     </message>
 </context>
 <context>
@@ -2946,8 +2945,8 @@ Upoštevajte, da če boste peres shranili preko urejevalnika brez ponovnega zago
         <translation>Ukazna vrstica</translation>
     </message>
     <message>
-        <source>Block &apos;%1&apos;</source>
-        <translation>Blok &apos;%1&apos;</translation>
+        <source>Block '%1'</source>
+        <translation>Blok '%1'</translation>
     </message>
     <message>
         <source>Cannot open the file
@@ -2974,10 +2973,9 @@ Prosim, preverite dovoljenja.</translation>
 %1
 Please check the permissions.
 Auto-save disabled.</source>
-        <translation>Ne moremsamodejno shraniti datoteke
-&amp;1
-Prosim,preverite dovoljenja.
-Samodejno shranjevanje zaustalvjeno.</translation>
+        <translation>Ne moremo samodejno shraniti datoteke %1.
+Prosim, preverite dovoljenja.
+Samodejno shranjevanje je zaustavljeno.</translation>
     </message>
     <message>
         <source>Import</source>
@@ -3084,8 +3082,8 @@ Please check its existence and permissions.</source>
 Preverite njeno obstojnost in dovoljenja.</translation>
     </message>
     <message>
-        <source>File &apos;%1&apos; does not exist. Opening aborted</source>
-        <translation>Datoteka &apos;%1&apos; ne obstaja. Odpiranje prekinjeno</translation>
+        <source>File '%1' does not exist. Opening aborted</source>
+        <translation>Datoteka '%1' ne obstaja. Odpiranje prekinjeno</translation>
     </message>
     <message>
         <source>Categories</source>
@@ -3335,7 +3333,7 @@ Preverite njeno obstojnost in dovoljenja.</translation>
         <translation>&amp;Wiki</translation>
     </message>
     <message>
-        <source>User&apos;s &amp;Manual</source>
+        <source>User's &amp;Manual</source>
         <translation>&amp;Priročnik uporabnika</translation>
     </message>
     <message>
@@ -3414,16 +3412,16 @@ Preverite njeno obstojnost in dovoljenja.</translation>
         <translation>Trenutna plast</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+        <source>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Name of Current Active Layer&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Helvetica'; font-size:7pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;Name of Current Active Layer&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Ime trenutne aktivne plasti&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Helvetica'; font-size:7pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;Ime trenutne aktivne plasti&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
@@ -3441,8 +3439,8 @@ p, li { white-space: pre-wrap; }
         <translation>Preimenovanje bloka</translation>
     </message>
     <message>
-        <source>Could not name block. A block named &quot;%1&quot; already exists.</source>
-        <translation>Bloka ni mogoče poimenovati. Blok imenovan &quot;%1&quot; že obstaja.</translation>
+        <source>Could not name block. A block named "%1" already exists.</source>
+        <translation>Bloka ni mogoče poimenovati. Blok imenovan "%1" že obstaja.</translation>
     </message>
 </context>
 <context>
@@ -4036,12 +4034,12 @@ To rekurzivno spremeni vse entitete samega bloka.</translation>
         <translation>Jezik ukazov:</translation>
     </message>
     <message>
-        <source>&lt;font size=&quot;+1&quot;&gt;&lt;b&gt;Welcome to LibreCAD&lt;/b&gt;
+        <source>&lt;font size="+1"&gt;&lt;b&gt;Welcome to LibreCAD&lt;/b&gt;
 &lt;/font&gt;
 &lt;br&gt;
 Please choose the unit you want to use for new drawings and your preferred language.&lt;br&gt;
 (You can changes these settings later.)</source>
-        <translation>&lt;font size=&quot;+1&quot;&gt;&lt;b&gt;Dobrodošli v LibreCAD&lt;/b&gt;
+        <translation>&lt;font size="+1"&gt;&lt;b&gt;Dobrodošli v LibreCAD&lt;/b&gt;
 &lt;/font&gt;
 &lt;br&gt;Izberite enote, ki jih želite uporabljati za nove risbe, in želeni jezik.&lt;br&gt;(Te nastavitve lahko pozneje spremenite.)</translation>
     </message>
@@ -4939,7 +4937,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation>Gradiani</translation>
     </message>
     <message>
-        <source>Surveyor&apos;s units</source>
+        <source>Surveyor's units</source>
         <translation>Geodetske enote</translation>
     </message>
     <message>
@@ -4947,8 +4945,8 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation>Možnosti</translation>
     </message>
     <message>
-        <source>For the length formats &apos;Engineering&apos; and &apos;Architectural&apos;, the unit must be set to Inch.</source>
-        <translation>Za dolžinske formate &apos;Inženirski&apos; in &apos;Arhitekturni&apos; mora biti enota nastavljena na palec.</translation>
+        <source>For the length formats 'Engineering' and 'Architectural', the unit must be set to Inch.</source>
+        <translation>Za dolžinske formate 'Inženirski' in 'Arhitekturni' mora biti enota nastavljena na palec.</translation>
     </message>
     <message>
         <source>Arrow size:</source>
@@ -5079,7 +5077,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation>Velikost označevalca:</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dimension Tick size. Set it to 0 will disable the dimension tick. Dimension arrow won&apos;t be drawn when dimension tick is enabled.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dimension Tick size. Set it to 0 will disable the dimension tick. Dimension arrow won't be drawn when dimension tick is enabled.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Velikost označevalca dimenzije. Nastavitev na 0 bo onemogočila označevalec dimenzije. Puščica dimenzije se ne bo narisala, ko je omogočen označevalec dimenzije.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
@@ -5103,11 +5101,11 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation>Slog besedila:</translation>
     </message>
     <message>
-        <source>&apos;.&apos; (Period)</source>
+        <source>'.' (Period)</source>
         <translation>.</translation>
     </message>
     <message>
-        <source>&apos;,&apos; (Comma)</source>
+        <source>',' (Comma)</source>
         <translation>,</translation>
     </message>
     <message>
@@ -5151,8 +5149,8 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation>Dolžina za povečavo nad dimenzijsko črto</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dimension arrow size. &lt;a name=&quot;result_box&quot;/&gt;without effect when tick size &lt;a name=&quot;result_box&quot;/&gt;is other than 0&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Velikost puščice dimenzije. &lt;a name=&quot;result_box&quot;/&gt;brez učinka, če je velikost črtice &lt;a name=&quot;result_box&quot;/&gt;drugačna od 0&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dimension arrow size. &lt;a name="result_box"/&gt;without effect when tick size &lt;a name="result_box"/&gt;is other than 0&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Velikost puščice dimenzije. &lt;a name="result_box"/&gt;brez učinka, če je velikost črtice &lt;a name="result_box"/&gt;drugačna od 0&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Width:</source>
@@ -5183,7 +5181,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation>Linearna natančnost:</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Text alignment &lt;a name=&quot;result_box&quot;/&gt;relative to the dimension line.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Text alignment &lt;a name="result_box"/&gt;relative to the dimension line.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>Besedilo je poravnano glede na merilno črto.</translation>
     </message>
     <message>
@@ -5287,8 +5285,8 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation>Arhitekturne (metrične)</translation>
     </message>
     <message>
-        <source>For the length format &apos;Architectural (metric)&apos;, the unit must be set to Meter.</source>
-        <translation>Za obliko dolžine &apos;Arhitekturne (metrične)&apos; mora biti enota nastavljena na meter.</translation>
+        <source>For the length format 'Architectural (metric)', the unit must be set to Meter.</source>
+        <translation>Za obliko dolžine 'Arhitekturne (metrične)' mora biti enota nastavljena na meter.</translation>
     </message>
     <message>
         <source>Screen %</source>
@@ -5534,7 +5532,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation>Število entitet za predogled:</translation>
     </message>
     <message>
-        <source>Don&apos;t use native OS file open dialog</source>
+        <source>Don't use native OS file open dialog</source>
         <translation>Ne uporabljaj izvornega sistemskega okna za odpiranje datotek</translation>
     </message>
     <message>
@@ -5610,8 +5608,8 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation>Samodejno povečaj risbo ob odpiranju</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-family:&apos;-apple-system&apos;,&apos;BlinkMacSystemFont&apos;,&apos;Segoe UI&apos;,&apos;Noto Sans&apos;,&apos;Helvetica&apos;,&apos;Arial&apos;,&apos;sans-serif&apos;,&apos;Apple Color Emoji&apos;,&apos;Segoe UI Emoji&apos;; font-size:14px; color:#1f2328; background-color:#ffffff;&quot;&gt;Part library folder. The symbol library dxf files must be located in the subdirectories of this folder. The subfolder names will be displayed in the Library Browser.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-family:&apos;-apple-system&apos;,&apos;BlinkMacSystemFont&apos;,&apos;Segoe UI&apos;,&apos;Noto Sans&apos;,&apos;Helvetica&apos;,&apos;Arial&apos;,&apos;sans-serif&apos;,&apos;Apple Color Emoji&apos;,&apos;Segoe UI Emoji&apos;; font-size:14px; color:#1f2328; background-color:#ffffff;&quot;&gt;( Menu: Widgets &amp;gt; Dock Widgets &amp;gt; Library Browser)&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-family:&apos;-apple-system&apos;,&apos;BlinkMacSystemFont&apos;,&apos;Segoe UI&apos;,&apos;Noto Sans&apos;,&apos;Helvetica&apos;,&apos;Arial&apos;,&apos;sans-serif&apos;,&apos;Apple Color Emoji&apos;,&apos;Segoe UI Emoji&apos;; font-size:14px; color:#1f2328; background-color:#ffffff;&quot;&gt;Mappa mape s knjižnico delov. Datoteke DXF s simboli morajo biti v podmapah te mape. Imena podmap bodo prikazana v brskalniku knjižnice.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-family:&apos;-apple-system&apos;,&apos;BlinkMacSystemFont&apos;,&apos;Segoe UI&apos;,&apos;Noto Sans&apos;,&apos;Helvetica&apos;,&apos;Arial&apos;,&apos;sans-serif&apos;,&apos;Apple Color Emoji&apos;,&apos;Segoe UI Emoji&apos;; font-size:14px; color:#1f2328; background-color:#ffffff;&quot;&gt;(Meni: Pripomočki &gt; Pripeta okna &gt; Brskalnik knjižnice)&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=" font-family:'-apple-system','BlinkMacSystemFont','Segoe UI','Noto Sans','Helvetica','Arial','sans-serif','Apple Color Emoji','Segoe UI Emoji'; font-size:14px; color:#1f2328; background-color:#ffffff;"&gt;Part library folder. The symbol library dxf files must be located in the subdirectories of this folder. The subfolder names will be displayed in the Library Browser.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=" font-family:'-apple-system','BlinkMacSystemFont','Segoe UI','Noto Sans','Helvetica','Arial','sans-serif','Apple Color Emoji','Segoe UI Emoji'; font-size:14px; color:#1f2328; background-color:#ffffff;"&gt;( Menu: Widgets &amp;gt; Dock Widgets &amp;gt; Library Browser)&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=" font-family:'-apple-system','BlinkMacSystemFont','Segoe UI','Noto Sans','Helvetica','Arial','sans-serif','Apple Color Emoji','Segoe UI Emoji'; font-size:14px; color:#1f2328; background-color:#ffffff;"&gt;Mappa mape s knjižnico delov. Datoteke DXF s simboli morajo biti v podmapah te mape. Imena podmap bodo prikazana v brskalniku knjižnice.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=" font-family:'-apple-system','BlinkMacSystemFont','Segoe UI','Noto Sans','Helvetica','Arial','sans-serif','Apple Color Emoji','Segoe UI Emoji'; font-size:14px; color:#1f2328; background-color:#ffffff;"&gt;(Meni: Pripomočki &gt; Pripeta okna &gt; Brskalnik knjižnice)&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Open last opened files</source>
@@ -5682,8 +5680,8 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>MakerCAM as of November 2014 does not hide SVG content 
-that has been set invisibe (&quot;display: none&quot; or &quot;visibility: hidden&quot;).</source>
-        <translation>Različica MakerCAM iz novembra 2014 ne skrije vsebine SVG, ki je bila nastavljena kot nevidna (&quot;display: none&quot; ali &quot;visibility: hidden&quot;).</translation>
+that has been set invisibe ("display: none" or "visibility: hidden").</source>
+        <translation>Različica MakerCAM iz novembra 2014 ne skrije vsebine SVG, ki je bila nastavljena kot nevidna ("display: none" ali "visibility: hidden").</translation>
     </message>
     <message>
         <source>MakerCAM as of November 2014 cannot correctly deal with blocks,
@@ -5698,16 +5696,16 @@ the &lt;transform&gt; attribute or as &lt;path&gt; using elliptic arc segments.<
     </message>
     <message>
         <source>Exported images can be useful in SVG editors (Inkscape, etc), 
-but avoided in some CAM&apos;s.</source>
+but avoided in some CAM's.</source>
         <translation>Izvožene slike so lahko uporabne v urejevalnikih SVG (Inkscape itd.), vendar jih nekateri CAM-i ne podpirajo.</translation>
     </message>
     <message>
-        <source>Many CAM&apos;s(MakerCAM, EleskCAM, LaserWeb) ignore dashed/doted line style, 
+        <source>Many CAM's(MakerCAM, EleskCAM, LaserWeb) ignore dashed/doted line style, 
 which can be useful in lasercut of plywood or for papercraft. </source>
         <translation>Mnogi CAM-i (MakerCAM, EleskCAM, LaserWeb) ne upoštevajo sloga črtanih/pikčastih črt, kar je lahko uporabno pri laserskem rezanju vezane plošče ali pri izdelavi papirnatih modelov.</translation>
     </message>
     <message>
-        <source>Default width of elements can affect some CAM&apos;s/SVG Editors, 
+        <source>Default width of elements can affect some CAM's/SVG Editors, 
 but ignored by other</source>
         <translation>Privzeta širina elementov lahko vpliva na nekatere CAM-e/urejevalnike SVG, medtem ko jo drugi ne upoštevajo.</translation>
     </message>
@@ -7019,11 +7017,11 @@ Vsebina konstrukcijskega sloja se ne sme pojavljati v tiskanem izhodu.</translat
         <translation>Leva</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+        <source>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Ubuntu&apos;; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Helvetica&apos;; font-size:9pt;&quot;&gt;Hint about left/right mouse button actions&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Ubuntu'; font-size:11pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;span style=" font-family:'Helvetica'; font-size:9pt;"&gt;Hint about left/right mouse button actions&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>Namig o dejanjih levega/desnega gumba miške</translation>
     </message>
 </context>
@@ -7071,19 +7069,19 @@ p, li { white-space: pre-wrap; }
         <translation>Skupna dolžina</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+        <source>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Number of selected entities&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Helvetica'; font-size:7pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;Number of selected entities&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>Število izbranih elementov</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+        <source>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Total length of selected entities&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Helvetica'; font-size:7pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;Total length of selected entities&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>Skupna dolžina izbranih entitet</translation>
     </message>
 </context>
@@ -7255,8 +7253,8 @@ p, li { white-space: pre-wrap; }
         <translation>Odstrani sloj</translation>
     </message>
     <message>
-        <source>Layer &quot;%1&quot; can never be removed.</source>
-        <translation>Sloj &quot;%1&quot; se ne more odstraniti.</translation>
+        <source>Layer "%1" can never be removed.</source>
+        <translation>Sloj "%1" se ne more odstraniti.</translation>
     </message>
     <message>
         <source>Layer Dialog</source>
@@ -7267,26 +7265,26 @@ p, li { white-space: pre-wrap; }
         <translation>Odstrani blok</translation>
     </message>
     <message>
-        <source>Block &quot;%1&quot; and all its entities will be removed.</source>
-        <translation>Blok &quot;%1&quot; in vse njegove entitete bodo odstranjene.</translation>
+        <source>Block "%1" and all its entities will be removed.</source>
+        <translation>Blok "%1" in vse njegove entitete bodo odstranjene.</translation>
     </message>
     <message>
         <source>Layer Properties</source>
         <translation>Lastnosti sloja</translation>
     </message>
     <message>
-        <source>Layer with a name &quot;%1&quot; already exists. Please specify a different name.</source>
-        <translation>Sloj z imenom &quot;%1&quot; že obstaja. Prosimo, navedite drugačno ime.</translation>
+        <source>Layer with a name "%1" already exists. Please specify a different name.</source>
+        <translation>Sloj z imenom "%1" že obstaja. Prosimo, navedite drugačno ime.</translation>
     </message>
     <message>
-        <source>Layer &quot;%1&quot; and all entities on it will be removed.
+        <source>Layer "%1" and all entities on it will be removed.
 This action can NOT be undone.</source>
-        <translation>Sloj &quot;%1&quot; in vse entitete na njem bodo odstranjene.
+        <translation>Sloj "%1" in vse entitete na njem bodo odstranjene.
 To dejanje ni mogoče povrniti.</translation>
     </message>
     <message>
-        <source>Layer &quot;0&quot; can never be removed.</source>
-        <translation>Sloj &quot;0&quot; se ne more odstraniti.</translation>
+        <source>Layer "0" can never be removed.</source>
+        <translation>Sloj "0" se ne more odstraniti.</translation>
     </message>
     <message numerus="yes">
         <source>Remove %n layer(s)</source>
@@ -7306,8 +7304,8 @@ To dejanje ni mogoče povrniti.</translation>
         <translation>Opozorilo: to dejanje ni mogoče razveljaviti!</translation>
     </message>
     <message>
-        <source>Warning: layer &quot;0&quot; can never be removed.</source>
-        <translation>Opozorilo: plasti &quot;0&quot; ni mogoče odstraniti.</translation>
+        <source>Warning: layer "0" can never be removed.</source>
+        <translation>Opozorilo: plasti "0" ni mogoče odstraniti.</translation>
     </message>
     <message>
         <source>Layers for removal:</source>
@@ -7403,9 +7401,9 @@ Prosimo, navedite drugačno ime.</translation>
         <translation>Podvoji izbor</translation>
     </message>
     <message>
-        <source>Replace &quot;By Layer&quot; value to source layers values?
-If Yes - entities with &quot;By Layer&quot; pens will look on new layer exactly as on previous layers and &quot;By Layer&quot; value will be replaced by resolved pens.
-If No - &quot;By Layer&quot; values remains and so pen of target layer will define pen for such entities.</source>
+        <source>Replace "By Layer" value to source layers values?
+If Yes - entities with "By Layer" pens will look on new layer exactly as on previous layers and "By Layer" value will be replaced by resolved pens.
+If No - "By Layer" values remains and so pen of target layer will define pen for such entities.</source>
         <translation type="vanished">Ali ste prepričani, da želite nadaljevati?</translation>
     </message>
     <message>
@@ -7435,7 +7433,7 @@ Prosimo, navedite drugačno vrednost.</translation>
         <translation>Pero bo odstranjeno iz palete, elementi risbe ne bodo prizadeti.</translation>
     </message>
     <message>
-        <source>Are you sure you&apos;d like to proceed?</source>
+        <source>Are you sure you'd like to proceed?</source>
         <translation>Ali ste prepričani, da želite nadaljevati?</translation>
     </message>
     <message>
@@ -7501,11 +7499,11 @@ Clear filtering mask and repeat.</source>
 Počistite filter in ponovite.</translation>
     </message>
     <message>
-        <source>Replace &quot;By Layer&quot; value to source layers values?
+        <source>Replace "By Layer" value to source layers values?
 
-If Yes - entities with &quot;By Layer&quot; pens will look on new layer exactly as on previous layers and &quot;By Layer&quot; value will be replaced by resolved pens.
+If Yes - entities with "By Layer" pens will look on new layer exactly as on previous layers and "By Layer" value will be replaced by resolved pens.
 
-If No - &quot;By Layer&quot; values remains and so pen of target layer will define pen for such entities.</source>
+If No - "By Layer" values remains and so pen of target layer will define pen for such entities.</source>
         <translation>Nadomestiti vrednost »Po sloju« z vrednostmi izvorne plasti?
 
 Če izberete »Da«, bodo entitete s peresi »Po sloju« na novi plasti izgledale enako kot na prejšnjih plasteh, vrednost »Po sloju« pa bo nadomeščena z določenimi peresi.
@@ -7766,7 +7764,7 @@ Ali ga želite nadomestiti?</translation>
         <translation>neznana napaka pri odpiranju datoteke DWG</translation>
     </message>
     <message>
-        <source>can&apos;t open this dwg file</source>
+        <source>can't open this dwg file</source>
         <translation>te datoteke DWG ni mogoče odpreti</translation>
     </message>
     <message>
@@ -9930,8 +9928,8 @@ Ali ga želite nadomestiti?</translation>
         <translation>-o some.pdf *.dxf</translation>
     </message>
     <message>
-        <source>-- print all dxf files to &apos;some.pdf&apos; file.</source>
-        <translation>-- natisnite vse datoteke DXF v datoteko &apos;some.pdf&apos;.</translation>
+        <source>-- print all dxf files to 'some.pdf' file.</source>
+        <translation>-- natisnite vse datoteke DXF v datoteko 'some.pdf'.</translation>
     </message>
     <message>
         <source>Auto fit and center drawing to page.</source>
@@ -10005,8 +10003,8 @@ Ali ga želite nadomestiti?</translation>
         <translation>Združi vse plasti</translation>
     </message>
     <message>
-        <source>File &quot;%1&quot; already exists. Do you want to replace it?</source>
-        <translation>Datoteka &quot;%1&quot; že obstaja. Ali jo želite nadomestiti?</translation>
+        <source>File "%1" already exists. Do you want to replace it?</source>
+        <translation>Datoteka "%1" že obstaja. Ali jo želite nadomestiti?</translation>
     </message>
     <message>
         <source>/CustomColor%1</source>
@@ -10666,8 +10664,8 @@ Ali ga želite nadomestiti?</translation>
         <translation>Vnesite kot:</translation>
     </message>
     <message>
-        <source></source>
-        <translation></translation>
+        <source />
+        <translation />
     </message>
     <message>
         <source>Enter factor:</source>
@@ -11154,24 +11152,24 @@ This block cannot be inserted.</source>
         <translation>Izberite središče tangentnega kroga</translation>
     </message>
     <message>
-        <source>Invalid expression &apos;%1&apos; for radius</source>
-        <translation>Neveljaven izraz &apos;%1&apos; za polmer</translation>
+        <source>Invalid expression '%1' for radius</source>
+        <translation>Neveljaven izraz '%1' za polmer</translation>
     </message>
     <message>
-        <source>Invalid negative radius &apos;%1&apos;</source>
-        <translation>Neveljaven negativni polmer &apos;%1&apos;</translation>
+        <source>Invalid negative radius '%1'</source>
+        <translation>Neveljaven negativni polmer '%1'</translation>
     </message>
     <message>
-        <source>Invalid zero radius &apos;%1&apos;</source>
-        <translation>Neveljaven ničelni polmer &apos;%1&apos;</translation>
+        <source>Invalid zero radius '%1'</source>
+        <translation>Neveljaven ničelni polmer '%1'</translation>
     </message>
     <message>
-        <source>No tangent circle possible for radius &apos;%1&apos;</source>
-        <translation>Ni mogoče narisati tangencialnega kroga za polmer &apos;%1&apos;</translation>
+        <source>No tangent circle possible for radius '%1'</source>
+        <translation>Ni mogoče narisati tangencialnega kroga za polmer '%1'</translation>
     </message>
     <message>
-        <source>No common tangential circle for radius &apos;%1&apos;</source>
-        <translation>Ni mogoče narisati skupnega tangencialnega kroga za polmer &apos;%1&apos;</translation>
+        <source>No common tangential circle for radius '%1'</source>
+        <translation>Ni mogoče narisati skupnega tangencialnega kroga za polmer '%1'</translation>
     </message>
 </context>
 <context>
@@ -11441,8 +11439,8 @@ This block cannot be inserted.</source>
         <translation>Vnesite kot:</translation>
     </message>
     <message>
-        <source></source>
-        <translation></translation>
+        <source />
+        <translation />
     </message>
     <message>
         <source>Enter factor:</source>
@@ -11657,8 +11655,8 @@ This block cannot be inserted.</source>
 <context>
     <name>RS_ActionDrawLinePolygon</name>
     <message>
-        <source></source>
-        <translation></translation>
+        <source />
+        <translation />
     </message>
 </context>
 <context>
@@ -11857,7 +11855,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Cannot undo: Not enough entities defined yet.</source>
-        <translation>Ni mogoče izvesti dejanja &apos;razveljavi&apos;: Še ni določeno dovolj entitet.</translation>
+        <translation>Ni mogoče izvesti dejanja 'razveljavi': Še ni določeno dovolj entitet.</translation>
     </message>
     <message>
         <source>Enter the end point x</source>
@@ -12136,16 +12134,16 @@ This block cannot be inserted.</source>
         <translation>Vnesite kot:</translation>
     </message>
     <message>
-        <source></source>
-        <translation></translation>
+        <source />
+        <translation />
     </message>
     <message>
         <source>Enter factor:</source>
         <translation>Vnesite faktor:</translation>
     </message>
     <message>
-        <source>Cannot open file &apos;%1&apos;</source>
-        <translation>Datoteke &apos;%1&apos; ni mogoče odpreti</translation>
+        <source>Cannot open file '%1'</source>
+        <translation>Datoteke '%1' ni mogoče odpreti</translation>
     </message>
 </context>
 <context>
@@ -12581,7 +12579,7 @@ This block cannot be inserted.</source>
         <translation>Prekliči</translation>
     </message>
     <message>
-        <source>Specify adding node&apos;s point</source>
+        <source>Specify adding node's point</source>
         <translation>Določite točko za dodajanje vozlišča.</translation>
     </message>
     <message>
@@ -12651,7 +12649,7 @@ This block cannot be inserted.</source>
         <translation>Prekliči</translation>
     </message>
     <message>
-        <source>Specify deleting node&apos;s point</source>
+        <source>Specify deleting node's point</source>
         <translation>Določite točko, ki jo želite izbrisati.</translation>
     </message>
     <message>
@@ -12818,8 +12816,8 @@ This block cannot be inserted.</source>
         <translation>vnesite odmak iz ukazne vrstice, da ga uporabite za tisk</translation>
     </message>
     <message>
-        <source>Printout offset ignores relative zero. Ignoring &apos;@&apos;</source>
-        <translation>Odmak tiskanja ne upošteva relativne ničle. Ignorira se znak &apos;@&apos;</translation>
+        <source>Printout offset ignores relative zero. Ignoring '@'</source>
+        <translation>Odmak tiskanja ne upošteva relativne ničle. Ignorira se znak '@'</translation>
     </message>
     <message>
         <source>Printout in Black/White</source>

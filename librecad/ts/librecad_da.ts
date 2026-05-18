@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
+<?xml version='1.0' encoding='utf-8'?>
 <TS version="2.1" language="da">
 <context>
     <name>ColorWizard</name>
@@ -1141,7 +1140,7 @@ eller [%2]</translation>
         <translation>Dupliker</translation>
     </message>
     <message>
-        <source>Update Current Pen by Active Layer&apos; Pen</source>
+        <source>Update Current Pen by Active Layer' Pen</source>
         <translation>Opdater nuværende pen med aktiv lags pen</translation>
     </message>
 </context>
@@ -1155,8 +1154,8 @@ eller [%2]</translation>
 <context>
     <name>LC_ActionLayersExport</name>
     <message>
-        <source>Saving layer &quot;%1&quot; as &quot;%2&quot; </source>
-        <translation>Gemmer lag &quot;%1&quot; som &quot;%2&quot; </translation>
+        <source>Saving layer "%1" as "%2" </source>
+        <translation>Gemmer lag "%1" som "%2" </translation>
     </message>
 </context>
 <context>
@@ -1670,7 +1669,7 @@ eller [%2]</translation>
         <translation>Konverter til normal lag</translation>
     </message>
     <message>
-        <source>&amp;Select Layer&apos;s Entities</source>
+        <source>&amp;Select Layer's Entities</source>
         <translation>&amp;Vælg lags enheder</translation>
     </message>
     <message>
@@ -2177,11 +2176,11 @@ eller [%2]</translation>
         <translation>til nuværende</translation>
     </message>
     <message>
-        <source>Update Current Pen by Active Layer&apos; Pen</source>
+        <source>Update Current Pen by Active Layer' Pen</source>
         <translation>Opdater nuværende pen med aktiv lags pen</translation>
     </message>
     <message>
-        <source>Fill Pen Editor from Active Layer&apos;s Pen</source>
+        <source>Fill Pen Editor from Active Layer's Pen</source>
         <translation>Udfyld pen-redigering fra aktiv lags pen</translation>
     </message>
     <message>
@@ -2246,14 +2245,14 @@ eller [%2]</translation>
     </message>
     <message>
         <source>Location of pens file is changed, please restart the application so new pens file will be used.
-Please note that if you&apos;ll save pen via editor without restart, current pens from palette will be saved in the new file and therefore existing content of it will be overridden.</source>
+Please note that if you'll save pen via editor without restart, current pens from palette will be saved in the new file and therefore existing content of it will be overridden.</source>
         <translation type="vanished">Placering af pen-fil er ændret. Genstart venligst programmet for at bruge den nye pen-fil.
 Bemærk: Hvis du gemmer pen via editoren uden genstart, gemmes nuværende penne fra palæet i den nye fil og eksisterende indhold overskrives.</translation>
     </message>
     <message>
         <source>Location of pens file is changed, please restart the application so new pens file will be used.
 
-Please note that if you&apos;ll save pen via editor without restart, current pens from palette will be saved in the new file and therefore existing content of it will be overridden.</source>
+Please note that if you'll save pen via editor without restart, current pens from palette will be saved in the new file and therefore existing content of it will be overridden.</source>
         <translation>Placeringen af pennefilen er ændret. Genstart programmet, så den nye pennefil kan bruges.
 
 Bemærk, at hvis du gemmer en pen via editoren uden at genstarte, vil de aktuelle penne fra paletten blive gemt i den nye fil, og det eksisterende indhold vil blive overskrevet.</translation>
@@ -2766,12 +2765,12 @@ Bemærk, at hvis du gemmer en pen via editoren uden at genstarte, vil de aktuell
         <translation>fjern højre</translation>
     </message>
     <message>
-        <source>remove 0&apos;</source>
-        <translation>fjern 0&apos;</translation>
+        <source>remove 0'</source>
+        <translation>fjern 0'</translation>
     </message>
     <message>
-        <source>remove 0&quot;</source>
-        <translation>fjern 0&quot;</translation>
+        <source>remove 0"</source>
+        <translation>fjern 0"</translation>
     </message>
 </context>
 <context>
@@ -2981,8 +2980,8 @@ Bemærk, at hvis du gemmer en pen via editoren uden at genstarte, vil de aktuell
         <translation>Komandolinie</translation>
     </message>
     <message>
-        <source>Block &apos;%1&apos;</source>
-        <translation>Blok &apos;%1&apos;</translation>
+        <source>Block '%1'</source>
+        <translation>Blok '%1'</translation>
     </message>
     <message>
         <source>Cannot open the file
@@ -3009,7 +3008,10 @@ Check venligst filretighederne.</translation>
 %1
 Please check the permissions.
 Auto-save disabled.</source>
-        <translation>Arkivering nægtet. Kontroller venligst rettigheder</translation>
+        <translation>Kan ikke automatisk gemme filen.
+%1
+Kontroller venligst tilladelserne.
+Automatisk gemning er deaktiveret.</translation>
     </message>
     <message>
         <source>Import</source>
@@ -3100,8 +3102,8 @@ Please check its existence and permissions.</source>
 Kontroller venligst dens eksistens og tilladelser.</translation>
     </message>
     <message>
-        <source>File &apos;%1&apos; does not exist. Opening aborted</source>
-        <translation>Filen &apos;%1&apos; findes ikke. Åbning afbrudt</translation>
+        <source>File '%1' does not exist. Opening aborted</source>
+        <translation>Filen '%1' findes ikke. Åbning afbrudt</translation>
     </message>
     <message>
         <source>Categories</source>
@@ -3347,7 +3349,7 @@ Kontroller venligst dens eksistens og tilladelser.</translation>
         <translation>&amp;Wiki</translation>
     </message>
     <message>
-        <source>User&apos;s &amp;Manual</source>
+        <source>User's &amp;Manual</source>
         <translation>Bruger&amp;manual</translation>
     </message>
     <message>
@@ -3426,16 +3428,16 @@ Kontroller venligst dens eksistens og tilladelser.</translation>
         <translation>Nuværende lag</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+        <source>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Name of Current Active Layer&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Helvetica'; font-size:7pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;Name of Current Active Layer&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Navn på nuværende aktive lag&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Helvetica'; font-size:7pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;Navn på nuværende aktive lag&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
@@ -3453,8 +3455,8 @@ p, li { white-space: pre-wrap; }
         <translation>Omdøb blok</translation>
     </message>
     <message>
-        <source>Could not name block. A block named &quot;%1&quot; already exists.</source>
-        <translation>Kunne ikke navngive blok. En blok ved navn &quot;%1&quot; findes allerede.</translation>
+        <source>Could not name block. A block named "%1" already exists.</source>
+        <translation>Kunne ikke navngive blok. En blok ved navn "%1" findes allerede.</translation>
     </message>
 </context>
 <context>
@@ -3967,7 +3969,7 @@ Dette modificerer rekursivt alle enheder i blokken selv.</translation>
     </message>
     <message>
         <source>Enable Preview</source>
-        <translation>Tilføj &quot;vis eksempel&quot;</translation>
+        <translation>Tilføj "vis eksempel"</translation>
     </message>
     <message>
         <source>Area</source>
@@ -4048,12 +4050,12 @@ Dette modificerer rekursivt alle enheder i blokken selv.</translation>
         <translation>Sprog i komandolinien:</translation>
     </message>
     <message>
-        <source>&lt;font size=&quot;+1&quot;&gt;&lt;b&gt;Welcome to LibreCAD&lt;/b&gt;
+        <source>&lt;font size="+1"&gt;&lt;b&gt;Welcome to LibreCAD&lt;/b&gt;
 &lt;/font&gt;
 &lt;br&gt;
 Please choose the unit you want to use for new drawings and your preferred language.&lt;br&gt;
 (You can changes these settings later.)</source>
-        <translation>&lt;font size=&quot;+1&quot;&gt;&lt;b&gt;Velkommen til LibreCAD&lt;/b&gt;&lt;/font&gt;&lt;br&gt;Vælg venligst enheden til nye tegninger og dit foretrukne sprog.&lt;br&gt;(Du kan ændre disse indstillinger senere.)</translation>
+        <translation>&lt;font size="+1"&gt;&lt;b&gt;Velkommen til LibreCAD&lt;/b&gt;&lt;/font&gt;&lt;br&gt;Vælg venligst enheden til nye tegninger og dit foretrukne sprog.&lt;br&gt;(Du kan ændre disse indstillinger senere.)</translation>
     </message>
 </context>
 <context>
@@ -4953,7 +4955,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation>Radianer</translation>
     </message>
     <message>
-        <source>Surveyor&apos;s units</source>
+        <source>Surveyor's units</source>
         <translation>Geografisk</translation>
     </message>
     <message>
@@ -4961,8 +4963,8 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation>Valg</translation>
     </message>
     <message>
-        <source>For the length formats &apos;Engineering&apos; and &apos;Architectural&apos;, the unit must be set to Inch.</source>
-        <translation>For længde format i &apos;mekanisk&apos; og &apos;arkitektur&apos;, skal enheden være sat til tommer.</translation>
+        <source>For the length formats 'Engineering' and 'Architectural', the unit must be set to Inch.</source>
+        <translation>For længde format i 'mekanisk' og 'arkitektur', skal enheden være sat til tommer.</translation>
     </message>
     <message>
         <source>Dimension line gap:</source>
@@ -5089,7 +5091,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation>Mærkeafstand:</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dimension Tick size. Set it to 0 will disable the dimension tick. Dimension arrow won&apos;t be drawn when dimension tick is enabled.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dimension Tick size. Set it to 0 will disable the dimension tick. Dimension arrow won't be drawn when dimension tick is enabled.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dimensionmærkeafstand. Indstilling til 0 deaktiverer dimensionmærket. Dimensionspil vil ikke blive tegnet, når dimensionmærket er aktiveret.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
@@ -5113,12 +5115,12 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation>Tekststil:</translation>
     </message>
     <message>
-        <source>&apos;.&apos; (Period)</source>
-        <translation>&apos;.&apos; (Punkt)</translation>
+        <source>'.' (Period)</source>
+        <translation>'.' (Punkt)</translation>
     </message>
     <message>
-        <source>&apos;,&apos; (Comma)</source>
-        <translation>&apos;,&apos; (Komma)</translation>
+        <source>',' (Comma)</source>
+        <translation>',' (Komma)</translation>
     </message>
     <message>
         <source>Decimal separator:</source>
@@ -5161,8 +5163,8 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation>Længde til forstørrelse over dimensionelinjen</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dimension arrow size. &lt;a name=&quot;result_box&quot;/&gt;without effect when tick size &lt;a name=&quot;result_box&quot;/&gt;is other than 0&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>Dimensionpilstørrelse. Har ingen effekt, når hakestørrelsen &lt;a name=&quot;result_box&quot;/&gt; er anderledes end 0</translation>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dimension arrow size. &lt;a name="result_box"/&gt;without effect when tick size &lt;a name="result_box"/&gt;is other than 0&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>Dimensionpilstørrelse. Har ingen effekt, når hakestørrelsen &lt;a name="result_box"/&gt; er anderledes end 0</translation>
     </message>
     <message>
         <source>Width:</source>
@@ -5193,8 +5195,8 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation>Lineær præcision:</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Text alignment &lt;a name=&quot;result_box&quot;/&gt;relative to the dimension line.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>Tekstjustering &lt;a name=&quot;result_box&quot;/&gt;i forhold til dimensionelinjen.</translation>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Text alignment &lt;a name="result_box"/&gt;relative to the dimension line.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>Tekstjustering &lt;a name="result_box"/&gt;i forhold til dimensionelinjen.</translation>
     </message>
     <message>
         <source>Aligned</source>
@@ -5297,8 +5299,8 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation>Arkitektonisk (metrisk)</translation>
     </message>
     <message>
-        <source>For the length format &apos;Architectural (metric)&apos;, the unit must be set to Meter.</source>
-        <translation>For længdeformatet &apos;Arkitektonisk (metrisk)&apos; skal enheden indstilles til Meter.</translation>
+        <source>For the length format 'Architectural (metric)', the unit must be set to Meter.</source>
+        <translation>For længdeformatet 'Arkitektonisk (metrisk)' skal enheden indstilles til Meter.</translation>
     </message>
     <message>
         <source>Screen %</source>
@@ -5373,11 +5375,11 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>G&amp;rid Color:</source>
-        <translation>Gitte&amp;r&apos;s farve:</translation>
+        <translation>Gitte&amp;r's farve:</translation>
     </message>
     <message>
         <source>&amp;Meta Grid Color:</source>
-        <translation>&amp;Meta gitter&apos;s farve:</translation>
+        <translation>&amp;Meta gitter's farve:</translation>
     </message>
     <message>
         <source>A&amp;utomatically scale grid</source>
@@ -5529,7 +5531,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;When enabled, activating a layer would modify all selected entities to that new layer. To change layer of multiple entities: first select needed entities; activate a layer in the layer widget. This makes all selected entities modified to belong to the new layer.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Når det er aktiveret, vil aktivering af et lag ændre alle valgte enheder til det nye lag. For at ændre laget for flere enheder: vælg først de nødvendige enheder; aktiver et lag i lag-widget&apos;en. Dette får alle valgte enheder til at tilhøre det nye lag.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Når det er aktiveret, vil aktivering af et lag ændre alle valgte enheder til det nye lag. For at ændre laget for flere enheder: vælg først de nødvendige enheder; aktiver et lag i lag-widget'en. Dette får alle valgte enheder til at tilhøre det nye lag.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Variable File:</source>
@@ -5544,8 +5546,8 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation>Antal forhåndsvisningsenheder:</translation>
     </message>
     <message>
-        <source>Don&apos;t use native OS file open dialog</source>
-        <translation>Brug ikke OS&apos;s native filåbningsdialog</translation>
+        <source>Don't use native OS file open dialog</source>
+        <translation>Brug ikke OS's native filåbningsdialog</translation>
     </message>
     <message>
         <source>Auto-panning</source>
@@ -5620,8 +5622,8 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation>Zoom tegningen automatisk, når den åbnes</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-family:&apos;-apple-system&apos;,&apos;BlinkMacSystemFont&apos;,&apos;Segoe UI&apos;,&apos;Noto Sans&apos;,&apos;Helvetica&apos;,&apos;Arial&apos;,&apos;sans-serif&apos;,&apos;Apple Color Emoji&apos;,&apos;Segoe UI Emoji&apos;; font-size:14px; color:#1f2328; background-color:#ffffff;&quot;&gt;Part library folder. The symbol library dxf files must be located in the subdirectories of this folder. The subfolder names will be displayed in the Library Browser.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-family:&apos;-apple-system&apos;,&apos;BlinkMacSystemFont&apos;,&apos;Segoe UI&apos;,&apos;Noto Sans&apos;,&apos;Helvetica&apos;,&apos;Arial&apos;,&apos;sans-serif&apos;,&apos;Apple Color Emoji&apos;,&apos;Segoe UI Emoji&apos;; font-size:14px; color:#1f2328; background-color:#ffffff;&quot;&gt;( Menu: Widgets &amp;gt; Dock Widgets &amp;gt; Library Browser)&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-family:&apos;-apple-system&apos;,&apos;BlinkMacSystemFont&apos;,&apos;Segoe UI&apos;,&apos;Noto Sans&apos;,&apos;Helvetica&apos;,&apos;Arial&apos;,&apos;sans-serif&apos;,&apos;Apple Color Emoji&apos;,&apos;Segoe UI Emoji&apos;; font-size:14px; color:#1f2328; background-color:#ffffff;&quot;&gt;Delsbibliotekmappe. Symbolbibliotek dxf-filer skal være placeret i undermapperne i denne mappe. Undermappenavne vil blive vist i Biblioteksbrowseren.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-family:&apos;-apple-system&apos;,&apos;BlinkMacSystemFont&apos;,&apos;Segoe UI&apos;,&apos;Noto Sans&apos;,&apos;Helvetica&apos;,&apos;Arial&apos;,&apos;sans-serif&apos;,&apos;Apple Color Emoji&apos;,&apos;Segoe UI Emoji&apos;; font-size:14px; color:#1f2328; background-color:#ffffff;&quot;&gt;( Menu: Widgets &amp;gt; Dock Widgets &amp;gt; Library Browser)&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=" font-family:'-apple-system','BlinkMacSystemFont','Segoe UI','Noto Sans','Helvetica','Arial','sans-serif','Apple Color Emoji','Segoe UI Emoji'; font-size:14px; color:#1f2328; background-color:#ffffff;"&gt;Part library folder. The symbol library dxf files must be located in the subdirectories of this folder. The subfolder names will be displayed in the Library Browser.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=" font-family:'-apple-system','BlinkMacSystemFont','Segoe UI','Noto Sans','Helvetica','Arial','sans-serif','Apple Color Emoji','Segoe UI Emoji'; font-size:14px; color:#1f2328; background-color:#ffffff;"&gt;( Menu: Widgets &amp;gt; Dock Widgets &amp;gt; Library Browser)&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=" font-family:'-apple-system','BlinkMacSystemFont','Segoe UI','Noto Sans','Helvetica','Arial','sans-serif','Apple Color Emoji','Segoe UI Emoji'; font-size:14px; color:#1f2328; background-color:#ffffff;"&gt;Delsbibliotekmappe. Symbolbibliotek dxf-filer skal være placeret i undermapperne i denne mappe. Undermappenavne vil blive vist i Biblioteksbrowseren.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=" font-family:'-apple-system','BlinkMacSystemFont','Segoe UI','Noto Sans','Helvetica','Arial','sans-serif','Apple Color Emoji','Segoe UI Emoji'; font-size:14px; color:#1f2328; background-color:#ffffff;"&gt;( Menu: Widgets &amp;gt; Dock Widgets &amp;gt; Library Browser)&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Open last opened files</source>
@@ -5692,8 +5694,8 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>MakerCAM as of November 2014 does not hide SVG content 
-that has been set invisibe (&quot;display: none&quot; or &quot;visibility: hidden&quot;).</source>
-        <translation>MakerCAM pr. november 2014 skjuler ikke SVG-indhold, der er sat usynligt (&quot;display: none&quot; eller &quot;visibility: hidden&quot;).</translation>
+that has been set invisibe ("display: none" or "visibility: hidden").</source>
+        <translation>MakerCAM pr. november 2014 skjuler ikke SVG-indhold, der er sat usynligt ("display: none" eller "visibility: hidden").</translation>
     </message>
     <message>
         <source>MakerCAM as of November 2014 cannot correctly deal with blocks,
@@ -5708,18 +5710,18 @@ the &lt;transform&gt; attribute or as &lt;path&gt; using elliptic arc segments.<
     </message>
     <message>
         <source>Exported images can be useful in SVG editors (Inkscape, etc), 
-but avoided in some CAM&apos;s.</source>
-        <translation>Eksporterede billeder kan være nyttige i SVG-editorer (Inkscape osv.), men undgås i nogle CAM&apos;er.</translation>
+but avoided in some CAM's.</source>
+        <translation>Eksporterede billeder kan være nyttige i SVG-editorer (Inkscape osv.), men undgås i nogle CAM'er.</translation>
     </message>
     <message>
-        <source>Many CAM&apos;s(MakerCAM, EleskCAM, LaserWeb) ignore dashed/doted line style, 
+        <source>Many CAM's(MakerCAM, EleskCAM, LaserWeb) ignore dashed/doted line style, 
 which can be useful in lasercut of plywood or for papercraft. </source>
-        <translation>Mange CAM&apos;er (MakerCAM, EleskCAM, LaserWeb) ignorerer stiplede/prikkede linjestilarter, hvilket kan være nyttigt ved laserskæring af krydsfiner eller til papirkunst.</translation>
+        <translation>Mange CAM'er (MakerCAM, EleskCAM, LaserWeb) ignorerer stiplede/prikkede linjestilarter, hvilket kan være nyttigt ved laserskæring af krydsfiner eller til papirkunst.</translation>
     </message>
     <message>
-        <source>Default width of elements can affect some CAM&apos;s/SVG Editors, 
+        <source>Default width of elements can affect some CAM's/SVG Editors, 
 but ignored by other</source>
-        <translation>Standard bredde af elementer kan påvirke nogle CAM&apos;er/SVG-editorer, men ignoreres af andre</translation>
+        <translation>Standard bredde af elementer kan påvirke nogle CAM'er/SVG-editorer, men ignoreres af andre</translation>
     </message>
     <message>
         <source>Length of line pattern related to zoom, 
@@ -7025,11 +7027,11 @@ The contents of a Construction Layer should not appear in printout.</source>
         <translation>Venstre</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+        <source>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Ubuntu&apos;; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Helvetica&apos;; font-size:9pt;&quot;&gt;Hint about left/right mouse button actions&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Ubuntu'; font-size:11pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;span style=" font-family:'Helvetica'; font-size:9pt;"&gt;Hint about left/right mouse button actions&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>Hint om handlinger med venstre/højre museknap</translation>
     </message>
 </context>
@@ -7077,28 +7079,28 @@ p, li { white-space: pre-wrap; }
         <translation>Samlet længde</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+        <source>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Number of selected entities&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Helvetica'; font-size:7pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;Number of selected entities&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Antal valgte enheder&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Helvetica'; font-size:7pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;Antal valgte enheder&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+        <source>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Total length of selected entities&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Helvetica'; font-size:7pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;Total length of selected entities&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Samlet længde af valgte enheder&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Helvetica'; font-size:7pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;Samlet længde af valgte enheder&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
@@ -7377,8 +7379,8 @@ p, li { white-space: pre-wrap; }
         <translation>Fjern lag</translation>
     </message>
     <message>
-        <source>Layer &quot;%1&quot; can never be removed.</source>
-        <translation>Lag &quot;%1&quot; kan aldrig fjernes.</translation>
+        <source>Layer "%1" can never be removed.</source>
+        <translation>Lag "%1" kan aldrig fjernes.</translation>
     </message>
     <message>
         <source>Layer Dialog</source>
@@ -7389,26 +7391,26 @@ p, li { white-space: pre-wrap; }
         <translation>Fjern blok</translation>
     </message>
     <message>
-        <source>Block &quot;%1&quot; and all its entities will be removed.</source>
-        <translation>Blok &quot;%1&quot; og dens enheder vil blive fjernet.</translation>
+        <source>Block "%1" and all its entities will be removed.</source>
+        <translation>Blok "%1" og dens enheder vil blive fjernet.</translation>
     </message>
     <message>
         <source>Layer Properties</source>
         <translation>Egenskaber for lag</translation>
     </message>
     <message>
-        <source>Layer with a name &quot;%1&quot; already exists. Please specify a different name.</source>
-        <translation>Et lag med navnet &quot;%1&quot; eksisterer allerede. Angiv venligst et andet navn.</translation>
+        <source>Layer with a name "%1" already exists. Please specify a different name.</source>
+        <translation>Et lag med navnet "%1" eksisterer allerede. Angiv venligst et andet navn.</translation>
     </message>
     <message>
-        <source>Layer &quot;%1&quot; and all entities on it will be removed.
+        <source>Layer "%1" and all entities on it will be removed.
 This action can NOT be undone.</source>
-        <translation>Lag &quot;%1&quot; og alle enheder på det vil blive fjernet.
+        <translation>Lag "%1" og alle enheder på det vil blive fjernet.
 Denne handling kan IKKE angres.</translation>
     </message>
     <message>
-        <source>Layer &quot;0&quot; can never be removed.</source>
-        <translation>Lag &quot;0&quot; kan aldrig fjernes.</translation>
+        <source>Layer "0" can never be removed.</source>
+        <translation>Lag "0" kan aldrig fjernes.</translation>
     </message>
     <message numerus="yes">
         <source>Remove %n layer(s)</source>
@@ -7426,8 +7428,8 @@ Denne handling kan IKKE angres.</translation>
         <translation>Advarsel: Denne handling kan IKKE angres!</translation>
     </message>
     <message>
-        <source>Warning: layer &quot;0&quot; can never be removed.</source>
-        <translation>Advarsel: Laget &quot;0&quot; kan aldrig fjernes.</translation>
+        <source>Warning: layer "0" can never be removed.</source>
+        <translation>Advarsel: Laget "0" kan aldrig fjernes.</translation>
     </message>
     <message>
         <source>Layers for removal:</source>
@@ -7523,12 +7525,12 @@ Vælg venligst et andet navn.</translation>
         <translation>Dupliker udvalg</translation>
     </message>
     <message>
-        <source>Replace &quot;By Layer&quot; value to source layers values?
-If Yes - entities with &quot;By Layer&quot; pens will look on new layer exactly as on previous layers and &quot;By Layer&quot; value will be replaced by resolved pens.
-If No - &quot;By Layer&quot; values remains and so pen of target layer will define pen for such entities.</source>
-        <translation type="vanished">Er du sikker på, at du vil erstatte værdien &quot;By Layer&quot; med værdierne fra kildelagene?
-Hvis Ja - vil enheder med &quot;By Layer&quot; penne se ud på det nye lag præcis som på de tidligere lag, og værdien &quot;By Layer&quot; vil blive erstattet af de afklarede penne.
-Hvis Nej - forbliver &quot;By Layer&quot; værdierne, og mållagets pen vil definere pennen for sådanne enheder.</translation>
+        <source>Replace "By Layer" value to source layers values?
+If Yes - entities with "By Layer" pens will look on new layer exactly as on previous layers and "By Layer" value will be replaced by resolved pens.
+If No - "By Layer" values remains and so pen of target layer will define pen for such entities.</source>
+        <translation type="vanished">Er du sikker på, at du vil erstatte værdien "By Layer" med værdierne fra kildelagene?
+Hvis Ja - vil enheder med "By Layer" penne se ud på det nye lag præcis som på de tidligere lag, og værdien "By Layer" vil blive erstattet af de afklarede penne.
+Hvis Nej - forbliver "By Layer" værdierne, og mållagets pen vil definere pennen for sådanne enheder.</translation>
     </message>
     <message>
         <source>Layer DialogEx</source>
@@ -7557,7 +7559,7 @@ Angiv venligst en anden værdi.</translation>
         <translation>Pennen fjernes fra paletten; tegneenheder påvirkes ikke.</translation>
     </message>
     <message>
-        <source>Are you sure you&apos;d like to proceed?</source>
+        <source>Are you sure you'd like to proceed?</source>
         <translation>Er du sikker på, at du vil fortsætte?</translation>
     </message>
     <message>
@@ -7623,16 +7625,16 @@ Clear filtering mask and repeat.</source>
 Fjern filtermasken og gentag.</translation>
     </message>
     <message>
-        <source>Replace &quot;By Layer&quot; value to source layers values?
+        <source>Replace "By Layer" value to source layers values?
 
-If Yes - entities with &quot;By Layer&quot; pens will look on new layer exactly as on previous layers and &quot;By Layer&quot; value will be replaced by resolved pens.
+If Yes - entities with "By Layer" pens will look on new layer exactly as on previous layers and "By Layer" value will be replaced by resolved pens.
 
-If No - &quot;By Layer&quot; values remains and so pen of target layer will define pen for such entities.</source>
-        <translation>Erstat &quot;Efter lag&quot; værdi med kilde-lagenes værdier?
+If No - "By Layer" values remains and so pen of target layer will define pen for such entities.</source>
+        <translation>Erstat "Efter lag" værdi med kilde-lagenes værdier?
 
-Hvis Ja - objekter med &quot;Efter lag&quot;-penne vil se ud på det nye lag præcis som på de tidligere lag, og &quot;Efter lag&quot;-værdien vil blive erstattet med de faktiske penne.
+Hvis Ja - objekter med "Efter lag"-penne vil se ud på det nye lag præcis som på de tidligere lag, og "Efter lag"-værdien vil blive erstattet med de faktiske penne.
 
-Hvis Nej - &quot;Efter lag&quot;-værdierne bevares, og pennen for mållaget vil definere pennen for disse objekter.</translation>
+Hvis Nej - "Efter lag"-værdierne bevares, og pennen for mållaget vil definere pennen for disse objekter.</translation>
     </message>
 </context>
 <context>
@@ -7892,7 +7894,7 @@ Vil du overskrive den?</translation>
         <translation>Ukendt fejl ved åbning af dwg-fil</translation>
     </message>
     <message>
-        <source>can&apos;t open this dwg file</source>
+        <source>can't open this dwg file</source>
         <translation>Kan ikke åbne denne dwg-fil</translation>
     </message>
     <message>
@@ -10052,8 +10054,8 @@ Vil du overskrive den?</translation>
         <translation>-o some.pdf *.dxf</translation>
     </message>
     <message>
-        <source>-- print all dxf files to &apos;some.pdf&apos; file.</source>
-        <translation>-- print alle dxf-filer til &apos;some.pdf&apos;-fil.</translation>
+        <source>-- print all dxf files to 'some.pdf' file.</source>
+        <translation>-- print alle dxf-filer til 'some.pdf'-fil.</translation>
     </message>
     <message>
         <source>Auto fit and center drawing to page.</source>
@@ -10127,8 +10129,8 @@ Vil du overskrive den?</translation>
         <translation>Kombiner alle lag</translation>
     </message>
     <message>
-        <source>File &quot;%1&quot; already exists. Do you want to replace it?</source>
-        <translation>Filen &quot;%1&quot; eksisterer allerede. Vil du erstatte den?</translation>
+        <source>File "%1" already exists. Do you want to replace it?</source>
+        <translation>Filen "%1" eksisterer allerede. Vil du erstatte den?</translation>
     </message>
     <message>
         <source>/CustomColor%1</source>
@@ -10788,8 +10790,8 @@ Vil du overskrive den?</translation>
         <translation>Indtast vinkel:</translation>
     </message>
     <message>
-        <source></source>
-        <translation></translation>
+        <source />
+        <translation />
     </message>
     <message>
         <source>Enter factor:</source>
@@ -11278,24 +11280,24 @@ Denne blok kan ikke indsættes.</translation>
         <translation>Vælg centrum af tangentcirklen</translation>
     </message>
     <message>
-        <source>Invalid expression &apos;%1&apos; for radius</source>
-        <translation>Ugyldigt udtryk &apos;%1&apos; for radius</translation>
+        <source>Invalid expression '%1' for radius</source>
+        <translation>Ugyldigt udtryk '%1' for radius</translation>
     </message>
     <message>
-        <source>Invalid negative radius &apos;%1&apos;</source>
-        <translation>Ugyldig negativ radius &apos;%1&apos;</translation>
+        <source>Invalid negative radius '%1'</source>
+        <translation>Ugyldig negativ radius '%1'</translation>
     </message>
     <message>
-        <source>Invalid zero radius &apos;%1&apos;</source>
-        <translation>Ugyldig nul radius &apos;%1&apos;</translation>
+        <source>Invalid zero radius '%1'</source>
+        <translation>Ugyldig nul radius '%1'</translation>
     </message>
     <message>
-        <source>No tangent circle possible for radius &apos;%1&apos;</source>
-        <translation>Ingen tangentcirkel mulig for radius &apos;%1&apos;</translation>
+        <source>No tangent circle possible for radius '%1'</source>
+        <translation>Ingen tangentcirkel mulig for radius '%1'</translation>
     </message>
     <message>
-        <source>No common tangential circle for radius &apos;%1&apos;</source>
-        <translation>Ingen fælles tangentcirkel for radius &apos;%1&apos;</translation>
+        <source>No common tangential circle for radius '%1'</source>
+        <translation>Ingen fælles tangentcirkel for radius '%1'</translation>
     </message>
 </context>
 <context>
@@ -11565,8 +11567,8 @@ Denne blok kan ikke indsættes.</translation>
         <translation>Indtast vinkel:</translation>
     </message>
     <message>
-        <source></source>
-        <translation></translation>
+        <source />
+        <translation />
     </message>
     <message>
         <source>Enter factor:</source>
@@ -11781,8 +11783,8 @@ Denne blok kan ikke indsættes.</translation>
 <context>
     <name>RS_ActionDrawLinePolygon</name>
     <message>
-        <source></source>
-        <translation></translation>
+        <source />
+        <translation />
     </message>
 </context>
 <context>
@@ -12260,16 +12262,16 @@ Denne blok kan ikke indsættes.</translation>
         <translation>Indtast vinkel:</translation>
     </message>
     <message>
-        <source></source>
-        <translation></translation>
+        <source />
+        <translation />
     </message>
     <message>
         <source>Enter factor:</source>
         <translation>Indtast faktor:</translation>
     </message>
     <message>
-        <source>Cannot open file &apos;%1&apos;</source>
-        <translation>Kan ikke åbne fil &apos;%1&apos;</translation>
+        <source>Cannot open file '%1'</source>
+        <translation>Kan ikke åbne fil '%1'</translation>
     </message>
 </context>
 <context>
@@ -12709,7 +12711,7 @@ Denne blok kan ikke indsættes.</translation>
         <translation>Angiv polylinje til at tilføje knuder</translation>
     </message>
     <message>
-        <source>Specify adding node&apos;s point</source>
+        <source>Specify adding node's point</source>
         <translation>Angiv tilføjelsesknudens punkt</translation>
     </message>
 </context>
@@ -12779,7 +12781,7 @@ Denne blok kan ikke indsættes.</translation>
         <translation>Angiv polylinje til at slette knude</translation>
     </message>
     <message>
-        <source>Specify deleting node&apos;s point</source>
+        <source>Specify deleting node's point</source>
         <translation>Angiv slettende knudes punkt</translation>
     </message>
     <message>
@@ -12942,8 +12944,8 @@ Denne blok kan ikke indsættes.</translation>
         <translation>indtast forskydning fra kommandolinjen for at forskydning udskrivning</translation>
     </message>
     <message>
-        <source>Printout offset ignores relative zero. Ignoring &apos;@&apos;</source>
-        <translation>Udskrivningsforskydning ignorerer relativ nul. Ignorerer &apos;@&apos;</translation>
+        <source>Printout offset ignores relative zero. Ignoring '@'</source>
+        <translation>Udskrivningsforskydning ignorerer relativ nul. Ignorerer '@'</translation>
     </message>
     <message>
         <source>Printout in Black/White</source>

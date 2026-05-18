@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
+<?xml version='1.0' encoding='utf-8'?>
 <TS version="2.1" language="ta">
 <context>
     <name>ColorWizard</name>
@@ -1141,7 +1140,7 @@ or [%2]</source>
         <translation>நகல்</translation>
     </message>
     <message>
-        <source>Update Current Pen by Active Layer&apos; Pen</source>
+        <source>Update Current Pen by Active Layer' Pen</source>
         <translation>செயலில் உள்ள அடுக்கின் பென்னால் தற்போதைய பென்னை புதுப்பி</translation>
     </message>
 </context>
@@ -1155,8 +1154,8 @@ or [%2]</source>
 <context>
     <name>LC_ActionLayersExport</name>
     <message>
-        <source>Saving layer &quot;%1&quot; as &quot;%2&quot; </source>
-        <translation>அடுக்கு &quot;%1&quot; ஐ &quot;%2&quot; ஆக சேமிக்கிறது </translation>
+        <source>Saving layer "%1" as "%2" </source>
+        <translation>அடுக்கு "%1" ஐ "%2" ஆக சேமிக்கிறது </translation>
     </message>
 </context>
 <context>
@@ -1670,7 +1669,7 @@ or [%2]</source>
         <translation>சாதாரண அடுக்காக மாற்று</translation>
     </message>
     <message>
-        <source>&amp;Select Layer&apos;s Entities</source>
+        <source>&amp;Select Layer's Entities</source>
         <translation>&amp;அடுக்கின் உருப்படிகளைத் தேர்ந்தெடு</translation>
     </message>
     <message>
@@ -2162,11 +2161,11 @@ or [%2]</source>
         <translation>தற்போதைக்கு</translation>
     </message>
     <message>
-        <source>Update Current Pen by Active Layer&apos; Pen</source>
+        <source>Update Current Pen by Active Layer' Pen</source>
         <translation>செயலில் உள்ள அடுக்கின் பென் மூலம் தற்போதைய பென்னை புதுப்பி</translation>
     </message>
     <message>
-        <source>Fill Pen Editor from Active Layer&apos;s Pen</source>
+        <source>Fill Pen Editor from Active Layer's Pen</source>
         <translation>செயலில் உள்ள அடுக்கின் பென் மூலம் பென் எடிட்டரை நிரப்பு</translation>
     </message>
     <message>
@@ -2231,14 +2230,14 @@ or [%2]</source>
     </message>
     <message>
         <source>Location of pens file is changed, please restart the application so new pens file will be used.
-Please note that if you&apos;ll save pen via editor without restart, current pens from palette will be saved in the new file and therefore existing content of it will be overridden.</source>
+Please note that if you'll save pen via editor without restart, current pens from palette will be saved in the new file and therefore existing content of it will be overridden.</source>
         <translation type="vanished">பென் கோப்பின் இருப்பிடம் மாற்றப்பட்டுள்ளது, புதிய பென் கோப்பைப் பயன்படுத்த பயன்பாட்டை மறுதொடக்கம் செய்யவும்.
 குறிப்பு: எடிட்டர் வழியாக பென்னை மறுதொடக்கம் இல்லாமல் சேமித்தால், பாலெட்டிலிருந்து தற்போதைய பென்கள் புதிய கோப்பில் சேமிக்கப்படும் மற்றும் அதன் இருக்கும் உள்ளடக்கம் மேலெழுதப்படும்.</translation>
     </message>
     <message>
         <source>Location of pens file is changed, please restart the application so new pens file will be used.
 
-Please note that if you&apos;ll save pen via editor without restart, current pens from palette will be saved in the new file and therefore existing content of it will be overridden.</source>
+Please note that if you'll save pen via editor without restart, current pens from palette will be saved in the new file and therefore existing content of it will be overridden.</source>
         <translation>பேனா கோப்பின் இருப்பிடம் மாற்றப்பட்டது, புதிய பேனா கோப்பைப் பயன்படுத்த பயன்பாட்டை மறுதொடக்கம் செய்யவும்.
 
 மறுதொடக்கம் இல்லாமல் எடிட்டர் மூலம் பேனாவைச் சேமித்தால், தற்போதைய பேனாக்கள் புதிய கோப்பில் சேமிக்கப்படும், இதனால் ஏற்கனவே உள்ள உள்ளடக்கம் மேலெழுதப்படும் என்பதை நினைவில் கொள்ளவும்.</translation>
@@ -2751,12 +2750,12 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <translation>வலதை நீக்கு</translation>
     </message>
     <message>
-        <source>remove 0&apos;</source>
-        <translation>0&apos; ஐ நீக்கு</translation>
+        <source>remove 0'</source>
+        <translation>0' ஐ நீக்கு</translation>
     </message>
     <message>
-        <source>remove 0&quot;</source>
-        <translation>0&quot; ஐ நீக்கு</translation>
+        <source>remove 0"</source>
+        <translation>0" ஐ நீக்கு</translation>
     </message>
 </context>
 <context>
@@ -2942,8 +2941,8 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <translation>கட்டளை வரி</translation>
     </message>
     <message>
-        <source>Block &apos;%1&apos;</source>
-        <translation>தொகுதி &apos;%1&apos;</translation>
+        <source>Block '%1'</source>
+        <translation>தொகுதி '%1'</translation>
     </message>
     <message>
         <source>Cannot open the file
@@ -3080,8 +3079,8 @@ Please check its existence and permissions.</source>
 அதன் இருப்பு மற்றும் அனுமதிகளை சரிபார்க்கவும்.</translation>
     </message>
     <message>
-        <source>File &apos;%1&apos; does not exist. Opening aborted</source>
-        <translation>கோப்பு &apos;%1&apos; இல்லை. திறப்பு நிறுத்தப்பட்டது</translation>
+        <source>File '%1' does not exist. Opening aborted</source>
+        <translation>கோப்பு '%1' இல்லை. திறப்பு நிறுத்தப்பட்டது</translation>
     </message>
     <message>
         <source>Categories</source>
@@ -3335,7 +3334,7 @@ Please check its existence and permissions.</source>
         <translation>&amp;விக்கி</translation>
     </message>
     <message>
-        <source>User&apos;s &amp;Manual</source>
+        <source>User's &amp;Manual</source>
         <translation>பயனரின் &amp;கையேடு</translation>
     </message>
     <message>
@@ -3414,16 +3413,16 @@ Please check its existence and permissions.</source>
         <translation>தற்போதைய அடுக்கு</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+        <source>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Name of Current Active Layer&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Helvetica'; font-size:7pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;Name of Current Active Layer&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;தற்போதைய செயலில் உள்ள அடுக்கின் பெயர்&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Helvetica'; font-size:7pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;தற்போதைய செயலில் உள்ள அடுக்கின் பெயர்&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
@@ -3441,8 +3440,8 @@ p, li { white-space: pre-wrap; }
         <translation>தொகுதியை மறுபெயரிடுதல்</translation>
     </message>
     <message>
-        <source>Could not name block. A block named &quot;%1&quot; already exists.</source>
-        <translation>பிளாக்கிற்குப் பெயர் வைக்க முடியவில்லை. &quot;%1&quot; என்ற பெயரில் ஏற்கனவே ஒரு பிளாக் உள்ளது.</translation>
+        <source>Could not name block. A block named "%1" already exists.</source>
+        <translation>பிளாக்கிற்குப் பெயர் வைக்க முடியவில்லை. "%1" என்ற பெயரில் ஏற்கனவே ஒரு பிளாக் உள்ளது.</translation>
     </message>
 </context>
 <context>
@@ -4035,12 +4034,12 @@ This recursively modifies all entities of the Block itself.</source>
         <translation>கட்டளை மொழி:</translation>
     </message>
     <message>
-        <source>&lt;font size=&quot;+1&quot;&gt;&lt;b&gt;Welcome to LibreCAD&lt;/b&gt;
+        <source>&lt;font size="+1"&gt;&lt;b&gt;Welcome to LibreCAD&lt;/b&gt;
 &lt;/font&gt;
 &lt;br&gt;
 Please choose the unit you want to use for new drawings and your preferred language.&lt;br&gt;
 (You can changes these settings later.)</source>
-        <translation>&lt;font size=&quot;+1&quot;&gt;&lt;b&gt;LibreCAD-க்கு வருக&lt;/b&gt;
+        <translation>&lt;font size="+1"&gt;&lt;b&gt;LibreCAD-க்கு வருக&lt;/b&gt;
 &lt;/font&gt;
 &lt;br&gt;
 புதிய வரைபடங்களுக்கு நீங்கள் பயன்படுத்த விரும்பும் அலகு மற்றும் நீங்கள் விரும்பும் மொழியைத் தேர்ந்தெடுக்கவும்.&lt;br&gt;
@@ -4940,7 +4939,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation>கிரேடியன்கள்</translation>
     </message>
     <message>
-        <source>Surveyor&apos;s units</source>
+        <source>Surveyor's units</source>
         <translation>நில அளவையாளர் அலகுகள்</translation>
     </message>
     <message>
@@ -4948,7 +4947,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation>விருப்பங்கள்</translation>
     </message>
     <message>
-        <source>For the length formats &apos;Engineering&apos; and &apos;Architectural&apos;, the unit must be set to Inch.</source>
+        <source>For the length formats 'Engineering' and 'Architectural', the unit must be set to Inch.</source>
         <translation>‘பொறியியல்’ மற்றும் ‘கட்டிடக்கலை’ நீள வடிவங்களுக்கு, அலகு அங்குலமாக அமைக்கப்பட வேண்டும்.</translation>
     </message>
     <message>
@@ -5080,7 +5079,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation>அடையாள அளவு:</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dimension Tick size. Set it to 0 will disable the dimension tick. Dimension arrow won&apos;t be drawn when dimension tick is enabled.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dimension Tick size. Set it to 0 will disable the dimension tick. Dimension arrow won't be drawn when dimension tick is enabled.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;அளவீட்டு அடையாளத்தின் அளவு. இதை 0 ஆக அமைத்தால், அளவீட்டு அடையாளம் முடக்கப்படும். அளவீட்டு அடையாளம் இயக்கப்பட்டிருந்தால், அளவீட்டு அம்பு வரையப்படாது.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
@@ -5104,12 +5103,12 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation>உரை பாணி:</translation>
     </message>
     <message>
-        <source>&apos;.&apos; (Period)</source>
-        <translation>&apos;.&apos;(புள்ளி)</translation>
+        <source>'.' (Period)</source>
+        <translation>'.'(புள்ளி)</translation>
     </message>
     <message>
-        <source>&apos;,&apos; (Comma)</source>
-        <translation>&apos;,&apos;(கமா)</translation>
+        <source>',' (Comma)</source>
+        <translation>','(கமா)</translation>
     </message>
     <message>
         <source>Decimal separator:</source>
@@ -5152,8 +5151,8 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation>அளவீட்டு கோட்டின் மீது நீளத்தை பெரிதாக்கு</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dimension arrow size. &lt;a name=&quot;result_box&quot;/&gt;without effect when tick size &lt;a name=&quot;result_box&quot;/&gt;is other than 0&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;அளவீட்டு அம்புக்குறியின் அளவு. &lt;a name=&quot;result_box&quot;/&gt; குறி அளவு &lt;a name=&quot;result_box&quot;/&gt; 0 ஆக இல்லாதபோது எந்த விளைவையும் ஏற்படுத்தாது&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dimension arrow size. &lt;a name="result_box"/&gt;without effect when tick size &lt;a name="result_box"/&gt;is other than 0&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;அளவீட்டு அம்புக்குறியின் அளவு. &lt;a name="result_box"/&gt; குறி அளவு &lt;a name="result_box"/&gt; 0 ஆக இல்லாதபோது எந்த விளைவையும் ஏற்படுத்தாது&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Width:</source>
@@ -5184,8 +5183,8 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation>நேரியல் துல்லியம்:</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Text alignment &lt;a name=&quot;result_box&quot;/&gt;relative to the dimension line.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;உரை சீரமைப்பு, பரிமாணக் கோட்டிற்கு &lt;a name=&quot;result_box&quot;/&gt; தொடர்புடையது.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Text alignment &lt;a name="result_box"/&gt;relative to the dimension line.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;உரை சீரமைப்பு, பரிமாணக் கோட்டிற்கு &lt;a name="result_box"/&gt; தொடர்புடையது.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Aligned</source>
@@ -5288,8 +5287,8 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation>கட்டிடக்கலை (மெட்ரிக்)</translation>
     </message>
     <message>
-        <source>For the length format &apos;Architectural (metric)&apos;, the unit must be set to Meter.</source>
-        <translation>&apos;ஆர்கிடெக்சுரல் (மெட்ரிக்)&apos; நீள வடிவத்திற்கு, அலகு மீட்டராக அமைக்கப்பட வேண்டும்.</translation>
+        <source>For the length format 'Architectural (metric)', the unit must be set to Meter.</source>
+        <translation>'ஆர்கிடெக்சுரல் (மெட்ரிக்)' நீள வடிவத்திற்கு, அலகு மீட்டராக அமைக்கப்பட வேண்டும்.</translation>
     </message>
     <message>
         <source>Screen %</source>
@@ -5535,7 +5534,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation>முன்னோட்டப் பொருட்களின் எண்ணிக்கை:</translation>
     </message>
     <message>
-        <source>Don&apos;t use native OS file open dialog</source>
+        <source>Don't use native OS file open dialog</source>
         <translation>இயல்புநிலை இயக்க முறைமை கோப்பு திறப்பு உரையாடல் பயன்படுத்த வேண்டாம்</translation>
     </message>
     <message>
@@ -5611,8 +5610,8 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation>வரைபடத்தைத் திறக்கும்போது தானாகவே பெரிதாக்கு</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-family:&apos;-apple-system&apos;,&apos;BlinkMacSystemFont&apos;,&apos;Segoe UI&apos;,&apos;Noto Sans&apos;,&apos;Helvetica&apos;,&apos;Arial&apos;,&apos;sans-serif&apos;,&apos;Apple Color Emoji&apos;,&apos;Segoe UI Emoji&apos;; font-size:14px; color:#1f2328; background-color:#ffffff;&quot;&gt;Part library folder. The symbol library dxf files must be located in the subdirectories of this folder. The subfolder names will be displayed in the Library Browser.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-family:&apos;-apple-system&apos;,&apos;BlinkMacSystemFont&apos;,&apos;Segoe UI&apos;,&apos;Noto Sans&apos;,&apos;Helvetica&apos;,&apos;Arial&apos;,&apos;sans-serif&apos;,&apos;Apple Color Emoji&apos;,&apos;Segoe UI Emoji&apos;; font-size:14px; color:#1f2328; background-color:#ffffff;&quot;&gt;( Menu: Widgets &amp;gt; Dock Widgets &amp;gt; Library Browser)&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-family:&apos;-apple-system&apos;,&apos;BlinkMacSystemFont&apos;,&apos;Segoe UI&apos;,&apos;Noto Sans&apos;,&apos;Helvetica&apos;,&apos;Arial&apos;,&apos;sans-serif&apos;,&apos;Apple Color Emoji&apos;,&apos;Segoe UI Emoji&apos;; font-size:14px; color:#1f2328; background-color:#ffffff;&quot;&gt;பகுதி நூலக கோப்புறை. குறியீடு நூலக dxf கோப்புகள் இந்த கோப்புறையின் துணை கோப்புறைகளில் இருக்க வேண்டும். துணை கோப்புறைகளின் பெயர்கள் நூலக உலாவியில் காட்டப்படும்.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-family:&apos;-apple-system&apos;,&apos;BlinkMacSystemFont&apos;,&apos;Segoe UI&apos;,&apos;Noto Sans&apos;,&apos;Helvetica&apos;,&apos;Arial&apos;,&apos;sans-serif&apos;,&apos;Apple Color Emoji&apos;,&apos;Segoe UI Emoji&apos;; font-size:14px; color:#1f2328; background-color:#ffffff;&quot;&gt;( மெனு: விட்ஜெட்கள் &gt; டாக் விட்ஜெட்கள் &gt; நூலக உலாவி)&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=" font-family:'-apple-system','BlinkMacSystemFont','Segoe UI','Noto Sans','Helvetica','Arial','sans-serif','Apple Color Emoji','Segoe UI Emoji'; font-size:14px; color:#1f2328; background-color:#ffffff;"&gt;Part library folder. The symbol library dxf files must be located in the subdirectories of this folder. The subfolder names will be displayed in the Library Browser.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=" font-family:'-apple-system','BlinkMacSystemFont','Segoe UI','Noto Sans','Helvetica','Arial','sans-serif','Apple Color Emoji','Segoe UI Emoji'; font-size:14px; color:#1f2328; background-color:#ffffff;"&gt;( Menu: Widgets &amp;gt; Dock Widgets &amp;gt; Library Browser)&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=" font-family:'-apple-system','BlinkMacSystemFont','Segoe UI','Noto Sans','Helvetica','Arial','sans-serif','Apple Color Emoji','Segoe UI Emoji'; font-size:14px; color:#1f2328; background-color:#ffffff;"&gt;பகுதி நூலக கோப்புறை. குறியீடு நூலக dxf கோப்புகள் இந்த கோப்புறையின் துணை கோப்புறைகளில் இருக்க வேண்டும். துணை கோப்புறைகளின் பெயர்கள் நூலக உலாவியில் காட்டப்படும்.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=" font-family:'-apple-system','BlinkMacSystemFont','Segoe UI','Noto Sans','Helvetica','Arial','sans-serif','Apple Color Emoji','Segoe UI Emoji'; font-size:14px; color:#1f2328; background-color:#ffffff;"&gt;( மெனு: விட்ஜெட்கள் &gt; டாக் விட்ஜெட்கள் &gt; நூலக உலாவி)&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Open last opened files</source>
@@ -5683,8 +5682,8 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>MakerCAM as of November 2014 does not hide SVG content 
-that has been set invisibe (&quot;display: none&quot; or &quot;visibility: hidden&quot;).</source>
-        <translation>நவம்பர் 2014 நிலவரப்படி, MakerCAM மறைக்கப்பட்ட SVG உள்ளடக்கத்தை மறைக்காது (&quot;display: none&quot; அல்லது &quot;visibility: hidden&quot;).</translation>
+that has been set invisibe ("display: none" or "visibility: hidden").</source>
+        <translation>நவம்பர் 2014 நிலவரப்படி, MakerCAM மறைக்கப்பட்ட SVG உள்ளடக்கத்தை மறைக்காது ("display: none" அல்லது "visibility: hidden").</translation>
     </message>
     <message>
         <source>MakerCAM as of November 2014 cannot correctly deal with blocks,
@@ -5699,16 +5698,16 @@ the &lt;transform&gt; attribute or as &lt;path&gt; using elliptic arc segments.<
     </message>
     <message>
         <source>Exported images can be useful in SVG editors (Inkscape, etc), 
-but avoided in some CAM&apos;s.</source>
+but avoided in some CAM's.</source>
         <translation>ஏற்றுமதி செய்யப்பட்ட படங்கள் SVG எடிட்டர்களில் (இங்க்ஸ்கேப் போன்றவை) பயனுள்ளதாக இருக்கும், ஆனால் சில CAM-களில் தவிர்க்கப்படலாம்.</translation>
     </message>
     <message>
-        <source>Many CAM&apos;s(MakerCAM, EleskCAM, LaserWeb) ignore dashed/doted line style, 
+        <source>Many CAM's(MakerCAM, EleskCAM, LaserWeb) ignore dashed/doted line style, 
 which can be useful in lasercut of plywood or for papercraft. </source>
         <translation>பல CAM-கள் (மேக்கர்கேம், எலெஸ்கேம், லேசர்வெப்) கோடுகள்/புள்ளிகள் கொண்ட கோட்டு பாணியை புறக்கணிக்கின்றன, இது மரப்பலகை லேசர் வெட்டு அல்லது காகித கைவினைக்கு பயனுள்ளதாக இருக்கும்.</translation>
     </message>
     <message>
-        <source>Default width of elements can affect some CAM&apos;s/SVG Editors, 
+        <source>Default width of elements can affect some CAM's/SVG Editors, 
 but ignored by other</source>
         <translation>உறுப்புகளின் இயல்புநிலை அகலம் சில CAMகள்/SVG எடிட்டர்களை பாதிக்கலாம், ஆனால் மற்றவற்றால் புறக்கணிக்கப்படுகிறது.</translation>
     </message>
@@ -7013,11 +7012,11 @@ The contents of a Construction Layer should not appear in printout.</source>
         <translation>இடது</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+        <source>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Ubuntu&apos;; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Helvetica&apos;; font-size:9pt;&quot;&gt;Hint about left/right mouse button actions&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Ubuntu'; font-size:11pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;span style=" font-family:'Helvetica'; font-size:9pt;"&gt;Hint about left/right mouse button actions&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>இடது/வலது சுட்டி பொத்தான் செயல்பாடுகள் பற்றிய குறிப்பு</translation>
     </message>
 </context>
@@ -7065,19 +7064,19 @@ p, li { white-space: pre-wrap; }
         <translation>மொத்த நீளம்</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+        <source>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Number of selected entities&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Helvetica'; font-size:7pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;Number of selected entities&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>தேர்ந்தெடுக்கப்பட்ட பொருட்களின் எண்ணிக்கை</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+        <source>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Total length of selected entities&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Helvetica'; font-size:7pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;Total length of selected entities&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>தேர்ந்தெடுக்கப்பட்ட பொருட்களின் மொத்த நீளம்</translation>
     </message>
 </context>
@@ -7249,8 +7248,8 @@ p, li { white-space: pre-wrap; }
         <translation>அடுக்கு நீக்கு</translation>
     </message>
     <message>
-        <source>Layer &quot;%1&quot; can never be removed.</source>
-        <translation>&quot;%1&quot; என்ற அடுக்கு நீக்கப்பட முடியாது.</translation>
+        <source>Layer "%1" can never be removed.</source>
+        <translation>"%1" என்ற அடுக்கு நீக்கப்பட முடியாது.</translation>
     </message>
     <message>
         <source>Layer Dialog</source>
@@ -7261,26 +7260,26 @@ p, li { white-space: pre-wrap; }
         <translation>தொகுதி நீக்கு</translation>
     </message>
     <message>
-        <source>Block &quot;%1&quot; and all its entities will be removed.</source>
-        <translation>&quot;%1&quot; மற்றும் அதிலுள்ள அனைத்து கூறுகளும் நீக்கப்படும்.</translation>
+        <source>Block "%1" and all its entities will be removed.</source>
+        <translation>"%1" மற்றும் அதிலுள்ள அனைத்து கூறுகளும் நீக்கப்படும்.</translation>
     </message>
     <message>
         <source>Layer Properties</source>
         <translation>அடுக்கு பண்புகள்</translation>
     </message>
     <message>
-        <source>Layer with a name &quot;%1&quot; already exists. Please specify a different name.</source>
-        <translation>&quot;%1&quot; என்ற பெயரில் ஒரு அடுக்கு ஏற்கனவே உள்ளது. வேறு பெயரைத் தேர்ந்தெடுக்கவும்.</translation>
+        <source>Layer with a name "%1" already exists. Please specify a different name.</source>
+        <translation>"%1" என்ற பெயரில் ஒரு அடுக்கு ஏற்கனவே உள்ளது. வேறு பெயரைத் தேர்ந்தெடுக்கவும்.</translation>
     </message>
     <message>
-        <source>Layer &quot;%1&quot; and all entities on it will be removed.
+        <source>Layer "%1" and all entities on it will be removed.
 This action can NOT be undone.</source>
-        <translation>அடுக்கு &quot;%1&quot; மற்றும் அதில் உள்ள அனைத்து கூறுகளும் நீக்கப்படும்.
+        <translation>அடுக்கு "%1" மற்றும் அதில் உள்ள அனைத்து கூறுகளும் நீக்கப்படும்.
 இந்த செயலைத் திரும்பப் பெற முடியாது.</translation>
     </message>
     <message>
-        <source>Layer &quot;0&quot; can never be removed.</source>
-        <translation>அடுக்கு &quot;0&quot; ஐ நீக்க முடியாது.</translation>
+        <source>Layer "0" can never be removed.</source>
+        <translation>அடுக்கு "0" ஐ நீக்க முடியாது.</translation>
     </message>
     <message numerus="yes">
         <source>Remove %n layer(s)</source>
@@ -7298,8 +7297,8 @@ This action can NOT be undone.</source>
         <translation>எச்சரிக்கை: இந்த செயலைத் திரும்பப் பெற முடியாது!</translation>
     </message>
     <message>
-        <source>Warning: layer &quot;0&quot; can never be removed.</source>
-        <translation>எச்சரிக்கை: அடுக்கு &quot;0&quot; ஐ நீக்க முடியாது.</translation>
+        <source>Warning: layer "0" can never be removed.</source>
+        <translation>எச்சரிக்கை: அடுக்கு "0" ஐ நீக்க முடியாது.</translation>
     </message>
     <message>
         <source>Layers for removal:</source>
@@ -7328,7 +7327,7 @@ This action can NOT be undone.</source>
         <source>Attempt to create layer with duplicating name. Duplicated layer name is 
 [%1].
 Please specify a different name.</source>
-        <translation>ஒரே பெயரில் மற்றொரு அடுக்கை உருவாக்க முயற்சி.</translation>
+        <translation>ஒரே பெயரில் மற்றொரு அடுக்கை உருவாக்க முயற்சி. நகல் அடுக்கின் பெயர் [%1]. வேறு பெயரைத் தெரிவு செய்யவும்.</translation>
     </message>
     <message>
         <source>Error</source>
@@ -7388,12 +7387,12 @@ Please specify a different name.</source>
         <translation>தேர்ந்தெடுத்ததை நகல் எடு</translation>
     </message>
     <message>
-        <source>Replace &quot;By Layer&quot; value to source layers values?
-If Yes - entities with &quot;By Layer&quot; pens will look on new layer exactly as on previous layers and &quot;By Layer&quot; value will be replaced by resolved pens.
-If No - &quot;By Layer&quot; values remains and so pen of target layer will define pen for such entities.</source>
-        <translation type="vanished">&quot;அடுக்கு மூலம்&quot; மதிப்பை மூல அடுக்குகளின் மதிப்புகளாக மாற்ற வேண்டுமா?
-ஆம் எனில் - &quot;அடுக்கு மூலம்&quot; பேனாக்களைக் கொண்ட கூறுகள் புதிய அடுக்கில் முந்தைய அடுக்குகளில் இருந்ததைப் போலவே தோன்றும், மேலும் &quot;அடுக்கு மூலம்&quot; மதிப்பு தீர்க்கப்பட்ட பேனாக்களால் மாற்றப்படும்.
-இல்லை எனில் - &quot;அடுக்கு மூலம்&quot; மதிப்புகள் அப்படியே இருக்கும், எனவே இலக்கு அடுக்கின் பேனா, அத்தகைய கூறுகளுக்கான பேனாவை வரையறுக்கும்.</translation>
+        <source>Replace "By Layer" value to source layers values?
+If Yes - entities with "By Layer" pens will look on new layer exactly as on previous layers and "By Layer" value will be replaced by resolved pens.
+If No - "By Layer" values remains and so pen of target layer will define pen for such entities.</source>
+        <translation type="vanished">"அடுக்கு மூலம்" மதிப்பை மூல அடுக்குகளின் மதிப்புகளாக மாற்ற வேண்டுமா?
+ஆம் எனில் - "அடுக்கு மூலம்" பேனாக்களைக் கொண்ட கூறுகள் புதிய அடுக்கில் முந்தைய அடுக்குகளில் இருந்ததைப் போலவே தோன்றும், மேலும் "அடுக்கு மூலம்" மதிப்பு தீர்க்கப்பட்ட பேனாக்களால் மாற்றப்படும்.
+இல்லை எனில் - "அடுக்கு மூலம்" மதிப்புகள் அப்படியே இருக்கும், எனவே இலக்கு அடுக்கின் பேனா, அத்தகைய கூறுகளுக்கான பேனாவை வரையறுக்கும்.</translation>
     </message>
     <message>
         <source>Layer DialogEx</source>
@@ -7421,7 +7420,7 @@ Please specify a different value.</source>
         <translation>பேனா, வண்ணத் தட்டிலிருந்து அகற்றப்படும், வரைதல் கூறுகள் பாதிக்கப்படாது.</translation>
     </message>
     <message>
-        <source>Are you sure you&apos;d like to proceed?</source>
+        <source>Are you sure you'd like to proceed?</source>
         <translation>நீங்கள் தொடர விரும்புகிறீர்களா என்பதை உறுதிப்படுத்தவும்.</translation>
     </message>
     <message>
@@ -7487,16 +7486,16 @@ Clear filtering mask and repeat.</source>
 வடிகட்டி முகமூடியை நீக்கி மீண்டும் செய்யவும்.</translation>
     </message>
     <message>
-        <source>Replace &quot;By Layer&quot; value to source layers values?
+        <source>Replace "By Layer" value to source layers values?
 
-If Yes - entities with &quot;By Layer&quot; pens will look on new layer exactly as on previous layers and &quot;By Layer&quot; value will be replaced by resolved pens.
+If Yes - entities with "By Layer" pens will look on new layer exactly as on previous layers and "By Layer" value will be replaced by resolved pens.
 
-If No - &quot;By Layer&quot; values remains and so pen of target layer will define pen for such entities.</source>
-        <translation>அடுக்கு மூலம்&quot; மதிப்பை மூல அடுக்குகளின் மதிப்புகளுடன் மாற்றவா?
+If No - "By Layer" values remains and so pen of target layer will define pen for such entities.</source>
+        <translation>அடுக்கு மூலம்" மதிப்பை மூல அடுக்குகளின் மதிப்புகளுடன் மாற்றவா?
 
-ஆம் எனில் - &quot;அடுக்கு மூலம்&quot; பேனாக்களைக் கொண்ட கூறுகள் புதிய அடுக்கில் முன்பு இருந்த அடுக்குகளைப் போலவே தோன்றும், மேலும் &quot;அடுக்கு மூலம்&quot; மதிப்பு தீர்மானிக்கப்பட்ட பேனாக்களால் மாற்றப்படும்.
+ஆம் எனில் - "அடுக்கு மூலம்" பேனாக்களைக் கொண்ட கூறுகள் புதிய அடுக்கில் முன்பு இருந்த அடுக்குகளைப் போலவே தோன்றும், மேலும் "அடுக்கு மூலம்" மதிப்பு தீர்மானிக்கப்பட்ட பேனாக்களால் மாற்றப்படும்.
 
-இல்லை எனில் - &quot;அடுக்கு மூலம்&quot; மதிப்புகள் அப்படியே இருக்கும், இதனால் இலக்கு அடுக்கின் பேனா, அத்தகைய கூறுகளுக்கான பேனாவை வரையறுக்கும்.</translation>
+இல்லை எனில் - "அடுக்கு மூலம்" மதிப்புகள் அப்படியே இருக்கும், இதனால் இலக்கு அடுக்கின் பேனா, அத்தகைய கூறுகளுக்கான பேனாவை வரையறுக்கும்.</translation>
     </message>
 </context>
 <context>
@@ -7752,7 +7751,7 @@ Do you want to replace it?</source>
         <translation>dwg கோப்பைத் திறக்கும்போது அறியப்படாத பிழை</translation>
     </message>
     <message>
-        <source>can&apos;t open this dwg file</source>
+        <source>can't open this dwg file</source>
         <translation>இந்த dwg கோப்பைத் திறக்க முடியவில்லை</translation>
     </message>
     <message>
@@ -9916,8 +9915,8 @@ Do you want to replace it?</source>
         <translation>-o some.pdf *.dxf</translation>
     </message>
     <message>
-        <source>-- print all dxf files to &apos;some.pdf&apos; file.</source>
-        <translation>அனைத்து dxf கோப்புகளையும் &apos;some.pdf&apos; கோப்பில் அச்சிடுகிறது.</translation>
+        <source>-- print all dxf files to 'some.pdf' file.</source>
+        <translation>அனைத்து dxf கோப்புகளையும் 'some.pdf' கோப்பில் அச்சிடுகிறது.</translation>
     </message>
     <message>
         <source>Auto fit and center drawing to page.</source>
@@ -9991,8 +9990,8 @@ Do you want to replace it?</source>
         <translation>அனைத்து அடுக்குகளையும் இணைக்கவும்</translation>
     </message>
     <message>
-        <source>File &quot;%1&quot; already exists. Do you want to replace it?</source>
-        <translation>&quot;%1&quot; என்ற கோப்பு ஏற்கனவே உள்ளது. அதை மாற்ற விரும்புகிறீர்களா?</translation>
+        <source>File "%1" already exists. Do you want to replace it?</source>
+        <translation>"%1" என்ற கோப்பு ஏற்கனவே உள்ளது. அதை மாற்ற விரும்புகிறீர்களா?</translation>
     </message>
     <message>
         <source>/CustomColor%1</source>
@@ -10652,8 +10651,8 @@ Do you want to replace it?</source>
         <translation>கோணத்தை உள்ளிடவும்:</translation>
     </message>
     <message>
-        <source></source>
-        <translation></translation>
+        <source />
+        <translation />
     </message>
     <message>
         <source>Enter factor:</source>
@@ -11140,24 +11139,24 @@ This block cannot be inserted.</source>
         <translation>தொடு வட்டத்தின் மையத்தைத் தேர்ந்தெடுக்கவும்</translation>
     </message>
     <message>
-        <source>Invalid expression &apos;%1&apos; for radius</source>
-        <translation>ஆரம் &apos;%1&apos; க்கான தவறான கோவை</translation>
+        <source>Invalid expression '%1' for radius</source>
+        <translation>ஆரம் '%1' க்கான தவறான கோவை</translation>
     </message>
     <message>
-        <source>Invalid negative radius &apos;%1&apos;</source>
-        <translation>எதிர்மறை ஆரம் &apos;%1&apos; தவறானது</translation>
+        <source>Invalid negative radius '%1'</source>
+        <translation>எதிர்மறை ஆரம் '%1' தவறானது</translation>
     </message>
     <message>
-        <source>Invalid zero radius &apos;%1&apos;</source>
-        <translation>பூஜ்ஜிய ஆரம் &apos;%1&apos; தவறானது</translation>
+        <source>Invalid zero radius '%1'</source>
+        <translation>பூஜ்ஜிய ஆரம் '%1' தவறானது</translation>
     </message>
     <message>
-        <source>No tangent circle possible for radius &apos;%1&apos;</source>
-        <translation>ஆரம் &apos;%1&apos; க்கான தொடு வட்டம் சாத்தியமில்லை</translation>
+        <source>No tangent circle possible for radius '%1'</source>
+        <translation>ஆரம் '%1' க்கான தொடு வட்டம் சாத்தியமில்லை</translation>
     </message>
     <message>
-        <source>No common tangential circle for radius &apos;%1&apos;</source>
-        <translation>ஆரம் &apos;%1&apos; க்கான பொதுவான தொடு வட்டம் இல்லை</translation>
+        <source>No common tangential circle for radius '%1'</source>
+        <translation>ஆரம் '%1' க்கான பொதுவான தொடு வட்டம் இல்லை</translation>
     </message>
 </context>
 <context>
@@ -11427,8 +11426,8 @@ This block cannot be inserted.</source>
         <translation>கோணத்தை உள்ளிடவும்:</translation>
     </message>
     <message>
-        <source></source>
-        <translation></translation>
+        <source />
+        <translation />
     </message>
     <message>
         <source>Enter factor:</source>
@@ -11643,8 +11642,8 @@ This block cannot be inserted.</source>
 <context>
     <name>RS_ActionDrawLinePolygon</name>
     <message>
-        <source></source>
-        <translation></translation>
+        <source />
+        <translation />
     </message>
 </context>
 <context>
@@ -12122,16 +12121,16 @@ This block cannot be inserted.</source>
         <translation>கோணத்தை உள்ளிடவும்:</translation>
     </message>
     <message>
-        <source></source>
-        <translation></translation>
+        <source />
+        <translation />
     </message>
     <message>
         <source>Enter factor:</source>
         <translation>காரணியை உள்ளிடவும்:</translation>
     </message>
     <message>
-        <source>Cannot open file &apos;%1&apos;</source>
-        <translation>&apos;%1&apos; கோப்பை திறக்க முடியவில்லை</translation>
+        <source>Cannot open file '%1'</source>
+        <translation>'%1' கோப்பை திறக்க முடியவில்லை</translation>
     </message>
 </context>
 <context>
@@ -12567,7 +12566,7 @@ This block cannot be inserted.</source>
         <translation>ரத்து செய்</translation>
     </message>
     <message>
-        <source>Specify adding node&apos;s point</source>
+        <source>Specify adding node's point</source>
         <translation>புள்ளியைச் சேர்க்க வேண்டிய இடத்தைக் குறிப்பிடவும்.</translation>
     </message>
     <message>
@@ -12637,7 +12636,7 @@ This block cannot be inserted.</source>
         <translation>ரத்து செய்</translation>
     </message>
     <message>
-        <source>Specify deleting node&apos;s point</source>
+        <source>Specify deleting node's point</source>
         <translation>நீக்க வேண்டிய முனையின் புள்ளியைக் குறிப்பிடவும்</translation>
     </message>
     <message>
@@ -12804,8 +12803,8 @@ This block cannot be inserted.</source>
         <translation>அச்சிடப்பட்ட நகலை நகர்த்துவதற்கு கட்டளை வரியில் இருந்து நகர்வு மதிப்பை உள்ளிடவும்</translation>
     </message>
     <message>
-        <source>Printout offset ignores relative zero. Ignoring &apos;@&apos;</source>
-        <translation>அச்சிடப்பட்ட நகலின் நகர்வு சார்பு பூஜ்ஜியத்தை புறக்கணிக்கிறது. &apos;@&apos; ஐ புறக்கணிக்கிறது</translation>
+        <source>Printout offset ignores relative zero. Ignoring '@'</source>
+        <translation>அச்சிடப்பட்ட நகலின் நகர்வு சார்பு பூஜ்ஜியத்தை புறக்கணிக்கிறது. '@' ஐ புறக்கணிக்கிறது</translation>
     </message>
     <message>
         <source>Printout in Black/White</source>

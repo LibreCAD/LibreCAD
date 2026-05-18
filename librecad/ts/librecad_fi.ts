@@ -3790,9 +3790,9 @@ Huomaa että jos tallennat kynän editorin kautta ilman uudelleenkäynnistystä,
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="535"/>
         <location filename="../src/main/qc_applicationwindow.cpp" line="1593"/>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1992"/>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2875"/>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3248"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1999"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2882"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3255"/>
         <source>Draft Mode</source>
         <translation>Luonnostila</translation>
     </message>
@@ -3812,7 +3812,7 @@ Huomaa että jos tallennat kynän editorin kautta ilman uudelleenkäynnistystä,
         <translation>Näkymä</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3040"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3047"/>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="930"/>
         <source>About</source>
         <translation>Tietoa ohjelmasta</translation>
@@ -3843,7 +3843,7 @@ Huomaa että jos tallennat kynän editorin kautta ilman uudelleenkäynnistystä,
         <translation>Kappaleluettelo</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3443"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3450"/>
         <source>Command line</source>
         <translation>Komentorivi</translation>
     </message>
@@ -3985,128 +3985,128 @@ Huomaa että jos tallennat kynän editorin kautta ilman uudelleenkäynnistystä,
         <translation>nimetön dokumentti %1</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1654"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1661"/>
         <source>New Drawing created.</source>
         <translation>Uusi piirros luotu.</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1720"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1727"/>
         <source>New document from template: </source>
         <translation>Uusi dokumentti mallipohjasta:</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1768"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1775"/>
         <source>Select Template aborted</source>
         <translation>Mallin valinta keskeytetty</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2055"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2062"/>
         <source>Save All cancelled</source>
         <translation>Tallenna kaikki peruutettu</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2389"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2396"/>
         <source>Close All cancelled</source>
         <translation>Sulje kaikki peruutettu</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2419"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2426"/>
         <source>Please adjust scaling and positioning in print preview first.</source>
         <translation>Säädä ensin skaalaus ja sijoitus tulostuksen esikatselussa.</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3062"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3069"/>
         <source>Compiler: Microsoft Visual C++</source>
         <translation>Kääntäjä: Microsoft Visual C++</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3066"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3073"/>
         <source>Boost Version: %1.%2.%3</source>
         <translation>Boost-versio: %1.%2.%3</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3073"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3080"/>
         <source>Copy</source>
         <translation>Kopioi</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3084"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3091"/>
         <source>Contributors</source>
         <translation>Avustajat</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3085"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3092"/>
         <source>License</source>
         <translation>Lisenssi</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3086"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3093"/>
         <source>The Code</source>
         <translation>Koodi</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3095"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3102"/>
         <source>System</source>
         <translation>Järjestelmä</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3288"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3295"/>
         <source>Toolbars</source>
         <translation>Työkalupalkit</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3293"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3300"/>
         <source>Dockwidgets</source>
         <translation>Dokki-widgetit</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3320"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3327"/>
         <source>Opening recent file...</source>
         <translation>Avataan viimeaikaista tiedostoa...</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3443"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3450"/>
         <source>Cmd</source>
         <translation>Kmd</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3444"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3451"/>
         <source>Float</source>
         <translation>Kelluva</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3444"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3451"/>
         <source>Dock</source>
         <comment>Dock the command widget to the main window</comment>
         <translation>Dokki</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3540"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3547"/>
         <source>Toolbar Creator</source>
         <translation>Työkalupalkin luoja</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3606"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3613"/>
         <source>Menu Creator</source>
         <translation>Valikon luoja</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3631"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3638"/>
         <source>Menu Assigner</source>
         <translation>Valikon määrääjä</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1884"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1891"/>
         <source>Warning: File already opened : </source>
         <translation>Varoitus: Tiedosto on jo avattu:</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2483"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2490"/>
         <source>Export as PDF</source>
         <translation>Vie PDF-tiedostona</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1784"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1791"/>
         <source>Cannot open the file
 %1
 Please check the permissions.</source>
@@ -4120,12 +4120,12 @@ Tarkista tiedoston käyttöoikeudet.</translation>
         <translation>Ruudukon tila</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2008"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2015"/>
         <source>Loaded document: </source>
         <translation>Dokumentti avattu: </translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2014"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2021"/>
         <source>Opening aborted</source>
         <translation>Avaaminen keskeytetty</translation>
     </message>
@@ -4155,7 +4155,7 @@ Tarkista tiedoston käyttöoikeudet.</translation>
         <translation>Vie</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1927"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1934"/>
         <source>Cannot open the file
 %1
 Please check its existence and permissions.</source>
@@ -4164,22 +4164,22 @@ Please check its existence and permissions.</source>
 Tarkista että se on olemassa ja oikeudet.</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2013"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2020"/>
         <source>File &apos;%1&apos; does not exist. Opening aborted</source>
         <translation>Tiedostoa &apos;%1&apos; ei ole olemassa. Avaus keskeytetty</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2080"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2087"/>
         <source>Auto-saving drawing...</source>
         <translation>Automaattitallennetaan piirrosta...</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2088"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2095"/>
         <source>Auto-saved drawing</source>
         <translation>Piirros automaattitallennettu</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2093"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2100"/>
         <source>Cannot auto-save the file
 %1
 Please check the permissions.
@@ -4190,92 +4190,92 @@ Ei voitu automaattitallentaa. Tiedoston oikeudet voivat olla väärin.
 Automaattitallennus otettu pois käytöstä.</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2098"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2105"/>
         <source>Auto-saving failed</source>
         <translation>Automaattitallennus epäonnistui</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2111"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2118"/>
         <source>Exporting drawing...</source>
         <translation>Viedään piirrosta...</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2148"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2155"/>
         <source>Export as</source>
         <translation>Vie muodossa</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2207"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2214"/>
         <source>Exported: %1</source>
         <translation>Viedään: %1</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2247"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2254"/>
         <source>Exporting...</source>
         <translation>Viedään...</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2320"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2327"/>
         <source>Export complete</source>
         <translation>Vienti valmis</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2322"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2329"/>
         <source>Export failed!</source>
         <translation>Vienti epäonnistui!</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2431"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2438"/>
         <source>Printing...</source>
         <translation>Tulostetaan...</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2677"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2684"/>
         <source>Printing complete</source>
         <translation>Tulostettu</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2753"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2760"/>
         <source>Print preview for %1</source>
         <translation>Tulostuksen %1 esikatselu</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2831"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2838"/>
         <source>Exiting application...</source>
         <translation>Suljetaan ohjelmaa...</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3056"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3063"/>
         <source>Version: %1</source>
         <translation>Versio: %1</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3058"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3065"/>
         <source>Compiler: Clang %1.%2.%3</source>
         <translation>Kääntäjä: Clang %1.%2.%3</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3060"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3067"/>
         <source>Compiler: GNU GCC %1.%2.%3</source>
         <translation>Kääntäjä: GNU GCC %1.%2.%3</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3065"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3072"/>
         <source>Qt Version: %1</source>
         <translation>Qt-versio: %1</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3064"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3071"/>
         <source>Compiled on: %1</source>
         <translation>Käännetty: %1</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3502"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3509"/>
         <source>Device Options</source>
         <translation>Laiteasetukset</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3505"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3512"/>
         <source>Device</source>
         <translation>Laite</translation>
     </message>
@@ -9134,9 +9134,9 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>QMessageBox</name>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1787"/>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1931"/>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2092"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1794"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1938"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2099"/>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="215"/>
         <source>Warning</source>
         <translation>Varoitus</translation>
@@ -10110,62 +10110,62 @@ Haluatko korvata sen?</translation>
         <translation>Avattu dwg-tiedosto versio %1.</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4035"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4075"/>
         <source>unknown error opening dwg file</source>
         <translation>Tuntematon virhe dwg-tiedoston avaamisessa</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4039"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4079"/>
         <source>can&apos;t open this dwg file</source>
         <translation>Tämän dwg-tiedoston avaaminen ei onnistu</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4043"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4083"/>
         <source>unsupported dwg version</source>
         <translation>Ei tuettu dwg-versio</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4047"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4087"/>
         <source>error reading file metadata in dwg file</source>
         <translation>Virhe tiedoston metatietojen lukemisessa dwg-tiedostossa</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4051"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4091"/>
         <source>error reading file header in dwg file</source>
         <translation>Virhe tiedoston otsikon lukemisessa dwg-tiedostossa</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4055"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4095"/>
         <source>error reading header vars in dwg file</source>
         <translation>Virhe otsikkamuuttujien lukemisessa dwg-tiedostossa</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4059"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4099"/>
         <source>error reading classes in dwg file</source>
         <translation>Virhe luokkien lukemisessa dwg-tiedostossa</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4063"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4103"/>
         <source>error reading offsets in dwg file</source>
         <translation>Virhe siirtymien lukemisessa dwg-tiedostossa</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4067"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4107"/>
         <source>error reading tables in dwg file</source>
         <translation>Virhe taulukoiden lukemisessa dwg-tiedostossa</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4071"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4111"/>
         <source>error reading blocks in dwg file</source>
         <translation>Virhe lohkojen lukemisessa dwg-tiedostosta</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4075"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4115"/>
         <source>error reading entities in dwg file</source>
         <translation>Virhe entiteettien lukemisessa dwg-tiedostosta</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4079"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4119"/>
         <source>error reading objects in dwg file</source>
         <translation>Virhe objektien lukemisessa dwg-tiedostosta</translation>
     </message>
@@ -12952,12 +12952,12 @@ Haluatko korvata sen?</translation>
         <translation>Kynäohjelmisto</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1961"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1968"/>
         <source>Invalid objects removed:</source>
         <translation>Virheelliset objektit poistettu:</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3818"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3825"/>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="934"/>
         <source>License</source>
         <translation>Lisenssi</translation>

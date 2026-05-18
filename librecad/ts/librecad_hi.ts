@@ -3526,9 +3526,9 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="535"/>
         <location filename="../src/main/qc_applicationwindow.cpp" line="1593"/>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1992"/>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2875"/>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3248"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1999"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2882"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3255"/>
         <source>Draft Mode</source>
         <translation>ड्राफ्ट मोड</translation>
     </message>
@@ -3788,7 +3788,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <translation>पेन</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3040"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3047"/>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="930"/>
         <source>About</source>
         <translation>के बारे में</translation>
@@ -3819,7 +3819,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <translation>ब्लॉक सूची</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3443"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3450"/>
         <source>Command line</source>
         <translation>कमांड लाइन</translation>
     </message>
@@ -3966,22 +3966,22 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <translation>अनाम दस्तावेज़ %1</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1654"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1661"/>
         <source>New Drawing created.</source>
         <translation>नया चित्रण बनाया गया।</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1720"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1727"/>
         <source>New document from template: </source>
         <translation>टेम्प्लेट से नया दस्तावेज़: </translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1768"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1775"/>
         <source>Select Template aborted</source>
         <translation>टेम्प्लेट चयन रद्द किया गया</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1784"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1791"/>
         <source>Cannot open the file
 %1
 Please check the permissions.</source>
@@ -3990,12 +3990,12 @@ Please check the permissions.</source>
 कृपया अनुमतियाँ जाँचें।</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1884"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1891"/>
         <source>Warning: File already opened : </source>
         <translation>चेतावनी: फ़ाइल पहले से खुली हुई है : </translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1927"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1934"/>
         <source>Cannot open the file
 %1
 Please check its existence and permissions.</source>
@@ -4004,17 +4004,17 @@ Please check its existence and permissions.</source>
 कृपया इसकी अस्तित्व और अनुमतियाँ जाँचें।</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2008"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2015"/>
         <source>Loaded document: </source>
         <translation>लोड किया गया दस्तावेज़: </translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2013"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2020"/>
         <source>File &apos;%1&apos; does not exist. Opening aborted</source>
         <translation>फ़ाइल &apos;%1&apos; मौजूद नहीं है। खोलना रद्द किया गया</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2014"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2021"/>
         <source>Opening aborted</source>
         <translation>खोलना रद्द किया गया</translation>
     </message>
@@ -4039,17 +4039,17 @@ Please check its existence and permissions.</source>
         <translation> , कृपया फ़ाइल नाम और अनुमतियाँ जाँचें।</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2080"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2087"/>
         <source>Auto-saving drawing...</source>
         <translation>स्वचालित सहेजना चित्रण...</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2088"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2095"/>
         <source>Auto-saved drawing</source>
         <translation>स्वचालित सहेजा गया चित्रण</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2093"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2100"/>
         <source>Cannot auto-save the file
 %1
 Please check the permissions.
@@ -4060,193 +4060,193 @@ Auto-save disabled.</source>
 स्वचालित सहेजना अक्षम।</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2098"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2105"/>
         <source>Auto-saving failed</source>
         <translation>स्वचालित सहेजना विफल</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2111"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2118"/>
         <source>Exporting drawing...</source>
         <translation>चित्रण निर्यात किया जा रहा है...</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2148"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2155"/>
         <source>Export as</source>
         <translation>इस रूप में निर्यात करें</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2207"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2214"/>
         <source>Exported: %1</source>
         <translation>निर्यात किया गया: %1</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2247"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2254"/>
         <source>Exporting...</source>
         <translation>निर्यात किया जा रहा है...</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2320"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2327"/>
         <source>Export complete</source>
         <translation>निर्यात पूर्ण</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2322"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2329"/>
         <source>Export failed!</source>
         <translation>निर्यात विफल!</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2389"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2396"/>
         <source>Close All cancelled</source>
         <translation>सभी बंद करना रद्द किया गया</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2419"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2426"/>
         <source>Please adjust scaling and positioning in print preview first.</source>
         <translation>कृपया पहले प्रिंट पूर्वावलोकन में स्केलिंग और स्थिति समायोजित करें।</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2431"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2438"/>
         <source>Printing...</source>
         <translation>मुद्रण...</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2483"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2490"/>
         <source>Export as PDF</source>
         <translation>PDF के रूप में निर्यात करें</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2677"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2684"/>
         <source>Printing complete</source>
         <translation>मुद्रण पूर्ण</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2753"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2760"/>
         <source>Print preview for %1</source>
         <translation>%1 के लिए मुद्रण पूर्वावलोकन</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2831"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2838"/>
         <source>Exiting application...</source>
         <translation>एप्लिकेशन से बाहर निकल रहे हैं...</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3062"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3069"/>
         <source>Compiler: Microsoft Visual C++</source>
         <translation>कंपाइलर: Microsoft Visual C++</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3066"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3073"/>
         <source>Boost Version: %1.%2.%3</source>
         <translation>बूस्ट संस्करण: %1.%2.%3</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3073"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3080"/>
         <source>Copy</source>
         <translation>कॉपी</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3084"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3091"/>
         <source>Contributors</source>
         <translation>योगदानकर्ता</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3085"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3092"/>
         <source>License</source>
         <translation>लाइसेंस</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3086"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3093"/>
         <source>The Code</source>
         <translation>कोड</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3095"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3102"/>
         <source>System</source>
         <translation>सिस्टम</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3540"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3547"/>
         <source>Toolbar Creator</source>
         <translation>टूलबार निर्माता</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3606"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3613"/>
         <source>Menu Creator</source>
         <translation>मेनू निर्माता</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3631"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3638"/>
         <source>Menu Assigner</source>
         <translation>मेनू असाइनर</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3056"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3063"/>
         <source>Version: %1</source>
         <translation>संस्करण: %1</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3058"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3065"/>
         <source>Compiler: Clang %1.%2.%3</source>
         <translation>कंपाइलर: Clang %1.%2.%3</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3060"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3067"/>
         <source>Compiler: GNU GCC %1.%2.%3</source>
         <translation>कंपाइलर: GNU GCC %1.%2.%3</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3065"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3072"/>
         <source>Qt Version: %1</source>
         <translation>Qt संस्करण: %1</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3064"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3071"/>
         <source>Compiled on: %1</source>
         <translation>संकलित किया गया: %1</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2055"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2062"/>
         <source>Save All cancelled</source>
         <translation>सभी सहेजना रद्द किया गया</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3288"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3295"/>
         <source>Toolbars</source>
         <translation>टूलबार</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3293"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3300"/>
         <source>Dockwidgets</source>
         <translation>डॉक विजेट</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3320"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3327"/>
         <source>Opening recent file...</source>
         <translation>हाल की फ़ाइल खोली जा रही है...</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3443"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3450"/>
         <source>Cmd</source>
         <translation>कमांड</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3444"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3451"/>
         <source>Float</source>
         <translation>फ्लोट</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3444"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3451"/>
         <source>Dock</source>
         <comment>Dock the command widget to the main window</comment>
         <translation>डॉक</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3502"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3509"/>
         <source>Device Options</source>
         <translation>डिवाइस विकल्प</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3505"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3512"/>
         <source>Device</source>
         <translation>डिवाइस</translation>
     </message>
@@ -9077,9 +9077,9 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>QMessageBox</name>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1787"/>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1931"/>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2092"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1794"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1938"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2099"/>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="215"/>
         <source>Warning</source>
         <translation>चेतावनी</translation>
@@ -9830,62 +9830,62 @@ Please specify a different value.</source>
         <translation>dwg फ़ाइल संस्करण %1 खोला गया।</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4035"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4075"/>
         <source>unknown error opening dwg file</source>
         <translation>dwg फ़ाइल खोलने में अज्ञात त्रुटि</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4039"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4079"/>
         <source>can&apos;t open this dwg file</source>
         <translation>इस dwg फ़ाइल को नहीं खोला जा सकता</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4043"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4083"/>
         <source>unsupported dwg version</source>
         <translation>असमर्थित dwg संस्करण</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4047"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4087"/>
         <source>error reading file metadata in dwg file</source>
         <translation>dwg फ़ाइल में फ़ाइल मेटाडेटा पढ़ते समय त्रुटि</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4051"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4091"/>
         <source>error reading file header in dwg file</source>
         <translation>dwg फ़ाइल में फ़ाइल हेडर पढ़ते समय त्रुटि</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4055"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4095"/>
         <source>error reading header vars in dwg file</source>
         <translation>dwg फ़ाइल में हेडर वैरिएबल्स पढ़ते समय त्रुटि</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4059"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4099"/>
         <source>error reading classes in dwg file</source>
         <translation>dwg फ़ाइल में क्लास पढ़ने में त्रुटि</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4063"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4103"/>
         <source>error reading offsets in dwg file</source>
         <translation>dwg फ़ाइल में ऑफसेट पढ़ने में त्रुटि</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4067"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4107"/>
         <source>error reading tables in dwg file</source>
         <translation>dwg फ़ाइल में तालिकाओं को पढ़ने में त्रुटि</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4071"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4111"/>
         <source>error reading blocks in dwg file</source>
         <translation>dwg फ़ाइल में ब्लॉक पढ़ने में त्रुटि</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4075"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4115"/>
         <source>error reading entities in dwg file</source>
         <translation>dwg फ़ाइल में संस्थाओं को पढ़ने में त्रुटि</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4079"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4119"/>
         <source>error reading objects in dwg file</source>
         <translation>dwg फ़ाइल में ऑब्जेक्ट पढ़ने में त्रुटि</translation>
     </message>
@@ -12892,12 +12892,12 @@ Do you want to replace it?</source>
         <translation>पेन विज़ार्ड</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1961"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1968"/>
         <source>Invalid objects removed:</source>
         <translation>अमान्य ऑब्जेक्ट हटा दिए गए:</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3818"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3825"/>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="934"/>
         <source>License</source>
         <translation>लाइसेंस</translation>

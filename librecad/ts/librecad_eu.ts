@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
+<?xml version='1.0' encoding='utf-8'?>
 <TS version="2.1" language="eu">
 <context>
     <name>ColorWizard</name>
@@ -1162,7 +1161,7 @@ edo [%2]</translation>
         <translation>Bikoiztu</translation>
     </message>
     <message>
-        <source>Update Current Pen by Active Layer&apos; Pen</source>
+        <source>Update Current Pen by Active Layer' Pen</source>
         <translation>Eguneratu uneko arkatz aktiboaren geruzaren arkatzarekin</translation>
     </message>
 </context>
@@ -1176,8 +1175,8 @@ edo [%2]</translation>
 <context>
     <name>LC_ActionLayersExport</name>
     <message>
-        <source>Saving layer &quot;%1&quot; as &quot;%2&quot; </source>
-        <translation>&quot;% 1&quot; geruza &quot;% 2&quot; gisa gordetzen </translation>
+        <source>Saving layer "%1" as "%2" </source>
+        <translation>%1" geruza "%2" gisa gordetzen da.</translation>
     </message>
 </context>
 <context>
@@ -1691,7 +1690,7 @@ edo [%2]</translation>
         <translation>Bihurtu geruza normala</translation>
     </message>
     <message>
-        <source>&amp;Select Layer&apos;s Entities</source>
+        <source>&amp;Select Layer's Entities</source>
         <translation>&amp;Hautatu geruzaren entitateak</translation>
     </message>
     <message>
@@ -2190,11 +2189,11 @@ edo [%2]</translation>
         <translation>unekoari</translation>
     </message>
     <message>
-        <source>Update Current Pen by Active Layer&apos; Pen</source>
+        <source>Update Current Pen by Active Layer' Pen</source>
         <translation>Eguneratu uneko arkatza geruza aktiboaren arkatzarekin</translation>
     </message>
     <message>
-        <source>Fill Pen Editor from Active Layer&apos;s Pen</source>
+        <source>Fill Pen Editor from Active Layer's Pen</source>
         <translation>Bete arkatz-editorea geruza aktiboaren arkatzarekin</translation>
     </message>
     <message>
@@ -2259,14 +2258,14 @@ edo [%2]</translation>
     </message>
     <message>
         <source>Location of pens file is changed, please restart the application so new pens file will be used.
-Please note that if you&apos;ll save pen via editor without restart, current pens from palette will be saved in the new file and therefore existing content of it will be overridden.</source>
+Please note that if you'll save pen via editor without restart, current pens from palette will be saved in the new file and therefore existing content of it will be overridden.</source>
         <translation type="vanished">Arkatzen fitxategiaren kokapena aldatu da, mesedez berrabiarazi aplikazioa arkatz-fitxategi berria erabiltzeko.
 Kontuan izan arkatz editore bidez gorde eta berrabiarazi gabe uzten baduzu, paletako uneko arkatza fitxategi berrian gordeko dela eta beraz edukia gainidatziko dela.</translation>
     </message>
     <message>
         <source>Location of pens file is changed, please restart the application so new pens file will be used.
 
-Please note that if you&apos;ll save pen via editor without restart, current pens from palette will be saved in the new file and therefore existing content of it will be overridden.</source>
+Please note that if you'll save pen via editor without restart, current pens from palette will be saved in the new file and therefore existing content of it will be overridden.</source>
         <translation>Arkatzen fitxategia aldatu da, mesedez berrabiarazi aplikazioa, beraz, arkatza-fitxategi berria erabiliko da.
 
 Gogoratu, editorearen bidez arkatza gorde eta berrabiarazi gabe, paletako arkatza-sorta berriaren fitxategian gorde egingo da, eta horrek aurreko edukiari gainetik idatziko dio.</translation>
@@ -2779,11 +2778,11 @@ Gogoratu, editorearen bidez arkatza gorde eta berrabiarazi gabe, paletako arkatz
         <translation>kendu eskuma</translation>
     </message>
     <message>
-        <source>remove 0&apos;</source>
+        <source>remove 0'</source>
         <translation>kendu 0</translation>
     </message>
     <message>
-        <source>remove 0&quot;</source>
+        <source>remove 0"</source>
         <translation>kendu 0ª</translation>
     </message>
 </context>
@@ -2970,8 +2969,8 @@ Gogoratu, editorearen bidez arkatza gorde eta berrabiarazi gabe, paletako arkatz
         <translation>Komando Lerroa</translation>
     </message>
     <message>
-        <source>Block &apos;%1&apos;</source>
-        <translation>Blokea &apos;%1&apos;</translation>
+        <source>Block '%1'</source>
+        <translation>Blokea '%1'</translation>
     </message>
     <message>
         <source>Cannot open the file
@@ -3108,8 +3107,8 @@ Please check its existence and permissions.</source>
 Ikus ea dagoen eta baimenak.</translation>
     </message>
     <message>
-        <source>File &apos;%1&apos; does not exist. Opening aborted</source>
-        <translation>Ez dago &apos;%1&apos; fitxategirik.</translation>
+        <source>File '%1' does not exist. Opening aborted</source>
+        <translation>Ez dago '%1' fitxategirik.</translation>
     </message>
     <message>
         <source>Categories</source>
@@ -3363,7 +3362,7 @@ Ikus ea dagoen eta baimenak.</translation>
         <translation>&amp;Wiki</translation>
     </message>
     <message>
-        <source>User&apos;s &amp;Manual</source>
+        <source>User's &amp;Manual</source>
         <translation>Erabiltzailearen &amp;eskuliburua</translation>
     </message>
     <message>
@@ -3442,16 +3441,16 @@ Ikus ea dagoen eta baimenak.</translation>
         <translation>Uneko Geruza</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+        <source>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Name of Current Active Layer&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Helvetica'; font-size:7pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;Name of Current Active Layer&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Uneko geruza aktiboaren izena&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Helvetica'; font-size:7pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;Uneko geruza aktiboaren izena&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
@@ -3469,8 +3468,8 @@ p, li { white-space: pre-wrap; }
         <translation>Blokeari izen berria jartzen</translation>
     </message>
     <message>
-        <source>Could not name block. A block named &quot;%1&quot; already exists.</source>
-        <translation>Ezin blokea berrinzendatu. &quot;%1&quot; deritzon blokea badago jada.</translation>
+        <source>Could not name block. A block named "%1" already exists.</source>
+        <translation>Ezin blokea berrinzendatu. "%1" deritzon blokea badago jada.</translation>
     </message>
 </context>
 <context>
@@ -4064,12 +4063,12 @@ Dies modifiziert rekursiv alle Entitäten des Blocks selbst.</translation>
         <translation>Komandoen Hizkuntza:</translation>
     </message>
     <message>
-        <source>&lt;font size=&quot;+1&quot;&gt;&lt;b&gt;Welcome to LibreCAD&lt;/b&gt;
+        <source>&lt;font size="+1"&gt;&lt;b&gt;Welcome to LibreCAD&lt;/b&gt;
 &lt;/font&gt;
 &lt;br&gt;
 Please choose the unit you want to use for new drawings and your preferred language.&lt;br&gt;
 (You can changes these settings later.)</source>
-        <translation>&lt;font size=&quot;+1&quot;&gt;&lt;b&gt;Welcome to LibreCAD&lt;/b&gt;
+        <translation>&lt;font size="+1"&gt;&lt;b&gt;Welcome to LibreCAD&lt;/b&gt;
 &lt;/font&gt;
 &lt;br&gt;
 Mesedez, aukeratu irudian erabili nahi dituzun unitateak eta hizkuntza.&lt;br&gt;
@@ -4969,7 +4968,7 @@ Mesedez, aukeratu irudian erabili nahi dituzun unitateak eta hizkuntza.&lt;br&gt
         <translation>Gradianeak</translation>
     </message>
     <message>
-        <source>Surveyor&apos;s units</source>
+        <source>Surveyor's units</source>
         <translation>Unitate topografikoak</translation>
     </message>
     <message>
@@ -4977,8 +4976,8 @@ Mesedez, aukeratu irudian erabili nahi dituzun unitateak eta hizkuntza.&lt;br&gt
         <translation>Aukerak</translation>
     </message>
     <message>
-        <source>For the length formats &apos;Engineering&apos; and &apos;Architectural&apos;, the unit must be set to Inch.</source>
-        <translation>&quot;Ingeneritza&quot; eta &quot;Arkitekturazko&quot; neurrientzat, unitatea Hazbetea izan behar da.</translation>
+        <source>For the length formats 'Engineering' and 'Architectural', the unit must be set to Inch.</source>
+        <translation>"Ingeneritza" eta "Arkitekturazko" neurrientzat, unitatea Hazbetea izan behar da.</translation>
     </message>
     <message>
         <source>Arrow size:</source>
@@ -5109,7 +5108,7 @@ Mesedez, aukeratu irudian erabili nahi dituzun unitateak eta hizkuntza.&lt;br&gt
         <translation>Rastergröße:</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dimension Tick size. Set it to 0 will disable the dimension tick. Dimension arrow won&apos;t be drawn when dimension tick is enabled.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dimension Tick size. Set it to 0 will disable the dimension tick. Dimension arrow won't be drawn when dimension tick is enabled.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Maßstabsgröße der Dimension. Auf 0 zu setzen deaktiviert den Maßstabsbalken. Der Dimensionspfeil wird nicht gezeichnet, wenn der Maßstabsbalken aktiviert ist.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
@@ -5133,12 +5132,12 @@ Mesedez, aukeratu irudian erabili nahi dituzun unitateak eta hizkuntza.&lt;br&gt
         <translation>Textstil:</translation>
     </message>
     <message>
-        <source>&apos;.&apos; (Period)</source>
-        <translation>&apos;.&apos; (Punkt)</translation>
+        <source>'.' (Period)</source>
+        <translation>'.' (Punkt)</translation>
     </message>
     <message>
-        <source>&apos;,&apos; (Comma)</source>
-        <translation>&apos;,&apos; (Komma)</translation>
+        <source>',' (Comma)</source>
+        <translation>',' (Komma)</translation>
     </message>
     <message>
         <source>Decimal separator:</source>
@@ -5181,7 +5180,7 @@ Mesedez, aukeratu irudian erabili nahi dituzun unitateak eta hizkuntza.&lt;br&gt
         <translation>Länge zur Vergrößerung über der Maßlinie</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dimension arrow size. &lt;a name=&quot;result_box&quot;/&gt;without effect when tick size &lt;a name=&quot;result_box&quot;/&gt;is other than 0&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dimension arrow size. &lt;a name="result_box"/&gt;without effect when tick size &lt;a name="result_box"/&gt;is other than 0&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>Größe des Maßpfeils. Hat keinen Effekt, wenn die Skalierung der Markierung (tick size) ungleich 0 ist.</translation>
     </message>
     <message>
@@ -5213,7 +5212,7 @@ Mesedez, aukeratu irudian erabili nahi dituzun unitateak eta hizkuntza.&lt;br&gt
         <translation>Lineare Genauigkeit:</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Text alignment &lt;a name=&quot;result_box&quot;/&gt;relative to the dimension line.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Text alignment &lt;a name="result_box"/&gt;relative to the dimension line.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>Textausrichtung relativ zur Bemaßungslinie.</translation>
     </message>
     <message>
@@ -5317,8 +5316,8 @@ Mesedez, aukeratu irudian erabili nahi dituzun unitateak eta hizkuntza.&lt;br&gt
         <translation>Architektonisch (metrisch)</translation>
     </message>
     <message>
-        <source>For the length format &apos;Architectural (metric)&apos;, the unit must be set to Meter.</source>
-        <translation>Für das Längenformat &apos;Architektonisch (metrisch)&apos; muss die Einheit auf Meter eingestellt werden.</translation>
+        <source>For the length format 'Architectural (metric)', the unit must be set to Meter.</source>
+        <translation>Für das Längenformat 'Architektonisch (metrisch)' muss die Einheit auf Meter eingestellt werden.</translation>
     </message>
     <message>
         <source>Screen %</source>
@@ -5564,7 +5563,7 @@ Mesedez, aukeratu irudian erabili nahi dituzun unitateak eta hizkuntza.&lt;br&gt
         <translation>Anzahl der Vorschau-Entitäten:</translation>
     </message>
     <message>
-        <source>Don&apos;t use native OS file open dialog</source>
+        <source>Don't use native OS file open dialog</source>
         <translation>Kein natives OS-Dialogfeld zum Öffnen von Dateien verwenden</translation>
     </message>
     <message>
@@ -5640,8 +5639,8 @@ Mesedez, aukeratu irudian erabili nahi dituzun unitateak eta hizkuntza.&lt;br&gt
         <translation>Zeichnung beim Öffnen automatisch zoomen</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-family:&apos;-apple-system&apos;,&apos;BlinkMacSystemFont&apos;,&apos;Segoe UI&apos;,&apos;Noto Sans&apos;,&apos;Helvetica&apos;,&apos;Arial&apos;,&apos;sans-serif&apos;,&apos;Apple Color Emoji&apos;,&apos;Segoe UI Emoji&apos;; font-size:14px; color:#1f2328; background-color:#ffffff;&quot;&gt;Part library folder. The symbol library dxf files must be located in the subdirectories of this folder. The subfolder names will be displayed in the Library Browser.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-family:&apos;-apple-system&apos;,&apos;BlinkMacSystemFont&apos;,&apos;Segoe UI&apos;,&apos;Noto Sans&apos;,&apos;Helvetica&apos;,&apos;Arial&apos;,&apos;sans-serif&apos;,&apos;Apple Color Emoji&apos;,&apos;Segoe UI Emoji&apos;; font-size:14px; color:#1f2328; background-color:#ffffff;&quot;&gt;( Menu: Widgets &amp;gt; Dock Widgets &amp;gt; Library Browser)&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-family:&apos;-apple-system&apos;,&apos;BlinkMacSystemFont&apos;,&apos;Segoe UI&apos;,&apos;Noto Sans&apos;,&apos;Helvetica&apos;,&apos;Arial&apos;,&apos;sans-serif&apos;,&apos;Apple Color Emoji&apos;,&apos;Segoe UI Emoji&apos;; font-size:14px; color:#1f2328; background-color:#ffffff;&quot;&gt;Teilebibliotheksordner. Die Symbolbibliotheks-dxf-Dateien müssen sich in den Unterverzeichnissen dieses Ordners befinden. Die Namen der Unterordner werden im Bibliotheksbrowser angezeigt.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-family:&apos;-apple-system&apos;,&apos;BlinkMacSystemFont&apos;,&apos;Segoe UI&apos;,&apos;Noto Sans&apos;,&apos;Helvetica&apos;,&apos;Arial&apos;,&apos;sans-serif&apos;,&apos;Apple Color Emoji&apos;,&apos;Segoe UI Emoji&apos;; font-size:14px; color:#1f2328; background-color:#ffffff;&quot;&gt;(Menü: Widgets &gt; Dock Widgets &gt; Bibliotheksbrowser)&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=" font-family:'-apple-system','BlinkMacSystemFont','Segoe UI','Noto Sans','Helvetica','Arial','sans-serif','Apple Color Emoji','Segoe UI Emoji'; font-size:14px; color:#1f2328; background-color:#ffffff;"&gt;Part library folder. The symbol library dxf files must be located in the subdirectories of this folder. The subfolder names will be displayed in the Library Browser.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=" font-family:'-apple-system','BlinkMacSystemFont','Segoe UI','Noto Sans','Helvetica','Arial','sans-serif','Apple Color Emoji','Segoe UI Emoji'; font-size:14px; color:#1f2328; background-color:#ffffff;"&gt;( Menu: Widgets &amp;gt; Dock Widgets &amp;gt; Library Browser)&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=" font-family:'-apple-system','BlinkMacSystemFont','Segoe UI','Noto Sans','Helvetica','Arial','sans-serif','Apple Color Emoji','Segoe UI Emoji'; font-size:14px; color:#1f2328; background-color:#ffffff;"&gt;Teilebibliotheksordner. Die Symbolbibliotheks-dxf-Dateien müssen sich in den Unterverzeichnissen dieses Ordners befinden. Die Namen der Unterordner werden im Bibliotheksbrowser angezeigt.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=" font-family:'-apple-system','BlinkMacSystemFont','Segoe UI','Noto Sans','Helvetica','Arial','sans-serif','Apple Color Emoji','Segoe UI Emoji'; font-size:14px; color:#1f2328; background-color:#ffffff;"&gt;(Menü: Widgets &gt; Dock Widgets &gt; Bibliotheksbrowser)&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Open last opened files</source>
@@ -5712,8 +5711,8 @@ Mesedez, aukeratu irudian erabili nahi dituzun unitateak eta hizkuntza.&lt;br&gt
     </message>
     <message>
         <source>MakerCAM as of November 2014 does not hide SVG content 
-that has been set invisibe (&quot;display: none&quot; or &quot;visibility: hidden&quot;).</source>
-        <translation>MakerCAM, as of November 2014, does not hide SVG content that has been set invisible (&quot;display: none&quot; or &quot;visibility: hidden&quot;).</translation>
+that has been set invisibe ("display: none" or "visibility: hidden").</source>
+        <translation>MakerCAM, as of November 2014, does not hide SVG content that has been set invisible ("display: none" or "visibility: hidden").</translation>
     </message>
     <message>
         <source>MakerCAM as of November 2014 cannot correctly deal with blocks,
@@ -5728,16 +5727,16 @@ the &lt;transform&gt; attribute or as &lt;path&gt; using elliptic arc segments.<
     </message>
     <message>
         <source>Exported images can be useful in SVG editors (Inkscape, etc), 
-but avoided in some CAM&apos;s.</source>
+but avoided in some CAM's.</source>
         <translation>Exported images are useful in SVG editors (Inkscape, etc.) but are unsupported by some CAM programs.</translation>
     </message>
     <message>
-        <source>Many CAM&apos;s(MakerCAM, EleskCAM, LaserWeb) ignore dashed/doted line style, 
+        <source>Many CAM's(MakerCAM, EleskCAM, LaserWeb) ignore dashed/doted line style, 
 which can be useful in lasercut of plywood or for papercraft. </source>
         <translation>Many CAM programs (MakerCAM, EleskCAM, LaserWeb) ignore dashed/dotted line styles, which can be useful for laser cutting plywood or for papercraft.</translation>
     </message>
     <message>
-        <source>Default width of elements can affect some CAM&apos;s/SVG Editors, 
+        <source>Default width of elements can affect some CAM's/SVG Editors, 
 but ignored by other</source>
         <translation>The default width of elements may affect some CAM/SVG editors, but is ignored by others.</translation>
     </message>
@@ -7048,11 +7047,11 @@ The contents of a Construction Layer should not appear in printout.</source>
         <translation>Esquerdo</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+        <source>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Ubuntu&apos;; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Helvetica&apos;; font-size:9pt;&quot;&gt;Hint about left/right mouse button actions&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Ubuntu'; font-size:11pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;span style=" font-family:'Helvetica'; font-size:9pt;"&gt;Hint about left/right mouse button actions&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>Ezker/eskuin botoiaren funtzioen inguruko informazioa</translation>
     </message>
 </context>
@@ -7100,19 +7099,19 @@ p, li { white-space: pre-wrap; }
         <translation>Guztizko luzera</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+        <source>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Number of selected entities&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Helvetica'; font-size:7pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;Number of selected entities&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>Hautatutako elementuen kopurua</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+        <source>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Total length of selected entities&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Helvetica'; font-size:7pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;Total length of selected entities&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>Hautatutako elementuen guztizko luzera</translation>
     </message>
 </context>
@@ -7288,8 +7287,8 @@ p, li { white-space: pre-wrap; }
         <translation>Remover Camada</translation>
     </message>
     <message>
-        <source>Layer &quot;%1&quot; can never be removed.</source>
-        <translation>A camada &quot;%1&quot; nunca pode ser removida.</translation>
+        <source>Layer "%1" can never be removed.</source>
+        <translation>A camada "%1" nunca pode ser removida.</translation>
     </message>
     <message>
         <source>Layer Dialog</source>
@@ -7300,26 +7299,26 @@ p, li { white-space: pre-wrap; }
         <translation>Remover Bloco</translation>
     </message>
     <message>
-        <source>Block &quot;%1&quot; and all its entities will be removed.</source>
-        <translation>O bloco &quot;%1&quot; e todas as suas entidades serão removidos.</translation>
+        <source>Block "%1" and all its entities will be removed.</source>
+        <translation>O bloco "%1" e todas as suas entidades serão removidos.</translation>
     </message>
     <message>
         <source>Layer Properties</source>
         <translation>Propiedades de la capa</translation>
     </message>
     <message>
-        <source>Layer with a name &quot;%1&quot; already exists. Please specify a different name.</source>
-        <translation>Ya existe una capa con el nombre &quot;%1&quot;. Por favor, especifique un nombre diferente.</translation>
+        <source>Layer with a name "%1" already exists. Please specify a different name.</source>
+        <translation>Ya existe una capa con el nombre "%1". Por favor, especifique un nombre diferente.</translation>
     </message>
     <message>
-        <source>Layer &quot;%1&quot; and all entities on it will be removed.
+        <source>Layer "%1" and all entities on it will be removed.
 This action can NOT be undone.</source>
-        <translation>Se eliminará la capa &quot;%1&quot; y todas las entidades que contiene.
+        <translation>Se eliminará la capa "%1" y todas las entidades que contiene.
 Esta acción no se puede deshacer.</translation>
     </message>
     <message>
-        <source>Layer &quot;0&quot; can never be removed.</source>
-        <translation>La capa &quot;0&quot; nunca se puede eliminar.</translation>
+        <source>Layer "0" can never be removed.</source>
+        <translation>La capa "0" nunca se puede eliminar.</translation>
     </message>
     <message numerus="yes">
         <source>Remove %n layer(s)</source>
@@ -7337,8 +7336,8 @@ Esta acción no se puede deshacer.</translation>
         <translation>¡Advertencia: esta acción no se puede deshacer!</translation>
     </message>
     <message>
-        <source>Warning: layer &quot;0&quot; can never be removed.</source>
-        <translation>Advertencia: la capa &quot;0&quot; nunca se puede eliminar.</translation>
+        <source>Warning: layer "0" can never be removed.</source>
+        <translation>Advertencia: la capa "0" nunca se puede eliminar.</translation>
     </message>
     <message>
         <source>Layers for removal:</source>
@@ -7426,12 +7425,12 @@ Please specify a different name.</source>
         <translation>Duplicar selección</translation>
     </message>
     <message>
-        <source>Replace &quot;By Layer&quot; value to source layers values?
-If Yes - entities with &quot;By Layer&quot; pens will look on new layer exactly as on previous layers and &quot;By Layer&quot; value will be replaced by resolved pens.
-If No - &quot;By Layer&quot; values remains and so pen of target layer will define pen for such entities.</source>
-        <translation type="vanished">¿Reemplazar el valor &quot;Por Capa&quot; por los valores de las capas de origen?
-Si Sí - las entidades con plumas &quot;Por Capa&quot; se verán en la nueva capa exactamente como en las capas anteriores y el valor &quot;Por Capa&quot; será reemplazado por plumas resueltas.
-Si No - los valores &quot;Por Capa&quot; se mantienen y la pluma de la capa de destino definirá la pluma para dichas entidades.</translation>
+        <source>Replace "By Layer" value to source layers values?
+If Yes - entities with "By Layer" pens will look on new layer exactly as on previous layers and "By Layer" value will be replaced by resolved pens.
+If No - "By Layer" values remains and so pen of target layer will define pen for such entities.</source>
+        <translation type="vanished">¿Reemplazar el valor "Por Capa" por los valores de las capas de origen?
+Si Sí - las entidades con plumas "Por Capa" se verán en la nueva capa exactamente como en las capas anteriores y el valor "Por Capa" será reemplazado por plumas resueltas.
+Si No - los valores "Por Capa" se mantienen y la pluma de la capa de destino definirá la pluma para dichas entidades.</translation>
     </message>
     <message>
         <source>Layer DialogEx</source>
@@ -7457,7 +7456,7 @@ Please specify a different value.</source>
         <translation>The pen will be removed from the palette, but drawing entities will remain unaffected.</translation>
     </message>
     <message>
-        <source>Are you sure you&apos;d like to proceed?</source>
+        <source>Are you sure you'd like to proceed?</source>
         <translation>Are you sure you want to proceed?</translation>
     </message>
     <message>
@@ -7523,16 +7522,16 @@ Clear filtering mask and repeat.</source>
 Garbitu iragazki-maskara eta errepikatu.</translation>
     </message>
     <message>
-        <source>Replace &quot;By Layer&quot; value to source layers values?
+        <source>Replace "By Layer" value to source layers values?
 
-If Yes - entities with &quot;By Layer&quot; pens will look on new layer exactly as on previous layers and &quot;By Layer&quot; value will be replaced by resolved pens.
+If Yes - entities with "By Layer" pens will look on new layer exactly as on previous layers and "By Layer" value will be replaced by resolved pens.
 
-If No - &quot;By Layer&quot; values remains and so pen of target layer will define pen for such entities.</source>
-        <translation>Ordez &quot;Geruzako&quot; balioa iturburu-geruzen balioekin?
+If No - "By Layer" values remains and so pen of target layer will define pen for such entities.</source>
+        <translation>Ordez "Geruzako" balioa iturburu-geruzen balioekin?
 
-Bai esaten baduzu, &quot;Geruzako&quot; boligaiak berriaren geruzan agertuko dira, aurreko geruzetan bezala, eta &quot;Geruzako&quot; balioa ordezkatuko da.
+Bai esaten baduzu, "Geruzako" boligaiak berriaren geruzan agertuko dira, aurreko geruzetan bezala, eta "Geruzako" balioa ordezkatuko da.
 
-Ez esaten baduzu, &quot;Geruzako&quot; balioak mantenduko dira, eta, beraz, helburuko geruzako boligaiak entitate horientzat boligai bat definituko du.</translation>
+Ez esaten baduzu, "Geruzako" balioak mantenduko dira, eta, beraz, helburuko geruzako boligaiak entitate horientzat boligai bat definituko du.</translation>
     </message>
 </context>
 <context>
@@ -7788,7 +7787,7 @@ Möchten Sie ihn überschreiben?</translation>
         <translation>Unbekannter Fehler beim Öffnen der dwg-Datei</translation>
     </message>
     <message>
-        <source>can&apos;t open this dwg file</source>
+        <source>can't open this dwg file</source>
         <translation>Diese dwg-Datei kann nicht geöffnet werden</translation>
     </message>
     <message>
@@ -9952,8 +9951,8 @@ Möchten Sie ihn überschreiben?</translation>
         <translation>-o some.pdf *.dxf</translation>
     </message>
     <message>
-        <source>-- print all dxf files to &apos;some.pdf&apos; file.</source>
-        <translation>-- Alle dxf-Dateien in die Datei &apos;some.pdf&apos; drucken.</translation>
+        <source>-- print all dxf files to 'some.pdf' file.</source>
+        <translation>-- Alle dxf-Dateien in die Datei 'some.pdf' drucken.</translation>
     </message>
     <message>
         <source>Auto fit and center drawing to page.</source>
@@ -10027,8 +10026,8 @@ Möchten Sie ihn überschreiben?</translation>
         <translation>Combine All Layers</translation>
     </message>
     <message>
-        <source>File &quot;%1&quot; already exists. Do you want to replace it?</source>
-        <translation>&quot;%1&quot; fitxategia dagoeneko badago. Ordezkatzea nahi duzu?</translation>
+        <source>File "%1" already exists. Do you want to replace it?</source>
+        <translation>"%1" fitxategia dagoeneko badago. Ordezkatzea nahi duzu?</translation>
     </message>
     <message>
         <source>/CustomColor%1</source>
@@ -10688,8 +10687,8 @@ Möchten Sie ihn überschreiben?</translation>
         <translation>Winkel eingeben:</translation>
     </message>
     <message>
-        <source></source>
-        <translation></translation>
+        <source />
+        <translation />
     </message>
     <message>
         <source>Enter factor:</source>
@@ -10887,7 +10886,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Select arc or circle entity</source>
-        <translation>Sélectionner une entité d&apos;arc ou de cercle</translation>
+        <translation>Sélectionner une entité d'arc ou de cercle</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -10895,7 +10894,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Specify dimension line position or enter angle:</source>
-        <translation>Spécifier la position de la ligne de cote ou entrer l&apos;angle :</translation>
+        <translation>Spécifier la position de la ligne de cote ou entrer l'angle :</translation>
     </message>
     <message>
         <source>Enter dimension text:</source>
@@ -11092,15 +11091,15 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>radius=%1 is invalid (expression)</source>
-        <translation>Radius &apos;%1&apos; is invalid (expression)</translation>
+        <translation>Radius '%1' is invalid (expression)</translation>
     </message>
     <message>
         <source>radius=%1 is invalid (negative)</source>
-        <translation>Radius &apos;%1&apos; is invalid (negative)</translation>
+        <translation>Radius '%1' is invalid (negative)</translation>
     </message>
     <message>
         <source>radius=%1 is invalid (zero)</source>
-        <translation>Radius &apos;%1&apos; is invalid (zero)</translation>
+        <translation>Radius '%1' is invalid (zero)</translation>
     </message>
 </context>
 <context>
@@ -11176,24 +11175,24 @@ This block cannot be inserted.</source>
         <translation>Hautatu ukitzaile-zirkuluaren zentroa</translation>
     </message>
     <message>
-        <source>Invalid expression &apos;%1&apos; for radius</source>
-        <translation>Errorea: &apos;%1&apos; ez da baliozko erradioa</translation>
+        <source>Invalid expression '%1' for radius</source>
+        <translation>Errorea: '%1' ez da baliozko erradioa</translation>
     </message>
     <message>
-        <source>Invalid negative radius &apos;%1&apos;</source>
-        <translation>Errorea: &apos;%1&apos; erradio negatiboa da</translation>
+        <source>Invalid negative radius '%1'</source>
+        <translation>Errorea: '%1' erradio negatiboa da</translation>
     </message>
     <message>
-        <source>Invalid zero radius &apos;%1&apos;</source>
-        <translation>Errorea: &apos;%1&apos; erradioa zero da</translation>
+        <source>Invalid zero radius '%1'</source>
+        <translation>Errorea: '%1' erradioa zero da</translation>
     </message>
     <message>
-        <source>No tangent circle possible for radius &apos;%1&apos;</source>
-        <translation>Ezin da &apos;%1&apos; erradiozko zirkulu ukitzailea marraztu.</translation>
+        <source>No tangent circle possible for radius '%1'</source>
+        <translation>Ezin da '%1' erradiozko zirkulu ukitzailea marraztu.</translation>
     </message>
     <message>
-        <source>No common tangential circle for radius &apos;%1&apos;</source>
-        <translation>Ezin da &apos;%1&apos; erradiozko zirkulu ukitzaile komun bat marraztu.</translation>
+        <source>No common tangential circle for radius '%1'</source>
+        <translation>Ezin da '%1' erradiozko zirkulu ukitzaile komun bat marraztu.</translation>
     </message>
 </context>
 <context>
@@ -11463,8 +11462,8 @@ This block cannot be inserted.</source>
         <translation>Winkel eingeben:</translation>
     </message>
     <message>
-        <source></source>
-        <translation></translation>
+        <source />
+        <translation />
     </message>
     <message>
         <source>Enter factor:</source>
@@ -11679,8 +11678,8 @@ This block cannot be inserted.</source>
 <context>
     <name>RS_ActionDrawLinePolygon</name>
     <message>
-        <source></source>
-        <translation></translation>
+        <source />
+        <translation />
     </message>
 </context>
 <context>
@@ -12158,16 +12157,16 @@ This block cannot be inserted.</source>
         <translation>Introduzir ângulo:</translation>
     </message>
     <message>
-        <source></source>
-        <translation></translation>
+        <source />
+        <translation />
     </message>
     <message>
         <source>Enter factor:</source>
         <translation>Introduzir fator:</translation>
     </message>
     <message>
-        <source>Cannot open file &apos;%1&apos;</source>
-        <translation>Ezin da &apos;%1&apos; fitxategia ireki.</translation>
+        <source>Cannot open file '%1'</source>
+        <translation>Ezin da '%1' fitxategia ireki.</translation>
     </message>
 </context>
 <context>
@@ -12309,7 +12308,7 @@ This block cannot be inserted.</source>
     <name>RS_ActionModifyEntity</name>
     <message>
         <source>Click on entity to modify</source>
-        <translation>Cliquez sur l&apos;entité pour la modifier</translation>
+        <translation>Cliquez sur l'entité pour la modifier</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -12603,7 +12602,7 @@ This block cannot be inserted.</source>
         <translation>Cancel</translation>
     </message>
     <message>
-        <source>Specify adding node&apos;s point</source>
+        <source>Specify adding node's point</source>
         <translation>Specify the point for the new node.</translation>
     </message>
     <message>
@@ -12673,7 +12672,7 @@ This block cannot be inserted.</source>
         <translation>Abbrechen</translation>
     </message>
     <message>
-        <source>Specify deleting node&apos;s point</source>
+        <source>Specify deleting node's point</source>
         <translation>Punkt des Knotens zum Löschen festlegen</translation>
     </message>
     <message>
@@ -12840,8 +12839,8 @@ This block cannot be inserted.</source>
         <translation>Versatz über die Kommandozeile eingeben, um den Ausdruck zu verschieben</translation>
     </message>
     <message>
-        <source>Printout offset ignores relative zero. Ignoring &apos;@&apos;</source>
-        <translation>Der Ausdrucksversatz ignoriert den relativen Nullpunkt. Ignoriert &apos;@&apos;</translation>
+        <source>Printout offset ignores relative zero. Ignoring '@'</source>
+        <translation>Der Ausdrucksversatz ignoriert den relativen Nullpunkt. Ignoriert '@'</translation>
     </message>
     <message>
         <source>Printout in Black/White</source>
@@ -13236,7 +13235,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Scale Factor</source>
-        <translation>Facteur d&apos;échelle</translation>
+        <translation>Facteur d'échelle</translation>
     </message>
     <message>
         <source>DPI</source>
@@ -13244,14 +13243,14 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>DPI of Image</source>
-        <translation>DPI de l&apos;image</translation>
+        <translation>DPI de l'image</translation>
     </message>
 </context>
 <context>
     <name>Ui_InsertOptions</name>
     <message>
         <source>Insert Options</source>
-        <translation>Options d&apos;insertion</translation>
+        <translation>Options d'insertion</translation>
     </message>
     <message>
         <source>Angle:</source>
@@ -13519,7 +13518,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Number of edges</source>
-        <translation>Nombre d&apos;arêtes</translation>
+        <translation>Nombre d'arêtes</translation>
     </message>
 </context>
 <context>

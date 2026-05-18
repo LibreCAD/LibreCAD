@@ -92,13 +92,9 @@ public:
      */
     bool showToolTip {true};
 
-    /**
-     * Saves options in settings
-     */
+    static QString defaultPensFilePath();
+
     void saveToSettings();
-    /**
-     * loads options from settings
-     */
     void loadFromSettings();
 
 };

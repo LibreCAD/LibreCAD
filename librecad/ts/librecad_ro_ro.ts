@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
+<?xml version='1.0' encoding='utf-8'?>
 <TS version="2.1" language="ro_RO">
 <context>
     <name>ColorWizard</name>
@@ -1155,7 +1154,7 @@ sau [%2]</translation>
         <translation>Duplicare</translation>
     </message>
     <message>
-        <source>Update Current Pen by Active Layer&apos; Pen</source>
+        <source>Update Current Pen by Active Layer' Pen</source>
         <translation>Actualizați stiloul curent cu stiloul stratului activ</translation>
     </message>
 </context>
@@ -1169,8 +1168,8 @@ sau [%2]</translation>
 <context>
     <name>LC_ActionLayersExport</name>
     <message>
-        <source>Saving layer &quot;%1&quot; as &quot;%2&quot; </source>
-        <translation>Salvare strat &quot;%1&quot; ca &quot;%2&quot; </translation>
+        <source>Saving layer "%1" as "%2" </source>
+        <translation>Salvare strat "%1" ca "%2" </translation>
     </message>
 </context>
 <context>
@@ -1684,7 +1683,7 @@ sau [%2]</translation>
         <translation>Convertiți în strat normal</translation>
     </message>
     <message>
-        <source>&amp;Select Layer&apos;s Entities</source>
+        <source>&amp;Select Layer's Entities</source>
         <translation>&amp;Selectați entitățile stratului</translation>
     </message>
     <message>
@@ -2203,11 +2202,11 @@ sau [%2]</translation>
         <translation>la curent</translation>
     </message>
     <message>
-        <source>Update Current Pen by Active Layer&apos; Pen</source>
+        <source>Update Current Pen by Active Layer' Pen</source>
         <translation>Actualizați stiloul curent cu stiloul stratului activ</translation>
     </message>
     <message>
-        <source>Fill Pen Editor from Active Layer&apos;s Pen</source>
+        <source>Fill Pen Editor from Active Layer's Pen</source>
         <translation>Completați editorul stilou cu stiloul stratului activ</translation>
     </message>
     <message>
@@ -2272,14 +2271,14 @@ sau [%2]</translation>
     </message>
     <message>
         <source>Location of pens file is changed, please restart the application so new pens file will be used.
-Please note that if you&apos;ll save pen via editor without restart, current pens from palette will be saved in the new file and therefore existing content of it will be overridden.</source>
+Please note that if you'll save pen via editor without restart, current pens from palette will be saved in the new file and therefore existing content of it will be overridden.</source>
         <translation type="vanished">Locația fișierului de stilouri a fost schimbată, reporniți aplicația pentru a utiliza noul fișier.
 Notă: dacă salvați stiloul prin editor fără repornire, stilourile curente din paletă vor fi salvate în noul fișier și conținutul existent va fi suprascris.</translation>
     </message>
     <message>
         <source>Location of pens file is changed, please restart the application so new pens file will be used.
 
-Please note that if you&apos;ll save pen via editor without restart, current pens from palette will be saved in the new file and therefore existing content of it will be overridden.</source>
+Please note that if you'll save pen via editor without restart, current pens from palette will be saved in the new file and therefore existing content of it will be overridden.</source>
         <translation>Locația fișierului de stilouri a fost modificată, vă rugăm să reporniți aplicația pentru a utiliza noul fișier de stilouri.
 
 Vă rugăm să rețineți că, dacă salvați un stilou prin editor fără a reporni aplicația, stilourile curente din paletă vor fi salvate în noul fișier, iar conținutul existent al acestuia va fi suprascris.</translation>
@@ -2792,12 +2791,12 @@ Vă rugăm să rețineți că, dacă salvați un stilou prin editor fără a rep
         <translation>eliminați dreapta</translation>
     </message>
     <message>
-        <source>remove 0&apos;</source>
-        <translation>eliminați 0&apos;</translation>
+        <source>remove 0'</source>
+        <translation>eliminați 0'</translation>
     </message>
     <message>
-        <source>remove 0&quot;</source>
-        <translation>eliminați 0&quot;</translation>
+        <source>remove 0"</source>
+        <translation>eliminați 0"</translation>
     </message>
 </context>
 <context>
@@ -3007,8 +3006,8 @@ Vă rugăm să rețineți că, dacă salvați un stilou prin editor fără a rep
         <translation>Linie de comanda</translation>
     </message>
     <message>
-        <source>Block &apos;%1&apos;</source>
-        <translation>Bloc &apos;%1&apos;</translation>
+        <source>Block '%1'</source>
+        <translation>Bloc '%1'</translation>
     </message>
     <message>
         <source>Cannot open the file
@@ -3129,8 +3128,8 @@ Please check its existence and permissions.</source>
 Verificați existența și permisiunile.</translation>
     </message>
     <message>
-        <source>File &apos;%1&apos; does not exist. Opening aborted</source>
-        <translation>Fișierul &apos;%1&apos; nu există. Deschidere anulată</translation>
+        <source>File '%1' does not exist. Opening aborted</source>
+        <translation>Fișierul '%1' nu există. Deschidere anulată</translation>
     </message>
     <message>
         <source>Categories</source>
@@ -3376,7 +3375,7 @@ Verificați existența și permisiunile.</translation>
         <translation>&amp;Wiki</translation>
     </message>
     <message>
-        <source>User&apos;s &amp;Manual</source>
+        <source>User's &amp;Manual</source>
         <translation>&amp;Manual utilizator</translation>
     </message>
     <message>
@@ -3455,16 +3454,16 @@ Verificați existența și permisiunile.</translation>
         <translation>Stratul curent</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+        <source>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Name of Current Active Layer&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Helvetica'; font-size:7pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;Name of Current Active Layer&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Numele stratului activ curent&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Helvetica'; font-size:7pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;Numele stratului activ curent&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
@@ -3482,8 +3481,8 @@ p, li { white-space: pre-wrap; }
         <translation>Redenumire Bloc</translation>
     </message>
     <message>
-        <source>Could not name block. A block named &quot;%1&quot; already exists.</source>
-        <translation>Nu pot da acest nume pentru bloc. Blocul &quot;%1&quot; exista deja.</translation>
+        <source>Could not name block. A block named "%1" already exists.</source>
+        <translation>Nu pot da acest nume pentru bloc. Blocul "%1" exista deja.</translation>
     </message>
 </context>
 <context>
@@ -4077,13 +4076,14 @@ Aceasta modifică recursiv toate entitățile blocului în sine.</translation>
         <translation>Limba de comanda:</translation>
     </message>
     <message>
-        <source>&lt;font size=&quot;+1&quot;&gt;&lt;b&gt;Welcome to LibreCAD&lt;/b&gt;
+        <source>&lt;font size="+1"&gt;&lt;b&gt;Welcome to LibreCAD&lt;/b&gt;
 &lt;/font&gt;
 &lt;br&gt;
 Please choose the unit you want to use for new drawings and your preferred language.&lt;br&gt;
 (You can changes these settings later.)</source>
-        <translation>Bine ați venit la LibreCAD
-Vă rugăm să alegeți unitatea de măsură pe care doriți să o utilizați pentru desenele noi și limba preferată.
+        <translation>&lt;font size="+1"&gt;&lt;b&gt;Bine ați venit la LibreCAD&lt;/b&gt;&lt;/font&gt;
+&lt;br&gt;
+Vă rugăm să alegeți unitatea de măsură pe care doriți să o utilizați pentru desenele noi și limba preferată.&lt;br&gt;
 (Puteți modifica aceste setări mai târziu.)</translation>
     </message>
 </context>
@@ -4980,7 +4980,7 @@ Vă rugăm să alegeți unitatea de măsură pe care doriți să o utilizați pe
         <translation>Grade</translation>
     </message>
     <message>
-        <source>Surveyor&apos;s units</source>
+        <source>Surveyor's units</source>
         <translation>Unitati Geometrice</translation>
     </message>
     <message>
@@ -4988,7 +4988,7 @@ Vă rugăm să alegeți unitatea de măsură pe care doriți să o utilizați pe
         <translation>Optiuni</translation>
     </message>
     <message>
-        <source>For the length formats &apos;Engineering&apos; and &apos;Architectural&apos;, the unit must be set to Inch.</source>
+        <source>For the length formats 'Engineering' and 'Architectural', the unit must be set to Inch.</source>
         <translation>In general, unitatea in inginerie este milimetrul, iar in arhitectura este metrul.</translation>
     </message>
     <message>
@@ -5120,7 +5120,7 @@ Vă rugăm să alegeți unitatea de măsură pe care doriți să o utilizați pe
         <translation>Marime bifa:</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dimension Tick size. Set it to 0 will disable the dimension tick. Dimension arrow won&apos;t be drawn when dimension tick is enabled.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dimension Tick size. Set it to 0 will disable the dimension tick. Dimension arrow won't be drawn when dimension tick is enabled.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dimensiunea bifei. Valoarea 0 va dezactiva marimea bifei. Sageata pentru dimensiune nu va fi desenata atunci cand dimensiunea bifei este activata.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
@@ -5144,12 +5144,12 @@ Vă rugăm să alegeți unitatea de măsură pe care doriți să o utilizați pe
         <translation>Stil text:</translation>
     </message>
     <message>
-        <source>&apos;.&apos; (Period)</source>
-        <translation>&apos;.&apos; (punct)</translation>
+        <source>'.' (Period)</source>
+        <translation>'.' (punct)</translation>
     </message>
     <message>
-        <source>&apos;,&apos; (Comma)</source>
-        <translation>&apos;, &apos; (virgulă)</translation>
+        <source>',' (Comma)</source>
+        <translation>', ' (virgulă)</translation>
     </message>
     <message>
         <source>Decimal separator:</source>
@@ -5192,8 +5192,8 @@ Vă rugăm să alegeți unitatea de măsură pe care doriți să o utilizați pe
         <translation>Lungimea pentru a depăși linia de cotă</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dimension arrow size. &lt;a name=&quot;result_box&quot;/&gt;without effect when tick size &lt;a name=&quot;result_box&quot;/&gt;is other than 0&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dimensiunea săgeții de cotă. &lt;a name=&quot;result_box&quot;/&gt;Nu are efect când dimensiunea marcajului &lt;a name=&quot;result_box&quot;/&gt;este diferită de 0&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dimension arrow size. &lt;a name="result_box"/&gt;without effect when tick size &lt;a name="result_box"/&gt;is other than 0&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dimensiunea săgeții de cotă. &lt;a name="result_box"/&gt;Nu are efect când dimensiunea marcajului &lt;a name="result_box"/&gt;este diferită de 0&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Width:</source>
@@ -5224,7 +5224,7 @@ Vă rugăm să alegeți unitatea de măsură pe care doriți să o utilizați pe
         <translation>Precizia liniară:</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Text alignment &lt;a name=&quot;result_box&quot;/&gt;relative to the dimension line.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Text alignment &lt;a name="result_box"/&gt;relative to the dimension line.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Alinierea textului relativ la linia de cotă.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
@@ -5328,8 +5328,8 @@ Vă rugăm să alegeți unitatea de măsură pe care doriți să o utilizați pe
         <translation>Arhitectural (metric)</translation>
     </message>
     <message>
-        <source>For the length format &apos;Architectural (metric)&apos;, the unit must be set to Meter.</source>
-        <translation>Pentru formatul de lungime &apos;Arhitectural (metric)&apos;, unitatea trebuie să fie setată la Metru.</translation>
+        <source>For the length format 'Architectural (metric)', the unit must be set to Meter.</source>
+        <translation>Pentru formatul de lungime 'Arhitectural (metric)', unitatea trebuie să fie setată la Metru.</translation>
     </message>
     <message>
         <source>Screen %</source>
@@ -5575,7 +5575,7 @@ Vă rugăm să alegeți unitatea de măsură pe care doriți să o utilizați pe
         <translation>Numărul de entități afișate în previzualizare:</translation>
     </message>
     <message>
-        <source>Don&apos;t use native OS file open dialog</source>
+        <source>Don't use native OS file open dialog</source>
         <translation>Nu utilizați dialogul nativ al sistemului de operare pentru deschiderea fișierelor</translation>
     </message>
     <message>
@@ -5651,8 +5651,8 @@ Vă rugăm să alegeți unitatea de măsură pe care doriți să o utilizați pe
         <translation>Măriți automat desenul la deschidere</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-family:&apos;-apple-system&apos;,&apos;BlinkMacSystemFont&apos;,&apos;Segoe UI&apos;,&apos;Noto Sans&apos;,&apos;Helvetica&apos;,&apos;Arial&apos;,&apos;sans-serif&apos;,&apos;Apple Color Emoji&apos;,&apos;Segoe UI Emoji&apos;; font-size:14px; color:#1f2328; background-color:#ffffff;&quot;&gt;Part library folder. The symbol library dxf files must be located in the subdirectories of this folder. The subfolder names will be displayed in the Library Browser.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-family:&apos;-apple-system&apos;,&apos;BlinkMacSystemFont&apos;,&apos;Segoe UI&apos;,&apos;Noto Sans&apos;,&apos;Helvetica&apos;,&apos;Arial&apos;,&apos;sans-serif&apos;,&apos;Apple Color Emoji&apos;,&apos;Segoe UI Emoji&apos;; font-size:14px; color:#1f2328; background-color:#ffffff;&quot;&gt;( Menu: Widgets &amp;gt; Dock Widgets &amp;gt; Library Browser)&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-family:&apos;-apple-system&apos;,&apos;BlinkMacSystemFont&apos;,&apos;Segoe UI&apos;,&apos;Noto Sans&apos;,&apos;Helvetica&apos;,&apos;Arial&apos;,&apos;sans-serif&apos;,&apos;Apple Color Emoji&apos;,&apos;Segoe UI Emoji&apos;; font-size:14px; color:#1f2328; background-color:#ffffff;&quot;&gt;Folderul bibliotecii de piese. Fișierele DXF ale bibliotecii de simboluri trebuie să se afle în subdirectoarele acestui folder. Numele subdirectoarelor vor fi afișate în Browserul bibliotecii.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-family:&apos;-apple-system&apos;,&apos;BlinkMacSystemFont&apos;,&apos;Segoe UI&apos;,&apos;Noto Sans&apos;,&apos;Helvetica&apos;,&apos;Arial&apos;,&apos;sans-serif&apos;,&apos;Apple Color Emoji&apos;,&apos;Segoe UI Emoji&apos;; font-size:14px; color:#1f2328; background-color:#ffffff;&quot;&gt;(Meniu: Widget-uri &gt; Widget-uri ancorabile &gt; Browserul bibliotecii)&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=" font-family:'-apple-system','BlinkMacSystemFont','Segoe UI','Noto Sans','Helvetica','Arial','sans-serif','Apple Color Emoji','Segoe UI Emoji'; font-size:14px; color:#1f2328; background-color:#ffffff;"&gt;Part library folder. The symbol library dxf files must be located in the subdirectories of this folder. The subfolder names will be displayed in the Library Browser.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=" font-family:'-apple-system','BlinkMacSystemFont','Segoe UI','Noto Sans','Helvetica','Arial','sans-serif','Apple Color Emoji','Segoe UI Emoji'; font-size:14px; color:#1f2328; background-color:#ffffff;"&gt;( Menu: Widgets &amp;gt; Dock Widgets &amp;gt; Library Browser)&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=" font-family:'-apple-system','BlinkMacSystemFont','Segoe UI','Noto Sans','Helvetica','Arial','sans-serif','Apple Color Emoji','Segoe UI Emoji'; font-size:14px; color:#1f2328; background-color:#ffffff;"&gt;Folderul bibliotecii de piese. Fișierele DXF ale bibliotecii de simboluri trebuie să se afle în subdirectoarele acestui folder. Numele subdirectoarelor vor fi afișate în Browserul bibliotecii.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=" font-family:'-apple-system','BlinkMacSystemFont','Segoe UI','Noto Sans','Helvetica','Arial','sans-serif','Apple Color Emoji','Segoe UI Emoji'; font-size:14px; color:#1f2328; background-color:#ffffff;"&gt;(Meniu: Widget-uri &gt; Widget-uri ancorabile &gt; Browserul bibliotecii)&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Open last opened files</source>
@@ -5723,8 +5723,8 @@ Vă rugăm să alegeți unitatea de măsură pe care doriți să o utilizați pe
     </message>
     <message>
         <source>MakerCAM as of November 2014 does not hide SVG content 
-that has been set invisibe (&quot;display: none&quot; or &quot;visibility: hidden&quot;).</source>
-        <translation>MakerCAM, versiunea din noiembrie 2014, nu ascunde conținutul SVG care a fost setat ca fiind invizibil (prin &quot;display: none&quot; sau &quot;visibility: hidden&quot;).</translation>
+that has been set invisibe ("display: none" or "visibility: hidden").</source>
+        <translation>MakerCAM, versiunea din noiembrie 2014, nu ascunde conținutul SVG care a fost setat ca fiind invizibil (prin "display: none" sau "visibility: hidden").</translation>
     </message>
     <message>
         <source>MakerCAM as of November 2014 cannot correctly deal with blocks,
@@ -5739,16 +5739,16 @@ the &lt;transform&gt; attribute or as &lt;path&gt; using elliptic arc segments.<
     </message>
     <message>
         <source>Exported images can be useful in SVG editors (Inkscape, etc), 
-but avoided in some CAM&apos;s.</source>
+but avoided in some CAM's.</source>
         <translation>Imaginile exportate pot fi utile în editoare SVG (Inkscape, etc.), dar sunt evitate în unele programe CAM.</translation>
     </message>
     <message>
-        <source>Many CAM&apos;s(MakerCAM, EleskCAM, LaserWeb) ignore dashed/doted line style, 
+        <source>Many CAM's(MakerCAM, EleskCAM, LaserWeb) ignore dashed/doted line style, 
 which can be useful in lasercut of plywood or for papercraft. </source>
         <translation>Multe programe CAM (MakerCAM, EleskCAM, LaserWeb) ignoră stilul de linie punctată/întreruptă, ceea ce poate fi util în tăierea laser a placajului sau pentru lucrări de artă din hârtie.</translation>
     </message>
     <message>
-        <source>Default width of elements can affect some CAM&apos;s/SVG Editors, 
+        <source>Default width of elements can affect some CAM's/SVG Editors, 
 but ignored by other</source>
         <translation>Lățimea implicită a elementelor poate afecta unele programe CAM/editoare SVG, dar este ignorată de altele.</translation>
     </message>
@@ -7057,11 +7057,11 @@ Conținutul unui strat de construcție nu ar trebui să apară în imprimare.</t
         <translation>Stanga</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+        <source>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Ubuntu&apos;; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Helvetica&apos;; font-size:9pt;&quot;&gt;Hint about left/right mouse button actions&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Ubuntu'; font-size:11pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;span style=" font-family:'Helvetica'; font-size:9pt;"&gt;Hint about left/right mouse button actions&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>Indicație despre acțiunile butoanelor din stânga/dreapta mouse-ului</translation>
     </message>
 </context>
@@ -7109,28 +7109,28 @@ p, li { white-space: pre-wrap; }
         <translation>Lungime totala</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+        <source>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Number of selected entities&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Helvetica'; font-size:7pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;Number of selected entities&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Numarul entitatilor selectate&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Helvetica'; font-size:7pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;Numarul entitatilor selectate&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+        <source>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Total length of selected entities&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Helvetica'; font-size:7pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;Total length of selected entities&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Lungimea totala a entitatilor selectate&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Helvetica'; font-size:7pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;Lungimea totala a entitatilor selectate&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
@@ -7409,8 +7409,8 @@ p, li { white-space: pre-wrap; }
         <translation>Stergere strat</translation>
     </message>
     <message>
-        <source>Layer &quot;%1&quot; can never be removed.</source>
-        <translation>Stratul &quot;%1&quot; nu poate fi sters.</translation>
+        <source>Layer "%1" can never be removed.</source>
+        <translation>Stratul "%1" nu poate fi sters.</translation>
     </message>
     <message>
         <source>Layer Dialog</source>
@@ -7421,25 +7421,25 @@ p, li { white-space: pre-wrap; }
         <translation>Stergere Bloc</translation>
     </message>
     <message>
-        <source>Block &quot;%1&quot; and all its entities will be removed.</source>
-        <translation>Blocul &quot;%1&quot; si continutul acestuia au fost sterse.</translation>
+        <source>Block "%1" and all its entities will be removed.</source>
+        <translation>Blocul "%1" si continutul acestuia au fost sterse.</translation>
     </message>
     <message>
         <source>Layer Properties</source>
         <translation>Proprietatile Stratului</translation>
     </message>
     <message>
-        <source>Layer with a name &quot;%1&quot; already exists. Please specify a different name.</source>
-        <translation>Stratul cu numele &quot;%1&quot; exista deja. Va trebui sa alegeti alt nume.</translation>
+        <source>Layer with a name "%1" already exists. Please specify a different name.</source>
+        <translation>Stratul cu numele "%1" exista deja. Va trebui sa alegeti alt nume.</translation>
     </message>
     <message>
-        <source>Layer &quot;%1&quot; and all entities on it will be removed.
+        <source>Layer "%1" and all entities on it will be removed.
 This action can NOT be undone.</source>
         <translation>Stratul „%1” și toate entitățile de pe acesta vor fi eliminate.
 Această acțiune NU poate fi anulată.</translation>
     </message>
     <message>
-        <source>Layer &quot;0&quot; can never be removed.</source>
+        <source>Layer "0" can never be removed.</source>
         <translation>Stratul „0” nu poate fi eliminat.</translation>
     </message>
     <message numerus="yes">
@@ -7459,8 +7459,8 @@ Această acțiune NU poate fi anulată.</translation>
         <translation>Atenție: această acțiune NU poate fi anulată!</translation>
     </message>
     <message>
-        <source>Warning: layer &quot;0&quot; can never be removed.</source>
-        <translation>Atenție: stratul &quot;0&quot; nu poate fi eliminat niciodată.</translation>
+        <source>Warning: layer "0" can never be removed.</source>
+        <translation>Atenție: stratul "0" nu poate fi eliminat niciodată.</translation>
     </message>
     <message>
         <source>Layers for removal:</source>
@@ -7554,9 +7554,9 @@ Vă rugăm să specificați un alt nume.</translation>
         <translation>Selecție duplicată</translation>
     </message>
     <message>
-        <source>Replace &quot;By Layer&quot; value to source layers values?
-If Yes - entities with &quot;By Layer&quot; pens will look on new layer exactly as on previous layers and &quot;By Layer&quot; value will be replaced by resolved pens.
-If No - &quot;By Layer&quot; values remains and so pen of target layer will define pen for such entities.</source>
+        <source>Replace "By Layer" value to source layers values?
+If Yes - entities with "By Layer" pens will look on new layer exactly as on previous layers and "By Layer" value will be replaced by resolved pens.
+If No - "By Layer" values remains and so pen of target layer will define pen for such entities.</source>
         <translation type="vanished">Înlocuiți valoarea „În funcție de strat” cu valorile straturilor sursă?
 Dacă da, entitățile cu penițe „În funcție de strat” vor arăta pe noul strat exact ca pe straturile anterioare, iar valoarea „În funcție de strat” va fi înlocuită cu penițele rezolvate.
 Dacă nu, valorile „În funcție de strat” vor rămâne, iar penița stratului țintă va defini penița pentru aceste entități.</translation>
@@ -7587,7 +7587,7 @@ Please specify a different value.</source>
         <translation>Penița va fi eliminată din paletă, entitățile desenate nu vor fi afectate.</translation>
     </message>
     <message>
-        <source>Are you sure you&apos;d like to proceed?</source>
+        <source>Are you sure you'd like to proceed?</source>
         <translation>Sunteți sigur că doriți să continuați?</translation>
     </message>
     <message>
@@ -7653,11 +7653,11 @@ Clear filtering mask and repeat.</source>
 Ștergeți masca de filtrare și repetați.</translation>
     </message>
     <message>
-        <source>Replace &quot;By Layer&quot; value to source layers values?
+        <source>Replace "By Layer" value to source layers values?
 
-If Yes - entities with &quot;By Layer&quot; pens will look on new layer exactly as on previous layers and &quot;By Layer&quot; value will be replaced by resolved pens.
+If Yes - entities with "By Layer" pens will look on new layer exactly as on previous layers and "By Layer" value will be replaced by resolved pens.
 
-If No - &quot;By Layer&quot; values remains and so pen of target layer will define pen for such entities.</source>
+If No - "By Layer" values remains and so pen of target layer will define pen for such entities.</source>
         <translation>Înlocuiți valoarea „Pe strat” cu valorile straturilor sursă?
 
 Dacă da, entitățile cu penițe „Pe strat” vor arăta pe noul strat exact ca pe straturile anterioare, iar valoarea „Pe strat” va fi înlocuită cu penițele rezolvate.
@@ -7870,7 +7870,7 @@ Doriti sa il inlocuiti cu acesta?</translation>
         <translation>Eroare necunoscută la deschiderea fișierului DWG.</translation>
     </message>
     <message>
-        <source>can&apos;t open this dwg file</source>
+        <source>can't open this dwg file</source>
         <translation>Nu se poate deschide acest fișier DWG.</translation>
     </message>
     <message>
@@ -10082,8 +10082,8 @@ Doriti sa il inlocuiti cu acesta?</translation>
         <translation>CONTEXT: QObject -o some.pdf *.dxf</translation>
     </message>
     <message>
-        <source>-- print all dxf files to &apos;some.pdf&apos; file.</source>
-        <translation>Imprimă toate fișierele DXF în fișierul &apos;some.pdf&apos;.</translation>
+        <source>-- print all dxf files to 'some.pdf' file.</source>
+        <translation>Imprimă toate fișierele DXF în fișierul 'some.pdf'.</translation>
     </message>
     <message>
         <source>Auto fit and center drawing to page.</source>
@@ -10157,8 +10157,8 @@ Doriti sa il inlocuiti cu acesta?</translation>
         <translation>Combină toate straturile.</translation>
     </message>
     <message>
-        <source>File &quot;%1&quot; already exists. Do you want to replace it?</source>
-        <translation>Fișierul &quot;%1&quot; există deja. Doriți să-l înlocuiți?</translation>
+        <source>File "%1" already exists. Do you want to replace it?</source>
+        <translation>Fișierul "%1" există deja. Doriți să-l înlocuiți?</translation>
     </message>
     <message>
         <source>/CustomColor%1</source>
@@ -10838,8 +10838,8 @@ Doriti sa il inlocuiti cu acesta?</translation>
         <translation>Introduceti spatiul dintre linii:</translation>
     </message>
     <message>
-        <source></source>
-        <translation></translation>
+        <source />
+        <translation />
     </message>
     <message>
         <source>Block cannot contain an insert of itself.</source>
@@ -11079,7 +11079,7 @@ This block cannot be inserted.</source>
     <name>RS_ActionDrawArc3P</name>
     <message>
         <source>Invalid arc data.</source>
-        <translation>Données d&apos;arc invalides.</translation>
+        <translation>Données d'arc invalides.</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -11306,24 +11306,24 @@ This block cannot be inserted.</source>
         <translation>Selectează centrul cercului tangent</translation>
     </message>
     <message>
-        <source>Invalid expression &apos;%1&apos; for radius</source>
-        <translation>Expresie invalidă &apos;%1&apos; pentru rază</translation>
+        <source>Invalid expression '%1' for radius</source>
+        <translation>Expresie invalidă '%1' pentru rază</translation>
     </message>
     <message>
-        <source>Invalid negative radius &apos;%1&apos;</source>
-        <translation>Rază negativă invalidă &apos;%1&apos;</translation>
+        <source>Invalid negative radius '%1'</source>
+        <translation>Rază negativă invalidă '%1'</translation>
     </message>
     <message>
-        <source>Invalid zero radius &apos;%1&apos;</source>
-        <translation>Rază zero invalidă &apos;%1&apos;</translation>
+        <source>Invalid zero radius '%1'</source>
+        <translation>Rază zero invalidă '%1'</translation>
     </message>
     <message>
-        <source>No tangent circle possible for radius &apos;%1&apos;</source>
-        <translation>Nu este posibil un cerc tangent pentru raza &apos;%1&apos;</translation>
+        <source>No tangent circle possible for radius '%1'</source>
+        <translation>Nu este posibil un cerc tangent pentru raza '%1'</translation>
     </message>
     <message>
-        <source>No common tangential circle for radius &apos;%1&apos;</source>
-        <translation>Nu există un cerc tangent comun pentru raza &apos;%1&apos;</translation>
+        <source>No common tangential circle for radius '%1'</source>
+        <translation>Nu există un cerc tangent comun pentru raza '%1'</translation>
     </message>
 </context>
 <context>
@@ -11597,8 +11597,8 @@ This block cannot be inserted.</source>
         <translation>Introduceti factorul:</translation>
     </message>
     <message>
-        <source></source>
-        <translation></translation>
+        <source />
+        <translation />
     </message>
     <message>
         <source>Enter dpi:</source>
@@ -11809,8 +11809,8 @@ This block cannot be inserted.</source>
 <context>
     <name>RS_ActionDrawLinePolygon</name>
     <message>
-        <source></source>
-        <translation></translation>
+        <source />
+        <translation />
     </message>
 </context>
 <context>
@@ -12288,16 +12288,16 @@ This block cannot be inserted.</source>
         <translation>Introduceti unghiul:</translation>
     </message>
     <message>
-        <source></source>
-        <translation></translation>
+        <source />
+        <translation />
     </message>
     <message>
         <source>Enter factor:</source>
         <translation>Introduceti factorul:</translation>
     </message>
     <message>
-        <source>Cannot open file &apos;%1&apos;</source>
-        <translation>Nu pot deschide fisierul &apos;%1&apos;</translation>
+        <source>Cannot open file '%1'</source>
+        <translation>Nu pot deschide fisierul '%1'</translation>
     </message>
 </context>
 <context>
@@ -12733,7 +12733,7 @@ This block cannot be inserted.</source>
         <translation>Renuntare</translation>
     </message>
     <message>
-        <source>Specify adding node&apos;s point</source>
+        <source>Specify adding node's point</source>
         <translation>Specificati punctul unde se va adauga noul nod</translation>
     </message>
     <message>
@@ -12803,7 +12803,7 @@ This block cannot be inserted.</source>
         <translation>Renuntare</translation>
     </message>
     <message>
-        <source>Specify deleting node&apos;s point</source>
+        <source>Specify deleting node's point</source>
         <translation>Specificati punctul de stergere a nodului</translation>
     </message>
     <message>
@@ -12970,8 +12970,8 @@ This block cannot be inserted.</source>
         <translation>Introduceți deplasarea din linia de comandă pentru a deplasa imprimarea.</translation>
     </message>
     <message>
-        <source>Printout offset ignores relative zero. Ignoring &apos;@&apos;</source>
-        <translation>Deplasarea imprimării ignoră zero relativ. Ignoră &apos;@&apos;.</translation>
+        <source>Printout offset ignores relative zero. Ignoring '@'</source>
+        <translation>Deplasarea imprimării ignoră zero relativ. Ignoră '@'.</translation>
     </message>
     <message>
         <source>Printout in Black/White</source>
@@ -13069,7 +13069,7 @@ This block cannot be inserted.</source>
     <name>RS_ActionSelectContour</name>
     <message>
         <source>Entity must be an Atomic Entity.</source>
-        <translation>Entitatea trebuie sa fie de tip &quot;atomic&quot;.</translation>
+        <translation>Entitatea trebuie sa fie de tip "atomic".</translation>
     </message>
 </context>
 <context>

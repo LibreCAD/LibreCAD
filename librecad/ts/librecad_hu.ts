@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
+<?xml version='1.0' encoding='utf-8'?>
 <TS version="2.1" language="hu">
 <context>
     <name>ColorWizard</name>
@@ -341,7 +340,7 @@ vagy [%2]</translation>
     </message>
     <message>
         <source>Specify next control point or [%1]</source>
-        <translation>Adja meg a következő vezérlőpontot vagy [% 1]</translation>
+        <translation>Adja meg a következő vezérlőpontot, vagy nyomja meg a(z) [%1] billentyűt.</translation>
     </message>
     <message>
         <source>Back</source>
@@ -1171,7 +1170,7 @@ vagy [%2]</translation>
         <translation>Másolat</translation>
     </message>
     <message>
-        <source>Update Current Pen by Active Layer&apos; Pen</source>
+        <source>Update Current Pen by Active Layer' Pen</source>
         <translation>Aktuális toll frissítése az aktív réteg tollával</translation>
     </message>
 </context>
@@ -1185,8 +1184,8 @@ vagy [%2]</translation>
 <context>
     <name>LC_ActionLayersExport</name>
     <message>
-        <source>Saving layer &quot;%1&quot; as &quot;%2&quot; </source>
-        <translation>Réteg mentése &quot;% 1&quot; mint &quot;% 2&quot; </translation>
+        <source>Saving layer "%1" as "%2" </source>
+        <translation>A "%1" réteg mentése "%2" néven.</translation>
     </message>
 </context>
 <context>
@@ -1700,7 +1699,7 @@ vagy [%2]</translation>
         <translation>Átalakítás normál réteggé</translation>
     </message>
     <message>
-        <source>&amp;Select Layer&apos;s Entities</source>
+        <source>&amp;Select Layer's Entities</source>
         <translation>&amp;Réteg entitásainak kijelölése</translation>
     </message>
     <message>
@@ -2231,11 +2230,11 @@ vagy [%2]</translation>
         <translation>aktuálisra</translation>
     </message>
     <message>
-        <source>Update Current Pen by Active Layer&apos; Pen</source>
+        <source>Update Current Pen by Active Layer' Pen</source>
         <translation>Aktuális toll frissítése az aktív réteg tollával</translation>
     </message>
     <message>
-        <source>Fill Pen Editor from Active Layer&apos;s Pen</source>
+        <source>Fill Pen Editor from Active Layer's Pen</source>
         <translation>Toll szerkesztő kitöltése az aktív réteg tollából</translation>
     </message>
     <message>
@@ -2300,14 +2299,14 @@ vagy [%2]</translation>
     </message>
     <message>
         <source>Location of pens file is changed, please restart the application so new pens file will be used.
-Please note that if you&apos;ll save pen via editor without restart, current pens from palette will be saved in the new file and therefore existing content of it will be overridden.</source>
+Please note that if you'll save pen via editor without restart, current pens from palette will be saved in the new file and therefore existing content of it will be overridden.</source>
         <translation type="vanished">A tollak fájljának helye megváltozott, kérjük indítsa újra az alkalmazást, hogy az új toll fájl használatra kerüljön.
 Megjegyzés: ha a szerkesztőn keresztül ment tollat újraindítás nélkül, akkor a palettáról származó aktuális tollak az új fájlba kerülnek mentésre és a meglévő tartalom felülíródik.</translation>
     </message>
     <message>
         <source>Location of pens file is changed, please restart the application so new pens file will be used.
 
-Please note that if you&apos;ll save pen via editor without restart, current pens from palette will be saved in the new file and therefore existing content of it will be overridden.</source>
+Please note that if you'll save pen via editor without restart, current pens from palette will be saved in the new file and therefore existing content of it will be overridden.</source>
         <translation>A tollfájl helye megváltozott, kérjük, indítsa újra az alkalmazást, hogy az új tollfájl használatba kerüljön.
 
 Kérjük, vegye figyelembe, hogy ha a tollakat az editorban, újraindítás nélkül menti, a paletta aktuális tollai kerülnek a fájlba, és ez felülírja a meglévő tartalmat.</translation>
@@ -2820,12 +2819,12 @@ Kérjük, vegye figyelembe, hogy ha a tollakat az editorban, újraindítás nél
         <translation>Eltávolítás jobbra</translation>
     </message>
     <message>
-        <source>remove 0&apos;</source>
-        <translation>eltávolítás 0&apos;</translation>
+        <source>remove 0'</source>
+        <translation>eltávolítás 0'</translation>
     </message>
     <message>
-        <source>remove 0&quot;</source>
-        <translation>eltávolítás 0&quot;</translation>
+        <source>remove 0"</source>
+        <translation>eltávolítás 0"</translation>
     </message>
 </context>
 <context>
@@ -3039,8 +3038,8 @@ Kérjük, vegye figyelembe, hogy ha a tollakat az editorban, újraindítás nél
         <translation>Parancssor</translation>
     </message>
     <message>
-        <source>Block &apos;%1&apos;</source>
-        <translation>Blokk &apos;%1&apos;</translation>
+        <source>Block '%1'</source>
+        <translation>Blokk '%1'</translation>
     </message>
     <message>
         <source>Cannot open the file
@@ -3161,8 +3160,8 @@ Please check its existence and permissions.</source>
 Kérjük, ellenőrizze annak létezését és engedélyeit.</translation>
     </message>
     <message>
-        <source>File &apos;%1&apos; does not exist. Opening aborted</source>
-        <translation>A &apos;%1&apos; fájl nem létezik. Megnyitás megszakítva</translation>
+        <source>File '%1' does not exist. Opening aborted</source>
+        <translation>A '%1' fájl nem létezik. Megnyitás megszakítva</translation>
     </message>
     <message>
         <source>Categories</source>
@@ -3332,7 +3331,7 @@ Kérjük, ellenőrizze annak létezését és engedélyeit.</translation>
     </message>
     <message>
         <source>Save %1 &amp;as...</source>
-        <translation>1 mentése &amp;másként...</translation>
+        <translation>A(z) %1 mentése másként...</translation>
     </message>
     <message>
         <source>&amp;Window mode</source>
@@ -3404,7 +3403,7 @@ Kérjük, ellenőrizze annak létezését és engedélyeit.</translation>
         <translation>&amp;Wiki</translation>
     </message>
     <message>
-        <source>User&apos;s &amp;Manual</source>
+        <source>User's &amp;Manual</source>
         <translation>Felhasználói &amp;Útmutató</translation>
     </message>
     <message>
@@ -3483,16 +3482,16 @@ Kérjük, ellenőrizze annak létezését és engedélyeit.</translation>
         <translation>Aktuális réteg</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+        <source>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Name of Current Active Layer&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Helvetica'; font-size:7pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;Name of Current Active Layer&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;A jelenlegi aktív réteg neve &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Helvetica'; font-size:7pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;A jelenlegi aktív réteg neve &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
@@ -3510,8 +3509,8 @@ p, li { white-space: pre-wrap; }
         <translation>Blokk átnevezés</translation>
     </message>
     <message>
-        <source>Could not name block. A block named &quot;%1&quot; already exists.</source>
-        <translation>Érvénytelen elnevezés. A &quot;%1 &quot; név már foglalt.</translation>
+        <source>Could not name block. A block named "%1" already exists.</source>
+        <translation>Érvénytelen elnevezés. A "%1 " név már foglalt.</translation>
     </message>
 </context>
 <context>
@@ -4105,12 +4104,12 @@ Ez rekurzív módon módosítja magának a blokknak az összes entitását.</tra
         <translation>Parancsok nyelve:</translation>
     </message>
     <message>
-        <source>&lt;font size=&quot;+1&quot;&gt;&lt;b&gt;Welcome to LibreCAD&lt;/b&gt;
+        <source>&lt;font size="+1"&gt;&lt;b&gt;Welcome to LibreCAD&lt;/b&gt;
 &lt;/font&gt;
 &lt;br&gt;
 Please choose the unit you want to use for new drawings and your preferred language.&lt;br&gt;
 (You can changes these settings later.)</source>
-        <translation>&lt;font size=&quot;+1&quot;&gt;&lt;b&gt;Üdvözli a LibreCAD&lt;/b&gt;
+        <translation>&lt;font size="+1"&gt;&lt;b&gt;Üdvözli a LibreCAD&lt;/b&gt;
 &lt;/font&gt;
 &lt;br&gt;
 Kérjük, válassza ki az új rajzokhoz használni kívánt egységet és a kívánt nyelvet.&lt;br&gt;
@@ -5022,7 +5021,7 @@ Kérjük, válassza ki az új rajzokhoz használni kívánt egységet és a kív
         <translation>Radián</translation>
     </message>
     <message>
-        <source>Surveyor&apos;s units</source>
+        <source>Surveyor's units</source>
         <translation>Geodéziai egységek</translation>
     </message>
     <message>
@@ -5030,8 +5029,8 @@ Kérjük, válassza ki az új rajzokhoz használni kívánt egységet és a kív
         <translation>Beállítások</translation>
     </message>
     <message>
-        <source>For the length formats &apos;Engineering&apos; and &apos;Architectural&apos;, the unit must be set to Inch.</source>
-        <translation>A &apos;Mérnöki&apos; és &apos;Építészeti&apos; formátumhoz Inch a mértékegység.</translation>
+        <source>For the length formats 'Engineering' and 'Architectural', the unit must be set to Inch.</source>
+        <translation>A 'Mérnöki' és 'Építészeti' formátumhoz Inch a mértékegység.</translation>
     </message>
     <message>
         <source>&amp;Paper</source>
@@ -5150,7 +5149,7 @@ Kérjük, válassza ki az új rajzokhoz használni kívánt egységet és a kív
         <translation>Ferde vonal mérete:</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dimension Tick size. Set it to 0 will disable the dimension tick. Dimension arrow won&apos;t be drawn when dimension tick is enabled.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dimension Tick size. Set it to 0 will disable the dimension tick. Dimension arrow won't be drawn when dimension tick is enabled.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Méretet határoló ferde vonal mérete. Ha 0-ra állítja, letiltja a ferde vonalat. A méretnyíl nem jelenik meg, ha a méretjelölés engedélyezve van.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
@@ -5174,12 +5173,12 @@ Kérjük, válassza ki az új rajzokhoz használni kívánt egységet és a kív
         <translation>Szöveg stílusa:</translation>
     </message>
     <message>
-        <source>&apos;.&apos; (Period)</source>
-        <translation>&apos;.&apos; (Pont)</translation>
+        <source>'.' (Period)</source>
+        <translation>'.' (Pont)</translation>
     </message>
     <message>
-        <source>&apos;,&apos; (Comma)</source>
-        <translation>&apos;,&apos; (Vessző)</translation>
+        <source>',' (Comma)</source>
+        <translation>',' (Vessző)</translation>
     </message>
     <message>
         <source>Decimal separator:</source>
@@ -5222,8 +5221,8 @@ Kérjük, válassza ki az új rajzokhoz használni kívánt egységet és a kív
         <translation>Hossz a méretvonal feletti nagyításhoz</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dimension arrow size. &lt;a name=&quot;result_box&quot;/&gt;without effect when tick size &lt;a name=&quot;result_box&quot;/&gt;is other than 0&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Méret nyíl mérete. &lt;a name=&quot;result_box&quot;/&gt; ha a ferde vonal &lt;a name=&quot;result_box&quot;/&gt; mérete nem 0&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dimension arrow size. &lt;a name="result_box"/&gt;without effect when tick size &lt;a name="result_box"/&gt;is other than 0&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Méret nyíl mérete. &lt;a name="result_box"/&gt; ha a ferde vonal &lt;a name="result_box"/&gt; mérete nem 0&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Width:</source>
@@ -5254,8 +5253,8 @@ Kérjük, válassza ki az új rajzokhoz használni kívánt egységet és a kív
         <translation>Lineáris pontosság:</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Text alignment &lt;a name=&quot;result_box&quot;/&gt;relative to the dimension line.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Szöveg igazítása &lt;a name=&quot;result_box&quot;/&gt;a méretvonalhoz viszonyítva.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Text alignment &lt;a name="result_box"/&gt;relative to the dimension line.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Szöveg igazítása &lt;a name="result_box"/&gt;a méretvonalhoz viszonyítva.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Aligned</source>
@@ -5358,7 +5357,7 @@ Kérjük, válassza ki az új rajzokhoz használni kívánt egységet és a kív
         <translation>Építészeti (metrikus)</translation>
     </message>
     <message>
-        <source>For the length format &apos;Architectural (metric)&apos;, the unit must be set to Meter.</source>
+        <source>For the length format 'Architectural (metric)', the unit must be set to Meter.</source>
         <translation>Az „Építészeti (metrikus)” hosszformátum esetén a mértékegységet Méter értékre kell állítani.</translation>
     </message>
     <message>
@@ -5605,7 +5604,7 @@ Kérjük, válassza ki az új rajzokhoz használni kívánt egységet és a kív
         <translation>Az előnézeti elemek száma:</translation>
     </message>
     <message>
-        <source>Don&apos;t use native OS file open dialog</source>
+        <source>Don't use native OS file open dialog</source>
         <translation>Ne használjon natív operációs rendszer fájlokat a megnyitott párbeszédablakban</translation>
     </message>
     <message>
@@ -5685,7 +5684,7 @@ Kérjük, válassza ki az új rajzokhoz használni kívánt egységet és a kív
         <translation>A rajz automatikus nagyítása megnyitáskor</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-family:&apos;-apple-system&apos;,&apos;BlinkMacSystemFont&apos;,&apos;Segoe UI&apos;,&apos;Noto Sans&apos;,&apos;Helvetica&apos;,&apos;Arial&apos;,&apos;sans-serif&apos;,&apos;Apple Color Emoji&apos;,&apos;Segoe UI Emoji&apos;; font-size:14px; color:#1f2328; background-color:#ffffff;&quot;&gt;Part library folder. The symbol library dxf files must be located in the subdirectories of this folder. The subfolder names will be displayed in the Library Browser.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-family:&apos;-apple-system&apos;,&apos;BlinkMacSystemFont&apos;,&apos;Segoe UI&apos;,&apos;Noto Sans&apos;,&apos;Helvetica&apos;,&apos;Arial&apos;,&apos;sans-serif&apos;,&apos;Apple Color Emoji&apos;,&apos;Segoe UI Emoji&apos;; font-size:14px; color:#1f2328; background-color:#ffffff;&quot;&gt;( Menu: Widgets &amp;gt; Dock Widgets &amp;gt; Library Browser)&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=" font-family:'-apple-system','BlinkMacSystemFont','Segoe UI','Noto Sans','Helvetica','Arial','sans-serif','Apple Color Emoji','Segoe UI Emoji'; font-size:14px; color:#1f2328; background-color:#ffffff;"&gt;Part library folder. The symbol library dxf files must be located in the subdirectories of this folder. The subfolder names will be displayed in the Library Browser.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=" font-family:'-apple-system','BlinkMacSystemFont','Segoe UI','Noto Sans','Helvetica','Arial','sans-serif','Apple Color Emoji','Segoe UI Emoji'; font-size:14px; color:#1f2328; background-color:#ffffff;"&gt;( Menu: Widgets &amp;gt; Dock Widgets &amp;gt; Library Browser)&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>Alkatrész könyvtár mappája. A szimbólum könyvtár dxf fájlokát e mappák alpontkönyvtáraiban kell elhelyezni. Az alpontkönyvtárak nevei a Könyvtár böngészőben jelennek meg. (Menü: Widgetek &gt; Dock Widgetek &gt; Könyvtár böngésző)</translation>
     </message>
     <message>
@@ -5757,9 +5756,9 @@ Kérjük, válassza ki az új rajzokhoz használni kívánt egységet és a kív
     </message>
     <message>
         <source>MakerCAM as of November 2014 does not hide SVG content 
-that has been set invisibe (&quot;display: none&quot; or &quot;visibility: hidden&quot;).</source>
+that has been set invisibe ("display: none" or "visibility: hidden").</source>
         <translation>A MakerCAM 2014 novemberétől nem rejti el az SVG tartalmat
-amelyet láthatatlannak állítottak be (&quot;megjelenítés: nincs&quot; vagy &quot;láthatóság: rejtett&quot;).</translation>
+amelyet láthatatlannak állítottak be ("megjelenítés: nincs" vagy "láthatóság: rejtett").</translation>
     </message>
     <message>
         <source>MakerCAM as of November 2014 cannot correctly deal with blocks,
@@ -5777,18 +5776,18 @@ az &lt;transform&gt; attribútum vagy az &lt;path&gt; elliptikus ívszegmensek h
     </message>
     <message>
         <source>Exported images can be useful in SVG editors (Inkscape, etc), 
-but avoided in some CAM&apos;s.</source>
+but avoided in some CAM's.</source>
         <translation>Az exportált képek hasznosak lehetnek az SVG szerkesztőkben (Inkscape stb.), 
 de néhány CAM-ban elkerülték.</translation>
     </message>
     <message>
-        <source>Many CAM&apos;s(MakerCAM, EleskCAM, LaserWeb) ignore dashed/doted line style, 
+        <source>Many CAM's(MakerCAM, EleskCAM, LaserWeb) ignore dashed/doted line style, 
 which can be useful in lasercut of plywood or for papercraft. </source>
         <translation>Sok CAM (MakerCAM, EleksCAM, LaserWeb) figyelmen kívül hagyja a szaggatott/pontozott vonalstílust,
 amely hasznos lehet rétegelt lemez lézervágásánál vagy papírgyártásnál. </translation>
     </message>
     <message>
-        <source>Default width of elements can affect some CAM&apos;s/SVG Editors, 
+        <source>Default width of elements can affect some CAM's/SVG Editors, 
 but ignored by other</source>
         <translation>Az elemek alapértelmezett szélessége hatással lehet egyes CAM / SVG szerkesztőkre, 
 de mások figyelmen kívül hagyják</translation>
@@ -7110,16 +7109,16 @@ A tervezési rétegek tartalma nem kerül kinyomtatásra.</translation>
         <translation>Bal</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+        <source>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Ubuntu&apos;; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Helvetica&apos;; font-size:9pt;&quot;&gt;Hint about left/right mouse button actions&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Ubuntu'; font-size:11pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;span style=" font-family:'Helvetica'; font-size:9pt;"&gt;Hint about left/right mouse button actions&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Ubuntu&apos;; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Helvetica&apos;; font-size:9pt;&quot;&gt;Tipp a bal/jobb egérgomb műveleteihez&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Ubuntu'; font-size:11pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;span style=" font-family:'Helvetica'; font-size:9pt;"&gt;Tipp a bal/jobb egérgomb műveleteihez&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
@@ -7166,28 +7165,28 @@ p, li { white-space: pre-wrap; }
         <translation>Teljes hossz</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+        <source>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Number of selected entities&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Helvetica'; font-size:7pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;Number of selected entities&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Kijelölt elemek száma&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Helvetica'; font-size:7pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;Kijelölt elemek száma&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+        <source>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Total length of selected entities&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Helvetica'; font-size:7pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;Total length of selected entities&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Kijelölt elemek összes hossza&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Helvetica'; font-size:7pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;Kijelölt elemek összes hossza&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
@@ -7466,8 +7465,8 @@ p, li { white-space: pre-wrap; }
         <translation>Fólia törlése</translation>
     </message>
     <message>
-        <source>Layer &quot;%1&quot; can never be removed.</source>
-        <translation>A &quot;%1&quot; fólia soha sem törölhető.</translation>
+        <source>Layer "%1" can never be removed.</source>
+        <translation>A "%1" fólia soha sem törölhető.</translation>
     </message>
     <message>
         <source>Layer Dialog</source>
@@ -7478,32 +7477,32 @@ p, li { white-space: pre-wrap; }
         <translation>Blokk törlése</translation>
     </message>
     <message>
-        <source>Block &quot;%1&quot; and all its entities will be removed.</source>
-        <translation>A &quot;%1&quot; blokk és minden eleme törlődik.</translation>
+        <source>Block "%1" and all its entities will be removed.</source>
+        <translation>A "%1" blokk és minden eleme törlődik.</translation>
     </message>
     <message>
         <source>Layer Properties</source>
         <translation>Fólia tulajdonságai</translation>
     </message>
     <message>
-        <source>Layer with a name &quot;%1&quot; already exists. Please specify a different name.</source>
-        <translation>A &quot;%1&quot; nevű fólia már létezik. Válasszon másik nevet.</translation>
+        <source>Layer with a name "%1" already exists. Please specify a different name.</source>
+        <translation>A "%1" nevű fólia már létezik. Válasszon másik nevet.</translation>
     </message>
     <message>
-        <source>Layer &quot;%1&quot; and all entities on it will be removed.
+        <source>Layer "%1" and all entities on it will be removed.
 This action can NOT be undone.</source>
         <translation>A „%1” réteg és az összes rajta lévő elem el lesz távolítva.
 Ez a művelet nem visszavonható.</translation>
     </message>
     <message>
-        <source>Layer &quot;0&quot; can never be removed.</source>
-        <translation>A &quot;0&quot; réteg soha nem távolítható el.</translation>
+        <source>Layer "0" can never be removed.</source>
+        <translation>A "0" réteg soha nem távolítható el.</translation>
     </message>
     <message numerus="yes">
         <source>Remove %n layer(s)</source>
         <translation>
-            <numerusform>%n réteg eltávolítása</numerusform>
-        </translation>
+            <numerusform>%n réteg(et) eltávolít</numerusform>
+        <numerusform>%n réteget eltávolít</numerusform></translation>
     </message>
     <message>
         <source>Listed layers and all entities on them will be removed.</source>
@@ -7514,8 +7513,8 @@ Ez a művelet nem visszavonható.</translation>
         <translation>Figyelmeztetés: ez a művelet NEM vonható vissza!</translation>
     </message>
     <message>
-        <source>Warning: layer &quot;0&quot; can never be removed.</source>
-        <translation>Figyelmeztetés: &quot;0&quot; réteg soha nem távolítható el.</translation>
+        <source>Warning: layer "0" can never be removed.</source>
+        <translation>Figyelmeztetés: "0" réteg soha nem távolítható el.</translation>
     </message>
     <message>
         <source>Layers for removal:</source>
@@ -7524,8 +7523,8 @@ Ez a művelet nem visszavonható.</translation>
     <message numerus="yes">
         <source>Remove %n block(s)</source>
         <translation>
-            <numerusform>%n blokk eltávolítása</numerusform>
-        </translation>
+            <numerusform>%n blokk(ot) eltávolít</numerusform>
+        <numerusform>%n blokkot eltávolít</numerusform></translation>
     </message>
     <message>
         <source>Listed blocks and all their entities will be removed.</source>
@@ -7604,12 +7603,12 @@ Please specify a different name.</source>
         <translation>Kiválasztás duplikálása</translation>
     </message>
     <message>
-        <source>Replace &quot;By Layer&quot; value to source layers values?
-If Yes - entities with &quot;By Layer&quot; pens will look on new layer exactly as on previous layers and &quot;By Layer&quot; value will be replaced by resolved pens.
-If No - &quot;By Layer&quot; values remains and so pen of target layer will define pen for such entities.</source>
-        <translation type="vanished">Helyettesítem a &quot;Réteg szerint&quot; értékeket a forrásréteg értékével?
-Ha Igen - a &quot;Réteg szerint&quot; pennel rendelkező entitások a yeni régen pontosan úgy néznek ki, mint az előző rétegeken, és a &quot;Réteg szerint&quot; érték a feloldott pennel helyettesítésre kerül.
-Ha Nem - a &quot;Réteg szerint&quot; értékek megmaradnak, így a célréteg pennje fog meghatározni a pennet az ilyen entitások számára.</translation>
+        <source>Replace "By Layer" value to source layers values?
+If Yes - entities with "By Layer" pens will look on new layer exactly as on previous layers and "By Layer" value will be replaced by resolved pens.
+If No - "By Layer" values remains and so pen of target layer will define pen for such entities.</source>
+        <translation type="vanished">Helyettesítem a "Réteg szerint" értékeket a forrásréteg értékével?
+Ha Igen - a "Réteg szerint" pennel rendelkező entitások a yeni régen pontosan úgy néznek ki, mint az előző rétegeken, és a "Réteg szerint" érték a feloldott pennel helyettesítésre kerül.
+Ha Nem - a "Réteg szerint" értékek megmaradnak, így a célréteg pennje fog meghatározni a pennet az ilyen entitások számára.</translation>
     </message>
     <message>
         <source>Layer DialogEx</source>
@@ -7636,7 +7635,7 @@ Kérjük, adja meg más értéket.</translation>
         <translation>A pennát a palettáról távolítjuk, a rajzolt elemek nem érintettek.</translation>
     </message>
     <message>
-        <source>Are you sure you&apos;d like to proceed?</source>
+        <source>Are you sure you'd like to proceed?</source>
         <translation>Biztosan folytatni szeretne?</translation>
     </message>
     <message>
@@ -7702,11 +7701,11 @@ Clear filtering mask and repeat.</source>
 Törölje a szűrőmaszkot, és próbálja újra.</translation>
     </message>
     <message>
-        <source>Replace &quot;By Layer&quot; value to source layers values?
+        <source>Replace "By Layer" value to source layers values?
 
-If Yes - entities with &quot;By Layer&quot; pens will look on new layer exactly as on previous layers and &quot;By Layer&quot; value will be replaced by resolved pens.
+If Yes - entities with "By Layer" pens will look on new layer exactly as on previous layers and "By Layer" value will be replaced by resolved pens.
 
-If No - &quot;By Layer&quot; values remains and so pen of target layer will define pen for such entities.</source>
+If No - "By Layer" values remains and so pen of target layer will define pen for such entities.</source>
         <translation>Cserélje ki a „Réteg szerint” értéket a forrásrétegek értékeire?
 
 Ha Igen, akkor a „Réteg szerint” tollbeállítással rendelkező entitások a rétegen pontosan úgy jelennek meg, mint az előző rétegeken, és a „Réteg szerint” érték a feloldott tollbeállításokkal kerül helyettesítésre.
@@ -7971,7 +7970,7 @@ Lecseréli?</translation>
         <translation>Ismeretlen hiba a DWG fájl megnyitásakor</translation>
     </message>
     <message>
-        <source>can&apos;t open this dwg file</source>
+        <source>can't open this dwg file</source>
         <translation>A DWG fájl nem nyitható meg</translation>
     </message>
     <message>
@@ -8925,7 +8924,7 @@ Lecseréli?</translation>
     </message>
     <message>
         <source>Command: %1 (%2)</source>
-        <translation>Parancs: % 1 (% 2)</translation>
+        <translation>Parancs: %1 (%2)</translation>
     </message>
     <message>
         <source>RS_Commands:: command not found: %1</source>
@@ -10136,8 +10135,8 @@ Lecseréli?</translation>
         <translation> -o néhány.pdf *.dxf</translation>
     </message>
     <message>
-        <source>-- print all dxf files to &apos;some.pdf&apos; file.</source>
-        <translation>-- az összes dxf fájl kinyomtatása &quot;some.pdf&quot; fájlba.</translation>
+        <source>-- print all dxf files to 'some.pdf' file.</source>
+        <translation>-- az összes dxf fájl kinyomtatása "some.pdf" fájlba.</translation>
     </message>
     <message>
         <source>Auto fit and center drawing to page.</source>
@@ -10211,8 +10210,8 @@ Lecseréli?</translation>
         <translation>Kombinálja az összes réteget</translation>
     </message>
     <message>
-        <source>File &quot;%1&quot; already exists. Do you want to replace it?</source>
-        <translation>A &quot;%1&quot; fájl már létezik. Ki akarod cserélni?</translation>
+        <source>File "%1" already exists. Do you want to replace it?</source>
+        <translation>A "%1" fájl már létezik. Ki akarod cserélni?</translation>
     </message>
     <message>
         <source>/CustomColor%1</source>
@@ -10892,8 +10891,8 @@ Lecseréli?</translation>
         <translation>Sorok távolsága:</translation>
     </message>
     <message>
-        <source></source>
-        <translation></translation>
+        <source />
+        <translation />
     </message>
     <message>
         <source>Block cannot contain an insert of itself.</source>
@@ -11362,24 +11361,24 @@ Ez a blokk nem illeszthető be.</translation>
         <translation>Válassza ki az érintőkör középpontját</translation>
     </message>
     <message>
-        <source>Invalid expression &apos;%1&apos; for radius</source>
+        <source>Invalid expression '%1' for radius</source>
         <translation>Érvénytelen „%1” kifejezés a sugárhoz</translation>
     </message>
     <message>
-        <source>Invalid negative radius &apos;%1&apos;</source>
-        <translation>Érvénytelen negatív sugár &apos;% 1&apos;</translation>
+        <source>Invalid negative radius '%1'</source>
+        <translation>Érvénytelen negatív sugár: '%1'</translation>
     </message>
     <message>
-        <source>Invalid zero radius &apos;%1&apos;</source>
-        <translation>Érvénytelen nulla sugár &apos;% 1&apos;</translation>
+        <source>Invalid zero radius '%1'</source>
+        <translation>Érvénytelen nulla sugár: '%1'</translation>
     </message>
     <message>
-        <source>No tangent circle possible for radius &apos;%1&apos;</source>
-        <translation>Nem lehetséges érintőkör a &apos;% 1&apos; sugárhoz</translation>
+        <source>No tangent circle possible for radius '%1'</source>
+        <translation>Nem lehetséges érintőkör '%1' sugárral.</translation>
     </message>
     <message>
-        <source>No common tangential circle for radius &apos;%1&apos;</source>
-        <translation>Nincs közös érintőkör a &apos;% 1&apos; sugárhoz</translation>
+        <source>No common tangential circle for radius '%1'</source>
+        <translation>Nincs közös érintőkör a '%1' sugárral.</translation>
     </message>
 </context>
 <context>
@@ -11653,8 +11652,8 @@ Ez a blokk nem illeszthető be.</translation>
         <translation>Méret:</translation>
     </message>
     <message>
-        <source></source>
-        <translation></translation>
+        <source />
+        <translation />
     </message>
     <message>
         <source>Enter dpi:</source>
@@ -11865,8 +11864,8 @@ Ez a blokk nem illeszthető be.</translation>
 <context>
     <name>RS_ActionDrawLinePolygon</name>
     <message>
-        <source></source>
-        <translation></translation>
+        <source />
+        <translation />
     </message>
 </context>
 <context>
@@ -12356,12 +12355,12 @@ Ez a blokk nem illeszthető be.</translation>
         <translation>Elem beszúrása</translation>
     </message>
     <message>
-        <source></source>
-        <translation></translation>
+        <source />
+        <translation />
     </message>
     <message>
-        <source>Cannot open file &apos;%1&apos;</source>
-        <translation>Nem lehet megnyitni a &apos;%1&apos; fájlt</translation>
+        <source>Cannot open file '%1'</source>
+        <translation>Nem lehet megnyitni a '%1' fájlt</translation>
     </message>
 </context>
 <context>
@@ -12797,7 +12796,7 @@ Ez a blokk nem illeszthető be.</translation>
         <translation>Mégsem</translation>
     </message>
     <message>
-        <source>Specify adding node&apos;s point</source>
+        <source>Specify adding node's point</source>
         <translation>Csomópont pontjának hozzáadása</translation>
     </message>
     <message>
@@ -12867,7 +12866,7 @@ Ez a blokk nem illeszthető be.</translation>
         <translation>Mégsem</translation>
     </message>
     <message>
-        <source>Specify deleting node&apos;s point</source>
+        <source>Specify deleting node's point</source>
         <translation>Adja meg a csomópont törlésének pontját</translation>
     </message>
     <message>
@@ -13011,11 +13010,11 @@ Ez a blokk nem illeszthető be.</translation>
     </message>
     <message>
         <source>Printout offset in paper coordinates by (%1, %2)</source>
-        <translation>Nyomtatás eltolása papír koordinátáiban (% 1, % 2)</translation>
+        <translation>Nyomtatás eltolása a papír koordináta-rendszerében: (%1, %2)</translation>
     </message>
     <message>
         <source>Printout offset in graph coordinates by (%1, %2)</source>
-        <translation>Nyomtatás eltolása a grafikon koordinátáiban (% 1, % 2)</translation>
+        <translation>Nyomtatás eltolása a grafikon koordinátáiban: (%1, %2)</translation>
     </message>
     <message>
         <source>Printout offset in graph coordinates</source>
@@ -13034,8 +13033,8 @@ Ez a blokk nem illeszthető be.</translation>
         <translation>Írja be az eltolás parancsot a parancssorból az eltolásos nyomtatáshoz</translation>
     </message>
     <message>
-        <source>Printout offset ignores relative zero. Ignoring &apos;@&apos;</source>
-        <translation>A nyomtatási eltolás figyelmen kívül hagyja a relatív nullát. A &quot;@&quot; figyelmen kívül hagyása</translation>
+        <source>Printout offset ignores relative zero. Ignoring '@'</source>
+        <translation>A nyomtatási eltolás figyelmen kívül hagyja a relatív nullát. A "@" figyelmen kívül hagyása</translation>
     </message>
     <message>
         <source>Printout in Black/White</source>

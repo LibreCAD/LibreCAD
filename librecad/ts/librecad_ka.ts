@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
+<?xml version='1.0' encoding='utf-8'?>
 <TS version="2.1" language="ka">
 <context>
     <name>ColorWizard</name>
@@ -1171,7 +1170,7 @@ or [%2]</source>
         <translation>დუბლიკატი</translation>
     </message>
     <message>
-        <source>Update Current Pen by Active Layer&apos; Pen</source>
+        <source>Update Current Pen by Active Layer' Pen</source>
         <translation>მიმდინარე პენის განახლება აქტიური ფენის პენით</translation>
     </message>
 </context>
@@ -1185,7 +1184,7 @@ or [%2]</source>
 <context>
     <name>LC_ActionLayersExport</name>
     <message>
-        <source>Saving layer &quot;%1&quot; as &quot;%2&quot; </source>
+        <source>Saving layer "%1" as "%2" </source>
         <translation>ფენის შენახვა „%1“ როგორც „%2“ </translation>
     </message>
 </context>
@@ -1700,7 +1699,7 @@ or [%2]</source>
         <translation>ნორმალურ ფენად გადაკეთება</translation>
     </message>
     <message>
-        <source>&amp;Select Layer&apos;s Entities</source>
+        <source>&amp;Select Layer's Entities</source>
         <translation>ფენის ენტიტეტების &amp;არჩევა</translation>
     </message>
     <message>
@@ -2231,11 +2230,11 @@ or [%2]</source>
         <translation>მიმდინარეზე</translation>
     </message>
     <message>
-        <source>Update Current Pen by Active Layer&apos; Pen</source>
+        <source>Update Current Pen by Active Layer' Pen</source>
         <translation>მიმდინარე პენის განახლება აქტიური ფენის პენით</translation>
     </message>
     <message>
-        <source>Fill Pen Editor from Active Layer&apos;s Pen</source>
+        <source>Fill Pen Editor from Active Layer's Pen</source>
         <translation>პენის რედაქტორის შევსება აქტიური ფენის პენიდან</translation>
     </message>
     <message>
@@ -2300,14 +2299,14 @@ or [%2]</source>
     </message>
     <message>
         <source>Location of pens file is changed, please restart the application so new pens file will be used.
-Please note that if you&apos;ll save pen via editor without restart, current pens from palette will be saved in the new file and therefore existing content of it will be overridden.</source>
+Please note that if you'll save pen via editor without restart, current pens from palette will be saved in the new file and therefore existing content of it will be overridden.</source>
         <translation type="vanished">პენების ფაილის მდებარეობა შეიცვალა, გთხოვთ გადატვირთოთ პროგრამა ახალი ფაილის გამოსაყენებლად.
 გაითვალისწინეთ: თუ რედაქტორით შეინახავთ პენს გადატვირთვის გარეშე, პალიტრის მიმდინარე პენები შეინახება ახალ ფაილში და არსებული შიგთავსი გადაიწერება.</translation>
     </message>
     <message>
         <source>Location of pens file is changed, please restart the application so new pens file will be used.
 
-Please note that if you&apos;ll save pen via editor without restart, current pens from palette will be saved in the new file and therefore existing content of it will be overridden.</source>
+Please note that if you'll save pen via editor without restart, current pens from palette will be saved in the new file and therefore existing content of it will be overridden.</source>
         <translation>რუჩკების ფაილის მდებარეობა შეიცვალა, გთხოვთ, პროგრამა გადატვირთოთ, რათა გამოიყენოთ ახალი რუჩკების ფაილი.
 
 გთხოვთ, გაითვალისწინოთ, რომ თუ რუჩკას რედაქტორის საშუალებით გადაიტანთ, პროგრამის გადატვირთვის გარეშე, პალიტრაში არსებული რუჩკები გადაიწერება ახალ ფაილში და, შესაბამისად, მისი არსებული შინაარსი ჩაანაცვლებს.</translation>
@@ -2820,12 +2819,12 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <translation>მარჯვენას წაშლა</translation>
     </message>
     <message>
-        <source>remove 0&apos;</source>
-        <translation>0&apos;-ის წაშლა</translation>
+        <source>remove 0'</source>
+        <translation>0'-ის წაშლა</translation>
     </message>
     <message>
-        <source>remove 0&quot;</source>
-        <translation>0&quot;-ის წაშლა</translation>
+        <source>remove 0"</source>
+        <translation>0"-ის წაშლა</translation>
     </message>
 </context>
 <context>
@@ -3011,8 +3010,8 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <translation>ბრძანებათა სტრიქონი</translation>
     </message>
     <message>
-        <source>Block &apos;%1&apos;</source>
-        <translation>ბლოკი &apos;%1&apos;</translation>
+        <source>Block '%1'</source>
+        <translation>ბლოკი '%1'</translation>
     </message>
     <message>
         <source>Cannot open the file
@@ -3149,7 +3148,7 @@ Please check its existence and permissions.</source>
 გთხოვთ შეამოწმოთ არსებობა და ნებართვები.</translation>
     </message>
     <message>
-        <source>File &apos;%1&apos; does not exist. Opening aborted</source>
+        <source>File '%1' does not exist. Opening aborted</source>
         <translation>ფაილი „%1“ არ არსებობს. გახსნა შეწყვეტილია</translation>
     </message>
     <message>
@@ -3332,7 +3331,7 @@ Please check its existence and permissions.</source>
     </message>
     <message>
         <source>Save %1 &amp;as...</source>
-        <translation>&apos;%1&apos;-ის &amp;შენახვა, როგორც...</translation>
+        <translation>'%1'-ის &amp;შენახვა, როგორც...</translation>
     </message>
     <message>
         <source>&amp;Window mode</source>
@@ -3404,7 +3403,7 @@ Please check its existence and permissions.</source>
         <translation>&amp;ვიკი</translation>
     </message>
     <message>
-        <source>User&apos;s &amp;Manual</source>
+        <source>User's &amp;Manual</source>
         <translation>მომხმარებლის &amp;სახელმძღვანელო</translation>
     </message>
     <message>
@@ -3483,16 +3482,16 @@ Please check its existence and permissions.</source>
         <translation>მიმდინარე ფენა</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+        <source>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Name of Current Active Layer&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Helvetica'; font-size:7pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;Name of Current Active Layer&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;აქტიური ფენის სახელი&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Helvetica'; font-size:7pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;აქტიური ფენის სახელი&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
@@ -3510,8 +3509,8 @@ p, li { white-space: pre-wrap; }
         <translation>ბლოკის ხელახალი სახელის დადება</translation>
     </message>
     <message>
-        <source>Could not name block. A block named &quot;%1&quot; already exists.</source>
-        <translation>ვერ მოხერხდა ბლოკის სახელის შეცვლა. ამ სახელის ბლოკი უკვე არსებობს: &quot;%1&quot;.</translation>
+        <source>Could not name block. A block named "%1" already exists.</source>
+        <translation>ვერ მოხერხდა ბლოკის სახელის შეცვლა. ამ სახელის ბლოკი უკვე არსებობს: "%1".</translation>
     </message>
 </context>
 <context>
@@ -4104,14 +4103,14 @@ This recursively modifies all entities of the Block itself.</source>
         <translation>ბრძანების ენა:</translation>
     </message>
     <message>
-        <source>&lt;font size=&quot;+1&quot;&gt;&lt;b&gt;Welcome to LibreCAD&lt;/b&gt;
+        <source>&lt;font size="+1"&gt;&lt;b&gt;Welcome to LibreCAD&lt;/b&gt;
 &lt;/font&gt;
 &lt;br&gt;
 Please choose the unit you want to use for new drawings and your preferred language.&lt;br&gt;
 (You can changes these settings later.)</source>
-        <translation>&lt;font size=&quot;+1&quot;&gt;&lt;b&gt;მოგესალმებით LibreCAD-ში&lt;/b&gt;&lt;/font&gt;
+        <translation>&lt;font size="+1"&gt;&lt;b&gt;მოგესალმებით LibreCAD-ში&lt;/b&gt;&lt;/font&gt;
 &lt;br&gt;გთხოვთ, აირჩიოთ ერთეული, რომელსაც გამოიყენებთ ახალ ნახაზებში და თქვენთვის სასურველი ენა.
-(შეგიძლიათ შეცვალოთ ეს პარამეტრები მოგვიანებით.)</translation>
+&lt;br&gt;(შეგიძლიათ შეცვალოთ ეს პარამეტრები მოგვიანებით.)</translation>
     </message>
 </context>
 <context>
@@ -5007,7 +5006,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation>გრადიანები</translation>
     </message>
     <message>
-        <source>Surveyor&apos;s units</source>
+        <source>Surveyor's units</source>
         <translation>გეოდეზისტის ერთეულები</translation>
     </message>
     <message>
@@ -5015,7 +5014,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation>მორგება</translation>
     </message>
     <message>
-        <source>For the length formats &apos;Engineering&apos; and &apos;Architectural&apos;, the unit must be set to Inch.</source>
+        <source>For the length formats 'Engineering' and 'Architectural', the unit must be set to Inch.</source>
         <translation>„ინჟინერიული“ და „არქიტექტურული“ ფორმატებისთვის, ერთეული უნდა იყოს დაყენებული „ინჩ“-ზე.</translation>
     </message>
     <message>
@@ -5147,7 +5146,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation>ნიშნის ზომა:</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dimension Tick size. Set it to 0 will disable the dimension tick. Dimension arrow won&apos;t be drawn when dimension tick is enabled.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dimension Tick size. Set it to 0 will disable the dimension tick. Dimension arrow won't be drawn when dimension tick is enabled.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;ზომის ნიშნის ზომა. თუ 0-ს დააყენებთ, ზომის ნიშანი გაუქმდება. ზომის ისარი არ იხატება, როდესაც ზომის ნიშანი ჩართულია.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
@@ -5171,12 +5170,12 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation>ტექსტის სტილი:</translation>
     </message>
     <message>
-        <source>&apos;.&apos; (Period)</source>
-        <translation>&apos;.&apos; (წერტილი)</translation>
+        <source>'.' (Period)</source>
+        <translation>'.' (წერტილი)</translation>
     </message>
     <message>
-        <source>&apos;,&apos; (Comma)</source>
-        <translation>&apos;,&apos; (მძიმე)</translation>
+        <source>',' (Comma)</source>
+        <translation>',' (მძიმე)</translation>
     </message>
     <message>
         <source>Decimal separator:</source>
@@ -5219,7 +5218,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation>სიგრძე, რომლის მიხედვითაც ზომა იზრდება დიამეტრის ხაზზე</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dimension arrow size. &lt;a name=&quot;result_box&quot;/&gt;without effect when tick size &lt;a name=&quot;result_box&quot;/&gt;is other than 0&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dimension arrow size. &lt;a name="result_box"/&gt;without effect when tick size &lt;a name="result_box"/&gt;is other than 0&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;დიამეტრის ისრის ზომა. არ მოქმედებს, თუ ნიშნის ზომა 0-სგან განსხვავებულია&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
@@ -5251,8 +5250,8 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation>ხაზოვანი სიზუსტე:</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Text alignment &lt;a name=&quot;result_box&quot;/&gt;relative to the dimension line.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;ტექსტის გასწორება &lt;a name=&quot;result_box&quot;/&gt;ზომის ხაზთან მიმართებაში.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Text alignment &lt;a name="result_box"/&gt;relative to the dimension line.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;ტექსტის გასწორება &lt;a name="result_box"/&gt;ზომის ხაზთან მიმართებაში.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Aligned</source>
@@ -5355,7 +5354,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation>არქიტექტურული (მეტრიული)</translation>
     </message>
     <message>
-        <source>For the length format &apos;Architectural (metric)&apos;, the unit must be set to Meter.</source>
+        <source>For the length format 'Architectural (metric)', the unit must be set to Meter.</source>
         <translation>ფორმატისთვის „არქიტექტურული (მეტრიული)“, ერთეულად უნდა იყოს მითითებული მეტრი.</translation>
     </message>
     <message>
@@ -5602,7 +5601,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation>წინასწარი ჩვენების ობიექტების რაო&amp;დენობა:</translation>
     </message>
     <message>
-        <source>Don&apos;t use native OS file open dialog</source>
+        <source>Don't use native OS file open dialog</source>
         <translation>ნუ გამოიყენებთ ოპერაციული სისტემის სტანდარტულ ფაილების გახსნის დიალოგს</translation>
     </message>
     <message>
@@ -5678,8 +5677,8 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation>ავტომატურად მასშტაბი შეცვალოს ნახაზის გახსნისას</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-family:&apos;-apple-system&apos;,&apos;BlinkMacSystemFont&apos;,&apos;Segoe UI&apos;,&apos;Noto Sans&apos;,&apos;Helvetica&apos;,&apos;Arial&apos;,&apos;sans-serif&apos;,&apos;Apple Color Emoji&apos;,&apos;Segoe UI Emoji&apos;; font-size:14px; color:#1f2328; background-color:#ffffff;&quot;&gt;Part library folder. The symbol library dxf files must be located in the subdirectories of this folder. The subfolder names will be displayed in the Library Browser.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-family:&apos;-apple-system&apos;,&apos;BlinkMacSystemFont&apos;,&apos;Segoe UI&apos;,&apos;Noto Sans&apos;,&apos;Helvetica&apos;,&apos;Arial&apos;,&apos;sans-serif&apos;,&apos;Apple Color Emoji&apos;,&apos;Segoe UI Emoji&apos;; font-size:14px; color:#1f2328; background-color:#ffffff;&quot;&gt;( Menu: Widgets &amp;gt; Dock Widgets &amp;gt; Library Browser)&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-family:&apos;-apple-system&apos;,&apos;BlinkMacSystemFont&apos;,&apos;Segoe UI&apos;,&apos;Noto Sans&apos;,&apos;Helvetica&apos;,&apos;Arial&apos;,&apos;sans-serif&apos;,&apos;Apple Color Emoji&apos;,&apos;Segoe UI Emoji&apos;; font-size:14px; color:#1f2328; background-color:#ffffff;&quot;&gt;სიმბოლოების ბიბლიოთეკის საქაღდე. სიმბოლოების ბიბლიოთეკის DXF ფაილები უნდა იყოს ამ საქაღდის ქვე-საქაღდეებში. ქვე-საქაღდეების სახელები ჩანს ბიბლიოთეკის ბრაუზერში.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-family:&apos;-apple-system&apos;,&apos;BlinkMacSystemFont&apos;,&apos;Segoe UI&apos;,&apos;Noto Sans&apos;,&apos;Helvetica&apos;,&apos;Arial&apos;,&apos;sans-serif&apos;,&apos;Apple Color Emoji&apos;,&apos;Segoe UI Emoji&apos;; font-size:14px; color:#1f2328; background-color:#ffffff;&quot;&gt;(მენიუ: ვიჯეტები &gt; დოკ-ვიჯეტები &gt; ბიბლიოთეკის ბრაუზერი)&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=" font-family:'-apple-system','BlinkMacSystemFont','Segoe UI','Noto Sans','Helvetica','Arial','sans-serif','Apple Color Emoji','Segoe UI Emoji'; font-size:14px; color:#1f2328; background-color:#ffffff;"&gt;Part library folder. The symbol library dxf files must be located in the subdirectories of this folder. The subfolder names will be displayed in the Library Browser.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=" font-family:'-apple-system','BlinkMacSystemFont','Segoe UI','Noto Sans','Helvetica','Arial','sans-serif','Apple Color Emoji','Segoe UI Emoji'; font-size:14px; color:#1f2328; background-color:#ffffff;"&gt;( Menu: Widgets &amp;gt; Dock Widgets &amp;gt; Library Browser)&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=" font-family:'-apple-system','BlinkMacSystemFont','Segoe UI','Noto Sans','Helvetica','Arial','sans-serif','Apple Color Emoji','Segoe UI Emoji'; font-size:14px; color:#1f2328; background-color:#ffffff;"&gt;სიმბოლოების ბიბლიოთეკის საქაღდე. სიმბოლოების ბიბლიოთეკის DXF ფაილები უნდა იყოს ამ საქაღდის ქვე-საქაღდეებში. ქვე-საქაღდეების სახელები ჩანს ბიბლიოთეკის ბრაუზერში.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=" font-family:'-apple-system','BlinkMacSystemFont','Segoe UI','Noto Sans','Helvetica','Arial','sans-serif','Apple Color Emoji','Segoe UI Emoji'; font-size:14px; color:#1f2328; background-color:#ffffff;"&gt;(მენიუ: ვიჯეტები &gt; დოკ-ვიჯეტები &gt; ბიბლიოთეკის ბრაუზერი)&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Open last opened files</source>
@@ -5750,7 +5749,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>MakerCAM as of November 2014 does not hide SVG content 
-that has been set invisibe (&quot;display: none&quot; or &quot;visibility: hidden&quot;).</source>
+that has been set invisibe ("display: none" or "visibility: hidden").</source>
         <translation>2014 წლის ნოემბრის მდგომარეობით, MakerCAM არ მალავს SVG-ში არსებულ კონტენტს, რომელსაც არჩეული აქვს „display: none“ ან „visibility: hidden“.</translation>
     </message>
     <message>
@@ -5766,16 +5765,16 @@ the &lt;transform&gt; attribute or as &lt;path&gt; using elliptic arc segments.<
     </message>
     <message>
         <source>Exported images can be useful in SVG editors (Inkscape, etc), 
-but avoided in some CAM&apos;s.</source>
+but avoided in some CAM's.</source>
         <translation>ექსპორტირებული გამოსახულებები შეიძლება იყოს სასარგებლო SVG რედაქტორებში (Inkscape და ა.შ.), მაგრამ ზოგიერთ CAM-ში არ გამოიყენება.</translation>
     </message>
     <message>
-        <source>Many CAM&apos;s(MakerCAM, EleskCAM, LaserWeb) ignore dashed/doted line style, 
+        <source>Many CAM's(MakerCAM, EleskCAM, LaserWeb) ignore dashed/doted line style, 
 which can be useful in lasercut of plywood or for papercraft. </source>
         <translation>მრავალი CAM (MakerCAM, EleskCAM, LaserWeb) არ ითვალისწინებს შტრიხიანი/წერტილოვანი ხაზის სტილს, რაც შეიძლება იყოს სასარგებლო ფაეურის ან ქაღალდის ნაკეთობების ლაზერული ჭრისას.</translation>
     </message>
     <message>
-        <source>Default width of elements can affect some CAM&apos;s/SVG Editors, 
+        <source>Default width of elements can affect some CAM's/SVG Editors, 
 but ignored by other</source>
         <translation>ელემენტების სტანდარტული სიგანე შეიძლება იმოქმედოს ზოგიერთ CAM/SVG რედაქტორზე, მაგრამ სხვა რედაქტორებს არ იმოქმედებს.</translation>
     </message>
@@ -6726,7 +6725,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <source>Save %1 As</source>
-        <translation>&apos;%1&apos;-ის &amp;შენახვა, როგორც</translation>
+        <translation>'%1'-ის &amp;შენახვა, როგორც</translation>
     </message>
     <message>
         <source>dwg Drawing %1</source>
@@ -7095,11 +7094,11 @@ The contents of a Construction Layer should not appear in printout.</source>
         <translation>მარცხენა</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+        <source>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Ubuntu&apos;; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Helvetica&apos;; font-size:9pt;&quot;&gt;Hint about left/right mouse button actions&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Ubuntu'; font-size:11pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;span style=" font-family:'Helvetica'; font-size:9pt;"&gt;Hint about left/right mouse button actions&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>მარჯვენა/მარცხენა ღილაკის ფუნქციების შესახებ</translation>
     </message>
 </context>
@@ -7129,7 +7128,7 @@ p, li { white-space: pre-wrap; }
     <name>QG_RecentFiles</name>
     <message>
         <source>&amp;%1 %2</source>
-        <translation>ბოლო ფაილები</translation>
+        <translation>ბოლო %1 ფაილი, %2.</translation>
     </message>
 </context>
 <context>
@@ -7147,19 +7146,19 @@ p, li { white-space: pre-wrap; }
         <translation>ჯამური სიგრძე</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+        <source>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Number of selected entities&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Helvetica'; font-size:7pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;Number of selected entities&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>შერჩეული ობიექტების რაოდენობა</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+        <source>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Total length of selected entities&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Helvetica'; font-size:7pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;Total length of selected entities&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>შერჩეული ობიექტების საერთო სიგრძე</translation>
     </message>
 </context>
@@ -7435,7 +7434,7 @@ p, li { white-space: pre-wrap; }
         <translation>ფენის წაშლა</translation>
     </message>
     <message>
-        <source>Layer &quot;%1&quot; can never be removed.</source>
+        <source>Layer "%1" can never be removed.</source>
         <translation>შრეს „%1“ ვერასოდეს მოხსნა.</translation>
     </message>
     <message>
@@ -7447,7 +7446,7 @@ p, li { white-space: pre-wrap; }
         <translation>ბლოკის მოხსნა</translation>
     </message>
     <message>
-        <source>Block &quot;%1&quot; and all its entities will be removed.</source>
+        <source>Block "%1" and all its entities will be removed.</source>
         <translation>ბლოკი „%1“ და მასში შემავალი ყველა ელემენტი მოხსნა.</translation>
     </message>
     <message>
@@ -7455,18 +7454,18 @@ p, li { white-space: pre-wrap; }
         <translation>ფენის თვისებები</translation>
     </message>
     <message>
-        <source>Layer with a name &quot;%1&quot; already exists. Please specify a different name.</source>
+        <source>Layer with a name "%1" already exists. Please specify a different name.</source>
         <translation>შრეს სახელწოდებით „%1“ უკვე არსებობს. გთხოვთ, მიუთითოთ სხვა სახელი.</translation>
     </message>
     <message>
-        <source>Layer &quot;%1&quot; and all entities on it will be removed.
+        <source>Layer "%1" and all entities on it will be removed.
 This action can NOT be undone.</source>
         <translation>შრე „%1“ და მასზე არსებული ყველა ელემენტი მოხსნა.
 ეს მოქმედება ვერ მოხსნა.</translation>
     </message>
     <message>
-        <source>Layer &quot;0&quot; can never be removed.</source>
-        <translation>შრეს &quot;0&quot; არ შეიძლება წაშლილი.</translation>
+        <source>Layer "0" can never be removed.</source>
+        <translation>შრეს "0" არ შეიძლება წაშლილი.</translation>
     </message>
     <message numerus="yes">
         <source>Remove %n layer(s)</source>
@@ -7484,8 +7483,8 @@ This action can NOT be undone.</source>
         <translation>გაფრთხილება: ეს მოქმედება არ შეიძლება გაუქმდეს!</translation>
     </message>
     <message>
-        <source>Warning: layer &quot;0&quot; can never be removed.</source>
-        <translation>გაფრთხილება: შრე &quot;0&quot; არ შეიძლება წაშლილი.</translation>
+        <source>Warning: layer "0" can never be removed.</source>
+        <translation>გაფრთხილება: შრე "0" არ შეიძლება წაშლილი.</translation>
     </message>
     <message>
         <source>Layers for removal:</source>
@@ -7579,12 +7578,12 @@ Please specify a different name.</source>
         <translation>სელექციის დუბლირება</translation>
     </message>
     <message>
-        <source>Replace &quot;By Layer&quot; value to source layers values?
-If Yes - entities with &quot;By Layer&quot; pens will look on new layer exactly as on previous layers and &quot;By Layer&quot; value will be replaced by resolved pens.
-If No - &quot;By Layer&quot; values remains and so pen of target layer will define pen for such entities.</source>
-        <translation type="vanished">შეცვალოთ &quot;ფენის მიხედვით&quot; მნიშვნელობა წყარო ფენების მნიშვნელობებზე?
-თუ პასუხი არის &quot;დიახ&quot; - &quot;ფენის მიხედვით&quot; მქონე ობიექტები ახალ ფენაზე გამოიყურებიან ისე, როგორც წინა ფენებზე და &quot;ფენის მიხედვით&quot; მნიშვნელობა შეიცვლება და მას რეალური ფერები დაემატება.
-თუ პასუხი არის &quot;არა&quot; - &quot;ფენის მიხედვით&quot; მნიშვნელობა დარჩება და, შესაბამისად, მიზნობრივი ფენის ფერი განსაზღვრავს ასეთ ობიექტების ფერს.</translation>
+        <source>Replace "By Layer" value to source layers values?
+If Yes - entities with "By Layer" pens will look on new layer exactly as on previous layers and "By Layer" value will be replaced by resolved pens.
+If No - "By Layer" values remains and so pen of target layer will define pen for such entities.</source>
+        <translation type="vanished">შეცვალოთ "ფენის მიხედვით" მნიშვნელობა წყარო ფენების მნიშვნელობებზე?
+თუ პასუხი არის "დიახ" - "ფენის მიხედვით" მქონე ობიექტები ახალ ფენაზე გამოიყურებიან ისე, როგორც წინა ფენებზე და "ფენის მიხედვით" მნიშვნელობა შეიცვლება და მას რეალური ფერები დაემატება.
+თუ პასუხი არის "არა" - "ფენის მიხედვით" მნიშვნელობა დარჩება და, შესაბამისად, მიზნობრივი ფენის ფერი განსაზღვრავს ასეთ ობიექტების ფერს.</translation>
     </message>
     <message>
         <source>Layer DialogEx</source>
@@ -7612,7 +7611,7 @@ Please specify a different value.</source>
         <translation>ფერი წაიშლება პალიტრადან, ეს არ იმოქმედებს ნახაზის ობიექტებზე.</translation>
     </message>
     <message>
-        <source>Are you sure you&apos;d like to proceed?</source>
+        <source>Are you sure you'd like to proceed?</source>
         <translation>ხართ თუ არა დარწმუნებული, რომ გსურთ გაგრძელება?</translation>
     </message>
     <message>
@@ -7678,11 +7677,11 @@ Clear filtering mask and repeat.</source>
 გააუქმეთ ფილტრი და გაიმეოროთ.</translation>
     </message>
     <message>
-        <source>Replace &quot;By Layer&quot; value to source layers values?
+        <source>Replace "By Layer" value to source layers values?
 
-If Yes - entities with &quot;By Layer&quot; pens will look on new layer exactly as on previous layers and &quot;By Layer&quot; value will be replaced by resolved pens.
+If Yes - entities with "By Layer" pens will look on new layer exactly as on previous layers and "By Layer" value will be replaced by resolved pens.
 
-If No - &quot;By Layer&quot; values remains and so pen of target layer will define pen for such entities.</source>
+If No - "By Layer" values remains and so pen of target layer will define pen for such entities.</source>
         <translation>შემცვალეთ „შრის მიხედვით“ მნიშვნელობა წყარო შრეების მნიშვნელობებით?
 
 თუ „დიახ“ - „შრის მიხედვით“ ტიპის ობიექტები ახალ შრეზე გამოიყურებიან ისევე, როგორც წინა შრეებზე და „შრის მიხედვით“ მნიშვნელობა შეიცვლება და კონკრეტული ტიპის ობიექტებისთვის დაინიშნება შესაბამისი ტიპი.
@@ -7943,7 +7942,7 @@ Do you want to replace it?</source>
         <translation>უცნობი შეცდომა dwg ფაილის გახსნისას</translation>
     </message>
     <message>
-        <source>can&apos;t open this dwg file</source>
+        <source>can't open this dwg file</source>
         <translation>ვერ შევძლებთ ამ dwg ფაილის გახსნას</translation>
     </message>
     <message>
@@ -8940,7 +8939,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Calculator error for input: </source>
-        <translation>კალკულატორის შეცდომა: %1</translation>
+        <translation>კალკულატორის შეცდომა:</translation>
     </message>
     <message>
         <source>bw</source>
@@ -10117,8 +10116,8 @@ Do you want to replace it?</source>
         <translation>-o some.pdf *.dxf</translation>
     </message>
     <message>
-        <source>-- print all dxf files to &apos;some.pdf&apos; file.</source>
-        <translation>-- დაბეჭდეთ ყველა DXF ფაილი &apos;some.pdf&apos; ფაილში.</translation>
+        <source>-- print all dxf files to 'some.pdf' file.</source>
+        <translation>-- დაბეჭდეთ ყველა DXF ფაილი 'some.pdf' ფაილში.</translation>
     </message>
     <message>
         <source>Auto fit and center drawing to page.</source>
@@ -10192,8 +10191,8 @@ Do you want to replace it?</source>
         <translation>ყველა შრის კომბინირება</translation>
     </message>
     <message>
-        <source>File &quot;%1&quot; already exists. Do you want to replace it?</source>
-        <translation>ფაილი &quot;%1&quot; უკვე არსებობს. გსურთ მისი ჩანაცვლება?</translation>
+        <source>File "%1" already exists. Do you want to replace it?</source>
+        <translation>ფაილი "%1" უკვე არსებობს. გსურთ მისი ჩანაცვლება?</translation>
     </message>
     <message>
         <source>/CustomColor%1</source>
@@ -10853,8 +10852,8 @@ Do you want to replace it?</source>
         <translation>შეიყვანეთ კუთხე:</translation>
     </message>
     <message>
-        <source></source>
-        <translation></translation>
+        <source />
+        <translation />
     </message>
     <message>
         <source>Enter factor:</source>
@@ -11341,24 +11340,24 @@ This block cannot be inserted.</source>
         <translation>აირჩიეთ წრეწირის ცენტრი</translation>
     </message>
     <message>
-        <source>Invalid expression &apos;%1&apos; for radius</source>
-        <translation>არასწორი გამოსახულება &apos;%1&apos; რადიუსისთვის</translation>
+        <source>Invalid expression '%1' for radius</source>
+        <translation>არასწორი გამოსახულება '%1' რადიუსისთვის</translation>
     </message>
     <message>
-        <source>Invalid negative radius &apos;%1&apos;</source>
-        <translation>არასწორი უარყოფითი რადიუსი &apos;%1&apos;</translation>
+        <source>Invalid negative radius '%1'</source>
+        <translation>არასწორი უარყოფითი რადიუსი '%1'</translation>
     </message>
     <message>
-        <source>Invalid zero radius &apos;%1&apos;</source>
-        <translation>არასწორი ნულოვანი რადიუსი &apos;%1&apos;</translation>
+        <source>Invalid zero radius '%1'</source>
+        <translation>არასწორი ნულოვანი რადიუსი '%1'</translation>
     </message>
     <message>
-        <source>No tangent circle possible for radius &apos;%1&apos;</source>
-        <translation>შესაძლებელი არ არის წრეწირის შექმნა &apos;%1&apos; რადიუსით</translation>
+        <source>No tangent circle possible for radius '%1'</source>
+        <translation>შესაძლებელი არ არის წრეწირის შექმნა '%1' რადიუსით</translation>
     </message>
     <message>
-        <source>No common tangential circle for radius &apos;%1&apos;</source>
-        <translation>შესაძლებელი არ არის საერთო მხები წრე &apos;%1&apos; რადიუსით</translation>
+        <source>No common tangential circle for radius '%1'</source>
+        <translation>შესაძლებელი არ არის საერთო მხები წრე '%1' რადიუსით</translation>
     </message>
 </context>
 <context>
@@ -11628,8 +11627,8 @@ This block cannot be inserted.</source>
         <translation>შეიყვანეთ კუთხე:</translation>
     </message>
     <message>
-        <source></source>
-        <translation></translation>
+        <source />
+        <translation />
     </message>
     <message>
         <source>Enter factor:</source>
@@ -11844,8 +11843,8 @@ This block cannot be inserted.</source>
 <context>
     <name>RS_ActionDrawLinePolygon</name>
     <message>
-        <source></source>
-        <translation></translation>
+        <source />
+        <translation />
     </message>
 </context>
 <context>
@@ -12323,16 +12322,16 @@ This block cannot be inserted.</source>
         <translation>შეიყვანეთ კუთხე:</translation>
     </message>
     <message>
-        <source></source>
-        <translation></translation>
+        <source />
+        <translation />
     </message>
     <message>
         <source>Enter factor:</source>
         <translation>შეიყვანეთ ფაქტორ:</translation>
     </message>
     <message>
-        <source>Cannot open file &apos;%1&apos;</source>
-        <translation>ფაილის &apos;%1&apos; გახსნის შეცდომა</translation>
+        <source>Cannot open file '%1'</source>
+        <translation>ფაილის '%1' გახსნის შეცდომა</translation>
     </message>
 </context>
 <context>
@@ -12768,7 +12767,7 @@ This block cannot be inserted.</source>
         <translation>გაუქმება</translation>
     </message>
     <message>
-        <source>Specify adding node&apos;s point</source>
+        <source>Specify adding node's point</source>
         <translation>მონიშნეთ წერტილი, რომელიც დაემატება</translation>
     </message>
     <message>
@@ -12838,7 +12837,7 @@ This block cannot be inserted.</source>
         <translation>გაუქმება</translation>
     </message>
     <message>
-        <source>Specify deleting node&apos;s point</source>
+        <source>Specify deleting node's point</source>
         <translation>მითითებული უნდა იყოს წერტილის წაშლის მოქმედება</translation>
     </message>
     <message>
@@ -13005,8 +13004,8 @@ This block cannot be inserted.</source>
         <translation>შეიყვანეთ გადაადგილების მნიშვნელობა ბრძანების სტრიქონში, რათა გადააადგილოთ გამოსახულება</translation>
     </message>
     <message>
-        <source>Printout offset ignores relative zero. Ignoring &apos;@&apos;</source>
-        <translation>გამოსაჩივრების გადაადგილების კომპენსაცია არ ითვალისწინებს შედარებით ნულს. იგნორირებულია &apos;@&apos;</translation>
+        <source>Printout offset ignores relative zero. Ignoring '@'</source>
+        <translation>გამოსაჩივრების გადაადგილების კომპენსაცია არ ითვალისწინებს შედარებით ნულს. იგნორირებულია '@'</translation>
     </message>
     <message>
         <source>Printout in Black/White</source>

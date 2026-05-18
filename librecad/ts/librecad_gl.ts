@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
+<?xml version='1.0' encoding='utf-8'?>
 <TS version="2.1" language="gl">
 <context>
     <name>ColorWizard</name>
@@ -1171,7 +1170,7 @@ ou [%2]</translation>
         <translation>Duplicar</translation>
     </message>
     <message>
-        <source>Update Current Pen by Active Layer&apos; Pen</source>
+        <source>Update Current Pen by Active Layer' Pen</source>
         <translation>Actualizar lapis actual co lapis da capa activa</translation>
     </message>
 </context>
@@ -1185,8 +1184,8 @@ ou [%2]</translation>
 <context>
     <name>LC_ActionLayersExport</name>
     <message>
-        <source>Saving layer &quot;%1&quot; as &quot;%2&quot; </source>
-        <translation>Gardando capa &quot;%1&quot; como &quot;%2&quot; </translation>
+        <source>Saving layer "%1" as "%2" </source>
+        <translation>Gardando capa "%1" como "%2" </translation>
     </message>
 </context>
 <context>
@@ -1700,7 +1699,7 @@ ou [%2]</translation>
         <translation>Converter en capa normal</translation>
     </message>
     <message>
-        <source>&amp;Select Layer&apos;s Entities</source>
+        <source>&amp;Select Layer's Entities</source>
         <translation>&amp;Seleccionar entidades da capa</translation>
     </message>
     <message>
@@ -2231,11 +2230,11 @@ ou [%2]</translation>
         <translation>ao actual</translation>
     </message>
     <message>
-        <source>Update Current Pen by Active Layer&apos; Pen</source>
+        <source>Update Current Pen by Active Layer' Pen</source>
         <translation>Actualizar lapis actual co lapis da capa activa</translation>
     </message>
     <message>
-        <source>Fill Pen Editor from Active Layer&apos;s Pen</source>
+        <source>Fill Pen Editor from Active Layer's Pen</source>
         <translation>Encher editor de lapis co lapis da capa activa</translation>
     </message>
     <message>
@@ -2300,14 +2299,14 @@ ou [%2]</translation>
     </message>
     <message>
         <source>Location of pens file is changed, please restart the application so new pens file will be used.
-Please note that if you&apos;ll save pen via editor without restart, current pens from palette will be saved in the new file and therefore existing content of it will be overridden.</source>
+Please note that if you'll save pen via editor without restart, current pens from palette will be saved in the new file and therefore existing content of it will be overridden.</source>
         <translation type="vanished">A localización do ficheiro de lapis cambiou, reinicia a aplicación para usar o novo ficheiro de lapis.
 Nota: se gardas un lapis a través do editor sen reiniciar, os lapis actuais da paleta gardaranse no novo ficheiro e o contido existente será sobrescrito.</translation>
     </message>
     <message>
         <source>Location of pens file is changed, please restart the application so new pens file will be used.
 
-Please note that if you&apos;ll save pen via editor without restart, current pens from palette will be saved in the new file and therefore existing content of it will be overridden.</source>
+Please note that if you'll save pen via editor without restart, current pens from palette will be saved in the new file and therefore existing content of it will be overridden.</source>
         <translation>A localización do ficheiro de bolígrafos cambiou, reinicie a aplicación para usar o novo ficheiro de bolígrafos.
 
 Teña en conta que, se garda un bolígrafo a través do editor sen reiniciar, os bolígrafos actuais da paleta gardaranse no novo ficheiro e, polo tanto, sobrescribirase o contido existente.</translation>
@@ -2820,12 +2819,12 @@ Teña en conta que, se garda un bolígrafo a través do editor sen reiniciar, os
         <translation>Desbotar a dereita</translation>
     </message>
     <message>
-        <source>remove 0&apos;</source>
-        <translation>Desbotar 0&apos;</translation>
+        <source>remove 0'</source>
+        <translation>Desbotar 0'</translation>
     </message>
     <message>
-        <source>remove 0&quot;</source>
-        <translation>Desbotar 0&quot;</translation>
+        <source>remove 0"</source>
+        <translation>Desbotar 0"</translation>
     </message>
 </context>
 <context>
@@ -3015,8 +3014,8 @@ Teña en conta que, se garda un bolígrafo a través do editor sen reiniciar, os
         <translation>Liña de comandos</translation>
     </message>
     <message>
-        <source>Block &apos;%1&apos;</source>
-        <translation>Bloque &apos;%1&apos;</translation>
+        <source>Block '%1'</source>
+        <translation>Bloque '%1'</translation>
     </message>
     <message>
         <source>Cannot open the file
@@ -3153,8 +3152,8 @@ Please check its existence and permissions.</source>
 Por favor comprobe se existe e mais se ten permiso.</translation>
     </message>
     <message>
-        <source>File &apos;%1&apos; does not exist. Opening aborted</source>
-        <translation>O ficheiro &apos;%1&apos; non existe. Non se abrirá</translation>
+        <source>File '%1' does not exist. Opening aborted</source>
+        <translation>O ficheiro '%1' non existe. Non se abrirá</translation>
     </message>
     <message>
         <source>Categories</source>
@@ -3404,7 +3403,7 @@ Por favor comprobe se existe e mais se ten permiso.</translation>
         <translation>&amp;Wiki</translation>
     </message>
     <message>
-        <source>User&apos;s &amp;Manual</source>
+        <source>User's &amp;Manual</source>
         <translation>&amp;Manual do usuario</translation>
     </message>
     <message>
@@ -3483,16 +3482,16 @@ Por favor comprobe se existe e mais se ten permiso.</translation>
         <translation>Capa actual</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+        <source>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Name of Current Active Layer&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Helvetica'; font-size:7pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;Name of Current Active Layer&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Nome da capa activa actual&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Helvetica'; font-size:7pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;Nome da capa activa actual&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
@@ -3510,8 +3509,8 @@ p, li { white-space: pre-wrap; }
         <translation>Renomeando o bloque</translation>
     </message>
     <message>
-        <source>Could not name block. A block named &quot;%1&quot; already exists.</source>
-        <translation>Non se puido nomear o bloque. Un bloque co nome &quot;%1&quot; xa existe.</translation>
+        <source>Could not name block. A block named "%1" already exists.</source>
+        <translation>Non se puido nomear o bloque. Un bloque co nome "%1" xa existe.</translation>
     </message>
 </context>
 <context>
@@ -4105,12 +4104,12 @@ Isto modifica recursivamente todas as entidades do propio Bloque.</translation>
         <translation>Linguaxe de comandos:</translation>
     </message>
     <message>
-        <source>&lt;font size=&quot;+1&quot;&gt;&lt;b&gt;Welcome to LibreCAD&lt;/b&gt;
+        <source>&lt;font size="+1"&gt;&lt;b&gt;Welcome to LibreCAD&lt;/b&gt;
 &lt;/font&gt;
 &lt;br&gt;
 Please choose the unit you want to use for new drawings and your preferred language.&lt;br&gt;
 (You can changes these settings later.)</source>
-        <translation>&lt;font size=&quot;+1&quot;&gt;&lt;b&gt;Benvido a LibreCAD&lt;/b&gt;
+        <translation>&lt;font size="+1"&gt;&lt;b&gt;Benvido a LibreCAD&lt;/b&gt;
 &lt;/font&gt;
 &lt;br&gt;
 Por favor, escolla as unidades preferidas para usar nos debuxos novos e mais a súa linguaxe preferida.&lt;br&gt;
@@ -5010,7 +5009,7 @@ Por favor, escolla as unidades preferidas para usar nos debuxos novos e mais a s
         <translation>Gradiáns</translation>
     </message>
     <message>
-        <source>Surveyor&apos;s units</source>
+        <source>Surveyor's units</source>
         <translation>Unidades de topografía</translation>
     </message>
     <message>
@@ -5018,8 +5017,8 @@ Por favor, escolla as unidades preferidas para usar nos debuxos novos e mais a s
         <translation>Opcións</translation>
     </message>
     <message>
-        <source>For the length formats &apos;Engineering&apos; and &apos;Architectural&apos;, the unit must be set to Inch.</source>
-        <translation>Para os formatos de lonxitude &apos;Enxeñaría&apos; e mais &apos;Arquitectura&apos;, débese configurar a unidade en polgada.</translation>
+        <source>For the length formats 'Engineering' and 'Architectural', the unit must be set to Inch.</source>
+        <translation>Para os formatos de lonxitude 'Enxeñaría' e mais 'Arquitectura', débese configurar a unidade en polgada.</translation>
     </message>
     <message>
         <source>Arrow size:</source>
@@ -5150,7 +5149,7 @@ Por favor, escolla as unidades preferidas para usar nos debuxos novos e mais a s
         <translation>Tamaño do remate de liña:</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dimension Tick size. Set it to 0 will disable the dimension tick. Dimension arrow won&apos;t be drawn when dimension tick is enabled.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dimension Tick size. Set it to 0 will disable the dimension tick. Dimension arrow won't be drawn when dimension tick is enabled.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Tamaño do remate de liña. Configurar isto a 0 desactiva o remate de liña. Pola contra, cando se establece algún valor, non se debuxa a frecha de liña de acoutamento.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
@@ -5174,12 +5173,12 @@ Por favor, escolla as unidades preferidas para usar nos debuxos novos e mais a s
         <translation>Estilo de texto:</translation>
     </message>
     <message>
-        <source>&apos;.&apos; (Period)</source>
-        <translation>&apos;.&apos; (Punto)</translation>
+        <source>'.' (Period)</source>
+        <translation>'.' (Punto)</translation>
     </message>
     <message>
-        <source>&apos;,&apos; (Comma)</source>
-        <translation>&apos;,&apos; (Coma)</translation>
+        <source>',' (Comma)</source>
+        <translation>',' (Coma)</translation>
     </message>
     <message>
         <source>Decimal separator:</source>
@@ -5222,8 +5221,8 @@ Por favor, escolla as unidades preferidas para usar nos debuxos novos e mais a s
         <translation>Lonxitude sobrante da liña auxiliar sobre a liña de acoutamento</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dimension arrow size. &lt;a name=&quot;result_box&quot;/&gt;without effect when tick size &lt;a name=&quot;result_box&quot;/&gt;is other than 0&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Tamaño de frecha. &lt;a name=&quot;result_box&quot;/&gt;Sen efecto cando o remate de liña &lt;a name=&quot;result_box&quot;/&gt;é diferente de 0&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dimension arrow size. &lt;a name="result_box"/&gt;without effect when tick size &lt;a name="result_box"/&gt;is other than 0&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Tamaño de frecha. &lt;a name="result_box"/&gt;Sen efecto cando o remate de liña &lt;a name="result_box"/&gt;é diferente de 0&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Width:</source>
@@ -5254,8 +5253,8 @@ Por favor, escolla as unidades preferidas para usar nos debuxos novos e mais a s
         <translation>Precisión linear:</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Text alignment &lt;a name=&quot;result_box&quot;/&gt;relative to the dimension line.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Aliñamento do texto &lt;a name=&quot;result_box&quot;/&gt;respecto da liña de acoutamento.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Text alignment &lt;a name="result_box"/&gt;relative to the dimension line.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Aliñamento do texto &lt;a name="result_box"/&gt;respecto da liña de acoutamento.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Aligned</source>
@@ -5358,8 +5357,8 @@ Por favor, escolla as unidades preferidas para usar nos debuxos novos e mais a s
         <translation>Arquitectónico (métrico)</translation>
     </message>
     <message>
-        <source>For the length format &apos;Architectural (metric)&apos;, the unit must be set to Meter.</source>
-        <translation>Para o formato de comprimento &apos;Arquitectónico (métrico)&apos;, a unidade debe estar configurada en Metro.</translation>
+        <source>For the length format 'Architectural (metric)', the unit must be set to Meter.</source>
+        <translation>Para o formato de comprimento 'Arquitectónico (métrico)', a unidade debe estar configurada en Metro.</translation>
     </message>
     <message>
         <source>Screen %</source>
@@ -5605,7 +5604,7 @@ Por favor, escolla as unidades preferidas para usar nos debuxos novos e mais a s
         <translation>&amp;Número de entidades a previsualizar:</translation>
     </message>
     <message>
-        <source>Don&apos;t use native OS file open dialog</source>
+        <source>Don't use native OS file open dialog</source>
         <translation>Non usar ficheiros do SO nativo en diálogos abertos</translation>
     </message>
     <message>
@@ -5681,7 +5680,7 @@ Por favor, escolla as unidades preferidas para usar nos debuxos novos e mais a s
         <translation>Zoomar automáticamente o desenho ao abrir</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-family:&apos;-apple-system&apos;,&apos;BlinkMacSystemFont&apos;,&apos;Segoe UI&apos;,&apos;Noto Sans&apos;,&apos;Helvetica&apos;,&apos;Arial&apos;,&apos;sans-serif&apos;,&apos;Apple Color Emoji&apos;,&apos;Segoe UI Emoji&apos;; font-size:14px; color:#1f2328; background-color:#ffffff;&quot;&gt;Part library folder. The symbol library dxf files must be located in the subdirectories of this folder. The subfolder names will be displayed in the Library Browser.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-family:&apos;-apple-system&apos;,&apos;BlinkMacSystemFont&apos;,&apos;Segoe UI&apos;,&apos;Noto Sans&apos;,&apos;Helvetica&apos;,&apos;Arial&apos;,&apos;sans-serif&apos;,&apos;Apple Color Emoji&apos;,&apos;Segoe UI Emoji&apos;; font-size:14px; color:#1f2328; background-color:#ffffff;&quot;&gt;( Menu: Widgets &amp;gt; Dock Widgets &amp;gt; Library Browser)&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=" font-family:'-apple-system','BlinkMacSystemFont','Segoe UI','Noto Sans','Helvetica','Arial','sans-serif','Apple Color Emoji','Segoe UI Emoji'; font-size:14px; color:#1f2328; background-color:#ffffff;"&gt;Part library folder. The symbol library dxf files must be located in the subdirectories of this folder. The subfolder names will be displayed in the Library Browser.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=" font-family:'-apple-system','BlinkMacSystemFont','Segoe UI','Noto Sans','Helvetica','Arial','sans-serif','Apple Color Emoji','Segoe UI Emoji'; font-size:14px; color:#1f2328; background-color:#ffffff;"&gt;( Menu: Widgets &amp;gt; Dock Widgets &amp;gt; Library Browser)&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>Part library folder. Os ficheiros dxf da biblioteca de símbolos deben estar ubicados nos subdirectorios desta carpeta. Os nomes dos subdirectorios serán mostrados no Navegador de Biblioteca. (Menú: Widgets &gt; Dock Widgets &gt; Library Browser)</translation>
     </message>
     <message>
@@ -5753,8 +5752,8 @@ Por favor, escolla as unidades preferidas para usar nos debuxos novos e mais a s
     </message>
     <message>
         <source>MakerCAM as of November 2014 does not hide SVG content 
-that has been set invisibe (&quot;display: none&quot; or &quot;visibility: hidden&quot;).</source>
-        <translation>નવેમ્બર 2014 સુધીનું MakerCAM એ SVG કન્ટેન્ટ છુપાવતું નથી જે અદ્રશ્ય સેટ કરવામાં આવ્યું હોય (&quot;display: none&quot; અથવા &quot;visibility: hidden&quot;).</translation>
+that has been set invisibe ("display: none" or "visibility: hidden").</source>
+        <translation>નવેમ્બર 2014 સુધીનું MakerCAM એ SVG કન્ટેન્ટ છુપાવતું નથી જે અદ્રશ્ય સેટ કરવામાં આવ્યું હોય ("display: none" અથવા "visibility: hidden").</translation>
     </message>
     <message>
         <source>MakerCAM as of November 2014 cannot correctly deal with blocks,
@@ -5769,16 +5768,16 @@ the &lt;transform&gt; attribute or as &lt;path&gt; using elliptic arc segments.<
     </message>
     <message>
         <source>Exported images can be useful in SVG editors (Inkscape, etc), 
-but avoided in some CAM&apos;s.</source>
+but avoided in some CAM's.</source>
         <translation>એક્સપોર્ટેડ છબીઓ SVG એડિટર્સ (Inkscape, વગેરે) માં ઉપયોગી હોઈ શકે છે, પરંતુ કેટલાક CAM માં ટાળવામાં આવે છે.</translation>
     </message>
     <message>
-        <source>Many CAM&apos;s(MakerCAM, EleskCAM, LaserWeb) ignore dashed/doted line style, 
+        <source>Many CAM's(MakerCAM, EleskCAM, LaserWeb) ignore dashed/doted line style, 
 which can be useful in lasercut of plywood or for papercraft. </source>
         <translation>ઘણા CAMs (MakerCAM, EleskCAM, LaserWeb) ડેશ/ડોટેડ લાઇન સ્ટાઇલને અવગણે છે, જે પ્લાયવુડના લેસર કટિંગ અથવા પેપરક્રાફ્ટ માટે ઉપયોગી થઈ શકે છે.</translation>
     </message>
     <message>
-        <source>Default width of elements can affect some CAM&apos;s/SVG Editors, 
+        <source>Default width of elements can affect some CAM's/SVG Editors, 
 but ignored by other</source>
         <translation>A largura predeterminada dos elementos pode afectar a certos editores CAM/SVG, pero é ignorada por outros.</translation>
     </message>
@@ -7094,16 +7093,16 @@ Os contidos dunha Capa de Construción non deberan aparecer na impresión.</tran
         <translation>Esquerdo</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+        <source>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Ubuntu&apos;; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Helvetica&apos;; font-size:9pt;&quot;&gt;Hint about left/right mouse button actions&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Ubuntu'; font-size:11pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;span style=" font-family:'Helvetica'; font-size:9pt;"&gt;Hint about left/right mouse button actions&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Ubuntu&apos;; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Helvetica&apos;; font-size:9pt;&quot;&gt;Información sobre as accións do botón do rato esquerdo/dereito&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Ubuntu'; font-size:11pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;span style=" font-family:'Helvetica'; font-size:9pt;"&gt;Información sobre as accións do botón do rato esquerdo/dereito&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
@@ -7150,28 +7149,28 @@ p, li { white-space: pre-wrap; }
         <translation>Lonxitude total</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+        <source>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Number of selected entities&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Helvetica'; font-size:7pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;Number of selected entities&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Cantidade de entidades seleccionadas&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Helvetica'; font-size:7pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;Cantidade de entidades seleccionadas&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+        <source>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Total length of selected entities&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Helvetica'; font-size:7pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;Total length of selected entities&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Lonxitude total das entidades seleccionadas&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Helvetica'; font-size:7pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;Lonxitude total das entidades seleccionadas&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
@@ -7450,8 +7449,8 @@ p, li { white-space: pre-wrap; }
         <translation>Desbotar a capa</translation>
     </message>
     <message>
-        <source>Layer &quot;%1&quot; can never be removed.</source>
-        <translation>A capa &quot;%1&quot; nunca se pode desbotar</translation>
+        <source>Layer "%1" can never be removed.</source>
+        <translation>A capa "%1" nunca se pode desbotar</translation>
     </message>
     <message>
         <source>Layer Dialog</source>
@@ -7462,26 +7461,26 @@ p, li { white-space: pre-wrap; }
         <translation>Desbotar bloque</translation>
     </message>
     <message>
-        <source>Block &quot;%1&quot; and all its entities will be removed.</source>
-        <translation>O bloque &quot;%1&quot; e tódalas súas entidades vánse desbotar</translation>
+        <source>Block "%1" and all its entities will be removed.</source>
+        <translation>O bloque "%1" e tódalas súas entidades vánse desbotar</translation>
     </message>
     <message>
         <source>Layer Properties</source>
         <translation>Propiedades da capa</translation>
     </message>
     <message>
-        <source>Layer with a name &quot;%1&quot; already exists. Please specify a different name.</source>
-        <translation>Xa hai unha capa co nome &quot;%1&quot; . Por favor, especifique outro nome diferente.</translation>
+        <source>Layer with a name "%1" already exists. Please specify a different name.</source>
+        <translation>Xa hai unha capa co nome "%1" . Por favor, especifique outro nome diferente.</translation>
     </message>
     <message>
-        <source>Layer &quot;%1&quot; and all entities on it will be removed.
+        <source>Layer "%1" and all entities on it will be removed.
 This action can NOT be undone.</source>
-        <translation>A capa &quot;%1&quot; e tódalas entidades dela van ser desbotadas.
+        <translation>A capa "%1" e tódalas entidades dela van ser desbotadas.
 Esta acción NON pode ser desfeita despois.</translation>
     </message>
     <message>
-        <source>Layer &quot;0&quot; can never be removed.</source>
-        <translation>A capa &quot;0&quot; nunca pode ser eliminada.</translation>
+        <source>Layer "0" can never be removed.</source>
+        <translation>A capa "0" nunca pode ser eliminada.</translation>
     </message>
     <message numerus="yes">
         <source>Remove %n layer(s)</source>
@@ -7499,8 +7498,8 @@ Esta acción NON pode ser desfeita despois.</translation>
         <translation>Aviso: esta acción non pode ser desfeita!</translation>
     </message>
     <message>
-        <source>Warning: layer &quot;0&quot; can never be removed.</source>
-        <translation>Aviso: a capa &quot;0&quot; nunca pode ser eliminada.</translation>
+        <source>Warning: layer "0" can never be removed.</source>
+        <translation>Aviso: a capa "0" nunca pode ser eliminada.</translation>
     </message>
     <message>
         <source>Layers for removal:</source>
@@ -7595,12 +7594,12 @@ Por favor, especifique un nome diferente.</translation>
         <translation>Selección duplicada</translation>
     </message>
     <message>
-        <source>Replace &quot;By Layer&quot; value to source layers values?
-If Yes - entities with &quot;By Layer&quot; pens will look on new layer exactly as on previous layers and &quot;By Layer&quot; value will be replaced by resolved pens.
-If No - &quot;By Layer&quot; values remains and so pen of target layer will define pen for such entities.</source>
-        <translation type="vanished">Reemplazar o valor &quot;Por Capa&quot; polos valores das capas de orixe?
-Se si - as entidades con plumas &quot;Por Capa&quot; aparecerán na nova capa exactamente como nas capas anteriores e o valor &quot;Por Capa&quot; será substituído por plumas resolvidas.
-Se non - os valores &quot;Por Capa&quot; permanecerán e, por lo tanto, a pluma da capa de destino definirá a pluma para dichas entidades.</translation>
+        <source>Replace "By Layer" value to source layers values?
+If Yes - entities with "By Layer" pens will look on new layer exactly as on previous layers and "By Layer" value will be replaced by resolved pens.
+If No - "By Layer" values remains and so pen of target layer will define pen for such entities.</source>
+        <translation type="vanished">Reemplazar o valor "Por Capa" polos valores das capas de orixe?
+Se si - as entidades con plumas "Por Capa" aparecerán na nova capa exactamente como nas capas anteriores e o valor "Por Capa" será substituído por plumas resolvidas.
+Se non - os valores "Por Capa" permanecerán e, por lo tanto, a pluma da capa de destino definirá a pluma para dichas entidades.</translation>
     </message>
     <message>
         <source>Layer DialogEx</source>
@@ -7629,7 +7628,7 @@ Por favor, especifique un valor diferente.</translation>
         <translation>A pluma será eliminada da paleta; as entidades de desenho non serán afectados.</translation>
     </message>
     <message>
-        <source>Are you sure you&apos;d like to proceed?</source>
+        <source>Are you sure you'd like to proceed?</source>
         <translation>Está seguro de que quere continuar?</translation>
     </message>
     <message>
@@ -7695,16 +7694,16 @@ Clear filtering mask and repeat.</source>
 Limpe a máscara de filtrado e repita.</translation>
     </message>
     <message>
-        <source>Replace &quot;By Layer&quot; value to source layers values?
+        <source>Replace "By Layer" value to source layers values?
 
-If Yes - entities with &quot;By Layer&quot; pens will look on new layer exactly as on previous layers and &quot;By Layer&quot; value will be replaced by resolved pens.
+If Yes - entities with "By Layer" pens will look on new layer exactly as on previous layers and "By Layer" value will be replaced by resolved pens.
 
-If No - &quot;By Layer&quot; values remains and so pen of target layer will define pen for such entities.</source>
-        <translation>Substituír o valor &quot;Por capa&quot; polos valores das capas de orixe?
+If No - "By Layer" values remains and so pen of target layer will define pen for such entities.</source>
+        <translation>Substituír o valor "Por capa" polos valores das capas de orixe?
 
-Se di &quot;Si&quot;, as entidades con bolígrafos &quot;Por capa&quot; aparecerán na nova capa exactamente como nas capas anteriores e o valor &quot;Por capa&quot; será substituído polos bolígrafos resolvidos.
+Se di "Si", as entidades con bolígrafos "Por capa" aparecerán na nova capa exactamente como nas capas anteriores e o valor "Por capa" será substituído polos bolígrafos resolvidos.
 
-Se di &quot;Non&quot;, os valores &quot;Por capa&quot; manteranse e, polo tanto, o bolígrafo da capa de destino definirá o bolígrafo para esas entidades.</translation>
+Se di "Non", os valores "Por capa" manteranse e, polo tanto, o bolígrafo da capa de destino definirá o bolígrafo para esas entidades.</translation>
     </message>
 </context>
 <context>
@@ -7960,7 +7959,7 @@ Quere reemprazalo?</translation>
         <translation>Erro descoñecido abrindo o ficheiro dwg</translation>
     </message>
     <message>
-        <source>can&apos;t open this dwg file</source>
+        <source>can't open this dwg file</source>
         <translation>Non se pode abrir este ficheiro dwg</translation>
     </message>
     <message>
@@ -7997,7 +7996,7 @@ Quere reemprazalo?</translation>
     </message>
     <message>
         <source>File on disk modified. Please save to another file to avoid data loss! File modified: %1</source>
-        <translation>Ficheiro modificado no disco. Por favor, garde noutro ficheiro para evitar a perda de datos! Ficheiro modificado:% 1</translation>
+        <translation>Ficheiro modificado no disco. Por favor, garde noutro ficheiro para evitar a perda de datos! Ficheiro modificado: %1.</translation>
     </message>
     <message>
         <source>Hatch failed due to a gap=%1 between (%2, %3) and (%4, %5)</source>
@@ -10134,8 +10133,8 @@ Quere reemprazalo?</translation>
         <translation>-o some.pdf *.dxf</translation>
     </message>
     <message>
-        <source>-- print all dxf files to &apos;some.pdf&apos; file.</source>
-        <translation>-- imprimir todos os ficheiros dxf no ficheiro &apos;some.pdf&apos;.</translation>
+        <source>-- print all dxf files to 'some.pdf' file.</source>
+        <translation>-- imprimir todos os ficheiros dxf no ficheiro 'some.pdf'.</translation>
     </message>
     <message>
         <source>Auto fit and center drawing to page.</source>
@@ -10209,8 +10208,8 @@ Quere reemprazalo?</translation>
         <translation>Combinar todas as capas</translation>
     </message>
     <message>
-        <source>File &quot;%1&quot; already exists. Do you want to replace it?</source>
-        <translation>O ficheiro &quot;%1&quot; existe xa. Desexa reemplazarlo?</translation>
+        <source>File "%1" already exists. Do you want to replace it?</source>
+        <translation>O ficheiro "%1" existe xa. Desexa reemplazarlo?</translation>
     </message>
     <message>
         <source>/CustomColor%1</source>
@@ -10870,8 +10869,8 @@ Quere reemprazalo?</translation>
         <translation>Introducir ángulo:</translation>
     </message>
     <message>
-        <source></source>
-        <translation></translation>
+        <source />
+        <translation />
     </message>
     <message>
         <source>Enter factor:</source>
@@ -11358,24 +11357,24 @@ This block cannot be inserted.</source>
         <translation>Escolla o centro do círculo tanxencial</translation>
     </message>
     <message>
-        <source>Invalid expression &apos;%1&apos; for radius</source>
-        <translation>Expresión &apos;%1&apos; inválida para o raio</translation>
+        <source>Invalid expression '%1' for radius</source>
+        <translation>Expresión '%1' inválida para o raio</translation>
     </message>
     <message>
-        <source>Invalid negative radius &apos;%1&apos;</source>
-        <translation>Raio negativo &apos;%1&apos; inválido</translation>
+        <source>Invalid negative radius '%1'</source>
+        <translation>Raio negativo '%1' inválido</translation>
     </message>
     <message>
-        <source>Invalid zero radius &apos;%1&apos;</source>
-        <translation>Raio cero inválido &apos;%1&apos;</translation>
+        <source>Invalid zero radius '%1'</source>
+        <translation>Raio cero inválido '%1'</translation>
     </message>
     <message>
-        <source>No tangent circle possible for radius &apos;%1&apos;</source>
-        <translation>Non é posible un círculo tangente para o raio &apos;%1&apos;</translation>
+        <source>No tangent circle possible for radius '%1'</source>
+        <translation>Non é posible un círculo tangente para o raio '%1'</translation>
     </message>
     <message>
-        <source>No common tangential circle for radius &apos;%1&apos;</source>
-        <translation>Non é posible un círculo tangente común para o raio &apos;%1&apos;</translation>
+        <source>No common tangential circle for radius '%1'</source>
+        <translation>Non é posible un círculo tangente común para o raio '%1'</translation>
     </message>
 </context>
 <context>
@@ -11645,8 +11644,8 @@ This block cannot be inserted.</source>
         <translation>Introducir ángulo:</translation>
     </message>
     <message>
-        <source></source>
-        <translation></translation>
+        <source />
+        <translation />
     </message>
     <message>
         <source>Enter factor:</source>
@@ -11861,8 +11860,8 @@ This block cannot be inserted.</source>
 <context>
     <name>RS_ActionDrawLinePolygon</name>
     <message>
-        <source></source>
-        <translation></translation>
+        <source />
+        <translation />
     </message>
 </context>
 <context>
@@ -12348,16 +12347,16 @@ This block cannot be inserted.</source>
         <translation>Introducir ángulo:</translation>
     </message>
     <message>
-        <source></source>
-        <translation></translation>
+        <source />
+        <translation />
     </message>
     <message>
         <source>Enter factor:</source>
         <translation>Introducir factor:</translation>
     </message>
     <message>
-        <source>Cannot open file &apos;%1&apos;</source>
-        <translation>Non se pode abrir o ficheiro &apos;%1&apos;</translation>
+        <source>Cannot open file '%1'</source>
+        <translation>Non se pode abrir o ficheiro '%1'</translation>
     </message>
 </context>
 <context>
@@ -12793,7 +12792,7 @@ This block cannot be inserted.</source>
         <translation>Cancelar</translation>
     </message>
     <message>
-        <source>Specify adding node&apos;s point</source>
+        <source>Specify adding node's point</source>
         <translation>Especifique o punto onde engadir o nodo</translation>
     </message>
     <message>
@@ -12863,7 +12862,7 @@ This block cannot be inserted.</source>
         <translation>Cancelar</translation>
     </message>
     <message>
-        <source>Specify deleting node&apos;s point</source>
+        <source>Specify deleting node's point</source>
         <translation>Especifique o nodo a desbotar</translation>
     </message>
     <message>
@@ -13030,8 +13029,8 @@ This block cannot be inserted.</source>
         <translation>introduza desprazamento dende a liña de comandos para o desprazamento da impresión</translation>
     </message>
     <message>
-        <source>Printout offset ignores relative zero. Ignoring &apos;@&apos;</source>
-        <translation>Desprazamento da impresión ignora a orixe relativa. Esquecendo &apos;@&apos;</translation>
+        <source>Printout offset ignores relative zero. Ignoring '@'</source>
+        <translation>Desprazamento da impresión ignora a orixe relativa. Esquecendo '@'</translation>
     </message>
     <message>
         <source>Printout in Black/White</source>
