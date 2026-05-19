@@ -23,16 +23,8 @@
 **********************************************************************/
 #include "lc_penpaletteoptions.h"
 #include "rs_settings.h"
-#include "rs_system.h"
 
-QString LC_PenPaletteOptions::defaultPensFilePath() {
-    return RS_SYSTEM->getAppDataDir() + "/pen_palette.pens";
-}
-
-/**
- * Straightforwards storing options to settings
- */
-void LC_PenPaletteOptions:: loadFromSettings(){
+void LC_PenPaletteOptions::loadFromSettings(){
 
     LC_PenPaletteOptions defaults;
 
@@ -61,7 +53,6 @@ void LC_PenPaletteOptions:: loadFromSettings(){
     colorNameDisplayMode = RS_SETTINGS->readNumEntry("/colorDisplayMode", defaults.colorNameDisplayMode);
     doubleClickOnTableMode = RS_SETTINGS->readNumEntry("/doubleClickOnTableMode", defaults.doubleClickOnTableMode);
 
-    pensFileName = RS_SETTINGS->readEntry("/pensFile", defaultPensFilePath());
 
     RS_SETTINGS->endGroup();
 
@@ -99,7 +90,6 @@ void LC_PenPaletteOptions::saveToSettings(){
     RS_SETTINGS->writeEntry("/doubleClickOnTableMode", doubleClickOnTableMode);
 
 
-    RS_SETTINGS->writeEntry("/pensFile", pensFileName);
 
     RS_SETTINGS->endGroup();
 }

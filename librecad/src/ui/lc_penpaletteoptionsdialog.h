@@ -34,7 +34,7 @@ class LC_PenPaletteOptionsDialog : public QDialog, public Ui::LC_PenPaletteOptio
     Q_OBJECT
 
 public:
-    explicit LC_PenPaletteOptionsDialog(QWidget *parent, LC_PenPaletteOptions* options, bool focusOnfile);
+    explicit LC_PenPaletteOptionsDialog(QWidget *parent, LC_PenPaletteOptions* options);
     ~LC_PenPaletteOptionsDialog() override;
 
 public slots:
@@ -48,9 +48,7 @@ private:
     LC_PenPaletteOptions* options = nullptr;
     void selectGridColor();
     void selectMatchedItemColor();
-    void setPensFile();
     void showInvalidColorMessage(const QString &name);
-    void showInvalidFileMessage(const QString &msg);
 };
 
 #endif // LC_PENPALETTEOPTIONSDIALOG_H

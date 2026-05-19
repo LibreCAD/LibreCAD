@@ -213,31 +213,6 @@
      </property>
     </widget>
    </item>
-   <item row="9" column="0">
-    <layout class="QHBoxLayout" name="horizontalLayout">
-     <item>
-      <widget class="QLabel" name="label">
-       <property name="text">
-        <string>Pens file:</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QLineEdit" name="lePensFile"/>
-     </item>
-     <item>
-      <widget class="QToolButton" name="tbBrowse">
-       <property name="text">
-        <string/>
-       </property>
-       <property name="icon">
-        <iconset resource="../../res/actions/actions.qrc">
-         <normaloff>:/actions/fileopen.png</normaloff>:/actions/fileopen.png</iconset>
-       </property>
-      </widget>
-     </item>
-    </layout>
-   </item>
    <item row="4" column="0" rowspan="2">
     <widget class="QGroupBox" name="groupBox">
      <property name="title">

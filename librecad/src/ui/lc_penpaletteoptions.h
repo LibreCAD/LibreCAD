@@ -65,12 +65,6 @@ public:
      */
     bool ignoreCaseOnMatch {true};
 
-    // fixme - well, probably we should use some reasonable defaults with paths related to the app there...
-    /**
-     * name of file where pens are stored
-     */
-    QString pensFileName{""};
-
     /**
      * columns visibility flags
      */
@@ -91,8 +85,6 @@ public:
      * should we show tooltip in table or not
      */
     bool showToolTip {true};
-
-    static QString defaultPensFilePath();
 
     void saveToSettings();
     void loadFromSettings();

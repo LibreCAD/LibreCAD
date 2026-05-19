@@ -21,12 +21,9 @@
 ** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
-#include <QFile>
-#include <QTextStream>
 #include "lc_penpalettedata.h"
-/**
- * Separator for fields of pen in persistent string
- */
+#include "rs_settings.h"
+
 static const char *const PEN_DATA_FIELDS_SEPARATOR = ",";
 
 LC_PenPaletteData::LC_PenPaletteData(LC_PenPaletteOptions *opts){
@@ -37,64 +34,31 @@ LC_PenPaletteData::~LC_PenPaletteData(){
     qDeleteAll(persistentItems);
     persistentItems.clear();
 }
-/**
- * Saves list of pens in the underlying file.
- * The file format is CSV, each line represents one pen
- */
 bool LC_PenPaletteData::saveItems(){
-    QString fileName = options->pensFileName;
-    QFile file(fileName);
-    bool result = false;
-    if (file.open(QIODevice::WriteOnly | QIODevice::Text)){
-        QTextStream out(&file);
-#if QT_VERSION >= QT_VERSION_CHECK(6, 2, 0)
-        out.setEncoding(QStringConverter::Utf8);
-#else
-        out.setCodec("UTF-8");
-#endif
-
-        // just convert each pen to string and store in file
-        int count = persistentItems.count();
-        for (int i= 0; i < count; i++){
-            LC_PenItem* item = persistentItems.at(i);
-            out << toStringRepresentation(item);
-        }
-        file.close();
-        result = true;
-    }
-    else{
-        // handle error later
-    }
-    return result;
+    QStringList lines;
+    for (LC_PenItem* item : persistentItems)
+        lines << toStringRepresentation(item).trimmed();
+    RS_SETTINGS->beginGroup("PenPaletteWidget");
+    RS_SETTINGS->writeEntry("/pens", lines.join('\n'));
+    RS_SETTINGS->endGroup();
+    return true;
 }
 
 bool LC_PenPaletteData::loadItems(){
-    QString fileName = options->pensFileName;
-    bool result = false;
-    QFile file(fileName);
-    file.open(QIODevice::ReadOnly | QIODevice::Text);
-    if (file.isOpen()){
-        QTextStream in(&file);
-#if QT_VERSION >= QT_VERSION_CHECK(6, 2, 0)
-        in.setEncoding(QStringConverter::Utf8);
-#else
-        in.setCodec("UTF-8");
-#endif
-        while (!in.atEnd())
-        {
-            QString line = in.readLine();
-            LC_PenItem* item = fromStringRepresentation(line);
-            if (item != nullptr){ // if null - some parsing issue occurred
-                persistentItems << item;
-            }
-        }
-        file.close();
-        return true;
-    }
-    else {
+    RS_SETTINGS->beginGroup("PenPaletteWidget");
+    QString data = RS_SETTINGS->readEntry("/pens", "");
+    RS_SETTINGS->endGroup();
+    if (data.isEmpty()){
         createDefaultPens();
+        return false;
     }
-    return result;
+    for (const QString& line : data.split('\n', Qt::SkipEmptyParts)){
+        QString mutableLine = line;
+        LC_PenItem* item = fromStringRepresentation(mutableLine);
+        if (item != nullptr)
+            persistentItems << item;
+    }
+    return true;
 }
 
 /**
