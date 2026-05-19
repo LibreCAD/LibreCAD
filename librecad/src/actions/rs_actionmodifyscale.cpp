@@ -127,12 +127,9 @@ RS_Vector RS_ActionModifyScale::getTargetPoint(QMouseEvent* e)
 {
     if (!pPoints->data.isotropicScaling)
         return snapPoint(e);
-    RS_Vector mouse = graphicView->toGraph(e->x(), e->y());
-    // project mouse to the line (center, source)
+    RS_Vector mouse = snapPoint(e);
     RS_Line centerSourceLine{nullptr, {pPoints->data.referencePoint, pPoints->sourcePoint}};
-    RS_Vector projected = centerSourceLine.getNearestPointOnEntity(mouse, false);
-    snapPoint(projected, true);
-    return projected;
+    return centerSourceLine.getNearestPointOnEntity(mouse, false);
 }
 
 void RS_ActionModifyScale::showPreview()
