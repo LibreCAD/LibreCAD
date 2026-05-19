@@ -28,7 +28,7 @@
     </message>
     <message>
         <source>Set</source>
-        <translation>Sett</translation>
+        <translation>Set</translation>
     </message>
 </context>
 <context>
@@ -126,7 +126,7 @@ avstand mellom punkter=%2 er større enn diameter=%3</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Tilbake</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Select circle center</source>
@@ -147,7 +147,7 @@ eller [%2]</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Tilbake</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Y</source>
@@ -191,7 +191,7 @@ eller [%2]</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Tilbake</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify distance (%1) or [%2]</source>
@@ -234,7 +234,7 @@ eller [%2]</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Tilbake</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify the third point on parabola</source>
@@ -265,7 +265,7 @@ eller [%2]</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Tilbake</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify the start point on parabola</source>
@@ -288,11 +288,11 @@ eller [%2]</translation>
     </message>
     <message>
         <source>Line</source>
-        <translation>Linje</translation>
+        <translation>Line</translation>
     </message>
     <message>
         <source>Arc</source>
-        <translation>Bue</translation>
+        <translation>Arc</translation>
     </message>
     <message>
         <source>Circle</source>
@@ -315,7 +315,7 @@ eller [%2]</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Tilbake</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify next control point</source>
@@ -933,7 +933,7 @@ eller [%2]</translation>
     </message>
     <message>
         <source>Left</source>
-        <translation>Venstre</translation>
+        <translation>Left</translation>
     </message>
     <message>
         <source>Right</source>
@@ -941,7 +941,7 @@ eller [%2]</translation>
     </message>
     <message>
         <source>Top</source>
-        <translation>Topp</translation>
+        <translation>Top</translation>
     </message>
     <message>
         <source>Bottom</source>
@@ -1070,7 +1070,7 @@ eller [%2]</translation>
     </message>
     <message>
         <source>Star</source>
-        <translation>Stjerne</translation>
+        <translation>Star</translation>
     </message>
     <message>
         <source>Break/Divide</source>
@@ -1205,14 +1205,14 @@ eller [%2]</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Tilbake</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
     <name>LC_CircleByArcOptions</name>
     <message>
         <source>Form</source>
-        <translation>Skjema</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <source>Active</source>
@@ -1247,7 +1247,7 @@ eller [%2]</translation>
     <name>LC_CrossOptions</name>
     <message>
         <source>Form</source>
-        <translation>Skjema</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <source>Extension</source>
@@ -1282,7 +1282,7 @@ eller [%2]</translation>
     <name>LC_DeviceOptions</name>
     <message>
         <source>Form</source>
-        <translation>Skjema</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <source>Device</source>
@@ -1290,7 +1290,7 @@ eller [%2]</translation>
     </message>
     <message>
         <source>Save</source>
-        <translation>Lagre</translation>
+        <translation>Save</translation>
     </message>
 </context>
 <context>
@@ -1304,7 +1304,7 @@ eller [%2]</translation>
     <name>LC_DuplicateOptions</name>
     <message>
         <source>Form</source>
-        <translation>Skjema</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <source>Layer:</source>
@@ -1730,7 +1730,7 @@ eller [%2]</translation>
     <name>LC_LineAngleRelOptions</name>
     <message>
         <source>Form</source>
-        <translation>Skjema</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <source>Offset:</source>
@@ -1738,7 +1738,7 @@ eller [%2]</translation>
     </message>
     <message>
         <source>Free</source>
-        <translation>Fri</translation>
+        <translation>Free</translation>
     </message>
     <message>
         <source>Start</source>
@@ -1750,7 +1750,7 @@ eller [%2]</translation>
     </message>
     <message>
         <source>End</source>
-        <translation>Slutt</translation>
+        <translation>End</translation>
     </message>
     <message>
         <source>Line Snap:</source>
@@ -1758,7 +1758,7 @@ eller [%2]</translation>
     </message>
     <message>
         <source>Rel</source>
-        <translation>Relativ</translation>
+        <translation>Rel</translation>
     </message>
     <message>
         <source>Divide</source>
@@ -1785,7 +1785,7 @@ eller [%2]</translation>
     <name>LC_LineFromPointToLineOptions</name>
     <message>
         <source>Form</source>
-        <translation>Skjema</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <source>Angle:</source>
@@ -1821,7 +1821,7 @@ eller [%2]</translation>
     </message>
     <message>
         <source>End</source>
-        <translation>Slutt</translation>
+        <translation>End</translation>
     </message>
     <message>
         <source>Length:</source>
@@ -1836,7 +1836,7 @@ eller [%2]</translation>
     <name>LC_LineJoinOptions</name>
     <message>
         <source>Form</source>
-        <translation>Skjema</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <source>Extend/Trim</source>
@@ -1891,7 +1891,7 @@ eller [%2]</translation>
     <name>LC_LinePointsOptions</name>
     <message>
         <source>Form</source>
-        <translation>Skjema</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <source>Angle:</source>
@@ -1903,11 +1903,11 @@ eller [%2]</translation>
     </message>
     <message>
         <source>None</source>
-        <translation>Ingen</translation>
+        <translation>None</translation>
     </message>
     <message>
         <source>Both</source>
-        <translation>Begge</translation>
+        <translation>Both</translation>
     </message>
     <message>
         <source>Start</source>
@@ -1915,7 +1915,7 @@ eller [%2]</translation>
     </message>
     <message>
         <source>End</source>
-        <translation>Slutt</translation>
+        <translation>End</translation>
     </message>
     <message>
         <source>Edge Points:</source>
@@ -1934,7 +1934,7 @@ eller [%2]</translation>
     <name>LC_ModifyBreakDivideOptions</name>
     <message>
         <source>Form</source>
-        <translation>Skjema</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <source>Remove Segments</source>
@@ -1949,7 +1949,7 @@ eller [%2]</translation>
     <name>LC_ModifyGapOptions</name>
     <message>
         <source>Form</source>
-        <translation>Skjema</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <source>Gap Snap:</source>
@@ -1961,7 +1961,7 @@ eller [%2]</translation>
     </message>
     <message>
         <source>Free</source>
-        <translation>Fri</translation>
+        <translation>Free</translation>
     </message>
     <message>
         <source>Gap Size:</source>
@@ -1977,7 +1977,7 @@ eller [%2]</translation>
     </message>
     <message>
         <source>End</source>
-        <translation>Slutt</translation>
+        <translation>End</translation>
     </message>
     <message>
         <source>Line Snap:</source>
@@ -2143,7 +2143,7 @@ eller [%2]</translation>
     </message>
     <message>
         <source>Save</source>
-        <translation>Lagre</translation>
+        <translation>Save</translation>
     </message>
     <message>
         <source>Apply Pen To Selection</source>
@@ -2248,7 +2248,7 @@ Vær oppmerksom på at hvis du lagrer en penn via redigeringsprogrammet uten å 
     <name>LC_Rectangle1PointOptions</name>
     <message>
         <source>Form</source>
-        <translation>Skjema</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <source>Polyline</source>
@@ -2292,7 +2292,7 @@ Vær oppmerksom på at hvis du lagrer en penn via redigeringsprogrammet uten å 
     </message>
     <message>
         <source>Top</source>
-        <translation>Topp</translation>
+        <translation>Top</translation>
     </message>
     <message>
         <source>Top-right</source>
@@ -2300,7 +2300,7 @@ Vær oppmerksom på at hvis du lagrer en penn via redigeringsprogrammet uten å 
     </message>
     <message>
         <source>Left</source>
-        <translation>Venstre</translation>
+        <translation>Left</translation>
     </message>
     <message>
         <source>Middle</source>
@@ -2340,7 +2340,7 @@ Vær oppmerksom på at hvis du lagrer en penn via redigeringsprogrammet uten å 
     </message>
     <message>
         <source>Both</source>
-        <translation>Begge</translation>
+        <translation>Both</translation>
     </message>
     <message>
         <source>Vertical</source>
@@ -2363,7 +2363,7 @@ Vær oppmerksom på at hvis du lagrer en penn via redigeringsprogrammet uten å 
     <name>LC_Rectangle2PointsOptions</name>
     <message>
         <source>Form</source>
-        <translation>Skjema</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <source>Snap shift</source>
@@ -2435,7 +2435,7 @@ Vær oppmerksom på at hvis du lagrer en penn via redigeringsprogrammet uten å 
     </message>
     <message>
         <source>Both</source>
-        <translation>Begge</translation>
+        <translation>Both</translation>
     </message>
     <message>
         <source>Vertical</source>
@@ -2450,7 +2450,7 @@ Vær oppmerksom på at hvis du lagrer en penn via redigeringsprogrammet uten å 
     <name>LC_Rectangle3PointsOptions</name>
     <message>
         <source>Form</source>
-        <translation>Skjema</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <source>Polyline</source>
@@ -2458,7 +2458,7 @@ Vær oppmerksom på at hvis du lagrer en penn via redigeringsprogrammet uten å 
     </message>
     <message>
         <source>Both</source>
-        <translation>Begge</translation>
+        <translation>Both</translation>
     </message>
     <message>
         <source>Vertical</source>
@@ -2532,15 +2532,15 @@ Vær oppmerksom på at hvis du lagrer en penn via redigeringsprogrammet uten å 
     <name>LC_SliceDivideOptions</name>
     <message>
         <source>Form</source>
-        <translation>Skjema</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <source>None</source>
-        <translation>Ingen</translation>
+        <translation>None</translation>
     </message>
     <message>
         <source>Both</source>
-        <translation>Begge</translation>
+        <translation>Both</translation>
     </message>
     <message>
         <source>Start</source>
@@ -2548,7 +2548,7 @@ Vær oppmerksom på at hvis du lagrer en penn via redigeringsprogrammet uten å 
     </message>
     <message>
         <source>End</source>
-        <translation>Slutt</translation>
+        <translation>End</translation>
     </message>
     <message>
         <source>Edge Tick:</source>
@@ -2556,7 +2556,7 @@ Vær oppmerksom på at hvis du lagrer en penn via redigeringsprogrammet uten å 
     </message>
     <message>
         <source>Rel</source>
-        <translation>Relativ</translation>
+        <translation>Rel</translation>
     </message>
     <message>
         <source>Offset:</source>
@@ -2603,7 +2603,7 @@ Vær oppmerksom på at hvis du lagrer en penn via redigeringsprogrammet uten å 
     <name>LC_StarOptions</name>
     <message>
         <source>Form</source>
-        <translation>Skjema</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <source>Radius Inner</source>
@@ -2638,7 +2638,7 @@ Vær oppmerksom på at hvis du lagrer en penn via redigeringsprogrammet uten å 
     </message>
     <message>
         <source>Dock</source>
-        <translation>Dokk</translation>
+        <translation>Dock</translation>
     </message>
     <message>
         <source>Float</source>
@@ -3025,15 +3025,15 @@ Autolagring deaktivert.</translation>
     </message>
     <message>
         <source>File</source>
-        <translation>Fil</translation>
+        <translation>File</translation>
     </message>
     <message>
         <source>Edit</source>
-        <translation>Rediger</translation>
+        <translation>Edit</translation>
     </message>
     <message>
         <source>View</source>
-        <translation>Vis</translation>
+        <translation>View</translation>
     </message>
     <message>
         <source>Snap Selection</source>
@@ -3101,7 +3101,7 @@ Kontroller at den finnes og tillatelsene.</translation>
     </message>
     <message>
         <source>Line</source>
-        <translation>Linje</translation>
+        <translation>Line</translation>
     </message>
     <message>
         <source>Circle</source>
@@ -3137,7 +3137,7 @@ Kontroller at den finnes og tillatelsene.</translation>
     </message>
     <message>
         <source>Pen</source>
-        <translation>Penne</translation>
+        <translation>Pen</translation>
     </message>
     <message>
         <source>Opening recent file...</source>
@@ -3197,7 +3197,7 @@ Kontroller at den finnes og tillatelsene.</translation>
     </message>
     <message>
         <source>Copy</source>
-        <translation>Kopier</translation>
+        <translation>Copy</translation>
     </message>
     <message>
         <source>Contributors</source>
@@ -3291,11 +3291,11 @@ Kontroller at den finnes og tillatelsene.</translation>
     </message>
     <message>
         <source>East</source>
-        <translation>Øst</translation>
+        <translation>East</translation>
     </message>
     <message>
         <source>West</source>
-        <translation>Vest</translation>
+        <translation>West</translation>
     </message>
     <message>
         <source>&amp;Arrange</source>
@@ -3328,7 +3328,7 @@ Kontroller at den finnes og tillatelsene.</translation>
     <message>
         <source>Dock</source>
         <comment>Dock the command widget to the main window</comment>
-        <translation>Dokk</translation>
+        <translation>Dock</translation>
     </message>
     <message>
         <source>&amp;Wiki</source>
@@ -3549,7 +3549,7 @@ in a separate window</source>
     </message>
     <message>
         <source>Red</source>
-        <translation>Rød</translation>
+        <translation>Red</translation>
     </message>
     <message>
         <source>Yellow</source>
@@ -3565,7 +3565,7 @@ in a separate window</source>
     </message>
     <message>
         <source>Blue</source>
-        <translation>Blå</translation>
+        <translation>Blue</translation>
     </message>
     <message>
         <source>Magenta</source>
@@ -3577,7 +3577,7 @@ in a separate window</source>
     </message>
     <message>
         <source>Gray</source>
-        <translation>Grå</translation>
+        <translation>Gray</translation>
     </message>
     <message>
         <source>Light Gray</source>
@@ -3675,7 +3675,7 @@ in a separate window</source>
     </message>
     <message>
         <source>Dock</source>
-        <translation>Dokk</translation>
+        <translation>Dock</translation>
     </message>
     <message>
         <source>Float</source>
@@ -3687,7 +3687,7 @@ in a separate window</source>
     </message>
     <message>
         <source>Cmd</source>
-        <translation>Kommando</translation>
+        <translation>Cmd</translation>
     </message>
 </context>
 <context>
@@ -3766,7 +3766,7 @@ in a separate window</source>
     <name>QG_DlgArc</name>
     <message>
         <source>Arc</source>
-        <translation>Bue</translation>
+        <translation>Arc</translation>
     </message>
     <message>
         <source>Layer:</source>
@@ -3958,7 +3958,7 @@ Dette endrer rekursivt alle enheter i selve blokken.</translation>
     </message>
     <message>
         <source>Area</source>
-        <translation>Areal</translation>
+        <translation>Area</translation>
     </message>
 </context>
 <context>
@@ -4098,7 +4098,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <name>QG_DlgLine</name>
     <message>
         <source>Line</source>
-        <translation>Linje</translation>
+        <translation>Line</translation>
     </message>
     <message>
         <source>Layer:</source>
@@ -4213,11 +4213,11 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>Cut</source>
-        <translation>Klipp ut</translation>
+        <translation>Cut</translation>
     </message>
     <message>
         <source>Copy</source>
-        <translation>Kopier</translation>
+        <translation>Copy</translation>
     </message>
     <message>
         <source>Paste</source>
@@ -5037,7 +5037,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>Left</source>
-        <translation>Venstre</translation>
+        <translation>Left</translation>
     </message>
     <message>
         <source>Top crosshair with isometric grid</source>
@@ -5045,7 +5045,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>Top</source>
-        <translation>Øvre</translation>
+        <translation>Top</translation>
     </message>
     <message>
         <source>Right crosshair with isometric grid</source>
@@ -5460,7 +5460,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>All</source>
-        <translation>Alle</translation>
+        <translation>All</translation>
     </message>
     <message>
         <source>Scrollbars</source>
@@ -5932,7 +5932,7 @@ so default step value required for baking</source>
     <name>QG_DlgText</name>
     <message>
         <source>Text</source>
-        <translation>Tekst</translation>
+        <translation>Text</translation>
     </message>
     <message>
         <source>Text:</source>
@@ -5952,11 +5952,11 @@ so default step value required for baking</source>
     </message>
     <message>
         <source>Cut</source>
-        <translation>Klipp ut</translation>
+        <translation>Cut</translation>
     </message>
     <message>
         <source>Copy</source>
-        <translation>Kopier</translation>
+        <translation>Copy</translation>
     </message>
     <message>
         <source>Paste</source>
@@ -6548,7 +6548,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <source>Fit</source>
-        <translation>Tilpass</translation>
+        <translation>Fit</translation>
     </message>
     <message>
         <source>Diameter (⌀)</source>
@@ -6899,7 +6899,7 @@ Innholdet i et konstruksjonslag skal ikke vises i utskrift.</translation>
     </message>
     <message>
         <source>Dot</source>
-        <translation>Punkt</translation>
+        <translation>Dot</translation>
     </message>
     <message>
         <source>Dot (small)</source>
@@ -6911,7 +6911,7 @@ Innholdet i et konstruksjonslag skal ikke vises i utskrift.</translation>
     </message>
     <message>
         <source>Dash</source>
-        <translation>Strek</translation>
+        <translation>Dash</translation>
     </message>
     <message>
         <source>Dash (small)</source>
@@ -7006,7 +7006,7 @@ Innholdet i et konstruksjonslag skal ikke vises i utskrift.</translation>
     </message>
     <message>
         <source>Left</source>
-        <translation>Venstre</translation>
+        <translation>Left</translation>
     </message>
     <message>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
@@ -7085,7 +7085,7 @@ p, li { white-space: pre-wrap; }
     <name>QG_SnapToolBar</name>
     <message>
         <source>Snap</source>
-        <translation>Fest</translation>
+        <translation>Snap</translation>
     </message>
     <message>
         <source>Snap to Endpoints</source>
@@ -7216,7 +7216,7 @@ p, li { white-space: pre-wrap; }
     <name>QG_WidgetPen</name>
     <message>
         <source>Pen</source>
-        <translation>Penn</translation>
+        <translation>Pen</translation>
     </message>
     <message>
         <source>Line type:</source>
@@ -7584,15 +7584,15 @@ Vil du erstatte den?</translation>
     </message>
     <message>
         <source>Inch</source>
-        <translation>Tomme</translation>
+        <translation>Inch</translation>
     </message>
     <message>
         <source>Foot</source>
-        <translation>Fot</translation>
+        <translation>Foot</translation>
     </message>
     <message>
         <source>Mile</source>
-        <translation>Mil</translation>
+        <translation>Mile</translation>
     </message>
     <message>
         <source>Millimeter</source>
@@ -7835,7 +7835,7 @@ Vil du erstatte den?</translation>
     <message>
         <source>line</source>
         <comment>draw line</comment>
-        <translation>linje</translation>
+        <translation>line</translation>
     </message>
     <message>
         <source>li</source>
@@ -7860,7 +7860,7 @@ Vil du erstatte den?</translation>
     <message>
         <source>free</source>
         <comment>draw freehand line</comment>
-        <translation>fri</translation>
+        <translation>free</translation>
     </message>
     <message>
         <source>fhl</source>
@@ -7915,7 +7915,7 @@ Vil du erstatte den?</translation>
     <message>
         <source>rect</source>
         <comment>draw rectangle</comment>
-        <translation>rektangel</translation>
+        <translation>rect</translation>
     </message>
     <message>
         <source>polygon2v</source>
@@ -7995,12 +7995,12 @@ Vil du erstatte den?</translation>
     <message>
         <source>text</source>
         <comment>draw text</comment>
-        <translation>tekst</translation>
+        <translation>text</translation>
     </message>
     <message>
         <source>txt</source>
         <comment>draw text</comment>
-        <translation>tekst</translation>
+        <translation>txt</translation>
     </message>
     <message>
         <source>regen</source>
@@ -8065,7 +8065,7 @@ Vil du erstatte den?</translation>
     <message>
         <source>kill</source>
         <comment>kill all actions</comment>
-        <translation>avslutt</translation>
+        <translation>kill</translation>
     </message>
     <message>
         <source>k</source>
@@ -8075,7 +8075,7 @@ Vil du erstatte den?</translation>
     <message>
         <source>undo</source>
         <comment>undo cycle</comment>
-        <translation>angre</translation>
+        <translation>undo</translation>
     </message>
     <message>
         <source>u</source>
@@ -8085,7 +8085,7 @@ Vil du erstatte den?</translation>
     <message>
         <source>redo</source>
         <comment>redo cycle</comment>
-        <translation>gjør om</translation>
+        <translation>redo</translation>
     </message>
     <message>
         <source>r</source>
@@ -8235,7 +8235,7 @@ Vil du erstatte den?</translation>
     <message>
         <source>cut</source>
         <comment>modify - divide (cut)</comment>
-        <translation>klipp</translation>
+        <translation>cut</translation>
     </message>
     <message>
         <source>div</source>
@@ -8250,22 +8250,22 @@ Vil du erstatte den?</translation>
     <message>
         <source>rev</source>
         <comment>modify -  revert direction</comment>
-        <translation>reverser</translation>
+        <translation>rev</translation>
     </message>
     <message>
         <source>ro</source>
         <comment>modify - rotate</comment>
-        <translation>skrivebeskyttet</translation>
+        <translation>ro</translation>
     </message>
     <message>
         <source>sz</source>
         <comment>modify - scale</comment>
-        <translation>størrelse</translation>
+        <translation>sz</translation>
     </message>
     <message>
         <source>tm</source>
         <comment>modify - trim (extend)</comment>
-        <translation>tidsstempel</translation>
+        <translation>tm</translation>
     </message>
     <message>
         <source>tm2</source>
@@ -8275,27 +8275,27 @@ Vil du erstatte den?</translation>
     <message>
         <source>le</source>
         <comment>modify - lengthen</comment>
-        <translation>venstre</translation>
+        <translation>le</translation>
     </message>
     <message>
         <source>ss</source>
         <comment>modify - stretch</comment>
-        <translation>status</translation>
+        <translation>ss</translation>
     </message>
     <message>
         <source>er</source>
         <comment>modify - delete (erase)</comment>
-        <translation>feil</translation>
+        <translation>er</translation>
     </message>
     <message>
         <source>del</source>
         <comment>modify - delete (erase)</comment>
-        <translation>slett</translation>
+        <translation>del</translation>
     </message>
     <message>
         <source>xp</source>
         <comment>explode block/polyline into entities</comment>
-        <translation>ekspander</translation>
+        <translation>xp</translation>
     </message>
     <message>
         <source>snapfree</source>
@@ -8305,7 +8305,7 @@ Vil du erstatte den?</translation>
     <message>
         <source>os</source>
         <comment>snap - free</comment>
-        <translation>OS</translation>
+        <translation>os</translation>
     </message>
     <message>
         <source>snapcenter</source>
@@ -8315,7 +8315,7 @@ Vil du erstatte den?</translation>
     <message>
         <source>sc</source>
         <comment>snap - center</comment>
-        <translation>SC</translation>
+        <translation>sc</translation>
     </message>
     <message>
         <source>snapdist</source>
@@ -8325,7 +8325,7 @@ Vil du erstatte den?</translation>
     <message>
         <source>sd</source>
         <comment>snap - distance to endpoints</comment>
-        <translation>SD</translation>
+        <translation>sd</translation>
     </message>
     <message>
         <source>snapend</source>
@@ -8335,7 +8335,7 @@ Vil du erstatte den?</translation>
     <message>
         <source>se</source>
         <comment>snap - end points</comment>
-        <translation>SE</translation>
+        <translation>se</translation>
     </message>
     <message>
         <source>snapgrid</source>
@@ -8345,7 +8345,7 @@ Vil du erstatte den?</translation>
     <message>
         <source>sg</source>
         <comment>snap - grid</comment>
-        <translation>SG</translation>
+        <translation>sg</translation>
     </message>
     <message>
         <source>snapintersection</source>
@@ -8415,7 +8415,7 @@ Vil du erstatte den?</translation>
     <message>
         <source>attr</source>
         <comment>modify attribute</comment>
-        <translation>attributt</translation>
+        <translation>attr</translation>
     </message>
     <message>
         <source>ma</source>
@@ -8425,12 +8425,12 @@ Vil du erstatte den?</translation>
     <message>
         <source>prop</source>
         <comment>modify properties</comment>
-        <translation>egenskap</translation>
+        <translation>prop</translation>
     </message>
     <message>
         <source>dist</source>
         <comment>distance point to point</comment>
-        <translation>distanse</translation>
+        <translation>dist</translation>
     </message>
     <message>
         <source>dpp</source>
@@ -8440,7 +8440,7 @@ Vil du erstatte den?</translation>
     <message>
         <source>ang</source>
         <comment>measure angle</comment>
-        <translation>vinkel</translation>
+        <translation>ang</translation>
     </message>
     <message>
         <source>angle</source>
@@ -8484,7 +8484,7 @@ Vil du erstatte den?</translation>
     </message>
     <message>
         <source>rows</source>
-        <translation>rader</translation>
+        <translation>rows</translation>
     </message>
     <message>
         <source>rowspacing</source>
@@ -8496,7 +8496,7 @@ Vil du erstatte den?</translation>
     </message>
     <message>
         <source>trim</source>
-        <translation>beskjær</translation>
+        <translation>trim</translation>
     </message>
     <message>
         <source>ang</source>
@@ -8506,7 +8506,7 @@ Vil du erstatte den?</translation>
     <message>
         <source>an</source>
         <comment>angle</comment>
-        <translation>en</translation>
+        <translation>an</translation>
     </message>
     <message>
         <source>center</source>
@@ -8515,32 +8515,32 @@ Vil du erstatte den?</translation>
     <message>
         <source>cen</source>
         <comment>center</comment>
-        <translation>senter</translation>
+        <translation>cen</translation>
     </message>
     <message>
         <source>ce</source>
         <comment>center</comment>
-        <translation>se</translation>
+        <translation>ce</translation>
     </message>
     <message>
         <source>cl</source>
         <comment>chord length</comment>
-        <translation>kl</translation>
+        <translation>cl</translation>
     </message>
     <message>
         <source>c</source>
         <comment>close</comment>
-        <translation>k</translation>
+        <translation>c</translation>
     </message>
     <message>
         <source>cols</source>
         <comment>columns</comment>
-        <translation>kolonner</translation>
+        <translation>cols</translation>
     </message>
     <message>
         <source>co</source>
         <comment>columns</comment>
-        <translation>ko</translation>
+        <translation>co</translation>
     </message>
     <message>
         <source>columnspacing</source>
@@ -8555,12 +8555,12 @@ Vil du erstatte den?</translation>
     <message>
         <source>cs</source>
         <comment>columnspacing for inserts</comment>
-        <translation>ka</translation>
+        <translation>cs</translation>
     </message>
     <message>
         <source>fact</source>
         <comment>factor</comment>
-        <translation>faktum</translation>
+        <translation>fact</translation>
     </message>
     <message>
         <source>f</source>
@@ -8569,7 +8569,7 @@ Vil du erstatte den?</translation>
     </message>
     <message>
         <source>help</source>
-        <translation>hjelp</translation>
+        <translation>help</translation>
     </message>
     <message>
         <source>?</source>
@@ -8584,7 +8584,7 @@ Vil du erstatte den?</translation>
     <message>
         <source>len</source>
         <comment>length</comment>
-        <translation>lengde</translation>
+        <translation>len</translation>
     </message>
     <message>
         <source>l</source>
@@ -8629,7 +8629,7 @@ Vil du erstatte den?</translation>
     <message>
         <source>num</source>
         <comment>number</comment>
-        <translation>antall</translation>
+        <translation>num</translation>
     </message>
     <message>
         <source>n</source>
@@ -8654,7 +8654,7 @@ Vil du erstatte den?</translation>
     <message>
         <source>row</source>
         <comment>row</comment>
-        <translation>rad</translation>
+        <translation>row</translation>
     </message>
     <message>
         <source>rowspacing</source>
@@ -8668,7 +8668,7 @@ Vil du erstatte den?</translation>
     </message>
     <message>
         <source>text</source>
-        <translation>tekst</translation>
+        <translation>text</translation>
     </message>
     <message>
         <source>t</source>
@@ -8682,30 +8682,30 @@ Vil du erstatte den?</translation>
     </message>
     <message>
         <source>undo</source>
-        <translation>angre</translation>
+        <translation>undo</translation>
     </message>
     <message>
         <source>u</source>
         <comment>undo</comment>
-        <translation>a</translation>
+        <translation>u</translation>
     </message>
     <message>
         <source>redo</source>
-        <translation>gjør om</translation>
+        <translation>redo</translation>
     </message>
     <message>
         <source>r</source>
         <comment>redo</comment>
-        <translation>g</translation>
+        <translation>r</translation>
     </message>
     <message>
         <source>back</source>
-        <translation>tilbake</translation>
+        <translation>back</translation>
     </message>
     <message>
         <source>b</source>
         <comment>back</comment>
-        <translation>t</translation>
+        <translation>b</translation>
     </message>
     <message>
         <source>paperoffset</source>
@@ -8738,7 +8738,7 @@ Vil du erstatte den?</translation>
     <message>
         <source>None</source>
         <comment>unknown length unit</comment>
-        <translation>Ingen</translation>
+        <translation>None</translation>
     </message>
     <message>
         <source>error reading file metadata in dwg file</source>
@@ -8750,7 +8750,7 @@ Vil du erstatte den?</translation>
     </message>
     <message>
         <source>bw</source>
-        <translation>sv/hv</translation>
+        <translation>bw</translation>
     </message>
     <message>
         <source>blackwhite</source>
@@ -8789,7 +8789,7 @@ Vil du erstatte den?</translation>
     </message>
     <message>
         <source>Edit</source>
-        <translation>Rediger</translation>
+        <translation>Edit</translation>
     </message>
     <message>
         <source>Ellipse</source>
@@ -8797,7 +8797,7 @@ Vil du erstatte den?</translation>
     </message>
     <message>
         <source>File</source>
-        <translation>Fil</translation>
+        <translation>File</translation>
     </message>
     <message>
         <source>Dimension</source>
@@ -8813,7 +8813,7 @@ Vil du erstatte den?</translation>
     </message>
     <message>
         <source>Line</source>
-        <translation>Linje</translation>
+        <translation>Line</translation>
     </message>
     <message>
         <source>Modify</source>
@@ -8841,7 +8841,7 @@ Vil du erstatte den?</translation>
     </message>
     <message>
         <source>Snap</source>
-        <translation>Fest</translation>
+        <translation>Snap</translation>
     </message>
     <message>
         <source>Snap Extras</source>
@@ -8849,7 +8849,7 @@ Vil du erstatte den?</translation>
     </message>
     <message>
         <source>View</source>
-        <translation>Visning</translation>
+        <translation>View</translation>
     </message>
     <message>
         <source>Widgets</source>
@@ -8861,7 +8861,7 @@ Vil du erstatte den?</translation>
     </message>
     <message>
         <source>All</source>
-        <translation>Alle</translation>
+        <translation>All</translation>
     </message>
     <message>
         <source>Invalid objects removed:</source>
@@ -9015,7 +9015,7 @@ Vil du erstatte den?</translation>
     <message>
         <source>or</source>
         <comment>tangent line and circle</comment>
-        <translation>eller</translation>
+        <translation>or</translation>
     </message>
     <message>
         <source>lineperp</source>
@@ -9035,7 +9035,7 @@ Vil du erstatte den?</translation>
     <message>
         <source>lr</source>
         <comment>relative line</comment>
-        <translation>translation 1</translation>
+        <translation>lr</translation>
     </message>
     <message>
         <source>polygoncencor</source>
@@ -9045,7 +9045,7 @@ Vil du erstatte den?</translation>
     <message>
         <source>pp</source>
         <comment>polygon centre point</comment>
-        <translation>translation 3</translation>
+        <translation>pp</translation>
     </message>
     <message>
         <source>polycp</source>
@@ -9055,7 +9055,7 @@ Vil du erstatte den?</translation>
     <message>
         <source>pcp</source>
         <comment>polygon centre point</comment>
-        <translation>polygonensenterpunkt</translation>
+        <translation>pcp</translation>
     </message>
     <message>
         <source>polygoncentan</source>
@@ -9065,7 +9065,7 @@ Vil du erstatte den?</translation>
     <message>
         <source>pv</source>
         <comment>polygon centre vertex</comment>
-        <translation>translation 7</translation>
+        <translation>pv</translation>
     </message>
     <message>
         <source>polyct</source>
@@ -9080,7 +9080,7 @@ Vil du erstatte den?</translation>
     <message>
         <source>c</source>
         <comment>draw circle</comment>
-        <translation>translation 10</translation>
+        <translation>c</translation>
     </message>
     <message>
         <source>circle2p</source>
@@ -9135,7 +9135,7 @@ Vil du erstatte den?</translation>
     <message>
         <source>tr</source>
         <comment>circle 2 tangent point</comment>
-        <translation>oversettelse 1</translation>
+        <translation>tr</translation>
     </message>
     <message>
         <source>circletan2p</source>
@@ -9145,7 +9145,7 @@ Vil du erstatte den?</translation>
     <message>
         <source>td</source>
         <comment>circle tangent 2 points</comment>
-        <translation>oversettelse 3</translation>
+        <translation>td</translation>
     </message>
     <message>
         <source>circletan2cr</source>
@@ -9155,7 +9155,7 @@ Vil du erstatte den?</translation>
     <message>
         <source>tc</source>
         <comment>circle 2 tangent radius</comment>
-        <translation>oversettelse 5</translation>
+        <translation>tc</translation>
     </message>
     <message>
         <source>circletan3</source>
@@ -9170,17 +9170,17 @@ Vil du erstatte den?</translation>
     <message>
         <source>arc</source>
         <comment>arc point radius</comment>
-        <translation>oversettelse 8</translation>
+        <translation>arc</translation>
     </message>
     <message>
         <source>ar</source>
         <comment>arc point radius</comment>
-        <translation>oversettelse 9</translation>
+        <translation>ar</translation>
     </message>
     <message>
         <source>a</source>
         <comment>arc point radius</comment>
-        <translation>oversettelse 10</translation>
+        <translation>a</translation>
     </message>
     <message>
         <source>arc3p</source>
@@ -9200,17 +9200,17 @@ Vil du erstatte den?</translation>
     <message>
         <source>at</source>
         <comment>arc tangent</comment>
-        <translation>translation 4</translation>
+        <translation>at</translation>
     </message>
     <message>
         <source>sf</source>
         <comment>draw spline</comment>
-        <translation>translation 5</translation>
+        <translation>sf</translation>
     </message>
     <message>
         <source>sp</source>
         <comment>spline through points</comment>
-        <translation>translation 6</translation>
+        <translation>sp</translation>
     </message>
     <message>
         <source>arcellc2ax</source>
@@ -9220,12 +9220,12 @@ Vil du erstatte den?</translation>
     <message>
         <source>ae</source>
         <comment>arc ellipse</comment>
-        <translation>translation 8</translation>
+        <translation>ae</translation>
     </message>
     <message>
         <source>fh</source>
         <comment>draw freehand line</comment>
-        <translation>translation 9</translation>
+        <translation>fh</translation>
     </message>
     <message>
         <source>ellipsec2p</source>
@@ -9350,7 +9350,7 @@ Vil du erstatte den?</translation>
     <message>
         <source>is</source>
         <comment>invert select</comment>
-        <translation>er</translation>
+        <translation>is</translation>
     </message>
     <message>
         <source>ds</source>
@@ -9609,12 +9609,12 @@ Vil du erstatte den?</translation>
     <message>
         <source>eqn</source>
         <comment>equation</comment>
-        <translation>ligning</translation>
+        <translation>eqn</translation>
     </message>
     <message>
         <source>eq</source>
         <comment>equation</comment>
-        <translation>ligning</translation>
+        <translation>eq</translation>
     </message>
     <message>
         <source>Custom</source>
@@ -10117,7 +10117,7 @@ Vil du erstatte den?</translation>
     <message>
         <source>star</source>
         <comment>draw star</comment>
-        <translation>stjerne</translation>
+        <translation>star</translation>
     </message>
     <message>
         <source>st</source>
@@ -10227,7 +10227,7 @@ Vil du erstatte den?</translation>
     <message>
         <source>rort</source>
         <comment>draw orthogonal</comment>
-        <translation>rotasjon</translation>
+        <translation>rort</translation>
     </message>
     <message>
         <source>point2line</source>
@@ -10296,11 +10296,11 @@ Vil du erstatte den?</translation>
     </message>
     <message>
         <source>pos</source>
-        <translation>posisjon</translation>
+        <translation>pos</translation>
     </message>
     <message>
         <source>size</source>
-        <translation>størrelse</translation>
+        <translation>size</translation>
     </message>
     <message>
         <source>bevels</source>
@@ -10320,7 +10320,7 @@ Vil du erstatte den?</translation>
     </message>
     <message>
         <source>str</source>
-        <translation>streng</translation>
+        <translation>str</translation>
     </message>
     <message>
         <source>round</source>
@@ -10332,19 +10332,19 @@ Vil du erstatte den?</translation>
     </message>
     <message>
         <source>topl</source>
-        <translation>topp</translation>
+        <translation>topl</translation>
     </message>
     <message>
         <source>top</source>
-        <translation>øverst</translation>
+        <translation>top</translation>
     </message>
     <message>
         <source>topr</source>
-        <translation>øverst til høyre</translation>
+        <translation>topr</translation>
     </message>
     <message>
         <source>left</source>
-        <translation>venstre</translation>
+        <translation>left</translation>
     </message>
     <message>
         <source>middle</source>
@@ -10384,11 +10384,11 @@ Vil du erstatte den?</translation>
     </message>
     <message>
         <source>hor</source>
-        <translation>horisontal</translation>
+        <translation>hor</translation>
     </message>
     <message>
         <source>vert</source>
-        <translation>vertikal</translation>
+        <translation>vert</translation>
     </message>
     <message>
         <source>snap2</source>
@@ -10408,7 +10408,7 @@ Vil du erstatte den?</translation>
     </message>
     <message>
         <source>quad</source>
-        <translation>kvadratisk</translation>
+        <translation>quad</translation>
     </message>
     <message>
         <source>noquad</source>
@@ -10440,19 +10440,19 @@ Vil du erstatte den?</translation>
     </message>
     <message>
         <source>end</source>
-        <translation>slutt</translation>
+        <translation>end</translation>
     </message>
     <message>
         <source>both</source>
-        <translation>begge</translation>
+        <translation>both</translation>
     </message>
     <message>
         <source>none</source>
-        <translation>ingen</translation>
+        <translation>none</translation>
     </message>
     <message>
         <source>fit</source>
-        <translation>tilpass</translation>
+        <translation>fit</translation>
     </message>
     <message>
         <source>nofit</source>
@@ -10472,7 +10472,7 @@ Vil du erstatte den?</translation>
     </message>
     <message>
         <source>sym</source>
-        <translation>symmetrisk</translation>
+        <translation>sym</translation>
     </message>
     <message>
         <source>nosym</source>
@@ -10509,7 +10509,7 @@ Vil du erstatte den?</translation>
     <message>
         <source>cal </source>
         <comment>command to trigger cli calculator</comment>
-        <translation>kal</translation>
+        <translation>cal</translation>
     </message>
     <message>
         <source>calculate </source>
@@ -10712,7 +10712,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Tilbake</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -10731,7 +10731,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Tilbake</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify dimension line location</source>
@@ -10831,7 +10831,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Tilbake</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify dimension line location</source>
@@ -10897,7 +10897,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Tilbake</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify start angle:</source>
@@ -10932,7 +10932,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Tilbake</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify endpoint</source>
@@ -10959,7 +10959,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Tilbake</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify end point</source>
@@ -10982,7 +10982,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Tilbake</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify point on circle</source>
@@ -11009,7 +11009,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Tilbake</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -11032,7 +11032,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Tilbake</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify third point</source>
@@ -11059,7 +11059,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Tilbake</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>radius=%1 is invalid (expression)</source>
@@ -11090,7 +11090,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Tilbake</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify the third line</source>
@@ -11109,7 +11109,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Tilbake</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify the second point on the tangent circle</source>
@@ -11140,7 +11140,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Tilbake</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Select the center of the tangent circle</source>
@@ -11183,7 +11183,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Tilbake</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify a point on the tangent circle</source>
@@ -11202,7 +11202,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Tilbake</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Select the center of the tangent circle</source>
@@ -11237,7 +11237,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Tilbake</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify the third point on ellipse</source>
@@ -11272,7 +11272,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Tilbake</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify endpoint or length of minor axis:</source>
@@ -11307,7 +11307,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Tilbake</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify the third point on ellipse</source>
@@ -11334,7 +11334,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Tilbake</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify a point on ellipse or total distance to foci</source>
@@ -11365,7 +11365,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Tilbake</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify the third line</source>
@@ -11462,7 +11462,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Tilbake</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify next point</source>
@@ -11501,7 +11501,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Tilbake</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Enter length:</source>
@@ -11528,7 +11528,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Tilbake</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Enter bisector length:</source>
@@ -11571,7 +11571,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Tilbake</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -11590,7 +11590,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Tilbake</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -11632,7 +11632,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Tilbake</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Number:</source>
@@ -11693,7 +11693,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Tilbake</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Number:</source>
@@ -11724,7 +11724,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Tilbake</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -11747,7 +11747,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Tilbake</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -11766,7 +11766,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Tilbake</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -11777,7 +11777,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Tilbake</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Select first circle/ellipse/parabola</source>
@@ -11808,7 +11808,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Tilbake</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -11838,7 +11838,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Tilbake</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify next point</source>
@@ -11905,7 +11905,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Tilbake</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify next control point</source>
@@ -11932,7 +11932,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Tilbake</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify second point</source>
@@ -11992,7 +11992,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Tilbake</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Angle: %1</source>
@@ -12046,7 +12046,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Tilbake</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Distance: %1 Cartesian: (%2 , %3), Polar: (%4&lt;%5)</source>
@@ -12073,7 +12073,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Tilbake</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -12168,7 +12168,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Tilbake</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Enter length 1:</source>
@@ -12207,7 +12207,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Tilbake</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Entity must be a line, arc, circle, ellipse or interpolation spline.</source>
@@ -12230,7 +12230,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Tilbake</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Entities not in the same polyline.</source>
@@ -12303,7 +12303,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Tilbake</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -12322,7 +12322,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Tilbake</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Invalid number of copies, use %1 </source>
@@ -12349,7 +12349,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Tilbake</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Enter rotation angle:</source>
@@ -12364,7 +12364,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Tilbake</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -12375,7 +12375,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Tilbake</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify rotation center</source>
@@ -12402,7 +12402,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Tilbake</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -12413,7 +12413,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Tilbake</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify second entity</source>
@@ -12467,7 +12467,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Tilbake</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify reference point</source>
@@ -12494,7 +12494,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Tilbake</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Select second trim entity</source>
@@ -12529,7 +12529,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Tilbake</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -12579,7 +12579,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Tilbake</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -12610,7 +12610,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Tilbake</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify next point</source>
@@ -12649,7 +12649,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Tilbake</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Deleting point is invalid.</source>
@@ -12688,7 +12688,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Tilbake</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify second node</source>
@@ -12773,7 +12773,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Tilbake</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify second segment</source>
@@ -12929,7 +12929,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Tilbake</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -12944,7 +12944,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Tilbake</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Click and drag for the selection window</source>
@@ -12978,7 +12978,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Tilbake</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Select second entity</source>
@@ -13027,7 +13027,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Tilbake</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -13096,7 +13096,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Trim</source>
-        <translation>Beskjær</translation>
+        <translation>Trim</translation>
     </message>
     <message>
         <source>Length 1:</source>
@@ -13324,7 +13324,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>End</source>
-        <translation>Slutt</translation>
+        <translation>End</translation>
     </message>
 </context>
 <context>
@@ -13370,7 +13370,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Undo</source>
-        <translation>Angre</translation>
+        <translation>Undo</translation>
     </message>
     <message>
         <source>Redo the last line drawing</source>
@@ -13378,7 +13378,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Redo</source>
-        <translation>Gjør om</translation>
+        <translation>Redo</translation>
     </message>
 </context>
 <context>
@@ -13409,7 +13409,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Rel</source>
-        <translation>Relativ</translation>
+        <translation>Rel</translation>
     </message>
     <message>
         <source>Undo the last line drawing</source>
@@ -13417,7 +13417,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Undo</source>
-        <translation>Angre</translation>
+        <translation>Undo</translation>
     </message>
     <message>
         <source>Form a closed contour from lines drawn</source>
@@ -13433,7 +13433,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Redo</source>
-        <translation>Gjør om</translation>
+        <translation>Redo</translation>
     </message>
     <message>
         <source>Point</source>
@@ -13584,11 +13584,11 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Undo</source>
-        <translation>Angre</translation>
+        <translation>Undo</translation>
     </message>
     <message>
         <source>Line</source>
-        <translation>Linje</translation>
+        <translation>Line</translation>
     </message>
     <message>
         <source>Tangential</source>
@@ -13670,7 +13670,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Trim</source>
-        <translation>Beskjær</translation>
+        <translation>Trim</translation>
     </message>
     <message>
         <source>Radius:</source>
@@ -13719,7 +13719,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Undo</source>
-        <translation>Angre</translation>
+        <translation>Undo</translation>
     </message>
 </context>
 <context>
@@ -13776,7 +13776,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Name</source>
-        <translation>Navn</translation>
+        <translation>Name</translation>
     </message>
     <message>
         <source>Create</source>

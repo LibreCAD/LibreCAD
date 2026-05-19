@@ -155,7 +155,7 @@ pirmais bāzes punkts, otrais bāzes punkts, pirmais mērķa punkts, otrais mēr
     </message>
     <message>
         <source>LINE</source>
-        <translation>LĪNIJA</translation>
+        <translation>LINE</translation>
     </message>
     <message>
         <source>from point</source>
@@ -179,7 +179,7 @@ pirmais bāzes punkts, otrais bāzes punkts, pirmais mērķa punkts, otrais mēr
     </message>
     <message>
         <source>ARC</source>
-        <translation>LOKS</translation>
+        <translation>ARC</translation>
     </message>
     <message>
         <source>center point</source>
@@ -207,7 +207,7 @@ pirmais bāzes punkts, otrais bāzes punkts, pirmais mērķa punkts, otrais mēr
     </message>
     <message>
         <source>area</source>
-        <translation>laukums</translation>
+        <translation>area</translation>
     </message>
     <message>
         <source>ELLIPSE</source>
@@ -235,7 +235,7 @@ pirmais bāzes punkts, otrais bāzes punkts, pirmais mērķa punkts, otrais mēr
     </message>
     <message>
         <source>TEXT</source>
-        <translation>TEKSTS</translation>
+        <translation>TEXT</translation>
     </message>
     <message>
         <source>INSERT</source>
@@ -243,7 +243,7 @@ pirmais bāzes punkts, otrais bāzes punkts, pirmais mērķa punkts, otrais mēr
     </message>
     <message>
         <source>Name</source>
-        <translation>Nosaukums</translation>
+        <translation>Name</translation>
     </message>
     <message>
         <source>Insertion point</source>
@@ -259,11 +259,11 @@ pirmais bāzes punkts, otrais bāzes punkts, pirmais mērķa punkts, otrais mēr
     </message>
     <message>
         <source>No</source>
-        <translation>Nē</translation>
+        <translation>No</translation>
     </message>
     <message>
         <source>Yes</source>
-        <translation>Jā</translation>
+        <translation>Yes</translation>
     </message>
     <message>
         <source>Vertices</source>
@@ -614,7 +614,7 @@ pirmais bāzes punkts, otrais bāzes punkts, pirmais mērķa punkts, otrais mēr
     </message>
     <message>
         <source>area</source>
-        <translation>apgabals</translation>
+        <translation>area</translation>
     </message>
     <message>
         <source>POLYLINE</source>
@@ -626,11 +626,11 @@ pirmais bāzes punkts, otrais bāzes punkts, pirmais mērķa punkts, otrais mēr
     </message>
     <message>
         <source>No</source>
-        <translation>Nē</translation>
+        <translation>No</translation>
     </message>
     <message>
         <source>Yes</source>
-        <translation>Jā</translation>
+        <translation>Yes</translation>
     </message>
     <message>
         <source>Vertices</source>
@@ -657,7 +657,7 @@ pirmais bāzes punkts, otrais bāzes punkts, pirmais mērķa punkts, otrais mēr
     </message>
     <message>
         <source>OK</source>
-        <translation>LABI</translation>
+        <translation>OK</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -669,7 +669,7 @@ pirmais bāzes punkts, otrais bāzes punkts, pirmais mērķa punkts, otrais mēr
     </message>
     <message>
         <source>Size</source>
-        <translation>Izmērs</translation>
+        <translation>Size</translation>
     </message>
     <message>
         <source>places</source>
@@ -984,7 +984,7 @@ Izmantojiet savos vienādojums t vai x kā mainīgos/parametrus.
     </message>
     <message>
         <source>Draw</source>
-        <translation>Zīmēt</translation>
+        <translation>Draw</translation>
     </message>
     <message>
         <source>Cancel</source>

@@ -158,7 +158,7 @@ Ha a „Először adja meg az alap pontokat” be van jelölve, az igazítás a 
     <message>
         <location filename="../list/list.cpp" line="82" />
         <source>ID</source>
-        <translation>azonosító</translation>
+        <translation>ID</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="88" />
@@ -175,7 +175,7 @@ Ha a „Először adja meg az alap pontokat” be van jelölve, az igazítás a 
     <message>
         <location filename="../list/list.cpp" line="94" />
         <source>LINE</source>
-        <translation>VONAL</translation>
+        <translation>LINE</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="99" />
@@ -206,7 +206,7 @@ Ha a „Először adja meg az alap pontokat” be van jelölve, az igazítás a 
     <message>
         <location filename="../list/list.cpp" line="118" />
         <source>ARC</source>
-        <translation>ÍV</translation>
+        <translation>ARC</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="119" />
@@ -245,7 +245,7 @@ Ha a „Először adja meg az alap pontokat” be van jelölve, az igazítás a 
     <message>
         <location filename="../list/list.cpp" line="141" />
         <source>area</source>
-        <translation>terület</translation>
+        <translation>area</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="144" />
@@ -280,7 +280,7 @@ Ha a „Először adja meg az alap pontokat” be van jelölve, az igazítás a 
     <message>
         <location filename="../list/list.cpp" line="179" />
         <source>TEXT</source>
-        <translation>SZÖVEG</translation>
+        <translation>TEXT</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="183" />
@@ -295,7 +295,7 @@ Ha a „Először adja meg az alap pontokat” be van jelölve, az igazítás a 
     <message>
         <location filename="../list/list.cpp" line="189" />
         <source>Name</source>
-        <translation>Név</translation>
+        <translation>Name</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="191" />
@@ -335,12 +335,12 @@ Ha a „Először adja meg az alap pontokat” be van jelölve, az igazítás a 
     <message>
         <location filename="../list/list.cpp" line="216" />
         <source>No</source>
-        <translation>Nem</translation>
+        <translation>No</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="216" />
         <source>Yes</source>
-        <translation>Igen</translation>
+        <translation>Yes</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="217" />
@@ -683,12 +683,12 @@ Ha a „Először adja meg az alap pontokat” be van jelölve, az igazítás a 
     <message>
         <location filename="../divide/divide.cpp" line="467" />
         <source>ID</source>
-        <translation>AZONOSÍTÓ</translation>
+        <translation>ID</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="474" />
         <source>LINE</source>
-        <translation>VONAL</translation>
+        <translation>LINE</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="479" />
@@ -757,7 +757,7 @@ Ha a „Először adja meg az alap pontokat” be van jelölve, az igazítás a 
     <message>
         <location filename="../divide/divide.cpp" line="526" />
         <source>area</source>
-        <translation>terület</translation>
+        <translation>area</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="530" />
@@ -772,12 +772,12 @@ Ha a „Először adja meg az alap pontokat” be van jelölve, az igazítás a 
     <message>
         <location filename="../divide/divide.cpp" line="533" />
         <source>No</source>
-        <translation>Nem</translation>
+        <translation>No</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="533" />
         <source>Yes</source>
-        <translation>Igen</translation>
+        <translation>Yes</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="534" />
@@ -810,7 +810,7 @@ Ha a „Először adja meg az alap pontokat” be van jelölve, az igazítás a 
     <message>
         <location filename="../divide/dividedlg.cpp" line="75" />
         <source>OK</source>
-        <translation>OKÉ</translation>
+        <translation>OK</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="76" />
@@ -825,7 +825,7 @@ Ha a „Először adja meg az alap pontokat” be van jelölve, az igazítás a 
     <message>
         <location filename="../divide/dividedlg.cpp" line="92" />
         <source>Size</source>
-        <translation>Méret</translation>
+        <translation>Size</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="115" />
@@ -1210,7 +1210,7 @@ Az egyenlet t vagy x értéke változó / paraméter.</translation>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="32" />
         <source>Draw</source>
-        <translation>Rajz</translation>
+        <translation>Draw</translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="33" />

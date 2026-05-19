@@ -149,7 +149,7 @@ första baspunkten, andra baspunkten, första målpunkten, andra målpunkten.</t
     <message>
         <location filename="../list/list.cpp" line="67" />
         <source>Y</source>
-        <translation>YTTERLIGARE</translation>
+        <translation>Y</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="77" />
@@ -261,7 +261,7 @@ första baspunkten, andra baspunkten, första målpunkten, andra målpunkten.</t
     <message>
         <location filename="../list/list.cpp" line="141" />
         <source>area</source>
-        <translation>område</translation>
+        <translation>area</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="144" />
@@ -311,7 +311,7 @@ första baspunkten, andra baspunkten, första målpunkten, andra målpunkten.</t
     <message>
         <location filename="../list/list.cpp" line="189" />
         <source>Name</source>
-        <translation>Namnnamn</translation>
+        <translation>Name</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="191" />
@@ -351,12 +351,12 @@ första baspunkten, andra baspunkten, första målpunkten, andra målpunkten.</t
     <message>
         <location filename="../list/list.cpp" line="216" />
         <source>No</source>
-        <translation>Ingen</translation>
+        <translation>No</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="216" />
         <source>Yes</source>
-        <translation>Ja</translation>
+        <translation>Yes</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="217" />
@@ -674,7 +674,7 @@ första baspunkten, andra baspunkten, första målpunkten, andra målpunkten.</t
     <message>
         <location filename="../divide/divide.cpp" line="452" />
         <source>Y</source>
-        <translation>YTTERLIGARE</translation>
+        <translation>Y</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="460" />
@@ -773,7 +773,7 @@ första baspunkten, andra baspunkten, första målpunkten, andra målpunkten.</t
     <message>
         <location filename="../divide/divide.cpp" line="526" />
         <source>area</source>
-        <translation>område</translation>
+        <translation>area</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="530" />
@@ -788,12 +788,12 @@ första baspunkten, andra baspunkten, första målpunkten, andra målpunkten.</t
     <message>
         <location filename="../divide/divide.cpp" line="533" />
         <source>No</source>
-        <translation>Ingen</translation>
+        <translation>No</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="533" />
         <source>Yes</source>
-        <translation>Ja</translation>
+        <translation>Yes</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="534" />
@@ -841,7 +841,7 @@ första baspunkten, andra baspunkten, första målpunkten, andra målpunkten.</t
     <message>
         <location filename="../divide/dividedlg.cpp" line="92" />
         <source>Size</source>
-        <translation>Storlek</translation>
+        <translation>Size</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="115" />

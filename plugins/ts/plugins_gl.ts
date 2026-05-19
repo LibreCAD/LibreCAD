@@ -191,7 +191,7 @@ primeiro punto base, segundo punto base, primeiro punto de destino, segundo punt
     <message>
         <location filename="../list/list.cpp" line="94" />
         <source>LINE</source>
-        <translation>LIÑA</translation>
+        <translation>LINE</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="99" />
@@ -222,7 +222,7 @@ primeiro punto base, segundo punto base, primeiro punto de destino, segundo punt
     <message>
         <location filename="../list/list.cpp" line="118" />
         <source>ARC</source>
-        <translation>ARCO</translation>
+        <translation>ARC</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="119" />
@@ -261,7 +261,7 @@ primeiro punto base, segundo punto base, primeiro punto de destino, segundo punt
     <message>
         <location filename="../list/list.cpp" line="141" />
         <source>area</source>
-        <translation>área</translation>
+        <translation>area</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="144" />
@@ -296,7 +296,7 @@ primeiro punto base, segundo punto base, primeiro punto de destino, segundo punt
     <message>
         <location filename="../list/list.cpp" line="179" />
         <source>TEXT</source>
-        <translation>TEXTO</translation>
+        <translation>TEXT</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="183" />
@@ -311,7 +311,7 @@ primeiro punto base, segundo punto base, primeiro punto de destino, segundo punt
     <message>
         <location filename="../list/list.cpp" line="189" />
         <source>Name</source>
-        <translation>Nome</translation>
+        <translation>Name</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="191" />
@@ -351,12 +351,12 @@ primeiro punto base, segundo punto base, primeiro punto de destino, segundo punt
     <message>
         <location filename="../list/list.cpp" line="216" />
         <source>No</source>
-        <translation>Non</translation>
+        <translation>No</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="216" />
         <source>Yes</source>
-        <translation>Si</translation>
+        <translation>Yes</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="217" />
@@ -773,7 +773,7 @@ primeiro punto base, segundo punto base, primeiro punto de destino, segundo punt
     <message>
         <location filename="../divide/divide.cpp" line="526" />
         <source>area</source>
-        <translation>área</translation>
+        <translation>area</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="530" />
@@ -793,7 +793,7 @@ primeiro punto base, segundo punto base, primeiro punto de destino, segundo punt
     <message>
         <location filename="../divide/divide.cpp" line="533" />
         <source>Yes</source>
-        <translation>Si</translation>
+        <translation>Yes</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="534" />
@@ -841,7 +841,7 @@ primeiro punto base, segundo punto base, primeiro punto de destino, segundo punt
     <message>
         <location filename="../divide/dividedlg.cpp" line="92" />
         <source>Size</source>
-        <translation>Tamaño</translation>
+        <translation>Size</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="115" />
@@ -1227,7 +1227,7 @@ Use t ou x na súa ecuación como unha variable/parámetro.
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="32" />
         <source>Draw</source>
-        <translation>Debuxar</translation>
+        <translation>Draw</translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="33" />

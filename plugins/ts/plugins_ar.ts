@@ -132,12 +132,12 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../list/list.cpp" line="67" />
         <source>X</source>
-        <translation>س</translation>
+        <translation>X</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="67" />
         <source>Y</source>
-        <translation>ص</translation>
+        <translation>Y</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="77" />
@@ -162,7 +162,7 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../list/list.cpp" line="82" />
         <source>ID</source>
-        <translation>الهوية</translation>
+        <translation>ID</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="88" />
@@ -179,7 +179,7 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../list/list.cpp" line="94" />
         <source>LINE</source>
-        <translation>خط</translation>
+        <translation>LINE</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="99" />
@@ -210,7 +210,7 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../list/list.cpp" line="118" />
         <source>ARC</source>
-        <translation>قوس</translation>
+        <translation>ARC</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="119" />
@@ -249,7 +249,7 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../list/list.cpp" line="141" />
         <source>area</source>
-        <translation>المنطقة</translation>
+        <translation>area</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="144" />
@@ -299,7 +299,7 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../list/list.cpp" line="189" />
         <source>Name</source>
-        <translation>اسم</translation>
+        <translation>Name</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="191" />
@@ -339,12 +339,12 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../list/list.cpp" line="216" />
         <source>No</source>
-        <translation>لا</translation>
+        <translation>No</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="216" />
         <source>Yes</source>
-        <translation>نعم</translation>
+        <translation>Yes</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="217" />
@@ -662,7 +662,7 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../divide/divide.cpp" line="452" />
         <source>Y</source>
-        <translation>نعم</translation>
+        <translation>Y</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="460" />
@@ -687,7 +687,7 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../divide/divide.cpp" line="467" />
         <source>ID</source>
-        <translation>الهوية</translation>
+        <translation>ID</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="474" />
@@ -761,7 +761,7 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../divide/divide.cpp" line="526" />
         <source>area</source>
-        <translation>المنطقة</translation>
+        <translation>area</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="530" />
@@ -776,12 +776,12 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../divide/divide.cpp" line="533" />
         <source>No</source>
-        <translation>لا</translation>
+        <translation>No</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="533" />
         <source>Yes</source>
-        <translation>نعم</translation>
+        <translation>Yes</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="534" />
@@ -814,7 +814,7 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../divide/dividedlg.cpp" line="75" />
         <source>OK</source>
-        <translation>حسنا</translation>
+        <translation>OK</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="76" />
@@ -829,7 +829,7 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../divide/dividedlg.cpp" line="92" />
         <source>Size</source>
-        <translation>الحجم</translation>
+        <translation>Size</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="115" />
@@ -1214,7 +1214,7 @@ Use t or x in your equation as a variable/parameter.
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="32" />
         <source>Draw</source>
-        <translation>رسم</translation>
+        <translation>Draw</translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="33" />

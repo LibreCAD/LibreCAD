@@ -311,7 +311,7 @@ titik dasar pertama, titik dasar kedua, titik target pertama, titik target kedua
     <message>
         <location filename="../list/list.cpp" line="189" />
         <source>Name</source>
-        <translation>Nama</translation>
+        <translation>Name</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="191" />
@@ -351,12 +351,12 @@ titik dasar pertama, titik dasar kedua, titik target pertama, titik target kedua
     <message>
         <location filename="../list/list.cpp" line="216" />
         <source>No</source>
-        <translation>Tidak</translation>
+        <translation>No</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="216" />
         <source>Yes</source>
-        <translation>Ya</translation>
+        <translation>Yes</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="217" />
@@ -704,7 +704,7 @@ titik dasar pertama, titik dasar kedua, titik target pertama, titik target kedua
     <message>
         <location filename="../divide/divide.cpp" line="474" />
         <source>LINE</source>
-        <translation>GARIS</translation>
+        <translation>LINE</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="479" />
@@ -773,7 +773,7 @@ titik dasar pertama, titik dasar kedua, titik target pertama, titik target kedua
     <message>
         <location filename="../divide/divide.cpp" line="526" />
         <source>area</source>
-        <translation>luas</translation>
+        <translation>area</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="530" />
@@ -788,12 +788,12 @@ titik dasar pertama, titik dasar kedua, titik target pertama, titik target kedua
     <message>
         <location filename="../divide/divide.cpp" line="533" />
         <source>No</source>
-        <translation>Tidak</translation>
+        <translation>No</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="533" />
         <source>Yes</source>
-        <translation>Ya</translation>
+        <translation>Yes</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="534" />
@@ -826,7 +826,7 @@ titik dasar pertama, titik dasar kedua, titik target pertama, titik target kedua
     <message>
         <location filename="../divide/dividedlg.cpp" line="75" />
         <source>OK</source>
-        <translation>Oke</translation>
+        <translation>OK</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="76" />
@@ -841,7 +841,7 @@ titik dasar pertama, titik dasar kedua, titik target pertama, titik target kedua
     <message>
         <location filename="../divide/dividedlg.cpp" line="92" />
         <source>Size</source>
-        <translation>Ukuran</translation>
+        <translation>Size</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="115" />
@@ -1225,7 +1225,7 @@ Gunakan t atau x dalam persamaan Anda sebagai variabel/parameter.</translation>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="32" />
         <source>Draw</source>
-        <translation>Gambar</translation>
+        <translation>Draw</translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="33" />

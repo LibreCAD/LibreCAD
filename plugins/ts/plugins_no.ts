@@ -187,7 +187,7 @@ først basis, andre basis, første mål, andre mål.</translation>
     <message>
         <location filename="../list/list.cpp" line="94" />
         <source>LINE</source>
-        <translation>LINJE</translation>
+        <translation>LINE</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="99" />
@@ -218,7 +218,7 @@ først basis, andre basis, første mål, andre mål.</translation>
     <message>
         <location filename="../list/list.cpp" line="118" />
         <source>ARC</source>
-        <translation>BUUE</translation>
+        <translation>ARC</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="119" />
@@ -257,7 +257,7 @@ først basis, andre basis, første mål, andre mål.</translation>
     <message>
         <location filename="../list/list.cpp" line="141" />
         <source>area</source>
-        <translation>område</translation>
+        <translation>area</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="144" />
@@ -292,7 +292,7 @@ først basis, andre basis, første mål, andre mål.</translation>
     <message>
         <location filename="../list/list.cpp" line="179" />
         <source>TEXT</source>
-        <translation>TEKST</translation>
+        <translation>TEXT</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="183" />
@@ -307,7 +307,7 @@ først basis, andre basis, første mål, andre mål.</translation>
     <message>
         <location filename="../list/list.cpp" line="189" />
         <source>Name</source>
-        <translation>Navn</translation>
+        <translation>Name</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="191" />
@@ -347,12 +347,12 @@ først basis, andre basis, første mål, andre mål.</translation>
     <message>
         <location filename="../list/list.cpp" line="216" />
         <source>No</source>
-        <translation>Nei</translation>
+        <translation>No</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="216" />
         <source>Yes</source>
-        <translation>Ja</translation>
+        <translation>Yes</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="217" />
@@ -700,7 +700,7 @@ først basis, andre basis, første mål, andre mål.</translation>
     <message>
         <location filename="../divide/divide.cpp" line="474" />
         <source>LINE</source>
-        <translation>LINJE</translation>
+        <translation>LINE</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="479" />
@@ -769,7 +769,7 @@ først basis, andre basis, første mål, andre mål.</translation>
     <message>
         <location filename="../divide/divide.cpp" line="526" />
         <source>area</source>
-        <translation>areal</translation>
+        <translation>area</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="530" />
@@ -784,12 +784,12 @@ først basis, andre basis, første mål, andre mål.</translation>
     <message>
         <location filename="../divide/divide.cpp" line="533" />
         <source>No</source>
-        <translation>Nei</translation>
+        <translation>No</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="533" />
         <source>Yes</source>
-        <translation>Ja</translation>
+        <translation>Yes</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="534" />
@@ -837,7 +837,7 @@ først basis, andre basis, første mål, andre mål.</translation>
     <message>
         <location filename="../divide/dividedlg.cpp" line="92" />
         <source>Size</source>
-        <translation>Størrelse</translation>
+        <translation>Size</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="115" />
@@ -1217,7 +1217,7 @@ Bruk t eller x i ligningen din som en variabel/parameter.</translation>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="32" />
         <source>Draw</source>
-        <translation>Tegn</translation>
+        <translation>Draw</translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="33" />

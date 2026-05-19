@@ -27,7 +27,7 @@
     </message>
     <message>
         <source>Set</source>
-        <translation>დაყენება</translation>
+        <translation>Set</translation>
     </message>
 </context>
 <context>
@@ -155,7 +155,7 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>უკან</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Select circle center</source>
@@ -176,7 +176,7 @@ or [%2]</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>უკან</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Y</source>
@@ -220,7 +220,7 @@ or [%2]</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>უკან</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify distance (%1) or [%2]</source>
@@ -263,7 +263,7 @@ or [%2]</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>უკან</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify the third point on parabola</source>
@@ -294,7 +294,7 @@ or [%2]</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>უკან</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify the start point on parabola</source>
@@ -317,11 +317,11 @@ or [%2]</source>
     </message>
     <message>
         <source>Line</source>
-        <translation>ხაზი</translation>
+        <translation>Line</translation>
     </message>
     <message>
         <source>Arc</source>
-        <translation>მრუდი</translation>
+        <translation>Arc</translation>
     </message>
     <message>
         <source>Circle</source>
@@ -344,7 +344,7 @@ or [%2]</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>უკან</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify next control point</source>
@@ -962,7 +962,7 @@ or [%2]</source>
     </message>
     <message>
         <source>Left</source>
-        <translation>მარცხენა</translation>
+        <translation>Left</translation>
     </message>
     <message>
         <source>Right</source>
@@ -970,7 +970,7 @@ or [%2]</source>
     </message>
     <message>
         <source>Top</source>
-        <translation>თავში</translation>
+        <translation>Top</translation>
     </message>
     <message>
         <source>Bottom</source>
@@ -1099,7 +1099,7 @@ or [%2]</source>
     </message>
     <message>
         <source>Star</source>
-        <translation>ვარსკვლავი</translation>
+        <translation>Star</translation>
     </message>
     <message>
         <source>Break/Divide</source>
@@ -1234,14 +1234,14 @@ or [%2]</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>უკან</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
     <name>LC_CircleByArcOptions</name>
     <message>
         <source>Form</source>
-        <translation>ფორმა</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <source>Active</source>
@@ -1276,7 +1276,7 @@ or [%2]</source>
     <name>LC_CrossOptions</name>
     <message>
         <source>Form</source>
-        <translation>ფორმა</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <source>Extension</source>
@@ -1300,7 +1300,7 @@ or [%2]</source>
     </message>
     <message>
         <source>Type</source>
-        <translation>ტიპი</translation>
+        <translation>Type</translation>
     </message>
     <message>
         <source>Angle:</source>
@@ -1311,7 +1311,7 @@ or [%2]</source>
     <name>LC_DeviceOptions</name>
     <message>
         <source>Form</source>
-        <translation>ფორმა</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <source>Device</source>
@@ -1319,7 +1319,7 @@ or [%2]</source>
     </message>
     <message>
         <source>Save</source>
-        <translation>შენახვა</translation>
+        <translation>Save</translation>
     </message>
 </context>
 <context>
@@ -1333,7 +1333,7 @@ or [%2]</source>
     <name>LC_DuplicateOptions</name>
     <message>
         <source>Form</source>
-        <translation>ფორმა</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <source>Layer:</source>
@@ -1759,7 +1759,7 @@ or [%2]</source>
     <name>LC_LineAngleRelOptions</name>
     <message>
         <source>Form</source>
-        <translation>ფორმა</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <source>Offset:</source>
@@ -1767,7 +1767,7 @@ or [%2]</source>
     </message>
     <message>
         <source>Free</source>
-        <translation>თავისუფალი</translation>
+        <translation>Free</translation>
     </message>
     <message>
         <source>Start</source>
@@ -1779,7 +1779,7 @@ or [%2]</source>
     </message>
     <message>
         <source>End</source>
-        <translation>დასასრული</translation>
+        <translation>End</translation>
     </message>
     <message>
         <source>Line Snap:</source>
@@ -1787,7 +1787,7 @@ or [%2]</source>
     </message>
     <message>
         <source>Rel</source>
-        <translation>შედარებითი</translation>
+        <translation>Rel</translation>
     </message>
     <message>
         <source>Divide</source>
@@ -1814,7 +1814,7 @@ or [%2]</source>
     <name>LC_LineFromPointToLineOptions</name>
     <message>
         <source>Form</source>
-        <translation>ფორმა</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <source>Angle:</source>
@@ -1850,7 +1850,7 @@ or [%2]</source>
     </message>
     <message>
         <source>End</source>
-        <translation>დასასრული</translation>
+        <translation>End</translation>
     </message>
     <message>
         <source>Length:</source>
@@ -1865,7 +1865,7 @@ or [%2]</source>
     <name>LC_LineJoinOptions</name>
     <message>
         <source>Form</source>
-        <translation>ფორმა</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <source>Extend/Trim</source>
@@ -1920,7 +1920,7 @@ or [%2]</source>
     <name>LC_LinePointsOptions</name>
     <message>
         <source>Form</source>
-        <translation>ფორმა</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <source>Angle:</source>
@@ -1932,11 +1932,11 @@ or [%2]</source>
     </message>
     <message>
         <source>None</source>
-        <translation>არაფერი</translation>
+        <translation>None</translation>
     </message>
     <message>
         <source>Both</source>
-        <translation>ორივე</translation>
+        <translation>Both</translation>
     </message>
     <message>
         <source>Start</source>
@@ -1944,7 +1944,7 @@ or [%2]</source>
     </message>
     <message>
         <source>End</source>
-        <translation>დასასრული</translation>
+        <translation>End</translation>
     </message>
     <message>
         <source>Edge Points:</source>
@@ -2002,7 +2002,7 @@ or [%2]</source>
     <name>LC_ModifyBreakDivideOptions</name>
     <message>
         <source>Form</source>
-        <translation>ფორმა</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <source>Remove Segments</source>
@@ -2017,7 +2017,7 @@ or [%2]</source>
     <name>LC_ModifyGapOptions</name>
     <message>
         <source>Form</source>
-        <translation>ფორმა</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <source>Gap Snap:</source>
@@ -2029,7 +2029,7 @@ or [%2]</source>
     </message>
     <message>
         <source>Free</source>
-        <translation>თავისუფალი</translation>
+        <translation>Free</translation>
     </message>
     <message>
         <source>Gap Size:</source>
@@ -2045,7 +2045,7 @@ or [%2]</source>
     </message>
     <message>
         <source>End</source>
-        <translation>დასასრული</translation>
+        <translation>End</translation>
     </message>
     <message>
         <source>Line Snap:</source>
@@ -2211,7 +2211,7 @@ or [%2]</source>
     </message>
     <message>
         <source>Save</source>
-        <translation>შენახვა</translation>
+        <translation>Save</translation>
     </message>
     <message>
         <source>Apply Pen To Selection</source>
@@ -2316,7 +2316,7 @@ Please note that if you'll save pen via editor without restart, current pens fro
     <name>LC_Rectangle1PointOptions</name>
     <message>
         <source>Form</source>
-        <translation>ფორმა</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <source>Polyline</source>
@@ -2360,7 +2360,7 @@ Please note that if you'll save pen via editor without restart, current pens fro
     </message>
     <message>
         <source>Top</source>
-        <translation>ზედა</translation>
+        <translation>Top</translation>
     </message>
     <message>
         <source>Top-right</source>
@@ -2368,7 +2368,7 @@ Please note that if you'll save pen via editor without restart, current pens fro
     </message>
     <message>
         <source>Left</source>
-        <translation>მარცხენა</translation>
+        <translation>Left</translation>
     </message>
     <message>
         <source>Middle</source>
@@ -2408,7 +2408,7 @@ Please note that if you'll save pen via editor without restart, current pens fro
     </message>
     <message>
         <source>Both</source>
-        <translation>ორივე</translation>
+        <translation>Both</translation>
     </message>
     <message>
         <source>Vertical</source>
@@ -2431,7 +2431,7 @@ Please note that if you'll save pen via editor without restart, current pens fro
     <name>LC_Rectangle2PointsOptions</name>
     <message>
         <source>Form</source>
-        <translation>ფორმა</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <source>Snap shift</source>
@@ -2503,7 +2503,7 @@ Please note that if you'll save pen via editor without restart, current pens fro
     </message>
     <message>
         <source>Both</source>
-        <translation>ორივე</translation>
+        <translation>Both</translation>
     </message>
     <message>
         <source>Vertical</source>
@@ -2518,7 +2518,7 @@ Please note that if you'll save pen via editor without restart, current pens fro
     <name>LC_Rectangle3PointsOptions</name>
     <message>
         <source>Form</source>
-        <translation>ფორმა</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <source>Polyline</source>
@@ -2526,7 +2526,7 @@ Please note that if you'll save pen via editor without restart, current pens fro
     </message>
     <message>
         <source>Both</source>
-        <translation>ორივე</translation>
+        <translation>Both</translation>
     </message>
     <message>
         <source>Vertical</source>
@@ -2600,15 +2600,15 @@ Please note that if you'll save pen via editor without restart, current pens fro
     <name>LC_SliceDivideOptions</name>
     <message>
         <source>Form</source>
-        <translation>ფორმა</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <source>None</source>
-        <translation>არაფერი</translation>
+        <translation>None</translation>
     </message>
     <message>
         <source>Both</source>
-        <translation>ორივე</translation>
+        <translation>Both</translation>
     </message>
     <message>
         <source>Start</source>
@@ -2616,7 +2616,7 @@ Please note that if you'll save pen via editor without restart, current pens fro
     </message>
     <message>
         <source>End</source>
-        <translation>დასასრული</translation>
+        <translation>End</translation>
     </message>
     <message>
         <source>Edge Tick:</source>
@@ -2624,7 +2624,7 @@ Please note that if you'll save pen via editor without restart, current pens fro
     </message>
     <message>
         <source>Rel</source>
-        <translation>შედარებითი</translation>
+        <translation>Rel</translation>
     </message>
     <message>
         <source>Offset:</source>
@@ -2671,7 +2671,7 @@ Please note that if you'll save pen via editor without restart, current pens fro
     <name>LC_StarOptions</name>
     <message>
         <source>Form</source>
-        <translation>ფორმა</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <source>Radius Inner</source>
@@ -2706,7 +2706,7 @@ Please note that if you'll save pen via editor without restart, current pens fro
     </message>
     <message>
         <source>Dock</source>
-        <translation>მიმაგრება</translation>
+        <translation>Dock</translation>
     </message>
     <message>
         <source>Float</source>
@@ -3093,15 +3093,15 @@ Auto-save disabled.</source>
     </message>
     <message>
         <source>File</source>
-        <translation>ფაილი</translation>
+        <translation>File</translation>
     </message>
     <message>
         <source>Edit</source>
-        <translation>ჩასწორება</translation>
+        <translation>Edit</translation>
     </message>
     <message>
         <source>View</source>
-        <translation>ნახვა</translation>
+        <translation>View</translation>
     </message>
     <message>
         <source>Snap Selection</source>
@@ -3169,7 +3169,7 @@ Please check its existence and permissions.</source>
     </message>
     <message>
         <source>Line</source>
-        <translation>ხაზი</translation>
+        <translation>Line</translation>
     </message>
     <message>
         <source>Circle</source>
@@ -3201,11 +3201,11 @@ Please check its existence and permissions.</source>
     </message>
     <message>
         <source>Info</source>
-        <translation>ინფორმაცია</translation>
+        <translation>Info</translation>
     </message>
     <message>
         <source>Pen</source>
-        <translation>ფანქარი</translation>
+        <translation>Pen</translation>
     </message>
     <message>
         <source>Opening recent file...</source>
@@ -3265,7 +3265,7 @@ Please check its existence and permissions.</source>
     </message>
     <message>
         <source>Copy</source>
-        <translation>კოპირება</translation>
+        <translation>Copy</translation>
     </message>
     <message>
         <source>Contributors</source>
@@ -3359,11 +3359,11 @@ Please check its existence and permissions.</source>
     </message>
     <message>
         <source>East</source>
-        <translation>აღმოსავლეთი</translation>
+        <translation>East</translation>
     </message>
     <message>
         <source>West</source>
-        <translation>დასავლეთი</translation>
+        <translation>West</translation>
     </message>
     <message>
         <source>&amp;Arrange</source>
@@ -3396,7 +3396,7 @@ Please check its existence and permissions.</source>
     <message>
         <source>Dock</source>
         <comment>Dock the command widget to the main window</comment>
-        <translation>მიმაგრება</translation>
+        <translation>Dock</translation>
     </message>
     <message>
         <source>&amp;Wiki</source>
@@ -3613,7 +3613,7 @@ in a separate window</source>
     </message>
     <message>
         <source>Red</source>
-        <translation>წითელი</translation>
+        <translation>Red</translation>
     </message>
     <message>
         <source>Yellow</source>
@@ -3625,11 +3625,11 @@ in a separate window</source>
     </message>
     <message>
         <source>Cyan</source>
-        <translation>ცისფერი</translation>
+        <translation>Cyan</translation>
     </message>
     <message>
         <source>Blue</source>
-        <translation>ლურჯი</translation>
+        <translation>Blue</translation>
     </message>
     <message>
         <source>Magenta</source>
@@ -3641,7 +3641,7 @@ in a separate window</source>
     </message>
     <message>
         <source>Gray</source>
-        <translation>ნაცრისფერი</translation>
+        <translation>Gray</translation>
     </message>
     <message>
         <source>Light Gray</source>
@@ -3743,7 +3743,7 @@ in a separate window</source>
     </message>
     <message>
         <source>Dock</source>
-        <translation>მიმაგრება</translation>
+        <translation>Dock</translation>
     </message>
     <message>
         <source>Float</source>
@@ -3834,7 +3834,7 @@ in a separate window</source>
     <name>QG_DlgArc</name>
     <message>
         <source>Arc</source>
-        <translation>რკალი</translation>
+        <translation>Arc</translation>
     </message>
     <message>
         <source>Layer:</source>
@@ -4026,7 +4026,7 @@ This recursively modifies all entities of the Block itself.</source>
     </message>
     <message>
         <source>Area</source>
-        <translation>ფართი</translation>
+        <translation>Area</translation>
     </message>
 </context>
 <context>
@@ -4168,7 +4168,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <name>QG_DlgLine</name>
     <message>
         <source>Line</source>
-        <translation>ხაზი</translation>
+        <translation>Line</translation>
     </message>
     <message>
         <source>Layer:</source>
@@ -4283,11 +4283,11 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>Cut</source>
-        <translation>ამოჭრა გაცვლის ბუფერში</translation>
+        <translation>Cut</translation>
     </message>
     <message>
         <source>Copy</source>
-        <translation>კოპირება</translation>
+        <translation>Copy</translation>
     </message>
     <message>
         <source>Paste</source>
@@ -5087,7 +5087,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>auto</source>
-        <translation>ავტომატური</translation>
+        <translation>auto</translation>
     </message>
     <message>
         <source>&amp;Grid</source>
@@ -5107,7 +5107,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>Left</source>
-        <translation>მარცხენა</translation>
+        <translation>Left</translation>
     </message>
     <message>
         <source>Top crosshair with isometric grid</source>
@@ -5115,7 +5115,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>Top</source>
-        <translation>თავში</translation>
+        <translation>Top</translation>
     </message>
     <message>
         <source>Right crosshair with isometric grid</source>
@@ -5530,7 +5530,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>All</source>
-        <translation>ყველა</translation>
+        <translation>All</translation>
     </message>
     <message>
         <source>Scrollbars</source>
@@ -6009,7 +6009,7 @@ so default step value required for baking</source>
     <name>QG_DlgText</name>
     <message>
         <source>Text</source>
-        <translation>ტექსტი</translation>
+        <translation>Text</translation>
     </message>
     <message>
         <source>Text:</source>
@@ -6029,11 +6029,11 @@ so default step value required for baking</source>
     </message>
     <message>
         <source>Cut</source>
-        <translation>ამოჭრა გაცვლის ბუფერში</translation>
+        <translation>Cut</translation>
     </message>
     <message>
         <source>Copy</source>
-        <translation>კოპირება</translation>
+        <translation>Copy</translation>
     </message>
     <message>
         <source>Paste</source>
@@ -6625,7 +6625,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <source>Fit</source>
-        <translation>ჩატევა</translation>
+        <translation>Fit</translation>
     </message>
     <message>
         <source>Diameter (⌀)</source>
@@ -6779,7 +6779,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <source>auto</source>
-        <translation>ავტომატური</translation>
+        <translation>auto</translation>
     </message>
     <message>
         <source>Colouring</source>
@@ -6980,7 +6980,7 @@ The contents of a Construction Layer should not appear in printout.</source>
     </message>
     <message>
         <source>Dot</source>
-        <translation>წერტილი</translation>
+        <translation>Dot</translation>
     </message>
     <message>
         <source>Dot (small)</source>
@@ -6992,7 +6992,7 @@ The contents of a Construction Layer should not appear in printout.</source>
     </message>
     <message>
         <source>Dash</source>
-        <translation>პანელი</translation>
+        <translation>Dash</translation>
     </message>
     <message>
         <source>Dash (small)</source>
@@ -7091,7 +7091,7 @@ The contents of a Construction Layer should not appear in printout.</source>
     </message>
     <message>
         <source>Left</source>
-        <translation>მარცხენა</translation>
+        <translation>Left</translation>
     </message>
     <message>
         <source>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
@@ -7166,7 +7166,7 @@ p, li { white-space: pre-wrap; }
     <name>QG_SnapToolBar</name>
     <message>
         <source>Snap</source>
-        <translation>მიმაგრება</translation>
+        <translation>Snap</translation>
     </message>
     <message>
         <source>Snap to Endpoints</source>
@@ -7297,7 +7297,7 @@ p, li { white-space: pre-wrap; }
     <name>QG_WidgetPen</name>
     <message>
         <source>Pen</source>
-        <translation>ფანქარი</translation>
+        <translation>Pen</translation>
     </message>
     <message>
         <source>Line type:</source>
@@ -7767,15 +7767,15 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Inch</source>
-        <translation>დუიმი</translation>
+        <translation>Inch</translation>
     </message>
     <message>
         <source>Foot</source>
-        <translation>ფუტი</translation>
+        <translation>Foot</translation>
     </message>
     <message>
         <source>Mile</source>
-        <translation>მილი</translation>
+        <translation>Mile</translation>
     </message>
     <message>
         <source>Millimeter</source>
@@ -7799,11 +7799,11 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Mil</source>
-        <translation>მილ</translation>
+        <translation>Mil</translation>
     </message>
     <message>
         <source>Yard</source>
-        <translation>იარდი</translation>
+        <translation>Yard</translation>
     </message>
     <message>
         <source>Angstrom</source>
@@ -8013,22 +8013,22 @@ Do you want to replace it?</source>
     <message>
         <source>po</source>
         <comment>draw point</comment>
-        <translation>წრტ</translation>
+        <translation>po</translation>
     </message>
     <message>
         <source>line</source>
         <comment>draw line</comment>
-        <translation>ხაზი</translation>
+        <translation>line</translation>
     </message>
     <message>
         <source>li</source>
         <comment>draw line</comment>
-        <translation>ხაზ</translation>
+        <translation>li</translation>
     </message>
     <message>
         <source>l</source>
         <comment>draw line</comment>
-        <translation>ხ</translation>
+        <translation>l</translation>
     </message>
     <message>
         <source>polyline</source>
@@ -8043,7 +8043,7 @@ Do you want to replace it?</source>
     <message>
         <source>free</source>
         <comment>draw freehand line</comment>
-        <translation>თავისუფალია</translation>
+        <translation>free</translation>
     </message>
     <message>
         <source>fhl</source>
@@ -8058,7 +8058,7 @@ Do you want to replace it?</source>
     <message>
         <source>spl</source>
         <comment>draw spline</comment>
-        <translation>სპლ</translation>
+        <translation>spl</translation>
     </message>
     <message>
         <source>spline2</source>
@@ -8118,7 +8118,7 @@ Do you want to replace it?</source>
     <message>
         <source>ci</source>
         <comment>draw circle</comment>
-        <translation>ცი</translation>
+        <translation>ci</translation>
     </message>
     <message>
         <source>c2</source>
@@ -8148,7 +8148,7 @@ Do you want to replace it?</source>
     <message>
         <source>ei</source>
         <comment>inscribed ellipse</comment>
-        <translation>ეი</translation>
+        <translation>ei</translation>
     </message>
     <message>
         <source>ie</source>
@@ -8178,12 +8178,12 @@ Do you want to replace it?</source>
     <message>
         <source>text</source>
         <comment>draw text</comment>
-        <translation>ტექსტი</translation>
+        <translation>text</translation>
     </message>
     <message>
         <source>txt</source>
         <comment>draw text</comment>
-        <translation>ტქსტ</translation>
+        <translation>txt</translation>
     </message>
     <message>
         <source>regen</source>
@@ -8233,7 +8233,7 @@ Do you want to replace it?</source>
     <message>
         <source>zp</source>
         <comment>zoom - pan</comment>
-        <translation>მზ</translation>
+        <translation>zp</translation>
     </message>
     <message>
         <source>zoomprevious</source>
@@ -8243,22 +8243,22 @@ Do you want to replace it?</source>
     <message>
         <source>zv</source>
         <comment>zoom - previous</comment>
-        <translation>მშ</translation>
+        <translation>zv</translation>
     </message>
     <message>
         <source>kill</source>
         <comment>kill all actions</comment>
-        <translation>მოკვლა</translation>
+        <translation>kill</translation>
     </message>
     <message>
         <source>k</source>
         <comment>kill all actions</comment>
-        <translation>კ</translation>
+        <translation>k</translation>
     </message>
     <message>
         <source>undo</source>
         <comment>undo cycle</comment>
-        <translation>გაუქმება</translation>
+        <translation>undo</translation>
     </message>
     <message>
         <source>u</source>
@@ -8268,12 +8268,12 @@ Do you want to replace it?</source>
     <message>
         <source>redo</source>
         <comment>redo cycle</comment>
-        <translation>გაიმეორე</translation>
+        <translation>redo</translation>
     </message>
     <message>
         <source>r</source>
         <comment>redo cycle</comment>
-        <translation>გ</translation>
+        <translation>r</translation>
     </message>
     <message>
         <source>dimaligned</source>
@@ -8288,7 +8288,7 @@ Do you want to replace it?</source>
     <message>
         <source>dh</source>
         <comment>dimension - horizontal</comment>
-        <translation>ჰ</translation>
+        <translation>dh</translation>
     </message>
     <message>
         <source>dimvertical</source>
@@ -8308,7 +8308,7 @@ Do you want to replace it?</source>
     <message>
         <source>dl</source>
         <comment>dimension - linear</comment>
-        <translation>დლ</translation>
+        <translation>dl</translation>
     </message>
     <message>
         <source>dimangular</source>
@@ -8318,7 +8318,7 @@ Do you want to replace it?</source>
     <message>
         <source>dan</source>
         <comment>dimension - angular</comment>
-        <translation>დან</translation>
+        <translation>dan</translation>
     </message>
     <message>
         <source>dimradial</source>
@@ -8338,7 +8338,7 @@ Do you want to replace it?</source>
     <message>
         <source>dd</source>
         <comment>dimension - diametric</comment>
-        <translation>დდ</translation>
+        <translation>dd</translation>
     </message>
     <message>
         <source>dimleader</source>
@@ -8348,7 +8348,7 @@ Do you want to replace it?</source>
     <message>
         <source>ld</source>
         <comment>dimension - leader</comment>
-        <translation>ხაზი</translation>
+        <translation>ld</translation>
     </message>
     <message>
         <source>dimregen</source>
@@ -8363,7 +8363,7 @@ Do you want to replace it?</source>
     <message>
         <source>rn</source>
         <comment>restrict - nothing</comment>
-        <translation>შეზღუდვა არანაირი</translation>
+        <translation>rn</translation>
     </message>
     <message>
         <source>restrictorthogonal</source>
@@ -8373,7 +8373,7 @@ Do you want to replace it?</source>
     <message>
         <source>rr</source>
         <comment>restrict - orthogonal</comment>
-        <translation>შეზღუდვა ორთოგონალური</translation>
+        <translation>rr</translation>
     </message>
     <message>
         <source>restricthorizontal</source>
@@ -8383,7 +8383,7 @@ Do you want to replace it?</source>
     <message>
         <source>rh</source>
         <comment>restrict - horizontal</comment>
-        <translation>შეზღუდვა ჰორიზონტალური</translation>
+        <translation>rh</translation>
     </message>
     <message>
         <source>restrictvertical</source>
@@ -8393,22 +8393,22 @@ Do you want to replace it?</source>
     <message>
         <source>rv</source>
         <comment>restrict - vertical</comment>
-        <translation>შეზღუდვა ვერტიკალური</translation>
+        <translation>rv</translation>
     </message>
     <message>
         <source>mv</source>
         <comment>modify - move (copy)</comment>
-        <translation>მოვე</translation>
+        <translation>mv</translation>
     </message>
     <message>
         <source>bev</source>
         <comment>modify - bevel</comment>
-        <translation>მოვე</translation>
+        <translation>bev</translation>
     </message>
     <message>
         <source>ch</source>
         <comment>modify - bevel</comment>
-        <translation>ჩ</translation>
+        <translation>ch</translation>
     </message>
     <message>
         <source>fi</source>
@@ -8418,22 +8418,22 @@ Do you want to replace it?</source>
     <message>
         <source>cut</source>
         <comment>modify - divide (cut)</comment>
-        <translation>ამოჭრა</translation>
+        <translation>cut</translation>
     </message>
     <message>
         <source>div</source>
         <comment>modify - divide (cut)</comment>
-        <translation>დივ</translation>
+        <translation>div</translation>
     </message>
     <message>
         <source>mi</source>
         <comment>modify -  mirror</comment>
-        <translation>მი</translation>
+        <translation>mi</translation>
     </message>
     <message>
         <source>rev</source>
         <comment>modify -  revert direction</comment>
-        <translation>რევ</translation>
+        <translation>rev</translation>
     </message>
     <message>
         <source>ro</source>
@@ -8443,12 +8443,12 @@ Do you want to replace it?</source>
     <message>
         <source>sz</source>
         <comment>modify - scale</comment>
-        <translation>ზ</translation>
+        <translation>sz</translation>
     </message>
     <message>
         <source>tm</source>
         <comment>modify - trim (extend)</comment>
-        <translation>თმ</translation>
+        <translation>tm</translation>
     </message>
     <message>
         <source>tm2</source>
@@ -8458,7 +8458,7 @@ Do you want to replace it?</source>
     <message>
         <source>le</source>
         <comment>modify - lengthen</comment>
-        <translation>ლე</translation>
+        <translation>le</translation>
     </message>
     <message>
         <source>ss</source>
@@ -8468,17 +8468,17 @@ Do you want to replace it?</source>
     <message>
         <source>er</source>
         <comment>modify - delete (erase)</comment>
-        <translation>ერ</translation>
+        <translation>er</translation>
     </message>
     <message>
         <source>del</source>
         <comment>modify - delete (erase)</comment>
-        <translation>წაშლა</translation>
+        <translation>del</translation>
     </message>
     <message>
         <source>xp</source>
         <comment>explode block/polyline into entities</comment>
-        <translation>ექსპ</translation>
+        <translation>xp</translation>
     </message>
     <message>
         <source>snapfree</source>
@@ -8488,7 +8488,7 @@ Do you want to replace it?</source>
     <message>
         <source>os</source>
         <comment>snap - free</comment>
-        <translation>ოპერაციული სისტემა</translation>
+        <translation>os</translation>
     </message>
     <message>
         <source>snapcenter</source>
@@ -8498,7 +8498,7 @@ Do you want to replace it?</source>
     <message>
         <source>sc</source>
         <comment>snap - center</comment>
-        <translation>შკ</translation>
+        <translation>sc</translation>
     </message>
     <message>
         <source>snapdist</source>
@@ -8518,7 +8518,7 @@ Do you want to replace it?</source>
     <message>
         <source>se</source>
         <comment>snap - end points</comment>
-        <translation>შბ</translation>
+        <translation>se</translation>
     </message>
     <message>
         <source>snapgrid</source>
@@ -8528,7 +8528,7 @@ Do you want to replace it?</source>
     <message>
         <source>sg</source>
         <comment>snap - grid</comment>
-        <translation>შგ</translation>
+        <translation>sg</translation>
     </message>
     <message>
         <source>snapintersection</source>
@@ -8548,7 +8548,7 @@ Do you want to replace it?</source>
     <message>
         <source>sm</source>
         <comment>snap - middle points</comment>
-        <translation>სმ</translation>
+        <translation>sm</translation>
     </message>
     <message>
         <source>snaponentity</source>
@@ -8558,12 +8558,12 @@ Do you want to replace it?</source>
     <message>
         <source>sn</source>
         <comment>snap - on entity</comment>
-        <translation>სნ</translation>
+        <translation>sn</translation>
     </message>
     <message>
         <source>np</source>
         <comment>snap - on entity</comment>
-        <translation>ნპ</translation>
+        <translation>np</translation>
     </message>
     <message>
         <source>setrelativezero</source>
@@ -8573,7 +8573,7 @@ Do you want to replace it?</source>
     <message>
         <source>rz</source>
         <comment>set relative zero position</comment>
-        <translation>შნ</translation>
+        <translation>rz</translation>
     </message>
     <message>
         <source>selectall</source>
@@ -8583,7 +8583,7 @@ Do you want to replace it?</source>
     <message>
         <source>sa</source>
         <comment>Select all entities</comment>
-        <translation>სან</translation>
+        <translation>sa</translation>
     </message>
     <message>
         <source>deselectall</source>
@@ -8603,12 +8603,12 @@ Do you want to replace it?</source>
     <message>
         <source>ma</source>
         <comment>modify attribute</comment>
-        <translation>მა</translation>
+        <translation>ma</translation>
     </message>
     <message>
         <source>prop</source>
         <comment>modify properties</comment>
-        <translation>თვისება</translation>
+        <translation>prop</translation>
     </message>
     <message>
         <source>dist</source>
@@ -8623,7 +8623,7 @@ Do you want to replace it?</source>
     <message>
         <source>ang</source>
         <comment>measure angle</comment>
-        <translation>კუთხე</translation>
+        <translation>ang</translation>
     </message>
     <message>
         <source>angle</source>
@@ -8667,7 +8667,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>rows</source>
-        <translation>მწკრივები</translation>
+        <translation>rows</translation>
     </message>
     <message>
         <source>rowspacing</source>
@@ -8679,17 +8679,17 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>trim</source>
-        <translation>მოჭრა</translation>
+        <translation>trim</translation>
     </message>
     <message>
         <source>ang</source>
         <comment>angle</comment>
-        <translation>კუთხე</translation>
+        <translation>ang</translation>
     </message>
     <message>
         <source>an</source>
         <comment>angle</comment>
-        <translation>ან</translation>
+        <translation>an</translation>
     </message>
     <message>
         <source>center</source>
@@ -8698,7 +8698,7 @@ Do you want to replace it?</source>
     <message>
         <source>cen</source>
         <comment>center</comment>
-        <translation>ცენტრი</translation>
+        <translation>cen</translation>
     </message>
     <message>
         <source>ce</source>
@@ -8708,7 +8708,7 @@ Do you want to replace it?</source>
     <message>
         <source>cl</source>
         <comment>chord length</comment>
-        <translation>ცლ</translation>
+        <translation>cl</translation>
     </message>
     <message>
         <source>c</source>
@@ -8718,7 +8718,7 @@ Do you want to replace it?</source>
     <message>
         <source>cols</source>
         <comment>columns</comment>
-        <translation>სვეტები</translation>
+        <translation>cols</translation>
     </message>
     <message>
         <source>co</source>
@@ -8743,7 +8743,7 @@ Do you want to replace it?</source>
     <message>
         <source>fact</source>
         <comment>factor</comment>
-        <translation>ფაქტი</translation>
+        <translation>fact</translation>
     </message>
     <message>
         <source>f</source>
@@ -8752,7 +8752,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>help</source>
-        <translation>დახმარება</translation>
+        <translation>help</translation>
     </message>
     <message>
         <source>?</source>
@@ -8767,12 +8767,12 @@ Do you want to replace it?</source>
     <message>
         <source>len</source>
         <comment>length</comment>
-        <translation>სიგრძე</translation>
+        <translation>len</translation>
     </message>
     <message>
         <source>l</source>
         <comment>length</comment>
-        <translation>ს</translation>
+        <translation>l</translation>
     </message>
     <message>
         <source>length1</source>
@@ -8812,7 +8812,7 @@ Do you want to replace it?</source>
     <message>
         <source>num</source>
         <comment>number</comment>
-        <translation>რიცხვ</translation>
+        <translation>num</translation>
     </message>
     <message>
         <source>n</source>
@@ -8832,12 +8832,12 @@ Do you want to replace it?</source>
     <message>
         <source>rev</source>
         <comment>reversed</comment>
-        <translation>რევიზია</translation>
+        <translation>rev</translation>
     </message>
     <message>
         <source>row</source>
         <comment>row</comment>
-        <translation>მწკრივი</translation>
+        <translation>row</translation>
     </message>
     <message>
         <source>rowspacing</source>
@@ -8847,25 +8847,25 @@ Do you want to replace it?</source>
     <message>
         <source>rs</source>
         <comment>rowspacing for inserts</comment>
-        <translation>ხმ</translation>
+        <translation>rs</translation>
     </message>
     <message>
         <source>text</source>
-        <translation>ტექსტი</translation>
+        <translation>text</translation>
     </message>
     <message>
         <source>t</source>
         <comment>text</comment>
-        <translation>ტ</translation>
+        <translation>t</translation>
     </message>
     <message>
         <source>t</source>
         <comment>through</comment>
-        <translation>ტ</translation>
+        <translation>t</translation>
     </message>
     <message>
         <source>undo</source>
-        <translation>უარყოფა</translation>
+        <translation>undo</translation>
     </message>
     <message>
         <source>u</source>
@@ -8874,21 +8874,21 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>redo</source>
-        <translation>გაუქმება</translation>
+        <translation>redo</translation>
     </message>
     <message>
         <source>r</source>
         <comment>redo</comment>
-        <translation>რ</translation>
+        <translation>r</translation>
     </message>
     <message>
         <source>back</source>
-        <translation>უკან</translation>
+        <translation>back</translation>
     </message>
     <message>
         <source>b</source>
         <comment>back</comment>
-        <translation>ბ</translation>
+        <translation>b</translation>
     </message>
     <message>
         <source>paperoffset</source>
@@ -8931,7 +8931,7 @@ Do you want to replace it?</source>
     <message>
         <source>None</source>
         <comment>unknown length unit</comment>
-        <translation>არცერთი</translation>
+        <translation>None</translation>
     </message>
     <message>
         <source>error reading file metadata in dwg file</source>
@@ -8956,7 +8956,7 @@ Do you want to replace it?</source>
     <message>
         <source>di</source>
         <comment>modify - divide (cut)</comment>
-        <translation>დი</translation>
+        <translation>di</translation>
     </message>
     <message>
         <source>t2</source>
@@ -8982,7 +8982,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Edit</source>
-        <translation>ჩასწორება</translation>
+        <translation>Edit</translation>
     </message>
     <message>
         <source>Ellipse</source>
@@ -8990,7 +8990,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>File</source>
-        <translation>ფაილი</translation>
+        <translation>File</translation>
     </message>
     <message>
         <source>Dimension</source>
@@ -8998,7 +8998,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Info</source>
-        <translation>ინფორმაცია</translation>
+        <translation>Info</translation>
     </message>
     <message>
         <source>Layer</source>
@@ -9006,7 +9006,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Line</source>
-        <translation>ხაზი</translation>
+        <translation>Line</translation>
     </message>
     <message>
         <source>Modify</source>
@@ -9034,7 +9034,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Snap</source>
-        <translation>მიმაგრება</translation>
+        <translation>Snap</translation>
     </message>
     <message>
         <source>Snap Extras</source>
@@ -9042,7 +9042,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>View</source>
-        <translation>ხედი</translation>
+        <translation>View</translation>
     </message>
     <message>
         <source>Widgets</source>
@@ -9054,7 +9054,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>All</source>
-        <translation>ყველა</translation>
+        <translation>All</translation>
     </message>
     <message>
         <source>Invalid objects removed:</source>
@@ -9082,7 +9082,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>cal</source>
-        <translation>კალ</translation>
+        <translation>cal</translation>
     </message>
     <message>
         <source>Calculator mode: On</source>
@@ -9143,7 +9143,7 @@ Do you want to replace it?</source>
     <message>
         <source>re</source>
         <comment>draw rectangle</comment>
-        <translation>პას</translation>
+        <translation>re</translation>
     </message>
     <message>
         <source>linepar</source>
@@ -9198,7 +9198,7 @@ Do you want to replace it?</source>
     <message>
         <source>lc</source>
         <comment>tangent two circles</comment>
-        <translation>ხაზის სიგრძე</translation>
+        <translation>lc</translation>
     </message>
     <message>
         <source>linetancper</source>
@@ -9208,7 +9208,7 @@ Do you want to replace it?</source>
     <message>
         <source>or</source>
         <comment>tangent line and circle</comment>
-        <translation>ან</translation>
+        <translation>or</translation>
     </message>
     <message>
         <source>lineperp</source>
@@ -9228,7 +9228,7 @@ Do you want to replace it?</source>
     <message>
         <source>lr</source>
         <comment>relative line</comment>
-        <translation>ხრ</translation>
+        <translation>lr</translation>
     </message>
     <message>
         <source>polygoncencor</source>
@@ -9238,7 +9238,7 @@ Do you want to replace it?</source>
     <message>
         <source>pp</source>
         <comment>polygon centre point</comment>
-        <translation>მკ</translation>
+        <translation>pp</translation>
     </message>
     <message>
         <source>polycp</source>
@@ -9248,7 +9248,7 @@ Do you want to replace it?</source>
     <message>
         <source>pcp</source>
         <comment>polygon centre point</comment>
-        <translation>მკც</translation>
+        <translation>pcp</translation>
     </message>
     <message>
         <source>polygoncentan</source>
@@ -9258,7 +9258,7 @@ Do you want to replace it?</source>
     <message>
         <source>pv</source>
         <comment>polygon centre vertex</comment>
-        <translation>მკ</translation>
+        <translation>pv</translation>
     </message>
     <message>
         <source>polyct</source>
@@ -9273,7 +9273,7 @@ Do you want to replace it?</source>
     <message>
         <source>c</source>
         <comment>draw circle</comment>
-        <translation>კ</translation>
+        <translation>c</translation>
     </message>
     <message>
         <source>circle2p</source>
@@ -9313,12 +9313,12 @@ Do you want to replace it?</source>
     <message>
         <source>cr</source>
         <comment>circle point radius</comment>
-        <translation>ც</translation>
+        <translation>cr</translation>
     </message>
     <message>
         <source>ccr</source>
         <comment>circle point radius</comment>
-        <translation>წრე, ცენტრი, რადიუსი</translation>
+        <translation>ccr</translation>
     </message>
     <message>
         <source>circletan2cp</source>
@@ -9363,7 +9363,7 @@ Do you want to replace it?</source>
     <message>
         <source>arc</source>
         <comment>arc point radius</comment>
-        <translation>რკალი</translation>
+        <translation>arc</translation>
     </message>
     <message>
         <source>ar</source>
@@ -9468,7 +9468,7 @@ Do you want to replace it?</source>
     <message>
         <source>pi</source>
         <comment>pl add node</comment>
-        <translation>პი</translation>
+        <translation>pi</translation>
     </message>
     <message>
         <source>plineapp</source>
@@ -9478,7 +9478,7 @@ Do you want to replace it?</source>
     <message>
         <source>pn</source>
         <comment>pl append node</comment>
-        <translation>პნ</translation>
+        <translation>pn</translation>
     </message>
     <message>
         <source>plinedel</source>
@@ -9498,7 +9498,7 @@ Do you want to replace it?</source>
     <message>
         <source>pr</source>
         <comment>pl del between nodes</comment>
-        <translation>პრ</translation>
+        <translation>pr</translation>
     </message>
     <message>
         <source>plinetrm</source>
@@ -9508,7 +9508,7 @@ Do you want to replace it?</source>
     <message>
         <source>pt</source>
         <comment>pl trim segments</comment>
-        <translation>წრტ</translation>
+        <translation>pt</translation>
     </message>
     <message>
         <source>plinepar</source>
@@ -9548,7 +9548,7 @@ Do you want to replace it?</source>
     <message>
         <source>ds</source>
         <comment>dimension - aligned</comment>
-        <translation>დწმ</translation>
+        <translation>ds</translation>
     </message>
     <message>
         <source>dimradius</source>
@@ -9568,7 +9568,7 @@ Do you want to replace it?</source>
     <message>
         <source>dg</source>
         <comment>dimension - regenerate</comment>
-        <translation>დგ</translation>
+        <translation>dg</translation>
     </message>
     <message>
         <source>modmove</source>
@@ -9643,7 +9643,7 @@ Do you want to replace it?</source>
     <message>
         <source>mo</source>
         <comment>modify - offset</comment>
-        <translation>თვ</translation>
+        <translation>mo</translation>
     </message>
     <message>
         <source>moff</source>
@@ -9768,12 +9768,12 @@ Do you want to replace it?</source>
     <message>
         <source>un</source>
         <comment>undo cycle</comment>
-        <translation>გაუქმება</translation>
+        <translation>un</translation>
     </message>
     <message>
         <source>rd</source>
         <comment>redo cycle</comment>
-        <translation>კითხული</translation>
+        <translation>rd</translation>
     </message>
     <message>
         <source>drawpref</source>
@@ -9783,7 +9783,7 @@ Do you want to replace it?</source>
     <message>
         <source>dp</source>
         <comment>drawing preferences</comment>
-        <translation>გამოტანა</translation>
+        <translation>dp</translation>
     </message>
     <message>
         <source>equation</source>
@@ -9802,12 +9802,12 @@ Do you want to replace it?</source>
     <message>
         <source>eqn</source>
         <comment>equation</comment>
-        <translation>ტოლობა</translation>
+        <translation>eqn</translation>
     </message>
     <message>
         <source>eq</source>
         <comment>equation</comment>
-        <translation>ტოლობა</translation>
+        <translation>eq</translation>
     </message>
     <message>
         <source>Custom</source>
@@ -10220,12 +10220,12 @@ Do you want to replace it?</source>
     <message>
         <source>sli</source>
         <comment>draw snake line</comment>
-        <translation>ხაზი</translation>
+        <translation>sli</translation>
     </message>
     <message>
         <source>sl</source>
         <comment>draw snake line</comment>
-        <translation>ხაზი</translation>
+        <translation>sl</translation>
     </message>
     <message>
         <source>slinex</source>
@@ -10235,12 +10235,12 @@ Do you want to replace it?</source>
     <message>
         <source>slix</source>
         <comment>draw snake line (X)</comment>
-        <translation>ხაზი</translation>
+        <translation>slix</translation>
     </message>
     <message>
         <source>rlx</source>
         <comment>draw snake line (X)</comment>
-        <translation>ხაზი</translation>
+        <translation>rlx</translation>
     </message>
     <message>
         <source>sliney</source>
@@ -10250,12 +10250,12 @@ Do you want to replace it?</source>
     <message>
         <source>sliy</source>
         <comment>draw snake line (Y)</comment>
-        <translation>ხაზი</translation>
+        <translation>sliy</translation>
     </message>
     <message>
         <source>rly</source>
         <comment>draw snake line (Y)</comment>
-        <translation>ხაზი</translation>
+        <translation>rly</translation>
     </message>
     <message>
         <source>rect1</source>
@@ -10310,12 +10310,12 @@ Do you want to replace it?</source>
     <message>
         <source>star</source>
         <comment>draw star</comment>
-        <translation>ვარსკვლავი</translation>
+        <translation>star</translation>
     </message>
     <message>
         <source>st</source>
         <comment>draw star</comment>
-        <translation>წ</translation>
+        <translation>st</translation>
     </message>
     <message>
         <source>cross</source>
@@ -10325,7 +10325,7 @@ Do you want to replace it?</source>
     <message>
         <source>cx</source>
         <comment>draw cross for circle</comment>
-        <translation>კვ</translation>
+        <translation>cx</translation>
     </message>
     <message>
         <source>linepoints</source>
@@ -10345,7 +10345,7 @@ Do you want to replace it?</source>
     <message>
         <source>cba</source>
         <comment>draw circle by arc</comment>
-        <translation>წმ</translation>
+        <translation>cba</translation>
     </message>
     <message>
         <source>duplicate</source>
@@ -10355,7 +10355,7 @@ Do you want to replace it?</source>
     <message>
         <source>dup</source>
         <comment>duplicate entity</comment>
-        <translation>კოპ</translation>
+        <translation>dup</translation>
     </message>
     <message>
         <source>linejoin</source>
@@ -10365,7 +10365,7 @@ Do you want to replace it?</source>
     <message>
         <source>lj</source>
         <comment>lines join</comment>
-        <translation>თარგმანი 1</translation>
+        <translation>lj</translation>
     </message>
     <message>
         <source>breakdivide</source>
@@ -10375,7 +10375,7 @@ Do you want to replace it?</source>
     <message>
         <source>bd</source>
         <comment>break or divide entity</comment>
-        <translation>თარგმანი 3</translation>
+        <translation>bd</translation>
     </message>
     <message>
         <source>gapline</source>
@@ -10385,7 +10385,7 @@ Do you want to replace it?</source>
     <message>
         <source>gl</source>
         <comment>line gap</comment>
-        <translation>თარგმანი 5</translation>
+        <translation>gl</translation>
     </message>
     <message>
         <source>parabola4p</source>
@@ -10405,7 +10405,7 @@ Do you want to replace it?</source>
     <message>
         <source>plfd</source>
         <comment>Parabola focus directrix</comment>
-        <translation>თარგმანი 9</translation>
+        <translation>plfd</translation>
     </message>
     <message>
         <source>angleline</source>
@@ -10445,7 +10445,7 @@ Do you want to replace it?</source>
     <message>
         <source>smm</source>
         <comment>snap middle manual</comment>
-        <translation>ხაზის შუაში ხელით</translation>
+        <translation>smm</translation>
     </message>
     <message>
         <source>x</source>
@@ -10489,11 +10489,11 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>pos</source>
-        <translation>პოზიცია</translation>
+        <translation>pos</translation>
     </message>
     <message>
         <source>size</source>
-        <translation>ზომა</translation>
+        <translation>size</translation>
     </message>
     <message>
         <source>bevels</source>
@@ -10513,7 +10513,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>str</source>
-        <translation>სტრინგი</translation>
+        <translation>str</translation>
     </message>
     <message>
         <source>round</source>
@@ -10525,19 +10525,19 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>topl</source>
-        <translation>ზემო</translation>
+        <translation>topl</translation>
     </message>
     <message>
         <source>top</source>
-        <translation>ზემო</translation>
+        <translation>top</translation>
     </message>
     <message>
         <source>topr</source>
-        <translation>ზემო</translation>
+        <translation>topr</translation>
     </message>
     <message>
         <source>left</source>
-        <translation>მარცხნივ</translation>
+        <translation>left</translation>
     </message>
     <message>
         <source>middle</source>
@@ -10577,11 +10577,11 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>hor</source>
-        <translation>ჰორიზონტალური</translation>
+        <translation>hor</translation>
     </message>
     <message>
         <source>vert</source>
-        <translation>ვერტიკალური</translation>
+        <translation>vert</translation>
     </message>
     <message>
         <source>snap2</source>
@@ -10601,7 +10601,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>quad</source>
-        <translation>კვადრატი</translation>
+        <translation>quad</translation>
     </message>
     <message>
         <source>noquad</source>
@@ -10633,19 +10633,19 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>end</source>
-        <translation>დასასრული</translation>
+        <translation>end</translation>
     </message>
     <message>
         <source>both</source>
-        <translation>ორივე</translation>
+        <translation>both</translation>
     </message>
     <message>
         <source>none</source>
-        <translation>არცერთი</translation>
+        <translation>none</translation>
     </message>
     <message>
         <source>fit</source>
-        <translation>მოერგოს</translation>
+        <translation>fit</translation>
     </message>
     <message>
         <source>nofit</source>
@@ -10665,7 +10665,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>sym</source>
-        <translation>სიმ</translation>
+        <translation>sym</translation>
     </message>
     <message>
         <source>nosym</source>
@@ -10702,7 +10702,7 @@ Do you want to replace it?</source>
     <message>
         <source>cal </source>
         <comment>command to trigger cli calculator</comment>
-        <translation>კალ</translation>
+        <translation>cal</translation>
     </message>
     <message>
         <source>calculate </source>
@@ -10905,7 +10905,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>უკან</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -10924,7 +10924,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>უკან</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify dimension line location</source>
@@ -11024,7 +11024,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>უკან</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify dimension line location</source>
@@ -11090,7 +11090,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>უკან</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify start angle:</source>
@@ -11125,7 +11125,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>უკან</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify endpoint</source>
@@ -11152,7 +11152,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>უკან</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify end point</source>
@@ -11175,7 +11175,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>უკან</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify point on circle</source>
@@ -11202,7 +11202,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>უკან</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -11225,7 +11225,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>უკან</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify third point</source>
@@ -11252,7 +11252,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>უკან</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>radius=%1 is invalid (expression)</source>
@@ -11283,7 +11283,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>უკან</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify the third line</source>
@@ -11302,7 +11302,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>უკან</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify the second point on the tangent circle</source>
@@ -11333,7 +11333,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>უკან</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Select the center of the tangent circle</source>
@@ -11376,7 +11376,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>უკან</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify a point on the tangent circle</source>
@@ -11395,7 +11395,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>უკან</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Select the center of the tangent circle</source>
@@ -11430,7 +11430,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>უკან</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify the third point on ellipse</source>
@@ -11465,7 +11465,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>უკან</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify endpoint or length of minor axis:</source>
@@ -11500,7 +11500,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>უკან</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify the third point on ellipse</source>
@@ -11527,7 +11527,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>უკან</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify a point on ellipse or total distance to foci</source>
@@ -11558,7 +11558,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>უკან</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify the third line</source>
@@ -11655,7 +11655,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>უკან</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify next point</source>
@@ -11694,7 +11694,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>უკან</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Enter length:</source>
@@ -11721,7 +11721,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>უკან</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Enter bisector length:</source>
@@ -11764,7 +11764,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>უკან</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -11783,7 +11783,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>უკან</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -11825,7 +11825,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>უკან</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Number:</source>
@@ -11886,7 +11886,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>უკან</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Number:</source>
@@ -11917,7 +11917,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>უკან</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -11940,7 +11940,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>უკან</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -11959,7 +11959,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>უკან</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -11970,7 +11970,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>უკან</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Select first circle/ellipse/parabola</source>
@@ -12001,7 +12001,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>უკან</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -12031,7 +12031,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>უკან</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify next point</source>
@@ -12098,7 +12098,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>უკან</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify next control point</source>
@@ -12125,7 +12125,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>უკან</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify second point</source>
@@ -12185,7 +12185,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>უკან</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Angle: %1</source>
@@ -12239,7 +12239,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>უკან</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Distance: %1 Cartesian: (%2 , %3), Polar: (%4&lt;%5)</source>
@@ -12266,7 +12266,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>უკან</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -12361,7 +12361,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>უკან</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Enter length 1:</source>
@@ -12400,7 +12400,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>უკან</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Entity must be a line, arc, circle, ellipse or interpolation spline.</source>
@@ -12423,7 +12423,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>უკან</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Entities not in the same polyline.</source>
@@ -12496,7 +12496,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>უკან</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -12515,7 +12515,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>უკან</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Invalid number of copies, use %1 </source>
@@ -12542,7 +12542,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>უკან</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Enter rotation angle:</source>
@@ -12557,7 +12557,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>უკან</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -12568,7 +12568,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>უკან</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify rotation center</source>
@@ -12595,7 +12595,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>უკან</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -12606,7 +12606,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>უკან</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify second entity</source>
@@ -12660,7 +12660,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>უკან</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify reference point</source>
@@ -12687,7 +12687,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>უკან</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Select second trim entity</source>
@@ -12722,7 +12722,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>უკან</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -12772,7 +12772,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>უკან</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -12803,7 +12803,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>უკან</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify next point</source>
@@ -12842,7 +12842,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>უკან</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Deleting point is invalid.</source>
@@ -12881,7 +12881,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>უკან</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify second node</source>
@@ -12966,7 +12966,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>უკან</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify second segment</source>
@@ -13122,7 +13122,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>უკან</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -13137,7 +13137,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>უკან</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Click and drag for the selection window</source>
@@ -13171,7 +13171,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>უკან</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Select second entity</source>
@@ -13220,7 +13220,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>უკან</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -13289,7 +13289,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Trim</source>
-        <translation>დაჭრა</translation>
+        <translation>Trim</translation>
     </message>
     <message>
         <source>Length 1:</source>
@@ -13517,7 +13517,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>End</source>
-        <translation>დასასრული</translation>
+        <translation>End</translation>
     </message>
 </context>
 <context>
@@ -13563,7 +13563,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Undo</source>
-        <translation>ბრძანების გაუქმება</translation>
+        <translation>Undo</translation>
     </message>
     <message>
         <source>Redo the last line drawing</source>
@@ -13571,7 +13571,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Redo</source>
-        <translation>გამეორება</translation>
+        <translation>Redo</translation>
     </message>
 </context>
 <context>
@@ -13602,7 +13602,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Rel</source>
-        <translation>რელატიური</translation>
+        <translation>Rel</translation>
     </message>
     <message>
         <source>Undo the last line drawing</source>
@@ -13610,7 +13610,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Undo</source>
-        <translation>გაუქმება</translation>
+        <translation>Undo</translation>
     </message>
     <message>
         <source>Form a closed contour from lines drawn</source>
@@ -13626,7 +13626,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Redo</source>
-        <translation>განმეორება</translation>
+        <translation>Redo</translation>
     </message>
     <message>
         <source>Point</source>
@@ -13777,11 +13777,11 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Undo</source>
-        <translation>ბრძანების გაუქმება</translation>
+        <translation>Undo</translation>
     </message>
     <message>
         <source>Line</source>
-        <translation>ხაზი</translation>
+        <translation>Line</translation>
     </message>
     <message>
         <source>Tangential</source>
@@ -13863,7 +13863,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Trim</source>
-        <translation>დაჭრა</translation>
+        <translation>Trim</translation>
     </message>
     <message>
         <source>Radius:</source>
@@ -13912,7 +13912,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Undo</source>
-        <translation>ბრძანების გაუქმება</translation>
+        <translation>Undo</translation>
     </message>
 </context>
 <context>
@@ -13969,7 +13969,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Name</source>
-        <translation>სახელი</translation>
+        <translation>Name</translation>
     </message>
     <message>
         <source>Create</source>

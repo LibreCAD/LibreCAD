@@ -28,7 +28,7 @@
     </message>
     <message>
         <source>Set</source>
-        <translation>Estableix</translation>
+        <translation>Set</translation>
     </message>
 </context>
 <context>
@@ -156,7 +156,7 @@ la distància entre els punts=%2 és més gran que el diàmetre=%3</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Enrere</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Select circle center</source>
@@ -177,7 +177,7 @@ o [%2]</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Enrere</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Y</source>
@@ -221,7 +221,7 @@ o [%2]</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Enrere</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify distance (%1) or [%2]</source>
@@ -264,7 +264,7 @@ o [%2]</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Enrere</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify the third point on parabola</source>
@@ -295,7 +295,7 @@ o [%2]</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Enrere</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify the start point on parabola</source>
@@ -318,7 +318,7 @@ o [%2]</translation>
     </message>
     <message>
         <source>Line</source>
-        <translation>Línia</translation>
+        <translation>Line</translation>
     </message>
     <message>
         <source>Arc</source>
@@ -345,7 +345,7 @@ o [%2]</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Enrere</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify next control point</source>
@@ -963,7 +963,7 @@ o [%2]</translation>
     </message>
     <message>
         <source>Left</source>
-        <translation>Esquerra</translation>
+        <translation>Left</translation>
     </message>
     <message>
         <source>Right</source>
@@ -971,7 +971,7 @@ o [%2]</translation>
     </message>
     <message>
         <source>Top</source>
-        <translation>Superior</translation>
+        <translation>Top</translation>
     </message>
     <message>
         <source>Bottom</source>
@@ -1100,7 +1100,7 @@ o [%2]</translation>
     </message>
     <message>
         <source>Star</source>
-        <translation>Estrella</translation>
+        <translation>Star</translation>
     </message>
     <message>
         <source>Break/Divide</source>
@@ -1235,14 +1235,14 @@ o [%2]</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Enrere</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
     <name>LC_CircleByArcOptions</name>
     <message>
         <source>Form</source>
-        <translation>Formulari</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <source>Active</source>
@@ -1277,7 +1277,7 @@ o [%2]</translation>
     <name>LC_CrossOptions</name>
     <message>
         <source>Form</source>
-        <translation>Formulari</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <source>Extension</source>
@@ -1301,7 +1301,7 @@ o [%2]</translation>
     </message>
     <message>
         <source>Type</source>
-        <translation>Tipus</translation>
+        <translation>Type</translation>
     </message>
     <message>
         <source>Angle:</source>
@@ -1312,7 +1312,7 @@ o [%2]</translation>
     <name>LC_DeviceOptions</name>
     <message>
         <source>Form</source>
-        <translation>Formulari</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <source>Device</source>
@@ -1320,7 +1320,7 @@ o [%2]</translation>
     </message>
     <message>
         <source>Save</source>
-        <translation>Desar</translation>
+        <translation>Save</translation>
     </message>
 </context>
 <context>
@@ -1334,7 +1334,7 @@ o [%2]</translation>
     <name>LC_DuplicateOptions</name>
     <message>
         <source>Form</source>
-        <translation>Formulari</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <source>Layer:</source>
@@ -1760,7 +1760,7 @@ o [%2]</translation>
     <name>LC_LineAngleRelOptions</name>
     <message>
         <source>Form</source>
-        <translation>Formulari</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <source>Offset:</source>
@@ -1768,7 +1768,7 @@ o [%2]</translation>
     </message>
     <message>
         <source>Free</source>
-        <translation>Lliure</translation>
+        <translation>Free</translation>
     </message>
     <message>
         <source>Start</source>
@@ -1780,7 +1780,7 @@ o [%2]</translation>
     </message>
     <message>
         <source>End</source>
-        <translation>Final</translation>
+        <translation>End</translation>
     </message>
     <message>
         <source>Line Snap:</source>
@@ -1788,7 +1788,7 @@ o [%2]</translation>
     </message>
     <message>
         <source>Rel</source>
-        <translation>Relatiu</translation>
+        <translation>Rel</translation>
     </message>
     <message>
         <source>Divide</source>
@@ -1815,7 +1815,7 @@ o [%2]</translation>
     <name>LC_LineFromPointToLineOptions</name>
     <message>
         <source>Form</source>
-        <translation>Formulari</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <source>Angle:</source>
@@ -1851,7 +1851,7 @@ o [%2]</translation>
     </message>
     <message>
         <source>End</source>
-        <translation>Final</translation>
+        <translation>End</translation>
     </message>
     <message>
         <source>Length:</source>
@@ -1866,7 +1866,7 @@ o [%2]</translation>
     <name>LC_LineJoinOptions</name>
     <message>
         <source>Form</source>
-        <translation>Formulari</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <source>Extend/Trim</source>
@@ -1921,7 +1921,7 @@ o [%2]</translation>
     <name>LC_LinePointsOptions</name>
     <message>
         <source>Form</source>
-        <translation>Formulari</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <source>Angle:</source>
@@ -1933,11 +1933,11 @@ o [%2]</translation>
     </message>
     <message>
         <source>None</source>
-        <translation>Cap</translation>
+        <translation>None</translation>
     </message>
     <message>
         <source>Both</source>
-        <translation>Ambdues</translation>
+        <translation>Both</translation>
     </message>
     <message>
         <source>Start</source>
@@ -1945,7 +1945,7 @@ o [%2]</translation>
     </message>
     <message>
         <source>End</source>
-        <translation>Final</translation>
+        <translation>End</translation>
     </message>
     <message>
         <source>Edge Points:</source>
@@ -1999,7 +1999,7 @@ o [%2]</translation>
     <name>LC_ModifyBreakDivideOptions</name>
     <message>
         <source>Form</source>
-        <translation>Formulari</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <source>Remove Segments</source>
@@ -2014,7 +2014,7 @@ o [%2]</translation>
     <name>LC_ModifyGapOptions</name>
     <message>
         <source>Form</source>
-        <translation>Formulari</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <source>Gap Snap:</source>
@@ -2026,7 +2026,7 @@ o [%2]</translation>
     </message>
     <message>
         <source>Free</source>
-        <translation>Lliure</translation>
+        <translation>Free</translation>
     </message>
     <message>
         <source>Gap Size:</source>
@@ -2042,7 +2042,7 @@ o [%2]</translation>
     </message>
     <message>
         <source>End</source>
-        <translation>Final</translation>
+        <translation>End</translation>
     </message>
     <message>
         <source>Line Snap:</source>
@@ -2208,7 +2208,7 @@ o [%2]</translation>
     </message>
     <message>
         <source>Save</source>
-        <translation>Desar</translation>
+        <translation>Save</translation>
     </message>
     <message>
         <source>Apply Pen To Selection</source>
@@ -2313,7 +2313,7 @@ Tingueu en compte que si deseu una ploma mitjançant l&apos;editor sense reinici
     <name>LC_Rectangle1PointOptions</name>
     <message>
         <source>Form</source>
-        <translation>Formulari</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <source>Polyline</source>
@@ -2357,7 +2357,7 @@ Tingueu en compte que si deseu una ploma mitjançant l&apos;editor sense reinici
     </message>
     <message>
         <source>Top</source>
-        <translation>Superior</translation>
+        <translation>Top</translation>
     </message>
     <message>
         <source>Top-right</source>
@@ -2365,7 +2365,7 @@ Tingueu en compte que si deseu una ploma mitjançant l&apos;editor sense reinici
     </message>
     <message>
         <source>Left</source>
-        <translation>Esquerra</translation>
+        <translation>Left</translation>
     </message>
     <message>
         <source>Middle</source>
@@ -2405,7 +2405,7 @@ Tingueu en compte que si deseu una ploma mitjançant l&apos;editor sense reinici
     </message>
     <message>
         <source>Both</source>
-        <translation>Ambdues</translation>
+        <translation>Both</translation>
     </message>
     <message>
         <source>Vertical</source>
@@ -2428,7 +2428,7 @@ Tingueu en compte que si deseu una ploma mitjançant l&apos;editor sense reinici
     <name>LC_Rectangle2PointsOptions</name>
     <message>
         <source>Form</source>
-        <translation>Formulari</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <source>Snap shift</source>
@@ -2500,7 +2500,7 @@ Tingueu en compte que si deseu una ploma mitjançant l&apos;editor sense reinici
     </message>
     <message>
         <source>Both</source>
-        <translation>Ambdues</translation>
+        <translation>Both</translation>
     </message>
     <message>
         <source>Vertical</source>
@@ -2515,7 +2515,7 @@ Tingueu en compte que si deseu una ploma mitjançant l&apos;editor sense reinici
     <name>LC_Rectangle3PointsOptions</name>
     <message>
         <source>Form</source>
-        <translation>Formulari</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <source>Polyline</source>
@@ -2523,7 +2523,7 @@ Tingueu en compte que si deseu una ploma mitjançant l&apos;editor sense reinici
     </message>
     <message>
         <source>Both</source>
-        <translation>Ambdues</translation>
+        <translation>Both</translation>
     </message>
     <message>
         <source>Vertical</source>
@@ -2597,15 +2597,15 @@ Tingueu en compte que si deseu una ploma mitjançant l&apos;editor sense reinici
     <name>LC_SliceDivideOptions</name>
     <message>
         <source>Form</source>
-        <translation>Formulari</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <source>None</source>
-        <translation>Cap</translation>
+        <translation>None</translation>
     </message>
     <message>
         <source>Both</source>
-        <translation>Ambdues</translation>
+        <translation>Both</translation>
     </message>
     <message>
         <source>Start</source>
@@ -2613,7 +2613,7 @@ Tingueu en compte que si deseu una ploma mitjançant l&apos;editor sense reinici
     </message>
     <message>
         <source>End</source>
-        <translation>Final</translation>
+        <translation>End</translation>
     </message>
     <message>
         <source>Edge Tick:</source>
@@ -2621,7 +2621,7 @@ Tingueu en compte que si deseu una ploma mitjançant l&apos;editor sense reinici
     </message>
     <message>
         <source>Rel</source>
-        <translation>Relatiu</translation>
+        <translation>Rel</translation>
     </message>
     <message>
         <source>Offset:</source>
@@ -2668,7 +2668,7 @@ Tingueu en compte que si deseu una ploma mitjançant l&apos;editor sense reinici
     <name>LC_StarOptions</name>
     <message>
         <source>Form</source>
-        <translation>Formulari</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <source>Radius Inner</source>
@@ -2703,7 +2703,7 @@ Tingueu en compte que si deseu una ploma mitjançant l&apos;editor sense reinici
     </message>
     <message>
         <source>Dock</source>
-        <translation>Acoblar</translation>
+        <translation>Dock</translation>
     </message>
     <message>
         <source>Float</source>
@@ -3097,15 +3097,15 @@ S&apos;ha desactivat el desament automàtic.</translation>
     </message>
     <message>
         <source>File</source>
-        <translation>Arxiu</translation>
+        <translation>File</translation>
     </message>
     <message>
         <source>Edit</source>
-        <translation>Edita</translation>
+        <translation>Edit</translation>
     </message>
     <message>
         <source>View</source>
-        <translation>Visualització</translation>
+        <translation>View</translation>
     </message>
     <message>
         <source>Snap Selection</source>
@@ -3173,7 +3173,7 @@ Comproveu la seva existència i els permisos.</translation>
     </message>
     <message>
         <source>Line</source>
-        <translation>Línia</translation>
+        <translation>Line</translation>
     </message>
     <message>
         <source>Circle</source>
@@ -3205,11 +3205,11 @@ Comproveu la seva existència i els permisos.</translation>
     </message>
     <message>
         <source>Info</source>
-        <translation>Informació</translation>
+        <translation>Info</translation>
     </message>
     <message>
         <source>Pen</source>
-        <translation>Traç</translation>
+        <translation>Pen</translation>
     </message>
     <message>
         <source>Dock Areas</source>
@@ -3265,7 +3265,7 @@ Comproveu la seva existència i els permisos.</translation>
     </message>
     <message>
         <source>Copy</source>
-        <translation>Copia</translation>
+        <translation>Copy</translation>
     </message>
     <message>
         <source>Contributors</source>
@@ -3359,11 +3359,11 @@ Comproveu la seva existència i els permisos.</translation>
     </message>
     <message>
         <source>East</source>
-        <translation>Est</translation>
+        <translation>East</translation>
     </message>
     <message>
         <source>West</source>
-        <translation>Oest</translation>
+        <translation>West</translation>
     </message>
     <message>
         <source>&amp;Arrange</source>
@@ -3396,7 +3396,7 @@ Comproveu la seva existència i els permisos.</translation>
     <message>
         <source>Dock</source>
         <comment>Dock the command widget to the main window</comment>
-        <translation>Acoblar</translation>
+        <translation>Dock</translation>
     </message>
     <message>
         <source>&amp;Wiki</source>
@@ -3614,7 +3614,7 @@ en una finestra separada</translation>
     </message>
     <message>
         <source>Red</source>
-        <translation>Vermell</translation>
+        <translation>Red</translation>
     </message>
     <message>
         <source>Yellow</source>
@@ -3626,11 +3626,11 @@ en una finestra separada</translation>
     </message>
     <message>
         <source>Cyan</source>
-        <translation>Cian</translation>
+        <translation>Cyan</translation>
     </message>
     <message>
         <source>Blue</source>
-        <translation>Blau</translation>
+        <translation>Blue</translation>
     </message>
     <message>
         <source>Magenta</source>
@@ -3642,7 +3642,7 @@ en una finestra separada</translation>
     </message>
     <message>
         <source>Gray</source>
-        <translation>Gris</translation>
+        <translation>Gray</translation>
     </message>
     <message>
         <source>Light Gray</source>
@@ -3744,7 +3744,7 @@ en una finestra separada</translation>
     </message>
     <message>
         <source>Dock</source>
-        <translation>Estació</translation>
+        <translation>Dock</translation>
     </message>
     <message>
         <source>Float</source>
@@ -4027,7 +4027,7 @@ Això modifica recursivament totes entitats del Bloc.</translation>
     </message>
     <message>
         <source>Area</source>
-        <translation>Àrea</translation>
+        <translation>Area</translation>
     </message>
 </context>
 <context>
@@ -4078,7 +4078,7 @@ Això modifica recursivament totes entitats del Bloc.</translation>
     </message>
     <message>
         <source>DPI</source>
-        <translation>PPP</translation>
+        <translation>DPI</translation>
     </message>
     <message>
         <source>Select an image file</source>
@@ -4171,7 +4171,7 @@ Seleccioneu la unitat que voleu utilitzar per als dibuixos nous i el vostre idio
     <name>QG_DlgLine</name>
     <message>
         <source>Line</source>
-        <translation>Línia</translation>
+        <translation>Line</translation>
     </message>
     <message>
         <source>Layer:</source>
@@ -4286,11 +4286,11 @@ Seleccioneu la unitat que voleu utilitzar per als dibuixos nous i el vostre idio
     </message>
     <message>
         <source>Cut</source>
-        <translation>Retalla</translation>
+        <translation>Cut</translation>
     </message>
     <message>
         <source>Copy</source>
-        <translation>Copia</translation>
+        <translation>Copy</translation>
     </message>
     <message>
         <source>Paste</source>
@@ -5090,7 +5090,7 @@ Seleccioneu la unitat que voleu utilitzar per als dibuixos nous i el vostre idio
     </message>
     <message>
         <source>auto</source>
-        <translation>automàtic</translation>
+        <translation>auto</translation>
     </message>
     <message>
         <source>&amp;Grid</source>
@@ -5110,7 +5110,7 @@ Seleccioneu la unitat que voleu utilitzar per als dibuixos nous i el vostre idio
     </message>
     <message>
         <source>Left</source>
-        <translation>Esquerre</translation>
+        <translation>Left</translation>
     </message>
     <message>
         <source>Top crosshair with isometric grid</source>
@@ -5118,7 +5118,7 @@ Seleccioneu la unitat que voleu utilitzar per als dibuixos nous i el vostre idio
     </message>
     <message>
         <source>Top</source>
-        <translation>Superior</translation>
+        <translation>Top</translation>
     </message>
     <message>
         <source>Right crosshair with isometric grid</source>
@@ -5533,7 +5533,7 @@ Seleccioneu la unitat que voleu utilitzar per als dibuixos nous i el vostre idio
     </message>
     <message>
         <source>All</source>
-        <translation>Tot</translation>
+        <translation>All</translation>
     </message>
     <message>
         <source>Scrollbars</source>
@@ -6038,11 +6038,11 @@ per tant, es requereix un valor de pas per defecte per a la cocció (baking)</tr
     </message>
     <message>
         <source>Cut</source>
-        <translation>Retalla</translation>
+        <translation>Cut</translation>
     </message>
     <message>
         <source>Copy</source>
-        <translation>Copia</translation>
+        <translation>Copy</translation>
     </message>
     <message>
         <source>Paste</source>
@@ -6634,7 +6634,7 @@ per tant, es requereix un valor de pas per defecte per a la cocció (baking)</tr
     </message>
     <message>
         <source>Fit</source>
-        <translation>Ajusta</translation>
+        <translation>Fit</translation>
     </message>
     <message>
         <source>Diameter (⌀)</source>
@@ -6653,7 +6653,7 @@ per tant, es requereix un valor de pas per defecte per a la cocció (baking)</tr
     <name>QG_ExitDialog</name>
     <message>
         <source>QCad</source>
-        <translation>LibreCAD</translation>
+        <translation>QCad</translation>
     </message>
     <message>
         <source>again Still No Text supplied.</source>
@@ -6789,7 +6789,7 @@ per tant, es requereix un valor de pas per defecte per a la cocció (baking)</tr
     </message>
     <message>
         <source>auto</source>
-        <translation>automàtica</translation>
+        <translation>auto</translation>
     </message>
     <message>
         <source>Colouring</source>
@@ -6990,7 +6990,7 @@ El contingut d&apos;una capa de construcció no hauria d&apos;aparèixer en la s
     </message>
     <message>
         <source>Dot</source>
-        <translation>Punt</translation>
+        <translation>Dot</translation>
     </message>
     <message>
         <source>Dot (small)</source>
@@ -7002,7 +7002,7 @@ El contingut d&apos;una capa de construcció no hauria d&apos;aparèixer en la s
     </message>
     <message>
         <source>Dash</source>
-        <translation>Guió</translation>
+        <translation>Dash</translation>
     </message>
     <message>
         <source>Dash (small)</source>
@@ -7101,7 +7101,7 @@ El contingut d&apos;una capa de construcció no hauria d&apos;aparèixer en la s
     </message>
     <message>
         <source>Left</source>
-        <translation>Esquerra</translation>
+        <translation>Left</translation>
     </message>
     <message>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
@@ -7188,7 +7188,7 @@ p, li { white-space: pre-wrap; }
     <name>QG_SnapToolBar</name>
     <message>
         <source>Snap</source>
-        <translation>Força</translation>
+        <translation>Snap</translation>
     </message>
     <message>
         <source>Snap to Endpoints</source>
@@ -7319,7 +7319,7 @@ p, li { white-space: pre-wrap; }
     <name>QG_WidgetPen</name>
     <message>
         <source>Pen</source>
-        <translation>Traç</translation>
+        <translation>Pen</translation>
     </message>
     <message>
         <source>Line type:</source>
@@ -7795,15 +7795,15 @@ Voleu substituir-ho?</translation>
     </message>
     <message>
         <source>Inch</source>
-        <translation>Polzada</translation>
+        <translation>Inch</translation>
     </message>
     <message>
         <source>Foot</source>
-        <translation>Peu</translation>
+        <translation>Foot</translation>
     </message>
     <message>
         <source>Mile</source>
-        <translation>Milla</translation>
+        <translation>Mile</translation>
     </message>
     <message>
         <source>Millimeter</source>
@@ -7827,11 +7827,11 @@ Voleu substituir-ho?</translation>
     </message>
     <message>
         <source>Mil</source>
-        <translation>Mil·lipolzada</translation>
+        <translation>Mil</translation>
     </message>
     <message>
         <source>Yard</source>
-        <translation>Iarda</translation>
+        <translation>Yard</translation>
     </message>
     <message>
         <source>Angstrom</source>
@@ -8046,7 +8046,7 @@ Voleu substituir-ho?</translation>
     <message>
         <source>line</source>
         <comment>draw line</comment>
-        <translation>línia</translation>
+        <translation>line</translation>
     </message>
     <message>
         <source>li</source>
@@ -8071,7 +8071,7 @@ Voleu substituir-ho?</translation>
     <message>
         <source>free</source>
         <comment>draw freehand line</comment>
-        <translation>lliure</translation>
+        <translation>free</translation>
     </message>
     <message>
         <source>fhl</source>
@@ -8201,7 +8201,7 @@ Voleu substituir-ho?</translation>
     <message>
         <source>mtxt</source>
         <comment>draw mtext</comment>
-        <translation>txtm</translation>
+        <translation>mtxt</translation>
     </message>
     <message>
         <source>text</source>
@@ -8241,7 +8241,7 @@ Voleu substituir-ho?</translation>
     <message>
         <source>zw</source>
         <comment>zoom - window</comment>
-        <translation>zf</translation>
+        <translation>zw</translation>
     </message>
     <message>
         <source>zoomauto</source>
@@ -8271,32 +8271,32 @@ Voleu substituir-ho?</translation>
     <message>
         <source>zv</source>
         <comment>zoom - previous</comment>
-        <translation>zp</translation>
+        <translation>zv</translation>
     </message>
     <message>
         <source>kill</source>
         <comment>kill all actions</comment>
-        <translation>mata</translation>
+        <translation>kill</translation>
     </message>
     <message>
         <source>k</source>
         <comment>kill all actions</comment>
-        <translation>m</translation>
+        <translation>k</translation>
     </message>
     <message>
         <source>undo</source>
         <comment>undo cycle</comment>
-        <translation>desfés</translation>
+        <translation>undo</translation>
     </message>
     <message>
         <source>u</source>
         <comment>undo cycle</comment>
-        <translation>d</translation>
+        <translation>u</translation>
     </message>
     <message>
         <source>redo</source>
         <comment>redo cycle</comment>
-        <translation>refés</translation>
+        <translation>redo</translation>
     </message>
     <message>
         <source>r</source>
@@ -8316,7 +8316,7 @@ Voleu substituir-ho?</translation>
     <message>
         <source>dh</source>
         <comment>dimension - horizontal</comment>
-        <translation>coth</translation>
+        <translation>dh</translation>
     </message>
     <message>
         <source>dimvertical</source>
@@ -8326,7 +8326,7 @@ Voleu substituir-ho?</translation>
     <message>
         <source>dv</source>
         <comment>dimension - vertical</comment>
-        <translation>cotv</translation>
+        <translation>dv</translation>
     </message>
     <message>
         <source>dimlinear</source>
@@ -8336,7 +8336,7 @@ Voleu substituir-ho?</translation>
     <message>
         <source>dl</source>
         <comment>dimension - linear</comment>
-        <translation>cotl</translation>
+        <translation>dl</translation>
     </message>
     <message>
         <source>dimangular</source>
@@ -8346,7 +8346,7 @@ Voleu substituir-ho?</translation>
     <message>
         <source>dan</source>
         <comment>dimension - angular</comment>
-        <translation>cotan</translation>
+        <translation>dan</translation>
     </message>
     <message>
         <source>dimradial</source>
@@ -8366,7 +8366,7 @@ Voleu substituir-ho?</translation>
     <message>
         <source>dd</source>
         <comment>dimension - diametric</comment>
-        <translation>cotd</translation>
+        <translation>dd</translation>
     </message>
     <message>
         <source>dimleader</source>
@@ -8376,7 +8376,7 @@ Voleu substituir-ho?</translation>
     <message>
         <source>ld</source>
         <comment>dimension - leader</comment>
-        <translation>cotg</translation>
+        <translation>ld</translation>
     </message>
     <message>
         <source>dimregen</source>
@@ -8391,7 +8391,7 @@ Voleu substituir-ho?</translation>
     <message>
         <source>rn</source>
         <comment>restrict - nothing</comment>
-        <translation>sr</translation>
+        <translation>rn</translation>
     </message>
     <message>
         <source>restrictorthogonal</source>
@@ -8401,7 +8401,7 @@ Voleu substituir-ho?</translation>
     <message>
         <source>rr</source>
         <comment>restrict - orthogonal</comment>
-        <translation>ro</translation>
+        <translation>rr</translation>
     </message>
     <message>
         <source>restricthorizontal</source>
@@ -8431,7 +8431,7 @@ Voleu substituir-ho?</translation>
     <message>
         <source>bev</source>
         <comment>modify - bevel</comment>
-        <translation>xamf</translation>
+        <translation>bev</translation>
     </message>
     <message>
         <source>ch</source>
@@ -8441,12 +8441,12 @@ Voleu substituir-ho?</translation>
     <message>
         <source>fi</source>
         <comment>modify - fillet</comment>
-        <translation>arre</translation>
+        <translation>fi</translation>
     </message>
     <message>
         <source>cut</source>
         <comment>modify - divide (cut)</comment>
-        <translation>retalla</translation>
+        <translation>cut</translation>
     </message>
     <message>
         <source>div</source>
@@ -8461,17 +8461,17 @@ Voleu substituir-ho?</translation>
     <message>
         <source>rev</source>
         <comment>modify -  revert direction</comment>
-        <translation>inv</translation>
+        <translation>rev</translation>
     </message>
     <message>
         <source>ro</source>
         <comment>modify - rotate</comment>
-        <translation>gi</translation>
+        <translation>ro</translation>
     </message>
     <message>
         <source>sz</source>
         <comment>modify - scale</comment>
-        <translation>esc</translation>
+        <translation>sz</translation>
     </message>
     <message>
         <source>tm</source>
@@ -8501,7 +8501,7 @@ Voleu substituir-ho?</translation>
     <message>
         <source>del</source>
         <comment>modify - delete (erase)</comment>
-        <translation>suprimeix</translation>
+        <translation>del</translation>
     </message>
     <message>
         <source>xp</source>
@@ -8601,7 +8601,7 @@ Voleu substituir-ho?</translation>
     <message>
         <source>rz</source>
         <comment>set relative zero position</comment>
-        <translation>dzr</translation>
+        <translation>rz</translation>
     </message>
     <message>
         <source>selectall</source>
@@ -8659,7 +8659,7 @@ Voleu substituir-ho?</translation>
     </message>
     <message>
         <source>dpi</source>
-        <translation>ppp</translation>
+        <translation>dpi</translation>
     </message>
     <message>
         <source>close</source>
@@ -8695,7 +8695,7 @@ Voleu substituir-ho?</translation>
     </message>
     <message>
         <source>rows</source>
-        <translation>files</translation>
+        <translation>rows</translation>
     </message>
     <message>
         <source>rowspacing</source>
@@ -8707,7 +8707,7 @@ Voleu substituir-ho?</translation>
     </message>
     <message>
         <source>trim</source>
-        <translation>redueix</translation>
+        <translation>trim</translation>
     </message>
     <message>
         <source>ang</source>
@@ -8741,12 +8741,12 @@ Voleu substituir-ho?</translation>
     <message>
         <source>c</source>
         <comment>close</comment>
-        <translation>t</translation>
+        <translation>c</translation>
     </message>
     <message>
         <source>cols</source>
         <comment>columns</comment>
-        <translation>columnes</translation>
+        <translation>cols</translation>
     </message>
     <message>
         <source>co</source>
@@ -8780,7 +8780,7 @@ Voleu substituir-ho?</translation>
     </message>
     <message>
         <source>help</source>
-        <translation>ajuda</translation>
+        <translation>help</translation>
     </message>
     <message>
         <source>?</source>
@@ -8865,7 +8865,7 @@ Voleu substituir-ho?</translation>
     <message>
         <source>row</source>
         <comment>row</comment>
-        <translation>fila</translation>
+        <translation>row</translation>
     </message>
     <message>
         <source>rowspacing</source>
@@ -8875,7 +8875,7 @@ Voleu substituir-ho?</translation>
     <message>
         <source>rs</source>
         <comment>rowspacing for inserts</comment>
-        <translation>ef</translation>
+        <translation>rs</translation>
     </message>
     <message>
         <source>text</source>
@@ -8893,16 +8893,16 @@ Voleu substituir-ho?</translation>
     </message>
     <message>
         <source>undo</source>
-        <translation>desfer</translation>
+        <translation>undo</translation>
     </message>
     <message>
         <source>u</source>
         <comment>undo</comment>
-        <translation>d</translation>
+        <translation>u</translation>
     </message>
     <message>
         <source>redo</source>
-        <translation>refér</translation>
+        <translation>redo</translation>
     </message>
     <message>
         <source>r</source>
@@ -8911,7 +8911,7 @@ Voleu substituir-ho?</translation>
     </message>
     <message>
         <source>back</source>
-        <translation>enrere</translation>
+        <translation>back</translation>
     </message>
     <message>
         <source>b</source>
@@ -8959,7 +8959,7 @@ Voleu substituir-ho?</translation>
     <message>
         <source>None</source>
         <comment>unknown length unit</comment>
-        <translation>Cap</translation>
+        <translation>None</translation>
     </message>
     <message>
         <source>error reading file metadata in dwg file</source>
@@ -9010,7 +9010,7 @@ Voleu substituir-ho?</translation>
     </message>
     <message>
         <source>Edit</source>
-        <translation>Edita</translation>
+        <translation>Edit</translation>
     </message>
     <message>
         <source>Ellipse</source>
@@ -9018,7 +9018,7 @@ Voleu substituir-ho?</translation>
     </message>
     <message>
         <source>File</source>
-        <translation>Arxiu</translation>
+        <translation>File</translation>
     </message>
     <message>
         <source>Dimension</source>
@@ -9026,7 +9026,7 @@ Voleu substituir-ho?</translation>
     </message>
     <message>
         <source>Info</source>
-        <translation>Informació</translation>
+        <translation>Info</translation>
     </message>
     <message>
         <source>Layer</source>
@@ -9034,7 +9034,7 @@ Voleu substituir-ho?</translation>
     </message>
     <message>
         <source>Line</source>
-        <translation>Línia</translation>
+        <translation>Line</translation>
     </message>
     <message>
         <source>Modify</source>
@@ -9062,7 +9062,7 @@ Voleu substituir-ho?</translation>
     </message>
     <message>
         <source>Snap</source>
-        <translation>Força</translation>
+        <translation>Snap</translation>
     </message>
     <message>
         <source>Snap Extras</source>
@@ -9070,7 +9070,7 @@ Voleu substituir-ho?</translation>
     </message>
     <message>
         <source>View</source>
-        <translation>Visualització</translation>
+        <translation>View</translation>
     </message>
     <message>
         <source>Widgets</source>
@@ -9082,7 +9082,7 @@ Voleu substituir-ho?</translation>
     </message>
     <message>
         <source>All</source>
-        <translation>Tot</translation>
+        <translation>All</translation>
     </message>
     <message>
         <source>Invalid objects removed:</source>
@@ -9341,12 +9341,12 @@ Voleu substituir-ho?</translation>
     <message>
         <source>cr</source>
         <comment>circle point radius</comment>
-        <translation>cpr</translation>
+        <translation>cr</translation>
     </message>
     <message>
         <source>ccr</source>
         <comment>circle point radius</comment>
-        <translation>ctd</translation>
+        <translation>ccr</translation>
     </message>
     <message>
         <source>circletan2cp</source>
@@ -9446,7 +9446,7 @@ Voleu substituir-ho?</translation>
     <message>
         <source>fh</source>
         <comment>draw freehand line</comment>
-        <translation>lma</translation>
+        <translation>fh</translation>
     </message>
     <message>
         <source>ellipsec2p</source>
@@ -9456,7 +9456,7 @@ Voleu substituir-ho?</translation>
     <message>
         <source>ea</source>
         <comment>ellipse axis</comment>
-        <translation>ee</translation>
+        <translation>ea</translation>
     </message>
     <message>
         <source>ellipse3p</source>
@@ -9496,7 +9496,7 @@ Voleu substituir-ho?</translation>
     <message>
         <source>pi</source>
         <comment>pl add node</comment>
-        <translation>plan</translation>
+        <translation>pi</translation>
     </message>
     <message>
         <source>plineapp</source>
@@ -9526,7 +9526,7 @@ Voleu substituir-ho?</translation>
     <message>
         <source>pr</source>
         <comment>pl del between nodes</comment>
-        <translation>pleen</translation>
+        <translation>pr</translation>
     </message>
     <message>
         <source>plinetrm</source>
@@ -9536,7 +9536,7 @@ Voleu substituir-ho?</translation>
     <message>
         <source>pt</source>
         <comment>pl trim segments</comment>
-        <translation>plrs</translation>
+        <translation>pt</translation>
     </message>
     <message>
         <source>plinepar</source>
@@ -9676,7 +9676,7 @@ Voleu substituir-ho?</translation>
     <message>
         <source>moff</source>
         <comment>modify - offset</comment>
-        <translation>Desplaçament</translation>
+        <translation>moff</translation>
     </message>
     <message>
         <source>modbevel</source>
@@ -9736,7 +9736,7 @@ Voleu substituir-ho?</translation>
     <message>
         <source>id</source>
         <comment>distance point to point</comment>
-        <translation>ID</translation>
+        <translation>id</translation>
     </message>
     <message>
         <source>infodistep</source>
@@ -9751,7 +9751,7 @@ Voleu substituir-ho?</translation>
     <message>
         <source>dep</source>
         <comment>distance entity to point</comment>
-        <translation>Detalls</translation>
+        <translation>dep</translation>
     </message>
     <message>
         <source>infoangle</source>
@@ -9761,7 +9761,7 @@ Voleu substituir-ho?</translation>
     <message>
         <source>ia</source>
         <comment>measure angle</comment>
-        <translation>IA</translation>
+        <translation>ia</translation>
     </message>
     <message>
         <source>infoarea</source>
@@ -9771,32 +9771,32 @@ Voleu substituir-ho?</translation>
     <message>
         <source>aa</source>
         <comment>measure area</comment>
-        <translation>AA</translation>
+        <translation>aa</translation>
     </message>
     <message>
         <source>mt</source>
         <comment>draw mtext</comment>
-        <translation>MT</translation>
+        <translation>mt</translation>
     </message>
     <message>
         <source>tx</source>
         <comment>draw text</comment>
-        <translation>Text</translation>
+        <translation>tx</translation>
     </message>
     <message>
         <source>so</source>
         <comment>snap - free</comment>
-        <translation>SO</translation>
+        <translation>so</translation>
     </message>
     <message>
         <source>ki</source>
         <comment>kill all actions</comment>
-        <translation>KI</translation>
+        <translation>ki</translation>
     </message>
     <message>
         <source>un</source>
         <comment>undo cycle</comment>
-        <translation>Unitat</translation>
+        <translation>un</translation>
     </message>
     <message>
         <source>rd</source>
@@ -9830,12 +9830,12 @@ Voleu substituir-ho?</translation>
     <message>
         <source>eqn</source>
         <comment>equation</comment>
-        <translation>Eq.</translation>
+        <translation>eqn</translation>
     </message>
     <message>
         <source>eq</source>
         <comment>equation</comment>
-        <translation>Eq.</translation>
+        <translation>eq</translation>
     </message>
     <message>
         <source>Custom</source>
@@ -10338,7 +10338,7 @@ Voleu substituir-ho?</translation>
     <message>
         <source>star</source>
         <comment>draw star</comment>
-        <translation>estrella</translation>
+        <translation>star</translation>
     </message>
     <message>
         <source>st</source>
@@ -10383,7 +10383,7 @@ Voleu substituir-ho?</translation>
     <message>
         <source>dup</source>
         <comment>duplicate entity</comment>
-        <translation>Dup</translation>
+        <translation>dup</translation>
     </message>
     <message>
         <source>linejoin</source>
@@ -10448,7 +10448,7 @@ Voleu substituir-ho?</translation>
     <message>
         <source>rort</source>
         <comment>draw orthogonal</comment>
-        <translation>rotació</translation>
+        <translation>rort</translation>
     </message>
     <message>
         <source>point2line</source>
@@ -10477,11 +10477,11 @@ Voleu substituir-ho?</translation>
     </message>
     <message>
         <source>x</source>
-        <translation>X</translation>
+        <translation>x</translation>
     </message>
     <message>
         <source>y</source>
-        <translation>Y</translation>
+        <translation>y</translation>
     </message>
     <message>
         <source>p</source>
@@ -10517,11 +10517,11 @@ Voleu substituir-ho?</translation>
     </message>
     <message>
         <source>pos</source>
-        <translation>posició</translation>
+        <translation>pos</translation>
     </message>
     <message>
         <source>size</source>
-        <translation>mida</translation>
+        <translation>size</translation>
     </message>
     <message>
         <source>bevels</source>
@@ -10553,19 +10553,19 @@ Voleu substituir-ho?</translation>
     </message>
     <message>
         <source>topl</source>
-        <translation>superior</translation>
+        <translation>topl</translation>
     </message>
     <message>
         <source>top</source>
-        <translation>superior</translation>
+        <translation>top</translation>
     </message>
     <message>
         <source>topr</source>
-        <translation>superior</translation>
+        <translation>topr</translation>
     </message>
     <message>
         <source>left</source>
-        <translation>esquerra</translation>
+        <translation>left</translation>
     </message>
     <message>
         <source>middle</source>
@@ -10605,11 +10605,11 @@ Voleu substituir-ho?</translation>
     </message>
     <message>
         <source>hor</source>
-        <translation>Horitzontal</translation>
+        <translation>hor</translation>
     </message>
     <message>
         <source>vert</source>
-        <translation>Vertical</translation>
+        <translation>vert</translation>
     </message>
     <message>
         <source>snap2</source>
@@ -10629,7 +10629,7 @@ Voleu substituir-ho?</translation>
     </message>
     <message>
         <source>quad</source>
-        <translation>Quadriláteral</translation>
+        <translation>quad</translation>
     </message>
     <message>
         <source>noquad</source>
@@ -10661,19 +10661,19 @@ Voleu substituir-ho?</translation>
     </message>
     <message>
         <source>end</source>
-        <translation>Final</translation>
+        <translation>end</translation>
     </message>
     <message>
         <source>both</source>
-        <translation>amb dos</translation>
+        <translation>both</translation>
     </message>
     <message>
         <source>none</source>
-        <translation>cap</translation>
+        <translation>none</translation>
     </message>
     <message>
         <source>fit</source>
-        <translation>ajustar</translation>
+        <translation>fit</translation>
     </message>
     <message>
         <source>nofit</source>
@@ -10693,7 +10693,7 @@ Voleu substituir-ho?</translation>
     </message>
     <message>
         <source>sym</source>
-        <translation>simbòl</translation>
+        <translation>sym</translation>
     </message>
     <message>
         <source>nosym</source>
@@ -10934,7 +10934,7 @@ Aquest bloc no es pot inserir.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Enrere</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -10953,7 +10953,7 @@ Aquest bloc no es pot inserir.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Enrere</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify dimension line location</source>
@@ -11053,7 +11053,7 @@ Aquest bloc no es pot inserir.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Enrere</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify dimension line location</source>
@@ -11119,7 +11119,7 @@ Aquest bloc no es pot inserir.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Enrere</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify start angle:</source>
@@ -11154,7 +11154,7 @@ Aquest bloc no es pot inserir.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Enrere</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify endpoint</source>
@@ -11181,7 +11181,7 @@ Aquest bloc no es pot inserir.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Enrere</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify end point</source>
@@ -11204,7 +11204,7 @@ Aquest bloc no es pot inserir.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Enrere</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify point on circle</source>
@@ -11231,7 +11231,7 @@ Aquest bloc no es pot inserir.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Enrere</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -11254,7 +11254,7 @@ Aquest bloc no es pot inserir.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Enrere</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify third point</source>
@@ -11281,7 +11281,7 @@ Aquest bloc no es pot inserir.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Enrere</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>radius=%1 is invalid (expression)</source>
@@ -11312,7 +11312,7 @@ Aquest bloc no es pot inserir.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Enrere</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify the third line</source>
@@ -11331,7 +11331,7 @@ Aquest bloc no es pot inserir.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Enrere</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify the second point on the tangent circle</source>
@@ -11362,7 +11362,7 @@ Aquest bloc no es pot inserir.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Enrere</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Select the center of the tangent circle</source>
@@ -11405,7 +11405,7 @@ Aquest bloc no es pot inserir.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Enrere</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify a point on the tangent circle</source>
@@ -11424,7 +11424,7 @@ Aquest bloc no es pot inserir.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Enrere</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Select the center of the tangent circle</source>
@@ -11459,7 +11459,7 @@ Aquest bloc no es pot inserir.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Enrere</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify the third point on ellipse</source>
@@ -11494,7 +11494,7 @@ Aquest bloc no es pot inserir.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Enrere</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify endpoint or length of minor axis:</source>
@@ -11529,7 +11529,7 @@ Aquest bloc no es pot inserir.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Enrere</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify the third point on ellipse</source>
@@ -11556,7 +11556,7 @@ Aquest bloc no es pot inserir.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Enrere</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify a point on ellipse or total distance to foci</source>
@@ -11587,7 +11587,7 @@ Aquest bloc no es pot inserir.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Enrere</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify the third line</source>
@@ -11684,7 +11684,7 @@ Aquest bloc no es pot inserir.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Enrere</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify next point</source>
@@ -11723,7 +11723,7 @@ Aquest bloc no es pot inserir.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Enrere</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Enter length:</source>
@@ -11750,7 +11750,7 @@ Aquest bloc no es pot inserir.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Enrere</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Enter bisector length:</source>
@@ -11793,7 +11793,7 @@ Aquest bloc no es pot inserir.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Enrere</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -11812,7 +11812,7 @@ Aquest bloc no es pot inserir.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Enrere</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -11854,7 +11854,7 @@ Aquest bloc no es pot inserir.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Enrere</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Number:</source>
@@ -11915,7 +11915,7 @@ Aquest bloc no es pot inserir.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Enrere</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Number:</source>
@@ -11946,7 +11946,7 @@ Aquest bloc no es pot inserir.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Enrere</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -11969,7 +11969,7 @@ Aquest bloc no es pot inserir.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Enrere</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -11988,7 +11988,7 @@ Aquest bloc no es pot inserir.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Enrere</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -11999,7 +11999,7 @@ Aquest bloc no es pot inserir.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Enrere</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Select first circle or ellipse</source>
@@ -12038,7 +12038,7 @@ Aquest bloc no es pot inserir.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Enrere</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -12068,7 +12068,7 @@ Aquest bloc no es pot inserir.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Enrere</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify next point</source>
@@ -12135,7 +12135,7 @@ Aquest bloc no es pot inserir.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Enrere</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify next control point</source>
@@ -12162,7 +12162,7 @@ Aquest bloc no es pot inserir.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Enrere</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify second point</source>
@@ -12222,7 +12222,7 @@ Aquest bloc no es pot inserir.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Enrere</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Angle: %1</source>
@@ -12276,7 +12276,7 @@ Aquest bloc no es pot inserir.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Enrere</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Distance: %1 Cartesian: (%2 , %3), Polar: (%4&lt;%5)</source>
@@ -12303,7 +12303,7 @@ Aquest bloc no es pot inserir.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Enrere</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -12398,7 +12398,7 @@ Aquest bloc no es pot inserir.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Enrere</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Enter length 1:</source>
@@ -12437,7 +12437,7 @@ Aquest bloc no es pot inserir.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Enrere</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Entity must be a line, arc, circle, ellipse or interpolation spline.</source>
@@ -12460,7 +12460,7 @@ Aquest bloc no es pot inserir.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Enrere</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Entities not in the same polyline.</source>
@@ -12533,7 +12533,7 @@ Aquest bloc no es pot inserir.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Enrere</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -12552,7 +12552,7 @@ Aquest bloc no es pot inserir.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Enrere</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Invalid number of copies, use %1 </source>
@@ -12579,7 +12579,7 @@ Aquest bloc no es pot inserir.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Enrere</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Enter rotation angle:</source>
@@ -12594,7 +12594,7 @@ Aquest bloc no es pot inserir.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Enrere</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -12605,7 +12605,7 @@ Aquest bloc no es pot inserir.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Enrere</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify rotation center</source>
@@ -12632,7 +12632,7 @@ Aquest bloc no es pot inserir.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Enrere</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -12643,7 +12643,7 @@ Aquest bloc no es pot inserir.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Enrere</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify second entity</source>
@@ -12697,7 +12697,7 @@ Aquest bloc no es pot inserir.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Enrere</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify reference point</source>
@@ -12724,7 +12724,7 @@ Aquest bloc no es pot inserir.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Enrere</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Select second trim entity</source>
@@ -12759,7 +12759,7 @@ Aquest bloc no es pot inserir.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Enrere</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -12809,7 +12809,7 @@ Aquest bloc no es pot inserir.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Enrere</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -12840,7 +12840,7 @@ Aquest bloc no es pot inserir.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Enrere</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify next point</source>
@@ -12879,7 +12879,7 @@ Aquest bloc no es pot inserir.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Enrere</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Deleting point is invalid.</source>
@@ -12918,7 +12918,7 @@ Aquest bloc no es pot inserir.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Enrere</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify second node</source>
@@ -13003,7 +13003,7 @@ Aquest bloc no es pot inserir.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Enrere</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify second segment</source>
@@ -13159,7 +13159,7 @@ Aquest bloc no es pot inserir.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Enrere</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -13174,7 +13174,7 @@ Aquest bloc no es pot inserir.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Enrere</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Click and drag for the selection window</source>
@@ -13208,7 +13208,7 @@ Aquest bloc no es pot inserir.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Enrere</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Select second entity</source>
@@ -13257,7 +13257,7 @@ Aquest bloc no es pot inserir.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Enrere</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -13326,7 +13326,7 @@ Aquest bloc no es pot inserir.</translation>
     </message>
     <message>
         <source>Trim</source>
-        <translation>Redueix</translation>
+        <translation>Trim</translation>
     </message>
     <message>
         <source>Length 1:</source>
@@ -13441,7 +13441,7 @@ Aquest bloc no es pot inserir.</translation>
     </message>
     <message>
         <source>DPI</source>
-        <translation>PPP</translation>
+        <translation>DPI</translation>
     </message>
     <message>
         <source>DPI of Image</source>
@@ -13554,7 +13554,7 @@ Aquest bloc no es pot inserir.</translation>
     </message>
     <message>
         <source>End</source>
-        <translation>Acabament</translation>
+        <translation>End</translation>
     </message>
 </context>
 <context>
@@ -13600,7 +13600,7 @@ Aquest bloc no es pot inserir.</translation>
     </message>
     <message>
         <source>Undo</source>
-        <translation>Desfés</translation>
+        <translation>Undo</translation>
     </message>
     <message>
         <source>Redo the last line drawing</source>
@@ -13608,7 +13608,7 @@ Aquest bloc no es pot inserir.</translation>
     </message>
     <message>
         <source>Redo</source>
-        <translation>Refés</translation>
+        <translation>Redo</translation>
     </message>
 </context>
 <context>
@@ -13639,7 +13639,7 @@ Aquest bloc no es pot inserir.</translation>
     </message>
     <message>
         <source>Rel</source>
-        <translation>Relatiu</translation>
+        <translation>Rel</translation>
     </message>
     <message>
         <source>Undo the last line drawing</source>
@@ -13647,7 +13647,7 @@ Aquest bloc no es pot inserir.</translation>
     </message>
     <message>
         <source>Undo</source>
-        <translation>Desfés</translation>
+        <translation>Undo</translation>
     </message>
     <message>
         <source>Form a closed contour from lines drawn</source>
@@ -13663,7 +13663,7 @@ Aquest bloc no es pot inserir.</translation>
     </message>
     <message>
         <source>Redo</source>
-        <translation>Refés</translation>
+        <translation>Redo</translation>
     </message>
     <message>
         <source>Point</source>
@@ -13814,11 +13814,11 @@ Aquest bloc no es pot inserir.</translation>
     </message>
     <message>
         <source>Undo</source>
-        <translation>Desfés</translation>
+        <translation>Undo</translation>
     </message>
     <message>
         <source>Line</source>
-        <translation>Línia</translation>
+        <translation>Line</translation>
     </message>
     <message>
         <source>Tangential</source>
@@ -13900,7 +13900,7 @@ Aquest bloc no es pot inserir.</translation>
     </message>
     <message>
         <source>Trim</source>
-        <translation>Redueix</translation>
+        <translation>Trim</translation>
     </message>
     <message>
         <source>Radius:</source>
@@ -13949,7 +13949,7 @@ Aquest bloc no es pot inserir.</translation>
     </message>
     <message>
         <source>Undo</source>
-        <translation>Desfés</translation>
+        <translation>Undo</translation>
     </message>
 </context>
 <context>
@@ -14006,7 +14006,7 @@ Aquest bloc no es pot inserir.</translation>
     </message>
     <message>
         <source>Name</source>
-        <translation>Nom</translation>
+        <translation>Name</translation>
     </message>
     <message>
         <source>Create</source>

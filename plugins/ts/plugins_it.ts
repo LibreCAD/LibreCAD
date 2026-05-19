@@ -149,7 +149,7 @@ primo punto base, secondo punto base, primo punto di riferimento, secondo punto 
     <message>
         <location filename="../list/list.cpp" line="67" />
         <source>Y</source>
-        <translation>SÌ</translation>
+        <translation>Y</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="77" />
@@ -296,7 +296,7 @@ primo punto base, secondo punto base, primo punto di riferimento, secondo punto 
     <message>
         <location filename="../list/list.cpp" line="179" />
         <source>TEXT</source>
-        <translation>TESTO</translation>
+        <translation>TEXT</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="183" />
@@ -311,7 +311,7 @@ primo punto base, secondo punto base, primo punto di riferimento, secondo punto 
     <message>
         <location filename="../list/list.cpp" line="189" />
         <source>Name</source>
-        <translation>Nome</translation>
+        <translation>Name</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="191" />
@@ -356,7 +356,7 @@ primo punto base, secondo punto base, primo punto di riferimento, secondo punto 
     <message>
         <location filename="../list/list.cpp" line="216" />
         <source>Yes</source>
-        <translation>Si</translation>
+        <translation>Yes</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="217" />
@@ -674,7 +674,7 @@ primo punto base, secondo punto base, primo punto di riferimento, secondo punto 
     <message>
         <location filename="../divide/divide.cpp" line="452" />
         <source>Y</source>
-        <translation>SÌ</translation>
+        <translation>Y</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="460" />
@@ -773,7 +773,7 @@ primo punto base, secondo punto base, primo punto di riferimento, secondo punto 
     <message>
         <location filename="../divide/divide.cpp" line="526" />
         <source>area</source>
-        <translation>zona</translation>
+        <translation>area</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="530" />
@@ -793,7 +793,7 @@ primo punto base, secondo punto base, primo punto di riferimento, secondo punto 
     <message>
         <location filename="../divide/divide.cpp" line="533" />
         <source>Yes</source>
-        <translation>Sì</translation>
+        <translation>Yes</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="534" />
@@ -841,7 +841,7 @@ primo punto base, secondo punto base, primo punto di riferimento, secondo punto 
     <message>
         <location filename="../divide/dividedlg.cpp" line="92" />
         <source>Size</source>
-        <translation>Dimensione</translation>
+        <translation>Size</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="115" />
@@ -1227,7 +1227,7 @@ Usa t o x nella tua equazione come variabile indipendente/parametro.
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="32" />
         <source>Draw</source>
-        <translation>Disegna</translation>
+        <translation>Draw</translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="33" />

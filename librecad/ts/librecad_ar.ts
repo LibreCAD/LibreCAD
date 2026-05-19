@@ -27,7 +27,7 @@
     </message>
     <message>
         <source>Set</source>
-        <translation>تعيين</translation>
+        <translation>Set</translation>
     </message>
 </context>
 <context>
@@ -125,7 +125,7 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>رجوع</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Select circle center</source>
@@ -142,15 +142,15 @@ or [%2]</source>
     </message>
     <message>
         <source>X</source>
-        <translation>س</translation>
+        <translation>X</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>رجوع</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Y</source>
-        <translation>ص</translation>
+        <translation>Y</translation>
     </message>
     <message>
         <source>Specify  distance (angle %1 deg)
@@ -190,7 +190,7 @@ or [%2]</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>رجوع</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify distance (%1) or [%2]</source>
@@ -198,11 +198,11 @@ or [%2]</source>
     </message>
     <message>
         <source>X</source>
-        <translation>س</translation>
+        <translation>X</translation>
     </message>
     <message>
         <source>Y</source>
-        <translation>ص</translation>
+        <translation>Y</translation>
     </message>
     <message>
         <source>Specify distance (%1 deg) or [%2]</source>
@@ -233,7 +233,7 @@ or [%2]</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>رجوع</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify the third point on parabola</source>
@@ -264,7 +264,7 @@ or [%2]</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>رجوع</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify the start point on parabola</source>
@@ -287,11 +287,11 @@ or [%2]</source>
     </message>
     <message>
         <source>Line</source>
-        <translation>خط</translation>
+        <translation>Line</translation>
     </message>
     <message>
         <source>Arc</source>
-        <translation>قوس</translation>
+        <translation>Arc</translation>
     </message>
     <message>
         <source>Circle</source>
@@ -314,7 +314,7 @@ or [%2]</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>رجوع</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify next control point</source>
@@ -932,7 +932,7 @@ or [%2]</source>
     </message>
     <message>
         <source>Left</source>
-        <translation>يسار</translation>
+        <translation>Left</translation>
     </message>
     <message>
         <source>Right</source>
@@ -940,7 +940,7 @@ or [%2]</source>
     </message>
     <message>
         <source>Top</source>
-        <translation>أعلى</translation>
+        <translation>Top</translation>
     </message>
     <message>
         <source>Bottom</source>
@@ -1069,7 +1069,7 @@ or [%2]</source>
     </message>
     <message>
         <source>Star</source>
-        <translation>نجمة</translation>
+        <translation>Star</translation>
     </message>
     <message>
         <source>Break/Divide</source>
@@ -1204,14 +1204,14 @@ or [%2]</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>رجوع</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
     <name>LC_CircleByArcOptions</name>
     <message>
         <source>Form</source>
-        <translation>نموذج</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <source>Active</source>
@@ -1246,7 +1246,7 @@ or [%2]</source>
     <name>LC_CrossOptions</name>
     <message>
         <source>Form</source>
-        <translation>نموذج</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <source>Extension</source>
@@ -1270,7 +1270,7 @@ or [%2]</source>
     </message>
     <message>
         <source>Type</source>
-        <translation>نوع</translation>
+        <translation>Type</translation>
     </message>
     <message>
         <source>Angle:</source>
@@ -1281,7 +1281,7 @@ or [%2]</source>
     <name>LC_DeviceOptions</name>
     <message>
         <source>Form</source>
-        <translation>نموذج</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <source>Device</source>
@@ -1289,7 +1289,7 @@ or [%2]</source>
     </message>
     <message>
         <source>Save</source>
-        <translation>حفظ</translation>
+        <translation>Save</translation>
     </message>
 </context>
 <context>
@@ -1303,7 +1303,7 @@ or [%2]</source>
     <name>LC_DuplicateOptions</name>
     <message>
         <source>Form</source>
-        <translation>نموذج</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <source>Layer:</source>
@@ -1729,7 +1729,7 @@ or [%2]</source>
     <name>LC_LineAngleRelOptions</name>
     <message>
         <source>Form</source>
-        <translation>نموذج</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <source>Offset:</source>
@@ -1737,7 +1737,7 @@ or [%2]</source>
     </message>
     <message>
         <source>Free</source>
-        <translation>حر</translation>
+        <translation>Free</translation>
     </message>
     <message>
         <source>Start</source>
@@ -1749,7 +1749,7 @@ or [%2]</source>
     </message>
     <message>
         <source>End</source>
-        <translation>نهاية</translation>
+        <translation>End</translation>
     </message>
     <message>
         <source>Line Snap:</source>
@@ -1757,7 +1757,7 @@ or [%2]</source>
     </message>
     <message>
         <source>Rel</source>
-        <translation>نسبي</translation>
+        <translation>Rel</translation>
     </message>
     <message>
         <source>Divide</source>
@@ -1784,7 +1784,7 @@ or [%2]</source>
     <name>LC_LineFromPointToLineOptions</name>
     <message>
         <source>Form</source>
-        <translation>نموذج</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <source>Angle:</source>
@@ -1820,7 +1820,7 @@ or [%2]</source>
     </message>
     <message>
         <source>End</source>
-        <translation>نهاية</translation>
+        <translation>End</translation>
     </message>
     <message>
         <source>Length:</source>
@@ -1835,7 +1835,7 @@ or [%2]</source>
     <name>LC_LineJoinOptions</name>
     <message>
         <source>Form</source>
-        <translation>نموذج</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <source>Extend/Trim</source>
@@ -1890,7 +1890,7 @@ or [%2]</source>
     <name>LC_LinePointsOptions</name>
     <message>
         <source>Form</source>
-        <translation>نموذج</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <source>Angle:</source>
@@ -1902,11 +1902,11 @@ or [%2]</source>
     </message>
     <message>
         <source>None</source>
-        <translation>لا شيء</translation>
+        <translation>None</translation>
     </message>
     <message>
         <source>Both</source>
-        <translation>كلا</translation>
+        <translation>Both</translation>
     </message>
     <message>
         <source>Start</source>
@@ -1914,7 +1914,7 @@ or [%2]</source>
     </message>
     <message>
         <source>End</source>
-        <translation>نهاية</translation>
+        <translation>End</translation>
     </message>
     <message>
         <source>Edge Points:</source>
@@ -1944,7 +1944,7 @@ or [%2]</source>
     <name>LC_ModifyBreakDivideOptions</name>
     <message>
         <source>Form</source>
-        <translation>نموذج</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <source>Remove Segments</source>
@@ -1959,7 +1959,7 @@ or [%2]</source>
     <name>LC_ModifyGapOptions</name>
     <message>
         <source>Form</source>
-        <translation>نموذج</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <source>Gap Snap:</source>
@@ -1971,7 +1971,7 @@ or [%2]</source>
     </message>
     <message>
         <source>Free</source>
-        <translation>حر</translation>
+        <translation>Free</translation>
     </message>
     <message>
         <source>Gap Size:</source>
@@ -1987,7 +1987,7 @@ or [%2]</source>
     </message>
     <message>
         <source>End</source>
-        <translation>نهاية</translation>
+        <translation>End</translation>
     </message>
     <message>
         <source>Line Snap:</source>
@@ -2153,7 +2153,7 @@ or [%2]</source>
     </message>
     <message>
         <source>Save</source>
-        <translation>حفظ</translation>
+        <translation>Save</translation>
     </message>
     <message>
         <source>Apply Pen To Selection</source>
@@ -2258,7 +2258,7 @@ Please note that if you'll save pen via editor without restart, current pens fro
     <name>LC_Rectangle1PointOptions</name>
     <message>
         <source>Form</source>
-        <translation>نموذج</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <source>Polyline</source>
@@ -2302,7 +2302,7 @@ Please note that if you'll save pen via editor without restart, current pens fro
     </message>
     <message>
         <source>Top</source>
-        <translation>أعلى</translation>
+        <translation>Top</translation>
     </message>
     <message>
         <source>Top-right</source>
@@ -2310,7 +2310,7 @@ Please note that if you'll save pen via editor without restart, current pens fro
     </message>
     <message>
         <source>Left</source>
-        <translation>يسار</translation>
+        <translation>Left</translation>
     </message>
     <message>
         <source>Middle</source>
@@ -2350,7 +2350,7 @@ Please note that if you'll save pen via editor without restart, current pens fro
     </message>
     <message>
         <source>Both</source>
-        <translation>كلا</translation>
+        <translation>Both</translation>
     </message>
     <message>
         <source>Vertical</source>
@@ -2373,7 +2373,7 @@ Please note that if you'll save pen via editor without restart, current pens fro
     <name>LC_Rectangle2PointsOptions</name>
     <message>
         <source>Form</source>
-        <translation>نموذج</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <source>Snap shift</source>
@@ -2445,7 +2445,7 @@ Please note that if you'll save pen via editor without restart, current pens fro
     </message>
     <message>
         <source>Both</source>
-        <translation>كلا</translation>
+        <translation>Both</translation>
     </message>
     <message>
         <source>Vertical</source>
@@ -2460,7 +2460,7 @@ Please note that if you'll save pen via editor without restart, current pens fro
     <name>LC_Rectangle3PointsOptions</name>
     <message>
         <source>Form</source>
-        <translation>نموذج</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <source>Polyline</source>
@@ -2468,7 +2468,7 @@ Please note that if you'll save pen via editor without restart, current pens fro
     </message>
     <message>
         <source>Both</source>
-        <translation>كلا</translation>
+        <translation>Both</translation>
     </message>
     <message>
         <source>Vertical</source>
@@ -2542,15 +2542,15 @@ Please note that if you'll save pen via editor without restart, current pens fro
     <name>LC_SliceDivideOptions</name>
     <message>
         <source>Form</source>
-        <translation>نموذج</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <source>None</source>
-        <translation>لا شيء</translation>
+        <translation>None</translation>
     </message>
     <message>
         <source>Both</source>
-        <translation>كلا</translation>
+        <translation>Both</translation>
     </message>
     <message>
         <source>Start</source>
@@ -2558,7 +2558,7 @@ Please note that if you'll save pen via editor without restart, current pens fro
     </message>
     <message>
         <source>End</source>
-        <translation>نهاية</translation>
+        <translation>End</translation>
     </message>
     <message>
         <source>Edge Tick:</source>
@@ -2566,7 +2566,7 @@ Please note that if you'll save pen via editor without restart, current pens fro
     </message>
     <message>
         <source>Rel</source>
-        <translation>نسبي</translation>
+        <translation>Rel</translation>
     </message>
     <message>
         <source>Offset:</source>
@@ -2613,7 +2613,7 @@ Please note that if you'll save pen via editor without restart, current pens fro
     <name>LC_StarOptions</name>
     <message>
         <source>Form</source>
-        <translation>نموذج</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <source>Radius Inner</source>
@@ -2648,7 +2648,7 @@ Please note that if you'll save pen via editor without restart, current pens fro
     </message>
     <message>
         <source>Dock</source>
-        <translation>ربط</translation>
+        <translation>Dock</translation>
     </message>
     <message>
         <source>Float</source>
@@ -3039,15 +3039,15 @@ Auto-save disabled.</source>
     </message>
     <message>
         <source>File</source>
-        <translation>ملف</translation>
+        <translation>File</translation>
     </message>
     <message>
         <source>Edit</source>
-        <translation>تحرير</translation>
+        <translation>Edit</translation>
     </message>
     <message>
         <source>View</source>
-        <translation>مشاهدة</translation>
+        <translation>View</translation>
     </message>
     <message>
         <source>Snap Selection</source>
@@ -3115,7 +3115,7 @@ Please check its existence and permissions.</source>
     </message>
     <message>
         <source>Line</source>
-        <translation>خط</translation>
+        <translation>Line</translation>
     </message>
     <message>
         <source>Circle</source>
@@ -3147,11 +3147,11 @@ Please check its existence and permissions.</source>
     </message>
     <message>
         <source>Info</source>
-        <translation>معلومات</translation>
+        <translation>Info</translation>
     </message>
     <message>
         <source>Pen</source>
-        <translation>قلم</translation>
+        <translation>Pen</translation>
     </message>
     <message>
         <source>Dock Areas</source>
@@ -3207,7 +3207,7 @@ Please check its existence and permissions.</source>
     </message>
     <message>
         <source>Copy</source>
-        <translation>نسخ</translation>
+        <translation>Copy</translation>
     </message>
     <message>
         <source>Contributors</source>
@@ -3301,11 +3301,11 @@ Please check its existence and permissions.</source>
     </message>
     <message>
         <source>East</source>
-        <translation>شرق</translation>
+        <translation>East</translation>
     </message>
     <message>
         <source>West</source>
-        <translation>غرب</translation>
+        <translation>West</translation>
     </message>
     <message>
         <source>&amp;Arrange</source>
@@ -3338,7 +3338,7 @@ Please check its existence and permissions.</source>
     <message>
         <source>Dock</source>
         <comment>Dock the command widget to the main window</comment>
-        <translation>ربط</translation>
+        <translation>Dock</translation>
     </message>
     <message>
         <source>&amp;Wiki</source>
@@ -3556,7 +3556,7 @@ in a separate window</source>
     </message>
     <message>
         <source>Red</source>
-        <translation>أحمر</translation>
+        <translation>Red</translation>
     </message>
     <message>
         <source>Yellow</source>
@@ -3568,11 +3568,11 @@ in a separate window</source>
     </message>
     <message>
         <source>Cyan</source>
-        <translation>سماوي</translation>
+        <translation>Cyan</translation>
     </message>
     <message>
         <source>Blue</source>
-        <translation>أزرق</translation>
+        <translation>Blue</translation>
     </message>
     <message>
         <source>Magenta</source>
@@ -3584,7 +3584,7 @@ in a separate window</source>
     </message>
     <message>
         <source>Gray</source>
-        <translation>رمادي</translation>
+        <translation>Gray</translation>
     </message>
     <message>
         <source>Light Gray</source>
@@ -3686,7 +3686,7 @@ in a separate window</source>
     </message>
     <message>
         <source>Dock</source>
-        <translation>الرصيف</translation>
+        <translation>Dock</translation>
     </message>
     <message>
         <source>Float</source>
@@ -3777,7 +3777,7 @@ in a separate window</source>
     <name>QG_DlgArc</name>
     <message>
         <source>Arc</source>
-        <translation>قوس</translation>
+        <translation>Arc</translation>
     </message>
     <message>
         <source>Layer:</source>
@@ -3969,7 +3969,7 @@ This recursively modifies all entities of the Block itself.</source>
     </message>
     <message>
         <source>Area</source>
-        <translation>المساحة</translation>
+        <translation>Area</translation>
     </message>
 </context>
 <context>
@@ -4110,7 +4110,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <name>QG_DlgLine</name>
     <message>
         <source>Line</source>
-        <translation>خط</translation>
+        <translation>Line</translation>
     </message>
     <message>
         <source>Layer:</source>
@@ -4225,11 +4225,11 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>Cut</source>
-        <translation>قص</translation>
+        <translation>Cut</translation>
     </message>
     <message>
         <source>Copy</source>
-        <translation>نسخ</translation>
+        <translation>Copy</translation>
     </message>
     <message>
         <source>Paste</source>
@@ -5029,7 +5029,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>auto</source>
-        <translation>تلقائي</translation>
+        <translation>auto</translation>
     </message>
     <message>
         <source>&amp;Grid</source>
@@ -5049,7 +5049,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>Left</source>
-        <translation>أيسر</translation>
+        <translation>Left</translation>
     </message>
     <message>
         <source>Top crosshair with isometric grid</source>
@@ -5057,7 +5057,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>Top</source>
-        <translation>علوي</translation>
+        <translation>Top</translation>
     </message>
     <message>
         <source>Right crosshair with isometric grid</source>
@@ -5472,7 +5472,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>All</source>
-        <translation>الكل</translation>
+        <translation>All</translation>
     </message>
     <message>
         <source>Scrollbars</source>
@@ -5958,7 +5958,7 @@ so default step value required for baking</source>
     <name>QG_DlgText</name>
     <message>
         <source>Text</source>
-        <translation>النص</translation>
+        <translation>Text</translation>
     </message>
     <message>
         <source>Text:</source>
@@ -5978,11 +5978,11 @@ so default step value required for baking</source>
     </message>
     <message>
         <source>Cut</source>
-        <translation>قص</translation>
+        <translation>Cut</translation>
     </message>
     <message>
         <source>Copy</source>
-        <translation>نسخ</translation>
+        <translation>Copy</translation>
     </message>
     <message>
         <source>Paste</source>
@@ -6574,7 +6574,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <source>Fit</source>
-        <translation>ملائم</translation>
+        <translation>Fit</translation>
     </message>
     <message>
         <source>Diameter (⌀)</source>
@@ -6720,7 +6720,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <source>auto</source>
-        <translation>تلقائي</translation>
+        <translation>auto</translation>
     </message>
     <message>
         <source>Colouring</source>
@@ -6920,7 +6920,7 @@ The contents of a Construction Layer should not appear in printout.</source>
     </message>
     <message>
         <source>Dot</source>
-        <translation>نقطي</translation>
+        <translation>Dot</translation>
     </message>
     <message>
         <source>Dot (small)</source>
@@ -6932,7 +6932,7 @@ The contents of a Construction Layer should not appear in printout.</source>
     </message>
     <message>
         <source>Dash</source>
-        <translation>شرطة</translation>
+        <translation>Dash</translation>
     </message>
     <message>
         <source>Dash (small)</source>
@@ -7031,7 +7031,7 @@ The contents of a Construction Layer should not appear in printout.</source>
     </message>
     <message>
         <source>Left</source>
-        <translation>يسار</translation>
+        <translation>Left</translation>
     </message>
     <message>
         <source>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
@@ -7110,7 +7110,7 @@ p, li { white-space: pre-wrap; }
     <name>QG_SnapToolBar</name>
     <message>
         <source>Snap</source>
-        <translation>وثب</translation>
+        <translation>Snap</translation>
     </message>
     <message>
         <source>Snap to Endpoints</source>
@@ -7241,7 +7241,7 @@ p, li { white-space: pre-wrap; }
     <name>QG_WidgetPen</name>
     <message>
         <source>Pen</source>
-        <translation>القلم</translation>
+        <translation>Pen</translation>
     </message>
     <message>
         <source>Line type:</source>
@@ -7617,15 +7617,15 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Inch</source>
-        <translation>بوصة</translation>
+        <translation>Inch</translation>
     </message>
     <message>
         <source>Foot</source>
-        <translation>قدم</translation>
+        <translation>Foot</translation>
     </message>
     <message>
         <source>Mile</source>
-        <translation>ميل</translation>
+        <translation>Mile</translation>
     </message>
     <message>
         <source>Millimeter</source>
@@ -7649,11 +7649,11 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Mil</source>
-        <translation>ميل</translation>
+        <translation>Mil</translation>
     </message>
     <message>
         <source>Yard</source>
-        <translation>ياردة</translation>
+        <translation>Yard</translation>
     </message>
     <message>
         <source>Angstrom</source>
@@ -7868,7 +7868,7 @@ Do you want to replace it?</source>
     <message>
         <source>line</source>
         <comment>draw line</comment>
-        <translation>خط</translation>
+        <translation>line</translation>
     </message>
     <message>
         <source>li</source>
@@ -7893,7 +7893,7 @@ Do you want to replace it?</source>
     <message>
         <source>free</source>
         <comment>draw freehand line</comment>
-        <translation>حر</translation>
+        <translation>free</translation>
     </message>
     <message>
         <source>fhl</source>
@@ -7948,7 +7948,7 @@ Do you want to replace it?</source>
     <message>
         <source>rect</source>
         <comment>draw rectangle</comment>
-        <translation>مستطيل</translation>
+        <translation>rect</translation>
     </message>
     <message>
         <source>polygon2v</source>
@@ -8023,12 +8023,12 @@ Do you want to replace it?</source>
     <message>
         <source>mtxt</source>
         <comment>draw mtext</comment>
-        <translation>نص متعدد</translation>
+        <translation>mtxt</translation>
     </message>
     <message>
         <source>text</source>
         <comment>draw text</comment>
-        <translation>نص</translation>
+        <translation>text</translation>
     </message>
     <message>
         <source>txt</source>
@@ -8098,7 +8098,7 @@ Do you want to replace it?</source>
     <message>
         <source>kill</source>
         <comment>kill all actions</comment>
-        <translation>إنهاء</translation>
+        <translation>kill</translation>
     </message>
     <message>
         <source>k</source>
@@ -8108,7 +8108,7 @@ Do you want to replace it?</source>
     <message>
         <source>undo</source>
         <comment>undo cycle</comment>
-        <translation>تراجع</translation>
+        <translation>undo</translation>
     </message>
     <message>
         <source>u</source>
@@ -8118,7 +8118,7 @@ Do you want to replace it?</source>
     <message>
         <source>redo</source>
         <comment>redo cycle</comment>
-        <translation>إعادة</translation>
+        <translation>redo</translation>
     </message>
     <message>
         <source>r</source>
@@ -8148,7 +8148,7 @@ Do you want to replace it?</source>
     <message>
         <source>dv</source>
         <comment>dimension - vertical</comment>
-        <translation>عمودي</translation>
+        <translation>dv</translation>
     </message>
     <message>
         <source>dimlinear</source>
@@ -8158,7 +8158,7 @@ Do you want to replace it?</source>
     <message>
         <source>dl</source>
         <comment>dimension - linear</comment>
-        <translation>خطي</translation>
+        <translation>dl</translation>
     </message>
     <message>
         <source>dimangular</source>
@@ -8168,7 +8168,7 @@ Do you want to replace it?</source>
     <message>
         <source>dan</source>
         <comment>dimension - angular</comment>
-        <translation>زاوي</translation>
+        <translation>dan</translation>
     </message>
     <message>
         <source>dimradial</source>
@@ -8188,7 +8188,7 @@ Do you want to replace it?</source>
     <message>
         <source>dd</source>
         <comment>dimension - diametric</comment>
-        <translation>قطري</translation>
+        <translation>dd</translation>
     </message>
     <message>
         <source>dimleader</source>
@@ -8268,7 +8268,7 @@ Do you want to replace it?</source>
     <message>
         <source>cut</source>
         <comment>modify - divide (cut)</comment>
-        <translation>قص</translation>
+        <translation>cut</translation>
     </message>
     <message>
         <source>div</source>
@@ -8323,7 +8323,7 @@ Do you want to replace it?</source>
     <message>
         <source>del</source>
         <comment>modify - delete (erase)</comment>
-        <translation>حذف</translation>
+        <translation>del</translation>
     </message>
     <message>
         <source>xp</source>
@@ -8338,7 +8338,7 @@ Do you want to replace it?</source>
     <message>
         <source>os</source>
         <comment>snap - free</comment>
-        <translation>نظام التشغيل</translation>
+        <translation>os</translation>
     </message>
     <message>
         <source>snapcenter</source>
@@ -8348,7 +8348,7 @@ Do you want to replace it?</source>
     <message>
         <source>sc</source>
         <comment>snap - center</comment>
-        <translation>المركز</translation>
+        <translation>sc</translation>
     </message>
     <message>
         <source>snapdist</source>
@@ -8358,7 +8358,7 @@ Do you want to replace it?</source>
     <message>
         <source>sd</source>
         <comment>snap - distance to endpoints</comment>
-        <translation>مسافة الالتقاط</translation>
+        <translation>sd</translation>
     </message>
     <message>
         <source>snapend</source>
@@ -8368,7 +8368,7 @@ Do you want to replace it?</source>
     <message>
         <source>se</source>
         <comment>snap - end points</comment>
-        <translation>نهاية الالتقاط</translation>
+        <translation>se</translation>
     </message>
     <message>
         <source>snapgrid</source>
@@ -8378,7 +8378,7 @@ Do you want to replace it?</source>
     <message>
         <source>sg</source>
         <comment>snap - grid</comment>
-        <translation>الشبكة</translation>
+        <translation>sg</translation>
     </message>
     <message>
         <source>snapintersection</source>
@@ -8388,7 +8388,7 @@ Do you want to replace it?</source>
     <message>
         <source>si</source>
         <comment>snap - intersection</comment>
-        <translation>التقاط التقاطع</translation>
+        <translation>si</translation>
     </message>
     <message>
         <source>snapmiddle</source>
@@ -8448,7 +8448,7 @@ Do you want to replace it?</source>
     <message>
         <source>attr</source>
         <comment>modify attribute</comment>
-        <translation>خاصية</translation>
+        <translation>attr</translation>
     </message>
     <message>
         <source>ma</source>
@@ -8458,12 +8458,12 @@ Do you want to replace it?</source>
     <message>
         <source>prop</source>
         <comment>modify properties</comment>
-        <translation>خاصية</translation>
+        <translation>prop</translation>
     </message>
     <message>
         <source>dist</source>
         <comment>distance point to point</comment>
-        <translation>المسافة</translation>
+        <translation>dist</translation>
     </message>
     <message>
         <source>dpp</source>
@@ -8473,7 +8473,7 @@ Do you want to replace it?</source>
     <message>
         <source>ang</source>
         <comment>measure angle</comment>
-        <translation>زاوية</translation>
+        <translation>ang</translation>
     </message>
     <message>
         <source>angle</source>
@@ -8481,7 +8481,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>dpi</source>
-        <translation>DPI</translation>
+        <translation>dpi</translation>
     </message>
     <message>
         <source>close</source>
@@ -8517,7 +8517,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>rows</source>
-        <translation>الصفوف</translation>
+        <translation>rows</translation>
     </message>
     <message>
         <source>rowspacing</source>
@@ -8529,17 +8529,17 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>trim</source>
-        <translation>اقتصاص</translation>
+        <translation>trim</translation>
     </message>
     <message>
         <source>ang</source>
         <comment>angle</comment>
-        <translation>زاوية</translation>
+        <translation>ang</translation>
     </message>
     <message>
         <source>an</source>
         <comment>angle</comment>
-        <translation>أن</translation>
+        <translation>an</translation>
     </message>
     <message>
         <source>center</source>
@@ -8548,32 +8548,32 @@ Do you want to replace it?</source>
     <message>
         <source>cen</source>
         <comment>center</comment>
-        <translation>مركز</translation>
+        <translation>cen</translation>
     </message>
     <message>
         <source>ce</source>
         <comment>center</comment>
-        <translation>توسيط</translation>
+        <translation>ce</translation>
     </message>
     <message>
         <source>cl</source>
         <comment>chord length</comment>
-        <translation>عمود</translation>
+        <translation>cl</translation>
     </message>
     <message>
         <source>c</source>
         <comment>close</comment>
-        <translation>عمود</translation>
+        <translation>c</translation>
     </message>
     <message>
         <source>cols</source>
         <comment>columns</comment>
-        <translation>أعمدة</translation>
+        <translation>cols</translation>
     </message>
     <message>
         <source>co</source>
         <comment>columns</comment>
-        <translation>عمود</translation>
+        <translation>co</translation>
     </message>
     <message>
         <source>columnspacing</source>
@@ -8593,7 +8593,7 @@ Do you want to replace it?</source>
     <message>
         <source>fact</source>
         <comment>factor</comment>
-        <translation>حقيقة</translation>
+        <translation>fact</translation>
     </message>
     <message>
         <source>f</source>
@@ -8602,7 +8602,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>help</source>
-        <translation>مساعدة</translation>
+        <translation>help</translation>
     </message>
     <message>
         <source>?</source>
@@ -8662,17 +8662,17 @@ Do you want to replace it?</source>
     <message>
         <source>num</source>
         <comment>number</comment>
-        <translation>رقم</translation>
+        <translation>num</translation>
     </message>
     <message>
         <source>n</source>
         <comment>number</comment>
-        <translation>ن</translation>
+        <translation>n</translation>
     </message>
     <message>
         <source>ra</source>
         <comment>radius</comment>
-        <translation>مقلوب</translation>
+        <translation>ra</translation>
     </message>
     <message>
         <source>reversed</source>
@@ -8682,12 +8682,12 @@ Do you want to replace it?</source>
     <message>
         <source>rev</source>
         <comment>reversed</comment>
-        <translation>عكس</translation>
+        <translation>rev</translation>
     </message>
     <message>
         <source>row</source>
         <comment>row</comment>
-        <translation>صف</translation>
+        <translation>row</translation>
     </message>
     <message>
         <source>rowspacing</source>
@@ -8697,11 +8697,11 @@ Do you want to replace it?</source>
     <message>
         <source>rs</source>
         <comment>rowspacing for inserts</comment>
-        <translation>تباعد الصف</translation>
+        <translation>rs</translation>
     </message>
     <message>
         <source>text</source>
-        <translation>نص</translation>
+        <translation>text</translation>
     </message>
     <message>
         <source>t</source>
@@ -8715,7 +8715,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>undo</source>
-        <translation>تراجع</translation>
+        <translation>undo</translation>
     </message>
     <message>
         <source>u</source>
@@ -8724,21 +8724,21 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>redo</source>
-        <translation>إعادة</translation>
+        <translation>redo</translation>
     </message>
     <message>
         <source>r</source>
         <comment>redo</comment>
-        <translation>ر</translation>
+        <translation>r</translation>
     </message>
     <message>
         <source>back</source>
-        <translation>رجوع</translation>
+        <translation>back</translation>
     </message>
     <message>
         <source>b</source>
         <comment>back</comment>
-        <translation>ب</translation>
+        <translation>b</translation>
     </message>
     <message>
         <source>paperoffset</source>
@@ -8771,7 +8771,7 @@ Do you want to replace it?</source>
     <message>
         <source>None</source>
         <comment>unknown length unit</comment>
-        <translation>لا شيء</translation>
+        <translation>None</translation>
     </message>
     <message>
         <source>error reading file metadata in dwg file</source>
@@ -8822,7 +8822,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Edit</source>
-        <translation>تحرير</translation>
+        <translation>Edit</translation>
     </message>
     <message>
         <source>Ellipse</source>
@@ -8830,7 +8830,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>File</source>
-        <translation>ملف</translation>
+        <translation>File</translation>
     </message>
     <message>
         <source>Dimension</source>
@@ -8838,7 +8838,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Info</source>
-        <translation>معلومات</translation>
+        <translation>Info</translation>
     </message>
     <message>
         <source>Layer</source>
@@ -8846,7 +8846,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Line</source>
-        <translation>خط</translation>
+        <translation>Line</translation>
     </message>
     <message>
         <source>Modify</source>
@@ -8874,7 +8874,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Snap</source>
-        <translation>تثبيت</translation>
+        <translation>Snap</translation>
     </message>
     <message>
         <source>Snap Extras</source>
@@ -8882,7 +8882,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>View</source>
-        <translation>عرض</translation>
+        <translation>View</translation>
     </message>
     <message>
         <source>Widgets</source>
@@ -8894,7 +8894,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>All</source>
-        <translation>الكل</translation>
+        <translation>All</translation>
     </message>
     <message>
         <source>Invalid objects removed:</source>
@@ -8983,7 +8983,7 @@ Do you want to replace it?</source>
     <message>
         <source>re</source>
         <comment>draw rectangle</comment>
-        <translation>تعبير نمطي</translation>
+        <translation>re</translation>
     </message>
     <message>
         <source>linepar</source>
@@ -8998,12 +8998,12 @@ Do you want to replace it?</source>
     <message>
         <source>pa</source>
         <comment>create parallel</comment>
-        <translation>معامل</translation>
+        <translation>pa</translation>
     </message>
     <message>
         <source>ll</source>
         <comment>create parallel</comment>
-        <translation>طول الخط</translation>
+        <translation>ll</translation>
     </message>
     <message>
         <source>lineparthro</source>
@@ -9013,7 +9013,7 @@ Do you want to replace it?</source>
     <message>
         <source>lp</source>
         <comment>parallel through point</comment>
-        <translation>معامل الخط</translation>
+        <translation>lp</translation>
     </message>
     <message>
         <source>linebisect</source>
@@ -9028,7 +9028,7 @@ Do you want to replace it?</source>
     <message>
         <source>lt</source>
         <comment>tangent point and circle</comment>
-        <translation>نوع الخط</translation>
+        <translation>lt</translation>
     </message>
     <message>
         <source>linetan2c</source>
@@ -9038,7 +9038,7 @@ Do you want to replace it?</source>
     <message>
         <source>lc</source>
         <comment>tangent two circles</comment>
-        <translation>جيب التمام</translation>
+        <translation>lc</translation>
     </message>
     <message>
         <source>linetancper</source>
@@ -9048,7 +9048,7 @@ Do you want to replace it?</source>
     <message>
         <source>or</source>
         <comment>tangent line and circle</comment>
-        <translation>أو</translation>
+        <translation>or</translation>
     </message>
     <message>
         <source>lineperp</source>
@@ -9058,7 +9058,7 @@ Do you want to replace it?</source>
     <message>
         <source>lo</source>
         <comment>perpendicular line</comment>
-        <translation>الأصل المحلي</translation>
+        <translation>lo</translation>
     </message>
     <message>
         <source>linerelang</source>
@@ -9068,7 +9068,7 @@ Do you want to replace it?</source>
     <message>
         <source>lr</source>
         <comment>relative line</comment>
-        <translation>نصف قطر الخط</translation>
+        <translation>lr</translation>
     </message>
     <message>
         <source>polygoncencor</source>
@@ -9078,7 +9078,7 @@ Do you want to replace it?</source>
     <message>
         <source>pp</source>
         <comment>polygon centre point</comment>
-        <translation>نقطة</translation>
+        <translation>pp</translation>
     </message>
     <message>
         <source>polycp</source>
@@ -9088,7 +9088,7 @@ Do you want to replace it?</source>
     <message>
         <source>pcp</source>
         <comment>polygon centre point</comment>
-        <translation>بي سي بي</translation>
+        <translation>pcp</translation>
     </message>
     <message>
         <source>polygoncentan</source>
@@ -9098,7 +9098,7 @@ Do you want to replace it?</source>
     <message>
         <source>pv</source>
         <comment>polygon centre vertex</comment>
-        <translation>بي في</translation>
+        <translation>pv</translation>
     </message>
     <message>
         <source>polyct</source>
@@ -9113,7 +9113,7 @@ Do you want to replace it?</source>
     <message>
         <source>c</source>
         <comment>draw circle</comment>
-        <translation>سي</translation>
+        <translation>c</translation>
     </message>
     <message>
         <source>circle2p</source>
@@ -9133,7 +9133,7 @@ Do you want to replace it?</source>
     <message>
         <source>cc</source>
         <comment>circle 2 points radius</comment>
-        <translation>CC</translation>
+        <translation>cc</translation>
     </message>
     <message>
         <source>circle3p</source>
@@ -9153,12 +9153,12 @@ Do you want to replace it?</source>
     <message>
         <source>cr</source>
         <comment>circle point radius</comment>
-        <translation>CR</translation>
+        <translation>cr</translation>
     </message>
     <message>
         <source>ccr</source>
         <comment>circle point radius</comment>
-        <translation>CCR</translation>
+        <translation>ccr</translation>
     </message>
     <message>
         <source>circletan2cp</source>
@@ -9168,7 +9168,7 @@ Do you want to replace it?</source>
     <message>
         <source>tr</source>
         <comment>circle 2 tangent point</comment>
-        <translation>نقل</translation>
+        <translation>tr</translation>
     </message>
     <message>
         <source>circletan2p</source>
@@ -9178,7 +9178,7 @@ Do you want to replace it?</source>
     <message>
         <source>td</source>
         <comment>circle tangent 2 points</comment>
-        <translation>بيانات النقل</translation>
+        <translation>td</translation>
     </message>
     <message>
         <source>circletan2cr</source>
@@ -9338,7 +9338,7 @@ Do you want to replace it?</source>
     <message>
         <source>pr</source>
         <comment>pl del between nodes</comment>
-        <translation>بي آر</translation>
+        <translation>pr</translation>
     </message>
     <message>
         <source>plinetrm</source>
@@ -9348,7 +9348,7 @@ Do you want to replace it?</source>
     <message>
         <source>pt</source>
         <comment>pl trim segments</comment>
-        <translation>بي تي</translation>
+        <translation>pt</translation>
     </message>
     <message>
         <source>plinepar</source>
@@ -9358,7 +9358,7 @@ Do you want to replace it?</source>
     <message>
         <source>pe</source>
         <comment>pl equidistant</comment>
-        <translation>بي إي</translation>
+        <translation>pe</translation>
     </message>
     <message>
         <source>plinejoin</source>
@@ -9368,12 +9368,12 @@ Do you want to replace it?</source>
     <message>
         <source>pj</source>
         <comment>pl join</comment>
-        <translation>بي جي</translation>
+        <translation>pj</translation>
     </message>
     <message>
         <source>sx</source>
         <comment>deselect all entities</comment>
-        <translation>إس إكس</translation>
+        <translation>sx</translation>
     </message>
     <message>
         <source>invertselect</source>
@@ -9383,7 +9383,7 @@ Do you want to replace it?</source>
     <message>
         <source>is</source>
         <comment>invert select</comment>
-        <translation>هو</translation>
+        <translation>is</translation>
     </message>
     <message>
         <source>ds</source>
@@ -9438,7 +9438,7 @@ Do you want to replace it?</source>
     <message>
         <source>mr</source>
         <comment>modify - move rotate</comment>
-        <translation>تدوير</translation>
+        <translation>mr</translation>
     </message>
     <message>
         <source>mod2rot</source>
@@ -9458,7 +9458,7 @@ Do you want to replace it?</source>
     <message>
         <source>md</source>
         <comment>modify -  revert direction</comment>
-        <translation>وضع التعديل</translation>
+        <translation>md</translation>
     </message>
     <message>
         <source>modtrim</source>
@@ -9548,7 +9548,7 @@ Do you want to replace it?</source>
     <message>
         <source>id</source>
         <comment>distance point to point</comment>
-        <translation>المعرّف</translation>
+        <translation>id</translation>
     </message>
     <message>
         <source>infodistep</source>
@@ -9563,7 +9563,7 @@ Do you want to replace it?</source>
     <message>
         <source>dep</source>
         <comment>distance entity to point</comment>
-        <translation>التبعية</translation>
+        <translation>dep</translation>
     </message>
     <message>
         <source>infoangle</source>
@@ -9642,12 +9642,12 @@ Do you want to replace it?</source>
     <message>
         <source>eqn</source>
         <comment>equation</comment>
-        <translation>المعادلة</translation>
+        <translation>eqn</translation>
     </message>
     <message>
         <source>eq</source>
         <comment>equation</comment>
-        <translation>المساواة</translation>
+        <translation>eq</translation>
     </message>
     <message>
         <source>Custom</source>
@@ -10135,7 +10135,7 @@ Do you want to replace it?</source>
     <message>
         <source>sll</source>
         <comment>slice/divide line</comment>
-        <translation>SLL</translation>
+        <translation>sll</translation>
     </message>
     <message>
         <source>slicec</source>
@@ -10145,12 +10145,12 @@ Do you want to replace it?</source>
     <message>
         <source>slc</source>
         <comment>slice/divide circle/arc</comment>
-        <translation>SLC</translation>
+        <translation>slc</translation>
     </message>
     <message>
         <source>star</source>
         <comment>draw star</comment>
-        <translation>نجمة</translation>
+        <translation>star</translation>
     </message>
     <message>
         <source>st</source>
@@ -10260,7 +10260,7 @@ Do you want to replace it?</source>
     <message>
         <source>rort</source>
         <comment>draw orthogonal</comment>
-        <translation>دوران</translation>
+        <translation>rort</translation>
     </message>
     <message>
         <source>point2line</source>
@@ -10289,11 +10289,11 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>x</source>
-        <translation>س</translation>
+        <translation>x</translation>
     </message>
     <message>
         <source>y</source>
-        <translation>ص</translation>
+        <translation>y</translation>
     </message>
     <message>
         <source>p</source>
@@ -10329,11 +10329,11 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>pos</source>
-        <translation>الموضع</translation>
+        <translation>pos</translation>
     </message>
     <message>
         <source>size</source>
-        <translation>الحجم</translation>
+        <translation>size</translation>
     </message>
     <message>
         <source>bevels</source>
@@ -10353,7 +10353,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>str</source>
-        <translation>النص</translation>
+        <translation>str</translation>
     </message>
     <message>
         <source>round</source>
@@ -10365,19 +10365,19 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>topl</source>
-        <translation>أعلى</translation>
+        <translation>topl</translation>
     </message>
     <message>
         <source>top</source>
-        <translation>أعلى</translation>
+        <translation>top</translation>
     </message>
     <message>
         <source>topr</source>
-        <translation>أعلى</translation>
+        <translation>topr</translation>
     </message>
     <message>
         <source>left</source>
-        <translation>يسار</translation>
+        <translation>left</translation>
     </message>
     <message>
         <source>middle</source>
@@ -10417,11 +10417,11 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>hor</source>
-        <translation>أفقي</translation>
+        <translation>hor</translation>
     </message>
     <message>
         <source>vert</source>
-        <translation>عمودي</translation>
+        <translation>vert</translation>
     </message>
     <message>
         <source>snap2</source>
@@ -10441,7 +10441,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>quad</source>
-        <translation>رباعي</translation>
+        <translation>quad</translation>
     </message>
     <message>
         <source>noquad</source>
@@ -10473,19 +10473,19 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>end</source>
-        <translation>النهاية</translation>
+        <translation>end</translation>
     </message>
     <message>
         <source>both</source>
-        <translation>كلاهما</translation>
+        <translation>both</translation>
     </message>
     <message>
         <source>none</source>
-        <translation>لا شيء</translation>
+        <translation>none</translation>
     </message>
     <message>
         <source>fit</source>
-        <translation>ملائمة</translation>
+        <translation>fit</translation>
     </message>
     <message>
         <source>nofit</source>
@@ -10505,7 +10505,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>sym</source>
-        <translation>الرمز</translation>
+        <translation>sym</translation>
     </message>
     <message>
         <source>nosym</source>
@@ -10542,7 +10542,7 @@ Do you want to replace it?</source>
     <message>
         <source>cal </source>
         <comment>command to trigger cli calculator</comment>
-        <translation>حساب</translation>
+        <translation>cal</translation>
     </message>
     <message>
         <source>calculate </source>
@@ -10745,7 +10745,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>رجوع</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -10764,7 +10764,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>رجوع</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify dimension line location</source>
@@ -10864,7 +10864,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>رجوع</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify dimension line location</source>
@@ -10930,7 +10930,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>رجوع</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify start angle:</source>
@@ -10965,7 +10965,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>رجوع</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify endpoint</source>
@@ -10992,7 +10992,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>رجوع</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify end point</source>
@@ -11015,7 +11015,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>رجوع</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify point on circle</source>
@@ -11042,7 +11042,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>رجوع</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -11065,7 +11065,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>رجوع</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify third point</source>
@@ -11092,7 +11092,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>رجوع</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>radius=%1 is invalid (expression)</source>
@@ -11123,7 +11123,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>رجوع</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify the third line</source>
@@ -11142,7 +11142,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>رجوع</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify the second point on the tangent circle</source>
@@ -11173,7 +11173,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>رجوع</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Select the center of the tangent circle</source>
@@ -11216,7 +11216,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>رجوع</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify a point on the tangent circle</source>
@@ -11235,7 +11235,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>رجوع</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Select the center of the tangent circle</source>
@@ -11270,7 +11270,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>رجوع</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify the third point on ellipse</source>
@@ -11305,7 +11305,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>رجوع</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify endpoint or length of minor axis:</source>
@@ -11340,7 +11340,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>رجوع</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify the third point on ellipse</source>
@@ -11367,7 +11367,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>رجوع</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify a point on ellipse or total distance to foci</source>
@@ -11398,7 +11398,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>رجوع</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify the third line</source>
@@ -11495,7 +11495,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>رجوع</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify next point</source>
@@ -11534,7 +11534,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>رجوع</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Enter length:</source>
@@ -11561,7 +11561,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>رجوع</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Enter bisector length:</source>
@@ -11604,7 +11604,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>رجوع</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -11623,7 +11623,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>رجوع</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -11665,7 +11665,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>رجوع</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Number:</source>
@@ -11726,7 +11726,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>رجوع</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Number:</source>
@@ -11757,7 +11757,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>رجوع</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -11780,7 +11780,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>رجوع</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -11799,7 +11799,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>رجوع</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -11810,7 +11810,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>رجوع</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Select first circle/ellipse/parabola</source>
@@ -11841,7 +11841,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>رجوع</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -11871,7 +11871,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>رجوع</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify next point</source>
@@ -11938,7 +11938,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>رجوع</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify next control point</source>
@@ -11965,7 +11965,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>رجوع</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify second point</source>
@@ -12025,7 +12025,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>رجوع</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Angle: %1</source>
@@ -12079,7 +12079,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>رجوع</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Distance: %1 Cartesian: (%2 , %3), Polar: (%4&lt;%5)</source>
@@ -12106,7 +12106,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>رجوع</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -12201,7 +12201,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>رجوع</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Enter length 1:</source>
@@ -12240,7 +12240,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>رجوع</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Entity must be a line, arc, circle, ellipse or interpolation spline.</source>
@@ -12263,7 +12263,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>رجوع</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Entities not in the same polyline.</source>
@@ -12336,7 +12336,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>رجوع</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -12355,7 +12355,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>رجوع</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Invalid number of copies, use %1 </source>
@@ -12382,7 +12382,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>رجوع</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Enter rotation angle:</source>
@@ -12397,7 +12397,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>رجوع</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -12408,7 +12408,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>رجوع</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify rotation center</source>
@@ -12435,7 +12435,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>رجوع</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -12446,7 +12446,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>رجوع</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify second entity</source>
@@ -12500,7 +12500,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>رجوع</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify reference point</source>
@@ -12527,7 +12527,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>رجوع</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Select second trim entity</source>
@@ -12562,7 +12562,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>رجوع</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -12612,7 +12612,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>رجوع</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -12643,7 +12643,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>رجوع</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify next point</source>
@@ -12682,7 +12682,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>رجوع</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Deleting point is invalid.</source>
@@ -12721,7 +12721,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>رجوع</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify second node</source>
@@ -12806,7 +12806,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>رجوع</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify second segment</source>
@@ -12962,7 +12962,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>رجوع</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -12977,7 +12977,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>رجوع</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Click and drag for the selection window</source>
@@ -13011,7 +13011,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>رجوع</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Select second entity</source>
@@ -13060,7 +13060,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>رجوع</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -13129,7 +13129,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Trim</source>
-        <translation>قص</translation>
+        <translation>Trim</translation>
     </message>
     <message>
         <source>Length 1:</source>
@@ -13357,7 +13357,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>End</source>
-        <translation>نهاية</translation>
+        <translation>End</translation>
     </message>
 </context>
 <context>
@@ -13403,7 +13403,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Undo</source>
-        <translation>تراجع</translation>
+        <translation>Undo</translation>
     </message>
     <message>
         <source>Redo the last line drawing</source>
@@ -13411,7 +13411,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Redo</source>
-        <translation>إعادة</translation>
+        <translation>Redo</translation>
     </message>
 </context>
 <context>
@@ -13442,7 +13442,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Rel</source>
-        <translation>نسبي</translation>
+        <translation>Rel</translation>
     </message>
     <message>
         <source>Undo the last line drawing</source>
@@ -13450,7 +13450,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Undo</source>
-        <translation>تراجع</translation>
+        <translation>Undo</translation>
     </message>
     <message>
         <source>Form a closed contour from lines drawn</source>
@@ -13466,7 +13466,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Redo</source>
-        <translation>إعادة</translation>
+        <translation>Redo</translation>
     </message>
     <message>
         <source>Point</source>
@@ -13617,11 +13617,11 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Undo</source>
-        <translation>تراجع</translation>
+        <translation>Undo</translation>
     </message>
     <message>
         <source>Line</source>
-        <translation>خط</translation>
+        <translation>Line</translation>
     </message>
     <message>
         <source>Tangential</source>
@@ -13703,7 +13703,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Trim</source>
-        <translation>قص</translation>
+        <translation>Trim</translation>
     </message>
     <message>
         <source>Radius:</source>
@@ -13752,7 +13752,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Undo</source>
-        <translation>تراجع</translation>
+        <translation>Undo</translation>
     </message>
 </context>
 <context>
@@ -13809,7 +13809,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Name</source>
-        <translation>الاسم</translation>
+        <translation>Name</translation>
     </message>
     <message>
         <source>Create</source>

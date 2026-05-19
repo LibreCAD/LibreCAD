@@ -34,7 +34,7 @@
   <message>
    <location filename="../src/ui/components/comboboxes/comboboxoption.ui" line="41" />
    <source>Set</source>
-   <translation>Подеси</translation>
+   <translation>Set</translation>
   </message>
  </context>
  <context>
@@ -267,7 +267,7 @@
   <message>
    <location filename="../src/ui/action_options/curve/lc_actiondrawarc2poptions.ui" line="14" />
    <source>Form</source>
-   <translation>Oblik</translation>
+   <translation>Form</translation>
   </message>
   <message>
    <location filename="../src/ui/action_options/curve/lc_actiondrawarc2poptions.ui" line="44" />
@@ -746,7 +746,7 @@ ili [%2]</translation>
    <location filename="../src/actions/drawing/draw/point/lc_actiondrawlinepoints.cpp" line="537" />
    <location filename="../src/actions/drawing/draw/point/lc_actiondrawlinepoints.cpp" line="542" />
    <source>Back</source>
-   <translation>Nazad</translation>
+   <translation>Back</translation>
   </message>
   <message>
    <location filename="../src/actions/drawing/draw/point/lc_actiondrawlinepoints.cpp" line="537" />
@@ -876,13 +876,13 @@ ili [%2]</translation>
    <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="128" />
    <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="495" />
    <source>Y</source>
-   <translation>Да</translation>
+   <translation>Y</translation>
   </message>
   <message>
    <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="134" />
    <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="491" />
    <source>X</source>
-   <translation>Не</translation>
+   <translation>X</translation>
   </message>
   <message>
    <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="153" />
@@ -1184,12 +1184,12 @@ ili [%2]</translation>
   <message>
    <location filename="../src/actions/drawing/draw/line/lc_actiondrawslicedivide.cpp" line="212" />
    <source>Line</source>
-   <translation>Linija</translation>
+   <translation>Line</translation>
   </message>
   <message>
    <location filename="../src/actions/drawing/draw/line/lc_actiondrawslicedivide.cpp" line="222" />
    <source>Arc</source>
-   <translation>Luk</translation>
+   <translation>Arc</translation>
   </message>
   <message>
    <location filename="../src/actions/drawing/draw/line/lc_actiondrawslicedivide.cpp" line="232" />
@@ -1222,7 +1222,7 @@ ili [%2]</translation>
   <message>
    <location filename="../src/actions/drawing/draw/spline/lc_actiondrawsplinepoints.cpp" line="231" />
    <source>Back</source>
-   <translation>Nazad</translation>
+   <translation>Back</translation>
   </message>
   <message>
    <location filename="../src/actions/drawing/draw/spline/lc_actiondrawsplinepoints.cpp" line="233" />
@@ -1322,7 +1322,7 @@ ili [%2]</translation>
   <message>
    <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="55" />
    <source>Arc</source>
-   <translation>Лук</translation>
+   <translation>Arc</translation>
   </message>
   <message>
    <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="55" />
@@ -1342,7 +1342,7 @@ ili [%2]</translation>
   <message>
    <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="57" />
    <source>Edit</source>
-   <translation>Уреди</translation>
+   <translation>Edit</translation>
   </message>
   <message>
    <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="57" />
@@ -1362,7 +1362,7 @@ ili [%2]</translation>
   <message>
    <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="59" />
    <source>File</source>
-   <translation>Датотека</translation>
+   <translation>File</translation>
   </message>
   <message>
    <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="59" />
@@ -1382,7 +1382,7 @@ ili [%2]</translation>
   <message>
    <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="61" />
    <source>Info</source>
-   <translation>Информације</translation>
+   <translation>Info</translation>
   </message>
   <message>
    <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="61" />
@@ -1402,7 +1402,7 @@ ili [%2]</translation>
   <message>
    <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="63" />
    <source>Line</source>
-   <translation>Линија</translation>
+   <translation>Line</translation>
   </message>
   <message>
    <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="63" />
@@ -1508,7 +1508,7 @@ ili [%2]</translation>
    <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="74" />
    <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="420" />
    <source>Snap</source>
-   <translation>„Snapping“</translation>
+   <translation>Snap</translation>
   </message>
   <message>
    <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="74" />
@@ -1528,7 +1528,7 @@ ili [%2]</translation>
   <message>
    <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="76" />
    <source>View</source>
-   <translation>Prikaži</translation>
+   <translation>View</translation>
   </message>
   <message>
    <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="76" />
@@ -1663,7 +1663,7 @@ ili [%2]</translation>
   <message>
    <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="191" />
    <source>Star</source>
-   <translation>Zvezda</translation>
+   <translation>Star</translation>
   </message>
   <message>
    <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="192" />
@@ -2875,7 +2875,7 @@ ili [%2]</translation>
   <message>
    <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="608" />
    <source>Left</source>
-   <translation>Levo</translation>
+   <translation>Left</translation>
   </message>
   <message>
    <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="609" />
@@ -2885,7 +2885,7 @@ ili [%2]</translation>
   <message>
    <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="610" />
    <source>Top</source>
-   <translation>Gore</translation>
+   <translation>Top</translation>
   </message>
   <message>
    <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="611" />
@@ -4275,7 +4275,7 @@ End Edge Point: (%9 , %10)</source>
   <message>
    <location filename="../src/ui/dialogs/settings/shortcuts/lc_actionsshortcutsdialog.ui" line="79" />
    <source>For</source>
-   <translation>За</translation>
+   <translation>For</translation>
   </message>
   <message>
    <location filename="../src/ui/dialogs/settings/shortcuts/lc_actionsshortcutsdialog.ui" line="86" />
@@ -4290,7 +4290,7 @@ End Edge Point: (%9 , %10)</source>
   <message>
    <location filename="../src/ui/dialogs/settings/shortcuts/lc_actionsshortcutsdialog.ui" line="100" />
    <source>name</source>
-   <translation>име</translation>
+   <translation>name</translation>
   </message>
   <message>
    <location filename="../src/ui/dialogs/settings/shortcuts/lc_actionsshortcutsdialog.ui" line="135" />
@@ -4446,7 +4446,7 @@ Are you sure you are going to discard changes?</source>
   <message>
    <location filename="../src/ui/components/status_bar/lc_anglesbasiswidget.ui" line="14" />
    <source>Form</source>
-   <translation>Формат</translation>
+   <translation>Form</translation>
   </message>
   <message>
    <location filename="../src/ui/components/status_bar/lc_anglesbasiswidget.ui" line="77" />
@@ -4535,7 +4535,7 @@ Are you sure you are going to discard changes?</source>
   <message>
    <location filename="../src/ui/dialogs/entity/lc_arcpropertieseditingwidget.ui" line="14" />
    <source>Form</source>
-   <translation>Форма</translation>
+   <translation>Form</translation>
   </message>
   <message>
    <location filename="../src/ui/dialogs/entity/lc_arcpropertieseditingwidget.ui" line="47" />
@@ -4684,7 +4684,7 @@ Are you sure you are going to discard changes?</source>
   <message>
    <location filename="../src/ui/action_options/circle/lc_circlebyarcoptions.ui" line="14" />
    <source>Form</source>
-   <translation>Oblik</translation>
+   <translation>Form</translation>
   </message>
   <message>
    <location filename="../src/ui/action_options/circle/lc_circlebyarcoptions.ui" line="32" />
@@ -4767,7 +4767,7 @@ Are you sure you are going to discard changes?</source>
   <message>
    <location filename="../src/ui/dialogs/entity/lc_circlepropertieseditingwidget.ui" line="14" />
    <source>Form</source>
-   <translation>Форма</translation>
+   <translation>Form</translation>
   </message>
   <message>
    <location filename="../src/ui/dialogs/entity/lc_circlepropertieseditingwidget.ui" line="41" />
@@ -4844,12 +4844,12 @@ Are you sure you are going to discard changes?</source>
   <message>
    <location filename="../src/ui/action_options/misc/lc_crossoptions.ui" line="20" />
    <source>Form</source>
-   <translation>Форма</translation>
+   <translation>Form</translation>
   </message>
   <message>
    <location filename="../src/ui/action_options/misc/lc_crossoptions.ui" line="38" />
    <source>Type</source>
-   <translation>Тип</translation>
+   <translation>Type</translation>
   </message>
   <message>
    <location filename="../src/ui/action_options/misc/lc_crossoptions.ui" line="63" />
@@ -4922,7 +4922,7 @@ Are you sure you are going to discard changes?</source>
   <message>
    <location filename="../src/ui/dialogs/settings/options_device/lc_deviceoptions.ui" line="14" />
    <source>Form</source>
-   <translation>Oblik</translation>
+   <translation>Form</translation>
   </message>
   <message>
    <location filename="../src/ui/dialogs/settings/options_device/lc_deviceoptions.ui" line="20" />
@@ -4937,7 +4937,7 @@ Are you sure you are going to discard changes?</source>
   <message>
    <location filename="../src/ui/dialogs/settings/options_device/lc_deviceoptions.ui" line="56" />
    <source>Save</source>
-   <translation>Sačuvaj</translation>
+   <translation>Save</translation>
   </message>
  </context>
  <context>
@@ -4950,7 +4950,7 @@ Are you sure you are going to discard changes?</source>
   <message>
    <location filename="../src/lib/engine/document/dimstyles/lc_dimarrowregistry.cpp" line="205" />
    <source>Dot</source>
-   <translation>Tačka</translation>
+   <translation>Dot</translation>
   </message>
   <message>
    <location filename="../src/lib/engine/document/dimstyles/lc_dimarrowregistry.cpp" line="206" />
@@ -4975,7 +4975,7 @@ Are you sure you are going to discard changes?</source>
   <message>
    <location filename="../src/lib/engine/document/dimstyles/lc_dimarrowregistry.cpp" line="210" />
    <source>Open</source>
-   <translation>Отворен</translation>
+   <translation>Open</translation>
   </message>
   <message>
    <location filename="../src/lib/engine/document/dimstyles/lc_dimarrowregistry.cpp" line="211" />
@@ -5000,7 +5000,7 @@ Are you sure you are going to discard changes?</source>
   <message>
    <location filename="../src/lib/engine/document/dimstyles/lc_dimarrowregistry.cpp" line="215" />
    <source>None</source>
-   <translation>Ништа</translation>
+   <translation>None</translation>
   </message>
   <message>
    <location filename="../src/lib/engine/document/dimstyles/lc_dimarrowregistry.cpp" line="216" />
@@ -5081,7 +5081,7 @@ Are you sure you are going to discard changes?</source>
   <message>
    <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/support/lc_dimstylepreviewpanel.ui" line="14" />
    <source>Form</source>
-   <translation>Форма</translation>
+   <translation>Form</translation>
   </message>
   <message>
    <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/support/lc_dimstylepreviewpanel.ui" line="35" />
@@ -5599,7 +5599,7 @@ Are you sure you are going to discard changes?</source>
    <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="672" />
    <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2063" />
    <source>None</source>
-   <translation>Ништа</translation>
+   <translation>None</translation>
   </message>
   <message>
    <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="640" />
@@ -5639,7 +5639,7 @@ Are you sure you are going to discard changes?</source>
   <message>
    <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="682" />
    <source>Mark</source>
-   <translation>Ознака</translation>
+   <translation>Mark</translation>
   </message>
   <message>
    <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="689" />
@@ -5649,7 +5649,7 @@ Are you sure you are going to discard changes?</source>
   <message>
    <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="692" />
    <source>Line</source>
-   <translation>Линија</translation>
+   <translation>Line</translation>
   </message>
   <message>
    <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="699" />
@@ -5665,7 +5665,7 @@ Are you sure you are going to discard changes?</source>
    <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="746" />
    <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1293" />
    <source>Text</source>
-   <translation>Текст</translation>
+   <translation>Text</translation>
   </message>
   <message>
    <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="758" />
@@ -5893,7 +5893,7 @@ Are you sure you are going to discard changes?</source>
   <message>
    <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1086" />
    <source>Fit</source>
-   <translation>Прилагоди</translation>
+   <translation>Fit</translation>
   </message>
   <message>
    <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1092" />
@@ -6458,7 +6458,7 @@ Are you sure you are going to discard changes?</source>
   <message>
    <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2095" />
    <source>Top</source>
-   <translation>Gore</translation>
+   <translation>Top</translation>
   </message>
   <message>
    <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2100" />
@@ -6721,7 +6721,7 @@ Are you sure you are going to discard changes?</source>
   <message>
    <location filename="../src/ui/dialogs/entity/lc_dlgdimension.ui" line="499" />
    <source>Flip</source>
-   <translation>Окрени</translation>
+   <translation>Flip</translation>
   </message>
   <message>
    <location filename="../src/ui/dialogs/entity/lc_dlgdimension.ui" line="505" />
@@ -6781,7 +6781,7 @@ Are you sure you are going to discard changes?</source>
   <message>
    <location filename="../src/ui/dialogs/entity/lc_dlgdimension.cpp" line="204" />
    <source>Pen</source>
-   <translation>Оловка</translation>
+   <translation>Pen</translation>
   </message>
   <message>
    <location filename="../src/ui/dialogs/entity/lc_dlgdimension.cpp" line="404" />
@@ -6869,12 +6869,12 @@ Are you sure you are going to discard changes?</source>
   <message>
    <location filename="../src/ui/dialogs/entity/lc_dlgdimension.cpp" line="657" />
    <source>YES</source>
-   <translation>DA</translation>
+   <translation>YES</translation>
   </message>
   <message>
    <location filename="../src/ui/dialogs/entity/lc_dlgdimension.cpp" line="664" />
    <source>No</source>
-   <translation>NE</translation>
+   <translation>No</translation>
   </message>
  </context>
  <context>
@@ -6907,7 +6907,7 @@ Are you sure you are going to discard changes?</source>
   <message>
    <location filename="../src/ui/dialogs/entity/lc_dlgentityproperties.cpp" line="143" />
    <source>Pen</source>
-   <translation>Оловка</translation>
+   <translation>Pen</translation>
   </message>
   <message>
    <location filename="../src/ui/dialogs/entity/lc_dlgentityproperties.cpp" line="171" />
@@ -7199,7 +7199,7 @@ Are you sure you are going to discard changes?</source>
   <message>
    <location filename="../src/ui/dialogs/creators/lc_dlgmenuassigner.ui" line="106" />
    <source>Back</source>
-   <translation>Назад</translation>
+   <translation>Back</translation>
   </message>
   <message>
    <location filename="../src/ui/dialogs/creators/lc_dlgmenuassigner.ui" line="113" />
@@ -7209,7 +7209,7 @@ Are you sure you are going to discard changes?</source>
   <message>
    <location filename="../src/ui/dialogs/creators/lc_dlgmenuassigner.ui" line="120" />
    <source>Task</source>
-   <translation>Задатак</translation>
+   <translation>Task</translation>
   </message>
   <message>
    <location filename="../src/ui/dialogs/creators/lc_dlgmenuassigner.ui" line="130" />
@@ -7219,7 +7219,7 @@ Are you sure you are going to discard changes?</source>
   <message>
    <location filename="../src/ui/dialogs/creators/lc_dlgmenuassigner.ui" line="133" />
    <source>Key</source>
-   <translation>Кључ</translation>
+   <translation>Key</translation>
   </message>
   <message>
    <location filename="../src/ui/dialogs/creators/lc_dlgmenuassigner.ui" line="139" />
@@ -7314,7 +7314,7 @@ Are you sure you are going to discard changes?</source>
   <message>
    <location filename="../src/ui/dialogs/creators/lc_dlgmenuassigner.cpp" line="109" />
    <source>Line</source>
-   <translation>Linija</translation>
+   <translation>Line</translation>
   </message>
   <message>
    <location filename="../src/ui/dialogs/creators/lc_dlgmenuassigner.cpp" line="110" />
@@ -7324,7 +7324,7 @@ Are you sure you are going to discard changes?</source>
   <message>
    <location filename="../src/ui/dialogs/creators/lc_dlgmenuassigner.cpp" line="111" />
    <source>Arc</source>
-   <translation>Лук</translation>
+   <translation>Arc</translation>
   </message>
   <message>
    <location filename="../src/ui/dialogs/creators/lc_dlgmenuassigner.cpp" line="112" />
@@ -7946,7 +7946,7 @@ Are you sure you are going to discard changes?</source>
   <message>
    <location filename="../src/ui/dialogs/entity/lc_dlgtolerance.cpp" line="52" />
    <source>Pen</source>
-   <translation>Olovka</translation>
+   <translation>Pen</translation>
   </message>
  </context>
  <context>
@@ -8144,7 +8144,7 @@ Are you sure you are going to discard changes?</source>
   <message>
    <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucsproperties.ui" line="37" />
    <source>Info</source>
-   <translation>Информације</translation>
+   <translation>Info</translation>
   </message>
   <message>
    <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucsproperties.ui" line="43" />
@@ -8198,7 +8198,7 @@ Are you sure you are going to discard changes?</source>
   <message>
    <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucsproperties.cpp" line="106" />
    <source>Left</source>
-   <translation>Лево</translation>
+   <translation>Left</translation>
   </message>
   <message>
    <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucsproperties.cpp" line="110" />
@@ -8208,7 +8208,7 @@ Are you sure you are going to discard changes?</source>
   <message>
    <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucsproperties.cpp" line="115" />
    <source>Top</source>
-   <translation>Горе</translation>
+   <translation>Top</translation>
   </message>
  </context>
  <context>
@@ -8286,7 +8286,7 @@ Are you sure you are going to discard changes?</source>
   <message>
    <location filename="../src/ui/dialogs/creators/lc_dlgwidgetcreator.ui" line="252" />
    <source>NONE</source>
-   <translation>НИШТА</translation>
+   <translation>NONE</translation>
   </message>
   <message>
    <location filename="../src/ui/dialogs/creators/lc_dlgwidgetcreator.ui" line="259" />
@@ -8356,7 +8356,7 @@ Are you sure you are going to discard changes?</source>
   <message>
    <location filename="../src/ui/dialogs/creators/lc_dlgwidgetcreator.ui" line="369" />
    <source>Left</source>
-   <translation>Levo</translation>
+   <translation>Left</translation>
   </message>
   <message>
    <location filename="../src/ui/dialogs/creators/lc_dlgwidgetcreator.ui" line="374" />
@@ -8366,7 +8366,7 @@ Are you sure you are going to discard changes?</source>
   <message>
    <location filename="../src/ui/dialogs/creators/lc_dlgwidgetcreator.ui" line="379" />
    <source>Top</source>
-   <translation>Gornji deo</translation>
+   <translation>Top</translation>
   </message>
   <message>
    <location filename="../src/ui/dialogs/creators/lc_dlgwidgetcreator.cpp" line="58" />
@@ -8449,7 +8449,7 @@ Are you sure you are going to discard changes?</source>
   <message>
    <location filename="../src/ui/dialogs/creators/lc_dlgwidgetcreator.cpp" line="424" />
    <source>menu</source>
-   <translation>мени</translation>
+   <translation>menu</translation>
   </message>
   <message>
    <location filename="../src/ui/dialogs/creators/lc_dlgwidgetcreator.cpp" line="427" />
@@ -8480,7 +8480,7 @@ Are you sure you are going to discard changes?</source>
   <message>
    <location filename="../src/ui/action_options/misc/lc_drawboundingboxoptions.ui" line="14" />
    <source>Form</source>
-   <translation>Форма</translation>
+   <translation>Form</translation>
   </message>
   <message>
    <location filename="../src/ui/action_options/misc/lc_drawboundingboxoptions.ui" line="42" />
@@ -8528,7 +8528,7 @@ Are you sure you are going to discard changes?</source>
   <message>
    <location filename="../src/ui/action_options/modify/lc_duplicateoptions.ui" line="14" />
    <source>Form</source>
-   <translation>Форма</translation>
+   <translation>Form</translation>
   </message>
   <message>
    <location filename="../src/ui/action_options/modify/lc_duplicateoptions.ui" line="45" />
@@ -8626,7 +8626,7 @@ Are you sure you are going to discard changes?</source>
   <message>
    <location filename="../src/ui/action_options/ellipse/lc_ellipse1pointoptions.ui" line="14" />
    <source>Form</source>
-   <translation>Oblik</translation>
+   <translation>Form</translation>
   </message>
   <message>
    <location filename="../src/ui/action_options/ellipse/lc_ellipse1pointoptions.ui" line="32" />
@@ -8661,7 +8661,7 @@ Are you sure you are going to discard changes?</source>
   <message>
    <location filename="../src/ui/action_options/ellipse/lc_ellipse1pointoptions.ui" line="110" />
    <source>Free</source>
-   <translation>Слободно</translation>
+   <translation>Free</translation>
   </message>
   <message>
    <location filename="../src/ui/action_options/ellipse/lc_ellipse1pointoptions.ui" line="129" />
@@ -8722,7 +8722,7 @@ Are you sure you are going to discard changes?</source>
   <message>
    <location filename="../src/ui/dialogs/entity/lc_ellipsepropertieseditingwidget.ui" line="14" />
    <source>Form</source>
-   <translation>Форма</translation>
+   <translation>Form</translation>
   </message>
   <message>
    <location filename="../src/ui/dialogs/entity/lc_ellipsepropertieseditingwidget.ui" line="47" />
@@ -9016,7 +9016,7 @@ Are you sure you are going to discard changes?</source>
   <message>
    <location filename="../src/ui/dialogs/entity/lc_imagepropertieseditingwidget.ui" line="14" />
    <source>Form</source>
-   <translation>Облик</translation>
+   <translation>Form</translation>
   </message>
   <message>
    <location filename="../src/ui/dialogs/entity/lc_imagepropertieseditingwidget.ui" line="44" />
@@ -9149,7 +9149,7 @@ Are you sure you are going to discard changes?</source>
   <message>
    <location filename="../src/ui/action_options/info/lc_infodist2options.ui" line="14" />
    <source>Form</source>
-   <translation>Форма</translation>
+   <translation>Form</translation>
   </message>
   <message>
    <location filename="../src/ui/action_options/info/lc_infodist2options.ui" line="32" />
@@ -9180,7 +9180,7 @@ Are you sure you are going to discard changes?</source>
   <message>
    <location filename="../src/ui/dialogs/entity/lc_insertpropertieseditingwidget.ui" line="14" />
    <source>Form</source>
-   <translation>Форма</translation>
+   <translation>Form</translation>
   </message>
   <message>
    <location filename="../src/ui/dialogs/entity/lc_insertpropertieseditingwidget.ui" line="35" />
@@ -9430,7 +9430,7 @@ Sadržaj konstrukcionog sloja ne bi trebalo da se pojavljuje u štampanoj verzij
   <message>
    <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="39" />
    <source>Form</source>
-   <translation>Форма</translation>
+   <translation>Form</translation>
   </message>
   <message>
    <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="57" />
@@ -9737,7 +9737,7 @@ Sadržaj konstrukcionog sloja ne bi trebalo da se pojavljuje u štampanoj verzij
   <message>
    <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="103" />
    <source>grid</source>
-   <translation>mreža</translation>
+   <translation>grid</translation>
   </message>
   <message>
    <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="111" />
@@ -10042,7 +10042,7 @@ Please specify a different value.</source>
   <message>
    <location filename="../src/ui/action_options/line/lc_lineanglereloptions.ui" line="14" />
    <source>Form</source>
-   <translation>Forma</translation>
+   <translation>Form</translation>
   </message>
   <message>
    <location filename="../src/ui/action_options/line/lc_lineanglereloptions.ui" line="50" />
@@ -10058,7 +10058,7 @@ Please specify a different value.</source>
    <location filename="../src/ui/action_options/line/lc_lineanglereloptions.ui" line="61" />
    <source>Free</source>
    <comment>linesnap</comment>
-   <translation>Slobodno</translation>
+   <translation>Free</translation>
   </message>
   <message>
    <location filename="../src/ui/action_options/line/lc_lineanglereloptions.ui" line="66" />
@@ -10076,7 +10076,7 @@ Please specify a different value.</source>
    <location filename="../src/ui/action_options/line/lc_lineanglereloptions.ui" line="76" />
    <location filename="../src/ui/action_options/line/lc_lineanglereloptions.ui" line="286" />
    <source>End</source>
-   <translation>Kraj</translation>
+   <translation>End</translation>
   </message>
   <message>
    <location filename="../src/ui/action_options/line/lc_lineanglereloptions.ui" line="102" />
@@ -10111,7 +10111,7 @@ Please specify a different value.</source>
   <message>
    <location filename="../src/ui/action_options/line/lc_lineanglereloptions.ui" line="149" />
    <source>Rel</source>
-   <translation>Релативно</translation>
+   <translation>Rel</translation>
   </message>
   <message>
    <location filename="../src/ui/action_options/line/lc_lineanglereloptions.ui" line="156" />
@@ -10126,7 +10126,7 @@ Please specify a different value.</source>
   <message>
    <location filename="../src/ui/action_options/line/lc_lineanglereloptions.ui" line="166" />
    <source>Free</source>
-   <translation>Слободно</translation>
+   <translation>Free</translation>
   </message>
   <message>
    <location filename="../src/ui/action_options/line/lc_lineanglereloptions.ui" line="180" />
@@ -10184,7 +10184,7 @@ Please specify a different value.</source>
   <message>
    <location filename="../src/ui/action_options/line/lc_linefrompointtolineoptions.ui" line="14" />
    <source>Form</source>
-   <translation>Oblik</translation>
+   <translation>Form</translation>
   </message>
   <message>
    <location filename="../src/ui/action_options/line/lc_linefrompointtolineoptions.ui" line="44" />
@@ -10224,7 +10224,7 @@ Please specify a different value.</source>
   <message>
    <location filename="../src/ui/action_options/line/lc_linefrompointtolineoptions.ui" line="134" />
    <source>End</source>
-   <translation>Крај</translation>
+   <translation>End</translation>
   </message>
   <message>
    <location filename="../src/ui/action_options/line/lc_linefrompointtolineoptions.ui" line="142" />
@@ -10292,7 +10292,7 @@ Please specify a different value.</source>
   <message>
    <location filename="../src/ui/action_options/modify/lc_linejoinoptions.ui" line="20" />
    <source>Form</source>
-   <translation>Oblik</translation>
+   <translation>Form</translation>
   </message>
   <message>
    <location filename="../src/ui/action_options/modify/lc_linejoinoptions.ui" line="38" />
@@ -10388,7 +10388,7 @@ Please specify a different value.</source>
   <message>
    <location filename="../src/ui/action_options/point/lc_linepointsoptions.ui" line="20" />
    <source>Form</source>
-   <translation>Форма</translation>
+   <translation>Form</translation>
   </message>
   <message>
    <location filename="../src/ui/action_options/point/lc_linepointsoptions.ui" line="38" />
@@ -10408,12 +10408,12 @@ Please specify a different value.</source>
   <message>
    <location filename="../src/ui/action_options/point/lc_linepointsoptions.ui" line="71" />
    <source>None</source>
-   <translation>Ништа</translation>
+   <translation>None</translation>
   </message>
   <message>
    <location filename="../src/ui/action_options/point/lc_linepointsoptions.ui" line="76" />
    <source>Both</source>
-   <translation>Оба</translation>
+   <translation>Both</translation>
   </message>
   <message>
    <location filename="../src/ui/action_options/point/lc_linepointsoptions.ui" line="81" />
@@ -10423,7 +10423,7 @@ Please specify a different value.</source>
   <message>
    <location filename="../src/ui/action_options/point/lc_linepointsoptions.ui" line="86" />
    <source>End</source>
-   <translation>Крај</translation>
+   <translation>End</translation>
   </message>
   <message>
    <location filename="../src/ui/action_options/point/lc_linepointsoptions.ui" line="115" />
@@ -10486,7 +10486,7 @@ Please specify a different value.</source>
   <message>
    <location filename="../src/ui/dialogs/entity/lc_linepropertieseditingwidget.ui" line="14" />
    <source>Form</source>
-   <translation>Forma</translation>
+   <translation>Form</translation>
   </message>
   <message>
    <location filename="../src/ui/dialogs/entity/lc_linepropertieseditingwidget.ui" line="41" />
@@ -10855,12 +10855,12 @@ Please specify a different value.</source>
   <message>
    <location filename="../src/ui/main/init/lc_menufactory.cpp" line="627" />
    <source>East</source>
-   <translation>Исток</translation>
+   <translation>East</translation>
   </message>
   <message>
    <location filename="../src/ui/main/init/lc_menufactory.cpp" line="631" />
    <source>West</source>
-   <translation>Запад</translation>
+   <translation>West</translation>
   </message>
   <message>
    <location filename="../src/ui/main/init/lc_menufactory.cpp" line="636" />
@@ -10941,12 +10941,12 @@ Please specify a different value.</source>
   <message>
    <location filename="../src/ui/main/init/lc_menufactory.cpp" line="973" />
    <source>Draw</source>
-   <translation>Цртај</translation>
+   <translation>Draw</translation>
   </message>
   <message>
    <location filename="../src/ui/main/init/lc_menufactory.cpp" line="976" />
    <source>Line</source>
-   <translation>Линија</translation>
+   <translation>Line</translation>
   </message>
   <message>
    <location filename="../src/ui/main/init/lc_menufactory.cpp" line="980" />
@@ -10966,7 +10966,7 @@ Please specify a different value.</source>
   <message>
    <location filename="../src/ui/main/init/lc_menufactory.cpp" line="992" />
    <source>Arc</source>
-   <translation>Лук</translation>
+   <translation>Arc</translation>
   </message>
   <message>
    <location filename="../src/ui/main/init/lc_menufactory.cpp" line="996" />
@@ -11023,7 +11023,7 @@ Please specify a different value.</source>
   <message>
    <location filename="../src/ui/main/init/lc_menufactory.cpp" line="1085" />
    <source>Edit</source>
-   <translation>Izmeni</translation>
+   <translation>Edit</translation>
   </message>
   <message>
    <location filename="../src/ui/main/init/lc_menufactory.cpp" line="1136" />
@@ -11127,7 +11127,7 @@ Please specify a different value.</source>
   <message>
    <location filename="../src/ui/action_options/misc/lc_midlineoptions.ui" line="14" />
    <source>Form</source>
-   <translation>Форма</translation>
+   <translation>Form</translation>
   </message>
   <message>
    <location filename="../src/ui/action_options/misc/lc_midlineoptions.ui" line="32" />
@@ -11145,7 +11145,7 @@ Please specify a different value.</source>
   <message>
    <location filename="../src/ui/action_options/modify/lc_modifyalignoptions.ui" line="14" />
    <source>Form</source>
-   <translation>Форма</translation>
+   <translation>Form</translation>
   </message>
   <message>
    <location filename="../src/ui/action_options/modify/lc_modifyalignoptions.ui" line="53" />
@@ -11238,7 +11238,7 @@ Please specify a different value.</source>
   <message>
    <location filename="../src/ui/action_options/modify/lc_modifyalignrefoptions.ui" line="14" />
    <source>Form</source>
-   <translation>Форма</translation>
+   <translation>Form</translation>
   </message>
   <message>
    <location filename="../src/ui/action_options/modify/lc_modifyalignrefoptions.ui" line="46" />
@@ -11286,7 +11286,7 @@ Please specify a different value.</source>
   <message>
    <location filename="../src/ui/action_options/modify/lc_modifybreakdivideoptions.ui" line="14" />
    <source>Form</source>
-   <translation>Oblik</translation>
+   <translation>Form</translation>
   </message>
   <message>
    <location filename="../src/ui/action_options/modify/lc_modifybreakdivideoptions.ui" line="45" />
@@ -11314,7 +11314,7 @@ Please specify a different value.</source>
   <message>
    <location filename="../src/ui/action_options/modify/lc_modifygapoptions.ui" line="14" />
    <source>Form</source>
-   <translation>Oblik</translation>
+   <translation>Form</translation>
   </message>
   <message>
    <location filename="../src/ui/action_options/modify/lc_modifygapoptions.ui" line="32" />
@@ -11337,7 +11337,7 @@ Please specify a different value.</source>
    <location filename="../src/ui/action_options/modify/lc_modifygapoptions.ui" line="46" />
    <source>End</source>
    <comment>gap</comment>
-   <translation>Kraj</translation>
+   <translation>End</translation>
   </message>
   <message>
    <location filename="../src/ui/action_options/modify/lc_modifygapoptions.ui" line="54" />
@@ -11358,7 +11358,7 @@ Please specify a different value.</source>
    <location filename="../src/ui/action_options/modify/lc_modifygapoptions.ui" line="72" />
    <source>Free</source>
    <comment>snap</comment>
-   <translation>Слободно</translation>
+   <translation>Free</translation>
   </message>
   <message>
    <location filename="../src/ui/action_options/modify/lc_modifygapoptions.ui" line="77" />
@@ -11376,7 +11376,7 @@ Please specify a different value.</source>
    <location filename="../src/ui/action_options/modify/lc_modifygapoptions.ui" line="87" />
    <source>End</source>
    <comment>snap</comment>
-   <translation>Кraj</translation>
+   <translation>End</translation>
   </message>
   <message>
    <location filename="../src/ui/action_options/modify/lc_modifygapoptions.ui" line="95" />
@@ -11401,7 +11401,7 @@ Please specify a different value.</source>
   <message>
    <location filename="../src/ui/action_options/modify/lc_modifygapoptions.ui" line="158" />
    <source>Free</source>
-   <translation>Слободно</translation>
+   <translation>Free</translation>
   </message>
   <message>
    <location filename="../src/ui/action_options/modify/lc_modifygapoptions.ui" line="177" />
@@ -11424,7 +11424,7 @@ Please specify a different value.</source>
   <message>
    <location filename="../src/ui/action_options/modify/lc_modifymirroroptions.ui" line="14" />
    <source>Form</source>
-   <translation>Облик</translation>
+   <translation>Form</translation>
   </message>
   <message>
    <location filename="../src/ui/action_options/modify/lc_modifymirroroptions.ui" line="32" />
@@ -11483,7 +11483,7 @@ Please specify a different value.</source>
    <location filename="../src/ui/action_options/modify/lc_modifyrotateoptions.ui" line="53" />
    <location filename="../src/ui/action_options/modify/lc_modifyrotateoptions.ui" line="170" />
    <source>Free</source>
-   <translation>Slobodno</translation>
+   <translation>Free</translation>
   </message>
   <message>
    <location filename="../src/ui/action_options/modify/lc_modifyrotateoptions.ui" line="66" />
@@ -11676,7 +11676,7 @@ Please specify a different value.</source>
   <message>
    <location filename="../src/ui/action_options/modify/lc_modifyscaleoptions.ui" line="212" />
    <source>Free</source>
-   <translation>Slobodno</translation>
+   <translation>Free</translation>
   </message>
  </context>
  <context>
@@ -11684,7 +11684,7 @@ Please specify a different value.</source>
   <message>
    <location filename="../src/ui/action_options/modify/lc_modifystretchoptions.ui" line="14" />
    <source>Form</source>
-   <translation>Oblik</translation>
+   <translation>Form</translation>
   </message>
   <message>
    <location filename="../src/ui/action_options/modify/lc_modifystretchoptions.ui" line="32" />
@@ -11702,7 +11702,7 @@ Please specify a different value.</source>
   <message>
    <location filename="../src/ui/action_options/modify/lc_moveoptions.ui" line="14" />
    <source>Form</source>
-   <translation>Форма</translation>
+   <translation>Form</translation>
   </message>
   <message>
    <location filename="../src/ui/action_options/modify/lc_moveoptions.ui" line="45" />
@@ -11755,7 +11755,7 @@ Please specify a different value.</source>
   <message>
    <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.ui" line="14" />
    <source>Form</source>
-   <translation>Форма</translation>
+   <translation>Form</translation>
   </message>
   <message>
    <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.ui" line="37" />
@@ -11946,7 +11946,7 @@ Upozorenje: ova akcija se NE može poništiti!</translation>
   <message>
    <location filename="../src/ui/dock_widgets/views_list/lc_namedviewsmodel.cpp" line="313" />
    <source>Left</source>
-   <translation>Levo</translation>
+   <translation>Left</translation>
   </message>
   <message>
    <location filename="../src/ui/dock_widgets/views_list/lc_namedviewsmodel.cpp" line="316" />
@@ -11956,18 +11956,18 @@ Upozorenje: ova akcija se NE može poništiti!</translation>
   <message>
    <location filename="../src/ui/dock_widgets/views_list/lc_namedviewsmodel.cpp" line="320" />
    <source>Top</source>
-   <translation>Gore</translation>
+   <translation>Top</translation>
   </message>
   <message>
    <location filename="../src/ui/dock_widgets/views_list/lc_namedviewsmodel.cpp" line="380" />
    <location filename="../src/ui/dock_widgets/views_list/lc_namedviewsmodel.cpp" line="384" />
    <source>WCS</source>
-   <translation>Sistem koordinata</translation>
+   <translation>WCS</translation>
   </message>
   <message>
    <location filename="../src/ui/dock_widgets/views_list/lc_namedviewsmodel.cpp" line="388" />
    <source>UCS</source>
-   <translation>Učeni sistem koordinata</translation>
+   <translation>UCS</translation>
   </message>
   <message>
    <location filename="../src/ui/dock_widgets/views_list/lc_namedviewsmodel.cpp" line="394" />
@@ -12033,12 +12033,12 @@ Upozorenje: ova akcija se NE može poništiti!</translation>
   <message>
    <location filename="../src/ui/dock_widgets/views_list/lc_namedviewsmodel.cpp" line="416" />
    <source>Yes</source>
-   <translation>Da</translation>
+   <translation>Yes</translation>
   </message>
   <message>
    <location filename="../src/ui/dock_widgets/views_list/lc_namedviewsmodel.cpp" line="416" />
    <source>No</source>
-   <translation>Ne</translation>
+   <translation>No</translation>
   </message>
  </context>
  <context>
@@ -12046,7 +12046,7 @@ Upozorenje: ova akcija se NE može poništiti!</translation>
   <message>
    <location filename="../src/ui/components/containers/lc_optionswidgetsholder.ui" line="14" />
    <source>Form</source>
-   <translation>Форма</translation>
+   <translation>Form</translation>
   </message>
   <message>
    <location filename="../src/ui/components/containers/lc_optionswidgetsholder.cpp" line="36" />
@@ -12066,7 +12066,7 @@ Upozorenje: ova akcija se NE može poništiti!</translation>
   <message>
    <location filename="../src/ui/dialogs/entity/lc_parabolapropertieseditingwidget.ui" line="14" />
    <source>Form</source>
-   <translation>Форма</translation>
+   <translation>Form</translation>
   </message>
   <message>
    <location filename="../src/ui/dialogs/entity/lc_parabolapropertieseditingwidget.ui" line="41" />
@@ -12095,7 +12095,7 @@ Upozorenje: ova akcija se NE može poništiti!</translation>
   <message>
    <location filename="../src/ui/action_options/point/lc_pastetopointsoptions.ui" line="14" />
    <source>Form</source>
-   <translation>Форма</translation>
+   <translation>Form</translation>
   </message>
   <message>
    <location filename="../src/ui/action_options/point/lc_pastetopointsoptions.ui" line="50" />
@@ -12138,7 +12138,7 @@ Upozorenje: ova akcija se NE može poništiti!</translation>
   <message>
    <location filename="../src/ui/action_options/edit/lc_pastetransformoptions.ui" line="14" />
    <source>Form</source>
-   <translation>Форма</translation>
+   <translation>Form</translation>
   </message>
   <message>
    <location filename="../src/ui/action_options/edit/lc_pastetransformoptions.ui" line="50" />
@@ -12394,7 +12394,7 @@ Upozorenje: ova akcija se NE može poništiti!</translation>
   <message>
    <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="309" />
    <source>Dot</source>
-   <translation>Тачка</translation>
+   <translation>Dot</translation>
   </message>
   <message>
    <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="310" />
@@ -12414,7 +12414,7 @@ Upozorenje: ova akcija se NE može poništiti!</translation>
   <message>
    <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="313" />
    <source>Dash</source>
-   <translation>Linija</translation>
+   <translation>Dash</translation>
   </message>
   <message>
    <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="314" />
@@ -12514,7 +12514,7 @@ Upozorenje: ova akcija se NE može poništiti!</translation>
   <message>
    <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="351" />
    <source>Red</source>
-   <translation>Црвена</translation>
+   <translation>Red</translation>
   </message>
   <message>
    <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="352" />
@@ -12544,7 +12544,7 @@ Upozorenje: ova akcija se NE može poništiti!</translation>
   <message>
    <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="357" />
    <source>Cyan</source>
-   <translation>Цијан</translation>
+   <translation>Cyan</translation>
   </message>
   <message>
    <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="358" />
@@ -12554,7 +12554,7 @@ Upozorenje: ova akcija se NE može poništiti!</translation>
   <message>
    <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="359" />
    <source>Blue</source>
-   <translation>Plava</translation>
+   <translation>Blue</translation>
   </message>
   <message>
    <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="360" />
@@ -12579,7 +12579,7 @@ Upozorenje: ova akcija se NE može poništiti!</translation>
   <message>
    <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="364" />
    <source>Gray</source>
-   <translation>Siva</translation>
+   <translation>Gray</translation>
   </message>
   <message>
    <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="365" />
@@ -12832,7 +12832,7 @@ Upozorenje: ova akcija se NE može poništiti!</translation>
    <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="117" />
    <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="120" />
    <source>Save</source>
-   <translation>Sačuvaj</translation>
+   <translation>Save</translation>
   </message>
   <message>
    <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="134" />
@@ -13007,7 +13007,7 @@ Imajte na umu da ako sačuvate olovku putem uređivača bez ponovnog pokretanja,
   <message>
    <location filename="../src/ui/dialogs/entity/lc_pointpickbutton.ui" line="20" />
    <source>Form</source>
-   <translation>Forma</translation>
+   <translation>Form</translation>
   </message>
  </context>
  <context>
@@ -13015,7 +13015,7 @@ Imajte na umu da ako sačuvate olovku putem uređivača bez ponovnog pokretanja,
   <message>
    <location filename="../src/ui/dialogs/entity/lc_pointpropertieseditingwidget.ui" line="14" />
    <source>Form</source>
-   <translation>Forma</translation>
+   <translation>Form</translation>
   </message>
   <message>
    <location filename="../src/ui/dialogs/entity/lc_pointpropertieseditingwidget.ui" line="35" />
@@ -13053,7 +13053,7 @@ Imajte na umu da ako sačuvate olovku putem uređivača bez ponovnog pokretanja,
   <message>
    <location filename="../src/ui/action_options/point/lc_pointslatticeoptions.ui" line="14" />
    <source>Form</source>
-   <translation>Форма</translation>
+   <translation>Form</translation>
   </message>
   <message>
    <location filename="../src/ui/action_options/point/lc_pointslatticeoptions.ui" line="32" />
@@ -13091,7 +13091,7 @@ Imajte na umu da ako sačuvate olovku putem uređivača bez ponovnog pokretanja,
   <message>
    <location filename="../src/ui/dialogs/entity/lc_polylinepropertieseditingwidget.ui" line="14" />
    <source>Form</source>
-   <translation>Форма</translation>
+   <translation>Form</translation>
   </message>
   <message>
    <location filename="../src/ui/dialogs/entity/lc_polylinepropertieseditingwidget.ui" line="41" />
@@ -13203,25 +13203,25 @@ Layer: </source>
   <message>
    <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="519" />
    <source>Max</source>
-   <translation>Maks</translation>
+   <translation>Max</translation>
   </message>
   <message>
    <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="528" />
    <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="546" />
    <source>LINE</source>
-   <translation>LINIJA</translation>
+   <translation>LINE</translation>
   </message>
   <message>
    <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="536" />
    <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="557" />
    <source>From</source>
-   <translation>Od</translation>
+   <translation>From</translation>
   </message>
   <message>
    <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="537" />
    <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="558" />
    <source>To</source>
-   <translation>Do</translation>
+   <translation>To</translation>
   </message>
   <message>
    <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="538" />
@@ -13339,13 +13339,13 @@ Layer: </source>
    <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="751" />
    <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1274" />
    <source>Area</source>
-   <translation>Површина</translation>
+   <translation>Area</translation>
   </message>
   <message>
    <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="613" />
    <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="640" />
    <source>ARC</source>
-   <translation>Лук</translation>
+   <translation>ARC</translation>
   </message>
   <message>
    <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="629" />
@@ -13389,7 +13389,7 @@ Layer: </source>
    <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="746" />
    <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="775" />
    <source>End</source>
-   <translation>Крај</translation>
+   <translation>End</translation>
   </message>
   <message>
    <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="634" />
@@ -13431,7 +13431,7 @@ Layer: </source>
    <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1303" />
    <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1314" />
    <source>Yes</source>
-   <translation>Да</translation>
+   <translation>Yes</translation>
   </message>
   <message>
    <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="636" />
@@ -13449,7 +13449,7 @@ Layer: </source>
    <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1303" />
    <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1314" />
    <source>No</source>
-   <translation>Не</translation>
+   <translation>No</translation>
   </message>
   <message>
    <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="685" />
@@ -13541,7 +13541,7 @@ Layer: </source>
    <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="848" />
    <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="870" />
    <source>Name</source>
-   <translation>Име</translation>
+   <translation>Name</translation>
   </message>
   <message>
    <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="849" />
@@ -13571,7 +13571,7 @@ Layer: </source>
    <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="854" />
    <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="875" />
    <source>Cols</source>
-   <translation>Колумне</translation>
+   <translation>Cols</translation>
   </message>
   <message>
    <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="855" />
@@ -13583,7 +13583,7 @@ Layer: </source>
    <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="856" />
    <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="877" />
    <source>Rows</source>
-   <translation>Редови</translation>
+   <translation>Rows</translation>
   </message>
   <message>
    <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="857" />
@@ -13595,7 +13595,7 @@ Layer: </source>
    <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="882" />
    <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="911" />
    <source>TEXT</source>
-   <translation>ТЕКСТ</translation>
+   <translation>TEXT</translation>
   </message>
   <message>
    <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="885" />
@@ -13667,7 +13667,7 @@ Layer: </source>
    <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="940" />
    <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="957" />
    <source>Left</source>
-   <translation>Levo</translation>
+   <translation>Left</translation>
   </message>
   <message>
    <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="942" />
@@ -13689,7 +13689,7 @@ Layer: </source>
   <message>
    <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="967" />
    <source>Fit</source>
-   <translation>Prilagođeno</translation>
+   <translation>Fit</translation>
   </message>
   <message>
    <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="981" />
@@ -13706,7 +13706,7 @@ Layer: </source>
    <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="987" />
    <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1005" />
    <source>Top</source>
-   <translation>Gornji deo</translation>
+   <translation>Top</translation>
   </message>
   <message>
    <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1019" />
@@ -13801,7 +13801,7 @@ Layer: </source>
    <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1128" />
    <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1152" />
    <source>File</source>
-   <translation>Datoteka</translation>
+   <translation>File</translation>
   </message>
   <message>
    <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1130" />
@@ -14076,7 +14076,7 @@ Layer: </source>
   <message>
    <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfopointsdata.cpp" line="216" />
    <source>Zero</source>
-   <translation>Нула</translation>
+   <translation>Zero</translation>
   </message>
   <message>
    <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfopointsdata.cpp" line="227" />
@@ -14116,7 +14116,7 @@ Layer: </source>
   <message>
    <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidget.ui" line="31" />
    <source>Form</source>
-   <translation>Форма</translation>
+   <translation>Form</translation>
   </message>
   <message>
    <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidget.ui" line="58" />
@@ -14359,7 +14359,7 @@ p, li { white-space: pre-wrap; }
   <message>
    <location filename="../src/ui/action_options/rect/lc_rectangle1pointoptions.ui" line="14" />
    <source>Form</source>
-   <translation>Forma</translation>
+   <translation>Form</translation>
   </message>
   <message>
    <location filename="../src/ui/action_options/rect/lc_rectangle1pointoptions.ui" line="32" />
@@ -14399,7 +14399,7 @@ p, li { white-space: pre-wrap; }
   <message>
    <location filename="../src/ui/action_options/rect/lc_rectangle1pointoptions.ui" line="91" />
    <source>Top</source>
-   <translation>Gornji ugao</translation>
+   <translation>Top</translation>
   </message>
   <message>
    <location filename="../src/ui/action_options/rect/lc_rectangle1pointoptions.ui" line="96" />
@@ -14409,7 +14409,7 @@ p, li { white-space: pre-wrap; }
   <message>
    <location filename="../src/ui/action_options/rect/lc_rectangle1pointoptions.ui" line="101" />
    <source>Left</source>
-   <translation>Levi ugao</translation>
+   <translation>Left</translation>
   </message>
   <message>
    <location filename="../src/ui/action_options/rect/lc_rectangle1pointoptions.ui" line="106" />
@@ -14464,7 +14464,7 @@ p, li { white-space: pre-wrap; }
   <message>
    <location filename="../src/ui/action_options/rect/lc_rectangle1pointoptions.ui" line="199" />
    <source>Both</source>
-   <translation>Оба</translation>
+   <translation>Both</translation>
   </message>
   <message>
    <location filename="../src/ui/action_options/rect/lc_rectangle1pointoptions.ui" line="204" />
@@ -14534,7 +14534,7 @@ p, li { white-space: pre-wrap; }
   <message>
    <location filename="../src/ui/action_options/rect/lc_rectangle1pointoptions.ui" line="320" />
    <source>Free</source>
-   <translation>Слободно</translation>
+   <translation>Free</translation>
   </message>
   <message>
    <location filename="../src/ui/action_options/rect/lc_rectangle1pointoptions.ui" line="339" />
@@ -14607,7 +14607,7 @@ p, li { white-space: pre-wrap; }
   <message>
    <location filename="../src/ui/action_options/rect/lc_rectangle2pointsoptions.ui" line="14" />
    <source>Form</source>
-   <translation>Oblik</translation>
+   <translation>Form</translation>
   </message>
   <message>
    <location filename="../src/ui/action_options/rect/lc_rectangle2pointsoptions.ui" line="32" />
@@ -14721,7 +14721,7 @@ p, li { white-space: pre-wrap; }
   <message>
    <location filename="../src/ui/action_options/rect/lc_rectangle2pointsoptions.ui" line="255" />
    <source>Both</source>
-   <translation>Oba</translation>
+   <translation>Both</translation>
   </message>
   <message>
    <location filename="../src/ui/action_options/rect/lc_rectangle2pointsoptions.ui" line="260" />
@@ -14794,7 +14794,7 @@ p, li { white-space: pre-wrap; }
   <message>
    <location filename="../src/ui/action_options/rect/lc_rectangle3pointsoptions.ui" line="14" />
    <source>Form</source>
-   <translation>Облик</translation>
+   <translation>Form</translation>
   </message>
   <message>
    <location filename="../src/ui/action_options/rect/lc_rectangle3pointsoptions.ui" line="32" />
@@ -14944,7 +14944,7 @@ p, li { white-space: pre-wrap; }
   <message>
    <location filename="../src/ui/action_options/rect/lc_rectangle3pointsoptions.ui" line="432" />
    <source>Both</source>
-   <translation>Oba</translation>
+   <translation>Both</translation>
   </message>
   <message>
    <location filename="../src/ui/action_options/rect/lc_rectangle3pointsoptions.ui" line="437" />
@@ -14967,7 +14967,7 @@ p, li { white-space: pre-wrap; }
   <message>
    <location filename="../src/ui/components/status_bar/lc_relzerocoordinateswidget.ui" line="14" />
    <source>Form</source>
-   <translation>Forma</translation>
+   <translation>Form</translation>
   </message>
   <message>
    <location filename="../src/ui/components/status_bar/lc_relzerocoordinateswidget.ui" line="35" />
@@ -15101,7 +15101,7 @@ p, li { white-space: pre-wrap; }
   <message>
    <location filename="../src/ui/action_options/selection/lc_selectwindowoptions.ui" line="14" />
    <source>Form</source>
-   <translation>Oblik</translation>
+   <translation>Form</translation>
   </message>
   <message>
    <location filename="../src/ui/action_options/selection/lc_selectwindowoptions.ui" line="32" />
@@ -15131,7 +15131,7 @@ p, li { white-space: pre-wrap; }
   <message>
    <location filename="../src/ui/action_options/selection/lc_selectwindowoptions.ui" line="67" />
    <source>All</source>
-   <translation>Sve</translation>
+   <translation>All</translation>
   </message>
   <message>
    <location filename="../src/ui/action_options/selection/lc_selectwindowoptions.ui" line="74" />
@@ -15156,7 +15156,7 @@ p, li { white-space: pre-wrap; }
   <message>
    <location filename="../src/ui/action_options/selection/lc_selectwindowoptions.ui" line="102" />
    <source>Text</source>
-   <translation>Текст</translation>
+   <translation>Text</translation>
   </message>
   <message>
    <location filename="../src/ui/action_options/selection/lc_selectwindowoptions.ui" line="109" />
@@ -15171,12 +15171,12 @@ p, li { white-space: pre-wrap; }
   <message>
    <location filename="../src/ui/action_options/selection/lc_selectwindowoptions.ui" line="123" />
    <source>Arc</source>
-   <translation>Лук</translation>
+   <translation>Arc</translation>
   </message>
   <message>
    <location filename="../src/ui/action_options/selection/lc_selectwindowoptions.ui" line="130" />
    <source>Line</source>
-   <translation>Линија</translation>
+   <translation>Line</translation>
   </message>
   <message>
    <location filename="../src/ui/action_options/selection/lc_selectwindowoptions.ui" line="137" />
@@ -15292,7 +15292,7 @@ p, li { white-space: pre-wrap; }
   <message>
    <location filename="../src/ui/action_options/line/lc_slicedivideoptions.ui" line="14" />
    <source>Form</source>
-   <translation>Oblik</translation>
+   <translation>Form</translation>
   </message>
   <message>
    <location filename="../src/ui/action_options/line/lc_slicedivideoptions.ui" line="66" />
@@ -15317,12 +15317,12 @@ p, li { white-space: pre-wrap; }
   <message>
    <location filename="../src/ui/action_options/line/lc_slicedivideoptions.ui" line="146" />
    <source>None</source>
-   <translation>Ниједна</translation>
+   <translation>None</translation>
   </message>
   <message>
    <location filename="../src/ui/action_options/line/lc_slicedivideoptions.ui" line="151" />
    <source>Both</source>
-   <translation>Обе</translation>
+   <translation>Both</translation>
   </message>
   <message>
    <location filename="../src/ui/action_options/line/lc_slicedivideoptions.ui" line="156" />
@@ -15334,7 +15334,7 @@ p, li { white-space: pre-wrap; }
    <location filename="../src/ui/action_options/line/lc_slicedivideoptions.ui" line="161" />
    <location filename="../src/ui/action_options/line/lc_slicedivideoptions.ui" line="264" />
    <source>End</source>
-   <translation>Крај</translation>
+   <translation>End</translation>
   </message>
   <message>
    <location filename="../src/ui/action_options/line/lc_slicedivideoptions.ui" line="169" />
@@ -15409,7 +15409,7 @@ p, li { white-space: pre-wrap; }
   <message>
    <location filename="../src/ui/action_options/line/lc_slicedivideoptions.ui" line="315" />
    <source>Rel</source>
-   <translation>Relativno</translation>
+   <translation>Rel</translation>
   </message>
   <message>
    <location filename="../src/ui/action_options/line/lc_slicedivideoptions.ui" line="322" />
@@ -15462,7 +15462,7 @@ p, li { white-space: pre-wrap; }
   <message>
    <location filename="../src/ui/components/containers/lc_snapoptionswidgetsholder.ui" line="14" />
    <source>Form</source>
-   <translation>Форма</translation>
+   <translation>Form</translation>
   </message>
  </context>
  <context>
@@ -15470,7 +15470,7 @@ p, li { white-space: pre-wrap; }
   <message>
    <location filename="../src/ui/action_options/spline/lc_splineexplodeoptions.ui" line="14" />
    <source>Form</source>
-   <translation>Форма</translation>
+   <translation>Form</translation>
   </message>
   <message>
    <location filename="../src/ui/action_options/spline/lc_splineexplodeoptions.ui" line="32" />
@@ -15533,7 +15533,7 @@ p, li { white-space: pre-wrap; }
   <message>
    <location filename="../src/ui/action_options/spline/lc_splinefrompolylineoptions.ui" line="14" />
    <source>Form</source>
-   <translation>Формирај</translation>
+   <translation>Form</translation>
   </message>
   <message>
    <location filename="../src/ui/action_options/spline/lc_splinefrompolylineoptions.ui" line="32" />
@@ -15601,7 +15601,7 @@ p, li { white-space: pre-wrap; }
   <message>
    <location filename="../src/ui/dialogs/entity/lc_splinepointspropertieseditingwidget.ui" line="14" />
    <source>Form</source>
-   <translation>Форма</translation>
+   <translation>Form</translation>
   </message>
   <message>
    <location filename="../src/ui/dialogs/entity/lc_splinepointspropertieseditingwidget.ui" line="41" />
@@ -15762,7 +15762,7 @@ p, li { white-space: pre-wrap; }
   <message>
    <location filename="../src/ui/dialogs/entity/lc_splinepropertieseditingwidget.ui" line="303" />
    <source>Add</source>
-   <translation>Додај</translation>
+   <translation>Add</translation>
   </message>
   <message>
    <location filename="../src/ui/dialogs/entity/lc_splinepropertieseditingwidget.ui" line="306" />
@@ -15797,7 +15797,7 @@ p, li { white-space: pre-wrap; }
   <message>
    <location filename="../src/ui/action_options/polygon/lc_staroptions.ui" line="14" />
    <source>Form</source>
-   <translation>Форма</translation>
+   <translation>Form</translation>
   </message>
   <message>
    <location filename="../src/ui/action_options/polygon/lc_staroptions.ui" line="32" />
@@ -15875,7 +15875,7 @@ p, li { white-space: pre-wrap; }
   <message>
    <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="52" />
    <source>Pen</source>
-   <translation>Olovka</translation>
+   <translation>Pen</translation>
   </message>
   <message>
    <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="67" />
@@ -15890,12 +15890,12 @@ p, li { white-space: pre-wrap; }
   <message>
    <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="84" />
    <source>File</source>
-   <translation>Datoteka</translation>
+   <translation>File</translation>
   </message>
   <message>
    <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="92" />
    <source>Edit</source>
-   <translation>Uredi</translation>
+   <translation>Edit</translation>
   </message>
   <message>
    <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="109" />
@@ -15906,7 +15906,7 @@ p, li { white-space: pre-wrap; }
   <message>
    <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="120" />
    <source>View</source>
-   <translation>Prikaz</translation>
+   <translation>View</translation>
   </message>
   <message>
    <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="138" />
@@ -15941,7 +15941,7 @@ p, li { white-space: pre-wrap; }
   <message>
    <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="268" />
    <source>Line</source>
-   <translation>Линија</translation>
+   <translation>Line</translation>
   </message>
   <message>
    <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="269" />
@@ -15961,7 +15961,7 @@ p, li { white-space: pre-wrap; }
   <message>
    <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="272" />
    <source>Arc</source>
-   <translation>Лук</translation>
+   <translation>Arc</translation>
   </message>
   <message>
    <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="273" />
@@ -16004,7 +16004,7 @@ p, li { white-space: pre-wrap; }
   <message>
    <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="280" />
    <source>Info</source>
-   <translation>Инфо</translation>
+   <translation>Info</translation>
   </message>
   <message>
    <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="298" />
@@ -16029,7 +16029,7 @@ p, li { white-space: pre-wrap; }
   <message>
    <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="304" />
    <source>Arcs</source>
-   <translation>Лукови</translation>
+   <translation>Arcs</translation>
   </message>
   <message>
    <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="305" />
@@ -16069,7 +16069,7 @@ p, li { white-space: pre-wrap; }
   <message>
    <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="336" />
    <source>UCS</source>
-   <translation>УКС</translation>
+   <translation>UCS</translation>
   </message>
   <message>
    <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="357" />
@@ -16088,7 +16088,7 @@ p, li { white-space: pre-wrap; }
   <message>
    <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistmodel.cpp" line="250" />
    <source>Left</source>
-   <translation>Лево</translation>
+   <translation>Left</translation>
   </message>
   <message>
    <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistmodel.cpp" line="253" />
@@ -16098,7 +16098,7 @@ p, li { white-space: pre-wrap; }
   <message>
    <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistmodel.cpp" line="257" />
    <source>Top</source>
-   <translation>Gore</translation>
+   <translation>Top</translation>
   </message>
   <message>
    <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistmodel.cpp" line="315" />
@@ -16138,12 +16138,12 @@ p, li { white-space: pre-wrap; }
   <message>
    <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistmodel.cpp" line="337" />
    <source>Yes</source>
-   <translation>Da</translation>
+   <translation>Yes</translation>
   </message>
   <message>
    <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistmodel.cpp" line="337" />
    <source>No</source>
-   <translation>Ne</translation>
+   <translation>No</translation>
   </message>
  </context>
  <context>
@@ -16151,7 +16151,7 @@ p, li { white-space: pre-wrap; }
   <message>
    <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.ui" line="14" />
    <source>Form</source>
-   <translation>Форма</translation>
+   <translation>Form</translation>
   </message>
   <message>
    <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.ui" line="37" />
@@ -16316,7 +16316,7 @@ Warning: this action can NOT be undone!</source>
   <message>
    <location filename="../src/ui/action_options/other/lc_ucssetoptions.ui" line="14" />
    <source>Form</source>
-   <translation>Форма</translation>
+   <translation>Form</translation>
   </message>
   <message>
    <location filename="../src/ui/action_options/other/lc_ucssetoptions.ui" line="32" />
@@ -16326,7 +16326,7 @@ Warning: this action can NOT be undone!</source>
   <message>
    <location filename="../src/ui/action_options/other/lc_ucssetoptions.ui" line="35" />
    <source>Free</source>
-   <translation>Слободно</translation>
+   <translation>Free</translation>
   </message>
   <message>
    <location filename="../src/ui/action_options/other/lc_ucssetoptions.ui" line="42" />
@@ -16349,7 +16349,7 @@ Warning: this action can NOT be undone!</source>
   <message>
    <location filename="../src/ui/components/status_bar/lc_ucsstatewidget.ui" line="14" />
    <source>Form</source>
-   <translation>Форма</translation>
+   <translation>Form</translation>
   </message>
   <message>
    <location filename="../src/ui/components/status_bar/lc_ucsstatewidget.ui" line="44" />
@@ -16378,7 +16378,7 @@ Warning: this action can NOT be undone!</source>
   <message>
    <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="94" />
    <source>Line</source>
-   <translation>Линија</translation>
+   <translation>Line</translation>
   </message>
   <message>
    <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="95" />
@@ -16398,7 +16398,7 @@ Warning: this action can NOT be undone!</source>
   <message>
    <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="98" />
    <source>Arc</source>
-   <translation>Лук</translation>
+   <translation>Arc</translation>
   </message>
   <message>
    <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="99" />
@@ -16454,7 +16454,7 @@ Warning: this action can NOT be undone!</source>
   <message>
    <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="139" />
    <source>Pens</source>
-   <translation>Olovke</translation>
+   <translation>Pens</translation>
   </message>
   <message>
    <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="152" />
@@ -16479,7 +16479,7 @@ Warning: this action can NOT be undone!</source>
   <message>
    <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="188" />
    <source>UCSs</source>
-   <translation>SKK</translation>
+   <translation>UCSs</translation>
   </message>
   <message>
    <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="200" />
@@ -16521,7 +16521,7 @@ Warning: this action can NOT be undone!</source>
   <message>
    <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="261" />
    <source>Dock</source>
-   <translation>Dok</translation>
+   <translation>Dock</translation>
   </message>
   <message>
    <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="261" />
@@ -16533,7 +16533,7 @@ Warning: this action can NOT be undone!</source>
    <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="285" />
    <source>Dock</source>
    <comment>Dock the command widget to the main window</comment>
-   <translation>Dok</translation>
+   <translation>Dock</translation>
   </message>
   <message>
    <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="379" />
@@ -17274,7 +17274,7 @@ Auto-save disabled.</source>
   <message>
    <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="108" />
    <source>Red</source>
-   <translation>Црвена</translation>
+   <translation>Red</translation>
   </message>
   <message>
    <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="112" />
@@ -17314,7 +17314,7 @@ Auto-save disabled.</source>
   <message>
    <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="121" />
    <source>Cyan</source>
-   <translation>Cijan</translation>
+   <translation>Cyan</translation>
   </message>
   <message>
    <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="122" />
@@ -17324,7 +17324,7 @@ Auto-save disabled.</source>
   <message>
    <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="123" />
    <source>Blue</source>
-   <translation>Plava</translation>
+   <translation>Blue</translation>
   </message>
   <message>
    <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="124" />
@@ -17349,7 +17349,7 @@ Auto-save disabled.</source>
   <message>
    <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="134" />
    <source>Gray</source>
-   <translation>Siva</translation>
+   <translation>Gray</translation>
   </message>
   <message>
    <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="135" />
@@ -17430,7 +17430,7 @@ Auto-save disabled.</source>
    <location filename="../src/ui/dock_widgets/command_line/qg_commandwidget.cpp" line="81" />
    <location filename="../src/ui/dock_widgets/command_line/qg_commandwidget.cpp" line="339" />
    <source>Dock</source>
-   <translation>Прикажи</translation>
+   <translation>Dock</translation>
   </message>
   <message>
    <location filename="../src/ui/dock_widgets/command_line/qg_commandwidget.cpp" line="177" />
@@ -17461,7 +17461,7 @@ Auto-save disabled.</source>
   <message>
    <location filename="../src/ui/dock_widgets/command_line/qg_commandwidget.cpp" line="340" />
    <source>Cmd</source>
-   <translation>Команда</translation>
+   <translation>Cmd</translation>
   </message>
  </context>
  <context>
@@ -17502,7 +17502,7 @@ Auto-save disabled.</source>
    <location filename="../src/ui/action_options/dimensions/qg_dimoptions.cpp" line="172" />
    <source>R</source>
    <comment>Radial dimension prefix</comment>
-   <translation>Ц</translation>
+   <translation>R</translation>
   </message>
  </context>
  <context>
@@ -17643,7 +17643,7 @@ Ovo rekurzivno modifikuje sve entitete samog bloka.</translation>
   <message>
    <location filename="../src/ui/dialogs/entity/qg_dlgattributes.cpp" line="61" />
    <source>Pen</source>
-   <translation>Linija</translation>
+   <translation>Pen</translation>
   </message>
  </context>
  <context>
@@ -17711,7 +17711,7 @@ Ovo rekurzivno modifikuje sve entitete samog bloka.</translation>
   <message>
    <location filename="../src/ui/dialogs/entity/qg_dlghatch.ui" line="117" />
    <source>Area</source>
-   <translation>Површина</translation>
+   <translation>Area</translation>
   </message>
   <message>
    <location filename="../src/ui/dialogs/entity/qg_dlghatch.ui" line="124" />
@@ -17922,12 +17922,12 @@ Ovo rekurzivno modifikuje sve entitete samog bloka.</translation>
   <message>
    <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="782" />
    <source>Cut</source>
-   <translation>Izreži</translation>
+   <translation>Cut</translation>
   </message>
   <message>
    <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="796" />
    <source>Copy</source>
-   <translation>Kopiraj</translation>
+   <translation>Copy</translation>
   </message>
   <message>
    <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="810" />
@@ -18597,7 +18597,7 @@ Ovo rekurzivno modifikuje sve entitete samog bloka.</translation>
   <message>
    <location filename="../src/ui/dialogs/entity/qg_dlgmtext.cpp" line="241" />
    <source>Pen</source>
-   <translation>Оловка</translation>
+   <translation>Pen</translation>
   </message>
  </context>
  <context>
@@ -18810,7 +18810,7 @@ Ovo rekurzivno modifikuje sve entitete samog bloka.</translation>
    <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="170" />
    <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="230" />
    <source>Left</source>
-   <translation>Levo</translation>
+   <translation>Left</translation>
   </message>
   <message>
    <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="183" />
@@ -18828,7 +18828,7 @@ Ovo rekurzivno modifikuje sve entitete samog bloka.</translation>
    <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="213" />
    <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="246" />
    <source>Top</source>
-   <translation>Gornji</translation>
+   <translation>Top</translation>
   </message>
   <message>
    <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="258" />
@@ -19087,7 +19087,7 @@ Ovo rekurzivno modifikuje sve entitete samog bloka.</translation>
    <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="1445" />
    <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="1450" />
    <source>auto</source>
-   <translation>ауто</translation>
+   <translation>auto</translation>
   </message>
   <message>
    <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="990" />
@@ -19431,7 +19431,7 @@ Ovo rekurzivno modifikuje sve entitete samog bloka.</translation>
    <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="2086" />
    <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="2120" />
    <source>None</source>
-   <translation>Нема</translation>
+   <translation>None</translation>
   </message>
   <message>
    <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="2091" />
@@ -19457,7 +19457,7 @@ Ovo rekurzivno modifikuje sve entitete samog bloka.</translation>
   <message>
    <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="2135" />
    <source>Flat</source>
-   <translation>Раван</translation>
+   <translation>Flat</translation>
   </message>
   <message>
    <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="2176" />
@@ -19665,17 +19665,17 @@ Ovo rekurzivno modifikuje sve entitete samog bloka.</translation>
    <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="3571" />
    <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="342" />
    <source>Name</source>
-   <translation>Назив</translation>
+   <translation>Name</translation>
   </message>
   <message>
    <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="3576" />
    <source>Code</source>
-   <translation>Код</translation>
+   <translation>Code</translation>
   </message>
   <message>
    <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="3581" />
    <source>Type</source>
-   <translation>Тип</translation>
+   <translation>Type</translation>
   </message>
   <message>
    <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="3586" />
@@ -19794,7 +19794,7 @@ Ovo rekurzivno modifikuje sve entitete samog bloka.</translation>
    <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="935" />
    <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="938" />
    <source>ON</source>
-   <translation>УКЉУЧЕНО</translation>
+   <translation>ON</translation>
   </message>
   <message>
    <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="929" />
@@ -19802,17 +19802,17 @@ Ovo rekurzivno modifikuje sve entitete samog bloka.</translation>
    <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="935" />
    <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="938" />
    <source>OFF</source>
-   <translation>ISKLJUČENO</translation>
+   <translation>OFF</translation>
   </message>
   <message>
    <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="1197" />
    <source>VOID</source>
-   <translation>НЕВАЖЕЋЕ</translation>
+   <translation>VOID</translation>
   </message>
   <message>
    <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="1200" />
    <source>INT</source>
-   <translation>ЦЕО БРОЈ</translation>
+   <translation>INT</translation>
   </message>
   <message>
    <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="1204" />
@@ -20273,7 +20273,7 @@ Ovo rekurzivno modifikuje sve entitete samog bloka.</translation>
    <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1167" />
    <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1428" />
    <source>Grid</source>
-   <translation>Mreža</translation>
+   <translation>Grid</translation>
   </message>
   <message>
    <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="928" />
@@ -20495,7 +20495,7 @@ Ovo rekurzivno modifikuje sve entitete samog bloka.</translation>
   <message>
    <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1543" />
    <source>Snap</source>
-   <translation>Привлачење</translation>
+   <translation>Snap</translation>
   </message>
   <message>
    <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1549" />
@@ -20505,7 +20505,7 @@ Ovo rekurzivno modifikuje sve entitete samog bloka.</translation>
   <message>
    <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1555" />
    <source>deg</source>
-   <translation>степен</translation>
+   <translation>deg</translation>
   </message>
   <message>
    <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1562" />
@@ -20651,7 +20651,7 @@ Ovo rekurzivno modifikuje sve entitete samog bloka.</translation>
   <message>
    <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1743" />
    <source>Gap</source>
-   <translation>Razmak</translation>
+   <translation>Gap</translation>
   </message>
   <message>
    <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1758" />
@@ -20877,7 +20877,7 @@ Ovo rekurzivno modifikuje sve entitete samog bloka.</translation>
    <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2223" />
    <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2346" />
    <source>None</source>
-   <translation>Ништа</translation>
+   <translation>None</translation>
   </message>
   <message>
    <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2231" />
@@ -21869,7 +21869,7 @@ Ovo rekurzivno modifikuje sve entitete samog bloka.</translation>
   <message>
    <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5102" />
    <source>All</source>
-   <translation>Sve</translation>
+   <translation>All</translation>
   </message>
   <message>
    <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5113" />
@@ -22538,7 +22538,7 @@ so default step value required for baking</source>
   <message>
    <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="20" />
    <source>Text</source>
-   <translation>Tekst</translation>
+   <translation>Text</translation>
   </message>
   <message>
    <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="33" />
@@ -22563,12 +22563,12 @@ so default step value required for baking</source>
   <message>
    <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="101" />
    <source>Cut</source>
-   <translation>Izreži</translation>
+   <translation>Cut</translation>
   </message>
   <message>
    <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="115" />
    <source>Copy</source>
-   <translation>Kopiraj</translation>
+   <translation>Copy</translation>
   </message>
   <message>
    <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="129" />
@@ -22674,7 +22674,7 @@ so default step value required for baking</source>
    <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="561" />
    <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="564" />
    <source>Fit</source>
-   <translation>Прилагоди</translation>
+   <translation>Fit</translation>
   </message>
   <message>
    <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="586" />
@@ -23396,7 +23396,7 @@ so default step value required for baking</source>
   <message>
    <location filename="../src/ui/dialogs/entity/qg_dlgtext.cpp" line="212" />
    <source>Pen</source>
-   <translation>Оловка</translation>
+   <translation>Pen</translation>
   </message>
  </context>
  <context>
@@ -23517,7 +23517,7 @@ so default step value required for baking</source>
   <message>
    <location filename="../src/ui/dialogs/file/export/image/qg_dlgimageoptions.ui" line="43" />
    <source>auto</source>
-   <translation>automatski</translation>
+   <translation>auto</translation>
   </message>
   <message>
    <location filename="../src/ui/dialogs/file/export/image/qg_dlgimageoptions.ui" line="144" />
@@ -23685,7 +23685,7 @@ The contents of a Construction Layer should not appear in printout.</source>
   <message>
    <location filename="../src/ui/components/comboboxes/qg_linetypebox.cpp" line="86" />
    <source>Dot</source>
-   <translation>Тачка</translation>
+   <translation>Dot</translation>
   </message>
   <message>
    <location filename="../src/ui/components/comboboxes/qg_linetypebox.cpp" line="87" />
@@ -23705,7 +23705,7 @@ The contents of a Construction Layer should not appear in printout.</source>
   <message>
    <location filename="../src/ui/components/comboboxes/qg_linetypebox.cpp" line="90" />
    <source>Dash</source>
-   <translation>Prekidana linija</translation>
+   <translation>Dash</translation>
   </message>
   <message>
    <location filename="../src/ui/components/comboboxes/qg_linetypebox.cpp" line="91" />
@@ -23813,7 +23813,7 @@ The contents of a Construction Layer should not appear in printout.</source>
   <message>
    <location filename="../src/ui/components/status_bar/qg_mousewidget.ui" line="229" />
    <source>Left</source>
-   <translation>Лево</translation>
+   <translation>Left</translation>
   </message>
   <message>
    <location filename="../src/ui/components/status_bar/qg_mousewidget.ui" line="263" />
@@ -23932,7 +23932,7 @@ p, li { white-space: pre-wrap; }
   <message>
    <location filename="../src/ui/components/toolbars/qg_snaptoolbar.cpp" line="176" />
    <source>User</source>
-   <translation>Корисник</translation>
+   <translation>User</translation>
   </message>
   <message>
    <location filename="../src/ui/components/toolbars/qg_snaptoolbar.cpp" line="176" />
@@ -23946,7 +23946,7 @@ p, li { white-space: pre-wrap; }
    <location filename="../src/ui/components/pen/qg_widgetpen.ui" line="26" />
    <location filename="../src/ui/components/pen/qg_widgetpen.ui" line="53" />
    <source>Pen</source>
-   <translation>Оловка</translation>
+   <translation>Pen</translation>
   </message>
   <message>
    <location filename="../src/ui/components/pen/qg_widgetpen.ui" line="65" />
@@ -24338,7 +24338,7 @@ Molimo, navedite drugačiju vrednost.</translation>
    <location filename="../src/cmd/lc_commandItems.h" line="94" />
    <source>line</source>
    <comment>draw line</comment>
-   <translation>linija</translation>
+   <translation>line</translation>
   </message>
   <message>
    <location filename="../src/cmd/lc_commandItems.h" line="95" />
@@ -24542,7 +24542,7 @@ Molimo, navedite drugačiju vrednost.</translation>
    <location filename="../src/cmd/lc_commandItems.h" line="187" />
    <source>bbox</source>
    <comment>draw bound box</comment>
-   <translation>оквир</translation>
+   <translation>bbox</translation>
   </message>
   <message>
    <location filename="../src/cmd/lc_commandItems.h" line="188" />
@@ -24596,7 +24596,7 @@ Molimo, navedite drugačiju vrednost.</translation>
    <location filename="../src/cmd/lc_commandItems.h" line="210" />
    <source>cba</source>
    <comment>draw circle by arc</comment>
-   <translation>кружница по луку</translation>
+   <translation>cba</translation>
   </message>
   <message>
    <location filename="../src/cmd/lc_commandItems.h" line="215" />
@@ -24608,7 +24608,7 @@ Molimo, navedite drugačiju vrednost.</translation>
    <location filename="../src/cmd/lc_commandItems.h" line="216" />
    <source>dup</source>
    <comment>duplicate entity</comment>
-   <translation>дуп</translation>
+   <translation>dup</translation>
   </message>
   <message>
    <location filename="../src/cmd/lc_commandItems.h" line="221" />
@@ -24620,7 +24620,7 @@ Molimo, navedite drugačiju vrednost.</translation>
    <location filename="../src/cmd/lc_commandItems.h" line="222" />
    <source>al</source>
    <comment>align entities</comment>
-   <translation>порав.</translation>
+   <translation>al</translation>
   </message>
   <message>
    <location filename="../src/cmd/lc_commandItems.h" line="227" />
@@ -24788,7 +24788,7 @@ Molimo, navedite drugačiju vrednost.</translation>
    <location filename="../src/cmd/lc_commandItems.h" line="293" />
    <source>or</source>
    <comment>tangent line and circle</comment>
-   <translation>ili</translation>
+   <translation>or</translation>
   </message>
   <message>
    <location filename="../src/cmd/lc_commandItems.h" line="298" />
@@ -24830,7 +24830,7 @@ Molimo, navedite drugačiju vrednost.</translation>
    <location filename="../src/cmd/lc_commandItems.h" line="312" />
    <source>pp</source>
    <comment>polygon centre point</comment>
-   <translation>пп</translation>
+   <translation>pp</translation>
   </message>
   <message>
    <location filename="../src/cmd/lc_commandItems.h" line="313" />
@@ -24842,7 +24842,7 @@ Molimo, navedite drugačiju vrednost.</translation>
    <location filename="../src/cmd/lc_commandItems.h" line="314" />
    <source>pcp</source>
    <comment>polygon centre point</comment>
-   <translation>пцп</translation>
+   <translation>pcp</translation>
   </message>
   <message>
    <location filename="../src/cmd/lc_commandItems.h" line="319" />
@@ -24854,7 +24854,7 @@ Molimo, navedite drugačiju vrednost.</translation>
    <location filename="../src/cmd/lc_commandItems.h" line="320" />
    <source>pv</source>
    <comment>polygon centre vertex</comment>
-   <translation>пв</translation>
+   <translation>pv</translation>
   </message>
   <message>
    <location filename="../src/cmd/lc_commandItems.h" line="321" />
@@ -24872,7 +24872,7 @@ Molimo, navedite drugačiju vrednost.</translation>
    <location filename="../src/cmd/lc_commandItems.h" line="327" />
    <source>pvv</source>
    <comment>polygon vertex vertex</comment>
-   <translation>пвв</translation>
+   <translation>pvv</translation>
   </message>
   <message>
    <location filename="../src/cmd/lc_commandItems.h" line="332" />
@@ -24968,13 +24968,13 @@ Molimo, navedite drugačiju vrednost.</translation>
    <location filename="../src/cmd/lc_commandItems.h" line="369" />
    <source>cr</source>
    <comment>circle point radius</comment>
-   <translation>кр</translation>
+   <translation>cr</translation>
   </message>
   <message>
    <location filename="../src/cmd/lc_commandItems.h" line="370" />
    <source>ccr</source>
    <comment>circle point radius</comment>
-   <translation>цкр</translation>
+   <translation>ccr</translation>
   </message>
   <message>
    <location filename="../src/cmd/lc_commandItems.h" line="376" />
@@ -24986,7 +24986,7 @@ Molimo, navedite drugačiju vrednost.</translation>
    <location filename="../src/cmd/lc_commandItems.h" line="377" />
    <source>tr</source>
    <comment>circle 2 tangent point</comment>
-   <translation>тр</translation>
+   <translation>tr</translation>
   </message>
   <message>
    <location filename="../src/cmd/lc_commandItems.h" line="382" />
@@ -24998,7 +24998,7 @@ Molimo, navedite drugačiju vrednost.</translation>
    <location filename="../src/cmd/lc_commandItems.h" line="383" />
    <source>td</source>
    <comment>circle tangent 2 points</comment>
-   <translation>тд</translation>
+   <translation>td</translation>
   </message>
   <message>
    <location filename="../src/cmd/lc_commandItems.h" line="388" />
@@ -25076,7 +25076,7 @@ Molimo, navedite drugačiju vrednost.</translation>
    <location filename="../src/cmd/lc_commandItems.h" line="419" />
    <source>at</source>
    <comment>arc tangent</comment>
-   <translation>u</translation>
+   <translation>at</translation>
   </message>
   <message>
    <location filename="../src/cmd/lc_commandItems.h" line="424" />
@@ -25214,7 +25214,7 @@ Molimo, navedite drugačiju vrednost.</translation>
    <location filename="../src/cmd/lc_commandItems.h" line="486" />
    <source>free</source>
    <comment>draw freehand line</comment>
-   <translation>slobodno</translation>
+   <translation>free</translation>
   </message>
   <message>
    <location filename="../src/cmd/lc_commandItems.h" line="487" />
@@ -25340,7 +25340,7 @@ Molimo, navedite drugačiju vrednost.</translation>
    <location filename="../src/cmd/lc_commandItems.h" line="546" />
    <source>rort</source>
    <comment>draw orthogonal</comment>
-   <translation>rot</translation>
+   <translation>rort</translation>
   </message>
   <message>
    <location filename="../src/cmd/lc_commandItems.h" line="551" />
@@ -25442,7 +25442,7 @@ Molimo, navedite drugačiju vrednost.</translation>
    <location filename="../src/cmd/lc_commandItems.h" line="600" />
    <source>dual</source>
    <comment>create dual geometries</comment>
-   <translation>dupli</translation>
+   <translation>dual</translation>
   </message>
   <message>
    <location filename="../src/cmd/lc_commandItems.h" line="601" />
@@ -25490,7 +25490,7 @@ Molimo, navedite drugačiju vrednost.</translation>
    <location filename="../src/cmd/lc_commandItems.h" line="621" />
    <source>is</source>
    <comment>invert select</comment>
-   <translation>je</translation>
+   <translation>is</translation>
   </message>
   <message>
    <location filename="../src/cmd/lc_commandItems.h" line="629" />
@@ -25550,7 +25550,7 @@ Molimo, navedite drugačiju vrednost.</translation>
    <location filename="../src/cmd/lc_commandItems.h" line="653" />
    <source>dh</source>
    <comment>dimension - horizontal</comment>
-   <translation>х</translation>
+   <translation>dh</translation>
   </message>
   <message>
    <location filename="../src/cmd/lc_commandItems.h" line="658" />
@@ -25562,7 +25562,7 @@ Molimo, navedite drugačiju vrednost.</translation>
    <location filename="../src/cmd/lc_commandItems.h" line="659" />
    <source>dv</source>
    <comment>dimension - vertical</comment>
-   <translation>в</translation>
+   <translation>dv</translation>
   </message>
   <message>
    <location filename="../src/cmd/lc_commandItems.h" line="664" />
@@ -25580,7 +25580,7 @@ Molimo, navedite drugačiju vrednost.</translation>
    <location filename="../src/cmd/lc_commandItems.h" line="666" />
    <source>dr</source>
    <comment>dimension - radial</comment>
-   <translation>р</translation>
+   <translation>dr</translation>
   </message>
   <message>
    <location filename="../src/cmd/lc_commandItems.h" line="671" />
@@ -25592,7 +25592,7 @@ Molimo, navedite drugačiju vrednost.</translation>
    <location filename="../src/cmd/lc_commandItems.h" line="672" />
    <source>dd</source>
    <comment>dimension - diametric</comment>
-   <translation>д</translation>
+   <translation>dd</translation>
   </message>
   <message>
    <location filename="../src/cmd/lc_commandItems.h" line="673" />
@@ -25850,7 +25850,7 @@ Molimo, navedite drugačiju vrednost.</translation>
    <location filename="../src/cmd/lc_commandItems.h" line="786" />
    <source>cut</source>
    <comment>modify - divide (cut)</comment>
-   <translation>izreži</translation>
+   <translation>cut</translation>
   </message>
   <message>
    <location filename="../src/cmd/lc_commandItems.h" line="787" />
@@ -25886,7 +25886,7 @@ Molimo, navedite drugačiju vrednost.</translation>
    <location filename="../src/cmd/lc_commandItems.h" line="800" />
    <source>prop</source>
    <comment>modify properties</comment>
-   <translation>svojstva</translation>
+   <translation>prop</translation>
   </message>
   <message>
    <location filename="../src/cmd/lc_commandItems.h" line="801" />
@@ -25904,7 +25904,7 @@ Molimo, navedite drugačiju vrednost.</translation>
    <location filename="../src/cmd/lc_commandItems.h" line="807" />
    <source>attr</source>
    <comment>modify attribute</comment>
-   <translation>atribut</translation>
+   <translation>attr</translation>
   </message>
   <message>
    <location filename="../src/cmd/lc_commandItems.h" line="808" />
@@ -25952,7 +25952,7 @@ Molimo, navedite drugačiju vrednost.</translation>
    <location filename="../src/cmd/lc_commandItems.h" line="827" />
    <source>del</source>
    <comment>modify - delete (erase)</comment>
-   <translation>obriši</translation>
+   <translation>del</translation>
   </message>
   <message>
    <location filename="../src/cmd/lc_commandItems.h" line="834" />
@@ -26036,31 +26036,31 @@ Molimo, navedite drugačiju vrednost.</translation>
    <location filename="../src/cmd/lc_commandItems.h" line="865" />
    <source>mt</source>
    <comment>draw mtext</comment>
-   <translation>мт</translation>
+   <translation>mt</translation>
   </message>
   <message>
    <location filename="../src/cmd/lc_commandItems.h" line="866" />
    <source>mtxt</source>
    <comment>draw mtext</comment>
-   <translation>мткст</translation>
+   <translation>mtxt</translation>
   </message>
   <message>
    <location filename="../src/cmd/lc_commandItems.h" line="871" />
    <source>text</source>
    <comment>draw text</comment>
-   <translation>текст</translation>
+   <translation>text</translation>
   </message>
   <message>
    <location filename="../src/cmd/lc_commandItems.h" line="872" />
    <source>tx</source>
    <comment>draw text</comment>
-   <translation>тх</translation>
+   <translation>tx</translation>
   </message>
   <message>
    <location filename="../src/cmd/lc_commandItems.h" line="873" />
    <source>txt</source>
    <comment>draw text</comment>
-   <translation>ткст</translation>
+   <translation>txt</translation>
   </message>
   <message>
    <location filename="../src/cmd/lc_commandItems.h" line="878" />
@@ -26072,7 +26072,7 @@ Molimo, navedite drugačiju vrednost.</translation>
    <location filename="../src/cmd/lc_commandItems.h" line="879" />
    <source>ha</source>
    <comment>draw hatch</comment>
-   <translation>ша</translation>
+   <translation>ha</translation>
   </message>
   <message>
    <location filename="../src/cmd/lc_commandItems.h" line="884" />
@@ -26150,7 +26150,7 @@ Molimo, navedite drugačiju vrednost.</translation>
    <location filename="../src/cmd/lc_commandItems.h" line="925" />
    <source>sg</source>
    <comment>snap - grid</comment>
-   <translation>mg</translation>
+   <translation>sg</translation>
   </message>
   <message>
    <location filename="../src/cmd/lc_commandItems.h" line="930" />
@@ -26162,7 +26162,7 @@ Molimo, navedite drugačiju vrednost.</translation>
    <location filename="../src/cmd/lc_commandItems.h" line="931" />
    <source>si</source>
    <comment>snap - intersection</comment>
-   <translation>pi</translation>
+   <translation>si</translation>
   </message>
   <message>
    <location filename="../src/cmd/lc_commandItems.h" line="936" />
@@ -26174,7 +26174,7 @@ Molimo, navedite drugačiju vrednost.</translation>
    <location filename="../src/cmd/lc_commandItems.h" line="937" />
    <source>sm</source>
    <comment>snap - middle points</comment>
-   <translation>st</translation>
+   <translation>sm</translation>
   </message>
   <message>
    <location filename="../src/cmd/lc_commandItems.h" line="942" />
@@ -26186,7 +26186,7 @@ Molimo, navedite drugačiju vrednost.</translation>
    <location filename="../src/cmd/lc_commandItems.h" line="943" />
    <source>sn</source>
    <comment>snap - on entity</comment>
-   <translation>pe</translation>
+   <translation>sn</translation>
   </message>
   <message>
    <location filename="../src/cmd/lc_commandItems.h" line="944" />
@@ -26276,7 +26276,7 @@ Molimo, navedite drugačiju vrednost.</translation>
    <location filename="../src/cmd/lc_commandItems.h" line="993" />
    <source>kill</source>
    <comment>kill all actions</comment>
-   <translation>ubij</translation>
+   <translation>kill</translation>
   </message>
   <message>
    <location filename="../src/cmd/lc_commandItems.h" line="994" />
@@ -26294,7 +26294,7 @@ Molimo, navedite drugačiju vrednost.</translation>
    <location filename="../src/cmd/lc_commandItems.h" line="1000" />
    <source>undo</source>
    <comment>undo cycle</comment>
-   <translation>poništi</translation>
+   <translation>undo</translation>
   </message>
   <message>
    <location filename="../src/cmd/lc_commandItems.h" line="1001" />
@@ -26313,7 +26313,7 @@ Molimo, navedite drugačiju vrednost.</translation>
    <location filename="../src/cmd/lc_commandItems.h" line="1007" />
    <source>redo</source>
    <comment>redo cycle</comment>
-   <translation>ponovi</translation>
+   <translation>redo</translation>
   </message>
   <message>
    <location filename="../src/cmd/lc_commandItems.h" line="1008" />
@@ -26524,7 +26524,7 @@ Molimo, navedite drugačiju vrednost.</translation>
   <message>
    <location filename="../src/cmd/lc_commandItems.h" line="1085" />
    <source>rows</source>
-   <translation>редови</translation>
+   <translation>rows</translation>
   </message>
   <message>
    <location filename="../src/cmd/lc_commandItems.h" line="1086" />
@@ -26540,7 +26540,7 @@ Molimo, navedite drugačiju vrednost.</translation>
   <message>
    <location filename="../src/cmd/lc_commandItems.h" line="1088" />
    <source>trim</source>
-   <translation>обрезати</translation>
+   <translation>trim</translation>
   </message>
   <message>
    <location filename="../src/cmd/lc_commandItems.h" line="1091" />
@@ -26555,7 +26555,7 @@ Molimo, navedite drugačiju vrednost.</translation>
   <message>
    <location filename="../src/cmd/lc_commandItems.h" line="1093" />
    <source>p</source>
-   <translation>п</translation>
+   <translation>p</translation>
   </message>
   <message>
    <location filename="../src/cmd/lc_commandItems.h" line="1094" />
@@ -26595,12 +26595,12 @@ Molimo, navedite drugačiju vrednost.</translation>
   <message>
    <location filename="../src/cmd/lc_commandItems.h" line="1105" />
    <source>pos</source>
-   <translation>позиција</translation>
+   <translation>pos</translation>
   </message>
   <message>
    <location filename="../src/cmd/lc_commandItems.h" line="1106" />
    <source>size</source>
-   <translation>величина</translation>
+   <translation>size</translation>
   </message>
   <message>
    <location filename="../src/cmd/lc_commandItems.h" line="1107" />
@@ -26626,7 +26626,7 @@ Molimo, navedite drugačiju vrednost.</translation>
   <message>
    <location filename="../src/cmd/lc_commandItems.h" line="1111" />
    <source>str</source>
-   <translation>niz</translation>
+   <translation>str</translation>
   </message>
   <message>
    <location filename="../src/cmd/lc_commandItems.h" line="1112" />
@@ -26641,22 +26641,22 @@ Molimo, navedite drugačiju vrednost.</translation>
   <message>
    <location filename="../src/cmd/lc_commandItems.h" line="1115" />
    <source>topl</source>
-   <translation>vrh</translation>
+   <translation>topl</translation>
   </message>
   <message>
    <location filename="../src/cmd/lc_commandItems.h" line="1116" />
    <source>top</source>
-   <translation>vrh</translation>
+   <translation>top</translation>
   </message>
   <message>
    <location filename="../src/cmd/lc_commandItems.h" line="1117" />
    <source>topr</source>
-   <translation>gornji desni ugao</translation>
+   <translation>topr</translation>
   </message>
   <message>
    <location filename="../src/cmd/lc_commandItems.h" line="1118" />
    <source>left</source>
-   <translation>levo</translation>
+   <translation>left</translation>
   </message>
   <message>
    <location filename="../src/cmd/lc_commandItems.h" line="1119" />
@@ -26706,12 +26706,12 @@ Molimo, navedite drugačiju vrednost.</translation>
   <message>
    <location filename="../src/cmd/lc_commandItems.h" line="1128" />
    <source>hor</source>
-   <translation>хоризонтално</translation>
+   <translation>hor</translation>
   </message>
   <message>
    <location filename="../src/cmd/lc_commandItems.h" line="1129" />
    <source>vert</source>
-   <translation>вертикално</translation>
+   <translation>vert</translation>
   </message>
   <message>
    <location filename="../src/cmd/lc_commandItems.h" line="1132" />
@@ -26736,7 +26736,7 @@ Molimo, navedite drugačiju vrednost.</translation>
   <message>
    <location filename="../src/cmd/lc_commandItems.h" line="1137" />
    <source>quad</source>
-   <translation>квадрат</translation>
+   <translation>quad</translation>
   </message>
   <message>
    <location filename="../src/cmd/lc_commandItems.h" line="1138" />
@@ -26776,22 +26776,22 @@ Molimo, navedite drugačiju vrednost.</translation>
   <message>
    <location filename="../src/cmd/lc_commandItems.h" line="1147" />
    <source>end</source>
-   <translation>крај</translation>
+   <translation>end</translation>
   </message>
   <message>
    <location filename="../src/cmd/lc_commandItems.h" line="1148" />
    <source>both</source>
-   <translation>обе стране</translation>
+   <translation>both</translation>
   </message>
   <message>
    <location filename="../src/cmd/lc_commandItems.h" line="1149" />
    <source>none</source>
-   <translation>ниједан</translation>
+   <translation>none</translation>
   </message>
   <message>
    <location filename="../src/cmd/lc_commandItems.h" line="1150" />
    <source>fit</source>
-   <translation>прилагоди</translation>
+   <translation>fit</translation>
   </message>
   <message>
    <location filename="../src/cmd/lc_commandItems.h" line="1151" />
@@ -26816,7 +26816,7 @@ Molimo, navedite drugačiju vrednost.</translation>
   <message>
    <location filename="../src/cmd/lc_commandItems.h" line="1158" />
    <source>sym</source>
-   <translation>simetrija</translation>
+   <translation>sym</translation>
   </message>
   <message>
    <location filename="../src/cmd/lc_commandItems.h" line="1159" />
@@ -26827,13 +26827,13 @@ Molimo, navedite drugačiju vrednost.</translation>
    <location filename="../src/cmd/lc_commandItems.h" line="1168" />
    <source>ang</source>
    <comment>angle</comment>
-   <translation>ugao</translation>
+   <translation>ang</translation>
   </message>
   <message>
    <location filename="../src/cmd/lc_commandItems.h" line="1169" />
    <source>an</source>
    <comment>angle</comment>
-   <translation>ugao</translation>
+   <translation>an</translation>
   </message>
   <message>
    <location filename="../src/cmd/lc_commandItems.h" line="1171" />
@@ -26844,19 +26844,19 @@ Molimo, navedite drugačiju vrednost.</translation>
    <location filename="../src/cmd/lc_commandItems.h" line="1172" />
    <source>cen</source>
    <comment>center</comment>
-   <translation>centar</translation>
+   <translation>cen</translation>
   </message>
   <message>
    <location filename="../src/cmd/lc_commandItems.h" line="1173" />
    <source>ce</source>
    <comment>center</comment>
-   <translation>centar</translation>
+   <translation>ce</translation>
   </message>
   <message>
    <location filename="../src/cmd/lc_commandItems.h" line="1177" />
    <source>cl</source>
    <comment>chordlen</comment>
-   <translation>blizu</translation>
+   <translation>cl</translation>
   </message>
   <message>
    <location filename="../src/cmd/lc_commandItems.h" line="1180" />
@@ -26868,7 +26868,7 @@ Molimo, navedite drugačiju vrednost.</translation>
    <location filename="../src/cmd/lc_commandItems.h" line="1183" />
    <source>cols</source>
    <comment>columns</comment>
-   <translation>колоне</translation>
+   <translation>cols</translation>
   </message>
   <message>
    <location filename="../src/cmd/lc_commandItems.h" line="1184" />
@@ -26898,7 +26898,7 @@ Molimo, navedite drugačiju vrednost.</translation>
    <location filename="../src/cmd/lc_commandItems.h" line="1191" />
    <source>fact</source>
    <comment>factor</comment>
-   <translation>чињеница</translation>
+   <translation>fact</translation>
   </message>
   <message>
    <location filename="../src/cmd/lc_commandItems.h" line="1192" />
@@ -26910,7 +26910,7 @@ Molimo, navedite drugačiju vrednost.</translation>
    <location filename="../src/cmd/lc_commandItems.h" line="1195" />
    <source>eqn</source>
    <comment>equation</comment>
-   <translation>једначина</translation>
+   <translation>eqn</translation>
   </message>
   <message>
    <location filename="../src/cmd/lc_commandItems.h" line="1196" />
@@ -26921,7 +26921,7 @@ Molimo, navedite drugačiju vrednost.</translation>
   <message>
    <location filename="../src/cmd/lc_commandItems.h" line="1198" />
    <source>help</source>
-   <translation>помоћ</translation>
+   <translation>help</translation>
   </message>
   <message>
    <location filename="../src/cmd/lc_commandItems.h" line="1199" />
@@ -26939,13 +26939,13 @@ Molimo, navedite drugačiju vrednost.</translation>
    <location filename="../src/cmd/lc_commandItems.h" line="1202" />
    <source>len</source>
    <comment>length</comment>
-   <translation>дуж</translation>
+   <translation>len</translation>
   </message>
   <message>
    <location filename="../src/cmd/lc_commandItems.h" line="1203" />
    <source>l</source>
    <comment>length</comment>
-   <translation>д</translation>
+   <translation>l</translation>
   </message>
   <message>
    <location filename="../src/cmd/lc_commandItems.h" line="1205" />
@@ -26993,19 +26993,19 @@ Molimo, navedite drugačiju vrednost.</translation>
    <location filename="../src/cmd/lc_commandItems.h" line="1214" />
    <source>num</source>
    <comment>number</comment>
-   <translation>број</translation>
+   <translation>num</translation>
   </message>
   <message>
    <location filename="../src/cmd/lc_commandItems.h" line="1215" />
    <source>n</source>
    <comment>number</comment>
-   <translation>н</translation>
+   <translation>n</translation>
   </message>
   <message>
    <location filename="../src/cmd/lc_commandItems.h" line="1218" />
    <source>ra</source>
    <comment>radius</comment>
-   <translation>ра</translation>
+   <translation>ra</translation>
   </message>
   <message>
    <location filename="../src/cmd/lc_commandItems.h" line="1220" />
@@ -27018,13 +27018,13 @@ Molimo, navedite drugačiju vrednost.</translation>
    <location filename="../src/cmd/lc_commandItems.h" line="1222" />
    <source>rev</source>
    <comment>reversed</comment>
-   <translation>обрнут</translation>
+   <translation>rev</translation>
   </message>
   <message>
    <location filename="../src/cmd/lc_commandItems.h" line="1224" />
    <source>row</source>
    <comment>row</comment>
-   <translation>ред</translation>
+   <translation>row</translation>
   </message>
   <message>
    <location filename="../src/cmd/lc_commandItems.h" line="1226" />
@@ -27036,56 +27036,56 @@ Molimo, navedite drugačiju vrednost.</translation>
    <location filename="../src/cmd/lc_commandItems.h" line="1227" />
    <source>rs</source>
    <comment>rowspacing for inserts</comment>
-   <translation>рс</translation>
+   <translation>rs</translation>
   </message>
   <message>
    <location filename="../src/cmd/lc_commandItems.h" line="1229" />
    <source>text</source>
-   <translation>текст</translation>
+   <translation>text</translation>
   </message>
   <message>
    <location filename="../src/cmd/lc_commandItems.h" line="1230" />
    <source>t</source>
    <comment>text</comment>
-   <translation>т</translation>
+   <translation>t</translation>
   </message>
   <message>
    <location filename="../src/cmd/lc_commandItems.h" line="1233" />
    <source>t</source>
    <comment>through</comment>
-   <translation>т</translation>
+   <translation>t</translation>
   </message>
   <message>
    <location filename="../src/cmd/lc_commandItems.h" line="1235" />
    <source>undo</source>
-   <translation>поништи</translation>
+   <translation>undo</translation>
   </message>
   <message>
    <location filename="../src/cmd/lc_commandItems.h" line="1238" />
    <source>redo</source>
-   <translation>понови</translation>
+   <translation>redo</translation>
   </message>
   <message>
    <location filename="../src/cmd/lc_commandItems.h" line="1239" />
    <source>r</source>
    <comment>redo redo cycle</comment>
-   <translation>п</translation>
+   <translation>r</translation>
   </message>
   <message>
    <location filename="../src/cmd/lc_commandItems.h" line="1241" />
    <source>back</source>
-   <translation>назад</translation>
+   <translation>back</translation>
   </message>
   <message>
    <location filename="../src/cmd/lc_commandItems.h" line="1242" />
    <source>b</source>
    <comment>back</comment>
-   <translation>н</translation>
+   <translation>b</translation>
   </message>
   <message>
    <location filename="../src/cmd/lc_commandItems.h" line="1244" />
    <source>bw</source>
-   <translation>црно-бело</translation>
+   <translation>bw</translation>
   </message>
   <message>
    <location filename="../src/cmd/lc_commandItems.h" line="1245" />
@@ -27202,25 +27202,25 @@ Molimo, navedite drugačiju vrednost.</translation>
    <location filename="../src/lib/engine/rs_units.cpp" line="204" />
    <source>None</source>
    <comment>unknown length unit</comment>
-   <translation>Ништа</translation>
+   <translation>None</translation>
   </message>
   <message>
    <location filename="../src/lib/engine/rs_units.cpp" line="206" />
    <location filename="../src/lib/engine/rs_units.cpp" line="262" />
    <source>Inch</source>
-   <translation>Инч</translation>
+   <translation>Inch</translation>
   </message>
   <message>
    <location filename="../src/lib/engine/rs_units.cpp" line="208" />
    <location filename="../src/lib/engine/rs_units.cpp" line="264" />
    <source>Foot</source>
-   <translation>Стопа</translation>
+   <translation>Foot</translation>
   </message>
   <message>
    <location filename="../src/lib/engine/rs_units.cpp" line="210" />
    <location filename="../src/lib/engine/rs_units.cpp" line="266" />
    <source>Mile</source>
-   <translation>Миља</translation>
+   <translation>Mile</translation>
   </message>
   <message>
    <location filename="../src/lib/engine/rs_units.cpp" line="212" />
@@ -27256,13 +27256,13 @@ Molimo, navedite drugačiju vrednost.</translation>
    <location filename="../src/lib/engine/rs_units.cpp" line="222" />
    <location filename="../src/lib/engine/rs_units.cpp" line="278" />
    <source>Mil</source>
-   <translation>Milja</translation>
+   <translation>Mil</translation>
   </message>
   <message>
    <location filename="../src/lib/engine/rs_units.cpp" line="224" />
    <location filename="../src/lib/engine/rs_units.cpp" line="280" />
    <source>Yard</source>
-   <translation>Jard</translation>
+   <translation>Yard</translation>
   </message>
   <message>
    <location filename="../src/lib/engine/rs_units.cpp" line="226" />
@@ -28095,7 +28095,7 @@ Molimo, navedite drugačiju vrednost.</translation>
    <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="468" />
    <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="552" />
    <source>Any</source>
-   <translation>Bilo koji</translation>
+   <translation>Any</translation>
   </message>
   <message>
    <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="472" />
@@ -28105,7 +28105,7 @@ Molimo, navedite drugačiju vrednost.</translation>
   <message>
    <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="476" />
    <source>Line</source>
-   <translation>Linija</translation>
+   <translation>Line</translation>
   </message>
   <message>
    <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="480" />
@@ -28115,7 +28115,7 @@ Molimo, navedite drugačiju vrednost.</translation>
   <message>
    <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="484" />
    <source>Arc</source>
-   <translation>Luk</translation>
+   <translation>Arc</translation>
   </message>
   <message>
    <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="488" />
@@ -28200,12 +28200,12 @@ Molimo, navedite drugačiju vrednost.</translation>
   <message>
    <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="556" />
    <source>None</source>
-   <translation>Ништа</translation>
+   <translation>None</translation>
   </message>
   <message>
    <location filename="../src/ui/dialogs/creators/lc_dlgwidgetcreator.cpp" line="88" />
    <source>All</source>
-   <translation>Све</translation>
+   <translation>All</translation>
   </message>
   <message>
    <location filename="../src/ui/dialogs/file/export/layers/lc_exportlayersdialogservice.cpp" line="180" />
@@ -28425,8 +28425,8 @@ Do you want to replace it?</source>
   <message>
    <location filename="../src/ui/dock_widgets/command_line/qg_commandedit.cpp" line="271" />
    <source>cal </source>
-   <comment>command to trigger cli calculator</comment>
-   <translation>kal</translation>
+        <comment>command to trigger cli calculator</comment>
+        <translation>cal</translation>
   </message>
   <message>
    <location filename="../src/ui/dock_widgets/command_line/qg_commandedit.cpp" line="272" />
@@ -28437,7 +28437,7 @@ Do you want to replace it?</source>
   <message>
    <location filename="../src/ui/dock_widgets/command_line/qg_commandedit.cpp" line="308" />
    <source>cal</source>
-   <translation>kal</translation>
+   <translation>cal</translation>
   </message>
   <message>
    <location filename="../src/ui/dock_widgets/command_line/qg_commandedit.cpp" line="314" />
@@ -28659,7 +28659,7 @@ This block cannot be inserted.</source>
   <message>
    <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="609" />
    <source>Line</source>
-   <translation>Линија</translation>
+   <translation>Line</translation>
   </message>
   <message>
    <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="610" />
@@ -28674,7 +28674,7 @@ This block cannot be inserted.</source>
   <message>
    <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="620" />
    <source>Arc</source>
-   <translation>Лук</translation>
+   <translation>Arc</translation>
   </message>
   <message>
    <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="621" />
@@ -30123,7 +30123,7 @@ End: (%8 , %9)</source>
   <message>
    <location filename="../src/actions/drawing/info/rs_actioninfodist.cpp" line="98" />
    <source>Info</source>
-   <translation>Informacije</translation>
+   <translation>Info</translation>
   </message>
   <message>
    <location filename="../src/actions/drawing/info/rs_actioninfodist.cpp" line="99" />
@@ -30200,7 +30200,7 @@ Point: (%8 , %9)</source>
   <message>
    <location filename="../src/actions/drawing/info/rs_actioninfodist2.cpp" line="306" />
    <source>Info</source>
-   <translation>Информације</translation>
+   <translation>Info</translation>
   </message>
   <message>
    <location filename="../src/actions/drawing/info/rs_actioninfodist2.cpp" line="307" />
@@ -30284,7 +30284,7 @@ Point: (%8 , %9)</source>
   <message>
    <location filename="../src/lib/actions/rs_actioninterface.cpp" line="572" />
    <source>Back</source>
-   <translation>Nazad</translation>
+   <translation>Back</translation>
   </message>
   <message>
    <location filename="../src/lib/actions/rs_actioninterface.cpp" line="594" />
@@ -30364,7 +30364,7 @@ Point: (%8 , %9)</source>
   <message>
    <location filename="../src/actions/drawing/modify/rs_actionmodifybevel.cpp" line="163" />
    <source>Trim</source>
-   <translation>Obreži</translation>
+   <translation>Trim</translation>
   </message>
   <message>
    <location filename="../src/actions/drawing/modify/rs_actionmodifybevel.cpp" line="164" />
@@ -31114,7 +31114,7 @@ Point: (%8 , %9)</source>
   <message>
    <location filename="../src/actions/drawing/modify/rs_actionmodifytrim.cpp" line="112" />
    <source>Trim</source>
-   <translation>Подрезивање</translation>
+   <translation>Trim</translation>
   </message>
   <message>
    <location filename="../src/actions/drawing/modify/rs_actionmodifytrim.cpp" line="114" />
@@ -31703,7 +31703,7 @@ Point: (%8 , %9)</source>
   <message>
    <location filename="../src/lib/actions/rs_snapper.cpp" line="993" />
    <source>Grid</source>
-   <translation>Mreža</translation>
+   <translation>Grid</translation>
   </message>
   <message>
    <location filename="../src/lib/actions/rs_snapper.cpp" line="995" />
@@ -31862,7 +31862,7 @@ Point: (%8 , %9)</source>
   <message>
    <location filename="../src/ui/action_options/modify/qg_beveloptions.ui" line="62" />
    <source>Trim</source>
-   <translation>Obrezivanje</translation>
+   <translation>Trim</translation>
   </message>
   <message>
    <location filename="../src/ui/action_options/modify/qg_beveloptions.ui" line="85" />
@@ -32069,7 +32069,7 @@ Point: (%8 , %9)</source>
    <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="356" />
    <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="386" />
    <source>Free</source>
-   <translation>Слободно</translation>
+   <translation>Free</translation>
   </message>
   <message>
    <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="376" />
@@ -32296,7 +32296,7 @@ Point: (%8 , %9)</source>
   <message>
    <location filename="../src/ui/action_options/line/qg_lineangleoptions.ui" line="224" />
    <source>End</source>
-   <translation>Kraj</translation>
+   <translation>End</translation>
   </message>
   <message>
    <location filename="../src/ui/action_options/line/qg_lineangleoptions.ui" line="232" />
@@ -32362,7 +32362,7 @@ Point: (%8 , %9)</source>
   <message>
    <location filename="../src/ui/action_options/line/qg_lineoptions.ui" line="75" />
    <source>Undo</source>
-   <translation>Поништи</translation>
+   <translation>Undo</translation>
   </message>
   <message>
    <location filename="../src/ui/action_options/line/qg_lineoptions.ui" line="82" />
@@ -32372,7 +32372,7 @@ Point: (%8 , %9)</source>
   <message>
    <location filename="../src/ui/action_options/line/qg_lineoptions.ui" line="85" />
    <source>Redo</source>
-   <translation>Понови</translation>
+   <translation>Redo</translation>
   </message>
  </context>
  <context>
@@ -32440,7 +32440,7 @@ Point: (%8 , %9)</source>
   <message>
    <location filename="../src/ui/action_options/line/lc_lineoptions.ui" line="250" />
    <source>Redo</source>
-   <translation>Понови</translation>
+   <translation>Redo</translation>
   </message>
   <message>
    <location filename="../src/ui/action_options/line/lc_lineoptions.ui" line="257" />
@@ -32450,7 +32450,7 @@ Point: (%8 , %9)</source>
   <message>
    <location filename="../src/ui/action_options/line/lc_lineoptions.ui" line="260" />
    <source>Undo</source>
-   <translation>Поништи</translation>
+   <translation>Undo</translation>
   </message>
   <message>
    <location filename="../src/ui/action_options/line/lc_lineoptions.ui" line="267" />
@@ -32471,7 +32471,7 @@ Point: (%8 , %9)</source>
   <message>
    <location filename="../src/ui/action_options/line/lc_lineoptions.ui" line="314" />
    <source>Rel</source>
-   <translation>Рел.</translation>
+   <translation>Rel</translation>
   </message>
   <message>
    <location filename="../src/ui/action_options/line/lc_lineoptions.ui" line="321" />
@@ -32807,7 +32807,7 @@ Point: (%8 , %9)</source>
   <message>
    <location filename="../src/ui/action_options/modify/qg_moverotateoptions.ui" line="137" />
    <source>Free</source>
-   <translation>Slobodno</translation>
+   <translation>Free</translation>
   </message>
   <message>
    <location filename="../src/ui/action_options/modify/qg_moverotateoptions.ui" line="144" />
@@ -32865,7 +32865,7 @@ Point: (%8 , %9)</source>
   <message>
    <location filename="../src/ui/action_options/polyline/qg_polylineoptions.ui" line="66" />
    <source>Undo</source>
-   <translation>Поништи</translation>
+   <translation>Undo</translation>
   </message>
   <message>
    <location filename="../src/ui/action_options/polyline/qg_polylineoptions.ui" line="73" />
@@ -32881,7 +32881,7 @@ Point: (%8 , %9)</source>
    <location filename="../src/ui/action_options/polyline/qg_polylineoptions.ui" line="96" />
    <location filename="../src/ui/action_options/polyline/qg_polylineoptions.ui" line="124" />
    <source>Line</source>
-   <translation>Линија</translation>
+   <translation>Line</translation>
   </message>
   <message>
    <location filename="../src/ui/action_options/polyline/qg_polylineoptions.ui" line="101" />
@@ -33087,7 +33087,7 @@ Point: (%8 , %9)</source>
   <message>
    <location filename="../src/ui/action_options/modify/qg_roundoptions.ui" line="62" />
    <source>Trim</source>
-   <translation>Обрежи</translation>
+   <translation>Trim</translation>
   </message>
   <message>
    <location filename="../src/ui/action_options/modify/qg_roundoptions.ui" line="85" />
@@ -33181,7 +33181,7 @@ Point: (%8 , %9)</source>
   <message>
    <location filename="../src/ui/action_options/spline/qg_splineoptions.ui" line="113" />
    <source>Undo</source>
-   <translation>Поништи</translation>
+   <translation>Undo</translation>
   </message>
  </context>
  <context>

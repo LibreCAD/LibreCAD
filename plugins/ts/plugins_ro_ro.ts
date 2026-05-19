@@ -191,7 +191,7 @@ prima bază, a doua bază, primul punct țintă, al doilea punct țintă.</trans
     <message>
         <location filename="../list/list.cpp" line="94" />
         <source>LINE</source>
-        <translation>LINIE</translation>
+        <translation>LINE</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="99" />
@@ -261,7 +261,7 @@ prima bază, a doua bază, primul punct țintă, al doilea punct țintă.</trans
     <message>
         <location filename="../list/list.cpp" line="141" />
         <source>area</source>
-        <translation>zonă</translation>
+        <translation>area</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="144" />
@@ -311,7 +311,7 @@ prima bază, a doua bază, primul punct țintă, al doilea punct țintă.</trans
     <message>
         <location filename="../list/list.cpp" line="189" />
         <source>Name</source>
-        <translation>Nume</translation>
+        <translation>Name</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="191" />
@@ -351,12 +351,12 @@ prima bază, a doua bază, primul punct țintă, al doilea punct țintă.</trans
     <message>
         <location filename="../list/list.cpp" line="216" />
         <source>No</source>
-        <translation>Nu</translation>
+        <translation>No</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="216" />
         <source>Yes</source>
-        <translation>Da</translation>
+        <translation>Yes</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="217" />
@@ -704,7 +704,7 @@ prima bază, a doua bază, primul punct țintă, al doilea punct țintă.</trans
     <message>
         <location filename="../divide/divide.cpp" line="474" />
         <source>LINE</source>
-        <translation>LINIE</translation>
+        <translation>LINE</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="479" />
@@ -773,7 +773,7 @@ prima bază, a doua bază, primul punct țintă, al doilea punct țintă.</trans
     <message>
         <location filename="../divide/divide.cpp" line="526" />
         <source>area</source>
-        <translation>zonă</translation>
+        <translation>area</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="530" />
@@ -788,12 +788,12 @@ prima bază, a doua bază, primul punct țintă, al doilea punct țintă.</trans
     <message>
         <location filename="../divide/divide.cpp" line="533" />
         <source>No</source>
-        <translation>Nu</translation>
+        <translation>No</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="533" />
         <source>Yes</source>
-        <translation>Da</translation>
+        <translation>Yes</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="534" />
@@ -826,7 +826,7 @@ prima bază, a doua bază, primul punct țintă, al doilea punct țintă.</trans
     <message>
         <location filename="../divide/dividedlg.cpp" line="75" />
         <source>OK</source>
-        <translation>BINE</translation>
+        <translation>OK</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="76" />
@@ -841,7 +841,7 @@ prima bază, a doua bază, primul punct țintă, al doilea punct țintă.</trans
     <message>
         <location filename="../divide/dividedlg.cpp" line="92" />
         <source>Size</source>
-        <translation>Dimensiune</translation>
+        <translation>Size</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="115" />
@@ -1226,7 +1226,7 @@ Utilizaţi t sau x în ecuaţia dumneavoastră ca variabilă/parametru.</transla
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="32" />
         <source>Draw</source>
-        <translation>Trage</translation>
+        <translation>Draw</translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="33" />

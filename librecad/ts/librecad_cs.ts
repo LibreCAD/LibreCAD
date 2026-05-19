@@ -28,7 +28,7 @@
     </message>
     <message>
         <source>Set</source>
-        <translation>Nastavit</translation>
+        <translation>Set</translation>
     </message>
 </context>
 <context>
@@ -126,7 +126,7 @@ Vzdálenost mezi body=%2 je větší než průměr=%3</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Zpět</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Select circle center</source>
@@ -147,7 +147,7 @@ nebo [%2]</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Zpět</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Y</source>
@@ -191,7 +191,7 @@ nebo [%2]</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Zpět</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify distance (%1) or [%2]</source>
@@ -234,7 +234,7 @@ nebo [%2]</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Zpět</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify the third point on parabola</source>
@@ -265,7 +265,7 @@ nebo [%2]</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Zpět</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify the start point on parabola</source>
@@ -288,11 +288,11 @@ nebo [%2]</translation>
     </message>
     <message>
         <source>Line</source>
-        <translation>Úsečka</translation>
+        <translation>Line</translation>
     </message>
     <message>
         <source>Arc</source>
-        <translation>Oblouk</translation>
+        <translation>Arc</translation>
     </message>
     <message>
         <source>Circle</source>
@@ -315,7 +315,7 @@ nebo [%2]</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Zpět</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify next control point</source>
@@ -933,7 +933,7 @@ nebo [%2]</translation>
     </message>
     <message>
         <source>Left</source>
-        <translation>Vlevo</translation>
+        <translation>Left</translation>
     </message>
     <message>
         <source>Right</source>
@@ -941,7 +941,7 @@ nebo [%2]</translation>
     </message>
     <message>
         <source>Top</source>
-        <translation>Nahoře</translation>
+        <translation>Top</translation>
     </message>
     <message>
         <source>Bottom</source>
@@ -1070,7 +1070,7 @@ nebo [%2]</translation>
     </message>
     <message>
         <source>Star</source>
-        <translation>Hvězda</translation>
+        <translation>Star</translation>
     </message>
     <message>
         <source>Break/Divide</source>
@@ -1205,14 +1205,14 @@ nebo [%2]</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Zpět</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
     <name>LC_CircleByArcOptions</name>
     <message>
         <source>Form</source>
-        <translation>Formulář</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <source>Active</source>
@@ -1247,7 +1247,7 @@ nebo [%2]</translation>
     <name>LC_CrossOptions</name>
     <message>
         <source>Form</source>
-        <translation>Formulář</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <source>Extension</source>
@@ -1271,7 +1271,7 @@ nebo [%2]</translation>
     </message>
     <message>
         <source>Type</source>
-        <translation>Typ</translation>
+        <translation>Type</translation>
     </message>
     <message>
         <source>Angle:</source>
@@ -1282,7 +1282,7 @@ nebo [%2]</translation>
     <name>LC_DeviceOptions</name>
     <message>
         <source>Form</source>
-        <translation>Formulář</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <source>Device</source>
@@ -1290,7 +1290,7 @@ nebo [%2]</translation>
     </message>
     <message>
         <source>Save</source>
-        <translation>Uložit</translation>
+        <translation>Save</translation>
     </message>
 </context>
 <context>
@@ -1304,7 +1304,7 @@ nebo [%2]</translation>
     <name>LC_DuplicateOptions</name>
     <message>
         <source>Form</source>
-        <translation>Formulář</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <source>Layer:</source>
@@ -1730,7 +1730,7 @@ nebo [%2]</translation>
     <name>LC_LineAngleRelOptions</name>
     <message>
         <source>Form</source>
-        <translation>Formulář</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <source>Offset:</source>
@@ -1738,7 +1738,7 @@ nebo [%2]</translation>
     </message>
     <message>
         <source>Free</source>
-        <translation>Volné</translation>
+        <translation>Free</translation>
     </message>
     <message>
         <source>Start</source>
@@ -1750,7 +1750,7 @@ nebo [%2]</translation>
     </message>
     <message>
         <source>End</source>
-        <translation>Konec</translation>
+        <translation>End</translation>
     </message>
     <message>
         <source>Line Snap:</source>
@@ -1758,7 +1758,7 @@ nebo [%2]</translation>
     </message>
     <message>
         <source>Rel</source>
-        <translation>Relativní</translation>
+        <translation>Rel</translation>
     </message>
     <message>
         <source>Divide</source>
@@ -1785,7 +1785,7 @@ nebo [%2]</translation>
     <name>LC_LineFromPointToLineOptions</name>
     <message>
         <source>Form</source>
-        <translation>Formulář</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <source>Angle:</source>
@@ -1821,7 +1821,7 @@ nebo [%2]</translation>
     </message>
     <message>
         <source>End</source>
-        <translation>Konec</translation>
+        <translation>End</translation>
     </message>
     <message>
         <source>Length:</source>
@@ -1836,7 +1836,7 @@ nebo [%2]</translation>
     <name>LC_LineJoinOptions</name>
     <message>
         <source>Form</source>
-        <translation>Formulář</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <source>Extend/Trim</source>
@@ -1891,7 +1891,7 @@ nebo [%2]</translation>
     <name>LC_LinePointsOptions</name>
     <message>
         <source>Form</source>
-        <translation>Formulář</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <source>Angle:</source>
@@ -1903,11 +1903,11 @@ nebo [%2]</translation>
     </message>
     <message>
         <source>None</source>
-        <translation>Žádný</translation>
+        <translation>None</translation>
     </message>
     <message>
         <source>Both</source>
-        <translation>Oba</translation>
+        <translation>Both</translation>
     </message>
     <message>
         <source>Start</source>
@@ -1915,7 +1915,7 @@ nebo [%2]</translation>
     </message>
     <message>
         <source>End</source>
-        <translation>Konec</translation>
+        <translation>End</translation>
     </message>
     <message>
         <source>Edge Points:</source>
@@ -1961,7 +1961,7 @@ nebo [%2]</translation>
     <name>LC_ModifyBreakDivideOptions</name>
     <message>
         <source>Form</source>
-        <translation>Formulář</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <source>Remove Segments</source>
@@ -1976,7 +1976,7 @@ nebo [%2]</translation>
     <name>LC_ModifyGapOptions</name>
     <message>
         <source>Form</source>
-        <translation>Formulář</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <source>Gap Snap:</source>
@@ -1988,7 +1988,7 @@ nebo [%2]</translation>
     </message>
     <message>
         <source>Free</source>
-        <translation>Volné</translation>
+        <translation>Free</translation>
     </message>
     <message>
         <source>Gap Size:</source>
@@ -2004,7 +2004,7 @@ nebo [%2]</translation>
     </message>
     <message>
         <source>End</source>
-        <translation>Konec</translation>
+        <translation>End</translation>
     </message>
     <message>
         <source>Line Snap:</source>
@@ -2170,7 +2170,7 @@ nebo [%2]</translation>
     </message>
     <message>
         <source>Save</source>
-        <translation>Uložit</translation>
+        <translation>Save</translation>
     </message>
     <message>
         <source>Apply Pen To Selection</source>
@@ -2275,7 +2275,7 @@ Upozorňujeme, že pokud uložíte pero pomocí editoru bez restartu, aktuální
     <name>LC_Rectangle1PointOptions</name>
     <message>
         <source>Form</source>
-        <translation>Formulář</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <source>Polyline</source>
@@ -2319,7 +2319,7 @@ Upozorňujeme, že pokud uložíte pero pomocí editoru bez restartu, aktuální
     </message>
     <message>
         <source>Top</source>
-        <translation>Nahoře</translation>
+        <translation>Top</translation>
     </message>
     <message>
         <source>Top-right</source>
@@ -2327,7 +2327,7 @@ Upozorňujeme, že pokud uložíte pero pomocí editoru bez restartu, aktuální
     </message>
     <message>
         <source>Left</source>
-        <translation>Vlevo</translation>
+        <translation>Left</translation>
     </message>
     <message>
         <source>Middle</source>
@@ -2367,7 +2367,7 @@ Upozorňujeme, že pokud uložíte pero pomocí editoru bez restartu, aktuální
     </message>
     <message>
         <source>Both</source>
-        <translation>Oba</translation>
+        <translation>Both</translation>
     </message>
     <message>
         <source>Vertical</source>
@@ -2390,7 +2390,7 @@ Upozorňujeme, že pokud uložíte pero pomocí editoru bez restartu, aktuální
     <name>LC_Rectangle2PointsOptions</name>
     <message>
         <source>Form</source>
-        <translation>Formulář</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <source>Snap shift</source>
@@ -2462,7 +2462,7 @@ Upozorňujeme, že pokud uložíte pero pomocí editoru bez restartu, aktuální
     </message>
     <message>
         <source>Both</source>
-        <translation>Oba</translation>
+        <translation>Both</translation>
     </message>
     <message>
         <source>Vertical</source>
@@ -2477,7 +2477,7 @@ Upozorňujeme, že pokud uložíte pero pomocí editoru bez restartu, aktuální
     <name>LC_Rectangle3PointsOptions</name>
     <message>
         <source>Form</source>
-        <translation>Formulář</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <source>Polyline</source>
@@ -2485,7 +2485,7 @@ Upozorňujeme, že pokud uložíte pero pomocí editoru bez restartu, aktuální
     </message>
     <message>
         <source>Both</source>
-        <translation>Oba</translation>
+        <translation>Both</translation>
     </message>
     <message>
         <source>Vertical</source>
@@ -2559,15 +2559,15 @@ Upozorňujeme, že pokud uložíte pero pomocí editoru bez restartu, aktuální
     <name>LC_SliceDivideOptions</name>
     <message>
         <source>Form</source>
-        <translation>Formulář</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <source>None</source>
-        <translation>Žádný</translation>
+        <translation>None</translation>
     </message>
     <message>
         <source>Both</source>
-        <translation>Oba</translation>
+        <translation>Both</translation>
     </message>
     <message>
         <source>Start</source>
@@ -2575,7 +2575,7 @@ Upozorňujeme, že pokud uložíte pero pomocí editoru bez restartu, aktuální
     </message>
     <message>
         <source>End</source>
-        <translation>Konec</translation>
+        <translation>End</translation>
     </message>
     <message>
         <source>Edge Tick:</source>
@@ -2583,7 +2583,7 @@ Upozorňujeme, že pokud uložíte pero pomocí editoru bez restartu, aktuální
     </message>
     <message>
         <source>Rel</source>
-        <translation>Relativní</translation>
+        <translation>Rel</translation>
     </message>
     <message>
         <source>Offset:</source>
@@ -2630,7 +2630,7 @@ Upozorňujeme, že pokud uložíte pero pomocí editoru bez restartu, aktuální
     <name>LC_StarOptions</name>
     <message>
         <source>Form</source>
-        <translation>Formulář</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <source>Radius Inner</source>
@@ -2665,7 +2665,7 @@ Upozorňujeme, že pokud uložíte pero pomocí editoru bez restartu, aktuální
     </message>
     <message>
         <source>Dock</source>
-        <translation>Kotva</translation>
+        <translation>Dock</translation>
     </message>
     <message>
         <source>Float</source>
@@ -2922,19 +2922,19 @@ Upozorňujeme, že pokud uložíte pero pomocí editoru bez restartu, aktuální
     </message>
     <message>
         <source>File</source>
-        <translation>Soubor</translation>
+        <translation>File</translation>
     </message>
     <message>
         <source>Edit</source>
-        <translation>Úpravy</translation>
+        <translation>Edit</translation>
     </message>
     <message>
         <source>View</source>
-        <translation>Zobrazit</translation>
+        <translation>View</translation>
     </message>
     <message>
         <source>Pen</source>
-        <translation>Pero</translation>
+        <translation>Pen</translation>
     </message>
     <message>
         <source>Tool Options</source>
@@ -3136,7 +3136,7 @@ Zkontrolujte jeho existenci a oprávnění.</translation>
     </message>
     <message>
         <source>Line</source>
-        <translation>Úsečka</translation>
+        <translation>Line</translation>
     </message>
     <message>
         <source>Circle</source>
@@ -3168,7 +3168,7 @@ Zkontrolujte jeho existenci a oprávnění.</translation>
     </message>
     <message>
         <source>Info</source>
-        <translation>Informace</translation>
+        <translation>Info</translation>
     </message>
     <message>
         <source>Dock Areas</source>
@@ -3224,7 +3224,7 @@ Zkontrolujte jeho existenci a oprávnění.</translation>
     </message>
     <message>
         <source>Copy</source>
-        <translation>Kopírovat</translation>
+        <translation>Copy</translation>
     </message>
     <message>
         <source>Contributors</source>
@@ -3318,11 +3318,11 @@ Zkontrolujte jeho existenci a oprávnění.</translation>
     </message>
     <message>
         <source>East</source>
-        <translation>Východ</translation>
+        <translation>East</translation>
     </message>
     <message>
         <source>West</source>
-        <translation>Západ</translation>
+        <translation>West</translation>
     </message>
     <message>
         <source>&amp;Arrange</source>
@@ -3355,7 +3355,7 @@ Zkontrolujte jeho existenci a oprávnění.</translation>
     <message>
         <source>Dock</source>
         <comment>Dock the command widget to the main window</comment>
-        <translation>Ukotvit</translation>
+        <translation>Dock</translation>
     </message>
     <message>
         <source>&amp;Wiki</source>
@@ -3573,7 +3573,7 @@ v samostatném okně</translation>
     </message>
     <message>
         <source>Red</source>
-        <translation>Červená</translation>
+        <translation>Red</translation>
     </message>
     <message>
         <source>Yellow</source>
@@ -3585,11 +3585,11 @@ v samostatném okně</translation>
     </message>
     <message>
         <source>Cyan</source>
-        <translation>Azurová</translation>
+        <translation>Cyan</translation>
     </message>
     <message>
         <source>Blue</source>
-        <translation>Modrá</translation>
+        <translation>Blue</translation>
     </message>
     <message>
         <source>Magenta</source>
@@ -3601,7 +3601,7 @@ v samostatném okně</translation>
     </message>
     <message>
         <source>Gray</source>
-        <translation>Šedá</translation>
+        <translation>Gray</translation>
     </message>
     <message>
         <source>Light Gray</source>
@@ -3703,7 +3703,7 @@ v samostatném okně</translation>
     </message>
     <message>
         <source>Dock</source>
-        <translation>Přístavba</translation>
+        <translation>Dock</translation>
     </message>
     <message>
         <source>Float</source>
@@ -3715,7 +3715,7 @@ v samostatném okně</translation>
     </message>
     <message>
         <source>Cmd</source>
-        <translation>Přík.</translation>
+        <translation>Cmd</translation>
     </message>
 </context>
 <context>
@@ -3794,7 +3794,7 @@ v samostatném okně</translation>
     <name>QG_DlgArc</name>
     <message>
         <source>Arc</source>
-        <translation>Oblouk</translation>
+        <translation>Arc</translation>
     </message>
     <message>
         <source>Layer:</source>
@@ -3986,7 +3986,7 @@ To rekurzivně modifikuje všechny entity samotného Bloku.</translation>
     </message>
     <message>
         <source>Area</source>
-        <translation>Oblast</translation>
+        <translation>Area</translation>
     </message>
 </context>
 <context>
@@ -4129,7 +4129,7 @@ Vyberte jednotku, kterou chcete použít pro nové výkresy, a svůj preferovan�
     <name>QG_DlgLine</name>
     <message>
         <source>Line</source>
-        <translation>Úsečka</translation>
+        <translation>Line</translation>
     </message>
     <message>
         <source>Layer:</source>
@@ -4244,11 +4244,11 @@ Vyberte jednotku, kterou chcete použít pro nové výkresy, a svůj preferovan�
     </message>
     <message>
         <source>Cut</source>
-        <translation>Vyjmout</translation>
+        <translation>Cut</translation>
     </message>
     <message>
         <source>Copy</source>
-        <translation>Kopírovat</translation>
+        <translation>Copy</translation>
     </message>
     <message>
         <source>Paste</source>
@@ -5048,7 +5048,7 @@ Vyberte jednotku, kterou chcete použít pro nové výkresy, a svůj preferovan�
     </message>
     <message>
         <source>auto</source>
-        <translation>automaticky</translation>
+        <translation>auto</translation>
     </message>
     <message>
         <source>&amp;Grid</source>
@@ -5068,7 +5068,7 @@ Vyberte jednotku, kterou chcete použít pro nové výkresy, a svůj preferovan�
     </message>
     <message>
         <source>Left</source>
-        <translation>Levý</translation>
+        <translation>Left</translation>
     </message>
     <message>
         <source>Top crosshair with isometric grid</source>
@@ -5076,7 +5076,7 @@ Vyberte jednotku, kterou chcete použít pro nové výkresy, a svůj preferovan�
     </message>
     <message>
         <source>Top</source>
-        <translation>Horní</translation>
+        <translation>Top</translation>
     </message>
     <message>
         <source>Right crosshair with isometric grid</source>
@@ -5491,7 +5491,7 @@ Vyberte jednotku, kterou chcete použít pro nové výkresy, a svůj preferovan�
     </message>
     <message>
         <source>All</source>
-        <translation>Všechny</translation>
+        <translation>All</translation>
     </message>
     <message>
         <source>Scrollbars</source>
@@ -5990,11 +5990,11 @@ so default step value required for baking</source>
     </message>
     <message>
         <source>Cut</source>
-        <translation>Vyjmout</translation>
+        <translation>Cut</translation>
     </message>
     <message>
         <source>Copy</source>
-        <translation>Kopírovat</translation>
+        <translation>Copy</translation>
     </message>
     <message>
         <source>Paste</source>
@@ -6586,7 +6586,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <source>Fit</source>
-        <translation>Přizpůsobit</translation>
+        <translation>Fit</translation>
     </message>
     <message>
         <source>Diameter (⌀)</source>
@@ -6736,7 +6736,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <source>auto</source>
-        <translation>automaticky</translation>
+        <translation>auto</translation>
     </message>
     <message>
         <source>Colouring</source>
@@ -6937,7 +6937,7 @@ Obsah pomocné hladiny se nezobrazí ve výstupu.</translation>
     </message>
     <message>
         <source>Dot</source>
-        <translation>Tečkovaná</translation>
+        <translation>Dot</translation>
     </message>
     <message>
         <source>Dot (small)</source>
@@ -6949,7 +6949,7 @@ Obsah pomocné hladiny se nezobrazí ve výstupu.</translation>
     </message>
     <message>
         <source>Dash</source>
-        <translation>Čárkovaná</translation>
+        <translation>Dash</translation>
     </message>
     <message>
         <source>Dash (small)</source>
@@ -7048,7 +7048,7 @@ Obsah pomocné hladiny se nezobrazí ve výstupu.</translation>
     </message>
     <message>
         <source>Left</source>
-        <translation>Levé</translation>
+        <translation>Left</translation>
     </message>
     <message>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
@@ -7135,7 +7135,7 @@ p, li { white-space: pre-wrap; }
     <name>QG_SnapToolBar</name>
     <message>
         <source>Snap</source>
-        <translation>Uchopení</translation>
+        <translation>Snap</translation>
     </message>
     <message>
         <source>Snap to Endpoints</source>
@@ -7266,7 +7266,7 @@ p, li { white-space: pre-wrap; }
     <name>QG_WidgetPen</name>
     <message>
         <source>Pen</source>
-        <translation>Pero</translation>
+        <translation>Pen</translation>
     </message>
     <message>
         <source>Line type:</source>
@@ -7748,15 +7748,15 @@ Přejete si ho přepsat?</translation>
     </message>
     <message>
         <source>Inch</source>
-        <translation>Palec</translation>
+        <translation>Inch</translation>
     </message>
     <message>
         <source>Foot</source>
-        <translation>Stopa</translation>
+        <translation>Foot</translation>
     </message>
     <message>
         <source>Mile</source>
-        <translation>Míle</translation>
+        <translation>Mile</translation>
     </message>
     <message>
         <source>Millimeter</source>
@@ -7780,7 +7780,7 @@ Přejete si ho přepsat?</translation>
     </message>
     <message>
         <source>Mil</source>
-        <translation>Milipalec</translation>
+        <translation>Mil</translation>
     </message>
     <message>
         <source>Yard</source>
@@ -7995,7 +7995,7 @@ Přejete si ho přepsat?</translation>
     <message>
         <source>line</source>
         <comment>draw line</comment>
-        <translation>čára</translation>
+        <translation>line</translation>
     </message>
     <message>
         <source>li</source>
@@ -8020,7 +8020,7 @@ Přejete si ho přepsat?</translation>
     <message>
         <source>free</source>
         <comment>draw freehand line</comment>
-        <translation>volný</translation>
+        <translation>free</translation>
     </message>
     <message>
         <source>fhl</source>
@@ -8125,12 +8125,12 @@ Přejete si ho přepsat?</translation>
     <message>
         <source>ei</source>
         <comment>inscribed ellipse</comment>
-        <translation>EI</translation>
+        <translation>ei</translation>
     </message>
     <message>
         <source>ie</source>
         <comment>inscribed ellipse</comment>
-        <translation>IE</translation>
+        <translation>ie</translation>
     </message>
     <message>
         <source>hatch</source>
@@ -8140,7 +8140,7 @@ Přejete si ho přepsat?</translation>
     <message>
         <source>ha</source>
         <comment>draw hatch</comment>
-        <translation>HA</translation>
+        <translation>ha</translation>
     </message>
     <message>
         <source>mtext</source>
@@ -8150,17 +8150,17 @@ Přejete si ho přepsat?</translation>
     <message>
         <source>mtxt</source>
         <comment>draw mtext</comment>
-        <translation>Text v více řádcích</translation>
+        <translation>mtxt</translation>
     </message>
     <message>
         <source>text</source>
         <comment>draw text</comment>
-        <translation>Text</translation>
+        <translation>text</translation>
     </message>
     <message>
         <source>txt</source>
         <comment>draw text</comment>
-        <translation>TXT</translation>
+        <translation>txt</translation>
     </message>
     <message>
         <source>regen</source>
@@ -8225,7 +8225,7 @@ Přejete si ho přepsat?</translation>
     <message>
         <source>kill</source>
         <comment>kill all actions</comment>
-        <translation>Zkaptit</translation>
+        <translation>kill</translation>
     </message>
     <message>
         <source>k</source>
@@ -8235,7 +8235,7 @@ Přejete si ho přepsat?</translation>
     <message>
         <source>undo</source>
         <comment>undo cycle</comment>
-        <translation>Zrušit</translation>
+        <translation>undo</translation>
     </message>
     <message>
         <source>u</source>
@@ -8245,7 +8245,7 @@ Přejete si ho přepsat?</translation>
     <message>
         <source>redo</source>
         <comment>redo cycle</comment>
-        <translation>Opravit</translation>
+        <translation>redo</translation>
     </message>
     <message>
         <source>r</source>
@@ -8275,7 +8275,7 @@ Přejete si ho přepsat?</translation>
     <message>
         <source>dv</source>
         <comment>dimension - vertical</comment>
-        <translation>Vertikální</translation>
+        <translation>dv</translation>
     </message>
     <message>
         <source>dimlinear</source>
@@ -8285,7 +8285,7 @@ Přejete si ho přepsat?</translation>
     <message>
         <source>dl</source>
         <comment>dimension - linear</comment>
-        <translation>Lineární</translation>
+        <translation>dl</translation>
     </message>
     <message>
         <source>dimangular</source>
@@ -8295,7 +8295,7 @@ Přejete si ho přepsat?</translation>
     <message>
         <source>dan</source>
         <comment>dimension - angular</comment>
-        <translation>Úhelný</translation>
+        <translation>dan</translation>
     </message>
     <message>
         <source>dimradial</source>
@@ -8315,7 +8315,7 @@ Přejete si ho přepsat?</translation>
     <message>
         <source>dd</source>
         <comment>dimension - diametric</comment>
-        <translation>Diametr</translation>
+        <translation>dd</translation>
     </message>
     <message>
         <source>dimleader</source>
@@ -8370,62 +8370,62 @@ Přejete si ho přepsat?</translation>
     <message>
         <source>rv</source>
         <comment>restrict - vertical</comment>
-        <translation>RV</translation>
+        <translation>rv</translation>
     </message>
     <message>
         <source>mv</source>
         <comment>modify - move (copy)</comment>
-        <translation>Pohyb</translation>
+        <translation>mv</translation>
     </message>
     <message>
         <source>bev</source>
         <comment>modify - bevel</comment>
-        <translation>Nápoj</translation>
+        <translation>bev</translation>
     </message>
     <message>
         <source>ch</source>
         <comment>modify - bevel</comment>
-        <translation>Změna</translation>
+        <translation>ch</translation>
     </message>
     <message>
         <source>fi</source>
         <comment>modify - fillet</comment>
-        <translation>Soubor</translation>
+        <translation>fi</translation>
     </message>
     <message>
         <source>cut</source>
         <comment>modify - divide (cut)</comment>
-        <translation>Vytnecut</translation>
+        <translation>cut</translation>
     </message>
     <message>
         <source>div</source>
         <comment>modify - divide (cut)</comment>
-        <translation>Dělit</translation>
+        <translation>div</translation>
     </message>
     <message>
         <source>mi</source>
         <comment>modify -  mirror</comment>
-        <translation>Min</translation>
+        <translation>mi</translation>
     </message>
     <message>
         <source>rev</source>
         <comment>modify -  revert direction</comment>
-        <translation>Revize</translation>
+        <translation>rev</translation>
     </message>
     <message>
         <source>ro</source>
         <comment>modify - rotate</comment>
-        <translation>Řádek</translation>
+        <translation>ro</translation>
     </message>
     <message>
         <source>sz</source>
         <comment>modify - scale</comment>
-        <translation>Rozměr</translation>
+        <translation>sz</translation>
     </message>
     <message>
         <source>tm</source>
         <comment>modify - trim (extend)</comment>
-        <translation>Čas</translation>
+        <translation>tm</translation>
     </message>
     <message>
         <source>tm2</source>
@@ -8435,27 +8435,27 @@ Přejete si ho přepsat?</translation>
     <message>
         <source>le</source>
         <comment>modify - lengthen</comment>
-        <translation>Délka</translation>
+        <translation>le</translation>
     </message>
     <message>
         <source>ss</source>
         <comment>modify - stretch</comment>
-        <translation>Stav</translation>
+        <translation>ss</translation>
     </message>
     <message>
         <source>er</source>
         <comment>modify - delete (erase)</comment>
-        <translation>Chyba</translation>
+        <translation>er</translation>
     </message>
     <message>
         <source>del</source>
         <comment>modify - delete (erase)</comment>
-        <translation>Odstranit</translation>
+        <translation>del</translation>
     </message>
     <message>
         <source>xp</source>
         <comment>explode block/polyline into entities</comment>
-        <translation>XP</translation>
+        <translation>xp</translation>
     </message>
     <message>
         <source>snapfree</source>
@@ -8465,7 +8465,7 @@ Přejete si ho přepsat?</translation>
     <message>
         <source>os</source>
         <comment>snap - free</comment>
-        <translation>OS</translation>
+        <translation>os</translation>
     </message>
     <message>
         <source>snapcenter</source>
@@ -8475,7 +8475,7 @@ Přejete si ho přepsat?</translation>
     <message>
         <source>sc</source>
         <comment>snap - center</comment>
-        <translation>SC</translation>
+        <translation>sc</translation>
     </message>
     <message>
         <source>snapdist</source>
@@ -8485,7 +8485,7 @@ Přejete si ho přepsat?</translation>
     <message>
         <source>sd</source>
         <comment>snap - distance to endpoints</comment>
-        <translation>SD</translation>
+        <translation>sd</translation>
     </message>
     <message>
         <source>snapend</source>
@@ -8495,7 +8495,7 @@ Přejete si ho přepsat?</translation>
     <message>
         <source>se</source>
         <comment>snap - end points</comment>
-        <translation>SE</translation>
+        <translation>se</translation>
     </message>
     <message>
         <source>snapgrid</source>
@@ -8505,7 +8505,7 @@ Přejete si ho přepsat?</translation>
     <message>
         <source>sg</source>
         <comment>snap - grid</comment>
-        <translation>SG</translation>
+        <translation>sg</translation>
     </message>
     <message>
         <source>snapintersection</source>
@@ -8515,7 +8515,7 @@ Přejete si ho přepsat?</translation>
     <message>
         <source>si</source>
         <comment>snap - intersection</comment>
-        <translation>SI</translation>
+        <translation>si</translation>
     </message>
     <message>
         <source>snapmiddle</source>
@@ -8525,7 +8525,7 @@ Přejete si ho přepsat?</translation>
     <message>
         <source>sm</source>
         <comment>snap - middle points</comment>
-        <translation>Střed</translation>
+        <translation>sm</translation>
     </message>
     <message>
         <source>snaponentity</source>
@@ -8535,12 +8535,12 @@ Přejete si ho přepsat?</translation>
     <message>
         <source>sn</source>
         <comment>snap - on entity</comment>
-        <translation>Entita</translation>
+        <translation>sn</translation>
     </message>
     <message>
         <source>np</source>
         <comment>snap - on entity</comment>
-        <translation>Bod</translation>
+        <translation>np</translation>
     </message>
     <message>
         <source>setrelativezero</source>
@@ -8550,7 +8550,7 @@ Přejete si ho přepsat?</translation>
     <message>
         <source>rz</source>
         <comment>set relative zero position</comment>
-        <translation>Relativní nula</translation>
+        <translation>rz</translation>
     </message>
     <message>
         <source>selectall</source>
@@ -8560,7 +8560,7 @@ Přejete si ho přepsat?</translation>
     <message>
         <source>sa</source>
         <comment>Select all entities</comment>
-        <translation>Vybrat vše</translation>
+        <translation>sa</translation>
     </message>
     <message>
         <source>deselectall</source>
@@ -8575,7 +8575,7 @@ Přejete si ho přepsat?</translation>
     <message>
         <source>attr</source>
         <comment>modify attribute</comment>
-        <translation>atribut</translation>
+        <translation>attr</translation>
     </message>
     <message>
         <source>ma</source>
@@ -8585,12 +8585,12 @@ Přejete si ho přepsat?</translation>
     <message>
         <source>prop</source>
         <comment>modify properties</comment>
-        <translation>vlastnost</translation>
+        <translation>prop</translation>
     </message>
     <message>
         <source>dist</source>
         <comment>distance point to point</comment>
-        <translation>vzdálenost</translation>
+        <translation>dist</translation>
     </message>
     <message>
         <source>dpp</source>
@@ -8600,7 +8600,7 @@ Přejete si ho přepsat?</translation>
     <message>
         <source>ang</source>
         <comment>measure angle</comment>
-        <translation>úhel</translation>
+        <translation>ang</translation>
     </message>
     <message>
         <source>angle</source>
@@ -8644,7 +8644,7 @@ Přejete si ho přepsat?</translation>
     </message>
     <message>
         <source>rows</source>
-        <translation>řádky</translation>
+        <translation>rows</translation>
     </message>
     <message>
         <source>rowspacing</source>
@@ -8661,7 +8661,7 @@ Přejete si ho přepsat?</translation>
     <message>
         <source>ang</source>
         <comment>angle</comment>
-        <translation>úhel</translation>
+        <translation>ang</translation>
     </message>
     <message>
         <source>an</source>
@@ -8695,7 +8695,7 @@ Přejete si ho přepsat?</translation>
     <message>
         <source>cols</source>
         <comment>columns</comment>
-        <translation>sloupce</translation>
+        <translation>cols</translation>
     </message>
     <message>
         <source>co</source>
@@ -8720,7 +8720,7 @@ Přejete si ho přepsat?</translation>
     <message>
         <source>fact</source>
         <comment>factor</comment>
-        <translation>fakt</translation>
+        <translation>fact</translation>
     </message>
     <message>
         <source>f</source>
@@ -8729,7 +8729,7 @@ Přejete si ho přepsat?</translation>
     </message>
     <message>
         <source>help</source>
-        <translation>pomoc</translation>
+        <translation>help</translation>
     </message>
     <message>
         <source>?</source>
@@ -8789,7 +8789,7 @@ Přejete si ho přepsat?</translation>
     <message>
         <source>num</source>
         <comment>number</comment>
-        <translation>Č.</translation>
+        <translation>num</translation>
     </message>
     <message>
         <source>n</source>
@@ -8809,12 +8809,12 @@ Přejete si ho přepsat?</translation>
     <message>
         <source>rev</source>
         <comment>reversed</comment>
-        <translation>Zvrácení</translation>
+        <translation>rev</translation>
     </message>
     <message>
         <source>row</source>
         <comment>row</comment>
-        <translation>Řádek</translation>
+        <translation>row</translation>
     </message>
     <message>
         <source>rowspacing</source>
@@ -8824,34 +8824,34 @@ Přejete si ho přepsat?</translation>
     <message>
         <source>rs</source>
         <comment>rowspacing for inserts</comment>
-        <translation>Řádková mezera</translation>
+        <translation>rs</translation>
     </message>
     <message>
         <source>text</source>
-        <translation>Text</translation>
+        <translation>text</translation>
     </message>
     <message>
         <source>t</source>
         <comment>text</comment>
-        <translation>Text</translation>
+        <translation>t</translation>
     </message>
     <message>
         <source>t</source>
         <comment>through</comment>
-        <translation>Text</translation>
+        <translation>t</translation>
     </message>
     <message>
         <source>undo</source>
-        <translation>Zrušit</translation>
+        <translation>undo</translation>
     </message>
     <message>
         <source>u</source>
         <comment>undo</comment>
-        <translation>Zrušit</translation>
+        <translation>u</translation>
     </message>
     <message>
         <source>redo</source>
-        <translation>Znovu</translation>
+        <translation>redo</translation>
     </message>
     <message>
         <source>r</source>
@@ -8860,7 +8860,7 @@ Přejete si ho přepsat?</translation>
     </message>
     <message>
         <source>back</source>
-        <translation>Zpět</translation>
+        <translation>back</translation>
     </message>
     <message>
         <source>b</source>
@@ -8908,7 +8908,7 @@ Přejete si ho přepsat?</translation>
     <message>
         <source>None</source>
         <comment>unknown length unit</comment>
-        <translation>Žádný</translation>
+        <translation>None</translation>
     </message>
     <message>
         <source>error reading file metadata in dwg file</source>
@@ -8959,7 +8959,7 @@ Přejete si ho přepsat?</translation>
     </message>
     <message>
         <source>Edit</source>
-        <translation>Upravit</translation>
+        <translation>Edit</translation>
     </message>
     <message>
         <source>Ellipse</source>
@@ -8967,7 +8967,7 @@ Přejete si ho přepsat?</translation>
     </message>
     <message>
         <source>File</source>
-        <translation>Soubor</translation>
+        <translation>File</translation>
     </message>
     <message>
         <source>Dimension</source>
@@ -8983,7 +8983,7 @@ Přejete si ho přepsat?</translation>
     </message>
     <message>
         <source>Line</source>
-        <translation>Čára</translation>
+        <translation>Line</translation>
     </message>
     <message>
         <source>Modify</source>
@@ -9011,7 +9011,7 @@ Přejete si ho přepsat?</translation>
     </message>
     <message>
         <source>Snap</source>
-        <translation>Přilnout</translation>
+        <translation>Snap</translation>
     </message>
     <message>
         <source>Snap Extras</source>
@@ -9019,7 +9019,7 @@ Přejete si ho přepsat?</translation>
     </message>
     <message>
         <source>View</source>
-        <translation>Zobrazení</translation>
+        <translation>View</translation>
     </message>
     <message>
         <source>Widgets</source>
@@ -9031,7 +9031,7 @@ Přejete si ho přepsat?</translation>
     </message>
     <message>
         <source>All</source>
-        <translation>Vše</translation>
+        <translation>All</translation>
     </message>
     <message>
         <source>Invalid objects removed:</source>
@@ -9120,7 +9120,7 @@ Přejete si ho přepsat?</translation>
     <message>
         <source>re</source>
         <comment>draw rectangle</comment>
-        <translation>Záznam</translation>
+        <translation>re</translation>
     </message>
     <message>
         <source>linepar</source>
@@ -9135,12 +9135,12 @@ Přejete si ho přepsat?</translation>
     <message>
         <source>pa</source>
         <comment>create parallel</comment>
-        <translation>Paralelní</translation>
+        <translation>pa</translation>
     </message>
     <message>
         <source>ll</source>
         <comment>create parallel</comment>
-        <translation>Délka řádku</translation>
+        <translation>ll</translation>
     </message>
     <message>
         <source>lineparthro</source>
@@ -9150,7 +9150,7 @@ Přejete si ho přepsat?</translation>
     <message>
         <source>lp</source>
         <comment>parallel through point</comment>
-        <translation>Bod řádku</translation>
+        <translation>lp</translation>
     </message>
     <message>
         <source>linebisect</source>
@@ -9165,7 +9165,7 @@ Přejete si ho přepsat?</translation>
     <message>
         <source>lt</source>
         <comment>tangent point and circle</comment>
-        <translation>délka</translation>
+        <translation>lt</translation>
     </message>
     <message>
         <source>linetan2c</source>
@@ -9175,7 +9175,7 @@ Přejete si ho přepsat?</translation>
     <message>
         <source>lc</source>
         <comment>tangent two circles</comment>
-        <translation>střed linie</translation>
+        <translation>lc</translation>
     </message>
     <message>
         <source>linetancper</source>
@@ -9185,7 +9185,7 @@ Přejete si ho přepsat?</translation>
     <message>
         <source>or</source>
         <comment>tangent line and circle</comment>
-        <translation>nebo</translation>
+        <translation>or</translation>
     </message>
     <message>
         <source>lineperp</source>
@@ -9195,7 +9195,7 @@ Přejete si ho přepsat?</translation>
     <message>
         <source>lo</source>
         <comment>perpendicular line</comment>
-        <translation>posun linie</translation>
+        <translation>lo</translation>
     </message>
     <message>
         <source>linerelang</source>
@@ -9205,7 +9205,7 @@ Přejete si ho přepsat?</translation>
     <message>
         <source>lr</source>
         <comment>relative line</comment>
-        <translation>poloměr linie</translation>
+        <translation>lr</translation>
     </message>
     <message>
         <source>polygoncencor</source>
@@ -9270,7 +9270,7 @@ Přejete si ho přepsat?</translation>
     <message>
         <source>cc</source>
         <comment>circle 2 points radius</comment>
-        <translation>CC</translation>
+        <translation>cc</translation>
     </message>
     <message>
         <source>circle3p</source>
@@ -9290,12 +9290,12 @@ Přejete si ho přepsat?</translation>
     <message>
         <source>cr</source>
         <comment>circle point radius</comment>
-        <translation>CR</translation>
+        <translation>cr</translation>
     </message>
     <message>
         <source>ccr</source>
         <comment>circle point radius</comment>
-        <translation>CCR</translation>
+        <translation>ccr</translation>
     </message>
     <message>
         <source>circletan2cp</source>
@@ -9305,7 +9305,7 @@ Přejete si ho přepsat?</translation>
     <message>
         <source>tr</source>
         <comment>circle 2 tangent point</comment>
-        <translation>TR</translation>
+        <translation>tr</translation>
     </message>
     <message>
         <source>circletan2p</source>
@@ -9520,7 +9520,7 @@ Přejete si ho přepsat?</translation>
     <message>
         <source>is</source>
         <comment>invert select</comment>
-        <translation>Je</translation>
+        <translation>is</translation>
     </message>
     <message>
         <source>ds</source>
@@ -9665,7 +9665,7 @@ Přejete si ho přepsat?</translation>
     <message>
         <source>xt</source>
         <comment>explode text strings</comment>
-        <translation>X</translation>
+        <translation>xt</translation>
     </message>
     <message>
         <source>modexplode</source>
@@ -9685,7 +9685,7 @@ Přejete si ho přepsat?</translation>
     <message>
         <source>id</source>
         <comment>distance point to point</comment>
-        <translation>ID</translation>
+        <translation>id</translation>
     </message>
     <message>
         <source>infodistep</source>
@@ -9695,12 +9695,12 @@ Přejete si ho přepsat?</translation>
     <message>
         <source>ii</source>
         <comment>distance entity to point</comment>
-        <translation>II</translation>
+        <translation>ii</translation>
     </message>
     <message>
         <source>dep</source>
         <comment>distance entity to point</comment>
-        <translation>Závislost</translation>
+        <translation>dep</translation>
     </message>
     <message>
         <source>infoangle</source>
@@ -9710,7 +9710,7 @@ Přejete si ho přepsat?</translation>
     <message>
         <source>ia</source>
         <comment>measure angle</comment>
-        <translation>IA</translation>
+        <translation>ia</translation>
     </message>
     <message>
         <source>infoarea</source>
@@ -9779,12 +9779,12 @@ Přejete si ho přepsat?</translation>
     <message>
         <source>eqn</source>
         <comment>equation</comment>
-        <translation>Rov.</translation>
+        <translation>eqn</translation>
     </message>
     <message>
         <source>eq</source>
         <comment>equation</comment>
-        <translation>Rov.</translation>
+        <translation>eq</translation>
     </message>
     <message>
         <source>Custom</source>
@@ -10287,7 +10287,7 @@ Přejete si ho přepsat?</translation>
     <message>
         <source>star</source>
         <comment>draw star</comment>
-        <translation>hvězda</translation>
+        <translation>star</translation>
     </message>
     <message>
         <source>st</source>
@@ -10332,7 +10332,7 @@ Přejete si ho přepsat?</translation>
     <message>
         <source>dup</source>
         <comment>duplicate entity</comment>
-        <translation>duplikát</translation>
+        <translation>dup</translation>
     </message>
     <message>
         <source>linejoin</source>
@@ -10342,7 +10342,7 @@ Přejete si ho přepsat?</translation>
     <message>
         <source>lj</source>
         <comment>lines join</comment>
-        <translation>Spojení řádků</translation>
+        <translation>lj</translation>
     </message>
     <message>
         <source>breakdivide</source>
@@ -10352,7 +10352,7 @@ Přejete si ho přepsat?</translation>
     <message>
         <source>bd</source>
         <comment>break or divide entity</comment>
-        <translation>Přerušení</translation>
+        <translation>bd</translation>
     </message>
     <message>
         <source>gapline</source>
@@ -10362,7 +10362,7 @@ Přejete si ho přepsat?</translation>
     <message>
         <source>gl</source>
         <comment>line gap</comment>
-        <translation>Mezvast</translation>
+        <translation>gl</translation>
     </message>
     <message>
         <source>parabola4p</source>
@@ -10397,7 +10397,7 @@ Přejete si ho přepsat?</translation>
     <message>
         <source>rort</source>
         <comment>draw orthogonal</comment>
-        <translation>Rotace</translation>
+        <translation>rort</translation>
     </message>
     <message>
         <source>point2line</source>
@@ -10422,19 +10422,19 @@ Přejete si ho přepsat?</translation>
     <message>
         <source>smm</source>
         <comment>snap middle manual</comment>
-        <translation>Střední ruční přizp.</translation>
+        <translation>smm</translation>
     </message>
     <message>
         <source>x</source>
-        <translation>X</translation>
+        <translation>x</translation>
     </message>
     <message>
         <source>y</source>
-        <translation>Y</translation>
+        <translation>y</translation>
     </message>
     <message>
         <source>p</source>
-        <translation>P</translation>
+        <translation>p</translation>
     </message>
     <message>
         <source>anglerel</source>
@@ -10466,11 +10466,11 @@ Přejete si ho přepsat?</translation>
     </message>
     <message>
         <source>pos</source>
-        <translation>Pozice</translation>
+        <translation>pos</translation>
     </message>
     <message>
         <source>size</source>
-        <translation>Velikost</translation>
+        <translation>size</translation>
     </message>
     <message>
         <source>bevels</source>
@@ -10490,7 +10490,7 @@ Přejete si ho přepsat?</translation>
     </message>
     <message>
         <source>str</source>
-        <translation>rový</translation>
+        <translation>str</translation>
     </message>
     <message>
         <source>round</source>
@@ -10502,19 +10502,19 @@ Přejete si ho přepsat?</translation>
     </message>
     <message>
         <source>topl</source>
-        <translation>Horní levý</translation>
+        <translation>topl</translation>
     </message>
     <message>
         <source>top</source>
-        <translation>Horní</translation>
+        <translation>top</translation>
     </message>
     <message>
         <source>topr</source>
-        <translation>Horní pravý</translation>
+        <translation>topr</translation>
     </message>
     <message>
         <source>left</source>
-        <translation>Doleva</translation>
+        <translation>left</translation>
     </message>
     <message>
         <source>middle</source>
@@ -10554,11 +10554,11 @@ Přejete si ho přepsat?</translation>
     </message>
     <message>
         <source>hor</source>
-        <translation>Horizontální</translation>
+        <translation>hor</translation>
     </message>
     <message>
         <source>vert</source>
-        <translation>Vertikální</translation>
+        <translation>vert</translation>
     </message>
     <message>
         <source>snap2</source>
@@ -10578,7 +10578,7 @@ Přejete si ho přepsat?</translation>
     </message>
     <message>
         <source>quad</source>
-        <translation>Čtverec</translation>
+        <translation>quad</translation>
     </message>
     <message>
         <source>noquad</source>
@@ -10610,19 +10610,19 @@ Přejete si ho přepsat?</translation>
     </message>
     <message>
         <source>end</source>
-        <translation>Konec</translation>
+        <translation>end</translation>
     </message>
     <message>
         <source>both</source>
-        <translation>Oba</translation>
+        <translation>both</translation>
     </message>
     <message>
         <source>none</source>
-        <translation>Žádný</translation>
+        <translation>none</translation>
     </message>
     <message>
         <source>fit</source>
-        <translation>Pasuje</translation>
+        <translation>fit</translation>
     </message>
     <message>
         <source>nofit</source>
@@ -10642,7 +10642,7 @@ Přejete si ho přepsat?</translation>
     </message>
     <message>
         <source>sym</source>
-        <translation>Symb.</translation>
+        <translation>sym</translation>
     </message>
     <message>
         <source>nosym</source>
@@ -10679,7 +10679,7 @@ Přejete si ho přepsat?</translation>
     <message>
         <source>cal </source>
         <comment>command to trigger cli calculator</comment>
-        <translation>Výpočet</translation>
+        <translation>cal</translation>
     </message>
     <message>
         <source>calculate </source>
@@ -10882,7 +10882,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Zpět</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -10901,7 +10901,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Zpět</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify dimension line location</source>
@@ -11001,7 +11001,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Zpět</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify dimension line location</source>
@@ -11067,7 +11067,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Zpět</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify start angle:</source>
@@ -11102,7 +11102,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Zpět</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify endpoint</source>
@@ -11129,7 +11129,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Zpět</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify end point</source>
@@ -11152,7 +11152,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Zpět</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify point on circle</source>
@@ -11179,7 +11179,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Zpět</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -11202,7 +11202,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Zpět</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify third point</source>
@@ -11229,7 +11229,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Zpět</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>radius=%1 is invalid (expression)</source>
@@ -11260,7 +11260,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Zpět</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify the third line</source>
@@ -11279,7 +11279,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Zpět</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify the second point on the tangent circle</source>
@@ -11310,7 +11310,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Zpět</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Select the center of the tangent circle</source>
@@ -11353,7 +11353,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Zpět</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify a point on the tangent circle</source>
@@ -11372,7 +11372,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Zpět</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Select the center of the tangent circle</source>
@@ -11407,7 +11407,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Zpět</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify the third point on ellipse</source>
@@ -11442,7 +11442,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Zpět</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify endpoint or length of minor axis:</source>
@@ -11477,7 +11477,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Zpět</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify the third point on ellipse</source>
@@ -11504,7 +11504,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Zpět</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify a point on ellipse or total distance to foci</source>
@@ -11535,7 +11535,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Zpět</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify the third line</source>
@@ -11632,7 +11632,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Zpět</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify next point</source>
@@ -11671,7 +11671,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Zpět</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Enter length:</source>
@@ -11698,7 +11698,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Zpět</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Enter bisector length:</source>
@@ -11741,7 +11741,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Zpět</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -11760,7 +11760,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Zpět</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -11802,7 +11802,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Zpět</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Number:</source>
@@ -11863,7 +11863,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Zpět</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Number:</source>
@@ -11894,7 +11894,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Zpět</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -11917,7 +11917,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Zpět</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -11932,7 +11932,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Zpět</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Select circle, arc or ellipse</source>
@@ -11947,7 +11947,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Zpět</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Select first circle or ellipse</source>
@@ -11986,7 +11986,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Zpět</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -12016,7 +12016,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Zpět</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify next point</source>
@@ -12083,7 +12083,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Zpět</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify next control point</source>
@@ -12110,7 +12110,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Zpět</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify second point</source>
@@ -12170,7 +12170,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Zpět</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Angle: %1</source>
@@ -12224,7 +12224,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Zpět</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Distance: %1 Cartesian: (%2 , %3), Polar: (%4&lt;%5)</source>
@@ -12251,7 +12251,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Zpět</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -12346,7 +12346,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Zpět</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Enter length 1:</source>
@@ -12377,7 +12377,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Zpět</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Cutting point is invalid.</source>
@@ -12408,7 +12408,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Zpět</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Entities not in the same polyline.</source>
@@ -12481,7 +12481,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Zpět</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -12500,7 +12500,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Zpět</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Invalid number of copies, use %1 </source>
@@ -12527,7 +12527,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Zpět</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Enter rotation angle:</source>
@@ -12542,7 +12542,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Zpět</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -12553,7 +12553,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Zpět</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify rotation center</source>
@@ -12580,7 +12580,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Zpět</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -12591,7 +12591,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Zpět</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify second entity</source>
@@ -12645,7 +12645,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Zpět</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify reference point</source>
@@ -12672,7 +12672,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Zpět</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Select second trim entity</source>
@@ -12707,7 +12707,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Zpět</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -12733,7 +12733,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Zpět</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>No Entity found.</source>
@@ -12788,7 +12788,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Zpět</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify next point</source>
@@ -12811,7 +12811,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Zpět</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>No Entity found.</source>
@@ -12846,7 +12846,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Zpět</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>No Entity found.</source>
@@ -12927,7 +12927,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Zpět</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>No Entity found.</source>
@@ -13099,7 +13099,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Zpět</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Choose first point of intersection line</source>
@@ -13122,7 +13122,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Zpět</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Click and drag for the selection window</source>
@@ -13152,7 +13152,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Zpět</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Select second entity</source>
@@ -13205,7 +13205,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Zpět</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -13274,7 +13274,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Trim</source>
-        <translation>Oříznout</translation>
+        <translation>Trim</translation>
     </message>
     <message>
         <source>Length 1:</source>
@@ -13502,7 +13502,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>End</source>
-        <translation>Konec</translation>
+        <translation>End</translation>
     </message>
 </context>
 <context>
@@ -13548,7 +13548,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Undo</source>
-        <translation>Zpět</translation>
+        <translation>Undo</translation>
     </message>
     <message>
         <source>Redo the last line drawing</source>
@@ -13556,7 +13556,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Redo</source>
-        <translation>Znovu</translation>
+        <translation>Redo</translation>
     </message>
 </context>
 <context>
@@ -13587,7 +13587,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Rel</source>
-        <translation>Relativní</translation>
+        <translation>Rel</translation>
     </message>
     <message>
         <source>Undo the last line drawing</source>
@@ -13595,7 +13595,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Undo</source>
-        <translation>Zpět</translation>
+        <translation>Undo</translation>
     </message>
     <message>
         <source>Form a closed contour from lines drawn</source>
@@ -13611,7 +13611,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Redo</source>
-        <translation>Znovu</translation>
+        <translation>Redo</translation>
     </message>
     <message>
         <source>Point</source>
@@ -13762,11 +13762,11 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Undo</source>
-        <translation>Zpět</translation>
+        <translation>Undo</translation>
     </message>
     <message>
         <source>Line</source>
-        <translation>Úsečka</translation>
+        <translation>Line</translation>
     </message>
     <message>
         <source>Tangential</source>
@@ -13848,7 +13848,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Trim</source>
-        <translation>Oříznout</translation>
+        <translation>Trim</translation>
     </message>
     <message>
         <source>Radius:</source>
@@ -13897,7 +13897,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Undo</source>
-        <translation>Zpět</translation>
+        <translation>Undo</translation>
     </message>
 </context>
 <context>
@@ -13954,7 +13954,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Name</source>
-        <translation>Název</translation>
+        <translation>Name</translation>
     </message>
     <message>
         <source>Create</source>

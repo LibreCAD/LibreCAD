@@ -27,7 +27,7 @@
     </message>
     <message>
         <source>Set</source>
-        <translation>Määra</translation>
+        <translation>Set</translation>
     </message>
 </context>
 <context>
@@ -125,7 +125,7 @@ punktide vaheline kaugus=%2 on suurem kui läbimõõt=%3</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Tagasi</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Select circle center</source>
@@ -146,7 +146,7 @@ või [%2]</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Tagasi</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Y</source>
@@ -190,7 +190,7 @@ või [%2]</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Tagasi</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify distance (%1) or [%2]</source>
@@ -233,7 +233,7 @@ või [%2]</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Tagasi</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify the third point on parabola</source>
@@ -264,7 +264,7 @@ või [%2]</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Tagasi</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify the start point on parabola</source>
@@ -287,11 +287,11 @@ või [%2]</translation>
     </message>
     <message>
         <source>Line</source>
-        <translation>Joon</translation>
+        <translation>Line</translation>
     </message>
     <message>
         <source>Arc</source>
-        <translation>Kaar</translation>
+        <translation>Arc</translation>
     </message>
     <message>
         <source>Circle</source>
@@ -314,7 +314,7 @@ või [%2]</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Tagasi</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify next control point</source>
@@ -932,7 +932,7 @@ või [%2]</translation>
     </message>
     <message>
         <source>Left</source>
-        <translation>Vasak</translation>
+        <translation>Left</translation>
     </message>
     <message>
         <source>Right</source>
@@ -940,7 +940,7 @@ või [%2]</translation>
     </message>
     <message>
         <source>Top</source>
-        <translation>Ülemine</translation>
+        <translation>Top</translation>
     </message>
     <message>
         <source>Bottom</source>
@@ -1069,7 +1069,7 @@ või [%2]</translation>
     </message>
     <message>
         <source>Star</source>
-        <translation>Täht</translation>
+        <translation>Star</translation>
     </message>
     <message>
         <source>Break/Divide</source>
@@ -1204,14 +1204,14 @@ või [%2]</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Tagasi</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
     <name>LC_CircleByArcOptions</name>
     <message>
         <source>Form</source>
-        <translation>Vorm</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <source>Active</source>
@@ -1246,7 +1246,7 @@ või [%2]</translation>
     <name>LC_CrossOptions</name>
     <message>
         <source>Form</source>
-        <translation>Vorm</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <source>Extension</source>
@@ -1270,7 +1270,7 @@ või [%2]</translation>
     </message>
     <message>
         <source>Type</source>
-        <translation>Tüüp</translation>
+        <translation>Type</translation>
     </message>
     <message>
         <source>Angle:</source>
@@ -1281,7 +1281,7 @@ või [%2]</translation>
     <name>LC_DeviceOptions</name>
     <message>
         <source>Form</source>
-        <translation>Vorm</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <source>Device</source>
@@ -1289,7 +1289,7 @@ või [%2]</translation>
     </message>
     <message>
         <source>Save</source>
-        <translation>Salvesta</translation>
+        <translation>Save</translation>
     </message>
 </context>
 <context>
@@ -1303,7 +1303,7 @@ või [%2]</translation>
     <name>LC_DuplicateOptions</name>
     <message>
         <source>Form</source>
-        <translation>Vorm</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <source>Layer:</source>
@@ -1729,7 +1729,7 @@ või [%2]</translation>
     <name>LC_LineAngleRelOptions</name>
     <message>
         <source>Form</source>
-        <translation>Vorm</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <source>Offset:</source>
@@ -1737,7 +1737,7 @@ või [%2]</translation>
     </message>
     <message>
         <source>Free</source>
-        <translation>Vaba</translation>
+        <translation>Free</translation>
     </message>
     <message>
         <source>Start</source>
@@ -1749,7 +1749,7 @@ või [%2]</translation>
     </message>
     <message>
         <source>End</source>
-        <translation>Lõpp</translation>
+        <translation>End</translation>
     </message>
     <message>
         <source>Line Snap:</source>
@@ -1757,7 +1757,7 @@ või [%2]</translation>
     </message>
     <message>
         <source>Rel</source>
-        <translation>Suhteline</translation>
+        <translation>Rel</translation>
     </message>
     <message>
         <source>Divide</source>
@@ -1784,7 +1784,7 @@ või [%2]</translation>
     <name>LC_LineFromPointToLineOptions</name>
     <message>
         <source>Form</source>
-        <translation>Vorm</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <source>Angle:</source>
@@ -1820,7 +1820,7 @@ või [%2]</translation>
     </message>
     <message>
         <source>End</source>
-        <translation>Lõpp</translation>
+        <translation>End</translation>
     </message>
     <message>
         <source>Length:</source>
@@ -1835,7 +1835,7 @@ või [%2]</translation>
     <name>LC_LineJoinOptions</name>
     <message>
         <source>Form</source>
-        <translation>Vorm</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <source>Extend/Trim</source>
@@ -1890,7 +1890,7 @@ või [%2]</translation>
     <name>LC_LinePointsOptions</name>
     <message>
         <source>Form</source>
-        <translation>Vorm</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <source>Angle:</source>
@@ -1902,11 +1902,11 @@ või [%2]</translation>
     </message>
     <message>
         <source>None</source>
-        <translation>Puudub</translation>
+        <translation>None</translation>
     </message>
     <message>
         <source>Both</source>
-        <translation>Mõlemad</translation>
+        <translation>Both</translation>
     </message>
     <message>
         <source>Start</source>
@@ -1914,7 +1914,7 @@ või [%2]</translation>
     </message>
     <message>
         <source>End</source>
-        <translation>Lõpp</translation>
+        <translation>End</translation>
     </message>
     <message>
         <source>Edge Points:</source>
@@ -1952,7 +1952,7 @@ või [%2]</translation>
     <name>LC_ModifyBreakDivideOptions</name>
     <message>
         <source>Form</source>
-        <translation>Vorm</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <source>Remove Segments</source>
@@ -1967,7 +1967,7 @@ või [%2]</translation>
     <name>LC_ModifyGapOptions</name>
     <message>
         <source>Form</source>
-        <translation>Vorm</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <source>Gap Snap:</source>
@@ -1979,7 +1979,7 @@ või [%2]</translation>
     </message>
     <message>
         <source>Free</source>
-        <translation>Vaba</translation>
+        <translation>Free</translation>
     </message>
     <message>
         <source>Gap Size:</source>
@@ -1995,7 +1995,7 @@ või [%2]</translation>
     </message>
     <message>
         <source>End</source>
-        <translation>Lõpp</translation>
+        <translation>End</translation>
     </message>
     <message>
         <source>Line Snap:</source>
@@ -2161,7 +2161,7 @@ või [%2]</translation>
     </message>
     <message>
         <source>Save</source>
-        <translation>Salvesta</translation>
+        <translation>Save</translation>
     </message>
     <message>
         <source>Apply Pen To Selection</source>
@@ -2266,7 +2266,7 @@ Pange tähele, et kui salvestate pliiatse redaktoris ilma taaskäivitamiseta, sa
     <name>LC_Rectangle1PointOptions</name>
     <message>
         <source>Form</source>
-        <translation>Vorm</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <source>Polyline</source>
@@ -2310,7 +2310,7 @@ Pange tähele, et kui salvestate pliiatse redaktoris ilma taaskäivitamiseta, sa
     </message>
     <message>
         <source>Top</source>
-        <translation>Ülemine</translation>
+        <translation>Top</translation>
     </message>
     <message>
         <source>Top-right</source>
@@ -2318,7 +2318,7 @@ Pange tähele, et kui salvestate pliiatse redaktoris ilma taaskäivitamiseta, sa
     </message>
     <message>
         <source>Left</source>
-        <translation>Vasak</translation>
+        <translation>Left</translation>
     </message>
     <message>
         <source>Middle</source>
@@ -2358,7 +2358,7 @@ Pange tähele, et kui salvestate pliiatse redaktoris ilma taaskäivitamiseta, sa
     </message>
     <message>
         <source>Both</source>
-        <translation>Mõlemad</translation>
+        <translation>Both</translation>
     </message>
     <message>
         <source>Vertical</source>
@@ -2381,7 +2381,7 @@ Pange tähele, et kui salvestate pliiatse redaktoris ilma taaskäivitamiseta, sa
     <name>LC_Rectangle2PointsOptions</name>
     <message>
         <source>Form</source>
-        <translation>Vorm</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <source>Snap shift</source>
@@ -2453,7 +2453,7 @@ Pange tähele, et kui salvestate pliiatse redaktoris ilma taaskäivitamiseta, sa
     </message>
     <message>
         <source>Both</source>
-        <translation>Mõlemad</translation>
+        <translation>Both</translation>
     </message>
     <message>
         <source>Vertical</source>
@@ -2468,7 +2468,7 @@ Pange tähele, et kui salvestate pliiatse redaktoris ilma taaskäivitamiseta, sa
     <name>LC_Rectangle3PointsOptions</name>
     <message>
         <source>Form</source>
-        <translation>Vorm</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <source>Polyline</source>
@@ -2476,7 +2476,7 @@ Pange tähele, et kui salvestate pliiatse redaktoris ilma taaskäivitamiseta, sa
     </message>
     <message>
         <source>Both</source>
-        <translation>Mõlemad</translation>
+        <translation>Both</translation>
     </message>
     <message>
         <source>Vertical</source>
@@ -2550,15 +2550,15 @@ Pange tähele, et kui salvestate pliiatse redaktoris ilma taaskäivitamiseta, sa
     <name>LC_SliceDivideOptions</name>
     <message>
         <source>Form</source>
-        <translation>Vorm</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <source>None</source>
-        <translation>Puudub</translation>
+        <translation>None</translation>
     </message>
     <message>
         <source>Both</source>
-        <translation>Mõlemad</translation>
+        <translation>Both</translation>
     </message>
     <message>
         <source>Start</source>
@@ -2566,7 +2566,7 @@ Pange tähele, et kui salvestate pliiatse redaktoris ilma taaskäivitamiseta, sa
     </message>
     <message>
         <source>End</source>
-        <translation>Lõpp</translation>
+        <translation>End</translation>
     </message>
     <message>
         <source>Edge Tick:</source>
@@ -2574,7 +2574,7 @@ Pange tähele, et kui salvestate pliiatse redaktoris ilma taaskäivitamiseta, sa
     </message>
     <message>
         <source>Rel</source>
-        <translation>Suhteline</translation>
+        <translation>Rel</translation>
     </message>
     <message>
         <source>Offset:</source>
@@ -2621,7 +2621,7 @@ Pange tähele, et kui salvestate pliiatse redaktoris ilma taaskäivitamiseta, sa
     <name>LC_StarOptions</name>
     <message>
         <source>Form</source>
-        <translation>Vorm</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <source>Radius Inner</source>
@@ -2656,7 +2656,7 @@ Pange tähele, et kui salvestate pliiatse redaktoris ilma taaskäivitamiseta, sa
     </message>
     <message>
         <source>Dock</source>
-        <translation>Dokkimine</translation>
+        <translation>Dock</translation>
     </message>
     <message>
         <source>Float</source>
@@ -2913,19 +2913,19 @@ Pange tähele, et kui salvestate pliiatse redaktoris ilma taaskäivitamiseta, sa
     </message>
     <message>
         <source>File</source>
-        <translation>Fail</translation>
+        <translation>File</translation>
     </message>
     <message>
         <source>Edit</source>
-        <translation>Redigeerimine</translation>
+        <translation>Edit</translation>
     </message>
     <message>
         <source>View</source>
-        <translation>Vaade</translation>
+        <translation>View</translation>
     </message>
     <message>
         <source>Pen</source>
-        <translation>Pliiats</translation>
+        <translation>Pen</translation>
     </message>
     <message>
         <source>Tool Options</source>
@@ -3127,7 +3127,7 @@ Palun kontrolli selle olemasolu ja õigusi.</translation>
     </message>
     <message>
         <source>Line</source>
-        <translation>Joon</translation>
+        <translation>Line</translation>
     </message>
     <message>
         <source>Circle</source>
@@ -3215,7 +3215,7 @@ Palun kontrolli selle olemasolu ja õigusi.</translation>
     </message>
     <message>
         <source>Copy</source>
-        <translation>Kopeeri</translation>
+        <translation>Copy</translation>
     </message>
     <message>
         <source>Contributors</source>
@@ -3309,11 +3309,11 @@ Palun kontrolli selle olemasolu ja õigusi.</translation>
     </message>
     <message>
         <source>East</source>
-        <translation>Ida</translation>
+        <translation>East</translation>
     </message>
     <message>
         <source>West</source>
-        <translation>Lääs</translation>
+        <translation>West</translation>
     </message>
     <message>
         <source>&amp;Arrange</source>
@@ -3337,7 +3337,7 @@ Palun kontrolli selle olemasolu ja õigusi.</translation>
     </message>
     <message>
         <source>Cmd</source>
-        <translation>Käsk</translation>
+        <translation>Cmd</translation>
     </message>
     <message>
         <source>Float</source>
@@ -3346,7 +3346,7 @@ Palun kontrolli selle olemasolu ja õigusi.</translation>
     <message>
         <source>Dock</source>
         <comment>Dock the command widget to the main window</comment>
-        <translation>Dokki</translation>
+        <translation>Dock</translation>
     </message>
     <message>
         <source>&amp;Wiki</source>
@@ -3559,7 +3559,7 @@ in a separate window</source>
     </message>
     <message>
         <source>Red</source>
-        <translation>Punane</translation>
+        <translation>Red</translation>
     </message>
     <message>
         <source>Yellow</source>
@@ -3571,11 +3571,11 @@ in a separate window</source>
     </message>
     <message>
         <source>Cyan</source>
-        <translation>Tsüaan</translation>
+        <translation>Cyan</translation>
     </message>
     <message>
         <source>Blue</source>
-        <translation>Sinine</translation>
+        <translation>Blue</translation>
     </message>
     <message>
         <source>Magenta</source>
@@ -3587,7 +3587,7 @@ in a separate window</source>
     </message>
     <message>
         <source>Gray</source>
-        <translation>Hall</translation>
+        <translation>Gray</translation>
     </message>
     <message>
         <source>Light Gray</source>
@@ -3780,7 +3780,7 @@ in a separate window</source>
     <name>QG_DlgArc</name>
     <message>
         <source>Arc</source>
-        <translation>Kaar</translation>
+        <translation>Arc</translation>
     </message>
     <message>
         <source>Layer:</source>
@@ -3972,7 +3972,7 @@ See muutmaks rekursiivselt kogu Bloki entiteete.</translation>
     </message>
     <message>
         <source>Area</source>
-        <translation>Alamaalt</translation>
+        <translation>Area</translation>
     </message>
 </context>
 <context>
@@ -4115,7 +4115,7 @@ Palun valige ühik, mida soovite uute jooniste jaoks kasutada, ning oma eelistat
     <name>QG_DlgLine</name>
     <message>
         <source>Line</source>
-        <translation>Joon</translation>
+        <translation>Line</translation>
     </message>
     <message>
         <source>Layer:</source>
@@ -4230,11 +4230,11 @@ Palun valige ühik, mida soovite uute jooniste jaoks kasutada, ning oma eelistat
     </message>
     <message>
         <source>Cut</source>
-        <translation>Lõika</translation>
+        <translation>Cut</translation>
     </message>
     <message>
         <source>Copy</source>
-        <translation>Kopeeri</translation>
+        <translation>Copy</translation>
     </message>
     <message>
         <source>Paste</source>
@@ -5034,7 +5034,7 @@ Palun valige ühik, mida soovite uute jooniste jaoks kasutada, ning oma eelistat
     </message>
     <message>
         <source>auto</source>
-        <translation>automaatne</translation>
+        <translation>auto</translation>
     </message>
     <message>
         <source>&amp;Grid</source>
@@ -5054,7 +5054,7 @@ Palun valige ühik, mida soovite uute jooniste jaoks kasutada, ning oma eelistat
     </message>
     <message>
         <source>Left</source>
-        <translation>Vasak</translation>
+        <translation>Left</translation>
     </message>
     <message>
         <source>Top crosshair with isometric grid</source>
@@ -5062,7 +5062,7 @@ Palun valige ühik, mida soovite uute jooniste jaoks kasutada, ning oma eelistat
     </message>
     <message>
         <source>Top</source>
-        <translation>Ülem</translation>
+        <translation>Top</translation>
     </message>
     <message>
         <source>Right crosshair with isometric grid</source>
@@ -5477,7 +5477,7 @@ Palun valige ühik, mida soovite uute jooniste jaoks kasutada, ning oma eelistat
     </message>
     <message>
         <source>All</source>
-        <translation>Kõik</translation>
+        <translation>All</translation>
     </message>
     <message>
         <source>Scrollbars</source>
@@ -5956,7 +5956,7 @@ so default step value required for baking</source>
     <name>QG_DlgText</name>
     <message>
         <source>Text</source>
-        <translation>Tekst</translation>
+        <translation>Text</translation>
     </message>
     <message>
         <source>Text:</source>
@@ -5976,11 +5976,11 @@ so default step value required for baking</source>
     </message>
     <message>
         <source>Cut</source>
-        <translation>Lõika</translation>
+        <translation>Cut</translation>
     </message>
     <message>
         <source>Copy</source>
-        <translation>Kopeeri</translation>
+        <translation>Copy</translation>
     </message>
     <message>
         <source>Paste</source>
@@ -6572,7 +6572,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <source>Fit</source>
-        <translation>Sobima</translation>
+        <translation>Fit</translation>
     </message>
     <message>
         <source>Diameter (⌀)</source>
@@ -6722,7 +6722,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <source>auto</source>
-        <translation>automaatne</translation>
+        <translation>auto</translation>
     </message>
     <message>
         <source>Colouring</source>
@@ -6922,7 +6922,7 @@ The contents of a Construction Layer should not appear in printout.</source>
     </message>
     <message>
         <source>Dot</source>
-        <translation>Punkt</translation>
+        <translation>Dot</translation>
     </message>
     <message>
         <source>Dot (small)</source>
@@ -6934,7 +6934,7 @@ The contents of a Construction Layer should not appear in printout.</source>
     </message>
     <message>
         <source>Dash</source>
-        <translation>Kriips</translation>
+        <translation>Dash</translation>
     </message>
     <message>
         <source>Dash (small)</source>
@@ -7033,7 +7033,7 @@ The contents of a Construction Layer should not appear in printout.</source>
     </message>
     <message>
         <source>Left</source>
-        <translation>Vasak</translation>
+        <translation>Left</translation>
     </message>
     <message>
         <source>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
@@ -7108,7 +7108,7 @@ p, li { white-space: pre-wrap; }
     <name>QG_SnapToolBar</name>
     <message>
         <source>Snap</source>
-        <translation>Klaapimine</translation>
+        <translation>Snap</translation>
     </message>
     <message>
         <source>Snap to Endpoints</source>
@@ -7239,7 +7239,7 @@ p, li { white-space: pre-wrap; }
     <name>QG_WidgetPen</name>
     <message>
         <source>Pen</source>
-        <translation>Pliiats</translation>
+        <translation>Pen</translation>
     </message>
     <message>
         <source>Line type:</source>
@@ -7699,15 +7699,15 @@ Tahad sa seda asendada?</translation>
     </message>
     <message>
         <source>Inch</source>
-        <translation>Tolp</translation>
+        <translation>Inch</translation>
     </message>
     <message>
         <source>Foot</source>
-        <translation>Jalg</translation>
+        <translation>Foot</translation>
     </message>
     <message>
         <source>Mile</source>
-        <translation>mil</translation>
+        <translation>Mile</translation>
     </message>
     <message>
         <source>Millimeter</source>
@@ -7731,11 +7731,11 @@ Tahad sa seda asendada?</translation>
     </message>
     <message>
         <source>Mil</source>
-        <translation>mil</translation>
+        <translation>Mil</translation>
     </message>
     <message>
         <source>Yard</source>
-        <translation>jards</translation>
+        <translation>Yard</translation>
     </message>
     <message>
         <source>Angstrom</source>
@@ -7946,7 +7946,7 @@ Tahad sa seda asendada?</translation>
     <message>
         <source>line</source>
         <comment>draw line</comment>
-        <translation>viiv</translation>
+        <translation>line</translation>
     </message>
     <message>
         <source>li</source>
@@ -7971,7 +7971,7 @@ Tahad sa seda asendada?</translation>
     <message>
         <source>free</source>
         <comment>draw freehand line</comment>
-        <translation>vaba</translation>
+        <translation>free</translation>
     </message>
     <message>
         <source>fhl</source>
@@ -8026,7 +8026,7 @@ Tahad sa seda asendada?</translation>
     <message>
         <source>rect</source>
         <comment>draw rectangle</comment>
-        <translation>rektangel</translation>
+        <translation>rect</translation>
     </message>
     <message>
         <source>polygon2v</source>
@@ -8101,12 +8101,12 @@ Tahad sa seda asendada?</translation>
     <message>
         <source>mtxt</source>
         <comment>draw mtext</comment>
-        <translation>sõnumtekst</translation>
+        <translation>mtxt</translation>
     </message>
     <message>
         <source>text</source>
         <comment>draw text</comment>
-        <translation>tekst</translation>
+        <translation>text</translation>
     </message>
     <message>
         <source>txt</source>
@@ -8126,12 +8126,12 @@ Tahad sa seda asendada?</translation>
     <message>
         <source>rg</source>
         <comment>zoom - redraw</comment>
-        <translation>Uusendada</translation>
+        <translation>rg</translation>
     </message>
     <message>
         <source>zr</source>
         <comment>zoom - redraw</comment>
-        <translation>Zoomaalimine vahemik</translation>
+        <translation>zr</translation>
     </message>
     <message>
         <source>zoomwindow</source>
@@ -8141,7 +8141,7 @@ Tahad sa seda asendada?</translation>
     <message>
         <source>zw</source>
         <comment>zoom - window</comment>
-        <translation>Zoomaakna</translation>
+        <translation>zw</translation>
     </message>
     <message>
         <source>zoomauto</source>
@@ -8151,7 +8151,7 @@ Tahad sa seda asendada?</translation>
     <message>
         <source>za</source>
         <comment>zoom - auto</comment>
-        <translation>Automaatne zoomaimine</translation>
+        <translation>za</translation>
     </message>
     <message>
         <source>zoompan</source>
@@ -8176,7 +8176,7 @@ Tahad sa seda asendada?</translation>
     <message>
         <source>kill</source>
         <comment>kill all actions</comment>
-        <translation>Tühista</translation>
+        <translation>kill</translation>
     </message>
     <message>
         <source>k</source>
@@ -8186,7 +8186,7 @@ Tahad sa seda asendada?</translation>
     <message>
         <source>undo</source>
         <comment>undo cycle</comment>
-        <translation>Tühistamine</translation>
+        <translation>undo</translation>
     </message>
     <message>
         <source>u</source>
@@ -8196,7 +8196,7 @@ Tahad sa seda asendada?</translation>
     <message>
         <source>redo</source>
         <comment>redo cycle</comment>
-        <translation>Uuenda</translation>
+        <translation>redo</translation>
     </message>
     <message>
         <source>r</source>
@@ -8216,7 +8216,7 @@ Tahad sa seda asendada?</translation>
     <message>
         <source>dh</source>
         <comment>dimension - horizontal</comment>
-        <translation>horisontaalne mõõt</translation>
+        <translation>dh</translation>
     </message>
     <message>
         <source>dimvertical</source>
@@ -8226,7 +8226,7 @@ Tahad sa seda asendada?</translation>
     <message>
         <source>dv</source>
         <comment>dimension - vertical</comment>
-        <translation>vertikaalne mõõt</translation>
+        <translation>dv</translation>
     </message>
     <message>
         <source>dimlinear</source>
@@ -8236,7 +8236,7 @@ Tahad sa seda asendada?</translation>
     <message>
         <source>dl</source>
         <comment>dimension - linear</comment>
-        <translation>lineaarne mõõt</translation>
+        <translation>dl</translation>
     </message>
     <message>
         <source>dimangular</source>
@@ -8246,7 +8246,7 @@ Tahad sa seda asendada?</translation>
     <message>
         <source>dan</source>
         <comment>dimension - angular</comment>
-        <translation>kulmik mõõt</translation>
+        <translation>dan</translation>
     </message>
     <message>
         <source>dimradial</source>
@@ -8266,7 +8266,7 @@ Tahad sa seda asendada?</translation>
     <message>
         <source>dd</source>
         <comment>dimension - diametric</comment>
-        <translation>läbimõõt</translation>
+        <translation>dd</translation>
     </message>
     <message>
         <source>dimleader</source>
@@ -8276,7 +8276,7 @@ Tahad sa seda asendada?</translation>
     <message>
         <source>ld</source>
         <comment>dimension - leader</comment>
-        <translation>juhend</translation>
+        <translation>ld</translation>
     </message>
     <message>
         <source>dimregen</source>
@@ -8291,7 +8291,7 @@ Tahad sa seda asendada?</translation>
     <message>
         <source>rn</source>
         <comment>restrict - nothing</comment>
-        <translation>piirustus ei</translation>
+        <translation>rn</translation>
     </message>
     <message>
         <source>restrictorthogonal</source>
@@ -8301,7 +8301,7 @@ Tahad sa seda asendada?</translation>
     <message>
         <source>rr</source>
         <comment>restrict - orthogonal</comment>
-        <translation>piirustus</translation>
+        <translation>rr</translation>
     </message>
     <message>
         <source>restricthorizontal</source>
@@ -8346,12 +8346,12 @@ Tahad sa seda asendada?</translation>
     <message>
         <source>cut</source>
         <comment>modify - divide (cut)</comment>
-        <translation>Lõika</translation>
+        <translation>cut</translation>
     </message>
     <message>
         <source>div</source>
         <comment>modify - divide (cut)</comment>
-        <translation>Jaotada</translation>
+        <translation>div</translation>
     </message>
     <message>
         <source>mi</source>
@@ -8371,12 +8371,12 @@ Tahad sa seda asendada?</translation>
     <message>
         <source>sz</source>
         <comment>modify - scale</comment>
-        <translation>mõõt</translation>
+        <translation>sz</translation>
     </message>
     <message>
         <source>tm</source>
         <comment>modify - trim (extend)</comment>
-        <translation>aeg</translation>
+        <translation>tm</translation>
     </message>
     <message>
         <source>tm2</source>
@@ -8386,27 +8386,27 @@ Tahad sa seda asendada?</translation>
     <message>
         <source>le</source>
         <comment>modify - lengthen</comment>
-        <translation>vasak</translation>
+        <translation>le</translation>
     </message>
     <message>
         <source>ss</source>
         <comment>modify - stretch</comment>
-        <translation>staatus</translation>
+        <translation>ss</translation>
     </message>
     <message>
         <source>er</source>
         <comment>modify - delete (erase)</comment>
-        <translation>vead</translation>
+        <translation>er</translation>
     </message>
     <message>
         <source>del</source>
         <comment>modify - delete (erase)</comment>
-        <translation>kustuta</translation>
+        <translation>del</translation>
     </message>
     <message>
         <source>xp</source>
         <comment>explode block/polyline into entities</comment>
-        <translation>kogemus</translation>
+        <translation>xp</translation>
     </message>
     <message>
         <source>snapfree</source>
@@ -8416,7 +8416,7 @@ Tahad sa seda asendada?</translation>
     <message>
         <source>os</source>
         <comment>snap - free</comment>
-        <translation>välja</translation>
+        <translation>os</translation>
     </message>
     <message>
         <source>snapcenter</source>
@@ -8426,7 +8426,7 @@ Tahad sa seda asendada?</translation>
     <message>
         <source>sc</source>
         <comment>snap - center</comment>
-        <translation>Tsentri</translation>
+        <translation>sc</translation>
     </message>
     <message>
         <source>snapdist</source>
@@ -8436,7 +8436,7 @@ Tahad sa seda asendada?</translation>
     <message>
         <source>sd</source>
         <comment>snap - distance to endpoints</comment>
-        <translation>Vahe</translation>
+        <translation>sd</translation>
     </message>
     <message>
         <source>snapend</source>
@@ -8446,7 +8446,7 @@ Tahad sa seda asendada?</translation>
     <message>
         <source>se</source>
         <comment>snap - end points</comment>
-        <translation>Lõpp</translation>
+        <translation>se</translation>
     </message>
     <message>
         <source>snapgrid</source>
@@ -8456,7 +8456,7 @@ Tahad sa seda asendada?</translation>
     <message>
         <source>sg</source>
         <comment>snap - grid</comment>
-        <translation>Ruut</translation>
+        <translation>sg</translation>
     </message>
     <message>
         <source>snapintersection</source>
@@ -8526,7 +8526,7 @@ Tahad sa seda asendada?</translation>
     <message>
         <source>attr</source>
         <comment>modify attribute</comment>
-        <translation>Atribuut</translation>
+        <translation>attr</translation>
     </message>
     <message>
         <source>ma</source>
@@ -8536,12 +8536,12 @@ Tahad sa seda asendada?</translation>
     <message>
         <source>prop</source>
         <comment>modify properties</comment>
-        <translation>Omadus</translation>
+        <translation>prop</translation>
     </message>
     <message>
         <source>dist</source>
         <comment>distance point to point</comment>
-        <translation>Käik</translation>
+        <translation>dist</translation>
     </message>
     <message>
         <source>dpp</source>
@@ -8551,7 +8551,7 @@ Tahad sa seda asendada?</translation>
     <message>
         <source>ang</source>
         <comment>measure angle</comment>
-        <translation>Kulm</translation>
+        <translation>ang</translation>
     </message>
     <message>
         <source>angle</source>
@@ -8595,7 +8595,7 @@ Tahad sa seda asendada?</translation>
     </message>
     <message>
         <source>rows</source>
-        <translation>Rivad</translation>
+        <translation>rows</translation>
     </message>
     <message>
         <source>rowspacing</source>
@@ -8607,12 +8607,12 @@ Tahad sa seda asendada?</translation>
     </message>
     <message>
         <source>trim</source>
-        <translation>trimmitada</translation>
+        <translation>trim</translation>
     </message>
     <message>
         <source>ang</source>
         <comment>angle</comment>
-        <translation>∠</translation>
+        <translation>ang</translation>
     </message>
     <message>
         <source>an</source>
@@ -8626,7 +8626,7 @@ Tahad sa seda asendada?</translation>
     <message>
         <source>cen</source>
         <comment>center</comment>
-        <translation>kesks</translation>
+        <translation>cen</translation>
     </message>
     <message>
         <source>ce</source>
@@ -8646,12 +8646,12 @@ Tahad sa seda asendada?</translation>
     <message>
         <source>cols</source>
         <comment>columns</comment>
-        <translation>Sälad</translation>
+        <translation>cols</translation>
     </message>
     <message>
         <source>co</source>
         <comment>columns</comment>
-        <translation>Sälad koordinate</translation>
+        <translation>co</translation>
     </message>
     <message>
         <source>columnspacing</source>
@@ -8666,21 +8666,21 @@ Tahad sa seda asendada?</translation>
     <message>
         <source>cs</source>
         <comment>columnspacing for inserts</comment>
-        <translation>Säladva vahemik</translation>
+        <translation>cs</translation>
     </message>
     <message>
         <source>fact</source>
         <comment>factor</comment>
-        <translation>Faktor</translation>
+        <translation>fact</translation>
     </message>
     <message>
         <source>f</source>
         <comment>factor</comment>
-        <translation>Faktor</translation>
+        <translation>f</translation>
     </message>
     <message>
         <source>help</source>
-        <translation>Abi</translation>
+        <translation>help</translation>
     </message>
     <message>
         <source>?</source>
@@ -8695,12 +8695,12 @@ Tahad sa seda asendada?</translation>
     <message>
         <source>len</source>
         <comment>length</comment>
-        <translation>Pikkus</translation>
+        <translation>len</translation>
     </message>
     <message>
         <source>l</source>
         <comment>length</comment>
-        <translation>Pikkus</translation>
+        <translation>l</translation>
     </message>
     <message>
         <source>length1</source>
@@ -8740,7 +8740,7 @@ Tahad sa seda asendada?</translation>
     <message>
         <source>num</source>
         <comment>number</comment>
-        <translation>Number</translation>
+        <translation>num</translation>
     </message>
     <message>
         <source>n</source>
@@ -8765,7 +8765,7 @@ Tahad sa seda asendada?</translation>
     <message>
         <source>row</source>
         <comment>row</comment>
-        <translation>rida</translation>
+        <translation>row</translation>
     </message>
     <message>
         <source>rowspacing</source>
@@ -8779,7 +8779,7 @@ Tahad sa seda asendada?</translation>
     </message>
     <message>
         <source>text</source>
-        <translation>tekst</translation>
+        <translation>text</translation>
     </message>
     <message>
         <source>t</source>
@@ -8793,7 +8793,7 @@ Tahad sa seda asendada?</translation>
     </message>
     <message>
         <source>undo</source>
-        <translation>Tühistada</translation>
+        <translation>undo</translation>
     </message>
     <message>
         <source>u</source>
@@ -8802,7 +8802,7 @@ Tahad sa seda asendada?</translation>
     </message>
     <message>
         <source>redo</source>
-        <translation>Uuesti teha</translation>
+        <translation>redo</translation>
     </message>
     <message>
         <source>r</source>
@@ -8811,7 +8811,7 @@ Tahad sa seda asendada?</translation>
     </message>
     <message>
         <source>back</source>
-        <translation>Tagasi</translation>
+        <translation>back</translation>
     </message>
     <message>
         <source>b</source>
@@ -8849,7 +8849,7 @@ Tahad sa seda asendada?</translation>
     <message>
         <source>None</source>
         <comment>unknown length unit</comment>
-        <translation>Ei ole</translation>
+        <translation>None</translation>
     </message>
     <message>
         <source>error reading file metadata in dwg file</source>
@@ -8900,7 +8900,7 @@ Tahad sa seda asendada?</translation>
     </message>
     <message>
         <source>Edit</source>
-        <translation>Redigeeri</translation>
+        <translation>Edit</translation>
     </message>
     <message>
         <source>Ellipse</source>
@@ -8908,7 +8908,7 @@ Tahad sa seda asendada?</translation>
     </message>
     <message>
         <source>File</source>
-        <translation>Fail</translation>
+        <translation>File</translation>
     </message>
     <message>
         <source>Dimension</source>
@@ -8924,7 +8924,7 @@ Tahad sa seda asendada?</translation>
     </message>
     <message>
         <source>Line</source>
-        <translation>Raad</translation>
+        <translation>Line</translation>
     </message>
     <message>
         <source>Modify</source>
@@ -8952,7 +8952,7 @@ Tahad sa seda asendada?</translation>
     </message>
     <message>
         <source>Snap</source>
-        <translation>Sidumine</translation>
+        <translation>Snap</translation>
     </message>
     <message>
         <source>Snap Extras</source>
@@ -8960,7 +8960,7 @@ Tahad sa seda asendada?</translation>
     </message>
     <message>
         <source>View</source>
-        <translation>Vaade</translation>
+        <translation>View</translation>
     </message>
     <message>
         <source>Widgets</source>
@@ -8972,7 +8972,7 @@ Tahad sa seda asendada?</translation>
     </message>
     <message>
         <source>All</source>
-        <translation>Kõik</translation>
+        <translation>All</translation>
     </message>
     <message>
         <source>Invalid objects removed:</source>
@@ -9000,7 +9000,7 @@ Tahad sa seda asendada?</translation>
     </message>
     <message>
         <source>cal</source>
-        <translation>Kalkulaator</translation>
+        <translation>cal</translation>
     </message>
     <message>
         <source>Calculator mode: On</source>
@@ -9031,7 +9031,7 @@ Tahad sa seda asendada?</translation>
     <message>
         <source>la</source>
         <comment>angled line</comment>
-        <translation>Viisiline</translation>
+        <translation>la</translation>
     </message>
     <message>
         <source>linehor</source>
@@ -9041,7 +9041,7 @@ Tahad sa seda asendada?</translation>
     <message>
         <source>lh</source>
         <comment>horizontal line</comment>
-        <translation>Viisiline kõrgus</translation>
+        <translation>lh</translation>
     </message>
     <message>
         <source>linever</source>
@@ -9051,7 +9051,7 @@ Tahad sa seda asendada?</translation>
     <message>
         <source>lv</source>
         <comment>vertical line</comment>
-        <translation>rii vaade</translation>
+        <translation>lv</translation>
     </message>
     <message>
         <source>linerec</source>
@@ -9061,7 +9061,7 @@ Tahad sa seda asendada?</translation>
     <message>
         <source>re</source>
         <comment>draw rectangle</comment>
-        <translation>rekord</translation>
+        <translation>re</translation>
     </message>
     <message>
         <source>linepar</source>
@@ -9076,12 +9076,12 @@ Tahad sa seda asendada?</translation>
     <message>
         <source>pa</source>
         <comment>create parallel</comment>
-        <translation>sika</translation>
+        <translation>pa</translation>
     </message>
     <message>
         <source>ll</source>
         <comment>create parallel</comment>
-        <translation>rii pikkus</translation>
+        <translation>ll</translation>
     </message>
     <message>
         <source>lineparthro</source>
@@ -9091,7 +9091,7 @@ Tahad sa seda asendada?</translation>
     <message>
         <source>lp</source>
         <comment>parallel through point</comment>
-        <translation>rii punkt</translation>
+        <translation>lp</translation>
     </message>
     <message>
         <source>linebisect</source>
@@ -9126,7 +9126,7 @@ Tahad sa seda asendada?</translation>
     <message>
         <source>or</source>
         <comment>tangent line and circle</comment>
-        <translation>või</translation>
+        <translation>or</translation>
     </message>
     <message>
         <source>lineperp</source>
@@ -9211,7 +9211,7 @@ Tahad sa seda asendada?</translation>
     <message>
         <source>cc</source>
         <comment>circle 2 points radius</comment>
-        <translation>Ring/Kaar -&gt; Ring/Kaar</translation>
+        <translation>cc</translation>
     </message>
     <message>
         <source>circle3p</source>
@@ -9231,12 +9231,12 @@ Tahad sa seda asendada?</translation>
     <message>
         <source>cr</source>
         <comment>circle point radius</comment>
-        <translation>Ring/Kaar -&gt; Raadius</translation>
+        <translation>cr</translation>
     </message>
     <message>
         <source>ccr</source>
         <comment>circle point radius</comment>
-        <translation>Ring/Kaar -&gt; Ring/Kaar</translation>
+        <translation>ccr</translation>
     </message>
     <message>
         <source>circletan2cp</source>
@@ -9281,7 +9281,7 @@ Tahad sa seda asendada?</translation>
     <message>
         <source>arc</source>
         <comment>arc point radius</comment>
-        <translation>kaar</translation>
+        <translation>arc</translation>
     </message>
     <message>
         <source>ar</source>
@@ -9561,12 +9561,12 @@ Tahad sa seda asendada?</translation>
     <message>
         <source>mo</source>
         <comment>modify - offset</comment>
-        <translation>Modifikator</translation>
+        <translation>mo</translation>
     </message>
     <message>
         <source>moff</source>
         <comment>modify - offset</comment>
-        <translation>Viivitusmodifikator</translation>
+        <translation>moff</translation>
     </message>
     <message>
         <source>modbevel</source>
@@ -9606,7 +9606,7 @@ Tahad sa seda asendada?</translation>
     <message>
         <source>xt</source>
         <comment>explode text strings</comment>
-        <translation>Tekst</translation>
+        <translation>xt</translation>
     </message>
     <message>
         <source>modexplode</source>
@@ -9626,7 +9626,7 @@ Tahad sa seda asendada?</translation>
     <message>
         <source>id</source>
         <comment>distance point to point</comment>
-        <translation>ID</translation>
+        <translation>id</translation>
     </message>
     <message>
         <source>infodistep</source>
@@ -9636,12 +9636,12 @@ Tahad sa seda asendada?</translation>
     <message>
         <source>ii</source>
         <comment>distance entity to point</comment>
-        <translation>Teabe</translation>
+        <translation>ii</translation>
     </message>
     <message>
         <source>dep</source>
         <comment>distance entity to point</comment>
-        <translation>Olumasuht</translation>
+        <translation>dep</translation>
     </message>
     <message>
         <source>infoangle</source>
@@ -9666,32 +9666,32 @@ Tahad sa seda asendada?</translation>
     <message>
         <source>mt</source>
         <comment>draw mtext</comment>
-        <translation>Metaandmed</translation>
+        <translation>mt</translation>
     </message>
     <message>
         <source>tx</source>
         <comment>draw text</comment>
-        <translation>Tekst</translation>
+        <translation>tx</translation>
     </message>
     <message>
         <source>so</source>
         <comment>snap - free</comment>
-        <translation>Allika</translation>
+        <translation>so</translation>
     </message>
     <message>
         <source>ki</source>
         <comment>kill all actions</comment>
-        <translation>Peamine info</translation>
+        <translation>ki</translation>
     </message>
     <message>
         <source>un</source>
         <comment>undo cycle</comment>
-        <translation>Ühik</translation>
+        <translation>un</translation>
     </message>
     <message>
         <source>rd</source>
         <comment>redo cycle</comment>
-        <translation>Kirjatekst</translation>
+        <translation>rd</translation>
     </message>
     <message>
         <source>drawpref</source>
@@ -10228,7 +10228,7 @@ Tahad sa seda asendada?</translation>
     <message>
         <source>star</source>
         <comment>draw star</comment>
-        <translation>Tähis</translation>
+        <translation>star</translation>
     </message>
     <message>
         <source>st</source>
@@ -10273,7 +10273,7 @@ Tahad sa seda asendada?</translation>
     <message>
         <source>dup</source>
         <comment>duplicate entity</comment>
-        <translation>Duplikaat</translation>
+        <translation>dup</translation>
     </message>
     <message>
         <source>linejoin</source>
@@ -10283,7 +10283,7 @@ Tahad sa seda asendada?</translation>
     <message>
         <source>lj</source>
         <comment>lines join</comment>
-        <translation>Linjaühendus</translation>
+        <translation>lj</translation>
     </message>
     <message>
         <source>breakdivide</source>
@@ -10293,7 +10293,7 @@ Tahad sa seda asendada?</translation>
     <message>
         <source>bd</source>
         <comment>break or divide entity</comment>
-        <translation>Lõikuvajalik</translation>
+        <translation>bd</translation>
     </message>
     <message>
         <source>gapline</source>
@@ -10303,7 +10303,7 @@ Tahad sa seda asendada?</translation>
     <message>
         <source>gl</source>
         <comment>line gap</comment>
-        <translation>Vahelinja</translation>
+        <translation>gl</translation>
     </message>
     <message>
         <source>parabola4p</source>
@@ -10323,7 +10323,7 @@ Tahad sa seda asendada?</translation>
     <message>
         <source>plfd</source>
         <comment>Parabola focus directrix</comment>
-        <translation>Punktist linjasse</translation>
+        <translation>plfd</translation>
     </message>
     <message>
         <source>angleline</source>
@@ -10338,7 +10338,7 @@ Tahad sa seda asendada?</translation>
     <message>
         <source>rort</source>
         <comment>draw orthogonal</comment>
-        <translation>Rotatsioon</translation>
+        <translation>rort</translation>
     </message>
     <message>
         <source>point2line</source>
@@ -10363,7 +10363,7 @@ Tahad sa seda asendada?</translation>
     <message>
         <source>smm</source>
         <comment>snap middle manual</comment>
-        <translation>Keskmine manuaalne kinnitus</translation>
+        <translation>smm</translation>
     </message>
     <message>
         <source>x</source>
@@ -10407,11 +10407,11 @@ Tahad sa seda asendada?</translation>
     </message>
     <message>
         <source>pos</source>
-        <translation>asukoht</translation>
+        <translation>pos</translation>
     </message>
     <message>
         <source>size</source>
-        <translation>mõõt</translation>
+        <translation>size</translation>
     </message>
     <message>
         <source>bevels</source>
@@ -10431,7 +10431,7 @@ Tahad sa seda asendada?</translation>
     </message>
     <message>
         <source>str</source>
-        <translation>tekst</translation>
+        <translation>str</translation>
     </message>
     <message>
         <source>round</source>
@@ -10443,19 +10443,19 @@ Tahad sa seda asendada?</translation>
     </message>
     <message>
         <source>topl</source>
-        <translation>üla</translation>
+        <translation>topl</translation>
     </message>
     <message>
         <source>top</source>
-        <translation>üla</translation>
+        <translation>top</translation>
     </message>
     <message>
         <source>topr</source>
-        <translation>üla-pingge</translation>
+        <translation>topr</translation>
     </message>
     <message>
         <source>left</source>
-        <translation>vasak</translation>
+        <translation>left</translation>
     </message>
     <message>
         <source>middle</source>
@@ -10495,11 +10495,11 @@ Tahad sa seda asendada?</translation>
     </message>
     <message>
         <source>hor</source>
-        <translation>Horisontaalselt</translation>
+        <translation>hor</translation>
     </message>
     <message>
         <source>vert</source>
-        <translation>Vertikaalselt</translation>
+        <translation>vert</translation>
     </message>
     <message>
         <source>snap2</source>
@@ -10519,7 +10519,7 @@ Tahad sa seda asendada?</translation>
     </message>
     <message>
         <source>quad</source>
-        <translation>Kvad</translation>
+        <translation>quad</translation>
     </message>
     <message>
         <source>noquad</source>
@@ -10551,19 +10551,19 @@ Tahad sa seda asendada?</translation>
     </message>
     <message>
         <source>end</source>
-        <translation>Lõpp</translation>
+        <translation>end</translation>
     </message>
     <message>
         <source>both</source>
-        <translation>Kahed</translation>
+        <translation>both</translation>
     </message>
     <message>
         <source>none</source>
-        <translation>Ei</translation>
+        <translation>none</translation>
     </message>
     <message>
         <source>fit</source>
-        <translation>Sobib</translation>
+        <translation>fit</translation>
     </message>
     <message>
         <source>nofit</source>
@@ -10583,7 +10583,7 @@ Tahad sa seda asendada?</translation>
     </message>
     <message>
         <source>sym</source>
-        <translation>sümbol</translation>
+        <translation>sym</translation>
     </message>
     <message>
         <source>nosym</source>
@@ -10825,7 +10825,7 @@ Seda plokki ei saa lisada.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Tagasi</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -10844,7 +10844,7 @@ Seda plokki ei saa lisada.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Tagasi</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify dimension line location</source>
@@ -10944,7 +10944,7 @@ Seda plokki ei saa lisada.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Tagasi</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify dimension line location</source>
@@ -11010,7 +11010,7 @@ Seda plokki ei saa lisada.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Tagasi</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify start angle:</source>
@@ -11045,7 +11045,7 @@ Seda plokki ei saa lisada.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Tagasi</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify endpoint</source>
@@ -11072,7 +11072,7 @@ Seda plokki ei saa lisada.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Tagasi</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify end point</source>
@@ -11095,7 +11095,7 @@ Seda plokki ei saa lisada.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Tagasi</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify point on circle</source>
@@ -11122,7 +11122,7 @@ Seda plokki ei saa lisada.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Tagasi</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -11145,7 +11145,7 @@ Seda plokki ei saa lisada.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Tagasi</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify third point</source>
@@ -11172,7 +11172,7 @@ Seda plokki ei saa lisada.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Tagasi</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>radius=%1 is invalid (expression)</source>
@@ -11203,7 +11203,7 @@ Seda plokki ei saa lisada.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Tagasi</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify the third line</source>
@@ -11222,7 +11222,7 @@ Seda plokki ei saa lisada.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Tagasi</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify the second point on the tangent circle</source>
@@ -11253,7 +11253,7 @@ Seda plokki ei saa lisada.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Tagasi</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Select the center of the tangent circle</source>
@@ -11296,7 +11296,7 @@ Seda plokki ei saa lisada.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Tagasi</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify a point on the tangent circle</source>
@@ -11315,7 +11315,7 @@ Seda plokki ei saa lisada.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Tagasi</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Select the center of the tangent circle</source>
@@ -11350,7 +11350,7 @@ Seda plokki ei saa lisada.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Tagasi</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify the third point on ellipse</source>
@@ -11385,7 +11385,7 @@ Seda plokki ei saa lisada.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Tagasi</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify endpoint or length of minor axis:</source>
@@ -11420,7 +11420,7 @@ Seda plokki ei saa lisada.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Tagasi</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify the third point on ellipse</source>
@@ -11447,7 +11447,7 @@ Seda plokki ei saa lisada.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Tagasi</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify a point on ellipse or total distance to foci</source>
@@ -11478,7 +11478,7 @@ Seda plokki ei saa lisada.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Tagasi</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify the third line</source>
@@ -11575,7 +11575,7 @@ Seda plokki ei saa lisada.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Tagasi</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify next point</source>
@@ -11614,7 +11614,7 @@ Seda plokki ei saa lisada.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Tagasi</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Enter length:</source>
@@ -11641,7 +11641,7 @@ Seda plokki ei saa lisada.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Tagasi</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Enter bisector length:</source>
@@ -11684,7 +11684,7 @@ Seda plokki ei saa lisada.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Tagasi</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -11703,7 +11703,7 @@ Seda plokki ei saa lisada.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Tagasi</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -11745,7 +11745,7 @@ Seda plokki ei saa lisada.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Tagasi</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Number:</source>
@@ -11806,7 +11806,7 @@ Seda plokki ei saa lisada.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Tagasi</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Number:</source>
@@ -11837,7 +11837,7 @@ Seda plokki ei saa lisada.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Tagasi</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -11860,7 +11860,7 @@ Seda plokki ei saa lisada.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Tagasi</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -11879,7 +11879,7 @@ Seda plokki ei saa lisada.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Tagasi</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -11890,7 +11890,7 @@ Seda plokki ei saa lisada.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Tagasi</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Select first circle/ellipse/parabola</source>
@@ -11921,7 +11921,7 @@ Seda plokki ei saa lisada.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Tagasi</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -11951,7 +11951,7 @@ Seda plokki ei saa lisada.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Tagasi</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify next point</source>
@@ -12018,7 +12018,7 @@ Seda plokki ei saa lisada.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Tagasi</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify next control point</source>
@@ -12045,7 +12045,7 @@ Seda plokki ei saa lisada.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Tagasi</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify second point</source>
@@ -12105,7 +12105,7 @@ Seda plokki ei saa lisada.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Tagasi</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Angle: %1</source>
@@ -12159,7 +12159,7 @@ Seda plokki ei saa lisada.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Tagasi</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Distance: %1 Cartesian: (%2 , %3), Polar: (%4&lt;%5)</source>
@@ -12186,7 +12186,7 @@ Seda plokki ei saa lisada.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Tagasi</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -12281,7 +12281,7 @@ Seda plokki ei saa lisada.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Tagasi</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Enter length 1:</source>
@@ -12320,7 +12320,7 @@ Seda plokki ei saa lisada.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Tagasi</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Entity must be a line, arc, circle, ellipse or interpolation spline.</source>
@@ -12343,7 +12343,7 @@ Seda plokki ei saa lisada.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Tagasi</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Entities not in the same polyline.</source>
@@ -12416,7 +12416,7 @@ Seda plokki ei saa lisada.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Tagasi</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -12435,7 +12435,7 @@ Seda plokki ei saa lisada.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Tagasi</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Invalid number of copies, use %1 </source>
@@ -12462,7 +12462,7 @@ Seda plokki ei saa lisada.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Tagasi</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Enter rotation angle:</source>
@@ -12477,7 +12477,7 @@ Seda plokki ei saa lisada.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Tagasi</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -12488,7 +12488,7 @@ Seda plokki ei saa lisada.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Tagasi</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify rotation center</source>
@@ -12515,7 +12515,7 @@ Seda plokki ei saa lisada.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Tagasi</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -12526,7 +12526,7 @@ Seda plokki ei saa lisada.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Tagasi</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify second entity</source>
@@ -12580,7 +12580,7 @@ Seda plokki ei saa lisada.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Tagasi</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify reference point</source>
@@ -12607,7 +12607,7 @@ Seda plokki ei saa lisada.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Tagasi</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Select second trim entity</source>
@@ -12642,7 +12642,7 @@ Seda plokki ei saa lisada.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Tagasi</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -12668,7 +12668,7 @@ Seda plokki ei saa lisada.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Tagasi</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>No Entity found.</source>
@@ -12723,7 +12723,7 @@ Seda plokki ei saa lisada.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Tagasi</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify next point</source>
@@ -12746,7 +12746,7 @@ Seda plokki ei saa lisada.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Tagasi</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>No Entity found.</source>
@@ -12781,7 +12781,7 @@ Seda plokki ei saa lisada.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Tagasi</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>No Entity found.</source>
@@ -12862,7 +12862,7 @@ Seda plokki ei saa lisada.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Tagasi</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>No Entity found.</source>
@@ -13042,7 +13042,7 @@ Seda plokki ei saa lisada.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Tagasi</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -13057,7 +13057,7 @@ Seda plokki ei saa lisada.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Tagasi</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Click and drag for the selection window</source>
@@ -13091,7 +13091,7 @@ Seda plokki ei saa lisada.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Tagasi</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Select second entity</source>
@@ -13140,7 +13140,7 @@ Seda plokki ei saa lisada.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Tagasi</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -13209,7 +13209,7 @@ Seda plokki ei saa lisada.</translation>
     </message>
     <message>
         <source>Trim</source>
-        <translation>Trimmi</translation>
+        <translation>Trim</translation>
     </message>
     <message>
         <source>Length 1:</source>
@@ -13437,7 +13437,7 @@ Seda plokki ei saa lisada.</translation>
     </message>
     <message>
         <source>End</source>
-        <translation>Lõpp</translation>
+        <translation>End</translation>
     </message>
 </context>
 <context>
@@ -13483,7 +13483,7 @@ Seda plokki ei saa lisada.</translation>
     </message>
     <message>
         <source>Undo</source>
-        <translation>Tühista</translation>
+        <translation>Undo</translation>
     </message>
     <message>
         <source>Redo the last line drawing</source>
@@ -13491,7 +13491,7 @@ Seda plokki ei saa lisada.</translation>
     </message>
     <message>
         <source>Redo</source>
-        <translation>Ennista</translation>
+        <translation>Redo</translation>
     </message>
 </context>
 <context>
@@ -13522,7 +13522,7 @@ Seda plokki ei saa lisada.</translation>
     </message>
     <message>
         <source>Rel</source>
-        <translation>Suhteline</translation>
+        <translation>Rel</translation>
     </message>
     <message>
         <source>Undo the last line drawing</source>
@@ -13530,7 +13530,7 @@ Seda plokki ei saa lisada.</translation>
     </message>
     <message>
         <source>Undo</source>
-        <translation>Tühista</translation>
+        <translation>Undo</translation>
     </message>
     <message>
         <source>Form a closed contour from lines drawn</source>
@@ -13546,7 +13546,7 @@ Seda plokki ei saa lisada.</translation>
     </message>
     <message>
         <source>Redo</source>
-        <translation>Ennista</translation>
+        <translation>Redo</translation>
     </message>
     <message>
         <source>Point</source>
@@ -13697,11 +13697,11 @@ Seda plokki ei saa lisada.</translation>
     </message>
     <message>
         <source>Undo</source>
-        <translation>Tühista</translation>
+        <translation>Undo</translation>
     </message>
     <message>
         <source>Line</source>
-        <translation>Joon</translation>
+        <translation>Line</translation>
     </message>
     <message>
         <source>Tangential</source>
@@ -13783,7 +13783,7 @@ Seda plokki ei saa lisada.</translation>
     </message>
     <message>
         <source>Trim</source>
-        <translation>Trimmi</translation>
+        <translation>Trim</translation>
     </message>
     <message>
         <source>Radius:</source>
@@ -13832,7 +13832,7 @@ Seda plokki ei saa lisada.</translation>
     </message>
     <message>
         <source>Undo</source>
-        <translation>Tühista</translation>
+        <translation>Undo</translation>
     </message>
 </context>
 <context>
@@ -13889,7 +13889,7 @@ Seda plokki ei saa lisada.</translation>
     </message>
     <message>
         <source>Name</source>
-        <translation>Nimi</translation>
+        <translation>Name</translation>
     </message>
     <message>
         <source>Create</source>

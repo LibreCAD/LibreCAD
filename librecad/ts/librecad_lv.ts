@@ -28,7 +28,7 @@
     </message>
     <message>
         <source>Set</source>
-        <translation>Iestatīt</translation>
+        <translation>Set</translation>
     </message>
 </context>
 <context>
@@ -148,7 +148,7 @@ attālums starp punktiem=%2 ir lielāks nekā diametrs=%3</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Atpakaļ</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Select circle center</source>
@@ -169,7 +169,7 @@ vai [%2]</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Atpakaļ</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Y</source>
@@ -213,7 +213,7 @@ vai [%2]</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Atpakaļ</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify distance (%1) or [%2]</source>
@@ -256,7 +256,7 @@ vai [%2]</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Atpakaļ</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify the third point on parabola</source>
@@ -287,7 +287,7 @@ vai [%2]</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Atpakaļ</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify the start point on parabola</source>
@@ -310,11 +310,11 @@ vai [%2]</translation>
     </message>
     <message>
         <source>Line</source>
-        <translation>Līnija</translation>
+        <translation>Line</translation>
     </message>
     <message>
         <source>Arc</source>
-        <translation>Loks</translation>
+        <translation>Arc</translation>
     </message>
     <message>
         <source>Circle</source>
@@ -337,7 +337,7 @@ vai [%2]</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Atpakaļ</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify next control point</source>
@@ -955,7 +955,7 @@ vai [%2]</translation>
     </message>
     <message>
         <source>Left</source>
-        <translation>Pa kreisi</translation>
+        <translation>Left</translation>
     </message>
     <message>
         <source>Right</source>
@@ -963,7 +963,7 @@ vai [%2]</translation>
     </message>
     <message>
         <source>Top</source>
-        <translation>Augšā</translation>
+        <translation>Top</translation>
     </message>
     <message>
         <source>Bottom</source>
@@ -1092,7 +1092,7 @@ vai [%2]</translation>
     </message>
     <message>
         <source>Star</source>
-        <translation>Zvaigzne</translation>
+        <translation>Star</translation>
     </message>
     <message>
         <source>Break/Divide</source>
@@ -1227,14 +1227,14 @@ vai [%2]</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Atpakaļ</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
     <name>LC_CircleByArcOptions</name>
     <message>
         <source>Form</source>
-        <translation>Forma</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <source>Active</source>
@@ -1269,7 +1269,7 @@ vai [%2]</translation>
     <name>LC_CrossOptions</name>
     <message>
         <source>Form</source>
-        <translation>Forma</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <source>Extension</source>
@@ -1293,7 +1293,7 @@ vai [%2]</translation>
     </message>
     <message>
         <source>Type</source>
-        <translation>Tips</translation>
+        <translation>Type</translation>
     </message>
     <message>
         <source>Angle:</source>
@@ -1304,7 +1304,7 @@ vai [%2]</translation>
     <name>LC_DeviceOptions</name>
     <message>
         <source>Form</source>
-        <translation>Forma</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <source>Device</source>
@@ -1312,7 +1312,7 @@ vai [%2]</translation>
     </message>
     <message>
         <source>Save</source>
-        <translation>Saglabāt</translation>
+        <translation>Save</translation>
     </message>
 </context>
 <context>
@@ -1326,7 +1326,7 @@ vai [%2]</translation>
     <name>LC_DuplicateOptions</name>
     <message>
         <source>Form</source>
-        <translation>Forma</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <source>Layer:</source>
@@ -1752,7 +1752,7 @@ vai [%2]</translation>
     <name>LC_LineAngleRelOptions</name>
     <message>
         <source>Form</source>
-        <translation>Forma</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <source>Offset:</source>
@@ -1760,7 +1760,7 @@ vai [%2]</translation>
     </message>
     <message>
         <source>Free</source>
-        <translation>Brīvs</translation>
+        <translation>Free</translation>
     </message>
     <message>
         <source>Start</source>
@@ -1772,7 +1772,7 @@ vai [%2]</translation>
     </message>
     <message>
         <source>End</source>
-        <translation>Beigas</translation>
+        <translation>End</translation>
     </message>
     <message>
         <source>Line Snap:</source>
@@ -1780,7 +1780,7 @@ vai [%2]</translation>
     </message>
     <message>
         <source>Rel</source>
-        <translation>Relatīvs</translation>
+        <translation>Rel</translation>
     </message>
     <message>
         <source>Divide</source>
@@ -1807,7 +1807,7 @@ vai [%2]</translation>
     <name>LC_LineFromPointToLineOptions</name>
     <message>
         <source>Form</source>
-        <translation>Forma</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <source>Angle:</source>
@@ -1843,7 +1843,7 @@ vai [%2]</translation>
     </message>
     <message>
         <source>End</source>
-        <translation>Beigas</translation>
+        <translation>End</translation>
     </message>
     <message>
         <source>Length:</source>
@@ -1858,7 +1858,7 @@ vai [%2]</translation>
     <name>LC_LineJoinOptions</name>
     <message>
         <source>Form</source>
-        <translation>Forma</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <source>Extend/Trim</source>
@@ -1913,7 +1913,7 @@ vai [%2]</translation>
     <name>LC_LinePointsOptions</name>
     <message>
         <source>Form</source>
-        <translation>Forma</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <source>Angle:</source>
@@ -1925,11 +1925,11 @@ vai [%2]</translation>
     </message>
     <message>
         <source>None</source>
-        <translation>Nekas</translation>
+        <translation>None</translation>
     </message>
     <message>
         <source>Both</source>
-        <translation>Abas</translation>
+        <translation>Both</translation>
     </message>
     <message>
         <source>Start</source>
@@ -1937,7 +1937,7 @@ vai [%2]</translation>
     </message>
     <message>
         <source>End</source>
-        <translation>Beigas</translation>
+        <translation>End</translation>
     </message>
     <message>
         <source>Edge Points:</source>
@@ -1983,7 +1983,7 @@ vai [%2]</translation>
     <name>LC_ModifyBreakDivideOptions</name>
     <message>
         <source>Form</source>
-        <translation>Forma</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <source>Remove Segments</source>
@@ -1998,7 +1998,7 @@ vai [%2]</translation>
     <name>LC_ModifyGapOptions</name>
     <message>
         <source>Form</source>
-        <translation>Forma</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <source>Gap Snap:</source>
@@ -2010,7 +2010,7 @@ vai [%2]</translation>
     </message>
     <message>
         <source>Free</source>
-        <translation>Brīvs</translation>
+        <translation>Free</translation>
     </message>
     <message>
         <source>Gap Size:</source>
@@ -2026,7 +2026,7 @@ vai [%2]</translation>
     </message>
     <message>
         <source>End</source>
-        <translation>Beigas</translation>
+        <translation>End</translation>
     </message>
     <message>
         <source>Line Snap:</source>
@@ -2192,7 +2192,7 @@ vai [%2]</translation>
     </message>
     <message>
         <source>Save</source>
-        <translation>Saglabāt</translation>
+        <translation>Save</translation>
     </message>
     <message>
         <source>Apply Pen To Selection</source>
@@ -2297,7 +2297,7 @@ Lūdzu, ņemiet vērā, ka, ja saglabāsiet pildspaleti, izmantojot redaktoru, n
     <name>LC_Rectangle1PointOptions</name>
     <message>
         <source>Form</source>
-        <translation>Forma</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <source>Polyline</source>
@@ -2341,7 +2341,7 @@ Lūdzu, ņemiet vērā, ka, ja saglabāsiet pildspaleti, izmantojot redaktoru, n
     </message>
     <message>
         <source>Top</source>
-        <translation>Augšā</translation>
+        <translation>Top</translation>
     </message>
     <message>
         <source>Top-right</source>
@@ -2349,7 +2349,7 @@ Lūdzu, ņemiet vērā, ka, ja saglabāsiet pildspaleti, izmantojot redaktoru, n
     </message>
     <message>
         <source>Left</source>
-        <translation>Pa kreisi</translation>
+        <translation>Left</translation>
     </message>
     <message>
         <source>Middle</source>
@@ -2389,7 +2389,7 @@ Lūdzu, ņemiet vērā, ka, ja saglabāsiet pildspaleti, izmantojot redaktoru, n
     </message>
     <message>
         <source>Both</source>
-        <translation>Abas</translation>
+        <translation>Both</translation>
     </message>
     <message>
         <source>Vertical</source>
@@ -2412,7 +2412,7 @@ Lūdzu, ņemiet vērā, ka, ja saglabāsiet pildspaleti, izmantojot redaktoru, n
     <name>LC_Rectangle2PointsOptions</name>
     <message>
         <source>Form</source>
-        <translation>Forma</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <source>Snap shift</source>
@@ -2484,7 +2484,7 @@ Lūdzu, ņemiet vērā, ka, ja saglabāsiet pildspaleti, izmantojot redaktoru, n
     </message>
     <message>
         <source>Both</source>
-        <translation>Abas</translation>
+        <translation>Both</translation>
     </message>
     <message>
         <source>Vertical</source>
@@ -2499,7 +2499,7 @@ Lūdzu, ņemiet vērā, ka, ja saglabāsiet pildspaleti, izmantojot redaktoru, n
     <name>LC_Rectangle3PointsOptions</name>
     <message>
         <source>Form</source>
-        <translation>Forma</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <source>Polyline</source>
@@ -2507,7 +2507,7 @@ Lūdzu, ņemiet vērā, ka, ja saglabāsiet pildspaleti, izmantojot redaktoru, n
     </message>
     <message>
         <source>Both</source>
-        <translation>Abas</translation>
+        <translation>Both</translation>
     </message>
     <message>
         <source>Vertical</source>
@@ -2581,15 +2581,15 @@ Lūdzu, ņemiet vērā, ka, ja saglabāsiet pildspaleti, izmantojot redaktoru, n
     <name>LC_SliceDivideOptions</name>
     <message>
         <source>Form</source>
-        <translation>Forma</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <source>None</source>
-        <translation>Nekas</translation>
+        <translation>None</translation>
     </message>
     <message>
         <source>Both</source>
-        <translation>Abas</translation>
+        <translation>Both</translation>
     </message>
     <message>
         <source>Start</source>
@@ -2597,7 +2597,7 @@ Lūdzu, ņemiet vērā, ka, ja saglabāsiet pildspaleti, izmantojot redaktoru, n
     </message>
     <message>
         <source>End</source>
-        <translation>Beigas</translation>
+        <translation>End</translation>
     </message>
     <message>
         <source>Edge Tick:</source>
@@ -2605,7 +2605,7 @@ Lūdzu, ņemiet vērā, ka, ja saglabāsiet pildspaleti, izmantojot redaktoru, n
     </message>
     <message>
         <source>Rel</source>
-        <translation>Relatīvs</translation>
+        <translation>Rel</translation>
     </message>
     <message>
         <source>Offset:</source>
@@ -2652,7 +2652,7 @@ Lūdzu, ņemiet vērā, ka, ja saglabāsiet pildspaleti, izmantojot redaktoru, n
     <name>LC_StarOptions</name>
     <message>
         <source>Form</source>
-        <translation>Forma</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <source>Radius Inner</source>
@@ -2687,7 +2687,7 @@ Lūdzu, ņemiet vērā, ka, ja saglabāsiet pildspaleti, izmantojot redaktoru, n
     </message>
     <message>
         <source>Dock</source>
-        <translation>Dokēt</translation>
+        <translation>Dock</translation>
     </message>
     <message>
         <source>Float</source>
@@ -3078,15 +3078,15 @@ Automātiskā saglabāšana ir deaktivēta.</translation>
     </message>
     <message>
         <source>File</source>
-        <translation>Datne</translation>
+        <translation>File</translation>
     </message>
     <message>
         <source>Edit</source>
-        <translation>Rediģēt</translation>
+        <translation>Edit</translation>
     </message>
     <message>
         <source>View</source>
-        <translation>Skats</translation>
+        <translation>View</translation>
     </message>
     <message>
         <source>Snap Selection</source>
@@ -3154,7 +3154,7 @@ Lūdzu, pārbaudiet, vai tā eksistē un vai ir pareizas atļaujas.</translation
     </message>
     <message>
         <source>Line</source>
-        <translation>Līnija</translation>
+        <translation>Line</translation>
     </message>
     <message>
         <source>Circle</source>
@@ -3186,11 +3186,11 @@ Lūdzu, pārbaudiet, vai tā eksistē un vai ir pareizas atļaujas.</translation
     </message>
     <message>
         <source>Info</source>
-        <translation>Informācija</translation>
+        <translation>Info</translation>
     </message>
     <message>
         <source>Pen</source>
-        <translation>Zīmulis</translation>
+        <translation>Pen</translation>
     </message>
     <message>
         <source>Dock Areas</source>
@@ -3246,7 +3246,7 @@ Lūdzu, pārbaudiet, vai tā eksistē un vai ir pareizas atļaujas.</translation
     </message>
     <message>
         <source>Copy</source>
-        <translation>Kopēt</translation>
+        <translation>Copy</translation>
     </message>
     <message>
         <source>Contributors</source>
@@ -3340,11 +3340,11 @@ Lūdzu, pārbaudiet, vai tā eksistē un vai ir pareizas atļaujas.</translation
     </message>
     <message>
         <source>East</source>
-        <translation>Austrumi</translation>
+        <translation>East</translation>
     </message>
     <message>
         <source>West</source>
-        <translation>Rietumi</translation>
+        <translation>West</translation>
     </message>
     <message>
         <source>&amp;Arrange</source>
@@ -3377,7 +3377,7 @@ Lūdzu, pārbaudiet, vai tā eksistē un vai ir pareizas atļaujas.</translation
     <message>
         <source>Dock</source>
         <comment>Dock the command widget to the main window</comment>
-        <translation>Dokēt</translation>
+        <translation>Dock</translation>
     </message>
     <message>
         <source>&amp;Wiki</source>
@@ -3595,7 +3595,7 @@ atsevišķā logā</translation>
     </message>
     <message>
         <source>Red</source>
-        <translation>Sarkans</translation>
+        <translation>Red</translation>
     </message>
     <message>
         <source>Yellow</source>
@@ -3607,11 +3607,11 @@ atsevišķā logā</translation>
     </message>
     <message>
         <source>Cyan</source>
-        <translation>Ciāna</translation>
+        <translation>Cyan</translation>
     </message>
     <message>
         <source>Blue</source>
-        <translation>Zils</translation>
+        <translation>Blue</translation>
     </message>
     <message>
         <source>Magenta</source>
@@ -3623,7 +3623,7 @@ atsevišķā logā</translation>
     </message>
     <message>
         <source>Gray</source>
-        <translation>Pelēks</translation>
+        <translation>Gray</translation>
     </message>
     <message>
         <source>Light Gray</source>
@@ -3725,7 +3725,7 @@ atsevišķā logā</translation>
     </message>
     <message>
         <source>Dock</source>
-        <translation>Pievienot</translation>
+        <translation>Dock</translation>
     </message>
     <message>
         <source>Float</source>
@@ -3737,7 +3737,7 @@ atsevišķā logā</translation>
     </message>
     <message>
         <source>Cmd</source>
-        <translation>Komanda</translation>
+        <translation>Cmd</translation>
     </message>
 </context>
 <context>
@@ -3816,7 +3816,7 @@ atsevišķā logā</translation>
     <name>QG_DlgArc</name>
     <message>
         <source>Arc</source>
-        <translation>Loks</translation>
+        <translation>Arc</translation>
     </message>
     <message>
         <source>Layer:</source>
@@ -4008,7 +4008,7 @@ This recursively modifies all entities of the Block itself.</source>
     </message>
     <message>
         <source>Area</source>
-        <translation>Laukums</translation>
+        <translation>Area</translation>
     </message>
 </context>
 <context>
@@ -4152,7 +4152,7 @@ Lūdzu, izvēlieties, kādas mērvienības vēlaties izmantot jauniem rasējumie
     <name>QG_DlgLine</name>
     <message>
         <source>Line</source>
-        <translation>Līnija</translation>
+        <translation>Line</translation>
     </message>
     <message>
         <source>Layer:</source>
@@ -4267,11 +4267,11 @@ Lūdzu, izvēlieties, kādas mērvienības vēlaties izmantot jauniem rasējumie
     </message>
     <message>
         <source>Cut</source>
-        <translation>Izgriezt</translation>
+        <translation>Cut</translation>
     </message>
     <message>
         <source>Copy</source>
-        <translation>Kopēt</translation>
+        <translation>Copy</translation>
     </message>
     <message>
         <source>Paste</source>
@@ -5071,7 +5071,7 @@ Lūdzu, izvēlieties, kādas mērvienības vēlaties izmantot jauniem rasējumie
     </message>
     <message>
         <source>auto</source>
-        <translation>automātiski</translation>
+        <translation>auto</translation>
     </message>
     <message>
         <source>&amp;Grid</source>
@@ -5091,7 +5091,7 @@ Lūdzu, izvēlieties, kādas mērvienības vēlaties izmantot jauniem rasējumie
     </message>
     <message>
         <source>Left</source>
-        <translation>Kreisais</translation>
+        <translation>Left</translation>
     </message>
     <message>
         <source>Top crosshair with isometric grid</source>
@@ -5099,7 +5099,7 @@ Lūdzu, izvēlieties, kādas mērvienības vēlaties izmantot jauniem rasējumie
     </message>
     <message>
         <source>Top</source>
-        <translation>Augšējais</translation>
+        <translation>Top</translation>
     </message>
     <message>
         <source>Right crosshair with isometric grid</source>
@@ -5514,7 +5514,7 @@ Lūdzu, izvēlieties, kādas mērvienības vēlaties izmantot jauniem rasējumie
     </message>
     <message>
         <source>All</source>
-        <translation>Viss</translation>
+        <translation>All</translation>
     </message>
     <message>
         <source>Scrollbars</source>
@@ -5993,7 +5993,7 @@ so default step value required for baking</source>
     <name>QG_DlgText</name>
     <message>
         <source>Text</source>
-        <translation>Teksts</translation>
+        <translation>Text</translation>
     </message>
     <message>
         <source>Text:</source>
@@ -6013,11 +6013,11 @@ so default step value required for baking</source>
     </message>
     <message>
         <source>Cut</source>
-        <translation>Izgriezt</translation>
+        <translation>Cut</translation>
     </message>
     <message>
         <source>Copy</source>
-        <translation>Kopēt</translation>
+        <translation>Copy</translation>
     </message>
     <message>
         <source>Paste</source>
@@ -6609,7 +6609,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <source>Fit</source>
-        <translation>Ietilpst</translation>
+        <translation>Fit</translation>
     </message>
     <message>
         <source>Diameter (⌀)</source>
@@ -6759,7 +6759,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <source>auto</source>
-        <translation>automātiski</translation>
+        <translation>auto</translation>
     </message>
     <message>
         <source>Colouring</source>
@@ -6960,7 +6960,7 @@ Konstruēšanas slāņa saturam nevajadzētu parādīties izdrukā.</translation
     </message>
     <message>
         <source>Dot</source>
-        <translation>Punkts</translation>
+        <translation>Dot</translation>
     </message>
     <message>
         <source>Dot (small)</source>
@@ -6972,7 +6972,7 @@ Konstruēšanas slāņa saturam nevajadzētu parādīties izdrukā.</translation
     </message>
     <message>
         <source>Dash</source>
-        <translation>Svītra</translation>
+        <translation>Dash</translation>
     </message>
     <message>
         <source>Dash (small)</source>
@@ -7071,7 +7071,7 @@ Konstruēšanas slāņa saturam nevajadzētu parādīties izdrukā.</translation
     </message>
     <message>
         <source>Left</source>
-        <translation>Kreisā</translation>
+        <translation>Left</translation>
     </message>
     <message>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
@@ -7158,7 +7158,7 @@ p, li { white-space: pre-wrap; }
     <name>QG_SnapToolBar</name>
     <message>
         <source>Snap</source>
-        <translation>Pievilkt</translation>
+        <translation>Snap</translation>
     </message>
     <message>
         <source>Snap to Endpoints</source>
@@ -7289,7 +7289,7 @@ p, li { white-space: pre-wrap; }
     <name>QG_WidgetPen</name>
     <message>
         <source>Pen</source>
-        <translation>Zīmulis</translation>
+        <translation>Pen</translation>
     </message>
     <message>
         <source>Line type:</source>
@@ -7762,15 +7762,15 @@ Vai vēlaties to aizvietot?</translation>
     </message>
     <message>
         <source>Inch</source>
-        <translation>Colla</translation>
+        <translation>Inch</translation>
     </message>
     <message>
         <source>Foot</source>
-        <translation>Pēda</translation>
+        <translation>Foot</translation>
     </message>
     <message>
         <source>Mile</source>
-        <translation>Jūdze</translation>
+        <translation>Mile</translation>
     </message>
     <message>
         <source>Millimeter</source>
@@ -7798,7 +7798,7 @@ Vai vēlaties to aizvietot?</translation>
     </message>
     <message>
         <source>Yard</source>
-        <translation>Jards</translation>
+        <translation>Yard</translation>
     </message>
     <message>
         <source>Angstrom</source>
@@ -8013,7 +8013,7 @@ Vai vēlaties to aizvietot?</translation>
     <message>
         <source>line</source>
         <comment>draw line</comment>
-        <translation>līnija</translation>
+        <translation>line</translation>
     </message>
     <message>
         <source>li</source>
@@ -8038,7 +8038,7 @@ Vai vēlaties to aizvietot?</translation>
     <message>
         <source>free</source>
         <comment>draw freehand line</comment>
-        <translation>brīvs</translation>
+        <translation>free</translation>
     </message>
     <message>
         <source>fhl</source>
@@ -8093,7 +8093,7 @@ Vai vēlaties to aizvietot?</translation>
     <message>
         <source>rect</source>
         <comment>draw rectangle</comment>
-        <translation>tābreiznis</translation>
+        <translation>rect</translation>
     </message>
     <message>
         <source>polygon2v</source>
@@ -8173,7 +8173,7 @@ Vai vēlaties to aizvietot?</translation>
     <message>
         <source>text</source>
         <comment>draw text</comment>
-        <translation>teksts</translation>
+        <translation>text</translation>
     </message>
     <message>
         <source>txt</source>
@@ -8243,7 +8243,7 @@ Vai vēlaties to aizvietot?</translation>
     <message>
         <source>kill</source>
         <comment>kill all actions</comment>
-        <translation>pārtraukt</translation>
+        <translation>kill</translation>
     </message>
     <message>
         <source>k</source>
@@ -8253,7 +8253,7 @@ Vai vēlaties to aizvietot?</translation>
     <message>
         <source>undo</source>
         <comment>undo cycle</comment>
-        <translation>atcelt</translation>
+        <translation>undo</translation>
     </message>
     <message>
         <source>u</source>
@@ -8263,7 +8263,7 @@ Vai vēlaties to aizvietot?</translation>
     <message>
         <source>redo</source>
         <comment>redo cycle</comment>
-        <translation>atkārtot</translation>
+        <translation>redo</translation>
     </message>
     <message>
         <source>r</source>
@@ -8293,7 +8293,7 @@ Vai vēlaties to aizvietot?</translation>
     <message>
         <source>dv</source>
         <comment>dimension - vertical</comment>
-        <translation>vertikālais</translation>
+        <translation>dv</translation>
     </message>
     <message>
         <source>dimlinear</source>
@@ -8303,7 +8303,7 @@ Vai vēlaties to aizvietot?</translation>
     <message>
         <source>dl</source>
         <comment>dimension - linear</comment>
-        <translation>lineārais</translation>
+        <translation>dl</translation>
     </message>
     <message>
         <source>dimangular</source>
@@ -8313,7 +8313,7 @@ Vai vēlaties to aizvietot?</translation>
     <message>
         <source>dan</source>
         <comment>dimension - angular</comment>
-        <translation>leņķiskais</translation>
+        <translation>dan</translation>
     </message>
     <message>
         <source>dimradial</source>
@@ -8333,7 +8333,7 @@ Vai vēlaties to aizvietot?</translation>
     <message>
         <source>dd</source>
         <comment>dimension - diametric</comment>
-        <translation>diametrs</translation>
+        <translation>dd</translation>
     </message>
     <message>
         <source>dimleader</source>
@@ -8343,7 +8343,7 @@ Vai vēlaties to aizvietot?</translation>
     <message>
         <source>ld</source>
         <comment>dimension - leader</comment>
-        <translation>dl</translation>
+        <translation>ld</translation>
     </message>
     <message>
         <source>dimregen</source>
@@ -8358,7 +8358,7 @@ Vai vēlaties to aizvietot?</translation>
     <message>
         <source>rn</source>
         <comment>restrict - nothing</comment>
-        <translation>ni</translation>
+        <translation>rn</translation>
     </message>
     <message>
         <source>restrictorthogonal</source>
@@ -8368,7 +8368,7 @@ Vai vēlaties to aizvietot?</translation>
     <message>
         <source>rr</source>
         <comment>restrict - orthogonal</comment>
-        <translation>ip</translation>
+        <translation>rr</translation>
     </message>
     <message>
         <source>restricthorizontal</source>
@@ -8378,7 +8378,7 @@ Vai vēlaties to aizvietot?</translation>
     <message>
         <source>rh</source>
         <comment>restrict - horizontal</comment>
-        <translation>ih</translation>
+        <translation>rh</translation>
     </message>
     <message>
         <source>restrictvertical</source>
@@ -8413,12 +8413,12 @@ Vai vēlaties to aizvietot?</translation>
     <message>
         <source>cut</source>
         <comment>modify - divide (cut)</comment>
-        <translation>izgriezt</translation>
+        <translation>cut</translation>
     </message>
     <message>
         <source>div</source>
         <comment>modify - divide (cut)</comment>
-        <translation>dalīt</translation>
+        <translation>div</translation>
     </message>
     <message>
         <source>mi</source>
@@ -8493,7 +8493,7 @@ Vai vēlaties to aizvietot?</translation>
     <message>
         <source>sc</source>
         <comment>snap - center</comment>
-        <translation>ic</translation>
+        <translation>sc</translation>
     </message>
     <message>
         <source>snapdist</source>
@@ -8503,7 +8503,7 @@ Vai vēlaties to aizvietot?</translation>
     <message>
         <source>sd</source>
         <comment>snap - distance to endpoints</comment>
-        <translation>ia</translation>
+        <translation>sd</translation>
     </message>
     <message>
         <source>snapend</source>
@@ -8513,7 +8513,7 @@ Vai vēlaties to aizvietot?</translation>
     <message>
         <source>se</source>
         <comment>snap - end points</comment>
-        <translation>ib</translation>
+        <translation>se</translation>
     </message>
     <message>
         <source>snapgrid</source>
@@ -8523,7 +8523,7 @@ Vai vēlaties to aizvietot?</translation>
     <message>
         <source>sg</source>
         <comment>snap - grid</comment>
-        <translation>ir</translation>
+        <translation>sg</translation>
     </message>
     <message>
         <source>snapintersection</source>
@@ -8533,7 +8533,7 @@ Vai vēlaties to aizvietot?</translation>
     <message>
         <source>si</source>
         <comment>snap - intersection</comment>
-        <translation>ik</translation>
+        <translation>si</translation>
     </message>
     <message>
         <source>snapmiddle</source>
@@ -8543,7 +8543,7 @@ Vai vēlaties to aizvietot?</translation>
     <message>
         <source>sm</source>
         <comment>snap - middle points</comment>
-        <translation>ic</translation>
+        <translation>sm</translation>
     </message>
     <message>
         <source>snaponentity</source>
@@ -8553,7 +8553,7 @@ Vai vēlaties to aizvietot?</translation>
     <message>
         <source>sn</source>
         <comment>snap - on entity</comment>
-        <translation>io</translation>
+        <translation>sn</translation>
     </message>
     <message>
         <source>np</source>
@@ -8578,7 +8578,7 @@ Vai vēlaties to aizvietot?</translation>
     <message>
         <source>sa</source>
         <comment>Select all entities</comment>
-        <translation>av</translation>
+        <translation>sa</translation>
     </message>
     <message>
         <source>deselectall</source>
@@ -8593,7 +8593,7 @@ Vai vēlaties to aizvietot?</translation>
     <message>
         <source>attr</source>
         <comment>modify attribute</comment>
-        <translation>atribūts</translation>
+        <translation>attr</translation>
     </message>
     <message>
         <source>ma</source>
@@ -8603,12 +8603,12 @@ Vai vēlaties to aizvietot?</translation>
     <message>
         <source>prop</source>
         <comment>modify properties</comment>
-        <translation>rekvizīts</translation>
+        <translation>prop</translation>
     </message>
     <message>
         <source>dist</source>
         <comment>distance point to point</comment>
-        <translation>attālums</translation>
+        <translation>dist</translation>
     </message>
     <message>
         <source>dpp</source>
@@ -8618,7 +8618,7 @@ Vai vēlaties to aizvietot?</translation>
     <message>
         <source>ang</source>
         <comment>measure angle</comment>
-        <translation>leņķis</translation>
+        <translation>ang</translation>
     </message>
     <message>
         <source>angle</source>
@@ -8662,7 +8662,7 @@ Vai vēlaties to aizvietot?</translation>
     </message>
     <message>
         <source>rows</source>
-        <translation>rindas</translation>
+        <translation>rows</translation>
     </message>
     <message>
         <source>rowspacing</source>
@@ -8674,17 +8674,17 @@ Vai vēlaties to aizvietot?</translation>
     </message>
     <message>
         <source>trim</source>
-        <translation>apgriezt</translation>
+        <translation>trim</translation>
     </message>
     <message>
         <source>ang</source>
         <comment>angle</comment>
-        <translation>grāds</translation>
+        <translation>ang</translation>
     </message>
     <message>
         <source>an</source>
         <comment>angle</comment>
-        <translation>gads</translation>
+        <translation>an</translation>
     </message>
     <message>
         <source>center</source>
@@ -8693,17 +8693,17 @@ Vai vēlaties to aizvietot?</translation>
     <message>
         <source>cen</source>
         <comment>center</comment>
-        <translation>centrs</translation>
+        <translation>cen</translation>
     </message>
     <message>
         <source>ce</source>
         <comment>center</comment>
-        <translation>centrs</translation>
+        <translation>ce</translation>
     </message>
     <message>
         <source>cl</source>
         <comment>chord length</comment>
-        <translation>kolonna</translation>
+        <translation>cl</translation>
     </message>
     <message>
         <source>c</source>
@@ -8713,12 +8713,12 @@ Vai vēlaties to aizvietot?</translation>
     <message>
         <source>cols</source>
         <comment>columns</comment>
-        <translation>kolonnas</translation>
+        <translation>cols</translation>
     </message>
     <message>
         <source>co</source>
         <comment>columns</comment>
-        <translation>ko</translation>
+        <translation>co</translation>
     </message>
     <message>
         <source>columnspacing</source>
@@ -8733,12 +8733,12 @@ Vai vēlaties to aizvietot?</translation>
     <message>
         <source>cs</source>
         <comment>columnspacing for inserts</comment>
-        <translation>ka</translation>
+        <translation>cs</translation>
     </message>
     <message>
         <source>fact</source>
         <comment>factor</comment>
-        <translation>fakti</translation>
+        <translation>fact</translation>
     </message>
     <message>
         <source>f</source>
@@ -8747,7 +8747,7 @@ Vai vēlaties to aizvietot?</translation>
     </message>
     <message>
         <source>help</source>
-        <translation>palīdzība</translation>
+        <translation>help</translation>
     </message>
     <message>
         <source>?</source>
@@ -8762,12 +8762,12 @@ Vai vēlaties to aizvietot?</translation>
     <message>
         <source>len</source>
         <comment>length</comment>
-        <translation>gar</translation>
+        <translation>len</translation>
     </message>
     <message>
         <source>l</source>
         <comment>length</comment>
-        <translation>g</translation>
+        <translation>l</translation>
     </message>
     <message>
         <source>length1</source>
@@ -8807,12 +8807,12 @@ Vai vēlaties to aizvietot?</translation>
     <message>
         <source>num</source>
         <comment>number</comment>
-        <translation>sk</translation>
+        <translation>num</translation>
     </message>
     <message>
         <source>n</source>
         <comment>number</comment>
-        <translation>s</translation>
+        <translation>n</translation>
     </message>
     <message>
         <source>ra</source>
@@ -8827,12 +8827,12 @@ Vai vēlaties to aizvietot?</translation>
     <message>
         <source>rev</source>
         <comment>reversed</comment>
-        <translation>apgriezts</translation>
+        <translation>rev</translation>
     </message>
     <message>
         <source>row</source>
         <comment>row</comment>
-        <translation>rinda</translation>
+        <translation>row</translation>
     </message>
     <message>
         <source>rowspacing</source>
@@ -8846,7 +8846,7 @@ Vai vēlaties to aizvietot?</translation>
     </message>
     <message>
         <source>text</source>
-        <translation>teksts</translation>
+        <translation>text</translation>
     </message>
     <message>
         <source>t</source>
@@ -8860,7 +8860,7 @@ Vai vēlaties to aizvietot?</translation>
     </message>
     <message>
         <source>undo</source>
-        <translation>atcelt</translation>
+        <translation>undo</translation>
     </message>
     <message>
         <source>u</source>
@@ -8869,16 +8869,16 @@ Vai vēlaties to aizvietot?</translation>
     </message>
     <message>
         <source>redo</source>
-        <translation>atkārtot</translation>
+        <translation>redo</translation>
     </message>
     <message>
         <source>r</source>
         <comment>redo</comment>
-        <translation>a</translation>
+        <translation>r</translation>
     </message>
     <message>
         <source>back</source>
-        <translation>atpakaļ</translation>
+        <translation>back</translation>
     </message>
     <message>
         <source>b</source>
@@ -8916,7 +8916,7 @@ Vai vēlaties to aizvietot?</translation>
     <message>
         <source>None</source>
         <comment>unknown length unit</comment>
-        <translation>Neviena</translation>
+        <translation>None</translation>
     </message>
     <message>
         <source>error reading file metadata in dwg file</source>
@@ -8928,7 +8928,7 @@ Vai vēlaties to aizvietot?</translation>
     </message>
     <message>
         <source>bw</source>
-        <translation>melnbalts</translation>
+        <translation>bw</translation>
     </message>
     <message>
         <source>blackwhite</source>
@@ -8967,7 +8967,7 @@ Vai vēlaties to aizvietot?</translation>
     </message>
     <message>
         <source>Edit</source>
-        <translation>Rediģēt</translation>
+        <translation>Edit</translation>
     </message>
     <message>
         <source>Ellipse</source>
@@ -8975,7 +8975,7 @@ Vai vēlaties to aizvietot?</translation>
     </message>
     <message>
         <source>File</source>
-        <translation>Fails</translation>
+        <translation>File</translation>
     </message>
     <message>
         <source>Dimension</source>
@@ -8983,7 +8983,7 @@ Vai vēlaties to aizvietot?</translation>
     </message>
     <message>
         <source>Info</source>
-        <translation>Informācija</translation>
+        <translation>Info</translation>
     </message>
     <message>
         <source>Layer</source>
@@ -8991,7 +8991,7 @@ Vai vēlaties to aizvietot?</translation>
     </message>
     <message>
         <source>Line</source>
-        <translation>Līnija</translation>
+        <translation>Line</translation>
     </message>
     <message>
         <source>Modify</source>
@@ -9019,7 +9019,7 @@ Vai vēlaties to aizvietot?</translation>
     </message>
     <message>
         <source>Snap</source>
-        <translation>Pielīmēt</translation>
+        <translation>Snap</translation>
     </message>
     <message>
         <source>Snap Extras</source>
@@ -9027,7 +9027,7 @@ Vai vēlaties to aizvietot?</translation>
     </message>
     <message>
         <source>View</source>
-        <translation>Skats</translation>
+        <translation>View</translation>
     </message>
     <message>
         <source>Widgets</source>
@@ -9039,7 +9039,7 @@ Vai vēlaties to aizvietot?</translation>
     </message>
     <message>
         <source>All</source>
-        <translation>Visi</translation>
+        <translation>All</translation>
     </message>
     <message>
         <source>Invalid objects removed:</source>
@@ -9067,7 +9067,7 @@ Vai vēlaties to aizvietot?</translation>
     </message>
     <message>
         <source>cal</source>
-        <translation>kal</translation>
+        <translation>cal</translation>
     </message>
     <message>
         <source>Calculator mode: On</source>
@@ -9128,7 +9128,7 @@ Vai vēlaties to aizvietot?</translation>
     <message>
         <source>re</source>
         <comment>draw rectangle</comment>
-        <translation>atkārtot</translation>
+        <translation>re</translation>
     </message>
     <message>
         <source>linepar</source>
@@ -9143,12 +9143,12 @@ Vai vēlaties to aizvietot?</translation>
     <message>
         <source>pa</source>
         <comment>create parallel</comment>
-        <translation>parametrs</translation>
+        <translation>pa</translation>
     </message>
     <message>
         <source>ll</source>
         <comment>create parallel</comment>
-        <translation>līnijas</translation>
+        <translation>ll</translation>
     </message>
     <message>
         <source>lineparthro</source>
@@ -9193,7 +9193,7 @@ Vai vēlaties to aizvietot?</translation>
     <message>
         <source>or</source>
         <comment>tangent line and circle</comment>
-        <translation>vai</translation>
+        <translation>or</translation>
     </message>
     <message>
         <source>lineperp</source>
@@ -9348,7 +9348,7 @@ Vai vēlaties to aizvietot?</translation>
     <message>
         <source>arc</source>
         <comment>arc point radius</comment>
-        <translation>loks</translation>
+        <translation>arc</translation>
     </message>
     <message>
         <source>ar</source>
@@ -9378,7 +9378,7 @@ Vai vēlaties to aizvietot?</translation>
     <message>
         <source>at</source>
         <comment>arc tangent</comment>
-        <translation>pie</translation>
+        <translation>at</translation>
     </message>
     <message>
         <source>sf</source>
@@ -9528,7 +9528,7 @@ Vai vēlaties to aizvietot?</translation>
     <message>
         <source>is</source>
         <comment>invert select</comment>
-        <translation>ir</translation>
+        <translation>is</translation>
     </message>
     <message>
         <source>ds</source>
@@ -9787,12 +9787,12 @@ Vai vēlaties to aizvietot?</translation>
     <message>
         <source>eqn</source>
         <comment>equation</comment>
-        <translation>vienādojums</translation>
+        <translation>eqn</translation>
     </message>
     <message>
         <source>eq</source>
         <comment>equation</comment>
-        <translation>vienādojums</translation>
+        <translation>eq</translation>
     </message>
     <message>
         <source>Custom</source>
@@ -10295,12 +10295,12 @@ Vai vēlaties to aizvietot?</translation>
     <message>
         <source>star</source>
         <comment>draw star</comment>
-        <translation>zvaigzne</translation>
+        <translation>star</translation>
     </message>
     <message>
         <source>st</source>
         <comment>draw star</comment>
-        <translation>zv</translation>
+        <translation>st</translation>
     </message>
     <message>
         <source>cross</source>
@@ -10310,7 +10310,7 @@ Vai vēlaties to aizvietot?</translation>
     <message>
         <source>cx</source>
         <comment>draw cross for circle</comment>
-        <translation>kr</translation>
+        <translation>cx</translation>
     </message>
     <message>
         <source>linepoints</source>
@@ -10330,7 +10330,7 @@ Vai vēlaties to aizvietot?</translation>
     <message>
         <source>cba</source>
         <comment>draw circle by arc</comment>
-        <translation>apl. ar loku</translation>
+        <translation>cba</translation>
     </message>
     <message>
         <source>duplicate</source>
@@ -10340,7 +10340,7 @@ Vai vēlaties to aizvietot?</translation>
     <message>
         <source>dup</source>
         <comment>duplicate entity</comment>
-        <translation>dubl.</translation>
+        <translation>dup</translation>
     </message>
     <message>
         <source>linejoin</source>
@@ -10350,7 +10350,7 @@ Vai vēlaties to aizvietot?</translation>
     <message>
         <source>lj</source>
         <comment>lines join</comment>
-        <translation>ls</translation>
+        <translation>lj</translation>
     </message>
     <message>
         <source>breakdivide</source>
@@ -10360,7 +10360,7 @@ Vai vēlaties to aizvietot?</translation>
     <message>
         <source>bd</source>
         <comment>break or divide entity</comment>
-        <translation>pd</translation>
+        <translation>bd</translation>
     </message>
     <message>
         <source>gapline</source>
@@ -10370,7 +10370,7 @@ Vai vēlaties to aizvietot?</translation>
     <message>
         <source>gl</source>
         <comment>line gap</comment>
-        <translation>al</translation>
+        <translation>gl</translation>
     </message>
     <message>
         <source>parabola4p</source>
@@ -10390,7 +10390,7 @@ Vai vēlaties to aizvietot?</translation>
     <message>
         <source>plfd</source>
         <comment>Parabola focus directrix</comment>
-        <translation>pdal</translation>
+        <translation>plfd</translation>
     </message>
     <message>
         <source>angleline</source>
@@ -10405,7 +10405,7 @@ Vai vēlaties to aizvietot?</translation>
     <message>
         <source>rort</source>
         <comment>draw orthogonal</comment>
-        <translation>rotācija</translation>
+        <translation>rort</translation>
     </message>
     <message>
         <source>point2line</source>
@@ -10430,7 +10430,7 @@ Vai vēlaties to aizvietot?</translation>
     <message>
         <source>smm</source>
         <comment>snap middle manual</comment>
-        <translation>mmp</translation>
+        <translation>smm</translation>
     </message>
     <message>
         <source>x</source>
@@ -10474,11 +10474,11 @@ Vai vēlaties to aizvietot?</translation>
     </message>
     <message>
         <source>pos</source>
-        <translation>pozīcija</translation>
+        <translation>pos</translation>
     </message>
     <message>
         <source>size</source>
-        <translation>izmērs</translation>
+        <translation>size</translation>
     </message>
     <message>
         <source>bevels</source>
@@ -10498,7 +10498,7 @@ Vai vēlaties to aizvietot?</translation>
     </message>
     <message>
         <source>str</source>
-        <translation>virkne</translation>
+        <translation>str</translation>
     </message>
     <message>
         <source>round</source>
@@ -10510,19 +10510,19 @@ Vai vēlaties to aizvietot?</translation>
     </message>
     <message>
         <source>topl</source>
-        <translation>augša</translation>
+        <translation>topl</translation>
     </message>
     <message>
         <source>top</source>
-        <translation>augša</translation>
+        <translation>top</translation>
     </message>
     <message>
         <source>topr</source>
-        <translation>augša</translation>
+        <translation>topr</translation>
     </message>
     <message>
         <source>left</source>
-        <translation>kreisā</translation>
+        <translation>left</translation>
     </message>
     <message>
         <source>middle</source>
@@ -10562,11 +10562,11 @@ Vai vēlaties to aizvietot?</translation>
     </message>
     <message>
         <source>hor</source>
-        <translation>horizontāli</translation>
+        <translation>hor</translation>
     </message>
     <message>
         <source>vert</source>
-        <translation>vertikāli</translation>
+        <translation>vert</translation>
     </message>
     <message>
         <source>snap2</source>
@@ -10586,7 +10586,7 @@ Vai vēlaties to aizvietot?</translation>
     </message>
     <message>
         <source>quad</source>
-        <translation>četrstūris</translation>
+        <translation>quad</translation>
     </message>
     <message>
         <source>noquad</source>
@@ -10618,19 +10618,19 @@ Vai vēlaties to aizvietot?</translation>
     </message>
     <message>
         <source>end</source>
-        <translation>beigas</translation>
+        <translation>end</translation>
     </message>
     <message>
         <source>both</source>
-        <translation>abas puses</translation>
+        <translation>both</translation>
     </message>
     <message>
         <source>none</source>
-        <translation>bez robežām</translation>
+        <translation>none</translation>
     </message>
     <message>
         <source>fit</source>
-        <translation>pielāgot</translation>
+        <translation>fit</translation>
     </message>
     <message>
         <source>nofit</source>
@@ -10650,7 +10650,7 @@ Vai vēlaties to aizvietot?</translation>
     </message>
     <message>
         <source>sym</source>
-        <translation>sim</translation>
+        <translation>sym</translation>
     </message>
     <message>
         <source>nosym</source>
@@ -10687,7 +10687,7 @@ Vai vēlaties to aizvietot?</translation>
     <message>
         <source>cal </source>
         <comment>command to trigger cli calculator</comment>
-        <translation>kal</translation>
+        <translation>cal</translation>
     </message>
     <message>
         <source>calculate </source>
@@ -10886,7 +10886,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Atpakaļ</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -10905,7 +10905,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Atpakaļ</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify dimension line location</source>
@@ -11005,7 +11005,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Atpakaļ</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify dimension line location</source>
@@ -11071,7 +11071,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Atpakaļ</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify start angle:</source>
@@ -11106,7 +11106,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Atpakaļ</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify endpoint</source>
@@ -11133,7 +11133,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Atpakaļ</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify end point</source>
@@ -11156,7 +11156,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Atpakaļ</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify point on circle</source>
@@ -11183,7 +11183,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Atpakaļ</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -11206,7 +11206,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Atpakaļ</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify third point</source>
@@ -11233,7 +11233,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Atpakaļ</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>radius=%1 is invalid (expression)</source>
@@ -11264,7 +11264,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Atpakaļ</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify the third line</source>
@@ -11283,7 +11283,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Atpakaļ</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify the second point on the tangent circle</source>
@@ -11314,7 +11314,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Atpakaļ</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Select the center of the tangent circle</source>
@@ -11357,7 +11357,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Atpakaļ</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify a point on the tangent circle</source>
@@ -11376,7 +11376,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Atpakaļ</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Select the center of the tangent circle</source>
@@ -11411,7 +11411,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Atpakaļ</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify the third point on ellipse</source>
@@ -11446,7 +11446,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Atpakaļ</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify endpoint or length of minor axis:</source>
@@ -11481,7 +11481,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Atpakaļ</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify the third point on ellipse</source>
@@ -11508,7 +11508,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Atpakaļ</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify a point on ellipse or total distance to foci</source>
@@ -11539,7 +11539,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Atpakaļ</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify the third line</source>
@@ -11632,7 +11632,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Atpakaļ</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify next point</source>
@@ -11671,7 +11671,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Atpakaļ</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Enter length:</source>
@@ -11698,7 +11698,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Atpakaļ</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Enter bisector length:</source>
@@ -11741,7 +11741,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Atpakaļ</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -11760,7 +11760,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Atpakaļ</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -11802,7 +11802,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Atpakaļ</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Number:</source>
@@ -11856,7 +11856,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Atpakaļ</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Number:</source>
@@ -11887,7 +11887,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Atpakaļ</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -11910,7 +11910,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Atpakaļ</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -11929,7 +11929,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Atpakaļ</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -11940,7 +11940,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Atpakaļ</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Select first circle or ellipse</source>
@@ -11979,7 +11979,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Atpakaļ</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -12009,7 +12009,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Atpakaļ</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify next point</source>
@@ -12076,7 +12076,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Atpakaļ</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify next control point</source>
@@ -12103,7 +12103,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Atpakaļ</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify second point</source>
@@ -12163,7 +12163,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Atpakaļ</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Angle: %1</source>
@@ -12217,7 +12217,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Atpakaļ</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Distance: %1 Cartesian: (%2 , %3), Polar: (%4&lt;%5)</source>
@@ -12244,7 +12244,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Atpakaļ</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -12335,7 +12335,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Atpakaļ</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Enter length 1:</source>
@@ -12374,7 +12374,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Atpakaļ</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Entity must be a line, arc, circle, ellipse or interpolation spline.</source>
@@ -12397,7 +12397,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Atpakaļ</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Entities not in the same polyline.</source>
@@ -12470,7 +12470,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Atpakaļ</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -12489,7 +12489,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Atpakaļ</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Invalid number of copies, use %1 </source>
@@ -12516,7 +12516,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Atpakaļ</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Enter rotation angle:</source>
@@ -12531,7 +12531,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Atpakaļ</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -12542,7 +12542,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Atpakaļ</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify rotation center</source>
@@ -12569,7 +12569,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Atpakaļ</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -12580,7 +12580,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Atpakaļ</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify second entity</source>
@@ -12634,7 +12634,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Atpakaļ</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify reference point</source>
@@ -12661,7 +12661,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Atpakaļ</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Select second trim entity</source>
@@ -12696,7 +12696,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Atpakaļ</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -12746,7 +12746,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Atpakaļ</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -12777,7 +12777,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Atpakaļ</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify next point</source>
@@ -12816,7 +12816,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Atpakaļ</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Deleting point is invalid.</source>
@@ -12855,7 +12855,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Atpakaļ</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify second node</source>
@@ -12940,7 +12940,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Atpakaļ</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify second segment</source>
@@ -13096,7 +13096,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Atpakaļ</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -13111,7 +13111,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Atpakaļ</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Click and drag for the selection window</source>
@@ -13145,7 +13145,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Atpakaļ</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Select second entity</source>
@@ -13194,7 +13194,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Atpakaļ</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -13263,7 +13263,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Trim</source>
-        <translation>Apgriezt</translation>
+        <translation>Trim</translation>
     </message>
     <message>
         <source>Length 1:</source>
@@ -13491,7 +13491,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>End</source>
-        <translation>Beigas</translation>
+        <translation>End</translation>
     </message>
 </context>
 <context>
@@ -13537,7 +13537,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Undo</source>
-        <translation>Atcelt</translation>
+        <translation>Undo</translation>
     </message>
     <message>
         <source>Redo the last line drawing</source>
@@ -13545,7 +13545,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Redo</source>
-        <translation>Atkārtot</translation>
+        <translation>Redo</translation>
     </message>
 </context>
 <context>
@@ -13576,7 +13576,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Rel</source>
-        <translation>Relatīvs</translation>
+        <translation>Rel</translation>
     </message>
     <message>
         <source>Undo the last line drawing</source>
@@ -13584,7 +13584,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Undo</source>
-        <translation>Atcelt</translation>
+        <translation>Undo</translation>
     </message>
     <message>
         <source>Form a closed contour from lines drawn</source>
@@ -13600,7 +13600,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Redo</source>
-        <translation>Atkārtot</translation>
+        <translation>Redo</translation>
     </message>
     <message>
         <source>Point</source>
@@ -13751,11 +13751,11 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Undo</source>
-        <translation>Atcelt</translation>
+        <translation>Undo</translation>
     </message>
     <message>
         <source>Line</source>
-        <translation>Līnija</translation>
+        <translation>Line</translation>
     </message>
     <message>
         <source>Tangential</source>
@@ -13837,7 +13837,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Trim</source>
-        <translation>Apgriezt</translation>
+        <translation>Trim</translation>
     </message>
     <message>
         <source>Radius:</source>
@@ -13886,7 +13886,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Undo</source>
-        <translation>Atcelt</translation>
+        <translation>Undo</translation>
     </message>
 </context>
 <context>
@@ -13943,7 +13943,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Name</source>
-        <translation>Nosaukums</translation>
+        <translation>Name</translation>
     </message>
     <message>
         <source>Create</source>

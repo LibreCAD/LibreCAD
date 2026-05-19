@@ -175,7 +175,7 @@ Hvis 'Angiv først basispunkterne' er markeret, vil Justér bede om justeringspu
     <message>
         <location filename="../list/list.cpp" line="94" />
         <source>LINE</source>
-        <translation>LINJE</translation>
+        <translation>LINE</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="99" />
@@ -206,7 +206,7 @@ Hvis 'Angiv først basispunkterne' er markeret, vil Justér bede om justeringspu
     <message>
         <location filename="../list/list.cpp" line="118" />
         <source>ARC</source>
-        <translation>CIRKELBUE</translation>
+        <translation>ARC</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="119" />
@@ -245,7 +245,7 @@ Hvis 'Angiv først basispunkterne' er markeret, vil Justér bede om justeringspu
     <message>
         <location filename="../list/list.cpp" line="141" />
         <source>area</source>
-        <translation>areal</translation>
+        <translation>area</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="144" />
@@ -280,7 +280,7 @@ Hvis 'Angiv først basispunkterne' er markeret, vil Justér bede om justeringspu
     <message>
         <location filename="../list/list.cpp" line="179" />
         <source>TEXT</source>
-        <translation>TEKST</translation>
+        <translation>TEXT</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="183" />
@@ -295,7 +295,7 @@ Hvis 'Angiv først basispunkterne' er markeret, vil Justér bede om justeringspu
     <message>
         <location filename="../list/list.cpp" line="189" />
         <source>Name</source>
-        <translation>Navn</translation>
+        <translation>Name</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="191" />
@@ -335,12 +335,12 @@ Hvis 'Angiv først basispunkterne' er markeret, vil Justér bede om justeringspu
     <message>
         <location filename="../list/list.cpp" line="216" />
         <source>No</source>
-        <translation>Nej</translation>
+        <translation>No</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="216" />
         <source>Yes</source>
-        <translation>Ja</translation>
+        <translation>Yes</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="217" />
@@ -688,7 +688,7 @@ Hvis 'Angiv først basispunkterne' er markeret, vil Justér bede om justeringspu
     <message>
         <location filename="../divide/divide.cpp" line="474" />
         <source>LINE</source>
-        <translation>LINJE</translation>
+        <translation>LINE</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="479" />
@@ -757,7 +757,7 @@ Hvis 'Angiv først basispunkterne' er markeret, vil Justér bede om justeringspu
     <message>
         <location filename="../divide/divide.cpp" line="526" />
         <source>area</source>
-        <translation>område</translation>
+        <translation>area</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="530" />
@@ -772,12 +772,12 @@ Hvis 'Angiv først basispunkterne' er markeret, vil Justér bede om justeringspu
     <message>
         <location filename="../divide/divide.cpp" line="533" />
         <source>No</source>
-        <translation>Nej</translation>
+        <translation>No</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="533" />
         <source>Yes</source>
-        <translation>Ja</translation>
+        <translation>Yes</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="534" />
@@ -825,7 +825,7 @@ Hvis 'Angiv først basispunkterne' er markeret, vil Justér bede om justeringspu
     <message>
         <location filename="../divide/dividedlg.cpp" line="92" />
         <source>Size</source>
-        <translation>Størrelse</translation>
+        <translation>Size</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="115" />
@@ -1210,7 +1210,7 @@ Brug t eller x i din ligning som en variabel / parameter.</translation>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="32" />
         <source>Draw</source>
-        <translation>Tegn</translation>
+        <translation>Draw</translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="33" />

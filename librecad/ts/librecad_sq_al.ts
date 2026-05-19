@@ -35,7 +35,7 @@
     <message>
         <location filename="../src/ui/generic/comboboxoption.ui" line="41"/>
         <source>Set</source>
-        <translation>Vendos</translation>
+        <translation>Set</translation>
     </message>
 </context>
 <context>
@@ -158,7 +158,7 @@ largësia midis pikave=%2 është më e madhe se diametri=%3</translation>
         <location filename="../src/actions/lc_actiondrawcircle2pr.cpp" line="243"/>
         <location filename="../src/actions/lc_actiondrawcircle2pr.cpp" line="247"/>
         <source>Back</source>
-        <translation>Kthehu</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actiondrawcircle2pr.cpp" line="246"/>
@@ -186,7 +186,7 @@ ose [%2]</translation>
         <location filename="../src/actions/lc_actiondrawlinepoints.cpp" line="516"/>
         <location filename="../src/actions/lc_actiondrawlinepoints.cpp" line="521"/>
         <source>Back</source>
-        <translation>Kthehu</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actiondrawlinepoints.cpp" line="516"/>
@@ -244,7 +244,7 @@ ose [%2]</translation>
         <location filename="../src/actions/lc_actiondrawlinesnake.cpp" line="474"/>
         <location filename="../src/actions/lc_actiondrawlinesnake.cpp" line="486"/>
         <source>Back</source>
-        <translation>Kthehu</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actiondrawlinesnake.cpp" line="448"/>
@@ -301,7 +301,7 @@ ose [%2]</translation>
         <location filename="../src/actions/lc_actiondrawparabola4points.cpp" line="284"/>
         <location filename="../src/actions/lc_actiondrawparabola4points.cpp" line="289"/>
         <source>Back</source>
-        <translation>Kthehu</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actiondrawparabola4points.cpp" line="278"/>
@@ -341,7 +341,7 @@ ose [%2]</translation>
         <location filename="../src/actions/lc_actiondrawparabolaFD.cpp" line="301"/>
         <location filename="../src/actions/lc_actiondrawparabolaFD.cpp" line="306"/>
         <source>Back</source>
-        <translation>Kthehu</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actiondrawparabolaFD.cpp" line="300"/>
@@ -369,12 +369,12 @@ ose [%2]</translation>
     <message>
         <location filename="../src/actions/lc_actiondrawslicedivide.cpp" line="180"/>
         <source>Line</source>
-        <translation>Çiara</translation>
+        <translation>Line</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actiondrawslicedivide.cpp" line="190"/>
         <source>Arc</source>
-        <translation>Oblúk</translation>
+        <translation>Arc</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actiondrawslicedivide.cpp" line="200"/>
@@ -403,7 +403,7 @@ ose [%2]</translation>
         <location filename="../src/actions/lc_actiondrawsplinepoints.cpp" line="276"/>
         <location filename="../src/actions/lc_actiondrawsplinepoints.cpp" line="282"/>
         <source>Back</source>
-        <translation>Kthehu</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actiondrawsplinepoints.cpp" line="281"/>
@@ -603,7 +603,7 @@ ose [%2]</translation>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="299"/>
         <source>Star</source>
-        <translation>Yll</translation>
+        <translation>Star</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="305"/>
@@ -1131,7 +1131,7 @@ ose [%2]</translation>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1328"/>
         <source>Left</source>
-        <translation>Majtas</translation>
+        <translation>Left</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1337"/>
@@ -1141,7 +1141,7 @@ ose [%2]</translation>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1346"/>
         <source>Top</source>
-        <translation>Sipër</translation>
+        <translation>Top</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1355"/>
@@ -1515,7 +1515,7 @@ ose [%2]</translation>
     <message>
         <location filename="../src/actions/lc_actionsnapmiddlemanual.cpp" line="306"/>
         <source>Back</source>
-        <translation>Kthehu</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -1523,7 +1523,7 @@ ose [%2]</translation>
     <message>
         <location filename="../src/ui/forms/lc_circlebyarcoptions.ui" line="14"/>
         <source>Form</source>
-        <translation>Formular</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_circlebyarcoptions.ui" line="27"/>
@@ -1568,7 +1568,7 @@ ose [%2]</translation>
     <message>
         <location filename="../src/ui/forms/lc_crossoptions.ui" line="20"/>
         <source>Form</source>
-        <translation>Formular</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_crossoptions.ui" line="63"/>
@@ -1598,7 +1598,7 @@ ose [%2]</translation>
     <message>
         <location filename="../src/ui/forms/lc_crossoptions.ui" line="161"/>
         <source>Type</source>
-        <translation>Lloji</translation>
+        <translation>Type</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_crossoptions.ui" line="168"/>
@@ -1611,7 +1611,7 @@ ose [%2]</translation>
     <message>
         <location filename="../src/ui/lc_deviceoptions.ui" line="14"/>
         <source>Form</source>
-        <translation>Formular</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_deviceoptions.ui" line="20"/>
@@ -1621,7 +1621,7 @@ ose [%2]</translation>
     <message>
         <location filename="../src/ui/lc_deviceoptions.ui" line="53"/>
         <source>Save</source>
-        <translation>Ruaj</translation>
+        <translation>Save</translation>
     </message>
 </context>
 <context>
@@ -1637,7 +1637,7 @@ ose [%2]</translation>
     <message>
         <location filename="../src/ui/forms/lc_duplicateoptions.ui" line="14"/>
         <source>Form</source>
-        <translation>Formular</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_duplicateoptions.ui" line="26"/>
@@ -2173,7 +2173,7 @@ ose [%2]</translation>
     <message>
         <location filename="../src/ui/forms/lc_lineanglereloptions.ui" line="14"/>
         <source>Form</source>
-        <translation>Formular</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_lineanglereloptions.ui" line="42"/>
@@ -2184,7 +2184,7 @@ ose [%2]</translation>
         <location filename="../src/ui/forms/lc_lineanglereloptions.ui" line="50"/>
         <location filename="../src/ui/forms/lc_lineanglereloptions.ui" line="181"/>
         <source>Free</source>
-        <translation>E lirë</translation>
+        <translation>Free</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_lineanglereloptions.ui" line="55"/>
@@ -2202,7 +2202,7 @@ ose [%2]</translation>
         <location filename="../src/ui/forms/lc_lineanglereloptions.ui" line="65"/>
         <location filename="../src/ui/forms/lc_lineanglereloptions.ui" line="120"/>
         <source>End</source>
-        <translation>Fund</translation>
+        <translation>End</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_lineanglereloptions.ui" line="73"/>
@@ -2212,7 +2212,7 @@ ose [%2]</translation>
     <message>
         <location filename="../src/ui/forms/lc_lineanglereloptions.ui" line="80"/>
         <source>Rel</source>
-        <translation>Relativ</translation>
+        <translation>Rel</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_lineanglereloptions.ui" line="144"/>
@@ -2245,7 +2245,7 @@ ose [%2]</translation>
     <message>
         <location filename="../src/ui/forms/lc_linefrompointtolineoptions.ui" line="14"/>
         <source>Form</source>
-        <translation>Formular</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_linefrompointtolineoptions.ui" line="48"/>
@@ -2290,7 +2290,7 @@ ose [%2]</translation>
     <message>
         <location filename="../src/ui/forms/lc_linefrompointtolineoptions.ui" line="227"/>
         <source>End</source>
-        <translation>Fund</translation>
+        <translation>End</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_linefrompointtolineoptions.ui" line="241"/>
@@ -2308,7 +2308,7 @@ ose [%2]</translation>
     <message>
         <location filename="../src/ui/forms/lc_linejoinoptions.ui" line="20"/>
         <source>Form</source>
-        <translation>Formular</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_linejoinoptions.ui" line="51"/>
@@ -2379,7 +2379,7 @@ ose [%2]</translation>
     <message>
         <location filename="../src/ui/forms/lc_linepointsoptions.ui" line="20"/>
         <source>Form</source>
-        <translation>Formular</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_linepointsoptions.ui" line="32"/>
@@ -2394,12 +2394,12 @@ ose [%2]</translation>
     <message>
         <location filename="../src/ui/forms/lc_linepointsoptions.ui" line="128"/>
         <source>None</source>
-        <translation>Asnjë</translation>
+        <translation>None</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_linepointsoptions.ui" line="133"/>
         <source>Both</source>
-        <translation>Të dyja</translation>
+        <translation>Both</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_linepointsoptions.ui" line="138"/>
@@ -2409,7 +2409,7 @@ ose [%2]</translation>
     <message>
         <location filename="../src/ui/forms/lc_linepointsoptions.ui" line="143"/>
         <source>End</source>
-        <translation>Fund</translation>
+        <translation>End</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_linepointsoptions.ui" line="183"/>
@@ -2432,7 +2432,7 @@ ose [%2]</translation>
     <message>
         <location filename="../src/ui/forms/lc_modifybreakdivideoptions.ui" line="14"/>
         <source>Form</source>
-        <translation>Formular</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_modifybreakdivideoptions.ui" line="39"/>
@@ -2450,7 +2450,7 @@ ose [%2]</translation>
     <message>
         <location filename="../src/ui/forms/lc_modifygapoptions.ui" line="14"/>
         <source>Form</source>
-        <translation>Formular</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_modifygapoptions.ui" line="42"/>
@@ -2466,7 +2466,7 @@ ose [%2]</translation>
         <location filename="../src/ui/forms/lc_modifygapoptions.ui" line="56"/>
         <location filename="../src/ui/forms/lc_modifygapoptions.ui" line="87"/>
         <source>Free</source>
-        <translation>E lirë</translation>
+        <translation>Free</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_modifygapoptions.ui" line="79"/>
@@ -2489,7 +2489,7 @@ ose [%2]</translation>
         <location filename="../src/ui/forms/lc_modifygapoptions.ui" line="102"/>
         <location filename="../src/ui/forms/lc_modifygapoptions.ui" line="121"/>
         <source>End</source>
-        <translation>Fund</translation>
+        <translation>End</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_modifygapoptions.ui" line="129"/>
@@ -2696,7 +2696,7 @@ ose [%2]</translation>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="349"/>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="352"/>
         <source>Save</source>
-        <translation>Ruaj</translation>
+        <translation>Save</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="363"/>
@@ -2824,7 +2824,7 @@ Ju lutemi vini re se nëse do të ruani stilin përmes editorit pa rinisje, stil
     <message>
         <location filename="../src/ui/forms/lc_rectangle1pointoptions.ui" line="14"/>
         <source>Form</source>
-        <translation>Formular</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle1pointoptions.ui" line="26"/>
@@ -2879,7 +2879,7 @@ Ju lutemi vini re se nëse do të ruani stilin përmes editorit pa rinisje, stil
     <message>
         <location filename="../src/ui/forms/lc_rectangle1pointoptions.ui" line="175"/>
         <source>Top</source>
-        <translation>Sipër</translation>
+        <translation>Top</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle1pointoptions.ui" line="180"/>
@@ -2889,7 +2889,7 @@ Ju lutemi vini re se nëse do të ruani stilin përmes editorit pa rinisje, stil
     <message>
         <location filename="../src/ui/forms/lc_rectangle1pointoptions.ui" line="185"/>
         <source>Left</source>
-        <translation>Majtas</translation>
+        <translation>Left</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle1pointoptions.ui" line="190"/>
@@ -2939,7 +2939,7 @@ Ju lutemi vini re se nëse do të ruani stilin përmes editorit pa rinisje, stil
     <message>
         <location filename="../src/ui/forms/lc_rectangle1pointoptions.ui" line="245"/>
         <source>Both</source>
-        <translation>Të dyja</translation>
+        <translation>Both</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle1pointoptions.ui" line="250"/>
@@ -2967,7 +2967,7 @@ Ju lutemi vini re se nëse do të ruani stilin përmes editorit pa rinisje, stil
     <message>
         <location filename="../src/ui/forms/lc_rectangle2pointsoptions.ui" line="14"/>
         <source>Form</source>
-        <translation>Formular</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle2pointsoptions.ui" line="26"/>
@@ -3061,7 +3061,7 @@ Ju lutemi vini re se nëse do të ruani stilin përmes editorit pa rinisje, stil
     <message>
         <location filename="../src/ui/forms/lc_rectangle2pointsoptions.ui" line="228"/>
         <source>Both</source>
-        <translation>Të dyja</translation>
+        <translation>Both</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle2pointsoptions.ui" line="233"/>
@@ -3079,7 +3079,7 @@ Ju lutemi vini re se nëse do të ruani stilin përmes editorit pa rinisje, stil
     <message>
         <location filename="../src/ui/forms/lc_rectangle3pointsoptions.ui" line="14"/>
         <source>Form</source>
-        <translation>Formular</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle3pointsoptions.ui" line="55"/>
@@ -3089,7 +3089,7 @@ Ju lutemi vini re se nëse do të ruani stilin përmes editorit pa rinisje, stil
     <message>
         <location filename="../src/ui/forms/lc_rectangle3pointsoptions.ui" line="63"/>
         <source>Both</source>
-        <translation>Të dyja</translation>
+        <translation>Both</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle3pointsoptions.ui" line="68"/>
@@ -3180,17 +3180,17 @@ Ju lutemi vini re se nëse do të ruani stilin përmes editorit pa rinisje, stil
     <message>
         <location filename="../src/ui/forms/lc_slicedivideoptions.ui" line="14"/>
         <source>Form</source>
-        <translation>Formular</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_slicedivideoptions.ui" line="48"/>
         <source>None</source>
-        <translation>Asnjë</translation>
+        <translation>None</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_slicedivideoptions.ui" line="53"/>
         <source>Both</source>
-        <translation>Të dyja</translation>
+        <translation>Both</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_slicedivideoptions.ui" line="58"/>
@@ -3202,7 +3202,7 @@ Ju lutemi vini re se nëse do të ruani stilin përmes editorit pa rinisje, stil
         <location filename="../src/ui/forms/lc_slicedivideoptions.ui" line="63"/>
         <location filename="../src/ui/forms/lc_slicedivideoptions.ui" line="276"/>
         <source>End</source>
-        <translation>Fund</translation>
+        <translation>End</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_slicedivideoptions.ui" line="71"/>
@@ -3212,7 +3212,7 @@ Ju lutemi vini re se nëse do të ruani stilin përmes editorit pa rinisje, stil
     <message>
         <location filename="../src/ui/forms/lc_slicedivideoptions.ui" line="113"/>
         <source>Rel</source>
-        <translation>Relativ</translation>
+        <translation>Rel</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_slicedivideoptions.ui" line="120"/>
@@ -3270,7 +3270,7 @@ Ju lutemi vini re se nëse do të ruani stilin përmes editorit pa rinisje, stil
     <message>
         <location filename="../src/ui/forms/lc_staroptions.ui" line="14"/>
         <source>Form</source>
-        <translation>Formular</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_staroptions.ui" line="26"/>
@@ -3313,7 +3313,7 @@ Ju lutemi vini re se nëse do të ruani stilin përmes editorit pa rinisje, stil
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="414"/>
         <source>Dock</source>
-        <translation>Dokiraj</translation>
+        <translation>Dock</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="414"/>
@@ -3589,7 +3589,7 @@ Ju lutemi vini re se nëse do të ruani stilin përmes editorit pa rinisje, stil
         <location filename="../src/ui/lc_widgetfactory.cpp" line="257"/>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="520"/>
         <source>Line</source>
-        <translation>Çiara</translation>
+        <translation>Line</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="262"/>
@@ -3651,7 +3651,7 @@ Ju lutemi vini re se nëse do të ruani stilin përmes editorit pa rinisje, stil
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="471"/>
         <source>Pen</source>
-        <translation>Stil</translation>
+        <translation>Pen</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="483"/>
@@ -3870,17 +3870,17 @@ Ju lutemi kontrolloni lejet.</translation>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="421"/>
         <source>File</source>
-        <translation>Skedar</translation>
+        <translation>File</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="428"/>
         <source>Edit</source>
-        <translation>Redakto</translation>
+        <translation>Edit</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="449"/>
         <source>View</source>
-        <translation>Shfaq</translation>
+        <translation>View</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="464"/>
@@ -4021,12 +4021,12 @@ Ju lutemi kontrolloni ekzistencën dhe lejet e tij.</translation>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="1203"/>
         <source>East</source>
-        <translation>Lindje</translation>
+        <translation>East</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="1207"/>
         <source>West</source>
-        <translation>Perëndim</translation>
+        <translation>West</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="1212"/>
@@ -4148,7 +4148,7 @@ Ruajtja automatike është çaktivizuar.</translation>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="3080"/>
         <source>Copy</source>
-        <translation>Kopjo</translation>
+        <translation>Copy</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="3091"/>
@@ -4239,7 +4239,7 @@ Ruajtja automatike është çaktivizuar.</translation>
         <location filename="../src/main/qc_applicationwindow.cpp" line="3451"/>
         <source>Dock</source>
         <comment>Dock the command widget to the main window</comment>
-        <translation>Dokiraj</translation>
+        <translation>Dock</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="3509"/>
@@ -4461,7 +4461,7 @@ in a separate window</source>
     <message>
         <location filename="../src/ui/qg_colorbox.cpp" line="115"/>
         <source>Red</source>
-        <translation>E Kuqe</translation>
+        <translation>Red</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_colorbox.cpp" line="119"/>
@@ -4491,7 +4491,7 @@ in a separate window</source>
     <message>
         <location filename="../src/ui/qg_colorbox.cpp" line="124"/>
         <source>Cyan</source>
-        <translation>Cian</translation>
+        <translation>Cyan</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_colorbox.cpp" line="125"/>
@@ -4501,7 +4501,7 @@ in a separate window</source>
     <message>
         <location filename="../src/ui/qg_colorbox.cpp" line="126"/>
         <source>Blue</source>
-        <translation>E kaltër</translation>
+        <translation>Blue</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_colorbox.cpp" line="127"/>
@@ -4526,7 +4526,7 @@ in a separate window</source>
     <message>
         <location filename="../src/ui/qg_colorbox.cpp" line="137"/>
         <source>Gray</source>
-        <translation>Gri</translation>
+        <translation>Gray</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_colorbox.cpp" line="138"/>
@@ -4603,7 +4603,7 @@ in a separate window</source>
         <location filename="../src/ui/forms/qg_commandwidget.cpp" line="94"/>
         <location filename="../src/ui/forms/qg_commandwidget.cpp" line="343"/>
         <source>Dock</source>
-        <translation>Ankoroj</translation>
+        <translation>Dock</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_commandwidget.cpp" line="210"/>
@@ -4729,7 +4729,7 @@ in a separate window</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgarc.ui" line="26"/>
         <source>Arc</source>
-        <translation>Hark</translation>
+        <translation>Arc</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgarc.ui" line="51"/>
@@ -4964,7 +4964,7 @@ Kjo modifikon në mënyrë rekursive të gjitha entitetet e vetë Bllokut.</tran
     <message>
         <location filename="../src/ui/forms/qg_dlghatch.ui" line="86"/>
         <source>Area</source>
-        <translation>Sipërfaqe</translation>
+        <translation>Area</translation>
     </message>
 </context>
 <context>
@@ -5138,7 +5138,7 @@ Ju lutemi, zgjidhni njësinë që dëshironi të përdorni për vizatimet e reja
     <message>
         <location filename="../src/ui/forms/qg_dlgline.ui" line="29"/>
         <source>Line</source>
-        <translation>Linjë</translation>
+        <translation>Line</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgline.ui" line="35"/>
@@ -5311,12 +5311,12 @@ Ju lutemi, zgjidhni njësinë që dëshironi të përdorni për vizatimet e reja
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="759"/>
         <source>Cut</source>
-        <translation>Prit</translation>
+        <translation>Cut</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="773"/>
         <source>Copy</source>
-        <translation>Kopjo</translation>
+        <translation>Copy</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="787"/>
@@ -6217,7 +6217,7 @@ Ju lutemi, zgjidhni njësinë që dëshironi të përdorni për vizatimet e reja
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="212"/>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="657"/>
         <source>Left</source>
-        <translation>E majtë</translation>
+        <translation>Left</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="676"/>
@@ -6229,7 +6229,7 @@ Ju lutemi, zgjidhni njësinë që dëshironi të përdorni për vizatimet e reja
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="228"/>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="679"/>
         <source>Top</source>
-        <translation>E sipërme</translation>
+        <translation>Top</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="698"/>
@@ -6322,7 +6322,7 @@ Ju lutemi, zgjidhni njësinë që dëshironi të përdorni për vizatimet e reja
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.cpp" line="552"/>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.cpp" line="557"/>
         <source>auto</source>
-        <translation>automatike</translation>
+        <translation>auto</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="789"/>
@@ -7055,7 +7055,7 @@ Ju lutemi, zgjidhni njësinë që dëshironi të përdorni për vizatimet e reja
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1120"/>
         <source>All</source>
-        <translation>Të gjitha</translation>
+        <translation>All</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.cpp" line="327"/>
@@ -7462,7 +7462,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="20"/>
         <source>Text</source>
-        <translation>Tekst</translation>
+        <translation>Text</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="256"/>
@@ -7542,12 +7542,12 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="101"/>
         <source>Cut</source>
-        <translation>Prit</translation>
+        <translation>Cut</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="115"/>
         <source>Copy</source>
-        <translation>Kopjo</translation>
+        <translation>Copy</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="129"/>
@@ -7609,7 +7609,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="774"/>
         <source>Fit</source>
-        <translation>Përshtat</translation>
+        <translation>Fit</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="784"/>
@@ -8403,7 +8403,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgimageoptions.ui" line="43"/>
         <source>auto</source>
-        <translation>automatikisht</translation>
+        <translation>auto</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgimageoptions.ui" line="203"/>
@@ -8666,7 +8666,7 @@ Brendësia e një shtrese konstruktive nuk duhet të shfaqet në printim.</trans
     <message>
         <location filename="../src/ui/qg_linetypebox.cpp" line="84"/>
         <source>Dot</source>
-        <translation>Pikë</translation>
+        <translation>Dot</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_linetypebox.cpp" line="85"/>
@@ -8686,7 +8686,7 @@ Brendësia e një shtrese konstruktive nuk duhet të shfaqet në printim.</trans
     <message>
         <location filename="../src/ui/qg_linetypebox.cpp" line="88"/>
         <source>Dash</source>
-        <translation>Vizë</translation>
+        <translation>Dash</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_linetypebox.cpp" line="89"/>
@@ -8799,7 +8799,7 @@ Brendësia e një shtrese konstruktive nuk duhet të shfaqet në printim.</trans
     <message>
         <location filename="../src/ui/forms/qg_mousewidget.ui" line="108"/>
         <source>Left</source>
-        <translation>Majtë</translation>
+        <translation>Left</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_mousewidget.ui" line="130"/>
@@ -8886,7 +8886,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="26"/>
         <source>Snap</source>
-        <translation>Kap</translation>
+        <translation>Snap</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="47"/>
@@ -9050,7 +9050,7 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/ui/forms/qg_widgetpen.ui" line="26"/>
         <location filename="../src/ui/forms/qg_widgetpen.ui" line="47"/>
         <source>Pen</source>
-        <translation>Stilolaps</translation>
+        <translation>Pen</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_widgetpen.ui" line="91"/>
@@ -9420,25 +9420,25 @@ Ju lutemi, specifikoni një vlerë tjetër.</translation>
         <location filename="../src/lib/engine/rs_units.cpp" line="204"/>
         <source>None</source>
         <comment>unknown length unit</comment>
-        <translation>Asnjë</translation>
+        <translation>None</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_units.cpp" line="206"/>
         <location filename="../src/lib/engine/rs_units.cpp" line="262"/>
         <source>Inch</source>
-        <translation>Inç</translation>
+        <translation>Inch</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_units.cpp" line="208"/>
         <location filename="../src/lib/engine/rs_units.cpp" line="264"/>
         <source>Foot</source>
-        <translation>Këmbë</translation>
+        <translation>Foot</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_units.cpp" line="210"/>
         <location filename="../src/lib/engine/rs_units.cpp" line="266"/>
         <source>Mile</source>
-        <translation>Mili</translation>
+        <translation>Mile</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_units.cpp" line="212"/>
@@ -9480,7 +9480,7 @@ Ju lutemi, specifikoni një vlerë tjetër.</translation>
         <location filename="../src/lib/engine/rs_units.cpp" line="224"/>
         <location filename="../src/lib/engine/rs_units.cpp" line="280"/>
         <source>Yard</source>
-        <translation>Jard</translation>
+        <translation>Yard</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_units.cpp" line="226"/>
@@ -10202,7 +10202,7 @@ A doni ta zëvendësoni?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="155"/>
         <source>line</source>
         <comment>draw line</comment>
-        <translation>vijë</translation>
+        <translation>line</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="154"/>
@@ -10232,7 +10232,7 @@ A doni ta zëvendësoni?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="478"/>
         <source>free</source>
         <comment>draw freehand line</comment>
-        <translation>i lirë</translation>
+        <translation>free</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="480"/>
@@ -10394,31 +10394,31 @@ A doni ta zëvendësoni?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="838"/>
         <source>text</source>
         <comment>draw text</comment>
-        <translation>tekst</translation>
+        <translation>text</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="840"/>
         <source>txt</source>
         <comment>draw text</comment>
-        <translation>tekst</translation>
+        <translation>txt</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="961"/>
         <source>ki</source>
         <comment>kill all actions</comment>
-        <translation>çelës</translation>
+        <translation>ki</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="968"/>
         <source>un</source>
         <comment>undo cycle</comment>
-        <translation>zhblloko</translation>
+        <translation>un</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="975"/>
         <source>rd</source>
         <comment>redo cycle</comment>
-        <translation>lexo</translation>
+        <translation>rd</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="983"/>
@@ -10430,7 +10430,7 @@ A doni ta zëvendësoni?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="984"/>
         <source>dp</source>
         <comment>drawing preferences</comment>
-        <translation>pv</translation>
+        <translation>dp</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="991"/>
@@ -10448,7 +10448,7 @@ A doni ta zëvendësoni?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="993"/>
         <source>rg</source>
         <comment>zoom - redraw</comment>
-        <translation>rd</translation>
+        <translation>rg</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="994"/>
@@ -10466,7 +10466,7 @@ A doni ta zëvendësoni?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="1012"/>
         <source>zw</source>
         <comment>zoom - window</comment>
-        <translation>dz</translation>
+        <translation>zw</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="999"/>
@@ -10490,7 +10490,7 @@ A doni ta zëvendësoni?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="1018"/>
         <source>zp</source>
         <comment>zoom - pan</comment>
-        <translation>zl</translation>
+        <translation>zp</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1005"/>
@@ -10508,37 +10508,37 @@ A doni ta zëvendësoni?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="960"/>
         <source>kill</source>
         <comment>kill all actions</comment>
-        <translation>mbyll</translation>
+        <translation>kill</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="962"/>
         <source>k</source>
         <comment>kill all actions</comment>
-        <translation>m</translation>
+        <translation>k</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="967"/>
         <source>undo</source>
         <comment>undo cycle</comment>
-        <translation>anulo</translation>
+        <translation>undo</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="969"/>
         <source>u</source>
         <comment>undo cycle</comment>
-        <translation>a</translation>
+        <translation>u</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="974"/>
         <source>redo</source>
         <comment>redo cycle</comment>
-        <translation>përsëri</translation>
+        <translation>redo</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="976"/>
         <source>r</source>
         <comment>redo cycle</comment>
-        <translation>p</translation>
+        <translation>r</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="611"/>
@@ -10556,7 +10556,7 @@ A doni ta zëvendësoni?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="624"/>
         <source>dh</source>
         <comment>dimension - horizontal</comment>
-        <translation>h</translation>
+        <translation>dh</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="629"/>
@@ -10568,7 +10568,7 @@ A doni ta zëvendësoni?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="630"/>
         <source>dv</source>
         <comment>dimension - vertical</comment>
-        <translation>v</translation>
+        <translation>dv</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="617"/>
@@ -10766,7 +10766,7 @@ A doni ta zëvendësoni?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="226"/>
         <source>sll</source>
         <comment>slice/divide line</comment>
-        <translation>pjesë</translation>
+        <translation>sll</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="231"/>
@@ -10778,19 +10778,19 @@ A doni ta zëvendësoni?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="232"/>
         <source>slc</source>
         <comment>slice/divide circle/arc</comment>
-        <translation>pjesë</translation>
+        <translation>slc</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="237"/>
         <source>star</source>
         <comment>draw star</comment>
-        <translation>yll</translation>
+        <translation>star</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="238"/>
         <source>st</source>
         <comment>draw star</comment>
-        <translation>y</translation>
+        <translation>st</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="243"/>
@@ -10802,7 +10802,7 @@ A doni ta zëvendësoni?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="244"/>
         <source>cx</source>
         <comment>draw cross for circle</comment>
-        <translation>kryq</translation>
+        <translation>cx</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="249"/>
@@ -10952,7 +10952,7 @@ A doni ta zëvendësoni?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="321"/>
         <source>or</source>
         <comment>tangent line and circle</comment>
-        <translation>ose</translation>
+        <translation>or</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="326"/>
@@ -11138,7 +11138,7 @@ A doni ta zëvendësoni?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="427"/>
         <source>arc</source>
         <comment>arc point radius</comment>
-        <translation>ark</translation>
+        <translation>arc</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="428"/>
@@ -11180,13 +11180,13 @@ A doni ta zëvendësoni?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="447"/>
         <source>sf</source>
         <comment>draw spline</comment>
-        <translation>translation 1</translation>
+        <translation>sf</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="454"/>
         <source>sp</source>
         <comment>spline through points</comment>
-        <translation>translation 2</translation>
+        <translation>sp</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="460"/>
@@ -11198,7 +11198,7 @@ A doni ta zëvendësoni?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="461"/>
         <source>ae</source>
         <comment>arc ellipse</comment>
-        <translation>translation 4</translation>
+        <translation>ae</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="466"/>
@@ -11222,13 +11222,13 @@ A doni ta zëvendësoni?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="473"/>
         <source>plfd</source>
         <comment>Parabola focus directrix</comment>
-        <translation>translation 8</translation>
+        <translation>plfd</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="479"/>
         <source>fh</source>
         <comment>draw freehand line</comment>
-        <translation>translation 9</translation>
+        <translation>fh</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="487"/>
@@ -11295,7 +11295,7 @@ A doni ta zëvendësoni?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="533"/>
         <source>rort</source>
         <comment>draw orthogonal</comment>
-        <translation>rrot</translation>
+        <translation>rort</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="538"/>
@@ -11427,7 +11427,7 @@ A doni ta zëvendësoni?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="637"/>
         <source>dr</source>
         <comment>dimension - radial</comment>
-        <translation>rr</translation>
+        <translation>dr</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="643"/>
@@ -11607,7 +11607,7 @@ A doni ta zëvendësoni?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="781"/>
         <source>xt</source>
         <comment>explode text strings</comment>
-        <translation>tekst</translation>
+        <translation>xt</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="786"/>
@@ -11631,7 +11631,7 @@ A doni ta zëvendësoni?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="802"/>
         <source>id</source>
         <comment>distance point to point</comment>
-        <translation>ID</translation>
+        <translation>id</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="809"/>
@@ -11643,7 +11643,7 @@ A doni ta zëvendësoni?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="810"/>
         <source>ii</source>
         <comment>distance entity to point</comment>
-        <translation>II</translation>
+        <translation>ii</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="811"/>
@@ -11787,7 +11787,7 @@ A doni ta zëvendësoni?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="753"/>
         <source>cut</source>
         <comment>modify - divide (cut)</comment>
-        <translation>përkiste</translation>
+        <translation>cut</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="754"/>
@@ -12015,7 +12015,7 @@ A doni ta zëvendësoni?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="774"/>
         <source>attr</source>
         <comment>modify attribute</comment>
-        <translation>atribut</translation>
+        <translation>attr</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="775"/>
@@ -12118,7 +12118,7 @@ A doni ta zëvendësoni?</translation>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1076"/>
         <source>rows</source>
-        <translation>rreshta</translation>
+        <translation>rows</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1077"/>
@@ -12134,7 +12134,7 @@ A doni ta zëvendësoni?</translation>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1079"/>
         <source>trim</source>
-        <translation>prerje</translation>
+        <translation>trim</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1082"/>
@@ -12189,12 +12189,12 @@ A doni ta zëvendësoni?</translation>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1096"/>
         <source>pos</source>
-        <translation>pozita</translation>
+        <translation>pos</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1097"/>
         <source>size</source>
-        <translation>madhësia</translation>
+        <translation>size</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1098"/>
@@ -12220,7 +12220,7 @@ A doni ta zëvendësoni?</translation>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1102"/>
         <source>str</source>
-        <translation>tekst</translation>
+        <translation>str</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1103"/>
@@ -12235,22 +12235,22 @@ A doni ta zëvendësoni?</translation>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1106"/>
         <source>topl</source>
-        <translation>majta e sipërme</translation>
+        <translation>topl</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1107"/>
         <source>top</source>
-        <translation>maja</translation>
+        <translation>top</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1108"/>
         <source>topr</source>
-        <translation>maja e majtë</translation>
+        <translation>topr</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1109"/>
         <source>left</source>
-        <translation>majtas</translation>
+        <translation>left</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1110"/>
@@ -12300,12 +12300,12 @@ A doni ta zëvendësoni?</translation>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1119"/>
         <source>hor</source>
-        <translation>horizontal</translation>
+        <translation>hor</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1120"/>
         <source>vert</source>
-        <translation>vertikal</translation>
+        <translation>vert</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1123"/>
@@ -12330,7 +12330,7 @@ A doni ta zëvendësoni?</translation>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1128"/>
         <source>quad</source>
-        <translation>katërkëndësh</translation>
+        <translation>quad</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1129"/>
@@ -12370,22 +12370,22 @@ A doni ta zëvendësoni?</translation>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1138"/>
         <source>end</source>
-        <translation>fund</translation>
+        <translation>end</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1139"/>
         <source>both</source>
-        <translation>të dy</translation>
+        <translation>both</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1140"/>
         <source>none</source>
-        <translation>asnjë</translation>
+        <translation>none</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1141"/>
         <source>fit</source>
-        <translation>përshtatet</translation>
+        <translation>fit</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1142"/>
@@ -12410,7 +12410,7 @@ A doni ta zëvendësoni?</translation>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1149"/>
         <source>sym</source>
-        <translation>simetrik</translation>
+        <translation>sym</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1150"/>
@@ -12421,7 +12421,7 @@ A doni ta zëvendësoni?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="1157"/>
         <source>ang</source>
         <comment>angle</comment>
-        <translation>kënd</translation>
+        <translation>ang</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1158"/>
@@ -12438,37 +12438,37 @@ A doni ta zëvendësoni?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="1161"/>
         <source>cen</source>
         <comment>center</comment>
-        <translation>qen</translation>
+        <translation>cen</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1162"/>
         <source>ce</source>
         <comment>center</comment>
-        <translation>qe</translation>
+        <translation>ce</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1166"/>
         <source>cl</source>
         <comment>chord length</comment>
-        <translation>ql</translation>
+        <translation>cl</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1169"/>
         <source>c</source>
         <comment>close</comment>
-        <translation>q</translation>
+        <translation>c</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1172"/>
         <source>cols</source>
         <comment>columns</comment>
-        <translation>kolona</translation>
+        <translation>cols</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1173"/>
         <source>co</source>
         <comment>columns</comment>
-        <translation>ko</translation>
+        <translation>co</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1175"/>
@@ -12486,13 +12486,13 @@ A doni ta zëvendësoni?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="1177"/>
         <source>cs</source>
         <comment>columnspacing for inserts</comment>
-        <translation>hs</translation>
+        <translation>cs</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1180"/>
         <source>fact</source>
         <comment>factor</comment>
-        <translation>fakt</translation>
+        <translation>fact</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1181"/>
@@ -12515,7 +12515,7 @@ A doni ta zëvendësoni?</translation>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1187"/>
         <source>help</source>
-        <translation>ndihmë</translation>
+        <translation>help</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1188"/>
@@ -12533,13 +12533,13 @@ A doni ta zëvendësoni?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="1191"/>
         <source>len</source>
         <comment>length</comment>
-        <translation>gj</translation>
+        <translation>len</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1192"/>
         <source>l</source>
         <comment>length</comment>
-        <translation>g</translation>
+        <translation>l</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1194"/>
@@ -12612,13 +12612,13 @@ A doni ta zëvendësoni?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="1211"/>
         <source>rev</source>
         <comment>reversed</comment>
-        <translation>i kthyer</translation>
+        <translation>rev</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1213"/>
         <source>row</source>
         <comment>row</comment>
-        <translation>rresht</translation>
+        <translation>row</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1215"/>
@@ -12630,12 +12630,12 @@ A doni ta zëvendësoni?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="1216"/>
         <source>rs</source>
         <comment>rowspacing for inserts</comment>
-        <translation>hr</translation>
+        <translation>rs</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1218"/>
         <source>text</source>
-        <translation>tekst</translation>
+        <translation>text</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1219"/>
@@ -12652,29 +12652,29 @@ A doni ta zëvendësoni?</translation>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1224"/>
         <source>undo</source>
-        <translation>anulo</translation>
+        <translation>undo</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1225"/>
         <source>u</source>
         <comment>undo</comment>
-        <translation>a</translation>
+        <translation>u</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1227"/>
         <source>redo</source>
-        <translation>përsëri</translation>
+        <translation>redo</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1228"/>
         <source>r</source>
         <comment>redo</comment>
-        <translation>p</translation>
+        <translation>r</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1230"/>
         <source>back</source>
-        <translation>prapa</translation>
+        <translation>back</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1231"/>
@@ -12685,7 +12685,7 @@ A doni ta zëvendësoni?</translation>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1233"/>
         <source>bw</source>
-        <translation>zi</translation>
+        <translation>bw</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1234"/>
@@ -12758,7 +12758,7 @@ A doni ta zëvendësoni?</translation>
         <location filename="../src/ui/qg_commandedit.cpp" line="258"/>
         <source>cal </source>
         <comment>command to trigger cli calculator</comment>
-        <translation>kalk</translation>
+        <translation>cal</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_commandedit.cpp" line="259"/>
@@ -12769,7 +12769,7 @@ A doni ta zëvendësoni?</translation>
     <message>
         <location filename="../src/ui/qg_commandedit.cpp" line="297"/>
         <source>cal</source>
-        <translation>kalk</translation>
+        <translation>cal</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_commandedit.cpp" line="301"/>
@@ -12799,7 +12799,7 @@ A doni ta zëvendësoni?</translation>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="67"/>
         <source>Edit</source>
-        <translation>Redakto</translation>
+        <translation>Edit</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="68"/>
@@ -12810,7 +12810,7 @@ A doni ta zëvendësoni?</translation>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="69"/>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="88"/>
         <source>File</source>
-        <translation>Skedar</translation>
+        <translation>File</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="70"/>
@@ -12820,7 +12820,7 @@ A doni ta zëvendësoni?</translation>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="71"/>
         <source>Info</source>
-        <translation>Informacion</translation>
+        <translation>Info</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="72"/>
@@ -12830,7 +12830,7 @@ A doni ta zëvendësoni?</translation>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="73"/>
         <source>Line</source>
-        <translation>Linjë</translation>
+        <translation>Line</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="74"/>
@@ -12866,7 +12866,7 @@ A doni ta zëvendësoni?</translation>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="80"/>
         <source>Snap</source>
-        <translation>Kap</translation>
+        <translation>Snap</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="81"/>
@@ -12876,7 +12876,7 @@ A doni ta zëvendësoni?</translation>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="82"/>
         <source>View</source>
-        <translation>Shikoni</translation>
+        <translation>View</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="83"/>
@@ -12914,7 +12914,7 @@ A doni ta zëvendësoni?</translation>
         <location filename="../src/ui/generic/widgetcreator.cpp" line="170"/>
         <location filename="../src/ui/generic/widgetcreator.cpp" line="224"/>
         <source>All</source>
-        <translation>Të gjitha</translation>
+        <translation>All</translation>
     </message>
     <message>
         <location filename="../src/ui/generic/colorwizard.cpp" line="54"/>
@@ -13353,7 +13353,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondefault.cpp" line="501"/>
         <source>Back</source>
-        <translation>Prapa</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -13377,7 +13377,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actiondimaligned.cpp" line="258"/>
         <location filename="../src/actions/rs_actiondimaligned.cpp" line="263"/>
         <source>Back</source>
-        <translation>Prapa</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondimaligned.cpp" line="262"/>
@@ -13503,7 +13503,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actiondimlinear.cpp" line="289"/>
         <location filename="../src/actions/rs_actiondimlinear.cpp" line="294"/>
         <source>Back</source>
-        <translation>Prapa</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondimlinear.cpp" line="293"/>
@@ -13593,7 +13593,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actiondrawarc.cpp" line="352"/>
         <location filename="../src/actions/rs_actiondrawarc.cpp" line="356"/>
         <source>Back</source>
-        <translation>Prapa</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawarc.cpp" line="343"/>
@@ -13642,7 +13642,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actiondrawarc3p.cpp" line="238"/>
         <location filename="../src/actions/rs_actiondrawarc3p.cpp" line="242"/>
         <source>Back</source>
-        <translation>Prapa</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawarc3p.cpp" line="242"/>
@@ -13671,7 +13671,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actiondrawarctangential.cpp" line="232"/>
         <location filename="../src/actions/rs_actiondrawarctangential.cpp" line="235"/>
         <source>Back</source>
-        <translation>Prapa</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawarctangential.cpp" line="235"/>
@@ -13704,7 +13704,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawcircle.cpp" line="204"/>
         <source>Back</source>
-        <translation>Prapa</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -13732,7 +13732,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawcircle2p.cpp" line="188"/>
         <source>Back</source>
-        <translation>Prapa</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -13761,7 +13761,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actiondrawcircle3p.cpp" line="191"/>
         <location filename="../src/actions/rs_actiondrawcircle3p.cpp" line="195"/>
         <source>Back</source>
-        <translation>Prapa</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawcircle3p.cpp" line="194"/>
@@ -13809,7 +13809,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawcirclecr.cpp" line="228"/>
         <source>Back</source>
-        <translation>Prapa</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -13833,7 +13833,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actiondrawcircleinscribe.cpp" line="275"/>
         <location filename="../src/actions/rs_actiondrawcircleinscribe.cpp" line="280"/>
         <source>Back</source>
-        <translation>Prapa</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawcircleinscribe.cpp" line="279"/>
@@ -13863,7 +13863,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actiondrawcircletan1_2p.cpp" line="436"/>
         <location filename="../src/actions/rs_actiondrawcircletan1_2p.cpp" line="440"/>
         <source>Back</source>
-        <translation>Prapa</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawcircletan1_2p.cpp" line="435"/>
@@ -13922,7 +13922,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actiondrawcircletan2.cpp" line="332"/>
         <location filename="../src/actions/rs_actiondrawcircletan2.cpp" line="337"/>
         <source>Back</source>
-        <translation>Prapa</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawcircletan2.cpp" line="336"/>
@@ -13952,7 +13952,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actiondrawcircletan2_1p.cpp" line="344"/>
         <location filename="../src/actions/rs_actiondrawcircletan2_1p.cpp" line="348"/>
         <source>Back</source>
-        <translation>Prapa</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawcircletan2_1p.cpp" line="343"/>
@@ -13992,7 +13992,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actiondrawcircletan3.cpp" line="473"/>
         <location filename="../src/actions/rs_actiondrawcircletan3.cpp" line="478"/>
         <source>Back</source>
-        <translation>Prapa</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawcircletan3.cpp" line="477"/>
@@ -14027,7 +14027,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actiondrawellipse4points.cpp" line="295"/>
         <location filename="../src/actions/rs_actiondrawellipse4points.cpp" line="300"/>
         <source>Back</source>
-        <translation>Prapa</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawellipse4points.cpp" line="294"/>
@@ -14070,7 +14070,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actiondrawellipseaxis.cpp" line="367"/>
         <location filename="../src/actions/rs_actiondrawellipseaxis.cpp" line="372"/>
         <source>Back</source>
-        <translation>Prapa</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawellipseaxis.cpp" line="361"/>
@@ -14115,7 +14115,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actiondrawellipsecenter3points.cpp" line="292"/>
         <location filename="../src/actions/rs_actiondrawellipsecenter3points.cpp" line="297"/>
         <source>Back</source>
-        <translation>Prapa</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawellipsecenter3points.cpp" line="296"/>
@@ -14159,7 +14159,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actiondrawellipsefocipoint.cpp" line="244"/>
         <location filename="../src/actions/rs_actiondrawellipsefocipoint.cpp" line="250"/>
         <source>Back</source>
-        <translation>Prapa</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawellipsefocipoint.cpp" line="249"/>
@@ -14194,7 +14194,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actiondrawellipseinscribe.cpp" line="290"/>
         <location filename="../src/actions/rs_actiondrawellipseinscribe.cpp" line="295"/>
         <source>Back</source>
-        <translation>Prapa</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawellipseinscribe.cpp" line="289"/>
@@ -14306,7 +14306,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actiondrawline.cpp" line="338"/>
         <location filename="../src/actions/rs_actiondrawline.cpp" line="342"/>
         <source>Back</source>
-        <translation>Prapa</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawline.cpp" line="341"/>
@@ -14356,7 +14356,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actiondrawlineangle.cpp" line="305"/>
         <location filename="../src/actions/rs_actiondrawlineangle.cpp" line="309"/>
         <source>Back</source>
-        <translation>Prapa</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawlineangle.cpp" line="309"/>
@@ -14398,7 +14398,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actiondrawlinebisector.cpp" line="297"/>
         <location filename="../src/actions/rs_actiondrawlinebisector.cpp" line="301"/>
         <source>Back</source>
-        <translation>Prapa</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawlinebisector.cpp" line="296"/>
@@ -14444,7 +14444,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawlinehorvert.cpp" line="162"/>
         <source>Back</source>
-        <translation>Prapa</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -14467,7 +14467,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawlineorthtan.cpp" line="190"/>
         <source>Back</source>
-        <translation>Prapa</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -14520,7 +14520,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actiondrawlineparallelthrough.cpp" line="181"/>
         <location filename="../src/actions/rs_actiondrawlineparallelthrough.cpp" line="185"/>
         <source>Back</source>
-        <translation>Prapa</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawlineparallelthrough.cpp" line="185"/>
@@ -14587,7 +14587,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actiondrawlinepolygon2.cpp" line="150"/>
         <location filename="../src/actions/rs_actiondrawlinepolygon2.cpp" line="154"/>
         <source>Back</source>
-        <translation>Prapa</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawlinepolygon2.cpp" line="154"/>
@@ -14625,7 +14625,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawlinerectangle.cpp" line="160"/>
         <source>Back</source>
-        <translation>Prapa</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -14654,7 +14654,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawlinerelangle.cpp" line="279"/>
         <source>Back</source>
-        <translation>Prapa</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -14677,7 +14677,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawlinetangent1.cpp" line="186"/>
         <source>Back</source>
-        <translation>Prapa</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -14701,7 +14701,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actiondrawlinetangent2.cpp" line="287"/>
         <location filename="../src/actions/rs_actiondrawlinetangent2.cpp" line="291"/>
         <source>Back</source>
-        <translation>Prapa</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawlinetangent2.cpp" line="290"/>
@@ -14729,7 +14729,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawmtext.cpp" line="261"/>
         <source>Back</source>
-        <translation>Prapa</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -14813,7 +14813,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actiondrawpolyline.cpp" line="695"/>
         <location filename="../src/actions/rs_actiondrawpolyline.cpp" line="699"/>
         <source>Back</source>
-        <translation>Prapa</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawpolyline.cpp" line="698"/>
@@ -14852,7 +14852,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actiondrawspline.cpp" line="290"/>
         <location filename="../src/actions/rs_actiondrawspline.cpp" line="294"/>
         <source>Back</source>
-        <translation>Prapa</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawspline.cpp" line="293"/>
@@ -14891,7 +14891,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawtext.cpp" line="291"/>
         <source>Back</source>
-        <translation>Prapa</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -14963,7 +14963,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actioninfoangle.cpp" line="145"/>
         <source>Back</source>
-        <translation>Prapa</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -15030,7 +15030,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actioninfodist.cpp" line="175"/>
         <source>Back</source>
-        <translation>Prapa</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -15058,7 +15058,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actioninfodist2.cpp" line="161"/>
         <source>Back</source>
-        <translation>Prapa</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -15172,7 +15172,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actionmodifybevel.cpp" line="279"/>
         <location filename="../src/actions/rs_actionmodifybevel.cpp" line="283"/>
         <source>Back</source>
-        <translation>Prapa</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifybevel.cpp" line="278"/>
@@ -15226,7 +15226,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionmodifycut.cpp" line="150"/>
         <source>Back</source>
-        <translation>Prapa</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -15289,7 +15289,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionmodifydeletefree.cpp" line="172"/>
         <source>Back</source>
-        <translation>Prapa</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -15338,7 +15338,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionmodifymirror.cpp" line="167"/>
         <source>Back</source>
-        <translation>Prapa</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -15366,7 +15366,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionmodifymove.cpp" line="175"/>
         <source>Back</source>
-        <translation>Prapa</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -15395,7 +15395,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actionmodifymoverotate.cpp" line="240"/>
         <location filename="../src/actions/rs_actionmodifymoverotate.cpp" line="244"/>
         <source>Back</source>
-        <translation>Prapa</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifymoverotate.cpp" line="243"/>
@@ -15413,7 +15413,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionmodifyoffset.cpp" line="101"/>
         <source>Back</source>
-        <translation>Prapa</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -15438,7 +15438,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actionmodifyrotate.cpp" line="150"/>
         <location filename="../src/actions/rs_actionmodifyrotate.cpp" line="154"/>
         <source>Back</source>
-        <translation>Prapa</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -15461,7 +15461,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionmodifyrotate2.cpp" line="153"/>
         <source>Back</source>
-        <translation>Prapa</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -15481,7 +15481,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actionmodifyround.cpp" line="411"/>
         <location filename="../src/actions/rs_actionmodifyround.cpp" line="415"/>
         <source>Back</source>
-        <translation>Prapa</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifyround.cpp" line="414"/>
@@ -15546,7 +15546,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actionmodifystretch.cpp" line="184"/>
         <location filename="../src/actions/rs_actionmodifystretch.cpp" line="188"/>
         <source>Back</source>
-        <translation>Prapa</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifystretch.cpp" line="183"/>
@@ -15581,7 +15581,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actionmodifytrim.cpp" line="181"/>
         <location filename="../src/actions/rs_actionmodifytrim.cpp" line="190"/>
         <source>Back</source>
-        <translation>Prapa</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifytrim.cpp" line="186"/>
@@ -15624,7 +15624,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionmodifytrimamount.cpp" line="187"/>
         <source>Back</source>
-        <translation>Prapa</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -15686,7 +15686,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionpolylineadd.cpp" line="162"/>
         <source>Back</source>
-        <translation>Prapa</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -15730,7 +15730,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actionpolylineappend.cpp" line="208"/>
         <location filename="../src/actions/rs_actionpolylineappend.cpp" line="212"/>
         <source>Back</source>
-        <translation>Prapa</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylineappend.cpp" line="211"/>
@@ -15784,7 +15784,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionpolylinedel.cpp" line="163"/>
         <source>Back</source>
-        <translation>Prapa</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -15832,7 +15832,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actionpolylinedelbetween.cpp" line="194"/>
         <location filename="../src/actions/rs_actionpolylinedelbetween.cpp" line="198"/>
         <source>Back</source>
-        <translation>Prapa</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylinedelbetween.cpp" line="197"/>
@@ -15937,7 +15937,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actionpolylinetrim.cpp" line="186"/>
         <location filename="../src/actions/rs_actionpolylinetrim.cpp" line="190"/>
         <source>Back</source>
-        <translation>Prapa</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylinetrim.cpp" line="189"/>
@@ -16145,7 +16145,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionselectintersected.cpp" line="143"/>
         <source>Back</source>
-        <translation>Prapa</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -16168,7 +16168,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionselectwindow.cpp" line="184"/>
         <source>Back</source>
-        <translation>Prapa</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -16205,7 +16205,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actionsnapintersectionmanual.cpp" line="183"/>
         <location filename="../src/actions/rs_actionsnapintersectionmanual.cpp" line="187"/>
         <source>Back</source>
-        <translation>Prapa</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionsnapintersectionmanual.cpp" line="186"/>
@@ -16265,7 +16265,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionzoomwindow.cpp" line="154"/>
         <source>Back</source>
-        <translation>Prapa</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -16347,7 +16347,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_beveloptions.ui" line="56"/>
         <source>Trim</source>
-        <translation>Prerje</translation>
+        <translation>Trim</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_beveloptions.ui" line="79"/>
@@ -16627,7 +16627,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_lineangleoptions.ui" line="180"/>
         <source>End</source>
-        <translation>Fundi</translation>
+        <translation>End</translation>
     </message>
 </context>
 <context>
@@ -16683,7 +16683,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_lineoptions.ui" line="75"/>
         <source>Undo</source>
-        <translation>Anulo</translation>
+        <translation>Undo</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_lineoptions.ui" line="82"/>
@@ -16693,7 +16693,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_lineoptions.ui" line="85"/>
         <source>Redo</source>
-        <translation>Riktheni</translation>
+        <translation>Redo</translation>
     </message>
 </context>
 <context>
@@ -16731,7 +16731,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/lc_lineoptions.ui" line="195"/>
         <source>Rel</source>
-        <translation>Relativ</translation>
+        <translation>Rel</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_lineoptions.ui" line="224"/>
@@ -16741,7 +16741,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/lc_lineoptions.ui" line="227"/>
         <source>Undo</source>
-        <translation>Anulo</translation>
+        <translation>Undo</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_lineoptions.ui" line="234"/>
@@ -16761,7 +16761,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/lc_lineoptions.ui" line="256"/>
         <source>Redo</source>
-        <translation>Riktheni</translation>
+        <translation>Redo</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_lineoptions.ui" line="297"/>
@@ -16943,12 +16943,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_polylineoptions.ui" line="60"/>
         <source>Undo</source>
-        <translation>Anulo</translation>
+        <translation>Undo</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_polylineoptions.ui" line="80"/>
         <source>Line</source>
-        <translation>Linjë</translation>
+        <translation>Line</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_polylineoptions.ui" line="85"/>
@@ -17049,7 +17049,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_roundoptions.ui" line="56"/>
         <source>Trim</source>
-        <translation>Prerë</translation>
+        <translation>Trim</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_roundoptions.ui" line="79"/>
@@ -17108,7 +17108,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_splineoptions.ui" line="104"/>
         <source>Undo</source>
-        <translation>Anulo</translation>
+        <translation>Undo</translation>
     </message>
 </context>
 <context>
@@ -17177,7 +17177,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/generic/widgetcreator.ui" line="155"/>
         <source>Name</source>
-        <translation>Emër</translation>
+        <translation>Name</translation>
     </message>
     <message>
         <location filename="../src/ui/generic/widgetcreator.ui" line="196"/>

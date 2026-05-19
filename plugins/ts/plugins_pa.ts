@@ -170,7 +170,7 @@ unang base, pangalawang base, unang target, pangalawang target.</translation>
     <message>
         <location filename="../list/list.cpp" line="82" />
         <source>ID</source>
-        <translation>ਆਈਡੀ</translation>
+        <translation>ID</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="88" />
@@ -187,7 +187,7 @@ unang base, pangalawang base, unang target, pangalawang target.</translation>
     <message>
         <location filename="../list/list.cpp" line="94" />
         <source>LINE</source>
-        <translation>ਲਾਈਨ</translation>
+        <translation>LINE</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="99" />
@@ -218,7 +218,7 @@ unang base, pangalawang base, unang target, pangalawang target.</translation>
     <message>
         <location filename="../list/list.cpp" line="118" />
         <source>ARC</source>
-        <translation>ਆਰਕ</translation>
+        <translation>ARC</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="119" />
@@ -257,7 +257,7 @@ unang base, pangalawang base, unang target, pangalawang target.</translation>
     <message>
         <location filename="../list/list.cpp" line="141" />
         <source>area</source>
-        <translation>ਖੇਤਰ</translation>
+        <translation>area</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="144" />
@@ -292,7 +292,7 @@ unang base, pangalawang base, unang target, pangalawang target.</translation>
     <message>
         <location filename="../list/list.cpp" line="179" />
         <source>TEXT</source>
-        <translation>ਟੈਕਸਟ</translation>
+        <translation>TEXT</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="183" />
@@ -307,7 +307,7 @@ unang base, pangalawang base, unang target, pangalawang target.</translation>
     <message>
         <location filename="../list/list.cpp" line="189" />
         <source>Name</source>
-        <translation>ਨਾਮ</translation>
+        <translation>Name</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="191" />
@@ -347,12 +347,12 @@ unang base, pangalawang base, unang target, pangalawang target.</translation>
     <message>
         <location filename="../list/list.cpp" line="216" />
         <source>No</source>
-        <translation>ਨਹੀਂ</translation>
+        <translation>No</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="216" />
         <source>Yes</source>
-        <translation>ਹਾਂ</translation>
+        <translation>Yes</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="217" />
@@ -695,12 +695,12 @@ unang base, pangalawang base, unang target, pangalawang target.</translation>
     <message>
         <location filename="../divide/divide.cpp" line="467" />
         <source>ID</source>
-        <translation>ਆਈਡੀ</translation>
+        <translation>ID</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="474" />
         <source>LINE</source>
-        <translation>ਲਾਈਨ</translation>
+        <translation>LINE</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="479" />
@@ -731,7 +731,7 @@ unang base, pangalawang base, unang target, pangalawang target.</translation>
     <message>
         <location filename="../divide/divide.cpp" line="499" />
         <source>ARC</source>
-        <translation>ਵੰਡੋ</translation>
+        <translation>ARC</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="500" />
@@ -769,7 +769,7 @@ unang base, pangalawang base, unang target, pangalawang target.</translation>
     <message>
         <location filename="../divide/divide.cpp" line="526" />
         <source>area</source>
-        <translation>ਖੇਤਰਫਲ</translation>
+        <translation>area</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="530" />
@@ -784,12 +784,12 @@ unang base, pangalawang base, unang target, pangalawang target.</translation>
     <message>
         <location filename="../divide/divide.cpp" line="533" />
         <source>No</source>
-        <translation>ਨਹੀਂ</translation>
+        <translation>No</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="533" />
         <source>Yes</source>
-        <translation>ਹਾਂ</translation>
+        <translation>Yes</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="534" />
@@ -822,7 +822,7 @@ unang base, pangalawang base, unang target, pangalawang target.</translation>
     <message>
         <location filename="../divide/dividedlg.cpp" line="75" />
         <source>OK</source>
-        <translation>ਠੀਕ ਹੈ</translation>
+        <translation>OK</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="76" />
@@ -837,7 +837,7 @@ unang base, pangalawang base, unang target, pangalawang target.</translation>
     <message>
         <location filename="../divide/dividedlg.cpp" line="92" />
         <source>Size</source>
-        <translation>ਆਕਾਰ</translation>
+        <translation>Size</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="115" />
@@ -1214,7 +1214,7 @@ Use t or x in your equation as a variable/parameter.
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="32" />
         <source>Draw</source>
-        <translation>ਬਣਾਓ</translation>
+        <translation>Draw</translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="33" />

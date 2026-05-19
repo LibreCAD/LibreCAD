@@ -249,7 +249,7 @@ Prvá méta, druhá méta, prvý cieľ, druhý cieľ.</translation>
     <message>
         <location filename="../list/list.cpp" line="141" />
         <source>area</source>
-        <translation>plocha</translation>
+        <translation>area</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="144" />
@@ -299,7 +299,7 @@ Prvá méta, druhá méta, prvý cieľ, druhý cieľ.</translation>
     <message>
         <location filename="../list/list.cpp" line="189" />
         <source>Name</source>
-        <translation>Názov</translation>
+        <translation>Name</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="191" />
@@ -339,12 +339,12 @@ Prvá méta, druhá méta, prvý cieľ, druhý cieľ.</translation>
     <message>
         <location filename="../list/list.cpp" line="216" />
         <source>No</source>
-        <translation>Nie</translation>
+        <translation>No</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="216" />
         <source>Yes</source>
-        <translation>Áno</translation>
+        <translation>Yes</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="217" />
@@ -761,7 +761,7 @@ Prvá méta, druhá méta, prvý cieľ, druhý cieľ.</translation>
     <message>
         <location filename="../divide/divide.cpp" line="526" />
         <source>area</source>
-        <translation>plocha</translation>
+        <translation>area</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="530" />
@@ -776,12 +776,12 @@ Prvá méta, druhá méta, prvý cieľ, druhý cieľ.</translation>
     <message>
         <location filename="../divide/divide.cpp" line="533" />
         <source>No</source>
-        <translation>Nie</translation>
+        <translation>No</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="533" />
         <source>Yes</source>
-        <translation>Áno</translation>
+        <translation>Yes</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="534" />
@@ -829,7 +829,7 @@ Prvá méta, druhá méta, prvý cieľ, druhý cieľ.</translation>
     <message>
         <location filename="../divide/dividedlg.cpp" line="92" />
         <source>Size</source>
-        <translation>Veľkosť</translation>
+        <translation>Size</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="115" />
@@ -1214,7 +1214,7 @@ Použite t alebo x vo vašej rovnici ako premennú/parameter.</translation>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="32" />
         <source>Draw</source>
-        <translation>Kresliť</translation>
+        <translation>Draw</translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="33" />

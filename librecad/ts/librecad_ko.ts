@@ -27,7 +27,7 @@
     </message>
     <message>
         <source>Set</source>
-        <translation>설정</translation>
+        <translation>Set</translation>
     </message>
 </context>
 <context>
@@ -124,7 +124,7 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>뒤로</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Select circle center</source>
@@ -145,7 +145,7 @@ or [%2]</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>뒤로</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Y</source>
@@ -189,7 +189,7 @@ or [%2]</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>뒤로</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify distance (%1) or [%2]</source>
@@ -232,7 +232,7 @@ or [%2]</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>뒤로</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify the third point on parabola</source>
@@ -263,7 +263,7 @@ or [%2]</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>뒤로</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify the start point on parabola</source>
@@ -286,11 +286,11 @@ or [%2]</source>
     </message>
     <message>
         <source>Line</source>
-        <translation>선</translation>
+        <translation>Line</translation>
     </message>
     <message>
         <source>Arc</source>
-        <translation>원호</translation>
+        <translation>Arc</translation>
     </message>
     <message>
         <source>Circle</source>
@@ -313,7 +313,7 @@ or [%2]</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>뒤로</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify next control point</source>
@@ -931,7 +931,7 @@ or [%2]</source>
     </message>
     <message>
         <source>Left</source>
-        <translation>왼쪽</translation>
+        <translation>Left</translation>
     </message>
     <message>
         <source>Right</source>
@@ -939,7 +939,7 @@ or [%2]</source>
     </message>
     <message>
         <source>Top</source>
-        <translation>위쪽</translation>
+        <translation>Top</translation>
     </message>
     <message>
         <source>Bottom</source>
@@ -1068,7 +1068,7 @@ or [%2]</source>
     </message>
     <message>
         <source>Star</source>
-        <translation>별</translation>
+        <translation>Star</translation>
     </message>
     <message>
         <source>Break/Divide</source>
@@ -1203,14 +1203,14 @@ or [%2]</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>뒤로</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
     <name>LC_CircleByArcOptions</name>
     <message>
         <source>Form</source>
-        <translation>폼</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <source>Active</source>
@@ -1245,7 +1245,7 @@ or [%2]</source>
     <name>LC_CrossOptions</name>
     <message>
         <source>Form</source>
-        <translation>폼</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <source>Extension</source>
@@ -1269,7 +1269,7 @@ or [%2]</source>
     </message>
     <message>
         <source>Type</source>
-        <translation>유형</translation>
+        <translation>Type</translation>
     </message>
     <message>
         <source>Angle:</source>
@@ -1280,7 +1280,7 @@ or [%2]</source>
     <name>LC_DeviceOptions</name>
     <message>
         <source>Form</source>
-        <translation>폼</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <source>Device</source>
@@ -1288,7 +1288,7 @@ or [%2]</source>
     </message>
     <message>
         <source>Save</source>
-        <translation>저장</translation>
+        <translation>Save</translation>
     </message>
 </context>
 <context>
@@ -1302,7 +1302,7 @@ or [%2]</source>
     <name>LC_DuplicateOptions</name>
     <message>
         <source>Form</source>
-        <translation>폼</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <source>Layer:</source>
@@ -1728,7 +1728,7 @@ or [%2]</source>
     <name>LC_LineAngleRelOptions</name>
     <message>
         <source>Form</source>
-        <translation>폼</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <source>Offset:</source>
@@ -1736,7 +1736,7 @@ or [%2]</source>
     </message>
     <message>
         <source>Free</source>
-        <translation>자유</translation>
+        <translation>Free</translation>
     </message>
     <message>
         <source>Start</source>
@@ -1748,7 +1748,7 @@ or [%2]</source>
     </message>
     <message>
         <source>End</source>
-        <translation>끝</translation>
+        <translation>End</translation>
     </message>
     <message>
         <source>Line Snap:</source>
@@ -1756,7 +1756,7 @@ or [%2]</source>
     </message>
     <message>
         <source>Rel</source>
-        <translation>상대</translation>
+        <translation>Rel</translation>
     </message>
     <message>
         <source>Divide</source>
@@ -1783,7 +1783,7 @@ or [%2]</source>
     <name>LC_LineFromPointToLineOptions</name>
     <message>
         <source>Form</source>
-        <translation>폼</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <source>Angle:</source>
@@ -1819,7 +1819,7 @@ or [%2]</source>
     </message>
     <message>
         <source>End</source>
-        <translation>끝</translation>
+        <translation>End</translation>
     </message>
     <message>
         <source>Length:</source>
@@ -1834,7 +1834,7 @@ or [%2]</source>
     <name>LC_LineJoinOptions</name>
     <message>
         <source>Form</source>
-        <translation>폼</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <source>Extend/Trim</source>
@@ -1889,7 +1889,7 @@ or [%2]</source>
     <name>LC_LinePointsOptions</name>
     <message>
         <source>Form</source>
-        <translation>폼</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <source>Angle:</source>
@@ -1901,11 +1901,11 @@ or [%2]</source>
     </message>
     <message>
         <source>None</source>
-        <translation>없음</translation>
+        <translation>None</translation>
     </message>
     <message>
         <source>Both</source>
-        <translation>둘 다</translation>
+        <translation>Both</translation>
     </message>
     <message>
         <source>Start</source>
@@ -1913,7 +1913,7 @@ or [%2]</source>
     </message>
     <message>
         <source>End</source>
-        <translation>끝</translation>
+        <translation>End</translation>
     </message>
     <message>
         <source>Edge Points:</source>
@@ -1951,7 +1951,7 @@ or [%2]</source>
     <name>LC_ModifyBreakDivideOptions</name>
     <message>
         <source>Form</source>
-        <translation>폼</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <source>Remove Segments</source>
@@ -1966,7 +1966,7 @@ or [%2]</source>
     <name>LC_ModifyGapOptions</name>
     <message>
         <source>Form</source>
-        <translation>폼</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <source>Gap Snap:</source>
@@ -1978,7 +1978,7 @@ or [%2]</source>
     </message>
     <message>
         <source>Free</source>
-        <translation>자유</translation>
+        <translation>Free</translation>
     </message>
     <message>
         <source>Gap Size:</source>
@@ -1994,7 +1994,7 @@ or [%2]</source>
     </message>
     <message>
         <source>End</source>
-        <translation>끝</translation>
+        <translation>End</translation>
     </message>
     <message>
         <source>Line Snap:</source>
@@ -2160,7 +2160,7 @@ or [%2]</source>
     </message>
     <message>
         <source>Save</source>
-        <translation>저장</translation>
+        <translation>Save</translation>
     </message>
     <message>
         <source>Apply Pen To Selection</source>
@@ -2265,7 +2265,7 @@ Please note that if you'll save pen via editor without restart, current pens fro
     <name>LC_Rectangle1PointOptions</name>
     <message>
         <source>Form</source>
-        <translation>폼</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <source>Polyline</source>
@@ -2309,7 +2309,7 @@ Please note that if you'll save pen via editor without restart, current pens fro
     </message>
     <message>
         <source>Top</source>
-        <translation>위</translation>
+        <translation>Top</translation>
     </message>
     <message>
         <source>Top-right</source>
@@ -2317,7 +2317,7 @@ Please note that if you'll save pen via editor without restart, current pens fro
     </message>
     <message>
         <source>Left</source>
-        <translation>왼쪽</translation>
+        <translation>Left</translation>
     </message>
     <message>
         <source>Middle</source>
@@ -2357,7 +2357,7 @@ Please note that if you'll save pen via editor without restart, current pens fro
     </message>
     <message>
         <source>Both</source>
-        <translation>둘 다</translation>
+        <translation>Both</translation>
     </message>
     <message>
         <source>Vertical</source>
@@ -2380,7 +2380,7 @@ Please note that if you'll save pen via editor without restart, current pens fro
     <name>LC_Rectangle2PointsOptions</name>
     <message>
         <source>Form</source>
-        <translation>폼</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <source>Snap shift</source>
@@ -2452,7 +2452,7 @@ Please note that if you'll save pen via editor without restart, current pens fro
     </message>
     <message>
         <source>Both</source>
-        <translation>둘 다</translation>
+        <translation>Both</translation>
     </message>
     <message>
         <source>Vertical</source>
@@ -2467,7 +2467,7 @@ Please note that if you'll save pen via editor without restart, current pens fro
     <name>LC_Rectangle3PointsOptions</name>
     <message>
         <source>Form</source>
-        <translation>폼</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <source>Polyline</source>
@@ -2475,7 +2475,7 @@ Please note that if you'll save pen via editor without restart, current pens fro
     </message>
     <message>
         <source>Both</source>
-        <translation>둘 다</translation>
+        <translation>Both</translation>
     </message>
     <message>
         <source>Vertical</source>
@@ -2549,15 +2549,15 @@ Please note that if you'll save pen via editor without restart, current pens fro
     <name>LC_SliceDivideOptions</name>
     <message>
         <source>Form</source>
-        <translation>폼</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <source>None</source>
-        <translation>없음</translation>
+        <translation>None</translation>
     </message>
     <message>
         <source>Both</source>
-        <translation>둘 다</translation>
+        <translation>Both</translation>
     </message>
     <message>
         <source>Start</source>
@@ -2565,7 +2565,7 @@ Please note that if you'll save pen via editor without restart, current pens fro
     </message>
     <message>
         <source>End</source>
-        <translation>끝</translation>
+        <translation>End</translation>
     </message>
     <message>
         <source>Edge Tick:</source>
@@ -2573,7 +2573,7 @@ Please note that if you'll save pen via editor without restart, current pens fro
     </message>
     <message>
         <source>Rel</source>
-        <translation>상대</translation>
+        <translation>Rel</translation>
     </message>
     <message>
         <source>Offset:</source>
@@ -2620,7 +2620,7 @@ Please note that if you'll save pen via editor without restart, current pens fro
     <name>LC_StarOptions</name>
     <message>
         <source>Form</source>
-        <translation>폼</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <source>Radius Inner</source>
@@ -2655,7 +2655,7 @@ Please note that if you'll save pen via editor without restart, current pens fro
     </message>
     <message>
         <source>Dock</source>
-        <translation>도킹</translation>
+        <translation>Dock</translation>
     </message>
     <message>
         <source>Float</source>
@@ -3046,15 +3046,15 @@ Auto-save disabled.</source>
     </message>
     <message>
         <source>File</source>
-        <translation>파일</translation>
+        <translation>File</translation>
     </message>
     <message>
         <source>Edit</source>
-        <translation>편집</translation>
+        <translation>Edit</translation>
     </message>
     <message>
         <source>View</source>
-        <translation>보기</translation>
+        <translation>View</translation>
     </message>
     <message>
         <source>Snap Selection</source>
@@ -3122,7 +3122,7 @@ Please check its existence and permissions.</source>
     </message>
     <message>
         <source>Line</source>
-        <translation>선</translation>
+        <translation>Line</translation>
     </message>
     <message>
         <source>Circle</source>
@@ -3154,11 +3154,11 @@ Please check its existence and permissions.</source>
     </message>
     <message>
         <source>Info</source>
-        <translation>정보</translation>
+        <translation>Info</translation>
     </message>
     <message>
         <source>Pen</source>
-        <translation>펜</translation>
+        <translation>Pen</translation>
     </message>
     <message>
         <source>Dock Areas</source>
@@ -3214,7 +3214,7 @@ Please check its existence and permissions.</source>
     </message>
     <message>
         <source>Copy</source>
-        <translation>복사</translation>
+        <translation>Copy</translation>
     </message>
     <message>
         <source>Contributors</source>
@@ -3308,11 +3308,11 @@ Please check its existence and permissions.</source>
     </message>
     <message>
         <source>East</source>
-        <translation>동쪽</translation>
+        <translation>East</translation>
     </message>
     <message>
         <source>West</source>
-        <translation>서쪽</translation>
+        <translation>West</translation>
     </message>
     <message>
         <source>&amp;Arrange</source>
@@ -3336,7 +3336,7 @@ Please check its existence and permissions.</source>
     </message>
     <message>
         <source>Cmd</source>
-        <translation>명령</translation>
+        <translation>Cmd</translation>
     </message>
     <message>
         <source>Float</source>
@@ -3345,7 +3345,7 @@ Please check its existence and permissions.</source>
     <message>
         <source>Dock</source>
         <comment>Dock the command widget to the main window</comment>
-        <translation>도킹</translation>
+        <translation>Dock</translation>
     </message>
     <message>
         <source>&amp;Wiki</source>
@@ -3563,7 +3563,7 @@ in a separate window</source>
     </message>
     <message>
         <source>Red</source>
-        <translation>빨간색</translation>
+        <translation>Red</translation>
     </message>
     <message>
         <source>Yellow</source>
@@ -3575,11 +3575,11 @@ in a separate window</source>
     </message>
     <message>
         <source>Cyan</source>
-        <translation>하늘색</translation>
+        <translation>Cyan</translation>
     </message>
     <message>
         <source>Blue</source>
-        <translation>파란색</translation>
+        <translation>Blue</translation>
     </message>
     <message>
         <source>Magenta</source>
@@ -3591,7 +3591,7 @@ in a separate window</source>
     </message>
     <message>
         <source>Gray</source>
-        <translation>회색</translation>
+        <translation>Gray</translation>
     </message>
     <message>
         <source>Light Gray</source>
@@ -3693,7 +3693,7 @@ in a separate window</source>
     </message>
     <message>
         <source>Dock</source>
-        <translation>도킹</translation>
+        <translation>Dock</translation>
     </message>
     <message>
         <source>Float</source>
@@ -3705,7 +3705,7 @@ in a separate window</source>
     </message>
     <message>
         <source>Cmd</source>
-        <translation>명령</translation>
+        <translation>Cmd</translation>
     </message>
 </context>
 <context>
@@ -3784,7 +3784,7 @@ in a separate window</source>
     <name>QG_DlgArc</name>
     <message>
         <source>Arc</source>
-        <translation>호</translation>
+        <translation>Arc</translation>
     </message>
     <message>
         <source>Layer:</source>
@@ -3976,7 +3976,7 @@ This recursively modifies all entities of the Block itself.</source>
     </message>
     <message>
         <source>Area</source>
-        <translation>영역</translation>
+        <translation>Area</translation>
     </message>
 </context>
 <context>
@@ -4117,7 +4117,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <name>QG_DlgLine</name>
     <message>
         <source>Line</source>
-        <translation>선</translation>
+        <translation>Line</translation>
     </message>
     <message>
         <source>Layer:</source>
@@ -4232,11 +4232,11 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>Cut</source>
-        <translation>자르기</translation>
+        <translation>Cut</translation>
     </message>
     <message>
         <source>Copy</source>
-        <translation>복사하기</translation>
+        <translation>Copy</translation>
     </message>
     <message>
         <source>Paste</source>
@@ -5036,7 +5036,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>auto</source>
-        <translation>자동</translation>
+        <translation>auto</translation>
     </message>
     <message>
         <source>&amp;Grid</source>
@@ -5056,7 +5056,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>Left</source>
-        <translation>왼쪽</translation>
+        <translation>Left</translation>
     </message>
     <message>
         <source>Top crosshair with isometric grid</source>
@@ -5064,7 +5064,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>Top</source>
-        <translation>위쪽</translation>
+        <translation>Top</translation>
     </message>
     <message>
         <source>Right crosshair with isometric grid</source>
@@ -5479,7 +5479,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>All</source>
-        <translation>모두</translation>
+        <translation>All</translation>
     </message>
     <message>
         <source>Scrollbars</source>
@@ -5958,7 +5958,7 @@ so default step value required for baking</source>
     <name>QG_DlgText</name>
     <message>
         <source>Text</source>
-        <translation>문자</translation>
+        <translation>Text</translation>
     </message>
     <message>
         <source>Text:</source>
@@ -5978,11 +5978,11 @@ so default step value required for baking</source>
     </message>
     <message>
         <source>Cut</source>
-        <translation>자르기</translation>
+        <translation>Cut</translation>
     </message>
     <message>
         <source>Copy</source>
-        <translation>복사하기</translation>
+        <translation>Copy</translation>
     </message>
     <message>
         <source>Paste</source>
@@ -6574,7 +6574,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <source>Fit</source>
-        <translation>맞춤</translation>
+        <translation>Fit</translation>
     </message>
     <message>
         <source>Diameter (⌀)</source>
@@ -6724,7 +6724,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <source>auto</source>
-        <translation>자동</translation>
+        <translation>auto</translation>
     </message>
     <message>
         <source>Colouring</source>
@@ -7036,7 +7036,7 @@ The contents of a Construction Layer should not appear in printout.</source>
     </message>
     <message>
         <source>Left</source>
-        <translation>좌측</translation>
+        <translation>Left</translation>
     </message>
     <message>
         <source>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
@@ -7123,7 +7123,7 @@ p, li { white-space: pre-wrap; }
     <name>QG_SnapToolBar</name>
     <message>
         <source>Snap</source>
-        <translation>스냅</translation>
+        <translation>Snap</translation>
     </message>
     <message>
         <source>Snap to Endpoints</source>
@@ -7254,7 +7254,7 @@ p, li { white-space: pre-wrap; }
     <name>QG_WidgetPen</name>
     <message>
         <source>Pen</source>
-        <translation>펜</translation>
+        <translation>Pen</translation>
     </message>
     <message>
         <source>Line type:</source>
@@ -7722,15 +7722,15 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Inch</source>
-        <translation>인치</translation>
+        <translation>Inch</translation>
     </message>
     <message>
         <source>Foot</source>
-        <translation>피트</translation>
+        <translation>Foot</translation>
     </message>
     <message>
         <source>Mile</source>
-        <translation>마일</translation>
+        <translation>Mile</translation>
     </message>
     <message>
         <source>Millimeter</source>
@@ -7754,11 +7754,11 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Mil</source>
-        <translation>밀</translation>
+        <translation>Mil</translation>
     </message>
     <message>
         <source>Yard</source>
-        <translation>야드</translation>
+        <translation>Yard</translation>
     </message>
     <message>
         <source>Angstrom</source>
@@ -7973,7 +7973,7 @@ Do you want to replace it?</source>
     <message>
         <source>line</source>
         <comment>draw line</comment>
-        <translation>선</translation>
+        <translation>line</translation>
     </message>
     <message>
         <source>li</source>
@@ -7998,7 +7998,7 @@ Do you want to replace it?</source>
     <message>
         <source>free</source>
         <comment>draw freehand line</comment>
-        <translation>자유</translation>
+        <translation>free</translation>
     </message>
     <message>
         <source>fhl</source>
@@ -8053,7 +8053,7 @@ Do you want to replace it?</source>
     <message>
         <source>rect</source>
         <comment>draw rectangle</comment>
-        <translation>사각형</translation>
+        <translation>rect</translation>
     </message>
     <message>
         <source>polygon2v</source>
@@ -8133,12 +8133,12 @@ Do you want to replace it?</source>
     <message>
         <source>text</source>
         <comment>draw text</comment>
-        <translation>텍스트</translation>
+        <translation>text</translation>
     </message>
     <message>
         <source>txt</source>
         <comment>draw text</comment>
-        <translation>텍스트</translation>
+        <translation>txt</translation>
     </message>
     <message>
         <source>regen</source>
@@ -8203,7 +8203,7 @@ Do you want to replace it?</source>
     <message>
         <source>kill</source>
         <comment>kill all actions</comment>
-        <translation>삭제</translation>
+        <translation>kill</translation>
     </message>
     <message>
         <source>k</source>
@@ -8213,7 +8213,7 @@ Do you want to replace it?</source>
     <message>
         <source>undo</source>
         <comment>undo cycle</comment>
-        <translation>실행 취소</translation>
+        <translation>undo</translation>
     </message>
     <message>
         <source>u</source>
@@ -8223,7 +8223,7 @@ Do you want to replace it?</source>
     <message>
         <source>redo</source>
         <comment>redo cycle</comment>
-        <translation>다시 실행</translation>
+        <translation>redo</translation>
     </message>
     <message>
         <source>r</source>
@@ -8338,7 +8338,7 @@ Do you want to replace it?</source>
     <message>
         <source>rh</source>
         <comment>restrict - horizontal</comment>
-        <translation>가로</translation>
+        <translation>rh</translation>
     </message>
     <message>
         <source>restrictvertical</source>
@@ -8348,37 +8348,37 @@ Do you want to replace it?</source>
     <message>
         <source>rv</source>
         <comment>restrict - vertical</comment>
-        <translation>세로</translation>
+        <translation>rv</translation>
     </message>
     <message>
         <source>mv</source>
         <comment>modify - move (copy)</comment>
-        <translation>이동</translation>
+        <translation>mv</translation>
     </message>
     <message>
         <source>bev</source>
         <comment>modify - bevel</comment>
-        <translation>이동 후 확대/축소</translation>
+        <translation>bev</translation>
     </message>
     <message>
         <source>ch</source>
         <comment>modify - bevel</comment>
-        <translation>변경</translation>
+        <translation>ch</translation>
     </message>
     <message>
         <source>fi</source>
         <comment>modify - fillet</comment>
-        <translation>맞춤</translation>
+        <translation>fi</translation>
     </message>
     <message>
         <source>cut</source>
         <comment>modify - divide (cut)</comment>
-        <translation>자르기</translation>
+        <translation>cut</translation>
     </message>
     <message>
         <source>div</source>
         <comment>modify - divide (cut)</comment>
-        <translation>나누기</translation>
+        <translation>div</translation>
     </message>
     <message>
         <source>mi</source>
@@ -8538,7 +8538,7 @@ Do you want to replace it?</source>
     <message>
         <source>sa</source>
         <comment>Select all entities</comment>
-        <translation>전체 선택</translation>
+        <translation>sa</translation>
     </message>
     <message>
         <source>deselectall</source>
@@ -8548,37 +8548,37 @@ Do you want to replace it?</source>
     <message>
         <source>tn</source>
         <comment>deselect all entities</comment>
-        <translation>전체 선택 해제</translation>
+        <translation>tn</translation>
     </message>
     <message>
         <source>attr</source>
         <comment>modify attribute</comment>
-        <translation>속성</translation>
+        <translation>attr</translation>
     </message>
     <message>
         <source>ma</source>
         <comment>modify attribute</comment>
-        <translation>속성</translation>
+        <translation>ma</translation>
     </message>
     <message>
         <source>prop</source>
         <comment>modify properties</comment>
-        <translation>속성</translation>
+        <translation>prop</translation>
     </message>
     <message>
         <source>dist</source>
         <comment>distance point to point</comment>
-        <translation>거리</translation>
+        <translation>dist</translation>
     </message>
     <message>
         <source>dpp</source>
         <comment>distance point to point</comment>
-        <translation>거리</translation>
+        <translation>dpp</translation>
     </message>
     <message>
         <source>ang</source>
         <comment>measure angle</comment>
-        <translation>각도</translation>
+        <translation>ang</translation>
     </message>
     <message>
         <source>angle</source>
@@ -8586,7 +8586,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>dpi</source>
-        <translation>DPI</translation>
+        <translation>dpi</translation>
     </message>
     <message>
         <source>close</source>
@@ -8622,7 +8622,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>rows</source>
-        <translation>행</translation>
+        <translation>rows</translation>
     </message>
     <message>
         <source>rowspacing</source>
@@ -8634,17 +8634,17 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>trim</source>
-        <translation>잘라내기</translation>
+        <translation>trim</translation>
     </message>
     <message>
         <source>ang</source>
         <comment>angle</comment>
-        <translation>각도</translation>
+        <translation>ang</translation>
     </message>
     <message>
         <source>an</source>
         <comment>angle</comment>
-        <translation>각</translation>
+        <translation>an</translation>
     </message>
     <message>
         <source>center</source>
@@ -8653,17 +8653,17 @@ Do you want to replace it?</source>
     <message>
         <source>cen</source>
         <comment>center</comment>
-        <translation>중</translation>
+        <translation>cen</translation>
     </message>
     <message>
         <source>ce</source>
         <comment>center</comment>
-        <translation>중</translation>
+        <translation>ce</translation>
     </message>
     <message>
         <source>cl</source>
         <comment>chord length</comment>
-        <translation>클</translation>
+        <translation>cl</translation>
     </message>
     <message>
         <source>c</source>
@@ -8673,7 +8673,7 @@ Do you want to replace it?</source>
     <message>
         <source>cols</source>
         <comment>columns</comment>
-        <translation>열</translation>
+        <translation>cols</translation>
     </message>
     <message>
         <source>co</source>
@@ -8698,7 +8698,7 @@ Do you want to replace it?</source>
     <message>
         <source>fact</source>
         <comment>factor</comment>
-        <translation>사실</translation>
+        <translation>fact</translation>
     </message>
     <message>
         <source>f</source>
@@ -8707,7 +8707,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>help</source>
-        <translation>도움말</translation>
+        <translation>help</translation>
     </message>
     <message>
         <source>?</source>
@@ -8722,12 +8722,12 @@ Do you want to replace it?</source>
     <message>
         <source>len</source>
         <comment>length</comment>
-        <translation>길이</translation>
+        <translation>len</translation>
     </message>
     <message>
         <source>l</source>
         <comment>length</comment>
-        <translation>길이</translation>
+        <translation>l</translation>
     </message>
     <message>
         <source>length1</source>
@@ -8767,7 +8767,7 @@ Do you want to replace it?</source>
     <message>
         <source>num</source>
         <comment>number</comment>
-        <translation>숫자</translation>
+        <translation>num</translation>
     </message>
     <message>
         <source>n</source>
@@ -8792,7 +8792,7 @@ Do you want to replace it?</source>
     <message>
         <source>row</source>
         <comment>row</comment>
-        <translation>행</translation>
+        <translation>row</translation>
     </message>
     <message>
         <source>rowspacing</source>
@@ -8806,7 +8806,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>text</source>
-        <translation>텍스트</translation>
+        <translation>text</translation>
     </message>
     <message>
         <source>t</source>
@@ -8820,7 +8820,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>undo</source>
-        <translation>실행 취소</translation>
+        <translation>undo</translation>
     </message>
     <message>
         <source>u</source>
@@ -8829,7 +8829,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>redo</source>
-        <translation>다시 실행</translation>
+        <translation>redo</translation>
     </message>
     <message>
         <source>r</source>
@@ -8838,7 +8838,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>back</source>
-        <translation>뒤로</translation>
+        <translation>back</translation>
     </message>
     <message>
         <source>b</source>
@@ -8876,7 +8876,7 @@ Do you want to replace it?</source>
     <message>
         <source>None</source>
         <comment>unknown length unit</comment>
-        <translation>없음</translation>
+        <translation>None</translation>
     </message>
     <message>
         <source>error reading file metadata in dwg file</source>
@@ -8888,7 +8888,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>bw</source>
-        <translation>흑백</translation>
+        <translation>bw</translation>
     </message>
     <message>
         <source>blackwhite</source>
@@ -8927,7 +8927,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Edit</source>
-        <translation>편집</translation>
+        <translation>Edit</translation>
     </message>
     <message>
         <source>Ellipse</source>
@@ -8935,7 +8935,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>File</source>
-        <translation>파일</translation>
+        <translation>File</translation>
     </message>
     <message>
         <source>Dimension</source>
@@ -8943,7 +8943,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Info</source>
-        <translation>정보</translation>
+        <translation>Info</translation>
     </message>
     <message>
         <source>Layer</source>
@@ -8951,7 +8951,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Line</source>
-        <translation>선</translation>
+        <translation>Line</translation>
     </message>
     <message>
         <source>Modify</source>
@@ -8979,7 +8979,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Snap</source>
-        <translation>스냅</translation>
+        <translation>Snap</translation>
     </message>
     <message>
         <source>Snap Extras</source>
@@ -8987,7 +8987,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>View</source>
-        <translation>보기</translation>
+        <translation>View</translation>
     </message>
     <message>
         <source>Widgets</source>
@@ -8999,7 +8999,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>All</source>
-        <translation>모두</translation>
+        <translation>All</translation>
     </message>
     <message>
         <source>Invalid objects removed:</source>
@@ -9027,7 +9027,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>cal</source>
-        <translation>계산</translation>
+        <translation>cal</translation>
     </message>
     <message>
         <source>Calculator mode: On</source>
@@ -9588,12 +9588,12 @@ Do you want to replace it?</source>
     <message>
         <source>mo</source>
         <comment>modify - offset</comment>
-        <translation>모드 켜기</translation>
+        <translation>mo</translation>
     </message>
     <message>
         <source>moff</source>
         <comment>modify - offset</comment>
-        <translation>모드 끄기</translation>
+        <translation>moff</translation>
     </message>
     <message>
         <source>modbevel</source>
@@ -9633,7 +9633,7 @@ Do you want to replace it?</source>
     <message>
         <source>xt</source>
         <comment>explode text strings</comment>
-        <translation>텍스트</translation>
+        <translation>xt</translation>
     </message>
     <message>
         <source>modexplode</source>
@@ -9653,7 +9653,7 @@ Do you want to replace it?</source>
     <message>
         <source>id</source>
         <comment>distance point to point</comment>
-        <translation>ID</translation>
+        <translation>id</translation>
     </message>
     <message>
         <source>infodistep</source>
@@ -9663,12 +9663,12 @@ Do you want to replace it?</source>
     <message>
         <source>ii</source>
         <comment>distance entity to point</comment>
-        <translation>II</translation>
+        <translation>ii</translation>
     </message>
     <message>
         <source>dep</source>
         <comment>distance entity to point</comment>
-        <translation>종속성</translation>
+        <translation>dep</translation>
     </message>
     <message>
         <source>infoangle</source>
@@ -9678,7 +9678,7 @@ Do you want to replace it?</source>
     <message>
         <source>ia</source>
         <comment>measure angle</comment>
-        <translation>정보 각도</translation>
+        <translation>ia</translation>
     </message>
     <message>
         <source>infoarea</source>
@@ -9688,32 +9688,32 @@ Do you want to replace it?</source>
     <message>
         <source>aa</source>
         <comment>measure area</comment>
-        <translation>정보 영역</translation>
+        <translation>aa</translation>
     </message>
     <message>
         <source>mt</source>
         <comment>draw mtext</comment>
-        <translation>메타데이터</translation>
+        <translation>mt</translation>
     </message>
     <message>
         <source>tx</source>
         <comment>draw text</comment>
-        <translation>텍스트</translation>
+        <translation>tx</translation>
     </message>
     <message>
         <source>so</source>
         <comment>snap - free</comment>
-        <translation>소스</translation>
+        <translation>so</translation>
     </message>
     <message>
         <source>ki</source>
         <comment>kill all actions</comment>
-        <translation>키</translation>
+        <translation>ki</translation>
     </message>
     <message>
         <source>un</source>
         <comment>undo cycle</comment>
-        <translation>알 수 없음</translation>
+        <translation>un</translation>
     </message>
     <message>
         <source>rd</source>
@@ -10255,7 +10255,7 @@ Do you want to replace it?</source>
     <message>
         <source>star</source>
         <comment>draw star</comment>
-        <translation>별표</translation>
+        <translation>star</translation>
     </message>
     <message>
         <source>st</source>
@@ -10365,7 +10365,7 @@ Do you want to replace it?</source>
     <message>
         <source>rort</source>
         <comment>draw orthogonal</comment>
-        <translation>회전</translation>
+        <translation>rort</translation>
     </message>
     <message>
         <source>point2line</source>
@@ -10434,11 +10434,11 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>pos</source>
-        <translation>위치</translation>
+        <translation>pos</translation>
     </message>
     <message>
         <source>size</source>
-        <translation>크기</translation>
+        <translation>size</translation>
     </message>
     <message>
         <source>bevels</source>
@@ -10458,7 +10458,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>str</source>
-        <translation>문자열</translation>
+        <translation>str</translation>
     </message>
     <message>
         <source>round</source>
@@ -10470,19 +10470,19 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>topl</source>
-        <translation>상단</translation>
+        <translation>topl</translation>
     </message>
     <message>
         <source>top</source>
-        <translation>상단</translation>
+        <translation>top</translation>
     </message>
     <message>
         <source>topr</source>
-        <translation>상단 오른쪽</translation>
+        <translation>topr</translation>
     </message>
     <message>
         <source>left</source>
-        <translation>왼쪽</translation>
+        <translation>left</translation>
     </message>
     <message>
         <source>middle</source>
@@ -10522,11 +10522,11 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>hor</source>
-        <translation>수평</translation>
+        <translation>hor</translation>
     </message>
     <message>
         <source>vert</source>
-        <translation>수직</translation>
+        <translation>vert</translation>
     </message>
     <message>
         <source>snap2</source>
@@ -10546,7 +10546,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>quad</source>
-        <translation>사분면</translation>
+        <translation>quad</translation>
     </message>
     <message>
         <source>noquad</source>
@@ -10578,19 +10578,19 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>end</source>
-        <translation>끝</translation>
+        <translation>end</translation>
     </message>
     <message>
         <source>both</source>
-        <translation>양쪽</translation>
+        <translation>both</translation>
     </message>
     <message>
         <source>none</source>
-        <translation>없음</translation>
+        <translation>none</translation>
     </message>
     <message>
         <source>fit</source>
-        <translation>맞춤</translation>
+        <translation>fit</translation>
     </message>
     <message>
         <source>nofit</source>
@@ -10610,7 +10610,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>sym</source>
-        <translation>대칭</translation>
+        <translation>sym</translation>
     </message>
     <message>
         <source>nosym</source>
@@ -10850,7 +10850,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>뒤로</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -10869,7 +10869,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>뒤로</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify dimension line location</source>
@@ -10969,7 +10969,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>뒤로</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify dimension line location</source>
@@ -11035,7 +11035,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>뒤로</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify start angle:</source>
@@ -11070,7 +11070,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>뒤로</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify endpoint</source>
@@ -11097,7 +11097,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>뒤로</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify end point</source>
@@ -11120,7 +11120,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>뒤로</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify point on circle</source>
@@ -11147,7 +11147,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>뒤로</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -11170,7 +11170,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>뒤로</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify third point</source>
@@ -11197,7 +11197,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>뒤로</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>radius=%1 is invalid (expression)</source>
@@ -11228,7 +11228,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>뒤로</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify the third line</source>
@@ -11247,7 +11247,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>뒤로</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify the second point on the tangent circle</source>
@@ -11278,7 +11278,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>뒤로</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Select the center of the tangent circle</source>
@@ -11321,7 +11321,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>뒤로</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify a point on the tangent circle</source>
@@ -11340,7 +11340,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>뒤로</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Select the center of the tangent circle</source>
@@ -11375,7 +11375,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>뒤로</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify the third point on ellipse</source>
@@ -11410,7 +11410,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>뒤로</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify endpoint or length of minor axis:</source>
@@ -11445,7 +11445,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>뒤로</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify the third point on ellipse</source>
@@ -11472,7 +11472,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>뒤로</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify a point on ellipse or total distance to foci</source>
@@ -11503,7 +11503,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>뒤로</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify the third line</source>
@@ -11600,7 +11600,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>뒤로</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify next point</source>
@@ -11639,7 +11639,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>뒤로</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Enter length:</source>
@@ -11666,7 +11666,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>뒤로</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Enter bisector length:</source>
@@ -11709,7 +11709,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>뒤로</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -11728,7 +11728,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>뒤로</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -11770,7 +11770,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>뒤로</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Number:</source>
@@ -11831,7 +11831,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>뒤로</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Number:</source>
@@ -11862,7 +11862,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>뒤로</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -11885,7 +11885,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>뒤로</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -11904,7 +11904,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>뒤로</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -11915,7 +11915,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>뒤로</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Select first circle/ellipse/parabola</source>
@@ -11946,7 +11946,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>뒤로</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -11976,7 +11976,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>뒤로</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify next point</source>
@@ -12043,7 +12043,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>뒤로</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify next control point</source>
@@ -12070,7 +12070,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>뒤로</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify second point</source>
@@ -12130,7 +12130,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>뒤로</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Angle: %1</source>
@@ -12184,7 +12184,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>뒤로</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Distance: %1 Cartesian: (%2 , %3), Polar: (%4&lt;%5)</source>
@@ -12211,7 +12211,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>뒤로</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -12306,7 +12306,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>뒤로</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Enter length 1:</source>
@@ -12345,7 +12345,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>뒤로</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Entity must be a line, arc, circle, ellipse or interpolation spline.</source>
@@ -12368,7 +12368,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>뒤로</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Entities not in the same polyline.</source>
@@ -12441,7 +12441,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>뒤로</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -12460,7 +12460,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>뒤로</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Invalid number of copies, use %1 </source>
@@ -12487,7 +12487,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>뒤로</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Enter rotation angle:</source>
@@ -12502,7 +12502,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>뒤로</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -12513,7 +12513,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>뒤로</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify rotation center</source>
@@ -12540,7 +12540,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>뒤로</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -12551,7 +12551,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>뒤로</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify second entity</source>
@@ -12605,7 +12605,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>뒤로</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify reference point</source>
@@ -12632,7 +12632,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>뒤로</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Select second trim entity</source>
@@ -12667,7 +12667,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>뒤로</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -12717,7 +12717,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>뒤로</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -12748,7 +12748,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>뒤로</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify next point</source>
@@ -12787,7 +12787,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>뒤로</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Deleting point is invalid.</source>
@@ -12826,7 +12826,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>뒤로</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify second node</source>
@@ -12911,7 +12911,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>뒤로</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify second segment</source>
@@ -13067,7 +13067,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>뒤로</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -13082,7 +13082,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>뒤로</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Click and drag for the selection window</source>
@@ -13116,7 +13116,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>뒤로</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Select second entity</source>
@@ -13165,7 +13165,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>뒤로</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -13234,7 +13234,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Trim</source>
-        <translation>트림</translation>
+        <translation>Trim</translation>
     </message>
     <message>
         <source>Length 1:</source>
@@ -13462,7 +13462,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>End</source>
-        <translation>끝</translation>
+        <translation>End</translation>
     </message>
 </context>
 <context>
@@ -13508,7 +13508,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Undo</source>
-        <translation>실행 취소</translation>
+        <translation>Undo</translation>
     </message>
     <message>
         <source>Redo the last line drawing</source>
@@ -13516,7 +13516,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Redo</source>
-        <translation>다시 실행</translation>
+        <translation>Redo</translation>
     </message>
 </context>
 <context>
@@ -13547,7 +13547,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Rel</source>
-        <translation>상대</translation>
+        <translation>Rel</translation>
     </message>
     <message>
         <source>Undo the last line drawing</source>
@@ -13555,7 +13555,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Undo</source>
-        <translation>실행 취소</translation>
+        <translation>Undo</translation>
     </message>
     <message>
         <source>Form a closed contour from lines drawn</source>
@@ -13571,7 +13571,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Redo</source>
-        <translation>다시 실행</translation>
+        <translation>Redo</translation>
     </message>
     <message>
         <source>Point</source>
@@ -13722,11 +13722,11 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Undo</source>
-        <translation>실행 취소</translation>
+        <translation>Undo</translation>
     </message>
     <message>
         <source>Line</source>
-        <translation>선</translation>
+        <translation>Line</translation>
     </message>
     <message>
         <source>Tangential</source>
@@ -13808,7 +13808,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Trim</source>
-        <translation>트림</translation>
+        <translation>Trim</translation>
     </message>
     <message>
         <source>Radius:</source>
@@ -13857,7 +13857,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Undo</source>
-        <translation>실행 취소</translation>
+        <translation>Undo</translation>
     </message>
 </context>
 <context>
@@ -13914,7 +13914,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Name</source>
-        <translation>이름</translation>
+        <translation>Name</translation>
     </message>
     <message>
         <source>Create</source>

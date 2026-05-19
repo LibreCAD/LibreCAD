@@ -249,7 +249,7 @@ Baza e parë, baza e dytë, objektivi i parë, objektivi i dytë.</translation>
     <message>
         <location filename="../list/list.cpp" line="141" />
         <source>area</source>
-        <translation>zona</translation>
+        <translation>area</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="144" />
@@ -299,7 +299,7 @@ Baza e parë, baza e dytë, objektivi i parë, objektivi i dytë.</translation>
     <message>
         <location filename="../list/list.cpp" line="189" />
         <source>Name</source>
-        <translation>Emri</translation>
+        <translation>Name</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="191" />
@@ -339,12 +339,12 @@ Baza e parë, baza e dytë, objektivi i parë, objektivi i dytë.</translation>
     <message>
         <location filename="../list/list.cpp" line="216" />
         <source>No</source>
-        <translation>Jo</translation>
+        <translation>No</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="216" />
         <source>Yes</source>
-        <translation>Po</translation>
+        <translation>Yes</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="217" />
@@ -761,7 +761,7 @@ Baza e parë, baza e dytë, objektivi i parë, objektivi i dytë.</translation>
     <message>
         <location filename="../divide/divide.cpp" line="526" />
         <source>area</source>
-        <translation>zona</translation>
+        <translation>area</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="530" />
@@ -776,12 +776,12 @@ Baza e parë, baza e dytë, objektivi i parë, objektivi i dytë.</translation>
     <message>
         <location filename="../divide/divide.cpp" line="533" />
         <source>No</source>
-        <translation>Jo</translation>
+        <translation>No</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="533" />
         <source>Yes</source>
-        <translation>Po</translation>
+        <translation>Yes</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="534" />
@@ -829,7 +829,7 @@ Baza e parë, baza e dytë, objektivi i parë, objektivi i dytë.</translation>
     <message>
         <location filename="../divide/dividedlg.cpp" line="92" />
         <source>Size</source>
-        <translation>Madhësia</translation>
+        <translation>Size</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="115" />
@@ -1214,7 +1214,7 @@ Përdorimi në a.</translation>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="32" />
         <source>Draw</source>
-        <translation>Vizato</translation>
+        <translation>Draw</translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="33" />

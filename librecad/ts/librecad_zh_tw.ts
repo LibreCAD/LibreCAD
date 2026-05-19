@@ -34,7 +34,7 @@
     <message>
         <location filename="../src/ui/generic/comboboxoption.ui" line="41" />
         <source>Set</source>
-        <translation>設定</translation>
+        <translation>Set</translation>
     </message>
 </context>
 <context>
@@ -179,7 +179,7 @@ distance between points=%2 is larger than diameter=%3</source>
         <location filename="../src/actions/lc_actiondrawcircle2pr.cpp" line="243" />
         <location filename="../src/actions/lc_actiondrawcircle2pr.cpp" line="247" />
         <source>Back</source>
-        <translation>返回</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actiondrawcircle2pr.cpp" line="246" />
@@ -207,7 +207,7 @@ or [%2]</source>
         <location filename="../src/actions/lc_actiondrawlinepoints.cpp" line="516" />
         <location filename="../src/actions/lc_actiondrawlinepoints.cpp" line="521" />
         <source>Back</source>
-        <translation>返回</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actiondrawlinepoints.cpp" line="516" />
@@ -265,7 +265,7 @@ or [%2]</source>
         <location filename="../src/actions/lc_actiondrawlinesnake.cpp" line="474" />
         <location filename="../src/actions/lc_actiondrawlinesnake.cpp" line="486" />
         <source>Back</source>
-        <translation>返回</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actiondrawlinesnake.cpp" line="448" />
@@ -322,7 +322,7 @@ or [%2]</source>
         <location filename="../src/actions/lc_actiondrawparabola4points.cpp" line="284" />
         <location filename="../src/actions/lc_actiondrawparabola4points.cpp" line="289" />
         <source>Back</source>
-        <translation>返回</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actiondrawparabola4points.cpp" line="278" />
@@ -362,7 +362,7 @@ or [%2]</source>
         <location filename="../src/actions/lc_actiondrawparabolaFD.cpp" line="301" />
         <location filename="../src/actions/lc_actiondrawparabolaFD.cpp" line="306" />
         <source>Back</source>
-        <translation>返回</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actiondrawparabolaFD.cpp" line="300" />
@@ -390,12 +390,12 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/lc_actiondrawslicedivide.cpp" line="180" />
         <source>Line</source>
-        <translation>直線</translation>
+        <translation>Line</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actiondrawslicedivide.cpp" line="190" />
         <source>Arc</source>
-        <translation>圓弧</translation>
+        <translation>Arc</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actiondrawslicedivide.cpp" line="200" />
@@ -424,7 +424,7 @@ or [%2]</source>
         <location filename="../src/actions/lc_actiondrawsplinepoints.cpp" line="276" />
         <location filename="../src/actions/lc_actiondrawsplinepoints.cpp" line="282" />
         <source>Back</source>
-        <translation>返回</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actiondrawsplinepoints.cpp" line="281" />
@@ -624,7 +624,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="299" />
         <source>Star</source>
-        <translation>星形</translation>
+        <translation>Star</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="305" />
@@ -1177,7 +1177,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1328" />
         <source>Left</source>
-        <translation>左側</translation>
+        <translation>Left</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1337" />
@@ -1187,7 +1187,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1346" />
         <source>Top</source>
-        <translation>上方</translation>
+        <translation>Top</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1355" />
@@ -1536,7 +1536,7 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/lc_actionsnapmiddlemanual.cpp" line="306" />
         <source>Back</source>
-        <translation>返回</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -1544,7 +1544,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_circlebyarcoptions.ui" line="14" />
         <source>Form</source>
-        <translation>表單</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_circlebyarcoptions.ui" line="27" />
@@ -1589,7 +1589,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_crossoptions.ui" line="20" />
         <source>Form</source>
-        <translation>表單</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_crossoptions.ui" line="63" />
@@ -1619,7 +1619,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_crossoptions.ui" line="161" />
         <source>Type</source>
-        <translation>類型</translation>
+        <translation>Type</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_crossoptions.ui" line="168" />
@@ -1632,7 +1632,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_deviceoptions.ui" line="14" />
         <source>Form</source>
-        <translation>表單</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_deviceoptions.ui" line="20" />
@@ -1642,7 +1642,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_deviceoptions.ui" line="53" />
         <source>Save</source>
-        <translation>儲存</translation>
+        <translation>Save</translation>
     </message>
 </context>
 <context>
@@ -1658,7 +1658,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_duplicateoptions.ui" line="14" />
         <source>Form</source>
-        <translation>表單</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_duplicateoptions.ui" line="26" />
@@ -2194,7 +2194,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_lineanglereloptions.ui" line="14" />
         <source>Form</source>
-        <translation>表單</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_lineanglereloptions.ui" line="42" />
@@ -2205,7 +2205,7 @@ or [%2]</source>
         <location filename="../src/ui/forms/lc_lineanglereloptions.ui" line="50" />
         <location filename="../src/ui/forms/lc_lineanglereloptions.ui" line="181" />
         <source>Free</source>
-        <translation>自由</translation>
+        <translation>Free</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_lineanglereloptions.ui" line="55" />
@@ -2223,7 +2223,7 @@ or [%2]</source>
         <location filename="../src/ui/forms/lc_lineanglereloptions.ui" line="65" />
         <location filename="../src/ui/forms/lc_lineanglereloptions.ui" line="120" />
         <source>End</source>
-        <translation>終點</translation>
+        <translation>End</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_lineanglereloptions.ui" line="73" />
@@ -2233,7 +2233,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_lineanglereloptions.ui" line="80" />
         <source>Rel</source>
-        <translation>相對</translation>
+        <translation>Rel</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_lineanglereloptions.ui" line="144" />
@@ -2266,7 +2266,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_linefrompointtolineoptions.ui" line="14" />
         <source>Form</source>
-        <translation>表單</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_linefrompointtolineoptions.ui" line="48" />
@@ -2311,7 +2311,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_linefrompointtolineoptions.ui" line="227" />
         <source>End</source>
-        <translation>終點</translation>
+        <translation>End</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_linefrompointtolineoptions.ui" line="241" />
@@ -2329,7 +2329,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_linejoinoptions.ui" line="20" />
         <source>Form</source>
-        <translation>表單</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_linejoinoptions.ui" line="51" />
@@ -2400,7 +2400,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_linepointsoptions.ui" line="20" />
         <source>Form</source>
-        <translation>表單</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_linepointsoptions.ui" line="32" />
@@ -2415,12 +2415,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_linepointsoptions.ui" line="128" />
         <source>None</source>
-        <translation>無</translation>
+        <translation>None</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_linepointsoptions.ui" line="133" />
         <source>Both</source>
-        <translation>兩者</translation>
+        <translation>Both</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_linepointsoptions.ui" line="138" />
@@ -2430,7 +2430,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_linepointsoptions.ui" line="143" />
         <source>End</source>
-        <translation>終點</translation>
+        <translation>End</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_linepointsoptions.ui" line="183" />
@@ -2484,7 +2484,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_modifybreakdivideoptions.ui" line="14" />
         <source>Form</source>
-        <translation>表單</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_modifybreakdivideoptions.ui" line="39" />
@@ -2502,7 +2502,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_modifygapoptions.ui" line="14" />
         <source>Form</source>
-        <translation>表單</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_modifygapoptions.ui" line="42" />
@@ -2518,7 +2518,7 @@ or [%2]</source>
         <location filename="../src/ui/forms/lc_modifygapoptions.ui" line="56" />
         <location filename="../src/ui/forms/lc_modifygapoptions.ui" line="87" />
         <source>Free</source>
-        <translation>自由</translation>
+        <translation>Free</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_modifygapoptions.ui" line="79" />
@@ -2541,7 +2541,7 @@ or [%2]</source>
         <location filename="../src/ui/forms/lc_modifygapoptions.ui" line="102" />
         <location filename="../src/ui/forms/lc_modifygapoptions.ui" line="121" />
         <source>End</source>
-        <translation>終點</translation>
+        <translation>End</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_modifygapoptions.ui" line="129" />
@@ -2644,7 +2644,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="250" />
         <source>HEX</source>
-        <translation>十六進位</translation>
+        <translation>HEX</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="257" />
@@ -2748,7 +2748,7 @@ or [%2]</source>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="349" />
         <location filename="../src/ui/lc_penpalettewidget.ui" line="352" />
         <source>Save</source>
-        <translation>儲存</translation>
+        <translation>Save</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="363" />
@@ -2876,7 +2876,7 @@ Please note that if you'll save pen via editor without restart, current pens fro
     <message>
         <location filename="../src/ui/forms/lc_rectangle1pointoptions.ui" line="14" />
         <source>Form</source>
-        <translation>表單</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle1pointoptions.ui" line="26" />
@@ -2931,7 +2931,7 @@ Please note that if you'll save pen via editor without restart, current pens fro
     <message>
         <location filename="../src/ui/forms/lc_rectangle1pointoptions.ui" line="175" />
         <source>Top</source>
-        <translation>上方</translation>
+        <translation>Top</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle1pointoptions.ui" line="180" />
@@ -2941,7 +2941,7 @@ Please note that if you'll save pen via editor without restart, current pens fro
     <message>
         <location filename="../src/ui/forms/lc_rectangle1pointoptions.ui" line="185" />
         <source>Left</source>
-        <translation>左</translation>
+        <translation>Left</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle1pointoptions.ui" line="190" />
@@ -2991,7 +2991,7 @@ Please note that if you'll save pen via editor without restart, current pens fro
     <message>
         <location filename="../src/ui/forms/lc_rectangle1pointoptions.ui" line="245" />
         <source>Both</source>
-        <translation>兩者</translation>
+        <translation>Both</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle1pointoptions.ui" line="250" />
@@ -3019,7 +3019,7 @@ Please note that if you'll save pen via editor without restart, current pens fro
     <message>
         <location filename="../src/ui/forms/lc_rectangle2pointsoptions.ui" line="14" />
         <source>Form</source>
-        <translation>表單</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle2pointsoptions.ui" line="26" />
@@ -3113,7 +3113,7 @@ Please note that if you'll save pen via editor without restart, current pens fro
     <message>
         <location filename="../src/ui/forms/lc_rectangle2pointsoptions.ui" line="228" />
         <source>Both</source>
-        <translation>兩者</translation>
+        <translation>Both</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle2pointsoptions.ui" line="233" />
@@ -3131,7 +3131,7 @@ Please note that if you'll save pen via editor without restart, current pens fro
     <message>
         <location filename="../src/ui/forms/lc_rectangle3pointsoptions.ui" line="14" />
         <source>Form</source>
-        <translation>表單</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle3pointsoptions.ui" line="55" />
@@ -3141,7 +3141,7 @@ Please note that if you'll save pen via editor without restart, current pens fro
     <message>
         <location filename="../src/ui/forms/lc_rectangle3pointsoptions.ui" line="63" />
         <source>Both</source>
-        <translation>兩者</translation>
+        <translation>Both</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle3pointsoptions.ui" line="68" />
@@ -3232,17 +3232,17 @@ Please note that if you'll save pen via editor without restart, current pens fro
     <message>
         <location filename="../src/ui/forms/lc_slicedivideoptions.ui" line="14" />
         <source>Form</source>
-        <translation>表單</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_slicedivideoptions.ui" line="48" />
         <source>None</source>
-        <translation>無</translation>
+        <translation>None</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_slicedivideoptions.ui" line="53" />
         <source>Both</source>
-        <translation>兩者</translation>
+        <translation>Both</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_slicedivideoptions.ui" line="58" />
@@ -3254,7 +3254,7 @@ Please note that if you'll save pen via editor without restart, current pens fro
         <location filename="../src/ui/forms/lc_slicedivideoptions.ui" line="63" />
         <location filename="../src/ui/forms/lc_slicedivideoptions.ui" line="276" />
         <source>End</source>
-        <translation>終點</translation>
+        <translation>End</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_slicedivideoptions.ui" line="71" />
@@ -3264,7 +3264,7 @@ Please note that if you'll save pen via editor without restart, current pens fro
     <message>
         <location filename="../src/ui/forms/lc_slicedivideoptions.ui" line="113" />
         <source>Rel</source>
-        <translation>相對</translation>
+        <translation>Rel</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_slicedivideoptions.ui" line="120" />
@@ -3322,7 +3322,7 @@ Please note that if you'll save pen via editor without restart, current pens fro
     <message>
         <location filename="../src/ui/forms/lc_staroptions.ui" line="14" />
         <source>Form</source>
-        <translation>表單</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_staroptions.ui" line="26" />
@@ -3365,7 +3365,7 @@ Please note that if you'll save pen via editor without restart, current pens fro
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="414" />
         <source>Dock</source>
-        <translation>停靠</translation>
+        <translation>Dock</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="414" />
@@ -3641,7 +3641,7 @@ Please note that if you'll save pen via editor without restart, current pens fro
         <location filename="../src/ui/lc_widgetfactory.cpp" line="257" />
         <location filename="../src/ui/lc_widgetfactory.cpp" line="520" />
         <source>Line</source>
-        <translation>線</translation>
+        <translation>Line</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="262" />
@@ -3688,7 +3688,7 @@ Please note that if you'll save pen via editor without restart, current pens fro
         <location filename="../src/ui/lc_widgetfactory.cpp" line="297" />
         <location filename="../src/ui/lc_widgetfactory.cpp" line="568" />
         <source>Info</source>
-        <translation>資訊</translation>
+        <translation>Info</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="336" />
@@ -3703,7 +3703,7 @@ Please note that if you'll save pen via editor without restart, current pens fro
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="471" />
         <source>Pen</source>
-        <translation>筆</translation>
+        <translation>Pen</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="483" />
@@ -3951,12 +3951,12 @@ Please note that if you'll save pen via editor without restart, current pens fro
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="1203" />
         <source>East</source>
-        <translation>東</translation>
+        <translation>East</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="1207" />
         <source>West</source>
-        <translation>西</translation>
+        <translation>West</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="1212" />
@@ -4026,7 +4026,7 @@ Please note that if you'll save pen via editor without restart, current pens fro
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="3080" />
         <source>Copy</source>
-        <translation>複製</translation>
+        <translation>Copy</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="3091" />
@@ -4066,7 +4066,7 @@ Please note that if you'll save pen via editor without restart, current pens fro
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="3450" />
         <source>Cmd</source>
-        <translation>命令</translation>
+        <translation>Cmd</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="3451" />
@@ -4077,7 +4077,7 @@ Please note that if you'll save pen via editor without restart, current pens fro
         <location filename="../src/main/qc_applicationwindow.cpp" line="3451" />
         <source>Dock</source>
         <comment>Dock the command widget to the main window</comment>
-        <translation>停靠</translation>
+        <translation>Dock</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="3547" />
@@ -4175,7 +4175,7 @@ Please check the permissions.</source>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="421" />
         <source>File</source>
-        <translation>檔案</translation>
+        <translation>File</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="689" />
@@ -4185,12 +4185,12 @@ Please check the permissions.</source>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="428" />
         <source>Edit</source>
-        <translation>編輯</translation>
+        <translation>Edit</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="449" />
         <source>View</source>
-        <translation>視圖</translation>
+        <translation>View</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="1934" />
@@ -4513,7 +4513,7 @@ in a separate window</source>
     <message>
         <location filename="../src/ui/qg_colorbox.cpp" line="115" />
         <source>Red</source>
-        <translation>紅</translation>
+        <translation>Red</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_colorbox.cpp" line="119" />
@@ -4543,7 +4543,7 @@ in a separate window</source>
     <message>
         <location filename="../src/ui/qg_colorbox.cpp" line="124" />
         <source>Cyan</source>
-        <translation>青</translation>
+        <translation>Cyan</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_colorbox.cpp" line="125" />
@@ -4553,7 +4553,7 @@ in a separate window</source>
     <message>
         <location filename="../src/ui/qg_colorbox.cpp" line="126" />
         <source>Blue</source>
-        <translation>藍</translation>
+        <translation>Blue</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_colorbox.cpp" line="127" />
@@ -4578,7 +4578,7 @@ in a separate window</source>
     <message>
         <location filename="../src/ui/qg_colorbox.cpp" line="137" />
         <source>Gray</source>
-        <translation>灰</translation>
+        <translation>Gray</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_colorbox.cpp" line="138" />
@@ -4655,7 +4655,7 @@ in a separate window</source>
         <location filename="../src/ui/forms/qg_commandwidget.cpp" line="94" />
         <location filename="../src/ui/forms/qg_commandwidget.cpp" line="343" />
         <source>Dock</source>
-        <translation>停靠</translation>
+        <translation>Dock</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_commandwidget.cpp" line="210" />
@@ -4681,7 +4681,7 @@ in a separate window</source>
     <message>
         <location filename="../src/ui/forms/qg_commandwidget.cpp" line="344" />
         <source>Cmd</source>
-        <translation>指令</translation>
+        <translation>Cmd</translation>
     </message>
 </context>
 <context>
@@ -4702,7 +4702,7 @@ in a separate window</source>
         <location filename="../src/ui/forms/qg_dimoptions.cpp" line="97" />
         <source>R</source>
         <comment>Radial dimension prefix</comment>
-        <translation>紅</translation>
+        <translation>R</translation>
     </message>
 </context>
 <context>
@@ -4781,7 +4781,7 @@ in a separate window</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgarc.ui" line="26" />
         <source>Arc</source>
-        <translation>弧</translation>
+        <translation>Arc</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgarc.ui" line="51" />
@@ -5016,7 +5016,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/forms/qg_dlghatch.ui" line="86" />
         <source>Area</source>
-        <translation>區域</translation>
+        <translation>Area</translation>
     </message>
 </context>
 <context>
@@ -5190,7 +5190,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgline.ui" line="29" />
         <source>Line</source>
-        <translation>線</translation>
+        <translation>Line</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgline.ui" line="35" />
@@ -5333,12 +5333,12 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="759" />
         <source>Cut</source>
-        <translation>剪下</translation>
+        <translation>Cut</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="773" />
         <source>Copy</source>
-        <translation>複製</translation>
+        <translation>Copy</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="787" />
@@ -6385,7 +6385,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="212" />
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="657" />
         <source>Left</source>
-        <translation>左向</translation>
+        <translation>Left</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="676" />
@@ -6397,7 +6397,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="228" />
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="679" />
         <source>Top</source>
-        <translation>頂向</translation>
+        <translation>Top</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="698" />
@@ -6444,7 +6444,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.cpp" line="552" />
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.cpp" line="557" />
         <source>auto</source>
-        <translation>自動</translation>
+        <translation>auto</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="789" />
@@ -7077,7 +7077,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1120" />
         <source>All</source>
-        <translation>全部</translation>
+        <translation>All</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1157" />
@@ -7521,7 +7521,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="20" />
         <source>Text</source>
-        <translation>文字</translation>
+        <translation>Text</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="256" />
@@ -7601,12 +7601,12 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="101" />
         <source>Cut</source>
-        <translation>剪下</translation>
+        <translation>Cut</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="115" />
         <source>Copy</source>
-        <translation>複製</translation>
+        <translation>Copy</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="129" />
@@ -7668,7 +7668,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="774" />
         <source>Fit</source>
-        <translation>適合</translation>
+        <translation>Fit</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="825" />
@@ -8466,7 +8466,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgimageoptions.ui" line="43" />
         <source>auto</source>
-        <translation>自動</translation>
+        <translation>auto</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgimageoptions.ui" line="203" />
@@ -8729,7 +8729,7 @@ The contents of a Construction Layer should not appear in printout.</source>
     <message>
         <location filename="../src/ui/qg_linetypebox.cpp" line="84" />
         <source>Dot</source>
-        <translation>點</translation>
+        <translation>Dot</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_linetypebox.cpp" line="85" />
@@ -8749,7 +8749,7 @@ The contents of a Construction Layer should not appear in printout.</source>
     <message>
         <location filename="../src/ui/qg_linetypebox.cpp" line="88" />
         <source>Dash</source>
-        <translation>虛線</translation>
+        <translation>Dash</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_linetypebox.cpp" line="89" />
@@ -8862,7 +8862,7 @@ The contents of a Construction Layer should not appear in printout.</source>
     <message>
         <location filename="../src/ui/forms/qg_mousewidget.ui" line="108" />
         <source>Left</source>
-        <translation>左鍵</translation>
+        <translation>Left</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_mousewidget.ui" line="130" />
@@ -8953,7 +8953,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="26" />
         <source>Snap</source>
-        <translation>貼齊</translation>
+        <translation>Snap</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="47" />
@@ -9117,7 +9117,7 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/ui/forms/qg_widgetpen.ui" line="26" />
         <location filename="../src/ui/forms/qg_widgetpen.ui" line="47" />
         <source>Pen</source>
-        <translation>筆</translation>
+        <translation>Pen</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_widgetpen.ui" line="91" />
@@ -9594,25 +9594,25 @@ Please specify a different value.</source>
         <location filename="../src/lib/engine/rs_units.cpp" line="204" />
         <source>None</source>
         <comment>unknown length unit</comment>
-        <translation>無</translation>
+        <translation>None</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_units.cpp" line="206" />
         <location filename="../src/lib/engine/rs_units.cpp" line="262" />
         <source>Inch</source>
-        <translation>英吋</translation>
+        <translation>Inch</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_units.cpp" line="208" />
         <location filename="../src/lib/engine/rs_units.cpp" line="264" />
         <source>Foot</source>
-        <translation>英呎</translation>
+        <translation>Foot</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_units.cpp" line="210" />
         <location filename="../src/lib/engine/rs_units.cpp" line="266" />
         <source>Mile</source>
-        <translation>英哩</translation>
+        <translation>Mile</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_units.cpp" line="212" />
@@ -9648,13 +9648,13 @@ Please specify a different value.</source>
         <location filename="../src/lib/engine/rs_units.cpp" line="222" />
         <location filename="../src/lib/engine/rs_units.cpp" line="278" />
         <source>Mil</source>
-        <translation>密爾(千分之一英吋)</translation>
+        <translation>Mil</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_units.cpp" line="224" />
         <location filename="../src/lib/engine/rs_units.cpp" line="280" />
         <source>Yard</source>
-        <translation>碼</translation>
+        <translation>Yard</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_units.cpp" line="226" />
@@ -10376,7 +10376,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="155" />
         <source>line</source>
         <comment>draw line</comment>
-        <translation>線</translation>
+        <translation>line</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="154" />
@@ -10406,7 +10406,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="478" />
         <source>free</source>
         <comment>draw freehand line</comment>
-        <translation>自由</translation>
+        <translation>free</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="480" />
@@ -10424,7 +10424,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="448" />
         <source>spl</source>
         <comment>draw spline</comment>
-        <translation>translation 1</translation>
+        <translation>spl</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="453" />
@@ -10436,13 +10436,13 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="455" />
         <source>stp</source>
         <comment>spline through points</comment>
-        <translation>translation 3</translation>
+        <translation>stp</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="295" />
         <source>ptp</source>
         <comment>parallel through point</comment>
-        <translation>translation 4</translation>
+        <translation>ptp</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="302" />
@@ -10454,7 +10454,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="301" />
         <source>bi</source>
         <comment>angle bisector</comment>
-        <translation>translation 6</translation>
+        <translation>bi</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="309" />
@@ -10472,7 +10472,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="202" />
         <source>rect</source>
         <comment>draw rectangle</comment>
-        <translation>translation 9</translation>
+        <translation>rect</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="354" />
@@ -10568,7 +10568,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="838" />
         <source>text</source>
         <comment>draw text</comment>
-        <translation>文字</translation>
+        <translation>text</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="840" />
@@ -10622,13 +10622,13 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="993" />
         <source>rg</source>
         <comment>zoom - redraw</comment>
-        <translation>translation 1</translation>
+        <translation>rg</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="994" />
         <source>zr</source>
         <comment>zoom - redraw</comment>
-        <translation>translation 2</translation>
+        <translation>zr</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1011" />
@@ -10640,7 +10640,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="1012" />
         <source>zw</source>
         <comment>zoom - window</comment>
-        <translation>translation 4</translation>
+        <translation>zw</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="999" />
@@ -10652,7 +10652,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="1000" />
         <source>za</source>
         <comment>zoom - auto</comment>
-        <translation>translation 6</translation>
+        <translation>za</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1017" />
@@ -10664,7 +10664,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="1018" />
         <source>zp</source>
         <comment>zoom - pan</comment>
-        <translation>translation 8</translation>
+        <translation>zp</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1005" />
@@ -10676,13 +10676,13 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="1006" />
         <source>zv</source>
         <comment>zoom - previous</comment>
-        <translation>translation 10</translation>
+        <translation>zv</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="960" />
         <source>kill</source>
         <comment>kill all actions</comment>
-        <translation>终止</translation>
+        <translation>kill</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="962" />
@@ -10694,7 +10694,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="967" />
         <source>undo</source>
         <comment>undo cycle</comment>
-        <translation>復原</translation>
+        <translation>undo</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="969" />
@@ -10706,7 +10706,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="974" />
         <source>redo</source>
         <comment>redo cycle</comment>
-        <translation>重作</translation>
+        <translation>redo</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="976" />
@@ -10940,7 +10940,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="226" />
         <source>sll</source>
         <comment>slice/divide line</comment>
-        <translation>切片</translation>
+        <translation>sll</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="231" />
@@ -10952,19 +10952,19 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="232" />
         <source>slc</source>
         <comment>slice/divide circle/arc</comment>
-        <translation>切片</translation>
+        <translation>slc</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="237" />
         <source>star</source>
         <comment>draw star</comment>
-        <translation>星形</translation>
+        <translation>star</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="238" />
         <source>st</source>
         <comment>draw star</comment>
-        <translation>星</translation>
+        <translation>st</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="243" />
@@ -10976,7 +10976,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="244" />
         <source>cx</source>
         <comment>draw cross for circle</comment>
-        <translation>十字</translation>
+        <translation>cx</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="249" />
@@ -11126,7 +11126,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="321" />
         <source>or</source>
         <comment>tangent line and circle</comment>
-        <translation>或</translation>
+        <translation>or</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="326" />
@@ -11252,13 +11252,13 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="391" />
         <source>cr</source>
         <comment>circle point radius</comment>
-        <translation>圓形 (圓心和半徑)</translation>
+        <translation>cr</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="392" />
         <source>ccr</source>
         <comment>circle point radius</comment>
-        <translation>圓形 (圓心和半徑)</translation>
+        <translation>ccr</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="398" />
@@ -11270,7 +11270,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="399" />
         <source>tr</source>
         <comment>circle 2 tangent point</comment>
-        <translation>轉換</translation>
+        <translation>tr</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="404" />
@@ -11282,7 +11282,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="405" />
         <source>td</source>
         <comment>circle tangent 2 points</comment>
-        <translation>轉換</translation>
+        <translation>td</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="410" />
@@ -11312,7 +11312,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="427" />
         <source>arc</source>
         <comment>arc point radius</comment>
-        <translation>弧</translation>
+        <translation>arc</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="428" />
@@ -11469,7 +11469,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="533" />
         <source>rort</source>
         <comment>draw orthogonal</comment>
-        <translation>旋轉</translation>
+        <translation>rort</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="538" />
@@ -11961,13 +11961,13 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="753" />
         <source>cut</source>
         <comment>modify - divide (cut)</comment>
-        <translation>剪切</translation>
+        <translation>cut</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="754" />
         <source>div</source>
         <comment>modify - divide (cut)</comment>
-        <translation>除</translation>
+        <translation>div</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="755" />
@@ -11985,7 +11985,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="708" />
         <source>rev</source>
         <comment>modify -  revert direction</comment>
-        <translation>反轉</translation>
+        <translation>rev</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="677" />
@@ -12021,31 +12021,31 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="727" />
         <source>le</source>
         <comment>modify - lengthen</comment>
-        <translation>translation 1</translation>
+        <translation>le</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="761" />
         <source>ss</source>
         <comment>modify - stretch</comment>
-        <translation>translation 2</translation>
+        <translation>ss</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="793" />
         <source>er</source>
         <comment>modify - delete (erase)</comment>
-        <translation>translation 3</translation>
+        <translation>er</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="794" />
         <source>del</source>
         <comment>modify - delete (erase)</comment>
-        <translation>translation 4</translation>
+        <translation>del</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="787" />
         <source>xp</source>
         <comment>explode block/polyline into entities</comment>
-        <translation>translation 5</translation>
+        <translation>xp</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="866" />
@@ -12057,7 +12057,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="868" />
         <source>os</source>
         <comment>snap - free</comment>
-        <translation>translation 7</translation>
+        <translation>os</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="873" />
@@ -12069,7 +12069,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="874" />
         <source>sc</source>
         <comment>snap - center</comment>
-        <translation>translation 9</translation>
+        <translation>sc</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="879" />
@@ -12189,7 +12189,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="774" />
         <source>attr</source>
         <comment>modify attribute</comment>
-        <translation>屬性</translation>
+        <translation>attr</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="775" />
@@ -12201,7 +12201,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="767" />
         <source>prop</source>
         <comment>modify properties</comment>
-        <translation>屬性</translation>
+        <translation>prop</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="768" />
@@ -12213,7 +12213,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="803" />
         <source>dist</source>
         <comment>distance point to point</comment>
-        <translation>距離</translation>
+        <translation>dist</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="804" />
@@ -12225,7 +12225,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="818" />
         <source>ang</source>
         <comment>measure angle</comment>
-        <translation>角度</translation>
+        <translation>ang</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1063" />
@@ -12292,7 +12292,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1076" />
         <source>rows</source>
-        <translation>列</translation>
+        <translation>rows</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1077" />
@@ -12308,7 +12308,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1079" />
         <source>trim</source>
-        <translation>修剪</translation>
+        <translation>trim</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1082" />
@@ -12363,12 +12363,12 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1096" />
         <source>pos</source>
-        <translation>位置</translation>
+        <translation>pos</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1097" />
         <source>size</source>
-        <translation>大小</translation>
+        <translation>size</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1098" />
@@ -12474,12 +12474,12 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1119" />
         <source>hor</source>
-        <translation>水平</translation>
+        <translation>hor</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1120" />
         <source>vert</source>
-        <translation>垂直</translation>
+        <translation>vert</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1123" />
@@ -12504,7 +12504,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1128" />
         <source>quad</source>
-        <translation>四邊形</translation>
+        <translation>quad</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1129" />
@@ -12544,22 +12544,22 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1138" />
         <source>end</source>
-        <translation>結束</translation>
+        <translation>end</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1139" />
         <source>both</source>
-        <translation>兩端</translation>
+        <translation>both</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1140" />
         <source>none</source>
-        <translation>無</translation>
+        <translation>none</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1141" />
         <source>fit</source>
-        <translation>適應</translation>
+        <translation>fit</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1142" />
@@ -12584,7 +12584,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1149" />
         <source>sym</source>
-        <translation>對稱</translation>
+        <translation>sym</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1150" />
@@ -12595,13 +12595,13 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="1157" />
         <source>ang</source>
         <comment>angle</comment>
-        <translation>角度</translation>
+        <translation>ang</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1158" />
         <source>an</source>
         <comment>angle</comment>
-        <translation>角度</translation>
+        <translation>an</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1160" />
@@ -12612,31 +12612,31 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="1161" />
         <source>cen</source>
         <comment>center</comment>
-        <translation>中心</translation>
+        <translation>cen</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1162" />
         <source>ce</source>
         <comment>center</comment>
-        <translation>中心</translation>
+        <translation>ce</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1166" />
         <source>cl</source>
         <comment>chord length</comment>
-        <translation>關閉</translation>
+        <translation>cl</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1169" />
         <source>c</source>
         <comment>close</comment>
-        <translation>關閉</translation>
+        <translation>c</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1172" />
         <source>cols</source>
         <comment>columns</comment>
-        <translation>欄</translation>
+        <translation>cols</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1173" />
@@ -12666,7 +12666,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="1180" />
         <source>fact</source>
         <comment>factor</comment>
-        <translation>事實</translation>
+        <translation>fact</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1181" />
@@ -12678,7 +12678,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="1184" />
         <source>eqn</source>
         <comment>equation</comment>
-        <translation>方程式</translation>
+        <translation>eqn</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1185" />
@@ -12689,7 +12689,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1187" />
         <source>help</source>
-        <translation>說明</translation>
+        <translation>help</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1188" />
@@ -12707,7 +12707,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="1191" />
         <source>len</source>
         <comment>length</comment>
-        <translation>長度</translation>
+        <translation>len</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1192" />
@@ -12761,7 +12761,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="1203" />
         <source>num</source>
         <comment>number</comment>
-        <translation>數量</translation>
+        <translation>num</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1204" />
@@ -12792,7 +12792,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="1213" />
         <source>row</source>
         <comment>row</comment>
-        <translation>列</translation>
+        <translation>row</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1215" />
@@ -12809,7 +12809,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1218" />
         <source>text</source>
-        <translation>文字</translation>
+        <translation>text</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1219" />
@@ -12826,7 +12826,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1224" />
         <source>undo</source>
-        <translation>復原</translation>
+        <translation>undo</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1225" />
@@ -12837,7 +12837,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1227" />
         <source>redo</source>
-        <translation>重做</translation>
+        <translation>redo</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1228" />
@@ -12848,7 +12848,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1230" />
         <source>back</source>
-        <translation>返回</translation>
+        <translation>back</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1231" />
@@ -12973,7 +12973,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="67" />
         <source>Edit</source>
-        <translation>編輯</translation>
+        <translation>Edit</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="68" />
@@ -12984,7 +12984,7 @@ Do you want to replace it?</source>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="69" />
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="88" />
         <source>File</source>
-        <translation>檔案</translation>
+        <translation>File</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="70" />
@@ -12994,7 +12994,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="71" />
         <source>Info</source>
-        <translation>資訊</translation>
+        <translation>Info</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="72" />
@@ -13004,7 +13004,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="73" />
         <source>Line</source>
-        <translation>線</translation>
+        <translation>Line</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="74" />
@@ -13040,7 +13040,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="80" />
         <source>Snap</source>
-        <translation>對齊</translation>
+        <translation>Snap</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="81" />
@@ -13050,7 +13050,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="82" />
         <source>View</source>
-        <translation>視圖</translation>
+        <translation>View</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="83" />
@@ -13088,7 +13088,7 @@ Do you want to replace it?</source>
         <location filename="../src/ui/generic/widgetcreator.cpp" line="170" />
         <location filename="../src/ui/generic/widgetcreator.cpp" line="224" />
         <source>All</source>
-        <translation>全部</translation>
+        <translation>All</translation>
     </message>
     <message>
         <location filename="../src/ui/generic/colorwizard.cpp" line="54" />
@@ -13258,7 +13258,7 @@ Do you want to replace it?</source>
         <location filename="../src/actions/rs_actiondimension.cpp" line="34" />
         <source>R</source>
         <comment>Radial dimension prefix</comment>
-        <translation>紅</translation>
+        <translation>R</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_patternlist.cpp" line="63" />
@@ -13527,7 +13527,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondefault.cpp" line="501" />
         <source>Back</source>
-        <translation>返回</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -13551,7 +13551,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actiondimaligned.cpp" line="258" />
         <location filename="../src/actions/rs_actiondimaligned.cpp" line="263" />
         <source>Back</source>
-        <translation>返回</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondimaligned.cpp" line="262" />
@@ -13677,7 +13677,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actiondimlinear.cpp" line="289" />
         <location filename="../src/actions/rs_actiondimlinear.cpp" line="294" />
         <source>Back</source>
-        <translation>返回</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondimlinear.cpp" line="293" />
@@ -13767,7 +13767,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actiondrawarc.cpp" line="352" />
         <location filename="../src/actions/rs_actiondrawarc.cpp" line="356" />
         <source>Back</source>
-        <translation>返回</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawarc.cpp" line="343" />
@@ -13816,7 +13816,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actiondrawarc3p.cpp" line="238" />
         <location filename="../src/actions/rs_actiondrawarc3p.cpp" line="242" />
         <source>Back</source>
-        <translation>返回</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawarc3p.cpp" line="242" />
@@ -13845,7 +13845,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actiondrawarctangential.cpp" line="232" />
         <location filename="../src/actions/rs_actiondrawarctangential.cpp" line="235" />
         <source>Back</source>
-        <translation>返回</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawarctangential.cpp" line="235" />
@@ -13878,7 +13878,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawcircle.cpp" line="204" />
         <source>Back</source>
-        <translation>返回</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -13906,7 +13906,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawcircle2p.cpp" line="188" />
         <source>Back</source>
-        <translation>返回</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -13935,7 +13935,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actiondrawcircle3p.cpp" line="191" />
         <location filename="../src/actions/rs_actiondrawcircle3p.cpp" line="195" />
         <source>Back</source>
-        <translation>返回</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawcircle3p.cpp" line="194" />
@@ -13983,7 +13983,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawcirclecr.cpp" line="228" />
         <source>Back</source>
-        <translation>返回</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -14007,7 +14007,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actiondrawcircleinscribe.cpp" line="275" />
         <location filename="../src/actions/rs_actiondrawcircleinscribe.cpp" line="280" />
         <source>Back</source>
-        <translation>返回</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawcircleinscribe.cpp" line="279" />
@@ -14037,7 +14037,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actiondrawcircletan1_2p.cpp" line="436" />
         <location filename="../src/actions/rs_actiondrawcircletan1_2p.cpp" line="440" />
         <source>Back</source>
-        <translation>返回</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawcircletan1_2p.cpp" line="435" />
@@ -14096,7 +14096,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actiondrawcircletan2.cpp" line="332" />
         <location filename="../src/actions/rs_actiondrawcircletan2.cpp" line="337" />
         <source>Back</source>
-        <translation>返回</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawcircletan2.cpp" line="336" />
@@ -14126,7 +14126,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actiondrawcircletan2_1p.cpp" line="344" />
         <location filename="../src/actions/rs_actiondrawcircletan2_1p.cpp" line="348" />
         <source>Back</source>
-        <translation>返回</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawcircletan2_1p.cpp" line="343" />
@@ -14166,7 +14166,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actiondrawcircletan3.cpp" line="473" />
         <location filename="../src/actions/rs_actiondrawcircletan3.cpp" line="478" />
         <source>Back</source>
-        <translation>返回</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawcircletan3.cpp" line="477" />
@@ -14201,7 +14201,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actiondrawellipse4points.cpp" line="295" />
         <location filename="../src/actions/rs_actiondrawellipse4points.cpp" line="300" />
         <source>Back</source>
-        <translation>返回</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawellipse4points.cpp" line="294" />
@@ -14244,7 +14244,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actiondrawellipseaxis.cpp" line="367" />
         <location filename="../src/actions/rs_actiondrawellipseaxis.cpp" line="372" />
         <source>Back</source>
-        <translation>返回</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawellipseaxis.cpp" line="361" />
@@ -14289,7 +14289,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actiondrawellipsecenter3points.cpp" line="292" />
         <location filename="../src/actions/rs_actiondrawellipsecenter3points.cpp" line="297" />
         <source>Back</source>
-        <translation>返回</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawellipsecenter3points.cpp" line="296" />
@@ -14333,7 +14333,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actiondrawellipsefocipoint.cpp" line="244" />
         <location filename="../src/actions/rs_actiondrawellipsefocipoint.cpp" line="250" />
         <source>Back</source>
-        <translation>返回</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawellipsefocipoint.cpp" line="249" />
@@ -14368,7 +14368,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actiondrawellipseinscribe.cpp" line="290" />
         <location filename="../src/actions/rs_actiondrawellipseinscribe.cpp" line="295" />
         <source>Back</source>
-        <translation>返回</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawellipseinscribe.cpp" line="289" />
@@ -14480,7 +14480,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actiondrawline.cpp" line="338" />
         <location filename="../src/actions/rs_actiondrawline.cpp" line="342" />
         <source>Back</source>
-        <translation>返回</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawline.cpp" line="341" />
@@ -14530,7 +14530,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actiondrawlineangle.cpp" line="305" />
         <location filename="../src/actions/rs_actiondrawlineangle.cpp" line="309" />
         <source>Back</source>
-        <translation>返回</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawlineangle.cpp" line="309" />
@@ -14572,7 +14572,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actiondrawlinebisector.cpp" line="297" />
         <location filename="../src/actions/rs_actiondrawlinebisector.cpp" line="301" />
         <source>Back</source>
-        <translation>返回</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawlinebisector.cpp" line="296" />
@@ -14618,7 +14618,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawlinehorvert.cpp" line="162" />
         <source>Back</source>
-        <translation>返回</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -14641,7 +14641,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawlineorthtan.cpp" line="190" />
         <source>Back</source>
-        <translation>返回</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -14694,7 +14694,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actiondrawlineparallelthrough.cpp" line="181" />
         <location filename="../src/actions/rs_actiondrawlineparallelthrough.cpp" line="185" />
         <source>Back</source>
-        <translation>返回</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawlineparallelthrough.cpp" line="185" />
@@ -14761,7 +14761,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actiondrawlinepolygon2.cpp" line="150" />
         <location filename="../src/actions/rs_actiondrawlinepolygon2.cpp" line="154" />
         <source>Back</source>
-        <translation>返回</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawlinepolygon2.cpp" line="154" />
@@ -14799,7 +14799,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawlinerectangle.cpp" line="160" />
         <source>Back</source>
-        <translation>返回</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -14828,7 +14828,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawlinerelangle.cpp" line="279" />
         <source>Back</source>
-        <translation>返回</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -14851,7 +14851,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawlinetangent1.cpp" line="186" />
         <source>Back</source>
-        <translation>返回</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -14883,7 +14883,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actiondrawlinetangent2.cpp" line="287" />
         <location filename="../src/actions/rs_actiondrawlinetangent2.cpp" line="291" />
         <source>Back</source>
-        <translation>返回</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawlinetangent2.cpp" line="290" />
@@ -14911,7 +14911,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawmtext.cpp" line="261" />
         <source>Back</source>
-        <translation>返回</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -14995,7 +14995,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actiondrawpolyline.cpp" line="695" />
         <location filename="../src/actions/rs_actiondrawpolyline.cpp" line="699" />
         <source>Back</source>
-        <translation>返回</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawpolyline.cpp" line="698" />
@@ -15034,7 +15034,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actiondrawspline.cpp" line="290" />
         <location filename="../src/actions/rs_actiondrawspline.cpp" line="294" />
         <source>Back</source>
-        <translation>返回</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawspline.cpp" line="293" />
@@ -15073,7 +15073,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawtext.cpp" line="291" />
         <source>Back</source>
-        <translation>返回</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -15145,7 +15145,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actioninfoangle.cpp" line="145" />
         <source>Back</source>
-        <translation>返回</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -15212,7 +15212,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actioninfodist.cpp" line="175" />
         <source>Back</source>
-        <translation>返回</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -15240,7 +15240,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actioninfodist2.cpp" line="161" />
         <source>Back</source>
-        <translation>返回</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -15354,7 +15354,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actionmodifybevel.cpp" line="279" />
         <location filename="../src/actions/rs_actionmodifybevel.cpp" line="283" />
         <source>Back</source>
-        <translation>返回</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifybevel.cpp" line="278" />
@@ -15408,7 +15408,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionmodifycut.cpp" line="150" />
         <source>Back</source>
-        <translation>返回</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -15471,7 +15471,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionmodifydeletefree.cpp" line="172" />
         <source>Back</source>
-        <translation>返回</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -15520,7 +15520,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionmodifymirror.cpp" line="167" />
         <source>Back</source>
-        <translation>返回</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -15548,7 +15548,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionmodifymove.cpp" line="175" />
         <source>Back</source>
-        <translation>返回</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -15577,7 +15577,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actionmodifymoverotate.cpp" line="240" />
         <location filename="../src/actions/rs_actionmodifymoverotate.cpp" line="244" />
         <source>Back</source>
-        <translation>返回</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifymoverotate.cpp" line="243" />
@@ -15595,7 +15595,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionmodifyoffset.cpp" line="101" />
         <source>Back</source>
-        <translation>返回</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -15620,7 +15620,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actionmodifyrotate.cpp" line="150" />
         <location filename="../src/actions/rs_actionmodifyrotate.cpp" line="154" />
         <source>Back</source>
-        <translation>返回</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -15643,7 +15643,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionmodifyrotate2.cpp" line="153" />
         <source>Back</source>
-        <translation>返回</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -15663,7 +15663,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actionmodifyround.cpp" line="411" />
         <location filename="../src/actions/rs_actionmodifyround.cpp" line="415" />
         <source>Back</source>
-        <translation>返回</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifyround.cpp" line="414" />
@@ -15728,7 +15728,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actionmodifystretch.cpp" line="184" />
         <location filename="../src/actions/rs_actionmodifystretch.cpp" line="188" />
         <source>Back</source>
-        <translation>返回</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifystretch.cpp" line="183" />
@@ -15763,7 +15763,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actionmodifytrim.cpp" line="181" />
         <location filename="../src/actions/rs_actionmodifytrim.cpp" line="190" />
         <source>Back</source>
-        <translation>返回</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifytrim.cpp" line="186" />
@@ -15806,7 +15806,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionmodifytrimamount.cpp" line="187" />
         <source>Back</source>
-        <translation>返回</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -15868,7 +15868,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionpolylineadd.cpp" line="162" />
         <source>Back</source>
-        <translation>返回</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -15912,7 +15912,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actionpolylineappend.cpp" line="208" />
         <location filename="../src/actions/rs_actionpolylineappend.cpp" line="212" />
         <source>Back</source>
-        <translation>返回</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylineappend.cpp" line="211" />
@@ -15966,7 +15966,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionpolylinedel.cpp" line="163" />
         <source>Back</source>
-        <translation>返回</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -16014,7 +16014,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actionpolylinedelbetween.cpp" line="194" />
         <location filename="../src/actions/rs_actionpolylinedelbetween.cpp" line="198" />
         <source>Back</source>
-        <translation>返回</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylinedelbetween.cpp" line="197" />
@@ -16119,7 +16119,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actionpolylinetrim.cpp" line="186" />
         <location filename="../src/actions/rs_actionpolylinetrim.cpp" line="190" />
         <source>Back</source>
-        <translation>返回</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylinetrim.cpp" line="189" />
@@ -16327,7 +16327,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionselectintersected.cpp" line="143" />
         <source>Back</source>
-        <translation>返回</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -16350,7 +16350,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionselectwindow.cpp" line="184" />
         <source>Back</source>
-        <translation>返回</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -16387,7 +16387,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actionsnapintersectionmanual.cpp" line="183" />
         <location filename="../src/actions/rs_actionsnapintersectionmanual.cpp" line="187" />
         <source>Back</source>
-        <translation>返回</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionsnapintersectionmanual.cpp" line="186" />
@@ -16447,7 +16447,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionzoomwindow.cpp" line="154" />
         <source>Back</source>
-        <translation>返回</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -16529,7 +16529,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_beveloptions.ui" line="56" />
         <source>Trim</source>
-        <translation>修剪</translation>
+        <translation>Trim</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_beveloptions.ui" line="79" />
@@ -16809,7 +16809,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_lineangleoptions.ui" line="180" />
         <source>End</source>
-        <translation>終點</translation>
+        <translation>End</translation>
     </message>
 </context>
 <context>
@@ -16865,7 +16865,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_lineoptions.ui" line="75" />
         <source>Undo</source>
-        <translation>復原</translation>
+        <translation>Undo</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_lineoptions.ui" line="82" />
@@ -16875,7 +16875,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_lineoptions.ui" line="85" />
         <source>Redo</source>
-        <translation>重做</translation>
+        <translation>Redo</translation>
     </message>
 </context>
 <context>
@@ -16913,7 +16913,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/lc_lineoptions.ui" line="195" />
         <source>Rel</source>
-        <translation>相對</translation>
+        <translation>Rel</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_lineoptions.ui" line="224" />
@@ -16923,7 +16923,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/lc_lineoptions.ui" line="227" />
         <source>Undo</source>
-        <translation>復原</translation>
+        <translation>Undo</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_lineoptions.ui" line="234" />
@@ -16943,7 +16943,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/lc_lineoptions.ui" line="256" />
         <source>Redo</source>
-        <translation>重做</translation>
+        <translation>Redo</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_lineoptions.ui" line="297" />
@@ -17125,12 +17125,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_polylineoptions.ui" line="60" />
         <source>Undo</source>
-        <translation>復原</translation>
+        <translation>Undo</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_polylineoptions.ui" line="80" />
         <source>Line</source>
-        <translation>直線</translation>
+        <translation>Line</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_polylineoptions.ui" line="85" />
@@ -17231,7 +17231,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_roundoptions.ui" line="56" />
         <source>Trim</source>
-        <translation>修剪</translation>
+        <translation>Trim</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_roundoptions.ui" line="79" />
@@ -17290,7 +17290,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_splineoptions.ui" line="104" />
         <source>Undo</source>
-        <translation>復原</translation>
+        <translation>Undo</translation>
     </message>
 </context>
 <context>
@@ -17359,7 +17359,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/generic/widgetcreator.ui" line="155" />
         <source>Name</source>
-        <translation>名稱</translation>
+        <translation>Name</translation>
     </message>
     <message>
         <location filename="../src/ui/generic/widgetcreator.ui" line="196" />

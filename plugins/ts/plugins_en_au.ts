@@ -16,7 +16,7 @@
         <location filename="../circletools/circletools.cpp" line="50"/>
         <location filename="../circletools/circletools.cpp" line="56"/>
         <source>CircleTools</source>
-        <translation type="unfinished"></translation>
+        <translation>CircleTools</translation>
     </message>
 </context>
 <context>

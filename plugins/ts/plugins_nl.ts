@@ -191,7 +191,7 @@ eerst basispunt, tweede basispunt, eerste doelpunt, tweede doelpunt.</translatio
     <message>
         <location filename="../list/list.cpp" line="94" />
         <source>LINE</source>
-        <translation>LIJN</translation>
+        <translation>LINE</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="99" />
@@ -222,7 +222,7 @@ eerst basispunt, tweede basispunt, eerste doelpunt, tweede doelpunt.</translatio
     <message>
         <location filename="../list/list.cpp" line="118" />
         <source>ARC</source>
-        <translation>BOOG</translation>
+        <translation>ARC</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="119" />
@@ -261,7 +261,7 @@ eerst basispunt, tweede basispunt, eerste doelpunt, tweede doelpunt.</translatio
     <message>
         <location filename="../list/list.cpp" line="141" />
         <source>area</source>
-        <translation>oppervlakte</translation>
+        <translation>area</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="144" />
@@ -296,7 +296,7 @@ eerst basispunt, tweede basispunt, eerste doelpunt, tweede doelpunt.</translatio
     <message>
         <location filename="../list/list.cpp" line="179" />
         <source>TEXT</source>
-        <translation>TEKST</translation>
+        <translation>TEXT</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="183" />
@@ -311,7 +311,7 @@ eerst basispunt, tweede basispunt, eerste doelpunt, tweede doelpunt.</translatio
     <message>
         <location filename="../list/list.cpp" line="189" />
         <source>Name</source>
-        <translation>Naam</translation>
+        <translation>Name</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="191" />
@@ -351,12 +351,12 @@ eerst basispunt, tweede basispunt, eerste doelpunt, tweede doelpunt.</translatio
     <message>
         <location filename="../list/list.cpp" line="216" />
         <source>No</source>
-        <translation>Nee</translation>
+        <translation>No</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="216" />
         <source>Yes</source>
-        <translation>Ja</translation>
+        <translation>Yes</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="217" />
@@ -704,7 +704,7 @@ eerst basispunt, tweede basispunt, eerste doelpunt, tweede doelpunt.</translatio
     <message>
         <location filename="../divide/divide.cpp" line="474" />
         <source>LINE</source>
-        <translation>LIJN</translation>
+        <translation>LINE</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="479" />
@@ -773,7 +773,7 @@ eerst basispunt, tweede basispunt, eerste doelpunt, tweede doelpunt.</translatio
     <message>
         <location filename="../divide/divide.cpp" line="526" />
         <source>area</source>
-        <translation>oppervlakte</translation>
+        <translation>area</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="530" />
@@ -788,12 +788,12 @@ eerst basispunt, tweede basispunt, eerste doelpunt, tweede doelpunt.</translatio
     <message>
         <location filename="../divide/divide.cpp" line="533" />
         <source>No</source>
-        <translation>Nee</translation>
+        <translation>No</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="533" />
         <source>Yes</source>
-        <translation>Ja</translation>
+        <translation>Yes</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="534" />
@@ -841,7 +841,7 @@ eerst basispunt, tweede basispunt, eerste doelpunt, tweede doelpunt.</translatio
     <message>
         <location filename="../divide/dividedlg.cpp" line="92" />
         <source>Size</source>
-        <translation>Grootte</translation>
+        <translation>Size</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="115" />
@@ -1226,7 +1226,7 @@ Gebruik t of x in je vergelijking als variabele/parameter.</translation>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="32" />
         <source>Draw</source>
-        <translation>Tekenen</translation>
+        <translation>Draw</translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="33" />

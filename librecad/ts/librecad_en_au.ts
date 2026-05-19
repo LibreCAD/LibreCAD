@@ -2824,7 +2824,9 @@ The contents of a Construction Layer should not appear in printout.</translation
         <source>Location of pens file is changed, please restart the application so new pens file will be used.
 
 Please note that if you&apos;ll save pen via editor without restart, current pens from palette will be saved in the new file and therefore existing content of it will be overridden.</source>
-        <translation type="unfinished"></translation>
+        <translation>Location of pens file is changed, please restart the application so new pens file will be used.
+
+Please note that if you&apos;ll save pen via editor without restart, current pens from palette will be saved in the new file and therefore existing content of it will be overridden.</translation>
     </message>
     <message>
         <source>Location of pens file is changed, please restart the application so new pens file will be used.
@@ -9276,7 +9278,9 @@ Clear the filtering mask and repeat.</translation>
         <source>Layer(s) without entities found, yet they are filtered and not visible.
 
 Clear filtering mask and repeat.</source>
-        <translation type="unfinished"></translation>
+        <translation>Layer(s) without entities found, yet they are filtered and not visible.
+
+Clear filtering mask and repeat.</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="988"/>
@@ -9330,7 +9334,11 @@ Please specify a different name.</translation>
 If Yes - entities with &quot;By Layer&quot; pens will look on new layer exactly as on previous layers and &quot;By Layer&quot; value will be replaced by resolved pens.
 
 If No - &quot;By Layer&quot; values remains and so pen of target layer will define pen for such entities.</source>
-        <translation type="unfinished"></translation>
+        <translation>Replace &quot;By Layer&quot; value to source layers values?
+
+If Yes - entities with &quot;By Layer&quot; pens will look on new layer exactly as on previous layers and &quot;By Layer&quot; value will be replaced by resolved pens.
+
+If No - &quot;By Layer&quot; values remains and so pen of target layer will define pen for such entities.</translation>
     </message>
     <message>
         <source>Replace &quot;By Layer&quot; value to source layers values?
@@ -10444,7 +10452,7 @@ Do you want to replace it?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="364"/>
         <source>ci</source>
         <comment>draw circle</comment>
-        <translation>Circle Inscribed</translation>
+        <translation>ci</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="371"/>
@@ -10480,7 +10488,7 @@ Do you want to replace it?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="512"/>
         <source>ei</source>
         <comment>inscribed ellipse</comment>
-        <translation>Ellipse Inscribed</translation>
+        <translation>ei</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="513"/>
@@ -10510,7 +10518,7 @@ Do you want to replace it?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="833"/>
         <source>mtxt</source>
         <comment>draw mtext</comment>
-        <translation>mtext</translation>
+        <translation>mtxt</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="838"/>
@@ -10552,7 +10560,7 @@ Do you want to replace it?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="984"/>
         <source>dp</source>
         <comment>drawing preferences</comment>
-        <translation>Draw Preferred</translation>
+        <translation>dp</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="991"/>
@@ -10570,13 +10578,13 @@ Do you want to replace it?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="993"/>
         <source>rg</source>
         <comment>zoom - redraw</comment>
-        <translation>Redraw Grid</translation>
+        <translation>rg</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="994"/>
         <source>zr</source>
         <comment>zoom - redraw</comment>
-        <translation>Zoom Reset</translation>
+        <translation>zr</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1011"/>
@@ -10588,7 +10596,7 @@ Do you want to replace it?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="1012"/>
         <source>zw</source>
         <comment>zoom - window</comment>
-        <translation>Zoom Window</translation>
+        <translation>zw</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="999"/>
@@ -10600,7 +10608,7 @@ Do you want to replace it?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="1000"/>
         <source>za</source>
         <comment>zoom - auto</comment>
-        <translation>Zoom Auto</translation>
+        <translation>za</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1017"/>
@@ -10612,7 +10620,7 @@ Do you want to replace it?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="1018"/>
         <source>zp</source>
         <comment>zoom - pan</comment>
-        <translation>Zoom Pan</translation>
+        <translation>zp</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1005"/>
@@ -10624,43 +10632,43 @@ Do you want to replace it?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="1006"/>
         <source>zv</source>
         <comment>zoom - previous</comment>
-        <translation>Zoom Previous</translation>
+        <translation>zv</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="960"/>
         <source>kill</source>
         <comment>kill all actions</comment>
-        <translation>Kill</translation>
+        <translation>kill</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="962"/>
         <source>k</source>
         <comment>kill all actions</comment>
-        <translation>Kill</translation>
+        <translation>k</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="967"/>
         <source>undo</source>
         <comment>undo cycle</comment>
-        <translation>Undo</translation>
+        <translation>undo</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="969"/>
         <source>u</source>
         <comment>undo cycle</comment>
-        <translation>Undo</translation>
+        <translation>u</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="974"/>
         <source>redo</source>
         <comment>redo cycle</comment>
-        <translation>Redo</translation>
+        <translation>redo</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="976"/>
         <source>r</source>
         <comment>redo cycle</comment>
-        <translation>Redo</translation>
+        <translation>r</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="611"/>
@@ -10678,7 +10686,7 @@ Do you want to replace it?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="624"/>
         <source>dh</source>
         <comment>dimension - horizontal</comment>
-        <translation>Horizontal Dim</translation>
+        <translation>dh</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="629"/>
@@ -10690,7 +10698,7 @@ Do you want to replace it?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="630"/>
         <source>dv</source>
         <comment>dimension - vertical</comment>
-        <translation>Vertical Dim</translation>
+        <translation>dv</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="617"/>
@@ -10702,7 +10710,7 @@ Do you want to replace it?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="618"/>
         <source>dl</source>
         <comment>dimension - linear</comment>
-        <translation>Linear Dim</translation>
+        <translation>dl</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="649"/>
@@ -10714,7 +10722,7 @@ Do you want to replace it?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="651"/>
         <source>dan</source>
         <comment>dimension - angular</comment>
-        <translation>Angular Dim</translation>
+        <translation>dan</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="636"/>
@@ -10972,7 +10980,7 @@ Do you want to replace it?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="268"/>
         <source>lj</source>
         <comment>lines join</comment>
-        <translation>LJ</translation>
+        <translation>lj</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="273"/>
@@ -10984,7 +10992,7 @@ Do you want to replace it?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="274"/>
         <source>bd</source>
         <comment>break or divide entity</comment>
-        <translation>BD</translation>
+        <translation>bd</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="279"/>
@@ -10996,7 +11004,7 @@ Do you want to replace it?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="280"/>
         <source>gl</source>
         <comment>line gap</comment>
-        <translation>GL</translation>
+        <translation>gl</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="285"/>
@@ -11014,13 +11022,13 @@ Do you want to replace it?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="287"/>
         <source>pa</source>
         <comment>create parallel</comment>
-        <translation>PA</translation>
+        <translation>pa</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="288"/>
         <source>ll</source>
         <comment>create parallel</comment>
-        <translation>LL</translation>
+        <translation>ll</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="293"/>
@@ -11453,7 +11461,7 @@ Do you want to replace it?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="552"/>
         <source>pn</source>
         <comment>pl append node</comment>
-        <translation>PN</translation>
+        <translation>pn</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="557"/>
@@ -11465,7 +11473,7 @@ Do you want to replace it?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="558"/>
         <source>pd</source>
         <comment>pl delete node</comment>
-        <translation>PD</translation>
+        <translation>pd</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="563"/>
@@ -11477,7 +11485,7 @@ Do you want to replace it?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="564"/>
         <source>pr</source>
         <comment>pl del between nodes</comment>
-        <translation>PR</translation>
+        <translation>pr</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="569"/>
@@ -11489,7 +11497,7 @@ Do you want to replace it?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="570"/>
         <source>pt</source>
         <comment>pl trim segments</comment>
-        <translation>PT</translation>
+        <translation>pt</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="575"/>
@@ -11501,7 +11509,7 @@ Do you want to replace it?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="576"/>
         <source>pe</source>
         <comment>pl equidistant</comment>
-        <translation>PE</translation>
+        <translation>pe</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="581"/>
@@ -11513,13 +11521,13 @@ Do you want to replace it?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="582"/>
         <source>pj</source>
         <comment>pl join</comment>
-        <translation>Polyjoin</translation>
+        <translation>pj</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="596"/>
         <source>sx</source>
         <comment>deselect all entities</comment>
-        <translation>Scale X</translation>
+        <translation>sx</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="602"/>
@@ -11531,13 +11539,13 @@ Do you want to replace it?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="603"/>
         <source>is</source>
         <comment>invert select</comment>
-        <translation>Isolate</translation>
+        <translation>is</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="612"/>
         <source>ds</source>
         <comment>dimension - aligned</comment>
-        <translation>Dissolve</translation>
+        <translation>ds</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="635"/>
@@ -11549,19 +11557,19 @@ Do you want to replace it?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="637"/>
         <source>dr</source>
         <comment>dimension - radial</comment>
-        <translation>Dimension Radius</translation>
+        <translation>dr</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="643"/>
         <source>dd</source>
         <comment>dimension - diametric</comment>
-        <translation>Dimension Distance</translation>
+        <translation>dd</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="650"/>
         <source>da</source>
         <comment>dimension - angular</comment>
-        <translation>Dimension Angle</translation>
+        <translation>da</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="656"/>
@@ -11573,7 +11581,7 @@ Do you want to replace it?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="657"/>
         <source>ld</source>
         <comment>dimension - leader</comment>
-        <translation>Leader</translation>
+        <translation>ld</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="662"/>
@@ -11585,7 +11593,7 @@ Do you want to replace it?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="663"/>
         <source>dg</source>
         <comment>dimension - regenerate</comment>
-        <translation>Dimension Group</translation>
+        <translation>dg</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="670"/>
@@ -11621,7 +11629,7 @@ Do you want to replace it?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="695"/>
         <source>mr</source>
         <comment>modify - move rotate</comment>
-        <translation>Mirror</translation>
+        <translation>mr</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="700"/>
@@ -11645,7 +11653,7 @@ Do you want to replace it?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="707"/>
         <source>md</source>
         <comment>modify -  revert direction</comment>
-        <translation>Mode Data</translation>
+        <translation>md</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="713"/>
@@ -11675,13 +11683,13 @@ Do you want to replace it?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="733"/>
         <source>mo</source>
         <comment>modify - offset</comment>
-        <translation>Mode Operation</translation>
+        <translation>mo</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="734"/>
         <source>moff</source>
         <comment>modify - offset</comment>
-        <translation>Mode Off</translation>
+        <translation>moff</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="739"/>
@@ -11729,7 +11737,7 @@ Do you want to replace it?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="781"/>
         <source>xt</source>
         <comment>explode text strings</comment>
-        <translation>X</translation>
+        <translation>xt</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="786"/>
@@ -11753,7 +11761,7 @@ Do you want to replace it?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="802"/>
         <source>id</source>
         <comment>distance point to point</comment>
-        <translation>ID</translation>
+        <translation>id</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="809"/>
@@ -11765,13 +11773,13 @@ Do you want to replace it?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="810"/>
         <source>ii</source>
         <comment>distance entity to point</comment>
-        <translation>II</translation>
+        <translation>ii</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="811"/>
         <source>dep</source>
         <comment>distance entity to point</comment>
-        <translation>Dependency</translation>
+        <translation>dep</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="816"/>
@@ -11783,7 +11791,7 @@ Do you want to replace it?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="817"/>
         <source>ia</source>
         <comment>measure angle</comment>
-        <translation>IA</translation>
+        <translation>ia</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="823"/>
@@ -11795,13 +11803,13 @@ Do you want to replace it?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="824"/>
         <source>aa</source>
         <comment>measure area</comment>
-        <translation>AA</translation>
+        <translation>aa</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="832"/>
         <source>mt</source>
         <comment>draw mtext</comment>
-        <translation>MT</translation>
+        <translation>mt</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="839"/>
@@ -11831,7 +11839,7 @@ Do you want to replace it?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="920"/>
         <source>smm</source>
         <comment>snap middle manual</comment>
-        <translation>SMM</translation>
+        <translation>smm</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="933"/>
@@ -11987,13 +11995,13 @@ Do you want to replace it?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="794"/>
         <source>del</source>
         <comment>modify - delete (erase)</comment>
-        <translation>Delete</translation>
+        <translation>del</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="787"/>
         <source>xp</source>
         <comment>explode block/polyline into entities</comment>
-        <translation>X Position</translation>
+        <translation>xp</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="866"/>
@@ -12005,7 +12013,7 @@ Do you want to replace it?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="868"/>
         <source>os</source>
         <comment>snap - free</comment>
-        <translation>Orientation Scale</translation>
+        <translation>os</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="873"/>
@@ -12017,7 +12025,7 @@ Do you want to replace it?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="874"/>
         <source>sc</source>
         <comment>snap - center</comment>
-        <translation>Scale Center</translation>
+        <translation>sc</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="879"/>
@@ -12029,7 +12037,7 @@ Do you want to replace it?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="880"/>
         <source>sd</source>
         <comment>snap - distance to endpoints</comment>
-        <translation>Snap Distance</translation>
+        <translation>sd</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="885"/>
@@ -12041,7 +12049,7 @@ Do you want to replace it?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="886"/>
         <source>se</source>
         <comment>snap - end points</comment>
-        <translation>Snap End</translation>
+        <translation>se</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="891"/>
@@ -12053,7 +12061,7 @@ Do you want to replace it?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="892"/>
         <source>sg</source>
         <comment>snap - grid</comment>
-        <translation>Grid Snap</translation>
+        <translation>sg</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="897"/>
@@ -12065,7 +12073,7 @@ Do you want to replace it?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="898"/>
         <source>si</source>
         <comment>snap - intersection</comment>
-        <translation>Intersection Snap</translation>
+        <translation>si</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="903"/>
@@ -12077,7 +12085,7 @@ Do you want to replace it?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="904"/>
         <source>sm</source>
         <comment>snap - middle points</comment>
-        <translation>Middle Snap</translation>
+        <translation>sm</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="909"/>
@@ -12089,13 +12097,13 @@ Do you want to replace it?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="910"/>
         <source>sn</source>
         <comment>snap - on entity</comment>
-        <translation>Entity Snap</translation>
+        <translation>sn</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="911"/>
         <source>np</source>
         <comment>snap - on entity</comment>
-        <translation>Nearest Point</translation>
+        <translation>np</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="927"/>
@@ -12137,7 +12145,7 @@ Do you want to replace it?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="774"/>
         <source>attr</source>
         <comment>modify attribute</comment>
-        <translation>Attribute</translation>
+        <translation>attr</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="775"/>
@@ -12149,7 +12157,7 @@ Do you want to replace it?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="767"/>
         <source>prop</source>
         <comment>modify properties</comment>
-        <translation>Property</translation>
+        <translation>prop</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="768"/>
@@ -12161,7 +12169,7 @@ Do you want to replace it?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="803"/>
         <source>dist</source>
         <comment>distance point to point</comment>
-        <translation>Distance</translation>
+        <translation>dist</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="804"/>
@@ -12184,7 +12192,7 @@ Do you want to replace it?</translation>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1064"/>
         <source>dpi</source>
-        <translation>DPI</translation>
+        <translation>dpi</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1065"/>
@@ -12311,12 +12319,12 @@ Do you want to replace it?</translation>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1096"/>
         <source>pos</source>
-        <translation>Position</translation>
+        <translation>pos</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1097"/>
         <source>size</source>
-        <translation>Size</translation>
+        <translation>size</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1098"/>
@@ -12422,12 +12430,12 @@ Do you want to replace it?</translation>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1119"/>
         <source>hor</source>
-        <translation>Horizontal</translation>
+        <translation>hor</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1120"/>
         <source>vert</source>
-        <translation>Vertical</translation>
+        <translation>vert</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1123"/>
@@ -12452,7 +12460,7 @@ Do you want to replace it?</translation>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1128"/>
         <source>quad</source>
-        <translation>Quad</translation>
+        <translation>quad</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1129"/>
@@ -12492,22 +12500,22 @@ Do you want to replace it?</translation>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1138"/>
         <source>end</source>
-        <translation>End</translation>
+        <translation>end</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1139"/>
         <source>both</source>
-        <translation>Both</translation>
+        <translation>both</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1140"/>
         <source>none</source>
-        <translation>None</translation>
+        <translation>none</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1141"/>
         <source>fit</source>
-        <translation>Fit</translation>
+        <translation>fit</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1142"/>
@@ -12584,13 +12592,13 @@ Do you want to replace it?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="1172"/>
         <source>cols</source>
         <comment>columns</comment>
-        <translation>Columns</translation>
+        <translation>cols</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1173"/>
         <source>co</source>
         <comment>columns</comment>
-        <translation>Column</translation>
+        <translation>co</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1175"/>
@@ -12608,36 +12616,36 @@ Do you want to replace it?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="1177"/>
         <source>cs</source>
         <comment>columnspacing for inserts</comment>
-        <translation>Column Spacing</translation>
+        <translation>cs</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1180"/>
         <source>fact</source>
         <comment>factor</comment>
-        <translation>Factor</translation>
+        <translation>fact</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1181"/>
         <source>f</source>
         <comment>factor</comment>
-        <translation>Factor</translation>
+        <translation>f</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1184"/>
         <source>eqn</source>
         <comment>equation</comment>
-        <translation>Equation</translation>
+        <translation>eqn</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1185"/>
         <source>eq</source>
         <comment>equation</comment>
-        <translation>Equation</translation>
+        <translation>eq</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1187"/>
         <source>help</source>
-        <translation>Help</translation>
+        <translation>help</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1188"/>
@@ -12774,40 +12782,40 @@ Do you want to replace it?</translation>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1224"/>
         <source>undo</source>
-        <translation>Undo</translation>
+        <translation>undo</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1225"/>
         <source>u</source>
         <comment>undo</comment>
-        <translation>U</translation>
+        <translation>u</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1227"/>
         <source>redo</source>
-        <translation>Redo</translation>
+        <translation>redo</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1228"/>
         <source>r</source>
         <comment>redo</comment>
-        <translation>R</translation>
+        <translation>r</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1230"/>
         <source>back</source>
-        <translation>Back</translation>
+        <translation>back</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1231"/>
         <source>b</source>
         <comment>back</comment>
-        <translation>B</translation>
+        <translation>b</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1233"/>
         <source>bw</source>
-        <translation>B&amp;W</translation>
+        <translation>bw</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1234"/>

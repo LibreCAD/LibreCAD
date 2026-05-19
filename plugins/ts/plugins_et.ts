@@ -191,7 +191,7 @@ esimene aluspunkt, teine aluspunkt, esimene sihtpunkt, teine sihtpunkt.</transla
     <message>
         <location filename="../list/list.cpp" line="94" />
         <source>LINE</source>
-        <translation>LIIN</translation>
+        <translation>LINE</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="99" />
@@ -261,7 +261,7 @@ esimene aluspunkt, teine aluspunkt, esimene sihtpunkt, teine sihtpunkt.</transla
     <message>
         <location filename="../list/list.cpp" line="141" />
         <source>area</source>
-        <translation>ala</translation>
+        <translation>area</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="144" />
@@ -296,7 +296,7 @@ esimene aluspunkt, teine aluspunkt, esimene sihtpunkt, teine sihtpunkt.</transla
     <message>
         <location filename="../list/list.cpp" line="179" />
         <source>TEXT</source>
-        <translation>TEKST</translation>
+        <translation>TEXT</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="183" />
@@ -311,7 +311,7 @@ esimene aluspunkt, teine aluspunkt, esimene sihtpunkt, teine sihtpunkt.</transla
     <message>
         <location filename="../list/list.cpp" line="189" />
         <source>Name</source>
-        <translation>Nimi</translation>
+        <translation>Name</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="191" />
@@ -351,12 +351,12 @@ esimene aluspunkt, teine aluspunkt, esimene sihtpunkt, teine sihtpunkt.</transla
     <message>
         <location filename="../list/list.cpp" line="216" />
         <source>No</source>
-        <translation>Ei</translation>
+        <translation>No</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="216" />
         <source>Yes</source>
-        <translation>Jah</translation>
+        <translation>Yes</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="217" />
@@ -704,7 +704,7 @@ esimene aluspunkt, teine aluspunkt, esimene sihtpunkt, teine sihtpunkt.</transla
     <message>
         <location filename="../divide/divide.cpp" line="474" />
         <source>LINE</source>
-        <translation>LIIN</translation>
+        <translation>LINE</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="479" />
@@ -773,7 +773,7 @@ esimene aluspunkt, teine aluspunkt, esimene sihtpunkt, teine sihtpunkt.</transla
     <message>
         <location filename="../divide/divide.cpp" line="526" />
         <source>area</source>
-        <translation>ala</translation>
+        <translation>area</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="530" />
@@ -788,12 +788,12 @@ esimene aluspunkt, teine aluspunkt, esimene sihtpunkt, teine sihtpunkt.</transla
     <message>
         <location filename="../divide/divide.cpp" line="533" />
         <source>No</source>
-        <translation>Ei</translation>
+        <translation>No</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="533" />
         <source>Yes</source>
-        <translation>Jah</translation>
+        <translation>Yes</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="534" />
@@ -841,7 +841,7 @@ esimene aluspunkt, teine aluspunkt, esimene sihtpunkt, teine sihtpunkt.</transla
     <message>
         <location filename="../divide/dividedlg.cpp" line="92" />
         <source>Size</source>
-        <translation>Suurus</translation>
+        <translation>Size</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="115" />
@@ -1226,7 +1226,7 @@ Kasuta oma võrrandis t või x muutuja/parameetrina.</translation>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="32" />
         <source>Draw</source>
-        <translation>Tõmba</translation>
+        <translation>Draw</translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="33" />

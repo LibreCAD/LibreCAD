@@ -261,7 +261,7 @@ Hizalama, hizalama noktalarını şu sırayla isteyecektir:
     <message>
         <location filename="../list/list.cpp" line="141" />
         <source>area</source>
-        <translation>alan alanı</translation>
+        <translation>area</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="144" />
@@ -351,12 +351,12 @@ Hizalama, hizalama noktalarını şu sırayla isteyecektir:
     <message>
         <location filename="../list/list.cpp" line="216" />
         <source>No</source>
-        <translation>Hayır hayır hayır</translation>
+        <translation>No</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="216" />
         <source>Yes</source>
-        <translation>Evet</translation>
+        <translation>Yes</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="217" />
@@ -659,7 +659,7 @@ Hizalama, hizalama noktalarını şu sırayla isteyecektir:
     <message>
         <location filename="../divide/divide.cpp" line="104" />
         <source>n</source>
-        <translation>s</translation>
+        <translation>n</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="444" />
@@ -773,7 +773,7 @@ Hizalama, hizalama noktalarını şu sırayla isteyecektir:
     <message>
         <location filename="../divide/divide.cpp" line="526" />
         <source>area</source>
-        <translation>alan alanı</translation>
+        <translation>area</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="530" />
@@ -788,12 +788,12 @@ Hizalama, hizalama noktalarını şu sırayla isteyecektir:
     <message>
         <location filename="../divide/divide.cpp" line="533" />
         <source>No</source>
-        <translation>Hayır hayır hayır</translation>
+        <translation>No</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="533" />
         <source>Yes</source>
-        <translation>Evet</translation>
+        <translation>Yes</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="534" />
@@ -826,7 +826,7 @@ Hizalama, hizalama noktalarını şu sırayla isteyecektir:
     <message>
         <location filename="../divide/dividedlg.cpp" line="75" />
         <source>OK</source>
-        <translation>TAMAM TAMAM</translation>
+        <translation>OK</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="76" />
@@ -841,7 +841,7 @@ Hizalama, hizalama noktalarını şu sırayla isteyecektir:
     <message>
         <location filename="../divide/dividedlg.cpp" line="92" />
         <source>Size</source>
-        <translation>Boyut Boyutu</translation>
+        <translation>Size</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="115" />
@@ -1226,7 +1226,7 @@ Bir değişken / parametre olarak denkleminizde t veya x kullanın.</translation
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="32" />
         <source>Draw</source>
-        <translation>Çizim</translation>
+        <translation>Draw</translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="33" />

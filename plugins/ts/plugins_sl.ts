@@ -191,7 +191,7 @@ prva osnovna točka, druga osnovna točka, prva ciljna točka, druga ciljna toč
     <message>
         <location filename="../list/list.cpp" line="94" />
         <source>LINE</source>
-        <translation>ČRTA</translation>
+        <translation>LINE</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="99" />
@@ -222,7 +222,7 @@ prva osnovna točka, druga osnovna točka, prva ciljna točka, druga ciljna toč
     <message>
         <location filename="../list/list.cpp" line="118" />
         <source>ARC</source>
-        <translation>LOK</translation>
+        <translation>ARC</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="119" />
@@ -261,7 +261,7 @@ prva osnovna točka, druga osnovna točka, prva ciljna točka, druga ciljna toč
     <message>
         <location filename="../list/list.cpp" line="141" />
         <source>area</source>
-        <translation>ploščina</translation>
+        <translation>area</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="144" />
@@ -296,7 +296,7 @@ prva osnovna točka, druga osnovna točka, prva ciljna točka, druga ciljna toč
     <message>
         <location filename="../list/list.cpp" line="179" />
         <source>TEXT</source>
-        <translation>TEKST</translation>
+        <translation>TEXT</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="183" />
@@ -311,7 +311,7 @@ prva osnovna točka, druga osnovna točka, prva ciljna točka, druga ciljna toč
     <message>
         <location filename="../list/list.cpp" line="189" />
         <source>Name</source>
-        <translation>Ime</translation>
+        <translation>Name</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="191" />
@@ -351,12 +351,12 @@ prva osnovna točka, druga osnovna točka, prva ciljna točka, druga ciljna toč
     <message>
         <location filename="../list/list.cpp" line="216" />
         <source>No</source>
-        <translation>Ne</translation>
+        <translation>No</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="216" />
         <source>Yes</source>
-        <translation>Da</translation>
+        <translation>Yes</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="217" />
@@ -773,7 +773,7 @@ prva osnovna točka, druga osnovna točka, prva ciljna točka, druga ciljna toč
     <message>
         <location filename="../divide/divide.cpp" line="526" />
         <source>area</source>
-        <translation>površina</translation>
+        <translation>area</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="530" />
@@ -788,12 +788,12 @@ prva osnovna točka, druga osnovna točka, prva ciljna točka, druga ciljna toč
     <message>
         <location filename="../divide/divide.cpp" line="533" />
         <source>No</source>
-        <translation>Št</translation>
+        <translation>No</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="533" />
         <source>Yes</source>
-        <translation>Ja, ja</translation>
+        <translation>Yes</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="534" />
@@ -826,7 +826,7 @@ prva osnovna točka, druga osnovna točka, prva ciljna točka, druga ciljna toč
     <message>
         <location filename="../divide/dividedlg.cpp" line="75" />
         <source>OK</source>
-        <translation>V REDU</translation>
+        <translation>OK</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="76" />
@@ -841,7 +841,7 @@ prva osnovna točka, druga osnovna točka, prva ciljna točka, druga ciljna toč
     <message>
         <location filename="../divide/dividedlg.cpp" line="92" />
         <source>Size</source>
-        <translation>Velikost</translation>
+        <translation>Size</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="115" />
@@ -1226,7 +1226,7 @@ Uporabite t ali x v enačbi kot spremenljivka/parameter.</translation>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="32" />
         <source>Draw</source>
-        <translation>Prikaži</translation>
+        <translation>Draw</translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="33" />

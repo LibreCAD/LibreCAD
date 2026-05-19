@@ -181,7 +181,7 @@ Primera base, segona base, primer objectiu, segona objectiu.</translation>
     <message>
         <location filename="../list/list.cpp" line="94" />
         <source>LINE</source>
-        <translation>LÍNIA</translation>
+        <translation>LINE</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="99" />
@@ -251,7 +251,7 @@ Primera base, segona base, primer objectiu, segona objectiu.</translation>
     <message>
         <location filename="../list/list.cpp" line="141" />
         <source>area</source>
-        <translation>àrea</translation>
+        <translation>area</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="144" />
@@ -301,7 +301,7 @@ Primera base, segona base, primer objectiu, segona objectiu.</translation>
     <message>
         <location filename="../list/list.cpp" line="189" />
         <source>Name</source>
-        <translation>Nom</translation>
+        <translation>Name</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="191" />
@@ -346,7 +346,7 @@ Primera base, segona base, primer objectiu, segona objectiu.</translation>
     <message>
         <location filename="../list/list.cpp" line="216" />
         <source>Yes</source>
-        <translation>Sí</translation>
+        <translation>Yes</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="217" />
@@ -694,7 +694,7 @@ Primera base, segona base, primer objectiu, segona objectiu.</translation>
     <message>
         <location filename="../divide/divide.cpp" line="474" />
         <source>LINE</source>
-        <translation>LÍNIA</translation>
+        <translation>LINE</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="479" />
@@ -763,7 +763,7 @@ Primera base, segona base, primer objectiu, segona objectiu.</translation>
     <message>
         <location filename="../divide/divide.cpp" line="526" />
         <source>area</source>
-        <translation>àrea</translation>
+        <translation>area</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="530" />
@@ -783,7 +783,7 @@ Primera base, segona base, primer objectiu, segona objectiu.</translation>
     <message>
         <location filename="../divide/divide.cpp" line="533" />
         <source>Yes</source>
-        <translation>Sí</translation>
+        <translation>Yes</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="534" />
@@ -816,7 +816,7 @@ Primera base, segona base, primer objectiu, segona objectiu.</translation>
     <message>
         <location filename="../divide/dividedlg.cpp" line="75" />
         <source>OK</source>
-        <translation>BÉ</translation>
+        <translation>OK</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="76" />
@@ -831,7 +831,7 @@ Primera base, segona base, primer objectiu, segona objectiu.</translation>
     <message>
         <location filename="../divide/dividedlg.cpp" line="92" />
         <source>Size</source>
-        <translation>Mida</translation>
+        <translation>Size</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="115" />
@@ -1217,7 +1217,7 @@ Utilitzeu t o x en la vostra equació com a variable o paràmetre.
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="32" />
         <source>Draw</source>
-        <translation>Traça</translation>
+        <translation>Draw</translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="33" />

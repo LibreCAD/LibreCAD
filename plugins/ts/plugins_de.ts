@@ -191,7 +191,7 @@ erstes Basisobjekt, zweites Basisobjekt, erstes Zielobjekt, zweites Zielobjekt.<
     <message>
         <location filename="../list/list.cpp" line="94" />
         <source>LINE</source>
-        <translation>LINIE</translation>
+        <translation>LINE</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="99" />
@@ -222,7 +222,7 @@ erstes Basisobjekt, zweites Basisobjekt, erstes Zielobjekt, zweites Zielobjekt.<
     <message>
         <location filename="../list/list.cpp" line="118" />
         <source>ARC</source>
-        <translation>KREISBOGEN</translation>
+        <translation>ARC</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="119" />
@@ -261,7 +261,7 @@ erstes Basisobjekt, zweites Basisobjekt, erstes Zielobjekt, zweites Zielobjekt.<
     <message>
         <location filename="../list/list.cpp" line="141" />
         <source>area</source>
-        <translation>Fläche</translation>
+        <translation>area</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="144" />
@@ -351,12 +351,12 @@ erstes Basisobjekt, zweites Basisobjekt, erstes Zielobjekt, zweites Zielobjekt.<
     <message>
         <location filename="../list/list.cpp" line="216" />
         <source>No</source>
-        <translation>Nein</translation>
+        <translation>No</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="216" />
         <source>Yes</source>
-        <translation>Ja</translation>
+        <translation>Yes</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="217" />
@@ -773,7 +773,7 @@ erstes Basisobjekt, zweites Basisobjekt, erstes Zielobjekt, zweites Zielobjekt.<
     <message>
         <location filename="../divide/divide.cpp" line="526" />
         <source>area</source>
-        <translation>fläche</translation>
+        <translation>area</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="530" />
@@ -788,12 +788,12 @@ erstes Basisobjekt, zweites Basisobjekt, erstes Zielobjekt, zweites Zielobjekt.<
     <message>
         <location filename="../divide/divide.cpp" line="533" />
         <source>No</source>
-        <translation>Nein</translation>
+        <translation>No</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="533" />
         <source>Yes</source>
-        <translation>Ja</translation>
+        <translation>Yes</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="534" />
@@ -826,7 +826,7 @@ erstes Basisobjekt, zweites Basisobjekt, erstes Zielobjekt, zweites Zielobjekt.<
     <message>
         <location filename="../divide/dividedlg.cpp" line="75" />
         <source>OK</source>
-        <translation>OKAY</translation>
+        <translation>OK</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="76" />
@@ -841,7 +841,7 @@ erstes Basisobjekt, zweites Basisobjekt, erstes Zielobjekt, zweites Zielobjekt.<
     <message>
         <location filename="../divide/dividedlg.cpp" line="92" />
         <source>Size</source>
-        <translation>Größe</translation>
+        <translation>Size</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="115" />
@@ -1227,7 +1227,7 @@ Als Variable/Parameter der Gleichung kann t oder x verwendet werden.
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="32" />
         <source>Draw</source>
-        <translation>Zeichnen</translation>
+        <translation>Draw</translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="33" />

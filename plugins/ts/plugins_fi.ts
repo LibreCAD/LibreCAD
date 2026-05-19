@@ -174,7 +174,7 @@ ensimmäinen tukipiste, toinen tukipiste, ensimmäinen kohdepiste, toinen kohdep
     <message>
         <location filename="../list/list.cpp" line="82" />
         <source>ID</source>
-        <translation>TUNNISTE</translation>
+        <translation>ID</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="88" />
@@ -261,7 +261,7 @@ ensimmäinen tukipiste, toinen tukipiste, ensimmäinen kohdepiste, toinen kohdep
     <message>
         <location filename="../list/list.cpp" line="141" />
         <source>area</source>
-        <translation>alue</translation>
+        <translation>area</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="144" />
@@ -296,7 +296,7 @@ ensimmäinen tukipiste, toinen tukipiste, ensimmäinen kohdepiste, toinen kohdep
     <message>
         <location filename="../list/list.cpp" line="179" />
         <source>TEXT</source>
-        <translation>TEKSTI</translation>
+        <translation>TEXT</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="183" />
@@ -311,7 +311,7 @@ ensimmäinen tukipiste, toinen tukipiste, ensimmäinen kohdepiste, toinen kohdep
     <message>
         <location filename="../list/list.cpp" line="189" />
         <source>Name</source>
-        <translation>Nimi</translation>
+        <translation>Name</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="191" />
@@ -351,12 +351,12 @@ ensimmäinen tukipiste, toinen tukipiste, ensimmäinen kohdepiste, toinen kohdep
     <message>
         <location filename="../list/list.cpp" line="216" />
         <source>No</source>
-        <translation>Ei</translation>
+        <translation>No</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="216" />
         <source>Yes</source>
-        <translation>Kyllä</translation>
+        <translation>Yes</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="217" />
@@ -699,7 +699,7 @@ ensimmäinen tukipiste, toinen tukipiste, ensimmäinen kohdepiste, toinen kohdep
     <message>
         <location filename="../divide/divide.cpp" line="467" />
         <source>ID</source>
-        <translation>TUNNISTE</translation>
+        <translation>ID</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="474" />
@@ -773,7 +773,7 @@ ensimmäinen tukipiste, toinen tukipiste, ensimmäinen kohdepiste, toinen kohdep
     <message>
         <location filename="../divide/divide.cpp" line="526" />
         <source>area</source>
-        <translation>alue</translation>
+        <translation>area</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="530" />
@@ -788,12 +788,12 @@ ensimmäinen tukipiste, toinen tukipiste, ensimmäinen kohdepiste, toinen kohdep
     <message>
         <location filename="../divide/divide.cpp" line="533" />
         <source>No</source>
-        <translation>Ei</translation>
+        <translation>No</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="533" />
         <source>Yes</source>
-        <translation>Kyllä</translation>
+        <translation>Yes</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="534" />
@@ -826,7 +826,7 @@ ensimmäinen tukipiste, toinen tukipiste, ensimmäinen kohdepiste, toinen kohdep
     <message>
         <location filename="../divide/dividedlg.cpp" line="75" />
         <source>OK</source>
-        <translation>SELVÄ</translation>
+        <translation>OK</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="76" />
@@ -841,7 +841,7 @@ ensimmäinen tukipiste, toinen tukipiste, ensimmäinen kohdepiste, toinen kohdep
     <message>
         <location filename="../divide/dividedlg.cpp" line="92" />
         <source>Size</source>
-        <translation>Koko</translation>
+        <translation>Size</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="115" />
@@ -1227,7 +1227,7 @@ Käytä yhtälössä kirjaimia t tai x ilmaisemaan muuttujaa/parametria.
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="32" />
         <source>Draw</source>
-        <translation>Piirrä</translation>
+        <translation>Draw</translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="33" />

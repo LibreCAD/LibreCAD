@@ -191,7 +191,7 @@ lehenengo oinarria, bigarren oinarria, lehenengo helburua, bigarren helburua.</t
     <message>
         <location filename="../list/list.cpp" line="94" />
         <source>LINE</source>
-        <translation>MARRA</translation>
+        <translation>LINE</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="99" />
@@ -222,7 +222,7 @@ lehenengo oinarria, bigarren oinarria, lehenengo helburua, bigarren helburua.</t
     <message>
         <location filename="../list/list.cpp" line="118" />
         <source>ARC</source>
-        <translation>Arkua</translation>
+        <translation>ARC</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="119" />
@@ -261,7 +261,7 @@ lehenengo oinarria, bigarren oinarria, lehenengo helburua, bigarren helburua.</t
     <message>
         <location filename="../list/list.cpp" line="141" />
         <source>area</source>
-        <translation>azalera</translation>
+        <translation>area</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="144" />
@@ -296,7 +296,7 @@ lehenengo oinarria, bigarren oinarria, lehenengo helburua, bigarren helburua.</t
     <message>
         <location filename="../list/list.cpp" line="179" />
         <source>TEXT</source>
-        <translation>TESTUA</translation>
+        <translation>TEXT</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="183" />
@@ -311,7 +311,7 @@ lehenengo oinarria, bigarren oinarria, lehenengo helburua, bigarren helburua.</t
     <message>
         <location filename="../list/list.cpp" line="189" />
         <source>Name</source>
-        <translation>Izena</translation>
+        <translation>Name</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="191" />
@@ -351,12 +351,12 @@ lehenengo oinarria, bigarren oinarria, lehenengo helburua, bigarren helburua.</t
     <message>
         <location filename="../list/list.cpp" line="216" />
         <source>No</source>
-        <translation>Ez</translation>
+        <translation>No</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="216" />
         <source>Yes</source>
-        <translation>Bai</translation>
+        <translation>Yes</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="217" />
@@ -699,12 +699,12 @@ lehenengo oinarria, bigarren oinarria, lehenengo helburua, bigarren helburua.</t
     <message>
         <location filename="../divide/divide.cpp" line="467" />
         <source>ID</source>
-        <translation>IDA</translation>
+        <translation>ID</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="474" />
         <source>LINE</source>
-        <translation>LERROA</translation>
+        <translation>LINE</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="479" />
@@ -788,12 +788,12 @@ lehenengo oinarria, bigarren oinarria, lehenengo helburua, bigarren helburua.</t
     <message>
         <location filename="../divide/divide.cpp" line="533" />
         <source>No</source>
-        <translation>Ez</translation>
+        <translation>No</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="533" />
         <source>Yes</source>
-        <translation>Bai</translation>
+        <translation>Yes</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="534" />
@@ -826,7 +826,7 @@ lehenengo oinarria, bigarren oinarria, lehenengo helburua, bigarren helburua.</t
     <message>
         <location filename="../divide/dividedlg.cpp" line="75" />
         <source>OK</source>
-        <translation>ADOS</translation>
+        <translation>OK</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="76" />
@@ -841,7 +841,7 @@ lehenengo oinarria, bigarren oinarria, lehenengo helburua, bigarren helburua.</t
     <message>
         <location filename="../divide/dividedlg.cpp" line="92" />
         <source>Size</source>
-        <translation>Tamaina</translation>
+        <translation>Size</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="115" />
@@ -1227,7 +1227,7 @@ Erabili t edo x zure ekuazioan aldagarri/parametro modura.
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="32" />
         <source>Draw</source>
-        <translation>Marraztu</translation>
+        <translation>Draw</translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="33" />

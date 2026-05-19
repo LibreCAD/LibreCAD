@@ -122,7 +122,7 @@ První meta, druhá meta, první terč, druhý terč.</translation>
     <message>
         <location filename="../list/list.cpp" line="46" />
         <source>n</source>
-        <translation>č.</translation>
+        <translation>n</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="60" />
@@ -179,7 +179,7 @@ První meta, druhá meta, první terč, druhý terč.</translation>
     <message>
         <location filename="../list/list.cpp" line="94" />
         <source>LINE</source>
-        <translation>ÚSEČKA</translation>
+        <translation>LINE</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="99" />
@@ -210,7 +210,7 @@ První meta, druhá meta, první terč, druhý terč.</translation>
     <message>
         <location filename="../list/list.cpp" line="118" />
         <source>ARC</source>
-        <translation>OBLOUK</translation>
+        <translation>ARC</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="119" />
@@ -249,7 +249,7 @@ První meta, druhá meta, první terč, druhý terč.</translation>
     <message>
         <location filename="../list/list.cpp" line="141" />
         <source>area</source>
-        <translation>obsah</translation>
+        <translation>area</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="144" />
@@ -299,7 +299,7 @@ První meta, druhá meta, první terč, druhý terč.</translation>
     <message>
         <location filename="../list/list.cpp" line="189" />
         <source>Name</source>
-        <translation>Název</translation>
+        <translation>Name</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="191" />
@@ -339,12 +339,12 @@ První meta, druhá meta, první terč, druhý terč.</translation>
     <message>
         <location filename="../list/list.cpp" line="216" />
         <source>No</source>
-        <translation>Ne</translation>
+        <translation>No</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="216" />
         <source>Yes</source>
-        <translation>Ano</translation>
+        <translation>Yes</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="217" />
@@ -761,7 +761,7 @@ První meta, druhá meta, první terč, druhý terč.</translation>
     <message>
         <location filename="../divide/divide.cpp" line="526" />
         <source>area</source>
-        <translation>plocha</translation>
+        <translation>area</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="530" />
@@ -776,12 +776,12 @@ První meta, druhá meta, první terč, druhý terč.</translation>
     <message>
         <location filename="../divide/divide.cpp" line="533" />
         <source>No</source>
-        <translation>Ne</translation>
+        <translation>No</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="533" />
         <source>Yes</source>
-        <translation>Ano</translation>
+        <translation>Yes</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="534" />
@@ -814,7 +814,7 @@ První meta, druhá meta, první terč, druhý terč.</translation>
     <message>
         <location filename="../divide/dividedlg.cpp" line="75" />
         <source>OK</source>
-        <translation>DOBŘE</translation>
+        <translation>OK</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="76" />
@@ -829,7 +829,7 @@ První meta, druhá meta, první terč, druhý terč.</translation>
     <message>
         <location filename="../divide/dividedlg.cpp" line="92" />
         <source>Size</source>
-        <translation>Velikost</translation>
+        <translation>Size</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="115" />
@@ -1215,7 +1215,7 @@ Jako proměnnou (parametr) rovnice použijte t nebo x.
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="32" />
         <source>Draw</source>
-        <translation>Vykreslit</translation>
+        <translation>Draw</translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="33" />

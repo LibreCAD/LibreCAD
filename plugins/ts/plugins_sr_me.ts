@@ -193,7 +193,7 @@ Then fill in the fields and press 'Accept' button.</source>
   <message>
    <location filename="../list/list.cpp" line="92" />
    <source>LINE</source>
-   <translation>LINIJA</translation>
+   <translation>LINE</translation>
   </message>
   <message>
    <location filename="../list/list.cpp" line="97" />
@@ -224,7 +224,7 @@ Then fill in the fields and press 'Accept' button.</source>
   <message>
    <location filename="../list/list.cpp" line="116" />
    <source>ARC</source>
-   <translation>LUK</translation>
+   <translation>ARC</translation>
   </message>
   <message>
    <location filename="../list/list.cpp" line="117" />
@@ -263,7 +263,7 @@ Then fill in the fields and press 'Accept' button.</source>
   <message>
    <location filename="../list/list.cpp" line="139" />
    <source>area</source>
-   <translation>површина</translation>
+   <translation>area</translation>
   </message>
   <message>
    <location filename="../list/list.cpp" line="142" />
@@ -298,7 +298,7 @@ Then fill in the fields and press 'Accept' button.</source>
   <message>
    <location filename="../list/list.cpp" line="177" />
    <source>TEXT</source>
-   <translation>TEKST</translation>
+   <translation>TEXT</translation>
   </message>
   <message>
    <location filename="../list/list.cpp" line="181" />
@@ -313,7 +313,7 @@ Then fill in the fields and press 'Accept' button.</source>
   <message>
    <location filename="../list/list.cpp" line="187" />
    <source>Name</source>
-   <translation>Име</translation>
+   <translation>Name</translation>
   </message>
   <message>
    <location filename="../list/list.cpp" line="189" />
@@ -353,12 +353,12 @@ Then fill in the fields and press 'Accept' button.</source>
   <message>
    <location filename="../list/list.cpp" line="214" />
    <source>No</source>
-   <translation>Ne</translation>
+   <translation>No</translation>
   </message>
   <message>
    <location filename="../list/list.cpp" line="214" />
    <source>Yes</source>
-   <translation>Da</translation>
+   <translation>Yes</translation>
   </message>
   <message>
    <location filename="../list/list.cpp" line="215" />
@@ -726,7 +726,7 @@ Then fill in the fields and press 'Accept' button.</source>
   <message>
    <location filename="../divide/divide.cpp" line="471" />
    <source>LINE</source>
-   <translation>ЛИНИЈА</translation>
+   <translation>LINE</translation>
   </message>
   <message>
    <location filename="../divide/divide.cpp" line="476" />
@@ -795,7 +795,7 @@ Then fill in the fields and press 'Accept' button.</source>
   <message>
    <location filename="../divide/divide.cpp" line="523" />
    <source>area</source>
-   <translation>површина</translation>
+   <translation>area</translation>
   </message>
   <message>
    <location filename="../divide/divide.cpp" line="527" />
@@ -810,12 +810,12 @@ Then fill in the fields and press 'Accept' button.</source>
   <message>
    <location filename="../divide/divide.cpp" line="530" />
    <source>No</source>
-   <translation>Не</translation>
+   <translation>No</translation>
   </message>
   <message>
    <location filename="../divide/divide.cpp" line="530" />
    <source>Yes</source>
-   <translation>Да</translation>
+   <translation>Yes</translation>
   </message>
   <message>
    <location filename="../divide/divide.cpp" line="531" />
@@ -848,7 +848,7 @@ Then fill in the fields and press 'Accept' button.</source>
   <message>
    <location filename="../divide/dividedlg.cpp" line="74" />
    <source>OK</source>
-   <translation>ОК</translation>
+   <translation>OK</translation>
   </message>
   <message>
    <location filename="../divide/dividedlg.cpp" line="75" />
@@ -863,7 +863,7 @@ Then fill in the fields and press 'Accept' button.</source>
   <message>
    <location filename="../divide/dividedlg.cpp" line="91" />
    <source>Size</source>
-   <translation>Величина</translation>
+   <translation>Size</translation>
   </message>
   <message>
    <location filename="../divide/dividedlg.cpp" line="114" />
@@ -1248,7 +1248,7 @@ Use t or x in your equation as a variable/parameter.
   <message>
    <location filename="../plotequation/plotdialog.cpp" line="32" />
    <source>Draw</source>
-   <translation>Цртај</translation>
+   <translation>Draw</translation>
   </message>
   <message>
    <location filename="../plotequation/plotdialog.cpp" line="33" />
