@@ -205,17 +205,7 @@ void LC_PenPaletteWidget::initTableView(){
  *
  */
 void LC_PenPaletteWidget::onPersistentItemsChanged(){
-    bool itemsSaved = penPaletteData ->saveItems();
-    while (!itemsSaved){
-        bool showOptions = invokeUnableToSavePenDataDialog();
-        if (showOptions){
-            invokeOptionsDialog(true);
-            itemsSaved = penPaletteData ->saveItems();
-        }
-        else{ // user skipped options, so we still cant' save data - yet that's to user. Will ask next time, however
-            itemsSaved = true;
-        }
-    }
+    penPaletteData->saveItems();
 }
 
 /**
@@ -389,21 +379,13 @@ void LC_PenPaletteWidget::onTableSelectionChanged(
 /**
  * Displays options dialogs and applies changes, if necessary
  */
-void LC_PenPaletteWidget::invokeOptionsDialog(bool focusOnFile){
+void LC_PenPaletteWidget::invokeOptionsDialog(){
     LC_PenPaletteOptions * options = penPaletteModel->getOptions();
-    LC_PenPaletteOptionsDialog dlg = LC_PenPaletteOptionsDialog(this, options, focusOnFile);
-    QString oldFileName = options->pensFileName;
-    int dialogResult = dlg.exec();
-    if (dialogResult == QDialog::Accepted){
+    LC_PenPaletteOptionsDialog dlg = LC_PenPaletteOptionsDialog(this, options);
+    if (dlg.exec() == QDialog::Accepted){
         options->saveToSettings();
         penPaletteModel->update(true);
         update();
-        if (!focusOnFile){ // this is normal invocation via settings button
-            QString newFileName = options->pensFileName;
-            if (oldFileName != newFileName){
-                penPaletteData->saveItems();
-            }
-        }
     }
 }
 
@@ -1369,18 +1351,6 @@ void LC_PenPaletteWidget::showEntitySelectionInfoDialog(){
     msgBox.exec();
 }
 
-/**
- * Displays dialog if error occurred during saving pens data and prompt the user to change location of pens file
- * @return true if user would like to change location
- */
-bool LC_PenPaletteWidget::invokeUnableToSavePenDataDialog(){
-    QString title(QMessageBox::tr("Saving Pens Data"));
-    QString text = QMessageBox::tr("Unable to save pens data to specified pens file. Would you like to specify correct path to the file?");
-    QMessageBox msgBox(QMessageBox::Information, title, text, QMessageBox::Yes | QMessageBox::No);
-    int dlgResult = msgBox.exec();
-    bool result = dlgResult == QMessageBox::Yes;
-    return result;
-}
 
 
 

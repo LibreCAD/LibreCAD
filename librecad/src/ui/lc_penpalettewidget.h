@@ -61,7 +61,7 @@ public slots:
     void fillPenEditorBySelectedEntityAttributesPen();
     void fillPenEditorBySelectedEntityDrawingPen();
     void fillPenEditorByPenToolBarPen();
-    void invokeOptionsDialog(bool focusOnFile=false);
+    void invokeOptionsDialog();
     void createOrUpdatePenItem();
     void applyEditorPenToSelection();
     void selectEntitiesWithAttributesPenByPenEditor();
@@ -126,7 +126,6 @@ private:
     void initToolBar() const;
     void onTableRowDoubleClicked();
     void onPersistentItemsChanged();
-    bool invokeUnableToSavePenDataDialog();
 };
 
 
