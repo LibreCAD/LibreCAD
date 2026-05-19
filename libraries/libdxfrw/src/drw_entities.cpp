@@ -1009,11 +1009,21 @@ bool DRW_Spline::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs, dw
     // Scenario:
     //   1 = control-point / rational / planar (uses knots + control + weights)
     //   2 = fit-point (uses fit points + tangents + tolerance)
-    // Pick based on which list the caller populated.
-    dint32 scenario = (!fitlist.empty()) ? 2 : 1;
+    // When both lists are populated (e.g. DXF-sourced splines), prefer scenario 1
+    // (ctrl + knots) and drop the fit list from the DWG stream — scenario 1 has no
+    // fit-point section, so writing both would corrupt all subsequent entities.
+    const bool hasFit  = !fitlist.empty();
+    const bool hasCtrl = !controllist.empty();
+    dint32 scenario = (hasFit && !hasCtrl) ? 2 : 1;
     buf->putBitLong(scenario);
     if (version > DRW::AC1024) {
-        buf->putBitLong((scenario == 2) ? 1 : 0);  // splFlag1: bit-0 mirrors scenario
+        // splFlag1 bit 0: method = fit points; bit 2: Is closed (for scenario 2)
+        dint32 splFlag1 = 0;
+        if (scenario == 2) {
+            splFlag1 = 1;                            // bit 0: fit-point method
+            if (flags & 0x01) splFlag1 |= 4;         // bit 2: Is closed
+        }
+        buf->putBitLong(splFlag1);
         buf->putBitLong(0);                          // knotParam: chord parameterization
     }
     buf->putBitLong(static_cast<dint32>(degree));
@@ -1026,7 +1036,7 @@ bool DRW_Spline::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs, dw
         buf->putBitLong(nFit);
     } else {
         // scenario == 1
-        // Reader at parseDwg:3614 reads three flag bits in this order:
+        // Reader at parseDwg reads three flag bits in this order:
         //   rational bit  (flags bit 2 → 0x04)
         //   closed bit    (flags bit 0 → 0x01)
         //   periodic bit  (flags bit 1 → 0x02)
@@ -1045,15 +1055,20 @@ bool DRW_Spline::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs, dw
         buf->putBit(hasWeights ? 1 : 0);
     }
 
-    for (double k : knotslist) buf->putBitDouble(k);
-    for (size_t i = 0; i < controllist.size(); ++i) {
-        buf->put3BitDouble(*controllist[i]);
-        if (!weightlist.empty() && scenario == 1) {
-            double w = (i < weightlist.size()) ? weightlist[i] : 1.0;
-            buf->putBitDouble(w);
+    // Data sections are scenario-gated to avoid stream corruption:
+    // parseDwg reads knots+ctrl only for scenario 1, fit only for scenario 2.
+    if (scenario == 1) {
+        for (double k : knotslist) buf->putBitDouble(k);
+        for (size_t i = 0; i < controllist.size(); ++i) {
+            buf->put3BitDouble(*controllist[i]);
+            if (!weightlist.empty()) {
+                double w = (i < weightlist.size()) ? weightlist[i] : 1.0;
+                buf->putBitDouble(w);
+            }
         }
+    } else {
+        for (const auto& fp : fitlist) buf->put3BitDouble(*fp);
     }
-    for (const auto& fp : fitlist) buf->put3BitDouble(*fp);
 
     return encodeDwgEntHandle(version, buf, handleBuf);
 }
@@ -3248,7 +3263,8 @@ bool DRW_Hatch::parseCode(int code, const std::unique_ptr<dxfReader>& reader){
         associative = reader->getInt32();
         break;
     case 72:        /*edge type*/
-        if (ispol){ //if is polyline is a as_bulge flag
+        if (ispol){ //if is polyline is a has-bulge flag
+            if (pline) pline->flags = (pline->flags & ~1) | (reader->getInt32() ? 1 : 0);
             break;
         } else if (reader->getInt32() == 1){ //line
             addLine();
@@ -3345,8 +3361,32 @@ bool DRW_Hatch::parseCode(int code, const std::unique_ptr<dxfReader>& reader){
         if (arc) arc->endangle = reader->getDouble()/ARAD;
         else if (ellipse) ellipse->endparam = reader->getDouble()/ARAD;
         break;
+    case 47:
+        pixelSize = reader->getDouble();
+        break;
     case 52:
         angle = reader->getDouble();
+        break;
+    case 53: // pattern line angle — starts a new PatternLine record
+        patternLines.push_back(PatternLine());
+        patternLines.back().angle = reader->getDouble();
+        break;
+    case 43:
+        if (!patternLines.empty()) patternLines.back().baseX = reader->getDouble();
+        break;
+    case 44:
+        if (!patternLines.empty()) patternLines.back().baseY = reader->getDouble();
+        break;
+    case 45:
+        if (!patternLines.empty()) patternLines.back().offsetX = reader->getDouble();
+        break;
+    case 46:
+        if (!patternLines.empty()) patternLines.back().offsetY = reader->getDouble();
+        break;
+    case 79: // dash count — the 49s that follow will accumulate
+        break;
+    case 49:
+        if (!patternLines.empty()) patternLines.back().dashList.push_back(reader->getDouble());
         break;
     case 73:
         // Spline edge: 73 is the rational flag (1 = rational).
@@ -3939,7 +3979,8 @@ bool DRW_Spline::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
         DRW_DBG(" control point tolerance: "); DRW_DBG(tolcontrol);
         nknots = buf->getBitLong();
         ncontrol = buf->getBitLong();
-        weight = buf->getBit(); // RLZ ??? flags, weight, code 70, bit 4 (16)
+        weight = buf->getBit(); // flags bit 4: weights present (code 70)
+        if (weight) flags |= 0x10;
         DRW_DBG("\nnum of knots: "); DRW_DBG(nknots); DRW_DBG(" num of control pt: ");
         DRW_DBG(ncontrol); DRW_DBG(" weight bit: "); DRW_DBG(weight);
     } else {

@@ -1045,36 +1045,46 @@ bool dxfRW::writeSpline(DRW_Spline *ent){
         writer->writeString(0, "SPLINE");
         writeEntity(ent);
         writer->writeString(100, "AcDbSpline");
-        writer->writeDouble(210, ent->normalVec.x);
-        writer->writeDouble(220, ent->normalVec.y);
-        writer->writeDouble(230, ent->normalVec.z);
+        // Normal vector is optional; omit when it is the default (0,0,1).
+        if (ent->normalVec.x != 0.0 || ent->normalVec.y != 0.0 || ent->normalVec.z != 1.0) {
+            writer->writeDouble(210, ent->normalVec.x);
+            writer->writeDouble(220, ent->normalVec.y);
+            writer->writeDouble(230, ent->normalVec.z);
+        }
         writer->writeInt16(70, ent->flags);
         writer->writeInt16(71, ent->degree);
-        writer->writeInt16(72, ent->nknots);
-        writer->writeInt16(73, ent->ncontrol);
-        writer->writeInt16(74, ent->nfit);
+        writer->writeInt16(72, static_cast<int>(ent->knotslist.size()));
+        writer->writeInt16(73, static_cast<int>(ent->controllist.size()));
+        writer->writeInt16(74, static_cast<int>(ent->fitlist.size()));
         writer->writeDouble(42, ent->tolknot);
         writer->writeDouble(43, ent->tolcontrol);
-    writer->writeDouble(44, ent->tolfit);
-        //RLZ: warning check if nknots are correct and ncontrol
-        for (int i = 0;  i< ent->nknots; i++){
-            writer->writeDouble(40, ent->knotslist.at(i));
-        }
-        for (std::size_t i = 0; i< ent->weightlist.size(); i++) {
-            writer->writeDouble(41, ent->weightlist.at(i));
-        }
-        for (int i = 0;  i< ent->ncontrol; i++){
-            auto crd = ent->controllist.at(i);
+        writer->writeDouble(44, ent->tolfit);
+        for (double k : ent->knotslist)
+            writer->writeDouble(40, k);
+        // Control points with interleaved weights (when present)
+        for (std::size_t i = 0; i < ent->controllist.size(); ++i) {
+            const auto& crd = ent->controllist[i];
             writer->writeDouble(10, crd->x);
             writer->writeDouble(20, crd->y);
             writer->writeDouble(30, crd->z);
+            if (i < ent->weightlist.size())
+                writer->writeDouble(41, ent->weightlist[i]);
         }
-        //fit points: required for splinepoints / fit-point-driven splines
-        for (int i = 0;  i< ent->nfit; i++){
-            auto crd = ent->fitlist.at(i);
+        for (const auto& crd : ent->fitlist) {
             writer->writeDouble(11, crd->x);
             writer->writeDouble(21, crd->y);
             writer->writeDouble(31, crd->z);
+        }
+        // Start/end tangent vectors (fit-point splines, codes 12/22/32 and 13/23/33)
+        if (ent->tgStart.x != 0.0 || ent->tgStart.y != 0.0 || ent->tgStart.z != 0.0) {
+            writer->writeDouble(12, ent->tgStart.x);
+            writer->writeDouble(22, ent->tgStart.y);
+            writer->writeDouble(32, ent->tgStart.z);
+        }
+        if (ent->tgEnd.x != 0.0 || ent->tgEnd.y != 0.0 || ent->tgEnd.z != 0.0) {
+            writer->writeDouble(13, ent->tgEnd.x);
+            writer->writeDouble(23, ent->tgEnd.y);
+            writer->writeDouble(33, ent->tgEnd.z);
         }
     } else {
         //RLZ: TODO convert spline in polyline (not exist in acad 12)
@@ -1103,7 +1113,25 @@ bool dxfRW::writeHatch(DRW_Hatch *ent){
             DRW_HatchLoop *loop = ent->looplist.at(i).get();
             writer->writeInt16(92, loop->type);
             if ( (loop->type & 2) == 2){
-                //RLZ: polyline boundary writeme
+                // Polyline boundary path
+                DRW_LWPolyline *pl = nullptr;
+                if (!loop->objlist.empty())
+                    pl = dynamic_cast<DRW_LWPolyline*>(loop->objlist.at(0).get());
+                const bool hasBulge = pl && std::any_of(
+                    pl->vertlist.begin(), pl->vertlist.end(),
+                    [](const std::shared_ptr<DRW_Vertex2D>& v){ return v && v->bulge != 0.0; });
+                writer->writeInt16(72, hasBulge ? 1 : 0);
+                writer->writeInt16(73, pl ? (pl->flags & 1) : 0); // is-closed
+                const int nv = pl ? static_cast<int>(pl->vertlist.size()) : 0;
+                writer->writeInt16(93, nv);
+                for (int v = 0; v < nv; ++v) {
+                    const auto &vtx = pl->vertlist.at(v);
+                    writer->writeDouble(10, vtx->x);
+                    writer->writeDouble(20, vtx->y);
+                    if (hasBulge)
+                        writer->writeDouble(42, vtx->bulge);
+                }
+                writer->writeInt16(97, 0); // source boundary object count
             } else {
                 //boundary path
                 loop->update();
@@ -1170,6 +1198,15 @@ bool dxfRW::writeHatch(DRW_Hatch *ent){
                             writer->writeDouble(11, fp->x);
                             writer->writeDouble(21, fp->y);
                         }
+                        // start/end tangents (codes 12/22, 13/23)
+                        if (sp->tgStart.x != 0.0 || sp->tgStart.y != 0.0) {
+                            writer->writeDouble(12, sp->tgStart.x);
+                            writer->writeDouble(22, sp->tgStart.y);
+                        }
+                        if (sp->tgEnd.x != 0.0 || sp->tgEnd.y != 0.0) {
+                            writer->writeDouble(13, sp->tgEnd.x);
+                            writer->writeDouble(23, sp->tgEnd.y);
+                        }
                         break;
                     }
                     default:
@@ -1185,8 +1222,22 @@ bool dxfRW::writeHatch(DRW_Hatch *ent){
             writer->writeDouble(52, ent->angle);
             writer->writeDouble(41, ent->scale);
             writer->writeInt16(77, ent->doubleflag);
-            writer->writeInt16(78, ent->deflines);
         }
+        // code 78 (def-line count) is written for both solid and pattern fills
+        const int nDefLines = static_cast<int>(ent->patternLines.size());
+        writer->writeInt16(78, nDefLines);
+        for (const DRW_Hatch::PatternLine &pl : ent->patternLines) {
+            writer->writeDouble(53, pl.angle);
+            writer->writeDouble(43, pl.baseX);
+            writer->writeDouble(44, pl.baseY);
+            writer->writeDouble(45, pl.offsetX);
+            writer->writeDouble(46, pl.offsetY);
+            writer->writeInt16(79, static_cast<int>(pl.dashList.size()));
+            for (double d : pl.dashList)
+                writer->writeDouble(49, d);
+        }
+        if (ent->pixelSize != 0.0)
+            writer->writeDouble(47, ent->pixelSize);
         // Seed points (group 98 = count, then 10/20 pairs).
         const int seedCount = static_cast<int>(ent->seedPoints.size());
         writer->writeInt32(98, seedCount);
@@ -1205,9 +1256,9 @@ bool dxfRW::writeHatch(DRW_Hatch *ent){
             writer->writeInt32(453, static_cast<int>(ent->gradColors.size()));
             for (const DRW_Hatch::GradientStop &stop : ent->gradColors) {
                 writer->writeDouble(463, stop.value);
-                writer->writeInt32(421, stop.rgb);
                 if (stop.aciColor != 0)
                     writer->writeInt32(63, stop.aciColor);
+                writer->writeInt32(421, stop.rgb);
             }
             writer->writeUtf8String(470, ent->gradName);
         }

@@ -49,6 +49,7 @@ SOURCES += \
     src/intern/dwgreader32.cpp \
     src/intern/dwgbufferw.cpp \
     src/intern/dwgwriter15.cpp \
+    src/intern/dwgwriter18.cpp \
     src/intern/dwgwriter24.cpp \
     src/intern/dwgwriter27.cpp
 
@@ -84,5 +85,6 @@ HEADERS += \
     src/intern/dwgbufferw.h \
     src/intern/dwgwriter.h \
     src/intern/dwgwriter15.h \
+    src/intern/dwgwriter18.h \
     src/intern/dwgwriter24.h \
     src/intern/dwgwriter27.h

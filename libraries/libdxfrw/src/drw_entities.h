@@ -1133,6 +1133,19 @@ public:
     }
 
     /*!
+     * One pattern definition line (group 53/43/44/45/46/79/49).
+     * Present only for non-solid hatches with explicit pattern data.
+     */
+    struct PatternLine {
+        double angle   {0.0};   /*!< line angle, code 53 */
+        double baseX   {0.0};   /*!< base point x, code 43 */
+        double baseY   {0.0};   /*!< base point y, code 44 */
+        double offsetX {0.0};   /*!< offset x, code 45 */
+        double offsetY {0.0};   /*!< offset y, code 46 */
+        std::vector<double> dashList; /*!< dash/space lengths, codes 49 (count = code 79) */
+    };
+
+    /*!
      * Per-stop gradient color entry. Populated when isGradient != 0.
      * 'value' is the position (group 463), 'rgb' is 24-bit color
      * (group 421); 'aciColor' (group 63) is preserved when present.
@@ -1163,6 +1176,8 @@ public:
     double angle;              /*!< hatch pattern angle, code 52 */
     double scale;              /*!< hatch pattern scale, code 41 */
     int deflines;              /*!< number of pattern definition lines, code 78 */
+    double pixelSize {0.0};   /*!< pixel size, code 47 */
+    std::vector<PatternLine> patternLines; /*!< pattern definition lines, count = deflines */
 
     std::vector<std::shared_ptr<DRW_HatchLoop>> looplist;  /*!< polyline list */
 
