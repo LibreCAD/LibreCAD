@@ -15,8 +15,11 @@
 #define DWGWRITER15_H
 
 #include <initializer_list>
+#include <utility>
+#include <vector>
 
 #include "dwgwriter.h"
+#include "../drw_objects.h"
 
 class DRW_Entity;
 
@@ -41,7 +44,19 @@ namespace recno {
 class dwgWriter15 : public dwgWriter {
 public:
     dwgWriter15(std::ofstream *stream, DRW_Header *header)
-        : dwgWriter(stream, header) {}
+        : dwgWriter(stream, header) {
+        // Pre-seed with canonical reserved handles so add*() deduplication
+        // works before writeDwgObjects() fires.  Values mirror reservedHandle::*
+        // in dwgwriter15.cpp (0x0F-0x16 are the R2000 fixed-table handles).
+        m_writingCtx.ltypeMap    = {{"CONTINUOUS", 0x11u},
+                                    {"BYLAYER",    0x10u},
+                                    {"BYBLOCK",    0x0Fu}};
+        m_writingCtx.layerMap    = {{"0",        0x12u}};
+        m_writingCtx.styleMap    = {{"STANDARD", 0x13u}};
+        m_writingCtx.appidMap    = {{"ACAD",     0x14u}};
+        m_writingCtx.dimstyleMap = {{"STANDARD", 0x15u}};
+        m_writingCtx.vportMap    = {{"*ACTIVE",  0x16u}};
+    }
 
     bool writeFileHeaderStub() override;
     bool writeDwgHeader() override;
@@ -59,6 +74,16 @@ public:
                         const DRW_Coord& basePoint) override;
     bool emitDeferredBlockControl() override;
 
+    /// Accept a user-defined table record for deferred emission in
+    /// writeDwgObjects().  Normalises the name to upper-case, deduplicates
+    /// against standard entries, allocates a handle, updates m_writingCtx.
+    void addLType(const DRW_LType& lt);
+    void addLayer(const DRW_Layer& lay);
+    void addTextstyle(const DRW_Textstyle& ts);
+    void addVport(const DRW_Vport& vp);
+    void addDimstyle(const DRW_Dimstyle& ds);
+    void addAppId(const DRW_AppId& ai);
+
 protected:
     /// Begin a new object in the object stream (the unsentinel'd byte
     /// region between CLASSES and HANDLES).  Records the offset of
@@ -72,7 +97,7 @@ protected:
     /// per-object frame (MS objectSize + body bytes + RS CRC16 LE) to
     /// `m_buf`, record the (handle, offset) pair in `m_objectMap`.
     /// CRC is over the MS prefix + body bytes per LibreDWG convention.
-    void finishObject();
+    virtual void finishObject();
 
     /// Phase 3d helper: emit one control object at `handle` into the
     /// object stream.  `numEntries` is the BL value emitted to the
@@ -88,6 +113,8 @@ protected:
     /// them as-is.
     void emitControlObject(duint16 oType, duint32 handle, duint32 numEntries,
                            std::initializer_list<duint32> childHandles);
+    void emitControlObject(duint16 oType, duint32 handle, duint32 numEntries,
+                           const std::vector<duint32>& childHandles);
 
     /// Phase 3e helper: emit a minimum-stub table record at `handle`.
     /// Body is preamble + name only.  The reader parses the name
@@ -114,7 +141,21 @@ protected:
     void emitBlockEntity(duint32 handle, const std::string& name,
                          bool isEnd);
 
+    /// Full table-record emitters — preamble + encodeDwg + finishObject.
+    void emitLtypeRecord(duint32 handle, const DRW_LType& lt);
+    void emitLayerRecord(duint32 handle, const DRW_Layer& lay);
+    void emitStyleRecord(duint32 handle, const DRW_Textstyle& ts);
+    void emitVportRecord(duint32 handle, const DRW_Vport& vp);
+    void emitAppIdRecord(duint32 handle, const DRW_AppId& ai);
+    void emitDimstyleRecord(duint32 handle, const DRW_Dimstyle& ds);
+
 protected:
+    /// Populate m_header's ctrl-handle fields with canonical reserved values
+    /// where they are still zero (caller may have pre-filled them on read).
+    /// Called from writeDwgHeader (and overrides) so the HEADER section's
+    /// control-handle block references the right objects.
+    void initHeaderControlHandles();
+
     /// Per-section-frame helper: emit BEGIN sentinel + 4-byte RL size
     /// placeholder, mark the start offset.  Returns the byte offset of
     /// the placeholder RL so `endSentinelSection` can patch it.
@@ -126,6 +167,45 @@ protected:
     void endSentinelSection(size_t sectionStart, size_t sizeOffset,
                             const duint8 (&endSentinel)[16]);
 
+protected:
+    /// Scratch buffer for the in-flight object body (DATA section).
+    /// Cleared at every `beginObject` call.
+    dwgBufferW m_objectBody;
+
+    /// Scratch buffer for string fields (AC1024+ only — strings are
+    /// written into the tail of the data section before the handle
+    /// section).  Ignored by dwgWriter15/18 finishObject.
+    dwgBufferW m_objectStrings;
+
+    /// Scratch buffer for handle fields (AC1024+ only — handles are
+    /// written into a separate handle section after the data section).
+    /// Ignored by dwgWriter15/18 finishObject.
+    dwgBufferW m_objectHandles;
+
+    /// Handle of the in-flight object (set by `beginObject`, cleared
+    /// at `finishObject`).  Used to record the (handle, offset) pair.
+    duint32 m_currentHandle {0};
+
+    /// Object-map collector.  Each entry is `(handle, byte-offset of
+    /// the object's MS prefix in m_buf)`.  Sorted by handle in
+    /// `writeDwgHandles` before page emission for monotonic deltas.
+    std::vector<std::pair<duint32, duint32>> m_objectMap;
+
+    /// Writing context: maps normalised (upper-case) table record names
+    /// to their allocated DWG handles.  Pre-seeded with standard entries;
+    /// extended by add*() as user records are registered.  Used by
+    /// encodeEntity() to resolve layer/ltype names to handles.
+    DRW_WritingContext m_writingCtx;
+
+    /// Pending user-defined table records.  Populated by add*() during
+    /// the table-callback phase; consumed by writeDwgObjects().
+    std::vector<std::pair<duint32, DRW_LType>>     m_pendingLTypes;
+    std::vector<std::pair<duint32, DRW_Layer>>     m_pendingLayers;
+    std::vector<std::pair<duint32, DRW_Textstyle>> m_pendingStyles;
+    std::vector<std::pair<duint32, DRW_Vport>>     m_pendingVports;
+    std::vector<std::pair<duint32, DRW_Dimstyle>>  m_pendingDimstyles;
+    std::vector<std::pair<duint32, DRW_AppId>>     m_pendingAppIds;
+
 private:
     /// File offset of the first section-locator record byte.  Used by
     /// `finalize()` to back-patch addresses + sizes.  Set during
@@ -136,19 +216,6 @@ private:
     /// empty document — HEADER, CLASSES, HANDLES, UNKNOWN, AUXHEADER —
     /// or 6 if TEMPLATE present).  v1 emits 5.
     duint8 m_numSections {5};
-
-    /// Scratch buffer for the in-flight object body.  Cleared at every
-    /// `beginObject` call.
-    dwgBufferW m_objectBody;
-
-    /// Handle of the in-flight object (set by `beginObject`, cleared
-    /// at `finishObject`).  Used to record the (handle, offset) pair.
-    duint32 m_currentHandle {0};
-
-    /// Object-map collector.  Each entry is `(handle, byte-offset of
-    /// the object's MS prefix in m_buf)`.  Sorted by handle in
-    /// `writeDwgHandles` before page emission for monotonic deltas.
-    std::vector<std::pair<duint32, duint32>> m_objectMap;
 
     /// Block_Record handles for user-defined blocks (from defineBlock).
     /// Consumed by emitDeferredBlockControl to populate BLOCK_CONTROL's

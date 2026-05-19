@@ -735,13 +735,20 @@ bool DRW_Point::parseCode(int code, const std::unique_ptr<dxfReader>& reader){
 //   - The body emit between encodeDwgCommon and encodeDwgEntHandle is
 //     per-entity (3BD basePoint for Point, etc.).
 
-bool DRW_Entity::encodeDwgCommon(DRW::Version version, dwgBufferW *buf) {
-    if (version != DRW::AC1015 && version != DRW::AC1018) return false;
+bool DRW_Entity::encodeDwgCommon(DRW::Version version, dwgBufferW *buf,
+                                  dwgBufferW *strBuf) {
+    (void)strBuf;  // common data contains no strings
+    if (version != DRW::AC1015 && version != DRW::AC1018 &&
+        version != DRW::AC1024 && version != DRW::AC1027) return false;
 
-    buf->putBitShort(static_cast<duint16>(oType));
-    // objSize stub — back-patched by dwgWriter15::finishObject() via
-    // patchRawLong32AtBit once the full body bit count is known.
-    buf->putRawLong32(0);
+    // Object type: BS for AC1015/AC1018, OT for AC1024+.
+    buf->putObjType(version, static_cast<duint16>(oType));
+
+    // objSize stub — back-patched for AC1015/AC1018 only.  AC1024 derives
+    // objSize from the body buffer size, so no RL is emitted.
+    if (version < DRW::AC1024) {
+        buf->putRawLong32(0);
+    }
 
     // Own handle: code 0 per spec §20.4.1.
     dwgHandle ownH;
@@ -766,18 +773,22 @@ bool DRW_Entity::encodeDwgCommon(DRW::Version version, dwgBufferW *buf) {
     // numReactors=0 (BL per spec §20.4.1)
     buf->putBitLong(0);
 
-    // R2004 (AC1018): reader reads xDictFlag bit (version > AC1015) then
-    // forces haveNextLinks=1 (no bit in stream).  xDictFlag=0 means the
+    // R2004/R2010 (AC1018, AC1024): reader reads xDictFlag bit (version > AC1015)
+    // then forces haveNextLinks=1 (no bit in stream).  xDictFlag=0 means the
     // reader will expect a null XDicObj handle in the handle section.
     // R2000 (AC1015): no xDictFlag bit; reader reads haveNextLinks bit.
+    // R2013+ (AC1027+): reader reads xDictFlag then reads haveNextLinks (bit restored).
     // haveNextLinks=1 means no prev/next links — no extra handles in stream.
     if (version == DRW::AC1015) {
         buf->putBit(1);  // haveNextLinks=1 (no prev/next chain)
     } else {
         buf->putBit(0);  // xDictFlag=0 (entity has no xdict; null handle follows)
+        if (version > DRW::AC1024) {
+            buf->putBit(1);  // haveNextLinks=1 (AC1027+: bit is back in stream)
+        }
     }
 
-    // ENC color (BS for R2000/R2004 — putEnColor delegates to putBitShort).
+    // ENC color (BS for R2000/R2004/R2010).
     buf->putEnColor(version, static_cast<duint16>(color));
 
     // ltypeScale BD.
@@ -786,6 +797,19 @@ bool DRW_Entity::encodeDwgCommon(DRW::Version version, dwgBufferW *buf) {
     // ltFlags BB (0 = BYLAYER), plotFlags BB (0 = BYLAYER).
     buf->put2Bits(0);
     buf->put2Bits(0);
+
+    // R2010 (AC1024): materialFlag BB + shadowFlag RC (version > AC1018).
+    if (version > DRW::AC1018) {
+        buf->put2Bits(0);       // materialFlag BB = 0 (inherit)
+        buf->putRawChar8(0);    // shadowFlag RC = 0 (inherit)
+    }
+
+    // R2010 (AC1024): three visual-style flag bits (version > AC1021).
+    if (version > DRW::AC1021) {
+        buf->putBit(0);  // hasFullVisualStyle
+        buf->putBit(0);  // hasFaceVisualStyle
+        buf->putBit(0);  // hasEdgeVisualStyle
+    }
 
     // invisibleFlag BS.
     buf->putBitShort(0);
@@ -796,19 +820,24 @@ bool DRW_Entity::encodeDwgCommon(DRW::Version version, dwgBufferW *buf) {
     return true;
 }
 
-bool DRW_Entity::encodeDwgEntHandle(DRW::Version version, dwgBufferW *buf) {
-    if (version != DRW::AC1015 && version != DRW::AC1018) return false;
+bool DRW_Entity::encodeDwgEntHandle(DRW::Version version, dwgBufferW *buf,
+                                     dwgBufferW *handleBuf) {
+    if (version != DRW::AC1015 && version != DRW::AC1018 &&
+        version != DRW::AC1024 && version != DRW::AC1027) return false;
+
+    // For AC1024, handles are directed to handleBuf (the separate handle section);
+    // for AC1015/AC1018, handles go into buf alongside the data.
+    dwgBufferW *hb = (handleBuf != nullptr) ? handleBuf : buf;
 
     // ownerHandle skipped — entmode=2 above.
     // No reactor handles (numReactors=0).
-    // XDic handle — for R2000, xDictFlag is uninitialized in the reader,
-    // so the reader's `xDictFlag != 1` branch fires and expects a null
-    // XDic handle here.
+    // XDic handle — for R2000/R2004/R2010, xDictFlag=0 means the reader
+    // expects a null XDicObj handle here.
     dwgHandle xDicNull;
     xDicNull.code = 3;
     xDicNull.ref  = 0;
     xDicNull.size = 0;
-    buf->putHandle(xDicNull);
+    hb->putHandle(xDicNull);
 
     // Layer handle (R2000+ unconditional).  Hard pointer.
     dwgHandle lH;
@@ -819,17 +848,18 @@ bool DRW_Entity::encodeDwgEntHandle(DRW::Version version, dwgBufferW *buf) {
         duint32 t = lH.ref;
         while (t != 0) { t >>= 8; ++lH.size; }
     }
-    buf->putHandle(lH);
+    hb->putHandle(lH);
 
     // ltFlags=0 → no separate lTypeH (BYLAYER).
     // plotFlags=0 → no plotStyleH (BYLAYER).
-    // No 2007+ material/shadow handles, no 2010+ visualStyle handles.
+    // materialFlag=0 → no materialH (for AC1024).
+    // visualStyle flags=0 → no visualStyleH (for AC1024).
 
     return true;
 }
 
-bool DRW_Point::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs) {
-    (void)bs;
+bool DRW_Point::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs, dwgBufferW *strBuf, dwgBufferW *handleBuf) {
+    (void)bs; (void)strBuf;
     oType = 27;  // POINT class id — see dwgreader.cpp:1111 dispatch
     if (!encodeDwgCommon(version, buf)) return false;
 
@@ -841,7 +871,7 @@ bool DRW_Point::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs) {
     buf->putExtrusion(extPoint, /*b_R2000_style=*/true);
     buf->putBitDouble(0.0);  // x-axis rotation; libdxfrw does not store it
 
-    return encodeDwgEntHandle(version, buf);
+    return encodeDwgEntHandle(version, buf, handleBuf);
 }
 
 bool DRW_Point::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
@@ -887,8 +917,8 @@ bool DRW_Line::parseCode(int code, const std::unique_ptr<dxfReader>& reader){
     return true;
 }
 
-bool DRW_Line::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs) {
-    (void)bs;
+bool DRW_Line::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs, dwgBufferW *strBuf, dwgBufferW *handleBuf) {
+    (void)bs; (void)strBuf;
     oType = 19;  // LINE class id — see dwgreader.cpp:1105
     if (!encodeDwgCommon(version, buf)) return false;
 
@@ -911,11 +941,11 @@ bool DRW_Line::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs) {
     buf->putThickness(thickness, /*b_R2000_style=*/true);
     buf->putExtrusion(extPoint, /*b_R2000_style=*/true);
 
-    return encodeDwgEntHandle(version, buf);
+    return encodeDwgEntHandle(version, buf, handleBuf);
 }
 
-bool DRW_Circle::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs) {
-    (void)bs;
+bool DRW_Circle::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs, dwgBufferW *strBuf, dwgBufferW *handleBuf) {
+    (void)bs; (void)strBuf;
     oType = 18;  // CIRCLE class id — see dwgreader.cpp:1099
     if (!encodeDwgCommon(version, buf)) return false;
 
@@ -927,11 +957,11 @@ bool DRW_Circle::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs) {
     buf->putThickness(thickness, /*b_R2000_style=*/true);
     buf->putExtrusion(extPoint, /*b_R2000_style=*/true);
 
-    return encodeDwgEntHandle(version, buf);
+    return encodeDwgEntHandle(version, buf, handleBuf);
 }
 
-bool DRW_Ray::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs) {
-    (void)bs;
+bool DRW_Ray::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs, dwgBufferW *strBuf, dwgBufferW *handleBuf) {
+    (void)bs; (void)strBuf;
     // Ray = 40, Xline = 41 — derive from runtime type so DRW_Xline can
     // share this encoder (it inherits from DRW_Ray).
     oType = (eType == DRW::XLINE) ? 41 : 40;
@@ -945,11 +975,11 @@ bool DRW_Ray::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs) {
     buf->putBitDouble(secPoint.y);
     buf->putBitDouble(secPoint.z);
 
-    return encodeDwgEntHandle(version, buf);
+    return encodeDwgEntHandle(version, buf, handleBuf);
 }
 
-bool DRW_Trace::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs) {
-    (void)bs;
+bool DRW_Trace::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs, dwgBufferW *strBuf, dwgBufferW *handleBuf) {
+    (void)bs; (void)strBuf;
     oType = 32;  // TRACE = 32 — see dwgreader.cpp:1317
     if (!encodeDwgCommon(version, buf)) return false;
 
@@ -968,11 +998,11 @@ bool DRW_Trace::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs) {
     buf->putRawDouble(fourPoint.y);
     buf->putExtrusion(extPoint, /*b_R2000_style=*/true);
 
-    return encodeDwgEntHandle(version, buf);
+    return encodeDwgEntHandle(version, buf, handleBuf);
 }
 
-bool DRW_Spline::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs) {
-    (void)bs;
+bool DRW_Spline::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs, dwgBufferW *strBuf, dwgBufferW *handleBuf) {
+    (void)bs; (void)strBuf;
     oType = 36;  // SPLINE class id — see dwgreader.cpp:1329
     if (!encodeDwgCommon(version, buf)) return false;
 
@@ -982,7 +1012,10 @@ bool DRW_Spline::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs) {
     // Pick based on which list the caller populated.
     dint32 scenario = (!fitlist.empty()) ? 2 : 1;
     buf->putBitLong(scenario);
-    // (R2013+ splFlag1 + knotParam BL pair omitted — R2000 doesn't read them.)
+    if (version > DRW::AC1024) {
+        buf->putBitLong((scenario == 2) ? 1 : 0);  // splFlag1: bit-0 mirrors scenario
+        buf->putBitLong(0);                          // knotParam: chord parameterization
+    }
     buf->putBitLong(static_cast<dint32>(degree));
 
     if (scenario == 2) {
@@ -1022,15 +1055,15 @@ bool DRW_Spline::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs) {
     }
     for (const auto& fp : fitlist) buf->put3BitDouble(*fp);
 
-    return encodeDwgEntHandle(version, buf);
+    return encodeDwgEntHandle(version, buf, handleBuf);
 }
 
-bool DRW_MText::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs) {
+bool DRW_MText::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs, dwgBufferW *strBuf, dwgBufferW *handleBuf) {
     (void)bs;
     oType = 44;  // MTEXT class id — see dwgreader.cpp:1215
     if (!encodeDwgCommon(version, buf)) return false;
 
-    // R2000 MTEXT body — mirror of DRW_MText::parseDwg.
+    // R2000/R2004/R2010 MTEXT body — mirror of DRW_MText::parseDwg.
     buf->put3BitDouble(basePoint);          // insertion
     buf->put3BitDouble(extPoint);           // extrusion
     buf->put3BitDouble(secPoint);           // X-axis dir
@@ -1041,7 +1074,8 @@ bool DRW_MText::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs) {
     buf->putBitShort(static_cast<duint16>(alignH));   // drawing dir
     buf->putBitDouble(0.0);                 // ext_ht (extents height; undocumented)
     buf->putBitDouble(0.0);                 // ext_wid (extents width; undocumented)
-    buf->putVariableText(version, text);    // multi-line text string
+    // For AC1024: text goes to string buffer; for AC1015/AC1018: inline.
+    (strBuf ? strBuf : buf)->putVariableText(version, text);
     // R2000+ extras:
     buf->putBitShort(0);                    // linespacing style BS (1 = at least)
     buf->putBitDouble(interlin);            // linespacing factor BD
@@ -1050,7 +1084,7 @@ bool DRW_MText::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs) {
         buf->putBitLong(0);                 // 0 = no background fill
     }
 
-    if (!encodeDwgEntHandle(version, buf)) return false;
+    if (!encodeDwgEntHandle(version, buf, handleBuf)) return false;
 
     // styleH — hard pointer to STYLE table record (default STANDARD).
     dwgHandle sH;
@@ -1062,12 +1096,12 @@ bool DRW_MText::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs) {
         duint32 t = sref;
         while (t != 0) { t >>= 8; ++sH.size; }
     }
-    buf->putHandle(sH);
+    (handleBuf ? handleBuf : buf)->putHandle(sH);
     return true;
 }
 
-bool DRW_Insert::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs) {
-    (void)bs;
+bool DRW_Insert::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs, dwgBufferW *strBuf, dwgBufferW *handleBuf) {
+    (void)bs; (void)strBuf;
     oType = 7;  // INSERT class id — see dwgreader.cpp:1122 (case 8 is MINSERT)
     if (!encodeDwgCommon(version, buf)) return false;
 
@@ -1100,7 +1134,7 @@ bool DRW_Insert::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs) {
     // (oType==8 minsert: colcount/rowcount/colspace/rowspace omitted —
     //  we only emit oType=7 plain INSERT.)
 
-    if (!encodeDwgEntHandle(version, buf)) return false;
+    if (!encodeDwgEntHandle(version, buf, handleBuf)) return false;
 
     // BLOCK_RECORD hard pointer.
     dwgHandle bhH;
@@ -1111,12 +1145,12 @@ bool DRW_Insert::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs) {
         duint32 t = bhH.ref;
         while (t != 0) { t >>= 8; ++bhH.size; }
     }
-    buf->putHandle(bhH);
+    (handleBuf ? handleBuf : buf)->putHandle(bhH);
     return true;
 }
 
-bool DRW_3Dface::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs) {
-    (void)bs;
+bool DRW_3Dface::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs, dwgBufferW *strBuf, dwgBufferW *handleBuf) {
+    (void)bs; (void)strBuf;
     oType = 28;  // 3DFACE class id — see dwgreader.cpp:1237
     if (!encodeDwgCommon(version, buf)) return false;
 
@@ -1141,11 +1175,11 @@ bool DRW_3Dface::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs) {
     buf->putDefaultDouble(thirdPoint.z, fourPoint.z);
     if (!hasNoFlag) buf->putBitShort(static_cast<duint16>(invisibleflag));
 
-    return encodeDwgEntHandle(version, buf);
+    return encodeDwgEntHandle(version, buf, handleBuf);
 }
 
-bool DRW_Solid::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs) {
-    (void)bs;
+bool DRW_Solid::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs, dwgBufferW *strBuf, dwgBufferW *handleBuf) {
+    (void)bs; (void)strBuf;
     oType = 31;  // SOLID class id — see dwgreader.cpp:1305
     if (!encodeDwgCommon(version, buf)) return false;
 
@@ -1164,11 +1198,11 @@ bool DRW_Solid::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs) {
     buf->putRawDouble(fourPoint.y);
     buf->putExtrusion(extPoint, /*b_R2000_style=*/true);
 
-    return encodeDwgEntHandle(version, buf);
+    return encodeDwgEntHandle(version, buf, handleBuf);
 }
 
-bool DRW_LWPolyline::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs) {
-    (void)bs;
+bool DRW_LWPolyline::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs, dwgBufferW *strBuf, dwgBufferW *handleBuf) {
+    (void)bs; (void)strBuf;
     oType = 77;  // LWPOLYLINE class id — see dwgreader.cpp:1202
     if (!encodeDwgCommon(version, buf)) return false;
 
@@ -1228,22 +1262,24 @@ bool DRW_LWPolyline::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs
         }
     }
 
-    return encodeDwgEntHandle(version, buf);
+    return encodeDwgEntHandle(version, buf, handleBuf);
 }
 
-bool DRW_Block::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs) {
+bool DRW_Block::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs, dwgBufferW *strBuf, dwgBufferW *handleBuf) {
     (void)bs;
     // BLOCK = 4, ENDBLK = 5 per DWG spec.  isEnd controls which.
     oType = isEnd ? 5 : 4;
     if (!encodeDwgCommon(version, buf)) return false;
     if (!isEnd) {
-        buf->putVariableText(version, name);
+        (strBuf ? strBuf : buf)->putVariableText(version, name);
     }
-    // (R2007+ unknown bit skipped for R2000.)
-    return encodeDwgEntHandle(version, buf);
+    if (version > DRW::AC1018) {
+        buf->putBit(0);  // unknown bit (R2007+: always 0 for our output)
+    }
+    return encodeDwgEntHandle(version, buf, handleBuf);
 }
 
-bool DRW_Text::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs) {
+bool DRW_Text::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs, dwgBufferW *strBuf, dwgBufferW *handleBuf) {
     (void)bs;
     oType = 1;  // TEXT class id — see dwgreader.cpp:1208
     if (!encodeDwgCommon(version, buf)) return false;
@@ -1266,12 +1302,12 @@ bool DRW_Text::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs) {
     buf->putRawDouble(angle / ARAD);
     buf->putRawDouble(height);                        // text height
     buf->putRawDouble(widthscale);                    // width factor
-    buf->putVariableText(version, text);              // text string
+    (strBuf ? strBuf : buf)->putVariableText(version, text);  // text string
     buf->putBitShort(static_cast<duint16>(textgen));
     buf->putBitShort(static_cast<duint16>(alignH));
     buf->putBitShort(static_cast<duint16>(alignV));
 
-    if (!encodeDwgEntHandle(version, buf)) return false;
+    if (!encodeDwgEntHandle(version, buf, handleBuf)) return false;
 
     // styleH — hard pointer to STYLE table record.  Default points at
     // the STANDARD textstyle (handle 0x13) if caller hasn't set one.
@@ -1284,12 +1320,12 @@ bool DRW_Text::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs) {
         duint32 t = sref;
         while (t != 0) { t >>= 8; ++sH.size; }
     }
-    buf->putHandle(sH);
+    (handleBuf ? handleBuf : buf)->putHandle(sH);
     return true;
 }
 
-bool DRW_Ellipse::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs) {
-    (void)bs;
+bool DRW_Ellipse::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs, dwgBufferW *strBuf, dwgBufferW *handleBuf) {
+    (void)bs; (void)strBuf;
     oType = 35;  // ELLIPSE class id — see dwgreader.cpp:1117
     if (!encodeDwgCommon(version, buf)) return false;
 
@@ -1301,11 +1337,11 @@ bool DRW_Ellipse::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs) {
     buf->putBitDouble(staparam);         // start parameter
     buf->putBitDouble(endparam);         // end parameter
 
-    return encodeDwgEntHandle(version, buf);
+    return encodeDwgEntHandle(version, buf, handleBuf);
 }
 
-bool DRW_Arc::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs) {
-    (void)bs;
+bool DRW_Arc::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs, dwgBufferW *strBuf, dwgBufferW *handleBuf) {
+    (void)bs; (void)strBuf;
     oType = 17;  // ARC class id — see dwgreader.cpp:1093
     if (!encodeDwgCommon(version, buf)) return false;
 
@@ -1319,7 +1355,7 @@ bool DRW_Arc::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs) {
     buf->putBitDouble(staangle);
     buf->putBitDouble(endangle);
 
-    return encodeDwgEntHandle(version, buf);
+    return encodeDwgEntHandle(version, buf, handleBuf);
 }
 
 bool DRW_Line::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
@@ -2703,7 +2739,7 @@ bool DRW_Attrib::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
     return buf->isGood();
 }
 
-bool DRW_Attrib::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs) {
+bool DRW_Attrib::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs, dwgBufferW *strBuf, dwgBufferW *handleBuf) {
     (void)bs;
     oType = 2;  // ATTRIB class id — see dwgreader.cpp:1148
     if (!encodeDwgCommon(version, buf)) return false;
@@ -2723,18 +2759,19 @@ bool DRW_Attrib::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs) {
     buf->putRawDouble(angle / ARAD);                  // angle in radians RD
     buf->putRawDouble(height);                        // text height RD
     buf->putRawDouble(widthscale);                    // width factor RD
-    buf->putVariableText(version, text);              // text string TV
+    dwgBufferW *sb = strBuf ? strBuf : buf;
+    sb->putVariableText(version, text);               // text string TV
     buf->putBitShort(static_cast<duint16>(textgen));  // generation flags BS
     buf->putBitShort(static_cast<duint16>(alignH));   // horiz align BS
     buf->putBitShort(static_cast<duint16>(alignV));   // vert align BS
 
     // ATTRIB-specific tail
-    buf->putVariableText(version, tag);               // tag TV
+    sb->putVariableText(version, tag);                // tag TV
     buf->putBitShort(0);                              // fieldLen BS (always 0)
     buf->putRawChar8(attribFlags);                    // flags RC
     // lockPosition (R2010+) omitted — targeting R2000 only
 
-    if (!encodeDwgEntHandle(version, buf)) return false;
+    if (!encodeDwgEntHandle(version, buf, handleBuf)) return false;
 
     dwgHandle sH;
     duint32 sref = (styleH.ref == 0) ? 0x13 : styleH.ref;
@@ -2742,7 +2779,7 @@ bool DRW_Attrib::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs) {
     sH.ref  = sref;
     sH.size = 0;
     if (sref != 0) { duint32 t = sref; while (t != 0) { t >>= 8; ++sH.size; } }
-    buf->putHandle(sH);
+    (handleBuf ? handleBuf : buf)->putHandle(sH);
     return true;
 }
 
@@ -2841,7 +2878,7 @@ bool DRW_Attdef::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
     return buf->isGood();
 }
 
-bool DRW_Attdef::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs) {
+bool DRW_Attdef::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs, dwgBufferW *strBuf, dwgBufferW *handleBuf) {
     (void)bs;
     oType = 3;  // ATTDEF class id — see dwgreader.cpp:1185
     if (!encodeDwgCommon(version, buf)) return false;
@@ -2859,19 +2896,20 @@ bool DRW_Attdef::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs) {
     buf->putRawDouble(angle / ARAD);
     buf->putRawDouble(height);
     buf->putRawDouble(widthscale);
-    buf->putVariableText(version, text);
+    dwgBufferW *sb = strBuf ? strBuf : buf;
+    sb->putVariableText(version, text);
     buf->putBitShort(static_cast<duint16>(textgen));
     buf->putBitShort(static_cast<duint16>(alignH));
     buf->putBitShort(static_cast<duint16>(alignV));
 
-    buf->putVariableText(version, tag);
+    sb->putVariableText(version, tag);
     buf->putBitShort(0);                              // fieldLen BS (always 0)
     buf->putRawChar8(attribFlags);
 
     // ATTDEF adds prompt between flags and handle stream
-    buf->putVariableText(version, prompt);
+    sb->putVariableText(version, prompt);
 
-    if (!encodeDwgEntHandle(version, buf)) return false;
+    if (!encodeDwgEntHandle(version, buf, handleBuf)) return false;
 
     dwgHandle sH;
     duint32 sref = (styleH.ref == 0) ? 0x13 : styleH.ref;
@@ -2879,7 +2917,7 @@ bool DRW_Attdef::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs) {
     sH.ref  = sref;
     sH.size = 0;
     if (sref != 0) { duint32 t = sref; while (t != 0) { t >>= 8; ++sH.size; } }
-    buf->putHandle(sH);
+    (handleBuf ? handleBuf : buf)->putHandle(sH);
     return true;
 }
 
@@ -3635,15 +3673,14 @@ bool DRW_Hatch::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
     return buf->isGood();
 }
 
-bool DRW_Hatch::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs) {
+bool DRW_Hatch::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs, dwgBufferW *strBuf, dwgBufferW *handleBuf) {
     (void)bs;
     oType = 78;  // HATCH class id — see dwgreader.cpp:1380
     if (!encodeDwgCommon(version, buf)) return false;
 
     // R2004+ gradient section (parser reads this for version > AC1015).
     // We always write non-gradient (isGradient=0) with 0 colors.
-    // For R2004, the gradient name is a TV in the same buf; for R2007+ it
-    // would be in a separate string buffer — not yet supported.
+    dwgBufferW *sb = strBuf ? strBuf : buf;
     if (version > DRW::AC1015) {
         buf->putBitLong(0);               // isGradient = 0
         buf->putBitLong(0);               // gradReserved
@@ -3652,12 +3689,12 @@ bool DRW_Hatch::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs) {
         buf->putBitLong(0);               // singleColor
         buf->putBitDouble(0.0);           // gradTint
         buf->putBitLong(0);               // numColors = 0
-        buf->putVariableText(version, std::string{});  // gradName ""
+        sb->putVariableText(version, std::string{});  // gradName ""
     }
 
     buf->putBitDouble(basePoint.z);            // BD: elevation
     buf->put3BitDouble(extPoint);              // 3BD: extrusion (NOT BE-style for HATCH)
-    buf->putVariableText(version, name);       // TV: hatch pattern name
+    sb->putVariableText(version, name);        // TV: hatch pattern name
     buf->putBit(static_cast<duint8>(solid));
     buf->putBit(static_cast<duint8>(associative));
     // Write the actual count we iterate — not loopsnum, which may be stale.
@@ -3763,7 +3800,7 @@ bool DRW_Hatch::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs) {
         buf->putRawDouble(sp.y);
     }
 
-    if (!encodeDwgEntHandle(version, buf)) return false;
+    if (!encodeDwgEntHandle(version, buf, handleBuf)) return false;
     // totalBoundItems handles — 0 for non-associative hatch
     (void)totalBoundItems;
     return true;
@@ -4497,7 +4534,8 @@ bool DRW_DimOrdinate::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs)
 // ----------------------------------------------------------------------------
 // DRW_Dimension shared base encoder (R2000 / AC1015)
 // ----------------------------------------------------------------------------
-bool DRW_Dimension::encodeDwgDimBase(DRW::Version version, dwgBufferW *buf) const {
+bool DRW_Dimension::encodeDwgDimBase(DRW::Version version, dwgBufferW *buf,
+                                     dwgBufferW *strBuf) const {
     buf->putExtrusion(extPoint, true);   // BE (R2000 style)
     // Five unknown bits (present for R2000 = version > AC1014)
     buf->putBit(0); buf->putBit(0); buf->putBit(0); buf->putBit(0); buf->putBit(0);
@@ -4510,7 +4548,7 @@ bool DRW_Dimension::encodeDwgDimBase(DRW::Version version, dwgBufferW *buf) cons
     duint8 rawByte = static_cast<duint8>(
         ((type & 0x80) ? 0 : 1) | ((type & 0x20) ? 2 : 0));
     buf->putRawChar8(rawByte);
-    buf->putVariableText(version, text);
+    (strBuf ? strBuf : buf)->putVariableText(version, text);
     buf->putBitDouble(rot);
     buf->putBitDouble(hdir);
     const DRW_Coord zeroCoord{0.0, 0.0, 0.0};
@@ -4528,97 +4566,99 @@ bool DRW_Dimension::encodeDwgDimBase(DRW::Version version, dwgBufferW *buf) cons
 }
 
 // Helper: emit dimStyleH (defaults to STANDARD=0x15) and blockH.
-static void putDimHandles(dwgBufferW *buf, const dwgHandle& dimStyleH, const dwgHandle& blockH) {
+static void putDimHandles(dwgBufferW *buf, const dwgHandle& dimStyleH, const dwgHandle& blockH,
+                          dwgBufferW *hBuf = nullptr) {
+    dwgBufferW *hb = hBuf ? hBuf : buf;
     dwgHandle dsH;
     dsH.code = 5;
     dsH.ref  = (dimStyleH.ref == 0) ? 0x15 : dimStyleH.ref;
     dsH.size = 0;
     if (dsH.ref != 0) { duint32 t = dsH.ref; while (t != 0) { t >>= 8; ++dsH.size; } }
-    buf->putHandle(dsH);
+    hb->putHandle(dsH);
 
     dwgHandle bhH;
     bhH.code = (blockH.ref == 0) ? 0 : 5;
     bhH.ref  = blockH.ref;
     bhH.size = 0;
     if (bhH.ref != 0) { duint32 t = bhH.ref; while (t != 0) { t >>= 8; ++bhH.size; } }
-    buf->putHandle(bhH);
+    hb->putHandle(bhH);
 }
 
 // ----------------------------------------------------------------------------
 // DRW_DimAligned::encodeDwg  (oType=22)
 // ----------------------------------------------------------------------------
-bool DRW_DimAligned::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs) {
+bool DRW_DimAligned::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs, dwgBufferW *strBuf, dwgBufferW *handleBuf) {
     (void)bs;
     oType = 22;
     if (!encodeDwgCommon(version, buf)) return false;
-    if (!encodeDwgDimBase(version, buf)) return false;
+    if (!encodeDwgDimBase(version, buf, strBuf)) return false;
     buf->put3BitDouble(getPt3());      // def1
     buf->put3BitDouble(getPt4());      // def2
     buf->put3BitDouble(getDefPoint()); // defPoint
     buf->putBitDouble(getOb52() / ARAD);  // oblique: degrees → radians
-    if (!encodeDwgEntHandle(version, buf)) return false;
-    putDimHandles(buf, dimStyleH, blockH);
+    if (!encodeDwgEntHandle(version, buf, handleBuf)) return false;
+    putDimHandles(buf, dimStyleH, blockH, handleBuf);
     return true;
 }
 
 // ----------------------------------------------------------------------------
 // DRW_DimLinear::encodeDwg  (oType=21)
 // ----------------------------------------------------------------------------
-bool DRW_DimLinear::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs) {
+bool DRW_DimLinear::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs, dwgBufferW *strBuf, dwgBufferW *handleBuf) {
     (void)bs;
     oType = 21;
     if (!encodeDwgCommon(version, buf)) return false;
-    if (!encodeDwgDimBase(version, buf)) return false;
+    if (!encodeDwgDimBase(version, buf, strBuf)) return false;
     buf->put3BitDouble(getPt3());      // def1
     buf->put3BitDouble(getPt4());      // def2
     buf->put3BitDouble(getDefPoint()); // defPoint
     buf->putBitDouble(getOb52() / ARAD);  // oblique: degrees → radians
     buf->putBitDouble(getAn50() / ARAD);  // rotation angle: degrees → radians
-    if (!encodeDwgEntHandle(version, buf)) return false;
-    putDimHandles(buf, dimStyleH, blockH);
+    if (!encodeDwgEntHandle(version, buf, handleBuf)) return false;
+    putDimHandles(buf, dimStyleH, blockH, handleBuf);
     return true;
 }
 
 // ----------------------------------------------------------------------------
 // DRW_DimRadial::encodeDwg  (oType=25)
 // ----------------------------------------------------------------------------
-bool DRW_DimRadial::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs) {
+bool DRW_DimRadial::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs, dwgBufferW *strBuf, dwgBufferW *handleBuf) {
     (void)bs;
     oType = 25;
     if (!encodeDwgCommon(version, buf)) return false;
-    if (!encodeDwgDimBase(version, buf)) return false;
+    if (!encodeDwgDimBase(version, buf, strBuf)) return false;
     buf->put3BitDouble(getDefPoint());  // center point (code 10)
     buf->put3BitDouble(getPt5());       // diameter point (code 15)
     buf->putBitDouble(getRa40());       // leader length (code 40)
-    if (!encodeDwgEntHandle(version, buf)) return false;
-    putDimHandles(buf, dimStyleH, blockH);
+    if (!encodeDwgEntHandle(version, buf, handleBuf)) return false;
+    putDimHandles(buf, dimStyleH, blockH, handleBuf);
     return true;
 }
 
 // ----------------------------------------------------------------------------
 // DRW_DimDiametric::encodeDwg  (oType=26)
 // ----------------------------------------------------------------------------
-bool DRW_DimDiametric::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs) {
+bool DRW_DimDiametric::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs, dwgBufferW *strBuf, dwgBufferW *handleBuf) {
     (void)bs;
     oType = 26;
     if (!encodeDwgCommon(version, buf)) return false;
-    if (!encodeDwgDimBase(version, buf)) return false;
+    if (!encodeDwgDimBase(version, buf, strBuf)) return false;
     buf->put3BitDouble(getPt5());       // first diameter point (code 15) — matches parseDwg order
     buf->put3BitDouble(getDefPoint());  // opposite point (code 10)
     buf->putBitDouble(getRa40());       // leader length (code 40)
-    if (!encodeDwgEntHandle(version, buf)) return false;
-    putDimHandles(buf, dimStyleH, blockH);
+    if (!encodeDwgEntHandle(version, buf, handleBuf)) return false;
+    putDimHandles(buf, dimStyleH, blockH, handleBuf);
     return true;
 }
 
 // ----------------------------------------------------------------------------
 // DRW_DimAngular::encodeDwg  (oType=24, 2-line angular)
 // ----------------------------------------------------------------------------
-bool DRW_DimAngular::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs) {
+bool DRW_DimAngular::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs, dwgBufferW *strBuf, dwgBufferW *handleBuf) {
     (void)bs;
     oType = 24;
     if (!encodeDwgCommon(version, buf)) return false;
-    if (!encodeDwgDimBase(version, buf)) return false;
+    if (!encodeDwgDimBase(version, buf, strBuf)) return false;
     // arcPoint is 2RD (not 3BD) in parseDwg — only x and y
     buf->putRawDouble(getPt6().x);
     buf->putRawDouble(getPt6().y);
@@ -4626,44 +4666,44 @@ bool DRW_DimAngular::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs
     buf->put3BitDouble(getPt4());       // def2 (line 1 end)
     buf->put3BitDouble(getPt5());       // circlePoint (center)
     buf->put3BitDouble(getDefPoint());  // defPoint
-    if (!encodeDwgEntHandle(version, buf)) return false;
-    putDimHandles(buf, dimStyleH, blockH);
+    if (!encodeDwgEntHandle(version, buf, handleBuf)) return false;
+    putDimHandles(buf, dimStyleH, blockH, handleBuf);
     return true;
 }
 
 // ----------------------------------------------------------------------------
 // DRW_DimAngular3p::encodeDwg  (oType=23, 3-point angular)
 // ----------------------------------------------------------------------------
-bool DRW_DimAngular3p::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs) {
+bool DRW_DimAngular3p::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs, dwgBufferW *strBuf, dwgBufferW *handleBuf) {
     (void)bs;
     oType = 23;
     if (!encodeDwgCommon(version, buf)) return false;
-    if (!encodeDwgDimBase(version, buf)) return false;
+    if (!encodeDwgDimBase(version, buf, strBuf)) return false;
     buf->put3BitDouble(getDefPoint());  // defPoint (code 10)
     buf->put3BitDouble(getPt3());       // def1 (code 13)
     buf->put3BitDouble(getPt4());       // def2 (code 14)
     buf->put3BitDouble(getPt5());       // circlePoint / vertex (code 15)
-    if (!encodeDwgEntHandle(version, buf)) return false;
-    putDimHandles(buf, dimStyleH, blockH);
+    if (!encodeDwgEntHandle(version, buf, handleBuf)) return false;
+    putDimHandles(buf, dimStyleH, blockH, handleBuf);
     return true;
 }
 
 // ----------------------------------------------------------------------------
 // DRW_DimOrdinate::encodeDwg  (oType=20)
 // ----------------------------------------------------------------------------
-bool DRW_DimOrdinate::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs) {
+bool DRW_DimOrdinate::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs, dwgBufferW *strBuf, dwgBufferW *handleBuf) {
     (void)bs;
     oType = 20;
     if (!encodeDwgCommon(version, buf)) return false;
-    if (!encodeDwgDimBase(version, buf)) return false;
+    if (!encodeDwgDimBase(version, buf, strBuf)) return false;
     buf->put3BitDouble(getDefPoint());  // origin/definition point (code 10)
     buf->put3BitDouble(getPt3());       // feature location point (code 13)
     buf->put3BitDouble(getPt4());       // leader end point (code 14)
     // type2 byte encodes the x-vs-y ordinate flag (bit7 of type)
     duint8 type2byte = (type & 0x80) ? 1 : 0;
     buf->putRawChar8(type2byte);
-    if (!encodeDwgEntHandle(version, buf)) return false;
-    putDimHandles(buf, dimStyleH, blockH);
+    if (!encodeDwgEntHandle(version, buf, handleBuf)) return false;
+    putDimHandles(buf, dimStyleH, blockH, handleBuf);
     return true;
 }
 
@@ -5373,4 +5413,328 @@ bool DRW_Viewport::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
     if (!ret)
         return ret;
     return buf->isGood();
+}
+
+// ---------------------------------------------------------------------------
+// Write helpers shared by the new encoders below.
+// ---------------------------------------------------------------------------
+
+namespace {
+// Write an absolute hard-pointer handle (code=5, ref=ref) or null handle
+// (code=3, ref=0) depending on whether ref is non-zero.
+static void putAbsHandle(dwgBufferW *hb, duint32 ref) {
+    dwgHandle h;
+    h.code = (ref != 0) ? 5 : 3;
+    h.ref  = ref;
+    h.size = 0;
+    if (h.ref != 0) {
+        duint32 t = h.ref;
+        while (t != 0) { t >>= 8; ++h.size; }
+    }
+    hb->putHandle(h);
+}
+} // namespace
+
+// ---------------------------------------------------------------------------
+// DRW_MLine::encodeDwg — OT=47 (AC1015/AC1018/AC1024)
+// ---------------------------------------------------------------------------
+
+bool DRW_MLine::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs,
+                           dwgBufferW *strBuf, dwgBufferW *handleBuf) {
+    (void)bs; (void)strBuf;
+    oType = 47;
+    if (!encodeDwgCommon(version, buf)) return false;
+
+    buf->putBitDouble(scale);
+    buf->putRawChar8(justification);
+    buf->put3BitDouble(basePoint);
+    buf->putExtrusion(extPoint, false);  // false = pre-2000 style (getExtrusion(false) in parser)
+    buf->putBitShort(static_cast<duint16>(openClosed));
+    buf->putRawChar8(numLines);
+    buf->putBitShort(numVerts);
+
+    for (const auto& vtx : vertlist) {
+        buf->put3BitDouble(vtx.position);
+        buf->put3BitDouble(vtx.vertexDir);
+        buf->put3BitDouble(vtx.miterDir);
+        for (int li = 0; li < static_cast<int>(numLines); ++li) {
+            const auto& segs  = (li < static_cast<int>(vtx.segParms.size()))
+                                    ? vtx.segParms[li]      : std::vector<double>{};
+            const auto& fills = (li < static_cast<int>(vtx.areaFillParms.size()))
+                                    ? vtx.areaFillParms[li] : std::vector<double>{};
+            buf->putBitShort(static_cast<duint16>(segs.size()));
+            for (double s : segs)  buf->putBitDouble(s);
+            buf->putBitShort(static_cast<duint16>(fills.size()));
+            for (double f : fills) buf->putBitDouble(f);
+        }
+    }
+
+    if (!encodeDwgEntHandle(version, buf, handleBuf)) return false;
+
+    // MLINE style handle — extra handle after standard entity handles.
+    if (version > DRW::AC1014) {
+        dwgBufferW *hb = (handleBuf != nullptr) ? handleBuf : buf;
+        putAbsHandle(hb, styleHandle);
+    }
+    return true;
+}
+
+// ---------------------------------------------------------------------------
+// DRW_Vertex::encodeDwg — OT varies by flags
+// ---------------------------------------------------------------------------
+
+bool DRW_Vertex::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs,
+                             dwgBufferW *strBuf, dwgBufferW *handleBuf) {
+    (void)bs; (void)strBuf;
+    // Determine object type from stored flags.
+    if (flags & 128)               oType = 0x0E;  // VERTEX_PFACE_FACE
+    else if (flags & (64 | 32 | 16)) oType = 0x0B;  // VERTEX_3D / VERTEX_MESH / VERTEX_PFACE
+    else                             oType = 0x0A;  // VERTEX_2D
+
+    if (!encodeDwgCommon(version, buf)) return false;
+
+    if (oType == 0x0A) {
+        buf->putRawChar8(static_cast<duint8>(flags));
+        buf->put3BitDouble(basePoint);
+        buf->putBitDouble(stawidth);
+        buf->putBitDouble(endwidth);
+        buf->putBitDouble(bulge);
+        if (version > DRW::AC1021)
+            buf->putBitLong(static_cast<dint32>(identifier));
+        buf->putBitDouble(tgdir);
+    } else if (oType == 0x0B) {
+        buf->putRawChar8(static_cast<duint8>(flags));
+        buf->put3BitDouble(basePoint);
+    } else {  // 0x0E pface face
+        buf->putBitShort(static_cast<duint16>(vindex1));
+        buf->putBitShort(static_cast<duint16>(vindex2));
+        buf->putBitShort(static_cast<duint16>(vindex3));
+        buf->putBitShort(static_cast<duint16>(vindex4));
+    }
+
+    return encodeDwgEntHandle(version, buf, handleBuf);
+}
+
+// ---------------------------------------------------------------------------
+// DRW_Polyline::encodeDwg — OT varies by flags; vertex handles emitted here.
+// ---------------------------------------------------------------------------
+
+bool DRW_Polyline::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs,
+                               dwgBufferW *strBuf, dwgBufferW *handleBuf) {
+    (void)bs; (void)strBuf;
+    // Determine object type from stored flags (mirror of parseDwg dispatch).
+    if (flags & 64)       oType = 0x1D;  // POLYLINE_PFACE
+    else if (flags & 16)  oType = 0x1E;  // POLYLINE_MESH
+    else if (flags & 8)   oType = 0x10;  // POLYLINE_3D
+    else                  oType = 0x0F;  // POLYLINE_2D
+
+    if (!encodeDwgCommon(version, buf)) return false;
+
+    if (oType == 0x0F) {
+        buf->putBitShort(static_cast<duint16>(flags));
+        buf->putBitShort(static_cast<duint16>(curvetype));
+        buf->putBitDouble(defstawidth);
+        buf->putBitDouble(defendwidth);
+        buf->putThickness(thickness, version > DRW::AC1014);
+        buf->putBitDouble(basePoint.z);
+        buf->putExtrusion(extPoint, version > DRW::AC1014);
+    } else if (oType == 0x10) {
+        // curvetype → 2 RC flag bytes (mirror of parser decode)
+        duint8 rc1 = 0;
+        if      (curvetype == 5) rc1 = 1;
+        else if (curvetype == 6) rc1 = 2;
+        else if (curvetype == 8) rc1 = 3;
+        buf->putRawChar8(rc1);
+        buf->putRawChar8(static_cast<duint8>(flags & 1));  // bit 0 = closed
+    } else if (oType == 0x1D) {
+        buf->putBitShort(static_cast<duint16>(vertexcount));
+        buf->putBitShort(static_cast<duint16>(facecount));
+    } else {  // 0x1E MESH
+        buf->putBitShort(static_cast<duint16>(flags & ~16));  // strip reader-added bit 4
+        buf->putBitShort(static_cast<duint16>(curvetype));
+        buf->putBitShort(static_cast<duint16>(vertexcount));  // M count
+        buf->putBitShort(static_cast<duint16>(facecount));    // N count
+        buf->putBitShort(0);  // mDensity
+        buf->putBitShort(0);  // nDensity
+    }
+
+    // AC2004+ (>AC1015): emit vertex count before the handle section.
+    dint32 ooCount = static_cast<dint32>(vertlist.size());
+    if (version > DRW::AC1015)
+        buf->putBitLong(ooCount);
+
+    if (!encodeDwgEntHandle(version, buf, handleBuf)) return false;
+
+    dwgBufferW *hb = (handleBuf != nullptr) ? handleBuf : buf;
+
+    if (version < DRW::AC1018) {
+        // R2000-: first/last vertex handles (absolute hard pointers).
+        putAbsHandle(hb, vertlist.empty() ? 0u : vertlist.front()->handle);
+        putAbsHandle(hb, vertlist.empty() ? 0u : vertlist.back()->handle);
+    } else {
+        // R2004+: one handle per vertex.
+        for (const auto& v : vertlist)
+            putAbsHandle(hb, v ? v->handle : 0u);
+    }
+    putAbsHandle(hb, 0);  // seqEndH — null (no separate SEQEND object)
+
+    return true;
+}
+
+// ---------------------------------------------------------------------------
+// DRW_Leader::encodeDwg — OT=45 (AC1015/AC1018/AC1024)
+// ---------------------------------------------------------------------------
+
+bool DRW_Leader::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs,
+                             dwgBufferW *strBuf, dwgBufferW *handleBuf) {
+    (void)bs; (void)strBuf;
+    oType = 45;
+    if (!encodeDwgCommon(version, buf)) return false;
+
+    buf->putBit(0);                                              // unknown bit
+    buf->putBitShort(0);                                         // annotType (ignored on read)
+    buf->putBitShort(0);                                         // pathType  (ignored on read)
+    buf->putBitLong(static_cast<dint32>(vertexlist.size()));
+    for (const auto& vp : vertexlist)
+        buf->put3BitDouble(*vp);
+    buf->put3BitDouble(DRW_Coord(0, 0, 0));                     // Endptproj (ignored on read)
+    buf->putExtrusion(extrusionPoint, version > DRW::AC1014);
+
+    if (version > DRW::AC1014) {
+        for (int i = 0; i < 5; ++i) buf->putBit(0);             // 5 unknown bits
+    }
+
+    buf->put3BitDouble(horizdir);
+    buf->put3BitDouble(offsetblock);
+
+    if (version > DRW::AC1012)
+        buf->put3BitDouble(DRW_Coord(0, 0, 0));                 // unknown coord
+
+    if (version < DRW::AC1015)
+        buf->putBitDouble(0.0);                                  // dimgap (pre-R2000)
+
+    if (version < DRW::AC1024) {
+        buf->putBitDouble(textheight);
+        buf->putBitDouble(textwidth);
+    }
+
+    buf->putBit(static_cast<duint8>(hookline));
+    buf->putBit(static_cast<duint8>(arrow));
+
+    if (version < DRW::AC1015) {
+        buf->putBitShort(0);    // arrowHeadType
+        buf->putBitDouble(0.0); // dimasz
+        buf->putBit(0);         // unk
+        buf->putBit(0);         // unk
+        buf->putBitShort(0);    // unk short
+        buf->putBitShort(0);    // byBlock color
+        buf->putBit(0);         // unk
+        buf->putBit(0);         // unk
+    } else {
+        buf->putBitShort(0);    // unk short (R2000+)
+        buf->putBit(0);         // unk
+        buf->putBit(0);         // unk
+    }
+
+    if (!encodeDwgEntHandle(version, buf, handleBuf)) return false;
+
+    dwgBufferW *hb = (handleBuf != nullptr) ? handleBuf : buf;
+    putAbsHandle(hb, 0);       // AnnotH — null (no annotation entity)
+    putAbsHandle(hb, 0x15);    // dimStyleH — hard ptr to STANDARD (handle 0x15)
+
+    return true;
+}
+
+// ---------------------------------------------------------------------------
+// DRW_Viewport::encodeDwg — OT=34 (AC1015/AC1018/AC1024)
+// ---------------------------------------------------------------------------
+
+bool DRW_Viewport::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs,
+                               dwgBufferW *strBuf, dwgBufferW *handleBuf) {
+    (void)bs;
+    oType = 34;
+    // Use strBuf for TV strings in AC1024; for AC1015/AC1018 strings go inline.
+    dwgBufferW *sb = (strBuf && version > DRW::AC1018) ? strBuf : buf;
+    if (!encodeDwgCommon(version, buf)) return false;
+
+    buf->putBitDouble(basePoint.x);
+    buf->putBitDouble(basePoint.y);
+    buf->putBitDouble(basePoint.z);
+    buf->putBitDouble(pswidth);
+    buf->putBitDouble(psheight);
+
+    if (version > DRW::AC1014) {
+        buf->putBitDouble(viewTarget.x);
+        buf->putBitDouble(viewTarget.y);
+        buf->putBitDouble(viewTarget.z);
+        buf->putBitDouble(viewDir.x);
+        buf->putBitDouble(viewDir.y);
+        buf->putBitDouble(viewDir.z);
+        buf->putBitDouble(twistAngle);
+        buf->putBitDouble(viewHeight);
+        buf->putBitDouble(viewLength);    // lens length
+        buf->putBitDouble(frontClip);
+        buf->putBitDouble(backClip);
+        buf->putBitDouble(snapAngle);
+        buf->putRawDouble(centerPX);
+        buf->putRawDouble(centerPY);
+        buf->putRawDouble(snapPX);
+        buf->putRawDouble(snapPY);
+        buf->putRawDouble(snapSpPX);
+        buf->putRawDouble(snapSpPY);
+        buf->putRawDouble(0.0);   // gridSpacingX
+        buf->putRawDouble(0.0);   // gridSpacingY
+        buf->putBitShort(0);      // circleZoom
+    }
+
+    if (version > DRW::AC1018)
+        buf->putBitShort(0);      // gridMajor (AC2007+)
+
+    if (version > DRW::AC1014) {
+        buf->putBitLong(0);       // frozenLyCount
+        buf->putBitLong(0);       // statusFlags
+        sb->putVariableText(version, "");  // styleSheet TV
+        buf->putRawChar8(0);      // renderMode
+        buf->putBit(0);           // ucsPerVP
+        buf->putBit(0);           // ucs flag
+        // UCS origin / X-axis / Y-axis (3×3BD), elevation, ortho type
+        for (int i = 0; i < 9; ++i) buf->putBitDouble(0.0);
+        buf->putBitDouble(0.0);   // ucsElev
+        buf->putBitShort(0);      // ucsOrthoType
+    }
+
+    if (version > DRW::AC1015)
+        buf->putBitShort(0);      // shadePlotMode (AC2004+)
+
+    if (version > DRW::AC1018) {
+        buf->putBit(0);           // useDefLight
+        buf->putRawChar8(0);      // defLightType
+        buf->putBitDouble(0.0);   // brightness
+        buf->putBitDouble(0.0);   // contrast
+        buf->putEnColor(version, 256);  // ambientColor (ByLayer)
+    }
+
+    if (!encodeDwgEntHandle(version, buf, handleBuf)) return false;
+
+    dwgBufferW *hb = (handleBuf != nullptr) ? handleBuf : buf;
+
+    if (version < DRW::AC1015) {
+        putAbsHandle(hb, 0);    // viewport entity header (pre-2000)
+    }
+    if (version > DRW::AC1014) {
+        // frozenLyCount=0, so no frozen layer handles.
+        putAbsHandle(hb, 0);    // clip boundary (null)
+        if (version == DRW::AC1015)
+            putAbsHandle(hb, 0);  // viewport entity header (R2000 only)
+        putAbsHandle(hb, 0);    // namedUCS (null)
+        putAbsHandle(hb, 0);    // baseUCS (null)
+    }
+    if (version > DRW::AC1018) {
+        putAbsHandle(hb, 0);    // background (null)
+        putAbsHandle(hb, 0);    // visualStyle (null)
+        putAbsHandle(hb, 0);    // shadeplotID (null)
+        putAbsHandle(hb, 0);    // sun (null)
+    }
+
+    return true;
 }

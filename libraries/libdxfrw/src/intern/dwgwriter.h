@@ -200,6 +200,16 @@ public:
     /// first open, marking the file modified.  See [Risk 4j].
     duint32 highWaterHandle() const { return m_handles.current(); }
 
+    /// Allocate a fresh user handle and return it without encoding any
+    /// object.  Used by writePolyline to reserve the polyline handle
+    /// before vertex handles, so that readDwgEntities (which iterates
+    /// ObjectMap in ascending-handle order) encounters the polyline
+    /// before its vertices and can consume them via readPlineVertex.
+    duint32 allocNextHandle() { return m_handles.next(); }
+
+    /// Reserve a specific handle so `next()` never returns it again.
+    void reserveHandle(duint32 h) { m_handles.reserve(h); }
+
 protected:
     /// In-memory byte accumulator. All section bodies append here;
     /// final flush copies to `m_stream` in one `write()` call.

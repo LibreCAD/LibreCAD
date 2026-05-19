@@ -22,6 +22,8 @@
 #include "intern/dwgwriter.h"
 #include "intern/dwgwriter15.h"
 #include "intern/dwgwriter18.h"
+#include "intern/dwgwriter24.h"
+#include "intern/dwgwriter27.h"
 #include "intern/dwgreader15.h"
 #include "intern/dwgreader18.h"
 #include "intern/dwgreader21.h"
@@ -194,7 +196,8 @@ bool dwgRW::write(DRW_Interface *interface_, DRW::Version ver, bool bin) {
     // The 'bin' parameter is accepted only for signature symmetry with
     // dxfRW::write — DWG is always binary on disk.
     (void)bin;
-    if (ver != DRW::AC1015 && ver != DRW::AC1018) {
+    if (ver != DRW::AC1015 && ver != DRW::AC1018 &&
+        ver != DRW::AC1024 && ver != DRW::AC1027) {
         error = DRW::BAD_VERSION;
         return false;
     }
@@ -220,7 +223,11 @@ bool dwgRW::write(DRW_Interface *interface_, DRW::Version ver, bool bin) {
     // (empty) state and the encoder emits per-var defaults.
     iface->writeHeader(header);
 
-    if (ver == DRW::AC1018)
+    if (ver == DRW::AC1027)
+        writer = std::make_unique<dwgWriter27>(&filestr, &header);
+    else if (ver == DRW::AC1024)
+        writer = std::make_unique<dwgWriter24>(&filestr, &header);
+    else if (ver == DRW::AC1018)
         writer = std::make_unique<dwgWriter18>(&filestr, &header);
     else
         writer = std::make_unique<dwgWriter15>(&filestr, &header);
@@ -239,8 +246,20 @@ bool dwgRW::write(DRW_Interface *interface_, DRW::Version ver, bool bin) {
     // writeDwgHandles (object map).
     bool ok = writer->writeFileHeaderStub() &&
               writer->writeDwgHeader() &&
-              writer->writeDwgClasses() &&
-              writer->writeDwgObjects();
+              writer->writeDwgClasses();
+    if (ok) {
+        // Collect user-defined table records before emitting the objects
+        // section.  Each iface callback calls back into dwgRW::add*() which
+        // forwards to the writer's pending lists.  Order matters: LTypes
+        // before Layers so ltype→handle resolution works in emitLayerRecord.
+        iface->writeLTypes();
+        iface->writeLayers();
+        iface->writeTextstyles();
+        iface->writeVports();
+        iface->writeDimstyles();
+        iface->writeAppId();
+        ok = writer->writeDwgObjects();
+    }
     if (ok) {
         // Caller-driven object-stream content.  writeBlocks fires
         // first so the caller can `defineBlock(...)` for any user
@@ -363,9 +382,89 @@ bool dwgRW::writeDimension(DRW_Dimension *ent) {
     return writer->encodeEntity(ent);
 }
 
+bool dwgRW::writeMLine(DRW_MLine *ent) {
+    if (writer == nullptr || ent == nullptr) return false;
+    return writer->encodeEntity(ent);
+}
+
+bool dwgRW::writePolyline(DRW_Polyline *ent) {
+    if (writer == nullptr || ent == nullptr) return false;
+    // Pre-allocate the polyline handle BEFORE vertex handles so that
+    // readDwgEntities (which iterates ObjectMap in ascending-handle order)
+    // processes the polyline first and can consume vertices via readPlineVertex.
+    if (ent->handle == 0)
+        ent->handle = writer->allocNextHandle();
+    else
+        writer->reserveHandle(ent->handle);
+    // Encode vertices (they receive higher handles than the polyline).
+    for (auto& v : ent->vertlist) {
+        if (v && !writer->encodeEntity(v.get())) return false;
+    }
+    return writer->encodeEntity(ent);
+}
+
+bool dwgRW::writeLeader(DRW_Leader *ent) {
+    if (writer == nullptr || ent == nullptr) return false;
+    return writer->encodeEntity(ent);
+}
+
+bool dwgRW::writeViewport(DRW_Viewport *ent) {
+    if (writer == nullptr || ent == nullptr) return false;
+    return writer->encodeEntity(ent);
+}
+
 duint32 dwgRW::defineBlock(const std::string& name, const DRW_Coord& basePoint) {
     if (writer == nullptr) return 0;
     return writer->defineBlock(name, basePoint);
+}
+
+// Table-record add* methods — forward to dwgWriter15 via dynamic_cast since
+// the add*() API lives on dwgWriter15 (all concrete writers derive from it).
+static dwgWriter15 *asWriter15(std::unique_ptr<dwgWriter> &w) {
+    return dynamic_cast<dwgWriter15 *>(w.get());
+}
+
+bool dwgRW::addLType(DRW_LType *ent) {
+    if (ent == nullptr) return false;
+    auto *w = asWriter15(writer);
+    if (w == nullptr) return false;
+    w->addLType(*ent);
+    return true;
+}
+bool dwgRW::addLayer(DRW_Layer *ent) {
+    if (ent == nullptr) return false;
+    auto *w = asWriter15(writer);
+    if (w == nullptr) return false;
+    w->addLayer(*ent);
+    return true;
+}
+bool dwgRW::addTextstyle(DRW_Textstyle *ent) {
+    if (ent == nullptr) return false;
+    auto *w = asWriter15(writer);
+    if (w == nullptr) return false;
+    w->addTextstyle(*ent);
+    return true;
+}
+bool dwgRW::addVport(DRW_Vport *ent) {
+    if (ent == nullptr) return false;
+    auto *w = asWriter15(writer);
+    if (w == nullptr) return false;
+    w->addVport(*ent);
+    return true;
+}
+bool dwgRW::addDimstyle(DRW_Dimstyle *ent) {
+    if (ent == nullptr) return false;
+    auto *w = asWriter15(writer);
+    if (w == nullptr) return false;
+    w->addDimstyle(*ent);
+    return true;
+}
+bool dwgRW::addAppId(DRW_AppId *ent) {
+    if (ent == nullptr) return false;
+    auto *w = asWriter15(writer);
+    if (w == nullptr) return false;
+    w->addAppId(*ent);
+    return true;
 }
 
 std::unique_ptr<dwgReader> dwgRW::createReaderForVersion(DRW::Version version, std::ifstream *stream, dwgRW *p )

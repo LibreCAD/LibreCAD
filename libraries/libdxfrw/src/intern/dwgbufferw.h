@@ -62,6 +62,10 @@ public:
     /// reallocations during large emits.
     void reserve(size_t n) { m_buf.reserve(n); }
 
+    /// Reset the buffer to empty, clearing both accumulated bytes and the
+    /// partial-byte cursor.  Use before reusing a scratch buffer.
+    void reset() { m_buf.clear(); m_bitPos = 0; }
+
     /// Round the cursor up to the next byte boundary by appending zero
     /// bits as needed.  No-op when already byte-aligned.
     void alignToByte();
@@ -110,17 +114,28 @@ public:
     /// (1..4 bytes, or 0 when ref == 0).
     void putHandle(const dwgHandle& h);
 
+    /// Object type (OT).  R2010+ uses a 2-bit code + variable-width
+    /// value; earlier versions use a plain BS.
+    void putObjType(DRW::Version v, duint16 oType);
+
     // ---- strings --------------------------------------------------------
 
-    /// Variable text (TV).  R2000 emits as BS(byte-length) + bytes in
-    /// the active codepage (typically CP1252).  Reader: getVariableText
-    /// branches on version; this writer is R2000-only and always emits
-    /// the 8-bit form.
+    /// Variable text (TV/TU).  For version > AC1018 (R2007+) emits the
+    /// R2007 TU form: BS char-count + UTF-16LE code units.  For earlier
+    /// versions emits the 8-bit TV form: BS byte-count + CP8 bytes.
     void putVariableText(DRW::Version v, const std::string& utf8);
 
     /// 8-bit codepage text (T).  Converts utf8 → codepage via decoder
     /// if present, then emits BS(len) + bytes.
     void putCP8Text(const std::string& utf8);
+
+    /// Unicode text (TU, R2007+).  Converts UTF-8 → UTF-16LE and emits
+    /// BS(char-count) + char-count × 2 bytes.
+    void putUCSText(const std::string& utf8);
+
+    /// Bit count of data written so far (total bits, accounting for a
+    /// partial trailing byte when bitPos() != 0).
+    duint32 bitCount() const;
 
     /// Append raw bytes at the current bit position.  Handles
     /// non-byte-aligned writes via per-byte bit shifting.

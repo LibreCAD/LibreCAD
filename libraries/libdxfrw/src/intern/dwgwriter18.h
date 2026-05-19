@@ -55,6 +55,11 @@ public:
     /// Re-packages m_buf sections into R2004 container pages,
     /// builds the encrypted variable header, and flushes to disk.
     bool finalize() override;
+
+protected:
+    /// Version string embedded in the 0x100-byte file header (bytes 0-5).
+    /// Override in subclasses to produce a different version (e.g. "AC1024").
+    virtual const char* fileHeaderVersion() const { return "AC1018"; }
 };
 
 #endif // DWGWRITER18_H

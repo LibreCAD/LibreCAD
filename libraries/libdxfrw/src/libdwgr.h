@@ -72,6 +72,10 @@ public:
     bool writeAttdef(DRW_Attdef *ent);
     bool writeHatch(DRW_Hatch *ent);
     bool writeDimension(DRW_Dimension *ent);
+    bool writeMLine(DRW_MLine *ent);
+    bool writePolyline(DRW_Polyline *ent);
+    bool writeLeader(DRW_Leader *ent);
+    bool writeViewport(DRW_Viewport *ent);
 
     /// Define an empty user-block.  Allocates fresh Block_Record + Block
     /// + ENDBLK handles, emits all three into the object stream, and
@@ -81,6 +85,17 @@ public:
     /// invoked from the iface's `writeBlocks()` callback (before
     /// `writeEntities`); returns 0 if invoked outside that window.
     duint32 defineBlock(const std::string& name, const DRW_Coord& basePoint);
+
+    /// Table-record registration API — invoked from the iface's writeLTypes/
+    /// writeLayers/etc. callbacks.  Each method normalises the name, deduplicates
+    /// against standard entries, allocates a handle, and queues the record for
+    /// emission in writeDwgObjects().  Returns false if invoked outside write().
+    bool addLType(DRW_LType *ent);
+    bool addLayer(DRW_Layer *ent);
+    bool addTextstyle(DRW_Textstyle *ent);
+    bool addVport(DRW_Vport *ent);
+    bool addDimstyle(DRW_Dimstyle *ent);
+    bool addAppId(DRW_AppId *ent);
 
     bool getPreview();
     DRW::Version getVersion(){return version;}

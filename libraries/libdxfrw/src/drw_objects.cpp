@@ -17,9 +17,26 @@
 #include "intern/dxfreader.h"
 #include "intern/dxfwriter.h"
 #include "intern/dwgbuffer.h"
+#include "intern/dwgbufferw.h"
 #include "intern/drw_dbg.h"
 #include "intern/drw_reserve.h"
 #include "intern/dwgutil.h"
+
+namespace {
+
+dwgHandle makeHardPtrW(duint32 ref) {
+    dwgHandle h; h.code = ref ? 4 : 0; h.ref = ref; h.size = 0;
+    for (duint32 t = ref; t; t >>= 8) ++h.size;
+    return h;
+}
+dwgHandle makeSoftOwnerW(duint32 ref) {
+    dwgHandle h; h.code = ref ? 3 : 0; h.ref = ref; h.size = 0;
+    for (duint32 t = ref; t; t >>= 8) ++h.size;
+    return h;
+}
+dwgHandle makeNullHandleW() { dwgHandle h; h.code = 0; h.size = 0; h.ref = 0; return h; }
+
+} // namespace
 
 //! Base class for tables entries
 /*!
@@ -1515,6 +1532,237 @@ bool DRW_AppId::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
     DRW_DBG("Remaining bytes: "); DRW_DBG(buf->numRemainingBytes()); DRW_DBG("\n\n");
     //    RS crc;   //RS */
     return buf->isGood();
+}
+
+// ---------------------------------------------------------------------------
+// encodeDwg implementations for table entry classes
+// ---------------------------------------------------------------------------
+
+// Reserved control-object handles (mirrors dwgwriter15.cpp constants).
+namespace {
+    constexpr duint32 kLtypeControl   = 0x05;
+    constexpr duint32 kLayerControl   = 0x02;
+    constexpr duint32 kStyleControl   = 0x03;
+    constexpr duint32 kVportControl   = 0x08;
+    constexpr duint32 kAppIdControl   = 0x09;
+    constexpr duint32 kDimstyleControl = 0x0A;
+}
+
+bool DRW_LType::encodeDwg(DRW::Version version, dwgBufferW *buf,
+                           dwgBufferW *strBuf, dwgBufferW *hdlBuf) const {
+    dwgBufferW *sb = (strBuf && version > DRW::AC1018) ? strBuf : buf;
+    dwgBufferW *hb = (hdlBuf && version > DRW::AC1018) ? hdlBuf : buf;
+
+    sb->putVariableText(version, name);
+    buf->putBit(static_cast<duint8>((flags >> 6) & 1));
+    if (version <= DRW::AC1018)
+        buf->putBitShort(0);  // xrefindex
+    buf->putBit(static_cast<duint8>((flags >> 4) & 1));
+    sb->putVariableText(version, desc);
+    buf->putBitDouble(length);
+    buf->putRawChar8(0x41);  // align = 'A'
+    buf->putRawChar8(static_cast<duint8>(size));
+
+    bool haveStrArea = false;
+    for (int i = 0; i < size; ++i) {
+        double dashLen = (i < static_cast<int>(path.size())) ? path[i] : 0.0;
+        buf->putBitDouble(dashLen);
+        buf->putBitShort(0);   // complexFlags1
+        buf->putRawDouble(0.0); buf->putRawDouble(0.0); // offset x,y
+        buf->putBitDouble(0.0); // scale
+        buf->putBitDouble(0.0); // rotation
+        buf->putBitShort(0);   // complexFlags2 (0 = no shape)
+    }
+
+    if (version < DRW::AC1021) {
+        // Pre-2007: 256-byte string area
+        duint8 strarea[256] = {};
+        buf->putBytes(strarea, 256);
+    } else if (haveStrArea) {
+        duint8 strarea[512] = {};
+        buf->putBytes(strarea, 512);
+    }
+
+    // Handles
+    hb->putHandle(makeSoftOwnerW(kLtypeControl));
+    // xDictFlag == 0 → write XDic null
+    hb->putHandle(makeSoftOwnerW(0));
+    if (size > 0) {
+        hb->putHandle(makeNullHandleW());  // XRefH
+        hb->putHandle(makeNullHandleW());  // shpH
+    }
+    hb->putHandle(makeNullHandleW());  // trailing null
+    return true;
+}
+
+bool DRW_Layer::encodeDwg(DRW::Version version, dwgBufferW *buf,
+                           dwgBufferW *strBuf, dwgBufferW *hdlBuf) const {
+    dwgBufferW *sb = (strBuf && version > DRW::AC1018) ? strBuf : buf;
+    dwgBufferW *hb = (hdlBuf && version > DRW::AC1018) ? hdlBuf : buf;
+
+    sb->putVariableText(version, name);
+    buf->putBit(static_cast<duint8>((flags >> 6) & 1));
+    if (version < DRW::AC1021)
+        buf->putBitShort(0);  // xrefindex (2004-)
+    buf->putBit(static_cast<duint8>((flags >> 4) & 1));
+
+    if (version < DRW::AC1015) {
+        buf->putBit(static_cast<duint8>(flags & 1));         // frozen
+        buf->putBit(0);                                        // negate color
+        buf->putBit(static_cast<duint8>((flags >> 1) & 1));  // frozen in new
+        buf->putBit(static_cast<duint8>((flags >> 3) & 1));  // locked
+    }
+    if (version > DRW::AC1014) {
+        int lwIdx = DRW_LW_Conv::lineWidth2dwgInt(lWeight);
+        dint16 f = static_cast<dint16>(
+            (flags & 0x01) |
+            ((flags & 0x02) << 1) |
+            ((flags & 0x04) << 1) |
+            (plotF ? 0x10 : 0) |
+            ((lwIdx & 0x1F) << 5));
+        buf->putSBitShort(f);
+    }
+    buf->putCmColor(version, static_cast<duint16>(color > 0 ? color : 7));
+
+    // Handles
+    hb->putHandle(makeSoftOwnerW(kLayerControl));
+    hb->putHandle(makeSoftOwnerW(0));   // XDic null
+    hb->putHandle(makeNullHandleW());   // XRef null
+    if (version > DRW::AC1014)
+        hb->putHandle(makeNullHandleW());  // plotStyH null
+    if (version > DRW::AC1018)
+        hb->putHandle(makeNullHandleW());  // materialH null
+    hb->putHandle(lTypeH);               // linetype handle (set by caller)
+    return true;
+}
+
+bool DRW_Textstyle::encodeDwg(DRW::Version version, dwgBufferW *buf,
+                               dwgBufferW *strBuf, dwgBufferW *hdlBuf) const {
+    dwgBufferW *sb = (strBuf && version > DRW::AC1018) ? strBuf : buf;
+    dwgBufferW *hb = (hdlBuf && version > DRW::AC1018) ? hdlBuf : buf;
+
+    sb->putVariableText(version, name);
+    buf->putBit(static_cast<duint8>((flags >> 6) & 1));
+    buf->putBitShort(0);  // xrefindex (always, all versions)
+    buf->putBit(static_cast<duint8>((flags >> 4) & 1));
+    buf->putBit(static_cast<duint8>((flags >> 2) & 1));  // vertical
+    buf->putBit(static_cast<duint8>(flags & 1));          // shape file
+    buf->putBitDouble(height);
+    buf->putBitDouble(width);
+    buf->putBitDouble(oblique);
+    buf->putRawChar8(static_cast<duint8>(genFlag));
+    buf->putBitDouble(lastHeight);
+    sb->putVariableText(version, font);
+    sb->putVariableText(version, bigFont);
+
+    hb->putHandle(makeSoftOwnerW(kStyleControl));
+    hb->putHandle(makeSoftOwnerW(0));  // XDic null
+    hb->putHandle(makeNullHandleW());  // XRef null
+    return true;
+}
+
+bool DRW_Dimstyle::encodeDwg(DRW::Version version, dwgBufferW *buf,
+                              dwgBufferW *strBuf, dwgBufferW *hdlBuf) const {
+    dwgBufferW *sb = (strBuf && version > DRW::AC1018) ? strBuf : buf;
+    // Minimal encoder: name only (parseDwg reads only name and returns)
+    sb->putVariableText(version, name);
+    (void)buf; (void)hdlBuf;
+    return true;
+}
+
+bool DRW_Vport::encodeDwg(DRW::Version version, dwgBufferW *buf,
+                           dwgBufferW *strBuf, dwgBufferW *hdlBuf) const {
+    dwgBufferW *sb = (strBuf && version > DRW::AC1018) ? strBuf : buf;
+    dwgBufferW *hb = (hdlBuf && version > DRW::AC1018) ? hdlBuf : buf;
+
+    sb->putVariableText(version, name);
+    buf->putBit(static_cast<duint8>((flags >> 6) & 1));
+    if (version < DRW::AC1021)
+        buf->putBitShort(0);  // xrefindex (2004-)
+    buf->putBit(static_cast<duint8>((flags >> 4) & 1));
+    buf->putBitDouble(height);
+    buf->putBitDouble(ratio);
+    buf->put2RawDouble(center);
+    buf->putBitDouble(viewTarget.x); buf->putBitDouble(viewTarget.y); buf->putBitDouble(viewTarget.z);
+    buf->putBitDouble(viewDir.x);    buf->putBitDouble(viewDir.y);    buf->putBitDouble(viewDir.z);
+    buf->putBitDouble(twistAngle);
+    buf->putBitDouble(lensHeight);
+    buf->putBitDouble(frontClip);
+    buf->putBitDouble(backClip);
+    buf->putBit(static_cast<duint8>(viewMode & 1));
+    buf->putBit(static_cast<duint8>((viewMode >> 1) & 1));
+    buf->putBit(static_cast<duint8>((viewMode >> 2) & 1));
+    buf->putBit(static_cast<duint8>((viewMode >> 4) & 1));
+    if (version > DRW::AC1014) {
+        buf->putRawChar8(0);  // renderMode = 0
+        if (version > DRW::AC1018) {
+            buf->putBit(1);         // useDefLight
+            buf->putRawChar8(1);    // defLightType
+            buf->putBitDouble(1.0); // brightness
+            buf->putBitDouble(0.0); // contrast
+            buf->putCmColor(version, 0);  // ambientColor
+        }
+    }
+    buf->put2RawDouble(lowerLeft);
+    buf->put2RawDouble(UpperRight);
+    buf->putBit(static_cast<duint8>((viewMode >> 3) & 1));
+    buf->putBitShort(static_cast<duint16>(circleZoom));
+    buf->putBit(static_cast<duint8>(fastZoom & 1));
+    buf->putBit(static_cast<duint8>(ucsIcon & 1));
+    buf->putBit(static_cast<duint8>((ucsIcon >> 1) & 1));
+    buf->putBit(static_cast<duint8>(grid & 1));
+    buf->put2RawDouble(gridSpacing);
+    buf->putBit(static_cast<duint8>(snap & 1));
+    buf->putBit(static_cast<duint8>(snapStyle & 1));
+    buf->putBitShort(static_cast<duint16>(snapIsopair));
+    buf->putBitDouble(snapAngle);
+    buf->put2RawDouble(snapBase);
+    buf->put2RawDouble(snapSpacing);
+    if (version > DRW::AC1014) {
+        buf->putBit(0);         // unknown
+        buf->putBit(0);         // ucsPerVP
+        DRW_Coord zero;
+        buf->putBitDouble(0.0); buf->putBitDouble(0.0); buf->putBitDouble(0.0); // ucsOrigin
+        buf->putBitDouble(1.0); buf->putBitDouble(0.0); buf->putBitDouble(0.0); // ucsX
+        buf->putBitDouble(0.0); buf->putBitDouble(1.0); buf->putBitDouble(0.0); // ucsY
+        buf->putBitDouble(0.0); // ucsElev
+        buf->putBitShort(0);    // ucsOrthoType
+        if (version > DRW::AC1018) {
+            buf->putBitShort(static_cast<duint16>(gridBehavior));
+            buf->putBitShort(1); // gridMajor
+        }
+    }
+
+    hb->putHandle(makeSoftOwnerW(kVportControl));
+    hb->putHandle(makeSoftOwnerW(0));  // XDic null
+    hb->putHandle(makeNullHandleW());  // XRef null
+    if (version > DRW::AC1018) {
+        hb->putHandle(makeNullHandleW());  // backgroundH
+        hb->putHandle(makeNullHandleW());  // visualStyleH
+        hb->putHandle(makeNullHandleW());  // sunH
+    }
+    if (version > DRW::AC1014) {
+        hb->putHandle(makeNullHandleW());  // namedUCSH
+        hb->putHandle(makeNullHandleW());  // baseUCSH
+    }
+    return true;
+}
+
+bool DRW_AppId::encodeDwg(DRW::Version version, dwgBufferW *buf,
+                           dwgBufferW *strBuf, dwgBufferW *hdlBuf) const {
+    dwgBufferW *sb = (strBuf && version > DRW::AC1018) ? strBuf : buf;
+    dwgBufferW *hb = (hdlBuf && version > DRW::AC1018) ? hdlBuf : buf;
+
+    sb->putVariableText(version, name);
+    buf->putBit(static_cast<duint8>((flags >> 6) & 1));
+    buf->putBitShort(0);  // xrefindex (always)
+    buf->putBit(static_cast<duint8>((flags >> 4) & 1));
+    buf->putRawChar8(0);  // unknown code 71
+
+    hb->putHandle(makeSoftOwnerW(kAppIdControl));
+    hb->putHandle(makeSoftOwnerW(0));  // XDic null
+    hb->putHandle(makeNullHandleW());  // XRef null
+    return true;
 }
 
 //Minimal parseDwg for DRW_Dictionary / DRW_Layout / DRW_MLineStyle.

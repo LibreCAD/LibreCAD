@@ -13,7 +13,6 @@
 
 #include <cstdio>
 #include <cstdlib>
-#include <iostream>
 #include <fstream>
 #include <string>
 #include <sstream>
@@ -963,69 +962,80 @@ bool dwgReader::readPlineVertex(DRW_Polyline& pline, dwgBuffer *dbuf){
     const duint32 savedNext = nextEntLink;
     const duint32 savedPrev = prevEntLink;
 
+    // Helper lambda: find a vertex handle in ObjectMap first, then fall back
+    // to objObjectMap (pre-processed by the unordered readDwgEntities sweep
+    // when vertex handles hash before the polyline handle).
+    auto findVertex = [&](duint32 h) -> bool {
+        auto mit = ObjectMap.find(h);
+        if (mit != ObjectMap.end()) {
+            oc = mit->second;
+            ObjectMap.erase(mit);
+            return true;
+        }
+        auto omit = objObjectMap.find(h);
+        if (omit != objObjectMap.end()) {
+            oc = omit->second;
+            objObjectMap.erase(omit);
+            return true;
+        }
+        return false;
+    };
+
     if (version < DRW::AC1018) { //pre 2004
         duint32 nextH = pline.firstEH;
         while (nextH != 0){
-            auto mit = ObjectMap.find(nextH);
-            if (mit==ObjectMap.end()) {
+            if (!findVertex(nextH)) {
                 nextH = 0;//end while if entity not found
                 DRW_DBG("\nWARNING: pline vertex not found\n");
                 ret = false;
                 continue;
-            } else {//foud entity reads it
-                oc = mit->second;
-                ObjectMap.erase(mit);
-                DRW_Vertex vt;
-                dbuf->setPosition(oc.loc);
-                //RLZ: verify if pos is ok
-                int size = dbuf->getModularShort();
-                if (version > DRW::AC1021) {//2010+
-                    bs = dbuf->getUModularChar();
-                }
-                std::vector<duint8> tmpByteStr(size);
-                dbuf->getBytes(tmpByteStr.data(), size);
-                dwgBuffer buff(tmpByteStr.data(), size, &decoder);
-                dint16 oType = buff.getObjType(version);
-                buff.resetPosition();
-                DRW_DBG(" object type= "); DRW_DBG(oType); DRW_DBG("\n");
-                ret2 = vt.parseDwg(version, &buff, bs, pline.basePoint.z);
-                pline.addVertex(vt);
-                if (!ret2) ++m_entityParseFailures; // per-vertex parse failure: warning, not section failure
-                if (nextH == pline.lastEH)
-                    nextH = 0; //redundant, but prevent read errors
-                else
-                    nextH = vt.nextEntLink;
             }
+            DRW_Vertex vt;
+            dbuf->setPosition(oc.loc);
+            //RLZ: verify if pos is ok
+            int size = dbuf->getModularShort();
+            if (version > DRW::AC1021) {//2010+
+                bs = dbuf->getUModularChar();
+            }
+            std::vector<duint8> tmpByteStr(size);
+            dbuf->getBytes(tmpByteStr.data(), size);
+            dwgBuffer buff(tmpByteStr.data(), size, &decoder);
+            dint16 oType = buff.getObjType(version);
+            buff.resetPosition();
+            DRW_DBG(" object type= "); DRW_DBG(oType); DRW_DBG("\n");
+            ret2 = vt.parseDwg(version, &buff, bs, pline.basePoint.z);
+            pline.addVertex(vt);
+            if (!ret2) ++m_entityParseFailures; // per-vertex parse failure: warning, not section failure
+            if (nextH == pline.lastEH)
+                nextH = 0; //redundant, but prevent read errors
+            else
+                nextH = vt.nextEntLink;
         }
     } else {//2004+
         for (std::list<duint32>::iterator it = pline.hadlesList.begin() ; it != pline.hadlesList.end(); ++it){
             duint32 nextH = *it;
-            auto mit = ObjectMap.find(nextH);
-            if (mit==ObjectMap.end()) {
-                DRW_DBG("\nWARNING: Entity of block not found\n");
+            if (!findVertex(nextH)) {
+                DRW_DBG("\nWARNING: pline vertex not found\n");
                 ret = false;
                 continue;
-            } else {//foud entity reads it
-                oc = mit->second;
-                ObjectMap.erase(mit);
-                DRW_DBG("\nPline vertex, parsing entity: "); DRW_DBGH(oc.handle); DRW_DBG(", pos: "); DRW_DBG(oc.loc); DRW_DBG("\n");
-                DRW_Vertex vt;
-                dbuf->setPosition(oc.loc);
-                //RLZ: verify if pos is ok
-                int size = dbuf->getModularShort();
-                if (version > DRW::AC1021) {//2010+
-                    bs = dbuf->getUModularChar();
-                }
-                std::vector<duint8> tmpByteStr(size);
-                dbuf->getBytes(tmpByteStr.data(), size);
-                dwgBuffer buff(tmpByteStr.data(), size, &decoder);
-                dint16 oType = buff.getObjType(version);
-                buff.resetPosition();
-                DRW_DBG(" object type= "); DRW_DBG(oType); DRW_DBG("\n");
-                ret2 = vt.parseDwg(version, &buff, bs, pline.basePoint.z);
-                pline.addVertex(vt);
-                if (!ret2) ++m_entityParseFailures; // per-vertex parse failure: warning, not section failure
             }
+            DRW_DBG("\nPline vertex, parsing entity: "); DRW_DBGH(oc.handle); DRW_DBG(", pos: "); DRW_DBG(oc.loc); DRW_DBG("\n");
+            DRW_Vertex vt;
+            dbuf->setPosition(oc.loc);
+            //RLZ: verify if pos is ok
+            int size = dbuf->getModularShort();
+            if (version > DRW::AC1021) {//2010+
+                bs = dbuf->getUModularChar();
+            }
+            std::vector<duint8> tmpByteStr(size);
+            dbuf->getBytes(tmpByteStr.data(), size);
+            dwgBuffer buff(tmpByteStr.data(), size, &decoder);
+            dint16 oType = buff.getObjType(version);
+            buff.resetPosition();
+            DRW_DBG(" object type= "); DRW_DBG(oType); DRW_DBG("\n");
+            ret2 = vt.parseDwg(version, &buff, bs, pline.basePoint.z);
+            pline.addVertex(vt);
+            if (!ret2) ++m_entityParseFailures; // per-vertex parse failure: warning, not section failure
         }
     }//end 2004+
 

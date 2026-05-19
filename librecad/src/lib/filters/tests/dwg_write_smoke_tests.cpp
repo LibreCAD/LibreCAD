@@ -715,3 +715,572 @@ TEST_CASE("dwgRW R2004 round-trip delivers the standard table records",
 
     std::remove(path.c_str());
 }
+
+// ---- R2010 (AC1024) write smoke tests ---------------------------------------
+
+TEST_CASE("dwgRW::write produces a syntactically valid empty R2010 file",
+          "[dwg-write][smoke][r2010]") {
+    const std::string path = tempPath("empty_r2010.dwg");
+
+    {
+        dwgRW writer(path.c_str());
+        EmptyIface iface;
+        REQUIRE(writer.write(&iface, DRW::AC1024, /*bin=*/false));
+    }
+
+    auto bytes = slurp(path);
+    REQUIRE(bytes.size() > 0x100);
+    REQUIRE(std::memcmp(bytes.data(), "AC1024", 6) == 0);
+
+    std::remove(path.c_str());
+}
+
+TEST_CASE("dwgRW R2010 round-trip: write empty, reader returns true",
+          "[dwg-write][smoke][r2010]") {
+    const std::string path = tempPath("roundtrip_r2010.dwg");
+
+    {
+        dwgRW writer(path.c_str());
+        EmptyIface iface;
+        REQUIRE(writer.write(&iface, DRW::AC1024, /*bin=*/false));
+    }
+
+    {
+        dwgRW reader(path.c_str());
+        EmptyIface iface;
+        bool ok = reader.read(&iface, /*ext=*/false);
+        REQUIRE(reader.getVersion() == DRW::AC1024);
+        REQUIRE(reader.getError() == DRW::BAD_NONE);
+        REQUIRE(ok);
+    }
+
+    std::remove(path.c_str());
+}
+
+TEST_CASE("dwgRW R2010 writes POINT/LINE/CIRCLE/ARC and reader recovers them",
+          "[dwg-write][smoke][r2010]") {
+    const std::string path = tempPath("entities_r2010.dwg");
+
+    {
+        dwgRW writer(path.c_str());
+        EntityRoundTripIface iface;
+        iface.m_writer = &writer;
+        REQUIRE(writer.write(&iface, DRW::AC1024, /*bin=*/false));
+    }
+
+    EntityRoundTripIface readIface;
+    {
+        dwgRW reader(path.c_str());
+        REQUIRE(reader.read(&readIface, /*ext=*/false));
+        REQUIRE(reader.getVersion() == DRW::AC1024);
+        REQUIRE(reader.getError() == DRW::BAD_NONE);
+    }
+
+    REQUIRE(readIface.m_points.size()   == 1);
+    REQUIRE(readIface.m_lines.size()    == 1);
+    REQUIRE(readIface.m_circles.size()  == 1);
+    REQUIRE(readIface.m_arcs.size()     == 1);
+    REQUIRE(readIface.m_ellipses.size() == 1);
+
+    REQUIRE(readIface.m_points[0].basePoint.x == 1.5);
+    REQUIRE(readIface.m_points[0].basePoint.y == 2.5);
+    REQUIRE(readIface.m_points[0].color       == 2);
+
+    REQUIRE(readIface.m_lines[0].basePoint.x == 0.0);
+    REQUIRE(readIface.m_lines[0].secPoint.x  == 10.0);
+    REQUIRE(readIface.m_lines[0].secPoint.y  == 5.0);
+    REQUIRE(readIface.m_lines[0].color       == 3);
+
+    REQUIRE(readIface.m_circles[0].basePoint.x == 100.0);
+    REQUIRE(readIface.m_circles[0].radious     == 25.0);
+    REQUIRE(readIface.m_circles[0].color       == 5);
+
+    REQUIRE(readIface.m_arcs[0].basePoint.x == 50.0);
+    REQUIRE(readIface.m_arcs[0].radious     == 10.0);
+    REQUIRE(readIface.m_arcs[0].staangle    == 0.0);
+    REQUIRE(readIface.m_arcs[0].endangle    == 3.141592653589793);
+    REQUIRE(readIface.m_arcs[0].color       == 6);
+
+    REQUIRE(readIface.m_ellipses[0].basePoint.x == 200.0);
+    REQUIRE(readIface.m_ellipses[0].secPoint.x  == 30.0);
+    REQUIRE(readIface.m_ellipses[0].ratio       == 0.5);
+    REQUIRE(readIface.m_ellipses[0].color       == 4);
+
+    bool sawModel = false;
+    bool sawPaper = false;
+    for (const auto& n : readIface.m_blocks) {
+        if (n == "*Model_Space") sawModel = true;
+        if (n == "*Paper_Space") sawPaper = true;
+    }
+    REQUIRE(sawModel);
+    REQUIRE(sawPaper);
+
+    std::remove(path.c_str());
+}
+
+TEST_CASE("dwgRW R2010 round-trip delivers the standard table records",
+          "[dwg-write][smoke][r2010]") {
+    const std::string path = tempPath("standard_tables_r2010.dwg");
+
+    {
+        dwgRW writer(path.c_str());
+        EmptyIface iface;
+        REQUIRE(writer.write(&iface, DRW::AC1024, /*bin=*/false));
+    }
+
+    TableCaptureIface cap;
+    {
+        dwgRW reader(path.c_str());
+        REQUIRE(reader.read(&cap, /*ext=*/false));
+        REQUIRE(reader.getError() == DRW::BAD_NONE);
+    }
+
+    REQUIRE(containsName(cap.m_lTypes,    "BYBLOCK"));
+    REQUIRE(containsName(cap.m_lTypes,    "BYLAYER"));
+    REQUIRE(containsName(cap.m_lTypes,    "CONTINUOUS"));
+    REQUIRE(containsName(cap.m_layers,    "0"));
+    REQUIRE(containsName(cap.m_textStyles,"STANDARD"));
+    REQUIRE(containsName(cap.m_appIds,    "ACAD"));
+    REQUIRE(containsName(cap.m_dimStyles, "STANDARD"));
+    REQUIRE(containsName(cap.m_vports,    "*ACTIVE"));
+
+    std::remove(path.c_str());
+}
+
+// ---- R2010 user-defined table round-trip tests --------------------------------
+
+namespace {
+
+/// Iface that registers a custom layer "WALLS" (color=1/red) on write and
+/// captures layer names on read.  Exercises the add*() infrastructure end-to-end.
+class CustomLayerIface : public EmptyIface {
+public:
+    dwgRW *m_writer {nullptr};
+    std::vector<std::string> m_layerNames;
+    int m_wallsColor {-1};
+
+    void writeLayers() override {
+        if (m_writer == nullptr) return;
+        DRW_Layer lay;
+        lay.name  = "WALLS";
+        lay.color = 1;
+        m_writer->addLayer(&lay);
+    }
+    void addLayer(const DRW_Layer& l) override {
+        m_layerNames.push_back(l.name);
+        if (l.name == "WALLS") m_wallsColor = l.color;
+    }
+};
+
+/// Iface that registers a custom linetype "DASHED" with a 2-element dash
+/// pattern on write, and captures linetype names on read.
+class CustomLtypeIface : public EmptyIface {
+public:
+    dwgRW *m_writer {nullptr};
+    std::vector<std::string> m_ltNames;
+
+    void writeLTypes() override {
+        if (m_writer == nullptr) return;
+        DRW_LType lt;
+        lt.name = "DASHED";
+        lt.desc = "Dashed __  __  __";
+        lt.length = 0.375;
+        lt.path.push_back(0.25);
+        lt.path.push_back(-0.125);
+        lt.size = static_cast<int>(lt.path.size());
+        m_writer->addLType(&lt);
+    }
+    void addLType(const DRW_LType& l) override { m_ltNames.push_back(l.name); }
+};
+
+/// Iface that writes a POINT on layer "WALLS" and reads it back.
+/// Validates layer-name→handle resolution in encodeEntity().
+class EntityOnLayerIface : public EmptyIface {
+public:
+    dwgRW *m_writer {nullptr};
+    std::vector<std::string> m_pointLayers;
+    std::vector<std::string> m_layerNames;
+
+    void writeLayers() override {
+        if (m_writer == nullptr) return;
+        DRW_Layer lay;
+        lay.name  = "WALLS";
+        lay.color = 2;
+        m_writer->addLayer(&lay);
+    }
+    void writeEntities() override {
+        if (m_writer == nullptr) return;
+        DRW_Point pt;
+        pt.basePoint = DRW_Coord{3.0, 4.0, 0.0};
+        pt.layer = "WALLS";
+        m_writer->writePoint(&pt);
+    }
+    void addPoint(const DRW_Point& p) override { m_pointLayers.push_back(p.layer); }
+    void addLayer(const DRW_Layer& l) override { m_layerNames.push_back(l.name); }
+};
+
+} // namespace
+
+TEST_CASE("dwgRW R2010 round-trip with custom layer",
+          "[dwg-write][smoke][r2010]") {
+    const std::string path = tempPath("custom_layer_r2010.dwg");
+
+    {
+        dwgRW writer(path.c_str());
+        CustomLayerIface iface;
+        iface.m_writer = &writer;
+        REQUIRE(writer.write(&iface, DRW::AC1024, /*bin=*/false));
+    }
+
+    CustomLayerIface cap;
+    {
+        dwgRW reader(path.c_str());
+        REQUIRE(reader.read(&cap, /*ext=*/false));
+        REQUIRE(reader.getError() == DRW::BAD_NONE);
+    }
+
+    REQUIRE(containsName(cap.m_layerNames, "0"));
+    REQUIRE(containsName(cap.m_layerNames, "WALLS"));
+    REQUIRE(cap.m_wallsColor == 1);
+
+    std::remove(path.c_str());
+}
+
+TEST_CASE("dwgRW R2010 entity on custom layer",
+          "[dwg-write][smoke][r2010]") {
+    const std::string path = tempPath("entity_on_layer_r2010.dwg");
+
+    {
+        dwgRW writer(path.c_str());
+        EntityOnLayerIface iface;
+        iface.m_writer = &writer;
+        REQUIRE(writer.write(&iface, DRW::AC1024, /*bin=*/false));
+    }
+
+    EntityOnLayerIface cap;
+    {
+        dwgRW reader(path.c_str());
+        REQUIRE(reader.read(&cap, /*ext=*/false));
+        REQUIRE(reader.getError() == DRW::BAD_NONE);
+    }
+
+    REQUIRE(containsName(cap.m_layerNames, "WALLS"));
+    REQUIRE(cap.m_pointLayers.size() == 1);
+    REQUIRE(cap.m_pointLayers[0] == "WALLS");
+
+    std::remove(path.c_str());
+}
+
+TEST_CASE("dwgRW R2010 round-trip with custom linetype",
+          "[dwg-write][smoke][r2010]") {
+    const std::string path = tempPath("custom_ltype_r2010.dwg");
+
+    {
+        dwgRW writer(path.c_str());
+        CustomLtypeIface iface;
+        iface.m_writer = &writer;
+        REQUIRE(writer.write(&iface, DRW::AC1024, /*bin=*/false));
+    }
+
+    CustomLtypeIface cap;
+    {
+        dwgRW reader(path.c_str());
+        REQUIRE(reader.read(&cap, /*ext=*/false));
+        REQUIRE(reader.getError() == DRW::BAD_NONE);
+    }
+
+    REQUIRE(containsName(cap.m_ltNames, "BYBLOCK"));
+    REQUIRE(containsName(cap.m_ltNames, "BYLAYER"));
+    REQUIRE(containsName(cap.m_ltNames, "CONTINUOUS"));
+    REQUIRE(containsName(cap.m_ltNames, "DASHED"));
+
+    std::remove(path.c_str());
+}
+
+namespace {
+
+/// Reusable iface for R2000/R2004 custom-layer round-trip tests.
+class CustomLayerR2000Iface : public EmptyIface {
+public:
+    dwgRW *m_writer {nullptr};
+    std::vector<std::string> m_layerNames;
+    int m_wallsColor {-1};
+
+    void writeLayers() override {
+        if (m_writer == nullptr) return;
+        DRW_Layer lay;
+        lay.name  = "WALLS";
+        lay.color = 1;
+        m_writer->addLayer(&lay);
+    }
+    void addLayer(const DRW_Layer& l) override {
+        m_layerNames.push_back(l.name);
+        if (l.name == "WALLS") m_wallsColor = l.color;
+    }
+};
+
+} // namespace
+
+TEST_CASE("dwgRW R2000 round-trip with custom layer",
+          "[dwg-write][smoke]") {
+    const std::string path = tempPath("custom_layer_r2000.dwg");
+
+    {
+        dwgRW writer(path.c_str());
+        CustomLayerR2000Iface iface;
+        iface.m_writer = &writer;
+        REQUIRE(writer.write(&iface, DRW::AC1015, /*bin=*/false));
+    }
+
+    CustomLayerR2000Iface cap;
+    {
+        dwgRW reader(path.c_str());
+        REQUIRE(reader.read(&cap, /*ext=*/false));
+        REQUIRE(reader.getError() == DRW::BAD_NONE);
+    }
+
+    REQUIRE(containsName(cap.m_layerNames, "0"));
+    REQUIRE(containsName(cap.m_layerNames, "WALLS"));
+    REQUIRE(cap.m_wallsColor == 1);
+
+    std::remove(path.c_str());
+}
+
+TEST_CASE("dwgRW R2004 round-trip with custom layer",
+          "[dwg-write][smoke][r2004]") {
+    const std::string path = tempPath("custom_layer_r2004.dwg");
+
+    {
+        dwgRW writer(path.c_str());
+        CustomLayerR2000Iface iface;
+        iface.m_writer = &writer;
+        REQUIRE(writer.write(&iface, DRW::AC1018, /*bin=*/false));
+    }
+
+    CustomLayerR2000Iface cap;
+    {
+        dwgRW reader(path.c_str());
+        REQUIRE(reader.read(&cap, /*ext=*/false));
+        REQUIRE(reader.getError() == DRW::BAD_NONE);
+    }
+
+    REQUIRE(containsName(cap.m_layerNames, "0"));
+    REQUIRE(containsName(cap.m_layerNames, "WALLS"));
+    REQUIRE(cap.m_wallsColor == 1);
+
+    std::remove(path.c_str());
+}
+
+// ---- Phase 5 entity encoder smoke tests --------------------------------
+
+namespace {
+
+class ViewportRoundTripIface : public EmptyIface {
+public:
+    dwgRW *m_writer {nullptr};
+    std::vector<DRW_Viewport> m_viewports;
+
+    void writeEntities() override {
+        if (m_writer == nullptr) return;
+        DRW_Viewport vp;
+        vp.pswidth  = 297.0;
+        vp.psheight = 210.0;
+        m_writer->writeViewport(&vp);
+    }
+    void addViewport(const DRW_Viewport& vp) override {
+        m_viewports.push_back(vp);
+    }
+};
+
+class PolylineRoundTripIface : public EmptyIface {
+public:
+    dwgRW *m_writer {nullptr};
+    std::vector<DRW_Polyline> m_polylines;
+
+    void writeEntities() override {
+        if (m_writer == nullptr) return;
+        DRW_Polyline pl;
+        pl.flags = 1;  // closed 2D polyline (bit 0)
+        pl.addVertex(DRW_Vertex(0.0,  0.0, 0.0, 0.0));
+        pl.addVertex(DRW_Vertex(10.0, 0.0, 0.0, 0.0));
+        pl.addVertex(DRW_Vertex(10.0, 5.0, 0.0, 0.0));
+        m_writer->writePolyline(&pl);
+    }
+    void addPolyline(const DRW_Polyline& pl) override {
+        m_polylines.push_back(pl);
+    }
+};
+
+} // namespace (phase-5 ifaces)
+
+TEST_CASE("dwgRW R2010 viewport entity round-trip", "[dwg-write][r2010][smoke]") {
+    const std::string path = tempPath("viewport_r2010.dwg");
+
+    {
+        dwgRW writer(path.c_str());
+        ViewportRoundTripIface iface;
+        iface.m_writer = &writer;
+        REQUIRE(writer.write(&iface, DRW::AC1024, /*bin=*/false));
+    }
+
+    ViewportRoundTripIface cap;
+    {
+        dwgRW reader(path.c_str());
+        REQUIRE(reader.read(&cap, /*ext=*/false));
+        REQUIRE(reader.getError() == DRW::BAD_NONE);
+    }
+
+    REQUIRE(cap.m_viewports.size() == 1);
+    REQUIRE(cap.m_viewports[0].pswidth  == 297.0);
+    REQUIRE(cap.m_viewports[0].psheight == 210.0);
+
+    std::remove(path.c_str());
+}
+
+TEST_CASE("dwgRW R2010 polyline (2D) round-trip", "[dwg-write][r2010][smoke]") {
+    const std::string path = tempPath("polyline_r2010.dwg");
+
+    {
+        dwgRW writer(path.c_str());
+        PolylineRoundTripIface iface;
+        iface.m_writer = &writer;
+        REQUIRE(writer.write(&iface, DRW::AC1024, /*bin=*/false));
+    }
+
+    PolylineRoundTripIface cap;
+    {
+        dwgRW reader(path.c_str());
+        REQUIRE(reader.read(&cap, /*ext=*/false));
+        REQUIRE(reader.getError() == DRW::BAD_NONE);
+    }
+
+    REQUIRE(cap.m_polylines.size() == 1);
+    REQUIRE(cap.m_polylines[0].vertlist.size() == 3);
+    REQUIRE(cap.m_polylines[0].vertlist[0]->basePoint.x == 0.0);
+    REQUIRE(cap.m_polylines[0].vertlist[1]->basePoint.x == 10.0);
+    REQUIRE(cap.m_polylines[0].vertlist[2]->basePoint.y == 5.0);
+
+    std::remove(path.c_str());
+}
+
+// ---- R2013 (AC1027) write smoke tests ---------------------------------------
+
+TEST_CASE("dwgRW::write produces a syntactically valid empty R2013 file",
+          "[dwg-write][smoke][r2013]") {
+    const std::string path = tempPath("empty_r2013.dwg");
+
+    {
+        dwgRW writer(path.c_str());
+        EmptyIface iface;
+        REQUIRE(writer.write(&iface, DRW::AC1027, /*bin=*/false));
+    }
+
+    auto bytes = slurp(path);
+    REQUIRE(bytes.size() > 0x100);
+    REQUIRE(std::memcmp(bytes.data(), "AC1027", 6) == 0);
+
+    std::remove(path.c_str());
+}
+
+TEST_CASE("dwgRW R2013 round-trip: write empty, reader returns true",
+          "[dwg-write][smoke][r2013]") {
+    const std::string path = tempPath("roundtrip_r2013.dwg");
+
+    {
+        dwgRW writer(path.c_str());
+        EmptyIface iface;
+        REQUIRE(writer.write(&iface, DRW::AC1027, /*bin=*/false));
+    }
+
+    {
+        dwgRW reader(path.c_str());
+        EmptyIface iface;
+        bool ok = reader.read(&iface, /*ext=*/false);
+        REQUIRE(reader.getVersion() == DRW::AC1027);
+        REQUIRE(reader.getError() == DRW::BAD_NONE);
+        REQUIRE(ok);
+    }
+
+    std::remove(path.c_str());
+}
+
+TEST_CASE("dwgRW R2013 writes POINT/LINE/CIRCLE/ARC and reader recovers them",
+          "[dwg-write][smoke][r2013]") {
+    const std::string path = tempPath("entities_r2013.dwg");
+
+    {
+        dwgRW writer(path.c_str());
+        EntityRoundTripIface iface;
+        iface.m_writer = &writer;
+        REQUIRE(writer.write(&iface, DRW::AC1027, /*bin=*/false));
+    }
+
+    EntityRoundTripIface readIface;
+    {
+        dwgRW reader(path.c_str());
+        REQUIRE(reader.read(&readIface, /*ext=*/false));
+        REQUIRE(reader.getVersion() == DRW::AC1027);
+        REQUIRE(reader.getError() == DRW::BAD_NONE);
+    }
+
+    REQUIRE(readIface.m_points.size()   == 1);
+    REQUIRE(readIface.m_lines.size()    == 1);
+    REQUIRE(readIface.m_circles.size()  == 1);
+    REQUIRE(readIface.m_arcs.size()     == 1);
+    REQUIRE(readIface.m_ellipses.size() == 1);
+
+    REQUIRE(readIface.m_points[0].basePoint.x == 1.5);
+    REQUIRE(readIface.m_points[0].basePoint.y == 2.5);
+    REQUIRE(readIface.m_points[0].color       == 2);
+
+    REQUIRE(readIface.m_lines[0].basePoint.x == 0.0);
+    REQUIRE(readIface.m_lines[0].secPoint.x  == 10.0);
+    REQUIRE(readIface.m_lines[0].secPoint.y  == 5.0);
+    REQUIRE(readIface.m_lines[0].color       == 3);
+
+    REQUIRE(readIface.m_circles[0].basePoint.x == 100.0);
+    REQUIRE(readIface.m_circles[0].radious     == 25.0);
+    REQUIRE(readIface.m_circles[0].color       == 5);
+
+    REQUIRE(readIface.m_arcs[0].basePoint.x == 50.0);
+    REQUIRE(readIface.m_arcs[0].radious     == 10.0);
+    REQUIRE(readIface.m_arcs[0].staangle    == 0.0);
+    REQUIRE(readIface.m_arcs[0].endangle    == 3.141592653589793);
+    REQUIRE(readIface.m_arcs[0].color       == 6);
+
+    REQUIRE(readIface.m_ellipses[0].basePoint.x == 200.0);
+    REQUIRE(readIface.m_ellipses[0].secPoint.x  == 30.0);
+    REQUIRE(readIface.m_ellipses[0].ratio       == 0.5);
+    REQUIRE(readIface.m_ellipses[0].color       == 4);
+
+    std::remove(path.c_str());
+}
+
+TEST_CASE("dwgRW R2013 round-trip delivers the standard table records",
+          "[dwg-write][smoke][r2013]") {
+    const std::string path = tempPath("standard_tables_r2013.dwg");
+
+    {
+        dwgRW writer(path.c_str());
+        EmptyIface iface;
+        REQUIRE(writer.write(&iface, DRW::AC1027, /*bin=*/false));
+    }
+
+    TableCaptureIface cap;
+    {
+        dwgRW reader(path.c_str());
+        REQUIRE(reader.read(&cap, /*ext=*/false));
+        REQUIRE(reader.getError() == DRW::BAD_NONE);
+    }
+
+    REQUIRE(containsName(cap.m_lTypes,    "BYBLOCK"));
+    REQUIRE(containsName(cap.m_lTypes,    "BYLAYER"));
+    REQUIRE(containsName(cap.m_lTypes,    "CONTINUOUS"));
+    REQUIRE(containsName(cap.m_layers,    "0"));
+    REQUIRE(containsName(cap.m_textStyles,"STANDARD"));
+    REQUIRE(containsName(cap.m_appIds,    "ACAD"));
+    REQUIRE(containsName(cap.m_dimStyles, "STANDARD"));
+    REQUIRE(containsName(cap.m_vports,    "*ACTIVE"));
+
+    std::remove(path.c_str());
+}

@@ -186,6 +186,9 @@ protected:
     bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) override;
 
 public:
+    bool encodeDwg(DRW::Version version, dwgBufferW *buf,
+                   dwgBufferW *strBuf = nullptr, dwgBufferW *hdlBuf = nullptr) const;
+
     //V12
     UTF8STRING dimpost;       /*!< code 3 */
     UTF8STRING dimapost;      /*!< code 4 */
@@ -297,6 +300,8 @@ protected:
     void update();
 
 public:
+    bool encodeDwg(DRW::Version version, dwgBufferW *buf,
+                   dwgBufferW *strBuf = nullptr, dwgBufferW *hdlBuf = nullptr) const;
     UTF8STRING desc;           /*!< descriptive string, code 3 */
 //    int align;               /*!< align code, always 65 ('A') code 72 */
     int size;                 /*!< element number, code 73 */
@@ -333,6 +338,8 @@ protected:
     bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) override;
 
 public:
+    bool encodeDwg(DRW::Version version, dwgBufferW *buf,
+                   dwgBufferW *strBuf = nullptr, dwgBufferW *hdlBuf = nullptr) const;
     UTF8STRING lineType;            /*!< line type, code 6 */
     int color;                      /*!< layer color, code 62 */
     int color24;                    /*!< 24-bit color, code 420 */
@@ -404,6 +411,8 @@ protected:
     bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) override;
 
 public:
+    bool encodeDwg(DRW::Version version, dwgBufferW *buf,
+                   dwgBufferW *strBuf = nullptr, dwgBufferW *hdlBuf = nullptr) const;
     double height;          /*!< Fixed text height (0 not set), code 40 */
     double width;           /*!< Width factor, code 41 */
     double oblique;         /*!< Oblique angle, code 50 */
@@ -449,6 +458,8 @@ protected:
     bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) override;
 
 public:
+    bool encodeDwg(DRW::Version version, dwgBufferW *buf,
+                   dwgBufferW *strBuf = nullptr, dwgBufferW *hdlBuf = nullptr) const;
     DRW_Coord lowerLeft;     /*!< Lower left corner, code 10 & 20 */
     DRW_Coord UpperRight;    /*!< Upper right corner, code 11 & 21 */
     DRW_Coord center;        /*!< center point in WCS, code 12 & 22 */
@@ -662,6 +673,10 @@ public:
 
 protected:
     bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) override;
+
+public:
+    bool encodeDwg(DRW::Version version, dwgBufferW *buf,
+                   dwgBufferW *strBuf = nullptr, dwgBufferW *hdlBuf = nullptr) const;
 };
 
 //! Class to handle Dictionary (ODA spec sec 19.4.30 fixed type 42)
@@ -931,11 +946,17 @@ public:
     UTF8STRING sheetName;
 };
 
-/** Holds per-write-session maps populated during DXF writing. */
+/** Holds per-write-session maps populated during DXF/DWG writing. */
 class DRW_WritingContext {
 public:
     DRW_WritingContext() = default;
-    std::vector<std::pair<std::string, int>> lineTypesMap; /*!< uppercase name -> handle */
+    std::vector<std::pair<std::string, int>> lineTypesMap; /*!< DXF: uppercase name -> handle */
+    std::map<std::string, duint32> ltypeMap;    /*!< DWG: uppercase ltype name -> handle */
+    std::map<std::string, duint32> layerMap;    /*!< DWG: uppercase layer name -> handle */
+    std::map<std::string, duint32> styleMap;    /*!< DWG: uppercase style name -> handle */
+    std::map<std::string, duint32> vportMap;    /*!< DWG: uppercase vport name -> handle */
+    std::map<std::string, duint32> appidMap;    /*!< DWG: uppercase appid name -> handle */
+    std::map<std::string, duint32> dimstyleMap; /*!< DWG: uppercase dimstyle name -> handle */
 };
 
 namespace DRW {

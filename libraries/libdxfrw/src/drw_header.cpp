@@ -2568,7 +2568,13 @@ namespace {
 } // namespace
 
 bool DRW_Header::encodeDwg(DRW::Version version, dwgBufferW *buf, dwgBufferW *hBbuf) {
-    if (version != DRW::AC1015 && version != DRW::AC1018) return false;
+    if (version != DRW::AC1015 && version != DRW::AC1018 &&
+        version != DRW::AC1024 && version != DRW::AC1027) return false;
+
+    // -------- REQUIREDVERSIONS (parseDwg:1786-1789) -------------------------
+    if (version > DRW::AC1024) {
+        buf->putBitLongLong(0);  // REQUIREDVERSIONS (AC1027+)
+    }
 
     // -------- Unknown 4 BDs (parseDwg:1789-1792) ----------------------------
     buf->putBitDouble(0.0);
@@ -2577,12 +2583,13 @@ bool DRW_Header::encodeDwg(DRW::Version version, dwgBufferW *buf, dwgBufferW *hB
     buf->putBitDouble(0.0);
 
     // -------- 4 CP8 string unknowns (parseDwg:1793-1798) --------------------
-    // Gated on `version < AC1021` (2007-).  R2000 hits this branch — emit
-    // four empty CP8 strings (BS length=0).
-    buf->putCP8Text(std::string());
-    buf->putCP8Text(std::string());
-    buf->putCP8Text(std::string());
-    buf->putCP8Text(std::string());
+    // Gated on `version < AC1021` (2007-).  R2000/R2004 hits this branch.
+    if (version < DRW::AC1021) {
+        buf->putCP8Text(std::string());
+        buf->putCP8Text(std::string());
+        buf->putCP8Text(std::string());
+        buf->putCP8Text(std::string());
+    }
 
     // -------- Unknown longs (parseDwg:1799-1800) ----------------------------
     // parseDwg comments call these "Unknown long1 (24L)" and "(0L)".  Real
@@ -2682,8 +2689,10 @@ bool DRW_Header::encodeDwg(DRW::Version version, dwgBufferW *buf, dwgBufferW *hB
     buf->putBitDouble(dblVar(*this, "CMLSCALE", 1.0));
     buf->putBitDouble(dblVar(*this, "CELTSCALE", 1.0));
 
-    // -------- MENU string (R2004-, including R2000) -------------------------
-    buf->putCP8Text(strVar(*this, "MENU"));
+    // -------- MENU string (gated version < AC1021) --------------------------
+    if (version < DRW::AC1021) {
+        buf->putCP8Text(strVar(*this, "MENU"));
+    }
 
     // -------- TDCREATE / TDUPDATE / TDINDWG / TDUSRTIMER (4 pairs of BLs) ---
     {
@@ -2731,6 +2740,9 @@ bool DRW_Header::encodeDwg(DRW::Version version, dwgBufferW *buf, dwgBufferW *hB
     hBbuf->putHandle(makeHardPtr(0));  // CLAYER
     hBbuf->putHandle(makeHardPtr(0));  // TEXTSTYLE
     hBbuf->putHandle(makeHardPtr(0));  // CELTYPE
+    if (version > DRW::AC1018) {       // 2007+: CMATERIAL (parseDwg:1960-1963)
+        hBbuf->putHandle(makeHardPtr(0));
+    }
     hBbuf->putHandle(makeHardPtr(0));  // DIMSTYLE
     hBbuf->putHandle(makeHardPtr(0));  // CMLSTYLE
 
@@ -2776,8 +2788,10 @@ bool DRW_Header::encodeDwg(DRW::Version version, dwgBufferW *buf, dwgBufferW *hB
     buf->put3BitDouble(coordVar(*this, "UCSORGRIGHT"));
     buf->put3BitDouble(coordVar(*this, "UCSORGFRONT"));
     buf->put3BitDouble(coordVar(*this, "UCSORGBACK"));
-    buf->putCP8Text(strVar(*this, "DIMPOST"));
-    buf->putCP8Text(strVar(*this, "DIMAPOST"));
+    if (version < DRW::AC1021) {  // gated: DIMPOST/DIMAPOST as CP8 strings (parseDwg:2019-2022)
+        buf->putCP8Text(strVar(*this, "DIMPOST"));
+        buf->putCP8Text(strVar(*this, "DIMAPOST"));
+    }
 
     // -------- DIM* values for R2000 (parseDwg:2053-2129; R14 branch dropped)
     buf->putBitDouble(dblVar(*this, "DIMSCALE", 1.0));
@@ -2789,6 +2803,12 @@ bool DRW_Header::encodeDwg(DRW::Version version, dwgBufferW *buf, dwgBufferW *hB
     buf->putBitDouble(dblVar(*this, "DIMDLE", 0.0));
     buf->putBitDouble(dblVar(*this, "DIMTP", 0.0));
     buf->putBitDouble(dblVar(*this, "DIMTM", 0.0));
+    if (version > DRW::AC1018) {  // 2007+: DIMFXL, DIMJOGANG, DIMTFILL, DIMTFILLCLR (parseDwg:2066-2070)
+        buf->putBitDouble(dblVar(*this, "DIMFXL", 1.0));
+        buf->putBitDouble(dblVar(*this, "DIMJOGANG", 0.0));
+        buf->putBitShort(static_cast<duint16>(intVar(*this, "DIMTFILL")));
+        buf->putCmColor(version, static_cast<duint16>(intVar(*this, "DIMTFILLCLR")));
+    }
     // R2000+: 6 bits then 3 BS
     buf->putBit(boolVar(*this, "DIMTOL"));
     buf->putBit(boolVar(*this, "DIMLIM"));
@@ -2799,6 +2819,9 @@ bool DRW_Header::encodeDwg(DRW::Version version, dwgBufferW *buf, dwgBufferW *hB
     buf->putBitShort(static_cast<duint16>(intVar(*this, "DIMTAD")));
     buf->putBitShort(static_cast<duint16>(intVar(*this, "DIMZIN")));
     buf->putBitShort(static_cast<duint16>(intVar(*this, "DIMAZIN")));
+    if (version > DRW::AC1018) {  // 2007+: DIMARCSYM (parseDwg:2083-2085)
+        buf->putBitShort(static_cast<duint16>(intVar(*this, "DIMARCSYM")));
+    }
     buf->putBitDouble(dblVar(*this, "DIMTXT", 0.18));
     buf->putBitDouble(dblVar(*this, "DIMCEN", 0.09));
     buf->putBitDouble(dblVar(*this, "DIMTSZ", 0.0));
@@ -2839,6 +2862,14 @@ bool DRW_Header::encodeDwg(DRW::Version version, dwgBufferW *buf, dwgBufferW *hB
     buf->putBitShort(static_cast<duint16>(intVar(*this, "DIMALTTZ")));
     buf->putBit(boolVar(*this, "DIMUPT"));
     buf->putBitShort(static_cast<duint16>(intVar(*this, "DIMATFIT", 3)));
+    if (version > DRW::AC1018) {  // 2007+: DIMFXLON (parseDwg:2134-2136)
+        buf->putBit(boolVar(*this, "DIMFXLON"));
+    }
+    if (version > DRW::AC1021) {  // 2010+: DIMTXTDIRECTION, DIMALTMZF, DIMMZF (parseDwg:2137-2141)
+        buf->putBit(boolVar(*this, "DIMTXTDIRECTION"));
+        buf->putBitDouble(dblVar(*this, "DIMALTMZF", 1.0));
+        buf->putBitDouble(dblVar(*this, "DIMMZF", 1.0));
+    }
 
     // -------- DIM handles (R2000+: 5 handles) (parseDwg:2139-2148) ----------
     hBbuf->putHandle(makeHardPtr(0));  // DIMTXSTY
@@ -2846,6 +2877,11 @@ bool DRW_Header::encodeDwg(DRW::Version version, dwgBufferW *buf, dwgBufferW *hB
     hBbuf->putHandle(makeHardPtr(0));  // DIMBLK
     hBbuf->putHandle(makeHardPtr(0));  // DIMBLK1
     hBbuf->putHandle(makeHardPtr(0));  // DIMBLK2
+    if (version > DRW::AC1018) {  // 2007+: DIMLTYPE, DIMLTEX1, DIMLTEX2 (parseDwg:2154-2160)
+        hBbuf->putHandle(makeHardPtr(0));  // DIMLTYPE
+        hBbuf->putHandle(makeHardPtr(0));  // DIMLTEX1
+        hBbuf->putHandle(makeHardPtr(0));  // DIMLTEX2
+    }
 
     // -------- DIMLWD, DIMLWE (R2000+: 2 BS) (parseDwg:2159-2160) ------------
     buf->putBitShort(static_cast<duint16>(intVar(*this, "DIMLWD", -2)));
@@ -2872,14 +2908,22 @@ bool DRW_Header::encodeDwg(DRW::Version version, dwgBufferW *buf, dwgBufferW *hB
     // -------- Post-control TSTACKALIGN/TSTACKSIZE + 3 NOD-related dict handles
     buf->putBitShort(static_cast<duint16>(intVar(*this, "TSTACKALIGN", 1)));
     buf->putBitShort(static_cast<duint16>(intVar(*this, "TSTACKSIZE", 70)));
-    buf->putCP8Text(strVar(*this, "HYPERLINKBASE"));
-    buf->putCP8Text(strVar(*this, "STYLESHEET"));
+    if (version < DRW::AC1021) {  // gated (parseDwg:2208-2211)
+        buf->putCP8Text(strVar(*this, "HYPERLINKBASE"));
+        buf->putCP8Text(strVar(*this, "STYLESHEET"));
+    }
     hBbuf->putHandle(makeSoftOwner(0));  // DICT LAYOUTS    (Phase 3.5)
     hBbuf->putHandle(makeSoftOwner(0));  // DICT PLOTSETTINGS (Phase 3.5)
     hBbuf->putHandle(makeSoftOwner(0));  // DICT PLOTSTYLES   (Phase 3.5)
     if (version > DRW::AC1015) {         // R2004+: 2 extra dict handles (parseDwg:2219-2223)
         hBbuf->putHandle(makeSoftOwner(0)); // DICT MATERIALS
         hBbuf->putHandle(makeSoftOwner(0)); // DICT COLORS
+    }
+    if (version > DRW::AC1018) {         // 2007+: DICT VISUALSTYLE (parseDwg:2225-2228)
+        hBbuf->putHandle(makeSoftOwner(0)); // DICT VISUALSTYLE
+    }
+    if (version > DRW::AC1024) {         // 2013+: unknown handle (parseDwg:2229-2232)
+        hBbuf->putHandle(makeSoftOwner(0));
     }
 
     // -------- Flags (BL) + INSUNITS (BS) + CEPSNTYPE (BS) -------------------
@@ -2890,8 +2934,10 @@ bool DRW_Header::encodeDwg(DRW::Version version, dwgBufferW *buf, dwgBufferW *hB
     if (cepsntype == 3) {
         hBbuf->putHandle(makeHardPtr(0));  // CPSNID
     }
-    buf->putCP8Text(strVar(*this, "FINGERPRINTGUID"));
-    buf->putCP8Text(strVar(*this, "VERSIONGUID"));
+    if (version < DRW::AC1021) {  // gated (parseDwg:2242-2245)
+        buf->putCP8Text(strVar(*this, "FINGERPRINTGUID"));
+        buf->putCP8Text(strVar(*this, "VERSIONGUID"));
+    }
 
     // -------- R2004+ RC/BS vars (parseDwg:2247-2261, version > AC1015) -------
     if (version > DRW::AC1015) {
@@ -2918,6 +2964,44 @@ bool DRW_Header::encodeDwg(DRW::Version version, dwgBufferW *buf, dwgBufferW *hB
     hBbuf->putHandle(makeHardPtr(0x10));  // LTYPE BYLAYER
     hBbuf->putHandle(makeHardPtr(0x0F));  // LTYPE BYBLOCK
     hBbuf->putHandle(makeHardPtr(0x11));  // LTYPE CONTINUOUS
+
+    // -------- R2007+ extra vars (parseDwg:2272-2310, version > AC1018) -------
+    if (version > DRW::AC1018) {
+        buf->putBit(boolVar(*this, "CAMERADISPLAY"));
+        buf->putBitLong(0);              // unknown BL 1
+        buf->putBitLong(0);              // unknown BL 2
+        buf->putBitDouble(0.0);          // unknown BD
+        buf->putBitDouble(dblVar(*this, "STEPSPERSEC", 2.0));
+        buf->putBitDouble(dblVar(*this, "STEPSIZE", 6.0));
+        buf->putBitDouble(dblVar(*this, "3DDWFPREC", 2.0));
+        buf->putBitDouble(dblVar(*this, "LENSLENGTH", 50.0));
+        buf->putBitDouble(dblVar(*this, "CAMERAHEIGHT", 0.0));
+        buf->putRawChar8(static_cast<duint8>(intVar(*this, "SOLIDHIST", 1)));
+        buf->putRawChar8(static_cast<duint8>(intVar(*this, "SHOWHIST", 1)));
+        buf->putBitDouble(dblVar(*this, "PSOLWIDTH", 5.0));
+        buf->putBitDouble(dblVar(*this, "PSOLHEIGHT", 80.0));
+        buf->putBitDouble(dblVar(*this, "LOFTANG1", 1.5707963));  // pi/2
+        buf->putBitDouble(dblVar(*this, "LOFTANG2", 1.5707963));
+        buf->putBitDouble(dblVar(*this, "LOFTMAG1", 0.0));
+        buf->putBitDouble(dblVar(*this, "LOFTMAG2", 0.0));
+        buf->putBitShort(static_cast<duint16>(intVar(*this, "LOFTPARAM", 7)));
+        buf->putRawChar8(static_cast<duint8>(intVar(*this, "LOFTNORMALS", 1)));
+        buf->putBitDouble(dblVar(*this, "LATITUDE", 37.7950));
+        buf->putBitDouble(dblVar(*this, "LONGITUDE", -122.394));
+        buf->putBitDouble(dblVar(*this, "NORTHDIRECTION", 0.0));
+        buf->putBitLong(static_cast<dint32>(intVar(*this, "TIMEZONE", -8000)));
+        buf->putRawChar8(static_cast<duint8>(intVar(*this, "LIGHTGLYPHDISPLAY", 1)));
+        buf->putRawChar8(static_cast<duint8>(intVar(*this, "TILEMODELIGHTSYNCH", 1)));
+        buf->putRawChar8(static_cast<duint8>(intVar(*this, "DWFFRAME")));
+        buf->putRawChar8(static_cast<duint8>(intVar(*this, "DGNFRAME")));
+        buf->putBit(0);                  // unknown B
+        buf->putCmColor(version, static_cast<duint16>(intVar(*this, "INTERFERECOLOR", 1)));
+        hBbuf->putHandle(makeHardPtr(0));  // INTERFEREOBJECT VS
+        hBbuf->putHandle(makeHardPtr(0));  // INTERFEREVPVS
+        hBbuf->putHandle(makeHardPtr(0));  // DRAGVS
+        buf->putRawChar8(static_cast<duint8>(intVar(*this, "CSHADOW")));
+        buf->putBitDouble(0.0);          // unknown BD
+    }
 
     // -------- R14+ trailing 4 BS unknowns (parseDwg:2307-2312) --------------
     buf->putBitShort(0);

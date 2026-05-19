@@ -280,6 +280,8 @@ set(SHARED_SOURCES
     libraries/libdxfrw/src/intern/dwgwriter15.h
     libraries/libdxfrw/src/intern/dwgwriter18.cpp
     libraries/libdxfrw/src/intern/dwgwriter18.h
+    libraries/libdxfrw/src/intern/dwgwriter24.cpp
+    libraries/libdxfrw/src/intern/dwgwriter24.h
     libraries/libdxfrw/src/intern/dwgreader.cpp
     libraries/libdxfrw/src/intern/dwgreader.h
     libraries/libdxfrw/src/intern/dwgreader15.cpp

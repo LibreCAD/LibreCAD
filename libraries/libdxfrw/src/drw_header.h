@@ -25,10 +25,12 @@ class dxfWriter;
 class dwgBuffer;
 class dwgBufferW;
 class DrwHeaderEncodeTestAccess;  // test-only friend; defined in tests/dwg_header_encode_round_trip_tests.cpp
+class dwgWriter24;                // forward declaration for friend access
 
 #define SETHDRFRIENDS  friend class dxfRW; \
                        friend class dwgReader; \
                        friend class dwgWriter15; \
+                       friend class dwgWriter24; \
                        friend class DrwHeaderEncodeTestAccess;
 
 //! Class to handle header entries

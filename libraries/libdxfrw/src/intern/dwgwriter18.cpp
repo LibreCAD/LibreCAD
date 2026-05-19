@@ -201,11 +201,10 @@ static std::vector<duint8> buildDataSectionMapContent(
 static std::vector<duint8> buildFileHeader(duint64 secPageMapAddr,
                                            duint32 secMapId,
                                            duint64 lastPageEndAddr,
-                                           duint32 numPages) {
+                                           duint32 numPages,
+                                           const char* verStr = "AC1018") {
     std::vector<duint8> hdr(0x100, 0);
 
-    // Version string "AC1018" at bytes 0-5, then 5 NUL bytes (6-10).
-    const char* verStr = "AC1018";
     std::memcpy(hdr.data(), verStr, 6);
     // Byte 11: maintenance version = 0 (already 0).
     // Byte 12: 0x00 (already 0).
@@ -381,7 +380,7 @@ bool dwgWriter18::finalize() {
     // addrSPM + spmPage.size().
     auto fileHdr = buildFileHeader(addrSPM, 5,
                                    addrSPM + static_cast<duint64>(spmPage.size()),
-                                   5);
+                                   5, fileHeaderVersion());
 
     // Write everything.
     auto writeVec = [&](const std::vector<duint8>& v) {

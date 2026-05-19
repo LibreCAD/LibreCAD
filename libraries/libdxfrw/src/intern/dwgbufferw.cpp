@@ -321,13 +321,33 @@ void dwgBufferW::putHandle(const dwgHandle& h) {
         putRawChar8(static_cast<duint8>((ref >> (i * 8)) & 0xFF));
 }
 
+// ---- object type (OT) ----------------------------------------------------
+
+void dwgBufferW::putObjType(DRW::Version v, duint16 oType) {
+    if (v > DRW::AC1021) {
+        // R2010+ OT: 2-bit code + variable payload
+        if (oType < 256) {
+            put2Bits(0);
+            putRawChar8(static_cast<duint8>(oType));
+        } else if (oType >= 0x01F0 && oType < 0x02F0) {
+            put2Bits(1);
+            putRawChar8(static_cast<duint8>(oType - 0x01F0));
+        } else {
+            put2Bits(2);
+            putRawShort16(oType);
+        }
+    } else {
+        putBitShort(oType);
+    }
+}
+
 // ---- strings -------------------------------------------------------------
 
 void dwgBufferW::putVariableText(DRW::Version v, const std::string& utf8) {
-    // R2000 (and earlier) → CP8 codepage path. R2007+ would emit UCS-2
-    // via TU, which is out of scope for the R2000-only writer.
-    (void)v;
-    putCP8Text(utf8);
+    if (v > DRW::AC1018)
+        putUCSText(utf8);
+    else
+        putCP8Text(utf8);
 }
 
 void dwgBufferW::putCP8Text(const std::string& utf8) {
@@ -336,6 +356,49 @@ void dwgBufferW::putCP8Text(const std::string& utf8) {
     putBitShort(byteLen);
     if (byteLen != 0)
         putBytes(reinterpret_cast<const duint8*>(encoded.data()), byteLen);
+}
+
+void dwgBufferW::putUCSText(const std::string& utf8) {
+    // Convert UTF-8 to UTF-16LE code units (BMP only — sufficient for
+    // printable ASCII + Latin-1 content found in typical DWG files).
+    std::vector<duint16> units;
+    for (size_t i = 0; i < utf8.size(); ) {
+        unsigned char c = static_cast<unsigned char>(utf8[i]);
+        duint32 cp = 0;
+        if (c < 0x80) {
+            cp = c; ++i;
+        } else if ((c & 0xE0) == 0xC0 && i + 1 < utf8.size()) {
+            cp = (c & 0x1F);
+            cp = (cp << 6) | (static_cast<unsigned char>(utf8[i+1]) & 0x3F);
+            i += 2;
+        } else if ((c & 0xF0) == 0xE0 && i + 2 < utf8.size()) {
+            cp = (c & 0x0F);
+            cp = (cp << 6) | (static_cast<unsigned char>(utf8[i+1]) & 0x3F);
+            cp = (cp << 6) | (static_cast<unsigned char>(utf8[i+2]) & 0x3F);
+            i += 3;
+        } else {
+            cp = '?'; ++i;  // replacement for malformed input
+        }
+        // Encode as UTF-16 (surrogates for > 0xFFFF)
+        if (cp < 0x10000) {
+            units.push_back(static_cast<duint16>(cp));
+        } else {
+            cp -= 0x10000;
+            units.push_back(static_cast<duint16>(0xD800 | (cp >> 10)));
+            units.push_back(static_cast<duint16>(0xDC00 | (cp & 0x3FF)));
+        }
+    }
+    putBitShort(static_cast<duint16>(units.size()));
+    for (duint16 u : units) {
+        putRawChar8(static_cast<duint8>(u & 0xFF));
+        putRawChar8(static_cast<duint8>(u >> 8));
+    }
+}
+
+duint32 dwgBufferW::bitCount() const {
+    if (m_bitPos == 0)
+        return static_cast<duint32>(m_buf.size()) * 8;
+    return static_cast<duint32>(m_buf.size() - 1) * 8 + m_bitPos;
 }
 
 void dwgBufferW::putBytes(const duint8* buf, size_t n) {
@@ -387,7 +450,20 @@ void dwgBufferW::putThickness(double t, bool b_R2000_style) {
 void dwgBufferW::putCmColor(DRW::Version v, duint16 colorIndex) {
     putBitShort(colorIndex);
     if (v >= DRW::AC1018) {  // R2004+: getCmColor reads BS + BL(rgb) + rawchar8(flags)
-        putBitLong(0);       // rgb = 0 (no RGB component, use color index)
+        // getCmColor dispatches on rgb>>24 (type byte):
+        //   0xC0 → return 256 (ByLayer)
+        //   0xC1 → return 0   (ByBlock)
+        //   0xC3 → return rgb&0xFF  (ACI palette index 1..255)
+        // Type 0x00 falls to the default "return 256" branch, discarding idx.
+        duint32 typeNibble;
+        if (colorIndex == 0)
+            typeNibble = 0xC1u;         // ByBlock
+        else if (colorIndex >= 256)
+            typeNibble = 0xC0u;         // ByLayer (256)
+        else
+            typeNibble = 0xC3u;         // ACI 1..255
+        duint32 rgb = (typeNibble << 24) | (colorIndex & 0xFFu);
+        putBitLong(rgb);
         putRawChar8(0);      // flags = 0 (no color name, no book name)
     }
 }

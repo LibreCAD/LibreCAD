@@ -14,10 +14,12 @@
 #include "dwgwriter15.h"
 
 #include <algorithm>
+#include <cctype>
 #include <cstring>
 
 #include "../drw_base.h"
 #include "../drw_entities.h"
+#include "../drw_objects.h"
 #include "dwgutil.h"
 
 namespace {
@@ -126,7 +128,7 @@ dwgHandle makeNullHandle() {
 /// slot in R2000 control objects.
 dwgHandle makeSoftOwner(duint32 ref) {
     dwgHandle h;
-    h.code = (ref == 0) ? 3 : 3;
+    h.code = 3;
     h.ref  = ref;
     h.size = 0;
     if (ref != 0) {
@@ -134,6 +136,14 @@ dwgHandle makeSoftOwner(duint32 ref) {
         while (t != 0) { t >>= 8; ++h.size; }
     }
     return h;
+}
+
+/// Normalize string to upper-case for writing-context map lookups.
+static std::string toUpperCase(const std::string& s) {
+    std::string r(s);
+    for (auto& c : r)
+        c = static_cast<char>(std::toupper(static_cast<unsigned char>(c)));
+    return r;
 }
 
 } // namespace
@@ -221,31 +231,33 @@ void dwgWriter15::endSentinelSection(size_t sectionStart, size_t sizeOffset,
     m_buf.putBytes(endSentinel, 16); // end sentinel AFTER CRC
 }
 
+void dwgWriter15::initHeaderControlHandles() {
+    if (m_header == nullptr) return;
+    auto fillIfZero = [](duint32& slot, duint32 value) {
+        if (slot == 0) slot = value;
+    };
+    fillIfZero(m_header->blockCtrl,       reservedHandle::BLOCK_CONTROL);
+    fillIfZero(m_header->layerCtrl,       reservedHandle::LAYER_CONTROL);
+    fillIfZero(m_header->styleCtrl,       reservedHandle::STYLE_CONTROL);
+    fillIfZero(m_header->linetypeCtrl,    reservedHandle::LTYPE_CONTROL);
+    fillIfZero(m_header->viewCtrl,        reservedHandle::VIEW_CONTROL);
+    fillIfZero(m_header->ucsCtrl,         reservedHandle::UCS_CONTROL);
+    fillIfZero(m_header->vportCtrl,       reservedHandle::VPORT_CONTROL);
+    fillIfZero(m_header->appidCtrl,       reservedHandle::APPID_CONTROL);
+    fillIfZero(m_header->dimstyleCtrl,    reservedHandle::DIMSTYLE_CONTROL);
+    fillIfZero(m_header->vpEntHeaderCtrl, reservedHandle::VPORT_ENTITY_HEADER_CONTROL);
+}
+
 bool dwgWriter15::writeDwgHeader() {
     size_t sectionStart = m_buf.size();
     m_sectionOffsets[recno::HEADER] = static_cast<duint32>(sectionStart);
 
     size_t sizeOffset = beginSentinelSection(dwgSentinels::HEADER_BEGIN);
 
-    // Phase 3d: populate the control-handle members on `m_header` so the
+    // Phase 3d: populate the control-handle members on m_header so the
     // encoder's control-handle block (parseDwg:2162-2199) references the
-    // canonical reserved handles.  Only override fields that the caller
-    // left at zero — non-zero values are preserved on read-then-write.
-    if (m_header != nullptr) {
-        auto fillIfZero = [](duint32& slot, duint32 value) {
-            if (slot == 0) slot = value;
-        };
-        fillIfZero(m_header->blockCtrl,       reservedHandle::BLOCK_CONTROL);
-        fillIfZero(m_header->layerCtrl,       reservedHandle::LAYER_CONTROL);
-        fillIfZero(m_header->styleCtrl,       reservedHandle::STYLE_CONTROL);
-        fillIfZero(m_header->linetypeCtrl,    reservedHandle::LTYPE_CONTROL);
-        fillIfZero(m_header->viewCtrl,        reservedHandle::VIEW_CONTROL);
-        fillIfZero(m_header->ucsCtrl,         reservedHandle::UCS_CONTROL);
-        fillIfZero(m_header->vportCtrl,       reservedHandle::VPORT_CONTROL);
-        fillIfZero(m_header->appidCtrl,       reservedHandle::APPID_CONTROL);
-        fillIfZero(m_header->dimstyleCtrl,    reservedHandle::DIMSTYLE_CONTROL);
-        fillIfZero(m_header->vpEntHeaderCtrl, reservedHandle::VPORT_ENTITY_HEADER_CONTROL);
-    }
+    // canonical reserved handles.
+    initHeaderControlHandles();
 
     // Phase 3a: full 282-var bit-packed emission via DRW_Header::encodeDwg.
     // For R2000 the handle stream is inline with the data stream — pass
@@ -287,42 +299,73 @@ void dwgWriter15::emitControlObject(
 {
     dwgBufferW& body = beginObject(handle);
 
-    // Common preamble (mirror of DRW_TableEntry::parseDwg for R2000):
-    //   BS  oType
-    //   RL  objSize  (in bits, stored but unused by reader for R2000;
-    //                 emit 0 as a placeholder — see note below)
-    //   H   handle   (the object's own handle, hard-owner code 4)
+    // Common preamble (mirrors DRW_TableEntry::parseDwg):
+    //   OT  oType  — R2010+ uses 2-bit code + RC/RS; R2000/R2004 uses BS
+    //   RL  objSize — R2000/R2004 only; R2010+ computes it from buf.size()-bs
+    //   H   handle  (the object's own handle)
     //   BS  extDataSize = 0
     //   BL  numReactors = 0
-    //   (no xDictFlag bit on R2000 — DRW_TableEntry::parseDwg only
-    //    reads it for version > AC1015)
-    body.putBitShort(typeCode);
-    // objSize stub — back-patched by finishObject().
-    body.putRawLong32(0);
-    body.putHandle(makeOwnHandle(handle)); // code 0 per spec §20.4.1
+    //   B   xDictFlag = 0  (R2004+)
+    body.putObjType(m_version, typeCode);
+    if (m_version > DRW::AC1014 && m_version < DRW::AC1024) {
+        body.putRawLong32(0);  // objSize placeholder (back-patched by finishObject)
+    }
+    body.putHandle(makeOwnHandle(handle));
     body.putBitShort(0);  // extDataSize
     body.putBitLong(0);   // numReactors
     if (m_version > DRW::AC1015) {
         body.putBit(0);   // xDictFlag=0 (R2004+)
     }
+    if (m_version > DRW::AC1024) {
+        body.putBit(0);   // Have binary data (AC1027+)
+    }
 
-    // DRW_ObjControl body (mirror of dwgreader.cpp:1633-1680 for R2000):
+    // DRW_ObjControl body (mirrors dwgreader.cpp DRW_ObjControl::parseDwg):
     //   BL  numEntries
-    //   [RC unkData byte if DIMSTYLE (oType 0x44) on R2000+]
-    //   H   null handle  (terminator slot)
-    //   H   XDic handle  (xDictFlag defaults to 0 → reader expects one)
-    //   <numEntries + 2 if BLOCK_CONTROL/LTYPE_CONTROL> offset handles
-    //                    (caller supplies them via childHandles —
-    //                     count must match the post-+2 expectation)
+    //   RC  unkData (DIMSTYLE only, R2000+)
+    //   B   stringBit = 0  (R2007+: control objects never have strings)
+    //   H   null handle
+    //   H   XDic handle  (xDictFlag=0 → reader reads one)
+    //   H   child offset handles × numEntries (+2 for BLOCK/LTYPE controls)
     body.putBitLong(static_cast<dint32>(numEntries));
     if (typeCode == oType::DIMSTYLE_CONTROL) {
         body.putRawChar8(0);
+    }
+    if (m_version > DRW::AC1018) {
+        body.putBit(0);   // stringBit = 0: no strings in control objects (R2007+)
     }
     body.putHandle(makeNullHandle());
     body.putHandle(makeSoftOwner(0));  // XDic null
     for (duint32 child : childHandles)
         body.putHandle(makeHardPtr(child));
 
+    finishObject();
+}
+
+void dwgWriter15::emitControlObject(
+    duint16 typeCode, duint32 handle, duint32 numEntries,
+    const std::vector<duint32>& childHandles)
+{
+    dwgBufferW& body = beginObject(handle);
+    body.putObjType(m_version, typeCode);
+    if (m_version > DRW::AC1014 && m_version < DRW::AC1024)
+        body.putRawLong32(0);
+    body.putHandle(makeOwnHandle(handle));
+    body.putBitShort(0);   // extDataSize
+    body.putBitLong(0);    // numReactors
+    if (m_version > DRW::AC1015)
+        body.putBit(0);    // xDictFlag
+    if (m_version > DRW::AC1024)
+        body.putBit(0);    // Have binary data (AC1027+)
+    body.putBitLong(static_cast<dint32>(numEntries));
+    if (typeCode == oType::DIMSTYLE_CONTROL)
+        body.putRawChar8(0);
+    if (m_version > DRW::AC1018)
+        body.putBit(0);
+    body.putHandle(makeNullHandle());
+    body.putHandle(makeSoftOwner(0));
+    for (duint32 child : childHandles)
+        body.putHandle(makeHardPtr(child));
     finishObject();
 }
 
@@ -361,13 +404,18 @@ duint32 dwgWriter15::defineBlock(const std::string& name,
     // Block_Record (with the caller's basePoint).
     {
         dwgBufferW& body = beginObject(blockRecH);
-        body.putBitShort(oType::BLOCK_RECORD);
-        body.putRawLong32(0);                  // objSize stub
+        body.putObjType(m_version, oType::BLOCK_RECORD);
+        if (m_version > DRW::AC1014 && m_version < DRW::AC1024) {
+            body.putRawLong32(0);              // objSize stub (R2000/R2004 only)
+        }
         body.putHandle(makeHardPtr(blockRecH));
         body.putBitShort(0);                   // extDataSize
         body.putBitLong(0);                    // numReactors
         if (m_version > DRW::AC1015) {
             body.putBit(0);                    // xDictFlag=0 (R2004+)
+        }
+        if (m_version > DRW::AC1024) {
+            body.putBit(0);                    // Have binary data (AC1027+)
         }
         body.putVariableText(m_version, name);
         body.putBit(0);                        // flags bit 6 (xref-ref)
@@ -414,15 +462,23 @@ bool dwgWriter15::emitDeferredBlockControl() {
     children.push_back(reservedHandle::BLOCK_PAPER_SPACE);
 
     dwgBufferW& body = beginObject(reservedHandle::BLOCK_CONTROL);
-    body.putBitShort(oType::BLOCK_CONTROL);
-    body.putRawLong32(0);  // objSize stub
+    body.putObjType(m_version, oType::BLOCK_CONTROL);
+    if (m_version > DRW::AC1014 && m_version < DRW::AC1024) {
+        body.putRawLong32(0);  // objSize stub (R2000/R2004 only)
+    }
     body.putHandle(makeHardPtr(reservedHandle::BLOCK_CONTROL));
     body.putBitShort(0);  // extDataSize
     body.putBitLong(0);   // numReactors
     if (m_version > DRW::AC1015) {
         body.putBit(0);   // xDictFlag=0 (R2004+)
     }
+    if (m_version > DRW::AC1024) {
+        body.putBit(0);   // Have binary data (AC1027+)
+    }
     body.putBitLong(static_cast<dint32>(m_userBlockRecordHandles.size()));
+    if (m_version > DRW::AC1018) {
+        body.putBit(0);   // stringBit = 0 (R2007+)
+    }
     body.putHandle(makeNullHandle());  // NullH
     body.putHandle(makeSoftOwner(0));  // XDic null
     for (duint32 h : children)
@@ -440,7 +496,13 @@ void dwgWriter15::emitBlockEntity(duint32 handle, const std::string& name,
     bk.name = name;
     bk.setIsEnd(isEnd);
     dwgBufferW& body = beginObject(handle);
-    bk.encodeDwg(m_version, &body, /*bs=*/0);
+    if (m_version > DRW::AC1018) {
+        m_objectStrings.reset();
+        m_objectHandles.reset();
+        bk.encodeDwg(m_version, &body, 0, &m_objectStrings, &m_objectHandles);
+    } else {
+        bk.encodeDwg(m_version, &body, 0);
+    }
     finishObject();
 }
 
@@ -449,56 +511,68 @@ void dwgWriter15::emitBlockRecord(duint32 handle, const std::string& name,
                                   duint32 endBlockHandle) {
     dwgBufferW& body = beginObject(handle);
 
-    // Common table-entry preamble (R2000/R2004).
-    body.putBitShort(oType::BLOCK_RECORD);
-    body.putRawLong32(0);                  // objSize stub
+    // Common table-entry preamble.
+    body.putObjType(m_version, oType::BLOCK_RECORD);
+    if (m_version > DRW::AC1014 && m_version < DRW::AC1024) {
+        body.putRawLong32(0);              // objSize stub (R2000/R2004 only)
+    }
     body.putHandle(makeHardPtr(handle));
     body.putBitShort(0);                   // extDataSize
     body.putBitLong(0);                    // numReactors
     if (m_version > DRW::AC1015) {
         body.putBit(0);                    // xDictFlag=0 (R2004+)
     }
+    if (m_version > DRW::AC1024) {
+        body.putBit(0);                    // Have binary data (AC1027+)
+    }
 
-    // R2000/R2004 Block_Record body.  Mirror of DRW_Block_Record::parseDwg
-    // at drw_objects.cpp:709-840 — collapsed for our empty/canonical
-    // *Model_Space / *Paper_Space records.
-    body.putVariableText(m_version, name);
+    // Block_Record body — mirrors DRW_Block_Record::parseDwg.
+    // For AC1024, strings go to m_objectStrings and handles to m_objectHandles.
+    dwgBufferW *strBuf = (m_version > DRW::AC1018) ? &m_objectStrings : &body;
+    dwgBufferW *hdlBuf = (m_version > DRW::AC1018) ? &m_objectHandles : &body;
+    if (m_version > DRW::AC1018) {
+        m_objectStrings.reset();
+        m_objectHandles.reset();
+    }
+
+    strBuf->putVariableText(m_version, name);
     body.putBit(0);                        // flags bit 6 (xref-ref)
-    body.putBitShort(0);                   // xrefindex BS (R2004-)
+    if (m_version <= DRW::AC1018) {
+        body.putBitShort(0);               // xrefindex BS (R2004-)
+    }
     body.putBit(0);                        // flags bit 4 (xref dep)
     body.putBit(0);                        // anon (*U bit)
     body.putBit(0);                        // attdefs
     body.putBit(0);                        // xref
     body.putBit(0);                        // overlaid xref
     body.putBit(0);                        // R2000+ loaded-xref
-    // R2004+: objectCount BL (non-xref blocks only; we write 0 = empty block).
     if (m_version > DRW::AC1015) {
-        body.putBitLong(0);                // objectCount = 0
+        body.putBitLong(0);                // objectCount = 0 (R2004+)
     }
     DRW_Coord origin;
     origin.x = origin.y = origin.z = 0.0;
     body.put3BitDouble(origin);            // basePoint 3BD
-    body.putVariableText(DRW::AC1015, std::string{});  // xrefPath empty
-    // R2000+ insertCount loop: emit terminating 0 byte.
-    body.putRawChar8(0);
-    body.putVariableText(DRW::AC1015, std::string{});  // bkdesc empty
-    body.putBitLong(0);                    // prevData BL = 0 (no bytes)
-    // (R2007+ insUnits/canExplode/bkScaling omitted.)
+    strBuf->putVariableText(m_version, std::string{});  // xrefPath empty
+    body.putRawChar8(0);                   // insertCount terminator (R2000+)
+    strBuf->putVariableText(m_version, std::string{});  // bkdesc empty
+    body.putBitLong(0);                    // prevData BL = 0
+    if (m_version > DRW::AC1018) {
+        body.putBitShort(0);               // insUnits BS (R2007+)
+        body.putBit(0);                    // canExplode B (R2007+)
+        body.putRawChar8(0);               // bkScaling RC (R2007+)
+    }
 
     // Handle stream.
-    body.putHandle(makeHardPtr(reservedHandle::BLOCK_CONTROL));  // parent
-    body.putHandle(makeSoftOwner(0));                            // XDic null
-    body.putHandle(makeNullHandle());                            // NullH
-    body.putHandle(makeHardPtr(blockHandle));                    // block ref
+    hdlBuf->putHandle(makeHardPtr(reservedHandle::BLOCK_CONTROL));  // parent
+    hdlBuf->putHandle(makeSoftOwner(0));                            // XDic null
+    hdlBuf->putHandle(makeNullHandle());                            // NullH
+    hdlBuf->putHandle(makeHardPtr(blockHandle));                    // block ref
     if (m_version <= DRW::AC1015) {
-        // R2000-: firstEH + lastEH (null = empty block, entities chained).
-        body.putHandle(makeNullHandle());
-        body.putHandle(makeNullHandle());
+        hdlBuf->putHandle(makeNullHandle());  // firstEH
+        hdlBuf->putHandle(makeNullHandle());  // lastEH
     }
-    // R2004+: objectCount=0, so zero entity handles follow here.
-    body.putHandle(makeHardPtr(endBlockHandle));                 // endBlock
-    // R2000+ insertCount=0 → no inserts handles in the loop body.
-    body.putHandle(makeSoftOwner(0));                            // layoutH null
+    hdlBuf->putHandle(makeHardPtr(endBlockHandle));  // endBlock
+    hdlBuf->putHandle(makeSoftOwner(0));             // layoutH null
 
     finishObject();
 }
@@ -507,26 +581,177 @@ void dwgWriter15::emitTableRecord(duint16 typeCode, duint32 handle,
                                   const std::string& name) {
     dwgBufferW& body = beginObject(handle);
 
-    // Common preamble — same as control objects.
-    body.putBitShort(typeCode);
-    body.putRawLong32(0);  // objSize placeholder (informational on R2000/R2004)
+    // Common preamble — same structure as control objects.
+    body.putObjType(m_version, typeCode);
+    if (m_version > DRW::AC1014 && m_version < DRW::AC1024) {
+        body.putRawLong32(0);  // objSize placeholder (R2000/R2004 only)
+    }
     body.putHandle(makeHardPtr(handle));
     body.putBitShort(0);   // extDataSize
     body.putBitLong(0);    // numReactors
     if (m_version > DRW::AC1015) {
         body.putBit(0);    // xDictFlag=0 (R2004+)
     }
+    if (m_version > DRW::AC1024) {
+        body.putBit(0);    // Have binary data (AC1027+)
+    }
 
-    // Record name — this is the first field after the preamble that
-    // every per-record parseDwg reads.  Reader uses
-    // `sBuf->getVariableText(version, false)` which for R2000/R2004 reads a
-    // BS-length + bytes (CP8) pair.  Stopping here is enough: the
-    // reader's subsequent reads return zeros/empty when it runs off
-    // the end of the body and parseDwg returns false with a per-record
-    // warning — the record is still stored in the map with `name` set.
-    body.putVariableText(m_version, name);
+    // Record name: for AC1024 go into the string section (m_objectStrings),
+    // which finishObject() appends to the data body with a footer.
+    // For R2000/R2004 write inline in body.
+    if (m_version > DRW::AC1018) {
+        m_objectStrings.reset();
+        m_objectHandles.reset();
+        m_objectStrings.putVariableText(m_version, name);
+    } else {
+        body.putVariableText(m_version, name);
+    }
 
     finishObject();
+}
+
+// --- Shared preamble helper for full table-record emitters -----------------
+// Writes OT + objSize stub (R2000/R2004) + own-handle + extDataSize +
+// numReactors + xDictFlag.  Sets up strBuf/hdlBuf for AC1024 three-stream;
+// caller passes back the strBuf/hdlBuf pointers via the out-params so the
+// subsequent encodeDwg call lands its strings/handles in the right buffer.
+static void emitRecordPreamble(dwgBufferW& body, DRW::Version version,
+                                duint16 otype, duint32 handle,
+                                dwgBufferW& strBuf, dwgBufferW& hdlBuf,
+                                dwgBufferW*& sb, dwgBufferW*& hb) {
+    body.putObjType(version, otype);
+    if (version > DRW::AC1014 && version < DRW::AC1024)
+        body.putRawLong32(0);
+    body.putHandle(makeHardPtr(handle));
+    body.putBitShort(0);
+    body.putBitLong(0);
+    if (version > DRW::AC1015)
+        body.putBit(0);   // xDictFlag
+    if (version > DRW::AC1024)
+        body.putBit(0);   // Have binary data (AC1027+)
+    if (version > DRW::AC1018) {
+        strBuf.reset();
+        hdlBuf.reset();
+        sb = &strBuf;
+        hb = &hdlBuf;
+    } else {
+        sb = &body;
+        hb = &body;
+    }
+}
+
+void dwgWriter15::emitLtypeRecord(duint32 handle, const DRW_LType& lt) {
+    dwgBufferW& body = beginObject(handle);
+    dwgBufferW *sb, *hb;
+    emitRecordPreamble(body, m_version, oType::LTYPE, handle,
+                       m_objectStrings, m_objectHandles, sb, hb);
+    lt.encodeDwg(m_version, &body, sb, hb);
+    finishObject();
+}
+
+void dwgWriter15::emitLayerRecord(duint32 handle, const DRW_Layer& lay) {
+    // Resolve linetype name to a handle before encoding.
+    DRW_Layer layerCopy = lay;
+    std::string ltUpper = toUpperCase(lay.lineType);
+    auto ltIt = m_writingCtx.ltypeMap.find(ltUpper);
+    if (ltIt != m_writingCtx.ltypeMap.end()) {
+        layerCopy.lTypeH = makeHardPtr(ltIt->second);
+    } else {
+        layerCopy.lTypeH = makeHardPtr(reservedHandle::LTYPE_CONTINUOUS);
+    }
+
+    dwgBufferW& body = beginObject(handle);
+    dwgBufferW *sb, *hb;
+    emitRecordPreamble(body, m_version, oType::LAYER, handle,
+                       m_objectStrings, m_objectHandles, sb, hb);
+    layerCopy.encodeDwg(m_version, &body, sb, hb);
+    finishObject();
+}
+
+void dwgWriter15::emitStyleRecord(duint32 handle, const DRW_Textstyle& ts) {
+    dwgBufferW& body = beginObject(handle);
+    dwgBufferW *sb, *hb;
+    emitRecordPreamble(body, m_version, oType::STYLE, handle,
+                       m_objectStrings, m_objectHandles, sb, hb);
+    ts.encodeDwg(m_version, &body, sb, hb);
+    finishObject();
+}
+
+void dwgWriter15::emitVportRecord(duint32 handle, const DRW_Vport& vp) {
+    dwgBufferW& body = beginObject(handle);
+    dwgBufferW *sb, *hb;
+    emitRecordPreamble(body, m_version, oType::VPORT, handle,
+                       m_objectStrings, m_objectHandles, sb, hb);
+    vp.encodeDwg(m_version, &body, sb, hb);
+    finishObject();
+}
+
+void dwgWriter15::emitAppIdRecord(duint32 handle, const DRW_AppId& ai) {
+    dwgBufferW& body = beginObject(handle);
+    dwgBufferW *sb, *hb;
+    emitRecordPreamble(body, m_version, oType::APPID, handle,
+                       m_objectStrings, m_objectHandles, sb, hb);
+    ai.encodeDwg(m_version, &body, sb, hb);
+    finishObject();
+}
+
+void dwgWriter15::emitDimstyleRecord(duint32 handle, const DRW_Dimstyle& ds) {
+    dwgBufferW& body = beginObject(handle);
+    dwgBufferW *sb, *hb;
+    emitRecordPreamble(body, m_version, oType::DIMSTYLE, handle,
+                       m_objectStrings, m_objectHandles, sb, hb);
+    ds.encodeDwg(m_version, &body, sb, hb);
+    finishObject();
+}
+
+// --- add*() methods: register user table records for deferred emission -----
+
+void dwgWriter15::addLType(const DRW_LType& lt) {
+    std::string upper = toUpperCase(lt.name);
+    if (upper.empty() || m_writingCtx.ltypeMap.count(upper)) return;
+    duint32 h = m_handles.next();
+    m_writingCtx.ltypeMap[upper] = h;
+    m_pendingLTypes.emplace_back(h, lt);
+}
+
+void dwgWriter15::addLayer(const DRW_Layer& lay) {
+    std::string upper = toUpperCase(lay.name);
+    if (upper.empty() || m_writingCtx.layerMap.count(upper)) return;
+    duint32 h = m_handles.next();
+    m_writingCtx.layerMap[upper] = h;
+    m_pendingLayers.emplace_back(h, lay);
+}
+
+void dwgWriter15::addTextstyle(const DRW_Textstyle& ts) {
+    std::string upper = toUpperCase(ts.name);
+    if (upper.empty() || m_writingCtx.styleMap.count(upper)) return;
+    duint32 h = m_handles.next();
+    m_writingCtx.styleMap[upper] = h;
+    m_pendingStyles.emplace_back(h, ts);
+}
+
+void dwgWriter15::addVport(const DRW_Vport& vp) {
+    std::string upper = toUpperCase(vp.name);
+    if (upper.empty() || m_writingCtx.vportMap.count(upper)) return;
+    duint32 h = m_handles.next();
+    m_writingCtx.vportMap[upper] = h;
+    m_pendingVports.emplace_back(h, vp);
+}
+
+void dwgWriter15::addDimstyle(const DRW_Dimstyle& ds) {
+    std::string upper = toUpperCase(ds.name);
+    if (upper.empty() || m_writingCtx.dimstyleMap.count(upper)) return;
+    duint32 h = m_handles.next();
+    m_writingCtx.dimstyleMap[upper] = h;
+    m_pendingDimstyles.emplace_back(h, ds);
+}
+
+void dwgWriter15::addAppId(const DRW_AppId& ai) {
+    std::string upper = toUpperCase(ai.name);
+    if (upper.empty() || m_writingCtx.appidMap.count(upper)) return;
+    duint32 h = m_handles.next();
+    m_writingCtx.appidMap[upper] = h;
+    m_pendingAppIds.emplace_back(h, ai);
 }
 
 bool dwgWriter15::encodeEntity(DRW_Entity *ent) {
@@ -542,10 +767,21 @@ bool dwgWriter15::encodeEntity(DRW_Entity *ent) {
     } else {
         m_handles.reserve(handle);
     }
-    // Default layer "0" (handle 0x12) when caller didn't set one.  Phase
-    // 4d will do real layer-name → handle resolution via the layermap.
+    // Resolve layer name → handle.  Caller may have pre-set layerH.ref for
+    // round-trip; only resolve from name when the handle is unset.
     if (ent->layerH.ref == 0) {
-        ent->layerH.ref = 0x12;
+        auto layerUp = toUpperCase(ent->layer);
+        auto it = m_writingCtx.layerMap.find(layerUp);
+        ent->layerH.ref = (it != m_writingCtx.layerMap.end())
+            ? it->second
+            : static_cast<duint32>(0x12);  // fallback: layer "0"
+    }
+    // Resolve linetype name → handle when caller specified a non-empty name.
+    if (ent->lTypeH.ref == 0 && !ent->lineType.empty()) {
+        auto ltUp = toUpperCase(ent->lineType);
+        auto it = m_writingCtx.ltypeMap.find(ltUp);
+        if (it != m_writingCtx.ltypeMap.end())
+            ent->lTypeH.ref = it->second;
     }
     dwgBufferW& body = beginObject(handle);
     bool ok = ent->encodeDwg(m_version, &body, /*bs=*/0);
@@ -555,97 +791,123 @@ bool dwgWriter15::encodeEntity(DRW_Entity *ent) {
 }
 
 bool dwgWriter15::writeDwgObjects() {
-    // Object stream — the unsentinel'd byte region between CLASSES end
-    // and HANDLES start.  Phase 3d: emit 10 empty control objects at
-    // the canonical reserved handles.  BLOCK_CONTROL and LTYPE_CONTROL
-    // each carry 2 phantom child handles because the reader applies
-    // `numEntries += 2` for those types (see Risk 4f).
+    // Ensure standard reserved entries are present.  The constructor
+    // pre-seeds these; insert is a no-op if a key already exists, which
+    // protects user entries added via add*() before this call.
+    m_writingCtx.ltypeMap.insert({"CONTINUOUS", reservedHandle::LTYPE_CONTINUOUS});
+    m_writingCtx.ltypeMap.insert({"BYLAYER",    reservedHandle::LTYPE_BYLAYER});
+    m_writingCtx.ltypeMap.insert({"BYBLOCK",    reservedHandle::LTYPE_BYBLOCK});
+    m_writingCtx.layerMap.insert({"0",        static_cast<duint32>(0x12)});
+    m_writingCtx.styleMap.insert({"STANDARD", static_cast<duint32>(0x13)});
+    m_writingCtx.appidMap.insert({"ACAD",     static_cast<duint32>(0x14)});
+    m_writingCtx.dimstyleMap.insert({"STANDARD", static_cast<duint32>(0x15)});
+    m_writingCtx.vportMap.insert({"*ACTIVE",  static_cast<duint32>(0x16)});
 
-    // BLOCK_CONTROL is deferred to emitDeferredBlockControl().  Without
-    // deferral, BLOCK_CONTROL's numEntries can't include user-defined
-    // blocks added later via iface->writeBlocks() — and the reader's
-    // findTableName uses blockRecordmap (populated only for records
-    // walked from BLOCK_CONTROL.handlesList), so INSERTs referencing
-    // user blocks would lose their name resolution.  See Phase 4f-INSERT.
+    // --- LTYPE section --- (emitted before LAYER so ltypeMap is populated
+    // when emitLayerRecord resolves lineType→handle)
+    {
+        std::vector<duint32> ltypeChildren = {
+            reservedHandle::LTYPE_BYBLOCK,
+            reservedHandle::LTYPE_BYLAYER,
+            reservedHandle::LTYPE_CONTINUOUS
+        };
+        for (auto& p : m_pendingLTypes) ltypeChildren.push_back(p.first);
+        // numEntries excludes BYBLOCK/BYLAYER phantoms (reader adds +2)
+        emitControlObject(oType::LTYPE_CONTROL, reservedHandle::LTYPE_CONTROL,
+                          1 + static_cast<duint32>(m_pendingLTypes.size()),
+                          ltypeChildren);
+        emitTableRecord(oType::LTYPE, reservedHandle::LTYPE_BYBLOCK,    "BYBLOCK");
+        emitTableRecord(oType::LTYPE, reservedHandle::LTYPE_BYLAYER,    "BYLAYER");
+        emitTableRecord(oType::LTYPE, reservedHandle::LTYPE_CONTINUOUS, "CONTINUOUS");
+        for (auto& p : m_pendingLTypes)
+            emitLtypeRecord(p.first, p.second);
+    }
 
-    // LAYER_CONTROL: 1 real entry (layer "0").
-    emitControlObject(oType::LAYER_CONTROL, reservedHandle::LAYER_CONTROL,
-                      1, {0x12});
+    // --- LAYER section ---
+    {
+        std::vector<duint32> layerChildren = {0x12};
+        for (auto& p : m_pendingLayers) layerChildren.push_back(p.first);
+        emitControlObject(oType::LAYER_CONTROL, reservedHandle::LAYER_CONTROL,
+                          1 + static_cast<duint32>(m_pendingLayers.size()),
+                          layerChildren);
+        emitTableRecord(oType::LAYER, 0x12, "0");
+        for (auto& p : m_pendingLayers)
+            emitLayerRecord(p.first, p.second);
+    }
 
-    // STYLE_CONTROL: 1 real entry (textstyle "STANDARD").
-    emitControlObject(oType::STYLE_CONTROL, reservedHandle::STYLE_CONTROL,
-                      1, {0x13});
-
-    // LTYPE_CONTROL: 1 real entry (CONTINUOUS) + 2 phantoms
-    //   (BYBLOCK, BYLAYER) → reader walks 3 offset handles.
-    emitControlObject(oType::LTYPE_CONTROL, reservedHandle::LTYPE_CONTROL,
-                      1,
-                      {reservedHandle::LTYPE_BYBLOCK,
-                       reservedHandle::LTYPE_BYLAYER,
-                       reservedHandle::LTYPE_CONTINUOUS});
+    // --- STYLE section ---
+    {
+        std::vector<duint32> styleChildren = {0x13};
+        for (auto& p : m_pendingStyles) styleChildren.push_back(p.first);
+        emitControlObject(oType::STYLE_CONTROL, reservedHandle::STYLE_CONTROL,
+                          1 + static_cast<duint32>(m_pendingStyles.size()),
+                          styleChildren);
+        emitTableRecord(oType::STYLE, 0x13, "STANDARD");
+        for (auto& p : m_pendingStyles)
+            emitStyleRecord(p.first, p.second);
+    }
 
     // VIEW_CONTROL: no entries.
-    emitControlObject(oType::VIEW_CONTROL, reservedHandle::VIEW_CONTROL,
-                      0, {});
+    emitControlObject(oType::VIEW_CONTROL, reservedHandle::VIEW_CONTROL, 0, {});
 
     // UCS_CONTROL: no entries.
-    emitControlObject(oType::UCS_CONTROL, reservedHandle::UCS_CONTROL,
-                      0, {});
+    emitControlObject(oType::UCS_CONTROL, reservedHandle::UCS_CONTROL, 0, {});
 
-    // VPORT_CONTROL: 1 real entry (*ACTIVE).
-    emitControlObject(oType::VPORT_CONTROL, reservedHandle::VPORT_CONTROL,
-                      1, {0x16});
+    // --- VPORT section ---
+    {
+        std::vector<duint32> vportChildren = {0x16};
+        for (auto& p : m_pendingVports) vportChildren.push_back(p.first);
+        emitControlObject(oType::VPORT_CONTROL, reservedHandle::VPORT_CONTROL,
+                          1 + static_cast<duint32>(m_pendingVports.size()),
+                          vportChildren);
+        emitTableRecord(oType::VPORT, 0x16, "*ACTIVE");
+        for (auto& p : m_pendingVports)
+            emitVportRecord(p.first, p.second);
+    }
 
-    // APPID_CONTROL: 1 real entry (ACAD).
-    emitControlObject(oType::APPID_CONTROL, reservedHandle::APPID_CONTROL,
-                      1, {0x14});
+    // --- APPID section ---
+    {
+        std::vector<duint32> appidChildren = {0x14};
+        for (auto& p : m_pendingAppIds) appidChildren.push_back(p.first);
+        emitControlObject(oType::APPID_CONTROL, reservedHandle::APPID_CONTROL,
+                          1 + static_cast<duint32>(m_pendingAppIds.size()),
+                          appidChildren);
+        emitTableRecord(oType::APPID, 0x14, "ACAD");
+        for (auto& p : m_pendingAppIds)
+            emitAppIdRecord(p.first, p.second);
+    }
 
-    // DIMSTYLE_CONTROL: 1 real entry (STANDARD).
-    emitControlObject(oType::DIMSTYLE_CONTROL,
-                      reservedHandle::DIMSTYLE_CONTROL, 1, {0x15});
+    // --- DIMSTYLE section ---
+    {
+        std::vector<duint32> dimChildren = {0x15};
+        for (auto& p : m_pendingDimstyles) dimChildren.push_back(p.first);
+        emitControlObject(oType::DIMSTYLE_CONTROL, reservedHandle::DIMSTYLE_CONTROL,
+                          1 + static_cast<duint32>(m_pendingDimstyles.size()),
+                          dimChildren);
+        emitTableRecord(oType::DIMSTYLE, 0x15, "STANDARD");
+        for (auto& p : m_pendingDimstyles)
+            emitDimstyleRecord(p.first, p.second);
+    }
 
-    // VPORT_ENTITY_HEADER_CONTROL: no entries (R2000-only slot).
+    // VPORT_ENTITY_HEADER_CONTROL: no entries.
     emitControlObject(oType::VPORT_ENTITY_HEADER_CONTROL,
-                      reservedHandle::VPORT_ENTITY_HEADER_CONTROL,
-                      0, {});
+                      reservedHandle::VPORT_ENTITY_HEADER_CONTROL, 0, {});
 
-    // Phase 3e: minimum table records at the reserved handles.  Emit
-    // 8 of the 10 — Block_Records (*Model_Space / *Paper_Space) are
-    // deferred to Phase 4 because the reader's `readDwgBlocks` will
-    // attempt to look up `Block_Record::block` in ObjectMap, and that
-    // handle points at a DRW_Block entity we don't emit until entity
-    // work lands.  Skipping the two Block_Record records keeps the
-    // BLOCK_CONTROL phantom-handle lookups silent (as they were in
-    // Phase 3d) without triggering BAD_READ_BLOCKS.  The other 8
-    // records resolve the LTYPE_CONTROL phantom handles and provide
-    // the standard layer / textstyle / appid / dimstyle / vport that
-    // AutoCAD expects to find in every R2000 document.
-    emitTableRecord(oType::LTYPE,    reservedHandle::LTYPE_BYBLOCK,    "BYBLOCK");
-    emitTableRecord(oType::LTYPE,    reservedHandle::LTYPE_BYLAYER,    "BYLAYER");
-    emitTableRecord(oType::LTYPE,    reservedHandle::LTYPE_CONTINUOUS, "CONTINUOUS");
-    emitTableRecord(oType::LAYER,    0x12, "0");
-    emitTableRecord(oType::STYLE,    0x13, "STANDARD");
-    emitTableRecord(oType::APPID,    0x14, "ACAD");
-    emitTableRecord(oType::DIMSTYLE, 0x15, "STANDARD");
-    emitTableRecord(oType::VPORT,    0x16, "*ACTIVE");
+    // Block entities + Block_Records for *Model_Space and *Paper_Space.
+    constexpr duint32 blkModelStart = 0x1B;
+    constexpr duint32 blkModelEnd   = 0x1C;
+    constexpr duint32 blkPaperStart = 0x1D;
+    constexpr duint32 blkPaperEnd   = 0x1E;
 
-    // Phase 4d: emit Block_Record records for *Model_Space and
-    // *Paper_Space + the BLOCK + ENDBLK entities they own.  Handles
-    // 0x1B-0x1E come from the master plan's reserved-but-unused range.
-    constexpr duint32 BLK_MODEL_START  = 0x1B;
-    constexpr duint32 BLK_MODEL_END    = 0x1C;
-    constexpr duint32 BLK_PAPER_START  = 0x1D;
-    constexpr duint32 BLK_PAPER_END    = 0x1E;
-
-    emitBlockEntity(BLK_MODEL_START, "*Model_Space", /*isEnd=*/false);
-    emitBlockEntity(BLK_MODEL_END,   std::string{},   /*isEnd=*/true);
-    emitBlockEntity(BLK_PAPER_START, "*Paper_Space", /*isEnd=*/false);
-    emitBlockEntity(BLK_PAPER_END,   std::string{},   /*isEnd=*/true);
+    emitBlockEntity(blkModelStart, "*Model_Space", /*isEnd=*/false);
+    emitBlockEntity(blkModelEnd,   std::string{},   /*isEnd=*/true);
+    emitBlockEntity(blkPaperStart, "*Paper_Space", /*isEnd=*/false);
+    emitBlockEntity(blkPaperEnd,   std::string{},   /*isEnd=*/true);
 
     emitBlockRecord(reservedHandle::BLOCK_MODEL_SPACE, "*Model_Space",
-                    BLK_MODEL_START, BLK_MODEL_END);
+                    blkModelStart, blkModelEnd);
     emitBlockRecord(reservedHandle::BLOCK_PAPER_SPACE, "*Paper_Space",
-                    BLK_PAPER_START, BLK_PAPER_END);
+                    blkPaperStart, blkPaperEnd);
 
     return true;
 }
