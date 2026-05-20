@@ -35,7 +35,7 @@
     <message>
         <location filename="../src/ui/generic/comboboxoption.ui" line="41"/>
         <source>Set</source>
-        <translation>सेट</translation>
+        <translation>Set</translation>
     </message>
 </context>
 <context>
@@ -158,7 +158,7 @@ distance between points=%2 is larger than diameter=%3</source>
         <location filename="../src/actions/lc_actiondrawcircle2pr.cpp" line="243"/>
         <location filename="../src/actions/lc_actiondrawcircle2pr.cpp" line="247"/>
         <source>Back</source>
-        <translation>वापस</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actiondrawcircle2pr.cpp" line="246"/>
@@ -186,7 +186,7 @@ or [%2]</source>
         <location filename="../src/actions/lc_actiondrawlinepoints.cpp" line="516"/>
         <location filename="../src/actions/lc_actiondrawlinepoints.cpp" line="521"/>
         <source>Back</source>
-        <translation>वापस</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actiondrawlinepoints.cpp" line="516"/>
@@ -244,7 +244,7 @@ or [%2]</source>
         <location filename="../src/actions/lc_actiondrawlinesnake.cpp" line="474"/>
         <location filename="../src/actions/lc_actiondrawlinesnake.cpp" line="486"/>
         <source>Back</source>
-        <translation>वापस</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actiondrawlinesnake.cpp" line="448"/>
@@ -301,7 +301,7 @@ or [%2]</source>
         <location filename="../src/actions/lc_actiondrawparabola4points.cpp" line="284"/>
         <location filename="../src/actions/lc_actiondrawparabola4points.cpp" line="289"/>
         <source>Back</source>
-        <translation>वापस</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actiondrawparabola4points.cpp" line="278"/>
@@ -341,7 +341,7 @@ or [%2]</source>
         <location filename="../src/actions/lc_actiondrawparabolaFD.cpp" line="301"/>
         <location filename="../src/actions/lc_actiondrawparabolaFD.cpp" line="306"/>
         <source>Back</source>
-        <translation>वापस</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actiondrawparabolaFD.cpp" line="300"/>
@@ -369,12 +369,12 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/lc_actiondrawslicedivide.cpp" line="180"/>
         <source>Line</source>
-        <translation>रेखा</translation>
+        <translation>Line</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actiondrawslicedivide.cpp" line="190"/>
         <source>Arc</source>
-        <translation>कमान</translation>
+        <translation>Arc</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actiondrawslicedivide.cpp" line="200"/>
@@ -403,7 +403,7 @@ or [%2]</source>
         <location filename="../src/actions/lc_actiondrawsplinepoints.cpp" line="276"/>
         <location filename="../src/actions/lc_actiondrawsplinepoints.cpp" line="282"/>
         <source>Back</source>
-        <translation>वापस</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actiondrawsplinepoints.cpp" line="281"/>
@@ -603,7 +603,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="299"/>
         <source>Star</source>
-        <translation>तारा</translation>
+        <translation>Star</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="305"/>
@@ -1141,7 +1141,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1328"/>
         <source>Left</source>
-        <translation>बायाँ</translation>
+        <translation>Left</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1337"/>
@@ -1151,7 +1151,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1346"/>
         <source>Top</source>
-        <translation>ऊपरी</translation>
+        <translation>Top</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1355"/>
@@ -1515,7 +1515,7 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/lc_actionsnapmiddlemanual.cpp" line="306"/>
         <source>Back</source>
-        <translation>वापस</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -1523,7 +1523,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_circlebyarcoptions.ui" line="14"/>
         <source>Form</source>
-        <translation>फॉर्म</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_circlebyarcoptions.ui" line="27"/>
@@ -1568,7 +1568,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_crossoptions.ui" line="20"/>
         <source>Form</source>
-        <translation>फॉर्म</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_crossoptions.ui" line="63"/>
@@ -1598,7 +1598,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_crossoptions.ui" line="161"/>
         <source>Type</source>
-        <translation>प्रकार</translation>
+        <translation>Type</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_crossoptions.ui" line="168"/>
@@ -1611,7 +1611,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_deviceoptions.ui" line="14"/>
         <source>Form</source>
-        <translation>फॉर्म</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_deviceoptions.ui" line="20"/>
@@ -1621,7 +1621,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_deviceoptions.ui" line="53"/>
         <source>Save</source>
-        <translation>सहेजें</translation>
+        <translation>Save</translation>
     </message>
 </context>
 <context>
@@ -1637,7 +1637,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_duplicateoptions.ui" line="14"/>
         <source>Form</source>
-        <translation>फॉर्म</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_duplicateoptions.ui" line="26"/>
@@ -2173,7 +2173,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_lineanglereloptions.ui" line="14"/>
         <source>Form</source>
-        <translation>फॉर्म</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_lineanglereloptions.ui" line="42"/>
@@ -2184,7 +2184,7 @@ or [%2]</source>
         <location filename="../src/ui/forms/lc_lineanglereloptions.ui" line="50"/>
         <location filename="../src/ui/forms/lc_lineanglereloptions.ui" line="181"/>
         <source>Free</source>
-        <translation>मुक्त</translation>
+        <translation>Free</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_lineanglereloptions.ui" line="55"/>
@@ -2202,7 +2202,7 @@ or [%2]</source>
         <location filename="../src/ui/forms/lc_lineanglereloptions.ui" line="65"/>
         <location filename="../src/ui/forms/lc_lineanglereloptions.ui" line="120"/>
         <source>End</source>
-        <translation>समाप्ति</translation>
+        <translation>End</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_lineanglereloptions.ui" line="73"/>
@@ -2212,7 +2212,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_lineanglereloptions.ui" line="80"/>
         <source>Rel</source>
-        <translation>संबंधित</translation>
+        <translation>Rel</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_lineanglereloptions.ui" line="144"/>
@@ -2245,7 +2245,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_linefrompointtolineoptions.ui" line="14"/>
         <source>Form</source>
-        <translation>फॉर्म</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_linefrompointtolineoptions.ui" line="48"/>
@@ -2290,7 +2290,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_linefrompointtolineoptions.ui" line="227"/>
         <source>End</source>
-        <translation>समाप्ति</translation>
+        <translation>End</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_linefrompointtolineoptions.ui" line="241"/>
@@ -2308,7 +2308,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_linejoinoptions.ui" line="20"/>
         <source>Form</source>
-        <translation>फॉर्म</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_linejoinoptions.ui" line="51"/>
@@ -2379,7 +2379,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_linepointsoptions.ui" line="20"/>
         <source>Form</source>
-        <translation>फॉर्म</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_linepointsoptions.ui" line="32"/>
@@ -2394,12 +2394,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_linepointsoptions.ui" line="128"/>
         <source>None</source>
-        <translation>कोई नहीं</translation>
+        <translation>None</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_linepointsoptions.ui" line="133"/>
         <source>Both</source>
-        <translation>दोनों</translation>
+        <translation>Both</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_linepointsoptions.ui" line="138"/>
@@ -2409,7 +2409,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_linepointsoptions.ui" line="143"/>
         <source>End</source>
-        <translation>समाप्ति</translation>
+        <translation>End</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_linepointsoptions.ui" line="183"/>
@@ -2432,7 +2432,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_modifybreakdivideoptions.ui" line="14"/>
         <source>Form</source>
-        <translation>फॉर्म</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_modifybreakdivideoptions.ui" line="39"/>
@@ -2450,7 +2450,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_modifygapoptions.ui" line="14"/>
         <source>Form</source>
-        <translation>फॉर्म</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_modifygapoptions.ui" line="42"/>
@@ -2466,7 +2466,7 @@ or [%2]</source>
         <location filename="../src/ui/forms/lc_modifygapoptions.ui" line="56"/>
         <location filename="../src/ui/forms/lc_modifygapoptions.ui" line="87"/>
         <source>Free</source>
-        <translation>मुक्त</translation>
+        <translation>Free</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_modifygapoptions.ui" line="79"/>
@@ -2489,7 +2489,7 @@ or [%2]</source>
         <location filename="../src/ui/forms/lc_modifygapoptions.ui" line="102"/>
         <location filename="../src/ui/forms/lc_modifygapoptions.ui" line="121"/>
         <source>End</source>
-        <translation>समाप्ति</translation>
+        <translation>End</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_modifygapoptions.ui" line="129"/>
@@ -2696,7 +2696,7 @@ or [%2]</source>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="349"/>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="352"/>
         <source>Save</source>
-        <translation>सहेजें</translation>
+        <translation>Save</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="363"/>
@@ -2824,7 +2824,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/forms/lc_rectangle1pointoptions.ui" line="14"/>
         <source>Form</source>
-        <translation>फॉर्म</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle1pointoptions.ui" line="26"/>
@@ -2879,7 +2879,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/forms/lc_rectangle1pointoptions.ui" line="175"/>
         <source>Top</source>
-        <translation>ऊपरी</translation>
+        <translation>Top</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle1pointoptions.ui" line="180"/>
@@ -2889,7 +2889,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/forms/lc_rectangle1pointoptions.ui" line="185"/>
         <source>Left</source>
-        <translation>बायाँ</translation>
+        <translation>Left</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle1pointoptions.ui" line="190"/>
@@ -2939,7 +2939,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/forms/lc_rectangle1pointoptions.ui" line="245"/>
         <source>Both</source>
-        <translation>दोनों</translation>
+        <translation>Both</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle1pointoptions.ui" line="250"/>
@@ -2967,7 +2967,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/forms/lc_rectangle2pointsoptions.ui" line="14"/>
         <source>Form</source>
-        <translation>फॉर्म</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle2pointsoptions.ui" line="26"/>
@@ -3061,7 +3061,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/forms/lc_rectangle2pointsoptions.ui" line="228"/>
         <source>Both</source>
-        <translation>दोनों</translation>
+        <translation>Both</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle2pointsoptions.ui" line="233"/>
@@ -3079,7 +3079,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/forms/lc_rectangle3pointsoptions.ui" line="14"/>
         <source>Form</source>
-        <translation>फॉर्म</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle3pointsoptions.ui" line="55"/>
@@ -3089,7 +3089,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/forms/lc_rectangle3pointsoptions.ui" line="63"/>
         <source>Both</source>
-        <translation>दोनों</translation>
+        <translation>Both</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle3pointsoptions.ui" line="68"/>
@@ -3180,17 +3180,17 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/forms/lc_slicedivideoptions.ui" line="14"/>
         <source>Form</source>
-        <translation>फॉर्म</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_slicedivideoptions.ui" line="48"/>
         <source>None</source>
-        <translation>कोई नहीं</translation>
+        <translation>None</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_slicedivideoptions.ui" line="53"/>
         <source>Both</source>
-        <translation>दोनों</translation>
+        <translation>Both</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_slicedivideoptions.ui" line="58"/>
@@ -3202,7 +3202,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../src/ui/forms/lc_slicedivideoptions.ui" line="63"/>
         <location filename="../src/ui/forms/lc_slicedivideoptions.ui" line="276"/>
         <source>End</source>
-        <translation>समाप्ति</translation>
+        <translation>End</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_slicedivideoptions.ui" line="71"/>
@@ -3212,7 +3212,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/forms/lc_slicedivideoptions.ui" line="113"/>
         <source>Rel</source>
-        <translation>संबंधित</translation>
+        <translation>Rel</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_slicedivideoptions.ui" line="120"/>
@@ -3270,7 +3270,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/forms/lc_staroptions.ui" line="14"/>
         <source>Form</source>
-        <translation>फॉर्म</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_staroptions.ui" line="26"/>
@@ -3313,7 +3313,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="414"/>
         <source>Dock</source>
-        <translation>डॉक</translation>
+        <translation>Dock</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="414"/>
@@ -3526,9 +3526,9 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="535"/>
         <location filename="../src/main/qc_applicationwindow.cpp" line="1593"/>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1992"/>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2875"/>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3248"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1999"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2882"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3255"/>
         <source>Draft Mode</source>
         <translation>ड्राफ्ट मोड</translation>
     </message>
@@ -3545,7 +3545,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="421"/>
         <source>File</source>
-        <translation>फ़ाइल</translation>
+        <translation>File</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="685"/>
@@ -3573,7 +3573,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../src/ui/lc_widgetfactory.cpp" line="257"/>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="520"/>
         <source>Line</source>
-        <translation>रेखा</translation>
+        <translation>Line</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="262"/>
@@ -3620,7 +3620,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../src/ui/lc_widgetfactory.cpp" line="297"/>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="568"/>
         <source>Info</source>
-        <translation>सूचना</translation>
+        <translation>Info</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="731"/>
@@ -3655,7 +3655,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="428"/>
         <source>Edit</source>
-        <translation>संपादन</translation>
+        <translation>Edit</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="737"/>
@@ -3665,7 +3665,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="449"/>
         <source>View</source>
-        <translation>दृश्य</translation>
+        <translation>View</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="336"/>
@@ -3785,10 +3785,10 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="471"/>
         <source>Pen</source>
-        <translation>पेन</translation>
+        <translation>Pen</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3040"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3047"/>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="930"/>
         <source>About</source>
         <translation>के बारे में</translation>
@@ -3819,7 +3819,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <translation>ब्लॉक सूची</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3443"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3450"/>
         <source>Command line</source>
         <translation>कमांड लाइन</translation>
     </message>
@@ -3933,12 +3933,12 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="1203"/>
         <source>East</source>
-        <translation>पूर्व</translation>
+        <translation>East</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="1207"/>
         <source>West</source>
-        <translation>पश्चिम</translation>
+        <translation>West</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="1212"/>
@@ -3966,22 +3966,22 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <translation>अनाम दस्तावेज़ %1</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1654"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1661"/>
         <source>New Drawing created.</source>
         <translation>नया चित्रण बनाया गया।</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1720"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1727"/>
         <source>New document from template: </source>
         <translation>टेम्प्लेट से नया दस्तावेज़: </translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1768"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1775"/>
         <source>Select Template aborted</source>
         <translation>टेम्प्लेट चयन रद्द किया गया</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1784"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1791"/>
         <source>Cannot open the file
 %1
 Please check the permissions.</source>
@@ -3990,12 +3990,12 @@ Please check the permissions.</source>
 कृपया अनुमतियाँ जाँचें।</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1884"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1891"/>
         <source>Warning: File already opened : </source>
         <translation>चेतावनी: फ़ाइल पहले से खुली हुई है : </translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1927"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1934"/>
         <source>Cannot open the file
 %1
 Please check its existence and permissions.</source>
@@ -4004,17 +4004,17 @@ Please check its existence and permissions.</source>
 कृपया इसकी अस्तित्व और अनुमतियाँ जाँचें।</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2008"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2015"/>
         <source>Loaded document: </source>
         <translation>लोड किया गया दस्तावेज़: </translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2013"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2020"/>
         <source>File &apos;%1&apos; does not exist. Opening aborted</source>
         <translation>फ़ाइल &apos;%1&apos; मौजूद नहीं है। खोलना रद्द किया गया</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2014"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2021"/>
         <source>Opening aborted</source>
         <translation>खोलना रद्द किया गया</translation>
     </message>
@@ -4039,17 +4039,17 @@ Please check its existence and permissions.</source>
         <translation> , कृपया फ़ाइल नाम और अनुमतियाँ जाँचें।</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2080"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2087"/>
         <source>Auto-saving drawing...</source>
         <translation>स्वचालित सहेजना चित्रण...</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2088"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2095"/>
         <source>Auto-saved drawing</source>
         <translation>स्वचालित सहेजा गया चित्रण</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2093"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2100"/>
         <source>Cannot auto-save the file
 %1
 Please check the permissions.
@@ -4060,193 +4060,193 @@ Auto-save disabled.</source>
 स्वचालित सहेजना अक्षम।</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2098"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2105"/>
         <source>Auto-saving failed</source>
         <translation>स्वचालित सहेजना विफल</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2111"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2118"/>
         <source>Exporting drawing...</source>
         <translation>चित्रण निर्यात किया जा रहा है...</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2148"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2155"/>
         <source>Export as</source>
         <translation>इस रूप में निर्यात करें</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2207"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2214"/>
         <source>Exported: %1</source>
         <translation>निर्यात किया गया: %1</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2247"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2254"/>
         <source>Exporting...</source>
         <translation>निर्यात किया जा रहा है...</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2320"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2327"/>
         <source>Export complete</source>
         <translation>निर्यात पूर्ण</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2322"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2329"/>
         <source>Export failed!</source>
         <translation>निर्यात विफल!</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2389"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2396"/>
         <source>Close All cancelled</source>
         <translation>सभी बंद करना रद्द किया गया</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2419"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2426"/>
         <source>Please adjust scaling and positioning in print preview first.</source>
         <translation>कृपया पहले प्रिंट पूर्वावलोकन में स्केलिंग और स्थिति समायोजित करें।</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2431"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2438"/>
         <source>Printing...</source>
         <translation>मुद्रण...</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2483"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2490"/>
         <source>Export as PDF</source>
         <translation>PDF के रूप में निर्यात करें</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2677"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2684"/>
         <source>Printing complete</source>
         <translation>मुद्रण पूर्ण</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2753"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2760"/>
         <source>Print preview for %1</source>
         <translation>%1 के लिए मुद्रण पूर्वावलोकन</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2831"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2838"/>
         <source>Exiting application...</source>
         <translation>एप्लिकेशन से बाहर निकल रहे हैं...</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3062"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3069"/>
         <source>Compiler: Microsoft Visual C++</source>
         <translation>कंपाइलर: Microsoft Visual C++</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3066"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3073"/>
         <source>Boost Version: %1.%2.%3</source>
         <translation>बूस्ट संस्करण: %1.%2.%3</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3073"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3080"/>
         <source>Copy</source>
-        <translation>कॉपी</translation>
+        <translation>Copy</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3084"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3091"/>
         <source>Contributors</source>
         <translation>योगदानकर्ता</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3085"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3092"/>
         <source>License</source>
         <translation>लाइसेंस</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3086"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3093"/>
         <source>The Code</source>
         <translation>कोड</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3095"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3102"/>
         <source>System</source>
         <translation>सिस्टम</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3540"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3547"/>
         <source>Toolbar Creator</source>
         <translation>टूलबार निर्माता</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3606"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3613"/>
         <source>Menu Creator</source>
         <translation>मेनू निर्माता</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3631"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3638"/>
         <source>Menu Assigner</source>
         <translation>मेनू असाइनर</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3056"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3063"/>
         <source>Version: %1</source>
         <translation>संस्करण: %1</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3058"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3065"/>
         <source>Compiler: Clang %1.%2.%3</source>
         <translation>कंपाइलर: Clang %1.%2.%3</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3060"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3067"/>
         <source>Compiler: GNU GCC %1.%2.%3</source>
         <translation>कंपाइलर: GNU GCC %1.%2.%3</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3065"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3072"/>
         <source>Qt Version: %1</source>
         <translation>Qt संस्करण: %1</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3064"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3071"/>
         <source>Compiled on: %1</source>
         <translation>संकलित किया गया: %1</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2055"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2062"/>
         <source>Save All cancelled</source>
         <translation>सभी सहेजना रद्द किया गया</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3288"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3295"/>
         <source>Toolbars</source>
         <translation>टूलबार</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3293"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3300"/>
         <source>Dockwidgets</source>
         <translation>डॉक विजेट</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3320"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3327"/>
         <source>Opening recent file...</source>
         <translation>हाल की फ़ाइल खोली जा रही है...</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3443"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3450"/>
         <source>Cmd</source>
-        <translation>कमांड</translation>
+        <translation>Cmd</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3444"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3451"/>
         <source>Float</source>
         <translation>फ्लोट</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3444"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3451"/>
         <source>Dock</source>
         <comment>Dock the command widget to the main window</comment>
-        <translation>डॉक</translation>
+        <translation>Dock</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3502"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3509"/>
         <source>Device Options</source>
         <translation>डिवाइस विकल्प</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3505"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3512"/>
         <source>Device</source>
         <translation>डिवाइस</translation>
     </message>
@@ -4456,7 +4456,7 @@ in a separate window</source>
     <message>
         <location filename="../src/ui/qg_colorbox.cpp" line="115"/>
         <source>Red</source>
-        <translation>लाल</translation>
+        <translation>Red</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_colorbox.cpp" line="119"/>
@@ -4486,7 +4486,7 @@ in a separate window</source>
     <message>
         <location filename="../src/ui/qg_colorbox.cpp" line="124"/>
         <source>Cyan</source>
-        <translation>सियान</translation>
+        <translation>Cyan</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_colorbox.cpp" line="125"/>
@@ -4496,7 +4496,7 @@ in a separate window</source>
     <message>
         <location filename="../src/ui/qg_colorbox.cpp" line="126"/>
         <source>Blue</source>
-        <translation>नीला</translation>
+        <translation>Blue</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_colorbox.cpp" line="127"/>
@@ -4521,7 +4521,7 @@ in a separate window</source>
     <message>
         <location filename="../src/ui/qg_colorbox.cpp" line="137"/>
         <source>Gray</source>
-        <translation>ग्रे</translation>
+        <translation>Gray</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_colorbox.cpp" line="138"/>
@@ -4598,7 +4598,7 @@ in a separate window</source>
         <location filename="../src/ui/forms/qg_commandwidget.cpp" line="94"/>
         <location filename="../src/ui/forms/qg_commandwidget.cpp" line="343"/>
         <source>Dock</source>
-        <translation>डॉक</translation>
+        <translation>Dock</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_commandwidget.cpp" line="210"/>
@@ -4624,7 +4624,7 @@ in a separate window</source>
     <message>
         <location filename="../src/ui/forms/qg_commandwidget.cpp" line="344"/>
         <source>Cmd</source>
-        <translation>कमान्ड</translation>
+        <translation>Cmd</translation>
     </message>
 </context>
 <context>
@@ -4645,7 +4645,7 @@ in a separate window</source>
         <location filename="../src/ui/forms/qg_dimoptions.cpp" line="97"/>
         <source>R</source>
         <comment>Radial dimension prefix</comment>
-        <translation>आर</translation>
+        <translation>R</translation>
     </message>
 </context>
 <context>
@@ -4709,14 +4709,14 @@ in a separate window</source>
         <location filename="../src/ui/forms/qg_dimensionlabeleditor.cpp" line="75"/>
         <source>R</source>
         <comment>Radial dimension prefix</comment>
-        <translation>त्रिज्या</translation>
+        <translation>R</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dimensionlabeleditor.cpp" line="77"/>
         <location filename="../src/ui/forms/qg_dimensionlabeleditor.cpp" line="164"/>
         <source>R</source>
         <comment>Radial dimesnion prefix</comment>
-        <translation>त्रिज्या</translation>
+        <translation>R</translation>
     </message>
 </context>
 <context>
@@ -4724,7 +4724,7 @@ in a separate window</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgarc.ui" line="26"/>
         <source>Arc</source>
-        <translation>चाप</translation>
+        <translation>Arc</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgarc.ui" line="51"/>
@@ -4958,7 +4958,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/forms/qg_dlghatch.ui" line="86"/>
         <source>Area</source>
-        <translation>क्षेत्र</translation>
+        <translation>Area</translation>
     </message>
 </context>
 <context>
@@ -5129,7 +5129,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgline.ui" line="29"/>
         <source>Line</source>
-        <translation>रेखा</translation>
+        <translation>Line</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgline.ui" line="35"/>
@@ -5302,12 +5302,12 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="759"/>
         <source>Cut</source>
-        <translation>काटना</translation>
+        <translation>Cut</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="773"/>
         <source>Copy</source>
-        <translation>कॉपी करें</translation>
+        <translation>Copy</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="787"/>
@@ -6213,7 +6213,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="212"/>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="657"/>
         <source>Left</source>
-        <translation>बाएँ</translation>
+        <translation>Left</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="676"/>
@@ -6225,7 +6225,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="228"/>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="679"/>
         <source>Top</source>
-        <translation>शीर्ष</translation>
+        <translation>Top</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="698"/>
@@ -6303,7 +6303,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.cpp" line="552"/>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.cpp" line="557"/>
         <source>auto</source>
-        <translation>स्वतः</translation>
+        <translation>auto</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="789"/>
@@ -7046,7 +7046,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1120"/>
         <source>All</source>
-        <translation>सभी</translation>
+        <translation>All</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.cpp" line="327"/>
@@ -7453,7 +7453,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="20"/>
         <source>Text</source>
-        <translation>पाठ</translation>
+        <translation>Text</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="33"/>
@@ -7478,12 +7478,12 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="101"/>
         <source>Cut</source>
-        <translation>काटें</translation>
+        <translation>Cut</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="115"/>
         <source>Copy</source>
-        <translation>कॉपी करें</translation>
+        <translation>Copy</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="129"/>
@@ -7600,7 +7600,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="774"/>
         <source>Fit</source>
-        <translation>फिट</translation>
+        <translation>Fit</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="784"/>
@@ -8384,7 +8384,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgimageoptions.ui" line="43"/>
         <source>auto</source>
-        <translation>स्वतः</translation>
+        <translation>auto</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgimageoptions.ui" line="144"/>
@@ -8656,7 +8656,7 @@ The contents of a Construction Layer should not appear in printout.</source>
     <message>
         <location filename="../src/ui/qg_linetypebox.cpp" line="84"/>
         <source>Dot</source>
-        <translation>बिंदु</translation>
+        <translation>Dot</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_linetypebox.cpp" line="85"/>
@@ -8676,7 +8676,7 @@ The contents of a Construction Layer should not appear in printout.</source>
     <message>
         <location filename="../src/ui/qg_linetypebox.cpp" line="88"/>
         <source>Dash</source>
-        <translation>डैश</translation>
+        <translation>Dash</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_linetypebox.cpp" line="89"/>
@@ -8789,7 +8789,7 @@ The contents of a Construction Layer should not appear in printout.</source>
     <message>
         <location filename="../src/ui/forms/qg_mousewidget.ui" line="108"/>
         <source>Left</source>
-        <translation>बायाँ</translation>
+        <translation>Left</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_mousewidget.ui" line="130"/>
@@ -8884,7 +8884,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="26"/>
         <source>Snap</source>
-        <translation>स्नैप</translation>
+        <translation>Snap</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="47"/>
@@ -9048,7 +9048,7 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/ui/forms/qg_widgetpen.ui" line="26"/>
         <location filename="../src/ui/forms/qg_widgetpen.ui" line="47"/>
         <source>Pen</source>
-        <translation>पेन</translation>
+        <translation>Pen</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_widgetpen.ui" line="91"/>
@@ -9077,9 +9077,9 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>QMessageBox</name>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1787"/>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1931"/>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2092"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1794"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1938"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2099"/>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="215"/>
         <source>Warning</source>
         <translation>चेतावनी</translation>
@@ -9414,25 +9414,25 @@ Please specify a different value.</source>
         <location filename="../src/lib/engine/rs_units.cpp" line="204"/>
         <source>None</source>
         <comment>unknown length unit</comment>
-        <translation>कोई नहीं</translation>
+        <translation>None</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_units.cpp" line="206"/>
         <location filename="../src/lib/engine/rs_units.cpp" line="262"/>
         <source>Inch</source>
-        <translation>इंच</translation>
+        <translation>Inch</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_units.cpp" line="208"/>
         <location filename="../src/lib/engine/rs_units.cpp" line="264"/>
         <source>Foot</source>
-        <translation>फुट</translation>
+        <translation>Foot</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_units.cpp" line="210"/>
         <location filename="../src/lib/engine/rs_units.cpp" line="266"/>
         <source>Mile</source>
-        <translation>मील</translation>
+        <translation>Mile</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_units.cpp" line="212"/>
@@ -9468,13 +9468,13 @@ Please specify a different value.</source>
         <location filename="../src/lib/engine/rs_units.cpp" line="222"/>
         <location filename="../src/lib/engine/rs_units.cpp" line="278"/>
         <source>Mil</source>
-        <translation>मिल</translation>
+        <translation>Mil</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_units.cpp" line="224"/>
         <location filename="../src/lib/engine/rs_units.cpp" line="280"/>
         <source>Yard</source>
-        <translation>गज</translation>
+        <translation>Yard</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_units.cpp" line="226"/>
@@ -9830,62 +9830,62 @@ Please specify a different value.</source>
         <translation>dwg फ़ाइल संस्करण %1 खोला गया।</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4035"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4075"/>
         <source>unknown error opening dwg file</source>
         <translation>dwg फ़ाइल खोलने में अज्ञात त्रुटि</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4039"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4079"/>
         <source>can&apos;t open this dwg file</source>
         <translation>इस dwg फ़ाइल को नहीं खोला जा सकता</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4043"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4083"/>
         <source>unsupported dwg version</source>
         <translation>असमर्थित dwg संस्करण</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4047"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4087"/>
         <source>error reading file metadata in dwg file</source>
         <translation>dwg फ़ाइल में फ़ाइल मेटाडेटा पढ़ते समय त्रुटि</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4051"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4091"/>
         <source>error reading file header in dwg file</source>
         <translation>dwg फ़ाइल में फ़ाइल हेडर पढ़ते समय त्रुटि</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4055"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4095"/>
         <source>error reading header vars in dwg file</source>
         <translation>dwg फ़ाइल में हेडर वैरिएबल्स पढ़ते समय त्रुटि</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4059"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4099"/>
         <source>error reading classes in dwg file</source>
         <translation>dwg फ़ाइल में क्लास पढ़ने में त्रुटि</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4063"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4103"/>
         <source>error reading offsets in dwg file</source>
         <translation>dwg फ़ाइल में ऑफसेट पढ़ने में त्रुटि</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4067"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4107"/>
         <source>error reading tables in dwg file</source>
         <translation>dwg फ़ाइल में तालिकाओं को पढ़ने में त्रुटि</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4071"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4111"/>
         <source>error reading blocks in dwg file</source>
         <translation>dwg फ़ाइल में ब्लॉक पढ़ने में त्रुटि</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4075"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4115"/>
         <source>error reading entities in dwg file</source>
         <translation>dwg फ़ाइल में संस्थाओं को पढ़ने में त्रुटि</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4079"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4119"/>
         <source>error reading objects in dwg file</source>
         <translation>dwg फ़ाइल में ऑब्जेक्ट पढ़ने में त्रुटि</translation>
     </message>
@@ -10195,7 +10195,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="155"/>
         <source>line</source>
         <comment>draw line</comment>
-        <translation>रेखा</translation>
+        <translation>line</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="154"/>
@@ -10225,7 +10225,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="478"/>
         <source>free</source>
         <comment>draw freehand line</comment>
-        <translation>मुक्त</translation>
+        <translation>free</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="480"/>
@@ -10243,7 +10243,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="448"/>
         <source>spl</source>
         <comment>draw spline</comment>
-        <translation>स्प्</translation>
+        <translation>spl</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="453"/>
@@ -10255,13 +10255,13 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="455"/>
         <source>stp</source>
         <comment>spline through points</comment>
-        <translation>एसटीपी</translation>
+        <translation>stp</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="295"/>
         <source>ptp</source>
         <comment>parallel through point</comment>
-        <translation>पीटीपी</translation>
+        <translation>ptp</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="302"/>
@@ -10273,7 +10273,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="301"/>
         <source>bi</source>
         <comment>angle bisector</comment>
-        <translation>बीआई</translation>
+        <translation>bi</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="309"/>
@@ -10291,7 +10291,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="202"/>
         <source>rect</source>
         <comment>draw rectangle</comment>
-        <translation>आयत</translation>
+        <translation>rect</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="354"/>
@@ -10315,7 +10315,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="364"/>
         <source>ci</source>
         <comment>draw circle</comment>
-        <translation>अंतर्निहित वृत्त</translation>
+        <translation>ci</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="371"/>
@@ -10387,7 +10387,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="838"/>
         <source>text</source>
         <comment>draw text</comment>
-        <translation>टेक्स्ट</translation>
+        <translation>text</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="840"/>
@@ -10411,7 +10411,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="975"/>
         <source>rd</source>
         <comment>redo cycle</comment>
-        <translation>पुनः ड्रा</translation>
+        <translation>rd</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="983"/>
@@ -10501,7 +10501,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="960"/>
         <source>kill</source>
         <comment>kill all actions</comment>
-        <translation>समाप्त करें</translation>
+        <translation>kill</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="962"/>
@@ -10513,7 +10513,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="967"/>
         <source>undo</source>
         <comment>undo cycle</comment>
-        <translation>पूर्ववत करें</translation>
+        <translation>undo</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="969"/>
@@ -10525,7 +10525,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="974"/>
         <source>redo</source>
         <comment>redo cycle</comment>
-        <translation>पुनः करें</translation>
+        <translation>redo</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="976"/>
@@ -10621,13 +10621,13 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="162"/>
         <source>sli</source>
         <comment>draw snake line</comment>
-        <translation>लघु रेखा संकेतक</translation>
+        <translation>sli</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="163"/>
         <source>sl</source>
         <comment>draw snake line</comment>
-        <translation>लघु रेखा</translation>
+        <translation>sl</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="168"/>
@@ -10639,13 +10639,13 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="169"/>
         <source>slix</source>
         <comment>draw snake line (X)</comment>
-        <translation>लघु रेखा X संकेतक</translation>
+        <translation>slix</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="170"/>
         <source>rlx</source>
         <comment>draw snake line (X)</comment>
-        <translation>रेडियल X</translation>
+        <translation>rlx</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="175"/>
@@ -10657,13 +10657,13 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="176"/>
         <source>sliy</source>
         <comment>draw snake line (Y)</comment>
-        <translation>हल्का झुकाव</translation>
+        <translation>sliy</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="177"/>
         <source>rly</source>
         <comment>draw snake line (Y)</comment>
-        <translation>रेडियल</translation>
+        <translation>rly</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="182"/>
@@ -10675,7 +10675,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="183"/>
         <source>la</source>
         <comment>angled line</comment>
-        <translation>लेबल</translation>
+        <translation>la</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="188"/>
@@ -10687,7 +10687,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="189"/>
         <source>lh</source>
         <comment>horizontal line</comment>
-        <translation>रेखा ऊँचाई</translation>
+        <translation>lh</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="194"/>
@@ -10699,7 +10699,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="195"/>
         <source>lv</source>
         <comment>vertical line</comment>
-        <translation>ऊर्ध्वाधर</translation>
+        <translation>lv</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="200"/>
@@ -10771,19 +10771,19 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="232"/>
         <source>slc</source>
         <comment>slice/divide circle/arc</comment>
-        <translation>चिकनी वक्र रेखा</translation>
+        <translation>slc</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="237"/>
         <source>star</source>
         <comment>draw star</comment>
-        <translation>स्टार</translation>
+        <translation>star</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="238"/>
         <source>st</source>
         <comment>draw star</comment>
-        <translation>सीधी रेखा</translation>
+        <translation>st</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="243"/>
@@ -10795,7 +10795,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="244"/>
         <source>cx</source>
         <comment>draw cross for circle</comment>
-        <translation>क्रॉस X</translation>
+        <translation>cx</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="249"/>
@@ -10819,7 +10819,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="256"/>
         <source>cba</source>
         <comment>draw circle by arc</comment>
-        <translation>सीबीए</translation>
+        <translation>cba</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="261"/>
@@ -10831,7 +10831,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="262"/>
         <source>dup</source>
         <comment>duplicate entity</comment>
-        <translation>डुप्लिकेट</translation>
+        <translation>dup</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="267"/>
@@ -10843,7 +10843,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="268"/>
         <source>lj</source>
         <comment>lines join</comment>
-        <translation>लाइन जॉइन</translation>
+        <translation>lj</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="273"/>
@@ -10855,7 +10855,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="274"/>
         <source>bd</source>
         <comment>break or divide entity</comment>
-        <translation>ब्रेक डिवाइड</translation>
+        <translation>bd</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="279"/>
@@ -10867,7 +10867,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="280"/>
         <source>gl</source>
         <comment>line gap</comment>
-        <translation>गैप लाइन</translation>
+        <translation>gl</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="285"/>
@@ -10885,7 +10885,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="287"/>
         <source>pa</source>
         <comment>create parallel</comment>
-        <translation>पैराग्राफ</translation>
+        <translation>pa</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="288"/>
@@ -11071,13 +11071,13 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="391"/>
         <source>cr</source>
         <comment>circle point radius</comment>
-        <translation>क्र</translation>
+        <translation>cr</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="392"/>
         <source>ccr</source>
         <comment>circle point radius</comment>
-        <translation>सीसीआर</translation>
+        <translation>ccr</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="398"/>
@@ -11089,7 +11089,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="399"/>
         <source>tr</source>
         <comment>circle 2 tangent point</comment>
-        <translation>टीआर</translation>
+        <translation>tr</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="404"/>
@@ -11101,7 +11101,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="405"/>
         <source>td</source>
         <comment>circle tangent 2 points</comment>
-        <translation>टीडी</translation>
+        <translation>td</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="410"/>
@@ -11113,7 +11113,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="411"/>
         <source>tc</source>
         <comment>circle 2 tangent radius</comment>
-        <translation>टीसी</translation>
+        <translation>tc</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="417"/>
@@ -11288,7 +11288,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="533"/>
         <source>rort</source>
         <comment>draw orthogonal</comment>
-        <translation>घूर्णन</translation>
+        <translation>rort</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="538"/>
@@ -11372,7 +11372,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="576"/>
         <source>pe</source>
         <comment>pl equidistant</comment>
-        <translation>पीई</translation>
+        <translation>pe</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="581"/>
@@ -11384,13 +11384,13 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="582"/>
         <source>pj</source>
         <comment>pl join</comment>
-        <translation>पीजे</translation>
+        <translation>pj</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="596"/>
         <source>sx</source>
         <comment>deselect all entities</comment>
-        <translation>एक्स स्केल</translation>
+        <translation>sx</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="602"/>
@@ -11402,13 +11402,13 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="603"/>
         <source>is</source>
         <comment>invert select</comment>
-        <translation>अलग करें</translation>
+        <translation>is</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="612"/>
         <source>ds</source>
         <comment>dimension - aligned</comment>
-        <translation>आयाम शैली</translation>
+        <translation>ds</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="635"/>
@@ -11420,13 +11420,13 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="637"/>
         <source>dr</source>
         <comment>dimension - radial</comment>
-        <translation>आयाम त्रिज्या</translation>
+        <translation>dr</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="643"/>
         <source>dd</source>
         <comment>dimension - diametric</comment>
-        <translation>डी डी</translation>
+        <translation>dd</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="650"/>
@@ -11624,7 +11624,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="802"/>
         <source>id</source>
         <comment>distance point to point</comment>
-        <translation>आईडी</translation>
+        <translation>id</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="809"/>
@@ -11642,7 +11642,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="811"/>
         <source>dep</source>
         <comment>distance entity to point</comment>
-        <translation>निर्भरता</translation>
+        <translation>dep</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="816"/>
@@ -11738,7 +11738,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="946"/>
         <source>rh</source>
         <comment>restrict - horizontal</comment>
-        <translation>क्षैतिज प्रतिबंध</translation>
+        <translation>rh</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="951"/>
@@ -11750,43 +11750,43 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="952"/>
         <source>rv</source>
         <comment>restrict - vertical</comment>
-        <translation>लंबवत प्रतिबंध</translation>
+        <translation>rv</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="671"/>
         <source>mv</source>
         <comment>modify - move (copy)</comment>
-        <translation>गति</translation>
+        <translation>mv</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="740"/>
         <source>bev</source>
         <comment>modify - bevel</comment>
-        <translation>व्यवहार</translation>
+        <translation>bev</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="741"/>
         <source>ch</source>
         <comment>modify - bevel</comment>
-        <translation>परिवर्तन</translation>
+        <translation>ch</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="747"/>
         <source>fi</source>
         <comment>modify - fillet</comment>
-        <translation>फ़िल्टर</translation>
+        <translation>fi</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="753"/>
         <source>cut</source>
         <comment>modify - divide (cut)</comment>
-        <translation>काटना</translation>
+        <translation>cut</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="754"/>
         <source>div</source>
         <comment>modify - divide (cut)</comment>
-        <translation>विभाजित करें</translation>
+        <translation>div</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="755"/>
@@ -11858,13 +11858,13 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="794"/>
         <source>del</source>
         <comment>modify - delete (erase)</comment>
-        <translation>डिलीट</translation>
+        <translation>del</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="787"/>
         <source>xp</source>
         <comment>explode block/polyline into entities</comment>
-        <translation>विस्तार</translation>
+        <translation>xp</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="866"/>
@@ -11876,7 +11876,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="868"/>
         <source>os</source>
         <comment>snap - free</comment>
-        <translation>वस्तु स्थिति</translation>
+        <translation>os</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="873"/>
@@ -11888,7 +11888,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="874"/>
         <source>sc</source>
         <comment>snap - center</comment>
-        <translation>स्नैप केंद्र</translation>
+        <translation>sc</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="879"/>
@@ -11900,7 +11900,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="880"/>
         <source>sd</source>
         <comment>snap - distance to endpoints</comment>
-        <translation>स्नैप दूरी</translation>
+        <translation>sd</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="885"/>
@@ -11912,7 +11912,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="886"/>
         <source>se</source>
         <comment>snap - end points</comment>
-        <translation>सक्षम</translation>
+        <translation>se</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="891"/>
@@ -11924,7 +11924,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="892"/>
         <source>sg</source>
         <comment>snap - grid</comment>
-        <translation>ग्रिड संरेखण</translation>
+        <translation>sg</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="897"/>
@@ -11936,7 +11936,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="898"/>
         <source>si</source>
         <comment>snap - intersection</comment>
-        <translation>इंटरसेक्शन संरेखण</translation>
+        <translation>si</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="903"/>
@@ -11948,7 +11948,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="904"/>
         <source>sm</source>
         <comment>snap - middle points</comment>
-        <translation>मध्य संरेखण</translation>
+        <translation>sm</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="909"/>
@@ -11960,13 +11960,13 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="910"/>
         <source>sn</source>
         <comment>snap - on entity</comment>
-        <translation>इकाई पर संरेखण</translation>
+        <translation>sn</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="911"/>
         <source>np</source>
         <comment>snap - on entity</comment>
-        <translation>कोई संरेखण नहीं</translation>
+        <translation>np</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="927"/>
@@ -11978,7 +11978,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="928"/>
         <source>rz</source>
         <comment>set relative zero position</comment>
-        <translation>सापेक्ष शून्य</translation>
+        <translation>rz</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="589"/>
@@ -11990,7 +11990,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="590"/>
         <source>sa</source>
         <comment>Select all entities</comment>
-        <translation>सभी का चयन</translation>
+        <translation>sa</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="595"/>
@@ -12008,7 +12008,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="774"/>
         <source>attr</source>
         <comment>modify attribute</comment>
-        <translation>विशेषता</translation>
+        <translation>attr</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="775"/>
@@ -12020,7 +12020,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="767"/>
         <source>prop</source>
         <comment>modify properties</comment>
-        <translation>गुण</translation>
+        <translation>prop</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="768"/>
@@ -12032,7 +12032,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="803"/>
         <source>dist</source>
         <comment>distance point to point</comment>
-        <translation>दूरी</translation>
+        <translation>dist</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="804"/>
@@ -12044,7 +12044,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="818"/>
         <source>ang</source>
         <comment>measure angle</comment>
-        <translation>कोण</translation>
+        <translation>ang</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1063"/>
@@ -12055,7 +12055,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1064"/>
         <source>dpi</source>
-        <translation>DPI</translation>
+        <translation>dpi</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1065"/>
@@ -12111,7 +12111,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1076"/>
         <source>rows</source>
-        <translation>पंक्तियाँ</translation>
+        <translation>rows</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1077"/>
@@ -12127,7 +12127,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1079"/>
         <source>trim</source>
-        <translation>ट्रिम</translation>
+        <translation>trim</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1082"/>
@@ -12182,12 +12182,12 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1096"/>
         <source>pos</source>
-        <translation>स्थिति</translation>
+        <translation>pos</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1097"/>
         <source>size</source>
-        <translation>आकार</translation>
+        <translation>size</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1098"/>
@@ -12213,7 +12213,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1102"/>
         <source>str</source>
-        <translation>स्ट्र</translation>
+        <translation>str</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1103"/>
@@ -12233,7 +12233,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1107"/>
         <source>top</source>
-        <translation>शीर्ष</translation>
+        <translation>top</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1108"/>
@@ -12243,7 +12243,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1109"/>
         <source>left</source>
-        <translation>बाएँ</translation>
+        <translation>left</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1110"/>
@@ -12293,12 +12293,12 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1119"/>
         <source>hor</source>
-        <translation>क्षैतिज</translation>
+        <translation>hor</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1120"/>
         <source>vert</source>
-        <translation>लंबवत</translation>
+        <translation>vert</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1123"/>
@@ -12323,7 +12323,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1128"/>
         <source>quad</source>
-        <translation>चतुर्भुज</translation>
+        <translation>quad</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1129"/>
@@ -12363,22 +12363,22 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1138"/>
         <source>end</source>
-        <translation>अंत</translation>
+        <translation>end</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1139"/>
         <source>both</source>
-        <translation>दोनों</translation>
+        <translation>both</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1140"/>
         <source>none</source>
-        <translation>कोई नहीं</translation>
+        <translation>none</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1141"/>
         <source>fit</source>
-        <translation>फिट</translation>
+        <translation>fit</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1142"/>
@@ -12403,7 +12403,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1149"/>
         <source>sym</source>
-        <translation>प्रतीक</translation>
+        <translation>sym</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1150"/>
@@ -12414,13 +12414,13 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="1157"/>
         <source>ang</source>
         <comment>angle</comment>
-        <translation>कोण</translation>
+        <translation>ang</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1158"/>
         <source>an</source>
         <comment>angle</comment>
-        <translation>संरेखण</translation>
+        <translation>an</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1160"/>
@@ -12431,19 +12431,19 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="1161"/>
         <source>cen</source>
         <comment>center</comment>
-        <translation>केंद्र</translation>
+        <translation>cen</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1162"/>
         <source>ce</source>
         <comment>center</comment>
-        <translation>केंद्र</translation>
+        <translation>ce</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1166"/>
         <source>cl</source>
         <comment>chord length</comment>
-        <translation>वर्ग</translation>
+        <translation>cl</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1169"/>
@@ -12455,13 +12455,13 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="1172"/>
         <source>cols</source>
         <comment>columns</comment>
-        <translation>कॉलम</translation>
+        <translation>cols</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1173"/>
         <source>co</source>
         <comment>columns</comment>
-        <translation>को</translation>
+        <translation>co</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1175"/>
@@ -12479,13 +12479,13 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="1177"/>
         <source>cs</source>
         <comment>columnspacing for inserts</comment>
-        <translation>सीएस</translation>
+        <translation>cs</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1180"/>
         <source>fact</source>
         <comment>factor</comment>
-        <translation>फैक्टोरियल</translation>
+        <translation>fact</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1181"/>
@@ -12497,18 +12497,18 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="1184"/>
         <source>eqn</source>
         <comment>equation</comment>
-        <translation>समीकरण</translation>
+        <translation>eqn</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1185"/>
         <source>eq</source>
         <comment>equation</comment>
-        <translation>समीकरण</translation>
+        <translation>eq</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1187"/>
         <source>help</source>
-        <translation>सहायता</translation>
+        <translation>help</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1188"/>
@@ -12526,13 +12526,13 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="1191"/>
         <source>len</source>
         <comment>length</comment>
-        <translation>लंबाई</translation>
+        <translation>len</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1192"/>
         <source>l</source>
         <comment>length</comment>
-        <translation>ल</translation>
+        <translation>l</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1194"/>
@@ -12611,7 +12611,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="1213"/>
         <source>row</source>
         <comment>row</comment>
-        <translation>पंक्ति</translation>
+        <translation>row</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1215"/>
@@ -12628,7 +12628,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1218"/>
         <source>text</source>
-        <translation>टेक्स्ट</translation>
+        <translation>text</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1219"/>
@@ -12645,7 +12645,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1224"/>
         <source>undo</source>
-        <translation>पूर्ववत करें</translation>
+        <translation>undo</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1225"/>
@@ -12656,7 +12656,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1227"/>
         <source>redo</source>
-        <translation>पुनः करें</translation>
+        <translation>redo</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1228"/>
@@ -12667,7 +12667,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1230"/>
         <source>back</source>
-        <translation>वापस</translation>
+        <translation>back</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1231"/>
@@ -12792,7 +12792,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="67"/>
         <source>Edit</source>
-        <translation>संपादन</translation>
+        <translation>Edit</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="68"/>
@@ -12803,7 +12803,7 @@ Do you want to replace it?</source>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="69"/>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="88"/>
         <source>File</source>
-        <translation>फ़ाइल</translation>
+        <translation>File</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="70"/>
@@ -12813,7 +12813,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="71"/>
         <source>Info</source>
-        <translation>जानकारी</translation>
+        <translation>Info</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="72"/>
@@ -12823,7 +12823,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="73"/>
         <source>Line</source>
-        <translation>रेखा</translation>
+        <translation>Line</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="74"/>
@@ -12859,7 +12859,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="80"/>
         <source>Snap</source>
-        <translation>स्नैप</translation>
+        <translation>Snap</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="81"/>
@@ -12869,7 +12869,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="82"/>
         <source>View</source>
-        <translation>दृश्य</translation>
+        <translation>View</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="83"/>
@@ -12892,12 +12892,12 @@ Do you want to replace it?</source>
         <translation>पेन विज़ार्ड</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1961"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1968"/>
         <source>Invalid objects removed:</source>
         <translation>अमान्य ऑब्जेक्ट हटा दिए गए:</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3818"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3825"/>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="934"/>
         <source>License</source>
         <translation>लाइसेंस</translation>
@@ -12907,7 +12907,7 @@ Do you want to replace it?</source>
         <location filename="../src/ui/generic/widgetcreator.cpp" line="170"/>
         <location filename="../src/ui/generic/widgetcreator.cpp" line="224"/>
         <source>All</source>
-        <translation>सभी</translation>
+        <translation>All</translation>
     </message>
     <message>
         <location filename="../src/ui/generic/colorwizard.cpp" line="54"/>
@@ -13346,7 +13346,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondefault.cpp" line="501"/>
         <source>Back</source>
-        <translation>वापस</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -13370,7 +13370,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actiondimaligned.cpp" line="258"/>
         <location filename="../src/actions/rs_actiondimaligned.cpp" line="263"/>
         <source>Back</source>
-        <translation>वापस</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondimaligned.cpp" line="262"/>
@@ -13496,7 +13496,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actiondimlinear.cpp" line="289"/>
         <location filename="../src/actions/rs_actiondimlinear.cpp" line="294"/>
         <source>Back</source>
-        <translation>वापस</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondimlinear.cpp" line="293"/>
@@ -13586,7 +13586,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actiondrawarc.cpp" line="352"/>
         <location filename="../src/actions/rs_actiondrawarc.cpp" line="356"/>
         <source>Back</source>
-        <translation>पीछे</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawarc.cpp" line="343"/>
@@ -13635,7 +13635,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actiondrawarc3p.cpp" line="238"/>
         <location filename="../src/actions/rs_actiondrawarc3p.cpp" line="242"/>
         <source>Back</source>
-        <translation>पीछे</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawarc3p.cpp" line="242"/>
@@ -13664,7 +13664,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actiondrawarctangential.cpp" line="232"/>
         <location filename="../src/actions/rs_actiondrawarctangential.cpp" line="235"/>
         <source>Back</source>
-        <translation>वापस</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawarctangential.cpp" line="235"/>
@@ -13697,7 +13697,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawcircle.cpp" line="204"/>
         <source>Back</source>
-        <translation>वापस</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -13725,7 +13725,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawcircle2p.cpp" line="188"/>
         <source>Back</source>
-        <translation>वापस</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -13754,7 +13754,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actiondrawcircle3p.cpp" line="191"/>
         <location filename="../src/actions/rs_actiondrawcircle3p.cpp" line="195"/>
         <source>Back</source>
-        <translation>वापस</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawcircle3p.cpp" line="194"/>
@@ -13802,7 +13802,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawcirclecr.cpp" line="228"/>
         <source>Back</source>
-        <translation>पीछे</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -13826,7 +13826,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actiondrawcircleinscribe.cpp" line="275"/>
         <location filename="../src/actions/rs_actiondrawcircleinscribe.cpp" line="280"/>
         <source>Back</source>
-        <translation>वापस</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawcircleinscribe.cpp" line="279"/>
@@ -13856,7 +13856,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actiondrawcircletan1_2p.cpp" line="436"/>
         <location filename="../src/actions/rs_actiondrawcircletan1_2p.cpp" line="440"/>
         <source>Back</source>
-        <translation>वापस</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawcircletan1_2p.cpp" line="435"/>
@@ -13915,7 +13915,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actiondrawcircletan2.cpp" line="332"/>
         <location filename="../src/actions/rs_actiondrawcircletan2.cpp" line="337"/>
         <source>Back</source>
-        <translation>पीछे</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawcircletan2.cpp" line="336"/>
@@ -13945,7 +13945,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actiondrawcircletan2_1p.cpp" line="344"/>
         <location filename="../src/actions/rs_actiondrawcircletan2_1p.cpp" line="348"/>
         <source>Back</source>
-        <translation>वापस</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawcircletan2_1p.cpp" line="343"/>
@@ -13980,7 +13980,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actiondrawcircletan3.cpp" line="473"/>
         <location filename="../src/actions/rs_actiondrawcircletan3.cpp" line="478"/>
         <source>Back</source>
-        <translation>वापस</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawcircletan3.cpp" line="472"/>
@@ -14020,7 +14020,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actiondrawellipse4points.cpp" line="295"/>
         <location filename="../src/actions/rs_actiondrawellipse4points.cpp" line="300"/>
         <source>Back</source>
-        <translation>पीछे</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawellipse4points.cpp" line="294"/>
@@ -14063,7 +14063,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actiondrawellipseaxis.cpp" line="367"/>
         <location filename="../src/actions/rs_actiondrawellipseaxis.cpp" line="372"/>
         <source>Back</source>
-        <translation>वापस</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawellipseaxis.cpp" line="361"/>
@@ -14108,7 +14108,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actiondrawellipsecenter3points.cpp" line="292"/>
         <location filename="../src/actions/rs_actiondrawellipsecenter3points.cpp" line="297"/>
         <source>Back</source>
-        <translation>वापस</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawellipsecenter3points.cpp" line="296"/>
@@ -14152,7 +14152,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actiondrawellipsefocipoint.cpp" line="244"/>
         <location filename="../src/actions/rs_actiondrawellipsefocipoint.cpp" line="250"/>
         <source>Back</source>
-        <translation>पीछे।</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawellipsefocipoint.cpp" line="249"/>
@@ -14187,7 +14187,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actiondrawellipseinscribe.cpp" line="290"/>
         <location filename="../src/actions/rs_actiondrawellipseinscribe.cpp" line="295"/>
         <source>Back</source>
-        <translation>वापस</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawellipseinscribe.cpp" line="289"/>
@@ -14299,7 +14299,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actiondrawline.cpp" line="338"/>
         <location filename="../src/actions/rs_actiondrawline.cpp" line="342"/>
         <source>Back</source>
-        <translation>वापस</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawline.cpp" line="341"/>
@@ -14349,7 +14349,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actiondrawlineangle.cpp" line="305"/>
         <location filename="../src/actions/rs_actiondrawlineangle.cpp" line="309"/>
         <source>Back</source>
-        <translation>वापस</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawlineangle.cpp" line="309"/>
@@ -14391,7 +14391,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actiondrawlinebisector.cpp" line="297"/>
         <location filename="../src/actions/rs_actiondrawlinebisector.cpp" line="301"/>
         <source>Back</source>
-        <translation>वापस</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawlinebisector.cpp" line="296"/>
@@ -14437,7 +14437,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawlinehorvert.cpp" line="162"/>
         <source>Back</source>
-        <translation>वापस</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -14460,7 +14460,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawlineorthtan.cpp" line="190"/>
         <source>Back</source>
-        <translation>वापस</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -14513,7 +14513,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actiondrawlineparallelthrough.cpp" line="181"/>
         <location filename="../src/actions/rs_actiondrawlineparallelthrough.cpp" line="185"/>
         <source>Back</source>
-        <translation>वापस</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawlineparallelthrough.cpp" line="185"/>
@@ -14580,7 +14580,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actiondrawlinepolygon2.cpp" line="150"/>
         <location filename="../src/actions/rs_actiondrawlinepolygon2.cpp" line="154"/>
         <source>Back</source>
-        <translation>वापस</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawlinepolygon2.cpp" line="154"/>
@@ -14618,7 +14618,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawlinerectangle.cpp" line="160"/>
         <source>Back</source>
-        <translation>वापस</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -14647,7 +14647,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawlinerelangle.cpp" line="279"/>
         <source>Back</source>
-        <translation>पीछे</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -14670,7 +14670,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawlinetangent1.cpp" line="186"/>
         <source>Back</source>
-        <translation>पीछे</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -14699,7 +14699,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actiondrawlinetangent2.cpp" line="287"/>
         <location filename="../src/actions/rs_actiondrawlinetangent2.cpp" line="291"/>
         <source>Back</source>
-        <translation>वापस</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -14722,7 +14722,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawmtext.cpp" line="261"/>
         <source>Back</source>
-        <translation>वापस</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -14806,7 +14806,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actiondrawpolyline.cpp" line="695"/>
         <location filename="../src/actions/rs_actiondrawpolyline.cpp" line="699"/>
         <source>Back</source>
-        <translation>वापस</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawpolyline.cpp" line="698"/>
@@ -14845,7 +14845,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actiondrawspline.cpp" line="290"/>
         <location filename="../src/actions/rs_actiondrawspline.cpp" line="294"/>
         <source>Back</source>
-        <translation>वापस</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawspline.cpp" line="293"/>
@@ -14884,7 +14884,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawtext.cpp" line="291"/>
         <source>Back</source>
-        <translation>पीछे</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -14956,7 +14956,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actioninfoangle.cpp" line="145"/>
         <source>Back</source>
-        <translation>वापस</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -15023,7 +15023,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actioninfodist.cpp" line="175"/>
         <source>Back</source>
-        <translation>वापस</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -15051,7 +15051,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actioninfodist2.cpp" line="161"/>
         <source>Back</source>
-        <translation>वापस</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -15165,7 +15165,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actionmodifybevel.cpp" line="279"/>
         <location filename="../src/actions/rs_actionmodifybevel.cpp" line="283"/>
         <source>Back</source>
-        <translation>वापस।</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifybevel.cpp" line="278"/>
@@ -15219,7 +15219,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionmodifycut.cpp" line="150"/>
         <source>Back</source>
-        <translation>पीछे</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -15282,7 +15282,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionmodifydeletefree.cpp" line="172"/>
         <source>Back</source>
-        <translation>पीछे</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -15331,7 +15331,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionmodifymirror.cpp" line="167"/>
         <source>Back</source>
-        <translation>वापस</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -15359,7 +15359,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionmodifymove.cpp" line="175"/>
         <source>Back</source>
-        <translation>वापस</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -15388,7 +15388,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actionmodifymoverotate.cpp" line="240"/>
         <location filename="../src/actions/rs_actionmodifymoverotate.cpp" line="244"/>
         <source>Back</source>
-        <translation>पीछे</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifymoverotate.cpp" line="243"/>
@@ -15406,7 +15406,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionmodifyoffset.cpp" line="101"/>
         <source>Back</source>
-        <translation>पीछे</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -15421,7 +15421,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actionmodifyrotate.cpp" line="150"/>
         <location filename="../src/actions/rs_actionmodifyrotate.cpp" line="154"/>
         <source>Back</source>
-        <translation>पीछे</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifyrotate.cpp" line="149"/>
@@ -15454,7 +15454,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionmodifyrotate2.cpp" line="153"/>
         <source>Back</source>
-        <translation>पीछे</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -15474,7 +15474,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actionmodifyround.cpp" line="411"/>
         <location filename="../src/actions/rs_actionmodifyround.cpp" line="415"/>
         <source>Back</source>
-        <translation>पीछे</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifyround.cpp" line="414"/>
@@ -15539,7 +15539,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actionmodifystretch.cpp" line="184"/>
         <location filename="../src/actions/rs_actionmodifystretch.cpp" line="188"/>
         <source>Back</source>
-        <translation>वापस</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifystretch.cpp" line="183"/>
@@ -15574,7 +15574,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actionmodifytrim.cpp" line="181"/>
         <location filename="../src/actions/rs_actionmodifytrim.cpp" line="190"/>
         <source>Back</source>
-        <translation>पीछे</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifytrim.cpp" line="186"/>
@@ -15617,7 +15617,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionmodifytrimamount.cpp" line="187"/>
         <source>Back</source>
-        <translation>वापस</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -15679,7 +15679,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionpolylineadd.cpp" line="162"/>
         <source>Back</source>
-        <translation>वापस</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -15723,7 +15723,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actionpolylineappend.cpp" line="208"/>
         <location filename="../src/actions/rs_actionpolylineappend.cpp" line="212"/>
         <source>Back</source>
-        <translation>वापस</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylineappend.cpp" line="211"/>
@@ -15777,7 +15777,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionpolylinedel.cpp" line="163"/>
         <source>Back</source>
-        <translation>वापस</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -15825,7 +15825,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actionpolylinedelbetween.cpp" line="194"/>
         <location filename="../src/actions/rs_actionpolylinedelbetween.cpp" line="198"/>
         <source>Back</source>
-        <translation>वापस</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylinedelbetween.cpp" line="197"/>
@@ -15930,7 +15930,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actionpolylinetrim.cpp" line="186"/>
         <location filename="../src/actions/rs_actionpolylinetrim.cpp" line="190"/>
         <source>Back</source>
-        <translation>वापस</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylinetrim.cpp" line="189"/>
@@ -16138,7 +16138,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionselectintersected.cpp" line="143"/>
         <source>Back</source>
-        <translation>वापस</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -16161,7 +16161,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionselectwindow.cpp" line="184"/>
         <source>Back</source>
-        <translation>वापस</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -16198,7 +16198,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actionsnapintersectionmanual.cpp" line="183"/>
         <location filename="../src/actions/rs_actionsnapintersectionmanual.cpp" line="187"/>
         <source>Back</source>
-        <translation>पीछे</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionsnapintersectionmanual.cpp" line="186"/>
@@ -16258,7 +16258,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionzoomwindow.cpp" line="154"/>
         <source>Back</source>
-        <translation>पीछे</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -16340,7 +16340,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_beveloptions.ui" line="56"/>
         <source>Trim</source>
-        <translation>ट्रिम</translation>
+        <translation>Trim</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_beveloptions.ui" line="79"/>
@@ -16620,7 +16620,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_lineangleoptions.ui" line="180"/>
         <source>End</source>
-        <translation>अंत</translation>
+        <translation>End</translation>
     </message>
 </context>
 <context>
@@ -16676,7 +16676,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_lineoptions.ui" line="75"/>
         <source>Undo</source>
-        <translation>पूर्ववत करें</translation>
+        <translation>Undo</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_lineoptions.ui" line="82"/>
@@ -16686,7 +16686,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_lineoptions.ui" line="85"/>
         <source>Redo</source>
-        <translation>दोहराएं</translation>
+        <translation>Redo</translation>
     </message>
 </context>
 <context>
@@ -16724,7 +16724,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/lc_lineoptions.ui" line="195"/>
         <source>Rel</source>
-        <translation>सापेक्ष</translation>
+        <translation>Rel</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_lineoptions.ui" line="224"/>
@@ -16734,7 +16734,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/lc_lineoptions.ui" line="227"/>
         <source>Undo</source>
-        <translation>पूर्ववत करें</translation>
+        <translation>Undo</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_lineoptions.ui" line="234"/>
@@ -16754,7 +16754,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/lc_lineoptions.ui" line="256"/>
         <source>Redo</source>
-        <translation>दोहराएं</translation>
+        <translation>Redo</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_lineoptions.ui" line="297"/>
@@ -16936,12 +16936,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_polylineoptions.ui" line="60"/>
         <source>Undo</source>
-        <translation>पूर्ववत करें</translation>
+        <translation>Undo</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_polylineoptions.ui" line="80"/>
         <source>Line</source>
-        <translation>रेखा</translation>
+        <translation>Line</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_polylineoptions.ui" line="85"/>
@@ -17042,7 +17042,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_roundoptions.ui" line="56"/>
         <source>Trim</source>
-        <translation>ट्रिम</translation>
+        <translation>Trim</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_roundoptions.ui" line="79"/>
@@ -17101,7 +17101,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_splineoptions.ui" line="104"/>
         <source>Undo</source>
-        <translation>पूर्ववत करें</translation>
+        <translation>Undo</translation>
     </message>
 </context>
 <context>
@@ -17170,7 +17170,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/generic/widgetcreator.ui" line="155"/>
         <source>Name</source>
-        <translation>नाम</translation>
+        <translation>Name</translation>
     </message>
     <message>
         <location filename="../src/ui/generic/widgetcreator.ui" line="196"/>

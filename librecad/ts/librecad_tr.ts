@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
+<?xml version='1.0' encoding='utf-8'?>
 <TS version="2.1" language="tr">
 <context>
     <name>ColorWizard</name>
@@ -28,7 +27,7 @@
     </message>
     <message>
         <source>Set</source>
-        <translation>Ayarla</translation>
+        <translation>Set</translation>
     </message>
 </context>
 <context>
@@ -156,7 +155,7 @@ noktalar arasındaki mesafe=%2 çap=%3 den daha büyük</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Geri</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Select circle center</source>
@@ -177,7 +176,7 @@ veya [%2]</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Geri</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Y</source>
@@ -221,7 +220,7 @@ veya [%2]</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Geri</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify distance (%1) or [%2]</source>
@@ -264,7 +263,7 @@ veya [%2]</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Geri</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify the third point on parabola</source>
@@ -295,7 +294,7 @@ veya [%2]</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Geri</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify the start point on parabola</source>
@@ -318,11 +317,11 @@ veya [%2]</translation>
     </message>
     <message>
         <source>Line</source>
-        <translation>Çizgi</translation>
+        <translation>Line</translation>
     </message>
     <message>
         <source>Arc</source>
-        <translation>Yay</translation>
+        <translation>Arc</translation>
     </message>
     <message>
         <source>Circle</source>
@@ -345,7 +344,7 @@ veya [%2]</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Geri</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify next control point</source>
@@ -963,7 +962,7 @@ veya [%2]</translation>
     </message>
     <message>
         <source>Left</source>
-        <translation>Sol</translation>
+        <translation>Left</translation>
     </message>
     <message>
         <source>Right</source>
@@ -971,7 +970,7 @@ veya [%2]</translation>
     </message>
     <message>
         <source>Top</source>
-        <translation>Üst</translation>
+        <translation>Top</translation>
     </message>
     <message>
         <source>Bottom</source>
@@ -1100,7 +1099,7 @@ veya [%2]</translation>
     </message>
     <message>
         <source>Star</source>
-        <translation>Yıldız</translation>
+        <translation>Star</translation>
     </message>
     <message>
         <source>Break/Divide</source>
@@ -1171,7 +1170,7 @@ veya [%2]</translation>
         <translation>Çoğalt</translation>
     </message>
     <message>
-        <source>Update Current Pen by Active Layer&apos; Pen</source>
+        <source>Update Current Pen by Active Layer' Pen</source>
         <translation>Geçerli kalemi aktif katmanın kalemiyle güncelle</translation>
     </message>
 </context>
@@ -1185,8 +1184,8 @@ veya [%2]</translation>
 <context>
     <name>LC_ActionLayersExport</name>
     <message>
-        <source>Saving layer &quot;%1&quot; as &quot;%2&quot; </source>
-        <translation>&quot;%1&quot; &amp;katmanını &quot;%2&quot; olarak kaydet </translation>
+        <source>Saving layer "%1" as "%2" </source>
+        <translation>"%1" &amp;katmanını "%2" olarak kaydet </translation>
     </message>
 </context>
 <context>
@@ -1235,7 +1234,7 @@ veya [%2]</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Geri</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -1301,7 +1300,7 @@ veya [%2]</translation>
     </message>
     <message>
         <source>Type</source>
-        <translation>Tür</translation>
+        <translation>Type</translation>
     </message>
     <message>
         <source>Angle:</source>
@@ -1312,7 +1311,7 @@ veya [%2]</translation>
     <name>LC_DeviceOptions</name>
     <message>
         <source>Form</source>
-        <translation>Biçim</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <source>Device</source>
@@ -1320,7 +1319,7 @@ veya [%2]</translation>
     </message>
     <message>
         <source>Save</source>
-        <translation>Kaydet</translation>
+        <translation>Save</translation>
     </message>
 </context>
 <context>
@@ -1700,7 +1699,7 @@ veya [%2]</translation>
         <translation>Normal Katmana Dönüştür</translation>
     </message>
     <message>
-        <source>&amp;Select Layer&apos;s Entities</source>
+        <source>&amp;Select Layer's Entities</source>
         <translation>Katmanın &amp;Varlıklarını Seç</translation>
     </message>
     <message>
@@ -1768,7 +1767,7 @@ veya [%2]</translation>
     </message>
     <message>
         <source>Free</source>
-        <translation>Serbest</translation>
+        <translation>Free</translation>
     </message>
     <message>
         <source>Start</source>
@@ -1780,7 +1779,7 @@ veya [%2]</translation>
     </message>
     <message>
         <source>End</source>
-        <translation>Bitiş</translation>
+        <translation>End</translation>
     </message>
     <message>
         <source>Line Snap:</source>
@@ -1788,7 +1787,7 @@ veya [%2]</translation>
     </message>
     <message>
         <source>Rel</source>
-        <translation>Göreceli</translation>
+        <translation>Rel</translation>
     </message>
     <message>
         <source>Divide</source>
@@ -1851,7 +1850,7 @@ veya [%2]</translation>
     </message>
     <message>
         <source>End</source>
-        <translation>Bitiş</translation>
+        <translation>End</translation>
     </message>
     <message>
         <source>Length:</source>
@@ -1933,11 +1932,11 @@ veya [%2]</translation>
     </message>
     <message>
         <source>None</source>
-        <translation>Yok</translation>
+        <translation>None</translation>
     </message>
     <message>
         <source>Both</source>
-        <translation>Her İkisi</translation>
+        <translation>Both</translation>
     </message>
     <message>
         <source>Start</source>
@@ -1945,7 +1944,7 @@ veya [%2]</translation>
     </message>
     <message>
         <source>End</source>
-        <translation>Bitiş</translation>
+        <translation>End</translation>
     </message>
     <message>
         <source>Edge Points:</source>
@@ -2030,7 +2029,7 @@ veya [%2]</translation>
     </message>
     <message>
         <source>Free</source>
-        <translation>Serbest</translation>
+        <translation>Free</translation>
     </message>
     <message>
         <source>Gap Size:</source>
@@ -2046,7 +2045,7 @@ veya [%2]</translation>
     </message>
     <message>
         <source>End</source>
-        <translation>Bitiş</translation>
+        <translation>End</translation>
     </message>
     <message>
         <source>Line Snap:</source>
@@ -2212,7 +2211,7 @@ veya [%2]</translation>
     </message>
     <message>
         <source>Save</source>
-        <translation>Kaydet</translation>
+        <translation>Save</translation>
     </message>
     <message>
         <source>Apply Pen To Selection</source>
@@ -2231,11 +2230,11 @@ veya [%2]</translation>
         <translation>geçerliye</translation>
     </message>
     <message>
-        <source>Update Current Pen by Active Layer&apos; Pen</source>
+        <source>Update Current Pen by Active Layer' Pen</source>
         <translation>Geçerli Kalemi Aktif Katman Kalemiyle Güncelle</translation>
     </message>
     <message>
-        <source>Fill Pen Editor from Active Layer&apos;s Pen</source>
+        <source>Fill Pen Editor from Active Layer's Pen</source>
         <translation>Kalem Düzenleyicisini Aktif Katman Kaleminden Doldur</translation>
     </message>
     <message>
@@ -2300,14 +2299,14 @@ veya [%2]</translation>
     </message>
     <message>
         <source>Location of pens file is changed, please restart the application so new pens file will be used.
-Please note that if you&apos;ll save pen via editor without restart, current pens from palette will be saved in the new file and therefore existing content of it will be overridden.</source>
+Please note that if you'll save pen via editor without restart, current pens from palette will be saved in the new file and therefore existing content of it will be overridden.</source>
         <translation type="vanished">Kalem dosyası konumu değişti, yeni kalem dosyasının kullanılabilmesi için uygulamayı yeniden başlatın.
 Not: Düzenleyici üzerinden yeniden başlatmadan kalem kaydederseniz, paletten mevcut kalemler yeni dosyaya kaydedilecek ve mevcut içerik üzerine yazılacaktır.</translation>
     </message>
     <message>
         <source>Location of pens file is changed, please restart the application so new pens file will be used.
 
-Please note that if you&apos;ll save pen via editor without restart, current pens from palette will be saved in the new file and therefore existing content of it will be overridden.</source>
+Please note that if you'll save pen via editor without restart, current pens from palette will be saved in the new file and therefore existing content of it will be overridden.</source>
         <translation>Kalem dosyası konumu değiştirildi, lütfen uygulamayı yeniden başlatın, böylece yeni kalem dosyası kullanılabilir.
 
 Lütfen, yeniden başlatmadan düzenleyici aracılığıyla kalemi kaydederseniz, paletten mevcut kalemler yeni dosyaya kaydedilecek ve bu nedenle mevcut içeriği üzerine yazılacaktır.</translation>
@@ -2361,7 +2360,7 @@ Lütfen, yeniden başlatmadan düzenleyici aracılığıyla kalemi kaydederseniz
     </message>
     <message>
         <source>Top</source>
-        <translation>Üst</translation>
+        <translation>Top</translation>
     </message>
     <message>
         <source>Top-right</source>
@@ -2369,7 +2368,7 @@ Lütfen, yeniden başlatmadan düzenleyici aracılığıyla kalemi kaydederseniz
     </message>
     <message>
         <source>Left</source>
-        <translation>Sol</translation>
+        <translation>Left</translation>
     </message>
     <message>
         <source>Middle</source>
@@ -2409,7 +2408,7 @@ Lütfen, yeniden başlatmadan düzenleyici aracılığıyla kalemi kaydederseniz
     </message>
     <message>
         <source>Both</source>
-        <translation>Her İkisi</translation>
+        <translation>Both</translation>
     </message>
     <message>
         <source>Vertical</source>
@@ -2504,7 +2503,7 @@ Lütfen, yeniden başlatmadan düzenleyici aracılığıyla kalemi kaydederseniz
     </message>
     <message>
         <source>Both</source>
-        <translation>Her İkisi</translation>
+        <translation>Both</translation>
     </message>
     <message>
         <source>Vertical</source>
@@ -2527,7 +2526,7 @@ Lütfen, yeniden başlatmadan düzenleyici aracılığıyla kalemi kaydederseniz
     </message>
     <message>
         <source>Both</source>
-        <translation>Her İkisi</translation>
+        <translation>Both</translation>
     </message>
     <message>
         <source>Vertical</source>
@@ -2605,11 +2604,11 @@ Lütfen, yeniden başlatmadan düzenleyici aracılığıyla kalemi kaydederseniz
     </message>
     <message>
         <source>None</source>
-        <translation>Yok</translation>
+        <translation>None</translation>
     </message>
     <message>
         <source>Both</source>
-        <translation>Her İkisi</translation>
+        <translation>Both</translation>
     </message>
     <message>
         <source>Start</source>
@@ -2617,7 +2616,7 @@ Lütfen, yeniden başlatmadan düzenleyici aracılığıyla kalemi kaydederseniz
     </message>
     <message>
         <source>End</source>
-        <translation>Bitiş</translation>
+        <translation>End</translation>
     </message>
     <message>
         <source>Edge Tick:</source>
@@ -2625,7 +2624,7 @@ Lütfen, yeniden başlatmadan düzenleyici aracılığıyla kalemi kaydederseniz
     </message>
     <message>
         <source>Rel</source>
-        <translation>Göreceli</translation>
+        <translation>Rel</translation>
     </message>
     <message>
         <source>Offset:</source>
@@ -2707,7 +2706,7 @@ Lütfen, yeniden başlatmadan düzenleyici aracılığıyla kalemi kaydederseniz
     </message>
     <message>
         <source>Dock</source>
-        <translation>Sabit</translation>
+        <translation>Dock</translation>
     </message>
     <message>
         <source>Float</source>
@@ -2820,12 +2819,12 @@ Lütfen, yeniden başlatmadan düzenleyici aracılığıyla kalemi kaydederseniz
         <translation>sağı kaldır</translation>
     </message>
     <message>
-        <source>remove 0&apos;</source>
-        <translation>0&apos; kaldır</translation>
+        <source>remove 0'</source>
+        <translation>0' kaldır</translation>
     </message>
     <message>
-        <source>remove 0&quot;</source>
-        <translation>0&quot; kaldır</translation>
+        <source>remove 0"</source>
+        <translation>0" kaldır</translation>
     </message>
 </context>
 <context>
@@ -2884,7 +2883,7 @@ Lütfen, yeniden başlatmadan düzenleyici aracılığıyla kalemi kaydederseniz
     </message>
     <message>
         <source>File</source>
-        <translation>Dosya</translation>
+        <translation>File</translation>
     </message>
     <message>
         <source>&amp;Edit</source>
@@ -2892,7 +2891,7 @@ Lütfen, yeniden başlatmadan düzenleyici aracılığıyla kalemi kaydederseniz
     </message>
     <message>
         <source>Edit</source>
-        <translation>Düzenle</translation>
+        <translation>Edit</translation>
     </message>
     <message>
         <source>&amp;View</source>
@@ -2900,7 +2899,7 @@ Lütfen, yeniden başlatmadan düzenleyici aracılığıyla kalemi kaydederseniz
     </message>
     <message>
         <source>View</source>
-        <translation>Görünüm</translation>
+        <translation>View</translation>
     </message>
     <message>
         <source>&amp;Select</source>
@@ -2928,7 +2927,7 @@ Lütfen, yeniden başlatmadan düzenleyici aracılığıyla kalemi kaydederseniz
     </message>
     <message>
         <source>Pen</source>
-        <translation>Kalem</translation>
+        <translation>Pen</translation>
     </message>
     <message>
         <source>Tool Options</source>
@@ -2971,8 +2970,8 @@ Lütfen, yeniden başlatmadan düzenleyici aracılığıyla kalemi kaydederseniz
         <translation>Yeni dosya oluşturuluyor...</translation>
     </message>
     <message>
-        <source>Block &apos;%1&apos;</source>
-        <translation>Blok &apos;%1&apos;</translation>
+        <source>Block '%1'</source>
+        <translation>Blok '%1'</translation>
     </message>
     <message>
         <source>unnamed document %1</source>
@@ -3157,8 +3156,8 @@ dosyası açılamıyor
 Lütfen varlığını ve izinlerini kontrol edin.</translation>
     </message>
     <message>
-        <source>File &apos;%1&apos; does not exist. Opening aborted</source>
-        <translation>&apos;%1&apos; dosyası yok. Açılış iptal edildi</translation>
+        <source>File '%1' does not exist. Opening aborted</source>
+        <translation>'%1' dosyası yok. Açılış iptal edildi</translation>
     </message>
     <message>
         <source>Categories</source>
@@ -3178,7 +3177,7 @@ Lütfen varlığını ve izinlerini kontrol edin.</translation>
     </message>
     <message>
         <source>Line</source>
-        <translation>Çizgi</translation>
+        <translation>Line</translation>
     </message>
     <message>
         <source>Circle</source>
@@ -3210,7 +3209,7 @@ Lütfen varlığını ve izinlerini kontrol edin.</translation>
     </message>
     <message>
         <source>Info</source>
-        <translation>Bilgi</translation>
+        <translation>Info</translation>
     </message>
     <message>
         <source>Dock Areas</source>
@@ -3266,7 +3265,7 @@ Lütfen varlığını ve izinlerini kontrol edin.</translation>
     </message>
     <message>
         <source>Copy</source>
-        <translation>Kopyala</translation>
+        <translation>Copy</translation>
     </message>
     <message>
         <source>Contributors</source>
@@ -3360,11 +3359,11 @@ Lütfen varlığını ve izinlerini kontrol edin.</translation>
     </message>
     <message>
         <source>East</source>
-        <translation>Doğu</translation>
+        <translation>East</translation>
     </message>
     <message>
         <source>West</source>
-        <translation>Batı</translation>
+        <translation>West</translation>
     </message>
     <message>
         <source>&amp;Arrange</source>
@@ -3388,7 +3387,7 @@ Lütfen varlığını ve izinlerini kontrol edin.</translation>
     </message>
     <message>
         <source>Cmd</source>
-        <translation>Kmt</translation>
+        <translation>Cmd</translation>
     </message>
     <message>
         <source>Float</source>
@@ -3397,14 +3396,14 @@ Lütfen varlığını ve izinlerini kontrol edin.</translation>
     <message>
         <source>Dock</source>
         <comment>Dock the command widget to the main window</comment>
-        <translation>Sabit</translation>
+        <translation>Dock</translation>
     </message>
     <message>
         <source>&amp;Wiki</source>
         <translation>&amp;Viki</translation>
     </message>
     <message>
-        <source>User&apos;s &amp;Manual</source>
+        <source>User's &amp;Manual</source>
         <translation>&amp;Kullanıcı Kılavuzu</translation>
     </message>
     <message>
@@ -3483,16 +3482,16 @@ Lütfen varlığını ve izinlerini kontrol edin.</translation>
         <translation>Geçerli Katman</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+        <source>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Name of Current Active Layer&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Helvetica'; font-size:7pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;Name of Current Active Layer&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Geçerli Etkin Katmanın Adı&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Helvetica'; font-size:7pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;Geçerli Etkin Katmanın Adı&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
@@ -3510,8 +3509,8 @@ p, li { white-space: pre-wrap; }
         <translation>Blok İsimlendirme</translation>
     </message>
     <message>
-        <source>Could not name block. A block named &quot;%1&quot; already exists.</source>
-        <translation>Blok isimlendirilemedi. &quot;%1&quot; isminde bir blok zaten var.</translation>
+        <source>Could not name block. A block named "%1" already exists.</source>
+        <translation>Blok isimlendirilemedi. "%1" isminde bir blok zaten var.</translation>
     </message>
 </context>
 <context>
@@ -3619,7 +3618,7 @@ pencerede düzenle</translation>
     </message>
     <message>
         <source>Red</source>
-        <translation>Kırmızı</translation>
+        <translation>Red</translation>
     </message>
     <message>
         <source>Yellow</source>
@@ -3631,11 +3630,11 @@ pencerede düzenle</translation>
     </message>
     <message>
         <source>Cyan</source>
-        <translation>Turkuaz</translation>
+        <translation>Cyan</translation>
     </message>
     <message>
         <source>Blue</source>
-        <translation>Mavi</translation>
+        <translation>Blue</translation>
     </message>
     <message>
         <source>Magenta</source>
@@ -3647,7 +3646,7 @@ pencerede düzenle</translation>
     </message>
     <message>
         <source>Gray</source>
-        <translation>Gri</translation>
+        <translation>Gray</translation>
     </message>
     <message>
         <source>Light Gray</source>
@@ -3745,7 +3744,7 @@ pencerede düzenle</translation>
     </message>
     <message>
         <source>Dock</source>
-        <translation>Sabit</translation>
+        <translation>Dock</translation>
     </message>
     <message>
         <source>Float</source>
@@ -3757,7 +3756,7 @@ pencerede düzenle</translation>
     </message>
     <message>
         <source>Cmd</source>
-        <translation>Kmt</translation>
+        <translation>Cmd</translation>
     </message>
 </context>
 <context>
@@ -3836,7 +3835,7 @@ pencerede düzenle</translation>
     <name>QG_DlgArc</name>
     <message>
         <source>Arc</source>
-        <translation>Yay</translation>
+        <translation>Arc</translation>
     </message>
     <message>
         <source>Layer:</source>
@@ -3884,7 +3883,7 @@ pencerede düzenle</translation>
     <message>
         <source>Apply attributes also to all sub-entities of selected INSERT.
 This recursively modifies all entities of the Block itself.</source>
-        <translation>Nitelikleri seçilen INSERT&apos;in tüm alt varlıklarına da uygulayın.
+        <translation>Nitelikleri seçilen INSERT'in tüm alt varlıklarına da uygulayın.
 Bu, Bloğun kendisinin tüm varlıklarını yinelemeli olarak değiştirir.</translation>
     </message>
     <message>
@@ -4028,7 +4027,7 @@ Bu, Bloğun kendisinin tüm varlıklarını yinelemeli olarak değiştirir.</tra
     </message>
     <message>
         <source>Area</source>
-        <translation>Alan</translation>
+        <translation>Area</translation>
     </message>
 </context>
 <context>
@@ -4105,12 +4104,12 @@ Bu, Bloğun kendisinin tüm varlıklarını yinelemeli olarak değiştirir.</tra
         <translation>Komut Dili:</translation>
     </message>
     <message>
-        <source>&lt;font size=&quot;+1&quot;&gt;&lt;b&gt;Welcome to LibreCAD&lt;/b&gt;
+        <source>&lt;font size="+1"&gt;&lt;b&gt;Welcome to LibreCAD&lt;/b&gt;
 &lt;/font&gt;
 &lt;br&gt;
 Please choose the unit you want to use for new drawings and your preferred language.&lt;br&gt;
 (You can changes these settings later.)</source>
-        <translation>&lt;font size=&quot;+1&quot;&gt;&lt;b&gt;LibreCAD&apos;e hoş geldiniz&lt;/b&gt;
+        <translation>&lt;font size="+1"&gt;&lt;b&gt;LibreCAD'e hoş geldiniz&lt;/b&gt;
 &lt;/font&gt;
 &lt;br&gt;
 Lütfen yeni çizimler için kullanmak istediğiniz birimi ve tercih ettiğiniz dili seçin.&lt;br&gt;
@@ -4172,7 +4171,7 @@ Lütfen yeni çizimler için kullanmak istediğiniz birimi ve tercih ettiğiniz 
     <name>QG_DlgLine</name>
     <message>
         <source>Line</source>
-        <translation>Çizgi</translation>
+        <translation>Line</translation>
     </message>
     <message>
         <source>Layer:</source>
@@ -4287,11 +4286,11 @@ Lütfen yeni çizimler için kullanmak istediğiniz birimi ve tercih ettiğiniz 
     </message>
     <message>
         <source>Cut</source>
-        <translation>Kes</translation>
+        <translation>Cut</translation>
     </message>
     <message>
         <source>Copy</source>
-        <translation>Kopyala</translation>
+        <translation>Copy</translation>
     </message>
     <message>
         <source>Paste</source>
@@ -5078,20 +5077,20 @@ Lütfen yeni çizimler için kullanmak istediğiniz birimi ve tercih ettiğiniz 
         <translation>Radyan</translation>
     </message>
     <message>
-        <source>Surveyor&apos;s units</source>
+        <source>Surveyor's units</source>
         <translation>Haritacı birimleri</translation>
     </message>
     <message>
         <source>auto</source>
-        <translation>özdevinimli</translation>
+        <translation>auto</translation>
     </message>
     <message>
         <source>Options</source>
         <translation>Seçenekler</translation>
     </message>
     <message>
-        <source>For the length formats &apos;Engineering&apos; and &apos;Architectural&apos;, the unit must be set to Inch.</source>
-        <translation>&apos;Mühendislik&apos; ve &apos;Mimari&apos; uzunluk biçimleri için birim İnç olarak ayarlanmalıdır.</translation>
+        <source>For the length formats 'Engineering' and 'Architectural', the unit must be set to Inch.</source>
+        <translation>'Mühendislik' ve 'Mimari' uzunluk biçimleri için birim İnç olarak ayarlanmalıdır.</translation>
     </message>
     <message>
         <source>&amp;Grid</source>
@@ -5111,7 +5110,7 @@ Lütfen yeni çizimler için kullanmak istediğiniz birimi ve tercih ettiğiniz 
     </message>
     <message>
         <source>Left</source>
-        <translation>Sol</translation>
+        <translation>Left</translation>
     </message>
     <message>
         <source>Top crosshair with isometric grid</source>
@@ -5119,7 +5118,7 @@ Lütfen yeni çizimler için kullanmak istediğiniz birimi ve tercih ettiğiniz 
     </message>
     <message>
         <source>Top</source>
-        <translation>Üst</translation>
+        <translation>Top</translation>
     </message>
     <message>
         <source>Right crosshair with isometric grid</source>
@@ -5150,8 +5149,8 @@ Lütfen yeni çizimler için kullanmak istediğiniz birimi ve tercih ettiğiniz 
         <translation>Tik büyüklüğü:</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dimension Tick size. Set it to 0 will disable the dimension tick. Dimension arrow won&apos;t be drawn when dimension tick is enabled.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Ölçülendirme tik boyutu. 0&apos;a ayarlamak ölçü tikini devre dışı bırakacaktır. Ölçü tiki etkinleştirildiğinde ölçü oku çizilmez.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dimension Tick size. Set it to 0 will disable the dimension tick. Dimension arrow won't be drawn when dimension tick is enabled.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Ölçülendirme tik boyutu. 0'a ayarlamak ölçü tikini devre dışı bırakacaktır. Ölçü tiki etkinleştirildiğinde ölçü oku çizilmez.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Horizontal</source>
@@ -5174,12 +5173,12 @@ Lütfen yeni çizimler için kullanmak istediğiniz birimi ve tercih ettiğiniz 
         <translation>Yazı stili:</translation>
     </message>
     <message>
-        <source>&apos;.&apos; (Period)</source>
-        <translation>&apos;.&apos; (Nokta)</translation>
+        <source>'.' (Period)</source>
+        <translation>'.' (Nokta)</translation>
     </message>
     <message>
-        <source>&apos;,&apos; (Comma)</source>
-        <translation>&apos;,&apos; (Virgül)</translation>
+        <source>',' (Comma)</source>
+        <translation>',' (Virgül)</translation>
     </message>
     <message>
         <source>Decimal separator:</source>
@@ -5222,8 +5221,8 @@ Lütfen yeni çizimler için kullanmak istediğiniz birimi ve tercih ettiğiniz 
         <translation>Ölçü çizgisi üzerinde büyütülecek uzunluk</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dimension arrow size. &lt;a name=&quot;result_box&quot;/&gt;without effect when tick size &lt;a name=&quot;result_box&quot;/&gt;is other than 0&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Ölçü oku boyutu. &lt;a name=&quot;result_box&quot;/&gt;tik boyutu &lt;a name=&quot;result_box&quot;/&gt;0&apos;dan büyük olduğunda etkisi yoktur&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dimension arrow size. &lt;a name="result_box"/&gt;without effect when tick size &lt;a name="result_box"/&gt;is other than 0&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Ölçü oku boyutu. &lt;a name="result_box"/&gt;tik boyutu &lt;a name="result_box"/&gt;0'dan büyük olduğunda etkisi yoktur&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Width:</source>
@@ -5254,8 +5253,8 @@ Lütfen yeni çizimler için kullanmak istediğiniz birimi ve tercih ettiğiniz 
         <translation>Doğrusal hassasiyet:</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Text alignment &lt;a name=&quot;result_box&quot;/&gt;relative to the dimension line.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Ölçü çizgisine göre &lt;a name=&quot;result_box&quot;/&gt;metin hizalaması.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Text alignment &lt;a name="result_box"/&gt;relative to the dimension line.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Ölçü çizgisine göre &lt;a name="result_box"/&gt;metin hizalaması.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Aligned</source>
@@ -5358,8 +5357,8 @@ Lütfen yeni çizimler için kullanmak istediğiniz birimi ve tercih ettiğiniz 
         <translation>Mimari (metrik)</translation>
     </message>
     <message>
-        <source>For the length format &apos;Architectural (metric)&apos;, the unit must be set to Meter.</source>
-        <translation>&apos;Mimari (metrik)&apos; uzunluk formatı için birim Metre olarak ayarlanmalıdır.</translation>
+        <source>For the length format 'Architectural (metric)', the unit must be set to Meter.</source>
+        <translation>'Mimari (metrik)' uzunluk formatı için birim Metre olarak ayarlanmalıdır.</translation>
     </message>
     <message>
         <source>Screen %</source>
@@ -5534,7 +5533,7 @@ Lütfen yeni çizimler için kullanmak istediğiniz birimi ve tercih ettiğiniz 
     </message>
     <message>
         <source>All</source>
-        <translation>Tümü</translation>
+        <translation>All</translation>
     </message>
     <message>
         <source>Scrollbars</source>
@@ -5605,7 +5604,7 @@ Lütfen yeni çizimler için kullanmak istediğiniz birimi ve tercih ettiğiniz 
         <translation>&amp;Önizleme varlıklarının sayısı:</translation>
     </message>
     <message>
-        <source>Don&apos;t use native OS file open dialog</source>
+        <source>Don't use native OS file open dialog</source>
         <translation>İşletim sistemi dosya açma iletişim kutusunu kullanma</translation>
     </message>
     <message>
@@ -5685,8 +5684,8 @@ Lütfen yeni çizimler için kullanmak istediğiniz birimi ve tercih ettiğiniz 
         <translation>Dosyayı açarken çizimi sığdır</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-family:&apos;-apple-system&apos;,&apos;BlinkMacSystemFont&apos;,&apos;Segoe UI&apos;,&apos;Noto Sans&apos;,&apos;Helvetica&apos;,&apos;Arial&apos;,&apos;sans-serif&apos;,&apos;Apple Color Emoji&apos;,&apos;Segoe UI Emoji&apos;; font-size:14px; color:#1f2328; background-color:#ffffff;&quot;&gt;Part library folder. The symbol library dxf files must be located in the subdirectories of this folder. The subfolder names will be displayed in the Library Browser.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-family:&apos;-apple-system&apos;,&apos;BlinkMacSystemFont&apos;,&apos;Segoe UI&apos;,&apos;Noto Sans&apos;,&apos;Helvetica&apos;,&apos;Arial&apos;,&apos;sans-serif&apos;,&apos;Apple Color Emoji&apos;,&apos;Segoe UI Emoji&apos;; font-size:14px; color:#1f2328; background-color:#ffffff;&quot;&gt;( Menu: Widgets &amp;gt; Dock Widgets &amp;gt; Library Browser)&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-family:&apos;-apple-system&apos;,&apos;BlinkMacSystemFont&apos;,&apos;Segoe UI&apos;,&apos;Noto Sans&apos;,&apos;Helvetica&apos;,&apos;Arial&apos;,&apos;sans-serif&apos;,&apos;Apple Color Emoji&apos;,&apos;Segoe UI Emoji&apos;; font-size:14px; color:#1f2328; background-color:#ffffff;&quot;&gt;Sembol kitaplığı klasörü. Sembol kitaplığı dxf dosyaları bu klasörün alt dizinlerinde bulunmalıdır. Alt dizin adları Kitaplık Görüntüleyicisinde görüntülenecektir.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-family:&apos;-apple-system&apos;,&apos;BlinkMacSystemFont&apos;,&apos;Segoe UI&apos;,&apos;Noto Sans&apos;,&apos;Helvetica&apos;,&apos;Arial&apos;,&apos;sans-serif&apos;,&apos;Apple Color Emoji&apos;,&apos;Segoe UI Emoji&apos;; font-size:14px; color:#1f2328; background-color:#ffffff;&quot;&gt;(Menü: Araçlar &gt; Sabitlenmiş Paneller &gt; Kitaplık Görüntüleyicisi)&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=" font-family:'-apple-system','BlinkMacSystemFont','Segoe UI','Noto Sans','Helvetica','Arial','sans-serif','Apple Color Emoji','Segoe UI Emoji'; font-size:14px; color:#1f2328; background-color:#ffffff;"&gt;Part library folder. The symbol library dxf files must be located in the subdirectories of this folder. The subfolder names will be displayed in the Library Browser.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=" font-family:'-apple-system','BlinkMacSystemFont','Segoe UI','Noto Sans','Helvetica','Arial','sans-serif','Apple Color Emoji','Segoe UI Emoji'; font-size:14px; color:#1f2328; background-color:#ffffff;"&gt;( Menu: Widgets &amp;gt; Dock Widgets &amp;gt; Library Browser)&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=" font-family:'-apple-system','BlinkMacSystemFont','Segoe UI','Noto Sans','Helvetica','Arial','sans-serif','Apple Color Emoji','Segoe UI Emoji'; font-size:14px; color:#1f2328; background-color:#ffffff;"&gt;Sembol kitaplığı klasörü. Sembol kitaplığı dxf dosyaları bu klasörün alt dizinlerinde bulunmalıdır. Alt dizin adları Kitaplık Görüntüleyicisinde görüntülenecektir.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=" font-family:'-apple-system','BlinkMacSystemFont','Segoe UI','Noto Sans','Helvetica','Arial','sans-serif','Apple Color Emoji','Segoe UI Emoji'; font-size:14px; color:#1f2328; background-color:#ffffff;"&gt;(Menü: Araçlar &gt; Sabitlenmiş Paneller &gt; Kitaplık Görüntüleyicisi)&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Open last opened files</source>
@@ -5757,9 +5756,9 @@ Lütfen yeni çizimler için kullanmak istediğiniz birimi ve tercih ettiğiniz 
     </message>
     <message>
         <source>MakerCAM as of November 2014 does not hide SVG content 
-that has been set invisibe (&quot;display: none&quot; or &quot;visibility: hidden&quot;).</source>
+that has been set invisibe ("display: none" or "visibility: hidden").</source>
         <translation>MakerCAM, Kasım 2014 itibarıyla SVG içeriğini gizlemiyor 
-görünmez olarak ayarlanmış (&quot;görüntü: yok&quot; veya &quot;görünürlük: gizli&quot;).</translation>
+görünmez olarak ayarlanmış ("görüntü: yok" veya "görünürlük: gizli").</translation>
     </message>
     <message>
         <source>MakerCAM as of November 2014 cannot correctly deal with blocks,
@@ -5777,20 +5776,20 @@ the &lt;transform&gt; attribute or as &lt;path&gt; using elliptic arc segments.<
     </message>
     <message>
         <source>Exported images can be useful in SVG editors (Inkscape, etc), 
-but avoided in some CAM&apos;s.</source>
+but avoided in some CAM's.</source>
         <translation>Dışa aktarılan görüntüler SVG düzenleyicilerde (Inkscape vb.) kullanılabilir
-ancak bazı CAM&apos;larda bundan kaçınılır.</translation>
+ancak bazı CAM'larda bundan kaçınılır.</translation>
     </message>
     <message>
-        <source>Many CAM&apos;s(MakerCAM, EleskCAM, LaserWeb) ignore dashed/doted line style, 
+        <source>Many CAM's(MakerCAM, EleskCAM, LaserWeb) ignore dashed/doted line style, 
 which can be useful in lasercut of plywood or for papercraft. </source>
         <translation>Birçok CAM (MakerCAM, EleskCAM, LaserWeb) kesikli/noktalı çizgi stilini göz ardı eder, 
 kontrplağın lazer kesiminde veya kağıt işlerinde yararlı olabilir. </translation>
     </message>
     <message>
-        <source>Default width of elements can affect some CAM&apos;s/SVG Editors, 
+        <source>Default width of elements can affect some CAM's/SVG Editors, 
 but ignored by other</source>
-        <translation>Elemanların varsayılan genişliği bazı CAM&apos;leri/SVG Düzenleyicilerini etkileyebilir, 
+        <translation>Elemanların varsayılan genişliği bazı CAM'leri/SVG Düzenleyicilerini etkileyebilir, 
 ama başkaları tarafından görmezden gelindi</translation>
     </message>
     <message>
@@ -6025,7 +6024,7 @@ yani pişirme için gereken varsayılan adım değeri</translation>
     <name>QG_DlgText</name>
     <message>
         <source>Text</source>
-        <translation>Metin</translation>
+        <translation>Text</translation>
     </message>
     <message>
         <source>&amp;Height:</source>
@@ -6089,11 +6088,11 @@ yani pişirme için gereken varsayılan adım değeri</translation>
     </message>
     <message>
         <source>Cut</source>
-        <translation>Kes</translation>
+        <translation>Cut</translation>
     </message>
     <message>
         <source>Copy</source>
-        <translation>Kopyala</translation>
+        <translation>Copy</translation>
     </message>
     <message>
         <source>Paste</source>
@@ -6641,7 +6640,7 @@ yani pişirme için gereken varsayılan adım değeri</translation>
     </message>
     <message>
         <source>Fit</source>
-        <translation>Sığdır</translation>
+        <translation>Fit</translation>
     </message>
     <message>
         <source>Diameter (⌀)</source>
@@ -6787,7 +6786,7 @@ yani pişirme için gereken varsayılan adım değeri</translation>
     </message>
     <message>
         <source>auto</source>
-        <translation>özdevinimli</translation>
+        <translation>auto</translation>
     </message>
     <message>
         <source>Background</source>
@@ -7000,7 +6999,7 @@ Yapı Katmanının içeriği çıktıda görünmemelidir.</translation>
     </message>
     <message>
         <source>Dot</source>
-        <translation>Noktalı</translation>
+        <translation>Dot</translation>
     </message>
     <message>
         <source>Dot (small)</source>
@@ -7012,7 +7011,7 @@ Yapı Katmanının içeriği çıktıda görünmemelidir.</translation>
     </message>
     <message>
         <source>Dash</source>
-        <translation>Kesikli çizgi</translation>
+        <translation>Dash</translation>
     </message>
     <message>
         <source>Dash (small)</source>
@@ -7107,19 +7106,19 @@ Yapı Katmanının içeriği çıktıda görünmemelidir.</translation>
     </message>
     <message>
         <source>Left</source>
-        <translation>Sol</translation>
+        <translation>Left</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+        <source>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Ubuntu&apos;; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Helvetica&apos;; font-size:9pt;&quot;&gt;Hint about left/right mouse button actions&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Ubuntu'; font-size:11pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;span style=" font-family:'Helvetica'; font-size:9pt;"&gt;Hint about left/right mouse button actions&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Ubuntu&apos;; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Helvetica&apos;; font-size:9pt;&quot;&gt;Sol/sağ fare düğmesi eylemleri hakkında ipucu&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Ubuntu'; font-size:11pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;span style=" font-family:'Helvetica'; font-size:9pt;"&gt;Sol/sağ fare düğmesi eylemleri hakkında ipucu&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
@@ -7166,35 +7165,35 @@ p, li { white-space: pre-wrap; }
         <translation>Toplam Uzunluk</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+        <source>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Number of selected entities&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Helvetica'; font-size:7pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;Number of selected entities&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Seçilen varlıkların sayısı&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Helvetica'; font-size:7pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;Seçilen varlıkların sayısı&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+        <source>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Total length of selected entities&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Helvetica'; font-size:7pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;Total length of selected entities&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Seçilen varlıkların toplam uzunluğu&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Helvetica'; font-size:7pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;Seçilen varlıkların toplam uzunluğu&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
     <name>QG_SnapToolBar</name>
     <message>
         <source>Snap</source>
-        <translation>Yakala</translation>
+        <translation>Snap</translation>
     </message>
     <message>
         <source>Snap to Endpoints</source>
@@ -7325,7 +7324,7 @@ p, li { white-space: pre-wrap; }
     <name>QG_WidgetPen</name>
     <message>
         <source>Pen</source>
-        <translation>Kalem</translation>
+        <translation>Pen</translation>
     </message>
     <message>
         <source>Line type:</source>
@@ -7462,8 +7461,8 @@ p, li { white-space: pre-wrap; }
         <translation>Katman Özellikleri</translation>
     </message>
     <message>
-        <source>Layer with a name &quot;%1&quot; already exists. Please specify a different name.</source>
-        <translation>&quot;%1&quot; isminde bir katman var. Lütfen başka bir isim verin.</translation>
+        <source>Layer with a name "%1" already exists. Please specify a different name.</source>
+        <translation>"%1" isminde bir katman var. Lütfen başka bir isim verin.</translation>
     </message>
     <message>
         <source>Warning</source>
@@ -7474,8 +7473,8 @@ p, li { white-space: pre-wrap; }
         <translation>Katmanı Sil</translation>
     </message>
     <message>
-        <source>Layer &quot;%1&quot; can never be removed.</source>
-        <translation>&quot;%1&quot; katmanı silinemez.</translation>
+        <source>Layer "%1" can never be removed.</source>
+        <translation>"%1" katmanı silinemez.</translation>
     </message>
     <message>
         <source>Layer Dialog</source>
@@ -7486,24 +7485,24 @@ p, li { white-space: pre-wrap; }
         <translation>Bloğu Sil</translation>
     </message>
     <message>
-        <source>Block &quot;%1&quot; and all its entities will be removed.</source>
-        <translation>&quot;%1&quot; bloğu ve içerdiği tüm varlıklar silinecek.</translation>
+        <source>Block "%1" and all its entities will be removed.</source>
+        <translation>"%1" bloğu ve içerdiği tüm varlıklar silinecek.</translation>
     </message>
     <message>
-        <source>Layer &quot;%1&quot; and all entities on it will be removed.
+        <source>Layer "%1" and all entities on it will be removed.
 This action can NOT be undone.</source>
-        <translation>Katman &quot;%1&quot; ve üzerindeki tüm varlıklar kaldırılacak.
+        <translation>Katman "%1" ve üzerindeki tüm varlıklar kaldırılacak.
 Bu işlem geri alınamaz.</translation>
     </message>
     <message>
-        <source>Layer &quot;0&quot; can never be removed.</source>
-        <translation>&quot;0&quot; katmanı hiçbir zaman silinemez.</translation>
+        <source>Layer "0" can never be removed.</source>
+        <translation>"0" katmanı hiçbir zaman silinemez.</translation>
     </message>
     <message numerus="yes">
         <source>Remove %n layer(s)</source>
         <translation>
             <numerusform>%n katmanı sil</numerusform>
-        </translation>
+        <numerusform>%n katmanı silin</numerusform></translation>
     </message>
     <message>
         <source>Listed layers and all entities on them will be removed.</source>
@@ -7514,8 +7513,8 @@ Bu işlem geri alınamaz.</translation>
         <translation>Uyarı: Bu işlem geri alınamaz!</translation>
     </message>
     <message>
-        <source>Warning: layer &quot;0&quot; can never be removed.</source>
-        <translation>Uyarı: &quot;0&quot; katmanı hiçbir zaman kaldırılamaz.</translation>
+        <source>Warning: layer "0" can never be removed.</source>
+        <translation>Uyarı: "0" katmanı hiçbir zaman kaldırılamaz.</translation>
     </message>
     <message>
         <source>Layers for removal:</source>
@@ -7524,8 +7523,8 @@ Bu işlem geri alınamaz.</translation>
     <message numerus="yes">
         <source>Remove %n block(s)</source>
         <translation>
-            <numerusform>%n bloğu kaldır</numerusform>
-        </translation>
+            <numerusform>%n blok kaldır</numerusform>
+        <numerusform>%n blokları kaldır</numerusform></translation>
     </message>
     <message>
         <source>Listed blocks and all their entities will be removed.</source>
@@ -7607,12 +7606,12 @@ Lütfen farklı bir ad belirtin.</translation>
         <translation>Seçimi Kopyala</translation>
     </message>
     <message>
-        <source>Replace &quot;By Layer&quot; value to source layers values?
-If Yes - entities with &quot;By Layer&quot; pens will look on new layer exactly as on previous layers and &quot;By Layer&quot; value will be replaced by resolved pens.
-If No - &quot;By Layer&quot; values remains and so pen of target layer will define pen for such entities.</source>
-        <translation type="vanished">&quot;Katmana Göre&quot; değerini kaynak katmanların değerleriyle değiştirmek ister misiniz?
-Evet ise, &quot;Katmana Göre&quot; kalemlere sahip varlıklar yeni katmanda tam olarak önceki katmanlardaki gibi görünecek ve &quot;Katmana Göre&quot; değeri çözümlenmiş kalemlerle değiştirilecektir.
-Hayır ise, &quot;Katmana Göre&quot; değerleri korunacak ve böylece hedef katmanın kalemi bu tür varlıklar için kalemi tanımlayacaktır.</translation>
+        <source>Replace "By Layer" value to source layers values?
+If Yes - entities with "By Layer" pens will look on new layer exactly as on previous layers and "By Layer" value will be replaced by resolved pens.
+If No - "By Layer" values remains and so pen of target layer will define pen for such entities.</source>
+        <translation type="vanished">"Katmana Göre" değerini kaynak katmanların değerleriyle değiştirmek ister misiniz?
+Evet ise, "Katmana Göre" kalemlere sahip varlıklar yeni katmanda tam olarak önceki katmanlardaki gibi görünecek ve "Katmana Göre" değeri çözümlenmiş kalemlerle değiştirilecektir.
+Hayır ise, "Katmana Göre" değerleri korunacak ve böylece hedef katmanın kalemi bu tür varlıklar için kalemi tanımlayacaktır.</translation>
     </message>
     <message>
         <source>Layer DialogEx</source>
@@ -7641,7 +7640,7 @@ Lütfen farklı bir değer belirtin.</translation>
         <translation>Kalem paletten kaldırılacak, çizim varlıkları bundan etkilenmeyecektir.</translation>
     </message>
     <message>
-        <source>Are you sure you&apos;d like to proceed?</source>
+        <source>Are you sure you'd like to proceed?</source>
         <translation>Devam etmek istediğinizden emin misiniz?</translation>
     </message>
     <message>
@@ -7707,16 +7706,16 @@ Clear filtering mask and repeat.</source>
 Filtre maskesini temizleyin ve tekrarlayın.</translation>
     </message>
     <message>
-        <source>Replace &quot;By Layer&quot; value to source layers values?
+        <source>Replace "By Layer" value to source layers values?
 
-If Yes - entities with &quot;By Layer&quot; pens will look on new layer exactly as on previous layers and &quot;By Layer&quot; value will be replaced by resolved pens.
+If Yes - entities with "By Layer" pens will look on new layer exactly as on previous layers and "By Layer" value will be replaced by resolved pens.
 
-If No - &quot;By Layer&quot; values remains and so pen of target layer will define pen for such entities.</source>
-        <translation>Katman Bazlı&quot; değerini kaynak katmanların değerleriyle değiştir?
+If No - "By Layer" values remains and so pen of target layer will define pen for such entities.</source>
+        <translation>Katman Bazlı" değerini kaynak katmanların değerleriyle değiştir?
 
-Evet ise, &quot;Katman Bazlı&quot; kalemlere sahip nesneler yeni katmanda önceki katmanlardaki gibi görünecek ve &quot;Katman Bazlı&quot; değeri çözümlenmiş kalemlerle değiştirilecektir.
+Evet ise, "Katman Bazlı" kalemlere sahip nesneler yeni katmanda önceki katmanlardaki gibi görünecek ve "Katman Bazlı" değeri çözümlenmiş kalemlerle değiştirilecektir.
 
-Hayır ise, &quot;Katman Bazlı&quot; değerleri korunacak ve böylece hedef katmanın kalemi bu tür nesneler için kullanılacak kalem olacaktır.</translation>
+Hayır ise, "Katman Bazlı" değerleri korunacak ve böylece hedef katmanın kalemi bu tür nesneler için kullanılacak kalem olacaktır.</translation>
     </message>
 </context>
 <context>
@@ -7801,15 +7800,15 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Inch</source>
-        <translation>İnç</translation>
+        <translation>Inch</translation>
     </message>
     <message>
         <source>Foot</source>
-        <translation>Ayak</translation>
+        <translation>Foot</translation>
     </message>
     <message>
         <source>Mile</source>
-        <translation>Mil</translation>
+        <translation>Mile</translation>
     </message>
     <message>
         <source>Millimeter</source>
@@ -7837,7 +7836,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Yard</source>
-        <translation>Yarda</translation>
+        <translation>Yard</translation>
     </message>
     <message>
         <source>Angstrom</source>
@@ -7976,7 +7975,7 @@ Do you want to replace it?</source>
         <translation>dwg dosyasını açarken bilinmeyen hata</translation>
     </message>
     <message>
-        <source>can&apos;t open this dwg file</source>
+        <source>can't open this dwg file</source>
         <translation>bu dwg dosyası açılamıyor</translation>
     </message>
     <message>
@@ -8043,22 +8042,22 @@ Do you want to replace it?</source>
     <message>
         <source>po</source>
         <comment>draw point</comment>
-        <translation>nok</translation>
+        <translation>po</translation>
     </message>
     <message>
         <source>line</source>
         <comment>draw line</comment>
-        <translation>çizgi</translation>
+        <translation>line</translation>
     </message>
     <message>
         <source>li</source>
         <comment>draw line</comment>
-        <translation>çz</translation>
+        <translation>li</translation>
     </message>
     <message>
         <source>l</source>
         <comment>draw line</comment>
-        <translation>ç</translation>
+        <translation>l</translation>
     </message>
     <message>
         <source>polyline</source>
@@ -8068,17 +8067,17 @@ Do you want to replace it?</source>
     <message>
         <source>pl</source>
         <comment>draw polyline</comment>
-        <translation>çç</translation>
+        <translation>pl</translation>
     </message>
     <message>
         <source>free</source>
         <comment>draw freehand line</comment>
-        <translation>serb</translation>
+        <translation>free</translation>
     </message>
     <message>
         <source>fhl</source>
         <comment>draw freehand line</comment>
-        <translation>sçç</translation>
+        <translation>fhl</translation>
     </message>
     <message>
         <source>spline</source>
@@ -8088,7 +8087,7 @@ Do you want to replace it?</source>
     <message>
         <source>spl</source>
         <comment>draw spline</comment>
-        <translation>eğç</translation>
+        <translation>spl</translation>
     </message>
     <message>
         <source>spline2</source>
@@ -8098,12 +8097,12 @@ Do you want to replace it?</source>
     <message>
         <source>stp</source>
         <comment>spline through points</comment>
-        <translation>eç2</translation>
+        <translation>stp</translation>
     </message>
     <message>
         <source>ptp</source>
         <comment>parallel through point</comment>
-        <translation>npl</translation>
+        <translation>ptp</translation>
     </message>
     <message>
         <source>bisect</source>
@@ -8113,7 +8112,7 @@ Do you want to replace it?</source>
     <message>
         <source>bi</source>
         <comment>angle bisector</comment>
-        <translation>ao</translation>
+        <translation>bi</translation>
     </message>
     <message>
         <source>tanpc</source>
@@ -8128,7 +8127,7 @@ Do you want to replace it?</source>
     <message>
         <source>rect</source>
         <comment>draw rectangle</comment>
-        <translation>ddç</translation>
+        <translation>rect</translation>
     </message>
     <message>
         <source>polygon2v</source>
@@ -8148,7 +8147,7 @@ Do you want to replace it?</source>
     <message>
         <source>ci</source>
         <comment>draw circle</comment>
-        <translation>çe</translation>
+        <translation>ci</translation>
     </message>
     <message>
         <source>c2</source>
@@ -8178,12 +8177,12 @@ Do you want to replace it?</source>
     <message>
         <source>ei</source>
         <comment>inscribed ellipse</comment>
-        <translation>ie</translation>
+        <translation>ei</translation>
     </message>
     <message>
         <source>ie</source>
         <comment>inscribed ellipse</comment>
-        <translation>ei</translation>
+        <translation>ie</translation>
     </message>
     <message>
         <source>hatch</source>
@@ -8193,7 +8192,7 @@ Do you want to replace it?</source>
     <message>
         <source>ha</source>
         <comment>draw hatch</comment>
-        <translation>trm</translation>
+        <translation>ha</translation>
     </message>
     <message>
         <source>mtext</source>
@@ -8203,17 +8202,17 @@ Do you want to replace it?</source>
     <message>
         <source>mtxt</source>
         <comment>draw mtext</comment>
-        <translation>çmt</translation>
+        <translation>mtxt</translation>
     </message>
     <message>
         <source>text</source>
         <comment>draw text</comment>
-        <translation>metin</translation>
+        <translation>text</translation>
     </message>
     <message>
         <source>txt</source>
         <comment>draw text</comment>
-        <translation>mtn</translation>
+        <translation>txt</translation>
     </message>
     <message>
         <source>regen</source>
@@ -8228,12 +8227,12 @@ Do you want to replace it?</source>
     <message>
         <source>rg</source>
         <comment>zoom - redraw</comment>
-        <translation>yü</translation>
+        <translation>rg</translation>
     </message>
     <message>
         <source>zr</source>
         <comment>zoom - redraw</comment>
-        <translation>yç</translation>
+        <translation>zr</translation>
     </message>
     <message>
         <source>zoomwindow</source>
@@ -8243,7 +8242,7 @@ Do you want to replace it?</source>
     <message>
         <source>zw</source>
         <comment>zoom - window</comment>
-        <translation>yp</translation>
+        <translation>zw</translation>
     </message>
     <message>
         <source>zoomauto</source>
@@ -8253,7 +8252,7 @@ Do you want to replace it?</source>
     <message>
         <source>za</source>
         <comment>zoom - auto</comment>
-        <translation>yt</translation>
+        <translation>za</translation>
     </message>
     <message>
         <source>zoompan</source>
@@ -8263,7 +8262,7 @@ Do you want to replace it?</source>
     <message>
         <source>zp</source>
         <comment>zoom - pan</comment>
-        <translation>yk</translation>
+        <translation>zp</translation>
     </message>
     <message>
         <source>zoomprevious</source>
@@ -8273,37 +8272,37 @@ Do you want to replace it?</source>
     <message>
         <source>zv</source>
         <comment>zoom - previous</comment>
-        <translation>öyk</translation>
+        <translation>zv</translation>
     </message>
     <message>
         <source>kill</source>
         <comment>kill all actions</comment>
-        <translation>tümişlemlerisonlandır</translation>
+        <translation>kill</translation>
     </message>
     <message>
         <source>k</source>
         <comment>kill all actions</comment>
-        <translation>tis</translation>
+        <translation>k</translation>
     </message>
     <message>
         <source>undo</source>
         <comment>undo cycle</comment>
-        <translation>gerial</translation>
+        <translation>undo</translation>
     </message>
     <message>
         <source>u</source>
         <comment>undo cycle</comment>
-        <translation>ga</translation>
+        <translation>u</translation>
     </message>
     <message>
         <source>redo</source>
         <comment>redo cycle</comment>
-        <translation>ilerial</translation>
+        <translation>redo</translation>
     </message>
     <message>
         <source>r</source>
         <comment>redo cycle</comment>
-        <translation>i</translation>
+        <translation>r</translation>
     </message>
     <message>
         <source>dimaligned</source>
@@ -8318,7 +8317,7 @@ Do you want to replace it?</source>
     <message>
         <source>dh</source>
         <comment>dimension - horizontal</comment>
-        <translation>öy</translation>
+        <translation>dh</translation>
     </message>
     <message>
         <source>dimvertical</source>
@@ -8328,7 +8327,7 @@ Do you want to replace it?</source>
     <message>
         <source>dv</source>
         <comment>dimension - vertical</comment>
-        <translation>ödk</translation>
+        <translation>dv</translation>
     </message>
     <message>
         <source>dimlinear</source>
@@ -8338,7 +8337,7 @@ Do you want to replace it?</source>
     <message>
         <source>dl</source>
         <comment>dimension - linear</comment>
-        <translation>öd</translation>
+        <translation>dl</translation>
     </message>
     <message>
         <source>dimangular</source>
@@ -8348,7 +8347,7 @@ Do you want to replace it?</source>
     <message>
         <source>dan</source>
         <comment>dimension - angular</comment>
-        <translation>ölça</translation>
+        <translation>dan</translation>
     </message>
     <message>
         <source>dimradial</source>
@@ -8368,7 +8367,7 @@ Do you want to replace it?</source>
     <message>
         <source>dd</source>
         <comment>dimension - diametric</comment>
-        <translation>öç</translation>
+        <translation>dd</translation>
     </message>
     <message>
         <source>dimleader</source>
@@ -8378,7 +8377,7 @@ Do you want to replace it?</source>
     <message>
         <source>ld</source>
         <comment>dimension - leader</comment>
-        <translation>öu</translation>
+        <translation>ld</translation>
     </message>
     <message>
         <source>dimregen</source>
@@ -8393,7 +8392,7 @@ Do you want to replace it?</source>
     <message>
         <source>rn</source>
         <comment>restrict - nothing</comment>
-        <translation>bk</translation>
+        <translation>rn</translation>
     </message>
     <message>
         <source>restrictorthogonal</source>
@@ -8403,7 +8402,7 @@ Do you want to replace it?</source>
     <message>
         <source>rr</source>
         <comment>restrict - orthogonal</comment>
-        <translation>dk</translation>
+        <translation>rr</translation>
     </message>
     <message>
         <source>restricthorizontal</source>
@@ -8413,7 +8412,7 @@ Do you want to replace it?</source>
     <message>
         <source>rh</source>
         <comment>restrict - horizontal</comment>
-        <translation>ykst</translation>
+        <translation>rh</translation>
     </message>
     <message>
         <source>restrictvertical</source>
@@ -8423,62 +8422,62 @@ Do you want to replace it?</source>
     <message>
         <source>rv</source>
         <comment>restrict - vertical</comment>
-        <translation>ds</translation>
+        <translation>rv</translation>
     </message>
     <message>
         <source>mv</source>
         <comment>modify - move (copy)</comment>
-        <translation>tm</translation>
+        <translation>mv</translation>
     </message>
     <message>
         <source>bev</source>
         <comment>modify - bevel</comment>
-        <translation>pk</translation>
+        <translation>bev</translation>
     </message>
     <message>
         <source>ch</source>
         <comment>modify - bevel</comment>
-        <translation>pak</translation>
+        <translation>ch</translation>
     </message>
     <message>
         <source>fi</source>
         <comment>modify - fillet</comment>
-        <translation>yuv</translation>
+        <translation>fi</translation>
     </message>
     <message>
         <source>cut</source>
         <comment>modify - divide (cut)</comment>
-        <translation>kes</translation>
+        <translation>cut</translation>
     </message>
     <message>
         <source>div</source>
         <comment>modify - divide (cut)</comment>
-        <translation>böl</translation>
+        <translation>div</translation>
     </message>
     <message>
         <source>mi</source>
         <comment>modify -  mirror</comment>
-        <translation>ay</translation>
+        <translation>mi</translation>
     </message>
     <message>
         <source>rev</source>
         <comment>modify -  revert direction</comment>
-        <translation>tç</translation>
+        <translation>rev</translation>
     </message>
     <message>
         <source>ro</source>
         <comment>modify - rotate</comment>
-        <translation>dö</translation>
+        <translation>ro</translation>
     </message>
     <message>
         <source>sz</source>
         <comment>modify - scale</comment>
-        <translation>öl</translation>
+        <translation>sz</translation>
     </message>
     <message>
         <source>tm</source>
         <comment>modify - trim (extend)</comment>
-        <translation>kuzt</translation>
+        <translation>tm</translation>
     </message>
     <message>
         <source>tm2</source>
@@ -8488,27 +8487,27 @@ Do you want to replace it?</source>
     <message>
         <source>le</source>
         <comment>modify - lengthen</comment>
-        <translation>uz</translation>
+        <translation>le</translation>
     </message>
     <message>
         <source>ss</source>
         <comment>modify - stretch</comment>
-        <translation>sü</translation>
+        <translation>ss</translation>
     </message>
     <message>
         <source>er</source>
         <comment>modify - delete (erase)</comment>
-        <translation>si</translation>
+        <translation>er</translation>
     </message>
     <message>
         <source>del</source>
         <comment>modify - delete (erase)</comment>
-        <translation>sil</translation>
+        <translation>del</translation>
     </message>
     <message>
         <source>xp</source>
         <comment>explode block/polyline into entities</comment>
-        <translation>pa</translation>
+        <translation>xp</translation>
     </message>
     <message>
         <source>snapfree</source>
@@ -8518,7 +8517,7 @@ Do you want to replace it?</source>
     <message>
         <source>os</source>
         <comment>snap - free</comment>
-        <translation>ys</translation>
+        <translation>os</translation>
     </message>
     <message>
         <source>snapcenter</source>
@@ -8528,7 +8527,7 @@ Do you want to replace it?</source>
     <message>
         <source>sc</source>
         <comment>snap - center</comment>
-        <translation>my</translation>
+        <translation>sc</translation>
     </message>
     <message>
         <source>snapdist</source>
@@ -8538,7 +8537,7 @@ Do you want to replace it?</source>
     <message>
         <source>sd</source>
         <comment>snap - distance to endpoints</comment>
-        <translation>msy</translation>
+        <translation>sd</translation>
     </message>
     <message>
         <source>snapend</source>
@@ -8548,7 +8547,7 @@ Do you want to replace it?</source>
     <message>
         <source>se</source>
         <comment>snap - end points</comment>
-        <translation>uy</translation>
+        <translation>se</translation>
     </message>
     <message>
         <source>snapgrid</source>
@@ -8558,7 +8557,7 @@ Do you want to replace it?</source>
     <message>
         <source>sg</source>
         <comment>snap - grid</comment>
-        <translation>ıy</translation>
+        <translation>sg</translation>
     </message>
     <message>
         <source>snapintersection</source>
@@ -8568,7 +8567,7 @@ Do you want to replace it?</source>
     <message>
         <source>si</source>
         <comment>snap - intersection</comment>
-        <translation>ky</translation>
+        <translation>si</translation>
     </message>
     <message>
         <source>snapmiddle</source>
@@ -8578,7 +8577,7 @@ Do you want to replace it?</source>
     <message>
         <source>sm</source>
         <comment>snap - middle points</comment>
-        <translation>oy</translation>
+        <translation>sm</translation>
     </message>
     <message>
         <source>snaponentity</source>
@@ -8588,12 +8587,12 @@ Do you want to replace it?</source>
     <message>
         <source>sn</source>
         <comment>snap - on entity</comment>
-        <translation>vy</translation>
+        <translation>sn</translation>
     </message>
     <message>
         <source>np</source>
         <comment>snap - on entity</comment>
-        <translation>yv</translation>
+        <translation>np</translation>
     </message>
     <message>
         <source>setrelativezero</source>
@@ -8603,7 +8602,7 @@ Do you want to replace it?</source>
     <message>
         <source>rz</source>
         <comment>set relative zero position</comment>
-        <translation>gsa</translation>
+        <translation>rz</translation>
     </message>
     <message>
         <source>selectall</source>
@@ -8613,7 +8612,7 @@ Do you want to replace it?</source>
     <message>
         <source>sa</source>
         <comment>Select all entities</comment>
-        <translation>vts</translation>
+        <translation>sa</translation>
     </message>
     <message>
         <source>deselectall</source>
@@ -8623,37 +8622,37 @@ Do you want to replace it?</source>
     <message>
         <source>tn</source>
         <comment>deselect all entities</comment>
-        <translation>hbs</translation>
+        <translation>tn</translation>
     </message>
     <message>
         <source>attr</source>
         <comment>modify attribute</comment>
-        <translation>öznitelik</translation>
+        <translation>attr</translation>
     </message>
     <message>
         <source>ma</source>
         <comment>modify attribute</comment>
-        <translation>ön</translation>
+        <translation>ma</translation>
     </message>
     <message>
         <source>prop</source>
         <comment>modify properties</comment>
-        <translation>özllk</translation>
+        <translation>prop</translation>
     </message>
     <message>
         <source>dist</source>
         <comment>distance point to point</comment>
-        <translation>mesafe</translation>
+        <translation>dist</translation>
     </message>
     <message>
         <source>dpp</source>
         <comment>distance point to point</comment>
-        <translation>msf</translation>
+        <translation>dpp</translation>
     </message>
     <message>
         <source>ang</source>
         <comment>measure angle</comment>
-        <translation>aç</translation>
+        <translation>ang</translation>
     </message>
     <message>
         <source>angle</source>
@@ -8697,7 +8696,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>rows</source>
-        <translation>satır sayısı</translation>
+        <translation>rows</translation>
     </message>
     <message>
         <source>rowspacing</source>
@@ -8709,17 +8708,17 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>trim</source>
-        <translation>kırp</translation>
+        <translation>trim</translation>
     </message>
     <message>
         <source>ang</source>
         <comment>angle</comment>
-        <translation>aç</translation>
+        <translation>ang</translation>
     </message>
     <message>
         <source>an</source>
         <comment>angle</comment>
-        <translation>aç</translation>
+        <translation>an</translation>
     </message>
     <message>
         <source>center</source>
@@ -8728,32 +8727,32 @@ Do you want to replace it?</source>
     <message>
         <source>cen</source>
         <comment>center</comment>
-        <translation>mrk</translation>
+        <translation>cen</translation>
     </message>
     <message>
         <source>ce</source>
         <comment>center</comment>
-        <translation>me</translation>
+        <translation>ce</translation>
     </message>
     <message>
         <source>cl</source>
         <comment>chord length</comment>
-        <translation>ku</translation>
+        <translation>cl</translation>
     </message>
     <message>
         <source>c</source>
         <comment>close</comment>
-        <translation>k</translation>
+        <translation>c</translation>
     </message>
     <message>
         <source>cols</source>
         <comment>columns</comment>
-        <translation>sütun</translation>
+        <translation>cols</translation>
     </message>
     <message>
         <source>co</source>
         <comment>columns</comment>
-        <translation>stn</translation>
+        <translation>co</translation>
     </message>
     <message>
         <source>columnspacing</source>
@@ -8768,21 +8767,21 @@ Do you want to replace it?</source>
     <message>
         <source>cs</source>
         <comment>columnspacing for inserts</comment>
-        <translation>sg</translation>
+        <translation>cs</translation>
     </message>
     <message>
         <source>fact</source>
         <comment>factor</comment>
-        <translation>çrpn</translation>
+        <translation>fact</translation>
     </message>
     <message>
         <source>f</source>
         <comment>factor</comment>
-        <translation>çs</translation>
+        <translation>f</translation>
     </message>
     <message>
         <source>help</source>
-        <translation>yardım</translation>
+        <translation>help</translation>
     </message>
     <message>
         <source>?</source>
@@ -8797,12 +8796,12 @@ Do you want to replace it?</source>
     <message>
         <source>len</source>
         <comment>length</comment>
-        <translation>uzu</translation>
+        <translation>len</translation>
     </message>
     <message>
         <source>l</source>
         <comment>length</comment>
-        <translation>u</translation>
+        <translation>l</translation>
     </message>
     <message>
         <source>length1</source>
@@ -8842,17 +8841,17 @@ Do you want to replace it?</source>
     <message>
         <source>num</source>
         <comment>number</comment>
-        <translation>sayı</translation>
+        <translation>num</translation>
     </message>
     <message>
         <source>n</source>
         <comment>number</comment>
-        <translation>s</translation>
+        <translation>n</translation>
     </message>
     <message>
         <source>ra</source>
         <comment>radius</comment>
-        <translation>yçp</translation>
+        <translation>ra</translation>
     </message>
     <message>
         <source>reversed</source>
@@ -8862,12 +8861,12 @@ Do you want to replace it?</source>
     <message>
         <source>rev</source>
         <comment>reversed</comment>
-        <translation>tyn</translation>
+        <translation>rev</translation>
     </message>
     <message>
         <source>row</source>
         <comment>row</comment>
-        <translation>satır</translation>
+        <translation>row</translation>
     </message>
     <message>
         <source>rowspacing</source>
@@ -8877,48 +8876,48 @@ Do you want to replace it?</source>
     <message>
         <source>rs</source>
         <comment>rowspacing for inserts</comment>
-        <translation>sb</translation>
+        <translation>rs</translation>
     </message>
     <message>
         <source>text</source>
-        <translation>metin</translation>
+        <translation>text</translation>
     </message>
     <message>
         <source>t</source>
         <comment>text</comment>
-        <translation>m</translation>
+        <translation>t</translation>
     </message>
     <message>
         <source>t</source>
         <comment>through</comment>
-        <translation>m</translation>
+        <translation>t</translation>
     </message>
     <message>
         <source>undo</source>
-        <translation>gerial</translation>
+        <translation>undo</translation>
     </message>
     <message>
         <source>u</source>
         <comment>undo</comment>
-        <translation>ga</translation>
+        <translation>u</translation>
     </message>
     <message>
         <source>redo</source>
-        <translation>ilerial</translation>
+        <translation>redo</translation>
     </message>
     <message>
         <source>r</source>
         <comment>redo</comment>
-        <translation>i</translation>
+        <translation>r</translation>
     </message>
     <message>
         <source>back</source>
-        <translation>geri</translation>
+        <translation>back</translation>
     </message>
     <message>
         <source>b</source>
         <comment>back</comment>
-        <translation>g</translation>
+        <translation>b</translation>
     </message>
     <message>
         <source>paperoffset</source>
@@ -8961,7 +8960,7 @@ Do you want to replace it?</source>
     <message>
         <source>None</source>
         <comment>unknown length unit</comment>
-        <translation>Yok</translation>
+        <translation>None</translation>
     </message>
     <message>
         <source>error reading file metadata in dwg file</source>
@@ -8973,7 +8972,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>bw</source>
-        <translation>sby</translation>
+        <translation>bw</translation>
     </message>
     <message>
         <source>blackwhite</source>
@@ -8986,7 +8985,7 @@ Do you want to replace it?</source>
     <message>
         <source>di</source>
         <comment>modify - divide (cut)</comment>
-        <translation>ks</translation>
+        <translation>di</translation>
     </message>
     <message>
         <source>t2</source>
@@ -8996,7 +8995,7 @@ Do you want to replace it?</source>
     <message>
         <source>mp</source>
         <comment>modify properties</comment>
-        <translation>öz</translation>
+        <translation>mp</translation>
     </message>
     <message>
         <source>Block</source>
@@ -9012,7 +9011,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Edit</source>
-        <translation>Düzenle</translation>
+        <translation>Edit</translation>
     </message>
     <message>
         <source>Ellipse</source>
@@ -9020,7 +9019,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>File</source>
-        <translation>Dosya</translation>
+        <translation>File</translation>
     </message>
     <message>
         <source>Dimension</source>
@@ -9028,7 +9027,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Info</source>
-        <translation>Bilgi</translation>
+        <translation>Info</translation>
     </message>
     <message>
         <source>Layer</source>
@@ -9036,7 +9035,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Line</source>
-        <translation>Çizgi</translation>
+        <translation>Line</translation>
     </message>
     <message>
         <source>Modify</source>
@@ -9064,7 +9063,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Snap</source>
-        <translation>Yakala</translation>
+        <translation>Snap</translation>
     </message>
     <message>
         <source>Snap Extras</source>
@@ -9072,7 +9071,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>View</source>
-        <translation>Görünüm</translation>
+        <translation>View</translation>
     </message>
     <message>
         <source>Widgets</source>
@@ -9084,7 +9083,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>All</source>
-        <translation>Tümü</translation>
+        <translation>All</translation>
     </message>
     <message>
         <source>Invalid objects removed:</source>
@@ -9112,7 +9111,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>cal</source>
-        <translation>hm</translation>
+        <translation>cal</translation>
     </message>
     <message>
         <source>Calculator mode: On</source>
@@ -9143,7 +9142,7 @@ Do you want to replace it?</source>
     <message>
         <source>la</source>
         <comment>angled line</comment>
-        <translation>açç</translation>
+        <translation>la</translation>
     </message>
     <message>
         <source>linehor</source>
@@ -9153,7 +9152,7 @@ Do you want to replace it?</source>
     <message>
         <source>lh</source>
         <comment>horizontal line</comment>
-        <translation>ytç</translation>
+        <translation>lh</translation>
     </message>
     <message>
         <source>linever</source>
@@ -9163,7 +9162,7 @@ Do you want to replace it?</source>
     <message>
         <source>lv</source>
         <comment>vertical line</comment>
-        <translation>dç</translation>
+        <translation>lv</translation>
     </message>
     <message>
         <source>linerec</source>
@@ -9173,7 +9172,7 @@ Do you want to replace it?</source>
     <message>
         <source>re</source>
         <comment>draw rectangle</comment>
-        <translation>ddg</translation>
+        <translation>re</translation>
     </message>
     <message>
         <source>linepar</source>
@@ -9188,12 +9187,12 @@ Do you want to replace it?</source>
     <message>
         <source>pa</source>
         <comment>create parallel</comment>
-        <translation>çu</translation>
+        <translation>pa</translation>
     </message>
     <message>
         <source>ll</source>
         <comment>create parallel</comment>
-        <translation>pll</translation>
+        <translation>ll</translation>
     </message>
     <message>
         <source>lineparthro</source>
@@ -9203,7 +9202,7 @@ Do you want to replace it?</source>
     <message>
         <source>lp</source>
         <comment>parallel through point</comment>
-        <translation>np</translation>
+        <translation>lp</translation>
     </message>
     <message>
         <source>linebisect</source>
@@ -9218,7 +9217,7 @@ Do you want to replace it?</source>
     <message>
         <source>lt</source>
         <comment>tangent point and circle</comment>
-        <translation>nçp</translation>
+        <translation>lt</translation>
     </message>
     <message>
         <source>linetan2c</source>
@@ -9228,7 +9227,7 @@ Do you want to replace it?</source>
     <message>
         <source>lc</source>
         <comment>tangent two circles</comment>
-        <translation>t2ç</translation>
+        <translation>lc</translation>
     </message>
     <message>
         <source>linetancper</source>
@@ -9238,7 +9237,7 @@ Do you want to replace it?</source>
     <message>
         <source>or</source>
         <comment>tangent line and circle</comment>
-        <translation>tçç</translation>
+        <translation>or</translation>
     </message>
     <message>
         <source>lineperp</source>
@@ -9248,7 +9247,7 @@ Do you want to replace it?</source>
     <message>
         <source>lo</source>
         <comment>perpendicular line</comment>
-        <translation>dçz</translation>
+        <translation>lo</translation>
     </message>
     <message>
         <source>linerelang</source>
@@ -9258,7 +9257,7 @@ Do you want to replace it?</source>
     <message>
         <source>lr</source>
         <comment>relative line</comment>
-        <translation>gç</translation>
+        <translation>lr</translation>
     </message>
     <message>
         <source>polygoncencor</source>
@@ -9268,7 +9267,7 @@ Do you want to replace it?</source>
     <message>
         <source>pp</source>
         <comment>polygon centre point</comment>
-        <translation>çmn</translation>
+        <translation>pp</translation>
     </message>
     <message>
         <source>polycp</source>
@@ -9278,7 +9277,7 @@ Do you want to replace it?</source>
     <message>
         <source>pcp</source>
         <comment>polygon centre point</comment>
-        <translation>çmnk</translation>
+        <translation>pcp</translation>
     </message>
     <message>
         <source>polygoncentan</source>
@@ -9288,7 +9287,7 @@ Do you want to replace it?</source>
     <message>
         <source>pv</source>
         <comment>polygon centre vertex</comment>
-        <translation>çmv</translation>
+        <translation>pv</translation>
     </message>
     <message>
         <source>polyct</source>
@@ -9303,7 +9302,7 @@ Do you want to replace it?</source>
     <message>
         <source>c</source>
         <comment>draw circle</comment>
-        <translation>çb</translation>
+        <translation>c</translation>
     </message>
     <message>
         <source>circle2p</source>
@@ -9323,7 +9322,7 @@ Do you want to replace it?</source>
     <message>
         <source>cc</source>
         <comment>circle 2 points radius</comment>
-        <translation>ç2nyç</translation>
+        <translation>cc</translation>
     </message>
     <message>
         <source>circle3p</source>
@@ -9343,12 +9342,12 @@ Do you want to replace it?</source>
     <message>
         <source>cr</source>
         <comment>circle point radius</comment>
-        <translation>çny</translation>
+        <translation>cr</translation>
     </message>
     <message>
         <source>ccr</source>
         <comment>circle point radius</comment>
-        <translation>çnkyç</translation>
+        <translation>ccr</translation>
     </message>
     <message>
         <source>circletan2cp</source>
@@ -9358,7 +9357,7 @@ Do you want to replace it?</source>
     <message>
         <source>tr</source>
         <comment>circle 2 tangent point</comment>
-        <translation>ç2tn</translation>
+        <translation>tr</translation>
     </message>
     <message>
         <source>circletan2p</source>
@@ -9368,7 +9367,7 @@ Do you want to replace it?</source>
     <message>
         <source>td</source>
         <comment>circle tangent 2 points</comment>
-        <translation>çt2p</translation>
+        <translation>td</translation>
     </message>
     <message>
         <source>circletan2cr</source>
@@ -9378,7 +9377,7 @@ Do you want to replace it?</source>
     <message>
         <source>tc</source>
         <comment>circle 2 tangent radius</comment>
-        <translation>ç2tyç</translation>
+        <translation>tc</translation>
     </message>
     <message>
         <source>circletan3</source>
@@ -9393,17 +9392,17 @@ Do you want to replace it?</source>
     <message>
         <source>arc</source>
         <comment>arc point radius</comment>
-        <translation>yay</translation>
+        <translation>arc</translation>
     </message>
     <message>
         <source>ar</source>
         <comment>arc point radius</comment>
-        <translation>ya</translation>
+        <translation>ar</translation>
     </message>
     <message>
         <source>a</source>
         <comment>arc point radius</comment>
-        <translation>ynyç</translation>
+        <translation>a</translation>
     </message>
     <message>
         <source>arc3p</source>
@@ -9423,17 +9422,17 @@ Do you want to replace it?</source>
     <message>
         <source>at</source>
         <comment>arc tangent</comment>
-        <translation>ty</translation>
+        <translation>at</translation>
     </message>
     <message>
         <source>sf</source>
         <comment>draw spline</comment>
-        <translation>sy</translation>
+        <translation>sf</translation>
     </message>
     <message>
         <source>sp</source>
         <comment>spline through points</comment>
-        <translation>eçn</translation>
+        <translation>sp</translation>
     </message>
     <message>
         <source>arcellc2ax</source>
@@ -9443,12 +9442,12 @@ Do you want to replace it?</source>
     <message>
         <source>ae</source>
         <comment>arc ellipse</comment>
-        <translation>ey</translation>
+        <translation>ae</translation>
     </message>
     <message>
         <source>fh</source>
         <comment>draw freehand line</comment>
-        <translation>sç</translation>
+        <translation>fh</translation>
     </message>
     <message>
         <source>ellipsec2p</source>
@@ -9458,7 +9457,7 @@ Do you want to replace it?</source>
     <message>
         <source>ea</source>
         <comment>ellipse axis</comment>
-        <translation>ee</translation>
+        <translation>ea</translation>
     </message>
     <message>
         <source>ellipse3p</source>
@@ -9498,7 +9497,7 @@ Do you want to replace it?</source>
     <message>
         <source>pi</source>
         <comment>pl add node</comment>
-        <translation>ççde</translation>
+        <translation>pi</translation>
     </message>
     <message>
         <source>plineapp</source>
@@ -9508,7 +9507,7 @@ Do you want to replace it?</source>
     <message>
         <source>pn</source>
         <comment>pl append node</comment>
-        <translation>ççsde</translation>
+        <translation>pn</translation>
     </message>
     <message>
         <source>plinedel</source>
@@ -9518,7 +9517,7 @@ Do you want to replace it?</source>
     <message>
         <source>pd</source>
         <comment>pl delete node</comment>
-        <translation>ççds</translation>
+        <translation>pd</translation>
     </message>
     <message>
         <source>plinedeltwn</source>
@@ -9528,7 +9527,7 @@ Do you want to replace it?</source>
     <message>
         <source>pr</source>
         <comment>pl del between nodes</comment>
-        <translation>ççdna</translation>
+        <translation>pr</translation>
     </message>
     <message>
         <source>plinetrm</source>
@@ -9538,7 +9537,7 @@ Do you want to replace it?</source>
     <message>
         <source>pt</source>
         <comment>pl trim segments</comment>
-        <translation>ççbk</translation>
+        <translation>pt</translation>
     </message>
     <message>
         <source>plinepar</source>
@@ -9548,7 +9547,7 @@ Do you want to replace it?</source>
     <message>
         <source>pe</source>
         <comment>pl equidistant</comment>
-        <translation>ççeu</translation>
+        <translation>pe</translation>
     </message>
     <message>
         <source>plinejoin</source>
@@ -9558,12 +9557,12 @@ Do you want to replace it?</source>
     <message>
         <source>pj</source>
         <comment>pl join</comment>
-        <translation>ççb</translation>
+        <translation>pj</translation>
     </message>
     <message>
         <source>sx</source>
         <comment>deselect all entities</comment>
-        <translation>hbsçm</translation>
+        <translation>sx</translation>
     </message>
     <message>
         <source>invertselect</source>
@@ -9573,12 +9572,12 @@ Do you want to replace it?</source>
     <message>
         <source>is</source>
         <comment>invert select</comment>
-        <translation>tsç</translation>
+        <translation>is</translation>
     </message>
     <message>
         <source>ds</source>
         <comment>dimension - aligned</comment>
-        <translation>öh</translation>
+        <translation>ds</translation>
     </message>
     <message>
         <source>dimradius</source>
@@ -9588,17 +9587,17 @@ Do you want to replace it?</source>
     <message>
         <source>dr</source>
         <comment>dimension - radial</comment>
-        <translation>öyç</translation>
+        <translation>dr</translation>
     </message>
     <message>
         <source>da</source>
         <comment>dimension - angular</comment>
-        <translation>öa</translation>
+        <translation>da</translation>
     </message>
     <message>
         <source>dg</source>
         <comment>dimension - regenerate</comment>
-        <translation>öyo</translation>
+        <translation>dg</translation>
     </message>
     <message>
         <source>modmove</source>
@@ -9628,7 +9627,7 @@ Do you want to replace it?</source>
     <message>
         <source>mr</source>
         <comment>modify - move rotate</comment>
-        <translation>td</translation>
+        <translation>mr</translation>
     </message>
     <message>
         <source>mod2rot</source>
@@ -9648,7 +9647,7 @@ Do you want to replace it?</source>
     <message>
         <source>md</source>
         <comment>modify -  revert direction</comment>
-        <translation>yd</translation>
+        <translation>md</translation>
     </message>
     <message>
         <source>modtrim</source>
@@ -9673,12 +9672,12 @@ Do you want to replace it?</source>
     <message>
         <source>mo</source>
         <comment>modify - offset</comment>
-        <translation>öm</translation>
+        <translation>mo</translation>
     </message>
     <message>
         <source>moff</source>
         <comment>modify - offset</comment>
-        <translation>ötm</translation>
+        <translation>moff</translation>
     </message>
     <message>
         <source>modbevel</source>
@@ -9718,7 +9717,7 @@ Do you want to replace it?</source>
     <message>
         <source>xt</source>
         <comment>explode text strings</comment>
-        <translation>mp</translation>
+        <translation>xt</translation>
     </message>
     <message>
         <source>modexplode</source>
@@ -9738,7 +9737,7 @@ Do you want to replace it?</source>
     <message>
         <source>id</source>
         <comment>distance point to point</comment>
-        <translation>mmd</translation>
+        <translation>id</translation>
     </message>
     <message>
         <source>infodistep</source>
@@ -9748,12 +9747,12 @@ Do you want to replace it?</source>
     <message>
         <source>ii</source>
         <comment>distance entity to point</comment>
-        <translation>vnm</translation>
+        <translation>ii</translation>
     </message>
     <message>
         <source>dep</source>
         <comment>distance entity to point</comment>
-        <translation>vms</translation>
+        <translation>dep</translation>
     </message>
     <message>
         <source>infoangle</source>
@@ -9763,7 +9762,7 @@ Do you want to replace it?</source>
     <message>
         <source>ia</source>
         <comment>measure angle</comment>
-        <translation>ab</translation>
+        <translation>ia</translation>
     </message>
     <message>
         <source>infoarea</source>
@@ -9773,37 +9772,37 @@ Do you want to replace it?</source>
     <message>
         <source>aa</source>
         <comment>measure area</comment>
-        <translation>alnb</translation>
+        <translation>aa</translation>
     </message>
     <message>
         <source>mt</source>
         <comment>draw mtext</comment>
-        <translation>çm</translation>
+        <translation>mt</translation>
     </message>
     <message>
         <source>tx</source>
         <comment>draw text</comment>
-        <translation>mt</translation>
+        <translation>tx</translation>
     </message>
     <message>
         <source>so</source>
         <comment>snap - free</comment>
-        <translation>srç</translation>
+        <translation>so</translation>
     </message>
     <message>
         <source>ki</source>
         <comment>kill all actions</comment>
-        <translation>tisl</translation>
+        <translation>ki</translation>
     </message>
     <message>
         <source>un</source>
         <comment>undo cycle</comment>
-        <translation>gas</translation>
+        <translation>un</translation>
     </message>
     <message>
         <source>rd</source>
         <comment>redo cycle</comment>
-        <translation>ia</translation>
+        <translation>rd</translation>
     </message>
     <message>
         <source>drawpref</source>
@@ -9813,7 +9812,7 @@ Do you want to replace it?</source>
     <message>
         <source>dp</source>
         <comment>drawing preferences</comment>
-        <translation>çt</translation>
+        <translation>dp</translation>
     </message>
     <message>
         <source>equation</source>
@@ -9832,12 +9831,12 @@ Do you want to replace it?</source>
     <message>
         <source>eqn</source>
         <comment>equation</comment>
-        <translation>dnklm</translation>
+        <translation>eqn</translation>
     </message>
     <message>
         <source>eq</source>
         <comment>equation</comment>
-        <translation>dn</translation>
+        <translation>eq</translation>
     </message>
     <message>
         <source>Custom</source>
@@ -10146,8 +10145,8 @@ Do you want to replace it?</source>
         <translation>2. [CONTEXT: QObject] -o some.pdf *.dxf</translation>
     </message>
     <message>
-        <source>-- print all dxf files to &apos;some.pdf&apos; file.</source>
-        <translation>-- tüm dxf dosyalarını &apos;some.pdf&apos; dosyasına yazdır.</translation>
+        <source>-- print all dxf files to 'some.pdf' file.</source>
+        <translation>-- tüm dxf dosyalarını 'some.pdf' dosyasına yazdır.</translation>
     </message>
     <message>
         <source>Auto fit and center drawing to page.</source>
@@ -10221,8 +10220,8 @@ Do you want to replace it?</source>
         <translation>Tüm katmanları birleştir</translation>
     </message>
     <message>
-        <source>File &quot;%1&quot; already exists. Do you want to replace it?</source>
-        <translation>&quot;%1&quot; dosyası zaten mevcut. Üzerine yazılsın mı?</translation>
+        <source>File "%1" already exists. Do you want to replace it?</source>
+        <translation>"%1" dosyası zaten mevcut. Üzerine yazılsın mı?</translation>
     </message>
     <message>
         <source>/CustomColor%1</source>
@@ -10340,7 +10339,7 @@ Do you want to replace it?</source>
     <message>
         <source>star</source>
         <comment>draw star</comment>
-        <translation>yıldız</translation>
+        <translation>star</translation>
     </message>
     <message>
         <source>st</source>
@@ -10475,7 +10474,7 @@ Do you want to replace it?</source>
     <message>
         <source>smm</source>
         <comment>snap middle manual</comment>
-        <translation>merkezi manuel hizalama</translation>
+        <translation>smm</translation>
     </message>
     <message>
         <source>x</source>
@@ -10519,11 +10518,11 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>pos</source>
-        <translation>konum</translation>
+        <translation>pos</translation>
     </message>
     <message>
         <source>size</source>
-        <translation>boyut</translation>
+        <translation>size</translation>
     </message>
     <message>
         <source>bevels</source>
@@ -10543,7 +10542,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>str</source>
-        <translation>dize</translation>
+        <translation>str</translation>
     </message>
     <message>
         <source>round</source>
@@ -10555,19 +10554,19 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>topl</source>
-        <translation>üst</translation>
+        <translation>topl</translation>
     </message>
     <message>
         <source>top</source>
-        <translation>üst</translation>
+        <translation>top</translation>
     </message>
     <message>
         <source>topr</source>
-        <translation>üst sağ</translation>
+        <translation>topr</translation>
     </message>
     <message>
         <source>left</source>
-        <translation>sol</translation>
+        <translation>left</translation>
     </message>
     <message>
         <source>middle</source>
@@ -10607,11 +10606,11 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>hor</source>
-        <translation>yatay</translation>
+        <translation>hor</translation>
     </message>
     <message>
         <source>vert</source>
-        <translation>dikey</translation>
+        <translation>vert</translation>
     </message>
     <message>
         <source>snap2</source>
@@ -10631,7 +10630,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>quad</source>
-        <translation>dörtlü</translation>
+        <translation>quad</translation>
     </message>
     <message>
         <source>noquad</source>
@@ -10663,19 +10662,19 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>end</source>
-        <translation>son</translation>
+        <translation>end</translation>
     </message>
     <message>
         <source>both</source>
-        <translation>her ikisi</translation>
+        <translation>both</translation>
     </message>
     <message>
         <source>none</source>
-        <translation>hiçbiri</translation>
+        <translation>none</translation>
     </message>
     <message>
         <source>fit</source>
-        <translation>uyumlu</translation>
+        <translation>fit</translation>
     </message>
     <message>
         <source>nofit</source>
@@ -10695,7 +10694,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>sym</source>
-        <translation>simetrik</translation>
+        <translation>sym</translation>
     </message>
     <message>
         <source>nosym</source>
@@ -10732,7 +10731,7 @@ Do you want to replace it?</source>
     <message>
         <source>cal </source>
         <comment>command to trigger cli calculator</comment>
-        <translation>kal</translation>
+        <translation>cal</translation>
     </message>
     <message>
         <source>calculate </source>
@@ -10933,7 +10932,7 @@ Bu blok eklenemez.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Geri</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -10952,7 +10951,7 @@ Bu blok eklenemez.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Geri</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify dimension line location</source>
@@ -11052,7 +11051,7 @@ Bu blok eklenemez.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Geri</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify dimension line location</source>
@@ -11118,7 +11117,7 @@ Bu blok eklenemez.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Geri</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify start angle:</source>
@@ -11153,7 +11152,7 @@ Bu blok eklenemez.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Geri</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify endpoint</source>
@@ -11180,7 +11179,7 @@ Bu blok eklenemez.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Geri</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify end point</source>
@@ -11203,7 +11202,7 @@ Bu blok eklenemez.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Geri</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify point on circle</source>
@@ -11230,7 +11229,7 @@ Bu blok eklenemez.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Geri</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -11253,7 +11252,7 @@ Bu blok eklenemez.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Geri</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify third point</source>
@@ -11280,7 +11279,7 @@ Bu blok eklenemez.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Geri</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>radius=%1 is invalid (expression)</source>
@@ -11311,7 +11310,7 @@ Bu blok eklenemez.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Geri</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify the third line</source>
@@ -11330,7 +11329,7 @@ Bu blok eklenemez.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Geri</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify the second point on the tangent circle</source>
@@ -11361,31 +11360,31 @@ Bu blok eklenemez.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Geri</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Select the center of the tangent circle</source>
         <translation>Teğet çemberin merkezini seçin</translation>
     </message>
     <message>
-        <source>Invalid expression &apos;%1&apos; for radius</source>
-        <translation>Yarı çap için geçersiz &apos;%1&apos; ifadesi</translation>
+        <source>Invalid expression '%1' for radius</source>
+        <translation>Yarı çap için geçersiz '%1' ifadesi</translation>
     </message>
     <message>
-        <source>Invalid negative radius &apos;%1&apos;</source>
-        <translation>Geçersiz negatif yarı çap &apos;%1&apos;</translation>
+        <source>Invalid negative radius '%1'</source>
+        <translation>Geçersiz negatif yarı çap '%1'</translation>
     </message>
     <message>
-        <source>Invalid zero radius &apos;%1&apos;</source>
-        <translation>Geçersiz sıfır yarı çapı &apos;%1&apos;</translation>
+        <source>Invalid zero radius '%1'</source>
+        <translation>Geçersiz sıfır yarı çapı '%1'</translation>
     </message>
     <message>
-        <source>No tangent circle possible for radius &apos;%1&apos;</source>
-        <translation>&apos;%1&apos; yarıçapı için teğet çember mümkün değil</translation>
+        <source>No tangent circle possible for radius '%1'</source>
+        <translation>'%1' yarıçapı için teğet çember mümkün değil</translation>
     </message>
     <message>
-        <source>No common tangential circle for radius &apos;%1&apos;</source>
-        <translation>&apos;%1&apos; yarı çapı için ortak teğet çember yok</translation>
+        <source>No common tangential circle for radius '%1'</source>
+        <translation>'%1' yarı çapı için ortak teğet çember yok</translation>
     </message>
 </context>
 <context>
@@ -11404,7 +11403,7 @@ Bu blok eklenemez.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Geri</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify a point on the tangent circle</source>
@@ -11423,7 +11422,7 @@ Bu blok eklenemez.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Geri</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Select the center of the tangent circle</source>
@@ -11458,7 +11457,7 @@ Bu blok eklenemez.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Geri</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify the third point on ellipse</source>
@@ -11493,7 +11492,7 @@ Bu blok eklenemez.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Geri</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify endpoint or length of minor axis:</source>
@@ -11528,7 +11527,7 @@ Bu blok eklenemez.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Geri</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify the third point on ellipse</source>
@@ -11555,7 +11554,7 @@ Bu blok eklenemez.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Geri</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify a point on ellipse or total distance to foci</source>
@@ -11586,7 +11585,7 @@ Bu blok eklenemez.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Geri</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify the third line</source>
@@ -11679,7 +11678,7 @@ Bu blok eklenemez.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Geri</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify next point</source>
@@ -11718,7 +11717,7 @@ Bu blok eklenemez.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Geri</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Enter length:</source>
@@ -11745,7 +11744,7 @@ Bu blok eklenemez.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Geri</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Enter bisector length:</source>
@@ -11788,7 +11787,7 @@ Bu blok eklenemez.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Geri</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -11807,7 +11806,7 @@ Bu blok eklenemez.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Geri</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -11849,7 +11848,7 @@ Bu blok eklenemez.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Geri</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Number:</source>
@@ -11903,7 +11902,7 @@ Bu blok eklenemez.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Geri</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Number:</source>
@@ -11934,7 +11933,7 @@ Bu blok eklenemez.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Geri</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -11957,7 +11956,7 @@ Bu blok eklenemez.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Geri</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -11976,7 +11975,7 @@ Bu blok eklenemez.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Geri</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -11987,7 +11986,7 @@ Bu blok eklenemez.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Geri</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Select first circle or ellipse</source>
@@ -12026,7 +12025,7 @@ Bu blok eklenemez.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Geri</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -12052,7 +12051,7 @@ Bu blok eklenemez.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Geri</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify next point or [%1]</source>
@@ -12072,7 +12071,7 @@ Bu blok eklenemez.</translation>
     </message>
     <message>
         <source>Enter the end point x</source>
-        <translation>Bitiş noktası x&apos;i girin</translation>
+        <translation>Bitiş noktası x'i girin</translation>
     </message>
     <message>
         <source>Enter number of polylines</source>
@@ -12092,7 +12091,7 @@ Bu blok eklenemez.</translation>
     </message>
     <message>
         <source>Enter the start point x</source>
-        <translation>Başlangıç noktası x&apos;i girin</translation>
+        <translation>Başlangıç noktası x'i girin</translation>
     </message>
     <message>
         <source>The entered x is invalid.</source>
@@ -12123,7 +12122,7 @@ Bu blok eklenemez.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Geri</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify next control point</source>
@@ -12150,7 +12149,7 @@ Bu blok eklenemez.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Geri</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify second point</source>
@@ -12210,7 +12209,7 @@ Bu blok eklenemez.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Geri</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Angle: %1</source>
@@ -12264,7 +12263,7 @@ Bu blok eklenemez.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Geri</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Distance: %1 Cartesian: (%2 , %3), Polar: (%4&lt;%5)</source>
@@ -12291,7 +12290,7 @@ Bu blok eklenemez.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Geri</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -12351,8 +12350,8 @@ Bu blok eklenemez.</translation>
         <translation>Çarpanı girin:</translation>
     </message>
     <message>
-        <source>Cannot open file &apos;%1&apos;</source>
-        <translation>&apos;%1&apos; dosyası açılamıyor</translation>
+        <source>Cannot open file '%1'</source>
+        <translation>'%1' dosyası açılamıyor</translation>
     </message>
 </context>
 <context>
@@ -12382,7 +12381,7 @@ Bu blok eklenemez.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Geri</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Enter length 1:</source>
@@ -12421,7 +12420,7 @@ Bu blok eklenemez.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Geri</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Entity must be a line, arc, circle, ellipse or interpolation spline.</source>
@@ -12444,7 +12443,7 @@ Bu blok eklenemez.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Geri</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Entities not in the same polyline.</source>
@@ -12517,7 +12516,7 @@ Bu blok eklenemez.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Geri</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -12536,7 +12535,7 @@ Bu blok eklenemez.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Geri</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Invalid number of copies, use %1 </source>
@@ -12563,7 +12562,7 @@ Bu blok eklenemez.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Geri</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Enter rotation angle:</source>
@@ -12578,7 +12577,7 @@ Bu blok eklenemez.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Geri</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -12589,7 +12588,7 @@ Bu blok eklenemez.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Geri</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify rotation center</source>
@@ -12616,7 +12615,7 @@ Bu blok eklenemez.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Geri</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -12627,7 +12626,7 @@ Bu blok eklenemez.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Geri</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify second entity</source>
@@ -12681,7 +12680,7 @@ Bu blok eklenemez.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Geri</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify reference point</source>
@@ -12708,7 +12707,7 @@ Bu blok eklenemez.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Geri</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Select second trim entity</source>
@@ -12743,7 +12742,7 @@ Bu blok eklenemez.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Geri</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -12769,7 +12768,7 @@ Bu blok eklenemez.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Geri</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>No Entity found.</source>
@@ -12792,7 +12791,7 @@ Bu blok eklenemez.</translation>
         <translation>Düğüm eklenecek çoklu çizgiyi belirtin</translation>
     </message>
     <message>
-        <source>Specify adding node&apos;s point</source>
+        <source>Specify adding node's point</source>
         <translation>Düğüm ekleme noktasını belirtin</translation>
     </message>
 </context>
@@ -12824,7 +12823,7 @@ Bu blok eklenemez.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Geri</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify next point</source>
@@ -12847,7 +12846,7 @@ Bu blok eklenemez.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Geri</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>No Entity found.</source>
@@ -12862,7 +12861,7 @@ Bu blok eklenemez.</translation>
         <translation>Düğümü silmek için çoklu çizgiyi belirtin</translation>
     </message>
     <message>
-        <source>Specify deleting node&apos;s point</source>
+        <source>Specify deleting node's point</source>
         <translation>Silinecek düğüm noktasını belirtin</translation>
     </message>
     <message>
@@ -12882,7 +12881,7 @@ Bu blok eklenemez.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Geri</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>No Entity found.</source>
@@ -12963,7 +12962,7 @@ Bu blok eklenemez.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Geri</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>No Entity found.</source>
@@ -13025,8 +13024,8 @@ Bu blok eklenemez.</translation>
         <translation>ofset çıktısına komut satırından uzaklık yazın</translation>
     </message>
     <message>
-        <source>Printout offset ignores relative zero. Ignoring &apos;@&apos;</source>
-        <translation>Çıktı ofseti göreceli sıfırı yok sayar. &apos;@&apos; göz ardı ediliyor</translation>
+        <source>Printout offset ignores relative zero. Ignoring '@'</source>
+        <translation>Çıktı ofseti göreceli sıfırı yok sayar. '@' göz ardı ediliyor</translation>
     </message>
     <message>
         <source>Printout in Black/White</source>
@@ -13143,7 +13142,7 @@ Bu blok eklenemez.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Geri</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -13158,7 +13157,7 @@ Bu blok eklenemez.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Geri</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Click and drag for the selection window</source>
@@ -13192,7 +13191,7 @@ Bu blok eklenemez.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Geri</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Select second entity</source>
@@ -13241,7 +13240,7 @@ Bu blok eklenemez.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Geri</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -13310,7 +13309,7 @@ Bu blok eklenemez.</translation>
     </message>
     <message>
         <source>Trim</source>
-        <translation>Kırp</translation>
+        <translation>Trim</translation>
     </message>
     <message>
         <source>Length 1:</source>
@@ -13538,7 +13537,7 @@ Bu blok eklenemez.</translation>
     </message>
     <message>
         <source>End</source>
-        <translation>Son</translation>
+        <translation>End</translation>
     </message>
 </context>
 <context>
@@ -13584,7 +13583,7 @@ Bu blok eklenemez.</translation>
     </message>
     <message>
         <source>Undo</source>
-        <translation>Geri Al</translation>
+        <translation>Undo</translation>
     </message>
     <message>
         <source>Redo the last line drawing</source>
@@ -13592,7 +13591,7 @@ Bu blok eklenemez.</translation>
     </message>
     <message>
         <source>Redo</source>
-        <translation>İleri al</translation>
+        <translation>Redo</translation>
     </message>
 </context>
 <context>
@@ -13623,7 +13622,7 @@ Bu blok eklenemez.</translation>
     </message>
     <message>
         <source>Rel</source>
-        <translation>Göreceli</translation>
+        <translation>Rel</translation>
     </message>
     <message>
         <source>Undo the last line drawing</source>
@@ -13631,7 +13630,7 @@ Bu blok eklenemez.</translation>
     </message>
     <message>
         <source>Undo</source>
-        <translation>Geri al</translation>
+        <translation>Undo</translation>
     </message>
     <message>
         <source>Form a closed contour from lines drawn</source>
@@ -13647,7 +13646,7 @@ Bu blok eklenemez.</translation>
     </message>
     <message>
         <source>Redo</source>
-        <translation>Yinele</translation>
+        <translation>Redo</translation>
     </message>
     <message>
         <source>Point</source>
@@ -13798,11 +13797,11 @@ Bu blok eklenemez.</translation>
     </message>
     <message>
         <source>Undo</source>
-        <translation>Geri al</translation>
+        <translation>Undo</translation>
     </message>
     <message>
         <source>Line</source>
-        <translation>Çizgi</translation>
+        <translation>Line</translation>
     </message>
     <message>
         <source>Tangential</source>
@@ -13884,7 +13883,7 @@ Bu blok eklenemez.</translation>
     </message>
     <message>
         <source>Trim</source>
-        <translation>Kırp</translation>
+        <translation>Trim</translation>
     </message>
     <message>
         <source>Radius:</source>
@@ -13933,7 +13932,7 @@ Bu blok eklenemez.</translation>
     </message>
     <message>
         <source>Undo</source>
-        <translation>Geri Al</translation>
+        <translation>Undo</translation>
     </message>
 </context>
 <context>
@@ -13990,7 +13989,7 @@ Bu blok eklenemez.</translation>
     </message>
     <message>
         <source>Name</source>
-        <translation>Ad</translation>
+        <translation>Name</translation>
     </message>
     <message>
         <source>Create</source>

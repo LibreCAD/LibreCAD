@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
+<?xml version='1.0' encoding='utf-8'?>
 <TS version="2.1" language="ta">
 <context>
     <name>ColorWizard</name>
@@ -28,7 +27,7 @@
     </message>
     <message>
         <source>Set</source>
-        <translation>அமை</translation>
+        <translation>Set</translation>
     </message>
 </context>
 <context>
@@ -126,7 +125,7 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>பின்</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Select circle center</source>
@@ -147,7 +146,7 @@ or [%2]</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>பின்</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Y</source>
@@ -191,7 +190,7 @@ or [%2]</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>பின்</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify distance (%1) or [%2]</source>
@@ -234,7 +233,7 @@ or [%2]</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>பின்</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify the third point on parabola</source>
@@ -265,7 +264,7 @@ or [%2]</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>பின்</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify the start point on parabola</source>
@@ -288,11 +287,11 @@ or [%2]</source>
     </message>
     <message>
         <source>Line</source>
-        <translation>கோடு</translation>
+        <translation>Line</translation>
     </message>
     <message>
         <source>Arc</source>
-        <translation>வளைவு</translation>
+        <translation>Arc</translation>
     </message>
     <message>
         <source>Circle</source>
@@ -315,7 +314,7 @@ or [%2]</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>பின்</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify next control point</source>
@@ -933,7 +932,7 @@ or [%2]</source>
     </message>
     <message>
         <source>Left</source>
-        <translation>இடது</translation>
+        <translation>Left</translation>
     </message>
     <message>
         <source>Right</source>
@@ -941,7 +940,7 @@ or [%2]</source>
     </message>
     <message>
         <source>Top</source>
-        <translation>மேல்</translation>
+        <translation>Top</translation>
     </message>
     <message>
         <source>Bottom</source>
@@ -1070,7 +1069,7 @@ or [%2]</source>
     </message>
     <message>
         <source>Star</source>
-        <translation>நட்சத்திரம்</translation>
+        <translation>Star</translation>
     </message>
     <message>
         <source>Break/Divide</source>
@@ -1141,7 +1140,7 @@ or [%2]</source>
         <translation>நகல்</translation>
     </message>
     <message>
-        <source>Update Current Pen by Active Layer&apos; Pen</source>
+        <source>Update Current Pen by Active Layer' Pen</source>
         <translation>செயலில் உள்ள அடுக்கின் பென்னால் தற்போதைய பென்னை புதுப்பி</translation>
     </message>
 </context>
@@ -1155,8 +1154,8 @@ or [%2]</source>
 <context>
     <name>LC_ActionLayersExport</name>
     <message>
-        <source>Saving layer &quot;%1&quot; as &quot;%2&quot; </source>
-        <translation>அடுக்கு &quot;%1&quot; ஐ &quot;%2&quot; ஆக சேமிக்கிறது </translation>
+        <source>Saving layer "%1" as "%2" </source>
+        <translation>அடுக்கு "%1" ஐ "%2" ஆக சேமிக்கிறது </translation>
     </message>
 </context>
 <context>
@@ -1205,14 +1204,14 @@ or [%2]</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>பின்</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
     <name>LC_CircleByArcOptions</name>
     <message>
         <source>Form</source>
-        <translation>படிவம்</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <source>Active</source>
@@ -1247,7 +1246,7 @@ or [%2]</source>
     <name>LC_CrossOptions</name>
     <message>
         <source>Form</source>
-        <translation>படிவம்</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <source>Extension</source>
@@ -1271,7 +1270,7 @@ or [%2]</source>
     </message>
     <message>
         <source>Type</source>
-        <translation>வகை</translation>
+        <translation>Type</translation>
     </message>
     <message>
         <source>Angle:</source>
@@ -1282,7 +1281,7 @@ or [%2]</source>
     <name>LC_DeviceOptions</name>
     <message>
         <source>Form</source>
-        <translation>படிவம்</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <source>Device</source>
@@ -1290,7 +1289,7 @@ or [%2]</source>
     </message>
     <message>
         <source>Save</source>
-        <translation>சேமி</translation>
+        <translation>Save</translation>
     </message>
 </context>
 <context>
@@ -1304,7 +1303,7 @@ or [%2]</source>
     <name>LC_DuplicateOptions</name>
     <message>
         <source>Form</source>
-        <translation>படிவம்</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <source>Layer:</source>
@@ -1670,7 +1669,7 @@ or [%2]</source>
         <translation>சாதாரண அடுக்காக மாற்று</translation>
     </message>
     <message>
-        <source>&amp;Select Layer&apos;s Entities</source>
+        <source>&amp;Select Layer's Entities</source>
         <translation>&amp;அடுக்கின் உருப்படிகளைத் தேர்ந்தெடு</translation>
     </message>
     <message>
@@ -1730,7 +1729,7 @@ or [%2]</source>
     <name>LC_LineAngleRelOptions</name>
     <message>
         <source>Form</source>
-        <translation>படிவம்</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <source>Offset:</source>
@@ -1738,7 +1737,7 @@ or [%2]</source>
     </message>
     <message>
         <source>Free</source>
-        <translation>சுதந்திரம்</translation>
+        <translation>Free</translation>
     </message>
     <message>
         <source>Start</source>
@@ -1750,7 +1749,7 @@ or [%2]</source>
     </message>
     <message>
         <source>End</source>
-        <translation>முடிவு</translation>
+        <translation>End</translation>
     </message>
     <message>
         <source>Line Snap:</source>
@@ -1758,7 +1757,7 @@ or [%2]</source>
     </message>
     <message>
         <source>Rel</source>
-        <translation>உறவு</translation>
+        <translation>Rel</translation>
     </message>
     <message>
         <source>Divide</source>
@@ -1785,7 +1784,7 @@ or [%2]</source>
     <name>LC_LineFromPointToLineOptions</name>
     <message>
         <source>Form</source>
-        <translation>படிவம்</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <source>Angle:</source>
@@ -1821,7 +1820,7 @@ or [%2]</source>
     </message>
     <message>
         <source>End</source>
-        <translation>முடிவு</translation>
+        <translation>End</translation>
     </message>
     <message>
         <source>Length:</source>
@@ -1836,7 +1835,7 @@ or [%2]</source>
     <name>LC_LineJoinOptions</name>
     <message>
         <source>Form</source>
-        <translation>படிவம்</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <source>Extend/Trim</source>
@@ -1891,7 +1890,7 @@ or [%2]</source>
     <name>LC_LinePointsOptions</name>
     <message>
         <source>Form</source>
-        <translation>படிவம்</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <source>Angle:</source>
@@ -1903,11 +1902,11 @@ or [%2]</source>
     </message>
     <message>
         <source>None</source>
-        <translation>எதுவும் இல்லை</translation>
+        <translation>None</translation>
     </message>
     <message>
         <source>Both</source>
-        <translation>இரண்டும்</translation>
+        <translation>Both</translation>
     </message>
     <message>
         <source>Start</source>
@@ -1915,7 +1914,7 @@ or [%2]</source>
     </message>
     <message>
         <source>End</source>
-        <translation>முடிவு</translation>
+        <translation>End</translation>
     </message>
     <message>
         <source>Edge Points:</source>
@@ -1934,7 +1933,7 @@ or [%2]</source>
     <name>LC_ModifyBreakDivideOptions</name>
     <message>
         <source>Form</source>
-        <translation>படிவம்</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <source>Remove Segments</source>
@@ -1949,7 +1948,7 @@ or [%2]</source>
     <name>LC_ModifyGapOptions</name>
     <message>
         <source>Form</source>
-        <translation>படிவம்</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <source>Gap Snap:</source>
@@ -1961,7 +1960,7 @@ or [%2]</source>
     </message>
     <message>
         <source>Free</source>
-        <translation>சுதந்திரம்</translation>
+        <translation>Free</translation>
     </message>
     <message>
         <source>Gap Size:</source>
@@ -1977,7 +1976,7 @@ or [%2]</source>
     </message>
     <message>
         <source>End</source>
-        <translation>முடிவு</translation>
+        <translation>End</translation>
     </message>
     <message>
         <source>Line Snap:</source>
@@ -2143,7 +2142,7 @@ or [%2]</source>
     </message>
     <message>
         <source>Save</source>
-        <translation>சேமி</translation>
+        <translation>Save</translation>
     </message>
     <message>
         <source>Apply Pen To Selection</source>
@@ -2162,11 +2161,11 @@ or [%2]</source>
         <translation>தற்போதைக்கு</translation>
     </message>
     <message>
-        <source>Update Current Pen by Active Layer&apos; Pen</source>
+        <source>Update Current Pen by Active Layer' Pen</source>
         <translation>செயலில் உள்ள அடுக்கின் பென் மூலம் தற்போதைய பென்னை புதுப்பி</translation>
     </message>
     <message>
-        <source>Fill Pen Editor from Active Layer&apos;s Pen</source>
+        <source>Fill Pen Editor from Active Layer's Pen</source>
         <translation>செயலில் உள்ள அடுக்கின் பென் மூலம் பென் எடிட்டரை நிரப்பு</translation>
     </message>
     <message>
@@ -2231,14 +2230,14 @@ or [%2]</source>
     </message>
     <message>
         <source>Location of pens file is changed, please restart the application so new pens file will be used.
-Please note that if you&apos;ll save pen via editor without restart, current pens from palette will be saved in the new file and therefore existing content of it will be overridden.</source>
+Please note that if you'll save pen via editor without restart, current pens from palette will be saved in the new file and therefore existing content of it will be overridden.</source>
         <translation type="vanished">பென் கோப்பின் இருப்பிடம் மாற்றப்பட்டுள்ளது, புதிய பென் கோப்பைப் பயன்படுத்த பயன்பாட்டை மறுதொடக்கம் செய்யவும்.
 குறிப்பு: எடிட்டர் வழியாக பென்னை மறுதொடக்கம் இல்லாமல் சேமித்தால், பாலெட்டிலிருந்து தற்போதைய பென்கள் புதிய கோப்பில் சேமிக்கப்படும் மற்றும் அதன் இருக்கும் உள்ளடக்கம் மேலெழுதப்படும்.</translation>
     </message>
     <message>
         <source>Location of pens file is changed, please restart the application so new pens file will be used.
 
-Please note that if you&apos;ll save pen via editor without restart, current pens from palette will be saved in the new file and therefore existing content of it will be overridden.</source>
+Please note that if you'll save pen via editor without restart, current pens from palette will be saved in the new file and therefore existing content of it will be overridden.</source>
         <translation>பேனா கோப்பின் இருப்பிடம் மாற்றப்பட்டது, புதிய பேனா கோப்பைப் பயன்படுத்த பயன்பாட்டை மறுதொடக்கம் செய்யவும்.
 
 மறுதொடக்கம் இல்லாமல் எடிட்டர் மூலம் பேனாவைச் சேமித்தால், தற்போதைய பேனாக்கள் புதிய கோப்பில் சேமிக்கப்படும், இதனால் ஏற்கனவே உள்ள உள்ளடக்கம் மேலெழுதப்படும் என்பதை நினைவில் கொள்ளவும்.</translation>
@@ -2248,7 +2247,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <name>LC_Rectangle1PointOptions</name>
     <message>
         <source>Form</source>
-        <translation>படிவம்</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <source>Polyline</source>
@@ -2292,7 +2291,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     </message>
     <message>
         <source>Top</source>
-        <translation>மேல்</translation>
+        <translation>Top</translation>
     </message>
     <message>
         <source>Top-right</source>
@@ -2300,7 +2299,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     </message>
     <message>
         <source>Left</source>
-        <translation>இடது</translation>
+        <translation>Left</translation>
     </message>
     <message>
         <source>Middle</source>
@@ -2340,7 +2339,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     </message>
     <message>
         <source>Both</source>
-        <translation>இரண்டும்</translation>
+        <translation>Both</translation>
     </message>
     <message>
         <source>Vertical</source>
@@ -2363,7 +2362,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <name>LC_Rectangle2PointsOptions</name>
     <message>
         <source>Form</source>
-        <translation>படிவம்</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <source>Snap shift</source>
@@ -2435,7 +2434,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     </message>
     <message>
         <source>Both</source>
-        <translation>இரண்டும்</translation>
+        <translation>Both</translation>
     </message>
     <message>
         <source>Vertical</source>
@@ -2450,7 +2449,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <name>LC_Rectangle3PointsOptions</name>
     <message>
         <source>Form</source>
-        <translation>படிவம்</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <source>Polyline</source>
@@ -2458,7 +2457,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     </message>
     <message>
         <source>Both</source>
-        <translation>இரண்டும்</translation>
+        <translation>Both</translation>
     </message>
     <message>
         <source>Vertical</source>
@@ -2532,15 +2531,15 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <name>LC_SliceDivideOptions</name>
     <message>
         <source>Form</source>
-        <translation>படிவம்</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <source>None</source>
-        <translation>எதுவும் இல்லை</translation>
+        <translation>None</translation>
     </message>
     <message>
         <source>Both</source>
-        <translation>இரண்டும்</translation>
+        <translation>Both</translation>
     </message>
     <message>
         <source>Start</source>
@@ -2548,7 +2547,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     </message>
     <message>
         <source>End</source>
-        <translation>முடிவு</translation>
+        <translation>End</translation>
     </message>
     <message>
         <source>Edge Tick:</source>
@@ -2556,7 +2555,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     </message>
     <message>
         <source>Rel</source>
-        <translation>உறவு</translation>
+        <translation>Rel</translation>
     </message>
     <message>
         <source>Offset:</source>
@@ -2603,7 +2602,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <name>LC_StarOptions</name>
     <message>
         <source>Form</source>
-        <translation>படிவம்</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <source>Radius Inner</source>
@@ -2638,7 +2637,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     </message>
     <message>
         <source>Dock</source>
-        <translation>பொருத்து</translation>
+        <translation>Dock</translation>
     </message>
     <message>
         <source>Float</source>
@@ -2751,12 +2750,12 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <translation>வலதை நீக்கு</translation>
     </message>
     <message>
-        <source>remove 0&apos;</source>
-        <translation>0&apos; ஐ நீக்கு</translation>
+        <source>remove 0'</source>
+        <translation>0' ஐ நீக்கு</translation>
     </message>
     <message>
-        <source>remove 0&quot;</source>
-        <translation>0&quot; ஐ நீக்கு</translation>
+        <source>remove 0"</source>
+        <translation>0" ஐ நீக்கு</translation>
     </message>
 </context>
 <context>
@@ -2942,8 +2941,8 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <translation>கட்டளை வரி</translation>
     </message>
     <message>
-        <source>Block &apos;%1&apos;</source>
-        <translation>தொகுதி &apos;%1&apos;</translation>
+        <source>Block '%1'</source>
+        <translation>தொகுதி '%1'</translation>
     </message>
     <message>
         <source>Cannot open the file
@@ -3025,15 +3024,15 @@ Auto-save disabled.</source>
     </message>
     <message>
         <source>File</source>
-        <translation>கோப்பு</translation>
+        <translation>File</translation>
     </message>
     <message>
         <source>Edit</source>
-        <translation>திருத்து</translation>
+        <translation>Edit</translation>
     </message>
     <message>
         <source>View</source>
-        <translation>பார்வை</translation>
+        <translation>View</translation>
     </message>
     <message>
         <source>Snap Selection</source>
@@ -3080,8 +3079,8 @@ Please check its existence and permissions.</source>
 அதன் இருப்பு மற்றும் அனுமதிகளை சரிபார்க்கவும்.</translation>
     </message>
     <message>
-        <source>File &apos;%1&apos; does not exist. Opening aborted</source>
-        <translation>கோப்பு &apos;%1&apos; இல்லை. திறப்பு நிறுத்தப்பட்டது</translation>
+        <source>File '%1' does not exist. Opening aborted</source>
+        <translation>கோப்பு '%1' இல்லை. திறப்பு நிறுத்தப்பட்டது</translation>
     </message>
     <message>
         <source>Categories</source>
@@ -3101,7 +3100,7 @@ Please check its existence and permissions.</source>
     </message>
     <message>
         <source>Line</source>
-        <translation>கோடு</translation>
+        <translation>Line</translation>
     </message>
     <message>
         <source>Circle</source>
@@ -3133,11 +3132,11 @@ Please check its existence and permissions.</source>
     </message>
     <message>
         <source>Info</source>
-        <translation>தகவல்</translation>
+        <translation>Info</translation>
     </message>
     <message>
         <source>Pen</source>
-        <translation>பென்</translation>
+        <translation>Pen</translation>
     </message>
     <message>
         <source>Opening recent file...</source>
@@ -3197,7 +3196,7 @@ Please check its existence and permissions.</source>
     </message>
     <message>
         <source>Copy</source>
-        <translation>நகலெடு</translation>
+        <translation>Copy</translation>
     </message>
     <message>
         <source>Contributors</source>
@@ -3291,11 +3290,11 @@ Please check its existence and permissions.</source>
     </message>
     <message>
         <source>East</source>
-        <translation>கிழக்கு</translation>
+        <translation>East</translation>
     </message>
     <message>
         <source>West</source>
-        <translation>மேற்கு</translation>
+        <translation>West</translation>
     </message>
     <message>
         <source>&amp;Arrange</source>
@@ -3328,14 +3327,14 @@ Please check its existence and permissions.</source>
     <message>
         <source>Dock</source>
         <comment>Dock the command widget to the main window</comment>
-        <translation>பொருத்து</translation>
+        <translation>Dock</translation>
     </message>
     <message>
         <source>&amp;Wiki</source>
         <translation>&amp;விக்கி</translation>
     </message>
     <message>
-        <source>User&apos;s &amp;Manual</source>
+        <source>User's &amp;Manual</source>
         <translation>பயனரின் &amp;கையேடு</translation>
     </message>
     <message>
@@ -3414,16 +3413,16 @@ Please check its existence and permissions.</source>
         <translation>தற்போதைய அடுக்கு</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+        <source>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Name of Current Active Layer&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Helvetica'; font-size:7pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;Name of Current Active Layer&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;தற்போதைய செயலில் உள்ள அடுக்கின் பெயர்&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Helvetica'; font-size:7pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;தற்போதைய செயலில் உள்ள அடுக்கின் பெயர்&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
@@ -3441,8 +3440,8 @@ p, li { white-space: pre-wrap; }
         <translation>தொகுதியை மறுபெயரிடுதல்</translation>
     </message>
     <message>
-        <source>Could not name block. A block named &quot;%1&quot; already exists.</source>
-        <translation>பிளாக்கிற்குப் பெயர் வைக்க முடியவில்லை. &quot;%1&quot; என்ற பெயரில் ஏற்கனவே ஒரு பிளாக் உள்ளது.</translation>
+        <source>Could not name block. A block named "%1" already exists.</source>
+        <translation>பிளாக்கிற்குப் பெயர் வைக்க முடியவில்லை. "%1" என்ற பெயரில் ஏற்கனவே ஒரு பிளாக் உள்ளது.</translation>
     </message>
 </context>
 <context>
@@ -3545,7 +3544,7 @@ in a separate window</source>
     </message>
     <message>
         <source>Red</source>
-        <translation>சிவப்பு</translation>
+        <translation>Red</translation>
     </message>
     <message>
         <source>Yellow</source>
@@ -3557,11 +3556,11 @@ in a separate window</source>
     </message>
     <message>
         <source>Cyan</source>
-        <translation>சியான்</translation>
+        <translation>Cyan</translation>
     </message>
     <message>
         <source>Blue</source>
-        <translation>நீலம்</translation>
+        <translation>Blue</translation>
     </message>
     <message>
         <source>Magenta</source>
@@ -3573,7 +3572,7 @@ in a separate window</source>
     </message>
     <message>
         <source>Gray</source>
-        <translation>சாம்பல்</translation>
+        <translation>Gray</translation>
     </message>
     <message>
         <source>Light Gray</source>
@@ -3675,7 +3674,7 @@ in a separate window</source>
     </message>
     <message>
         <source>Dock</source>
-        <translation>டாக்கிங்</translation>
+        <translation>Dock</translation>
     </message>
     <message>
         <source>Float</source>
@@ -3687,7 +3686,7 @@ in a separate window</source>
     </message>
     <message>
         <source>Cmd</source>
-        <translation>கட்டளை</translation>
+        <translation>Cmd</translation>
     </message>
 </context>
 <context>
@@ -3702,7 +3701,7 @@ in a separate window</source>
     <message>
         <source>R</source>
         <comment>Radial dimension prefix</comment>
-        <translation>ஆர்</translation>
+        <translation>R</translation>
     </message>
 </context>
 <context>
@@ -3766,7 +3765,7 @@ in a separate window</source>
     <name>QG_DlgArc</name>
     <message>
         <source>Arc</source>
-        <translation>வளைவு</translation>
+        <translation>Arc</translation>
     </message>
     <message>
         <source>Layer:</source>
@@ -3958,7 +3957,7 @@ This recursively modifies all entities of the Block itself.</source>
     </message>
     <message>
         <source>Area</source>
-        <translation>பரப்பளவு</translation>
+        <translation>Area</translation>
     </message>
 </context>
 <context>
@@ -4035,12 +4034,12 @@ This recursively modifies all entities of the Block itself.</source>
         <translation>கட்டளை மொழி:</translation>
     </message>
     <message>
-        <source>&lt;font size=&quot;+1&quot;&gt;&lt;b&gt;Welcome to LibreCAD&lt;/b&gt;
+        <source>&lt;font size="+1"&gt;&lt;b&gt;Welcome to LibreCAD&lt;/b&gt;
 &lt;/font&gt;
 &lt;br&gt;
 Please choose the unit you want to use for new drawings and your preferred language.&lt;br&gt;
 (You can changes these settings later.)</source>
-        <translation>&lt;font size=&quot;+1&quot;&gt;&lt;b&gt;LibreCAD-க்கு வருக&lt;/b&gt;
+        <translation>&lt;font size="+1"&gt;&lt;b&gt;LibreCAD-க்கு வருக&lt;/b&gt;
 &lt;/font&gt;
 &lt;br&gt;
 புதிய வரைபடங்களுக்கு நீங்கள் பயன்படுத்த விரும்பும் அலகு மற்றும் நீங்கள் விரும்பும் மொழியைத் தேர்ந்தெடுக்கவும்.&lt;br&gt;
@@ -4102,7 +4101,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <name>QG_DlgLine</name>
     <message>
         <source>Line</source>
-        <translation>கோடு</translation>
+        <translation>Line</translation>
     </message>
     <message>
         <source>Layer:</source>
@@ -4217,11 +4216,11 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>Cut</source>
-        <translation>வெட்டு</translation>
+        <translation>Cut</translation>
     </message>
     <message>
         <source>Copy</source>
-        <translation>நகல்</translation>
+        <translation>Copy</translation>
     </message>
     <message>
         <source>Paste</source>
@@ -4940,7 +4939,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation>கிரேடியன்கள்</translation>
     </message>
     <message>
-        <source>Surveyor&apos;s units</source>
+        <source>Surveyor's units</source>
         <translation>நில அளவையாளர் அலகுகள்</translation>
     </message>
     <message>
@@ -4948,7 +4947,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation>விருப்பங்கள்</translation>
     </message>
     <message>
-        <source>For the length formats &apos;Engineering&apos; and &apos;Architectural&apos;, the unit must be set to Inch.</source>
+        <source>For the length formats 'Engineering' and 'Architectural', the unit must be set to Inch.</source>
         <translation>‘பொறியியல்’ மற்றும் ‘கட்டிடக்கலை’ நீள வடிவங்களுக்கு, அலகு அங்குலமாக அமைக்கப்பட வேண்டும்.</translation>
     </message>
     <message>
@@ -5021,7 +5020,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>auto</source>
-        <translation>தானியங்கி</translation>
+        <translation>auto</translation>
     </message>
     <message>
         <source>&amp;Grid</source>
@@ -5041,7 +5040,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>Left</source>
-        <translation>இடது</translation>
+        <translation>Left</translation>
     </message>
     <message>
         <source>Top crosshair with isometric grid</source>
@@ -5049,7 +5048,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>Top</source>
-        <translation>மேல்</translation>
+        <translation>Top</translation>
     </message>
     <message>
         <source>Right crosshair with isometric grid</source>
@@ -5080,7 +5079,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation>அடையாள அளவு:</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dimension Tick size. Set it to 0 will disable the dimension tick. Dimension arrow won&apos;t be drawn when dimension tick is enabled.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dimension Tick size. Set it to 0 will disable the dimension tick. Dimension arrow won't be drawn when dimension tick is enabled.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;அளவீட்டு அடையாளத்தின் அளவு. இதை 0 ஆக அமைத்தால், அளவீட்டு அடையாளம் முடக்கப்படும். அளவீட்டு அடையாளம் இயக்கப்பட்டிருந்தால், அளவீட்டு அம்பு வரையப்படாது.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
@@ -5104,12 +5103,12 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation>உரை பாணி:</translation>
     </message>
     <message>
-        <source>&apos;.&apos; (Period)</source>
-        <translation>&apos;.&apos;(புள்ளி)</translation>
+        <source>'.' (Period)</source>
+        <translation>'.'(புள்ளி)</translation>
     </message>
     <message>
-        <source>&apos;,&apos; (Comma)</source>
-        <translation>&apos;,&apos;(கமா)</translation>
+        <source>',' (Comma)</source>
+        <translation>','(கமா)</translation>
     </message>
     <message>
         <source>Decimal separator:</source>
@@ -5152,8 +5151,8 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation>அளவீட்டு கோட்டின் மீது நீளத்தை பெரிதாக்கு</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dimension arrow size. &lt;a name=&quot;result_box&quot;/&gt;without effect when tick size &lt;a name=&quot;result_box&quot;/&gt;is other than 0&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;அளவீட்டு அம்புக்குறியின் அளவு. &lt;a name=&quot;result_box&quot;/&gt; குறி அளவு &lt;a name=&quot;result_box&quot;/&gt; 0 ஆக இல்லாதபோது எந்த விளைவையும் ஏற்படுத்தாது&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dimension arrow size. &lt;a name="result_box"/&gt;without effect when tick size &lt;a name="result_box"/&gt;is other than 0&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;அளவீட்டு அம்புக்குறியின் அளவு. &lt;a name="result_box"/&gt; குறி அளவு &lt;a name="result_box"/&gt; 0 ஆக இல்லாதபோது எந்த விளைவையும் ஏற்படுத்தாது&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Width:</source>
@@ -5184,8 +5183,8 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation>நேரியல் துல்லியம்:</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Text alignment &lt;a name=&quot;result_box&quot;/&gt;relative to the dimension line.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;உரை சீரமைப்பு, பரிமாணக் கோட்டிற்கு &lt;a name=&quot;result_box&quot;/&gt; தொடர்புடையது.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Text alignment &lt;a name="result_box"/&gt;relative to the dimension line.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;உரை சீரமைப்பு, பரிமாணக் கோட்டிற்கு &lt;a name="result_box"/&gt; தொடர்புடையது.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Aligned</source>
@@ -5288,8 +5287,8 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation>கட்டிடக்கலை (மெட்ரிக்)</translation>
     </message>
     <message>
-        <source>For the length format &apos;Architectural (metric)&apos;, the unit must be set to Meter.</source>
-        <translation>&apos;ஆர்கிடெக்சுரல் (மெட்ரிக்)&apos; நீள வடிவத்திற்கு, அலகு மீட்டராக அமைக்கப்பட வேண்டும்.</translation>
+        <source>For the length format 'Architectural (metric)', the unit must be set to Meter.</source>
+        <translation>'ஆர்கிடெக்சுரல் (மெட்ரிக்)' நீள வடிவத்திற்கு, அலகு மீட்டராக அமைக்கப்பட வேண்டும்.</translation>
     </message>
     <message>
         <source>Screen %</source>
@@ -5464,7 +5463,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>All</source>
-        <translation>அனைத்தும்</translation>
+        <translation>All</translation>
     </message>
     <message>
         <source>Scrollbars</source>
@@ -5535,7 +5534,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation>முன்னோட்டப் பொருட்களின் எண்ணிக்கை:</translation>
     </message>
     <message>
-        <source>Don&apos;t use native OS file open dialog</source>
+        <source>Don't use native OS file open dialog</source>
         <translation>இயல்புநிலை இயக்க முறைமை கோப்பு திறப்பு உரையாடல் பயன்படுத்த வேண்டாம்</translation>
     </message>
     <message>
@@ -5611,8 +5610,8 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation>வரைபடத்தைத் திறக்கும்போது தானாகவே பெரிதாக்கு</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-family:&apos;-apple-system&apos;,&apos;BlinkMacSystemFont&apos;,&apos;Segoe UI&apos;,&apos;Noto Sans&apos;,&apos;Helvetica&apos;,&apos;Arial&apos;,&apos;sans-serif&apos;,&apos;Apple Color Emoji&apos;,&apos;Segoe UI Emoji&apos;; font-size:14px; color:#1f2328; background-color:#ffffff;&quot;&gt;Part library folder. The symbol library dxf files must be located in the subdirectories of this folder. The subfolder names will be displayed in the Library Browser.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-family:&apos;-apple-system&apos;,&apos;BlinkMacSystemFont&apos;,&apos;Segoe UI&apos;,&apos;Noto Sans&apos;,&apos;Helvetica&apos;,&apos;Arial&apos;,&apos;sans-serif&apos;,&apos;Apple Color Emoji&apos;,&apos;Segoe UI Emoji&apos;; font-size:14px; color:#1f2328; background-color:#ffffff;&quot;&gt;( Menu: Widgets &amp;gt; Dock Widgets &amp;gt; Library Browser)&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-family:&apos;-apple-system&apos;,&apos;BlinkMacSystemFont&apos;,&apos;Segoe UI&apos;,&apos;Noto Sans&apos;,&apos;Helvetica&apos;,&apos;Arial&apos;,&apos;sans-serif&apos;,&apos;Apple Color Emoji&apos;,&apos;Segoe UI Emoji&apos;; font-size:14px; color:#1f2328; background-color:#ffffff;&quot;&gt;பகுதி நூலக கோப்புறை. குறியீடு நூலக dxf கோப்புகள் இந்த கோப்புறையின் துணை கோப்புறைகளில் இருக்க வேண்டும். துணை கோப்புறைகளின் பெயர்கள் நூலக உலாவியில் காட்டப்படும்.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-family:&apos;-apple-system&apos;,&apos;BlinkMacSystemFont&apos;,&apos;Segoe UI&apos;,&apos;Noto Sans&apos;,&apos;Helvetica&apos;,&apos;Arial&apos;,&apos;sans-serif&apos;,&apos;Apple Color Emoji&apos;,&apos;Segoe UI Emoji&apos;; font-size:14px; color:#1f2328; background-color:#ffffff;&quot;&gt;( மெனு: விட்ஜெட்கள் &gt; டாக் விட்ஜெட்கள் &gt; நூலக உலாவி)&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=" font-family:'-apple-system','BlinkMacSystemFont','Segoe UI','Noto Sans','Helvetica','Arial','sans-serif','Apple Color Emoji','Segoe UI Emoji'; font-size:14px; color:#1f2328; background-color:#ffffff;"&gt;Part library folder. The symbol library dxf files must be located in the subdirectories of this folder. The subfolder names will be displayed in the Library Browser.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=" font-family:'-apple-system','BlinkMacSystemFont','Segoe UI','Noto Sans','Helvetica','Arial','sans-serif','Apple Color Emoji','Segoe UI Emoji'; font-size:14px; color:#1f2328; background-color:#ffffff;"&gt;( Menu: Widgets &amp;gt; Dock Widgets &amp;gt; Library Browser)&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=" font-family:'-apple-system','BlinkMacSystemFont','Segoe UI','Noto Sans','Helvetica','Arial','sans-serif','Apple Color Emoji','Segoe UI Emoji'; font-size:14px; color:#1f2328; background-color:#ffffff;"&gt;பகுதி நூலக கோப்புறை. குறியீடு நூலக dxf கோப்புகள் இந்த கோப்புறையின் துணை கோப்புறைகளில் இருக்க வேண்டும். துணை கோப்புறைகளின் பெயர்கள் நூலக உலாவியில் காட்டப்படும்.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=" font-family:'-apple-system','BlinkMacSystemFont','Segoe UI','Noto Sans','Helvetica','Arial','sans-serif','Apple Color Emoji','Segoe UI Emoji'; font-size:14px; color:#1f2328; background-color:#ffffff;"&gt;( மெனு: விட்ஜெட்கள் &gt; டாக் விட்ஜெட்கள் &gt; நூலக உலாவி)&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Open last opened files</source>
@@ -5683,8 +5682,8 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>MakerCAM as of November 2014 does not hide SVG content 
-that has been set invisibe (&quot;display: none&quot; or &quot;visibility: hidden&quot;).</source>
-        <translation>நவம்பர் 2014 நிலவரப்படி, MakerCAM மறைக்கப்பட்ட SVG உள்ளடக்கத்தை மறைக்காது (&quot;display: none&quot; அல்லது &quot;visibility: hidden&quot;).</translation>
+that has been set invisibe ("display: none" or "visibility: hidden").</source>
+        <translation>நவம்பர் 2014 நிலவரப்படி, MakerCAM மறைக்கப்பட்ட SVG உள்ளடக்கத்தை மறைக்காது ("display: none" அல்லது "visibility: hidden").</translation>
     </message>
     <message>
         <source>MakerCAM as of November 2014 cannot correctly deal with blocks,
@@ -5699,16 +5698,16 @@ the &lt;transform&gt; attribute or as &lt;path&gt; using elliptic arc segments.<
     </message>
     <message>
         <source>Exported images can be useful in SVG editors (Inkscape, etc), 
-but avoided in some CAM&apos;s.</source>
+but avoided in some CAM's.</source>
         <translation>ஏற்றுமதி செய்யப்பட்ட படங்கள் SVG எடிட்டர்களில் (இங்க்ஸ்கேப் போன்றவை) பயனுள்ளதாக இருக்கும், ஆனால் சில CAM-களில் தவிர்க்கப்படலாம்.</translation>
     </message>
     <message>
-        <source>Many CAM&apos;s(MakerCAM, EleskCAM, LaserWeb) ignore dashed/doted line style, 
+        <source>Many CAM's(MakerCAM, EleskCAM, LaserWeb) ignore dashed/doted line style, 
 which can be useful in lasercut of plywood or for papercraft. </source>
         <translation>பல CAM-கள் (மேக்கர்கேம், எலெஸ்கேம், லேசர்வெப்) கோடுகள்/புள்ளிகள் கொண்ட கோட்டு பாணியை புறக்கணிக்கின்றன, இது மரப்பலகை லேசர் வெட்டு அல்லது காகித கைவினைக்கு பயனுள்ளதாக இருக்கும்.</translation>
     </message>
     <message>
-        <source>Default width of elements can affect some CAM&apos;s/SVG Editors, 
+        <source>Default width of elements can affect some CAM's/SVG Editors, 
 but ignored by other</source>
         <translation>உறுப்புகளின் இயல்புநிலை அகலம் சில CAMகள்/SVG எடிட்டர்களை பாதிக்கலாம், ஆனால் மற்றவற்றால் புறக்கணிக்கப்படுகிறது.</translation>
     </message>
@@ -5898,11 +5897,11 @@ so default step value required for baking</source>
     </message>
     <message>
         <source>X</source>
-        <translation>எக்ஸ்</translation>
+        <translation>X</translation>
     </message>
     <message>
         <source>Y</source>
-        <translation>ஒய்</translation>
+        <translation>Y</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Find the scaling ratios around the center by a reference point and a target point.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
@@ -5936,7 +5935,7 @@ so default step value required for baking</source>
     <name>QG_DlgText</name>
     <message>
         <source>Text</source>
-        <translation>உரை</translation>
+        <translation>Text</translation>
     </message>
     <message>
         <source>Text:</source>
@@ -5956,11 +5955,11 @@ so default step value required for baking</source>
     </message>
     <message>
         <source>Cut</source>
-        <translation>வெட்டு</translation>
+        <translation>Cut</translation>
     </message>
     <message>
         <source>Copy</source>
-        <translation>நகல்</translation>
+        <translation>Copy</translation>
     </message>
     <message>
         <source>Paste</source>
@@ -6552,7 +6551,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <source>Fit</source>
-        <translation>பொருத்து</translation>
+        <translation>Fit</translation>
     </message>
     <message>
         <source>Diameter (⌀)</source>
@@ -6698,7 +6697,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <source>auto</source>
-        <translation>தானியங்கி</translation>
+        <translation>auto</translation>
     </message>
     <message>
         <source>Colouring</source>
@@ -6899,7 +6898,7 @@ The contents of a Construction Layer should not appear in printout.</source>
     </message>
     <message>
         <source>Dot</source>
-        <translation>புள்ளி</translation>
+        <translation>Dot</translation>
     </message>
     <message>
         <source>Dot (small)</source>
@@ -6911,7 +6910,7 @@ The contents of a Construction Layer should not appear in printout.</source>
     </message>
     <message>
         <source>Dash</source>
-        <translation>கோடு</translation>
+        <translation>Dash</translation>
     </message>
     <message>
         <source>Dash (small)</source>
@@ -7010,14 +7009,14 @@ The contents of a Construction Layer should not appear in printout.</source>
     </message>
     <message>
         <source>Left</source>
-        <translation>இடது</translation>
+        <translation>Left</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+        <source>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Ubuntu&apos;; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Helvetica&apos;; font-size:9pt;&quot;&gt;Hint about left/right mouse button actions&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Ubuntu'; font-size:11pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;span style=" font-family:'Helvetica'; font-size:9pt;"&gt;Hint about left/right mouse button actions&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>இடது/வலது சுட்டி பொத்தான் செயல்பாடுகள் பற்றிய குறிப்பு</translation>
     </message>
 </context>
@@ -7065,19 +7064,19 @@ p, li { white-space: pre-wrap; }
         <translation>மொத்த நீளம்</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+        <source>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Number of selected entities&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Helvetica'; font-size:7pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;Number of selected entities&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>தேர்ந்தெடுக்கப்பட்ட பொருட்களின் எண்ணிக்கை</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+        <source>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Total length of selected entities&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Helvetica'; font-size:7pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;Total length of selected entities&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>தேர்ந்தெடுக்கப்பட்ட பொருட்களின் மொத்த நீளம்</translation>
     </message>
 </context>
@@ -7085,7 +7084,7 @@ p, li { white-space: pre-wrap; }
     <name>QG_SnapToolBar</name>
     <message>
         <source>Snap</source>
-        <translation>சரியாக பொருத்து</translation>
+        <translation>Snap</translation>
     </message>
     <message>
         <source>Snap to Endpoints</source>
@@ -7216,7 +7215,7 @@ p, li { white-space: pre-wrap; }
     <name>QG_WidgetPen</name>
     <message>
         <source>Pen</source>
-        <translation>பேனா</translation>
+        <translation>Pen</translation>
     </message>
     <message>
         <source>Line type:</source>
@@ -7249,8 +7248,8 @@ p, li { white-space: pre-wrap; }
         <translation>அடுக்கு நீக்கு</translation>
     </message>
     <message>
-        <source>Layer &quot;%1&quot; can never be removed.</source>
-        <translation>&quot;%1&quot; என்ற அடுக்கு நீக்கப்பட முடியாது.</translation>
+        <source>Layer "%1" can never be removed.</source>
+        <translation>"%1" என்ற அடுக்கு நீக்கப்பட முடியாது.</translation>
     </message>
     <message>
         <source>Layer Dialog</source>
@@ -7261,26 +7260,26 @@ p, li { white-space: pre-wrap; }
         <translation>தொகுதி நீக்கு</translation>
     </message>
     <message>
-        <source>Block &quot;%1&quot; and all its entities will be removed.</source>
-        <translation>&quot;%1&quot; மற்றும் அதிலுள்ள அனைத்து கூறுகளும் நீக்கப்படும்.</translation>
+        <source>Block "%1" and all its entities will be removed.</source>
+        <translation>"%1" மற்றும் அதிலுள்ள அனைத்து கூறுகளும் நீக்கப்படும்.</translation>
     </message>
     <message>
         <source>Layer Properties</source>
         <translation>அடுக்கு பண்புகள்</translation>
     </message>
     <message>
-        <source>Layer with a name &quot;%1&quot; already exists. Please specify a different name.</source>
-        <translation>&quot;%1&quot; என்ற பெயரில் ஒரு அடுக்கு ஏற்கனவே உள்ளது. வேறு பெயரைத் தேர்ந்தெடுக்கவும்.</translation>
+        <source>Layer with a name "%1" already exists. Please specify a different name.</source>
+        <translation>"%1" என்ற பெயரில் ஒரு அடுக்கு ஏற்கனவே உள்ளது. வேறு பெயரைத் தேர்ந்தெடுக்கவும்.</translation>
     </message>
     <message>
-        <source>Layer &quot;%1&quot; and all entities on it will be removed.
+        <source>Layer "%1" and all entities on it will be removed.
 This action can NOT be undone.</source>
-        <translation>அடுக்கு &quot;%1&quot; மற்றும் அதில் உள்ள அனைத்து கூறுகளும் நீக்கப்படும்.
+        <translation>அடுக்கு "%1" மற்றும் அதில் உள்ள அனைத்து கூறுகளும் நீக்கப்படும்.
 இந்த செயலைத் திரும்பப் பெற முடியாது.</translation>
     </message>
     <message>
-        <source>Layer &quot;0&quot; can never be removed.</source>
-        <translation>அடுக்கு &quot;0&quot; ஐ நீக்க முடியாது.</translation>
+        <source>Layer "0" can never be removed.</source>
+        <translation>அடுக்கு "0" ஐ நீக்க முடியாது.</translation>
     </message>
     <message numerus="yes">
         <source>Remove %n layer(s)</source>
@@ -7298,8 +7297,8 @@ This action can NOT be undone.</source>
         <translation>எச்சரிக்கை: இந்த செயலைத் திரும்பப் பெற முடியாது!</translation>
     </message>
     <message>
-        <source>Warning: layer &quot;0&quot; can never be removed.</source>
-        <translation>எச்சரிக்கை: அடுக்கு &quot;0&quot; ஐ நீக்க முடியாது.</translation>
+        <source>Warning: layer "0" can never be removed.</source>
+        <translation>எச்சரிக்கை: அடுக்கு "0" ஐ நீக்க முடியாது.</translation>
     </message>
     <message>
         <source>Layers for removal:</source>
@@ -7328,7 +7327,7 @@ This action can NOT be undone.</source>
         <source>Attempt to create layer with duplicating name. Duplicated layer name is 
 [%1].
 Please specify a different name.</source>
-        <translation>ஒரே பெயரில் மற்றொரு அடுக்கை உருவாக்க முயற்சி.</translation>
+        <translation>ஒரே பெயரில் மற்றொரு அடுக்கை உருவாக்க முயற்சி. நகல் அடுக்கின் பெயர் [%1]. வேறு பெயரைத் தெரிவு செய்யவும்.</translation>
     </message>
     <message>
         <source>Error</source>
@@ -7388,12 +7387,12 @@ Please specify a different name.</source>
         <translation>தேர்ந்தெடுத்ததை நகல் எடு</translation>
     </message>
     <message>
-        <source>Replace &quot;By Layer&quot; value to source layers values?
-If Yes - entities with &quot;By Layer&quot; pens will look on new layer exactly as on previous layers and &quot;By Layer&quot; value will be replaced by resolved pens.
-If No - &quot;By Layer&quot; values remains and so pen of target layer will define pen for such entities.</source>
-        <translation type="vanished">&quot;அடுக்கு மூலம்&quot; மதிப்பை மூல அடுக்குகளின் மதிப்புகளாக மாற்ற வேண்டுமா?
-ஆம் எனில் - &quot;அடுக்கு மூலம்&quot; பேனாக்களைக் கொண்ட கூறுகள் புதிய அடுக்கில் முந்தைய அடுக்குகளில் இருந்ததைப் போலவே தோன்றும், மேலும் &quot;அடுக்கு மூலம்&quot; மதிப்பு தீர்க்கப்பட்ட பேனாக்களால் மாற்றப்படும்.
-இல்லை எனில் - &quot;அடுக்கு மூலம்&quot; மதிப்புகள் அப்படியே இருக்கும், எனவே இலக்கு அடுக்கின் பேனா, அத்தகைய கூறுகளுக்கான பேனாவை வரையறுக்கும்.</translation>
+        <source>Replace "By Layer" value to source layers values?
+If Yes - entities with "By Layer" pens will look on new layer exactly as on previous layers and "By Layer" value will be replaced by resolved pens.
+If No - "By Layer" values remains and so pen of target layer will define pen for such entities.</source>
+        <translation type="vanished">"அடுக்கு மூலம்" மதிப்பை மூல அடுக்குகளின் மதிப்புகளாக மாற்ற வேண்டுமா?
+ஆம் எனில் - "அடுக்கு மூலம்" பேனாக்களைக் கொண்ட கூறுகள் புதிய அடுக்கில் முந்தைய அடுக்குகளில் இருந்ததைப் போலவே தோன்றும், மேலும் "அடுக்கு மூலம்" மதிப்பு தீர்க்கப்பட்ட பேனாக்களால் மாற்றப்படும்.
+இல்லை எனில் - "அடுக்கு மூலம்" மதிப்புகள் அப்படியே இருக்கும், எனவே இலக்கு அடுக்கின் பேனா, அத்தகைய கூறுகளுக்கான பேனாவை வரையறுக்கும்.</translation>
     </message>
     <message>
         <source>Layer DialogEx</source>
@@ -7421,7 +7420,7 @@ Please specify a different value.</source>
         <translation>பேனா, வண்ணத் தட்டிலிருந்து அகற்றப்படும், வரைதல் கூறுகள் பாதிக்கப்படாது.</translation>
     </message>
     <message>
-        <source>Are you sure you&apos;d like to proceed?</source>
+        <source>Are you sure you'd like to proceed?</source>
         <translation>நீங்கள் தொடர விரும்புகிறீர்களா என்பதை உறுதிப்படுத்தவும்.</translation>
     </message>
     <message>
@@ -7487,16 +7486,16 @@ Clear filtering mask and repeat.</source>
 வடிகட்டி முகமூடியை நீக்கி மீண்டும் செய்யவும்.</translation>
     </message>
     <message>
-        <source>Replace &quot;By Layer&quot; value to source layers values?
+        <source>Replace "By Layer" value to source layers values?
 
-If Yes - entities with &quot;By Layer&quot; pens will look on new layer exactly as on previous layers and &quot;By Layer&quot; value will be replaced by resolved pens.
+If Yes - entities with "By Layer" pens will look on new layer exactly as on previous layers and "By Layer" value will be replaced by resolved pens.
 
-If No - &quot;By Layer&quot; values remains and so pen of target layer will define pen for such entities.</source>
-        <translation>அடுக்கு மூலம்&quot; மதிப்பை மூல அடுக்குகளின் மதிப்புகளுடன் மாற்றவா?
+If No - "By Layer" values remains and so pen of target layer will define pen for such entities.</source>
+        <translation>அடுக்கு மூலம்" மதிப்பை மூல அடுக்குகளின் மதிப்புகளுடன் மாற்றவா?
 
-ஆம் எனில் - &quot;அடுக்கு மூலம்&quot; பேனாக்களைக் கொண்ட கூறுகள் புதிய அடுக்கில் முன்பு இருந்த அடுக்குகளைப் போலவே தோன்றும், மேலும் &quot;அடுக்கு மூலம்&quot; மதிப்பு தீர்மானிக்கப்பட்ட பேனாக்களால் மாற்றப்படும்.
+ஆம் எனில் - "அடுக்கு மூலம்" பேனாக்களைக் கொண்ட கூறுகள் புதிய அடுக்கில் முன்பு இருந்த அடுக்குகளைப் போலவே தோன்றும், மேலும் "அடுக்கு மூலம்" மதிப்பு தீர்மானிக்கப்பட்ட பேனாக்களால் மாற்றப்படும்.
 
-இல்லை எனில் - &quot;அடுக்கு மூலம்&quot; மதிப்புகள் அப்படியே இருக்கும், இதனால் இலக்கு அடுக்கின் பேனா, அத்தகைய கூறுகளுக்கான பேனாவை வரையறுக்கும்.</translation>
+இல்லை எனில் - "அடுக்கு மூலம்" மதிப்புகள் அப்படியே இருக்கும், இதனால் இலக்கு அடுக்கின் பேனா, அத்தகைய கூறுகளுக்கான பேனாவை வரையறுக்கும்.</translation>
     </message>
 </context>
 <context>
@@ -7577,15 +7576,15 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Inch</source>
-        <translation>அங்குலம்</translation>
+        <translation>Inch</translation>
     </message>
     <message>
         <source>Foot</source>
-        <translation>அடி</translation>
+        <translation>Foot</translation>
     </message>
     <message>
         <source>Mile</source>
-        <translation>மைல்</translation>
+        <translation>Mile</translation>
     </message>
     <message>
         <source>Millimeter</source>
@@ -7609,11 +7608,11 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Mil</source>
-        <translation>மிலி</translation>
+        <translation>Mil</translation>
     </message>
     <message>
         <source>Yard</source>
-        <translation>கஜம்</translation>
+        <translation>Yard</translation>
     </message>
     <message>
         <source>Angstrom</source>
@@ -7752,7 +7751,7 @@ Do you want to replace it?</source>
         <translation>dwg கோப்பைத் திறக்கும்போது அறியப்படாத பிழை</translation>
     </message>
     <message>
-        <source>can&apos;t open this dwg file</source>
+        <source>can't open this dwg file</source>
         <translation>இந்த dwg கோப்பைத் திறக்க முடியவில்லை</translation>
     </message>
     <message>
@@ -7823,22 +7822,22 @@ Do you want to replace it?</source>
     <message>
         <source>po</source>
         <comment>draw point</comment>
-        <translation>போ</translation>
+        <translation>po</translation>
     </message>
     <message>
         <source>line</source>
         <comment>draw line</comment>
-        <translation>வரி</translation>
+        <translation>line</translation>
     </message>
     <message>
         <source>li</source>
         <comment>draw line</comment>
-        <translation>லி</translation>
+        <translation>li</translation>
     </message>
     <message>
         <source>l</source>
         <comment>draw line</comment>
-        <translation>எல்</translation>
+        <translation>l</translation>
     </message>
     <message>
         <source>polyline</source>
@@ -7848,12 +7847,12 @@ Do you want to replace it?</source>
     <message>
         <source>pl</source>
         <comment>draw polyline</comment>
-        <translation>பிஎல்</translation>
+        <translation>pl</translation>
     </message>
     <message>
         <source>free</source>
         <comment>draw freehand line</comment>
-        <translation>இலவசம்</translation>
+        <translation>free</translation>
     </message>
     <message>
         <source>fhl</source>
@@ -7868,7 +7867,7 @@ Do you want to replace it?</source>
     <message>
         <source>spl</source>
         <comment>draw spline</comment>
-        <translation>ஸ்ப்ல்</translation>
+        <translation>spl</translation>
     </message>
     <message>
         <source>spline2</source>
@@ -7878,12 +7877,12 @@ Do you want to replace it?</source>
     <message>
         <source>stp</source>
         <comment>spline through points</comment>
-        <translation>ஸ்டிப்</translation>
+        <translation>stp</translation>
     </message>
     <message>
         <source>ptp</source>
         <comment>parallel through point</comment>
-        <translation>பிடிபி</translation>
+        <translation>ptp</translation>
     </message>
     <message>
         <source>bisect</source>
@@ -7893,7 +7892,7 @@ Do you want to replace it?</source>
     <message>
         <source>bi</source>
         <comment>angle bisector</comment>
-        <translation>பி</translation>
+        <translation>bi</translation>
     </message>
     <message>
         <source>tanpc</source>
@@ -7908,7 +7907,7 @@ Do you want to replace it?</source>
     <message>
         <source>rect</source>
         <comment>draw rectangle</comment>
-        <translation>செவ்வகம்</translation>
+        <translation>rect</translation>
     </message>
     <message>
         <source>polygon2v</source>
@@ -7973,7 +7972,7 @@ Do you want to replace it?</source>
     <message>
         <source>ha</source>
         <comment>draw hatch</comment>
-        <translation>ஹா</translation>
+        <translation>ha</translation>
     </message>
     <message>
         <source>mtext</source>
@@ -7983,17 +7982,17 @@ Do you want to replace it?</source>
     <message>
         <source>mtxt</source>
         <comment>draw mtext</comment>
-        <translation>உரை</translation>
+        <translation>mtxt</translation>
     </message>
     <message>
         <source>text</source>
         <comment>draw text</comment>
-        <translation>உரை</translation>
+        <translation>text</translation>
     </message>
     <message>
         <source>txt</source>
         <comment>draw text</comment>
-        <translation>உரை</translation>
+        <translation>txt</translation>
     </message>
     <message>
         <source>regen</source>
@@ -8058,32 +8057,32 @@ Do you want to replace it?</source>
     <message>
         <source>kill</source>
         <comment>kill all actions</comment>
-        <translation>கொல்லு</translation>
+        <translation>kill</translation>
     </message>
     <message>
         <source>k</source>
         <comment>kill all actions</comment>
-        <translation>க</translation>
+        <translation>k</translation>
     </message>
     <message>
         <source>undo</source>
         <comment>undo cycle</comment>
-        <translation>செயலைத் திரும்பப் பெறு</translation>
+        <translation>undo</translation>
     </message>
     <message>
         <source>u</source>
         <comment>undo cycle</comment>
-        <translation>உ</translation>
+        <translation>u</translation>
     </message>
     <message>
         <source>redo</source>
         <comment>redo cycle</comment>
-        <translation>மீண்டும் செய்</translation>
+        <translation>redo</translation>
     </message>
     <message>
         <source>r</source>
         <comment>redo cycle</comment>
-        <translation>மீ</translation>
+        <translation>r</translation>
     </message>
     <message>
         <source>dimaligned</source>
@@ -8098,7 +8097,7 @@ Do you want to replace it?</source>
     <message>
         <source>dh</source>
         <comment>dimension - horizontal</comment>
-        <translation>கி</translation>
+        <translation>dh</translation>
     </message>
     <message>
         <source>dimvertical</source>
@@ -8208,52 +8207,52 @@ Do you want to replace it?</source>
     <message>
         <source>mv</source>
         <comment>modify - move (copy)</comment>
-        <translation>நகர்த்து</translation>
+        <translation>mv</translation>
     </message>
     <message>
         <source>bev</source>
         <comment>modify - bevel</comment>
-        <translation>நகர்த்து</translation>
+        <translation>bev</translation>
     </message>
     <message>
         <source>ch</source>
         <comment>modify - bevel</comment>
-        <translation>மாற்று</translation>
+        <translation>ch</translation>
     </message>
     <message>
         <source>fi</source>
         <comment>modify - fillet</comment>
-        <translation>காண்க</translation>
+        <translation>fi</translation>
     </message>
     <message>
         <source>cut</source>
         <comment>modify - divide (cut)</comment>
-        <translation>வெட்டு</translation>
+        <translation>cut</translation>
     </message>
     <message>
         <source>div</source>
         <comment>modify - divide (cut)</comment>
-        <translation>பிரி</translation>
+        <translation>div</translation>
     </message>
     <message>
         <source>mi</source>
         <comment>modify -  mirror</comment>
-        <translation>குறை</translation>
+        <translation>mi</translation>
     </message>
     <message>
         <source>rev</source>
         <comment>modify -  revert direction</comment>
-        <translation>தலைகீழாக்கு</translation>
+        <translation>rev</translation>
     </message>
     <message>
         <source>ro</source>
         <comment>modify - rotate</comment>
-        <translation>சுழற்று</translation>
+        <translation>ro</translation>
     </message>
     <message>
         <source>sz</source>
         <comment>modify - scale</comment>
-        <translation>அளவு</translation>
+        <translation>sz</translation>
     </message>
     <message>
         <source>tm</source>
@@ -8408,32 +8407,32 @@ Do you want to replace it?</source>
     <message>
         <source>attr</source>
         <comment>modify attribute</comment>
-        <translation>அтрибуட்</translation>
+        <translation>attr</translation>
     </message>
     <message>
         <source>ma</source>
         <comment>modify attribute</comment>
-        <translation>மா</translation>
+        <translation>ma</translation>
     </message>
     <message>
         <source>prop</source>
         <comment>modify properties</comment>
-        <translation>பண்பு</translation>
+        <translation>prop</translation>
     </message>
     <message>
         <source>dist</source>
         <comment>distance point to point</comment>
-        <translation>தூரம்</translation>
+        <translation>dist</translation>
     </message>
     <message>
         <source>dpp</source>
         <comment>distance point to point</comment>
-        <translation>டிபிபி</translation>
+        <translation>dpp</translation>
     </message>
     <message>
         <source>ang</source>
         <comment>measure angle</comment>
-        <translation>கோணம்</translation>
+        <translation>ang</translation>
     </message>
     <message>
         <source>angle</source>
@@ -8441,7 +8440,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>dpi</source>
-        <translation>டிபிஐ</translation>
+        <translation>dpi</translation>
     </message>
     <message>
         <source>close</source>
@@ -8477,7 +8476,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>rows</source>
-        <translation>வரிசைகள்</translation>
+        <translation>rows</translation>
     </message>
     <message>
         <source>rowspacing</source>
@@ -8489,17 +8488,17 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>trim</source>
-        <translation>அகற்று</translation>
+        <translation>trim</translation>
     </message>
     <message>
         <source>ang</source>
         <comment>angle</comment>
-        <translation>ஆங்</translation>
+        <translation>ang</translation>
     </message>
     <message>
         <source>an</source>
         <comment>angle</comment>
-        <translation>ஆன்</translation>
+        <translation>an</translation>
     </message>
     <message>
         <source>center</source>
@@ -8508,32 +8507,32 @@ Do you want to replace it?</source>
     <message>
         <source>cen</source>
         <comment>center</comment>
-        <translation>சென்</translation>
+        <translation>cen</translation>
     </message>
     <message>
         <source>ce</source>
         <comment>center</comment>
-        <translation>செ</translation>
+        <translation>ce</translation>
     </message>
     <message>
         <source>cl</source>
         <comment>chord length</comment>
-        <translation>கி</translation>
+        <translation>cl</translation>
     </message>
     <message>
         <source>c</source>
         <comment>close</comment>
-        <translation>சி</translation>
+        <translation>c</translation>
     </message>
     <message>
         <source>cols</source>
         <comment>columns</comment>
-        <translation>நிரல்கள்</translation>
+        <translation>cols</translation>
     </message>
     <message>
         <source>co</source>
         <comment>columns</comment>
-        <translation>கோ</translation>
+        <translation>co</translation>
     </message>
     <message>
         <source>columnspacing</source>
@@ -8548,21 +8547,21 @@ Do you want to replace it?</source>
     <message>
         <source>cs</source>
         <comment>columnspacing for inserts</comment>
-        <translation>நிரல் இடைவெளி</translation>
+        <translation>cs</translation>
     </message>
     <message>
         <source>fact</source>
         <comment>factor</comment>
-        <translation>உண்மை</translation>
+        <translation>fact</translation>
     </message>
     <message>
         <source>f</source>
         <comment>factor</comment>
-        <translation>உண்மை</translation>
+        <translation>f</translation>
     </message>
     <message>
         <source>help</source>
-        <translation>உதவி</translation>
+        <translation>help</translation>
     </message>
     <message>
         <source>?</source>
@@ -8577,12 +8576,12 @@ Do you want to replace it?</source>
     <message>
         <source>len</source>
         <comment>length</comment>
-        <translation>நீளம்</translation>
+        <translation>len</translation>
     </message>
     <message>
         <source>l</source>
         <comment>length</comment>
-        <translation>நீளம்</translation>
+        <translation>l</translation>
     </message>
     <message>
         <source>length1</source>
@@ -8622,17 +8621,17 @@ Do you want to replace it?</source>
     <message>
         <source>num</source>
         <comment>number</comment>
-        <translation>எண்</translation>
+        <translation>num</translation>
     </message>
     <message>
         <source>n</source>
         <comment>number</comment>
-        <translation>எ</translation>
+        <translation>n</translation>
     </message>
     <message>
         <source>ra</source>
         <comment>radius</comment>
-        <translation>ரா</translation>
+        <translation>ra</translation>
     </message>
     <message>
         <source>reversed</source>
@@ -8642,12 +8641,12 @@ Do you want to replace it?</source>
     <message>
         <source>rev</source>
         <comment>reversed</comment>
-        <translation>திருப்பு</translation>
+        <translation>rev</translation>
     </message>
     <message>
         <source>row</source>
         <comment>row</comment>
-        <translation>வரிசை</translation>
+        <translation>row</translation>
     </message>
     <message>
         <source>rowspacing</source>
@@ -8657,34 +8656,34 @@ Do you want to replace it?</source>
     <message>
         <source>rs</source>
         <comment>rowspacing for inserts</comment>
-        <translation>ஆர்.எஸ்</translation>
+        <translation>rs</translation>
     </message>
     <message>
         <source>text</source>
-        <translation>உரை</translation>
+        <translation>text</translation>
     </message>
     <message>
         <source>t</source>
         <comment>text</comment>
-        <translation>டி</translation>
+        <translation>t</translation>
     </message>
     <message>
         <source>t</source>
         <comment>through</comment>
-        <translation>டி</translation>
+        <translation>t</translation>
     </message>
     <message>
         <source>undo</source>
-        <translation>செயலைத் திரும்பப் பெறு</translation>
+        <translation>undo</translation>
     </message>
     <message>
         <source>u</source>
         <comment>undo</comment>
-        <translation>யு</translation>
+        <translation>u</translation>
     </message>
     <message>
         <source>redo</source>
-        <translation>மீண்டும் செய்</translation>
+        <translation>redo</translation>
     </message>
     <message>
         <source>r</source>
@@ -8693,7 +8692,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>back</source>
-        <translation>பின்</translation>
+        <translation>back</translation>
     </message>
     <message>
         <source>b</source>
@@ -8731,7 +8730,7 @@ Do you want to replace it?</source>
     <message>
         <source>None</source>
         <comment>unknown length unit</comment>
-        <translation>எதுவுமில்லை</translation>
+        <translation>None</translation>
     </message>
     <message>
         <source>error reading file metadata in dwg file</source>
@@ -8743,7 +8742,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>bw</source>
-        <translation>கருப்பு வெள்ளை</translation>
+        <translation>bw</translation>
     </message>
     <message>
         <source>blackwhite</source>
@@ -8782,7 +8781,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Edit</source>
-        <translation>திருத்து</translation>
+        <translation>Edit</translation>
     </message>
     <message>
         <source>Ellipse</source>
@@ -8790,7 +8789,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>File</source>
-        <translation>கோப்பு</translation>
+        <translation>File</translation>
     </message>
     <message>
         <source>Dimension</source>
@@ -8798,7 +8797,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Info</source>
-        <translation>தகவல்</translation>
+        <translation>Info</translation>
     </message>
     <message>
         <source>Layer</source>
@@ -8806,7 +8805,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Line</source>
-        <translation>கோடு</translation>
+        <translation>Line</translation>
     </message>
     <message>
         <source>Modify</source>
@@ -8834,7 +8833,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Snap</source>
-        <translation>ஸ்னாப்</translation>
+        <translation>Snap</translation>
     </message>
     <message>
         <source>Snap Extras</source>
@@ -8842,7 +8841,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>View</source>
-        <translation>காட்சி</translation>
+        <translation>View</translation>
     </message>
     <message>
         <source>Widgets</source>
@@ -8854,7 +8853,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>All</source>
-        <translation>எல்லாம்</translation>
+        <translation>All</translation>
     </message>
     <message>
         <source>Invalid objects removed:</source>
@@ -8882,7 +8881,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>cal</source>
-        <translation>கணிப்பான்</translation>
+        <translation>cal</translation>
     </message>
     <message>
         <source>Calculator mode: On</source>
@@ -8943,7 +8942,7 @@ Do you want to replace it?</source>
     <message>
         <source>re</source>
         <comment>draw rectangle</comment>
-        <translation>மீண்டும்</translation>
+        <translation>re</translation>
     </message>
     <message>
         <source>linepar</source>
@@ -8958,12 +8957,12 @@ Do you want to replace it?</source>
     <message>
         <source>pa</source>
         <comment>create parallel</comment>
-        <translation>பார்</translation>
+        <translation>pa</translation>
     </message>
     <message>
         <source>ll</source>
         <comment>create parallel</comment>
-        <translation>எல்லா</translation>
+        <translation>ll</translation>
     </message>
     <message>
         <source>lineparthro</source>
@@ -8973,7 +8972,7 @@ Do you want to replace it?</source>
     <message>
         <source>lp</source>
         <comment>parallel through point</comment>
-        <translation>வரிசை</translation>
+        <translation>lp</translation>
     </message>
     <message>
         <source>linebisect</source>
@@ -8988,7 +8987,7 @@ Do you want to replace it?</source>
     <message>
         <source>lt</source>
         <comment>tangent point and circle</comment>
-        <translation>வரி</translation>
+        <translation>lt</translation>
     </message>
     <message>
         <source>linetan2c</source>
@@ -9008,7 +9007,7 @@ Do you want to replace it?</source>
     <message>
         <source>or</source>
         <comment>tangent line and circle</comment>
-        <translation>அல்லது</translation>
+        <translation>or</translation>
     </message>
     <message>
         <source>lineperp</source>
@@ -9048,7 +9047,7 @@ Do you want to replace it?</source>
     <message>
         <source>pcp</source>
         <comment>polygon centre point</comment>
-        <translation>பிசிபி</translation>
+        <translation>pcp</translation>
     </message>
     <message>
         <source>polygoncentan</source>
@@ -9058,7 +9057,7 @@ Do you want to replace it?</source>
     <message>
         <source>pv</source>
         <comment>polygon centre vertex</comment>
-        <translation>பிவி</translation>
+        <translation>pv</translation>
     </message>
     <message>
         <source>polyct</source>
@@ -9073,7 +9072,7 @@ Do you want to replace it?</source>
     <message>
         <source>c</source>
         <comment>draw circle</comment>
-        <translation>சி</translation>
+        <translation>c</translation>
     </message>
     <message>
         <source>circle2p</source>
@@ -9113,7 +9112,7 @@ Do you want to replace it?</source>
     <message>
         <source>cr</source>
         <comment>circle point radius</comment>
-        <translation>சுழற்சி</translation>
+        <translation>cr</translation>
     </message>
     <message>
         <source>ccr</source>
@@ -9148,7 +9147,7 @@ Do you want to replace it?</source>
     <message>
         <source>tc</source>
         <comment>circle 2 tangent radius</comment>
-        <translation>டிசி</translation>
+        <translation>tc</translation>
     </message>
     <message>
         <source>circletan3</source>
@@ -9163,17 +9162,17 @@ Do you want to replace it?</source>
     <message>
         <source>arc</source>
         <comment>arc point radius</comment>
-        <translation>ஆர்க்</translation>
+        <translation>arc</translation>
     </message>
     <message>
         <source>ar</source>
         <comment>arc point radius</comment>
-        <translation>ஆர்</translation>
+        <translation>ar</translation>
     </message>
     <message>
         <source>a</source>
         <comment>arc point radius</comment>
-        <translation>ஏ</translation>
+        <translation>a</translation>
     </message>
     <message>
         <source>arc3p</source>
@@ -9193,17 +9192,17 @@ Do you want to replace it?</source>
     <message>
         <source>at</source>
         <comment>arc tangent</comment>
-        <translation>இங்கு</translation>
+        <translation>at</translation>
     </message>
     <message>
         <source>sf</source>
         <comment>draw spline</comment>
-        <translation>எஸ்எஃப்</translation>
+        <translation>sf</translation>
     </message>
     <message>
         <source>sp</source>
         <comment>spline through points</comment>
-        <translation>எஸ்பி</translation>
+        <translation>sp</translation>
     </message>
     <message>
         <source>arcellc2ax</source>
@@ -9213,12 +9212,12 @@ Do you want to replace it?</source>
     <message>
         <source>ae</source>
         <comment>arc ellipse</comment>
-        <translation>ஏஇ</translation>
+        <translation>ae</translation>
     </message>
     <message>
         <source>fh</source>
         <comment>draw freehand line</comment>
-        <translation>எஃப்எச்</translation>
+        <translation>fh</translation>
     </message>
     <message>
         <source>ellipsec2p</source>
@@ -9228,7 +9227,7 @@ Do you want to replace it?</source>
     <message>
         <source>ea</source>
         <comment>ellipse axis</comment>
-        <translation>ஈஏ</translation>
+        <translation>ea</translation>
     </message>
     <message>
         <source>ellipse3p</source>
@@ -9238,7 +9237,7 @@ Do you want to replace it?</source>
     <message>
         <source>ef</source>
         <comment>ellipse foci</comment>
-        <translation>ஈஎஃப்</translation>
+        <translation>ef</translation>
     </message>
     <message>
         <source>ellipse4p</source>
@@ -9268,7 +9267,7 @@ Do you want to replace it?</source>
     <message>
         <source>pi</source>
         <comment>pl add node</comment>
-        <translation>கோ</translation>
+        <translation>pi</translation>
     </message>
     <message>
         <source>plineapp</source>
@@ -9278,7 +9277,7 @@ Do you want to replace it?</source>
     <message>
         <source>pn</source>
         <comment>pl append node</comment>
-        <translation>கோ</translation>
+        <translation>pn</translation>
     </message>
     <message>
         <source>plinedel</source>
@@ -9288,7 +9287,7 @@ Do you want to replace it?</source>
     <message>
         <source>pd</source>
         <comment>pl delete node</comment>
-        <translation>கோ</translation>
+        <translation>pd</translation>
     </message>
     <message>
         <source>plinedeltwn</source>
@@ -9298,7 +9297,7 @@ Do you want to replace it?</source>
     <message>
         <source>pr</source>
         <comment>pl del between nodes</comment>
-        <translation>பிஆர்</translation>
+        <translation>pr</translation>
     </message>
     <message>
         <source>plinetrm</source>
@@ -9308,7 +9307,7 @@ Do you want to replace it?</source>
     <message>
         <source>pt</source>
         <comment>pl trim segments</comment>
-        <translation>பிடி</translation>
+        <translation>pt</translation>
     </message>
     <message>
         <source>plinepar</source>
@@ -9318,7 +9317,7 @@ Do you want to replace it?</source>
     <message>
         <source>pe</source>
         <comment>pl equidistant</comment>
-        <translation>பிஇ</translation>
+        <translation>pe</translation>
     </message>
     <message>
         <source>plinejoin</source>
@@ -9328,12 +9327,12 @@ Do you want to replace it?</source>
     <message>
         <source>pj</source>
         <comment>pl join</comment>
-        <translation>பிஜே</translation>
+        <translation>pj</translation>
     </message>
     <message>
         <source>sx</source>
         <comment>deselect all entities</comment>
-        <translation>எஸ்எக்ஸ்</translation>
+        <translation>sx</translation>
     </message>
     <message>
         <source>invertselect</source>
@@ -9343,12 +9342,12 @@ Do you want to replace it?</source>
     <message>
         <source>is</source>
         <comment>invert select</comment>
-        <translation>இது</translation>
+        <translation>is</translation>
     </message>
     <message>
         <source>ds</source>
         <comment>dimension - aligned</comment>
-        <translation>டிஎஸ்</translation>
+        <translation>ds</translation>
     </message>
     <message>
         <source>dimradius</source>
@@ -9358,17 +9357,17 @@ Do you want to replace it?</source>
     <message>
         <source>dr</source>
         <comment>dimension - radial</comment>
-        <translation>டிஆர்</translation>
+        <translation>dr</translation>
     </message>
     <message>
         <source>da</source>
         <comment>dimension - angular</comment>
-        <translation>டிஏ</translation>
+        <translation>da</translation>
     </message>
     <message>
         <source>dg</source>
         <comment>dimension - regenerate</comment>
-        <translation>டிஜி</translation>
+        <translation>dg</translation>
     </message>
     <message>
         <source>modmove</source>
@@ -9398,7 +9397,7 @@ Do you want to replace it?</source>
     <message>
         <source>mr</source>
         <comment>modify - move rotate</comment>
-        <translation>எம்ஆர்</translation>
+        <translation>mr</translation>
     </message>
     <message>
         <source>mod2rot</source>
@@ -9418,7 +9417,7 @@ Do you want to replace it?</source>
     <message>
         <source>md</source>
         <comment>modify -  revert direction</comment>
-        <translation>எம்டி</translation>
+        <translation>md</translation>
     </message>
     <message>
         <source>modtrim</source>
@@ -9508,7 +9507,7 @@ Do you want to replace it?</source>
     <message>
         <source>id</source>
         <comment>distance point to point</comment>
-        <translation>ஐடி</translation>
+        <translation>id</translation>
     </message>
     <message>
         <source>infodistep</source>
@@ -9583,7 +9582,7 @@ Do you want to replace it?</source>
     <message>
         <source>dp</source>
         <comment>drawing preferences</comment>
-        <translation>டிபி</translation>
+        <translation>dp</translation>
     </message>
     <message>
         <source>equation</source>
@@ -9602,12 +9601,12 @@ Do you want to replace it?</source>
     <message>
         <source>eqn</source>
         <comment>equation</comment>
-        <translation>சமன்பாடு</translation>
+        <translation>eqn</translation>
     </message>
     <message>
         <source>eq</source>
         <comment>equation</comment>
-        <translation>சமன்பாடு</translation>
+        <translation>eq</translation>
     </message>
     <message>
         <source>Custom</source>
@@ -9916,8 +9915,8 @@ Do you want to replace it?</source>
         <translation>-o some.pdf *.dxf</translation>
     </message>
     <message>
-        <source>-- print all dxf files to &apos;some.pdf&apos; file.</source>
-        <translation>அனைத்து dxf கோப்புகளையும் &apos;some.pdf&apos; கோப்பில் அச்சிடுகிறது.</translation>
+        <source>-- print all dxf files to 'some.pdf' file.</source>
+        <translation>அனைத்து dxf கோப்புகளையும் 'some.pdf' கோப்பில் அச்சிடுகிறது.</translation>
     </message>
     <message>
         <source>Auto fit and center drawing to page.</source>
@@ -9991,8 +9990,8 @@ Do you want to replace it?</source>
         <translation>அனைத்து அடுக்குகளையும் இணைக்கவும்</translation>
     </message>
     <message>
-        <source>File &quot;%1&quot; already exists. Do you want to replace it?</source>
-        <translation>&quot;%1&quot; என்ற கோப்பு ஏற்கனவே உள்ளது. அதை மாற்ற விரும்புகிறீர்களா?</translation>
+        <source>File "%1" already exists. Do you want to replace it?</source>
+        <translation>"%1" என்ற கோப்பு ஏற்கனவே உள்ளது. அதை மாற்ற விரும்புகிறீர்களா?</translation>
     </message>
     <message>
         <source>/CustomColor%1</source>
@@ -10010,7 +10009,7 @@ Do you want to replace it?</source>
     <message>
         <source>R</source>
         <comment>Radial dimension prefix</comment>
-        <translation>ஆர்</translation>
+        <translation>R</translation>
     </message>
     <message>
         <source>sline</source>
@@ -10020,12 +10019,12 @@ Do you want to replace it?</source>
     <message>
         <source>sli</source>
         <comment>draw snake line</comment>
-        <translation>வரி</translation>
+        <translation>sli</translation>
     </message>
     <message>
         <source>sl</source>
         <comment>draw snake line</comment>
-        <translation>வரி</translation>
+        <translation>sl</translation>
     </message>
     <message>
         <source>slinex</source>
@@ -10035,12 +10034,12 @@ Do you want to replace it?</source>
     <message>
         <source>slix</source>
         <comment>draw snake line (X)</comment>
-        <translation>வரி</translation>
+        <translation>slix</translation>
     </message>
     <message>
         <source>rlx</source>
         <comment>draw snake line (X)</comment>
-        <translation>வரி</translation>
+        <translation>rlx</translation>
     </message>
     <message>
         <source>sliney</source>
@@ -10050,12 +10049,12 @@ Do you want to replace it?</source>
     <message>
         <source>sliy</source>
         <comment>draw snake line (Y)</comment>
-        <translation>வரி</translation>
+        <translation>sliy</translation>
     </message>
     <message>
         <source>rly</source>
         <comment>draw snake line (Y)</comment>
-        <translation>வரி</translation>
+        <translation>rly</translation>
     </message>
     <message>
         <source>rect1</source>
@@ -10110,7 +10109,7 @@ Do you want to replace it?</source>
     <message>
         <source>star</source>
         <comment>draw star</comment>
-        <translation>நட்சத்திரம்</translation>
+        <translation>star</translation>
     </message>
     <message>
         <source>st</source>
@@ -10289,11 +10288,11 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>pos</source>
-        <translation>நிலை</translation>
+        <translation>pos</translation>
     </message>
     <message>
         <source>size</source>
-        <translation>அளவு</translation>
+        <translation>size</translation>
     </message>
     <message>
         <source>bevels</source>
@@ -10313,7 +10312,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>str</source>
-        <translation>சரம்</translation>
+        <translation>str</translation>
     </message>
     <message>
         <source>round</source>
@@ -10325,19 +10324,19 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>topl</source>
-        <translation>மேல்புறம் இடது</translation>
+        <translation>topl</translation>
     </message>
     <message>
         <source>top</source>
-        <translation>மேல்</translation>
+        <translation>top</translation>
     </message>
     <message>
         <source>topr</source>
-        <translation>மேல்புறம் வலது</translation>
+        <translation>topr</translation>
     </message>
     <message>
         <source>left</source>
-        <translation>இடது</translation>
+        <translation>left</translation>
     </message>
     <message>
         <source>middle</source>
@@ -10377,11 +10376,11 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>hor</source>
-        <translation>கிடைமட்ட</translation>
+        <translation>hor</translation>
     </message>
     <message>
         <source>vert</source>
-        <translation>செங்குத்து</translation>
+        <translation>vert</translation>
     </message>
     <message>
         <source>snap2</source>
@@ -10401,7 +10400,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>quad</source>
-        <translation>சதுரம்</translation>
+        <translation>quad</translation>
     </message>
     <message>
         <source>noquad</source>
@@ -10433,19 +10432,19 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>end</source>
-        <translation>முடிவு</translation>
+        <translation>end</translation>
     </message>
     <message>
         <source>both</source>
-        <translation>இரண்டும்</translation>
+        <translation>both</translation>
     </message>
     <message>
         <source>none</source>
-        <translation>எதுவுமில்லை</translation>
+        <translation>none</translation>
     </message>
     <message>
         <source>fit</source>
-        <translation>பொருத்து</translation>
+        <translation>fit</translation>
     </message>
     <message>
         <source>nofit</source>
@@ -10465,7 +10464,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>sym</source>
-        <translation>சமச்சீர்</translation>
+        <translation>sym</translation>
     </message>
     <message>
         <source>nosym</source>
@@ -10502,7 +10501,7 @@ Do you want to replace it?</source>
     <message>
         <source>cal </source>
         <comment>command to trigger cli calculator</comment>
-        <translation>கால்</translation>
+        <translation>cal</translation>
     </message>
     <message>
         <source>calculate </source>
@@ -10652,8 +10651,8 @@ Do you want to replace it?</source>
         <translation>கோணத்தை உள்ளிடவும்:</translation>
     </message>
     <message>
-        <source></source>
-        <translation></translation>
+        <source />
+        <translation />
     </message>
     <message>
         <source>Enter factor:</source>
@@ -10705,7 +10704,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>பின்செல்</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -10724,7 +10723,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>பின்</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify dimension line location</source>
@@ -10824,7 +10823,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>பின்செல்</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify dimension line location</source>
@@ -10890,7 +10889,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>பின்னோக்கி</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify start angle:</source>
@@ -10925,7 +10924,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>பின்செல்</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify endpoint</source>
@@ -10952,7 +10951,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>பின்செல்</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify end point</source>
@@ -10975,7 +10974,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>பின்செல்</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify point on circle</source>
@@ -11002,7 +11001,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>பின்செல்</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -11025,7 +11024,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>பின்செல்</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify third point</source>
@@ -11052,7 +11051,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>பின்செல்</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>radius=%1 is invalid (expression)</source>
@@ -11083,7 +11082,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>முந்தைய</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify the third line</source>
@@ -11102,7 +11101,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>முந்தைய</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify the second point on the tangent circle</source>
@@ -11133,31 +11132,31 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>பின்செல்</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Select the center of the tangent circle</source>
         <translation>தொடு வட்டத்தின் மையத்தைத் தேர்ந்தெடுக்கவும்</translation>
     </message>
     <message>
-        <source>Invalid expression &apos;%1&apos; for radius</source>
-        <translation>ஆரம் &apos;%1&apos; க்கான தவறான கோவை</translation>
+        <source>Invalid expression '%1' for radius</source>
+        <translation>ஆரம் '%1' க்கான தவறான கோவை</translation>
     </message>
     <message>
-        <source>Invalid negative radius &apos;%1&apos;</source>
-        <translation>எதிர்மறை ஆரம் &apos;%1&apos; தவறானது</translation>
+        <source>Invalid negative radius '%1'</source>
+        <translation>எதிர்மறை ஆரம் '%1' தவறானது</translation>
     </message>
     <message>
-        <source>Invalid zero radius &apos;%1&apos;</source>
-        <translation>பூஜ்ஜிய ஆரம் &apos;%1&apos; தவறானது</translation>
+        <source>Invalid zero radius '%1'</source>
+        <translation>பூஜ்ஜிய ஆரம் '%1' தவறானது</translation>
     </message>
     <message>
-        <source>No tangent circle possible for radius &apos;%1&apos;</source>
-        <translation>ஆரம் &apos;%1&apos; க்கான தொடு வட்டம் சாத்தியமில்லை</translation>
+        <source>No tangent circle possible for radius '%1'</source>
+        <translation>ஆரம் '%1' க்கான தொடு வட்டம் சாத்தியமில்லை</translation>
     </message>
     <message>
-        <source>No common tangential circle for radius &apos;%1&apos;</source>
-        <translation>ஆரம் &apos;%1&apos; க்கான பொதுவான தொடு வட்டம் இல்லை</translation>
+        <source>No common tangential circle for radius '%1'</source>
+        <translation>ஆரம் '%1' க்கான பொதுவான தொடு வட்டம் இல்லை</translation>
     </message>
 </context>
 <context>
@@ -11176,7 +11175,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>பின்செல்</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify a point on the tangent circle</source>
@@ -11195,7 +11194,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>பின்செல்</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Select the center of the tangent circle</source>
@@ -11230,7 +11229,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>பின்செல்</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify the third point on ellipse</source>
@@ -11265,7 +11264,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>பின்செல்</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify endpoint or length of minor axis:</source>
@@ -11300,7 +11299,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>பின்செல்</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify the third point on ellipse</source>
@@ -11327,7 +11326,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>பின்செல்</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify a point on ellipse or total distance to foci</source>
@@ -11358,7 +11357,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>பின்செல்</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify the third line</source>
@@ -11427,8 +11426,8 @@ This block cannot be inserted.</source>
         <translation>கோணத்தை உள்ளிடவும்:</translation>
     </message>
     <message>
-        <source></source>
-        <translation></translation>
+        <source />
+        <translation />
     </message>
     <message>
         <source>Enter factor:</source>
@@ -11455,7 +11454,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>பின்செல்</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify next point</source>
@@ -11494,7 +11493,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>பின்செல்</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Enter length:</source>
@@ -11521,7 +11520,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>பின்செல்</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Enter bisector length:</source>
@@ -11564,7 +11563,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>பின்செல்</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -11583,7 +11582,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>பின்செல்</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -11625,7 +11624,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>முந்தைய</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Number:</source>
@@ -11643,8 +11642,8 @@ This block cannot be inserted.</source>
 <context>
     <name>RS_ActionDrawLinePolygon</name>
     <message>
-        <source></source>
-        <translation></translation>
+        <source />
+        <translation />
     </message>
 </context>
 <context>
@@ -11686,7 +11685,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>பின்செல்</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Number:</source>
@@ -11717,7 +11716,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>பின்செல்</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -11740,7 +11739,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>பின்செல்</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -11759,7 +11758,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>பின்செல்</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -11770,7 +11769,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>முந்தைய</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Select first circle/ellipse/parabola</source>
@@ -11801,7 +11800,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>முந்தைய</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -11831,7 +11830,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>பின்செல்</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify next point</source>
@@ -11898,7 +11897,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>முந்தைய</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify next control point</source>
@@ -11925,7 +11924,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>பின்செல்</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify second point</source>
@@ -11985,7 +11984,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>பின்செல்</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Angle: %1</source>
@@ -12039,7 +12038,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>பின்செல்</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Distance: %1 Cartesian: (%2 , %3), Polar: (%4&lt;%5)</source>
@@ -12066,7 +12065,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>பின்செல்</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -12122,16 +12121,16 @@ This block cannot be inserted.</source>
         <translation>கோணத்தை உள்ளிடவும்:</translation>
     </message>
     <message>
-        <source></source>
-        <translation></translation>
+        <source />
+        <translation />
     </message>
     <message>
         <source>Enter factor:</source>
         <translation>காரணியை உள்ளிடவும்:</translation>
     </message>
     <message>
-        <source>Cannot open file &apos;%1&apos;</source>
-        <translation>&apos;%1&apos; கோப்பை திறக்க முடியவில்லை</translation>
+        <source>Cannot open file '%1'</source>
+        <translation>'%1' கோப்பை திறக்க முடியவில்லை</translation>
     </message>
 </context>
 <context>
@@ -12161,7 +12160,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>பின்செல்</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Enter length 1:</source>
@@ -12200,7 +12199,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>பின்செல்</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Entity must be a line, arc, circle, ellipse or interpolation spline.</source>
@@ -12223,7 +12222,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>பின்செல்</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Entities not in the same polyline.</source>
@@ -12296,7 +12295,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>பின்செல்</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -12315,7 +12314,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>பின்செல்</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Invalid number of copies, use %1 </source>
@@ -12342,7 +12341,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>பின்செல்</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Enter rotation angle:</source>
@@ -12357,7 +12356,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>பின்செல்</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -12368,7 +12367,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>பின்செல்</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify rotation center</source>
@@ -12395,7 +12394,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>பின்செல்</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -12406,7 +12405,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>பின்செல்</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify second entity</source>
@@ -12460,7 +12459,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>பின்செல்</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify reference point</source>
@@ -12487,7 +12486,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>பின்செல்</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Select second trim entity</source>
@@ -12522,7 +12521,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>பின்செல்</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -12567,12 +12566,12 @@ This block cannot be inserted.</source>
         <translation>ரத்து செய்</translation>
     </message>
     <message>
-        <source>Specify adding node&apos;s point</source>
+        <source>Specify adding node's point</source>
         <translation>புள்ளியைச் சேர்க்க வேண்டிய இடத்தைக் குறிப்பிடவும்.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>பின்செல்</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -12603,7 +12602,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>திரும்ப</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify next point</source>
@@ -12637,12 +12636,12 @@ This block cannot be inserted.</source>
         <translation>ரத்து செய்</translation>
     </message>
     <message>
-        <source>Specify deleting node&apos;s point</source>
+        <source>Specify deleting node's point</source>
         <translation>நீக்க வேண்டிய முனையின் புள்ளியைக் குறிப்பிடவும்</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>முந்தைய</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Deleting point is invalid.</source>
@@ -12681,7 +12680,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>முந்தைய</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify second node</source>
@@ -12766,7 +12765,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>பின்செல்</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify second segment</source>
@@ -12804,8 +12803,8 @@ This block cannot be inserted.</source>
         <translation>அச்சிடப்பட்ட நகலை நகர்த்துவதற்கு கட்டளை வரியில் இருந்து நகர்வு மதிப்பை உள்ளிடவும்</translation>
     </message>
     <message>
-        <source>Printout offset ignores relative zero. Ignoring &apos;@&apos;</source>
-        <translation>அச்சிடப்பட்ட நகலின் நகர்வு சார்பு பூஜ்ஜியத்தை புறக்கணிக்கிறது. &apos;@&apos; ஐ புறக்கணிக்கிறது</translation>
+        <source>Printout offset ignores relative zero. Ignoring '@'</source>
+        <translation>அச்சிடப்பட்ட நகலின் நகர்வு சார்பு பூஜ்ஜியத்தை புறக்கணிக்கிறது. '@' ஐ புறக்கணிக்கிறது</translation>
     </message>
     <message>
         <source>Printout in Black/White</source>
@@ -12922,7 +12921,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>பின்செல்</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -12937,7 +12936,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>பின்செல்</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Click and drag for the selection window</source>
@@ -12971,7 +12970,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>பின்செல்</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Select second entity</source>
@@ -13020,7 +13019,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>பின்செல்</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -13089,7 +13088,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Trim</source>
-        <translation>வெட்டு</translation>
+        <translation>Trim</translation>
     </message>
     <message>
         <source>Length 1:</source>
@@ -13204,7 +13203,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>DPI</source>
-        <translation>டிபிஐ</translation>
+        <translation>DPI</translation>
     </message>
     <message>
         <source>DPI of Image</source>
@@ -13317,7 +13316,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>End</source>
-        <translation>முடிவு</translation>
+        <translation>End</translation>
     </message>
 </context>
 <context>
@@ -13363,7 +13362,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Undo</source>
-        <translation>நீக்கு</translation>
+        <translation>Undo</translation>
     </message>
     <message>
         <source>Redo the last line drawing</source>
@@ -13371,7 +13370,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Redo</source>
-        <translation>மீண்டும் செய்</translation>
+        <translation>Redo</translation>
     </message>
 </context>
 <context>
@@ -13402,7 +13401,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Rel</source>
-        <translation>உறவினர்</translation>
+        <translation>Rel</translation>
     </message>
     <message>
         <source>Undo the last line drawing</source>
@@ -13410,7 +13409,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Undo</source>
-        <translation>செயல்தவிர்க்க</translation>
+        <translation>Undo</translation>
     </message>
     <message>
         <source>Form a closed contour from lines drawn</source>
@@ -13426,7 +13425,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Redo</source>
-        <translation>மீண்டும் செய்</translation>
+        <translation>Redo</translation>
     </message>
     <message>
         <source>Point</source>
@@ -13577,11 +13576,11 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Undo</source>
-        <translation>செயலைத் திரும்பப் பெறு</translation>
+        <translation>Undo</translation>
     </message>
     <message>
         <source>Line</source>
-        <translation>கோடு</translation>
+        <translation>Line</translation>
     </message>
     <message>
         <source>Tangential</source>
@@ -13663,7 +13662,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Trim</source>
-        <translation>வெட்டு</translation>
+        <translation>Trim</translation>
     </message>
     <message>
         <source>Radius:</source>
@@ -13712,7 +13711,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Undo</source>
-        <translation>செயலைத் திரும்பப் பெறு</translation>
+        <translation>Undo</translation>
     </message>
 </context>
 <context>
@@ -13769,7 +13768,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Name</source>
-        <translation>பெயர்</translation>
+        <translation>Name</translation>
     </message>
     <message>
         <source>Create</source>

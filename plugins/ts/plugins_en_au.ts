@@ -11,6 +11,15 @@
     </message>
 </context>
 <context>
+    <name>CircleToolsPlugin</name>
+    <message>
+        <location filename="../circletools/circletools.cpp" line="50"/>
+        <location filename="../circletools/circletools.cpp" line="56"/>
+        <source>CircleTools</source>
+        <translation>CircleTools</translation>
+    </message>
+</context>
+<context>
     <name>ExpTo_Csv</name>
     <message>
         <location filename="../pointstocsv/pointstocsv.cpp" line="34"/>

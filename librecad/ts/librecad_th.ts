@@ -28,7 +28,7 @@
     </message>
     <message>
         <source>Set</source>
-        <translation>ตั้งค่า</translation>
+        <translation>Set</translation>
     </message>
 </context>
 <context>
@@ -126,7 +126,7 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>ย้อนกลับ</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Select circle center</source>
@@ -147,7 +147,7 @@ or [%2]</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>ย้อนกลับ</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Y</source>
@@ -191,7 +191,7 @@ or [%2]</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>ย้อนกลับ</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify distance (%1) or [%2]</source>
@@ -234,7 +234,7 @@ or [%2]</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>ย้อนกลับ</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify the third point on parabola</source>
@@ -265,7 +265,7 @@ or [%2]</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>ย้อนกลับ</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify the start point on parabola</source>
@@ -288,11 +288,11 @@ or [%2]</source>
     </message>
     <message>
         <source>Line</source>
-        <translation>เส้นตรง</translation>
+        <translation>Line</translation>
     </message>
     <message>
         <source>Arc</source>
-        <translation>วงโค้ง</translation>
+        <translation>Arc</translation>
     </message>
     <message>
         <source>Circle</source>
@@ -315,7 +315,7 @@ or [%2]</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>ย้อนกลับ</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify next control point</source>
@@ -933,7 +933,7 @@ or [%2]</source>
     </message>
     <message>
         <source>Left</source>
-        <translation>ซ้าย</translation>
+        <translation>Left</translation>
     </message>
     <message>
         <source>Right</source>
@@ -941,7 +941,7 @@ or [%2]</source>
     </message>
     <message>
         <source>Top</source>
-        <translation>บน</translation>
+        <translation>Top</translation>
     </message>
     <message>
         <source>Bottom</source>
@@ -1070,7 +1070,7 @@ or [%2]</source>
     </message>
     <message>
         <source>Star</source>
-        <translation>ดาว</translation>
+        <translation>Star</translation>
     </message>
     <message>
         <source>Break/Divide</source>
@@ -1205,14 +1205,14 @@ or [%2]</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>ย้อนกลับ</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
     <name>LC_CircleByArcOptions</name>
     <message>
         <source>Form</source>
-        <translation>แบบฟอร์ม</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <source>Active</source>
@@ -1247,7 +1247,7 @@ or [%2]</source>
     <name>LC_CrossOptions</name>
     <message>
         <source>Form</source>
-        <translation>แบบฟอร์ม</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <source>Extension</source>
@@ -1271,7 +1271,7 @@ or [%2]</source>
     </message>
     <message>
         <source>Type</source>
-        <translation>ประเภท</translation>
+        <translation>Type</translation>
     </message>
     <message>
         <source>Angle:</source>
@@ -1282,7 +1282,7 @@ or [%2]</source>
     <name>LC_DeviceOptions</name>
     <message>
         <source>Form</source>
-        <translation>แบบฟอร์ม</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <source>Device</source>
@@ -1290,7 +1290,7 @@ or [%2]</source>
     </message>
     <message>
         <source>Save</source>
-        <translation>บันทึก</translation>
+        <translation>Save</translation>
     </message>
 </context>
 <context>
@@ -1304,7 +1304,7 @@ or [%2]</source>
     <name>LC_DuplicateOptions</name>
     <message>
         <source>Form</source>
-        <translation>แบบฟอร์ม</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <source>Layer:</source>
@@ -1730,7 +1730,7 @@ or [%2]</source>
     <name>LC_LineAngleRelOptions</name>
     <message>
         <source>Form</source>
-        <translation>แบบฟอร์ม</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <source>Offset:</source>
@@ -1738,7 +1738,7 @@ or [%2]</source>
     </message>
     <message>
         <source>Free</source>
-        <translation>อิสระ</translation>
+        <translation>Free</translation>
     </message>
     <message>
         <source>Start</source>
@@ -1750,7 +1750,7 @@ or [%2]</source>
     </message>
     <message>
         <source>End</source>
-        <translation>สิ้นสุด</translation>
+        <translation>End</translation>
     </message>
     <message>
         <source>Line Snap:</source>
@@ -1758,7 +1758,7 @@ or [%2]</source>
     </message>
     <message>
         <source>Rel</source>
-        <translation>สัมพัทธ์</translation>
+        <translation>Rel</translation>
     </message>
     <message>
         <source>Divide</source>
@@ -1785,7 +1785,7 @@ or [%2]</source>
     <name>LC_LineFromPointToLineOptions</name>
     <message>
         <source>Form</source>
-        <translation>แบบฟอร์ม</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <source>Angle:</source>
@@ -1821,7 +1821,7 @@ or [%2]</source>
     </message>
     <message>
         <source>End</source>
-        <translation>สิ้นสุด</translation>
+        <translation>End</translation>
     </message>
     <message>
         <source>Length:</source>
@@ -1836,7 +1836,7 @@ or [%2]</source>
     <name>LC_LineJoinOptions</name>
     <message>
         <source>Form</source>
-        <translation>แบบฟอร์ม</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <source>Extend/Trim</source>
@@ -1891,7 +1891,7 @@ or [%2]</source>
     <name>LC_LinePointsOptions</name>
     <message>
         <source>Form</source>
-        <translation>แบบฟอร์ม</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <source>Angle:</source>
@@ -1903,11 +1903,11 @@ or [%2]</source>
     </message>
     <message>
         <source>None</source>
-        <translation>ไม่มี</translation>
+        <translation>None</translation>
     </message>
     <message>
         <source>Both</source>
-        <translation>ทั้งคู่</translation>
+        <translation>Both</translation>
     </message>
     <message>
         <source>Start</source>
@@ -1915,7 +1915,7 @@ or [%2]</source>
     </message>
     <message>
         <source>End</source>
-        <translation>สิ้นสุด</translation>
+        <translation>End</translation>
     </message>
     <message>
         <source>Edge Points:</source>
@@ -1934,7 +1934,7 @@ or [%2]</source>
     <name>LC_ModifyBreakDivideOptions</name>
     <message>
         <source>Form</source>
-        <translation>แบบฟอร์ม</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <source>Remove Segments</source>
@@ -1949,7 +1949,7 @@ or [%2]</source>
     <name>LC_ModifyGapOptions</name>
     <message>
         <source>Form</source>
-        <translation>แบบฟอร์ม</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <source>Gap Snap:</source>
@@ -1961,7 +1961,7 @@ or [%2]</source>
     </message>
     <message>
         <source>Free</source>
-        <translation>อิสระ</translation>
+        <translation>Free</translation>
     </message>
     <message>
         <source>Gap Size:</source>
@@ -1977,7 +1977,7 @@ or [%2]</source>
     </message>
     <message>
         <source>End</source>
-        <translation>สิ้นสุด</translation>
+        <translation>End</translation>
     </message>
     <message>
         <source>Line Snap:</source>
@@ -2143,7 +2143,7 @@ or [%2]</source>
     </message>
     <message>
         <source>Save</source>
-        <translation>บันทึก</translation>
+        <translation>Save</translation>
     </message>
     <message>
         <source>Apply Pen To Selection</source>
@@ -2248,7 +2248,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <name>LC_Rectangle1PointOptions</name>
     <message>
         <source>Form</source>
-        <translation>แบบฟอร์ม</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <source>Polyline</source>
@@ -2292,7 +2292,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     </message>
     <message>
         <source>Top</source>
-        <translation>บน</translation>
+        <translation>Top</translation>
     </message>
     <message>
         <source>Top-right</source>
@@ -2300,7 +2300,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     </message>
     <message>
         <source>Left</source>
-        <translation>ซ้าย</translation>
+        <translation>Left</translation>
     </message>
     <message>
         <source>Middle</source>
@@ -2340,7 +2340,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     </message>
     <message>
         <source>Both</source>
-        <translation>ทั้งคู่</translation>
+        <translation>Both</translation>
     </message>
     <message>
         <source>Vertical</source>
@@ -2363,7 +2363,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <name>LC_Rectangle2PointsOptions</name>
     <message>
         <source>Form</source>
-        <translation>แบบฟอร์ม</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <source>Snap shift</source>
@@ -2435,7 +2435,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     </message>
     <message>
         <source>Both</source>
-        <translation>ทั้งคู่</translation>
+        <translation>Both</translation>
     </message>
     <message>
         <source>Vertical</source>
@@ -2450,7 +2450,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <name>LC_Rectangle3PointsOptions</name>
     <message>
         <source>Form</source>
-        <translation>แบบฟอร์ม</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <source>Polyline</source>
@@ -2458,7 +2458,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     </message>
     <message>
         <source>Both</source>
-        <translation>ทั้งคู่</translation>
+        <translation>Both</translation>
     </message>
     <message>
         <source>Vertical</source>
@@ -2532,15 +2532,15 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <name>LC_SliceDivideOptions</name>
     <message>
         <source>Form</source>
-        <translation>แบบฟอร์ม</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <source>None</source>
-        <translation>ไม่มี</translation>
+        <translation>None</translation>
     </message>
     <message>
         <source>Both</source>
-        <translation>ทั้งคู่</translation>
+        <translation>Both</translation>
     </message>
     <message>
         <source>Start</source>
@@ -2548,7 +2548,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     </message>
     <message>
         <source>End</source>
-        <translation>สิ้นสุด</translation>
+        <translation>End</translation>
     </message>
     <message>
         <source>Edge Tick:</source>
@@ -2556,7 +2556,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     </message>
     <message>
         <source>Rel</source>
-        <translation>สัมพัทธ์</translation>
+        <translation>Rel</translation>
     </message>
     <message>
         <source>Offset:</source>
@@ -2603,7 +2603,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <name>LC_StarOptions</name>
     <message>
         <source>Form</source>
-        <translation>แบบฟอร์ม</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <source>Radius Inner</source>
@@ -2638,7 +2638,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     </message>
     <message>
         <source>Dock</source>
-        <translation>เทียบท่า</translation>
+        <translation>Dock</translation>
     </message>
     <message>
         <source>Float</source>
@@ -3025,15 +3025,15 @@ Auto-save disabled.</source>
     </message>
     <message>
         <source>File</source>
-        <translation>แฟ้ม</translation>
+        <translation>File</translation>
     </message>
     <message>
         <source>Edit</source>
-        <translation>แก้ไข</translation>
+        <translation>Edit</translation>
     </message>
     <message>
         <source>View</source>
-        <translation>มุมมอง</translation>
+        <translation>View</translation>
     </message>
     <message>
         <source>Snap Selection</source>
@@ -3101,7 +3101,7 @@ Please check its existence and permissions.</source>
     </message>
     <message>
         <source>Line</source>
-        <translation>เส้นตรง</translation>
+        <translation>Line</translation>
     </message>
     <message>
         <source>Circle</source>
@@ -3133,11 +3133,11 @@ Please check its existence and permissions.</source>
     </message>
     <message>
         <source>Info</source>
-        <translation>ข้อมูล</translation>
+        <translation>Info</translation>
     </message>
     <message>
         <source>Pen</source>
-        <translation>ปากกา</translation>
+        <translation>Pen</translation>
     </message>
     <message>
         <source>Opening recent file...</source>
@@ -3197,7 +3197,7 @@ Please check its existence and permissions.</source>
     </message>
     <message>
         <source>Copy</source>
-        <translation>คัดลอก</translation>
+        <translation>Copy</translation>
     </message>
     <message>
         <source>Contributors</source>
@@ -3291,11 +3291,11 @@ Please check its existence and permissions.</source>
     </message>
     <message>
         <source>East</source>
-        <translation>ตะวันออก</translation>
+        <translation>East</translation>
     </message>
     <message>
         <source>West</source>
-        <translation>ตะวันตก</translation>
+        <translation>West</translation>
     </message>
     <message>
         <source>&amp;Arrange</source>
@@ -3319,7 +3319,7 @@ Please check its existence and permissions.</source>
     </message>
     <message>
         <source>Cmd</source>
-        <translation>คำสั่ง</translation>
+        <translation>Cmd</translation>
     </message>
     <message>
         <source>Float</source>
@@ -3328,7 +3328,7 @@ Please check its existence and permissions.</source>
     <message>
         <source>Dock</source>
         <comment>Dock the command widget to the main window</comment>
-        <translation>เทียบท่า</translation>
+        <translation>Dock</translation>
     </message>
     <message>
         <source>&amp;Wiki</source>
@@ -3546,7 +3546,7 @@ in a separate window</source>
     </message>
     <message>
         <source>Red</source>
-        <translation>แดง</translation>
+        <translation>Red</translation>
     </message>
     <message>
         <source>Yellow</source>
@@ -3558,11 +3558,11 @@ in a separate window</source>
     </message>
     <message>
         <source>Cyan</source>
-        <translation>ฟ้าเขียว</translation>
+        <translation>Cyan</translation>
     </message>
     <message>
         <source>Blue</source>
-        <translation>น้ำเงิน</translation>
+        <translation>Blue</translation>
     </message>
     <message>
         <source>Magenta</source>
@@ -3574,7 +3574,7 @@ in a separate window</source>
     </message>
     <message>
         <source>Gray</source>
-        <translation>เทา</translation>
+        <translation>Gray</translation>
     </message>
     <message>
         <source>Light Gray</source>
@@ -3676,7 +3676,7 @@ in a separate window</source>
     </message>
     <message>
         <source>Dock</source>
-        <translation>ยึด</translation>
+        <translation>Dock</translation>
     </message>
     <message>
         <source>Float</source>
@@ -3688,7 +3688,7 @@ in a separate window</source>
     </message>
     <message>
         <source>Cmd</source>
-        <translation>คำสั่ง</translation>
+        <translation>Cmd</translation>
     </message>
 </context>
 <context>
@@ -3767,7 +3767,7 @@ in a separate window</source>
     <name>QG_DlgArc</name>
     <message>
         <source>Arc</source>
-        <translation>ส่วนโค้ง</translation>
+        <translation>Arc</translation>
     </message>
     <message>
         <source>Layer:</source>
@@ -3959,7 +3959,7 @@ This recursively modifies all entities of the Block itself.</source>
     </message>
     <message>
         <source>Area</source>
-        <translation>พื้นที่</translation>
+        <translation>Area</translation>
     </message>
 </context>
 <context>
@@ -4099,7 +4099,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <name>QG_DlgLine</name>
     <message>
         <source>Line</source>
-        <translation>เส้น</translation>
+        <translation>Line</translation>
     </message>
     <message>
         <source>Layer:</source>
@@ -4214,11 +4214,11 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>Cut</source>
-        <translation>ตัด</translation>
+        <translation>Cut</translation>
     </message>
     <message>
         <source>Copy</source>
-        <translation>คัดลอก</translation>
+        <translation>Copy</translation>
     </message>
     <message>
         <source>Paste</source>
@@ -5018,7 +5018,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>auto</source>
-        <translation>อัตโนมัติ</translation>
+        <translation>auto</translation>
     </message>
     <message>
         <source>&amp;Grid</source>
@@ -5038,7 +5038,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>Left</source>
-        <translation>ซ้าย</translation>
+        <translation>Left</translation>
     </message>
     <message>
         <source>Top crosshair with isometric grid</source>
@@ -5046,7 +5046,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>Top</source>
-        <translation>ด้านบน</translation>
+        <translation>Top</translation>
     </message>
     <message>
         <source>Right crosshair with isometric grid</source>
@@ -5461,7 +5461,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>All</source>
-        <translation>ทั้งหมด</translation>
+        <translation>All</translation>
     </message>
     <message>
         <source>Scrollbars</source>
@@ -5933,7 +5933,7 @@ so default step value required for baking</source>
     <name>QG_DlgText</name>
     <message>
         <source>Text</source>
-        <translation>ข้อความ</translation>
+        <translation>Text</translation>
     </message>
     <message>
         <source>Text:</source>
@@ -5953,11 +5953,11 @@ so default step value required for baking</source>
     </message>
     <message>
         <source>Cut</source>
-        <translation>ตัด</translation>
+        <translation>Cut</translation>
     </message>
     <message>
         <source>Copy</source>
-        <translation>คัดลอก</translation>
+        <translation>Copy</translation>
     </message>
     <message>
         <source>Paste</source>
@@ -6549,7 +6549,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <source>Fit</source>
-        <translation>ปรับขนาด</translation>
+        <translation>Fit</translation>
     </message>
     <message>
         <source>Diameter (⌀)</source>
@@ -6695,7 +6695,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <source>auto</source>
-        <translation>อัตโนมัติ</translation>
+        <translation>auto</translation>
     </message>
     <message>
         <source>Colouring</source>
@@ -6895,7 +6895,7 @@ The contents of a Construction Layer should not appear in printout.</source>
     </message>
     <message>
         <source>Dot</source>
-        <translation>จุด</translation>
+        <translation>Dot</translation>
     </message>
     <message>
         <source>Dot (small)</source>
@@ -6907,7 +6907,7 @@ The contents of a Construction Layer should not appear in printout.</source>
     </message>
     <message>
         <source>Dash</source>
-        <translation>เส้นประ</translation>
+        <translation>Dash</translation>
     </message>
     <message>
         <source>Dash (small)</source>
@@ -7006,7 +7006,7 @@ The contents of a Construction Layer should not appear in printout.</source>
     </message>
     <message>
         <source>Left</source>
-        <translation>ซ้าย</translation>
+        <translation>Left</translation>
     </message>
     <message>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
@@ -7081,7 +7081,7 @@ p, li { white-space: pre-wrap; }
     <name>QG_SnapToolBar</name>
     <message>
         <source>Snap</source>
-        <translation>จัดเรียง</translation>
+        <translation>Snap</translation>
     </message>
     <message>
         <source>Snap to Endpoints</source>
@@ -7212,7 +7212,7 @@ p, li { white-space: pre-wrap; }
     <name>QG_WidgetPen</name>
     <message>
         <source>Pen</source>
-        <translation>ลักษณะเส้น</translation>
+        <translation>Pen</translation>
     </message>
     <message>
         <source>Line type:</source>
@@ -7564,15 +7564,15 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Inch</source>
-        <translation>นิ้ว</translation>
+        <translation>Inch</translation>
     </message>
     <message>
         <source>Foot</source>
-        <translation>ฟุต</translation>
+        <translation>Foot</translation>
     </message>
     <message>
         <source>Mile</source>
-        <translation>ไมล์</translation>
+        <translation>Mile</translation>
     </message>
     <message>
         <source>Millimeter</source>
@@ -7596,11 +7596,11 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Mil</source>
-        <translation>ไมล์</translation>
+        <translation>Mil</translation>
     </message>
     <message>
         <source>Yard</source>
-        <translation>หลา</translation>
+        <translation>Yard</translation>
     </message>
     <message>
         <source>Angstrom</source>
@@ -7815,7 +7815,7 @@ Do you want to replace it?</source>
     <message>
         <source>line</source>
         <comment>draw line</comment>
-        <translation>เส้น</translation>
+        <translation>line</translation>
     </message>
     <message>
         <source>li</source>
@@ -7840,7 +7840,7 @@ Do you want to replace it?</source>
     <message>
         <source>free</source>
         <comment>draw freehand line</comment>
-        <translation>อิสระ</translation>
+        <translation>free</translation>
     </message>
     <message>
         <source>fhl</source>
@@ -7855,7 +7855,7 @@ Do you want to replace it?</source>
     <message>
         <source>spl</source>
         <comment>draw spline</comment>
-        <translation>สปล.</translation>
+        <translation>spl</translation>
     </message>
     <message>
         <source>spline2</source>
@@ -7895,7 +7895,7 @@ Do you want to replace it?</source>
     <message>
         <source>rect</source>
         <comment>draw rectangle</comment>
-        <translation>สี่เหลี่ยมผืนผ้า</translation>
+        <translation>rect</translation>
     </message>
     <message>
         <source>polygon2v</source>
@@ -7975,7 +7975,7 @@ Do you want to replace it?</source>
     <message>
         <source>text</source>
         <comment>draw text</comment>
-        <translation>ข้อความ</translation>
+        <translation>text</translation>
     </message>
     <message>
         <source>txt</source>
@@ -8045,32 +8045,32 @@ Do you want to replace it?</source>
     <message>
         <source>kill</source>
         <comment>kill all actions</comment>
-        <translation>ฆ่า</translation>
+        <translation>kill</translation>
     </message>
     <message>
         <source>k</source>
         <comment>kill all actions</comment>
-        <translation>ฆ</translation>
+        <translation>k</translation>
     </message>
     <message>
         <source>undo</source>
         <comment>undo cycle</comment>
-        <translation>ยกเลิก</translation>
+        <translation>undo</translation>
     </message>
     <message>
         <source>u</source>
         <comment>undo cycle</comment>
-        <translation>ย</translation>
+        <translation>u</translation>
     </message>
     <message>
         <source>redo</source>
         <comment>redo cycle</comment>
-        <translation>ทำซ้ำ</translation>
+        <translation>redo</translation>
     </message>
     <message>
         <source>r</source>
         <comment>redo cycle</comment>
-        <translation>ท</translation>
+        <translation>r</translation>
     </message>
     <message>
         <source>dimaligned</source>
@@ -8085,7 +8085,7 @@ Do you want to replace it?</source>
     <message>
         <source>dh</source>
         <comment>dimension - horizontal</comment>
-        <translation>น</translation>
+        <translation>dh</translation>
     </message>
     <message>
         <source>dimvertical</source>
@@ -8195,52 +8195,52 @@ Do you want to replace it?</source>
     <message>
         <source>mv</source>
         <comment>modify - move (copy)</comment>
-        <translation>ย้าย</translation>
+        <translation>mv</translation>
     </message>
     <message>
         <source>bev</source>
         <comment>modify - bevel</comment>
-        <translation>ย้าย</translation>
+        <translation>bev</translation>
     </message>
     <message>
         <source>ch</source>
         <comment>modify - bevel</comment>
-        <translation>เปลี่ยน</translation>
+        <translation>ch</translation>
     </message>
     <message>
         <source>fi</source>
         <comment>modify - fillet</comment>
-        <translation>ค้นหา</translation>
+        <translation>fi</translation>
     </message>
     <message>
         <source>cut</source>
         <comment>modify - divide (cut)</comment>
-        <translation>ตัด</translation>
+        <translation>cut</translation>
     </message>
     <message>
         <source>div</source>
         <comment>modify - divide (cut)</comment>
-        <translation>หาร</translation>
+        <translation>div</translation>
     </message>
     <message>
         <source>mi</source>
         <comment>modify -  mirror</comment>
-        <translation>น้อยที่สุด</translation>
+        <translation>mi</translation>
     </message>
     <message>
         <source>rev</source>
         <comment>modify -  revert direction</comment>
-        <translation>ย้อนกลับ</translation>
+        <translation>rev</translation>
     </message>
     <message>
         <source>ro</source>
         <comment>modify - rotate</comment>
-        <translation>หมุน</translation>
+        <translation>ro</translation>
     </message>
     <message>
         <source>sz</source>
         <comment>modify - scale</comment>
-        <translation>ขนาด</translation>
+        <translation>sz</translation>
     </message>
     <message>
         <source>tm</source>
@@ -8395,22 +8395,22 @@ Do you want to replace it?</source>
     <message>
         <source>attr</source>
         <comment>modify attribute</comment>
-        <translation>คุณสมบัติ</translation>
+        <translation>attr</translation>
     </message>
     <message>
         <source>ma</source>
         <comment>modify attribute</comment>
-        <translation>มา</translation>
+        <translation>ma</translation>
     </message>
     <message>
         <source>prop</source>
         <comment>modify properties</comment>
-        <translation>คุณสมบัติ</translation>
+        <translation>prop</translation>
     </message>
     <message>
         <source>dist</source>
         <comment>distance point to point</comment>
-        <translation>ระยะห่าง</translation>
+        <translation>dist</translation>
     </message>
     <message>
         <source>dpp</source>
@@ -8420,7 +8420,7 @@ Do you want to replace it?</source>
     <message>
         <source>ang</source>
         <comment>measure angle</comment>
-        <translation>มุม</translation>
+        <translation>ang</translation>
     </message>
     <message>
         <source>angle</source>
@@ -8464,7 +8464,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>rows</source>
-        <translation>แถว</translation>
+        <translation>rows</translation>
     </message>
     <message>
         <source>rowspacing</source>
@@ -8476,7 +8476,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>trim</source>
-        <translation>ตัดแต่ง</translation>
+        <translation>trim</translation>
     </message>
     <message>
         <source>ang</source>
@@ -8535,21 +8535,21 @@ Do you want to replace it?</source>
     <message>
         <source>cs</source>
         <comment>columnspacing for inserts</comment>
-        <translation>ระยะห่าง</translation>
+        <translation>cs</translation>
     </message>
     <message>
         <source>fact</source>
         <comment>factor</comment>
-        <translation>ข้อเท็จจริง</translation>
+        <translation>fact</translation>
     </message>
     <message>
         <source>f</source>
         <comment>factor</comment>
-        <translation>ข้อเท็จจริง</translation>
+        <translation>f</translation>
     </message>
     <message>
         <source>help</source>
-        <translation>ช่วยเหลือ</translation>
+        <translation>help</translation>
     </message>
     <message>
         <source>?</source>
@@ -8564,12 +8564,12 @@ Do you want to replace it?</source>
     <message>
         <source>len</source>
         <comment>length</comment>
-        <translation>ความยาว</translation>
+        <translation>len</translation>
     </message>
     <message>
         <source>l</source>
         <comment>length</comment>
-        <translation>ความยาว</translation>
+        <translation>l</translation>
     </message>
     <message>
         <source>length1</source>
@@ -8609,17 +8609,17 @@ Do you want to replace it?</source>
     <message>
         <source>num</source>
         <comment>number</comment>
-        <translation>จำนวน</translation>
+        <translation>num</translation>
     </message>
     <message>
         <source>n</source>
         <comment>number</comment>
-        <translation>น</translation>
+        <translation>n</translation>
     </message>
     <message>
         <source>ra</source>
         <comment>radius</comment>
-        <translation>รา</translation>
+        <translation>ra</translation>
     </message>
     <message>
         <source>reversed</source>
@@ -8634,7 +8634,7 @@ Do you want to replace it?</source>
     <message>
         <source>row</source>
         <comment>row</comment>
-        <translation>แถว</translation>
+        <translation>row</translation>
     </message>
     <message>
         <source>rowspacing</source>
@@ -8648,7 +8648,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>text</source>
-        <translation>ข้อความ</translation>
+        <translation>text</translation>
     </message>
     <message>
         <source>t</source>
@@ -8662,7 +8662,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>undo</source>
-        <translation>ยกเลิก</translation>
+        <translation>undo</translation>
     </message>
     <message>
         <source>u</source>
@@ -8671,7 +8671,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>redo</source>
-        <translation>ทำซ้ำ</translation>
+        <translation>redo</translation>
     </message>
     <message>
         <source>r</source>
@@ -8680,7 +8680,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>back</source>
-        <translation>ย้อนกลับ</translation>
+        <translation>back</translation>
     </message>
     <message>
         <source>b</source>
@@ -8718,7 +8718,7 @@ Do you want to replace it?</source>
     <message>
         <source>None</source>
         <comment>unknown length unit</comment>
-        <translation>ไม่มี</translation>
+        <translation>None</translation>
     </message>
     <message>
         <source>error reading file metadata in dwg file</source>
@@ -8730,7 +8730,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>bw</source>
-        <translation>ขาวดำ</translation>
+        <translation>bw</translation>
     </message>
     <message>
         <source>blackwhite</source>
@@ -8743,7 +8743,7 @@ Do you want to replace it?</source>
     <message>
         <source>di</source>
         <comment>modify - divide (cut)</comment>
-        <translation>ได</translation>
+        <translation>di</translation>
     </message>
     <message>
         <source>t2</source>
@@ -8753,7 +8753,7 @@ Do you want to replace it?</source>
     <message>
         <source>mp</source>
         <comment>modify properties</comment>
-        <translation>เอ็มพี</translation>
+        <translation>mp</translation>
     </message>
     <message>
         <source>Block</source>
@@ -8769,7 +8769,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Edit</source>
-        <translation>แก้ไข</translation>
+        <translation>Edit</translation>
     </message>
     <message>
         <source>Ellipse</source>
@@ -8777,7 +8777,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>File</source>
-        <translation>ไฟล์</translation>
+        <translation>File</translation>
     </message>
     <message>
         <source>Dimension</source>
@@ -8785,7 +8785,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Info</source>
-        <translation>ข้อมูล</translation>
+        <translation>Info</translation>
     </message>
     <message>
         <source>Layer</source>
@@ -8793,7 +8793,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Line</source>
-        <translation>เส้น</translation>
+        <translation>Line</translation>
     </message>
     <message>
         <source>Modify</source>
@@ -8821,7 +8821,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Snap</source>
-        <translation>จัดเรียง</translation>
+        <translation>Snap</translation>
     </message>
     <message>
         <source>Snap Extras</source>
@@ -8829,7 +8829,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>View</source>
-        <translation>มุมมอง</translation>
+        <translation>View</translation>
     </message>
     <message>
         <source>Widgets</source>
@@ -8841,7 +8841,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>All</source>
-        <translation>ทั้งหมด</translation>
+        <translation>All</translation>
     </message>
     <message>
         <source>Invalid objects removed:</source>
@@ -8869,7 +8869,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>cal</source>
-        <translation>แคล</translation>
+        <translation>cal</translation>
     </message>
     <message>
         <source>Calculator mode: On</source>
@@ -8995,7 +8995,7 @@ Do you want to replace it?</source>
     <message>
         <source>or</source>
         <comment>tangent line and circle</comment>
-        <translation>หรือ</translation>
+        <translation>or</translation>
     </message>
     <message>
         <source>lineperp</source>
@@ -9100,12 +9100,12 @@ Do you want to replace it?</source>
     <message>
         <source>cr</source>
         <comment>circle point radius</comment>
-        <translation>วงกลมแบบโค้ง</translation>
+        <translation>cr</translation>
     </message>
     <message>
         <source>ccr</source>
         <comment>circle point radius</comment>
-        <translation>วงกลมแบบโค้ง</translation>
+        <translation>ccr</translation>
     </message>
     <message>
         <source>circletan2cp</source>
@@ -9115,7 +9115,7 @@ Do you want to replace it?</source>
     <message>
         <source>tr</source>
         <comment>circle 2 tangent point</comment>
-        <translation>เส้นตรง</translation>
+        <translation>tr</translation>
     </message>
     <message>
         <source>circletan2p</source>
@@ -9125,7 +9125,7 @@ Do you want to replace it?</source>
     <message>
         <source>td</source>
         <comment>circle tangent 2 points</comment>
-        <translation>เส้นตรง</translation>
+        <translation>td</translation>
     </message>
     <message>
         <source>circletan2cr</source>
@@ -9385,7 +9385,7 @@ Do you want to replace it?</source>
     <message>
         <source>mr</source>
         <comment>modify - move rotate</comment>
-        <translation>translation 1</translation>
+        <translation>mr</translation>
     </message>
     <message>
         <source>mod2rot</source>
@@ -9405,7 +9405,7 @@ Do you want to replace it?</source>
     <message>
         <source>md</source>
         <comment>modify -  revert direction</comment>
-        <translation>translation 5</translation>
+        <translation>md</translation>
     </message>
     <message>
         <source>modtrim</source>
@@ -9430,7 +9430,7 @@ Do you want to replace it?</source>
     <message>
         <source>mo</source>
         <comment>modify - offset</comment>
-        <translation>translation 10</translation>
+        <translation>mo</translation>
     </message>
     <message>
         <source>moff</source>
@@ -9589,12 +9589,12 @@ Do you want to replace it?</source>
     <message>
         <source>eqn</source>
         <comment>equation</comment>
-        <translation>สมการ</translation>
+        <translation>eqn</translation>
     </message>
     <message>
         <source>eq</source>
         <comment>equation</comment>
-        <translation>สมการ</translation>
+        <translation>eq</translation>
     </message>
     <message>
         <source>Custom</source>
@@ -10276,11 +10276,11 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>pos</source>
-        <translation>ตำแหน่ง</translation>
+        <translation>pos</translation>
     </message>
     <message>
         <source>size</source>
-        <translation>ขนาด</translation>
+        <translation>size</translation>
     </message>
     <message>
         <source>bevels</source>
@@ -10300,7 +10300,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>str</source>
-        <translation>สตริง</translation>
+        <translation>str</translation>
     </message>
     <message>
         <source>round</source>
@@ -10312,19 +10312,19 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>topl</source>
-        <translation>ด้านบนซ้าย</translation>
+        <translation>topl</translation>
     </message>
     <message>
         <source>top</source>
-        <translation>ด้านบน</translation>
+        <translation>top</translation>
     </message>
     <message>
         <source>topr</source>
-        <translation>ด้านบนขวา</translation>
+        <translation>topr</translation>
     </message>
     <message>
         <source>left</source>
-        <translation>ซ้าย</translation>
+        <translation>left</translation>
     </message>
     <message>
         <source>middle</source>
@@ -10364,11 +10364,11 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>hor</source>
-        <translation>แนวนอน</translation>
+        <translation>hor</translation>
     </message>
     <message>
         <source>vert</source>
-        <translation>แนวตั้ง</translation>
+        <translation>vert</translation>
     </message>
     <message>
         <source>snap2</source>
@@ -10388,7 +10388,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>quad</source>
-        <translation>สี่เหลี่ยม</translation>
+        <translation>quad</translation>
     </message>
     <message>
         <source>noquad</source>
@@ -10420,19 +10420,19 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>end</source>
-        <translation>สิ้นสุด</translation>
+        <translation>end</translation>
     </message>
     <message>
         <source>both</source>
-        <translation>ทั้งสอง</translation>
+        <translation>both</translation>
     </message>
     <message>
         <source>none</source>
-        <translation>ไม่มี</translation>
+        <translation>none</translation>
     </message>
     <message>
         <source>fit</source>
-        <translation>ปรับให้พอดี</translation>
+        <translation>fit</translation>
     </message>
     <message>
         <source>nofit</source>
@@ -10694,7 +10694,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>ย้อนกลับ</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -10713,7 +10713,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>ย้อนกลับ</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify dimension line location</source>
@@ -10813,7 +10813,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>ย้อนกลับ</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify dimension line location</source>
@@ -10879,7 +10879,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>ย้อนกลับ</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify start angle:</source>
@@ -10914,7 +10914,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>ย้อนกลับ</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify endpoint</source>
@@ -10941,7 +10941,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>ย้อนกลับ</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify end point</source>
@@ -10964,7 +10964,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>ย้อนกลับ</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify point on circle</source>
@@ -10991,7 +10991,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>ย้อนกลับ</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -11014,7 +11014,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>ย้อนกลับ</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify third point</source>
@@ -11041,7 +11041,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>ย้อนกลับ</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>radius=%1 is invalid (expression)</source>
@@ -11072,7 +11072,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>ย้อนกลับ</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify the third line</source>
@@ -11091,7 +11091,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>ย้อนกลับ</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify the second point on the tangent circle</source>
@@ -11122,7 +11122,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>ย้อนกลับ</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Select the center of the tangent circle</source>
@@ -11165,7 +11165,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>ย้อนกลับ</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify a point on the tangent circle</source>
@@ -11184,7 +11184,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>ย้อนกลับ</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Select the center of the tangent circle</source>
@@ -11219,7 +11219,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>ย้อนกลับ</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify the third point on ellipse</source>
@@ -11254,7 +11254,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>ย้อนกลับ</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify endpoint or length of minor axis:</source>
@@ -11289,7 +11289,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>ย้อนกลับ</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify the third point on ellipse</source>
@@ -11316,7 +11316,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>ย้อนกลับ</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify a point on ellipse or total distance to foci</source>
@@ -11347,7 +11347,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>ย้อนกลับ</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify the third line</source>
@@ -11444,7 +11444,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>ย้อนกลับ</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify next point</source>
@@ -11483,7 +11483,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>ย้อนกลับ</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Enter length:</source>
@@ -11510,7 +11510,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>ย้อนกลับ</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Enter bisector length:</source>
@@ -11553,7 +11553,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>ย้อนกลับ</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -11572,7 +11572,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>ย้อนกลับ</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -11614,7 +11614,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>ย้อนกลับ</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Number:</source>
@@ -11675,7 +11675,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>ย้อนกลับ</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Number:</source>
@@ -11706,7 +11706,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>ย้อนกลับ</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -11729,7 +11729,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>ย้อนกลับ</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -11748,7 +11748,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>ย้อนกลับ</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -11759,7 +11759,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>ย้อนกลับ</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Select first circle/ellipse/parabola</source>
@@ -11790,7 +11790,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>ย้อนกลับ</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -11820,7 +11820,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>ย้อนกลับ</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify next point</source>
@@ -11887,7 +11887,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>ย้อนกลับ</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify next control point</source>
@@ -11914,7 +11914,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>ย้อนกลับ</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify second point</source>
@@ -11974,7 +11974,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>ย้อนกลับ</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Angle: %1</source>
@@ -12028,7 +12028,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>ย้อนกลับ</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Distance: %1 Cartesian: (%2 , %3), Polar: (%4&lt;%5)</source>
@@ -12055,7 +12055,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>ย้อนกลับ</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -12150,7 +12150,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>ย้อนกลับ</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Enter length 1:</source>
@@ -12189,7 +12189,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>ย้อนกลับ</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Entity must be a line, arc, circle, ellipse or interpolation spline.</source>
@@ -12212,7 +12212,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>ย้อนกลับ</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Entities not in the same polyline.</source>
@@ -12285,7 +12285,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>ย้อนกลับ</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -12304,7 +12304,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>ย้อนกลับ</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Invalid number of copies, use %1 </source>
@@ -12331,7 +12331,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>ย้อนกลับ</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Enter rotation angle:</source>
@@ -12346,7 +12346,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>ย้อนกลับ</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -12357,7 +12357,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>ย้อนกลับ</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify rotation center</source>
@@ -12384,7 +12384,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>ย้อนกลับ</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -12395,7 +12395,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>ย้อนกลับ</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify second entity</source>
@@ -12449,7 +12449,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>ย้อนกลับ</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify reference point</source>
@@ -12476,7 +12476,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>ย้อนกลับ</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Select second trim entity</source>
@@ -12511,7 +12511,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>ย้อนกลับ</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -12561,7 +12561,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>ย้อนกลับ</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -12592,7 +12592,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>ย้อนกลับ</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify next point</source>
@@ -12631,7 +12631,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>ย้อนกลับ</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Deleting point is invalid.</source>
@@ -12670,7 +12670,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>ย้อนกลับ</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify second node</source>
@@ -12755,7 +12755,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>ย้อนกลับ</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify second segment</source>
@@ -12911,7 +12911,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>ย้อนกลับ</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -12926,7 +12926,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>ย้อนกลับ</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Click and drag for the selection window</source>
@@ -12960,7 +12960,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>ย้อนกลับ</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Select second entity</source>
@@ -13009,7 +13009,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>ย้อนกลับ</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -13078,7 +13078,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Trim</source>
-        <translation>ตัดแต่ง</translation>
+        <translation>Trim</translation>
     </message>
     <message>
         <source>Length 1:</source>
@@ -13306,7 +13306,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>End</source>
-        <translation>สิ้นสุด</translation>
+        <translation>End</translation>
     </message>
 </context>
 <context>
@@ -13352,7 +13352,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Undo</source>
-        <translation>ย้อนกลับ</translation>
+        <translation>Undo</translation>
     </message>
     <message>
         <source>Redo the last line drawing</source>
@@ -13360,7 +13360,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Redo</source>
-        <translation>ทำซ้ำ</translation>
+        <translation>Redo</translation>
     </message>
 </context>
 <context>
@@ -13391,7 +13391,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Rel</source>
-        <translation>สัมพัทธ์</translation>
+        <translation>Rel</translation>
     </message>
     <message>
         <source>Undo the last line drawing</source>
@@ -13399,7 +13399,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Undo</source>
-        <translation>ย้อนกลับ</translation>
+        <translation>Undo</translation>
     </message>
     <message>
         <source>Form a closed contour from lines drawn</source>
@@ -13415,7 +13415,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Redo</source>
-        <translation>ทำซ้ำ</translation>
+        <translation>Redo</translation>
     </message>
     <message>
         <source>Point</source>
@@ -13566,11 +13566,11 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Undo</source>
-        <translation>ย้อนกลับ</translation>
+        <translation>Undo</translation>
     </message>
     <message>
         <source>Line</source>
-        <translation>เส้นตรง</translation>
+        <translation>Line</translation>
     </message>
     <message>
         <source>Tangential</source>
@@ -13652,7 +13652,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Trim</source>
-        <translation>ตัดแต่ง</translation>
+        <translation>Trim</translation>
     </message>
     <message>
         <source>Radius:</source>
@@ -13701,7 +13701,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Undo</source>
-        <translation>ย้อนกลับ</translation>
+        <translation>Undo</translation>
     </message>
 </context>
 <context>
@@ -13758,7 +13758,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Name</source>
-        <translation>ชื่อ</translation>
+        <translation>Name</translation>
     </message>
     <message>
         <source>Create</source>

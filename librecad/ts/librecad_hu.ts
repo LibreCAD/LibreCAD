@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
+<?xml version='1.0' encoding='utf-8'?>
 <TS version="2.1" language="hu">
 <context>
     <name>ColorWizard</name>
@@ -28,7 +27,7 @@
     </message>
     <message>
         <source>Set</source>
-        <translation>Beállít</translation>
+        <translation>Set</translation>
     </message>
 </context>
 <context>
@@ -156,7 +155,7 @@ A pontok közötti távolság=%2 nagyobb mint az átmérő=%3</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Vissza</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Select circle center</source>
@@ -177,7 +176,7 @@ vagy [%2]</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Vissza</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Y</source>
@@ -221,7 +220,7 @@ vagy [%2]</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Vissza</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify distance (%1) or [%2]</source>
@@ -264,7 +263,7 @@ vagy [%2]</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Vissza</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify the third point on parabola</source>
@@ -295,7 +294,7 @@ vagy [%2]</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Vissza</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify the start point on parabola</source>
@@ -318,11 +317,11 @@ vagy [%2]</translation>
     </message>
     <message>
         <source>Line</source>
-        <translation>Vonal</translation>
+        <translation>Line</translation>
     </message>
     <message>
         <source>Arc</source>
-        <translation>Ív</translation>
+        <translation>Arc</translation>
     </message>
     <message>
         <source>Circle</source>
@@ -341,11 +340,11 @@ vagy [%2]</translation>
     </message>
     <message>
         <source>Specify next control point or [%1]</source>
-        <translation>Adja meg a következő vezérlőpontot vagy [% 1]</translation>
+        <translation>Adja meg a következő vezérlőpontot, vagy nyomja meg a(z) [%1] billentyűt.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Vissza</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify next control point</source>
@@ -963,7 +962,7 @@ vagy [%2]</translation>
     </message>
     <message>
         <source>Left</source>
-        <translation>Bal</translation>
+        <translation>Left</translation>
     </message>
     <message>
         <source>Right</source>
@@ -971,7 +970,7 @@ vagy [%2]</translation>
     </message>
     <message>
         <source>Top</source>
-        <translation>Felső</translation>
+        <translation>Top</translation>
     </message>
     <message>
         <source>Bottom</source>
@@ -1100,7 +1099,7 @@ vagy [%2]</translation>
     </message>
     <message>
         <source>Star</source>
-        <translation>Csillag</translation>
+        <translation>Star</translation>
     </message>
     <message>
         <source>Break/Divide</source>
@@ -1171,7 +1170,7 @@ vagy [%2]</translation>
         <translation>Másolat</translation>
     </message>
     <message>
-        <source>Update Current Pen by Active Layer&apos; Pen</source>
+        <source>Update Current Pen by Active Layer' Pen</source>
         <translation>Aktuális toll frissítése az aktív réteg tollával</translation>
     </message>
 </context>
@@ -1185,8 +1184,8 @@ vagy [%2]</translation>
 <context>
     <name>LC_ActionLayersExport</name>
     <message>
-        <source>Saving layer &quot;%1&quot; as &quot;%2&quot; </source>
-        <translation>Réteg mentése &quot;% 1&quot; mint &quot;% 2&quot; </translation>
+        <source>Saving layer "%1" as "%2" </source>
+        <translation>A "%1" réteg mentése "%2" néven.</translation>
     </message>
 </context>
 <context>
@@ -1235,14 +1234,14 @@ vagy [%2]</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Vissza</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
     <name>LC_CircleByArcOptions</name>
     <message>
         <source>Form</source>
-        <translation>Űrlap</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <source>Active</source>
@@ -1277,7 +1276,7 @@ vagy [%2]</translation>
     <name>LC_CrossOptions</name>
     <message>
         <source>Form</source>
-        <translation>Űrlap</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <source>Extension</source>
@@ -1301,7 +1300,7 @@ vagy [%2]</translation>
     </message>
     <message>
         <source>Type</source>
-        <translation>Típus</translation>
+        <translation>Type</translation>
     </message>
     <message>
         <source>Angle:</source>
@@ -1312,7 +1311,7 @@ vagy [%2]</translation>
     <name>LC_DeviceOptions</name>
     <message>
         <source>Form</source>
-        <translation>Forma</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <source>Device</source>
@@ -1320,7 +1319,7 @@ vagy [%2]</translation>
     </message>
     <message>
         <source>Save</source>
-        <translation>Mentés</translation>
+        <translation>Save</translation>
     </message>
 </context>
 <context>
@@ -1334,7 +1333,7 @@ vagy [%2]</translation>
     <name>LC_DuplicateOptions</name>
     <message>
         <source>Form</source>
-        <translation>Űrlap</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <source>Layer:</source>
@@ -1700,7 +1699,7 @@ vagy [%2]</translation>
         <translation>Átalakítás normál réteggé</translation>
     </message>
     <message>
-        <source>&amp;Select Layer&apos;s Entities</source>
+        <source>&amp;Select Layer's Entities</source>
         <translation>&amp;Réteg entitásainak kijelölése</translation>
     </message>
     <message>
@@ -1760,7 +1759,7 @@ vagy [%2]</translation>
     <name>LC_LineAngleRelOptions</name>
     <message>
         <source>Form</source>
-        <translation>Űrlap</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <source>Offset:</source>
@@ -1768,7 +1767,7 @@ vagy [%2]</translation>
     </message>
     <message>
         <source>Free</source>
-        <translation>Szabad</translation>
+        <translation>Free</translation>
     </message>
     <message>
         <source>Start</source>
@@ -1780,7 +1779,7 @@ vagy [%2]</translation>
     </message>
     <message>
         <source>End</source>
-        <translation>Vég</translation>
+        <translation>End</translation>
     </message>
     <message>
         <source>Line Snap:</source>
@@ -1815,7 +1814,7 @@ vagy [%2]</translation>
     <name>LC_LineFromPointToLineOptions</name>
     <message>
         <source>Form</source>
-        <translation>Űrlap</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <source>Angle:</source>
@@ -1851,7 +1850,7 @@ vagy [%2]</translation>
     </message>
     <message>
         <source>End</source>
-        <translation>Vég</translation>
+        <translation>End</translation>
     </message>
     <message>
         <source>Length:</source>
@@ -1866,7 +1865,7 @@ vagy [%2]</translation>
     <name>LC_LineJoinOptions</name>
     <message>
         <source>Form</source>
-        <translation>Űrlap</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <source>Extend/Trim</source>
@@ -1921,7 +1920,7 @@ vagy [%2]</translation>
     <name>LC_LinePointsOptions</name>
     <message>
         <source>Form</source>
-        <translation>Űrlap</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <source>Angle:</source>
@@ -1933,11 +1932,11 @@ vagy [%2]</translation>
     </message>
     <message>
         <source>None</source>
-        <translation>Nincs</translation>
+        <translation>None</translation>
     </message>
     <message>
         <source>Both</source>
-        <translation>Mindkettő</translation>
+        <translation>Both</translation>
     </message>
     <message>
         <source>Start</source>
@@ -1945,7 +1944,7 @@ vagy [%2]</translation>
     </message>
     <message>
         <source>End</source>
-        <translation>Vég</translation>
+        <translation>End</translation>
     </message>
     <message>
         <source>Edge Points:</source>
@@ -2003,7 +2002,7 @@ vagy [%2]</translation>
     <name>LC_ModifyBreakDivideOptions</name>
     <message>
         <source>Form</source>
-        <translation>Űrlap</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <source>Remove Segments</source>
@@ -2018,7 +2017,7 @@ vagy [%2]</translation>
     <name>LC_ModifyGapOptions</name>
     <message>
         <source>Form</source>
-        <translation>Űrlap</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <source>Gap Snap:</source>
@@ -2030,7 +2029,7 @@ vagy [%2]</translation>
     </message>
     <message>
         <source>Free</source>
-        <translation>Szabad</translation>
+        <translation>Free</translation>
     </message>
     <message>
         <source>Gap Size:</source>
@@ -2046,7 +2045,7 @@ vagy [%2]</translation>
     </message>
     <message>
         <source>End</source>
-        <translation>Vég</translation>
+        <translation>End</translation>
     </message>
     <message>
         <source>Line Snap:</source>
@@ -2212,7 +2211,7 @@ vagy [%2]</translation>
     </message>
     <message>
         <source>Save</source>
-        <translation>Mentés</translation>
+        <translation>Save</translation>
     </message>
     <message>
         <source>Apply Pen To Selection</source>
@@ -2231,11 +2230,11 @@ vagy [%2]</translation>
         <translation>aktuálisra</translation>
     </message>
     <message>
-        <source>Update Current Pen by Active Layer&apos; Pen</source>
+        <source>Update Current Pen by Active Layer' Pen</source>
         <translation>Aktuális toll frissítése az aktív réteg tollával</translation>
     </message>
     <message>
-        <source>Fill Pen Editor from Active Layer&apos;s Pen</source>
+        <source>Fill Pen Editor from Active Layer's Pen</source>
         <translation>Toll szerkesztő kitöltése az aktív réteg tollából</translation>
     </message>
     <message>
@@ -2300,14 +2299,14 @@ vagy [%2]</translation>
     </message>
     <message>
         <source>Location of pens file is changed, please restart the application so new pens file will be used.
-Please note that if you&apos;ll save pen via editor without restart, current pens from palette will be saved in the new file and therefore existing content of it will be overridden.</source>
+Please note that if you'll save pen via editor without restart, current pens from palette will be saved in the new file and therefore existing content of it will be overridden.</source>
         <translation type="vanished">A tollak fájljának helye megváltozott, kérjük indítsa újra az alkalmazást, hogy az új toll fájl használatra kerüljön.
 Megjegyzés: ha a szerkesztőn keresztül ment tollat újraindítás nélkül, akkor a palettáról származó aktuális tollak az új fájlba kerülnek mentésre és a meglévő tartalom felülíródik.</translation>
     </message>
     <message>
         <source>Location of pens file is changed, please restart the application so new pens file will be used.
 
-Please note that if you&apos;ll save pen via editor without restart, current pens from palette will be saved in the new file and therefore existing content of it will be overridden.</source>
+Please note that if you'll save pen via editor without restart, current pens from palette will be saved in the new file and therefore existing content of it will be overridden.</source>
         <translation>A tollfájl helye megváltozott, kérjük, indítsa újra az alkalmazást, hogy az új tollfájl használatba kerüljön.
 
 Kérjük, vegye figyelembe, hogy ha a tollakat az editorban, újraindítás nélkül menti, a paletta aktuális tollai kerülnek a fájlba, és ez felülírja a meglévő tartalmat.</translation>
@@ -2317,7 +2316,7 @@ Kérjük, vegye figyelembe, hogy ha a tollakat az editorban, újraindítás nél
     <name>LC_Rectangle1PointOptions</name>
     <message>
         <source>Form</source>
-        <translation>Űrlap</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <source>Polyline</source>
@@ -2361,7 +2360,7 @@ Kérjük, vegye figyelembe, hogy ha a tollakat az editorban, újraindítás nél
     </message>
     <message>
         <source>Top</source>
-        <translation>Felső</translation>
+        <translation>Top</translation>
     </message>
     <message>
         <source>Top-right</source>
@@ -2369,7 +2368,7 @@ Kérjük, vegye figyelembe, hogy ha a tollakat az editorban, újraindítás nél
     </message>
     <message>
         <source>Left</source>
-        <translation>Bal</translation>
+        <translation>Left</translation>
     </message>
     <message>
         <source>Middle</source>
@@ -2409,7 +2408,7 @@ Kérjük, vegye figyelembe, hogy ha a tollakat az editorban, újraindítás nél
     </message>
     <message>
         <source>Both</source>
-        <translation>Mindkettő</translation>
+        <translation>Both</translation>
     </message>
     <message>
         <source>Vertical</source>
@@ -2432,7 +2431,7 @@ Kérjük, vegye figyelembe, hogy ha a tollakat az editorban, újraindítás nél
     <name>LC_Rectangle2PointsOptions</name>
     <message>
         <source>Form</source>
-        <translation>Űrlap</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <source>Snap shift</source>
@@ -2504,7 +2503,7 @@ Kérjük, vegye figyelembe, hogy ha a tollakat az editorban, újraindítás nél
     </message>
     <message>
         <source>Both</source>
-        <translation>Mindkettő</translation>
+        <translation>Both</translation>
     </message>
     <message>
         <source>Vertical</source>
@@ -2519,7 +2518,7 @@ Kérjük, vegye figyelembe, hogy ha a tollakat az editorban, újraindítás nél
     <name>LC_Rectangle3PointsOptions</name>
     <message>
         <source>Form</source>
-        <translation>Űrlap</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <source>Polyline</source>
@@ -2527,7 +2526,7 @@ Kérjük, vegye figyelembe, hogy ha a tollakat az editorban, újraindítás nél
     </message>
     <message>
         <source>Both</source>
-        <translation>Mindkettő</translation>
+        <translation>Both</translation>
     </message>
     <message>
         <source>Vertical</source>
@@ -2601,15 +2600,15 @@ Kérjük, vegye figyelembe, hogy ha a tollakat az editorban, újraindítás nél
     <name>LC_SliceDivideOptions</name>
     <message>
         <source>Form</source>
-        <translation>Űrlap</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <source>None</source>
-        <translation>Nincs</translation>
+        <translation>None</translation>
     </message>
     <message>
         <source>Both</source>
-        <translation>Mindkettő</translation>
+        <translation>Both</translation>
     </message>
     <message>
         <source>Start</source>
@@ -2617,7 +2616,7 @@ Kérjük, vegye figyelembe, hogy ha a tollakat az editorban, újraindítás nél
     </message>
     <message>
         <source>End</source>
-        <translation>Vég</translation>
+        <translation>End</translation>
     </message>
     <message>
         <source>Edge Tick:</source>
@@ -2672,7 +2671,7 @@ Kérjük, vegye figyelembe, hogy ha a tollakat az editorban, újraindítás nél
     <name>LC_StarOptions</name>
     <message>
         <source>Form</source>
-        <translation>Űrlap</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <source>Radius Inner</source>
@@ -2707,7 +2706,7 @@ Kérjük, vegye figyelembe, hogy ha a tollakat az editorban, újraindítás nél
     </message>
     <message>
         <source>Dock</source>
-        <translation>Dokk</translation>
+        <translation>Dock</translation>
     </message>
     <message>
         <source>Float</source>
@@ -2820,12 +2819,12 @@ Kérjük, vegye figyelembe, hogy ha a tollakat az editorban, újraindítás nél
         <translation>Eltávolítás jobbra</translation>
     </message>
     <message>
-        <source>remove 0&apos;</source>
-        <translation>eltávolítás 0&apos;</translation>
+        <source>remove 0'</source>
+        <translation>eltávolítás 0'</translation>
     </message>
     <message>
-        <source>remove 0&quot;</source>
-        <translation>eltávolítás 0&quot;</translation>
+        <source>remove 0"</source>
+        <translation>eltávolítás 0"</translation>
     </message>
 </context>
 <context>
@@ -2884,7 +2883,7 @@ Kérjük, vegye figyelembe, hogy ha a tollakat az editorban, újraindítás nél
     </message>
     <message>
         <source>File</source>
-        <translation>Fájl</translation>
+        <translation>File</translation>
     </message>
     <message>
         <source>&amp;Edit</source>
@@ -2892,7 +2891,7 @@ Kérjük, vegye figyelembe, hogy ha a tollakat az editorban, újraindítás nél
     </message>
     <message>
         <source>Edit</source>
-        <translation>Szerkesztés</translation>
+        <translation>Edit</translation>
     </message>
     <message>
         <source>&amp;View</source>
@@ -2900,7 +2899,7 @@ Kérjük, vegye figyelembe, hogy ha a tollakat az editorban, újraindítás nél
     </message>
     <message>
         <source>View</source>
-        <translation>Nézet</translation>
+        <translation>View</translation>
     </message>
     <message>
         <source>&amp;Select</source>
@@ -2932,7 +2931,7 @@ Kérjük, vegye figyelembe, hogy ha a tollakat az editorban, újraindítás nél
     </message>
     <message>
         <source>Pen</source>
-        <translation>Toll</translation>
+        <translation>Pen</translation>
     </message>
     <message>
         <source>Tool Options</source>
@@ -3039,8 +3038,8 @@ Kérjük, vegye figyelembe, hogy ha a tollakat az editorban, újraindítás nél
         <translation>Parancssor</translation>
     </message>
     <message>
-        <source>Block &apos;%1&apos;</source>
-        <translation>Blokk &apos;%1&apos;</translation>
+        <source>Block '%1'</source>
+        <translation>Blokk '%1'</translation>
     </message>
     <message>
         <source>Cannot open the file
@@ -3161,8 +3160,8 @@ Please check its existence and permissions.</source>
 Kérjük, ellenőrizze annak létezését és engedélyeit.</translation>
     </message>
     <message>
-        <source>File &apos;%1&apos; does not exist. Opening aborted</source>
-        <translation>A &apos;%1&apos; fájl nem létezik. Megnyitás megszakítva</translation>
+        <source>File '%1' does not exist. Opening aborted</source>
+        <translation>A '%1' fájl nem létezik. Megnyitás megszakítva</translation>
     </message>
     <message>
         <source>Categories</source>
@@ -3182,7 +3181,7 @@ Kérjük, ellenőrizze annak létezését és engedélyeit.</translation>
     </message>
     <message>
         <source>Line</source>
-        <translation>Vonal</translation>
+        <translation>Line</translation>
     </message>
     <message>
         <source>Circle</source>
@@ -3214,7 +3213,7 @@ Kérjük, ellenőrizze annak létezését és engedélyeit.</translation>
     </message>
     <message>
         <source>Info</source>
-        <translation>Infó</translation>
+        <translation>Info</translation>
     </message>
     <message>
         <source>Dock Areas</source>
@@ -3266,7 +3265,7 @@ Kérjük, ellenőrizze annak létezését és engedélyeit.</translation>
     </message>
     <message>
         <source>Copy</source>
-        <translation>Másolás</translation>
+        <translation>Copy</translation>
     </message>
     <message>
         <source>Contributors</source>
@@ -3332,7 +3331,7 @@ Kérjük, ellenőrizze annak létezését és engedélyeit.</translation>
     </message>
     <message>
         <source>Save %1 &amp;as...</source>
-        <translation>1 mentése &amp;másként...</translation>
+        <translation>A(z) %1 mentése másként...</translation>
     </message>
     <message>
         <source>&amp;Window mode</source>
@@ -3360,11 +3359,11 @@ Kérjük, ellenőrizze annak létezését és engedélyeit.</translation>
     </message>
     <message>
         <source>East</source>
-        <translation>Kelet</translation>
+        <translation>East</translation>
     </message>
     <message>
         <source>West</source>
-        <translation>nyugat</translation>
+        <translation>West</translation>
     </message>
     <message>
         <source>&amp;Arrange</source>
@@ -3397,14 +3396,14 @@ Kérjük, ellenőrizze annak létezését és engedélyeit.</translation>
     <message>
         <source>Dock</source>
         <comment>Dock the command widget to the main window</comment>
-        <translation>Dokk</translation>
+        <translation>Dock</translation>
     </message>
     <message>
         <source>&amp;Wiki</source>
         <translation>&amp;Wiki</translation>
     </message>
     <message>
-        <source>User&apos;s &amp;Manual</source>
+        <source>User's &amp;Manual</source>
         <translation>Felhasználói &amp;Útmutató</translation>
     </message>
     <message>
@@ -3483,16 +3482,16 @@ Kérjük, ellenőrizze annak létezését és engedélyeit.</translation>
         <translation>Aktuális réteg</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+        <source>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Name of Current Active Layer&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Helvetica'; font-size:7pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;Name of Current Active Layer&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;A jelenlegi aktív réteg neve &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Helvetica'; font-size:7pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;A jelenlegi aktív réteg neve &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
@@ -3510,8 +3509,8 @@ p, li { white-space: pre-wrap; }
         <translation>Blokk átnevezés</translation>
     </message>
     <message>
-        <source>Could not name block. A block named &quot;%1&quot; already exists.</source>
-        <translation>Érvénytelen elnevezés. A &quot;%1 &quot; név már foglalt.</translation>
+        <source>Could not name block. A block named "%1" already exists.</source>
+        <translation>Érvénytelen elnevezés. A "%1 " név már foglalt.</translation>
     </message>
 </context>
 <context>
@@ -3619,7 +3618,7 @@ in a separate window</source>
     </message>
     <message>
         <source>Red</source>
-        <translation>Vörös</translation>
+        <translation>Red</translation>
     </message>
     <message>
         <source>Yellow</source>
@@ -3631,11 +3630,11 @@ in a separate window</source>
     </message>
     <message>
         <source>Cyan</source>
-        <translation>Cián</translation>
+        <translation>Cyan</translation>
     </message>
     <message>
         <source>Blue</source>
-        <translation>Kék</translation>
+        <translation>Blue</translation>
     </message>
     <message>
         <source>Magenta</source>
@@ -3647,7 +3646,7 @@ in a separate window</source>
     </message>
     <message>
         <source>Gray</source>
-        <translation>Szürke</translation>
+        <translation>Gray</translation>
     </message>
     <message>
         <source>Light Gray</source>
@@ -3745,7 +3744,7 @@ in a separate window</source>
     </message>
     <message>
         <source>Dock</source>
-        <translation>Dokk</translation>
+        <translation>Dock</translation>
     </message>
     <message>
         <source>Float</source>
@@ -3836,7 +3835,7 @@ in a separate window</source>
     <name>QG_DlgArc</name>
     <message>
         <source>Arc</source>
-        <translation>Ív</translation>
+        <translation>Arc</translation>
     </message>
     <message>
         <source>Layer:</source>
@@ -4028,7 +4027,7 @@ Ez rekurzív módon módosítja magának a blokknak az összes entitását.</tra
     </message>
     <message>
         <source>Area</source>
-        <translation>Felület</translation>
+        <translation>Area</translation>
     </message>
 </context>
 <context>
@@ -4105,12 +4104,12 @@ Ez rekurzív módon módosítja magának a blokknak az összes entitását.</tra
         <translation>Parancsok nyelve:</translation>
     </message>
     <message>
-        <source>&lt;font size=&quot;+1&quot;&gt;&lt;b&gt;Welcome to LibreCAD&lt;/b&gt;
+        <source>&lt;font size="+1"&gt;&lt;b&gt;Welcome to LibreCAD&lt;/b&gt;
 &lt;/font&gt;
 &lt;br&gt;
 Please choose the unit you want to use for new drawings and your preferred language.&lt;br&gt;
 (You can changes these settings later.)</source>
-        <translation>&lt;font size=&quot;+1&quot;&gt;&lt;b&gt;Üdvözli a LibreCAD&lt;/b&gt;
+        <translation>&lt;font size="+1"&gt;&lt;b&gt;Üdvözli a LibreCAD&lt;/b&gt;
 &lt;/font&gt;
 &lt;br&gt;
 Kérjük, válassza ki az új rajzokhoz használni kívánt egységet és a kívánt nyelvet.&lt;br&gt;
@@ -4172,7 +4171,7 @@ Kérjük, válassza ki az új rajzokhoz használni kívánt egységet és a kív
     <name>QG_DlgLine</name>
     <message>
         <source>Line</source>
-        <translation>Vonal</translation>
+        <translation>Line</translation>
     </message>
     <message>
         <source>Layer:</source>
@@ -4287,11 +4286,11 @@ Kérjük, válassza ki az új rajzokhoz használni kívánt egységet és a kív
     </message>
     <message>
         <source>Cut</source>
-        <translation>Kivágás</translation>
+        <translation>Cut</translation>
     </message>
     <message>
         <source>Copy</source>
-        <translation>Másolás</translation>
+        <translation>Copy</translation>
     </message>
     <message>
         <source>Paste</source>
@@ -5022,7 +5021,7 @@ Kérjük, válassza ki az új rajzokhoz használni kívánt egységet és a kív
         <translation>Radián</translation>
     </message>
     <message>
-        <source>Surveyor&apos;s units</source>
+        <source>Surveyor's units</source>
         <translation>Geodéziai egységek</translation>
     </message>
     <message>
@@ -5030,8 +5029,8 @@ Kérjük, válassza ki az új rajzokhoz használni kívánt egységet és a kív
         <translation>Beállítások</translation>
     </message>
     <message>
-        <source>For the length formats &apos;Engineering&apos; and &apos;Architectural&apos;, the unit must be set to Inch.</source>
-        <translation>A &apos;Mérnöki&apos; és &apos;Építészeti&apos; formátumhoz Inch a mértékegység.</translation>
+        <source>For the length formats 'Engineering' and 'Architectural', the unit must be set to Inch.</source>
+        <translation>A 'Mérnöki' és 'Építészeti' formátumhoz Inch a mértékegység.</translation>
     </message>
     <message>
         <source>&amp;Paper</source>
@@ -5091,7 +5090,7 @@ Kérjük, válassza ki az új rajzokhoz használni kívánt egységet és a kív
     </message>
     <message>
         <source>auto</source>
-        <translation>automatikus</translation>
+        <translation>auto</translation>
     </message>
     <message>
         <source>&amp;Grid</source>
@@ -5111,7 +5110,7 @@ Kérjük, válassza ki az új rajzokhoz használni kívánt egységet és a kív
     </message>
     <message>
         <source>Left</source>
-        <translation>Bal</translation>
+        <translation>Left</translation>
     </message>
     <message>
         <source>Top crosshair with isometric grid</source>
@@ -5119,7 +5118,7 @@ Kérjük, válassza ki az új rajzokhoz használni kívánt egységet és a kív
     </message>
     <message>
         <source>Top</source>
-        <translation>Felső</translation>
+        <translation>Top</translation>
     </message>
     <message>
         <source>Right crosshair with isometric grid</source>
@@ -5150,7 +5149,7 @@ Kérjük, válassza ki az új rajzokhoz használni kívánt egységet és a kív
         <translation>Ferde vonal mérete:</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dimension Tick size. Set it to 0 will disable the dimension tick. Dimension arrow won&apos;t be drawn when dimension tick is enabled.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dimension Tick size. Set it to 0 will disable the dimension tick. Dimension arrow won't be drawn when dimension tick is enabled.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Méretet határoló ferde vonal mérete. Ha 0-ra állítja, letiltja a ferde vonalat. A méretnyíl nem jelenik meg, ha a méretjelölés engedélyezve van.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
@@ -5174,12 +5173,12 @@ Kérjük, válassza ki az új rajzokhoz használni kívánt egységet és a kív
         <translation>Szöveg stílusa:</translation>
     </message>
     <message>
-        <source>&apos;.&apos; (Period)</source>
-        <translation>&apos;.&apos; (Pont)</translation>
+        <source>'.' (Period)</source>
+        <translation>'.' (Pont)</translation>
     </message>
     <message>
-        <source>&apos;,&apos; (Comma)</source>
-        <translation>&apos;,&apos; (Vessző)</translation>
+        <source>',' (Comma)</source>
+        <translation>',' (Vessző)</translation>
     </message>
     <message>
         <source>Decimal separator:</source>
@@ -5222,8 +5221,8 @@ Kérjük, válassza ki az új rajzokhoz használni kívánt egységet és a kív
         <translation>Hossz a méretvonal feletti nagyításhoz</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dimension arrow size. &lt;a name=&quot;result_box&quot;/&gt;without effect when tick size &lt;a name=&quot;result_box&quot;/&gt;is other than 0&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Méret nyíl mérete. &lt;a name=&quot;result_box&quot;/&gt; ha a ferde vonal &lt;a name=&quot;result_box&quot;/&gt; mérete nem 0&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dimension arrow size. &lt;a name="result_box"/&gt;without effect when tick size &lt;a name="result_box"/&gt;is other than 0&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Méret nyíl mérete. &lt;a name="result_box"/&gt; ha a ferde vonal &lt;a name="result_box"/&gt; mérete nem 0&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Width:</source>
@@ -5254,8 +5253,8 @@ Kérjük, válassza ki az új rajzokhoz használni kívánt egységet és a kív
         <translation>Lineáris pontosság:</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Text alignment &lt;a name=&quot;result_box&quot;/&gt;relative to the dimension line.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Szöveg igazítása &lt;a name=&quot;result_box&quot;/&gt;a méretvonalhoz viszonyítva.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Text alignment &lt;a name="result_box"/&gt;relative to the dimension line.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Szöveg igazítása &lt;a name="result_box"/&gt;a méretvonalhoz viszonyítva.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Aligned</source>
@@ -5358,7 +5357,7 @@ Kérjük, válassza ki az új rajzokhoz használni kívánt egységet és a kív
         <translation>Építészeti (metrikus)</translation>
     </message>
     <message>
-        <source>For the length format &apos;Architectural (metric)&apos;, the unit must be set to Meter.</source>
+        <source>For the length format 'Architectural (metric)', the unit must be set to Meter.</source>
         <translation>Az „Építészeti (metrikus)” hosszformátum esetén a mértékegységet Méter értékre kell állítani.</translation>
     </message>
     <message>
@@ -5534,7 +5533,7 @@ Kérjük, válassza ki az új rajzokhoz használni kívánt egységet és a kív
     </message>
     <message>
         <source>All</source>
-        <translation>Minden</translation>
+        <translation>All</translation>
     </message>
     <message>
         <source>Scrollbars</source>
@@ -5605,7 +5604,7 @@ Kérjük, válassza ki az új rajzokhoz használni kívánt egységet és a kív
         <translation>Az előnézeti elemek száma:</translation>
     </message>
     <message>
-        <source>Don&apos;t use native OS file open dialog</source>
+        <source>Don't use native OS file open dialog</source>
         <translation>Ne használjon natív operációs rendszer fájlokat a megnyitott párbeszédablakban</translation>
     </message>
     <message>
@@ -5685,7 +5684,7 @@ Kérjük, válassza ki az új rajzokhoz használni kívánt egységet és a kív
         <translation>A rajz automatikus nagyítása megnyitáskor</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-family:&apos;-apple-system&apos;,&apos;BlinkMacSystemFont&apos;,&apos;Segoe UI&apos;,&apos;Noto Sans&apos;,&apos;Helvetica&apos;,&apos;Arial&apos;,&apos;sans-serif&apos;,&apos;Apple Color Emoji&apos;,&apos;Segoe UI Emoji&apos;; font-size:14px; color:#1f2328; background-color:#ffffff;&quot;&gt;Part library folder. The symbol library dxf files must be located in the subdirectories of this folder. The subfolder names will be displayed in the Library Browser.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-family:&apos;-apple-system&apos;,&apos;BlinkMacSystemFont&apos;,&apos;Segoe UI&apos;,&apos;Noto Sans&apos;,&apos;Helvetica&apos;,&apos;Arial&apos;,&apos;sans-serif&apos;,&apos;Apple Color Emoji&apos;,&apos;Segoe UI Emoji&apos;; font-size:14px; color:#1f2328; background-color:#ffffff;&quot;&gt;( Menu: Widgets &amp;gt; Dock Widgets &amp;gt; Library Browser)&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=" font-family:'-apple-system','BlinkMacSystemFont','Segoe UI','Noto Sans','Helvetica','Arial','sans-serif','Apple Color Emoji','Segoe UI Emoji'; font-size:14px; color:#1f2328; background-color:#ffffff;"&gt;Part library folder. The symbol library dxf files must be located in the subdirectories of this folder. The subfolder names will be displayed in the Library Browser.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=" font-family:'-apple-system','BlinkMacSystemFont','Segoe UI','Noto Sans','Helvetica','Arial','sans-serif','Apple Color Emoji','Segoe UI Emoji'; font-size:14px; color:#1f2328; background-color:#ffffff;"&gt;( Menu: Widgets &amp;gt; Dock Widgets &amp;gt; Library Browser)&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>Alkatrész könyvtár mappája. A szimbólum könyvtár dxf fájlokát e mappák alpontkönyvtáraiban kell elhelyezni. Az alpontkönyvtárak nevei a Könyvtár böngészőben jelennek meg. (Menü: Widgetek &gt; Dock Widgetek &gt; Könyvtár böngésző)</translation>
     </message>
     <message>
@@ -5757,9 +5756,9 @@ Kérjük, válassza ki az új rajzokhoz használni kívánt egységet és a kív
     </message>
     <message>
         <source>MakerCAM as of November 2014 does not hide SVG content 
-that has been set invisibe (&quot;display: none&quot; or &quot;visibility: hidden&quot;).</source>
+that has been set invisibe ("display: none" or "visibility: hidden").</source>
         <translation>A MakerCAM 2014 novemberétől nem rejti el az SVG tartalmat
-amelyet láthatatlannak állítottak be (&quot;megjelenítés: nincs&quot; vagy &quot;láthatóság: rejtett&quot;).</translation>
+amelyet láthatatlannak állítottak be ("megjelenítés: nincs" vagy "láthatóság: rejtett").</translation>
     </message>
     <message>
         <source>MakerCAM as of November 2014 cannot correctly deal with blocks,
@@ -5777,18 +5776,18 @@ az &lt;transform&gt; attribútum vagy az &lt;path&gt; elliptikus ívszegmensek h
     </message>
     <message>
         <source>Exported images can be useful in SVG editors (Inkscape, etc), 
-but avoided in some CAM&apos;s.</source>
+but avoided in some CAM's.</source>
         <translation>Az exportált képek hasznosak lehetnek az SVG szerkesztőkben (Inkscape stb.), 
 de néhány CAM-ban elkerülték.</translation>
     </message>
     <message>
-        <source>Many CAM&apos;s(MakerCAM, EleskCAM, LaserWeb) ignore dashed/doted line style, 
+        <source>Many CAM's(MakerCAM, EleskCAM, LaserWeb) ignore dashed/doted line style, 
 which can be useful in lasercut of plywood or for papercraft. </source>
         <translation>Sok CAM (MakerCAM, EleksCAM, LaserWeb) figyelmen kívül hagyja a szaggatott/pontozott vonalstílust,
 amely hasznos lehet rétegelt lemez lézervágásánál vagy papírgyártásnál. </translation>
     </message>
     <message>
-        <source>Default width of elements can affect some CAM&apos;s/SVG Editors, 
+        <source>Default width of elements can affect some CAM's/SVG Editors, 
 but ignored by other</source>
         <translation>Az elemek alapértelmezett szélessége hatással lehet egyes CAM / SVG szerkesztőkre, 
 de mások figyelmen kívül hagyják</translation>
@@ -6025,7 +6024,7 @@ so default step value required for baking</source>
     <name>QG_DlgText</name>
     <message>
         <source>Text</source>
-        <translation>Szöveg</translation>
+        <translation>Text</translation>
     </message>
     <message>
         <source>Text:</source>
@@ -6045,11 +6044,11 @@ so default step value required for baking</source>
     </message>
     <message>
         <source>Cut</source>
-        <translation>Kivágás</translation>
+        <translation>Cut</translation>
     </message>
     <message>
         <source>Copy</source>
-        <translation>Másolás</translation>
+        <translation>Copy</translation>
     </message>
     <message>
         <source>Paste</source>
@@ -6641,7 +6640,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <source>Fit</source>
-        <translation>Megfelelő</translation>
+        <translation>Fit</translation>
     </message>
     <message>
         <source>Diameter (⌀)</source>
@@ -6660,7 +6659,7 @@ so default step value required for baking</source>
     <name>QG_ExitDialog</name>
     <message>
         <source>QCad</source>
-        <translation>LibreCad</translation>
+        <translation>QCad</translation>
     </message>
     <message>
         <source>again Still No Text supplied.</source>
@@ -6795,7 +6794,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <source>auto</source>
-        <translation>automatikus</translation>
+        <translation>auto</translation>
     </message>
     <message>
         <source>Colouring</source>
@@ -7000,7 +6999,7 @@ A tervezési rétegek tartalma nem kerül kinyomtatásra.</translation>
     </message>
     <message>
         <source>Dot</source>
-        <translation>Pontozott</translation>
+        <translation>Dot</translation>
     </message>
     <message>
         <source>Dot (small)</source>
@@ -7012,7 +7011,7 @@ A tervezési rétegek tartalma nem kerül kinyomtatásra.</translation>
     </message>
     <message>
         <source>Dash</source>
-        <translation>Szaggatott</translation>
+        <translation>Dash</translation>
     </message>
     <message>
         <source>Dash (small)</source>
@@ -7107,19 +7106,19 @@ A tervezési rétegek tartalma nem kerül kinyomtatásra.</translation>
     </message>
     <message>
         <source>Left</source>
-        <translation>Bal</translation>
+        <translation>Left</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+        <source>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Ubuntu&apos;; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Helvetica&apos;; font-size:9pt;&quot;&gt;Hint about left/right mouse button actions&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Ubuntu'; font-size:11pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;span style=" font-family:'Helvetica'; font-size:9pt;"&gt;Hint about left/right mouse button actions&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Ubuntu&apos;; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Helvetica&apos;; font-size:9pt;&quot;&gt;Tipp a bal/jobb egérgomb műveleteihez&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Ubuntu'; font-size:11pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;span style=" font-family:'Helvetica'; font-size:9pt;"&gt;Tipp a bal/jobb egérgomb műveleteihez&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
@@ -7166,35 +7165,35 @@ p, li { white-space: pre-wrap; }
         <translation>Teljes hossz</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+        <source>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Number of selected entities&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Helvetica'; font-size:7pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;Number of selected entities&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Kijelölt elemek száma&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Helvetica'; font-size:7pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;Kijelölt elemek száma&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+        <source>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Total length of selected entities&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Helvetica'; font-size:7pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;Total length of selected entities&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Kijelölt elemek összes hossza&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Helvetica'; font-size:7pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;Kijelölt elemek összes hossza&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
     <name>QG_SnapToolBar</name>
     <message>
         <source>Snap</source>
-        <translation>Igazítás</translation>
+        <translation>Snap</translation>
     </message>
     <message>
         <source>Snap to Endpoints</source>
@@ -7325,7 +7324,7 @@ p, li { white-space: pre-wrap; }
     <name>QG_WidgetPen</name>
     <message>
         <source>Pen</source>
-        <translation>Toll</translation>
+        <translation>Pen</translation>
     </message>
     <message>
         <source>Line type:</source>
@@ -7466,8 +7465,8 @@ p, li { white-space: pre-wrap; }
         <translation>Fólia törlése</translation>
     </message>
     <message>
-        <source>Layer &quot;%1&quot; can never be removed.</source>
-        <translation>A &quot;%1&quot; fólia soha sem törölhető.</translation>
+        <source>Layer "%1" can never be removed.</source>
+        <translation>A "%1" fólia soha sem törölhető.</translation>
     </message>
     <message>
         <source>Layer Dialog</source>
@@ -7478,32 +7477,32 @@ p, li { white-space: pre-wrap; }
         <translation>Blokk törlése</translation>
     </message>
     <message>
-        <source>Block &quot;%1&quot; and all its entities will be removed.</source>
-        <translation>A &quot;%1&quot; blokk és minden eleme törlődik.</translation>
+        <source>Block "%1" and all its entities will be removed.</source>
+        <translation>A "%1" blokk és minden eleme törlődik.</translation>
     </message>
     <message>
         <source>Layer Properties</source>
         <translation>Fólia tulajdonságai</translation>
     </message>
     <message>
-        <source>Layer with a name &quot;%1&quot; already exists. Please specify a different name.</source>
-        <translation>A &quot;%1&quot; nevű fólia már létezik. Válasszon másik nevet.</translation>
+        <source>Layer with a name "%1" already exists. Please specify a different name.</source>
+        <translation>A "%1" nevű fólia már létezik. Válasszon másik nevet.</translation>
     </message>
     <message>
-        <source>Layer &quot;%1&quot; and all entities on it will be removed.
+        <source>Layer "%1" and all entities on it will be removed.
 This action can NOT be undone.</source>
         <translation>A „%1” réteg és az összes rajta lévő elem el lesz távolítva.
 Ez a művelet nem visszavonható.</translation>
     </message>
     <message>
-        <source>Layer &quot;0&quot; can never be removed.</source>
-        <translation>A &quot;0&quot; réteg soha nem távolítható el.</translation>
+        <source>Layer "0" can never be removed.</source>
+        <translation>A "0" réteg soha nem távolítható el.</translation>
     </message>
     <message numerus="yes">
         <source>Remove %n layer(s)</source>
         <translation>
-            <numerusform>%n réteg eltávolítása</numerusform>
-        </translation>
+            <numerusform>%n réteg(et) eltávolít</numerusform>
+        <numerusform>%n réteget eltávolít</numerusform></translation>
     </message>
     <message>
         <source>Listed layers and all entities on them will be removed.</source>
@@ -7514,8 +7513,8 @@ Ez a művelet nem visszavonható.</translation>
         <translation>Figyelmeztetés: ez a művelet NEM vonható vissza!</translation>
     </message>
     <message>
-        <source>Warning: layer &quot;0&quot; can never be removed.</source>
-        <translation>Figyelmeztetés: &quot;0&quot; réteg soha nem távolítható el.</translation>
+        <source>Warning: layer "0" can never be removed.</source>
+        <translation>Figyelmeztetés: "0" réteg soha nem távolítható el.</translation>
     </message>
     <message>
         <source>Layers for removal:</source>
@@ -7524,8 +7523,8 @@ Ez a művelet nem visszavonható.</translation>
     <message numerus="yes">
         <source>Remove %n block(s)</source>
         <translation>
-            <numerusform>%n blokk eltávolítása</numerusform>
-        </translation>
+            <numerusform>%n blokk(ot) eltávolít</numerusform>
+        <numerusform>%n blokkot eltávolít</numerusform></translation>
     </message>
     <message>
         <source>Listed blocks and all their entities will be removed.</source>
@@ -7604,12 +7603,12 @@ Please specify a different name.</source>
         <translation>Kiválasztás duplikálása</translation>
     </message>
     <message>
-        <source>Replace &quot;By Layer&quot; value to source layers values?
-If Yes - entities with &quot;By Layer&quot; pens will look on new layer exactly as on previous layers and &quot;By Layer&quot; value will be replaced by resolved pens.
-If No - &quot;By Layer&quot; values remains and so pen of target layer will define pen for such entities.</source>
-        <translation type="vanished">Helyettesítem a &quot;Réteg szerint&quot; értékeket a forrásréteg értékével?
-Ha Igen - a &quot;Réteg szerint&quot; pennel rendelkező entitások a yeni régen pontosan úgy néznek ki, mint az előző rétegeken, és a &quot;Réteg szerint&quot; érték a feloldott pennel helyettesítésre kerül.
-Ha Nem - a &quot;Réteg szerint&quot; értékek megmaradnak, így a célréteg pennje fog meghatározni a pennet az ilyen entitások számára.</translation>
+        <source>Replace "By Layer" value to source layers values?
+If Yes - entities with "By Layer" pens will look on new layer exactly as on previous layers and "By Layer" value will be replaced by resolved pens.
+If No - "By Layer" values remains and so pen of target layer will define pen for such entities.</source>
+        <translation type="vanished">Helyettesítem a "Réteg szerint" értékeket a forrásréteg értékével?
+Ha Igen - a "Réteg szerint" pennel rendelkező entitások a yeni régen pontosan úgy néznek ki, mint az előző rétegeken, és a "Réteg szerint" érték a feloldott pennel helyettesítésre kerül.
+Ha Nem - a "Réteg szerint" értékek megmaradnak, így a célréteg pennje fog meghatározni a pennet az ilyen entitások számára.</translation>
     </message>
     <message>
         <source>Layer DialogEx</source>
@@ -7636,7 +7635,7 @@ Kérjük, adja meg más értéket.</translation>
         <translation>A pennát a palettáról távolítjuk, a rajzolt elemek nem érintettek.</translation>
     </message>
     <message>
-        <source>Are you sure you&apos;d like to proceed?</source>
+        <source>Are you sure you'd like to proceed?</source>
         <translation>Biztosan folytatni szeretne?</translation>
     </message>
     <message>
@@ -7702,11 +7701,11 @@ Clear filtering mask and repeat.</source>
 Törölje a szűrőmaszkot, és próbálja újra.</translation>
     </message>
     <message>
-        <source>Replace &quot;By Layer&quot; value to source layers values?
+        <source>Replace "By Layer" value to source layers values?
 
-If Yes - entities with &quot;By Layer&quot; pens will look on new layer exactly as on previous layers and &quot;By Layer&quot; value will be replaced by resolved pens.
+If Yes - entities with "By Layer" pens will look on new layer exactly as on previous layers and "By Layer" value will be replaced by resolved pens.
 
-If No - &quot;By Layer&quot; values remains and so pen of target layer will define pen for such entities.</source>
+If No - "By Layer" values remains and so pen of target layer will define pen for such entities.</source>
         <translation>Cserélje ki a „Réteg szerint” értéket a forrásrétegek értékeire?
 
 Ha Igen, akkor a „Réteg szerint” tollbeállítással rendelkező entitások a rétegen pontosan úgy jelennek meg, mint az előző rétegeken, és a „Réteg szerint” érték a feloldott tollbeállításokkal kerül helyettesítésre.
@@ -7796,15 +7795,15 @@ Lecseréli?</translation>
     </message>
     <message>
         <source>Inch</source>
-        <translation>incs</translation>
+        <translation>Inch</translation>
     </message>
     <message>
         <source>Foot</source>
-        <translation>Láb</translation>
+        <translation>Foot</translation>
     </message>
     <message>
         <source>Mile</source>
-        <translation>Mérföld</translation>
+        <translation>Mile</translation>
     </message>
     <message>
         <source>Millimeter</source>
@@ -7828,7 +7827,7 @@ Lecseréli?</translation>
     </message>
     <message>
         <source>Mil</source>
-        <translation>Ezredinch</translation>
+        <translation>Mil</translation>
     </message>
     <message>
         <source>Yard</source>
@@ -7971,7 +7970,7 @@ Lecseréli?</translation>
         <translation>Ismeretlen hiba a DWG fájl megnyitásakor</translation>
     </message>
     <message>
-        <source>can&apos;t open this dwg file</source>
+        <source>can't open this dwg file</source>
         <translation>A DWG fájl nem nyitható meg</translation>
     </message>
     <message>
@@ -8043,7 +8042,7 @@ Lecseréli?</translation>
     <message>
         <source>line</source>
         <comment>draw line</comment>
-        <translation>vonal</translation>
+        <translation>line</translation>
     </message>
     <message>
         <source>li</source>
@@ -8053,7 +8052,7 @@ Lecseréli?</translation>
     <message>
         <source>l</source>
         <comment>draw line</comment>
-        <translation>v</translation>
+        <translation>l</translation>
     </message>
     <message>
         <source>polyline</source>
@@ -8063,17 +8062,17 @@ Lecseréli?</translation>
     <message>
         <source>pl</source>
         <comment>draw polyline</comment>
-        <translation>vl</translation>
+        <translation>pl</translation>
     </message>
     <message>
         <source>free</source>
         <comment>draw freehand line</comment>
-        <translation>szabad</translation>
+        <translation>free</translation>
     </message>
     <message>
         <source>fhl</source>
         <comment>draw freehand line</comment>
-        <translation>szkv</translation>
+        <translation>fhl</translation>
     </message>
     <message>
         <source>spline</source>
@@ -8083,7 +8082,7 @@ Lecseréli?</translation>
     <message>
         <source>spl</source>
         <comment>draw spline</comment>
-        <translation>Hvonal</translation>
+        <translation>spl</translation>
     </message>
     <message>
         <source>spline2</source>
@@ -8093,12 +8092,12 @@ Lecseréli?</translation>
     <message>
         <source>stp</source>
         <comment>spline through points</comment>
-        <translation>Hvonal2</translation>
+        <translation>stp</translation>
     </message>
     <message>
         <source>ptp</source>
         <comment>parallel through point</comment>
-        <translation>pkp</translation>
+        <translation>ptp</translation>
     </message>
     <message>
         <source>bisect</source>
@@ -8108,7 +8107,7 @@ Lecseréli?</translation>
     <message>
         <source>bi</source>
         <comment>angle bisector</comment>
-        <translation>kv</translation>
+        <translation>bi</translation>
     </message>
     <message>
         <source>tanpc</source>
@@ -8123,7 +8122,7 @@ Lecseréli?</translation>
     <message>
         <source>rect</source>
         <comment>draw rectangle</comment>
-        <translation>tégla</translation>
+        <translation>rect</translation>
     </message>
     <message>
         <source>polygon2v</source>
@@ -8173,12 +8172,12 @@ Lecseréli?</translation>
     <message>
         <source>ei</source>
         <comment>inscribed ellipse</comment>
-        <translation>fe</translation>
+        <translation>ei</translation>
     </message>
     <message>
         <source>ie</source>
         <comment>inscribed ellipse</comment>
-        <translation>ef</translation>
+        <translation>ie</translation>
     </message>
     <message>
         <source>hatch</source>
@@ -8188,7 +8187,7 @@ Lecseréli?</translation>
     <message>
         <source>ha</source>
         <comment>draw hatch</comment>
-        <translation>sraff</translation>
+        <translation>ha</translation>
     </message>
     <message>
         <source>mtext</source>
@@ -8198,17 +8197,17 @@ Lecseréli?</translation>
     <message>
         <source>mtxt</source>
         <comment>draw mtext</comment>
-        <translation>szövegbevitel</translation>
+        <translation>mtxt</translation>
     </message>
     <message>
         <source>text</source>
         <comment>draw text</comment>
-        <translation>szöveg</translation>
+        <translation>text</translation>
     </message>
     <message>
         <source>txt</source>
         <comment>draw text</comment>
-        <translation>szöveg</translation>
+        <translation>txt</translation>
     </message>
     <message>
         <source>regen</source>
@@ -8238,7 +8237,7 @@ Lecseréli?</translation>
     <message>
         <source>zw</source>
         <comment>zoom - window</comment>
-        <translation>an</translation>
+        <translation>zw</translation>
     </message>
     <message>
         <source>zoomauto</source>
@@ -8273,17 +8272,17 @@ Lecseréli?</translation>
     <message>
         <source>kill</source>
         <comment>kill all actions</comment>
-        <translation>befejez</translation>
+        <translation>kill</translation>
     </message>
     <message>
         <source>k</source>
         <comment>kill all actions</comment>
-        <translation>b</translation>
+        <translation>k</translation>
     </message>
     <message>
         <source>undo</source>
         <comment>undo cycle</comment>
-        <translation>visszavonás</translation>
+        <translation>undo</translation>
     </message>
     <message>
         <source>u</source>
@@ -8293,7 +8292,7 @@ Lecseréli?</translation>
     <message>
         <source>redo</source>
         <comment>redo cycle</comment>
-        <translation>mégis</translation>
+        <translation>redo</translation>
     </message>
     <message>
         <source>r</source>
@@ -8333,7 +8332,7 @@ Lecseréli?</translation>
     <message>
         <source>dl</source>
         <comment>dimension - linear</comment>
-        <translation>vm</translation>
+        <translation>dl</translation>
     </message>
     <message>
         <source>dimangular</source>
@@ -8343,7 +8342,7 @@ Lecseréli?</translation>
     <message>
         <source>dan</source>
         <comment>dimension - angular</comment>
-        <translation>szm</translation>
+        <translation>dan</translation>
     </message>
     <message>
         <source>dimradial</source>
@@ -8363,7 +8362,7 @@ Lecseréli?</translation>
     <message>
         <source>dd</source>
         <comment>dimension - diametric</comment>
-        <translation>ám</translation>
+        <translation>dd</translation>
     </message>
     <message>
         <source>dimleader</source>
@@ -8388,7 +8387,7 @@ Lecseréli?</translation>
     <message>
         <source>rn</source>
         <comment>restrict - nothing</comment>
-        <translation>ssk</translation>
+        <translation>rn</translation>
     </message>
     <message>
         <source>restrictorthogonal</source>
@@ -8398,7 +8397,7 @@ Lecseréli?</translation>
     <message>
         <source>rr</source>
         <comment>restrict - orthogonal</comment>
-        <translation>dk</translation>
+        <translation>rr</translation>
     </message>
     <message>
         <source>restricthorizontal</source>
@@ -8408,7 +8407,7 @@ Lecseréli?</translation>
     <message>
         <source>rh</source>
         <comment>restrict - horizontal</comment>
-        <translation>vk</translation>
+        <translation>rh</translation>
     </message>
     <message>
         <source>restrictvertical</source>
@@ -8418,7 +8417,7 @@ Lecseréli?</translation>
     <message>
         <source>rv</source>
         <comment>restrict - vertical</comment>
-        <translation>fk</translation>
+        <translation>rv</translation>
     </message>
     <message>
         <source>mv</source>
@@ -8443,7 +8442,7 @@ Lecseréli?</translation>
     <message>
         <source>cut</source>
         <comment>modify - divide (cut)</comment>
-        <translation>vágás</translation>
+        <translation>cut</translation>
     </message>
     <message>
         <source>div</source>
@@ -8458,7 +8457,7 @@ Lecseréli?</translation>
     <message>
         <source>rev</source>
         <comment>modify -  revert direction</comment>
-        <translation>for</translation>
+        <translation>rev</translation>
     </message>
     <message>
         <source>ro</source>
@@ -8468,12 +8467,12 @@ Lecseréli?</translation>
     <message>
         <source>sz</source>
         <comment>modify - scale</comment>
-        <translation>Méret</translation>
+        <translation>sz</translation>
     </message>
     <message>
         <source>tm</source>
         <comment>modify - trim (extend)</comment>
-        <translation>Idő</translation>
+        <translation>tm</translation>
     </message>
     <message>
         <source>tm2</source>
@@ -8483,27 +8482,27 @@ Lecseréli?</translation>
     <message>
         <source>le</source>
         <comment>modify - lengthen</comment>
-        <translation>Címke</translation>
+        <translation>le</translation>
     </message>
     <message>
         <source>ss</source>
         <comment>modify - stretch</comment>
-        <translation>Forrás/Állapot</translation>
+        <translation>ss</translation>
     </message>
     <message>
         <source>er</source>
         <comment>modify - delete (erase)</comment>
-        <translation>Hiba</translation>
+        <translation>er</translation>
     </message>
     <message>
         <source>del</source>
         <comment>modify - delete (erase)</comment>
-        <translation>Törlés</translation>
+        <translation>del</translation>
     </message>
     <message>
         <source>xp</source>
         <comment>explode block/polyline into entities</comment>
-        <translation>Példa</translation>
+        <translation>xp</translation>
     </message>
     <message>
         <source>snapfree</source>
@@ -8513,7 +8512,7 @@ Lecseréli?</translation>
     <message>
         <source>os</source>
         <comment>snap - free</comment>
-        <translation>Operációs rendszer</translation>
+        <translation>os</translation>
     </message>
     <message>
         <source>snapcenter</source>
@@ -8523,7 +8522,7 @@ Lecseréli?</translation>
     <message>
         <source>sc</source>
         <comment>snap - center</comment>
-        <translation>Tartomány</translation>
+        <translation>sc</translation>
     </message>
     <message>
         <source>snapdist</source>
@@ -8623,7 +8622,7 @@ Lecseréli?</translation>
     <message>
         <source>attr</source>
         <comment>modify attribute</comment>
-        <translation>Attribútum</translation>
+        <translation>attr</translation>
     </message>
     <message>
         <source>ma</source>
@@ -8633,12 +8632,12 @@ Lecseréli?</translation>
     <message>
         <source>prop</source>
         <comment>modify properties</comment>
-        <translation>Tulajdonság</translation>
+        <translation>prop</translation>
     </message>
     <message>
         <source>dist</source>
         <comment>distance point to point</comment>
-        <translation>Távolság</translation>
+        <translation>dist</translation>
     </message>
     <message>
         <source>dpp</source>
@@ -8648,7 +8647,7 @@ Lecseréli?</translation>
     <message>
         <source>ang</source>
         <comment>measure angle</comment>
-        <translation>szög</translation>
+        <translation>ang</translation>
     </message>
     <message>
         <source>angle</source>
@@ -8656,7 +8655,7 @@ Lecseréli?</translation>
     </message>
     <message>
         <source>dpi</source>
-        <translation>DPI</translation>
+        <translation>dpi</translation>
     </message>
     <message>
         <source>close</source>
@@ -8692,7 +8691,7 @@ Lecseréli?</translation>
     </message>
     <message>
         <source>rows</source>
-        <translation>sorok</translation>
+        <translation>rows</translation>
     </message>
     <message>
         <source>rowspacing</source>
@@ -8704,17 +8703,17 @@ Lecseréli?</translation>
     </message>
     <message>
         <source>trim</source>
-        <translation>letör</translation>
+        <translation>trim</translation>
     </message>
     <message>
         <source>ang</source>
         <comment>angle</comment>
-        <translation>szög</translation>
+        <translation>ang</translation>
     </message>
     <message>
         <source>an</source>
         <comment>angle</comment>
-        <translation>sz</translation>
+        <translation>an</translation>
     </message>
     <message>
         <source>center</source>
@@ -8723,7 +8722,7 @@ Lecseréli?</translation>
     <message>
         <source>cen</source>
         <comment>center</comment>
-        <translation>köz</translation>
+        <translation>cen</translation>
     </message>
     <message>
         <source>ce</source>
@@ -8743,12 +8742,12 @@ Lecseréli?</translation>
     <message>
         <source>cols</source>
         <comment>columns</comment>
-        <translation>Sütunok</translation>
+        <translation>cols</translation>
     </message>
     <message>
         <source>co</source>
         <comment>columns</comment>
-        <translation>Cég</translation>
+        <translation>co</translation>
     </message>
     <message>
         <source>columnspacing</source>
@@ -8763,21 +8762,21 @@ Lecseréli?</translation>
     <message>
         <source>cs</source>
         <comment>columnspacing for inserts</comment>
-        <translation>Tartalomforrás</translation>
+        <translation>cs</translation>
     </message>
     <message>
         <source>fact</source>
         <comment>factor</comment>
-        <translation>Tény</translation>
+        <translation>fact</translation>
     </message>
     <message>
         <source>f</source>
         <comment>factor</comment>
-        <translation>Mező</translation>
+        <translation>f</translation>
     </message>
     <message>
         <source>help</source>
-        <translation>súgó</translation>
+        <translation>help</translation>
     </message>
     <message>
         <source>?</source>
@@ -8792,12 +8791,12 @@ Lecseréli?</translation>
     <message>
         <source>len</source>
         <comment>length</comment>
-        <translation>Hossz</translation>
+        <translation>len</translation>
     </message>
     <message>
         <source>l</source>
         <comment>length</comment>
-        <translation>h</translation>
+        <translation>l</translation>
     </message>
     <message>
         <source>length1</source>
@@ -8837,7 +8836,7 @@ Lecseréli?</translation>
     <message>
         <source>num</source>
         <comment>number</comment>
-        <translation>szám</translation>
+        <translation>num</translation>
     </message>
     <message>
         <source>n</source>
@@ -8857,12 +8856,12 @@ Lecseréli?</translation>
     <message>
         <source>rev</source>
         <comment>reversed</comment>
-        <translation>for</translation>
+        <translation>rev</translation>
     </message>
     <message>
         <source>row</source>
         <comment>row</comment>
-        <translation>sor</translation>
+        <translation>row</translation>
     </message>
     <message>
         <source>rowspacing</source>
@@ -8876,7 +8875,7 @@ Lecseréli?</translation>
     </message>
     <message>
         <source>text</source>
-        <translation>szöveg</translation>
+        <translation>text</translation>
     </message>
     <message>
         <source>t</source>
@@ -8890,7 +8889,7 @@ Lecseréli?</translation>
     </message>
     <message>
         <source>undo</source>
-        <translation>visszavonás</translation>
+        <translation>undo</translation>
     </message>
     <message>
         <source>u</source>
@@ -8899,21 +8898,21 @@ Lecseréli?</translation>
     </message>
     <message>
         <source>redo</source>
-        <translation>mégis</translation>
+        <translation>redo</translation>
     </message>
     <message>
         <source>r</source>
         <comment>redo</comment>
-        <translation>még</translation>
+        <translation>r</translation>
     </message>
     <message>
         <source>back</source>
-        <translation>vissza</translation>
+        <translation>back</translation>
     </message>
     <message>
         <source>b</source>
         <comment>back</comment>
-        <translation>vi</translation>
+        <translation>b</translation>
     </message>
     <message>
         <source>paperoffset</source>
@@ -8925,7 +8924,7 @@ Lecseréli?</translation>
     </message>
     <message>
         <source>Command: %1 (%2)</source>
-        <translation>Parancs: % 1 (% 2)</translation>
+        <translation>Parancs: %1 (%2)</translation>
     </message>
     <message>
         <source>RS_Commands:: command not found: %1</source>
@@ -8951,7 +8950,7 @@ Lecseréli?</translation>
     <message>
         <source>None</source>
         <comment>unknown length unit</comment>
-        <translation>Egyik sem</translation>
+        <translation>None</translation>
     </message>
     <message>
         <source>error reading file metadata in dwg file</source>
@@ -8963,7 +8962,7 @@ Lecseréli?</translation>
     </message>
     <message>
         <source>bw</source>
-        <translation>fekete fehér</translation>
+        <translation>bw</translation>
     </message>
     <message>
         <source>blackwhite</source>
@@ -9002,7 +9001,7 @@ Lecseréli?</translation>
     </message>
     <message>
         <source>Edit</source>
-        <translation>Szerkesztés</translation>
+        <translation>Edit</translation>
     </message>
     <message>
         <source>Ellipse</source>
@@ -9010,7 +9009,7 @@ Lecseréli?</translation>
     </message>
     <message>
         <source>File</source>
-        <translation>Fájl</translation>
+        <translation>File</translation>
     </message>
     <message>
         <source>Dimension</source>
@@ -9018,7 +9017,7 @@ Lecseréli?</translation>
     </message>
     <message>
         <source>Info</source>
-        <translation>Infó</translation>
+        <translation>Info</translation>
     </message>
     <message>
         <source>Layer</source>
@@ -9026,7 +9025,7 @@ Lecseréli?</translation>
     </message>
     <message>
         <source>Line</source>
-        <translation>Vonal</translation>
+        <translation>Line</translation>
     </message>
     <message>
         <source>Modify</source>
@@ -9054,7 +9053,7 @@ Lecseréli?</translation>
     </message>
     <message>
         <source>Snap</source>
-        <translation>Igazítás</translation>
+        <translation>Snap</translation>
     </message>
     <message>
         <source>Snap Extras</source>
@@ -9062,7 +9061,7 @@ Lecseréli?</translation>
     </message>
     <message>
         <source>View</source>
-        <translation>Nézet</translation>
+        <translation>View</translation>
     </message>
     <message>
         <source>Widgets</source>
@@ -9074,7 +9073,7 @@ Lecseréli?</translation>
     </message>
     <message>
         <source>All</source>
-        <translation>Minden</translation>
+        <translation>All</translation>
     </message>
     <message>
         <source>Invalid objects removed:</source>
@@ -9133,7 +9132,7 @@ Lecseréli?</translation>
     <message>
         <source>la</source>
         <comment>angled line</comment>
-        <translation>Elrendezési terület</translation>
+        <translation>la</translation>
     </message>
     <message>
         <source>linehor</source>
@@ -9143,7 +9142,7 @@ Lecseréli?</translation>
     <message>
         <source>lh</source>
         <comment>horizontal line</comment>
-        <translation>Sor magassága</translation>
+        <translation>lh</translation>
     </message>
     <message>
         <source>linever</source>
@@ -9153,7 +9152,7 @@ Lecseréli?</translation>
     <message>
         <source>lv</source>
         <comment>vertical line</comment>
-        <translation>Vertikális méret</translation>
+        <translation>lv</translation>
     </message>
     <message>
         <source>linerec</source>
@@ -9163,7 +9162,7 @@ Lecseréli?</translation>
     <message>
         <source>re</source>
         <comment>draw rectangle</comment>
-        <translation>Négyzet</translation>
+        <translation>re</translation>
     </message>
     <message>
         <source>linepar</source>
@@ -9178,7 +9177,7 @@ Lecseréli?</translation>
     <message>
         <source>pa</source>
         <comment>create parallel</comment>
-        <translation>Paraméter</translation>
+        <translation>pa</translation>
     </message>
     <message>
         <source>ll</source>
@@ -9228,7 +9227,7 @@ Lecseréli?</translation>
     <message>
         <source>or</source>
         <comment>tangent line and circle</comment>
-        <translation>vagy</translation>
+        <translation>or</translation>
     </message>
     <message>
         <source>lineperp</source>
@@ -9438,7 +9437,7 @@ Lecseréli?</translation>
     <message>
         <source>fh</source>
         <comment>draw freehand line</comment>
-        <translation>szk</translation>
+        <translation>fh</translation>
     </message>
     <message>
         <source>ellipsec2p</source>
@@ -9518,7 +9517,7 @@ Lecseréli?</translation>
     <message>
         <source>pr</source>
         <comment>pl del between nodes</comment>
-        <translation>nyomtatás</translation>
+        <translation>pr</translation>
     </message>
     <message>
         <source>plinetrm</source>
@@ -9528,7 +9527,7 @@ Lecseréli?</translation>
     <message>
         <source>pt</source>
         <comment>pl trim segments</comment>
-        <translation>pont</translation>
+        <translation>pt</translation>
     </message>
     <message>
         <source>plinepar</source>
@@ -9618,7 +9617,7 @@ Lecseréli?</translation>
     <message>
         <source>mr</source>
         <comment>modify - move rotate</comment>
-        <translation>Mozgatás/Forgatás</translation>
+        <translation>mr</translation>
     </message>
     <message>
         <source>mod2rot</source>
@@ -9638,7 +9637,7 @@ Lecseréli?</translation>
     <message>
         <source>md</source>
         <comment>modify -  revert direction</comment>
-        <translation>Mozgatás/Dimenzió</translation>
+        <translation>md</translation>
     </message>
     <message>
         <source>modtrim</source>
@@ -9708,7 +9707,7 @@ Lecseréli?</translation>
     <message>
         <source>xt</source>
         <comment>explode text strings</comment>
-        <translation>extra szöveg</translation>
+        <translation>xt</translation>
     </message>
     <message>
         <source>modexplode</source>
@@ -9728,7 +9727,7 @@ Lecseréli?</translation>
     <message>
         <source>id</source>
         <comment>distance point to point</comment>
-        <translation>azonosító</translation>
+        <translation>id</translation>
     </message>
     <message>
         <source>infodistep</source>
@@ -9738,12 +9737,12 @@ Lecseréli?</translation>
     <message>
         <source>ii</source>
         <comment>distance entity to point</comment>
-        <translation>infó index</translation>
+        <translation>ii</translation>
     </message>
     <message>
         <source>dep</source>
         <comment>distance entity to point</comment>
-        <translation>függőség</translation>
+        <translation>dep</translation>
     </message>
     <message>
         <source>infoangle</source>
@@ -9753,7 +9752,7 @@ Lecseréli?</translation>
     <message>
         <source>ia</source>
         <comment>measure angle</comment>
-        <translation>adat</translation>
+        <translation>ia</translation>
     </message>
     <message>
         <source>infoarea</source>
@@ -9763,22 +9762,22 @@ Lecseréli?</translation>
     <message>
         <source>aa</source>
         <comment>measure area</comment>
-        <translation>kiegészítő terület</translation>
+        <translation>aa</translation>
     </message>
     <message>
         <source>mt</source>
         <comment>draw mtext</comment>
-        <translation>főcím</translation>
+        <translation>mt</translation>
     </message>
     <message>
         <source>tx</source>
         <comment>draw text</comment>
-        <translation>szöveg</translation>
+        <translation>tx</translation>
     </message>
     <message>
         <source>so</source>
         <comment>snap - free</comment>
-        <translation>forrás</translation>
+        <translation>so</translation>
     </message>
     <message>
         <source>ki</source>
@@ -9788,7 +9787,7 @@ Lecseréli?</translation>
     <message>
         <source>un</source>
         <comment>undo cycle</comment>
-        <translation>egység</translation>
+        <translation>un</translation>
     </message>
     <message>
         <source>rd</source>
@@ -9822,12 +9821,12 @@ Lecseréli?</translation>
     <message>
         <source>eqn</source>
         <comment>equation</comment>
-        <translation>egyenlet</translation>
+        <translation>eqn</translation>
     </message>
     <message>
         <source>eq</source>
         <comment>equation</comment>
-        <translation>egyenlet</translation>
+        <translation>eq</translation>
     </message>
     <message>
         <source>Custom</source>
@@ -10136,8 +10135,8 @@ Lecseréli?</translation>
         <translation> -o néhány.pdf *.dxf</translation>
     </message>
     <message>
-        <source>-- print all dxf files to &apos;some.pdf&apos; file.</source>
-        <translation>-- az összes dxf fájl kinyomtatása &quot;some.pdf&quot; fájlba.</translation>
+        <source>-- print all dxf files to 'some.pdf' file.</source>
+        <translation>-- az összes dxf fájl kinyomtatása "some.pdf" fájlba.</translation>
     </message>
     <message>
         <source>Auto fit and center drawing to page.</source>
@@ -10211,8 +10210,8 @@ Lecseréli?</translation>
         <translation>Kombinálja az összes réteget</translation>
     </message>
     <message>
-        <source>File &quot;%1&quot; already exists. Do you want to replace it?</source>
-        <translation>A &quot;%1&quot; fájl már létezik. Ki akarod cserélni?</translation>
+        <source>File "%1" already exists. Do you want to replace it?</source>
+        <translation>A "%1" fájl már létezik. Ki akarod cserélni?</translation>
     </message>
     <message>
         <source>/CustomColor%1</source>
@@ -10240,12 +10239,12 @@ Lecseréli?</translation>
     <message>
         <source>sli</source>
         <comment>draw snake line</comment>
-        <translation>egyszerű vonal indikátora</translation>
+        <translation>sli</translation>
     </message>
     <message>
         <source>sl</source>
         <comment>draw snake line</comment>
-        <translation>egyszerű vonal</translation>
+        <translation>sl</translation>
     </message>
     <message>
         <source>slinex</source>
@@ -10255,7 +10254,7 @@ Lecseréli?</translation>
     <message>
         <source>slix</source>
         <comment>draw snake line (X)</comment>
-        <translation>egyszerű vonal X</translation>
+        <translation>slix</translation>
     </message>
     <message>
         <source>rlx</source>
@@ -10330,7 +10329,7 @@ Lecseréli?</translation>
     <message>
         <source>star</source>
         <comment>draw star</comment>
-        <translation>csillag</translation>
+        <translation>star</translation>
     </message>
     <message>
         <source>st</source>
@@ -10425,7 +10424,7 @@ Lecseréli?</translation>
     <message>
         <source>plfd</source>
         <comment>Parabola focus directrix</comment>
-        <translation>Pont-von-vonal</translation>
+        <translation>plfd</translation>
     </message>
     <message>
         <source>angleline</source>
@@ -10440,7 +10439,7 @@ Lecseréli?</translation>
     <message>
         <source>rort</source>
         <comment>draw orthogonal</comment>
-        <translation>Rotáció</translation>
+        <translation>rort</translation>
     </message>
     <message>
         <source>point2line</source>
@@ -10465,19 +10464,19 @@ Lecseréli?</translation>
     <message>
         <source>smm</source>
         <comment>snap middle manual</comment>
-        <translation>SMM</translation>
+        <translation>smm</translation>
     </message>
     <message>
         <source>x</source>
-        <translation>X</translation>
+        <translation>x</translation>
     </message>
     <message>
         <source>y</source>
-        <translation>Y</translation>
+        <translation>y</translation>
     </message>
     <message>
         <source>p</source>
-        <translation>Pont</translation>
+        <translation>p</translation>
     </message>
     <message>
         <source>anglerel</source>
@@ -10509,11 +10508,11 @@ Lecseréli?</translation>
     </message>
     <message>
         <source>pos</source>
-        <translation>pozíció</translation>
+        <translation>pos</translation>
     </message>
     <message>
         <source>size</source>
-        <translation>méret</translation>
+        <translation>size</translation>
     </message>
     <message>
         <source>bevels</source>
@@ -10533,7 +10532,7 @@ Lecseréli?</translation>
     </message>
     <message>
         <source>str</source>
-        <translation>szöveg</translation>
+        <translation>str</translation>
     </message>
     <message>
         <source>round</source>
@@ -10545,19 +10544,19 @@ Lecseréli?</translation>
     </message>
     <message>
         <source>topl</source>
-        <translation>bal felső</translation>
+        <translation>topl</translation>
     </message>
     <message>
         <source>top</source>
-        <translation>felső</translation>
+        <translation>top</translation>
     </message>
     <message>
         <source>topr</source>
-        <translation>jobb felső</translation>
+        <translation>topr</translation>
     </message>
     <message>
         <source>left</source>
-        <translation>bal</translation>
+        <translation>left</translation>
     </message>
     <message>
         <source>middle</source>
@@ -10597,11 +10596,11 @@ Lecseréli?</translation>
     </message>
     <message>
         <source>hor</source>
-        <translation>Vízszintes</translation>
+        <translation>hor</translation>
     </message>
     <message>
         <source>vert</source>
-        <translation>Függőleges</translation>
+        <translation>vert</translation>
     </message>
     <message>
         <source>snap2</source>
@@ -10653,19 +10652,19 @@ Lecseréli?</translation>
     </message>
     <message>
         <source>end</source>
-        <translation>vég</translation>
+        <translation>end</translation>
     </message>
     <message>
         <source>both</source>
-        <translation>mindkettő</translation>
+        <translation>both</translation>
     </message>
     <message>
         <source>none</source>
-        <translation>nincs</translation>
+        <translation>none</translation>
     </message>
     <message>
         <source>fit</source>
-        <translation>illesztés</translation>
+        <translation>fit</translation>
     </message>
     <message>
         <source>nofit</source>
@@ -10685,7 +10684,7 @@ Lecseréli?</translation>
     </message>
     <message>
         <source>sym</source>
-        <translation>szimbolikus</translation>
+        <translation>sym</translation>
     </message>
     <message>
         <source>nosym</source>
@@ -10892,8 +10891,8 @@ Lecseréli?</translation>
         <translation>Sorok távolsága:</translation>
     </message>
     <message>
-        <source></source>
-        <translation></translation>
+        <source />
+        <translation />
     </message>
     <message>
         <source>Block cannot contain an insert of itself.</source>
@@ -10927,7 +10926,7 @@ Ez a blokk nem illeszthető be.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Vissza</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -10946,7 +10945,7 @@ Ez a blokk nem illeszthető be.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Vissza</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify dimension line location</source>
@@ -11046,7 +11045,7 @@ Ez a blokk nem illeszthető be.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Vissza</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify dimension line location</source>
@@ -11112,7 +11111,7 @@ Ez a blokk nem illeszthető be.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Vissza</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify start angle:</source>
@@ -11147,7 +11146,7 @@ Ez a blokk nem illeszthető be.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Vissza</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify endpoint</source>
@@ -11174,7 +11173,7 @@ Ez a blokk nem illeszthető be.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Vissza</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify end point</source>
@@ -11197,7 +11196,7 @@ Ez a blokk nem illeszthető be.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Vissza</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify point on circle</source>
@@ -11224,7 +11223,7 @@ Ez a blokk nem illeszthető be.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Vissza</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -11247,7 +11246,7 @@ Ez a blokk nem illeszthető be.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Vissza</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify third point</source>
@@ -11274,7 +11273,7 @@ Ez a blokk nem illeszthető be.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Vissza</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>radius=%1 is invalid (expression)</source>
@@ -11305,7 +11304,7 @@ Ez a blokk nem illeszthető be.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Vissza</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify the third line</source>
@@ -11324,7 +11323,7 @@ Ez a blokk nem illeszthető be.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Vissza</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify the second point on the tangent circle</source>
@@ -11355,31 +11354,31 @@ Ez a blokk nem illeszthető be.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Vissza</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Select the center of the tangent circle</source>
         <translation>Válassza ki az érintőkör középpontját</translation>
     </message>
     <message>
-        <source>Invalid expression &apos;%1&apos; for radius</source>
+        <source>Invalid expression '%1' for radius</source>
         <translation>Érvénytelen „%1” kifejezés a sugárhoz</translation>
     </message>
     <message>
-        <source>Invalid negative radius &apos;%1&apos;</source>
-        <translation>Érvénytelen negatív sugár &apos;% 1&apos;</translation>
+        <source>Invalid negative radius '%1'</source>
+        <translation>Érvénytelen negatív sugár: '%1'</translation>
     </message>
     <message>
-        <source>Invalid zero radius &apos;%1&apos;</source>
-        <translation>Érvénytelen nulla sugár &apos;% 1&apos;</translation>
+        <source>Invalid zero radius '%1'</source>
+        <translation>Érvénytelen nulla sugár: '%1'</translation>
     </message>
     <message>
-        <source>No tangent circle possible for radius &apos;%1&apos;</source>
-        <translation>Nem lehetséges érintőkör a &apos;% 1&apos; sugárhoz</translation>
+        <source>No tangent circle possible for radius '%1'</source>
+        <translation>Nem lehetséges érintőkör '%1' sugárral.</translation>
     </message>
     <message>
-        <source>No common tangential circle for radius &apos;%1&apos;</source>
-        <translation>Nincs közös érintőkör a &apos;% 1&apos; sugárhoz</translation>
+        <source>No common tangential circle for radius '%1'</source>
+        <translation>Nincs közös érintőkör a '%1' sugárral.</translation>
     </message>
 </context>
 <context>
@@ -11398,7 +11397,7 @@ Ez a blokk nem illeszthető be.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Vissza</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify a point on the tangent circle</source>
@@ -11417,7 +11416,7 @@ Ez a blokk nem illeszthető be.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Vissza</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Select the center of the tangent circle</source>
@@ -11452,7 +11451,7 @@ Ez a blokk nem illeszthető be.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Vissza</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify the third point on ellipse</source>
@@ -11487,7 +11486,7 @@ Ez a blokk nem illeszthető be.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Vissza</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify endpoint or length of minor axis:</source>
@@ -11522,7 +11521,7 @@ Ez a blokk nem illeszthető be.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Vissza</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify the third point on ellipse</source>
@@ -11549,7 +11548,7 @@ Ez a blokk nem illeszthető be.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Vissza</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify a point on ellipse or total distance to foci</source>
@@ -11580,7 +11579,7 @@ Ez a blokk nem illeszthető be.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Vissza</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify the third line</source>
@@ -11653,8 +11652,8 @@ Ez a blokk nem illeszthető be.</translation>
         <translation>Méret:</translation>
     </message>
     <message>
-        <source></source>
-        <translation></translation>
+        <source />
+        <translation />
     </message>
     <message>
         <source>Enter dpi:</source>
@@ -11677,7 +11676,7 @@ Ez a blokk nem illeszthető be.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Vissza</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify next point</source>
@@ -11716,7 +11715,7 @@ Ez a blokk nem illeszthető be.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Vissza</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Enter length:</source>
@@ -11743,7 +11742,7 @@ Ez a blokk nem illeszthető be.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Vissza</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Enter bisector length:</source>
@@ -11786,7 +11785,7 @@ Ez a blokk nem illeszthető be.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Vissza</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -11805,7 +11804,7 @@ Ez a blokk nem illeszthető be.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Vissza</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -11847,7 +11846,7 @@ Ez a blokk nem illeszthető be.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Vissza</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Number:</source>
@@ -11865,8 +11864,8 @@ Ez a blokk nem illeszthető be.</translation>
 <context>
     <name>RS_ActionDrawLinePolygon</name>
     <message>
-        <source></source>
-        <translation></translation>
+        <source />
+        <translation />
     </message>
 </context>
 <context>
@@ -11908,7 +11907,7 @@ Ez a blokk nem illeszthető be.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Vissza</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Number:</source>
@@ -11939,7 +11938,7 @@ Ez a blokk nem illeszthető be.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Vissza</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -11962,7 +11961,7 @@ Ez a blokk nem illeszthető be.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Vissza</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -11977,7 +11976,7 @@ Ez a blokk nem illeszthető be.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Vissza</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Select circle, arc or ellipse</source>
@@ -11992,7 +11991,7 @@ Ez a blokk nem illeszthető be.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Vissza</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Select first circle or ellipse</source>
@@ -12031,7 +12030,7 @@ Ez a blokk nem illeszthető be.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Vissza</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -12061,7 +12060,7 @@ Ez a blokk nem illeszthető be.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Vissza</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify next point</source>
@@ -12128,7 +12127,7 @@ Ez a blokk nem illeszthető be.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Vissza</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify next control point</source>
@@ -12155,7 +12154,7 @@ Ez a blokk nem illeszthető be.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Vissza</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify second point</source>
@@ -12215,7 +12214,7 @@ Ez a blokk nem illeszthető be.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Vissza</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Angle: %1</source>
@@ -12269,7 +12268,7 @@ Ez a blokk nem illeszthető be.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Vissza</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Distance: %1 Cartesian: (%2 , %3), Polar: (%4&lt;%5)</source>
@@ -12296,7 +12295,7 @@ Ez a blokk nem illeszthető be.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Vissza</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -12356,12 +12355,12 @@ Ez a blokk nem illeszthető be.</translation>
         <translation>Elem beszúrása</translation>
     </message>
     <message>
-        <source></source>
-        <translation></translation>
+        <source />
+        <translation />
     </message>
     <message>
-        <source>Cannot open file &apos;%1&apos;</source>
-        <translation>Nem lehet megnyitni a &apos;%1&apos; fájlt</translation>
+        <source>Cannot open file '%1'</source>
+        <translation>Nem lehet megnyitni a '%1' fájlt</translation>
     </message>
 </context>
 <context>
@@ -12391,7 +12390,7 @@ Ez a blokk nem illeszthető be.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Vissza</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Enter length 1:</source>
@@ -12422,7 +12421,7 @@ Ez a blokk nem illeszthető be.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Vissza</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Cutting point is invalid.</source>
@@ -12453,7 +12452,7 @@ Ez a blokk nem illeszthető be.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Vissza</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Entities not in the same polyline.</source>
@@ -12526,7 +12525,7 @@ Ez a blokk nem illeszthető be.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Vissza</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -12545,7 +12544,7 @@ Ez a blokk nem illeszthető be.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Vissza</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Invalid number of copies, use %1 </source>
@@ -12572,7 +12571,7 @@ Ez a blokk nem illeszthető be.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Vissza</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Enter rotation angle:</source>
@@ -12587,7 +12586,7 @@ Ez a blokk nem illeszthető be.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Vissza</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -12598,7 +12597,7 @@ Ez a blokk nem illeszthető be.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Vissza</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify rotation center</source>
@@ -12625,7 +12624,7 @@ Ez a blokk nem illeszthető be.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Vissza</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -12636,7 +12635,7 @@ Ez a blokk nem illeszthető be.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Vissza</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify second entity</source>
@@ -12690,7 +12689,7 @@ Ez a blokk nem illeszthető be.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Vissza</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify reference point</source>
@@ -12717,7 +12716,7 @@ Ez a blokk nem illeszthető be.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Vissza</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Select second trim entity</source>
@@ -12752,7 +12751,7 @@ Ez a blokk nem illeszthető be.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Vissza</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -12797,12 +12796,12 @@ Ez a blokk nem illeszthető be.</translation>
         <translation>Mégsem</translation>
     </message>
     <message>
-        <source>Specify adding node&apos;s point</source>
+        <source>Specify adding node's point</source>
         <translation>Csomópont pontjának hozzáadása</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Vissza</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -12833,7 +12832,7 @@ Ez a blokk nem illeszthető be.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Vissza</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify next point</source>
@@ -12867,12 +12866,12 @@ Ez a blokk nem illeszthető be.</translation>
         <translation>Mégsem</translation>
     </message>
     <message>
-        <source>Specify deleting node&apos;s point</source>
+        <source>Specify deleting node's point</source>
         <translation>Adja meg a csomópont törlésének pontját</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Vissza</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Deleting point is invalid.</source>
@@ -12911,7 +12910,7 @@ Ez a blokk nem illeszthető be.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Vissza</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify second node</source>
@@ -12996,7 +12995,7 @@ Ez a blokk nem illeszthető be.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Vissza</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify second segment</source>
@@ -13011,11 +13010,11 @@ Ez a blokk nem illeszthető be.</translation>
     </message>
     <message>
         <source>Printout offset in paper coordinates by (%1, %2)</source>
-        <translation>Nyomtatás eltolása papír koordinátáiban (% 1, % 2)</translation>
+        <translation>Nyomtatás eltolása a papír koordináta-rendszerében: (%1, %2)</translation>
     </message>
     <message>
         <source>Printout offset in graph coordinates by (%1, %2)</source>
-        <translation>Nyomtatás eltolása a grafikon koordinátáiban (% 1, % 2)</translation>
+        <translation>Nyomtatás eltolása a grafikon koordinátáiban: (%1, %2)</translation>
     </message>
     <message>
         <source>Printout offset in graph coordinates</source>
@@ -13034,8 +13033,8 @@ Ez a blokk nem illeszthető be.</translation>
         <translation>Írja be az eltolás parancsot a parancssorból az eltolásos nyomtatáshoz</translation>
     </message>
     <message>
-        <source>Printout offset ignores relative zero. Ignoring &apos;@&apos;</source>
-        <translation>A nyomtatási eltolás figyelmen kívül hagyja a relatív nullát. A &quot;@&quot; figyelmen kívül hagyása</translation>
+        <source>Printout offset ignores relative zero. Ignoring '@'</source>
+        <translation>A nyomtatási eltolás figyelmen kívül hagyja a relatív nullát. A "@" figyelmen kívül hagyása</translation>
     </message>
     <message>
         <source>Printout in Black/White</source>
@@ -13144,7 +13143,7 @@ Ez a blokk nem illeszthető be.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Vissza</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Choose first point of intersection line</source>
@@ -13167,7 +13166,7 @@ Ez a blokk nem illeszthető be.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Vissza</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Click and drag for the selection window</source>
@@ -13197,7 +13196,7 @@ Ez a blokk nem illeszthető be.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Vissza</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Select second entity</source>
@@ -13250,7 +13249,7 @@ Ez a blokk nem illeszthető be.</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Vissza</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -13319,7 +13318,7 @@ Ez a blokk nem illeszthető be.</translation>
     </message>
     <message>
         <source>Trim</source>
-        <translation>Vágás</translation>
+        <translation>Trim</translation>
     </message>
     <message>
         <source>Length 1:</source>
@@ -13547,7 +13546,7 @@ Ez a blokk nem illeszthető be.</translation>
     </message>
     <message>
         <source>End</source>
-        <translation>Vég</translation>
+        <translation>End</translation>
     </message>
 </context>
 <context>
@@ -13593,7 +13592,7 @@ Ez a blokk nem illeszthető be.</translation>
     </message>
     <message>
         <source>Undo</source>
-        <translation>Visszavonás</translation>
+        <translation>Undo</translation>
     </message>
     <message>
         <source>Redo the last line drawing</source>
@@ -13601,7 +13600,7 @@ Ez a blokk nem illeszthető be.</translation>
     </message>
     <message>
         <source>Redo</source>
-        <translation>Mégis</translation>
+        <translation>Redo</translation>
     </message>
 </context>
 <context>
@@ -13632,7 +13631,7 @@ Ez a blokk nem illeszthető be.</translation>
     </message>
     <message>
         <source>Rel</source>
-        <translation>Relatív</translation>
+        <translation>Rel</translation>
     </message>
     <message>
         <source>Undo the last line drawing</source>
@@ -13640,7 +13639,7 @@ Ez a blokk nem illeszthető be.</translation>
     </message>
     <message>
         <source>Undo</source>
-        <translation>Vissza</translation>
+        <translation>Undo</translation>
     </message>
     <message>
         <source>Form a closed contour from lines drawn</source>
@@ -13656,7 +13655,7 @@ Ez a blokk nem illeszthető be.</translation>
     </message>
     <message>
         <source>Redo</source>
-        <translation>Újra</translation>
+        <translation>Redo</translation>
     </message>
     <message>
         <source>Point</source>
@@ -13807,11 +13806,11 @@ Ez a blokk nem illeszthető be.</translation>
     </message>
     <message>
         <source>Undo</source>
-        <translation>Visszavonás</translation>
+        <translation>Undo</translation>
     </message>
     <message>
         <source>Line</source>
-        <translation>Vonal</translation>
+        <translation>Line</translation>
     </message>
     <message>
         <source>Tangential</source>
@@ -13893,7 +13892,7 @@ Ez a blokk nem illeszthető be.</translation>
     </message>
     <message>
         <source>Trim</source>
-        <translation>Levágni</translation>
+        <translation>Trim</translation>
     </message>
     <message>
         <source>Radius:</source>
@@ -13942,7 +13941,7 @@ Ez a blokk nem illeszthető be.</translation>
     </message>
     <message>
         <source>Undo</source>
-        <translation>Visszavonás</translation>
+        <translation>Undo</translation>
     </message>
 </context>
 <context>
@@ -13999,7 +13998,7 @@ Ez a blokk nem illeszthető be.</translation>
     </message>
     <message>
         <source>Name</source>
-        <translation>Név</translation>
+        <translation>Name</translation>
     </message>
     <message>
         <source>Create</source>

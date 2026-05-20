@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
+<?xml version='1.0' encoding='utf-8'?>
 <TS version="2.1" language="eu">
 <context>
     <name>ColorWizard</name>
@@ -28,7 +27,7 @@
     </message>
     <message>
         <source>Set</source>
-        <translation>Taldea</translation>
+        <translation>Set</translation>
     </message>
 </context>
 <context>
@@ -147,7 +146,7 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Atzera</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Select circle center</source>
@@ -168,7 +167,7 @@ edo [%2]</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Atzera</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Y</source>
@@ -212,7 +211,7 @@ edo [%2]</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Atzera</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify distance (%1) or [%2]</source>
@@ -255,7 +254,7 @@ edo [%2]</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Atzera</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify the third point on parabola</source>
@@ -286,7 +285,7 @@ edo [%2]</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Atzera</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify the start point on parabola</source>
@@ -309,11 +308,11 @@ edo [%2]</translation>
     </message>
     <message>
         <source>Line</source>
-        <translation>Marra</translation>
+        <translation>Line</translation>
     </message>
     <message>
         <source>Arc</source>
-        <translation>Arku</translation>
+        <translation>Arc</translation>
     </message>
     <message>
         <source>Circle</source>
@@ -336,7 +335,7 @@ edo [%2]</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Atzera</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify next control point</source>
@@ -954,7 +953,7 @@ edo [%2]</translation>
     </message>
     <message>
         <source>Left</source>
-        <translation>Ezkerra</translation>
+        <translation>Left</translation>
     </message>
     <message>
         <source>Right</source>
@@ -962,7 +961,7 @@ edo [%2]</translation>
     </message>
     <message>
         <source>Top</source>
-        <translation>Gora</translation>
+        <translation>Top</translation>
     </message>
     <message>
         <source>Bottom</source>
@@ -1091,7 +1090,7 @@ edo [%2]</translation>
     </message>
     <message>
         <source>Star</source>
-        <translation>Izarra</translation>
+        <translation>Star</translation>
     </message>
     <message>
         <source>Break/Divide</source>
@@ -1162,7 +1161,7 @@ edo [%2]</translation>
         <translation>Bikoiztu</translation>
     </message>
     <message>
-        <source>Update Current Pen by Active Layer&apos; Pen</source>
+        <source>Update Current Pen by Active Layer' Pen</source>
         <translation>Eguneratu uneko arkatz aktiboaren geruzaren arkatzarekin</translation>
     </message>
 </context>
@@ -1176,8 +1175,8 @@ edo [%2]</translation>
 <context>
     <name>LC_ActionLayersExport</name>
     <message>
-        <source>Saving layer &quot;%1&quot; as &quot;%2&quot; </source>
-        <translation>&quot;% 1&quot; geruza &quot;% 2&quot; gisa gordetzen </translation>
+        <source>Saving layer "%1" as "%2" </source>
+        <translation>%1" geruza "%2" gisa gordetzen da.</translation>
     </message>
 </context>
 <context>
@@ -1226,14 +1225,14 @@ edo [%2]</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Atzera</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
     <name>LC_CircleByArcOptions</name>
     <message>
         <source>Form</source>
-        <translation>Inprimakia</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <source>Active</source>
@@ -1268,7 +1267,7 @@ edo [%2]</translation>
     <name>LC_CrossOptions</name>
     <message>
         <source>Form</source>
-        <translation>Inprimakia</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <source>Extension</source>
@@ -1292,7 +1291,7 @@ edo [%2]</translation>
     </message>
     <message>
         <source>Type</source>
-        <translation>Mota</translation>
+        <translation>Type</translation>
     </message>
     <message>
         <source>Angle:</source>
@@ -1303,7 +1302,7 @@ edo [%2]</translation>
     <name>LC_DeviceOptions</name>
     <message>
         <source>Form</source>
-        <translation>Forma</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <source>Device</source>
@@ -1311,7 +1310,7 @@ edo [%2]</translation>
     </message>
     <message>
         <source>Save</source>
-        <translation>Gorde</translation>
+        <translation>Save</translation>
     </message>
 </context>
 <context>
@@ -1325,7 +1324,7 @@ edo [%2]</translation>
     <name>LC_DuplicateOptions</name>
     <message>
         <source>Form</source>
-        <translation>Inprimakia</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <source>Layer:</source>
@@ -1691,7 +1690,7 @@ edo [%2]</translation>
         <translation>Bihurtu geruza normala</translation>
     </message>
     <message>
-        <source>&amp;Select Layer&apos;s Entities</source>
+        <source>&amp;Select Layer's Entities</source>
         <translation>&amp;Hautatu geruzaren entitateak</translation>
     </message>
     <message>
@@ -1751,7 +1750,7 @@ edo [%2]</translation>
     <name>LC_LineAngleRelOptions</name>
     <message>
         <source>Form</source>
-        <translation>Inprimakia</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <source>Offset:</source>
@@ -1759,7 +1758,7 @@ edo [%2]</translation>
     </message>
     <message>
         <source>Free</source>
-        <translation>Askea</translation>
+        <translation>Free</translation>
     </message>
     <message>
         <source>Start</source>
@@ -1771,7 +1770,7 @@ edo [%2]</translation>
     </message>
     <message>
         <source>End</source>
-        <translation>Amaiera</translation>
+        <translation>End</translation>
     </message>
     <message>
         <source>Line Snap:</source>
@@ -1779,7 +1778,7 @@ edo [%2]</translation>
     </message>
     <message>
         <source>Rel</source>
-        <translation>Erlatiboa</translation>
+        <translation>Rel</translation>
     </message>
     <message>
         <source>Divide</source>
@@ -1806,7 +1805,7 @@ edo [%2]</translation>
     <name>LC_LineFromPointToLineOptions</name>
     <message>
         <source>Form</source>
-        <translation>Inprimakia</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <source>Angle:</source>
@@ -1842,7 +1841,7 @@ edo [%2]</translation>
     </message>
     <message>
         <source>End</source>
-        <translation>Amaiera</translation>
+        <translation>End</translation>
     </message>
     <message>
         <source>Length:</source>
@@ -1857,7 +1856,7 @@ edo [%2]</translation>
     <name>LC_LineJoinOptions</name>
     <message>
         <source>Form</source>
-        <translation>Inprimakia</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <source>Extend/Trim</source>
@@ -1912,7 +1911,7 @@ edo [%2]</translation>
     <name>LC_LinePointsOptions</name>
     <message>
         <source>Form</source>
-        <translation>Inprimakia</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <source>Angle:</source>
@@ -1924,11 +1923,11 @@ edo [%2]</translation>
     </message>
     <message>
         <source>None</source>
-        <translation>Bat ere ez</translation>
+        <translation>None</translation>
     </message>
     <message>
         <source>Both</source>
-        <translation>Biak</translation>
+        <translation>Both</translation>
     </message>
     <message>
         <source>Start</source>
@@ -1936,7 +1935,7 @@ edo [%2]</translation>
     </message>
     <message>
         <source>End</source>
-        <translation>Amaiera</translation>
+        <translation>End</translation>
     </message>
     <message>
         <source>Edge Points:</source>
@@ -1962,7 +1961,7 @@ edo [%2]</translation>
     <name>LC_ModifyBreakDivideOptions</name>
     <message>
         <source>Form</source>
-        <translation>Inprimakia</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <source>Remove Segments</source>
@@ -1977,7 +1976,7 @@ edo [%2]</translation>
     <name>LC_ModifyGapOptions</name>
     <message>
         <source>Form</source>
-        <translation>Inprimakia</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <source>Gap Snap:</source>
@@ -1989,7 +1988,7 @@ edo [%2]</translation>
     </message>
     <message>
         <source>Free</source>
-        <translation>Askea</translation>
+        <translation>Free</translation>
     </message>
     <message>
         <source>Gap Size:</source>
@@ -2005,7 +2004,7 @@ edo [%2]</translation>
     </message>
     <message>
         <source>End</source>
-        <translation>Amaiera</translation>
+        <translation>End</translation>
     </message>
     <message>
         <source>Line Snap:</source>
@@ -2171,7 +2170,7 @@ edo [%2]</translation>
     </message>
     <message>
         <source>Save</source>
-        <translation>Gorde</translation>
+        <translation>Save</translation>
     </message>
     <message>
         <source>Apply Pen To Selection</source>
@@ -2190,11 +2189,11 @@ edo [%2]</translation>
         <translation>unekoari</translation>
     </message>
     <message>
-        <source>Update Current Pen by Active Layer&apos; Pen</source>
+        <source>Update Current Pen by Active Layer' Pen</source>
         <translation>Eguneratu uneko arkatza geruza aktiboaren arkatzarekin</translation>
     </message>
     <message>
-        <source>Fill Pen Editor from Active Layer&apos;s Pen</source>
+        <source>Fill Pen Editor from Active Layer's Pen</source>
         <translation>Bete arkatz-editorea geruza aktiboaren arkatzarekin</translation>
     </message>
     <message>
@@ -2259,14 +2258,14 @@ edo [%2]</translation>
     </message>
     <message>
         <source>Location of pens file is changed, please restart the application so new pens file will be used.
-Please note that if you&apos;ll save pen via editor without restart, current pens from palette will be saved in the new file and therefore existing content of it will be overridden.</source>
+Please note that if you'll save pen via editor without restart, current pens from palette will be saved in the new file and therefore existing content of it will be overridden.</source>
         <translation type="vanished">Arkatzen fitxategiaren kokapena aldatu da, mesedez berrabiarazi aplikazioa arkatz-fitxategi berria erabiltzeko.
 Kontuan izan arkatz editore bidez gorde eta berrabiarazi gabe uzten baduzu, paletako uneko arkatza fitxategi berrian gordeko dela eta beraz edukia gainidatziko dela.</translation>
     </message>
     <message>
         <source>Location of pens file is changed, please restart the application so new pens file will be used.
 
-Please note that if you&apos;ll save pen via editor without restart, current pens from palette will be saved in the new file and therefore existing content of it will be overridden.</source>
+Please note that if you'll save pen via editor without restart, current pens from palette will be saved in the new file and therefore existing content of it will be overridden.</source>
         <translation>Arkatzen fitxategia aldatu da, mesedez berrabiarazi aplikazioa, beraz, arkatza-fitxategi berria erabiliko da.
 
 Gogoratu, editorearen bidez arkatza gorde eta berrabiarazi gabe, paletako arkatza-sorta berriaren fitxategian gorde egingo da, eta horrek aurreko edukiari gainetik idatziko dio.</translation>
@@ -2276,7 +2275,7 @@ Gogoratu, editorearen bidez arkatza gorde eta berrabiarazi gabe, paletako arkatz
     <name>LC_Rectangle1PointOptions</name>
     <message>
         <source>Form</source>
-        <translation>Inprimakia</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <source>Polyline</source>
@@ -2320,7 +2319,7 @@ Gogoratu, editorearen bidez arkatza gorde eta berrabiarazi gabe, paletako arkatz
     </message>
     <message>
         <source>Top</source>
-        <translation>Goi</translation>
+        <translation>Top</translation>
     </message>
     <message>
         <source>Top-right</source>
@@ -2328,7 +2327,7 @@ Gogoratu, editorearen bidez arkatza gorde eta berrabiarazi gabe, paletako arkatz
     </message>
     <message>
         <source>Left</source>
-        <translation>Ezkerra</translation>
+        <translation>Left</translation>
     </message>
     <message>
         <source>Middle</source>
@@ -2368,7 +2367,7 @@ Gogoratu, editorearen bidez arkatza gorde eta berrabiarazi gabe, paletako arkatz
     </message>
     <message>
         <source>Both</source>
-        <translation>Biak</translation>
+        <translation>Both</translation>
     </message>
     <message>
         <source>Vertical</source>
@@ -2391,7 +2390,7 @@ Gogoratu, editorearen bidez arkatza gorde eta berrabiarazi gabe, paletako arkatz
     <name>LC_Rectangle2PointsOptions</name>
     <message>
         <source>Form</source>
-        <translation>Inprimakia</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <source>Snap shift</source>
@@ -2463,7 +2462,7 @@ Gogoratu, editorearen bidez arkatza gorde eta berrabiarazi gabe, paletako arkatz
     </message>
     <message>
         <source>Both</source>
-        <translation>Biak</translation>
+        <translation>Both</translation>
     </message>
     <message>
         <source>Vertical</source>
@@ -2478,7 +2477,7 @@ Gogoratu, editorearen bidez arkatza gorde eta berrabiarazi gabe, paletako arkatz
     <name>LC_Rectangle3PointsOptions</name>
     <message>
         <source>Form</source>
-        <translation>Inprimakia</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <source>Polyline</source>
@@ -2486,7 +2485,7 @@ Gogoratu, editorearen bidez arkatza gorde eta berrabiarazi gabe, paletako arkatz
     </message>
     <message>
         <source>Both</source>
-        <translation>Biak</translation>
+        <translation>Both</translation>
     </message>
     <message>
         <source>Vertical</source>
@@ -2560,15 +2559,15 @@ Gogoratu, editorearen bidez arkatza gorde eta berrabiarazi gabe, paletako arkatz
     <name>LC_SliceDivideOptions</name>
     <message>
         <source>Form</source>
-        <translation>Inprimakia</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <source>None</source>
-        <translation>Bat ere ez</translation>
+        <translation>None</translation>
     </message>
     <message>
         <source>Both</source>
-        <translation>Biak</translation>
+        <translation>Both</translation>
     </message>
     <message>
         <source>Start</source>
@@ -2576,7 +2575,7 @@ Gogoratu, editorearen bidez arkatza gorde eta berrabiarazi gabe, paletako arkatz
     </message>
     <message>
         <source>End</source>
-        <translation>Amaiera</translation>
+        <translation>End</translation>
     </message>
     <message>
         <source>Edge Tick:</source>
@@ -2584,7 +2583,7 @@ Gogoratu, editorearen bidez arkatza gorde eta berrabiarazi gabe, paletako arkatz
     </message>
     <message>
         <source>Rel</source>
-        <translation>Erlatiboa</translation>
+        <translation>Rel</translation>
     </message>
     <message>
         <source>Offset:</source>
@@ -2631,7 +2630,7 @@ Gogoratu, editorearen bidez arkatza gorde eta berrabiarazi gabe, paletako arkatz
     <name>LC_StarOptions</name>
     <message>
         <source>Form</source>
-        <translation>Inprimakia</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <source>Radius Inner</source>
@@ -2666,7 +2665,7 @@ Gogoratu, editorearen bidez arkatza gorde eta berrabiarazi gabe, paletako arkatz
     </message>
     <message>
         <source>Dock</source>
-        <translation>Panela</translation>
+        <translation>Dock</translation>
     </message>
     <message>
         <source>Float</source>
@@ -2779,11 +2778,11 @@ Gogoratu, editorearen bidez arkatza gorde eta berrabiarazi gabe, paletako arkatz
         <translation>kendu eskuma</translation>
     </message>
     <message>
-        <source>remove 0&apos;</source>
+        <source>remove 0'</source>
         <translation>kendu 0</translation>
     </message>
     <message>
-        <source>remove 0&quot;</source>
+        <source>remove 0"</source>
         <translation>kendu 0ª</translation>
     </message>
 </context>
@@ -2970,8 +2969,8 @@ Gogoratu, editorearen bidez arkatza gorde eta berrabiarazi gabe, paletako arkatz
         <translation>Komando Lerroa</translation>
     </message>
     <message>
-        <source>Block &apos;%1&apos;</source>
-        <translation>Blokea &apos;%1&apos;</translation>
+        <source>Block '%1'</source>
+        <translation>Blokea '%1'</translation>
     </message>
     <message>
         <source>Cannot open the file
@@ -3053,15 +3052,15 @@ Baimenak ikusi.
     </message>
     <message>
         <source>File</source>
-        <translation>Fitxategia</translation>
+        <translation>File</translation>
     </message>
     <message>
         <source>Edit</source>
-        <translation>Editatu</translation>
+        <translation>Edit</translation>
     </message>
     <message>
         <source>View</source>
-        <translation>Ikusi</translation>
+        <translation>View</translation>
     </message>
     <message>
         <source>Snap Selection</source>
@@ -3108,8 +3107,8 @@ Please check its existence and permissions.</source>
 Ikus ea dagoen eta baimenak.</translation>
     </message>
     <message>
-        <source>File &apos;%1&apos; does not exist. Opening aborted</source>
-        <translation>Ez dago &apos;%1&apos; fitxategirik.</translation>
+        <source>File '%1' does not exist. Opening aborted</source>
+        <translation>Ez dago '%1' fitxategirik.</translation>
     </message>
     <message>
         <source>Categories</source>
@@ -3129,7 +3128,7 @@ Ikus ea dagoen eta baimenak.</translation>
     </message>
     <message>
         <source>Line</source>
-        <translation>Marra</translation>
+        <translation>Line</translation>
     </message>
     <message>
         <source>Circle</source>
@@ -3165,7 +3164,7 @@ Ikus ea dagoen eta baimenak.</translation>
     </message>
     <message>
         <source>Pen</source>
-        <translation>Arkatza</translation>
+        <translation>Pen</translation>
     </message>
     <message>
         <source>Opening recent file...</source>
@@ -3225,7 +3224,7 @@ Ikus ea dagoen eta baimenak.</translation>
     </message>
     <message>
         <source>Copy</source>
-        <translation>Kopiatu</translation>
+        <translation>Copy</translation>
     </message>
     <message>
         <source>Contributors</source>
@@ -3319,11 +3318,11 @@ Ikus ea dagoen eta baimenak.</translation>
     </message>
     <message>
         <source>East</source>
-        <translation>Ekialdea</translation>
+        <translation>East</translation>
     </message>
     <message>
         <source>West</source>
-        <translation>Mendebaldea</translation>
+        <translation>West</translation>
     </message>
     <message>
         <source>&amp;Arrange</source>
@@ -3347,7 +3346,7 @@ Ikus ea dagoen eta baimenak.</translation>
     </message>
     <message>
         <source>Cmd</source>
-        <translation>Kmd</translation>
+        <translation>Cmd</translation>
     </message>
     <message>
         <source>Float</source>
@@ -3356,14 +3355,14 @@ Ikus ea dagoen eta baimenak.</translation>
     <message>
         <source>Dock</source>
         <comment>Dock the command widget to the main window</comment>
-        <translation>Dokatu</translation>
+        <translation>Dock</translation>
     </message>
     <message>
         <source>&amp;Wiki</source>
         <translation>&amp;Wiki</translation>
     </message>
     <message>
-        <source>User&apos;s &amp;Manual</source>
+        <source>User's &amp;Manual</source>
         <translation>Erabiltzailearen &amp;eskuliburua</translation>
     </message>
     <message>
@@ -3442,16 +3441,16 @@ Ikus ea dagoen eta baimenak.</translation>
         <translation>Uneko Geruza</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+        <source>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Name of Current Active Layer&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Helvetica'; font-size:7pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;Name of Current Active Layer&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Uneko geruza aktiboaren izena&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Helvetica'; font-size:7pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;Uneko geruza aktiboaren izena&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
@@ -3469,8 +3468,8 @@ p, li { white-space: pre-wrap; }
         <translation>Blokeari izen berria jartzen</translation>
     </message>
     <message>
-        <source>Could not name block. A block named &quot;%1&quot; already exists.</source>
-        <translation>Ezin blokea berrinzendatu. &quot;%1&quot; deritzon blokea badago jada.</translation>
+        <source>Could not name block. A block named "%1" already exists.</source>
+        <translation>Ezin blokea berrinzendatu. "%1" deritzon blokea badago jada.</translation>
     </message>
 </context>
 <context>
@@ -3574,7 +3573,7 @@ beste lehio batean</translation>
     </message>
     <message>
         <source>Red</source>
-        <translation>Gorria</translation>
+        <translation>Red</translation>
     </message>
     <message>
         <source>Yellow</source>
@@ -3586,11 +3585,11 @@ beste lehio batean</translation>
     </message>
     <message>
         <source>Cyan</source>
-        <translation>Zeru kolorea</translation>
+        <translation>Cyan</translation>
     </message>
     <message>
         <source>Blue</source>
-        <translation>Urdina</translation>
+        <translation>Blue</translation>
     </message>
     <message>
         <source>Magenta</source>
@@ -3602,7 +3601,7 @@ beste lehio batean</translation>
     </message>
     <message>
         <source>Gray</source>
-        <translation>Grisa</translation>
+        <translation>Gray</translation>
     </message>
     <message>
         <source>Light Gray</source>
@@ -3731,7 +3730,7 @@ beste lehio batean</translation>
     <message>
         <source>R</source>
         <comment>Radial dimension prefix</comment>
-        <translation>Option</translation>
+        <translation>R</translation>
     </message>
 </context>
 <context>
@@ -3783,19 +3782,19 @@ beste lehio batean</translation>
     <message>
         <source>R</source>
         <comment>Radial dimension prefix</comment>
-        <translation>Option</translation>
+        <translation>R</translation>
     </message>
     <message>
         <source>R</source>
         <comment>Radial dimesnion prefix</comment>
-        <translation>Option</translation>
+        <translation>R</translation>
     </message>
 </context>
 <context>
     <name>QG_DlgArc</name>
     <message>
         <source>Arc</source>
-        <translation>Arkua</translation>
+        <translation>Arc</translation>
     </message>
     <message>
         <source>Layer:</source>
@@ -3987,7 +3986,7 @@ Dies modifiziert rekursiv alle Entitäten des Blocks selbst.</translation>
     </message>
     <message>
         <source>Area</source>
-        <translation>Fläche</translation>
+        <translation>Area</translation>
     </message>
 </context>
 <context>
@@ -4064,12 +4063,12 @@ Dies modifiziert rekursiv alle Entitäten des Blocks selbst.</translation>
         <translation>Komandoen Hizkuntza:</translation>
     </message>
     <message>
-        <source>&lt;font size=&quot;+1&quot;&gt;&lt;b&gt;Welcome to LibreCAD&lt;/b&gt;
+        <source>&lt;font size="+1"&gt;&lt;b&gt;Welcome to LibreCAD&lt;/b&gt;
 &lt;/font&gt;
 &lt;br&gt;
 Please choose the unit you want to use for new drawings and your preferred language.&lt;br&gt;
 (You can changes these settings later.)</source>
-        <translation>&lt;font size=&quot;+1&quot;&gt;&lt;b&gt;Welcome to LibreCAD&lt;/b&gt;
+        <translation>&lt;font size="+1"&gt;&lt;b&gt;Welcome to LibreCAD&lt;/b&gt;
 &lt;/font&gt;
 &lt;br&gt;
 Mesedez, aukeratu irudian erabili nahi dituzun unitateak eta hizkuntza.&lt;br&gt;
@@ -4131,7 +4130,7 @@ Mesedez, aukeratu irudian erabili nahi dituzun unitateak eta hizkuntza.&lt;br&gt
     <name>QG_DlgLine</name>
     <message>
         <source>Line</source>
-        <translation>Marra</translation>
+        <translation>Line</translation>
     </message>
     <message>
         <source>Layer:</source>
@@ -4246,11 +4245,11 @@ Mesedez, aukeratu irudian erabili nahi dituzun unitateak eta hizkuntza.&lt;br&gt
     </message>
     <message>
         <source>Cut</source>
-        <translation>Moztu</translation>
+        <translation>Cut</translation>
     </message>
     <message>
         <source>Copy</source>
-        <translation>Kopiatu</translation>
+        <translation>Copy</translation>
     </message>
     <message>
         <source>Paste</source>
@@ -4969,7 +4968,7 @@ Mesedez, aukeratu irudian erabili nahi dituzun unitateak eta hizkuntza.&lt;br&gt
         <translation>Gradianeak</translation>
     </message>
     <message>
-        <source>Surveyor&apos;s units</source>
+        <source>Surveyor's units</source>
         <translation>Unitate topografikoak</translation>
     </message>
     <message>
@@ -4977,8 +4976,8 @@ Mesedez, aukeratu irudian erabili nahi dituzun unitateak eta hizkuntza.&lt;br&gt
         <translation>Aukerak</translation>
     </message>
     <message>
-        <source>For the length formats &apos;Engineering&apos; and &apos;Architectural&apos;, the unit must be set to Inch.</source>
-        <translation>&quot;Ingeneritza&quot; eta &quot;Arkitekturazko&quot; neurrientzat, unitatea Hazbetea izan behar da.</translation>
+        <source>For the length formats 'Engineering' and 'Architectural', the unit must be set to Inch.</source>
+        <translation>"Ingeneritza" eta "Arkitekturazko" neurrientzat, unitatea Hazbetea izan behar da.</translation>
     </message>
     <message>
         <source>Arrow size:</source>
@@ -5070,7 +5069,7 @@ Mesedez, aukeratu irudian erabili nahi dituzun unitateak eta hizkuntza.&lt;br&gt
     </message>
     <message>
         <source>Left</source>
-        <translation>Links</translation>
+        <translation>Left</translation>
     </message>
     <message>
         <source>Top crosshair with isometric grid</source>
@@ -5078,7 +5077,7 @@ Mesedez, aukeratu irudian erabili nahi dituzun unitateak eta hizkuntza.&lt;br&gt
     </message>
     <message>
         <source>Top</source>
-        <translation>Oben</translation>
+        <translation>Top</translation>
     </message>
     <message>
         <source>Right crosshair with isometric grid</source>
@@ -5109,7 +5108,7 @@ Mesedez, aukeratu irudian erabili nahi dituzun unitateak eta hizkuntza.&lt;br&gt
         <translation>Rastergröße:</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dimension Tick size. Set it to 0 will disable the dimension tick. Dimension arrow won&apos;t be drawn when dimension tick is enabled.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dimension Tick size. Set it to 0 will disable the dimension tick. Dimension arrow won't be drawn when dimension tick is enabled.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Maßstabsgröße der Dimension. Auf 0 zu setzen deaktiviert den Maßstabsbalken. Der Dimensionspfeil wird nicht gezeichnet, wenn der Maßstabsbalken aktiviert ist.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
@@ -5133,12 +5132,12 @@ Mesedez, aukeratu irudian erabili nahi dituzun unitateak eta hizkuntza.&lt;br&gt
         <translation>Textstil:</translation>
     </message>
     <message>
-        <source>&apos;.&apos; (Period)</source>
-        <translation>&apos;.&apos; (Punkt)</translation>
+        <source>'.' (Period)</source>
+        <translation>'.' (Punkt)</translation>
     </message>
     <message>
-        <source>&apos;,&apos; (Comma)</source>
-        <translation>&apos;,&apos; (Komma)</translation>
+        <source>',' (Comma)</source>
+        <translation>',' (Komma)</translation>
     </message>
     <message>
         <source>Decimal separator:</source>
@@ -5181,7 +5180,7 @@ Mesedez, aukeratu irudian erabili nahi dituzun unitateak eta hizkuntza.&lt;br&gt
         <translation>Länge zur Vergrößerung über der Maßlinie</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dimension arrow size. &lt;a name=&quot;result_box&quot;/&gt;without effect when tick size &lt;a name=&quot;result_box&quot;/&gt;is other than 0&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dimension arrow size. &lt;a name="result_box"/&gt;without effect when tick size &lt;a name="result_box"/&gt;is other than 0&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>Größe des Maßpfeils. Hat keinen Effekt, wenn die Skalierung der Markierung (tick size) ungleich 0 ist.</translation>
     </message>
     <message>
@@ -5213,7 +5212,7 @@ Mesedez, aukeratu irudian erabili nahi dituzun unitateak eta hizkuntza.&lt;br&gt
         <translation>Lineare Genauigkeit:</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Text alignment &lt;a name=&quot;result_box&quot;/&gt;relative to the dimension line.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Text alignment &lt;a name="result_box"/&gt;relative to the dimension line.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>Textausrichtung relativ zur Bemaßungslinie.</translation>
     </message>
     <message>
@@ -5317,8 +5316,8 @@ Mesedez, aukeratu irudian erabili nahi dituzun unitateak eta hizkuntza.&lt;br&gt
         <translation>Architektonisch (metrisch)</translation>
     </message>
     <message>
-        <source>For the length format &apos;Architectural (metric)&apos;, the unit must be set to Meter.</source>
-        <translation>Für das Längenformat &apos;Architektonisch (metrisch)&apos; muss die Einheit auf Meter eingestellt werden.</translation>
+        <source>For the length format 'Architectural (metric)', the unit must be set to Meter.</source>
+        <translation>Für das Längenformat 'Architektonisch (metrisch)' muss die Einheit auf Meter eingestellt werden.</translation>
     </message>
     <message>
         <source>Screen %</source>
@@ -5564,7 +5563,7 @@ Mesedez, aukeratu irudian erabili nahi dituzun unitateak eta hizkuntza.&lt;br&gt
         <translation>Anzahl der Vorschau-Entitäten:</translation>
     </message>
     <message>
-        <source>Don&apos;t use native OS file open dialog</source>
+        <source>Don't use native OS file open dialog</source>
         <translation>Kein natives OS-Dialogfeld zum Öffnen von Dateien verwenden</translation>
     </message>
     <message>
@@ -5640,8 +5639,8 @@ Mesedez, aukeratu irudian erabili nahi dituzun unitateak eta hizkuntza.&lt;br&gt
         <translation>Zeichnung beim Öffnen automatisch zoomen</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-family:&apos;-apple-system&apos;,&apos;BlinkMacSystemFont&apos;,&apos;Segoe UI&apos;,&apos;Noto Sans&apos;,&apos;Helvetica&apos;,&apos;Arial&apos;,&apos;sans-serif&apos;,&apos;Apple Color Emoji&apos;,&apos;Segoe UI Emoji&apos;; font-size:14px; color:#1f2328; background-color:#ffffff;&quot;&gt;Part library folder. The symbol library dxf files must be located in the subdirectories of this folder. The subfolder names will be displayed in the Library Browser.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-family:&apos;-apple-system&apos;,&apos;BlinkMacSystemFont&apos;,&apos;Segoe UI&apos;,&apos;Noto Sans&apos;,&apos;Helvetica&apos;,&apos;Arial&apos;,&apos;sans-serif&apos;,&apos;Apple Color Emoji&apos;,&apos;Segoe UI Emoji&apos;; font-size:14px; color:#1f2328; background-color:#ffffff;&quot;&gt;( Menu: Widgets &amp;gt; Dock Widgets &amp;gt; Library Browser)&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-family:&apos;-apple-system&apos;,&apos;BlinkMacSystemFont&apos;,&apos;Segoe UI&apos;,&apos;Noto Sans&apos;,&apos;Helvetica&apos;,&apos;Arial&apos;,&apos;sans-serif&apos;,&apos;Apple Color Emoji&apos;,&apos;Segoe UI Emoji&apos;; font-size:14px; color:#1f2328; background-color:#ffffff;&quot;&gt;Teilebibliotheksordner. Die Symbolbibliotheks-dxf-Dateien müssen sich in den Unterverzeichnissen dieses Ordners befinden. Die Namen der Unterordner werden im Bibliotheksbrowser angezeigt.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-family:&apos;-apple-system&apos;,&apos;BlinkMacSystemFont&apos;,&apos;Segoe UI&apos;,&apos;Noto Sans&apos;,&apos;Helvetica&apos;,&apos;Arial&apos;,&apos;sans-serif&apos;,&apos;Apple Color Emoji&apos;,&apos;Segoe UI Emoji&apos;; font-size:14px; color:#1f2328; background-color:#ffffff;&quot;&gt;(Menü: Widgets &gt; Dock Widgets &gt; Bibliotheksbrowser)&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=" font-family:'-apple-system','BlinkMacSystemFont','Segoe UI','Noto Sans','Helvetica','Arial','sans-serif','Apple Color Emoji','Segoe UI Emoji'; font-size:14px; color:#1f2328; background-color:#ffffff;"&gt;Part library folder. The symbol library dxf files must be located in the subdirectories of this folder. The subfolder names will be displayed in the Library Browser.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=" font-family:'-apple-system','BlinkMacSystemFont','Segoe UI','Noto Sans','Helvetica','Arial','sans-serif','Apple Color Emoji','Segoe UI Emoji'; font-size:14px; color:#1f2328; background-color:#ffffff;"&gt;( Menu: Widgets &amp;gt; Dock Widgets &amp;gt; Library Browser)&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=" font-family:'-apple-system','BlinkMacSystemFont','Segoe UI','Noto Sans','Helvetica','Arial','sans-serif','Apple Color Emoji','Segoe UI Emoji'; font-size:14px; color:#1f2328; background-color:#ffffff;"&gt;Teilebibliotheksordner. Die Symbolbibliotheks-dxf-Dateien müssen sich in den Unterverzeichnissen dieses Ordners befinden. Die Namen der Unterordner werden im Bibliotheksbrowser angezeigt.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=" font-family:'-apple-system','BlinkMacSystemFont','Segoe UI','Noto Sans','Helvetica','Arial','sans-serif','Apple Color Emoji','Segoe UI Emoji'; font-size:14px; color:#1f2328; background-color:#ffffff;"&gt;(Menü: Widgets &gt; Dock Widgets &gt; Bibliotheksbrowser)&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Open last opened files</source>
@@ -5712,8 +5711,8 @@ Mesedez, aukeratu irudian erabili nahi dituzun unitateak eta hizkuntza.&lt;br&gt
     </message>
     <message>
         <source>MakerCAM as of November 2014 does not hide SVG content 
-that has been set invisibe (&quot;display: none&quot; or &quot;visibility: hidden&quot;).</source>
-        <translation>MakerCAM, as of November 2014, does not hide SVG content that has been set invisible (&quot;display: none&quot; or &quot;visibility: hidden&quot;).</translation>
+that has been set invisibe ("display: none" or "visibility: hidden").</source>
+        <translation>MakerCAM, as of November 2014, does not hide SVG content that has been set invisible ("display: none" or "visibility: hidden").</translation>
     </message>
     <message>
         <source>MakerCAM as of November 2014 cannot correctly deal with blocks,
@@ -5728,16 +5727,16 @@ the &lt;transform&gt; attribute or as &lt;path&gt; using elliptic arc segments.<
     </message>
     <message>
         <source>Exported images can be useful in SVG editors (Inkscape, etc), 
-but avoided in some CAM&apos;s.</source>
+but avoided in some CAM's.</source>
         <translation>Exported images are useful in SVG editors (Inkscape, etc.) but are unsupported by some CAM programs.</translation>
     </message>
     <message>
-        <source>Many CAM&apos;s(MakerCAM, EleskCAM, LaserWeb) ignore dashed/doted line style, 
+        <source>Many CAM's(MakerCAM, EleskCAM, LaserWeb) ignore dashed/doted line style, 
 which can be useful in lasercut of plywood or for papercraft. </source>
         <translation>Many CAM programs (MakerCAM, EleskCAM, LaserWeb) ignore dashed/dotted line styles, which can be useful for laser cutting plywood or for papercraft.</translation>
     </message>
     <message>
-        <source>Default width of elements can affect some CAM&apos;s/SVG Editors, 
+        <source>Default width of elements can affect some CAM's/SVG Editors, 
 but ignored by other</source>
         <translation>The default width of elements may affect some CAM/SVG editors, but is ignored by others.</translation>
     </message>
@@ -5972,7 +5971,7 @@ so default step value required for baking</source>
     <name>QG_DlgText</name>
     <message>
         <source>Text</source>
-        <translation>Texto</translation>
+        <translation>Text</translation>
     </message>
     <message>
         <source>Text:</source>
@@ -5992,11 +5991,11 @@ so default step value required for baking</source>
     </message>
     <message>
         <source>Cut</source>
-        <translation>Ausschneiden</translation>
+        <translation>Cut</translation>
     </message>
     <message>
         <source>Copy</source>
-        <translation>Kopieren</translation>
+        <translation>Copy</translation>
     </message>
     <message>
         <source>Paste</source>
@@ -6588,7 +6587,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <source>Fit</source>
-        <translation>Ajustar</translation>
+        <translation>Fit</translation>
     </message>
     <message>
         <source>Diameter (⌀)</source>
@@ -6734,7 +6733,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <source>auto</source>
-        <translation>Auto</translation>
+        <translation>auto</translation>
     </message>
     <message>
         <source>Colouring</source>
@@ -6934,7 +6933,7 @@ The contents of a Construction Layer should not appear in printout.</source>
     </message>
     <message>
         <source>Dot</source>
-        <translation>Gepunktet</translation>
+        <translation>Dot</translation>
     </message>
     <message>
         <source>Dot (small)</source>
@@ -6946,7 +6945,7 @@ The contents of a Construction Layer should not appear in printout.</source>
     </message>
     <message>
         <source>Dash</source>
-        <translation>Strich</translation>
+        <translation>Dash</translation>
     </message>
     <message>
         <source>Dash (small)</source>
@@ -7045,14 +7044,14 @@ The contents of a Construction Layer should not appear in printout.</source>
     </message>
     <message>
         <source>Left</source>
-        <translation>Esquerdo</translation>
+        <translation>Left</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+        <source>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Ubuntu&apos;; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Helvetica&apos;; font-size:9pt;&quot;&gt;Hint about left/right mouse button actions&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Ubuntu'; font-size:11pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;span style=" font-family:'Helvetica'; font-size:9pt;"&gt;Hint about left/right mouse button actions&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>Ezker/eskuin botoiaren funtzioen inguruko informazioa</translation>
     </message>
 </context>
@@ -7100,19 +7099,19 @@ p, li { white-space: pre-wrap; }
         <translation>Guztizko luzera</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+        <source>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Number of selected entities&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Helvetica'; font-size:7pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;Number of selected entities&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>Hautatutako elementuen kopurua</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+        <source>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Total length of selected entities&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Helvetica'; font-size:7pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;Total length of selected entities&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>Hautatutako elementuen guztizko luzera</translation>
     </message>
 </context>
@@ -7251,7 +7250,7 @@ p, li { white-space: pre-wrap; }
     <name>QG_WidgetPen</name>
     <message>
         <source>Pen</source>
-        <translation>Stift</translation>
+        <translation>Pen</translation>
     </message>
     <message>
         <source>Line type:</source>
@@ -7288,8 +7287,8 @@ p, li { white-space: pre-wrap; }
         <translation>Remover Camada</translation>
     </message>
     <message>
-        <source>Layer &quot;%1&quot; can never be removed.</source>
-        <translation>A camada &quot;%1&quot; nunca pode ser removida.</translation>
+        <source>Layer "%1" can never be removed.</source>
+        <translation>A camada "%1" nunca pode ser removida.</translation>
     </message>
     <message>
         <source>Layer Dialog</source>
@@ -7300,26 +7299,26 @@ p, li { white-space: pre-wrap; }
         <translation>Remover Bloco</translation>
     </message>
     <message>
-        <source>Block &quot;%1&quot; and all its entities will be removed.</source>
-        <translation>O bloco &quot;%1&quot; e todas as suas entidades serão removidos.</translation>
+        <source>Block "%1" and all its entities will be removed.</source>
+        <translation>O bloco "%1" e todas as suas entidades serão removidos.</translation>
     </message>
     <message>
         <source>Layer Properties</source>
         <translation>Propiedades de la capa</translation>
     </message>
     <message>
-        <source>Layer with a name &quot;%1&quot; already exists. Please specify a different name.</source>
-        <translation>Ya existe una capa con el nombre &quot;%1&quot;. Por favor, especifique un nombre diferente.</translation>
+        <source>Layer with a name "%1" already exists. Please specify a different name.</source>
+        <translation>Ya existe una capa con el nombre "%1". Por favor, especifique un nombre diferente.</translation>
     </message>
     <message>
-        <source>Layer &quot;%1&quot; and all entities on it will be removed.
+        <source>Layer "%1" and all entities on it will be removed.
 This action can NOT be undone.</source>
-        <translation>Se eliminará la capa &quot;%1&quot; y todas las entidades que contiene.
+        <translation>Se eliminará la capa "%1" y todas las entidades que contiene.
 Esta acción no se puede deshacer.</translation>
     </message>
     <message>
-        <source>Layer &quot;0&quot; can never be removed.</source>
-        <translation>La capa &quot;0&quot; nunca se puede eliminar.</translation>
+        <source>Layer "0" can never be removed.</source>
+        <translation>La capa "0" nunca se puede eliminar.</translation>
     </message>
     <message numerus="yes">
         <source>Remove %n layer(s)</source>
@@ -7337,8 +7336,8 @@ Esta acción no se puede deshacer.</translation>
         <translation>¡Advertencia: esta acción no se puede deshacer!</translation>
     </message>
     <message>
-        <source>Warning: layer &quot;0&quot; can never be removed.</source>
-        <translation>Advertencia: la capa &quot;0&quot; nunca se puede eliminar.</translation>
+        <source>Warning: layer "0" can never be removed.</source>
+        <translation>Advertencia: la capa "0" nunca se puede eliminar.</translation>
     </message>
     <message>
         <source>Layers for removal:</source>
@@ -7426,12 +7425,12 @@ Please specify a different name.</source>
         <translation>Duplicar selección</translation>
     </message>
     <message>
-        <source>Replace &quot;By Layer&quot; value to source layers values?
-If Yes - entities with &quot;By Layer&quot; pens will look on new layer exactly as on previous layers and &quot;By Layer&quot; value will be replaced by resolved pens.
-If No - &quot;By Layer&quot; values remains and so pen of target layer will define pen for such entities.</source>
-        <translation type="vanished">¿Reemplazar el valor &quot;Por Capa&quot; por los valores de las capas de origen?
-Si Sí - las entidades con plumas &quot;Por Capa&quot; se verán en la nueva capa exactamente como en las capas anteriores y el valor &quot;Por Capa&quot; será reemplazado por plumas resueltas.
-Si No - los valores &quot;Por Capa&quot; se mantienen y la pluma de la capa de destino definirá la pluma para dichas entidades.</translation>
+        <source>Replace "By Layer" value to source layers values?
+If Yes - entities with "By Layer" pens will look on new layer exactly as on previous layers and "By Layer" value will be replaced by resolved pens.
+If No - "By Layer" values remains and so pen of target layer will define pen for such entities.</source>
+        <translation type="vanished">¿Reemplazar el valor "Por Capa" por los valores de las capas de origen?
+Si Sí - las entidades con plumas "Por Capa" se verán en la nueva capa exactamente como en las capas anteriores y el valor "Por Capa" será reemplazado por plumas resueltas.
+Si No - los valores "Por Capa" se mantienen y la pluma de la capa de destino definirá la pluma para dichas entidades.</translation>
     </message>
     <message>
         <source>Layer DialogEx</source>
@@ -7457,7 +7456,7 @@ Please specify a different value.</source>
         <translation>The pen will be removed from the palette, but drawing entities will remain unaffected.</translation>
     </message>
     <message>
-        <source>Are you sure you&apos;d like to proceed?</source>
+        <source>Are you sure you'd like to proceed?</source>
         <translation>Are you sure you want to proceed?</translation>
     </message>
     <message>
@@ -7523,16 +7522,16 @@ Clear filtering mask and repeat.</source>
 Garbitu iragazki-maskara eta errepikatu.</translation>
     </message>
     <message>
-        <source>Replace &quot;By Layer&quot; value to source layers values?
+        <source>Replace "By Layer" value to source layers values?
 
-If Yes - entities with &quot;By Layer&quot; pens will look on new layer exactly as on previous layers and &quot;By Layer&quot; value will be replaced by resolved pens.
+If Yes - entities with "By Layer" pens will look on new layer exactly as on previous layers and "By Layer" value will be replaced by resolved pens.
 
-If No - &quot;By Layer&quot; values remains and so pen of target layer will define pen for such entities.</source>
-        <translation>Ordez &quot;Geruzako&quot; balioa iturburu-geruzen balioekin?
+If No - "By Layer" values remains and so pen of target layer will define pen for such entities.</source>
+        <translation>Ordez "Geruzako" balioa iturburu-geruzen balioekin?
 
-Bai esaten baduzu, &quot;Geruzako&quot; boligaiak berriaren geruzan agertuko dira, aurreko geruzetan bezala, eta &quot;Geruzako&quot; balioa ordezkatuko da.
+Bai esaten baduzu, "Geruzako" boligaiak berriaren geruzan agertuko dira, aurreko geruzetan bezala, eta "Geruzako" balioa ordezkatuko da.
 
-Ez esaten baduzu, &quot;Geruzako&quot; balioak mantenduko dira, eta, beraz, helburuko geruzako boligaiak entitate horientzat boligai bat definituko du.</translation>
+Ez esaten baduzu, "Geruzako" balioak mantenduko dira, eta, beraz, helburuko geruzako boligaiak entitate horientzat boligai bat definituko du.</translation>
     </message>
 </context>
 <context>
@@ -7613,15 +7612,15 @@ Möchten Sie ihn überschreiben?</translation>
     </message>
     <message>
         <source>Inch</source>
-        <translation>Zoll</translation>
+        <translation>Inch</translation>
     </message>
     <message>
         <source>Foot</source>
-        <translation>Fuß</translation>
+        <translation>Foot</translation>
     </message>
     <message>
         <source>Mile</source>
-        <translation>Meile</translation>
+        <translation>Mile</translation>
     </message>
     <message>
         <source>Millimeter</source>
@@ -7649,7 +7648,7 @@ Möchten Sie ihn überschreiben?</translation>
     </message>
     <message>
         <source>Yard</source>
-        <translation>Verge</translation>
+        <translation>Yard</translation>
     </message>
     <message>
         <source>Angstrom</source>
@@ -7788,7 +7787,7 @@ Möchten Sie ihn überschreiben?</translation>
         <translation>Unbekannter Fehler beim Öffnen der dwg-Datei</translation>
     </message>
     <message>
-        <source>can&apos;t open this dwg file</source>
+        <source>can't open this dwg file</source>
         <translation>Diese dwg-Datei kann nicht geöffnet werden</translation>
     </message>
     <message>
@@ -7864,7 +7863,7 @@ Möchten Sie ihn überschreiben?</translation>
     <message>
         <source>line</source>
         <comment>draw line</comment>
-        <translation>Linie</translation>
+        <translation>line</translation>
     </message>
     <message>
         <source>li</source>
@@ -7889,7 +7888,7 @@ Möchten Sie ihn überschreiben?</translation>
     <message>
         <source>free</source>
         <comment>draw freehand line</comment>
-        <translation>frei</translation>
+        <translation>free</translation>
     </message>
     <message>
         <source>fhl</source>
@@ -7944,7 +7943,7 @@ Möchten Sie ihn überschreiben?</translation>
     <message>
         <source>rect</source>
         <comment>draw rectangle</comment>
-        <translation>rectángulo</translation>
+        <translation>rect</translation>
     </message>
     <message>
         <source>polygon2v</source>
@@ -8019,17 +8018,17 @@ Möchten Sie ihn überschreiben?</translation>
     <message>
         <source>mtxt</source>
         <comment>draw mtext</comment>
-        <translation>mtext</translation>
+        <translation>mtxt</translation>
     </message>
     <message>
         <source>text</source>
         <comment>draw text</comment>
-        <translation>Text</translation>
+        <translation>text</translation>
     </message>
     <message>
         <source>txt</source>
         <comment>draw text</comment>
-        <translation>Text</translation>
+        <translation>txt</translation>
     </message>
     <message>
         <source>regen</source>
@@ -8044,12 +8043,12 @@ Möchten Sie ihn überschreiben?</translation>
     <message>
         <source>rg</source>
         <comment>zoom - redraw</comment>
-        <translation>Region</translation>
+        <translation>rg</translation>
     </message>
     <message>
         <source>zr</source>
         <comment>zoom - redraw</comment>
-        <translation>Zoom Reset</translation>
+        <translation>zr</translation>
     </message>
     <message>
         <source>zoomwindow</source>
@@ -8059,7 +8058,7 @@ Möchten Sie ihn überschreiben?</translation>
     <message>
         <source>zw</source>
         <comment>zoom - window</comment>
-        <translation>Zoom Window</translation>
+        <translation>zw</translation>
     </message>
     <message>
         <source>zoomauto</source>
@@ -8069,7 +8068,7 @@ Möchten Sie ihn überschreiben?</translation>
     <message>
         <source>za</source>
         <comment>zoom - auto</comment>
-        <translation>Auto Zoom</translation>
+        <translation>za</translation>
     </message>
     <message>
         <source>zoompan</source>
@@ -8079,7 +8078,7 @@ Möchten Sie ihn überschreiben?</translation>
     <message>
         <source>zp</source>
         <comment>zoom - pan</comment>
-        <translation>Pan View</translation>
+        <translation>zp</translation>
     </message>
     <message>
         <source>zoomprevious</source>
@@ -8089,7 +8088,7 @@ Möchten Sie ihn überschreiben?</translation>
     <message>
         <source>zv</source>
         <comment>zoom - previous</comment>
-        <translation>zoom vertical</translation>
+        <translation>zv</translation>
     </message>
     <message>
         <source>kill</source>
@@ -8264,12 +8263,12 @@ Möchten Sie ihn überschreiben?</translation>
     <message>
         <source>cut</source>
         <comment>modify - divide (cut)</comment>
-        <translation>ausschneiden</translation>
+        <translation>cut</translation>
     </message>
     <message>
         <source>div</source>
         <comment>modify - divide (cut)</comment>
-        <translation>teilen</translation>
+        <translation>div</translation>
     </message>
     <message>
         <source>mi</source>
@@ -8334,7 +8333,7 @@ Möchten Sie ihn überschreiben?</translation>
     <message>
         <source>os</source>
         <comment>snap - free</comment>
-        <translation>Objektschnappfunktion</translation>
+        <translation>os</translation>
     </message>
     <message>
         <source>snapcenter</source>
@@ -8344,7 +8343,7 @@ Möchten Sie ihn überschreiben?</translation>
     <message>
         <source>sc</source>
         <comment>snap - center</comment>
-        <translation>Mitte</translation>
+        <translation>sc</translation>
     </message>
     <message>
         <source>snapdist</source>
@@ -8354,7 +8353,7 @@ Möchten Sie ihn überschreiben?</translation>
     <message>
         <source>sd</source>
         <comment>snap - distance to endpoints</comment>
-        <translation>Distanz</translation>
+        <translation>sd</translation>
     </message>
     <message>
         <source>snapend</source>
@@ -8364,7 +8363,7 @@ Möchten Sie ihn überschreiben?</translation>
     <message>
         <source>se</source>
         <comment>snap - end points</comment>
-        <translation>Ende</translation>
+        <translation>se</translation>
     </message>
     <message>
         <source>snapgrid</source>
@@ -8374,7 +8373,7 @@ Möchten Sie ihn überschreiben?</translation>
     <message>
         <source>sg</source>
         <comment>snap - grid</comment>
-        <translation>Gitter</translation>
+        <translation>sg</translation>
     </message>
     <message>
         <source>snapintersection</source>
@@ -8444,7 +8443,7 @@ Möchten Sie ihn überschreiben?</translation>
     <message>
         <source>attr</source>
         <comment>modify attribute</comment>
-        <translation>Attribut</translation>
+        <translation>attr</translation>
     </message>
     <message>
         <source>ma</source>
@@ -8454,12 +8453,12 @@ Möchten Sie ihn überschreiben?</translation>
     <message>
         <source>prop</source>
         <comment>modify properties</comment>
-        <translation>Eigenschaft</translation>
+        <translation>prop</translation>
     </message>
     <message>
         <source>dist</source>
         <comment>distance point to point</comment>
-        <translation>Distanz</translation>
+        <translation>dist</translation>
     </message>
     <message>
         <source>dpp</source>
@@ -8469,7 +8468,7 @@ Möchten Sie ihn überschreiben?</translation>
     <message>
         <source>ang</source>
         <comment>measure angle</comment>
-        <translation>Winkel</translation>
+        <translation>ang</translation>
     </message>
     <message>
         <source>angle</source>
@@ -8477,7 +8476,7 @@ Möchten Sie ihn überschreiben?</translation>
     </message>
     <message>
         <source>dpi</source>
-        <translation>DPI</translation>
+        <translation>dpi</translation>
     </message>
     <message>
         <source>close</source>
@@ -8513,7 +8512,7 @@ Möchten Sie ihn überschreiben?</translation>
     </message>
     <message>
         <source>rows</source>
-        <translation>filas</translation>
+        <translation>rows</translation>
     </message>
     <message>
         <source>rowspacing</source>
@@ -8525,12 +8524,12 @@ Möchten Sie ihn überschreiben?</translation>
     </message>
     <message>
         <source>trim</source>
-        <translation>aparar</translation>
+        <translation>trim</translation>
     </message>
     <message>
         <source>ang</source>
         <comment>angle</comment>
-        <translation>ângulo</translation>
+        <translation>ang</translation>
     </message>
     <message>
         <source>an</source>
@@ -8564,7 +8563,7 @@ Möchten Sie ihn überschreiben?</translation>
     <message>
         <source>cols</source>
         <comment>columns</comment>
-        <translation>colunas</translation>
+        <translation>cols</translation>
     </message>
     <message>
         <source>co</source>
@@ -8584,12 +8583,12 @@ Möchten Sie ihn überschreiben?</translation>
     <message>
         <source>cs</source>
         <comment>columnspacing for inserts</comment>
-        <translation>Spaltenabstand</translation>
+        <translation>cs</translation>
     </message>
     <message>
         <source>fact</source>
         <comment>factor</comment>
-        <translation>Fakt</translation>
+        <translation>fact</translation>
     </message>
     <message>
         <source>f</source>
@@ -8598,7 +8597,7 @@ Möchten Sie ihn überschreiben?</translation>
     </message>
     <message>
         <source>help</source>
-        <translation>Hilfe</translation>
+        <translation>help</translation>
     </message>
     <message>
         <source>?</source>
@@ -8613,7 +8612,7 @@ Möchten Sie ihn überschreiben?</translation>
     <message>
         <source>len</source>
         <comment>length</comment>
-        <translation>Länge</translation>
+        <translation>len</translation>
     </message>
     <message>
         <source>l</source>
@@ -8668,7 +8667,7 @@ Möchten Sie ihn überschreiben?</translation>
     <message>
         <source>ra</source>
         <comment>radius</comment>
-        <translation>Ausrichtung der Zeile</translation>
+        <translation>ra</translation>
     </message>
     <message>
         <source>reversed</source>
@@ -8678,12 +8677,12 @@ Möchten Sie ihn überschreiben?</translation>
     <message>
         <source>rev</source>
         <comment>reversed</comment>
-        <translation>Umgekehrt</translation>
+        <translation>rev</translation>
     </message>
     <message>
         <source>row</source>
         <comment>row</comment>
-        <translation>Zeile</translation>
+        <translation>row</translation>
     </message>
     <message>
         <source>rowspacing</source>
@@ -8693,25 +8692,25 @@ Möchten Sie ihn überschreiben?</translation>
     <message>
         <source>rs</source>
         <comment>rowspacing for inserts</comment>
-        <translation>Zeilenabstand</translation>
+        <translation>rs</translation>
     </message>
     <message>
         <source>text</source>
-        <translation>Text</translation>
+        <translation>text</translation>
     </message>
     <message>
         <source>t</source>
         <comment>text</comment>
-        <translation>Text</translation>
+        <translation>t</translation>
     </message>
     <message>
         <source>t</source>
         <comment>through</comment>
-        <translation>Text</translation>
+        <translation>t</translation>
     </message>
     <message>
         <source>undo</source>
-        <translation>Rückgängig</translation>
+        <translation>undo</translation>
     </message>
     <message>
         <source>u</source>
@@ -8720,7 +8719,7 @@ Möchten Sie ihn überschreiben?</translation>
     </message>
     <message>
         <source>redo</source>
-        <translation>rehacer</translation>
+        <translation>redo</translation>
     </message>
     <message>
         <source>r</source>
@@ -8729,7 +8728,7 @@ Möchten Sie ihn überschreiben?</translation>
     </message>
     <message>
         <source>back</source>
-        <translation>atrás</translation>
+        <translation>back</translation>
     </message>
     <message>
         <source>b</source>
@@ -8818,7 +8817,7 @@ Möchten Sie ihn überschreiben?</translation>
     </message>
     <message>
         <source>Edit</source>
-        <translation>Bearbeiten</translation>
+        <translation>Edit</translation>
     </message>
     <message>
         <source>Ellipse</source>
@@ -8826,7 +8825,7 @@ Möchten Sie ihn überschreiben?</translation>
     </message>
     <message>
         <source>File</source>
-        <translation>Datei</translation>
+        <translation>File</translation>
     </message>
     <message>
         <source>Dimension</source>
@@ -8890,7 +8889,7 @@ Möchten Sie ihn überschreiben?</translation>
     </message>
     <message>
         <source>All</source>
-        <translation>Alle</translation>
+        <translation>All</translation>
     </message>
     <message>
         <source>Invalid objects removed:</source>
@@ -8949,7 +8948,7 @@ Möchten Sie ihn überschreiben?</translation>
     <message>
         <source>la</source>
         <comment>angled line</comment>
-        <translation>largura</translation>
+        <translation>la</translation>
     </message>
     <message>
         <source>linehor</source>
@@ -8959,7 +8958,7 @@ Möchten Sie ihn überschreiben?</translation>
     <message>
         <source>lh</source>
         <comment>horizontal line</comment>
-        <translation>altura</translation>
+        <translation>lh</translation>
     </message>
     <message>
         <source>linever</source>
@@ -8969,7 +8968,7 @@ Möchten Sie ihn überschreiben?</translation>
     <message>
         <source>lv</source>
         <comment>vertical line</comment>
-        <translation>Vista de línea</translation>
+        <translation>lv</translation>
     </message>
     <message>
         <source>linerec</source>
@@ -8979,7 +8978,7 @@ Möchten Sie ihn überschreiben?</translation>
     <message>
         <source>re</source>
         <comment>draw rectangle</comment>
-        <translation>Registro</translation>
+        <translation>re</translation>
     </message>
     <message>
         <source>linepar</source>
@@ -8994,12 +8993,12 @@ Möchten Sie ihn überschreiben?</translation>
     <message>
         <source>pa</source>
         <comment>create parallel</comment>
-        <translation>Paralelo</translation>
+        <translation>pa</translation>
     </message>
     <message>
         <source>ll</source>
         <comment>create parallel</comment>
-        <translation>Etiqueta de línea</translation>
+        <translation>ll</translation>
     </message>
     <message>
         <source>lineparthro</source>
@@ -9009,7 +9008,7 @@ Möchten Sie ihn überschreiben?</translation>
     <message>
         <source>lp</source>
         <comment>parallel through point</comment>
-        <translation>Punto de línea</translation>
+        <translation>lp</translation>
     </message>
     <message>
         <source>linebisect</source>
@@ -9129,7 +9128,7 @@ Möchten Sie ihn überschreiben?</translation>
     <message>
         <source>cc</source>
         <comment>circle 2 points radius</comment>
-        <translation>centro a centro</translation>
+        <translation>cc</translation>
     </message>
     <message>
         <source>circle3p</source>
@@ -9149,12 +9148,12 @@ Möchten Sie ihn überschreiben?</translation>
     <message>
         <source>cr</source>
         <comment>circle point radius</comment>
-        <translation>radio centro</translation>
+        <translation>cr</translation>
     </message>
     <message>
         <source>ccr</source>
         <comment>circle point radius</comment>
-        <translation>centro a centro (radio)</translation>
+        <translation>ccr</translation>
     </message>
     <message>
         <source>circletan2cp</source>
@@ -9164,7 +9163,7 @@ Möchten Sie ihn überschreiben?</translation>
     <message>
         <source>tr</source>
         <comment>circle 2 tangent point</comment>
-        <translation>transformación</translation>
+        <translation>tr</translation>
     </message>
     <message>
         <source>circletan2p</source>
@@ -9304,7 +9303,7 @@ Möchten Sie ihn überschreiben?</translation>
     <message>
         <source>pi</source>
         <comment>pl add node</comment>
-        <translation>polilinea</translation>
+        <translation>pi</translation>
     </message>
     <message>
         <source>plineapp</source>
@@ -9314,7 +9313,7 @@ Möchten Sie ihn überschreiben?</translation>
     <message>
         <source>pn</source>
         <comment>pl append node</comment>
-        <translation>polilínea</translation>
+        <translation>pn</translation>
     </message>
     <message>
         <source>plinedel</source>
@@ -9324,7 +9323,7 @@ Möchten Sie ihn überschreiben?</translation>
     <message>
         <source>pd</source>
         <comment>pl delete node</comment>
-        <translation>excluir pai</translation>
+        <translation>pd</translation>
     </message>
     <message>
         <source>plinedeltwn</source>
@@ -9334,7 +9333,7 @@ Möchten Sie ihn überschreiben?</translation>
     <message>
         <source>pr</source>
         <comment>pl del between nodes</comment>
-        <translation>referência pai</translation>
+        <translation>pr</translation>
     </message>
     <message>
         <source>plinetrm</source>
@@ -9344,7 +9343,7 @@ Möchten Sie ihn überschreiben?</translation>
     <message>
         <source>pt</source>
         <comment>pl trim segments</comment>
-        <translation>texto pai</translation>
+        <translation>pt</translation>
     </message>
     <message>
         <source>plinepar</source>
@@ -9354,7 +9353,7 @@ Möchten Sie ihn überschreiben?</translation>
     <message>
         <source>pe</source>
         <comment>pl equidistant</comment>
-        <translation>elemento pai</translation>
+        <translation>pe</translation>
     </message>
     <message>
         <source>plinejoin</source>
@@ -9364,12 +9363,12 @@ Möchten Sie ihn überschreiben?</translation>
     <message>
         <source>pj</source>
         <comment>pl join</comment>
-        <translation>juntar pai</translation>
+        <translation>pj</translation>
     </message>
     <message>
         <source>sx</source>
         <comment>deselect all entities</comment>
-        <translation>Escala X</translation>
+        <translation>sx</translation>
     </message>
     <message>
         <source>invertselect</source>
@@ -9379,12 +9378,12 @@ Möchten Sie ihn überschreiben?</translation>
     <message>
         <source>is</source>
         <comment>invert select</comment>
-        <translation>Estado</translation>
+        <translation>is</translation>
     </message>
     <message>
         <source>ds</source>
         <comment>dimension - aligned</comment>
-        <translation>Escala de dimensión</translation>
+        <translation>ds</translation>
     </message>
     <message>
         <source>dimradius</source>
@@ -9394,17 +9393,17 @@ Möchten Sie ihn überschreiben?</translation>
     <message>
         <source>dr</source>
         <comment>dimension - radial</comment>
-        <translation>Radio de dimensión</translation>
+        <translation>dr</translation>
     </message>
     <message>
         <source>da</source>
         <comment>dimension - angular</comment>
-        <translation>Alpha de dimensión</translation>
+        <translation>da</translation>
     </message>
     <message>
         <source>dg</source>
         <comment>dimension - regenerate</comment>
-        <translation>Gamma de dimensión</translation>
+        <translation>dg</translation>
     </message>
     <message>
         <source>modmove</source>
@@ -9434,7 +9433,7 @@ Möchten Sie ihn überschreiben?</translation>
     <message>
         <source>mr</source>
         <comment>modify - move rotate</comment>
-        <translation>MR</translation>
+        <translation>mr</translation>
     </message>
     <message>
         <source>mod2rot</source>
@@ -9454,7 +9453,7 @@ Möchten Sie ihn überschreiben?</translation>
     <message>
         <source>md</source>
         <comment>modify -  revert direction</comment>
-        <translation>MD</translation>
+        <translation>md</translation>
     </message>
     <message>
         <source>modtrim</source>
@@ -9479,12 +9478,12 @@ Möchten Sie ihn überschreiben?</translation>
     <message>
         <source>mo</source>
         <comment>modify - offset</comment>
-        <translation>Modifikator Offset</translation>
+        <translation>mo</translation>
     </message>
     <message>
         <source>moff</source>
         <comment>modify - offset</comment>
-        <translation>Modifikator Offset</translation>
+        <translation>moff</translation>
     </message>
     <message>
         <source>modbevel</source>
@@ -9524,7 +9523,7 @@ Möchten Sie ihn überschreiben?</translation>
     <message>
         <source>xt</source>
         <comment>explode text strings</comment>
-        <translation>XT</translation>
+        <translation>xt</translation>
     </message>
     <message>
         <source>modexplode</source>
@@ -9544,7 +9543,7 @@ Möchten Sie ihn überschreiben?</translation>
     <message>
         <source>id</source>
         <comment>distance point to point</comment>
-        <translation>ID</translation>
+        <translation>id</translation>
     </message>
     <message>
         <source>infodistep</source>
@@ -9554,12 +9553,12 @@ Möchten Sie ihn überschreiben?</translation>
     <message>
         <source>ii</source>
         <comment>distance entity to point</comment>
-        <translation>II</translation>
+        <translation>ii</translation>
     </message>
     <message>
         <source>dep</source>
         <comment>distance entity to point</comment>
-        <translation>Abhängigkeit</translation>
+        <translation>dep</translation>
     </message>
     <message>
         <source>infoangle</source>
@@ -9638,12 +9637,12 @@ Möchten Sie ihn überschreiben?</translation>
     <message>
         <source>eqn</source>
         <comment>equation</comment>
-        <translation>Gl.</translation>
+        <translation>eqn</translation>
     </message>
     <message>
         <source>eq</source>
         <comment>equation</comment>
-        <translation>Gl.</translation>
+        <translation>eq</translation>
     </message>
     <message>
         <source>Custom</source>
@@ -9952,8 +9951,8 @@ Möchten Sie ihn überschreiben?</translation>
         <translation>-o some.pdf *.dxf</translation>
     </message>
     <message>
-        <source>-- print all dxf files to &apos;some.pdf&apos; file.</source>
-        <translation>-- Alle dxf-Dateien in die Datei &apos;some.pdf&apos; drucken.</translation>
+        <source>-- print all dxf files to 'some.pdf' file.</source>
+        <translation>-- Alle dxf-Dateien in die Datei 'some.pdf' drucken.</translation>
     </message>
     <message>
         <source>Auto fit and center drawing to page.</source>
@@ -10027,8 +10026,8 @@ Möchten Sie ihn überschreiben?</translation>
         <translation>Combine All Layers</translation>
     </message>
     <message>
-        <source>File &quot;%1&quot; already exists. Do you want to replace it?</source>
-        <translation>&quot;%1&quot; fitxategia dagoeneko badago. Ordezkatzea nahi duzu?</translation>
+        <source>File "%1" already exists. Do you want to replace it?</source>
+        <translation>"%1" fitxategia dagoeneko badago. Ordezkatzea nahi duzu?</translation>
     </message>
     <message>
         <source>/CustomColor%1</source>
@@ -10131,7 +10130,7 @@ Möchten Sie ihn überschreiben?</translation>
     <message>
         <source>sll</source>
         <comment>slice/divide line</comment>
-        <translation>Lista de etiquetas de segmento</translation>
+        <translation>sll</translation>
     </message>
     <message>
         <source>slicec</source>
@@ -10241,7 +10240,7 @@ Möchten Sie ihn überschreiben?</translation>
     <message>
         <source>plfd</source>
         <comment>Parabola focus directrix</comment>
-        <translation>Point to Line Feature</translation>
+        <translation>plfd</translation>
     </message>
     <message>
         <source>angleline</source>
@@ -10256,7 +10255,7 @@ Möchten Sie ihn überschreiben?</translation>
     <message>
         <source>rort</source>
         <comment>draw orthogonal</comment>
-        <translation>Rotate</translation>
+        <translation>rort</translation>
     </message>
     <message>
         <source>point2line</source>
@@ -10281,19 +10280,19 @@ Möchten Sie ihn überschreiben?</translation>
     <message>
         <source>smm</source>
         <comment>snap middle manual</comment>
-        <translation>Snap Middle Manually</translation>
+        <translation>smm</translation>
     </message>
     <message>
         <source>x</source>
-        <translation>X</translation>
+        <translation>x</translation>
     </message>
     <message>
         <source>y</source>
-        <translation>Y</translation>
+        <translation>y</translation>
     </message>
     <message>
         <source>p</source>
-        <translation>P</translation>
+        <translation>p</translation>
     </message>
     <message>
         <source>anglerel</source>
@@ -10325,11 +10324,11 @@ Möchten Sie ihn überschreiben?</translation>
     </message>
     <message>
         <source>pos</source>
-        <translation>Position</translation>
+        <translation>pos</translation>
     </message>
     <message>
         <source>size</source>
-        <translation>Größe</translation>
+        <translation>size</translation>
     </message>
     <message>
         <source>bevels</source>
@@ -10349,7 +10348,7 @@ Möchten Sie ihn überschreiben?</translation>
     </message>
     <message>
         <source>str</source>
-        <translation>Zeichenkette</translation>
+        <translation>str</translation>
     </message>
     <message>
         <source>round</source>
@@ -10361,19 +10360,19 @@ Möchten Sie ihn überschreiben?</translation>
     </message>
     <message>
         <source>topl</source>
-        <translation>Oben links</translation>
+        <translation>topl</translation>
     </message>
     <message>
         <source>top</source>
-        <translation>Oben</translation>
+        <translation>top</translation>
     </message>
     <message>
         <source>topr</source>
-        <translation>Oben</translation>
+        <translation>topr</translation>
     </message>
     <message>
         <source>left</source>
-        <translation>Links</translation>
+        <translation>left</translation>
     </message>
     <message>
         <source>middle</source>
@@ -10413,11 +10412,11 @@ Möchten Sie ihn überschreiben?</translation>
     </message>
     <message>
         <source>hor</source>
-        <translation>Horizontal</translation>
+        <translation>hor</translation>
     </message>
     <message>
         <source>vert</source>
-        <translation>Vertical</translation>
+        <translation>vert</translation>
     </message>
     <message>
         <source>snap2</source>
@@ -10437,7 +10436,7 @@ Möchten Sie ihn überschreiben?</translation>
     </message>
     <message>
         <source>quad</source>
-        <translation>Cuadrángulo</translation>
+        <translation>quad</translation>
     </message>
     <message>
         <source>noquad</source>
@@ -10469,19 +10468,19 @@ Möchten Sie ihn überschreiben?</translation>
     </message>
     <message>
         <source>end</source>
-        <translation>Final</translation>
+        <translation>end</translation>
     </message>
     <message>
         <source>both</source>
-        <translation>Ambos</translation>
+        <translation>both</translation>
     </message>
     <message>
         <source>none</source>
-        <translation>Ninguno</translation>
+        <translation>none</translation>
     </message>
     <message>
         <source>fit</source>
-        <translation>Ajuste</translation>
+        <translation>fit</translation>
     </message>
     <message>
         <source>nofit</source>
@@ -10501,7 +10500,7 @@ Möchten Sie ihn überschreiben?</translation>
     </message>
     <message>
         <source>sym</source>
-        <translation>Symbol</translation>
+        <translation>sym</translation>
     </message>
     <message>
         <source>nosym</source>
@@ -10688,8 +10687,8 @@ Möchten Sie ihn überschreiben?</translation>
         <translation>Winkel eingeben:</translation>
     </message>
     <message>
-        <source></source>
-        <translation></translation>
+        <source />
+        <translation />
     </message>
     <message>
         <source>Enter factor:</source>
@@ -10741,7 +10740,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Zurück</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -10760,7 +10759,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Zurück</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify dimension line location</source>
@@ -10860,7 +10859,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Zurück</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify dimension line location</source>
@@ -10887,7 +10886,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Select arc or circle entity</source>
-        <translation>Sélectionner une entité d&apos;arc ou de cercle</translation>
+        <translation>Sélectionner une entité d'arc ou de cercle</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -10895,7 +10894,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Specify dimension line position or enter angle:</source>
-        <translation>Spécifier la position de la ligne de cote ou entrer l&apos;angle :</translation>
+        <translation>Spécifier la position de la ligne de cote ou entrer l'angle :</translation>
     </message>
     <message>
         <source>Enter dimension text:</source>
@@ -10926,7 +10925,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Retour</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify start angle:</source>
@@ -10988,7 +10987,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Zurück</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify end point</source>
@@ -11011,7 +11010,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Zurück</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify point on circle</source>
@@ -11038,7 +11037,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Zurück</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -11061,7 +11060,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Zurück</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify third point</source>
@@ -11092,15 +11091,15 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>radius=%1 is invalid (expression)</source>
-        <translation>Radius &apos;%1&apos; is invalid (expression)</translation>
+        <translation>Radius '%1' is invalid (expression)</translation>
     </message>
     <message>
         <source>radius=%1 is invalid (negative)</source>
-        <translation>Radius &apos;%1&apos; is invalid (negative)</translation>
+        <translation>Radius '%1' is invalid (negative)</translation>
     </message>
     <message>
         <source>radius=%1 is invalid (zero)</source>
-        <translation>Radius &apos;%1&apos; is invalid (zero)</translation>
+        <translation>Radius '%1' is invalid (zero)</translation>
     </message>
 </context>
 <context>
@@ -11119,7 +11118,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Zurück</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify the third line</source>
@@ -11138,7 +11137,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Zurück</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify the second point on the tangent circle</source>
@@ -11176,24 +11175,24 @@ This block cannot be inserted.</source>
         <translation>Hautatu ukitzaile-zirkuluaren zentroa</translation>
     </message>
     <message>
-        <source>Invalid expression &apos;%1&apos; for radius</source>
-        <translation>Errorea: &apos;%1&apos; ez da baliozko erradioa</translation>
+        <source>Invalid expression '%1' for radius</source>
+        <translation>Errorea: '%1' ez da baliozko erradioa</translation>
     </message>
     <message>
-        <source>Invalid negative radius &apos;%1&apos;</source>
-        <translation>Errorea: &apos;%1&apos; erradio negatiboa da</translation>
+        <source>Invalid negative radius '%1'</source>
+        <translation>Errorea: '%1' erradio negatiboa da</translation>
     </message>
     <message>
-        <source>Invalid zero radius &apos;%1&apos;</source>
-        <translation>Errorea: &apos;%1&apos; erradioa zero da</translation>
+        <source>Invalid zero radius '%1'</source>
+        <translation>Errorea: '%1' erradioa zero da</translation>
     </message>
     <message>
-        <source>No tangent circle possible for radius &apos;%1&apos;</source>
-        <translation>Ezin da &apos;%1&apos; erradiozko zirkulu ukitzailea marraztu.</translation>
+        <source>No tangent circle possible for radius '%1'</source>
+        <translation>Ezin da '%1' erradiozko zirkulu ukitzailea marraztu.</translation>
     </message>
     <message>
-        <source>No common tangential circle for radius &apos;%1&apos;</source>
-        <translation>Ezin da &apos;%1&apos; erradiozko zirkulu ukitzaile komun bat marraztu.</translation>
+        <source>No common tangential circle for radius '%1'</source>
+        <translation>Ezin da '%1' erradiozko zirkulu ukitzaile komun bat marraztu.</translation>
     </message>
 </context>
 <context>
@@ -11301,7 +11300,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Atrás</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify endpoint or length of minor axis:</source>
@@ -11336,7 +11335,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Atrás</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify the third point on ellipse</source>
@@ -11363,7 +11362,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Atrás</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify a point on ellipse or total distance to foci</source>
@@ -11463,8 +11462,8 @@ This block cannot be inserted.</source>
         <translation>Winkel eingeben:</translation>
     </message>
     <message>
-        <source></source>
-        <translation></translation>
+        <source />
+        <translation />
     </message>
     <message>
         <source>Enter factor:</source>
@@ -11491,7 +11490,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Zurück</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify next point</source>
@@ -11530,7 +11529,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Zurück</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Enter length:</source>
@@ -11557,7 +11556,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Zurück</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Enter bisector length:</source>
@@ -11600,7 +11599,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Zurück</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -11619,7 +11618,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Zurück</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -11661,7 +11660,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Zurück</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Number:</source>
@@ -11679,8 +11678,8 @@ This block cannot be inserted.</source>
 <context>
     <name>RS_ActionDrawLinePolygon</name>
     <message>
-        <source></source>
-        <translation></translation>
+        <source />
+        <translation />
     </message>
 </context>
 <context>
@@ -11722,7 +11721,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Zurück</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Number:</source>
@@ -11753,7 +11752,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Zurück</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -11776,7 +11775,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Zurück</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -11795,7 +11794,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Zurück</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -11806,7 +11805,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Zurück</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Select first circle/ellipse/parabola</source>
@@ -11837,7 +11836,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Zurück</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -11934,7 +11933,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Zurück</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify next control point</source>
@@ -11961,7 +11960,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Zurück</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify second point</source>
@@ -12021,7 +12020,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Voltar</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Angle: %1</source>
@@ -12075,7 +12074,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Voltar</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Distance: %1 Cartesian: (%2 , %3), Polar: (%4&lt;%5)</source>
@@ -12102,7 +12101,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Voltar</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -12158,16 +12157,16 @@ This block cannot be inserted.</source>
         <translation>Introduzir ângulo:</translation>
     </message>
     <message>
-        <source></source>
-        <translation></translation>
+        <source />
+        <translation />
     </message>
     <message>
         <source>Enter factor:</source>
         <translation>Introduzir fator:</translation>
     </message>
     <message>
-        <source>Cannot open file &apos;%1&apos;</source>
-        <translation>Ezin da &apos;%1&apos; fitxategia ireki.</translation>
+        <source>Cannot open file '%1'</source>
+        <translation>Ezin da '%1' fitxategia ireki.</translation>
     </message>
 </context>
 <context>
@@ -12309,7 +12308,7 @@ This block cannot be inserted.</source>
     <name>RS_ActionModifyEntity</name>
     <message>
         <source>Click on entity to modify</source>
-        <translation>Cliquez sur l&apos;entité pour la modifier</translation>
+        <translation>Cliquez sur l'entité pour la modifier</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -12332,7 +12331,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Retour</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -12351,7 +12350,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Zurück</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Invalid number of copies, use %1 </source>
@@ -12378,7 +12377,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Zurück</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Enter rotation angle:</source>
@@ -12393,7 +12392,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Zurück</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -12404,7 +12403,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Zurück</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify rotation center</source>
@@ -12431,7 +12430,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Zurück</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -12442,7 +12441,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Zurück</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify second entity</source>
@@ -12496,7 +12495,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Zurück</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify reference point</source>
@@ -12523,7 +12522,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Zurück</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Select second trim entity</source>
@@ -12558,7 +12557,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Zurück</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -12603,7 +12602,7 @@ This block cannot be inserted.</source>
         <translation>Cancel</translation>
     </message>
     <message>
-        <source>Specify adding node&apos;s point</source>
+        <source>Specify adding node's point</source>
         <translation>Specify the point for the new node.</translation>
     </message>
     <message>
@@ -12673,12 +12672,12 @@ This block cannot be inserted.</source>
         <translation>Abbrechen</translation>
     </message>
     <message>
-        <source>Specify deleting node&apos;s point</source>
+        <source>Specify deleting node's point</source>
         <translation>Punkt des Knotens zum Löschen festlegen</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Zurück</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Deleting point is invalid.</source>
@@ -12717,7 +12716,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Zurück</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify second node</source>
@@ -12802,7 +12801,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Zurück</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Specify second segment</source>
@@ -12840,8 +12839,8 @@ This block cannot be inserted.</source>
         <translation>Versatz über die Kommandozeile eingeben, um den Ausdruck zu verschieben</translation>
     </message>
     <message>
-        <source>Printout offset ignores relative zero. Ignoring &apos;@&apos;</source>
-        <translation>Der Ausdrucksversatz ignoriert den relativen Nullpunkt. Ignoriert &apos;@&apos;</translation>
+        <source>Printout offset ignores relative zero. Ignoring '@'</source>
+        <translation>Der Ausdrucksversatz ignoriert den relativen Nullpunkt. Ignoriert '@'</translation>
     </message>
     <message>
         <source>Printout in Black/White</source>
@@ -12958,7 +12957,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Zurück</translation>
+        <translation>Back</translation>
     </message>
 </context>
 <context>
@@ -12973,7 +12972,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Zurück</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Click and drag for the selection window</source>
@@ -13007,7 +13006,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation>Zurück</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <source>Select second entity</source>
@@ -13125,7 +13124,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Trim</source>
-        <translation>Abschneiden</translation>
+        <translation>Trim</translation>
     </message>
     <message>
         <source>Length 1:</source>
@@ -13236,7 +13235,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Scale Factor</source>
-        <translation>Facteur d&apos;échelle</translation>
+        <translation>Facteur d'échelle</translation>
     </message>
     <message>
         <source>DPI</source>
@@ -13244,14 +13243,14 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>DPI of Image</source>
-        <translation>DPI de l&apos;image</translation>
+        <translation>DPI de l'image</translation>
     </message>
 </context>
 <context>
     <name>Ui_InsertOptions</name>
     <message>
         <source>Insert Options</source>
-        <translation>Options d&apos;insertion</translation>
+        <translation>Options d'insertion</translation>
     </message>
     <message>
         <source>Angle:</source>
@@ -13353,7 +13352,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>End</source>
-        <translation>Ende</translation>
+        <translation>End</translation>
     </message>
 </context>
 <context>
@@ -13399,7 +13398,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Undo</source>
-        <translation>Desfazer</translation>
+        <translation>Undo</translation>
     </message>
     <message>
         <source>Redo the last line drawing</source>
@@ -13407,7 +13406,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Redo</source>
-        <translation>Refazer</translation>
+        <translation>Redo</translation>
     </message>
 </context>
 <context>
@@ -13438,7 +13437,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Rel</source>
-        <translation>Rel.</translation>
+        <translation>Rel</translation>
     </message>
     <message>
         <source>Undo the last line drawing</source>
@@ -13446,7 +13445,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Undo</source>
-        <translation>Rückgängig</translation>
+        <translation>Undo</translation>
     </message>
     <message>
         <source>Form a closed contour from lines drawn</source>
@@ -13462,7 +13461,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Redo</source>
-        <translation>Wiederherstellen</translation>
+        <translation>Redo</translation>
     </message>
     <message>
         <source>Point</source>
@@ -13519,7 +13518,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Number of edges</source>
-        <translation>Nombre d&apos;arêtes</translation>
+        <translation>Nombre d'arêtes</translation>
     </message>
 </context>
 <context>
@@ -13699,7 +13698,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Trim</source>
-        <translation>Zuschneiden</translation>
+        <translation>Trim</translation>
     </message>
     <message>
         <source>Radius:</source>
@@ -13748,7 +13747,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Undo</source>
-        <translation>Desegin</translation>
+        <translation>Undo</translation>
     </message>
 </context>
 <context>
@@ -13805,7 +13804,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Name</source>
-        <translation>Izena</translation>
+        <translation>Name</translation>
     </message>
     <message>
         <source>Create</source>
