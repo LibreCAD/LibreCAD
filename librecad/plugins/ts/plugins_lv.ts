@@ -12,11 +12,11 @@
     <name>ColorWizard</name>
     <message>
         <source>Frame</source>
-        <translation>Frame</translation>
+        <translation>Rāmis</translation>
     </message>
     <message>
         <source>Add to favorites</source>
-        <translation>Add to favorites</translation>
+        <translation>Pievienot izlasē</translation>
     </message>
     <message>
         <source>...</source>
@@ -27,11 +27,11 @@
     <name>ComboBoxOption</name>
     <message>
         <source>Frame</source>
-        <translation>Frame</translation>
+        <translation>Rāmis</translation>
     </message>
     <message>
         <source>GroupBox</source>
-        <translation>GroupBox</translation>
+        <translation>Grupu lodziņš</translation>
     </message>
     <message>
         <source>Set</source>
@@ -42,7 +42,7 @@
     <name>CustomToolbarCreator</name>
     <message>
         <source>Frame</source>
-        <translation>Frame</translation>
+        <translation>Rāmis</translation>
     </message>
     <message>
         <source>&gt;</source>
@@ -62,7 +62,7 @@
     </message>
     <message>
         <source>input a name and then press +</source>
-        <translation>input a name and then press +</translation>
+        <translation>ievadiet nosaukumu un nospiediet +</translation>
     </message>
     <message>
         <source>Save</source>
@@ -73,7 +73,7 @@
     <name>CustomWidgetCreator</name>
     <message>
         <source>Frame</source>
-        <translation>Frame</translation>
+        <translation>Rāmis</translation>
     </message>
     <message>
         <source>-&gt;</source>
@@ -100,22 +100,22 @@
     </message>
     <message>
         <source>Geometry</source>
-        <translation>Geometry</translation>
+        <translation>Ģeometrija</translation>
     </message>
     <message>
         <source>Points on Spline</source>
-        <translation>Points on Spline</translation>
+        <translation>Punkti uz splaina</translation>
     </message>
     <message>
         <source>Control Points</source>
-        <translation>Control Points</translation>
+        <translation>Kontrolpunkti</translation>
     </message>
 </context>
 <context>
     <name>DlgSplinePoints</name>
     <message>
         <source>SplinePoints</source>
-        <translation>SplinePoints</translation>
+        <translation>SplainPunkti</translation>
     </message>
     <message>
         <source>Layer:</source>
@@ -123,7 +123,7 @@
     </message>
     <message>
         <source>Geometry</source>
-        <translation>Geometry</translation>
+        <translation>Ģeometrija</translation>
     </message>
     <message>
         <source>Closed</source>
@@ -131,29 +131,29 @@
     </message>
     <message>
         <source>Spline Points</source>
-        <translation>Spline Points</translation>
+        <translation>Splaina punkti</translation>
     </message>
     <message>
         <source>Control Points</source>
-        <translation>Control Points</translation>
+        <translation>Kontrolpunkti</translation>
     </message>
     <message>
         <source>Points on Spline</source>
-        <translation>Points on Spline</translation>
+        <translation>Punkti uz splaina</translation>
     </message>
 </context>
 <context>
     <name>ExpTo_Csv</name>
     <message>
         <source>Export points to csv</source>
-        <translation>Export points to csv</translation>
+        <translation>Eksportēt punktus uz csv</translation>
     </message>
 </context>
 <context>
     <name>LC_ActionDimArc</name>
     <message>
         <source>Select arc entity</source>
-        <translation>Select arc entity</translation>
+        <translation>Atlasīt loka elementu</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -161,7 +161,7 @@
     </message>
     <message>
         <source>Specify dimension arc location</source>
-        <translation>Specify dimension arc location</translation>
+        <translation>Norādīt izmēra loka atrašanās vietu</translation>
     </message>
 </context>
 <context>
@@ -169,16 +169,16 @@
     <message>
         <source>radius=%1 is too small for points selected
 distance between points=%2 is larger than diameter=%3</source>
-        <translation>radius=%1 is too small for points selected
-distance between points=%2 is larger than diameter=%3</translation>
+        <translation>rādiuss=%1 ir pārāk mazs atlasītajiem punktiem
+attālums starp punktiem=%2 ir lielāks par diametru=%3</translation>
     </message>
     <message>
         <source>Select from two possible circle centers</source>
-        <translation>Select from two possible circle centers</translation>
+        <translation>Atlasīt no diviem iespējamiem apļa centriem</translation>
     </message>
     <message>
         <source>Specify first point</source>
-        <translation>Specify first point</translation>
+        <translation>Norādīt pirmo punktu</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -186,7 +186,7 @@ distance between points=%2 is larger than diameter=%3</translation>
     </message>
     <message>
         <source>Specify second point</source>
-        <translation>Specify second point</translation>
+        <translation>Norādīt otro punktu</translation>
     </message>
     <message>
         <source>Back</source>
@@ -194,7 +194,7 @@ distance between points=%2 is larger than diameter=%3</translation>
     </message>
     <message>
         <source>Select circle center</source>
-        <translation>Select circle center</translation>
+        <translation>Atlasīt apļa centru</translation>
     </message>
 </context>
 <context>
@@ -202,8 +202,8 @@ distance between points=%2 is larger than diameter=%3</translation>
     <message>
         <source>Specify distance (%1)
 or [%2]</source>
-        <translation>Specify distance (%1)
-or [%2]</translation>
+        <translation>Norādīt attālumu (%1)
+vai [%2]</translation>
     </message>
     <message>
         <source>X</source>
@@ -220,38 +220,38 @@ or [%2]</translation>
     <message>
         <source>Specify  distance (angle %1 deg)
 or [%2]</source>
-        <translation>Specify  distance (angle %1 deg)
-or [%2]</translation>
+        <translation>Norādīt attālumu (leņķis %1 grādi)
+vai [%2]</translation>
     </message>
 </context>
 <context>
     <name>LC_ActionDrawLinePolygonCenTan</name>
     <message>
         <source>Specify center</source>
-        <translation>Specify center</translation>
+        <translation>Norādīt centru</translation>
     </message>
     <message>
         <source>Specify a tangent</source>
-        <translation>Specify a tangent</translation>
+        <translation>Norādīt pieskari</translation>
     </message>
     <message>
         <source>Enter number:</source>
-        <translation>Enter number:</translation>
+        <translation>Ievadīt numuru:</translation>
     </message>
     <message>
         <source>Not a valid number. Try 1..9999</source>
-        <translation>Not a valid number. Try 1..9999</translation>
+        <translation>Nederīgs numurs. Mēģiniet 1..9999</translation>
     </message>
     <message>
         <source>Not a valid expression</source>
-        <translation>Not a valid expression</translation>
+        <translation>Nederīga izteiksme</translation>
     </message>
 </context>
 <context>
     <name>LC_ActionDrawLineSnake</name>
     <message>
         <source>Specify direction (x or y) or [%1]</source>
-        <translation>Specify direction (x or y) or [%1]</translation>
+        <translation>Norādīt virzienu (x vai y) vai [%1]</translation>
     </message>
     <message>
         <source>Back</source>
@@ -259,7 +259,7 @@ or [%2]</translation>
     </message>
     <message>
         <source>Specify distance (%1) or [%2]</source>
-        <translation>Specify distance (%1) or [%2]</translation>
+        <translation>Norādīt attālumu (%1) vai [%2]</translation>
     </message>
     <message>
         <source>X</source>
@@ -271,22 +271,22 @@ or [%2]</translation>
     </message>
     <message>
         <source>Specify distance (%1 deg) or [%2]</source>
-        <translation>Specify distance (%1 deg) or [%2]</translation>
+        <translation>Norādīt attālumu (%1 grādi) vai [%2]</translation>
     </message>
     <message>
         <source>Specify angle or [%2]</source>
-        <translation>Specify angle or [%2]</translation>
+        <translation>Norādīt leņķi vai [%2]</translation>
     </message>
     <message>
         <source>Specify point or [%1]</source>
-        <translation>Specify point or [%1]</translation>
+        <translation>Norādīt punktu vai [%1]</translation>
     </message>
 </context>
 <context>
     <name>LC_ActionDrawParabola4Points</name>
     <message>
         <source>Specify the first point on parabola</source>
-        <translation>Specify the first point on parabola</translation>
+        <translation>Norādīt pirmo punktu uz parabolas</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -294,7 +294,7 @@ or [%2]</translation>
     </message>
     <message>
         <source>Specify the second point on parabola</source>
-        <translation>Specify the second point on parabola</translation>
+        <translation>Norādīt otro punktu uz parabolas</translation>
     </message>
     <message>
         <source>Back</source>
@@ -302,22 +302,22 @@ or [%2]</translation>
     </message>
     <message>
         <source>Specify the third point on parabola</source>
-        <translation>Specify the third point on parabola</translation>
+        <translation>Norādīt trešo punktu uz parabolas</translation>
     </message>
     <message>
         <source>Specify the fourth point on parabola</source>
-        <translation>Specify the fourth point on parabola</translation>
+        <translation>Norādīt ceturto punktu uz parabolas</translation>
     </message>
     <message>
         <source>Specify the Axis on parabola</source>
-        <translation>Specify the Axis on parabola</translation>
+        <translation>Norādīt asi uz parabolas</translation>
     </message>
 </context>
 <context>
     <name>LC_ActionDrawParabolaFD</name>
     <message>
         <source>Specify the focus of parabola</source>
-        <translation>Specify the focus of parabola</translation>
+        <translation>Norādīt parabolas fokusu</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -325,7 +325,7 @@ or [%2]</translation>
     </message>
     <message>
         <source>Specify the directrix of parabola</source>
-        <translation>Specify the directrix of parabola</translation>
+        <translation>Norādīt parabolas direktrisu</translation>
     </message>
     <message>
         <source>Back</source>
@@ -333,22 +333,22 @@ or [%2]</translation>
     </message>
     <message>
         <source>Specify the start point on parabola</source>
-        <translation>Specify the start point on parabola</translation>
+        <translation>Norādīt sākuma punktu uz parabolas</translation>
     </message>
     <message>
         <source>Specify the end point on parabola</source>
-        <translation>Specify the end point on parabola</translation>
+        <translation>Norādīt beigu punktu uz parabolas</translation>
     </message>
 </context>
 <context>
     <name>LC_ActionDrawSliceDivide</name>
     <message>
         <source> is not divided as it is locked.</source>
-        <translation>is not divided as it is locked.</translation>
+        <translation>nav sadalīts, jo ir bloķēts.</translation>
     </message>
     <message>
         <source> is not divided as it is part of polyline. Expand polyline first.</source>
-        <translation>is not divided as it is part of polyline. Expand polyline first.</translation>
+        <translation>nav sadalīts, jo ir polilīnijas daļa. Vispirms izvērst polilīniju.</translation>
     </message>
     <message>
         <source>Line</source>
@@ -360,14 +360,14 @@ or [%2]</translation>
     </message>
     <message>
         <source>Circle</source>
-        <translation>Circle</translation>
+        <translation>Aplis</translation>
     </message>
 </context>
 <context>
     <name>LC_ActionDrawSplinePoints</name>
     <message>
         <source>Specify first control point</source>
-        <translation>Specify first control point</translation>
+        <translation>Norādīt pirmo kontrolpunktu</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -375,7 +375,7 @@ or [%2]</translation>
     </message>
     <message>
         <source>Specify next control point or [%1]</source>
-        <translation>Specify next control point or [%1]</translation>
+        <translation>Norādīt nākamo kontrolpunktu vai [%1]</translation>
     </message>
     <message>
         <source>Back</source>
@@ -383,154 +383,154 @@ or [%2]</translation>
     </message>
     <message>
         <source>Specify next control point</source>
-        <translation>Specify next control point</translation>
+        <translation>Norādīt nākamo kontrolpunktu</translation>
     </message>
     <message>
         <source>Cannot undo: Not enough entities defined yet.</source>
-        <translation>Cannot undo: Not enough entities defined yet.</translation>
+        <translation>Nevar atcelt: vēl nav definēts pietiekami daudz elementu.</translation>
     </message>
     <message>
         <source>Cannot undo: Nothing could be redone.</source>
-        <translation>Cannot undo: Nothing could be redone.</translation>
+        <translation>Nevar atcelt: nav ko atkārtot.</translation>
     </message>
 </context>
 <context>
     <name>LC_ActionFactory</name>
     <message>
         <source>Zoom &amp;Panning</source>
-        <translation>Zoom &amp;Panning</translation>
+        <translation>Tālummaiņa un &amp;ritināšana</translation>
     </message>
     <message>
         <source>Select Entity</source>
-        <translation>Select Entity</translation>
+        <translation>Atlasīt elementu</translation>
     </message>
     <message>
         <source>Select Window</source>
-        <translation>Select Window</translation>
+        <translation>Atlasīt logā</translation>
     </message>
     <message>
         <source>Deselect Window</source>
-        <translation>Deselect Window</translation>
+        <translation>Atcelt atlasi logā</translation>
     </message>
     <message>
         <source>(De-)Select &amp;Contour</source>
-        <translation>(De-)Select &amp;Contour</translation>
+        <translation>(At)atlasīt &amp;kontūru</translation>
     </message>
     <message>
         <source>Select Intersected Entities</source>
-        <translation>Select Intersected Entities</translation>
+        <translation>Atlasīt krustojošos elementus</translation>
     </message>
     <message>
         <source>Deselect Intersected Entities</source>
-        <translation>Deselect Intersected Entities</translation>
+        <translation>Atcelt krustojošos elementu atlasi</translation>
     </message>
     <message>
         <source>(De-)Select Layer</source>
-        <translation>(De-)Select Layer</translation>
+        <translation>(At)atlasīt slāni</translation>
     </message>
     <message>
         <source>&amp;Points</source>
-        <translation>&amp;Points</translation>
+        <translation>&amp;Punkti</translation>
     </message>
     <message>
         <source>&amp;2 Points</source>
-        <translation>&amp;2 Points</translation>
+        <translation>&amp;2 punkti</translation>
     </message>
     <message>
         <source>&amp;Angle</source>
-        <translation>&amp;Angle</translation>
+        <translation>&amp;Leņķis</translation>
     </message>
     <message>
         <source>&amp;Horizontal</source>
-        <translation>&amp;Horizontal</translation>
+        <translation>&amp;Horizontāls</translation>
     </message>
     <message>
         <source>Vertical</source>
-        <translation>Vertical</translation>
+        <translation>Vertikāls</translation>
     </message>
     <message>
         <source>&amp;Freehand Line</source>
-        <translation>&amp;Freehand Line</translation>
+        <translation>&amp;Brīvrokas līnija</translation>
     </message>
     <message>
         <source>&amp;Parallel</source>
-        <translation>&amp;Parallel</translation>
+        <translation>&amp;Paralēls</translation>
     </message>
     <message>
         <source>Parallel through point</source>
-        <translation>Parallel through point</translation>
+        <translation>Paralēls caur punktu</translation>
     </message>
     <message>
         <source>Rectangle</source>
-        <translation>Rectangle</translation>
+        <translation>Taisnstūris</translation>
     </message>
     <message>
         <source>Bisector</source>
-        <translation>Bisector</translation>
+        <translation>Bisektrise</translation>
     </message>
     <message>
         <source>Tangent (P,C)</source>
-        <translation>Tangent (P,C)</translation>
+        <translation>Pieskare (P,C)</translation>
     </message>
     <message>
         <source>Tangent (C,C)</source>
-        <translation>Tangent (C,C)</translation>
+        <translation>Pieskare (C,C)</translation>
     </message>
     <message>
         <source>Tangent &amp;Orthogonal</source>
-        <translation>Tangent &amp;Orthogonal</translation>
+        <translation>Pieskare &amp;ortogonāla</translation>
     </message>
     <message>
         <source>Orthogonal</source>
-        <translation>Orthogonal</translation>
+        <translation>Ortogonāls</translation>
     </message>
     <message>
         <source>Relative angle</source>
-        <translation>Relative angle</translation>
+        <translation>Relatīvais leņķis</translation>
     </message>
     <message>
         <source>Pol&amp;ygon (Cen,Cor)</source>
-        <translation>Pol&amp;ygon (Cen,Cor)</translation>
+        <translation>Da&amp;udrstūris (Cen,Stūr)</translation>
     </message>
     <message>
         <source>Pol&amp;ygon (Cen,Tan)</source>
-        <translation>Pol&amp;ygon (Cen,Tan)</translation>
+        <translation>Da&amp;udrstūris (Cen,Pies)</translation>
     </message>
     <message>
         <source>Polygo&amp;n (Cor,Cor)</source>
-        <translation>Polygo&amp;n (Cor,Cor)</translation>
+        <translation>Daudzs&amp;tūris (Stūr,Stūr)</translation>
     </message>
     <message>
         <source>Center, &amp;Point</source>
-        <translation>Center, &amp;Point</translation>
+        <translation>Centrs, &amp;punkts</translation>
     </message>
     <message>
         <source>Cross</source>
-        <translation>Cross</translation>
+        <translation>Krusts</translation>
     </message>
     <message>
         <source>Snake</source>
-        <translation>Snake</translation>
+        <translation>Čūska</translation>
     </message>
     <message>
         <source>Snake (X)</source>
-        <translation>Snake (X)</translation>
+        <translation>Čūska (X)</translation>
     </message>
     <message>
         <source>Snake (Y)</source>
-        <translation>Snake (Y)</translation>
+        <translation>Čūska (Y)</translation>
     </message>
     <message>
         <source>Rectangle (1 Point)</source>
-        <translation>Rectangle (1 Point)</translation>
+        <translation>Taisnstūris (1 punkts)</translation>
     </message>
     <message>
         <source>Rectangle (2 Points)</source>
-        <translation>Rectangle (2 Points)</translation>
+        <translation>Taisnstūris (2 punkti)</translation>
     </message>
     <message>
         <source>Rectangle (3 Points)</source>
-        <translation>Rectangle (3 Points)</translation>
+        <translation>Taisnstūris (3 punkti)</translation>
     </message>
     <message>
         <source>Star</source>
@@ -538,232 +538,232 @@ or [%2]</translation>
     </message>
     <message>
         <source>Break/Divide</source>
-        <translation>Break/Divide</translation>
+        <translation>Pārraut/sadalīt</translation>
     </message>
     <message>
         <source>Line Gap</source>
-        <translation>Line Gap</translation>
+        <translation>Līnijas sprauga</translation>
     </message>
     <message>
         <source>Angle From Line</source>
-        <translation>Angle From Line</translation>
+        <translation>Leņķis no līnijas</translation>
     </message>
     <message>
         <source>Orthogonal From Line</source>
-        <translation>Orthogonal From Line</translation>
+        <translation>Ortogonāls no līnijas</translation>
     </message>
     <message>
         <source>From Point To Line</source>
-        <translation>From Point To Line</translation>
+        <translation>No punkta uz līniju</translation>
     </message>
     <message>
         <source>Slice/Divide Line</source>
-        <translation>Slice/Divide Line</translation>
+        <translation>Sagriezt/sadalīt līniju</translation>
     </message>
     <message>
         <source>Slice/Divide Circle</source>
-        <translation>Slice/Divide Circle</translation>
+        <translation>Sagriezt/sadalīt apli</translation>
     </message>
     <message>
         <source>Line of Points</source>
-        <translation>Line of Points</translation>
+        <translation>Punktu rinda</translation>
     </message>
     <message>
         <source>By Arc</source>
-        <translation>By Arc</translation>
+        <translation>Ar loku</translation>
     </message>
     <message>
         <source>Center, &amp;Radius</source>
-        <translation>Center, &amp;Radius</translation>
+        <translation>Centrs, &amp;rādiuss</translation>
     </message>
     <message>
         <source>2 Points</source>
-        <translation>2 Points</translation>
+        <translation>2 punkti</translation>
     </message>
     <message>
         <source>2 Points, Radius</source>
-        <translation>2 Points, Radius</translation>
+        <translation>2 punkti, rādiuss</translation>
     </message>
     <message>
         <source>3 Points</source>
-        <translation>3 Points</translation>
+        <translation>3 punkti</translation>
     </message>
     <message>
         <source>&amp;Concentric</source>
-        <translation>&amp;Concentric</translation>
+        <translation>&amp;Koncentrisks</translation>
     </message>
     <message>
         <source>Circle &amp;Inscribed</source>
-        <translation>Circle &amp;Inscribed</translation>
+        <translation>Ierakstīts &amp;aplis</translation>
     </message>
     <message>
         <source>Tangential 2 Circles, Radius</source>
         <comment>circle tangential with two circles, and given radius</comment>
-        <translation>Tangential 2 Circles, Radius</translation>
+        <translation>Pieskares 2 apļi, rādiuss</translation>
     </message>
     <message>
         <source>Tangential 2 Circles, 1 Point</source>
-        <translation>Tangential 2 Circles, 1 Point</translation>
+        <translation>Pieskares 2 apļi, 1 punkts</translation>
     </message>
     <message>
         <source>Tangential &amp;3 Circles</source>
-        <translation>Tangential &amp;3 Circles</translation>
+        <translation>Pieskares &amp;3 apļi</translation>
     </message>
     <message>
         <source>Tangential, 2 P&amp;oints</source>
-        <translation>Tangential, 2 P&amp;oints</translation>
+        <translation>Pieskare, 2 p&amp;unkti</translation>
     </message>
     <message>
         <source>&amp;Center, Point, Angles</source>
-        <translation>&amp;Center, Point, Angles</translation>
+        <translation>&amp;Centrs, punkts, leņķi</translation>
     </message>
     <message>
         <source>&amp;3 Points</source>
-        <translation>&amp;3 Points</translation>
+        <translation>&amp;3 punkti</translation>
     </message>
     <message>
         <source>Arc &amp;Tangential</source>
-        <translation>Arc &amp;Tangential</translation>
+        <translation>Loks &amp;pieskares</translation>
     </message>
     <message>
         <source>&amp;Ellipse (Axis)</source>
-        <translation>&amp;Ellipse (Axis)</translation>
+        <translation>&amp;Elipse (ass)</translation>
     </message>
     <message>
         <source>Ellipse &amp;Arc (Axis)</source>
-        <translation>Ellipse &amp;Arc (Axis)</translation>
+        <translation>Elipses &amp;loks (ass)</translation>
     </message>
     <message>
         <source>Ellipse &amp;Foci Point</source>
-        <translation>Ellipse &amp;Foci Point</translation>
+        <translation>Elipses &amp;fokusa punkts</translation>
     </message>
     <message>
         <source>Ellipse &amp;4 Point</source>
-        <translation>Ellipse &amp;4 Point</translation>
+        <translation>Elipse &amp;4 punkti</translation>
     </message>
     <message>
         <source>Ellipse Center and &amp;3 Points</source>
-        <translation>Ellipse Center and &amp;3 Points</translation>
+        <translation>Elipses centrs un &amp;3 punkti</translation>
     </message>
     <message>
         <source>Ellipse &amp;Inscribed</source>
-        <translation>Ellipse &amp;Inscribed</translation>
+        <translation>Ierakstīta &amp;elipse</translation>
     </message>
     <message>
         <source>Para&amp;bola 4 points</source>
-        <translation>Para&amp;bola 4 points</translation>
+        <translation>Para&amp;bola 4 punkti</translation>
     </message>
     <message>
         <source>Parabola &amp;Focus Directrix</source>
-        <translation>Parabola &amp;Focus Directrix</translation>
+        <translation>Parabolas &amp;fokuss un direktrise</translation>
     </message>
     <message>
         <source>&amp;Spline</source>
-        <translation>&amp;Spline</translation>
+        <translation>&amp;Splains</translation>
     </message>
     <message>
         <source>&amp;Spline through points</source>
-        <translation>&amp;Spline through points</translation>
+        <translation>&amp;Splains caur punktiem</translation>
     </message>
     <message>
         <source>&amp;Polyline</source>
-        <translation>&amp;Polyline</translation>
+        <translation>&amp;Polilīnija</translation>
     </message>
     <message>
         <source>&amp;Add node</source>
-        <translation>&amp;Add node</translation>
+        <translation>&amp;Pievienot mezglu</translation>
     </message>
     <message>
         <source>A&amp;ppend node</source>
-        <translation>A&amp;ppend node</translation>
+        <translation>P&amp;ievienot mezglu galā</translation>
     </message>
     <message>
         <source>&amp;Delete node</source>
-        <translation>&amp;Delete node</translation>
+        <translation>&amp;Dzēst mezglu</translation>
     </message>
     <message>
         <source>Delete &amp;between two nodes</source>
-        <translation>Delete &amp;between two nodes</translation>
+        <translation>Dzēst &amp;starp diviem mezgliem</translation>
     </message>
     <message>
         <source>&amp;Trim segments</source>
-        <translation>&amp;Trim segments</translation>
+        <translation>&amp;Apgriezt segmentus</translation>
     </message>
     <message>
         <source>Create &amp;Equidistant Polylines</source>
-        <translation>Create &amp;Equidistant Polylines</translation>
+        <translation>Izveidot &amp;vienādattāluma polilīnijas</translation>
     </message>
     <message>
         <source>Create Polyline from Existing &amp;Segments</source>
-        <translation>Create Polyline from Existing &amp;Segments</translation>
+        <translation>Izveidot polilīniju no esošajiem &amp;segmentiem</translation>
     </message>
     <message>
         <source>&amp;MText</source>
-        <translation>&amp;MText</translation>
+        <translation>&amp;DzTeksts</translation>
     </message>
     <message>
         <source>&amp;Text</source>
-        <translation>&amp;Text</translation>
+        <translation>&amp;Teksts</translation>
     </message>
     <message>
         <source>&amp;Hatch</source>
-        <translation>&amp;Hatch</translation>
+        <translation>&amp;Šķelšana</translation>
     </message>
     <message>
         <source>Insert &amp;Image</source>
-        <translation>Insert &amp;Image</translation>
+        <translation>Ievietot &amp;attēlu</translation>
     </message>
     <message>
         <source>&amp;Aligned</source>
-        <translation>&amp;Aligned</translation>
+        <translation>&amp;Izlīdzināts</translation>
     </message>
     <message>
         <source>&amp;Linear</source>
-        <translation>&amp;Linear</translation>
+        <translation>&amp;Lineārs</translation>
     </message>
     <message>
         <source>&amp;Vertical</source>
-        <translation>&amp;Vertical</translation>
+        <translation>&amp;Vertikāls</translation>
     </message>
     <message>
         <source>&amp;Radial</source>
-        <translation>&amp;Radial</translation>
+        <translation>&amp;Radiāls</translation>
     </message>
     <message>
         <source>&amp;Diametric</source>
-        <translation>&amp;Diametric</translation>
+        <translation>&amp;Diametrāls</translation>
     </message>
     <message>
         <source>&amp;Angular</source>
-        <translation>&amp;Angular</translation>
+        <translation>&amp;Leņķisks</translation>
     </message>
     <message>
         <source>&amp;Arc</source>
-        <translation>&amp;Arc</translation>
+        <translation>&amp;Loks</translation>
     </message>
     <message>
         <source>&amp;Leader</source>
-        <translation>&amp;Leader</translation>
+        <translation>&amp;Vadlīnija</translation>
     </message>
     <message>
         <source>&amp;Attributes</source>
-        <translation>&amp;Attributes</translation>
+        <translation>&amp;Atribūti</translation>
     </message>
     <message>
         <source>&amp;Delete</source>
-        <translation>&amp;Delete</translation>
+        <translation>&amp;Dzēst</translation>
     </message>
     <message>
         <source>Delete Freehand</source>
-        <translation>Delete Freehand</translation>
+        <translation>Dzēst brīvrokas</translation>
     </message>
     <message>
         <source>&amp;Move / Copy</source>
-        <translation>&amp;Move / Copy</translation>
+        <translation>&amp;Pārvietot / kopēt</translation>
     </message>
     <message>
         <source>Re&amp;vert direction</source>
-        <translation>Re&amp;vert direction</translation>
+        <translation>Apg&amp;riezt virzienu</translation>
     </message>
     <message>
         <source>Ctrl+R</source>
@@ -771,251 +771,251 @@ or [%2]</translation>
     </message>
     <message>
         <source>&amp;Rotate</source>
-        <translation>&amp;Rotate</translation>
+        <translation>&amp;Pagriezt</translation>
     </message>
     <message>
         <source>&amp;Scale</source>
-        <translation>&amp;Scale</translation>
+        <translation>&amp;Mērogot</translation>
     </message>
     <message>
         <source>&amp;Mirror</source>
-        <translation>&amp;Mirror</translation>
+        <translation>&amp;Spoguļot</translation>
     </message>
     <message>
         <source>Mo&amp;ve and Rotate</source>
-        <translation>Mo&amp;ve and Rotate</translation>
+        <translation>Pār&amp;vietot un pagriezt</translation>
     </message>
     <message>
         <source>Rotate T&amp;wo</source>
-        <translation>Rotate T&amp;wo</translation>
+        <translation>Pagriezt d&amp;ivreiz</translation>
     </message>
     <message>
         <source>&amp;Properties</source>
-        <translation>&amp;Properties</translation>
+        <translation>&amp;Īpašības</translation>
     </message>
     <message>
         <source>&amp;Trim</source>
-        <translation>&amp;Trim</translation>
+        <translation>&amp;Apgriezt</translation>
     </message>
     <message>
         <source>Tr&amp;im Two</source>
-        <translation>Tr&amp;im Two</translation>
+        <translation>Ap&amp;griezt abus</translation>
     </message>
     <message>
         <source>&amp;Lengthen</source>
-        <translation>&amp;Lengthen</translation>
+        <translation>&amp;Pagarināt</translation>
     </message>
     <message>
         <source>O&amp;ffset</source>
-        <translation>O&amp;ffset</translation>
+        <translation>N&amp;obīde</translation>
     </message>
     <message>
         <source>&amp;Divide</source>
-        <translation>&amp;Divide</translation>
+        <translation>&amp;Sadalīt</translation>
     </message>
     <message>
         <source>&amp;Stretch</source>
-        <translation>&amp;Stretch</translation>
+        <translation>&amp;Izstiept</translation>
     </message>
     <message>
         <source>&amp;Bevel</source>
-        <translation>&amp;Bevel</translation>
+        <translation>&amp;Nofāze</translation>
     </message>
     <message>
         <source>&amp;Fillet</source>
-        <translation>&amp;Fillet</translation>
+        <translation>&amp;Noapaļojums</translation>
     </message>
     <message>
         <source>&amp;Explode Text into Letters</source>
-        <translation>&amp;Explode Text into Letters</translation>
+        <translation>&amp;Sadalīt tekstu burtiem</translation>
     </message>
     <message>
         <source>Ex&amp;plode</source>
-        <translation>Ex&amp;plode</translation>
+        <translation>Izs&amp;adalīt</translation>
     </message>
     <message>
         <source>&amp;Pick Pen From Entity</source>
-        <translation>&amp;Pick Pen From Entity</translation>
+        <translation>&amp;Paņemt spalvu no elementa</translation>
     </message>
     <message>
         <source>&amp;Pick Pen From Entity (Resolved)</source>
-        <translation>&amp;Pick Pen From Entity (Resolved)</translation>
+        <translation>&amp;Paņemt spalvu no elementa (atrisinātu)</translation>
     </message>
     <message>
         <source>Apply Pen to Entity</source>
-        <translation>Apply Pen to Entity</translation>
+        <translation>Pielietot spalvu elementam</translation>
     </message>
     <message>
         <source>Copy Pen</source>
-        <translation>Copy Pen</translation>
+        <translation>Kopēt spalvu</translation>
     </message>
     <message>
         <source>Line Join</source>
-        <translation>Line Join</translation>
+        <translation>Līniju savienojums</translation>
     </message>
     <message>
         <source>Duplicate</source>
-        <translation>Duplicate</translation>
+        <translation>Dublēt</translation>
     </message>
     <message>
         <source>Point inside contour</source>
-        <translation>Point inside contour</translation>
+        <translation>Punkts kontūras iekšpusē</translation>
     </message>
     <message>
         <source>&amp;Distance Point to Point</source>
-        <translation>&amp;Distance Point to Point</translation>
+        <translation>&amp;Attālums no punkta līdz punktam</translation>
     </message>
     <message>
         <source>&amp;Distance Entity to Point</source>
-        <translation>&amp;Distance Entity to Point</translation>
+        <translation>&amp;Attālums no elementa līdz punktam</translation>
     </message>
     <message>
         <source>An&amp;gle between two lines</source>
-        <translation>An&amp;gle between two lines</translation>
+        <translation>Le&amp;ņķis starp divām līnijām</translation>
     </message>
     <message>
         <source>&amp;Total length of selected entities</source>
-        <translation>&amp;Total length of selected entities</translation>
+        <translation>&amp;Kopējais atlasīto elementu garums</translation>
     </message>
     <message>
         <source>Polygonal &amp;Area</source>
-        <translation>Polygonal &amp;Area</translation>
+        <translation>Daudzstūra &amp;laukums</translation>
     </message>
     <message>
         <source>move to bottom</source>
-        <translation>move to bottom</translation>
+        <translation>pārvietot uz apakšu</translation>
     </message>
     <message>
         <source>lower after entity</source>
-        <translation>lower after entity</translation>
+        <translation>nolaist aiz elementa</translation>
     </message>
     <message>
         <source>raise over entity</source>
-        <translation>raise over entity</translation>
+        <translation>pacelt virs elementa</translation>
     </message>
     <message>
         <source>move to top</source>
-        <translation>move to top</translation>
+        <translation>pārvietot uz augšu</translation>
     </message>
     <message>
         <source>&amp;Show all layers</source>
-        <translation>&amp;Show all layers</translation>
+        <translation>&amp;Rādīt visus slāņus</translation>
     </message>
     <message>
         <source>&amp;Hide all layers</source>
-        <translation>&amp;Hide all layers</translation>
+        <translation>&amp;Slēpt visus slāņus</translation>
     </message>
     <message>
         <source>&amp;Unlock all</source>
-        <translation>&amp;Unlock all</translation>
+        <translation>&amp;Atbloķēt visus</translation>
     </message>
     <message>
         <source>&amp;Lock all</source>
-        <translation>&amp;Lock all</translation>
+        <translation>&amp;Bloķēt visus</translation>
     </message>
     <message>
         <source>&amp;Add Layer</source>
-        <translation>&amp;Add Layer</translation>
+        <translation>&amp;Pievienot slāni</translation>
     </message>
     <message>
         <source>&amp;Remove Layer</source>
-        <translation>&amp;Remove Layer</translation>
+        <translation>&amp;Noņemt slāni</translation>
     </message>
     <message>
         <source>&amp;Edit Layer</source>
-        <translation>&amp;Edit Layer</translation>
+        <translation>&amp;Rediģēt slāni</translation>
     </message>
     <message>
         <source>Toggle Layer Loc&amp;k</source>
-        <translation>Toggle Layer Loc&amp;k</translation>
+        <translation>Pārslēgt slāņa &amp;bloķēšanu</translation>
     </message>
     <message>
         <source>&amp;Toggle Layer Visibility</source>
-        <translation>&amp;Toggle Layer Visibility</translation>
+        <translation>&amp;Pārslēgt slāņa redzamību</translation>
     </message>
     <message>
         <source>Toggle Layer &amp;Print</source>
-        <translation>Toggle Layer &amp;Print</translation>
+        <translation>Pārslēgt slāņa &amp;drukāšanu</translation>
     </message>
     <message>
         <source>Toggle &amp;Construction Layer</source>
-        <translation>Toggle &amp;Construction Layer</translation>
+        <translation>Pārslēgt &amp;konstruktīvo slāni</translation>
     </message>
     <message>
         <source>&amp;Export Selected Layer(s)</source>
-        <translation>&amp;Export Selected Layer(s)</translation>
+        <translation>&amp;Eksportēt atlasīto(-os) slāni(-ņus)</translation>
     </message>
     <message>
         <source>Export &amp;Visible Layer(s)</source>
-        <translation>Export &amp;Visible Layer(s)</translation>
+        <translation>Eksportēt &amp;redzamo(-os) slāni(-ņus)</translation>
     </message>
     <message>
         <source>&amp;Show all blocks</source>
-        <translation>&amp;Show all blocks</translation>
+        <translation>&amp;Rādīt visus blokus</translation>
     </message>
     <message>
         <source>&amp;Hide all blocks</source>
-        <translation>&amp;Hide all blocks</translation>
+        <translation>&amp;Slēpt visus blokus</translation>
     </message>
     <message>
         <source>&amp;Add Block</source>
-        <translation>&amp;Add Block</translation>
+        <translation>&amp;Pievienot bloku</translation>
     </message>
     <message>
         <source>&amp;Remove Block</source>
-        <translation>&amp;Remove Block</translation>
+        <translation>&amp;Noņemt bloku</translation>
     </message>
     <message>
         <source>&amp;Rename Block</source>
-        <translation>&amp;Rename Block</translation>
+        <translation>&amp;Pārsaukt bloku</translation>
     </message>
     <message>
         <source>&amp;Edit Block</source>
-        <translation>&amp;Edit Block</translation>
+        <translation>&amp;Rediģēt bloku</translation>
     </message>
     <message>
         <source>&amp;Save Block</source>
-        <translation>&amp;Save Block</translation>
+        <translation>&amp;Saglabāt bloku</translation>
     </message>
     <message>
         <source>&amp;Insert Block</source>
-        <translation>&amp;Insert Block</translation>
+        <translation>&amp;Ievietot bloku</translation>
     </message>
     <message>
         <source>Toggle Block &amp;Visibility</source>
-        <translation>Toggle Block &amp;Visibility</translation>
+        <translation>Pārslēgt bloka &amp;redzamību</translation>
     </message>
     <message>
         <source>&amp;Create Block</source>
-        <translation>&amp;Create Block</translation>
+        <translation>&amp;Izveidot bloku</translation>
     </message>
     <message>
         <source>&amp;Application Preferences</source>
-        <translation>&amp;Application Preferences</translation>
+        <translation>&amp;Programmas preferences</translation>
     </message>
     <message>
         <source>Current &amp;Drawing Preferences</source>
-        <translation>Current &amp;Drawing Preferences</translation>
+        <translation>Pašreizējā &amp;zīmējuma preferences</translation>
     </message>
     <message>
         <source>Widget Options</source>
-        <translation>Widget Options</translation>
+        <translation>Logrīka opcijas</translation>
     </message>
     <message>
         <source>Device Options</source>
-        <translation>Device Options</translation>
+        <translation>Ierīces opcijas</translation>
     </message>
     <message>
         <source>&amp;Delete selected</source>
-        <translation>&amp;Delete selected</translation>
+        <translation>&amp;Dzēst atlasīto</translation>
     </message>
     <message>
         <source>Select &amp;All</source>
-        <translation>Select &amp;All</translation>
+        <translation>Atlasīt &amp;visu</translation>
     </message>
     <message>
         <source>Deselect &amp;all</source>
-        <translation>Deselect &amp;all</translation>
+        <translation>Atcelt &amp;visu atlasi</translation>
     </message>
     <message>
         <source>Ctrl+K</source>
@@ -1023,39 +1023,39 @@ or [%2]</translation>
     </message>
     <message>
         <source>Invert Selection</source>
-        <translation>Invert Selection</translation>
+        <translation>Invertēt atlasi</translation>
     </message>
     <message>
         <source>Export as CA&amp;M/plain SVG...</source>
-        <translation>Export as CA&amp;M/plain SVG...</translation>
+        <translation>Eksportēt kā CA&amp;M/vienkāršu SVG...</translation>
     </message>
     <message>
         <source>&amp;Export as image</source>
-        <translation>&amp;Export as image</translation>
+        <translation>&amp;Eksportēt kā attēlu</translation>
     </message>
     <message>
         <source>&amp;Close</source>
-        <translation>&amp;Close</translation>
+        <translation>&amp;Aizvērt</translation>
     </message>
     <message>
         <source>Close All</source>
-        <translation>Close All</translation>
+        <translation>Aizvērt visu</translation>
     </message>
     <message>
         <source>Export as PDF</source>
-        <translation>Export as PDF</translation>
+        <translation>Eksportēt kā PDF</translation>
     </message>
     <message>
         <source>&amp;Block</source>
-        <translation>&amp;Block</translation>
+        <translation>&amp;Bloks</translation>
     </message>
     <message>
         <source>&amp;Fullscreen</source>
-        <translation>&amp;Fullscreen</translation>
+        <translation>&amp;Pilnekrāns</translation>
     </message>
     <message>
         <source>&amp;Grid</source>
-        <translation>&amp;Grid</translation>
+        <translation>&amp;Tīkls</translation>
     </message>
     <message>
         <source>Ctrl+G</source>
@@ -1064,7 +1064,7 @@ or [%2]</translation>
     </message>
     <message>
         <source>&amp;Draft</source>
-        <translation>&amp;Draft</translation>
+        <translation>&amp;Mets</translation>
     </message>
     <message>
         <source>Ctrl+D</source>
@@ -1073,7 +1073,7 @@ or [%2]</translation>
     </message>
     <message>
         <source>&amp;Statusbar</source>
-        <translation>&amp;Statusbar</translation>
+        <translation>&amp;Statusa josla</translation>
     </message>
     <message>
         <source>Ctrl+I</source>
@@ -1082,7 +1082,7 @@ or [%2]</translation>
     </message>
     <message>
         <source>Focus on &amp;Command Line</source>
-        <translation>Focus on &amp;Command Line</translation>
+        <translation>Fokusēties uz &amp;komandrindu</translation>
     </message>
     <message>
         <source>Left</source>
@@ -1090,7 +1090,7 @@ or [%2]</translation>
     </message>
     <message>
         <source>Right</source>
-        <translation>Right</translation>
+        <translation>Pa labi</translation>
     </message>
     <message>
         <source>Top</source>
@@ -1098,136 +1098,136 @@ or [%2]</translation>
     </message>
     <message>
         <source>Bottom</source>
-        <translation>Bottom</translation>
+        <translation>Apakšā</translation>
     </message>
     <message>
         <source>Floating</source>
-        <translation>Floating</translation>
+        <translation>Peldošs</translation>
     </message>
     <message>
         <source>Reload Style Sheet</source>
-        <translation>Reload Style Sheet</translation>
+        <translation>Pārlādēt stilu lapu</translation>
     </message>
     <message>
         <source>Re-dock Widgets</source>
-        <translation>Re-dock Widgets</translation>
+        <translation>Atkārtoti piestiprina logrīkus</translation>
     </message>
     <message>
         <source>Menu Creator</source>
-        <translation>Menu Creator</translation>
+        <translation>Izvēlnes veidotājs</translation>
     </message>
     <message>
         <source>Toolbar Creator</source>
-        <translation>Toolbar Creator</translation>
+        <translation>Rīkjoslas veidotājs</translation>
     </message>
     <message>
         <source>&amp;Selection pointer</source>
-        <translation>&amp;Selection pointer</translation>
+        <translation>&amp;Atlases rādītājs</translation>
     </message>
     <message>
         <source>&amp;Undo</source>
-        <translation>&amp;Undo</translation>
+        <translation>&amp;Atcelt</translation>
     </message>
     <message>
         <source>&amp;Redo</source>
-        <translation>&amp;Redo</translation>
+        <translation>&amp;Atkārtot</translation>
     </message>
     <message>
         <source>Cu&amp;t</source>
-        <translation>Cu&amp;t</translation>
+        <translation>Izg&amp;riezt</translation>
     </message>
     <message>
         <source>&amp;Copy</source>
-        <translation>&amp;Copy</translation>
+        <translation>&amp;Kopēt</translation>
     </message>
     <message>
         <source>&amp;Paste</source>
-        <translation>&amp;Paste</translation>
+        <translation>&amp;Ielīmēt</translation>
     </message>
     <message>
         <source>Zoom &amp;In</source>
-        <translation>Zoom &amp;In</translation>
+        <translation>Tuvināt &amp;iekšā</translation>
     </message>
     <message>
         <source>Zoom &amp;Out</source>
-        <translation>Zoom &amp;Out</translation>
+        <translation>Tālināt &amp;ārā</translation>
     </message>
     <message>
         <source>&amp;Auto Zoom</source>
-        <translation>&amp;Auto Zoom</translation>
+        <translation>&amp;Automātiskā tālummaiņa</translation>
     </message>
     <message>
         <source>Previous &amp;View</source>
-        <translation>Previous &amp;View</translation>
+        <translation>Iepriekšējais &amp;skats</translation>
     </message>
     <message>
         <source>&amp;Redraw</source>
-        <translation>&amp;Redraw</translation>
+        <translation>&amp;Pārzīmēt</translation>
     </message>
     <message>
         <source>&amp;Window Zoom</source>
-        <translation>&amp;Window Zoom</translation>
+        <translation>&amp;Loga tālummaiņa</translation>
     </message>
     <message>
         <source>&amp;New</source>
-        <translation>&amp;New</translation>
+        <translation>&amp;Jauns</translation>
     </message>
     <message>
         <source>New From &amp;Template</source>
-        <translation>New From &amp;Template</translation>
+        <translation>Jauns no &amp;veidnes</translation>
     </message>
     <message>
         <source>&amp;Open...</source>
-        <translation>&amp;Open...</translation>
+        <translation>&amp;Atvērt...</translation>
     </message>
     <message>
         <source>&amp;Save</source>
-        <translation>&amp;Save</translation>
+        <translation>&amp;Saglabāt</translation>
     </message>
     <message>
         <source>Save &amp;as...</source>
-        <translation>Save &amp;as...</translation>
+        <translation>Saglabāt &amp;kā...</translation>
     </message>
     <message>
         <source>Save A&amp;ll...</source>
-        <translation>Save A&amp;ll...</translation>
+        <translation>Saglabāt v&amp;isu...</translation>
     </message>
     <message>
         <source>&amp;Print...</source>
-        <translation>&amp;Print...</translation>
+        <translation>&amp;Drukāt...</translation>
     </message>
     <message>
         <source>Print Pre&amp;view</source>
-        <translation>Print Pre&amp;view</translation>
+        <translation>Drukas prie&amp;kšskatījums</translation>
     </message>
     <message>
         <source>&amp;Quit</source>
-        <translation>&amp;Quit</translation>
+        <translation>&amp;Iziet</translation>
     </message>
     <message>
         <source>Update Current Pen by Active Layer&apos; Pen</source>
-        <translation>Update Current Pen by Active Layer&apos; Pen</translation>
+        <translation>Atjaunināt pašreizējo spalvu pēc aktīvā slāņa spalvas</translation>
     </message>
 </context>
 <context>
     <name>LC_ActionFileExportMakerCam</name>
     <message>
         <source>Export as</source>
-        <translation>Export as</translation>
+        <translation>Eksportēt kā</translation>
     </message>
 </context>
 <context>
     <name>LC_ActionLayersExport</name>
     <message>
         <source>Saving layer &quot;%1&quot; as &quot;%2&quot; </source>
-        <translation>Saving layer &quot;%1&quot; as &quot;%2&quot;</translation>
+        <translation>Saglabā slāni "%1" kā "%2"</translation>
     </message>
 </context>
 <context>
     <name>LC_ActionPenApply</name>
     <message>
         <source>Specify entity to pick the pen</source>
-        <translation>Specify entity to pick the pen</translation>
+        <translation>Norādīt elementu spalvas paņemšanai</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -1235,14 +1235,14 @@ or [%2]</translation>
     </message>
     <message>
         <source>Specify entity to apply pen</source>
-        <translation>Specify entity to apply pen</translation>
+        <translation>Norādīt elementu spalvas pielietošanai</translation>
     </message>
 </context>
 <context>
     <name>LC_ActionPenPick</name>
     <message>
         <source>Specify entity to pick the pen</source>
-        <translation>Specify entity to pick the pen</translation>
+        <translation>Norādīt elementu spalvas paņemšanai</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -1253,7 +1253,7 @@ or [%2]</translation>
     <name>LC_ActionSnapMiddleManual</name>
     <message>
         <source>Specify percentage / start-point</source>
-        <translation>Specify percentage / start-point</translation>
+        <translation>Norādīt procentus / sākuma punktu</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -1261,11 +1261,11 @@ or [%2]</translation>
     </message>
     <message>
         <source>Specify start point</source>
-        <translation>Specify start point</translation>
+        <translation>Norādīt sākuma punktu</translation>
     </message>
     <message>
         <source>Specify end point</source>
-        <translation>Specify end point</translation>
+        <translation>Norādīt beigu punktu</translation>
     </message>
     <message>
         <source>Back</source>
@@ -1296,25 +1296,25 @@ or [%2]</translation>
     </message>
     <message>
         <source>Align settings...</source>
-        <translation>Align settings...</translation>
+        <translation>Līdzināšanas iestatījumi...</translation>
     </message>
     <message>
         <source>Keep original objects</source>
-        <translation>Keep original objects</translation>
+        <translation>Saglabāt oriģinālos objektus</translation>
     </message>
     <message>
         <source>Specify base points first</source>
-        <translation>Specify base points first</translation>
+        <translation>Vispirms norādīt bāzes punktus</translation>
     </message>
     <message>
         <source>Align Settings</source>
-        <translation>Align Settings</translation>
+        <translation>Līdzināšanas iestatījumi</translation>
     </message>
     <message>
         <source>Click on options to set/unset,
 Ok to accept and start alignment.</source>
-        <translation>Click on options to set/unset,
-Ok to accept and start alignment.</translation>
+        <translation>Noklikšķiniet uz opcijām, lai iestatītu/atiestatītu,
+Labi, lai pieņemtu un sāktu izlīdzināšanu.</translation>
     </message>
     <message>
         <source>If &apos;Keep original objects&apos; is checked,
@@ -1323,12 +1323,12 @@ Align will copy rather than move the selected objects.
 If &apos;Specify base points first&apos; is checked,
 Align will prompt for the alignment points in the order
 first base, second base, first target, second target.</source>
-        <translation>If &apos;Keep original objects&apos; is checked,
-Align will copy rather than move the selected objects.
+        <translation>Ja ir atzīmēts 'Paturēt oriģinālos objektus',
+Izlīdzināšana kopēs, nevis pārvietos atlasītos objektus.
 
-If &apos;Specify base points first&apos; is checked,
-Align will prompt for the alignment points in the order
-first base, second base, first target, second target.</translation>
+Ja ir atzīmēts 'Vispirms norādīt bāzes punktus',
+Izlīdzināšana prasīs izlīdzināšanas punktus šādā secībā:
+pirmā bāze, otrā bāze, pirmais mērķis, otrais mērķis.</translation>
     </message>
 </context>
 <context>
@@ -1339,19 +1339,19 @@ first base, second base, first target, second target.</translation>
     </message>
     <message>
         <source>Active</source>
-        <translation>Active</translation>
+        <translation>Aktīvs</translation>
     </message>
     <message>
         <source>Original</source>
-        <translation>Original</translation>
+        <translation>Oriģināls</translation>
     </message>
     <message>
         <source>Original Resolved</source>
-        <translation>Original Resolved</translation>
+        <translation>Oriģināls (atrisināts)</translation>
     </message>
     <message>
         <source>Radius Shift:</source>
-        <translation>Radius Shift:</translation>
+        <translation>Rādiusa nobīde:</translation>
     </message>
     <message>
         <source>Layer:</source>
@@ -1359,11 +1359,11 @@ first base, second base, first target, second target.</translation>
     </message>
     <message>
         <source>Replace arc</source>
-        <translation>Replace arc</translation>
+        <translation>Nomainīt loku</translation>
     </message>
     <message>
         <source>Pen:</source>
-        <translation>Pen:</translation>
+        <translation>Spalva:</translation>
     </message>
 </context>
 <context>
@@ -1374,15 +1374,15 @@ first base, second base, first target, second target.</translation>
     </message>
     <message>
         <source>Extension</source>
-        <translation>Extension</translation>
+        <translation>Pagarinājums</translation>
     </message>
     <message>
         <source>Total Length</source>
-        <translation>Total Length</translation>
+        <translation>Kopējais garums</translation>
     </message>
     <message>
         <source>Percent</source>
-        <translation>Percent</translation>
+        <translation>Procenti</translation>
     </message>
     <message>
         <source>X:</source>
@@ -1398,14 +1398,14 @@ first base, second base, first target, second target.</translation>
     </message>
     <message>
         <source>Angle:</source>
-        <translation>Angle:</translation>
+        <translation>Leņķis:</translation>
     </message>
 </context>
 <context>
     <name>LC_CustomToolbar</name>
     <message>
         <source>Add or Remove Action</source>
-        <translation>Add or Remove Action</translation>
+        <translation>Pievienot vai noņemt darbību</translation>
     </message>
 </context>
 <context>
@@ -1416,7 +1416,7 @@ first base, second base, first target, second target.</translation>
     </message>
     <message>
         <source>Device</source>
-        <translation>Device</translation>
+        <translation>Ierīce</translation>
     </message>
     <message>
         <source>Save</source>
@@ -1427,7 +1427,7 @@ first base, second base, first target, second target.</translation>
     <name>LC_DlgParabola</name>
     <message>
         <source>Parabola control points cannot be collinear</source>
-        <translation>Parabola control points cannot be collinear</translation>
+        <translation>Parabolas kontrolpunkti nedrīkst būt kollineāri</translation>
     </message>
 </context>
 <context>
@@ -1442,186 +1442,186 @@ first base, second base, first target, second target.</translation>
     </message>
     <message>
         <source>In Place</source>
-        <translation>In Place</translation>
+        <translation>Vietā</translation>
     </message>
     <message>
         <source>Offset X:</source>
-        <translation>Offset X:</translation>
+        <translation>Nobīde X:</translation>
     </message>
     <message>
         <source>Active</source>
-        <translation>Active</translation>
+        <translation>Aktīvs</translation>
     </message>
     <message>
         <source>Original</source>
-        <translation>Original</translation>
+        <translation>Oriģināls</translation>
     </message>
     <message>
         <source>Original Resolved</source>
-        <translation>Original Resolved</translation>
+        <translation>Oriģināls (atrisināts)</translation>
     </message>
     <message>
         <source>Offset Y:</source>
-        <translation>Offset Y:</translation>
+        <translation>Nobīde Y:</translation>
     </message>
     <message>
         <source>Pen:</source>
-        <translation>Pen:</translation>
+        <translation>Spalva:</translation>
     </message>
 </context>
 <context>
     <name>LC_Gear</name>
     <message>
         <source>Gear creation plugin</source>
-        <translation>Gear creation plugin</translation>
+        <translation>Zobrata izveides spraudnis</translation>
     </message>
     <message>
         <source>Gear plugin</source>
-        <translation>Gear plugin</translation>
+        <translation>Zobrata spraudnis</translation>
     </message>
 </context>
 <context>
     <name>LC_LayerDialogEx</name>
     <message>
         <source>Layer Settings</source>
-        <translation>Layer Settings</translation>
+        <translation>Slāņa iestatījumi</translation>
     </message>
     <message>
         <source>Parent Layers Path:</source>
-        <translation>Parent Layers Path:</translation>
+        <translation>Vecāku slāņu ceļš:</translation>
     </message>
     <message>
         <source>Layer Type</source>
-        <translation>Layer Type</translation>
+        <translation>Slāņa tips</translation>
     </message>
     <message>
         <source>Informational</source>
-        <translation>Informational</translation>
+        <translation>Informatīvs</translation>
     </message>
     <message>
         <source>Normal</source>
-        <translation>Normal</translation>
+        <translation>Parasts</translation>
     </message>
     <message>
         <source>Dimensions</source>
-        <translation>Dimensions</translation>
+        <translation>Izmēri</translation>
     </message>
     <message>
         <source>Alternative Position</source>
-        <translation>Alternative Position</translation>
+        <translation>Alternatīvā pozīcija</translation>
     </message>
     <message>
         <source>A Construction Layer has entities of infinite straight lines intended to be used for geometric construction.
        The contents of a Construction Layer should not appear in printout.</source>
-        <translation>A Construction Layer has entities of infinite straight lines intended to be used for geometric construction.
-       The contents of a Construction Layer should not appear in printout.</translation>
+        <translation>Konstruktīvajam slānim ir bezgalīgu taisnu līniju elementi, kas paredzēti ģeometriskai konstrukšanai.
+       Konstruktīvā slāņa saturam nevajadzētu parādīties drukājumā.</translation>
     </message>
     <message>
         <source>Construction Layer</source>
-        <translation>Construction Layer</translation>
+        <translation>Konstruktīvais slānis</translation>
     </message>
     <message>
         <source>Layer Name:</source>
-        <translation>Layer Name:</translation>
+        <translation>Slāņa nosaukums:</translation>
     </message>
     <message>
         <source>Rename Virtual Layer</source>
-        <translation>Rename Virtual Layer</translation>
+        <translation>Pārsaukt virtuālo slāni</translation>
     </message>
     <message>
         <source>Add Secondary Layer</source>
-        <translation>Add Secondary Layer</translation>
+        <translation>Pievienot sekundāro slāni</translation>
     </message>
     <message>
         <source>Add Layer</source>
-        <translation>Add Layer</translation>
+        <translation>Pievienot slāni</translation>
     </message>
     <message>
         <source>Edit Layer</source>
-        <translation>Edit Layer</translation>
+        <translation>Rediģēt slāni</translation>
     </message>
     <message>
         <source>Default Pen</source>
-        <translation>Default Pen</translation>
+        <translation>Noklusējuma spalva</translation>
     </message>
     <message>
         <source>Rename Layer</source>
-        <translation>Rename Layer</translation>
+        <translation>Pārsaukt slāni</translation>
     </message>
 </context>
 <context>
     <name>LC_LayerTreeOptionsDialog</name>
     <message>
         <source>Layers Tree Options</source>
-        <translation>Layers Tree Options</translation>
+        <translation>Slāņu koka opcijas</translation>
     </message>
     <message>
         <source>Naming Convention</source>
-        <translation>Naming Convention</translation>
+        <translation>Nosaukumu konvencija</translation>
     </message>
     <message>
         <source>Layer Level Name Separator</source>
-        <translation>Layer Level Name Separator</translation>
+        <translation>Slāņa līmeņa nosaukuma atdalītājs</translation>
     </message>
     <message>
         <source>Secondary Layer Suffixes</source>
-        <translation>Secondary Layer Suffixes</translation>
+        <translation>Sekundārā slāņa sufiksi</translation>
     </message>
     <message>
         <source>Dimensional</source>
-        <translation>Dimensional</translation>
+        <translation>Izmēru</translation>
     </message>
     <message>
         <source>Informational</source>
-        <translation>Informational</translation>
+        <translation>Informatīvs</translation>
     </message>
     <message>
         <source>Alternative Position </source>
-        <translation>Alternative Position</translation>
+        <translation>Alternatīvā pozīcija</translation>
     </message>
     <message>
         <source>Duplicating Name</source>
-        <translation>Duplicating Name</translation>
+        <translation>Dublēšanas nosaukums</translation>
     </message>
     <message>
         <source>Prefix</source>
-        <translation>Prefix</translation>
+        <translation>Prefikss</translation>
     </message>
     <message>
         <source>Suffix</source>
-        <translation>Suffix</translation>
+        <translation>Sufikss</translation>
     </message>
     <message>
         <source>Display and Operations</source>
-        <translation>Display and Operations</translation>
+        <translation>Displejs un operācijas</translation>
     </message>
     <message>
         <source>Show full name as ToolTip</source>
-        <translation>Show full name as ToolTip</translation>
+        <translation>Rādīt pilnu nosaukumu kā rīkpadomu</translation>
     </message>
     <message>
         <source>Show layer type icons</source>
-        <translation>Show layer type icons</translation>
+        <translation>Rādīt slāņa tipa ikonas</translation>
     </message>
     <message>
         <source>Show indented layer names. Ident size:</source>
-        <translation>Show indented layer names. Ident size:</translation>
+        <translation>Rādīt atkāptus slāņu nosaukumus. Atkāpes lielums:</translation>
     </message>
     <message>
         <source>Allow restructuring via Drag&amp;Drop</source>
-        <translation>Allow restructuring via Drag&amp;Drop</translation>
+        <translation>Atļaut pārstrukturēšanu ar &amp;vilkšanu un nomešanu</translation>
     </message>
     <message>
         <source>Rename secondary layers on primary rename</source>
-        <translation>Rename secondary layers on primary rename</translation>
+        <translation>Pārsaukt sekundāros slāņus, pārsaucot primāro</translation>
     </message>
     <message>
         <source>Colors</source>
-        <translation>Colors</translation>
+        <translation>Krāsas</translation>
     </message>
     <message>
         <source>Matched item in highlight filter mode</source>
-        <translation>Matched item in highlight filter mode</translation>
+        <translation>Atbilstošais elements izcelšanas filtra režīmā</translation>
     </message>
     <message>
         <source>#1E90FF</source>
@@ -1629,242 +1629,242 @@ first base, second base, first target, second target.</translation>
     </message>
     <message>
         <source>Virtual layer background color</source>
-        <translation>Virtual layer background color</translation>
+        <translation>Virtuālā slāņa fona krāsa</translation>
     </message>
     <message>
         <source>Threeview items separator grid</source>
-        <translation>Threeview items separator grid</translation>
+        <translation>Trīsskats elementu atdalītāja tīkls</translation>
     </message>
     <message>
         <source>Selected items background color</source>
-        <translation>Selected items background color</translation>
+        <translation>Atlasīto elementu fona krāsa</translation>
     </message>
     <message>
         <source>Active layer background color</source>
-        <translation>Active layer background color</translation>
+        <translation>Aktīvā slāņa fona krāsa</translation>
     </message>
     <message>
         <source>Default Pens</source>
-        <translation>Default Pens</translation>
+        <translation>Noklusējuma spalvas</translation>
     </message>
     <message>
         <source>Normal Layer</source>
-        <translation>Normal Layer</translation>
+        <translation>Parastais slānis</translation>
     </message>
     <message>
         <source>Dimensional Layer</source>
-        <translation>Dimensional Layer</translation>
+        <translation>Izmēru slānis</translation>
     </message>
     <message>
         <source>Informational Layer</source>
-        <translation>Informational Layer</translation>
+        <translation>Informatīvais slānis</translation>
     </message>
     <message>
         <source>Alternative Position Layer</source>
-        <translation>Alternative Position Layer</translation>
+        <translation>Alternatīvās pozīcijas slānis</translation>
     </message>
     <message>
         <source>Select Color</source>
-        <translation>Select Color</translation>
+        <translation>Atlasīt krāsu</translation>
     </message>
 </context>
 <context>
     <name>LC_LayerTreeWidget</name>
     <message>
         <source>Filter</source>
-        <translation>Filter</translation>
+        <translation>Filtrs</translation>
     </message>
     <message>
         <source>Looking for matching layer names</source>
-        <translation>Looking for matching layer names</translation>
+        <translation>Meklē atbilstošos slāņu nosaukumus</translation>
     </message>
     <message>
         <source>Highlight Mode</source>
-        <translation>Highlight Mode</translation>
+        <translation>Izcelšanas režīms</translation>
     </message>
     <message>
         <source>Settings</source>
-        <translation>Settings</translation>
+        <translation>Iestatījumi</translation>
     </message>
     <message>
         <source>Show all layers</source>
-        <translation>Show all layers</translation>
+        <translation>Rādīt visus slāņus</translation>
     </message>
     <message>
         <source>Hide all layers</source>
-        <translation>Hide all layers</translation>
+        <translation>Slēpt visus slāņus</translation>
     </message>
     <message>
         <source>Show Secondary Layers</source>
-        <translation>Show Secondary Layers</translation>
+        <translation>Rādīt sekundāros slāņus</translation>
     </message>
     <message>
         <source>Show Active Layer Only</source>
-        <translation>Show Active Layer Only</translation>
+        <translation>Rādīt tikai aktīvo slāni</translation>
     </message>
     <message>
         <source>Expand All</source>
-        <translation>Expand All</translation>
+        <translation>Izvērst visu</translation>
     </message>
     <message>
         <source>Collapse All</source>
-        <translation>Collapse All</translation>
+        <translation>Sakļaut visu</translation>
     </message>
     <message>
         <source>Collapse Secondary</source>
-        <translation>Collapse Secondary</translation>
+        <translation>Sakļaut sekundāros</translation>
     </message>
     <message>
         <source>Unlock all layers</source>
-        <translation>Unlock all layers</translation>
+        <translation>Atbloķēt visus slāņus</translation>
     </message>
     <message>
         <source>Lock all layers</source>
-        <translation>Lock all layers</translation>
+        <translation>Bloķēt visus slāņus</translation>
     </message>
     <message>
         <source>Add a layer</source>
-        <translation>Add a layer</translation>
+        <translation>Pievienot slāni</translation>
     </message>
     <message>
         <source>Add dimensions Layer</source>
-        <translation>Add dimensions Layer</translation>
+        <translation>Pievienot izmēru slāni</translation>
     </message>
     <message>
         <source>Remove layer</source>
-        <translation>Remove layer</translation>
+        <translation>Noņemt slāni</translation>
     </message>
     <message>
         <source>Modify layer attributes / rename</source>
-        <translation>Modify layer attributes / rename</translation>
+        <translation>Mainīt slāņa atribūtus / pārsaukt</translation>
     </message>
     <message>
         <source>Flat List Mode)</source>
-        <translation>Flat List Mode)</translation>
+        <translation>Plakana saraksta režīms)</translation>
     </message>
     <message>
         <source>Layer Menu</source>
-        <translation>Layer Menu</translation>
+        <translation>Slāņa izvēlne</translation>
     </message>
     <message>
         <source>&amp;Add Child Layer</source>
-        <translation>&amp;Add Child Layer</translation>
+        <translation>&amp;Pievienot bērna slāni</translation>
     </message>
     <message>
         <source>&amp;Rename</source>
-        <translation>&amp;Rename</translation>
+        <translation>&amp;Pārsaukt</translation>
     </message>
     <message>
         <source>&amp;Remove Layers (Sub-Tree)</source>
-        <translation>&amp;Remove Layers (Sub-Tree)</translation>
+        <translation>&amp;Noņemt slāņus (apakškoks)</translation>
     </message>
     <message>
         <source>&amp;Copy Structure (Sub-Tree)</source>
-        <translation>&amp;Copy Structure (Sub-Tree)</translation>
+        <translation>&amp;Kopēt struktūru (apakškoks)</translation>
     </message>
     <message>
         <source>&amp;Duplicate Content (Sub-Tree)</source>
-        <translation>&amp;Duplicate Content (Sub-Tree)</translation>
+        <translation>&amp;Dublēt saturu (apakškoks)</translation>
     </message>
     <message>
         <source>&amp;Select Entities (Sub-Tree)</source>
-        <translation>&amp;Select Entities (Sub-Tree)</translation>
+        <translation>&amp;Atlasīt elementus (apakškoks)</translation>
     </message>
     <message>
         <source>&amp;Edit Layer &amp;Attributes</source>
-        <translation>&amp;Edit Layer &amp;Attributes</translation>
+        <translation>&amp;Rediģēt slāņa &amp;atribūtus</translation>
     </message>
     <message>
         <source>&amp;Remove Layer</source>
-        <translation>&amp;Remove Layer</translation>
+        <translation>&amp;Noņemt slāni</translation>
     </message>
     <message>
         <source>&amp;Add Dimensions Sub-Layer</source>
-        <translation>&amp;Add Dimensions Sub-Layer</translation>
+        <translation>&amp;Pievienot izmēru apakšslāni</translation>
     </message>
     <message>
         <source>&amp;Add Info Sub-Layer</source>
-        <translation>&amp;Add Info Sub-Layer</translation>
+        <translation>&amp;Pievienot info apakšslāni</translation>
     </message>
     <message>
         <source>&amp;Add Alternative View Sub-Layer</source>
-        <translation>&amp;Add Alternative View Sub-Layer</translation>
+        <translation>&amp;Pievienot alternatīvā skata apakšslāni</translation>
     </message>
     <message>
         <source>&amp;Remove Sub-layers</source>
-        <translation>&amp;Remove Sub-layers</translation>
+        <translation>&amp;Noņemt apakšslāņus</translation>
     </message>
     <message>
         <source>Convert to Dimensional Layer</source>
-        <translation>Convert to Dimensional Layer</translation>
+        <translation>Konvertēt uz izmēru slāni</translation>
     </message>
     <message>
         <source>Convert to Info Layer</source>
-        <translation>Convert to Info Layer</translation>
+        <translation>Konvertēt uz info slāni</translation>
     </message>
     <message>
         <source>Convert to Alternative Position Layer</source>
-        <translation>Convert to Alternative Position Layer</translation>
+        <translation>Konvertēt uz alternatīvās pozīcijas slāni</translation>
     </message>
     <message>
         <source>Convert to Normal Layer</source>
-        <translation>Convert to Normal Layer</translation>
+        <translation>Konvertēt uz parasto slāni</translation>
     </message>
     <message>
         <source>&amp;Select Layer&apos;s Entities</source>
-        <translation>&amp;Select Layer&apos;s Entities</translation>
+        <translation>&amp;Atlasīt slāņa elementus</translation>
     </message>
     <message>
         <source>&amp;Create Layer Copy</source>
-        <translation>&amp;Create Layer Copy</translation>
+        <translation>&amp;Izveidot slāņa kopiju</translation>
     </message>
     <message>
         <source>&amp;Duplicate Layer With Content</source>
-        <translation>&amp;Duplicate Layer With Content</translation>
+        <translation>&amp;Dublēt slāni ar saturu</translation>
     </message>
     <message>
         <source>Move Selection to Layer</source>
-        <translation>Move Selection to Layer</translation>
+        <translation>Pārvietot atlasi uz slāni</translation>
     </message>
     <message>
         <source>Duplicate Selection to Layer</source>
-        <translation>Duplicate Selection to Layer</translation>
+        <translation>Dublēt atlasi uz slāni</translation>
     </message>
     <message>
         <source>&amp;Add Layer</source>
-        <translation>&amp;Add Layer</translation>
+        <translation>&amp;Pievienot slāni</translation>
     </message>
     <message>
         <source>&amp;Freeze Others Layers</source>
-        <translation>&amp;Freeze Others Layers</translation>
+        <translation>&amp;Iesaldēt pārējos slāņus</translation>
     </message>
     <message>
         <source>&amp;Defreeze All Layers</source>
-        <translation>&amp;Defreeze All Layers</translation>
+        <translation>&amp;Atsaldēt visus slāņus</translation>
     </message>
     <message>
         <source>&amp;Freeze All Layers</source>
-        <translation>&amp;Freeze All Layers</translation>
+        <translation>&amp;Iesaldēt visus slāņus</translation>
     </message>
     <message>
         <source>&amp;Unlock All Layers</source>
-        <translation>&amp;Unlock All Layers</translation>
+        <translation>&amp;Atbloķēt visus slāņus</translation>
     </message>
     <message>
         <source>&amp;Lock All Layers</source>
-        <translation>&amp;Lock All Layers</translation>
+        <translation>&amp;Bloķēt visus slāņus</translation>
     </message>
     <message>
         <source>Enable &amp;Printing All Layers</source>
-        <translation>Enable &amp;Printing All Layers</translation>
+        <translation>Iespējot visu slāņu &amp;drukāšanu</translation>
     </message>
     <message>
         <source>&amp;Disable Printing All Layers</source>
-        <translation>&amp;Disable Printing All Layers</translation>
+        <translation>&amp;Atspējot visu slāņu drukāšanu</translation>
     </message>
     <message>
         <source>&amp;Find And Remove Empty Layers</source>
-        <translation>&amp;Find And Remove Empty Layers</translation>
+        <translation>&amp;Atrast un noņemt tukšos slāņus</translation>
     </message>
 </context>
 <context>
@@ -1875,7 +1875,7 @@ first base, second base, first target, second target.</translation>
     </message>
     <message>
         <source>Offset:</source>
-        <translation>Offset:</translation>
+        <translation>Nobīde:</translation>
     </message>
     <message>
         <source>Free</source>
@@ -1883,11 +1883,11 @@ first base, second base, first target, second target.</translation>
     </message>
     <message>
         <source>Start</source>
-        <translation>Start</translation>
+        <translation>Sākums</translation>
     </message>
     <message>
         <source>Middle</source>
-        <translation>Middle</translation>
+        <translation>Vidus</translation>
     </message>
     <message>
         <source>End</source>
@@ -1895,7 +1895,7 @@ first base, second base, first target, second target.</translation>
     </message>
     <message>
         <source>Line Snap:</source>
-        <translation>Line Snap:</translation>
+        <translation>Līnijas uztveršana:</translation>
     </message>
     <message>
         <source>Rel</source>
@@ -1903,23 +1903,23 @@ first base, second base, first target, second target.</translation>
     </message>
     <message>
         <source>Divide</source>
-        <translation>Divide</translation>
+        <translation>Sadalīt</translation>
     </message>
     <message>
         <source>Tick Snap:</source>
-        <translation>Tick Snap:</translation>
+        <translation>Atzīmes uztveršana:</translation>
     </message>
     <message>
         <source>Length:</source>
-        <translation>Length:</translation>
+        <translation>Garums:</translation>
     </message>
     <message>
         <source>Angle:</source>
-        <translation>Angle:</translation>
+        <translation>Leņķis:</translation>
     </message>
     <message>
         <source>Snap Distance:</source>
-        <translation>Snap Distance:</translation>
+        <translation>Uztveršanas attālums:</translation>
     </message>
 </context>
 <context>
@@ -1930,35 +1930,35 @@ first base, second base, first target, second target.</translation>
     </message>
     <message>
         <source>Angle:</source>
-        <translation>Angle:</translation>
+        <translation>Leņķis:</translation>
     </message>
     <message>
         <source>Size:</source>
-        <translation>Size:</translation>
+        <translation>Izmērs:</translation>
     </message>
     <message>
         <source>Orthogonal</source>
-        <translation>Orthogonal</translation>
+        <translation>Ortogonāls</translation>
     </message>
     <message>
         <source>To Intersection</source>
-        <translation>To Intersection</translation>
+        <translation>Uz krustpunktu</translation>
     </message>
     <message>
         <source>Fixed Length</source>
-        <translation>Fixed Length</translation>
+        <translation>Fiksēts garums</translation>
     </message>
     <message>
         <source>End offset:</source>
-        <translation>End offset:</translation>
+        <translation>Beigu nobīde:</translation>
     </message>
     <message>
         <source>Start</source>
-        <translation>Start</translation>
+        <translation>Sākums</translation>
     </message>
     <message>
         <source>Middle</source>
-        <translation>Middle</translation>
+        <translation>Vidus</translation>
     </message>
     <message>
         <source>End</source>
@@ -1966,11 +1966,11 @@ first base, second base, first target, second target.</translation>
     </message>
     <message>
         <source>Length:</source>
-        <translation>Length:</translation>
+        <translation>Garums:</translation>
     </message>
     <message>
         <source>Snap:</source>
-        <translation>Snap:</translation>
+        <translation>Uztveršana:</translation>
     </message>
 </context>
 <context>
@@ -1981,51 +1981,51 @@ first base, second base, first target, second target.</translation>
     </message>
     <message>
         <source>Extend/Trim</source>
-        <translation>Extend/Trim</translation>
+        <translation>Pagarināt/apgriezt</translation>
     </message>
     <message>
         <source>Add segment</source>
-        <translation>Add segment</translation>
+        <translation>Pievienot segmentu</translation>
     </message>
     <message>
         <source>No change</source>
-        <translation>No change</translation>
+        <translation>Nav izmaiņu</translation>
     </message>
     <message>
         <source>Create Polyline</source>
-        <translation>Create Polyline</translation>
+        <translation>Izveidot polilīniju</translation>
     </message>
     <message>
         <source>Attributes:</source>
-        <translation>Attributes:</translation>
+        <translation>Atribūti:</translation>
     </message>
     <message>
         <source>Active Pen</source>
-        <translation>Active Pen</translation>
+        <translation>Aktīvā spalva</translation>
     </message>
     <message>
         <source>Line 1</source>
-        <translation>Line 1</translation>
+        <translation>Līnija 1</translation>
     </message>
     <message>
         <source>Line 2</source>
-        <translation>Line 2</translation>
+        <translation>Līnija 2</translation>
     </message>
     <message>
         <source>Both lines</source>
-        <translation>Both lines</translation>
+        <translation>Abas līnijas</translation>
     </message>
     <message>
         <source>Remove originals</source>
-        <translation>Remove originals</translation>
+        <translation>Noņemt oriģinālus</translation>
     </message>
     <message>
         <source>Line 2:</source>
-        <translation>Line 2:</translation>
+        <translation>Līnija 2:</translation>
     </message>
     <message>
         <source>Line 1:</source>
-        <translation>Line 1:</translation>
+        <translation>Līnija 1:</translation>
     </message>
 </context>
 <context>
@@ -2036,11 +2036,11 @@ first base, second base, first target, second target.</translation>
     </message>
     <message>
         <source>Angle:</source>
-        <translation>Angle:</translation>
+        <translation>Leņķis:</translation>
     </message>
     <message>
         <source>Fit Line</source>
-        <translation>Fit Line</translation>
+        <translation>Piemērot līniju</translation>
     </message>
     <message>
         <source>None</source>
@@ -2052,7 +2052,7 @@ first base, second base, first target, second target.</translation>
     </message>
     <message>
         <source>Start</source>
-        <translation>Start</translation>
+        <translation>Sākums</translation>
     </message>
     <message>
         <source>End</source>
@@ -2060,15 +2060,15 @@ first base, second base, first target, second target.</translation>
     </message>
     <message>
         <source>Edge Points:</source>
-        <translation>Edge Points:</translation>
+        <translation>Malu punkti:</translation>
     </message>
     <message>
         <source>Number of points:</source>
-        <translation>Number of points:</translation>
+        <translation>Punktu skaits:</translation>
     </message>
     <message>
         <source>Fixed Distance</source>
-        <translation>Fixed Distance</translation>
+        <translation>Fiksēts attālums</translation>
     </message>
 </context>
 <context>
@@ -2279,27 +2279,27 @@ first base, second base, first target, second target.</translation>
     </message>
     <message>
         <source>SPLINEPOINTS</source>
-        <translation>SPLINEPOINTS</translation>
+        <translation>SPLAINPUNKTI</translation>
     </message>
     <message>
         <source>Scale</source>
-        <translation>Scale</translation>
+        <translation>Mērogs</translation>
     </message>
     <message>
         <source>Rotation</source>
-        <translation>Rotation</translation>
+        <translation>Rotācija</translation>
     </message>
     <message>
         <source>Columns/Rows</source>
-        <translation>Columns/Rows</translation>
+        <translation>Kolonnas/Rindas</translation>
     </message>
     <message>
         <source>Column/Row Spacing</source>
-        <translation>Column/Row Spacing</translation>
+        <translation>Kolonnu/rindu atstarpe</translation>
     </message>
     <message>
         <source>TEXTCONTENT</source>
-        <translation>TEXTCONTENT</translation>
+        <translation>TEKSTASATURS</translation>
     </message>
 </context>
 <context>
@@ -2310,11 +2310,11 @@ first base, second base, first target, second target.</translation>
     </message>
     <message>
         <source>Remove Segments</source>
-        <translation>Remove Segments</translation>
+        <translation>Noņemt segmentus</translation>
     </message>
     <message>
         <source>Remove Selected</source>
-        <translation>Remove Selected</translation>
+        <translation>Noņemt atlasīto</translation>
     </message>
 </context>
 <context>
@@ -2325,11 +2325,11 @@ first base, second base, first target, second target.</translation>
     </message>
     <message>
         <source>Gap Snap:</source>
-        <translation>Gap Snap:</translation>
+        <translation>Spraugu uztveršana:</translation>
     </message>
     <message>
         <source>Snap Distance:</source>
-        <translation>Snap Distance:</translation>
+        <translation>Uztveršanas attālums:</translation>
     </message>
     <message>
         <source>Free</source>
@@ -2337,15 +2337,15 @@ first base, second base, first target, second target.</translation>
     </message>
     <message>
         <source>Gap Size:</source>
-        <translation>Gap Size:</translation>
+        <translation>Spraugas izmērs:</translation>
     </message>
     <message>
         <source>Start</source>
-        <translation>Start</translation>
+        <translation>Sākums</translation>
     </message>
     <message>
         <source>Middle</source>
-        <translation>Middle</translation>
+        <translation>Vidus</translation>
     </message>
     <message>
         <source>End</source>
@@ -2353,82 +2353,82 @@ first base, second base, first target, second target.</translation>
     </message>
     <message>
         <source>Line Snap:</source>
-        <translation>Line Snap:</translation>
+        <translation>Līnijas uztveršana:</translation>
     </message>
 </context>
 <context>
     <name>LC_PenPaletteOptionsDialog</name>
     <message>
         <source>Pen Palette Settings</source>
-        <translation>Pen Palette Settings</translation>
+        <translation>Spalvu paletes iestatījumi</translation>
     </message>
     <message>
         <source>Columns to display</source>
-        <translation>Columns to display</translation>
+        <translation>Parādāmās kolonnas</translation>
     </message>
     <message>
         <source>Line Type Name</source>
-        <translation>Line Type Name</translation>
+        <translation>Līnijas tipa nosaukums</translation>
     </message>
     <message>
         <source>Color Name</source>
-        <translation>Color Name</translation>
+        <translation>Krāsas nosaukums</translation>
     </message>
     <message>
         <source>Line Type Icon</source>
-        <translation>Line Type Icon</translation>
+        <translation>Līnijas tipa ikona</translation>
     </message>
     <message>
         <source>Color Icon</source>
-        <translation>Color Icon</translation>
+        <translation>Krāsas ikona</translation>
     </message>
     <message>
         <source>Line Width Icon</source>
-        <translation>Line Width Icon</translation>
+        <translation>Līnijas platuma ikona</translation>
     </message>
     <message>
         <source>Line Width Name</source>
-        <translation>Line Width Name</translation>
+        <translation>Līnijas platuma nosaukums</translation>
     </message>
     <message>
         <source>Colors</source>
-        <translation>Colors</translation>
+        <translation>Krāsas</translation>
     </message>
     <message>
         <source>Active Pen Background:</source>
-        <translation>Active Pen Background:</translation>
+        <translation>Aktīvās spalvas fons:</translation>
     </message>
     <message>
         <source>Entire table row is bold for active pen</source>
-        <translation>Entire table row is bold for active pen</translation>
+        <translation>Visa tabulas rinda ir treknrakstā aktīvajai spalvai</translation>
     </message>
     <message>
         <source>Grid Color:</source>
-        <translation>Grid Color:</translation>
+        <translation>Tīkla krāsa:</translation>
     </message>
     <message>
         <source>Matched Item Color:</source>
-        <translation>Matched Item Color:</translation>
+        <translation>Atbilstošā elementa krāsa:</translation>
     </message>
     <message>
         <source>Case-insensitive pens filtering</source>
-        <translation>Case-insensitive pens filtering</translation>
+        <translation>Spalvu filtrēšana bez reģistra ievērošanas</translation>
     </message>
     <message>
         <source>Controls whether tooltip will be shown for table item or not</source>
-        <translation>Controls whether tooltip will be shown for table item or not</translation>
+        <translation>Kontrolē, vai tabulas elementam tiks rādīts rīkpadoms</translation>
     </message>
     <message>
         <source>Show tooltip for table items</source>
-        <translation>Show tooltip for table items</translation>
+        <translation>Rādīt rīkpadomi tabulas elementiem</translation>
     </message>
     <message>
         <source>Pens file:</source>
-        <translation>Pens file:</translation>
+        <translation>Spalvu fails:</translation>
     </message>
     <message>
         <source>Show colorn name as</source>
-        <translation>Show colorn name as</translation>
+        <translation>Rādīt krāsas nosaukumu kā</translation>
     </message>
     <message>
         <source>HEX</source>
@@ -2440,78 +2440,78 @@ first base, second base, first target, second target.</translation>
     </message>
     <message>
         <source>Natural name where possible</source>
-        <translation>Natural name where possible</translation>
+        <translation>Dabisks nosaukums, kur iespējams</translation>
     </message>
     <message>
         <source>Show info message if no entities may be selected by pen</source>
-        <translation>Show info message if no entities may be selected by pen</translation>
+        <translation>Rādīt informācijas ziņojumu, ja neviens elements nevar tikt atlasīts ar spalvu</translation>
     </message>
     <message>
         <source>On double click on table item</source>
-        <translation>On double click on table item</translation>
+        <translation>Dubultklikšķot uz tabulas elementa</translation>
     </message>
     <message>
         <source>Do nothing</source>
-        <translation>Do nothing</translation>
+        <translation>Nedarīt neko</translation>
     </message>
     <message>
         <source>Select entities by attributes pen</source>
-        <translation>Select entities by attributes pen</translation>
+        <translation>Atlasīt elementus pēc atribūtu spalvas</translation>
     </message>
     <message>
         <source>Select entities by drawing pen</source>
-        <translation>Select entities by drawing pen</translation>
+        <translation>Atlasīt elementus pēc zīmēšanas spalvas</translation>
     </message>
 </context>
 <context>
     <name>LC_PenPaletteWidget</name>
     <message>
         <source>Pen Palette</source>
-        <translation>Pen Palette</translation>
+        <translation>Spalvu palete</translation>
     </message>
     <message>
         <source>Pen Name:</source>
-        <translation>Pen Name:</translation>
+        <translation>Spalvas nosaukums:</translation>
     </message>
     <message>
         <source>Color:</source>
-        <translation>Color:</translation>
+        <translation>Krāsa:</translation>
     </message>
     <message>
         <source>Filter...</source>
-        <translation>Filter...</translation>
+        <translation>Filtrēt...</translation>
     </message>
     <message>
         <source>Highlight Mode</source>
-        <translation>Highlight Mode</translation>
+        <translation>Izcelšanas režīms</translation>
     </message>
     <message>
         <source>Type:</source>
-        <translation>Type:</translation>
+        <translation>Tips:</translation>
     </message>
     <message>
         <source>Width:</source>
-        <translation>Width:</translation>
+        <translation>Platums:</translation>
     </message>
     <message>
         <source>Settings</source>
-        <translation>Settings</translation>
+        <translation>Iestatījumi</translation>
     </message>
     <message>
         <source>Fill Pen Editor by Entity Drawing Pen</source>
-        <translation>Fill Pen Editor by Entity Drawing Pen</translation>
+        <translation>Aizpildīt spalvas redaktoru ar elementa zīmēšanas spalvu</translation>
     </message>
     <message>
         <source>Fill Pen Editor by Entity Attributes</source>
-        <translation>Fill Pen Editor by Entity Attributes</translation>
+        <translation>Aizpildīt spalvas redaktoru ar elementa atribūtiem</translation>
     </message>
     <message>
         <source>Select Entities By Drawing Pen</source>
-        <translation>Select Entities By Drawing Pen</translation>
+        <translation>Atlasīt elementus pēc zīmēšanas spalvas</translation>
     </message>
     <message>
         <source>Select Entities By Pen Attributes</source>
-        <translation>Select Entities By Pen Attributes</translation>
+        <translation>Atlasīt elementus pēc spalvas atribūtiem</translation>
     </message>
     <message>
         <source>Save</source>
@@ -2519,95 +2519,95 @@ first base, second base, first target, second target.</translation>
     </message>
     <message>
         <source>Apply Pen To Selection</source>
-        <translation>Apply Pen To Selection</translation>
+        <translation>Pielietot spalvu atlasei</translation>
     </message>
     <message>
         <source>Fill Editor Pen by Current Pen</source>
-        <translation>Fill Editor Pen by Current Pen</translation>
+        <translation>Aizpildīt redaktora spalvu ar pašreizējo spalvu</translation>
     </message>
     <message>
         <source>Apply Editor Pen As Current Pen</source>
-        <translation>Apply Editor Pen As Current Pen</translation>
+        <translation>Pielietot redaktora spalvu kā pašreizējo spalvu</translation>
     </message>
     <message>
         <source>to current</source>
-        <translation>to current</translation>
+        <translation>uz pašreizējo</translation>
     </message>
     <message>
         <source>Update Current Pen by Active Layer&apos; Pen</source>
-        <translation>Update Current Pen by Active Layer&apos; Pen</translation>
+        <translation>Atjaunināt pašreizējo spalvu pēc aktīvā slāņa spalvas</translation>
     </message>
     <message>
         <source>Fill Pen Editor from Active Layer&apos;s Pen</source>
-        <translation>Fill Pen Editor from Active Layer&apos;s Pen</translation>
+        <translation>Aizpildīt spalvas redaktoru no aktīvā slāņa spalvas</translation>
     </message>
     <message>
         <source>Pick from Active Layer</source>
-        <translation>Pick from Active Layer</translation>
+        <translation>Paņemt no aktīvā slāņa</translation>
     </message>
     <message>
         <source>Apply Editor Pen to Active Layer Pen</source>
-        <translation>Apply Editor Pen to Active Layer Pen</translation>
+        <translation>Pielietot redaktora spalvu aktīvā slāņa spalvai</translation>
     </message>
     <message>
         <source>Apply To Layer</source>
-        <translation>Apply To Layer</translation>
+        <translation>Pielietot slānim</translation>
     </message>
     <message>
         <source>Remove Selected Pen</source>
-        <translation>Remove Selected Pen</translation>
+        <translation>Noņemt atlasīto spalvu</translation>
     </message>
     <message>
         <source>Delete Pen</source>
-        <translation>Delete Pen</translation>
+        <translation>Dzēst spalvu</translation>
     </message>
     <message>
         <source>Pens Menu</source>
-        <translation>Pens Menu</translation>
+        <translation>Spalvu izvēlne</translation>
     </message>
     <message>
         <source>&amp;Apply Pen To Selection</source>
-        <translation>&amp;Apply Pen To Selection</translation>
+        <translation>&amp;Pielietot spalvu atlasei</translation>
     </message>
     <message>
         <source>&amp;Set As Current Pen</source>
-        <translation>&amp;Set As Current Pen</translation>
+        <translation>&amp;Iestatīt kā pašreizējo spalvu</translation>
     </message>
     <message>
         <source>&amp;Apply Pen To Active Layer</source>
-        <translation>&amp;Apply Pen To Active Layer</translation>
+        <translation>&amp;Pielietot spalvu aktīvajam slānim</translation>
     </message>
     <message>
         <source>&amp;Select Entities With Attributes Pen</source>
-        <translation>&amp;Select Entities With Attributes Pen</translation>
+        <translation>&amp;Atlasīt elementus ar atribūtu spalvu</translation>
     </message>
     <message>
         <source>&amp;Select Entities With Drawing Pen</source>
-        <translation>&amp;Select Entities With Drawing Pen</translation>
+        <translation>&amp;Atlasīt elementus ar zīmēšanas spalvu</translation>
     </message>
     <message>
         <source>&amp;Edit Pen</source>
-        <translation>&amp;Edit Pen</translation>
+        <translation>&amp;Rediģēt spalvu</translation>
     </message>
     <message>
         <source>&amp;Remove Pen</source>
-        <translation>&amp;Remove Pen</translation>
+        <translation>&amp;Noņemt spalvu</translation>
     </message>
     <message>
         <source>&amp;Remove Pens</source>
-        <translation>&amp;Remove Pens</translation>
+        <translation>&amp;Noņemt spalvas</translation>
     </message>
     <message>
         <source>Pen palette</source>
-        <translation>Pen palette</translation>
+        <translation>Spalvu palete</translation>
     </message>
     <message>
         <source>Location of pens file is changed, please restart the application so new pens file will be used.
 
 Please note that if you&apos;ll save pen via editor without restart, current pens from palette will be saved in the new file and therefore existing content of it will be overridden.</source>
-        <translation>Location of pens file is changed, please restart the application so new pens file will be used.
+        <translation>Spalvu faila atrašanās vieta ir mainīta, lūdzu restartējiet programmu, lai tiktu izmantots jaunais spalvu fails.
 
-Please note that if you&apos;ll save pen via editor without restart, current pens from palette will be saved in the new file and therefore existing content of it will be overridden.</translation>
+Lūdzu ņemiet vērā, ka, ja saglabāsiet spalvu caur redaktoru bez restartēšanas, pašreizējās spalvas no paletes tiks saglabātas jaunajā failā un tādēļ tā esošais saturs tiks pārrakstīts.</translation>
     </message>
 </context>
 <context>
@@ -2618,7 +2618,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     </message>
     <message>
         <source>Polyline</source>
-        <translation>Polyline</translation>
+        <translation>Polilīnija</translation>
     </message>
     <message>
         <source>Height:</source>
@@ -2626,35 +2626,35 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     </message>
     <message>
         <source>Edges:</source>
-        <translation>Edges:</translation>
+        <translation>Malas:</translation>
     </message>
     <message>
         <source>Corners:</source>
-        <translation>Corners:</translation>
+        <translation>Stūri:</translation>
     </message>
     <message>
         <source>Size inner</source>
-        <translation>Size inner</translation>
+        <translation>Iekšējais izmērs</translation>
     </message>
     <message>
         <source>Length X:</source>
-        <translation>Length X:</translation>
+        <translation>Garums X:</translation>
     </message>
     <message>
         <source>Radius:</source>
-        <translation>Radius:</translation>
+        <translation>Rādiuss:</translation>
     </message>
     <message>
         <source>Snap:</source>
-        <translation>Snap:</translation>
+        <translation>Uztveršana:</translation>
     </message>
     <message>
         <source>Length Y:</source>
-        <translation>Length Y:</translation>
+        <translation>Garums Y:</translation>
     </message>
     <message>
         <source>Top-left</source>
-        <translation>Top-left</translation>
+        <translation>Augšā pa kreisi</translation>
     </message>
     <message>
         <source>Top</source>
@@ -2662,7 +2662,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     </message>
     <message>
         <source>Top-right</source>
-        <translation>Top-right</translation>
+        <translation>Augšā pa labi</translation>
     </message>
     <message>
         <source>Left</source>
@@ -2670,39 +2670,39 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     </message>
     <message>
         <source>Middle</source>
-        <translation>Middle</translation>
+        <translation>Vidus</translation>
     </message>
     <message>
         <source>Right</source>
-        <translation>Right</translation>
+        <translation>Pa labi</translation>
     </message>
     <message>
         <source>Bottom-left</source>
-        <translation>Bottom-left</translation>
+        <translation>Apakšā pa kreisi</translation>
     </message>
     <message>
         <source>Bottom</source>
-        <translation>Bottom</translation>
+        <translation>Apakšā</translation>
     </message>
     <message>
         <source>Bottom-right</source>
-        <translation>Bottom-right</translation>
+        <translation>Apakšā pa labi</translation>
     </message>
     <message>
         <source>Straight</source>
-        <translation>Straight</translation>
+        <translation>Taisns</translation>
     </message>
     <message>
         <source>Round</source>
-        <translation>Round</translation>
+        <translation>Apaļš</translation>
     </message>
     <message>
         <source>Bevel</source>
-        <translation>Bevel</translation>
+        <translation>Nofāze</translation>
     </message>
     <message>
         <source>Snap shift</source>
-        <translation>Snap shift</translation>
+        <translation>Uztveršanas nobīde</translation>
     </message>
     <message>
         <source>Both</source>
@@ -2710,19 +2710,19 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     </message>
     <message>
         <source>Vertical</source>
-        <translation>Vertical</translation>
+        <translation>Vertikāls</translation>
     </message>
     <message>
         <source>Horizontal</source>
-        <translation>Horizontal</translation>
+        <translation>Horizontāls</translation>
     </message>
     <message>
         <source>Width:</source>
-        <translation>Width:</translation>
+        <translation>Platums:</translation>
     </message>
     <message>
         <source>Base Angle:</source>
-        <translation>Base Angle:</translation>
+        <translation>Pamata leņķis:</translation>
     </message>
 </context>
 <context>
@@ -2733,71 +2733,71 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     </message>
     <message>
         <source>Snap shift</source>
-        <translation>Snap shift</translation>
+        <translation>Uztveršanas nobīde</translation>
     </message>
     <message>
         <source>Radius:</source>
-        <translation>Radius:</translation>
+        <translation>Rādiuss:</translation>
     </message>
     <message>
         <source>Edges:</source>
-        <translation>Edges:</translation>
+        <translation>Malas:</translation>
     </message>
     <message>
         <source>Polyline</source>
-        <translation>Polyline</translation>
+        <translation>Polilīnija</translation>
     </message>
     <message>
         <source>End Snap:</source>
-        <translation>End Snap:</translation>
+        <translation>Beigu uztveršana:</translation>
     </message>
     <message>
         <source>Corners:</source>
-        <translation>Corners:</translation>
+        <translation>Stūri:</translation>
     </message>
     <message>
         <source>Length X:</source>
-        <translation>Length X:</translation>
+        <translation>Garums X:</translation>
     </message>
     <message>
         <source>Start Snap:</source>
-        <translation>Start Snap:</translation>
+        <translation>Sākuma uztveršana:</translation>
     </message>
     <message>
         <source>Corner</source>
-        <translation>Corner</translation>
+        <translation>Stūris</translation>
     </message>
     <message>
         <source>Mid-Vertical</source>
-        <translation>Mid-Vertical</translation>
+        <translation>Vidus vertikāls</translation>
     </message>
     <message>
         <source>Mid-Horizontal</source>
-        <translation>Mid-Horizontal</translation>
+        <translation>Vidus horizontāls</translation>
     </message>
     <message>
         <source>Middle</source>
-        <translation>Middle</translation>
+        <translation>Vidus</translation>
     </message>
     <message>
         <source>Base Angle:</source>
-        <translation>Base Angle:</translation>
+        <translation>Pamata leņķis:</translation>
     </message>
     <message>
         <source>Straight</source>
-        <translation>Straight</translation>
+        <translation>Taisns</translation>
     </message>
     <message>
         <source>Round</source>
-        <translation>Round</translation>
+        <translation>Apaļš</translation>
     </message>
     <message>
         <source>Bevel</source>
-        <translation>Bevel</translation>
+        <translation>Nofāze</translation>
     </message>
     <message>
         <source>Length Y:</source>
-        <translation>Length Y:</translation>
+        <translation>Garums Y:</translation>
     </message>
     <message>
         <source>Both</source>
@@ -2805,11 +2805,11 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     </message>
     <message>
         <source>Vertical</source>
-        <translation>Vertical</translation>
+        <translation>Vertikāls</translation>
     </message>
     <message>
         <source>Horizontal</source>
-        <translation>Horizontal</translation>
+        <translation>Horizontāls</translation>
     </message>
 </context>
 <context>
@@ -2820,7 +2820,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     </message>
     <message>
         <source>Polyline</source>
-        <translation>Polyline</translation>
+        <translation>Polilīnija</translation>
     </message>
     <message>
         <source>Both</source>
@@ -2828,59 +2828,59 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     </message>
     <message>
         <source>Vertical</source>
-        <translation>Vertical</translation>
+        <translation>Vertikāls</translation>
     </message>
     <message>
         <source>Horizontal</source>
-        <translation>Horizontal</translation>
+        <translation>Horizontāls</translation>
     </message>
     <message>
         <source>Edges:</source>
-        <translation>Edges:</translation>
+        <translation>Malas:</translation>
     </message>
     <message>
         <source>Quadrangle</source>
-        <translation>Quadrangle</translation>
+        <translation>Četrstūris</translation>
     </message>
     <message>
         <source>Fixed Base Angle:</source>
-        <translation>Fixed Base Angle:</translation>
+        <translation>Fiksēts pamata leņķis:</translation>
     </message>
     <message>
         <source>Length X:</source>
-        <translation>Length X:</translation>
+        <translation>Garums X:</translation>
     </message>
     <message>
         <source>Straight</source>
-        <translation>Straight</translation>
+        <translation>Taisns</translation>
     </message>
     <message>
         <source>Round</source>
-        <translation>Round</translation>
+        <translation>Apaļš</translation>
     </message>
     <message>
         <source>Bevel</source>
-        <translation>Bevel</translation>
+        <translation>Nofāze</translation>
     </message>
     <message>
         <source>Corners:</source>
-        <translation>Corners:</translation>
+        <translation>Stūri:</translation>
     </message>
     <message>
         <source>Snap shift</source>
-        <translation>Snap shift</translation>
+        <translation>Uztveršanas nobīde</translation>
     </message>
     <message>
         <source>Length Y:</source>
-        <translation>Length Y:</translation>
+        <translation>Garums Y:</translation>
     </message>
     <message>
         <source>Radius:</source>
-        <translation>Radius:</translation>
+        <translation>Rādiuss:</translation>
     </message>
     <message>
         <source>Fixed Inner Angle:</source>
-        <translation>Fixed Inner Angle:</translation>
+        <translation>Fiksēts iekšējais leņķis:</translation>
     </message>
 </context>
 <context>
@@ -2909,11 +2909,11 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <name>LC_SimpleTests</name>
     <message>
         <source>De&amp;bugging</source>
-        <translation>De&amp;bugging</translation>
+        <translation>A&amp;tkļūdošana</translation>
     </message>
     <message>
         <source>Insert Image</source>
-        <translation>Insert Image</translation>
+        <translation>Ievietot attēlu</translation>
     </message>
 </context>
 <context>
@@ -2932,7 +2932,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     </message>
     <message>
         <source>Start</source>
-        <translation>Start</translation>
+        <translation>Sākums</translation>
     </message>
     <message>
         <source>End</source>
@@ -2940,7 +2940,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     </message>
     <message>
         <source>Edge Tick:</source>
-        <translation>Edge Tick:</translation>
+        <translation>Malas atzīme:</translation>
     </message>
     <message>
         <source>Rel</source>
@@ -2948,43 +2948,43 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     </message>
     <message>
         <source>Offset:</source>
-        <translation>Offset:</translation>
+        <translation>Nobīde:</translation>
     </message>
     <message>
         <source>Count:</source>
-        <translation>Count:</translation>
+        <translation>Skaits:</translation>
     </message>
     <message>
         <source>Start Circle Angle:</source>
-        <translation>Start Circle Angle:</translation>
+        <translation>Sākuma apļa leņķis:</translation>
     </message>
     <message>
         <source>Tick Length:</source>
-        <translation>Tick Length:</translation>
+        <translation>Atzīmes garums:</translation>
     </message>
     <message>
         <source>Tick snap:</source>
-        <translation>Tick snap:</translation>
+        <translation>Atzīmes uztveršana:</translation>
     </message>
     <message>
         <source>Angle:</source>
-        <translation>Angle:</translation>
+        <translation>Leņķis:</translation>
     </message>
     <message>
         <source>Divide</source>
-        <translation>Divide</translation>
+        <translation>Sadalīt</translation>
     </message>
     <message>
         <source>Middle</source>
-        <translation>Middle</translation>
+        <translation>Vidus</translation>
     </message>
     <message>
         <source>Fixed </source>
-        <translation>Fixed</translation>
+        <translation>Fiksēts</translation>
     </message>
     <message>
         <source>Distance:</source>
-        <translation>Distance:</translation>
+        <translation>Attālums:</translation>
     </message>
 </context>
 <context>
@@ -2995,34 +2995,34 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     </message>
     <message>
         <source>Radius Inner</source>
-        <translation>Radius Inner</translation>
+        <translation>Iekšējais rādiuss</translation>
     </message>
     <message>
         <source>Polyline</source>
-        <translation>Polyline</translation>
+        <translation>Polilīnija</translation>
     </message>
     <message>
         <source>Radius Outer</source>
-        <translation>Radius Outer</translation>
+        <translation>Ārējais rādiuss</translation>
     </message>
     <message>
         <source>Symmetric</source>
-        <translation>Symmetric</translation>
+        <translation>Simetrisks</translation>
     </message>
     <message>
         <source>Number:</source>
-        <translation>Number:</translation>
+        <translation>Numurs:</translation>
     </message>
 </context>
 <context>
     <name>LC_WidgetFactory</name>
     <message>
         <source>Library Browser</source>
-        <translation>Library Browser</translation>
+        <translation>Bibliotēkas pārlūks</translation>
     </message>
     <message>
         <source>Command line</source>
-        <translation>Command line</translation>
+        <translation>Komandrinда</translation>
     </message>
     <message>
         <source>Dock</source>
@@ -3030,158 +3030,158 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     </message>
     <message>
         <source>Float</source>
-        <translation>Float</translation>
+        <translation>Peldošs</translation>
     </message>
     <message>
         <source>Lines</source>
-        <translation>Lines</translation>
+        <translation>Līnijas</translation>
     </message>
     <message>
         <source>Circles</source>
-        <translation>Circles</translation>
+        <translation>Apļi</translation>
     </message>
     <message>
         <source>Freehand</source>
-        <translation>Freehand</translation>
+        <translation>Brīvrokas</translation>
     </message>
     <message>
         <source>Ellipses</source>
-        <translation>Ellipses</translation>
+        <translation>Elipses</translation>
     </message>
     <message>
         <source>PolyLines</source>
-        <translation>PolyLines</translation>
+        <translation>Polilīnijas</translation>
     </message>
     <message>
         <source>Select</source>
-        <translation>Select</translation>
+        <translation>Atlasīt</translation>
     </message>
     <message>
         <source>Dimensions</source>
-        <translation>Dimensions</translation>
+        <translation>Izmēri</translation>
     </message>
     <message>
         <source>Modify</source>
-        <translation>Modify</translation>
+        <translation>Modificēt</translation>
     </message>
     <message>
         <source>Measure</source>
-        <translation>Measure</translation>
+        <translation>Mērīt</translation>
     </message>
 </context>
 <context>
     <name>LC_WidgetOptionsDialog</name>
     <message>
         <source>Widget Options</source>
-        <translation>Widget Options</translation>
+        <translation>Logrīka opcijas</translation>
     </message>
     <message>
         <source>Toolbar</source>
-        <translation>Toolbar</translation>
+        <translation>Rīkjosla</translation>
     </message>
     <message>
         <source>Use themed icons</source>
-        <translation>Use themed icons</translation>
+        <translation>Izmantot tematizētas ikonas</translation>
     </message>
     <message>
         <source>Icon Size</source>
-        <translation>Icon Size</translation>
+        <translation>Ikonas izmērs</translation>
     </message>
     <message>
         <source>side length in pixels</source>
-        <translation>side length in pixels</translation>
+        <translation>malas garums pikseļos</translation>
     </message>
     <message>
         <source>Left toolbar columns:</source>
-        <translation>Left toolbar columns:</translation>
+        <translation>Kreisās rīkjoslas kolonnas:</translation>
     </message>
     <message>
         <source>General</source>
-        <translation>General</translation>
+        <translation>Vispārīgi</translation>
     </message>
     <message>
         <source>Style</source>
-        <translation>Style</translation>
+        <translation>Stils</translation>
     </message>
     <message>
         <source>Style Sheet</source>
-        <translation>Style Sheet</translation>
+        <translation>Stilu lapa</translation>
     </message>
     <message>
         <source>Input the path of a Qt style sheet.</source>
-        <translation>Input the path of a Qt style sheet.</translation>
+        <translation>Ievadiet Qt stilu lapas ceļu.</translation>
     </message>
     <message>
         <source>Statusbar</source>
-        <translation>Statusbar</translation>
+        <translation>Statusa josla</translation>
     </message>
     <message>
         <source>Height</source>
-        <translation>Height</translation>
+        <translation>Augstums</translation>
     </message>
     <message>
         <source>Font Size</source>
-        <translation>Font Size</translation>
+        <translation>Fonta izmērs</translation>
     </message>
 </context>
 <context>
     <name>LG_DimzerosBox</name>
     <message>
         <source>select:</source>
-        <translation>select:</translation>
+        <translation>atlasīt:</translation>
     </message>
     <message>
         <source>remove left</source>
-        <translation>remove left</translation>
+        <translation>noņemt kreiso</translation>
     </message>
     <message>
         <source>remove right</source>
-        <translation>remove right</translation>
+        <translation>noņemt labo</translation>
     </message>
     <message>
         <source>remove 0&apos;</source>
-        <translation>remove 0&apos;</translation>
+        <translation>noņemt 0'</translation>
     </message>
     <message>
         <source>remove 0&quot;</source>
-        <translation>remove 0&quot;</translation>
+        <translation>noņemt 0"</translation>
     </message>
 </context>
 <context>
     <name>PicFile</name>
     <message>
         <source>Read PIC file</source>
-        <translation>Read PIC file</translation>
+        <translation>Lasīt PIC failu</translation>
     </message>
     <message>
         <source>import PIC file</source>
-        <translation>import PIC file</translation>
+        <translation>importēt PIC failu</translation>
     </message>
 </context>
 <context>
     <name>PolylineEquidistantOptions</name>
     <message>
         <source>Line Relative Angle Options</source>
-        <translation>Line Relative Angle Options</translation>
+        <translation>Līnijas relatīvā leņķa opcijas</translation>
     </message>
     <message>
         <source>Spacing:</source>
-        <translation>Spacing:</translation>
+        <translation>Atstarpe:</translation>
     </message>
     <message>
         <source>Distance from original polyline</source>
-        <translation>Distance from original polyline</translation>
+        <translation>Attālums no oriģinālās polilīnijas</translation>
     </message>
     <message>
         <source>Copies:</source>
-        <translation>Copies:</translation>
+        <translation>Kopijas:</translation>
     </message>
 </context>
 <context>
     <name>QC_ActionGetEnt</name>
     <message>
         <source>Select object:</source>
-        <translation>Select object:</translation>
+        <translation>Atlasīt objektu:</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -3199,7 +3199,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <name>QC_ActionGetSelect</name>
     <message>
         <source>Select objects:</source>
-        <translation>Select objects:</translation>
+        <translation>Atlasīt objektus:</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -3210,93 +3210,93 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <name>QC_ApplicationWindow</name>
     <message>
         <source>Grid Status</source>
-        <translation>Grid Status</translation>
+        <translation>Tīkla statuss</translation>
     </message>
     <message>
         <source>Recent Files</source>
-        <translation>Recent Files</translation>
+        <translation>Pēdējie faili</translation>
     </message>
     <message>
         <source>Saving drawing...</source>
-        <translation>Saving drawing...</translation>
+        <translation>Saglabā zīmējumu...</translation>
     </message>
     <message>
         <source>Saving drawing: %1</source>
-        <translation>Saving drawing: %1</translation>
+        <translation>Saglabā zīmējumu: %1</translation>
     </message>
     <message>
         <source>Save cancelled</source>
-        <translation>Save cancelled</translation>
+        <translation>Saglabāšana atcelta</translation>
     </message>
     <message>
         <source>Saved drawing: %1</source>
-        <translation>Saved drawing: %1</translation>
+        <translation>Zīmējums saglabāts: %1</translation>
     </message>
     <message>
         <source>Draft Mode</source>
-        <translation>Draft Mode</translation>
+        <translation>Metu režīms</translation>
     </message>
     <message>
         <source>Cannot save the file </source>
-        <translation>Cannot save the file</translation>
+        <translation>Nevar saglabāt failu</translation>
     </message>
     <message>
         <source> , please check the filename and permissions.</source>
-        <translation>, please check the filename and permissions.</translation>
+        <translation>, lūdzu pārbaudiet faila nosaukumu un atļaujas.</translation>
     </message>
     <message>
         <source>Closing Drawing</source>
-        <translation>Closing Drawing</translation>
+        <translation>Aizver zīmējumu</translation>
     </message>
     <message>
         <source>Save changes to the following item?
 %1</source>
-        <translation>Save changes to the following item?
+        <translation>Saglabāt izmaiņas šajā elementā?
 %1</translation>
     </message>
     <message>
         <source>&amp;Save</source>
-        <translation>&amp;Save</translation>
+        <translation>&amp;Saglabāt</translation>
     </message>
     <message>
         <source>Save &amp;as...</source>
-        <translation>Save &amp;as...</translation>
+        <translation>Saglabāt &amp;kā...</translation>
     </message>
     <message>
         <source>&amp;Save %1</source>
-        <translation>&amp;Save %1</translation>
+        <translation>&amp;Saglabāt %1</translation>
     </message>
     <message>
         <source>Save %1 &amp;as...</source>
-        <translation>Save %1 &amp;as...</translation>
+        <translation>Saglabāt %1 &amp;kā...</translation>
     </message>
     <message>
         <source>Ta&amp;b mode</source>
-        <translation>Ta&amp;b mode</translation>
+        <translation>Ci&amp;lņu režīms</translation>
     </message>
     <message>
         <source>&amp;Window mode</source>
-        <translation>&amp;Window mode</translation>
+        <translation>&amp;Loga režīms</translation>
     </message>
     <message>
         <source>&amp;Layout</source>
-        <translation>&amp;Layout</translation>
+        <translation>&amp;Izkārtojums</translation>
     </message>
     <message>
         <source>Rounded</source>
-        <translation>Rounded</translation>
+        <translation>Noapaļots</translation>
     </message>
     <message>
         <source>Triangular</source>
-        <translation>Triangular</translation>
+        <translation>Trīsstūrveida</translation>
     </message>
     <message>
         <source>North</source>
-        <translation>North</translation>
+        <translation>Ziemeļi</translation>
     </message>
     <message>
         <source>South</source>
-        <translation>South</translation>
+        <translation>Dienvidi</translation>
     </message>
     <message>
         <source>East</source>
@@ -3308,193 +3308,193 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     </message>
     <message>
         <source>&amp;Arrange</source>
-        <translation>&amp;Arrange</translation>
+        <translation>&amp;Kārtot</translation>
     </message>
     <message>
         <source>&amp;Maximized</source>
-        <translation>&amp;Maximized</translation>
+        <translation>&amp;Palielināts</translation>
     </message>
     <message>
         <source>&amp;Cascade</source>
-        <translation>&amp;Cascade</translation>
+        <translation>&amp;Kaskāde</translation>
     </message>
     <message>
         <source>&amp;Tile</source>
-        <translation>&amp;Tile</translation>
+        <translation>&amp;Flīze</translation>
     </message>
     <message>
         <source>Tile &amp;Vertically</source>
-        <translation>Tile &amp;Vertically</translation>
+        <translation>Flīzēt &amp;vertikāli</translation>
     </message>
     <message>
         <source>Tile &amp;Horizontally</source>
-        <translation>Tile &amp;Horizontally</translation>
+        <translation>Flīzēt &amp;horizontāli</translation>
     </message>
     <message>
         <source>Creating new file...</source>
-        <translation>Creating new file...</translation>
+        <translation>Izveido jaunu failu...</translation>
     </message>
     <message>
         <source>Block &apos;%1&apos;</source>
-        <translation>Block &apos;%1&apos;</translation>
+        <translation>Bloks '%1'</translation>
     </message>
     <message>
         <source>unnamed document %1</source>
-        <translation>unnamed document %1</translation>
+        <translation>nenosaukts dokuments %1</translation>
     </message>
     <message>
         <source>New Drawing created.</source>
-        <translation>New Drawing created.</translation>
+        <translation>Jauns zīmējums izveidots.</translation>
     </message>
     <message>
         <source>New document from template: </source>
-        <translation>New document from template:</translation>
+        <translation>Jauns dokuments no veidnes:</translation>
     </message>
     <message>
         <source>Select Template aborted</source>
-        <translation>Select Template aborted</translation>
+        <translation>Veidnes atlase atcelta</translation>
     </message>
     <message>
         <source>Cannot open the file
 %1
 Please check the permissions.</source>
-        <translation>Cannot open the file
+        <translation>Nevar atvērt failu
 %1
-Please check the permissions.</translation>
+Lūdzu pārbaudiet atļaujas.</translation>
     </message>
     <message>
         <source>Warning: File already opened : </source>
-        <translation>Warning: File already opened :</translation>
+        <translation>Brīdinājums: fails jau atvērts:</translation>
     </message>
     <message>
         <source>Cannot open the file
 %1
 Please check its existence and permissions.</source>
-        <translation>Cannot open the file
+        <translation>Nevar atvērt failu
 %1
-Please check its existence and permissions.</translation>
+Lūdzu pārbaudiet tā esamību un atļaujas.</translation>
     </message>
     <message>
         <source>Loaded document: </source>
-        <translation>Loaded document:</translation>
+        <translation>Dokuments ielādēts:</translation>
     </message>
     <message>
         <source>File &apos;%1&apos; does not exist. Opening aborted</source>
-        <translation>File &apos;%1&apos; does not exist. Opening aborted</translation>
+        <translation>Fails '%1' neeksistē. Atvēršana atcelta</translation>
     </message>
     <message>
         <source>Opening aborted</source>
-        <translation>Opening aborted</translation>
+        <translation>Atvēršana atcelta</translation>
     </message>
     <message>
         <source>Save All cancelled</source>
-        <translation>Save All cancelled</translation>
+        <translation>Visu saglabāšana atcelta</translation>
     </message>
     <message>
         <source>Auto-saving drawing...</source>
-        <translation>Auto-saving drawing...</translation>
+        <translation>Automātiski saglabā zīmējumu...</translation>
     </message>
     <message>
         <source>Auto-saved drawing</source>
-        <translation>Auto-saved drawing</translation>
+        <translation>Zīmējums automātiski saglabāts</translation>
     </message>
     <message>
         <source>Cannot auto-save the file
 %1
 Please check the permissions.
 Auto-save disabled.</source>
-        <translation>Cannot auto-save the file
+        <translation>Nevar automātiski saglabāt failu
 %1
-Please check the permissions.
-Auto-save disabled.</translation>
+Lūdzu pārbaudiet atļaujas.
+Automātiskā saglabāšana atspējota.</translation>
     </message>
     <message>
         <source>Auto-saving failed</source>
-        <translation>Auto-saving failed</translation>
+        <translation>Automātiskā saglabāšana neizdevās</translation>
     </message>
     <message>
         <source>Exporting drawing...</source>
-        <translation>Exporting drawing...</translation>
+        <translation>Eksportē zīmējumu...</translation>
     </message>
     <message>
         <source>Export as</source>
-        <translation>Export as</translation>
+        <translation>Eksportēt kā</translation>
     </message>
     <message>
         <source>Exported: %1</source>
-        <translation>Exported: %1</translation>
+        <translation>Eksportēts: %1</translation>
     </message>
     <message>
         <source>Exporting...</source>
-        <translation>Exporting...</translation>
+        <translation>Eksportē...</translation>
     </message>
     <message>
         <source>Export complete</source>
-        <translation>Export complete</translation>
+        <translation>Eksportēšana pabeigta</translation>
     </message>
     <message>
         <source>Export failed!</source>
-        <translation>Export failed!</translation>
+        <translation>Eksportēšana neizdevās!</translation>
     </message>
     <message>
         <source>Close All cancelled</source>
-        <translation>Close All cancelled</translation>
+        <translation>Visu aizvēršana atcelta</translation>
     </message>
     <message>
         <source>Please adjust scaling and positioning in print preview first.</source>
-        <translation>Please adjust scaling and positioning in print preview first.</translation>
+        <translation>Lūdzu vispirms pielāgojiet mērogu un novietojumu drukas priekšskatījumā.</translation>
     </message>
     <message>
         <source>Printing...</source>
-        <translation>Printing...</translation>
+        <translation>Drukā...</translation>
     </message>
     <message>
         <source>Export as PDF</source>
-        <translation>Export as PDF</translation>
+        <translation>Eksportēt kā PDF</translation>
     </message>
     <message>
         <source>Printing complete</source>
-        <translation>Printing complete</translation>
+        <translation>Drukāšana pabeigta</translation>
     </message>
     <message>
         <source>Print preview for %1</source>
-        <translation>Print preview for %1</translation>
+        <translation>Drukas priekšskatījums priekš %1</translation>
     </message>
     <message>
         <source>Exiting application...</source>
-        <translation>Exiting application...</translation>
+        <translation>Iziet no programmas...</translation>
     </message>
     <message>
         <source>About</source>
-        <translation>About</translation>
+        <translation>Par</translation>
     </message>
     <message>
         <source>Version: %1</source>
-        <translation>Version: %1</translation>
+        <translation>Versija: %1</translation>
     </message>
     <message>
         <source>Compiler: Clang %1.%2.%3</source>
-        <translation>Compiler: Clang %1.%2.%3</translation>
+        <translation>Kompilators: Clang %1.%2.%3</translation>
     </message>
     <message>
         <source>Compiler: GNU GCC %1.%2.%3</source>
-        <translation>Compiler: GNU GCC %1.%2.%3</translation>
+        <translation>Kompilators: GNU GCC %1.%2.%3</translation>
     </message>
     <message>
         <source>Compiler: Microsoft Visual C++</source>
-        <translation>Compiler: Microsoft Visual C++</translation>
+        <translation>Kompilators: Microsoft Visual C++</translation>
     </message>
     <message>
         <source>Compiled on: %1</source>
-        <translation>Compiled on: %1</translation>
+        <translation>Kompilēts: %1</translation>
     </message>
     <message>
         <source>Qt Version: %1</source>
-        <translation>Qt Version: %1</translation>
+        <translation>Qt versija: %1</translation>
     </message>
     <message>
         <source>Boost Version: %1.%2.%3</source>
-        <translation>Boost Version: %1.%2.%3</translation>
+        <translation>Boost versija: %1.%2.%3</translation>
     </message>
     <message>
         <source>Copy</source>
@@ -3502,31 +3502,31 @@ Auto-save disabled.</translation>
     </message>
     <message>
         <source>Contributors</source>
-        <translation>Contributors</translation>
+        <translation>Līdzautori</translation>
     </message>
     <message>
         <source>License</source>
-        <translation>License</translation>
+        <translation>Licence</translation>
     </message>
     <message>
         <source>The Code</source>
-        <translation>The Code</translation>
+        <translation>Kods</translation>
     </message>
     <message>
         <source>System</source>
-        <translation>System</translation>
+        <translation>Sistēma</translation>
     </message>
     <message>
         <source>Toolbars</source>
-        <translation>Toolbars</translation>
+        <translation>Rīkjoslas</translation>
     </message>
     <message>
         <source>Dockwidgets</source>
-        <translation>Dockwidgets</translation>
+        <translation>Piestiprināmie logrīki</translation>
     </message>
     <message>
         <source>Opening recent file...</source>
-        <translation>Opening recent file...</translation>
+        <translation>Atver pēdējo failu...</translation>
     </message>
     <message>
         <source>Cmd</source>
@@ -3534,11 +3534,11 @@ Auto-save disabled.</translation>
     </message>
     <message>
         <source>Command line</source>
-        <translation>Command line</translation>
+        <translation>Komandrinда</translation>
     </message>
     <message>
         <source>Float</source>
-        <translation>Float</translation>
+        <translation>Peldošs</translation>
     </message>
     <message>
         <source>Dock</source>
@@ -3547,23 +3547,23 @@ Auto-save disabled.</translation>
     </message>
     <message>
         <source>Device Options</source>
-        <translation>Device Options</translation>
+        <translation>Ierīces opcijas</translation>
     </message>
     <message>
         <source>Device</source>
-        <translation>Device</translation>
+        <translation>Ierīce</translation>
     </message>
     <message>
         <source>Toolbar Creator</source>
-        <translation>Toolbar Creator</translation>
+        <translation>Rīkjoslas veidotājs</translation>
     </message>
     <message>
         <source>Menu Creator</source>
-        <translation>Menu Creator</translation>
+        <translation>Izvēlnes veidotājs</translation>
     </message>
     <message>
         <source>Menu Assigner</source>
-        <translation>Menu Assigner</translation>
+        <translation>Izvēlnes piešķirējs</translation>
     </message>
     <message>
         <source>Line</source>
@@ -3571,31 +3571,31 @@ Auto-save disabled.</translation>
     </message>
     <message>
         <source>Circle</source>
-        <translation>Circle</translation>
+        <translation>Aplis</translation>
     </message>
     <message>
         <source>Curve</source>
-        <translation>Curve</translation>
+        <translation>Līkne</translation>
     </message>
     <message>
         <source>Ellipse</source>
-        <translation>Ellipse</translation>
+        <translation>Elipse</translation>
     </message>
     <message>
         <source>Polyline</source>
-        <translation>Polyline</translation>
+        <translation>Polilīnija</translation>
     </message>
     <message>
         <source>Select</source>
-        <translation>Select</translation>
+        <translation>Atlasīt</translation>
     </message>
     <message>
         <source>Dimension</source>
-        <translation>Dimension</translation>
+        <translation>Izmērs</translation>
     </message>
     <message>
         <source>Modify</source>
-        <translation>Modify</translation>
+        <translation>Modificēt</translation>
     </message>
     <message>
         <source>Info</source>
@@ -3603,23 +3603,23 @@ Auto-save disabled.</translation>
     </message>
     <message>
         <source>Order</source>
-        <translation>Order</translation>
+        <translation>Kārtošana</translation>
     </message>
     <message>
         <source>Pen Palette</source>
-        <translation>Pen Palette</translation>
+        <translation>Spalvu palete</translation>
     </message>
     <message>
         <source>Layer List</source>
-        <translation>Layer List</translation>
+        <translation>Slāņu saraksts</translation>
     </message>
     <message>
         <source>Layer Tree</source>
-        <translation>Layer Tree</translation>
+        <translation>Slāņu koks</translation>
     </message>
     <message>
         <source>Block List</source>
-        <translation>Block List</translation>
+        <translation>Bloku saraksts</translation>
     </message>
     <message>
         <source>File</source>
@@ -3635,7 +3635,7 @@ Auto-save disabled.</translation>
     </message>
     <message>
         <source>Snap Selection</source>
-        <translation>Snap Selection</translation>
+        <translation>Uztveršanas atlase</translation>
     </message>
     <message>
         <source>Pen</source>
@@ -3643,79 +3643,79 @@ Auto-save disabled.</translation>
     </message>
     <message>
         <source>Tool Options</source>
-        <translation>Tool Options</translation>
+        <translation>Rīka opcijas</translation>
     </message>
     <message>
         <source>Dock Areas</source>
-        <translation>Dock Areas</translation>
+        <translation>Piestiprinājuma apgabali</translation>
     </message>
     <message>
         <source>Categories</source>
-        <translation>Categories</translation>
+        <translation>Kategorijas</translation>
     </message>
     <message>
         <source>&amp;File</source>
-        <translation>&amp;File</translation>
+        <translation>&amp;Fails</translation>
     </message>
     <message>
         <source>Import</source>
-        <translation>Import</translation>
+        <translation>Importēt</translation>
     </message>
     <message>
         <source>Export</source>
-        <translation>Export</translation>
+        <translation>Eksportēt</translation>
     </message>
     <message>
         <source>&amp;Options</source>
-        <translation>&amp;Options</translation>
+        <translation>&amp;Opcijas</translation>
     </message>
     <message>
         <source>&amp;Edit</source>
-        <translation>&amp;Edit</translation>
+        <translation>&amp;Rediģēt</translation>
     </message>
     <message>
         <source>Pl&amp;ugins</source>
-        <translation>Pl&amp;ugins</translation>
+        <translation>Spra&amp;udņi</translation>
     </message>
     <message>
         <source>&amp;View</source>
-        <translation>&amp;View</translation>
+        <translation>&amp;Skats</translation>
     </message>
     <message>
         <source>&amp;Tools</source>
-        <translation>&amp;Tools</translation>
+        <translation>&amp;Rīki</translation>
     </message>
     <message>
         <source>&amp;Line</source>
-        <translation>&amp;Line</translation>
+        <translation>&amp;Līnija</translation>
     </message>
     <message>
         <source>&amp;Circle</source>
-        <translation>&amp;Circle</translation>
+        <translation>&amp;Aplis</translation>
     </message>
     <message>
         <source>&amp;Curve</source>
-        <translation>&amp;Curve</translation>
+        <translation>&amp;Līkne</translation>
     </message>
     <message>
         <source>&amp;Ellipse</source>
-        <translation>&amp;Ellipse</translation>
+        <translation>&amp;Elipse</translation>
     </message>
     <message>
         <source>&amp;Polyline</source>
-        <translation>&amp;Polyline</translation>
+        <translation>&amp;Polilīnija</translation>
     </message>
     <message>
         <source>&amp;Select</source>
-        <translation>&amp;Select</translation>
+        <translation>&amp;Atlasīt</translation>
     </message>
     <message>
         <source>Dime&amp;nsion</source>
-        <translation>Dime&amp;nsion</translation>
+        <translation>Izmē&amp;rs</translation>
     </message>
     <message>
         <source>&amp;Modify</source>
-        <translation>&amp;Modify</translation>
+        <translation>&amp;Modificēt</translation>
     </message>
     <message>
         <source>&amp;Info</source>
@@ -3723,15 +3723,15 @@ Auto-save disabled.</translation>
     </message>
     <message>
         <source>&amp;Order</source>
-        <translation>&amp;Order</translation>
+        <translation>&amp;Kārtošana</translation>
     </message>
     <message>
         <source>&amp;Drawings</source>
-        <translation>&amp;Drawings</translation>
+        <translation>&amp;Zīmējumi</translation>
     </message>
     <message>
         <source>&amp;Help</source>
-        <translation>&amp;Help</translation>
+        <translation>&amp;Palīdzība</translation>
     </message>
     <message>
         <source>&amp;Wiki</source>
@@ -3739,58 +3739,58 @@ Auto-save disabled.</translation>
     </message>
     <message>
         <source>User&apos;s &amp;Manual</source>
-        <translation>User&apos;s &amp;Manual</translation>
+        <translation>Lietotāja &amp;rokasgrāmata</translation>
     </message>
     <message>
         <source>&amp;Commands</source>
-        <translation>&amp;Commands</translation>
+        <translation>&amp;Komandas</translation>
     </message>
     <message>
         <source>&amp;Style Sheets</source>
-        <translation>&amp;Style Sheets</translation>
+        <translation>&amp;Stilu lapas</translation>
     </message>
     <message>
         <source>Wid&amp;gets</source>
-        <translation>Wid&amp;gets</translation>
+        <translation>Log&amp;rīki</translation>
     </message>
     <message>
         <source>&amp;Forum</source>
-        <translation>&amp;Forum</translation>
+        <translation>&amp;Forums</translation>
     </message>
     <message>
         <source>Zulip &amp;Chat</source>
-        <translation>Zulip &amp;Chat</translation>
+        <translation>Zulip &amp;čats</translation>
     </message>
     <message>
         <source>&amp;Release Information</source>
-        <translation>&amp;Release Information</translation>
+        <translation>&amp;Izlaiduma informācija</translation>
     </message>
     <message>
         <source>On&amp;line</source>
-        <translation>On&amp;line</translation>
+        <translation>Tie&amp;šsaiste</translation>
     </message>
     <message>
         <source>&amp;Donate</source>
-        <translation>&amp;Donate</translation>
+        <translation>&amp;Ziedot</translation>
     </message>
     <message>
         <source>Dock Wid&amp;gets</source>
-        <translation>Dock Wid&amp;gets</translation>
+        <translation>Piestiprināmie log&amp;rīki</translation>
     </message>
     <message>
         <source>&amp;Toolbars</source>
-        <translation>&amp;Toolbars</translation>
+        <translation>&amp;Rīkjoslas</translation>
     </message>
 </context>
 <context>
     <name>QG_ActionHandler</name>
     <message>
         <source>Spacebar: restored snapping mode to normal</source>
-        <translation>Spacebar: restored snapping mode to normal</translation>
+        <translation>Atstarpes taustiņš: uztveršanas režīms atjaunots uz normālu</translation>
     </message>
     <message>
         <source>Spacebar: temporarily set snapping mode to free snapping</source>
-        <translation>Spacebar: temporarily set snapping mode to free snapping</translation>
+        <translation>Atstarpes taustiņš: uztveršanas režīms pagaidu iestatīts uz brīvu uztveršanu</translation>
     </message>
     <message>
         <source>escape</source>
@@ -3802,7 +3802,7 @@ Auto-save disabled.</translation>
     <name>QG_ActiveLayerName</name>
     <message>
         <source>Selection</source>
-        <translation>Selection</translation>
+        <translation>Atlase</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
@@ -3810,7 +3810,7 @@ Auto-save disabled.</translation>
     </message>
     <message>
         <source>Current Layer</source>
-        <translation>Current Layer</translation>
+        <translation>Pašreizējais slānis</translation>
     </message>
     <message>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
@@ -3829,127 +3829,127 @@ p, li { white-space: pre-wrap; }
     <name>QG_BlockDialog</name>
     <message>
         <source>Block Settings</source>
-        <translation>Block Settings</translation>
+        <translation>Bloka iestatījumi</translation>
     </message>
     <message>
         <source>Block Name:</source>
-        <translation>Block Name:</translation>
+        <translation>Bloka nosaukums:</translation>
     </message>
     <message>
         <source>Renaming Block</source>
-        <translation>Renaming Block</translation>
+        <translation>Pārsaukt bloku</translation>
     </message>
     <message>
         <source>Could not name block. A block named &quot;%1&quot; already exists.</source>
-        <translation>Could not name block. A block named &quot;%1&quot; already exists.</translation>
+        <translation>Nevar nosaukt bloku. Bloks ar nosaukumu "%1" jau pastāv.</translation>
     </message>
 </context>
 <context>
     <name>QG_BlockWidget</name>
     <message>
         <source>Show all blocks</source>
-        <translation>Show all blocks</translation>
+        <translation>Rādīt visus blokus</translation>
     </message>
     <message>
         <source>Hide all blocks</source>
-        <translation>Hide all blocks</translation>
+        <translation>Slēpt visus blokus</translation>
     </message>
     <message>
         <source>Create Block</source>
-        <translation>Create Block</translation>
+        <translation>Izveidot bloku</translation>
     </message>
     <message>
         <source>Add an empty block</source>
-        <translation>Add an empty block</translation>
+        <translation>Pievienot tukšu bloku</translation>
     </message>
     <message>
         <source>Remove block</source>
-        <translation>Remove block</translation>
+        <translation>Noņemt bloku</translation>
     </message>
     <message>
         <source>Rename the active block</source>
-        <translation>Rename the active block</translation>
+        <translation>Pārsaukt aktīvo bloku</translation>
     </message>
     <message>
         <source>Edit the active block
 in a separate window</source>
-        <translation>Edit the active block
-in a separate window</translation>
+        <translation>Rediģēt aktīvo bloku
+atsevišķā logā</translation>
     </message>
     <message>
         <source>save the active block to a file</source>
-        <translation>save the active block to a file</translation>
+        <translation>saglabāt aktīvo bloku failā</translation>
     </message>
     <message>
         <source>Insert the active block</source>
-        <translation>Insert the active block</translation>
+        <translation>Ievietot aktīvo bloku</translation>
     </message>
     <message>
         <source>Filter</source>
-        <translation>Filter</translation>
+        <translation>Filtrs</translation>
     </message>
     <message>
         <source>Looking for matching block names</source>
-        <translation>Looking for matching block names</translation>
+        <translation>Meklē atbilstošos bloku nosaukumus</translation>
     </message>
     <message>
         <source>Block Menu</source>
-        <translation>Block Menu</translation>
+        <translation>Bloka izvēlne</translation>
     </message>
     <message>
         <source>&amp;Defreeze all Blocks</source>
-        <translation>&amp;Defreeze all Blocks</translation>
+        <translation>&amp;Atsaldēt visus blokus</translation>
     </message>
     <message>
         <source>&amp;Freeze all Blocks</source>
-        <translation>&amp;Freeze all Blocks</translation>
+        <translation>&amp;Iesaldēt visus blokus</translation>
     </message>
     <message>
         <source>&amp;Toggle Visibility</source>
-        <translation>&amp;Toggle Visibility</translation>
+        <translation>&amp;Pārslēgt redzamību</translation>
     </message>
     <message>
         <source>&amp;Remove Block</source>
-        <translation>&amp;Remove Block</translation>
+        <translation>&amp;Noņemt bloku</translation>
     </message>
     <message>
         <source>&amp;Add Block</source>
-        <translation>&amp;Add Block</translation>
+        <translation>&amp;Pievienot bloku</translation>
     </message>
     <message>
         <source>&amp;Rename Block</source>
-        <translation>&amp;Rename Block</translation>
+        <translation>&amp;Pārsaukt bloku</translation>
     </message>
     <message>
         <source>&amp;Edit Block</source>
-        <translation>&amp;Edit Block</translation>
+        <translation>&amp;Rediģēt bloku</translation>
     </message>
     <message>
         <source>&amp;Insert Block</source>
-        <translation>&amp;Insert Block</translation>
+        <translation>&amp;Ievietot bloku</translation>
     </message>
     <message>
         <source>&amp;Create New Block</source>
-        <translation>&amp;Create New Block</translation>
+        <translation>&amp;Izveidot jaunu bloku</translation>
     </message>
 </context>
 <context>
     <name>QG_ColorBox</name>
     <message>
         <source>Unchanged</source>
-        <translation>Unchanged</translation>
+        <translation>Nemainīts</translation>
     </message>
     <message>
         <source>By Layer</source>
-        <translation>By Layer</translation>
+        <translation>Pēc slāņa</translation>
     </message>
     <message>
         <source>By Block</source>
-        <translation>By Block</translation>
+        <translation>Pēc bloka</translation>
     </message>
     <message>
         <source>Custom</source>
-        <translation>Custom</translation>
+        <translation>Pielāgots</translation>
     </message>
     <message>
         <source>Red</source>
@@ -3957,23 +3957,23 @@ in a separate window</translation>
     </message>
     <message>
         <source>Dark Red</source>
-        <translation>Dark Red</translation>
+        <translation>Tumši sarkans</translation>
     </message>
     <message>
         <source>Yellow</source>
-        <translation>Yellow</translation>
+        <translation>Dzeltens</translation>
     </message>
     <message>
         <source>Dark Yellow</source>
-        <translation>Dark Yellow</translation>
+        <translation>Tumši dzeltens</translation>
     </message>
     <message>
         <source>Green</source>
-        <translation>Green</translation>
+        <translation>Zaļš</translation>
     </message>
     <message>
         <source>Dark Green</source>
-        <translation>Dark Green</translation>
+        <translation>Tumši zaļš</translation>
     </message>
     <message>
         <source>Cyan</source>
@@ -3981,7 +3981,7 @@ in a separate window</translation>
     </message>
     <message>
         <source>Dark Cyan</source>
-        <translation>Dark Cyan</translation>
+        <translation>Tumši ciāns</translation>
     </message>
     <message>
         <source>Blue</source>
@@ -3989,19 +3989,19 @@ in a separate window</translation>
     </message>
     <message>
         <source>Dark Blue</source>
-        <translation>Dark Blue</translation>
+        <translation>Tumši zils</translation>
     </message>
     <message>
         <source>Magenta</source>
-        <translation>Magenta</translation>
+        <translation>Fuksija</translation>
     </message>
     <message>
         <source>Dark Magenta</source>
-        <translation>Dark Magenta</translation>
+        <translation>Tumši fuksija</translation>
     </message>
     <message>
         <source>Black / White</source>
-        <translation>Black / White</translation>
+        <translation>Melns / balts</translation>
     </message>
     <message>
         <source>Gray</source>
@@ -4009,56 +4009,56 @@ in a separate window</translation>
     </message>
     <message>
         <source>Dark Gray</source>
-        <translation>Dark Gray</translation>
+        <translation>Tumši pelēks</translation>
     </message>
     <message>
         <source>Light Gray</source>
-        <translation>Light Gray</translation>
+        <translation>Gaišpelēks</translation>
     </message>
     <message>
         <source>/ColorBox</source>
-        <translation>/ColorBox</translation>
+        <translation>/KrāsuLodziņš</translation>
     </message>
     <message>
         <source>Custom Picked</source>
-        <translation>Custom Picked</translation>
+        <translation>Pielāgota izvēle</translation>
     </message>
 </context>
 <context>
     <name>QG_CommandEdit</name>
     <message>
         <source>clear</source>
-        <translation>clear</translation>
+        <translation>notīrīt</translation>
     </message>
 </context>
 <context>
     <name>QG_CommandHistory</name>
     <message>
         <source>&amp;Copy</source>
-        <translation>&amp;Copy</translation>
+        <translation>&amp;Kopēt</translation>
     </message>
     <message>
         <source>Select &amp;All</source>
-        <translation>Select &amp;All</translation>
+        <translation>Atlasīt &amp;visu</translation>
     </message>
     <message>
         <source>Clear</source>
-        <translation>Clear</translation>
+        <translation>Notīrīt</translation>
     </message>
 </context>
 <context>
     <name>QG_CommandWidget</name>
     <message>
         <source>Command Line</source>
-        <translation>Command Line</translation>
+        <translation>Komandrinда</translation>
     </message>
     <message>
         <source>Command history and output</source>
-        <translation>Command history and output</translation>
+        <translation>Komandu vēsture un izvade</translation>
     </message>
     <message>
         <source>Command:</source>
-        <translation>Command:</translation>
+        <translation>Komanda:</translation>
     </message>
     <message>
         <source>...</source>
@@ -4070,7 +4070,7 @@ in a separate window</translation>
     </message>
     <message>
         <source>Unknown command: %1</source>
-        <translation>Unknown command: %1</translation>
+        <translation>Nezināma komanda: %1</translation>
     </message>
     <message>
         <source>escape</source>
@@ -4079,11 +4079,11 @@ in a separate window</translation>
     </message>
     <message>
         <source>Float</source>
-        <translation>Float</translation>
+        <translation>Peldošs</translation>
     </message>
     <message>
         <source>Command line</source>
-        <translation>Command line</translation>
+        <translation>Komandrinда</translation>
     </message>
     <message>
         <source>Cmd</source>
@@ -4094,7 +4094,7 @@ in a separate window</translation>
     <name>QG_CoordinateWidget</name>
     <message>
         <source>Coordinates</source>
-        <translation>Coordinates</translation>
+        <translation>Koordinātes</translation>
     </message>
 </context>
 <context>
@@ -4109,15 +4109,15 @@ in a separate window</translation>
     <name>QG_DimensionLabelEditor</name>
     <message>
         <source>Dimension Label Editor</source>
-        <translation>Dimension Label Editor</translation>
+        <translation>Izmēra etiķetes redaktors</translation>
     </message>
     <message>
         <source>Dimension Label:</source>
-        <translation>Dimension Label:</translation>
+        <translation>Izmēra etiķete:</translation>
     </message>
     <message>
         <source>Label:</source>
-        <translation>Label:</translation>
+        <translation>Etiķete:</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Format of the dimension text, &amp;lt;&amp;gt; can be used as a placeholder for the dimension measurement value&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
@@ -4125,19 +4125,19 @@ in a separate window</translation>
     </message>
     <message>
         <source>Insert:</source>
-        <translation>Insert:</translation>
+        <translation>Ievietot:</translation>
     </message>
     <message>
         <source>⌀ (Diameter)</source>
-        <translation>⌀ (Diameter)</translation>
+        <translation>⌀ (Diametrs)</translation>
     </message>
     <message>
         <source>° (Degree)</source>
-        <translation>° (Degree)</translation>
+        <translation>° (Grāds)</translation>
     </message>
     <message>
         <source>± (Plus / Minus)</source>
-        <translation>± (Plus / Minus)</translation>
+        <translation>± (Plus / mīnus)</translation>
     </message>
     <message>
         <source>π (Pi)</source>
@@ -4145,11 +4145,11 @@ in a separate window</translation>
     </message>
     <message>
         <source>× (Times)</source>
-        <translation>× (Times)</translation>
+        <translation>× (Reizināt)</translation>
     </message>
     <message>
         <source>÷ (Division)</source>
-        <translation>÷ (Division)</translation>
+        <translation>÷ (Dalīt)</translation>
     </message>
     <message>
         <source>R</source>
@@ -4174,38 +4174,38 @@ in a separate window</translation>
     </message>
     <message>
         <source>Geometry</source>
-        <translation>Geometry</translation>
+        <translation>Ģeometrija</translation>
     </message>
     <message>
         <source>Radius:</source>
-        <translation>Radius:</translation>
+        <translation>Rādiuss:</translation>
     </message>
     <message>
         <source>Center (y):</source>
-        <translation>Center (y):</translation>
+        <translation>Centrs (y):</translation>
     </message>
     <message>
         <source>Center (x):</source>
-        <translation>Center (x):</translation>
+        <translation>Centrs (x):</translation>
     </message>
     <message>
         <source>Start Angle:</source>
-        <translation>Start Angle:</translation>
+        <translation>Sākuma leņķis:</translation>
     </message>
     <message>
         <source>End Angle:</source>
-        <translation>End Angle:</translation>
+        <translation>Beigu leņķis:</translation>
     </message>
     <message>
         <source>Reversed</source>
-        <translation>Reversed</translation>
+        <translation>Apgriezts</translation>
     </message>
 </context>
 <context>
     <name>QG_DlgAttributes</name>
     <message>
         <source>Attributes</source>
-        <translation>Attributes</translation>
+        <translation>Atribūti</translation>
     </message>
     <message>
         <source>Layer:</source>
@@ -4214,19 +4214,19 @@ in a separate window</translation>
     <message>
         <source>Apply attributes also to all sub-entities of selected INSERT.
 This recursively modifies all entities of the Block itself.</source>
-        <translation>Apply attributes also to all sub-entities of selected INSERT.
-This recursively modifies all entities of the Block itself.</translation>
+        <translation>Pielietot atribūtus arī visiem atlasītā INSERT apakšelementiem.
+Tas rekursīvi modificē visus elementu atribūtus</translation>
     </message>
     <message>
         <source>Apply attributes Block-deep</source>
-        <translation>Apply attributes Block-deep</translation>
+        <translation>Pielietot atribūtus visā blokā</translation>
     </message>
 </context>
 <context>
     <name>QG_DlgCircle</name>
     <message>
         <source>Circle</source>
-        <translation>Circle</translation>
+        <translation>Aplis</translation>
     </message>
     <message>
         <source>Layer:</source>
@@ -4234,26 +4234,26 @@ This recursively modifies all entities of the Block itself.</translation>
     </message>
     <message>
         <source>Geometry</source>
-        <translation>Geometry</translation>
+        <translation>Ģeometrija</translation>
     </message>
     <message>
         <source>Radius:</source>
-        <translation>Radius:</translation>
+        <translation>Rādiuss:</translation>
     </message>
     <message>
         <source>Center (y):</source>
-        <translation>Center (y):</translation>
+        <translation>Centrs (y):</translation>
     </message>
     <message>
         <source>Center (x):</source>
-        <translation>Center (x):</translation>
+        <translation>Centrs (x):</translation>
     </message>
 </context>
 <context>
     <name>QG_DlgDimLinear</name>
     <message>
         <source>Linear Dimension</source>
-        <translation>Linear Dimension</translation>
+        <translation>Lineārs izmērs</translation>
     </message>
     <message>
         <source>Layer:</source>
@@ -4261,18 +4261,18 @@ This recursively modifies all entities of the Block itself.</translation>
     </message>
     <message>
         <source>Geometry</source>
-        <translation>Geometry</translation>
+        <translation>Ģeometrija</translation>
     </message>
     <message>
         <source>Angle:</source>
-        <translation>Angle:</translation>
+        <translation>Leņķis:</translation>
     </message>
 </context>
 <context>
     <name>QG_DlgDimension</name>
     <message>
         <source>Dimension</source>
-        <translation>Dimension</translation>
+        <translation>Izmērs</translation>
     </message>
     <message>
         <source>Layer:</source>
@@ -4283,7 +4283,7 @@ This recursively modifies all entities of the Block itself.</translation>
     <name>QG_DlgEllipse</name>
     <message>
         <source>Ellipse</source>
-        <translation>Ellipse</translation>
+        <translation>Elipse</translation>
     </message>
     <message>
         <source>Layer:</source>
@@ -4291,70 +4291,70 @@ This recursively modifies all entities of the Block itself.</translation>
     </message>
     <message>
         <source>Geometry</source>
-        <translation>Geometry</translation>
+        <translation>Ģeometrija</translation>
     </message>
     <message>
         <source>Center (y):</source>
-        <translation>Center (y):</translation>
+        <translation>Centrs (y):</translation>
     </message>
     <message>
         <source>Center (x):</source>
-        <translation>Center (x):</translation>
+        <translation>Centrs (x):</translation>
     </message>
     <message>
         <source>End Angle:</source>
-        <translation>End Angle:</translation>
+        <translation>Beigu leņķis:</translation>
     </message>
     <message>
         <source>Start Angle:</source>
-        <translation>Start Angle:</translation>
+        <translation>Sākuma leņķis:</translation>
     </message>
     <message>
         <source>Rotation:</source>
-        <translation>Rotation:</translation>
+        <translation>Rotācija:</translation>
     </message>
     <message>
         <source>Minor:</source>
-        <translation>Minor:</translation>
+        <translation>Mazākais:</translation>
     </message>
     <message>
         <source>Major:</source>
-        <translation>Major:</translation>
+        <translation>Lielākais:</translation>
     </message>
     <message>
         <source>Reversed</source>
-        <translation>Reversed</translation>
+        <translation>Apgriezts</translation>
     </message>
 </context>
 <context>
     <name>QG_DlgHatch</name>
     <message>
         <source>Choose Hatch Attributes</source>
-        <translation>Choose Hatch Attributes</translation>
+        <translation>Izvēlēties šķelšanas atribūtus</translation>
     </message>
     <message>
         <source>Pattern</source>
-        <translation>Pattern</translation>
+        <translation>Raksts</translation>
     </message>
     <message>
         <source>Angle:</source>
-        <translation>Angle:</translation>
+        <translation>Leņķis:</translation>
     </message>
     <message>
         <source>Scale:</source>
-        <translation>Scale:</translation>
+        <translation>Mērogs:</translation>
     </message>
     <message>
         <source>Solid Fill</source>
-        <translation>Solid Fill</translation>
+        <translation>Vienkrāsains aizpildījums</translation>
     </message>
     <message>
         <source>Preview</source>
-        <translation>Preview</translation>
+        <translation>Priekšskatījums</translation>
     </message>
     <message>
         <source>Enable Preview</source>
-        <translation>Enable Preview</translation>
+        <translation>Iespējot priekšskatījumu</translation>
     </message>
     <message>
         <source>Area</source>
@@ -4365,7 +4365,7 @@ This recursively modifies all entities of the Block itself.</translation>
     <name>QG_DlgImage</name>
     <message>
         <source>Image</source>
-        <translation>Image</translation>
+        <translation>Attēls</translation>
     </message>
     <message>
         <source>Layer:</source>
@@ -4373,11 +4373,11 @@ This recursively modifies all entities of the Block itself.</translation>
     </message>
     <message>
         <source>Geometry</source>
-        <translation>Geometry</translation>
+        <translation>Ģeometrija</translation>
     </message>
     <message>
         <source>Angle:</source>
-        <translation>Angle:</translation>
+        <translation>Leņķis:</translation>
     </message>
     <message>
         <source>Height:</source>
@@ -4385,23 +4385,23 @@ This recursively modifies all entities of the Block itself.</translation>
     </message>
     <message>
         <source>insert (y):</source>
-        <translation>insert (y):</translation>
+        <translation>ievietot (y):</translation>
     </message>
     <message>
         <source>Size (px):</source>
-        <translation>Size (px):</translation>
+        <translation>Izmērs (px):</translation>
     </message>
     <message>
         <source>path:</source>
-        <translation>path:</translation>
+        <translation>ceļš:</translation>
     </message>
     <message>
         <source>insert (x):</source>
-        <translation>insert (x):</translation>
+        <translation>ievietot (x):</translation>
     </message>
     <message>
         <source>Scale:</source>
-        <translation>Scale:</translation>
+        <translation>Mērogs:</translation>
     </message>
     <message>
         <source>DPI</source>
@@ -4409,18 +4409,18 @@ This recursively modifies all entities of the Block itself.</translation>
     </message>
     <message>
         <source>Width:</source>
-        <translation>Width:</translation>
+        <translation>Platums:</translation>
     </message>
     <message>
         <source>Select an image file</source>
-        <translation>Select an image file</translation>
+        <translation>Atlasīt attēla failu</translation>
     </message>
 </context>
 <context>
     <name>QG_DlgInitial</name>
     <message>
         <source>Welcome</source>
-        <translation>Welcome</translation>
+        <translation>Sveicināti</translation>
     </message>
     <message>
         <source>&lt;font size=&quot;+1&quot;&gt;&lt;b&gt;Welcome to LibreCAD&lt;/b&gt;
@@ -4436,22 +4436,22 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>Default Unit:</source>
-        <translation>Default Unit:</translation>
+        <translation>Noklusējuma vienība:</translation>
     </message>
     <message>
         <source>GUI Language:</source>
-        <translation>GUI Language:</translation>
+        <translation>GUI valoda:</translation>
     </message>
     <message>
         <source>Command Language:</source>
-        <translation>Command Language:</translation>
+        <translation>Komandu valoda:</translation>
     </message>
 </context>
 <context>
     <name>QG_DlgInsert</name>
     <message>
         <source>Insert</source>
-        <translation>Insert</translation>
+        <translation>Ievietot</translation>
     </message>
     <message>
         <source>Layer:</source>
@@ -4459,43 +4459,43 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>Geometry</source>
-        <translation>Geometry</translation>
+        <translation>Ģeometrija</translation>
     </message>
     <message>
         <source>Insertion point (x):</source>
-        <translation>Insertion point (x):</translation>
+        <translation>Ievietošanas punkts (x):</translation>
     </message>
     <message>
         <source>Insertion point (y):</source>
-        <translation>Insertion point (y):</translation>
+        <translation>Ievietošanas punkts (y):</translation>
     </message>
     <message>
         <source>Scale X:</source>
-        <translation>Scale X:</translation>
+        <translation>Mērogs X:</translation>
     </message>
     <message>
         <source>Scale Y:</source>
-        <translation>Scale Y:</translation>
+        <translation>Mērogs Y:</translation>
     </message>
     <message>
         <source>Angle:</source>
-        <translation>Angle:</translation>
+        <translation>Leņķis:</translation>
     </message>
     <message>
         <source>Rows:</source>
-        <translation>Rows:</translation>
+        <translation>Rindas:</translation>
     </message>
     <message>
         <source>Columns:</source>
-        <translation>Columns:</translation>
+        <translation>Kolonnas:</translation>
     </message>
     <message>
         <source>Row Spacing:</source>
-        <translation>Row Spacing:</translation>
+        <translation>Rindu atstarpe:</translation>
     </message>
     <message>
         <source>Column Spacing:</source>
-        <translation>Column Spacing:</translation>
+        <translation>Kolonnu atstarpe:</translation>
     </message>
 </context>
 <context>
@@ -4514,30 +4514,30 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>Geometry</source>
-        <translation>Geometry</translation>
+        <translation>Ģeometrija</translation>
     </message>
     <message>
         <source>End point (x):</source>
-        <translation>End point (x):</translation>
+        <translation>Beigu punkts (x):</translation>
     </message>
     <message>
         <source>End point (y):</source>
-        <translation>End point (y):</translation>
+        <translation>Beigu punkts (y):</translation>
     </message>
     <message>
         <source>Start point (y):</source>
-        <translation>Start point (y):</translation>
+        <translation>Sākuma punkts (y):</translation>
     </message>
     <message>
         <source>Start point (x):</source>
-        <translation>Start point (x):</translation>
+        <translation>Sākuma punkts (x):</translation>
     </message>
 </context>
 <context>
     <name>QG_DlgMText</name>
     <message>
         <source>MText</source>
-        <translation>MText</translation>
+        <translation>DzTeksts</translation>
     </message>
     <message>
         <source>Layer:</source>
@@ -4545,15 +4545,15 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>Font Settings</source>
-        <translation>Font Settings</translation>
+        <translation>Fonta iestatījumi</translation>
     </message>
     <message>
         <source>&amp;Line spacing:</source>
-        <translation>&amp;Line spacing:</translation>
+        <translation>&amp;Rindu atstarpe:</translation>
     </message>
     <message>
         <source>&amp;Default line spacing</source>
-        <translation>&amp;Default line spacing</translation>
+        <translation>&amp;Noklusējuma rindu atstarpe</translation>
     </message>
     <message>
         <source>Alt+D</source>
@@ -4561,83 +4561,83 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>&amp;Height:</source>
-        <translation>&amp;Height:</translation>
+        <translation>&amp;Augstums:</translation>
     </message>
     <message>
         <source>Font:</source>
-        <translation>Font:</translation>
+        <translation>Fonts:</translation>
     </message>
     <message>
         <source>Alignment</source>
-        <translation>Alignment</translation>
+        <translation>Izlīdzināšana</translation>
     </message>
     <message>
         <source>Top Right</source>
-        <translation>Top Right</translation>
+        <translation>Augšā pa labi</translation>
     </message>
     <message>
         <source>Top Left</source>
-        <translation>Top Left</translation>
+        <translation>Augšā pa kreisi</translation>
     </message>
     <message>
         <source>Middle Left</source>
-        <translation>Middle Left</translation>
+        <translation>Vidū pa kreisi</translation>
     </message>
     <message>
         <source>Middle Center</source>
-        <translation>Middle Center</translation>
+        <translation>Vidū centrā</translation>
     </message>
     <message>
         <source>Middle Right</source>
-        <translation>Middle Right</translation>
+        <translation>Vidū pa labi</translation>
     </message>
     <message>
         <source>Bottom Left</source>
-        <translation>Bottom Left</translation>
+        <translation>Apakšā pa kreisi</translation>
     </message>
     <message>
         <source>Bottom Right</source>
-        <translation>Bottom Right</translation>
+        <translation>Apakšā pa labi</translation>
     </message>
     <message>
         <source>Bottom Center</source>
-        <translation>Bottom Center</translation>
+        <translation>Apakšā centrā</translation>
     </message>
     <message>
         <source>Top Center</source>
-        <translation>Top Center</translation>
+        <translation>Augšā centrā</translation>
     </message>
     <message>
         <source>Angle</source>
-        <translation>Angle</translation>
+        <translation>Leņķis</translation>
     </message>
     <message>
         <source>Text Direction</source>
-        <translation>Text Direction</translation>
+        <translation>Teksta virziens</translation>
     </message>
     <message>
         <source>Left to right</source>
-        <translation>Left to right</translation>
+        <translation>No kreisās uz labo</translation>
     </message>
     <message>
         <source>Right to left</source>
-        <translation>Right to left</translation>
+        <translation>No labās uz kreiso</translation>
     </message>
     <message>
         <source>Text:</source>
-        <translation>Text:</translation>
+        <translation>Teksts:</translation>
     </message>
     <message>
         <source>Clear Text</source>
-        <translation>Clear Text</translation>
+        <translation>Notīrīt tekstu</translation>
     </message>
     <message>
         <source>Load Text From File</source>
-        <translation>Load Text From File</translation>
+        <translation>Ielādēt tekstu no faila</translation>
     </message>
     <message>
         <source>Save Text To File</source>
-        <translation>Save Text To File</translation>
+        <translation>Saglabāt tekstu failā</translation>
     </message>
     <message>
         <source>Cut</source>
@@ -4649,47 +4649,47 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>Paste</source>
-        <translation>Paste</translation>
+        <translation>Ielīmēt</translation>
     </message>
     <message>
         <source>Insert Symbol</source>
-        <translation>Insert Symbol</translation>
+        <translation>Ievietot simbolu</translation>
     </message>
     <message>
         <source>Diameter (⌀)</source>
-        <translation>Diameter (⌀)</translation>
+        <translation>Diametrs (⌀)</translation>
     </message>
     <message>
         <source>Degree (°)</source>
-        <translation>Degree (°)</translation>
+        <translation>Grāds (°)</translation>
     </message>
     <message>
         <source>Plus / Minus (±)</source>
-        <translation>Plus / Minus (±)</translation>
+        <translation>Plus / mīnus (±)</translation>
     </message>
     <message>
         <source>At (@)</source>
-        <translation>At (@)</translation>
+        <translation>Uz (@)</translation>
     </message>
     <message>
         <source>Hash (#)</source>
-        <translation>Hash (#)</translation>
+        <translation>Restes zīme (#)</translation>
     </message>
     <message>
         <source>Dollar ($)</source>
-        <translation>Dollar ($)</translation>
+        <translation>Dolārs ($)</translation>
     </message>
     <message>
         <source>Copyright (©)</source>
-        <translation>Copyright (©)</translation>
+        <translation>Autortiesības (©)</translation>
     </message>
     <message>
         <source>Registered (®)</source>
-        <translation>Registered (®)</translation>
+        <translation>Reģistrēts (®)</translation>
     </message>
     <message>
         <source>Paragraph (§)</source>
-        <translation>Paragraph (§)</translation>
+        <translation>Paragrāfs (§)</translation>
     </message>
     <message>
         <source>Pi (π)</source>
@@ -4697,91 +4697,91 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>Pound (£)</source>
-        <translation>Pound (£)</translation>
+        <translation>Mārciņa (£)</translation>
     </message>
     <message>
         <source>Yen (¥)</source>
-        <translation>Yen (¥)</translation>
+        <translation>Jena (¥)</translation>
     </message>
     <message>
         <source>Times (×)</source>
-        <translation>Times (×)</translation>
+        <translation>Reizināt (×)</translation>
     </message>
     <message>
         <source>Division (÷)</source>
-        <translation>Division (÷)</translation>
+        <translation>Dalīt (÷)</translation>
     </message>
     <message>
         <source>Insert Unicode</source>
-        <translation>Insert Unicode</translation>
+        <translation>Ievietot Unicode</translation>
     </message>
     <message>
         <source>Page:</source>
-        <translation>Page:</translation>
+        <translation>Lapa:</translation>
     </message>
     <message>
         <source>Char:</source>
-        <translation>Char:</translation>
+        <translation>Simbols:</translation>
     </message>
     <message>
         <source>[0000-007F] Basic Latin</source>
-        <translation>[0000-007F] Basic Latin</translation>
+        <translation>[0000-007F] Pamata latīņu</translation>
     </message>
     <message>
         <source>[0080-00FF] Latin-1 Supplementary</source>
-        <translation>[0080-00FF] Latin-1 Supplementary</translation>
+        <translation>[0080-00FF] Latīņu-1 papildinājums</translation>
     </message>
     <message>
         <source>[0100-017F] Latin Extended-A</source>
-        <translation>[0100-017F] Latin Extended-A</translation>
+        <translation>[0100-017F] Paplašinātā latīņu A</translation>
     </message>
     <message>
         <source>[0180-024F] Latin Extended-B</source>
-        <translation>[0180-024F] Latin Extended-B</translation>
+        <translation>[0180-024F] Paplašinātā latīņu B</translation>
     </message>
     <message>
         <source>[0250-02AF] IPA Extensions</source>
-        <translation>[0250-02AF] IPA Extensions</translation>
+        <translation>[0250-02AF] IPA paplašinājumi</translation>
     </message>
     <message>
         <source>[02B0-02FF] Spacing Modifier Letters</source>
-        <translation>[02B0-02FF] Spacing Modifier Letters</translation>
+        <translation>[02B0-02FF] Atstarpju modifikatori</translation>
     </message>
     <message>
         <source>[0300-036F] Combining Diacritical Marks</source>
-        <translation>[0300-036F] Combining Diacritical Marks</translation>
+        <translation>[0300-036F] Kombinētās diakritiskās zīmes</translation>
     </message>
     <message>
         <source>[0370-03FF] Greek and Coptic</source>
-        <translation>[0370-03FF] Greek and Coptic</translation>
+        <translation>[0370-03FF] Grieķu un koptu</translation>
     </message>
     <message>
         <source>[0400-04FF] Cyrillic</source>
-        <translation>[0400-04FF] Cyrillic</translation>
+        <translation>[0400-04FF] Kirilica</translation>
     </message>
     <message>
         <source>[0500-052F] Cyrillic Supplementary</source>
-        <translation>[0500-052F] Cyrillic Supplementary</translation>
+        <translation>[0500-052F] Kirilicas papildinājums</translation>
     </message>
     <message>
         <source>[0530-058F] Armenian</source>
-        <translation>[0530-058F] Armenian</translation>
+        <translation>[0530-058F] Armēņu</translation>
     </message>
     <message>
         <source>[0590-05FF] Hebrew</source>
-        <translation>[0590-05FF] Hebrew</translation>
+        <translation>[0590-05FF] Ivrits</translation>
     </message>
     <message>
         <source>[0600-06FF] Arabic</source>
-        <translation>[0600-06FF] Arabic</translation>
+        <translation>[0600-06FF] Arābu</translation>
     </message>
     <message>
         <source>[0700-074F] Syriac</source>
-        <translation>[0700-074F] Syriac</translation>
+        <translation>[0700-074F] Sīriešu</translation>
     </message>
     <message>
         <source>[0780-07BF] Thaana</source>
-        <translation>[0780-07BF] Thaana</translation>
+        <translation>[0780-07BF] Taanas</translation>
     </message>
     <message>
         <source>[0900-097F] Devanagari</source>
@@ -4789,7 +4789,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>[0980-09FF] Bengali</source>
-        <translation>[0980-09FF] Bengali</translation>
+        <translation>[0980-09FF] Bengāļu</translation>
     </message>
     <message>
         <source>[0A00-0A7F] Gurmukhi</source>
@@ -4797,15 +4797,15 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>[0A80-0AFF] Gujarati</source>
-        <translation>[0A80-0AFF] Gujarati</translation>
+        <translation>[0A80-0AFF] Gudžarāti</translation>
     </message>
     <message>
         <source>[0B00-0B7F] Oriya</source>
-        <translation>[0B00-0B7F] Oriya</translation>
+        <translation>[0B00-0B7F] Orija</translation>
     </message>
     <message>
         <source>[0B80-0BFF] Tamil</source>
-        <translation>[0B80-0BFF] Tamil</translation>
+        <translation>[0B80-0BFF] Tamilu</translation>
     </message>
     <message>
         <source>[0C00-0C7F] Telugu</source>
@@ -4817,31 +4817,31 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>[0D00-0D7F] Malayalam</source>
-        <translation>[0D00-0D7F] Malayalam</translation>
+        <translation>[0D00-0D7F] Malajalu</translation>
     </message>
     <message>
         <source>[0D80-0DFF] Sinhala</source>
-        <translation>[0D80-0DFF] Sinhala</translation>
+        <translation>[0D80-0DFF] Singāļu</translation>
     </message>
     <message>
         <source>[0E00-0E7F] Thai</source>
-        <translation>[0E00-0E7F] Thai</translation>
+        <translation>[0E00-0E7F] Taju</translation>
     </message>
     <message>
         <source>[0E80-0EFF] Lao</source>
-        <translation>[0E80-0EFF] Lao</translation>
+        <translation>[0E80-0EFF] Laosiešu</translation>
     </message>
     <message>
         <source>[0F00-0FFF] Tibetan</source>
-        <translation>[0F00-0FFF] Tibetan</translation>
+        <translation>[0F00-0FFF] Tibetiešu</translation>
     </message>
     <message>
         <source>[1000-109F] Myanmar</source>
-        <translation>[1000-109F] Myanmar</translation>
+        <translation>[1000-109F] Mjanmas</translation>
     </message>
     <message>
         <source>[10A0-10FF] Georgian</source>
-        <translation>[10A0-10FF] Georgian</translation>
+        <translation>[10A0-10FF] Gruzīnu</translation>
     </message>
     <message>
         <source>[1100-11FF] Hangul Jamo</source>
@@ -4849,15 +4849,15 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>[1200-137F] Ethiopic</source>
-        <translation>[1200-137F] Ethiopic</translation>
+        <translation>[1200-137F] Etiopiešu</translation>
     </message>
     <message>
         <source>[13A0-13FF] Cherokee</source>
-        <translation>[13A0-13FF] Cherokee</translation>
+        <translation>[13A0-13FF] Čeroku</translation>
     </message>
     <message>
         <source>[1400-167F] Unified Canadian Aboriginal Syllabic</source>
-        <translation>[1400-167F] Unified Canadian Aboriginal Syllabic</translation>
+        <translation>[1400-167F] Apvienotā Kanādas pamatiedzīvotāju zilbiskā</translation>
     </message>
     <message>
         <source>[1680-169F] Ogham</source>
@@ -4865,11 +4865,11 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>[16A0-16FF] Runic</source>
-        <translation>[16A0-16FF] Runic</translation>
+        <translation>[16A0-16FF] Rūniskā</translation>
     </message>
     <message>
         <source>[1700-171F] Tagalog</source>
-        <translation>[1700-171F] Tagalog</translation>
+        <translation>[1700-171F] Tagalogu</translation>
     </message>
     <message>
         <source>[1720-173F] Hanunoo</source>
@@ -4885,127 +4885,127 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>[1780-17FF] Khmer</source>
-        <translation>[1780-17FF] Khmer</translation>
+        <translation>[1780-17FF] Khmeru</translation>
     </message>
     <message>
         <source>[1800-18AF] Mongolian</source>
-        <translation>[1800-18AF] Mongolian</translation>
+        <translation>[1800-18AF] Mongoļu</translation>
     </message>
     <message>
         <source>[1E00-1EFF] Latin Extended Additional</source>
-        <translation>[1E00-1EFF] Latin Extended Additional</translation>
+        <translation>[1E00-1EFF] Paplašinātā latīņu papildinājums</translation>
     </message>
     <message>
         <source>[1F00-1FFF] Greek Extended</source>
-        <translation>[1F00-1FFF] Greek Extended</translation>
+        <translation>[1F00-1FFF] Paplašinātā grieķu</translation>
     </message>
     <message>
         <source>[2000-206F] General Punctuation</source>
-        <translation>[2000-206F] General Punctuation</translation>
+        <translation>[2000-206F] Vispārīgā interpunkcija</translation>
     </message>
     <message>
         <source>[2070-209F] Superscripts and Subscripts</source>
-        <translation>[2070-209F] Superscripts and Subscripts</translation>
+        <translation>[2070-209F] Augšraksti un apakšraksti</translation>
     </message>
     <message>
         <source>[20A0-20CF] Currency Symbols</source>
-        <translation>[20A0-20CF] Currency Symbols</translation>
+        <translation>[20A0-20CF] Valūtas simboli</translation>
     </message>
     <message>
         <source>[20D0-20FF] Combining Marks for Symbols</source>
-        <translation>[20D0-20FF] Combining Marks for Symbols</translation>
+        <translation>[20D0-20FF] Simbolu kombinētās zīmes</translation>
     </message>
     <message>
         <source>[2100-214F] Letterlike Symbols</source>
-        <translation>[2100-214F] Letterlike Symbols</translation>
+        <translation>[2100-214F] Burstveidīgie simboli</translation>
     </message>
     <message>
         <source>[2150-218F] Number Forms</source>
-        <translation>[2150-218F] Number Forms</translation>
+        <translation>[2150-218F] Skaitļu formas</translation>
     </message>
     <message>
         <source>[2190-21FF] Arrows</source>
-        <translation>[2190-21FF] Arrows</translation>
+        <translation>[2190-21FF] Bultiņas</translation>
     </message>
     <message>
         <source>[2200-22FF] Mathematical Operators</source>
-        <translation>[2200-22FF] Mathematical Operators</translation>
+        <translation>[2200-22FF] Matemātiskie operatori</translation>
     </message>
     <message>
         <source>[2300-23FF] Miscellaneous Technical</source>
-        <translation>[2300-23FF] Miscellaneous Technical</translation>
+        <translation>[2300-23FF] Dažādi tehniski simboli</translation>
     </message>
     <message>
         <source>[2400-243F] Control Pictures</source>
-        <translation>[2400-243F] Control Pictures</translation>
+        <translation>[2400-243F] Vadības attēli</translation>
     </message>
     <message>
         <source>[2440-245F] Optical Character Recognition</source>
-        <translation>[2440-245F] Optical Character Recognition</translation>
+        <translation>[2440-245F] Optiskā rakstzīmju atpazīšana</translation>
     </message>
     <message>
         <source>[2460-24FF] Enclosed Alphanumerics</source>
-        <translation>[2460-24FF] Enclosed Alphanumerics</translation>
+        <translation>[2460-24FF] Ierakstīti burtu-ciparu simboli</translation>
     </message>
     <message>
         <source>[2500-257F] Box Drawing</source>
-        <translation>[2500-257F] Box Drawing</translation>
+        <translation>[2500-257F] Lodziņu zīmēšana</translation>
     </message>
     <message>
         <source>[2580-259F] Block Elements</source>
-        <translation>[2580-259F] Block Elements</translation>
+        <translation>[2580-259F] Bloku elementi</translation>
     </message>
     <message>
         <source>[25A0-25FF] Geometric Shapes</source>
-        <translation>[25A0-25FF] Geometric Shapes</translation>
+        <translation>[25A0-25FF] Ģeometriskas figūras</translation>
     </message>
     <message>
         <source>[2600-26FF] Miscellaneous Symbols</source>
-        <translation>[2600-26FF] Miscellaneous Symbols</translation>
+        <translation>[2600-26FF] Dažādi simboli</translation>
     </message>
     <message>
         <source>[2700-27BF] Dingbats</source>
-        <translation>[2700-27BF] Dingbats</translation>
+        <translation>[2700-27BF] Dekoratīvie simboli</translation>
     </message>
     <message>
         <source>[27C0-27EF] Miscellaneous Mathematical Symbols-A</source>
-        <translation>[27C0-27EF] Miscellaneous Mathematical Symbols-A</translation>
+        <translation>[27C0-27EF] Dažādi matemātiskie simboli A</translation>
     </message>
     <message>
         <source>[27F0-27FF] Supplemental Arrows-A</source>
-        <translation>[27F0-27FF] Supplemental Arrows-A</translation>
+        <translation>[27F0-27FF] Papildu bultiņas A</translation>
     </message>
     <message>
         <source>[2800-28FF] Braille Patterns</source>
-        <translation>[2800-28FF] Braille Patterns</translation>
+        <translation>[2800-28FF] Braila raksti</translation>
     </message>
     <message>
         <source>[2900-297F] Supplemental Arrows-B</source>
-        <translation>[2900-297F] Supplemental Arrows-B</translation>
+        <translation>[2900-297F] Papildu bultiņas B</translation>
     </message>
     <message>
         <source>[2980-29FF] Miscellaneous Mathematical Symbols-B</source>
-        <translation>[2980-29FF] Miscellaneous Mathematical Symbols-B</translation>
+        <translation>[2980-29FF] Dažādi matemātiskie simboli B</translation>
     </message>
     <message>
         <source>[2A00-2AFF] Supplemental Mathematical Operators</source>
-        <translation>[2A00-2AFF] Supplemental Mathematical Operators</translation>
+        <translation>[2A00-2AFF] Papildu matemātiskie operatori</translation>
     </message>
     <message>
         <source>[2E80-2EFF] CJK Radicals Supplement</source>
-        <translation>[2E80-2EFF] CJK Radicals Supplement</translation>
+        <translation>[2E80-2EFF] CJK radikāļu papildinājums</translation>
     </message>
     <message>
         <source>[2F00-2FDF] Kangxi Radicals</source>
-        <translation>[2F00-2FDF] Kangxi Radicals</translation>
+        <translation>[2F00-2FDF] Kangxi radikāļi</translation>
     </message>
     <message>
         <source>[2FF0-2FFF] Ideographic Description Characters</source>
-        <translation>[2FF0-2FFF] Ideographic Description Characters</translation>
+        <translation>[2FF0-2FFF] Ideogrāfiskās apraksta rakstzīmes</translation>
     </message>
     <message>
         <source>[3000-303F] CJK Symbols and Punctuation</source>
-        <translation>[3000-303F] CJK Symbols and Punctuation</translation>
+        <translation>[3000-303F] CJK simboli un interpunkcija</translation>
     </message>
     <message>
         <source>[3040-309F] Hiragana</source>
@@ -5021,7 +5021,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>[3130-318F] Hangul Compatibility Jamo</source>
-        <translation>[3130-318F] Hangul Compatibility Jamo</translation>
+        <translation>[3130-318F] Hangul saderības Jamo</translation>
     </message>
     <message>
         <source>[3190-319F] Kanbun</source>
@@ -5029,146 +5029,146 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>[31A0-31BF] Bopomofo Extended</source>
-        <translation>[31A0-31BF] Bopomofo Extended</translation>
+        <translation>[31A0-31BF] Paplašinātā Bopomofo</translation>
     </message>
     <message>
         <source>[3200-32FF] Enclosed CJK Letters and Months</source>
-        <translation>[3200-32FF] Enclosed CJK Letters and Months</translation>
+        <translation>[3200-32FF] Ierakstītas CJK burtas un mēneši</translation>
     </message>
     <message>
         <source>[3300-33FF] CJK Compatibility</source>
-        <translation>[3300-33FF] CJK Compatibility</translation>
+        <translation>[3300-33FF] CJK saderība</translation>
     </message>
     <message>
         <source>[3400-4DBF] CJK Unified Ideographs Extension A</source>
-        <translation>[3400-4DBF] CJK Unified Ideographs Extension A</translation>
+        <translation>[3400-4DBF] CJK apvienoto ideogrāfu paplašinājums A</translation>
     </message>
     <message>
         <source>[4E00-9FAF] CJK Unified Ideographs</source>
-        <translation>[4E00-9FAF] CJK Unified Ideographs</translation>
+        <translation>[4E00-9FAF] CJK apvienotie ideogrāfi</translation>
     </message>
     <message>
         <source>[A000-A48F] Yi Syllables</source>
-        <translation>[A000-A48F] Yi Syllables</translation>
+        <translation>[A000-A48F] Yi zilbes</translation>
     </message>
     <message>
         <source>[A490-A4CF] Yi Radicals</source>
-        <translation>[A490-A4CF] Yi Radicals</translation>
+        <translation>[A490-A4CF] Yi radikāļi</translation>
     </message>
     <message>
         <source>[AC00-D7AF] Hangul Syllables</source>
-        <translation>[AC00-D7AF] Hangul Syllables</translation>
+        <translation>[AC00-D7AF] Hangul zilbes</translation>
     </message>
     <message>
         <source>[D800-DBFF] High Surrogates</source>
-        <translation>[D800-DBFF] High Surrogates</translation>
+        <translation>[D800-DBFF] Augstie surogāti</translation>
     </message>
     <message>
         <source>[DC00-DFFF] Low Surrogate Area</source>
-        <translation>[DC00-DFFF] Low Surrogate Area</translation>
+        <translation>[DC00-DFFF] Zemais surogātu apgabals</translation>
     </message>
     <message>
         <source>[E000-F8FF] Private Use Area</source>
-        <translation>[E000-F8FF] Private Use Area</translation>
+        <translation>[E000-F8FF] Privātās lietošanas apgabals</translation>
     </message>
     <message>
         <source>[F900-FAFF] CJK Compatibility Ideographs</source>
-        <translation>[F900-FAFF] CJK Compatibility Ideographs</translation>
+        <translation>[F900-FAFF] CJK saderības ideogrāfi</translation>
     </message>
     <message>
         <source>[FB00-FB4F] Alphabetic Presentation Forms</source>
-        <translation>[FB00-FB4F] Alphabetic Presentation Forms</translation>
+        <translation>[FB00-FB4F] Alfabētiskās prezentācijas formas</translation>
     </message>
     <message>
         <source>[FB50-FDFF] Arabic Presentation Forms-A</source>
-        <translation>[FB50-FDFF] Arabic Presentation Forms-A</translation>
+        <translation>[FB50-FDFF] Arābu prezentācijas formas A</translation>
     </message>
     <message>
         <source>[FE00-FE0F] Variation Selectors</source>
-        <translation>[FE00-FE0F] Variation Selectors</translation>
+        <translation>[FE00-FE0F] Variāciju atlasītāji</translation>
     </message>
     <message>
         <source>[FE20-FE2F] Combining Half Marks</source>
-        <translation>[FE20-FE2F] Combining Half Marks</translation>
+        <translation>[FE20-FE2F] Kombinētās pusspiedumi</translation>
     </message>
     <message>
         <source>[FE30-FE4F] CJK Compatibility Forms</source>
-        <translation>[FE30-FE4F] CJK Compatibility Forms</translation>
+        <translation>[FE30-FE4F] CJK saderības formas</translation>
     </message>
     <message>
         <source>[FE50-FE6F] Small Form Variants</source>
-        <translation>[FE50-FE6F] Small Form Variants</translation>
+        <translation>[FE50-FE6F] Mazās formas varianti</translation>
     </message>
     <message>
         <source>[FE70-FEFF] Arabic Presentation Forms-B</source>
-        <translation>[FE70-FEFF] Arabic Presentation Forms-B</translation>
+        <translation>[FE70-FEFF] Arābu prezentācijas formas B</translation>
     </message>
     <message>
         <source>[FF00-FFEF] Halfwidth and Fullwidth Forms</source>
-        <translation>[FF00-FFEF] Halfwidth and Fullwidth Forms</translation>
+        <translation>[FF00-FFEF] Puspilnplatuma un pilnplatuma formas</translation>
     </message>
     <message>
         <source>[FFF0-FFFF] Specials</source>
-        <translation>[FFF0-FFFF] Specials</translation>
+        <translation>[FFF0-FFFF] Īpašie simboli</translation>
     </message>
     <message>
         <source>[10300-1032F] Old Italic</source>
-        <translation>[10300-1032F] Old Italic</translation>
+        <translation>[10300-1032F] Vecā itāļu</translation>
     </message>
     <message>
         <source>[10330-1034F] Gothic</source>
-        <translation>[10330-1034F] Gothic</translation>
+        <translation>[10330-1034F] Gotiskā</translation>
     </message>
     <message>
         <source>[10400-1044F] Deseret</source>
-        <translation>[10400-1044F] Deseret</translation>
+        <translation>[10400-1044F] Desereta</translation>
     </message>
     <message>
         <source>[1D000-1D0FF] Byzantine Musical Symbols</source>
-        <translation>[1D000-1D0FF] Byzantine Musical Symbols</translation>
+        <translation>[1D000-1D0FF] Bizantijas mūzikas simboli</translation>
     </message>
     <message>
         <source>[1D100-1D1FF] Musical Symbols</source>
-        <translation>[1D100-1D1FF] Musical Symbols</translation>
+        <translation>[1D100-1D1FF] Mūzikas simboli</translation>
     </message>
     <message>
         <source>[1D400-1D7FF] Mathematical Alphanumeric Symbols</source>
-        <translation>[1D400-1D7FF] Mathematical Alphanumeric Symbols</translation>
+        <translation>[1D400-1D7FF] Matemātiskie burtu-ciparu simboli</translation>
     </message>
     <message>
         <source>[20000-2A6DF] CJK Unified Ideographs Extension B</source>
-        <translation>[20000-2A6DF] CJK Unified Ideographs Extension B</translation>
+        <translation>[20000-2A6DF] CJK apvienoto ideogrāfu paplašinājums B</translation>
     </message>
     <message>
         <source>[2F800-2FA1F] CJK Compatibility Ideographs Supplement</source>
-        <translation>[2F800-2FA1F] CJK Compatibility Ideographs Supplement</translation>
+        <translation>[2F800-2FA1F] CJK saderības ideogrāfu papildinājums</translation>
     </message>
     <message>
         <source>[E0000-E007F] Tags</source>
-        <translation>[E0000-E007F] Tags</translation>
+        <translation>[E0000-E007F] Birkas</translation>
     </message>
     <message>
         <source>[F0000-FFFFD] Supplementary Private Use Area-A</source>
-        <translation>[F0000-FFFFD] Supplementary Private Use Area-A</translation>
+        <translation>[F0000-FFFFD] Papildu privātās lietošanas apgabals A</translation>
     </message>
     <message>
         <source>[100000-10FFFD] Supplementary Private Use Area-B</source>
-        <translation>[100000-10FFFD] Supplementary Private Use Area-B</translation>
+        <translation>[100000-10FFFD] Papildu privātās lietošanas apgabals B</translation>
     </message>
 </context>
 <context>
     <name>QG_DlgMirror</name>
     <message>
         <source>Mirroring Options</source>
-        <translation>Mirroring Options</translation>
+        <translation>Spoguļošanas opcijas</translation>
     </message>
     <message>
         <source>Use current &amp;attributes</source>
-        <translation>Use current &amp;attributes</translation>
+        <translation>Izmantot pašreizējos &amp;atribūtus</translation>
     </message>
     <message>
         <source>Use current &amp;layer</source>
-        <translation>Use current &amp;layer</translation>
+        <translation>Izmantot pašreizējo &amp;slāni</translation>
     </message>
     <message>
         <source>...</source>
@@ -5176,50 +5176,50 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>Number of copies</source>
-        <translation>Number of copies</translation>
+        <translation>Kopiju skaits</translation>
     </message>
     <message>
         <source>&amp;Delete Original</source>
-        <translation>&amp;Delete Original</translation>
+        <translation>&amp;Dzēst oriģinālu</translation>
     </message>
     <message>
         <source>&amp;Keep Original</source>
-        <translation>&amp;Keep Original</translation>
+        <translation>&amp;Paturēt oriģinālu</translation>
     </message>
 </context>
 <context>
     <name>QG_DlgMove</name>
     <message>
         <source>Move/Copy Options</source>
-        <translation>Move/Copy Options</translation>
+        <translation>Pārvietošanas/kopēšanas opcijas</translation>
     </message>
     <message>
         <source>Number of copies</source>
-        <translation>Number of copies</translation>
+        <translation>Kopiju skaits</translation>
     </message>
     <message>
         <source>&amp;Delete Original</source>
-        <translation>&amp;Delete Original</translation>
+        <translation>&amp;Dzēst oriģinālu</translation>
     </message>
     <message>
         <source>&amp;Keep Original</source>
-        <translation>&amp;Keep Original</translation>
+        <translation>&amp;Paturēt oriģinālu</translation>
     </message>
     <message>
         <source>&amp;Multiple Copies</source>
-        <translation>&amp;Multiple Copies</translation>
+        <translation>&amp;Vairākas kopijas</translation>
     </message>
     <message>
         <source>Number of copies. Maximum 100</source>
-        <translation>Number of copies. Maximum 100</translation>
+        <translation>Kopiju skaits. Maksimums 100</translation>
     </message>
     <message>
         <source>Use current &amp;attributes</source>
-        <translation>Use current &amp;attributes</translation>
+        <translation>Izmantot pašreizējos &amp;atribūtus</translation>
     </message>
     <message>
         <source>Use current &amp;layer</source>
-        <translation>Use current &amp;layer</translation>
+        <translation>Izmantot pašreizējo &amp;slāni</translation>
     </message>
     <message>
         <source>...</source>
@@ -5230,7 +5230,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <name>QG_DlgMoveRotate</name>
     <message>
         <source>Move/Rotate Options</source>
-        <translation>Move/Rotate Options</translation>
+        <translation>Pārvietošanas/pagriešanas opcijas</translation>
     </message>
     <message>
         <source>...</source>
@@ -5242,70 +5242,70 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>&amp;Angle (a):</source>
-        <translation>&amp;Angle (a):</translation>
+        <translation>&amp;Leņķis (a):</translation>
     </message>
     <message>
         <source>Use current &amp;attributes</source>
-        <translation>Use current &amp;attributes</translation>
+        <translation>Izmantot pašreizējos &amp;atribūtus</translation>
     </message>
     <message>
         <source>Use current &amp;layer</source>
-        <translation>Use current &amp;layer</translation>
+        <translation>Izmantot pašreizējo &amp;slāni</translation>
     </message>
     <message>
         <source>Number of copies</source>
-        <translation>Number of copies</translation>
+        <translation>Kopiju skaits</translation>
     </message>
     <message>
         <source>&amp;Delete Original</source>
-        <translation>&amp;Delete Original</translation>
+        <translation>&amp;Dzēst oriģinālu</translation>
     </message>
     <message>
         <source>&amp;Keep Original</source>
-        <translation>&amp;Keep Original</translation>
+        <translation>&amp;Paturēt oriģinālu</translation>
     </message>
     <message>
         <source>&amp;Multiple Copies</source>
-        <translation>&amp;Multiple Copies</translation>
+        <translation>&amp;Vairākas kopijas</translation>
     </message>
 </context>
 <context>
     <name>QG_DlgOptionsDrawing</name>
     <message>
         <source>Drawing Preferences</source>
-        <translation>Drawing Preferences</translation>
+        <translation>Zīmējuma preferences</translation>
     </message>
     <message>
         <source>&amp;Paper</source>
-        <translation>&amp;Paper</translation>
+        <translation>&amp;Papīrs</translation>
     </message>
     <message>
         <source>Format</source>
-        <translation>Format</translation>
+        <translation>Formāts</translation>
     </message>
     <message>
         <source>&amp;Height:</source>
-        <translation>&amp;Height:</translation>
+        <translation>&amp;Augstums:</translation>
     </message>
     <message>
         <source>&amp;Width:</source>
-        <translation>&amp;Width:</translation>
+        <translation>&amp;Platums:</translation>
     </message>
     <message>
         <source>Orientation</source>
-        <translation>Orientation</translation>
+        <translation>Orientācija</translation>
     </message>
     <message>
         <source>&amp;Landscape</source>
-        <translation>&amp;Landscape</translation>
+        <translation>&amp;Ainava</translation>
     </message>
     <message>
         <source>P&amp;ortrait</source>
-        <translation>P&amp;ortrait</translation>
+        <translation>P&amp;ortrets</translation>
     </message>
     <message>
         <source>Margins</source>
-        <translation>Margins</translation>
+        <translation>Malas</translation>
     </message>
     <message>
         <source>Left</source>
@@ -5313,11 +5313,11 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>Bottom</source>
-        <translation>Bottom</translation>
+        <translation>Apakšā</translation>
     </message>
     <message>
         <source>Right</source>
-        <translation>Right</translation>
+        <translation>Pa labi</translation>
     </message>
     <message>
         <source>Top</source>
@@ -5325,111 +5325,111 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>Number of pages</source>
-        <translation>Number of pages</translation>
+        <translation>Lapu skaits</translation>
     </message>
     <message>
         <source>Horizontally:</source>
-        <translation>Horizontally:</translation>
+        <translation>Horizontāli:</translation>
     </message>
     <message>
         <source>Vertically:</source>
-        <translation>Vertically:</translation>
+        <translation>Vertikāli:</translation>
     </message>
     <message>
         <source>Preview</source>
-        <translation>Preview</translation>
+        <translation>Priekšskatījums</translation>
     </message>
     <message>
         <source>&amp;Units</source>
-        <translation>&amp;Units</translation>
+        <translation>&amp;Vienības</translation>
     </message>
     <message>
         <source>Main Unit</source>
-        <translation>Main Unit</translation>
+        <translation>Galvenā vienība</translation>
     </message>
     <message>
         <source>&amp;Main drawing unit:</source>
-        <translation>&amp;Main drawing unit:</translation>
+        <translation>&amp;Galvenā zīmējuma vienība:</translation>
     </message>
     <message>
         <source>Length</source>
-        <translation>Length</translation>
+        <translation>Garums</translation>
     </message>
     <message>
         <source>&amp;Format:</source>
-        <translation>&amp;Format:</translation>
+        <translation>&amp;Formāts:</translation>
     </message>
     <message>
         <source>P&amp;recision:</source>
-        <translation>P&amp;recision:</translation>
+        <translation>P&amp;recizitāte:</translation>
     </message>
     <message>
         <source>linear</source>
-        <translation>linear</translation>
+        <translation>lineārs</translation>
     </message>
     <message>
         <source>Angle</source>
-        <translation>Angle</translation>
+        <translation>Leņķis</translation>
     </message>
     <message>
         <source>F&amp;ormat:</source>
-        <translation>F&amp;ormat:</translation>
+        <translation>F&amp;ormāts:</translation>
     </message>
     <message>
         <source>Pre&amp;cision:</source>
-        <translation>Pre&amp;cision:</translation>
+        <translation>Pre&amp;cizitāte:</translation>
     </message>
     <message>
         <source>angular</source>
-        <translation>angular</translation>
+        <translation>leņķisks</translation>
     </message>
     <message>
         <source>&amp;Grid</source>
-        <translation>&amp;Grid</translation>
+        <translation>&amp;Tīkls</translation>
     </message>
     <message>
         <source>Grid Settings</source>
-        <translation>Grid Settings</translation>
+        <translation>Tīkla iestatījumi</translation>
     </message>
     <message>
         <source>Show Grid</source>
-        <translation>Show Grid</translation>
+        <translation>Rādīt tīklu</translation>
     </message>
     <message>
         <source>Use orthogonal grid</source>
-        <translation>Use orthogonal grid</translation>
+        <translation>Izmantot ortogonālo tīklu</translation>
     </message>
     <message>
         <source>Orthogonal Grid</source>
-        <translation>Orthogonal Grid</translation>
+        <translation>Ortogonālais tīkls</translation>
     </message>
     <message>
         <source>Use isometric grid</source>
-        <translation>Use isometric grid</translation>
+        <translation>Izmantot izometrisko tīklu</translation>
     </message>
     <message>
         <source>Isometric Grid</source>
-        <translation>Isometric Grid</translation>
+        <translation>Izometriskais tīkls</translation>
     </message>
     <message>
         <source>Left crosshair with isometric grid</source>
-        <translation>Left crosshair with isometric grid</translation>
+        <translation>Kreisais krustiņš ar izometrisko tīklu</translation>
     </message>
     <message>
         <source>Top crosshair with isometric grid</source>
-        <translation>Top crosshair with isometric grid</translation>
+        <translation>Augšējais krustiņš ar izometrisko tīklu</translation>
     </message>
     <message>
         <source>Right crosshair with isometric grid</source>
-        <translation>Right crosshair with isometric grid</translation>
+        <translation>Labais krustiņš ar izometrisko tīklu</translation>
     </message>
     <message>
         <source>Crosshair</source>
-        <translation>Crosshair</translation>
+        <translation>Krustiņš</translation>
     </message>
     <message>
         <source>X Spacing:</source>
-        <translation>X Spacing:</translation>
+        <translation>X atstarpe:</translation>
     </message>
     <message>
         <source>auto</source>
@@ -5437,43 +5437,43 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>Y Spacing:</source>
-        <translation>Y Spacing:</translation>
+        <translation>Y atstarpe:</translation>
     </message>
     <message>
         <source>&amp;Dimensions</source>
-        <translation>&amp;Dimensions</translation>
+        <translation>&amp;Izmēri</translation>
     </message>
     <message>
         <source>Text style:</source>
-        <translation>Text style:</translation>
+        <translation>Teksta stils:</translation>
     </message>
     <message>
         <source>&apos;.&apos; (Period)</source>
-        <translation>&apos;.&apos; (Period)</translation>
+        <translation>'.' (Punkts)</translation>
     </message>
     <message>
         <source>&apos;,&apos; (Comma)</source>
-        <translation>&apos;,&apos; (Comma)</translation>
+        <translation>',' (Komats)</translation>
     </message>
     <message>
         <source>Decimal separator:</source>
-        <translation>Decimal separator:</translation>
+        <translation>Decimālais atdalītājs:</translation>
     </message>
     <message>
         <source>units</source>
-        <translation>units</translation>
+        <translation>vienības</translation>
     </message>
     <message>
         <source>Linear units:</source>
-        <translation>Linear units:</translation>
+        <translation>Lineārās vienības:</translation>
     </message>
     <message>
         <source>Color:</source>
-        <translation>Color:</translation>
+        <translation>Krāsa:</translation>
     </message>
     <message>
         <source>Length Factor:</source>
-        <translation>Length Factor:</translation>
+        <translation>Garuma koeficients:</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Scale to multiply all dimension values.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
@@ -5481,19 +5481,19 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>Tick size:</source>
-        <translation>Tick size:</translation>
+        <translation>Atzīmes izmērs:</translation>
     </message>
     <message>
         <source>Angular units:</source>
-        <translation>Angular units:</translation>
+        <translation>Leņķa vienības:</translation>
     </message>
     <message>
         <source>Text Height:</source>
-        <translation>Text Height:</translation>
+        <translation>Teksta augstums:</translation>
     </message>
     <message>
         <source>Linear zeros:</source>
-        <translation>Linear zeros:</translation>
+        <translation>Lineārie nulles:</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dimension Tick size. Set it to 0 will disable the dimension tick. Dimension arrow won&apos;t be drawn when dimension tick is enabled.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
@@ -5501,7 +5501,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>Format units</source>
-        <translation>Format units</translation>
+        <translation>Formatēt vienības</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Distance gap around text&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
@@ -5513,15 +5513,15 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>Text size &amp; position</source>
-        <translation>Text size &amp; position</translation>
+        <translation>Teksta izmērs un &amp;pozīcija</translation>
     </message>
     <message>
         <source>General Scale:</source>
-        <translation>General Scale:</translation>
+        <translation>Vispārīgais mērogs:</translation>
     </message>
     <message>
         <source>Length to enlarge over dimension line</source>
-        <translation>Length to enlarge over dimension line</translation>
+        <translation>Garums, par cik palielināt pāri izmēra līnijai</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dimension arrow size. &lt;a name=&quot;result_box&quot;/&gt;without effect when tick size &lt;a name=&quot;result_box&quot;/&gt;is other than 0&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
@@ -5529,35 +5529,35 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>Arrow size:</source>
-        <translation>Arrow size:</translation>
+        <translation>Bultiņas izmērs:</translation>
     </message>
     <message>
         <source>Width:</source>
-        <translation>Width:</translation>
+        <translation>Platums:</translation>
     </message>
     <message>
         <source>Dimension lines, arrows &amp; ticks</source>
-        <translation>Dimension lines, arrows &amp; ticks</translation>
+        <translation>Izmēra līnijas, bultiņas un &amp;atzīmes</translation>
     </message>
     <message>
         <source>Angular zeros:</source>
-        <translation>Angular zeros:</translation>
+        <translation>Leņķa nulles:</translation>
     </message>
     <message>
         <source>Angular precision:</source>
-        <translation>Angular precision:</translation>
+        <translation>Leņķa precizitāte:</translation>
     </message>
     <message>
         <source>Enlarge:</source>
-        <translation>Enlarge:</translation>
+        <translation>Palielināt:</translation>
     </message>
     <message>
         <source>Offset:</source>
-        <translation>Offset:</translation>
+        <translation>Nobīde:</translation>
     </message>
     <message>
         <source>Linear precision:</source>
-        <translation>Linear precision:</translation>
+        <translation>Lineārā precizitāte:</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Text alignment &lt;a name=&quot;result_box&quot;/&gt;relative to the dimension line.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
@@ -5565,11 +5565,11 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>Aligned</source>
-        <translation>Aligned</translation>
+        <translation>Izlīdzināts</translation>
     </message>
     <message>
         <source>Horizontal</source>
-        <translation>Horizontal</translation>
+        <translation>Horizontāls</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Offset from origin point.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
@@ -5577,39 +5577,39 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>Text alignment:</source>
-        <translation>Text alignment:</translation>
+        <translation>Teksta izlīdzināšana:</translation>
     </message>
     <message>
         <source>Dimension line gap:</source>
-        <translation>Dimension line gap:</translation>
+        <translation>Izmēra līnijas sprauga:</translation>
     </message>
     <message>
         <source>Extension lines</source>
-        <translation>Extension lines</translation>
+        <translation>Pagarinājuma līnijas</translation>
     </message>
     <message>
         <source>Fixed length:</source>
-        <translation>Fixed length:</translation>
+        <translation>Fiksēts garums:</translation>
     </message>
     <message>
         <source>fixed extension line length</source>
-        <translation>fixed extension line length</translation>
+        <translation>fiksēts pagarinājuma līnijas garums</translation>
     </message>
     <message>
         <source>&amp;Splines</source>
-        <translation>&amp;Splines</translation>
+        <translation>&amp;Plaini</translation>
     </message>
     <message>
         <source>Number of line segments per spline patch:</source>
-        <translation>Number of line segments per spline patch:</translation>
+        <translation>Līnijas segmentu skaits uz splaina lāpu:</translation>
     </message>
     <message>
         <source>&amp;Points</source>
-        <translation>&amp;Points</translation>
+        <translation>&amp;Punkti</translation>
     </message>
     <message>
         <source>Point Style</source>
-        <translation>Point Style</translation>
+        <translation>Punkta stils</translation>
     </message>
     <message>
         <source>...</source>
@@ -5617,138 +5617,138 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>Point Size</source>
-        <translation>Point Size</translation>
+        <translation>Punkta izmērs</translation>
     </message>
     <message>
         <source>Dwg Units</source>
-        <translation>Dwg Units</translation>
+        <translation>Dwg vienības</translation>
     </message>
     <message>
         <source>Size relative to screen</source>
-        <translation>Size relative to screen</translation>
+        <translation>Izmērs relatīvi pret ekrānu</translation>
     </message>
     <message>
         <source>Size in drawing units</source>
-        <translation>Size in drawing units</translation>
+        <translation>Izmērs zīmējuma vienībās</translation>
     </message>
     <message>
         <source>(0 =&gt; 5% relative to screen size)</source>
-        <translation>(0 =&gt; 5% relative to screen size)</translation>
+        <translation>(0 => 5% relatīvi pret ekrāna izmēru)</translation>
     </message>
     <message>
         <source>Scientific</source>
-        <translation>Scientific</translation>
+        <translation>Zinātnisks</translation>
     </message>
     <message>
         <source>Decimal</source>
-        <translation>Decimal</translation>
+        <translation>Decimāls</translation>
     </message>
     <message>
         <source>Engineering</source>
-        <translation>Engineering</translation>
+        <translation>Inženieru</translation>
     </message>
     <message>
         <source>Architectural</source>
-        <translation>Architectural</translation>
+        <translation>Arhitektūras</translation>
     </message>
     <message>
         <source>Fractional</source>
-        <translation>Fractional</translation>
+        <translation>Daļskaitļu</translation>
     </message>
     <message>
         <source>Architectural (metric)</source>
-        <translation>Architectural (metric)</translation>
+        <translation>Arhitektūras (metriskais)</translation>
     </message>
     <message>
         <source>Decimal Degrees</source>
-        <translation>Decimal Degrees</translation>
+        <translation>Decimālās pakāpes</translation>
     </message>
     <message>
         <source>Deg/min/sec</source>
-        <translation>Deg/min/sec</translation>
+        <translation>Grādi/minūtes/sekundes</translation>
     </message>
     <message>
         <source>Gradians</source>
-        <translation>Gradians</translation>
+        <translation>Grādiāni</translation>
     </message>
     <message>
         <source>Radians</source>
-        <translation>Radians</translation>
+        <translation>Radiāni</translation>
     </message>
     <message>
         <source>Surveyor&apos;s units</source>
-        <translation>Surveyor&apos;s units</translation>
+        <translation>Mērniecības vienības</translation>
     </message>
     <message>
         <source>Options</source>
-        <translation>Options</translation>
+        <translation>Opcijas</translation>
     </message>
     <message>
         <source>For the length formats &apos;Engineering&apos; and &apos;Architectural&apos;, the unit must be set to Inch.</source>
-        <translation>For the length formats &apos;Engineering&apos; and &apos;Architectural&apos;, the unit must be set to Inch.</translation>
+        <translation>Garuma formātiem 'Inženieru' un 'Arhitektūras' vienībai jābūt iestatītai uz colām.</translation>
     </message>
     <message>
         <source>For the length format &apos;Architectural (metric)&apos;, the unit must be set to Meter.</source>
-        <translation>For the length format &apos;Architectural (metric)&apos;, the unit must be set to Meter.</translation>
+        <translation>Garuma formātam 'Arhitektūras (metriskais)' vienībai jābūt iestatītai uz Metru.</translation>
     </message>
     <message>
         <source>Screen %</source>
-        <translation>Screen %</translation>
+        <translation>Ekrāns %</translation>
     </message>
 </context>
 <context>
     <name>QG_DlgOptionsGeneral</name>
     <message>
         <source>Application Preferences</source>
-        <translation>Application Preferences</translation>
+        <translation>Programmas preferences</translation>
     </message>
     <message>
         <source>&amp;Appearance</source>
-        <translation>&amp;Appearance</translation>
+        <translation>&amp;Izskats</translation>
     </message>
     <message>
         <source>Language</source>
-        <translation>Language</translation>
+        <translation>Valoda</translation>
     </message>
     <message>
         <source>&amp;GUI Language:</source>
-        <translation>&amp;GUI Language:</translation>
+        <translation>&amp;GUI valoda:</translation>
     </message>
     <message>
         <source>&amp;Command Language:</source>
-        <translation>&amp;Command Language:</translation>
+        <translation>&amp;Komandu valoda:</translation>
     </message>
     <message>
         <source>Graphic View</source>
-        <translation>Graphic View</translation>
+        <translation>Grafikas skats</translation>
     </message>
     <message>
         <source>Auto-panning</source>
-        <translation>Auto-panning</translation>
+        <translation>Automātiska ritināšana</translation>
     </message>
     <message>
         <source>N&amp;umber of preview entities:</source>
-        <translation>N&amp;umber of preview entities:</translation>
+        <translation>P&amp;riekšskatījuma elementu skaits:</translation>
     </message>
     <message>
         <source>Snap indicator shape</source>
-        <translation>Snap indicator shape</translation>
+        <translation>Uztveršanas indikatora forma</translation>
     </message>
     <message>
         <source>Hide cursor when snapping</source>
-        <translation>Hide cursor when snapping</translation>
+        <translation>Slēpt kursoru, uztveroties</translation>
     </message>
     <message>
         <source>Scrollbars</source>
-        <translation>Scrollbars</translation>
+        <translation>Ritjoslas</translation>
     </message>
     <message>
         <source>Anti-aliasing</source>
-        <translation>Anti-aliasing</translation>
+        <translation>Pretpixelizācija</translation>
     </message>
     <message>
         <source>A&amp;utomatically scale grid</source>
-        <translation>A&amp;utomatically scale grid</translation>
+        <translation>A&amp;utomātiski mērogot tīklu</translation>
     </message>
     <message>
         <source>Alt+U</source>
@@ -5756,7 +5756,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>Hide the relative-&amp;zero marker</source>
-        <translation>Hide the relative-&amp;zero marker</translation>
+        <translation>Slēpt relatīvā &amp;nulles marķieri</translation>
     </message>
     <message>
         <source>Alt+Z</source>
@@ -5764,7 +5764,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>Snap indicator lines</source>
-        <translation>Snap indicator lines</translation>
+        <translation>Uztveršanas indikatora līnijas</translation>
     </message>
     <message>
         <source>Alt+S</source>
@@ -5772,59 +5772,59 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>Minimal Grid Spacing (p&amp;x):</source>
-        <translation>Minimal Grid Spacing (p&amp;x):</translation>
+        <translation>Minimālā tīkla atstarpe (p&amp;x):</translation>
     </message>
     <message>
         <source>Visualize the entity under the cursor</source>
-        <translation>Visualize the entity under the cursor</translation>
+        <translation>Vizualizēt elementu zem kursora</translation>
     </message>
     <message>
         <source>Mouse-over effects</source>
-        <translation>Mouse-over effects</translation>
+        <translation>Virzīšanas efekti</translation>
     </message>
     <message>
         <source>Graphic Colors</source>
-        <translation>Graphic Colors</translation>
+        <translation>Grafikas krāsas</translation>
     </message>
     <message>
         <source>&amp;End Handle Color:</source>
-        <translation>&amp;End Handle Color:</translation>
+        <translation>&amp;Beigu roktura krāsa:</translation>
     </message>
     <message>
         <source>&amp;Relative-Zero Marker Color:</source>
-        <translation>&amp;Relative-Zero Marker Color:</translation>
+        <translation>&amp;Relatīvā nulles marķiera krāsa:</translation>
     </message>
     <message>
         <source>G&amp;rid Color:</source>
-        <translation>G&amp;rid Color:</translation>
+        <translation>T&amp;īkla krāsa:</translation>
     </message>
     <message>
         <source>&amp;Highlighted Color:</source>
-        <translation>&amp;Highlighted Color:</translation>
+        <translation>&amp;Izceltā krāsa:</translation>
     </message>
     <message>
         <source>&amp;Meta Grid Color:</source>
-        <translation>&amp;Meta Grid Color:</translation>
+        <translation>&amp;Meta tīkla krāsa:</translation>
     </message>
     <message>
         <source>S&amp;elected Color:</source>
-        <translation>S&amp;elected Color:</translation>
+        <translation>Atla&amp;sītā krāsa:</translation>
     </message>
     <message>
         <source>St&amp;art Handle Color:</source>
-        <translation>St&amp;art Handle Color:</translation>
+        <translation>Sāk&amp;uma roktura krāsa:</translation>
     </message>
     <message>
         <source>Backgr&amp;ound:</source>
-        <translation>Backgr&amp;ound:</translation>
+        <translation>Fon&amp;s:</translation>
     </message>
     <message>
         <source>&amp;Handle Color:</source>
-        <translation>&amp;Handle Color:</translation>
+        <translation>&amp;Roktura krāsa:</translation>
     </message>
     <message>
         <source>Snap indicator:</source>
-        <translation>Snap indicator:</translation>
+        <translation>Uztveršanas indikators:</translation>
     </message>
     <message>
         <source>#1E90FF</source>
@@ -5832,23 +5832,23 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>&amp;Paths</source>
-        <translation>&amp;Paths</translation>
+        <translation>&amp;Ceļi</translation>
     </message>
     <message>
         <source>Variable File:</source>
-        <translation>Variable File:</translation>
+        <translation>Mainīgo fails:</translation>
     </message>
     <message>
         <source>Fonts:</source>
-        <translation>Fonts:</translation>
+        <translation>Fonti:</translation>
     </message>
     <message>
         <source>Part Libraries:</source>
-        <translation>Part Libraries:</translation>
+        <translation>Daļu bibliotēkas:</translation>
     </message>
     <message>
         <source>Template:</source>
-        <translation>Template:</translation>
+        <translation>Veidne:</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-family:&apos;-apple-system&apos;,&apos;BlinkMacSystemFont&apos;,&apos;Segoe UI&apos;,&apos;Noto Sans&apos;,&apos;Helvetica&apos;,&apos;Arial&apos;,&apos;sans-serif&apos;,&apos;Apple Color Emoji&apos;,&apos;Segoe UI Emoji&apos;; font-size:14px; color:#1f2328; background-color:#ffffff;&quot;&gt;Part library folder. The symbol library dxf files must be located in the subdirectories of this folder. The subfolder names will be displayed in the Library Browser.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-family:&apos;-apple-system&apos;,&apos;BlinkMacSystemFont&apos;,&apos;Segoe UI&apos;,&apos;Noto Sans&apos;,&apos;Helvetica&apos;,&apos;Arial&apos;,&apos;sans-serif&apos;,&apos;Apple Color Emoji&apos;,&apos;Segoe UI Emoji&apos;; font-size:14px; color:#1f2328; background-color:#ffffff;&quot;&gt;( Menu: Widgets &amp;gt; Dock Widgets &amp;gt; Library Browser)&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
@@ -5856,79 +5856,79 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>Translations:</source>
-        <translation>Translations:</translation>
+        <translation>Tulkojumi:</translation>
     </message>
     <message>
         <source>Hatch Patterns:</source>
-        <translation>Hatch Patterns:</translation>
+        <translation>Šķelšanas raksti:</translation>
     </message>
     <message>
         <source>&amp;Defaults</source>
-        <translation>&amp;Defaults</translation>
+        <translation>&amp;Noklusējumi</translation>
     </message>
     <message>
         <source>Program Defaults</source>
-        <translation>Program Defaults</translation>
+        <translation>Programmas noklusējumi</translation>
     </message>
     <message>
         <source>When set, LibreCAD will automatically generate a backup of your current drawing.</source>
-        <translation>When set, LibreCAD will automatically generate a backup of your current drawing.</translation>
+        <translation>Ja iestatīts, LibreCAD automātiski izveidos jūsu pašreizējā zīmējuma rezerves kopiju.</translation>
     </message>
     <message>
         <source>Auto backup</source>
-        <translation>Auto backup</translation>
+        <translation>Automātiskā rezervēšana</translation>
     </message>
     <message>
         <source>Auto save time (minutes):</source>
-        <translation>Auto save time (minutes):</translation>
+        <translation>Automātiskās saglabāšanas laiks (minūtes):</translation>
     </message>
     <message>
         <source>Time between automatic saving of the document in minutes.</source>
-        <translation>Time between automatic saving of the document in minutes.</translation>
+        <translation>Laiks starp dokumenta automātiskajām saglabāšanas reizēm minūtēs.</translation>
     </message>
     <message>
         <source>Don&apos;t use native OS file open dialog</source>
-        <translation>Don&apos;t use native OS file open dialog</translation>
+        <translation>Neizmantot OS natīvo failu atvēršanas dialogu</translation>
     </message>
     <message>
         <source>Inverts scrolling direction when using mouse wheel with Shift key.</source>
-        <translation>Inverts scrolling direction when using mouse wheel with Shift key.</translation>
+        <translation>Apvērš ritināšanas virzienu, izmantojot peles riteni ar taustiņu Shift.</translation>
     </message>
     <message>
         <source>Invert horizontal scrolling direction</source>
-        <translation>Invert horizontal scrolling direction</translation>
+        <translation>Invertēt horizontālo ritināšanas virzienu</translation>
     </message>
     <message>
         <source>Inverts scrolling direction when using mouse wheel with Ctrl key.</source>
-        <translation>Inverts scrolling direction when using mouse wheel with Ctrl key.</translation>
+        <translation>Apvērš ritināšanas virzienu, izmantojot peles riteni ar taustiņu Ctrl.</translation>
     </message>
     <message>
         <source>Invert vertical scrolling direction</source>
-        <translation>Invert vertical scrolling direction</translation>
+        <translation>Invertēt vertikālo ritināšanas virzienu</translation>
     </message>
     <message>
         <source>Inverts zoom direction when using mouse wheel.</source>
-        <translation>Inverts zoom direction when using mouse wheel.</translation>
+        <translation>Apvērš tālummaiņas virzienu, izmantojot peles riteni.</translation>
     </message>
     <message>
         <source>Invert zoom direction</source>
-        <translation>Invert zoom direction</translation>
+        <translation>Invertēt tālummaiņas virzienu</translation>
     </message>
     <message>
         <source>Clear Settings</source>
-        <translation>Clear Settings</translation>
+        <translation>Notīrīt iestatījumus</translation>
     </message>
     <message>
         <source>restores program geometry/layout to original state</source>
-        <translation>restores program geometry/layout to original state</translation>
+        <translation>atjauno programmas ģeometriju/izkārtojumu uz sākotnējo stāvokli</translation>
     </message>
     <message>
         <source>Layout</source>
-        <translation>Layout</translation>
+        <translation>Izkārtojums</translation>
     </message>
     <message>
         <source>restores the program to its original state</source>
-        <translation>restores the program to its original state</translation>
+        <translation>atjauno programmu uz sākotnējo stāvokli</translation>
     </message>
     <message>
         <source>All</source>
@@ -5936,51 +5936,51 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>Startup</source>
-        <translation>Startup</translation>
+        <translation>Palaišana</translation>
     </message>
     <message>
         <source>Display loading screen</source>
-        <translation>Display loading screen</translation>
+        <translation>Rādīt ielādes ekrānu</translation>
     </message>
     <message>
         <source>Start in tab mode</source>
-        <translation>Start in tab mode</translation>
+        <translation>Startēt cilnes režīmā</translation>
     </message>
     <message>
         <source>Start with main window maximized</source>
-        <translation>Start with main window maximized</translation>
+        <translation>Startēt ar palielinātu galveno logu</translation>
     </message>
     <message>
         <source>Open last opened files</source>
-        <translation>Open last opened files</translation>
+        <translation>Atvērt pēdējos atvērtos failus</translation>
     </message>
     <message>
         <source>Enable CAD dockwidgets</source>
-        <translation>Enable CAD dockwidgets</translation>
+        <translation>Iespējot CAD piestiprināmos logrīkus</translation>
     </message>
     <message>
         <source>Enable CAD toolbars</source>
-        <translation>Enable CAD toolbars</translation>
+        <translation>Iespējot CAD rīkjoslas</translation>
     </message>
     <message>
         <source>Defaults for new drawings</source>
-        <translation>Defaults for new drawings</translation>
+        <translation>Noklusējumi jauniem zīmējumiem</translation>
     </message>
     <message>
         <source>&amp;Unit:</source>
-        <translation>&amp;Unit:</translation>
+        <translation>&amp;Vienība:</translation>
     </message>
     <message>
         <source>Drawing unit.</source>
-        <translation>Drawing unit.</translation>
+        <translation>Zīmējuma vienība.</translation>
     </message>
     <message>
         <source>Keyboard Settings</source>
-        <translation>Keyboard Settings</translation>
+        <translation>Tastatūras iestatījumi</translation>
     </message>
     <message>
         <source>Evaluate commands when SPACE BAR is pressed</source>
-        <translation>Evaluate commands when SPACE BAR is pressed</translation>
+        <translation>Novērtēt komandas, nospiežot ATSTARPES TAUSTIŅU</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Temporarily toggle free snapping when the spacebar is pressed and the command window is activated&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
@@ -5988,11 +5988,11 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>Toggle free snap mode when SPACE BAR is pressed</source>
-        <translation>Toggle free snap mode when SPACE BAR is pressed</translation>
+        <translation>Pārslēgt brīvās uztveršanas režīmu, nospiežot ATSTARPES TAUSTIŅU</translation>
     </message>
     <message>
         <source>CAD Preferences</source>
-        <translation>CAD Preferences</translation>
+        <translation>CAD preferences</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;When enabled, activating a layer would modify all selected entities to that new layer. To change layer of multiple entities: first select needed entities; activate a layer in the layer widget. This makes all selected entities modified to belong to the new layer.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
@@ -6000,11 +6000,11 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>Modify layer of selected entities, at  layer activation</source>
-        <translation>Modify layer of selected entities, at  layer activation</translation>
+        <translation>Mainīt atlasīto elementu slāni, aktivizējot slāni</translation>
     </message>
     <message>
         <source>Automatically zoom drawing when opening</source>
-        <translation>Automatically zoom drawing when opening</translation>
+        <translation>Automātiski tuvināt zīmējumu atverot</translation>
     </message>
     <message>
         <source>Preferences</source>
@@ -6012,88 +6012,88 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>Please restart the application to apply all changes.</source>
-        <translation>Please restart the application to apply all changes.</translation>
+        <translation>Lūdzu restartējiet programmu, lai piemērotu visas izmaiņas.</translation>
     </message>
     <message>
         <source>Clear settings</source>
-        <translation>Clear settings</translation>
+        <translation>Notīrīt iestatījumus</translation>
     </message>
     <message>
         <source>This will also include custom menus and toolbars. Continue?</source>
-        <translation>This will also include custom menus and toolbars. Continue?</translation>
+        <translation>Tas ietvers arī pielāgotas izvēlnes un rīkjoslas. Turpināt?</translation>
     </message>
 </context>
 <context>
     <name>QG_DlgOptionsMakerCam</name>
     <message>
         <source>Export as CAM/plain SVG</source>
-        <translation>Export as CAM/plain SVG</translation>
+        <translation>Eksportēt kā CAM/vienkāršu SVG</translation>
     </message>
     <message>
         <source>Layers</source>
-        <translation>Layers</translation>
+        <translation>Slāņi</translation>
     </message>
     <message>
         <source>Default width of elements, mm</source>
-        <translation>Default width of elements, mm</translation>
+        <translation>Elementu noklusējuma platums, mm</translation>
     </message>
     <message>
         <source>Export invisible layers</source>
-        <translation>Export invisible layers</translation>
+        <translation>Eksportēt neredzamos slāņus</translation>
     </message>
     <message>
         <source>Export visible construction layers</source>
-        <translation>Export visible construction layers</translation>
+        <translation>Eksportēt redzamos konstruktīvos slāņus</translation>
     </message>
     <message>
         <source>Blocks</source>
-        <translation>Blocks</translation>
+        <translation>Bloki</translation>
     </message>
     <message>
         <source>Convert blocks to safe inline SVG content</source>
-        <translation>Convert blocks to safe inline SVG content</translation>
+        <translation>Konvertēt blokus uz drošu iekļauto SVG saturu</translation>
     </message>
     <message>
         <source>Ellipses / Ellipse arcs</source>
-        <translation>Ellipses / Ellipse arcs</translation>
+        <translation>Elipses / elipšu loki</translation>
     </message>
     <message>
         <source>Approximate ellipses and ellipse arcs with cubic béziers</source>
-        <translation>Approximate ellipses and ellipse arcs with cubic béziers</translation>
+        <translation>Aptuveni attēlot elipses un elipšu lokus ar kubisko Bezjē</translation>
     </message>
     <message>
         <source>Images</source>
-        <translation>Images</translation>
+        <translation>Attēli</translation>
     </message>
     <message>
         <source>Raster Image export</source>
-        <translation>Raster Image export</translation>
+        <translation>Rastra attēla eksports</translation>
     </message>
     <message>
         <source>Dash/Dot Lines</source>
-        <translation>Dash/Dot Lines</translation>
+        <translation>Strīpas/punktu līnijas</translation>
     </message>
     <message>
         <source>Length of the pattern, mm</source>
-        <translation>Length of the pattern, mm</translation>
+        <translation>Raksta garums, mm</translation>
     </message>
     <message>
         <source>Bake dash/dot lines to SVG path</source>
-        <translation>Bake dash/dot lines to SVG path</translation>
+        <translation>Pārvērst strīpu/punktu līnijas SVG ceļā</translation>
     </message>
     <message>
         <source>Points</source>
-        <translation>Points</translation>
+        <translation>Punkti</translation>
     </message>
     <message>
         <source>Export Points</source>
-        <translation>Export Points</translation>
+        <translation>Eksportēt punktus</translation>
     </message>
     <message>
         <source>MakerCAM as of November 2014 does not hide SVG content 
 that has been set invisibe (&quot;display: none&quot; or &quot;visibility: hidden&quot;).</source>
-        <translation>MakerCAM as of November 2014 does not hide SVG content 
-that has been set invisibe (&quot;display: none&quot; or &quot;visibility: hidden&quot;).</translation>
+        <translation>MakerCAM no 2014. gada novembra neslēpj SVG saturu, 
+kas iestatīts kā neredzams (&quot;display: none&quot; vai &quot;visibility: hidden&quot;).</translation>
     </message>
     <message>
         <source>MakerCAM as of November 2014 cannot correctly deal with blocks,
@@ -6105,48 +6105,48 @@ because it does not take into account the reference point in the &lt;use&gt;.</t
         <source>MakerCAM as of March 2015 cannot display ellipses and ellipse arcs correctly, 
 when they are created using the &lt;ellipse&gt; tag  with a rotation in 
 the &lt;transform&gt; attribute or as &lt;path&gt; using elliptic arc segments.</source>
-        <translation>MakerCAM as of March 2015 cannot display ellipses and ellipse arcs correctly, 
-when they are created using the &lt;ellipse&gt; tag  with a rotation in 
-the &lt;transform&gt; attribute or as &lt;path&gt; using elliptic arc segments.</translation>
+        <translation>MakerCAM no 2015. gada marta nevar pareizi attēlot elipses un elipses lokus, 
+kad tie ir izveidoti, izmantojot birku &lt;ellipse&gt; ar rotāciju 
+atribūtā &lt;transform&gt; vai kā &lt;path&gt;, izmantojot eliptiskus loka segmentus.</translation>
     </message>
     <message>
         <source>Exported images can be useful in SVG editors (Inkscape, etc), 
 but avoided in some CAM&apos;s.</source>
-        <translation>Exported images can be useful in SVG editors (Inkscape, etc), 
-but avoided in some CAM&apos;s.</translation>
+        <translation>Eksportētie attēli var noderēt SVG redaktoros (Inkscape u.c.), 
+bet dažās CAM programmās ir jāizvairās no to izmantošanas.</translation>
     </message>
     <message>
         <source>Many CAM&apos;s(MakerCAM, EleskCAM, LaserWeb) ignore dashed/doted line style, 
 which can be useful in lasercut of plywood or for papercraft. </source>
-        <translation>Many CAM&apos;s(MakerCAM, EleskCAM, LaserWeb) ignore dashed/doted line style, 
-which can be useful in lasercut of plywood or for papercraft.</translation>
+        <translation>Daudzas CAM programmas (MakerCAM, EleskCAM, LaserWeb) ignorē svītrotu/punktotu līniju stilu, 
+kas var būt noderīgs saplākšņa lāzergriešanā vai papīra amatniecībā.</translation>
     </message>
     <message>
         <source>Default width of elements can affect some CAM&apos;s/SVG Editors, 
 but ignored by other</source>
-        <translation>Default width of elements can affect some CAM&apos;s/SVG Editors, 
-but ignored by other</translation>
+        <translation>Elementu noklusējuma platums var ietekmēt dažas CAM programmas/SVG redaktorus, 
+bet citas to ignorē</translation>
     </message>
     <message>
         <source>Length of line pattern related to zoom, 
 so default step value required for baking</source>
-        <translation>Length of line pattern related to zoom, 
-so default step value required for baking</translation>
+        <translation>Līnijas raksta garums ir saistīts ar tālummaiņu, 
+tāpēc materializācijai ir nepieciešama noklusējuma soļa vērtība</translation>
     </message>
     <message>
         <source>Whether to export points</source>
-        <translation>Whether to export points</translation>
+        <translation>Vai eksportēt punktus</translation>
     </message>
 </context>
 <context>
     <name>QG_DlgOptionsVariables</name>
     <message>
         <source>Drawing Variables</source>
-        <translation>Drawing Variables</translation>
+        <translation>Zīmējuma mainīgie</translation>
     </message>
     <message>
         <source>Variable</source>
-        <translation>Variable</translation>
+        <translation>Mainīgais</translation>
     </message>
     <message>
         <source>Code</source>
@@ -6154,11 +6154,11 @@ so default step value required for baking</translation>
     </message>
     <message>
         <source>Value</source>
-        <translation>Value</translation>
+        <translation>Vērtība</translation>
     </message>
     <message>
         <source>&amp;OK</source>
-        <translation>&amp;OK</translation>
+        <translation>&amp;Labi</translation>
     </message>
     <message>
         <source>Alt+O</source>
@@ -6177,7 +6177,7 @@ so default step value required for baking</translation>
     <name>QG_DlgPoint</name>
     <message>
         <source>Point</source>
-        <translation>Point</translation>
+        <translation>Punkts</translation>
     </message>
     <message>
         <source>Layer:</source>
@@ -6185,22 +6185,22 @@ so default step value required for baking</translation>
     </message>
     <message>
         <source>Geometry</source>
-        <translation>Geometry</translation>
+        <translation>Ģeometrija</translation>
     </message>
     <message>
         <source>Position (y):</source>
-        <translation>Position (y):</translation>
+        <translation>Pozīcija (y):</translation>
     </message>
     <message>
         <source>Position (x):</source>
-        <translation>Position (x):</translation>
+        <translation>Pozīcija (x):</translation>
     </message>
 </context>
 <context>
     <name>QG_DlgPolyline</name>
     <message>
         <source>Polyline</source>
-        <translation>Polyline</translation>
+        <translation>Polilīnija</translation>
     </message>
     <message>
         <source>Layer:</source>
@@ -6208,7 +6208,7 @@ so default step value required for baking</translation>
     </message>
     <message>
         <source>Geometry</source>
-        <translation>Geometry</translation>
+        <translation>Ģeometrija</translation>
     </message>
     <message>
         <source>Closed</source>
@@ -6219,23 +6219,23 @@ so default step value required for baking</translation>
     <name>QG_DlgRotate</name>
     <message>
         <source>Rotation Options</source>
-        <translation>Rotation Options</translation>
+        <translation>Pagriešanas opcijas</translation>
     </message>
     <message>
         <source>Number of copies</source>
-        <translation>Number of copies</translation>
+        <translation>Kopiju skaits</translation>
     </message>
     <message>
         <source>&amp;Delete Original</source>
-        <translation>&amp;Delete Original</translation>
+        <translation>&amp;Dzēst oriģinālu</translation>
     </message>
     <message>
         <source>&amp;Keep Original</source>
-        <translation>&amp;Keep Original</translation>
+        <translation>&amp;Paturēt oriģinālu</translation>
     </message>
     <message>
         <source>&amp;Multiple Copies:</source>
-        <translation>&amp;Multiple Copies:</translation>
+        <translation>&amp;Vairākas kopijas:</translation>
     </message>
     <message>
         <source>...</source>
@@ -6243,38 +6243,38 @@ so default step value required for baking</translation>
     </message>
     <message>
         <source>&amp;Angle (a):</source>
-        <translation>&amp;Angle (a):</translation>
+        <translation>&amp;Leņķis (a):</translation>
     </message>
     <message>
         <source>Use current &amp;attributes</source>
-        <translation>Use current &amp;attributes</translation>
+        <translation>Izmantot pašreizējos &amp;atribūtus</translation>
     </message>
     <message>
         <source>Use current &amp;layer</source>
-        <translation>Use current &amp;layer</translation>
+        <translation>Izmantot pašreizējo &amp;slāni</translation>
     </message>
 </context>
 <context>
     <name>QG_DlgRotate2</name>
     <message>
         <source>Rotate Two Options</source>
-        <translation>Rotate Two Options</translation>
+        <translation>Divkārtējas pagriešanas opcijas</translation>
     </message>
     <message>
         <source>Number of copies</source>
-        <translation>Number of copies</translation>
+        <translation>Kopiju skaits</translation>
     </message>
     <message>
         <source>&amp;Delete Original</source>
-        <translation>&amp;Delete Original</translation>
+        <translation>&amp;Dzēst oriģinālu</translation>
     </message>
     <message>
         <source>&amp;Keep Original</source>
-        <translation>&amp;Keep Original</translation>
+        <translation>&amp;Paturēt oriģinālu</translation>
     </message>
     <message>
         <source>&amp;Multiple Copies</source>
-        <translation>&amp;Multiple Copies</translation>
+        <translation>&amp;Vairākas kopijas</translation>
     </message>
     <message>
         <source>...</source>
@@ -6282,42 +6282,42 @@ so default step value required for baking</translation>
     </message>
     <message>
         <source>Angle (&amp;a):</source>
-        <translation>Angle (&amp;a):</translation>
+        <translation>Leņķis (&amp;a):</translation>
     </message>
     <message>
         <source>Angle (&amp;b):</source>
-        <translation>Angle (&amp;b):</translation>
+        <translation>Leņķis (&amp;b):</translation>
     </message>
     <message>
         <source>Use current &amp;attributes</source>
-        <translation>Use current &amp;attributes</translation>
+        <translation>Izmantot pašreizējos &amp;atribūtus</translation>
     </message>
     <message>
         <source>Use current &amp;layer</source>
-        <translation>Use current &amp;layer</translation>
+        <translation>Izmantot pašreizējo &amp;slāni</translation>
     </message>
 </context>
 <context>
     <name>QG_DlgScale</name>
     <message>
         <source>Scaling Options</source>
-        <translation>Scaling Options</translation>
+        <translation>Mērogošanas opcijas</translation>
     </message>
     <message>
         <source>Number of copies</source>
-        <translation>Number of copies</translation>
+        <translation>Kopiju skaits</translation>
     </message>
     <message>
         <source>&amp;Delete Original</source>
-        <translation>&amp;Delete Original</translation>
+        <translation>&amp;Dzēst oriģinālu</translation>
     </message>
     <message>
         <source>&amp;Keep Original</source>
-        <translation>&amp;Keep Original</translation>
+        <translation>&amp;Paturēt oriģinālu</translation>
     </message>
     <message>
         <source>&amp;Multiple Copies</source>
-        <translation>&amp;Multiple Copies</translation>
+        <translation>&amp;Vairākas kopijas</translation>
     </message>
     <message>
         <source>...</source>
@@ -6325,11 +6325,11 @@ so default step value required for baking</translation>
     </message>
     <message>
         <source>Scale by the same factor at both x- and y- directions</source>
-        <translation>Scale by the same factor at both x- and y- directions</translation>
+        <translation>Mērogot ar vienādu koeficientu gan x, gan y virzienos</translation>
     </message>
     <message>
         <source>Isotropic Scaling</source>
-        <translation>Isotropic Scaling</translation>
+        <translation>Izotropā mērogošana</translation>
     </message>
     <message>
         <source>X</source>
@@ -6345,18 +6345,18 @@ so default step value required for baking</translation>
     </message>
     <message>
         <source>Use current &amp;attributes</source>
-        <translation>Use current &amp;attributes</translation>
+        <translation>Izmantot pašreizējos &amp;atribūtus</translation>
     </message>
     <message>
         <source>Use current &amp;layer</source>
-        <translation>Use current &amp;layer</translation>
+        <translation>Izmantot pašreizējo &amp;slāni</translation>
     </message>
 </context>
 <context>
     <name>QG_DlgSpline</name>
     <message>
         <source>Spline</source>
-        <translation>Spline</translation>
+        <translation>Splains</translation>
     </message>
     <message>
         <source>Layer:</source>
@@ -6364,11 +6364,11 @@ so default step value required for baking</translation>
     </message>
     <message>
         <source>Geometry</source>
-        <translation>Geometry</translation>
+        <translation>Ģeometrija</translation>
     </message>
     <message>
         <source>Degree:</source>
-        <translation>Degree:</translation>
+        <translation>Pakāpe:</translation>
     </message>
     <message>
         <source>Closed</source>
@@ -6383,19 +6383,19 @@ so default step value required for baking</translation>
     </message>
     <message>
         <source>Text:</source>
-        <translation>Text:</translation>
+        <translation>Teksts:</translation>
     </message>
     <message>
         <source>Clear Text</source>
-        <translation>Clear Text</translation>
+        <translation>Notīrīt tekstu</translation>
     </message>
     <message>
         <source>Load Text From File</source>
-        <translation>Load Text From File</translation>
+        <translation>Ielādēt tekstu no faila</translation>
     </message>
     <message>
         <source>Save Text To File</source>
-        <translation>Save Text To File</translation>
+        <translation>Saglabāt tekstu failā</translation>
     </message>
     <message>
         <source>Cut</source>
@@ -6407,7 +6407,7 @@ so default step value required for baking</translation>
     </message>
     <message>
         <source>Paste</source>
-        <translation>Paste</translation>
+        <translation>Ielīmēt</translation>
     </message>
     <message>
         <source>Layer:</source>
@@ -6415,55 +6415,55 @@ so default step value required for baking</translation>
     </message>
     <message>
         <source>Font settings</source>
-        <translation>Font settings</translation>
+        <translation>Fonta iestatījumi</translation>
     </message>
     <message>
         <source>&amp;Height:</source>
-        <translation>&amp;Height:</translation>
+        <translation>&amp;Augstums:</translation>
     </message>
     <message>
         <source>Angle:</source>
-        <translation>Angle:</translation>
+        <translation>Leņķis:</translation>
     </message>
     <message>
         <source>Oblique:</source>
-        <translation>Oblique:</translation>
+        <translation>Slīps:</translation>
     </message>
     <message>
         <source>Width factor:</source>
-        <translation>Width factor:</translation>
+        <translation>Platuma koeficients:</translation>
     </message>
     <message>
         <source>Font:</source>
-        <translation>Font:</translation>
+        <translation>Fonts:</translation>
     </message>
     <message>
         <source>Alignment</source>
-        <translation>Alignment</translation>
+        <translation>Izlīdzināšana</translation>
     </message>
     <message>
         <source>Bottom Center</source>
-        <translation>Bottom Center</translation>
+        <translation>Apakšā centrā</translation>
     </message>
     <message>
         <source>Bottom Right</source>
-        <translation>Bottom Right</translation>
+        <translation>Apakšā pa labi</translation>
     </message>
     <message>
         <source>Middle Right</source>
-        <translation>Middle Right</translation>
+        <translation>Vidū pa labi</translation>
     </message>
     <message>
         <source>Bottom Left</source>
-        <translation>Bottom Left</translation>
+        <translation>Apakšā pa kreisi</translation>
     </message>
     <message>
         <source>Middle Left</source>
-        <translation>Middle Left</translation>
+        <translation>Vidū pa kreisi</translation>
     </message>
     <message>
         <source>Baseline Left</source>
-        <translation>Baseline Left</translation>
+        <translation>Bāzlīnija pa kreisi</translation>
     </message>
     <message>
         <source>...</source>
@@ -6471,27 +6471,27 @@ so default step value required for baking</translation>
     </message>
     <message>
         <source>Top Center</source>
-        <translation>Top Center</translation>
+        <translation>Augšā centrā</translation>
     </message>
     <message>
         <source>Baseline Right</source>
-        <translation>Baseline Right</translation>
+        <translation>Bāzlīnija pa labi</translation>
     </message>
     <message>
         <source>Baseline Center</source>
-        <translation>Baseline Center</translation>
+        <translation>Bāzlīnija centrā</translation>
     </message>
     <message>
         <source>Top Left</source>
-        <translation>Top Left</translation>
+        <translation>Augšā pa kreisi</translation>
     </message>
     <message>
         <source>Top Right</source>
-        <translation>Top Right</translation>
+        <translation>Augšā pa labi</translation>
     </message>
     <message>
         <source>Middle Center</source>
-        <translation>Middle Center</translation>
+        <translation>Vidū centrā</translation>
     </message>
     <message>
         <source>Fit</source>
@@ -6499,51 +6499,51 @@ so default step value required for baking</translation>
     </message>
     <message>
         <source>A&amp;ligned</source>
-        <translation>A&amp;ligned</translation>
+        <translation>Izl&amp;īdzināts</translation>
     </message>
     <message>
         <source>&amp;Middle</source>
-        <translation>&amp;Middle</translation>
+        <translation>&amp;Vidus</translation>
     </message>
     <message>
         <source>Insert Symbol</source>
-        <translation>Insert Symbol</translation>
+        <translation>Ievietot simbolu</translation>
     </message>
     <message>
         <source>Diameter (⌀)</source>
-        <translation>Diameter (⌀)</translation>
+        <translation>Diametrs (⌀)</translation>
     </message>
     <message>
         <source>Degree (°)</source>
-        <translation>Degree (°)</translation>
+        <translation>Grāds (°)</translation>
     </message>
     <message>
         <source>Plus / Minus (±)</source>
-        <translation>Plus / Minus (±)</translation>
+        <translation>Plus / mīnus (±)</translation>
     </message>
     <message>
         <source>At (@)</source>
-        <translation>At (@)</translation>
+        <translation>Uz (@)</translation>
     </message>
     <message>
         <source>Hash (#)</source>
-        <translation>Hash (#)</translation>
+        <translation>Restes zīme (#)</translation>
     </message>
     <message>
         <source>Dollar ($)</source>
-        <translation>Dollar ($)</translation>
+        <translation>Dolārs ($)</translation>
     </message>
     <message>
         <source>Copyright (©)</source>
-        <translation>Copyright (©)</translation>
+        <translation>Autortiesības (©)</translation>
     </message>
     <message>
         <source>Registered (®)</source>
-        <translation>Registered (®)</translation>
+        <translation>Reģistrēts (®)</translation>
     </message>
     <message>
         <source>Paragraph (§)</source>
-        <translation>Paragraph (§)</translation>
+        <translation>Paragrāfs (§)</translation>
     </message>
     <message>
         <source>Pi (π)</source>
@@ -6551,91 +6551,91 @@ so default step value required for baking</translation>
     </message>
     <message>
         <source>Pound (£)</source>
-        <translation>Pound (£)</translation>
+        <translation>Mārciņa (£)</translation>
     </message>
     <message>
         <source>Yen (¥)</source>
-        <translation>Yen (¥)</translation>
+        <translation>Jena (¥)</translation>
     </message>
     <message>
         <source>Times (×)</source>
-        <translation>Times (×)</translation>
+        <translation>Reizināt (×)</translation>
     </message>
     <message>
         <source>Division (÷)</source>
-        <translation>Division (÷)</translation>
+        <translation>Dalīt (÷)</translation>
     </message>
     <message>
         <source>Insert Unicode</source>
-        <translation>Insert Unicode</translation>
+        <translation>Ievietot Unicode</translation>
     </message>
     <message>
         <source>Page:</source>
-        <translation>Page:</translation>
+        <translation>Lapa:</translation>
     </message>
     <message>
         <source>Char:</source>
-        <translation>Char:</translation>
+        <translation>Simbols:</translation>
     </message>
     <message>
         <source>[0000-007F] Basic Latin</source>
-        <translation>[0000-007F] Basic Latin</translation>
+        <translation>[0000-007F] Pamata latīņu</translation>
     </message>
     <message>
         <source>[0080-00FF] Latin-1 Supplementary</source>
-        <translation>[0080-00FF] Latin-1 Supplementary</translation>
+        <translation>[0080-00FF] Latīņu-1 papildinājums</translation>
     </message>
     <message>
         <source>[0100-017F] Latin Extended-A</source>
-        <translation>[0100-017F] Latin Extended-A</translation>
+        <translation>[0100-017F] Paplašinātā latīņu A</translation>
     </message>
     <message>
         <source>[0180-024F] Latin Extended-B</source>
-        <translation>[0180-024F] Latin Extended-B</translation>
+        <translation>[0180-024F] Paplašinātā latīņu B</translation>
     </message>
     <message>
         <source>[0250-02AF] IPA Extensions</source>
-        <translation>[0250-02AF] IPA Extensions</translation>
+        <translation>[0250-02AF] IPA paplašinājumi</translation>
     </message>
     <message>
         <source>[02B0-02FF] Spacing Modifier Letters</source>
-        <translation>[02B0-02FF] Spacing Modifier Letters</translation>
+        <translation>[02B0-02FF] Atstarpju modifikatori</translation>
     </message>
     <message>
         <source>[0300-036F] Combining Diacritical Marks</source>
-        <translation>[0300-036F] Combining Diacritical Marks</translation>
+        <translation>[0300-036F] Kombinētās diakritiskās zīmes</translation>
     </message>
     <message>
         <source>[0370-03FF] Greek and Coptic</source>
-        <translation>[0370-03FF] Greek and Coptic</translation>
+        <translation>[0370-03FF] Grieķu un koptu</translation>
     </message>
     <message>
         <source>[0400-04FF] Cyrillic</source>
-        <translation>[0400-04FF] Cyrillic</translation>
+        <translation>[0400-04FF] Kirilica</translation>
     </message>
     <message>
         <source>[0500-052F] Cyrillic Supplementary</source>
-        <translation>[0500-052F] Cyrillic Supplementary</translation>
+        <translation>[0500-052F] Kirilicas papildinājums</translation>
     </message>
     <message>
         <source>[0530-058F] Armenian</source>
-        <translation>[0530-058F] Armenian</translation>
+        <translation>[0530-058F] Armēņu</translation>
     </message>
     <message>
         <source>[0590-05FF] Hebrew</source>
-        <translation>[0590-05FF] Hebrew</translation>
+        <translation>[0590-05FF] Ivrits</translation>
     </message>
     <message>
         <source>[0600-06FF] Arabic</source>
-        <translation>[0600-06FF] Arabic</translation>
+        <translation>[0600-06FF] Arābu</translation>
     </message>
     <message>
         <source>[0700-074F] Syriac</source>
-        <translation>[0700-074F] Syriac</translation>
+        <translation>[0700-074F] Sīriešu</translation>
     </message>
     <message>
         <source>[0780-07BF] Thaana</source>
-        <translation>[0780-07BF] Thaana</translation>
+        <translation>[0780-07BF] Taanas</translation>
     </message>
     <message>
         <source>[0900-097F] Devanagari</source>
@@ -6643,7 +6643,7 @@ so default step value required for baking</translation>
     </message>
     <message>
         <source>[0980-09FF] Bengali</source>
-        <translation>[0980-09FF] Bengali</translation>
+        <translation>[0980-09FF] Bengāļu</translation>
     </message>
     <message>
         <source>[0A00-0A7F] Gurmukhi</source>
@@ -6651,15 +6651,15 @@ so default step value required for baking</translation>
     </message>
     <message>
         <source>[0A80-0AFF] Gujarati</source>
-        <translation>[0A80-0AFF] Gujarati</translation>
+        <translation>[0A80-0AFF] Gudžarāti</translation>
     </message>
     <message>
         <source>[0B00-0B7F] Oriya</source>
-        <translation>[0B00-0B7F] Oriya</translation>
+        <translation>[0B00-0B7F] Orija</translation>
     </message>
     <message>
         <source>[0B80-0BFF] Tamil</source>
-        <translation>[0B80-0BFF] Tamil</translation>
+        <translation>[0B80-0BFF] Tamilu</translation>
     </message>
     <message>
         <source>[0C00-0C7F] Telugu</source>
@@ -6671,31 +6671,31 @@ so default step value required for baking</translation>
     </message>
     <message>
         <source>[0D00-0D7F] Malayalam</source>
-        <translation>[0D00-0D7F] Malayalam</translation>
+        <translation>[0D00-0D7F] Malajalu</translation>
     </message>
     <message>
         <source>[0D80-0DFF] Sinhala</source>
-        <translation>[0D80-0DFF] Sinhala</translation>
+        <translation>[0D80-0DFF] Singāļu</translation>
     </message>
     <message>
         <source>[0E00-0E7F] Thai</source>
-        <translation>[0E00-0E7F] Thai</translation>
+        <translation>[0E00-0E7F] Taju</translation>
     </message>
     <message>
         <source>[0E80-0EFF] Lao</source>
-        <translation>[0E80-0EFF] Lao</translation>
+        <translation>[0E80-0EFF] Laosiešu</translation>
     </message>
     <message>
         <source>[0F00-0FFF] Tibetan</source>
-        <translation>[0F00-0FFF] Tibetan</translation>
+        <translation>[0F00-0FFF] Tibetiešu</translation>
     </message>
     <message>
         <source>[1000-109F] Myanmar</source>
-        <translation>[1000-109F] Myanmar</translation>
+        <translation>[1000-109F] Mjanmas</translation>
     </message>
     <message>
         <source>[10A0-10FF] Georgian</source>
-        <translation>[10A0-10FF] Georgian</translation>
+        <translation>[10A0-10FF] Gruzīnu</translation>
     </message>
     <message>
         <source>[1100-11FF] Hangul Jamo</source>
@@ -6703,15 +6703,15 @@ so default step value required for baking</translation>
     </message>
     <message>
         <source>[1200-137F] Ethiopic</source>
-        <translation>[1200-137F] Ethiopic</translation>
+        <translation>[1200-137F] Etiopiešu</translation>
     </message>
     <message>
         <source>[13A0-13FF] Cherokee</source>
-        <translation>[13A0-13FF] Cherokee</translation>
+        <translation>[13A0-13FF] Čeroku</translation>
     </message>
     <message>
         <source>[1400-167F] Unified Canadian Aboriginal Syllabic</source>
-        <translation>[1400-167F] Unified Canadian Aboriginal Syllabic</translation>
+        <translation>[1400-167F] Apvienotā Kanādas pamatiedzīvotāju zilbiskā</translation>
     </message>
     <message>
         <source>[1680-169F] Ogham</source>
@@ -6719,11 +6719,11 @@ so default step value required for baking</translation>
     </message>
     <message>
         <source>[16A0-16FF] Runic</source>
-        <translation>[16A0-16FF] Runic</translation>
+        <translation>[16A0-16FF] Rūniskā</translation>
     </message>
     <message>
         <source>[1700-171F] Tagalog</source>
-        <translation>[1700-171F] Tagalog</translation>
+        <translation>[1700-171F] Tagalogu</translation>
     </message>
     <message>
         <source>[1720-173F] Hanunoo</source>
@@ -6739,127 +6739,127 @@ so default step value required for baking</translation>
     </message>
     <message>
         <source>[1780-17FF] Khmer</source>
-        <translation>[1780-17FF] Khmer</translation>
+        <translation>[1780-17FF] Khmeru</translation>
     </message>
     <message>
         <source>[1800-18AF] Mongolian</source>
-        <translation>[1800-18AF] Mongolian</translation>
+        <translation>[1800-18AF] Mongoļu</translation>
     </message>
     <message>
         <source>[1E00-1EFF] Latin Extended Additional</source>
-        <translation>[1E00-1EFF] Latin Extended Additional</translation>
+        <translation>[1E00-1EFF] Paplašinātā latīņu papildinājums</translation>
     </message>
     <message>
         <source>[1F00-1FFF] Greek Extended</source>
-        <translation>[1F00-1FFF] Greek Extended</translation>
+        <translation>[1F00-1FFF] Paplašinātā grieķu</translation>
     </message>
     <message>
         <source>[2000-206F] General Punctuation</source>
-        <translation>[2000-206F] General Punctuation</translation>
+        <translation>[2000-206F] Vispārīgā interpunkcija</translation>
     </message>
     <message>
         <source>[2070-209F] Superscripts and Subscripts</source>
-        <translation>[2070-209F] Superscripts and Subscripts</translation>
+        <translation>[2070-209F] Augšraksti un apakšraksti</translation>
     </message>
     <message>
         <source>[20A0-20CF] Currency Symbols</source>
-        <translation>[20A0-20CF] Currency Symbols</translation>
+        <translation>[20A0-20CF] Valūtas simboli</translation>
     </message>
     <message>
         <source>[20D0-20FF] Combining Marks for Symbols</source>
-        <translation>[20D0-20FF] Combining Marks for Symbols</translation>
+        <translation>[20D0-20FF] Simbolu kombinētās zīmes</translation>
     </message>
     <message>
         <source>[2100-214F] Letterlike Symbols</source>
-        <translation>[2100-214F] Letterlike Symbols</translation>
+        <translation>[2100-214F] Burstveidīgie simboli</translation>
     </message>
     <message>
         <source>[2150-218F] Number Forms</source>
-        <translation>[2150-218F] Number Forms</translation>
+        <translation>[2150-218F] Skaitļu formas</translation>
     </message>
     <message>
         <source>[2190-21FF] Arrows</source>
-        <translation>[2190-21FF] Arrows</translation>
+        <translation>[2190-21FF] Bultiņas</translation>
     </message>
     <message>
         <source>[2200-22FF] Mathematical Operators</source>
-        <translation>[2200-22FF] Mathematical Operators</translation>
+        <translation>[2200-22FF] Matemātiskie operatori</translation>
     </message>
     <message>
         <source>[2300-23FF] Miscellaneous Technical</source>
-        <translation>[2300-23FF] Miscellaneous Technical</translation>
+        <translation>[2300-23FF] Dažādi tehniski simboli</translation>
     </message>
     <message>
         <source>[2400-243F] Control Pictures</source>
-        <translation>[2400-243F] Control Pictures</translation>
+        <translation>[2400-243F] Vadības attēli</translation>
     </message>
     <message>
         <source>[2440-245F] Optical Character Recognition</source>
-        <translation>[2440-245F] Optical Character Recognition</translation>
+        <translation>[2440-245F] Optiskā rakstzīmju atpazīšana</translation>
     </message>
     <message>
         <source>[2460-24FF] Enclosed Alphanumerics</source>
-        <translation>[2460-24FF] Enclosed Alphanumerics</translation>
+        <translation>[2460-24FF] Ierakstīti burtu-ciparu simboli</translation>
     </message>
     <message>
         <source>[2500-257F] Box Drawing</source>
-        <translation>[2500-257F] Box Drawing</translation>
+        <translation>[2500-257F] Lodziņu zīmēšana</translation>
     </message>
     <message>
         <source>[2580-259F] Block Elements</source>
-        <translation>[2580-259F] Block Elements</translation>
+        <translation>[2580-259F] Bloku elementi</translation>
     </message>
     <message>
         <source>[25A0-25FF] Geometric Shapes</source>
-        <translation>[25A0-25FF] Geometric Shapes</translation>
+        <translation>[25A0-25FF] Ģeometriskas figūras</translation>
     </message>
     <message>
         <source>[2600-26FF] Miscellaneous Symbols</source>
-        <translation>[2600-26FF] Miscellaneous Symbols</translation>
+        <translation>[2600-26FF] Dažādi simboli</translation>
     </message>
     <message>
         <source>[2700-27BF] Dingbats</source>
-        <translation>[2700-27BF] Dingbats</translation>
+        <translation>[2700-27BF] Dekoratīvie simboli</translation>
     </message>
     <message>
         <source>[27C0-27EF] Miscellaneous Mathematical Symbols-A</source>
-        <translation>[27C0-27EF] Miscellaneous Mathematical Symbols-A</translation>
+        <translation>[27C0-27EF] Dažādi matemātiskie simboli A</translation>
     </message>
     <message>
         <source>[27F0-27FF] Supplemental Arrows-A</source>
-        <translation>[27F0-27FF] Supplemental Arrows-A</translation>
+        <translation>[27F0-27FF] Papildu bultiņas A</translation>
     </message>
     <message>
         <source>[2800-28FF] Braille Patterns</source>
-        <translation>[2800-28FF] Braille Patterns</translation>
+        <translation>[2800-28FF] Braila raksti</translation>
     </message>
     <message>
         <source>[2900-297F] Supplemental Arrows-B</source>
-        <translation>[2900-297F] Supplemental Arrows-B</translation>
+        <translation>[2900-297F] Papildu bultiņas B</translation>
     </message>
     <message>
         <source>[2980-29FF] Miscellaneous Mathematical Symbols-B</source>
-        <translation>[2980-29FF] Miscellaneous Mathematical Symbols-B</translation>
+        <translation>[2980-29FF] Dažādi matemātiskie simboli B</translation>
     </message>
     <message>
         <source>[2A00-2AFF] Supplemental Mathematical Operators</source>
-        <translation>[2A00-2AFF] Supplemental Mathematical Operators</translation>
+        <translation>[2A00-2AFF] Papildu matemātiskie operatori</translation>
     </message>
     <message>
         <source>[2E80-2EFF] CJK Radicals Supplement</source>
-        <translation>[2E80-2EFF] CJK Radicals Supplement</translation>
+        <translation>[2E80-2EFF] CJK radikāļu papildinājums</translation>
     </message>
     <message>
         <source>[2F00-2FDF] Kangxi Radicals</source>
-        <translation>[2F00-2FDF] Kangxi Radicals</translation>
+        <translation>[2F00-2FDF] Kangxi radikāļi</translation>
     </message>
     <message>
         <source>[2FF0-2FFF] Ideographic Description Characters</source>
-        <translation>[2FF0-2FFF] Ideographic Description Characters</translation>
+        <translation>[2FF0-2FFF] Ideogrāfiskās apraksta rakstzīmes</translation>
     </message>
     <message>
         <source>[3000-303F] CJK Symbols and Punctuation</source>
-        <translation>[3000-303F] CJK Symbols and Punctuation</translation>
+        <translation>[3000-303F] CJK simboli un interpunkcija</translation>
     </message>
     <message>
         <source>[3040-309F] Hiragana</source>
@@ -6875,7 +6875,7 @@ so default step value required for baking</translation>
     </message>
     <message>
         <source>[3130-318F] Hangul Compatibility Jamo</source>
-        <translation>[3130-318F] Hangul Compatibility Jamo</translation>
+        <translation>[3130-318F] Hangul saderības Jamo</translation>
     </message>
     <message>
         <source>[3190-319F] Kanbun</source>
@@ -6883,131 +6883,131 @@ so default step value required for baking</translation>
     </message>
     <message>
         <source>[31A0-31BF] Bopomofo Extended</source>
-        <translation>[31A0-31BF] Bopomofo Extended</translation>
+        <translation>[31A0-31BF] Paplašinātā Bopomofo</translation>
     </message>
     <message>
         <source>[3200-32FF] Enclosed CJK Letters and Months</source>
-        <translation>[3200-32FF] Enclosed CJK Letters and Months</translation>
+        <translation>[3200-32FF] Ierakstītas CJK burtas un mēneši</translation>
     </message>
     <message>
         <source>[3300-33FF] CJK Compatibility</source>
-        <translation>[3300-33FF] CJK Compatibility</translation>
+        <translation>[3300-33FF] CJK saderība</translation>
     </message>
     <message>
         <source>[3400-4DBF] CJK Unified Ideographs Extension A</source>
-        <translation>[3400-4DBF] CJK Unified Ideographs Extension A</translation>
+        <translation>[3400-4DBF] CJK apvienoto ideogrāfu paplašinājums A</translation>
     </message>
     <message>
         <source>[4E00-9FAF] CJK Unified Ideographs</source>
-        <translation>[4E00-9FAF] CJK Unified Ideographs</translation>
+        <translation>[4E00-9FAF] CJK apvienotie ideogrāfi</translation>
     </message>
     <message>
         <source>[A000-A48F] Yi Syllables</source>
-        <translation>[A000-A48F] Yi Syllables</translation>
+        <translation>[A000-A48F] Yi zilbes</translation>
     </message>
     <message>
         <source>[A490-A4CF] Yi Radicals</source>
-        <translation>[A490-A4CF] Yi Radicals</translation>
+        <translation>[A490-A4CF] Yi radikāļi</translation>
     </message>
     <message>
         <source>[AC00-D7AF] Hangul Syllables</source>
-        <translation>[AC00-D7AF] Hangul Syllables</translation>
+        <translation>[AC00-D7AF] Hangul zilbes</translation>
     </message>
     <message>
         <source>[D800-DBFF] High Surrogates</source>
-        <translation>[D800-DBFF] High Surrogates</translation>
+        <translation>[D800-DBFF] Augstie surogāti</translation>
     </message>
     <message>
         <source>[DC00-DFFF] Low Surrogate Area</source>
-        <translation>[DC00-DFFF] Low Surrogate Area</translation>
+        <translation>[DC00-DFFF] Zemais surogātu apgabals</translation>
     </message>
     <message>
         <source>[E000-F8FF] Private Use Area</source>
-        <translation>[E000-F8FF] Private Use Area</translation>
+        <translation>[E000-F8FF] Privātās lietošanas apgabals</translation>
     </message>
     <message>
         <source>[F900-FAFF] CJK Compatibility Ideographs</source>
-        <translation>[F900-FAFF] CJK Compatibility Ideographs</translation>
+        <translation>[F900-FAFF] CJK saderības ideogrāfi</translation>
     </message>
     <message>
         <source>[FB00-FB4F] Alphabetic Presentation Forms</source>
-        <translation>[FB00-FB4F] Alphabetic Presentation Forms</translation>
+        <translation>[FB00-FB4F] Alfabētiskās prezentācijas formas</translation>
     </message>
     <message>
         <source>[FB50-FDFF] Arabic Presentation Forms-A</source>
-        <translation>[FB50-FDFF] Arabic Presentation Forms-A</translation>
+        <translation>[FB50-FDFF] Arābu prezentācijas formas A</translation>
     </message>
     <message>
         <source>[FE00-FE0F] Variation Selectors</source>
-        <translation>[FE00-FE0F] Variation Selectors</translation>
+        <translation>[FE00-FE0F] Variāciju atlasītāji</translation>
     </message>
     <message>
         <source>[FE20-FE2F] Combining Half Marks</source>
-        <translation>[FE20-FE2F] Combining Half Marks</translation>
+        <translation>[FE20-FE2F] Kombinētās pusspiedumi</translation>
     </message>
     <message>
         <source>[FE30-FE4F] CJK Compatibility Forms</source>
-        <translation>[FE30-FE4F] CJK Compatibility Forms</translation>
+        <translation>[FE30-FE4F] CJK saderības formas</translation>
     </message>
     <message>
         <source>[FE50-FE6F] Small Form Variants</source>
-        <translation>[FE50-FE6F] Small Form Variants</translation>
+        <translation>[FE50-FE6F] Mazās formas varianti</translation>
     </message>
     <message>
         <source>[FE70-FEFF] Arabic Presentation Forms-B</source>
-        <translation>[FE70-FEFF] Arabic Presentation Forms-B</translation>
+        <translation>[FE70-FEFF] Arābu prezentācijas formas B</translation>
     </message>
     <message>
         <source>[FF00-FFEF] Halfwidth and Fullwidth Forms</source>
-        <translation>[FF00-FFEF] Halfwidth and Fullwidth Forms</translation>
+        <translation>[FF00-FFEF] Puspilnplatuma un pilnplatuma formas</translation>
     </message>
     <message>
         <source>[FFF0-FFFF] Specials</source>
-        <translation>[FFF0-FFFF] Specials</translation>
+        <translation>[FFF0-FFFF] Īpašie simboli</translation>
     </message>
     <message>
         <source>[10300-1032F] Old Italic</source>
-        <translation>[10300-1032F] Old Italic</translation>
+        <translation>[10300-1032F] Vecā itāļu</translation>
     </message>
     <message>
         <source>[10330-1034F] Gothic</source>
-        <translation>[10330-1034F] Gothic</translation>
+        <translation>[10330-1034F] Gotiskā</translation>
     </message>
     <message>
         <source>[10400-1044F] Deseret</source>
-        <translation>[10400-1044F] Deseret</translation>
+        <translation>[10400-1044F] Desereta</translation>
     </message>
     <message>
         <source>[1D000-1D0FF] Byzantine Musical Symbols</source>
-        <translation>[1D000-1D0FF] Byzantine Musical Symbols</translation>
+        <translation>[1D000-1D0FF] Bizantijas mūzikas simboli</translation>
     </message>
     <message>
         <source>[1D100-1D1FF] Musical Symbols</source>
-        <translation>[1D100-1D1FF] Musical Symbols</translation>
+        <translation>[1D100-1D1FF] Mūzikas simboli</translation>
     </message>
     <message>
         <source>[1D400-1D7FF] Mathematical Alphanumeric Symbols</source>
-        <translation>[1D400-1D7FF] Mathematical Alphanumeric Symbols</translation>
+        <translation>[1D400-1D7FF] Matemātiskie burtu-ciparu simboli</translation>
     </message>
     <message>
         <source>[20000-2A6DF] CJK Unified Ideographs Extension B</source>
-        <translation>[20000-2A6DF] CJK Unified Ideographs Extension B</translation>
+        <translation>[20000-2A6DF] CJK apvienoto ideogrāfu paplašinājums B</translation>
     </message>
     <message>
         <source>[2F800-2FA1F] CJK Compatibility Ideographs Supplement</source>
-        <translation>[2F800-2FA1F] CJK Compatibility Ideographs Supplement</translation>
+        <translation>[2F800-2FA1F] CJK saderības ideogrāfu papildinājums</translation>
     </message>
     <message>
         <source>[E0000-E007F] Tags</source>
-        <translation>[E0000-E007F] Tags</translation>
+        <translation>[E0000-E007F] Birkas</translation>
     </message>
     <message>
         <source>[F0000-FFFFD] Supplementary Private Use Area-A</source>
-        <translation>[F0000-FFFFD] Supplementary Private Use Area-A</translation>
+        <translation>[F0000-FFFFD] Papildu privātās lietošanas apgabals A</translation>
     </message>
     <message>
         <source>[100000-10FFFD] Supplementary Private Use Area-B</source>
-        <translation>[100000-10FFFD] Supplementary Private Use Area-B</translation>
+        <translation>[100000-10FFFD] Papildu privātās lietošanas apgabals B</translation>
     </message>
 </context>
 <context>
@@ -7018,110 +7018,110 @@ so default step value required for baking</translation>
     </message>
     <message>
         <source>again Still No Text supplied.</source>
-        <translation>again Still No Text supplied.</translation>
+        <translation>joprojām nav piegādāts teksts.</translation>
     </message>
     <message>
         <source>Discard All</source>
-        <translation>Discard All</translation>
+        <translation>Atmest visu</translation>
     </message>
     <message>
         <source>Discard</source>
-        <translation>Discard</translation>
+        <translation>Atmest</translation>
     </message>
 </context>
 <context>
     <name>QG_FileDialog</name>
     <message>
         <source>Drawing Exchange DXF 2007 %1</source>
-        <translation>Drawing Exchange DXF 2007 %1</translation>
+        <translation>Zīmējumu apmaiņas DXF 2007 %1</translation>
     </message>
     <message>
         <source>Drawing Exchange DXF 2004 %1</source>
-        <translation>Drawing Exchange DXF 2004 %1</translation>
+        <translation>Zīmējumu apmaiņas DXF 2004 %1</translation>
     </message>
     <message>
         <source>Drawing Exchange DXF 2000 %1</source>
-        <translation>Drawing Exchange DXF 2000 %1</translation>
+        <translation>Zīmējumu apmaiņas DXF 2000 %1</translation>
     </message>
     <message>
         <source>Drawing Exchange DXF R14 %1</source>
-        <translation>Drawing Exchange DXF R14 %1</translation>
+        <translation>Zīmējumu apmaiņas DXF R14 %1</translation>
     </message>
     <message>
         <source>Drawing Exchange DXF R12 %1</source>
-        <translation>Drawing Exchange DXF R12 %1</translation>
+        <translation>Zīmējumu apmaiņas DXF R12 %1</translation>
     </message>
     <message>
         <source>Drawing Exchange %1</source>
-        <translation>Drawing Exchange %1</translation>
+        <translation>Zīmējumu apmaiņa %1</translation>
     </message>
     <message>
         <source>LFF Font %1</source>
-        <translation>LFF Font %1</translation>
+        <translation>LFF fonts %1</translation>
     </message>
     <message>
         <source>dwg Drawing %1</source>
-        <translation>dwg Drawing %1</translation>
+        <translation>dwg zīmējums %1</translation>
     </message>
     <message>
         <source>QCad Font %1</source>
-        <translation>QCad Font %1</translation>
+        <translation>QCad fonts %1</translation>
     </message>
     <message>
         <source>Jww Drawing %1</source>
-        <translation>Jww Drawing %1</translation>
+        <translation>Jww zīmējums %1</translation>
     </message>
     <message>
         <source>QCad 1.x file %1</source>
-        <translation>QCad 1.x file %1</translation>
+        <translation>QCad 1.x fails %1</translation>
     </message>
     <message>
         <source>Block</source>
         <comment>block file</comment>
-        <translation>Block</translation>
+        <translation>Bloks</translation>
     </message>
     <message>
         <source>Drawing</source>
         <comment>drawing file</comment>
-        <translation>Drawing</translation>
+        <translation>Zīmējums</translation>
     </message>
     <message>
         <source>Open %1</source>
-        <translation>Open %1</translation>
+        <translation>Atvērt %1</translation>
     </message>
     <message>
         <source>Untitled</source>
-        <translation>Untitled</translation>
+        <translation>Nenosaukts</translation>
     </message>
     <message>
         <source>Save %1 As</source>
-        <translation>Save %1 As</translation>
+        <translation>Saglabāt %1 kā</translation>
     </message>
 </context>
 <context>
     <name>QG_GraphicView</name>
     <message>
         <source>Edit Block</source>
-        <translation>Edit Block</translation>
+        <translation>Rediģēt bloku</translation>
     </message>
     <message>
         <source>Edit Properties</source>
-        <translation>Edit Properties</translation>
+        <translation>Rediģēt īpašības</translation>
     </message>
 </context>
 <context>
     <name>QG_ImageOptionsDialog</name>
     <message>
         <source>Image Export Options</source>
-        <translation>Image Export Options</translation>
+        <translation>Attēla eksportēšanas opcijas</translation>
     </message>
     <message>
         <source>Bitmap Size</source>
-        <translation>Bitmap Size</translation>
+        <translation>Bitkartes izmērs</translation>
     </message>
     <message>
         <source>Resolution:</source>
-        <translation>Resolution:</translation>
+        <translation>Izšķirtspēja:</translation>
     </message>
     <message>
         <source>auto</source>
@@ -7129,7 +7129,7 @@ so default step value required for baking</translation>
     </message>
     <message>
         <source>Width:</source>
-        <translation>Width:</translation>
+        <translation>Platums:</translation>
     </message>
     <message>
         <source>Height:</source>
@@ -7137,212 +7137,211 @@ so default step value required for baking</translation>
     </message>
     <message>
         <source>Background</source>
-        <translation>Background</translation>
+        <translation>Fons</translation>
     </message>
     <message>
         <source>White</source>
-        <translation>White</translation>
+        <translation>Balts</translation>
     </message>
     <message>
         <source>B&amp;lack</source>
-        <translation>B&amp;lack</translation>
+        <translation>Me&amp;lns</translation>
     </message>
     <message>
         <source>Colouring</source>
-        <translation>Colouring</translation>
+        <translation>Krāsošana</translation>
     </message>
     <message>
         <source>Black / White</source>
-        <translation>Black / White</translation>
+        <translation>Melns / balts</translation>
     </message>
     <message>
         <source>Coloured</source>
-        <translation>Coloured</translation>
+        <translation>Krāsains</translation>
     </message>
     <message>
         <source>Borders</source>
-        <translation>Borders</translation>
+        <translation>Malas</translation>
     </message>
     <message>
         <source>Top / Bottom - Border:</source>
-        <translation>Top / Bottom - Border:</translation>
+        <translation>Augšā / apakšā - mala:</translation>
     </message>
     <message>
         <source>Left / Right - Border:</source>
-        <translation>Left / Right - Border:</translation>
+        <translation>Kreisā / labā - mala:</translation>
     </message>
     <message>
         <source>set same size</source>
-        <translation>set same size</translation>
+        <translation>iestatīt vienādu izmēru</translation>
     </message>
 </context>
 <context>
     <name>QG_LayerBox</name>
     <message>
         <source>- Unchanged -</source>
-        <translation>- Unchanged -</translation>
+        <translation>- Nemainīts -</translation>
     </message>
 </context>
 <context>
     <name>QG_LayerDialog</name>
     <message>
         <source>Layer Settings</source>
-        <translation>Layer Settings</translation>
+        <translation>Slāņa iestatījumi</translation>
     </message>
     <message>
         <source>A Construction Layer has entities of infinite straight lines intended to be used for geometric construction.
 The contents of a Construction Layer should not appear in printout.</source>
-        <translation>A Construction Layer has entities of infinite straight lines intended to be used for geometric construction.
-The contents of a Construction Layer should not appear in printout.</translation>
+        <translation>Konstruktīvajam slānim ir bezgalīgu taisnu līniju elementi, kas paredzēti ģeometriskai konstrukšanai. Konstruktīvā slāņa saturam nevajadzētu parādīties drukājumā.</translation>
     </message>
     <message>
         <source>Construction Layer</source>
-        <translation>Construction Layer</translation>
+        <translation>Konstruktīvais slānis</translation>
     </message>
     <message>
         <source>Layer Name:</source>
-        <translation>Layer Name:</translation>
+        <translation>Slāņa nosaukums:</translation>
     </message>
     <message>
         <source>Default Pen</source>
-        <translation>Default Pen</translation>
+        <translation>Noklusējuma spalva</translation>
     </message>
 </context>
 <context>
     <name>QG_LayerWidget</name>
     <message>
         <source>Show all layers</source>
-        <translation>Show all layers</translation>
+        <translation>Rādīt visus slāņus</translation>
     </message>
     <message>
         <source>Hide all layers</source>
-        <translation>Hide all layers</translation>
+        <translation>Slēpt visus slāņus</translation>
     </message>
     <message>
         <source>Unlock all layers</source>
-        <translation>Unlock all layers</translation>
+        <translation>Atbloķēt visus slāņus</translation>
     </message>
     <message>
         <source>Lock all layers</source>
-        <translation>Lock all layers</translation>
+        <translation>Bloķēt visus slāņus</translation>
     </message>
     <message>
         <source>Add a layer</source>
-        <translation>Add a layer</translation>
+        <translation>Pievienot slāni</translation>
     </message>
     <message>
         <source>Remove layer</source>
-        <translation>Remove layer</translation>
+        <translation>Noņemt slāni</translation>
     </message>
     <message>
         <source>Modify layer attributes / rename</source>
-        <translation>Modify layer attributes / rename</translation>
+        <translation>Mainīt slāņa atribūtus / pārsaukt</translation>
     </message>
     <message>
         <source>Filter</source>
-        <translation>Filter</translation>
+        <translation>Filtrs</translation>
     </message>
     <message>
         <source>Looking for matching layer names</source>
-        <translation>Looking for matching layer names</translation>
+        <translation>Meklē atbilstošos slāņu nosaukumus</translation>
     </message>
     <message>
         <source>Layer Menu</source>
-        <translation>Layer Menu</translation>
+        <translation>Slāņa izvēlne</translation>
     </message>
     <message>
         <source>&amp;Defreeze all Layers</source>
-        <translation>&amp;Defreeze all Layers</translation>
+        <translation>&amp;Atsaldēt visus slāņus</translation>
     </message>
     <message>
         <source>&amp;Freeze all Layers</source>
-        <translation>&amp;Freeze all Layers</translation>
+        <translation>&amp;Iesaldēt visus slāņus</translation>
     </message>
     <message>
         <source>&amp;Unlock all Layers</source>
-        <translation>&amp;Unlock all Layers</translation>
+        <translation>&amp;Atbloķēt visus slāņus</translation>
     </message>
     <message>
         <source>&amp;Lock all Layers</source>
-        <translation>&amp;Lock all Layers</translation>
+        <translation>&amp;Bloķēt visus slāņus</translation>
     </message>
     <message>
         <source>Toggle Layer &amp;Visibility</source>
-        <translation>Toggle Layer &amp;Visibility</translation>
+        <translation>Pārslēgt slāņa &amp;redzamību</translation>
     </message>
     <message>
         <source>Toggle Layer Loc&amp;k</source>
-        <translation>Toggle Layer Loc&amp;k</translation>
+        <translation>Pārslēgt slāņa &amp;bloķēšanu</translation>
     </message>
     <message>
         <source>Toggle Layer &amp;Printing</source>
-        <translation>Toggle Layer &amp;Printing</translation>
+        <translation>Pārslēgt slāņa &amp;drukāšanu</translation>
     </message>
     <message>
         <source>Toggle &amp;Construction Layer</source>
-        <translation>Toggle &amp;Construction Layer</translation>
+        <translation>Pārslēgt &amp;konstruktīvo slāni</translation>
     </message>
     <message>
         <source>&amp;Remove Layer</source>
-        <translation>&amp;Remove Layer</translation>
+        <translation>&amp;Noņemt slāni</translation>
     </message>
     <message>
         <source>&amp;Add Layer</source>
-        <translation>&amp;Add Layer</translation>
+        <translation>&amp;Pievienot slāni</translation>
     </message>
     <message>
         <source>Edit Layer &amp;Attributes</source>
-        <translation>Edit Layer &amp;Attributes</translation>
+        <translation>Rediģēt slāņa &amp;atribūtus</translation>
     </message>
     <message>
         <source>&amp;Export Selected Layer(s)</source>
-        <translation>&amp;Export Selected Layer(s)</translation>
+        <translation>&amp;Eksportēt atlasīto(-os) slāni(-ņus)</translation>
     </message>
     <message>
         <source>Export &amp;Visible Layer(s)</source>
-        <translation>Export &amp;Visible Layer(s)</translation>
+        <translation>Eksportēt &amp;redzamo(-os) slāni(-ņus)</translation>
     </message>
 </context>
 <context>
     <name>QG_LibraryWidget</name>
     <message>
         <source>Insert</source>
-        <translation>Insert</translation>
+        <translation>Ievietot</translation>
     </message>
     <message>
         <source>Refresh</source>
-        <translation>Refresh</translation>
+        <translation>Atsvaidzināt</translation>
     </message>
     <message>
         <source>Rebuild</source>
-        <translation>Rebuild</translation>
+        <translation>Pārbūvēt</translation>
     </message>
     <message>
         <source>Directories</source>
-        <translation>Directories</translation>
+        <translation>Direktorijas</translation>
     </message>
 </context>
 <context>
     <name>QG_LineTypeBox</name>
     <message>
         <source>- Unchanged -</source>
-        <translation>- Unchanged -</translation>
+        <translation>- Nemainīts -</translation>
     </message>
     <message>
         <source>By Layer</source>
-        <translation>By Layer</translation>
+        <translation>Pēc slāņa</translation>
     </message>
     <message>
         <source>By Block</source>
-        <translation>By Block</translation>
+        <translation>Pēc bloka</translation>
     </message>
     <message>
         <source>No Pen</source>
-        <translation>No Pen</translation>
+        <translation>Nav spalvas</translation>
     </message>
     <message>
         <source>Continuous</source>
-        <translation>Continuous</translation>
+        <translation>Nepārtraukts</translation>
     </message>
     <message>
         <source>Dot</source>
@@ -7350,15 +7349,15 @@ The contents of a Construction Layer should not appear in printout.</translation
     </message>
     <message>
         <source>Dot (tiny)</source>
-        <translation>Dot (tiny)</translation>
+        <translation>Punkts (sīks)</translation>
     </message>
     <message>
         <source>Dot (small)</source>
-        <translation>Dot (small)</translation>
+        <translation>Punkts (mazs)</translation>
     </message>
     <message>
         <source>Dot (large)</source>
-        <translation>Dot (large)</translation>
+        <translation>Punkts (liels)</translation>
     </message>
     <message>
         <source>Dash</source>
@@ -7366,90 +7365,90 @@ The contents of a Construction Layer should not appear in printout.</translation
     </message>
     <message>
         <source>Dash (tiny)</source>
-        <translation>Dash (tiny)</translation>
+        <translation>Strīpa (sīka)</translation>
     </message>
     <message>
         <source>Dash (small)</source>
-        <translation>Dash (small)</translation>
+        <translation>Strīpa (maza)</translation>
     </message>
     <message>
         <source>Dash (large)</source>
-        <translation>Dash (large)</translation>
+        <translation>Strīpa (liela)</translation>
     </message>
     <message>
         <source>Dash Dot</source>
-        <translation>Dash Dot</translation>
+        <translation>Strīpa punkts</translation>
     </message>
     <message>
         <source>Dash Dot (tiny)</source>
-        <translation>Dash Dot (tiny)</translation>
+        <translation>Strīpa punkts (sīks)</translation>
     </message>
     <message>
         <source>Dash Dot (small)</source>
-        <translation>Dash Dot (small)</translation>
+        <translation>Strīpa punkts (mazs)</translation>
     </message>
     <message>
         <source>Dash Dot (large)</source>
-        <translation>Dash Dot (large)</translation>
+        <translation>Strīpa punkts (liels)</translation>
     </message>
     <message>
         <source>Divide</source>
-        <translation>Divide</translation>
+        <translation>Sadalīt</translation>
     </message>
     <message>
         <source>Divide (tiny)</source>
-        <translation>Divide (tiny)</translation>
+        <translation>Sadalīt (sīks)</translation>
     </message>
     <message>
         <source>Divide (small)</source>
-        <translation>Divide (small)</translation>
+        <translation>Sadalīt (mazs)</translation>
     </message>
     <message>
         <source>Divide (large)</source>
-        <translation>Divide (large)</translation>
+        <translation>Sadalīt (liels)</translation>
     </message>
     <message>
         <source>Center</source>
-        <translation>Center</translation>
+        <translation>Centrs</translation>
     </message>
     <message>
         <source>Center (tiny)</source>
-        <translation>Center (tiny)</translation>
+        <translation>Centrs (sīks)</translation>
     </message>
     <message>
         <source>Center (small)</source>
-        <translation>Center (small)</translation>
+        <translation>Centrs (mazs)</translation>
     </message>
     <message>
         <source>Center (large)</source>
-        <translation>Center (large)</translation>
+        <translation>Centrs (liels)</translation>
     </message>
     <message>
         <source>Border</source>
-        <translation>Border</translation>
+        <translation>Mala</translation>
     </message>
     <message>
         <source>Border (tiny)</source>
-        <translation>Border (tiny)</translation>
+        <translation>Mala (sīka)</translation>
     </message>
     <message>
         <source>Border (small)</source>
-        <translation>Border (small)</translation>
+        <translation>Mala (maza)</translation>
     </message>
     <message>
         <source>Border (large)</source>
-        <translation>Border (large)</translation>
+        <translation>Mala (liela)</translation>
     </message>
 </context>
 <context>
     <name>QG_MouseWidget</name>
     <message>
         <source>Mouse</source>
-        <translation>Mouse</translation>
+        <translation>Pele</translation>
     </message>
     <message>
         <source>Right</source>
-        <translation>Right</translation>
+        <translation>Pa labi</translation>
     </message>
     <message>
         <source>Left</source>
@@ -7472,11 +7471,11 @@ p, li { white-space: pre-wrap; }
     <name>QG_PenToolBar</name>
     <message>
         <source>Line color</source>
-        <translation>Line color</translation>
+        <translation>Līnijas krāsa</translation>
     </message>
     <message>
         <source>Line width</source>
-        <translation>Line width</translation>
+        <translation>Līnijas platums</translation>
     </message>
     <message>
         <source>Line type</source>
@@ -7487,7 +7486,7 @@ p, li { white-space: pre-wrap; }
     <name>QG_PolylineOptions</name>
     <message>
         <source>wrong action type</source>
-        <translation>wrong action type</translation>
+        <translation>nepareizs darbības tips</translation>
     </message>
 </context>
 <context>
@@ -7501,15 +7500,15 @@ p, li { white-space: pre-wrap; }
     <name>QG_SelectionWidget</name>
     <message>
         <source>Selection</source>
-        <translation>Selection</translation>
+        <translation>Atlase</translation>
     </message>
     <message>
         <source>Selected</source>
-        <translation>Selected</translation>
+        <translation>Atlasīts</translation>
     </message>
     <message>
         <source>Total Length</source>
-        <translation>Total Length</translation>
+        <translation>Kopējais garums</translation>
     </message>
     <message>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
@@ -7544,127 +7543,127 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Snap to Endpoints</source>
-        <translation>Snap to Endpoints</translation>
+        <translation>Uzvert galapunktus</translation>
     </message>
     <message>
         <source>Snap to equidistant points of entity</source>
-        <translation>Snap to equidistant points of entity</translation>
+        <translation>Uzvert vienādattāluma punktus uz elementa</translation>
     </message>
     <message>
         <source>Snap to center points</source>
-        <translation>Snap to center points</translation>
+        <translation>Uzvert centru punktus</translation>
     </message>
     <message>
         <source>Snap to intersections automatically</source>
-        <translation>Snap to intersections automatically</translation>
+        <translation>Automātiski uzvert krustpunktus</translation>
     </message>
     <message>
         <source>Snap to closest point on entity</source>
-        <translation>Snap to closest point on entity</translation>
+        <translation>Uzvert tuvāko punktu uz elementa</translation>
     </message>
     <message>
         <source>Snap to point with given distance to endpoint</source>
-        <translation>Snap to point with given distance to endpoint</translation>
+        <translation>Uzvert punktu ar dotu attālumu līdz galapunktam</translation>
     </message>
     <message>
         <source>Snap to intersections manually</source>
-        <translation>Snap to intersections manually</translation>
+        <translation>Manuāli uzvert krustpunktus</translation>
     </message>
     <message>
         <source>Snap to grid</source>
-        <translation>Snap to grid</translation>
+        <translation>Uzvert uz tīkla</translation>
     </message>
     <message>
         <source>Restrict Horizontally</source>
-        <translation>Restrict Horizontally</translation>
+        <translation>Ierobežot horizontāli</translation>
     </message>
     <message>
         <source>Restrict Vertically</source>
-        <translation>Restrict Vertically</translation>
+        <translation>Ierobežot vertikāli</translation>
     </message>
     <message>
         <source>Move relative Zero</source>
-        <translation>Move relative Zero</translation>
+        <translation>Pārvietot relatīvo nulli</translation>
     </message>
     <message>
         <source>Lock relative Zero</source>
-        <translation>Lock relative Zero</translation>
+        <translation>Bloķēt relatīvo nulli</translation>
     </message>
     <message>
         <source>Exclusive Snap Mode</source>
-        <translation>Exclusive Snap Mode</translation>
+        <translation>Ekskluzīvais uztveršanas režīms</translation>
     </message>
     <message>
         <source>Snap Middle Manual</source>
-        <translation>Snap Middle Manual</translation>
+        <translation>Manuāla viduspunkta uztveršana</translation>
     </message>
     <message>
         <source>Free Snap</source>
-        <translation>Free Snap</translation>
+        <translation>Brīvā uztveršana</translation>
     </message>
     <message>
         <source>Snap on grid</source>
-        <translation>Snap on grid</translation>
+        <translation>Uzvert uz tīkla</translation>
     </message>
     <message>
         <source>Snap on Endpoints</source>
-        <translation>Snap on Endpoints</translation>
+        <translation>Uzvert galapunktus</translation>
     </message>
     <message>
         <source>Snap on Entity</source>
-        <translation>Snap on Entity</translation>
+        <translation>Uzvert uz elementa</translation>
     </message>
     <message>
         <source>Snap Center</source>
-        <translation>Snap Center</translation>
+        <translation>Uzvert centru</translation>
     </message>
     <message>
         <source>Snap Middle</source>
-        <translation>Snap Middle</translation>
+        <translation>Uzvert viduspunktu</translation>
     </message>
     <message>
         <source>Snap Distance</source>
-        <translation>Snap Distance</translation>
+        <translation>Uztveršanas attālums</translation>
     </message>
     <message>
         <source>Snap Intersection</source>
-        <translation>Snap Intersection</translation>
+        <translation>Uzvert krustpunktu</translation>
     </message>
     <message>
         <source>Restrict Horizontal</source>
-        <translation>Restrict Horizontal</translation>
+        <translation>Ierobežot horizontāli</translation>
     </message>
     <message>
         <source>Restrict Vertical</source>
-        <translation>Restrict Vertical</translation>
+        <translation>Ierobežot vertikāli</translation>
     </message>
     <message>
         <source>Restrict Orthogonal</source>
-        <translation>Restrict Orthogonal</translation>
+        <translation>Ierobežot ortogonāli</translation>
     </message>
     <message>
         <source>Restrict Nothing</source>
-        <translation>Restrict Nothing</translation>
+        <translation>Nav ierobežojumu</translation>
     </message>
     <message>
         <source>Set relative zero position</source>
-        <translation>Set relative zero position</translation>
+        <translation>Iestatīt relatīvās nulles pozīciju</translation>
     </message>
     <message>
         <source>Lock relative zero position</source>
-        <translation>Lock relative zero position</translation>
+        <translation>Bloķēt relatīvās nulles pozīciju</translation>
     </message>
     <message>
         <source>Relative zero position is %1</source>
-        <translation>Relative zero position is %1</translation>
+        <translation>Relatīvās nulles pozīcija ir %1</translation>
     </message>
     <message>
         <source>locked</source>
-        <translation>locked</translation>
+        <translation>bloķēts</translation>
     </message>
     <message>
         <source>unlocked</source>
-        <translation>unlocked</translation>
+        <translation>atbloķēts</translation>
     </message>
 </context>
 <context>
@@ -7675,113 +7674,113 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Color:</source>
-        <translation>Color:</translation>
+        <translation>Krāsa:</translation>
     </message>
     <message>
         <source>Width:</source>
-        <translation>Width:</translation>
+        <translation>Platums:</translation>
     </message>
     <message>
         <source>Line type:</source>
-        <translation>Line type:</translation>
+        <translation>Līnijas tips:</translation>
     </message>
 </context>
 <context>
     <name>QG_WidthBox</name>
     <message>
         <source>By Layer</source>
-        <translation>By Layer</translation>
+        <translation>Pēc slāņa</translation>
     </message>
 </context>
 <context>
     <name>QMessageBox</name>
     <message>
         <source>Warning</source>
-        <translation>Warning</translation>
+        <translation>Brīdinājums</translation>
     </message>
     <message>
         <source>Layer Properties</source>
-        <translation>Layer Properties</translation>
+        <translation>Slāņa īpašības</translation>
     </message>
     <message>
         <source>Layer empty name is not allowed.</source>
-        <translation>Layer empty name is not allowed.</translation>
+        <translation>Tukšs slāņa nosaukums nav atļauts.</translation>
     </message>
     <message>
         <source>Attempt to create layer with duplicating name. Duplicated layer name is 
 [%1].
 Please specify a different name.</source>
-        <translation>Attempt to create layer with duplicating name. Duplicated layer name is 
+        <translation>Mēģinājums izveidot slāni ar dublētu nosaukumu. Dublētais slāņa nosaukums ir 
 [%1].
-Please specify a different name.</translation>
+Lūdzu, norādiet citu nosaukumu.</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation>Error</translation>
+        <translation>Kļūda</translation>
     </message>
     <message>
         <source>Layer list separator string is empty. It will not be possible to build layers tree.
 Please specify a different value.</source>
-        <translation>Layer list separator string is empty. It will not be possible to build layers tree.
-Please specify a different value.</translation>
+        <translation>Slāņu saraksta atdalītāja virkne ir tukša. Nebūs iespējams veidot slāņu koku.
+Lūdzu norādiet atdalītāju slāņu koka opcijās.</translation>
     </message>
     <message>
         <source>Invalid value provide for %1 color.
 Please specify a different value.</source>
-        <translation>Invalid value provide for %1 color.
-Please specify a different value.</translation>
+        <translation>Nederīga vērtība %1 krāsai.
+Lūdzu norādiet citu vērtību.</translation>
     </message>
     <message>
         <source>Layer with a name &quot;%1&quot; already exists. Please specify a different name.</source>
-        <translation>Layer with a name &quot;%1&quot; already exists. Please specify a different name.</translation>
+        <translation>Slānis ar nosaukumu "%1" jau pastāv. Lūdzu norādiet citu nosaukumu.</translation>
     </message>
     <message>
         <source>Remove empty layers</source>
-        <translation>Remove empty layers</translation>
+        <translation>Noņemt tukšos slāņus</translation>
     </message>
     <message>
         <source>Layer(s) without entities found, yet they are filtered and not visible.
 
 Clear filtering mask and repeat.</source>
-        <translation>Layer(s) without entities found, yet they are filtered and not visible.
+        <translation>Atrasti slāņi bez elementiem, taču tie ir filtrēti un neredzami.
 
-Clear filtering mask and repeat.</translation>
+Notīrīt filtres masku un atkārtot?</translation>
     </message>
     <message>
         <source>No layers without entities found, nothing to remove.</source>
-        <translation>No layers without entities found, nothing to remove.</translation>
+        <translation>Nav atrasts neviens slānis bez elementiem, nav ko noņemt.</translation>
     </message>
     <message>
         <source>Add Layer</source>
-        <translation>Add Layer</translation>
+        <translation>Pievienot slāni</translation>
     </message>
     <message>
         <source>Such child layer already exist for 
 [%1].
 Please specify a different name.</source>
-        <translation>Such child layer already exist for 
+        <translation>Tāds apakšslānis jau pastāv 
 [%1].
-Please specify a different name.</translation>
+Lūdzu, norādiet citu nosaukumu.</translation>
     </message>
     <message>
         <source>Such child layer already exist for 
 [%1].
 </source>
-        <translation>Such child layer already exist for 
+        <translation>Tāds apakšslānis jau pastāv 
 [%1].</translation>
     </message>
     <message>
         <source>Dimensional layer may be added only for normal active layer.
 </source>
-        <translation>Dimensional layer may be added only for normal active layer.</translation>
+        <translation>Izmēru slāni var pievienot tikai parastajam aktīvajam slānim.</translation>
     </message>
     <message>
         <source>Move Selection</source>
-        <translation>Move Selection</translation>
+        <translation>Pārvietot atlasi</translation>
     </message>
     <message>
         <source>Duplicate Selection</source>
-        <translation>Duplicate Selection</translation>
+        <translation>Dublēt atlasi</translation>
     </message>
     <message>
         <source>Replace &quot;By Layer&quot; value to source layers values?
@@ -7789,19 +7788,17 @@ Please specify a different name.</translation>
 If Yes - entities with &quot;By Layer&quot; pens will look on new layer exactly as on previous layers and &quot;By Layer&quot; value will be replaced by resolved pens.
 
 If No - &quot;By Layer&quot; values remains and so pen of target layer will define pen for such entities.</source>
-        <translation>Replace &quot;By Layer&quot; value to source layers values?
+        <translation>Aizstāt vērtību "Pēc slāņa" ar avota slāņu vērtībām?
 
-If Yes - entities with &quot;By Layer&quot; pens will look on new layer exactly as on previous layers and &quot;By Layer&quot; value will be replaced by resolved pens.
-
-If No - &quot;By Layer&quot; values remains and so pen of target layer will define pen for such entities.</translation>
+Ja Jā - elementi ar "Pēc slāņa" vērtībām tiks mainīti uz konkrētām vērtībām.</translation>
     </message>
     <message>
         <source>Remove Layer</source>
-        <translation>Remove Layer</translation>
+        <translation>Noņemt slāni</translation>
     </message>
     <message>
         <source>Layer &quot;0&quot; can never be removed.</source>
-        <translation>Layer &quot;0&quot; can never be removed.</translation>
+        <translation>Slāni "0" nekad nevar noņemt.</translation>
     </message>
     <message numerus="yes">
         <source>Remove %n layer(s)</source>
@@ -7813,125 +7810,125 @@ If No - &quot;By Layer&quot; values remains and so pen of target layer will defi
     </message>
     <message>
         <source>Listed layers and all entities on them will be removed.</source>
-        <translation>Listed layers and all entities on them will be removed.</translation>
+        <translation>Uzskaitītie slāņi un visi to elementi tiks noņemti.</translation>
     </message>
     <message>
         <source>Warning: this action can NOT be undone!</source>
-        <translation>Warning: this action can NOT be undone!</translation>
+        <translation>Brīdinājums: šo darbību NEVAR atcelt!</translation>
     </message>
     <message>
         <source>Layers for removal:</source>
-        <translation>Layers for removal:</translation>
+        <translation>Slāņi noņemšanai:</translation>
     </message>
     <message>
         <source>Layer DialogEx</source>
-        <translation>Layer DialogEx</translation>
+        <translation>Slāņa dialoglodziņš</translation>
     </message>
     <message>
         <source>Invalid value provided for %1 color.
 Please specify a different value.</source>
-        <translation>Invalid value provided for %1 color.
-Please specify a different value.</translation>
+        <translation>Norādīta nederīga vērtība %1 krāsai.
+Lūdzu norādiet citu vērtību.</translation>
     </message>
     <message>
         <source>Invalid path to pens file.
 %1 
 Please specify a different value.</source>
-        <translation>Invalid path to pens file.
+        <translation>Nederīgs ceļš uz pildspalvu failu.
 %1 
-Please specify a different value.</translation>
+Lūdzu, norādiet citu vērtību.</translation>
     </message>
     <message>
         <source>Remove pen</source>
-        <translation>Remove pen</translation>
+        <translation>Noņemt spalvu</translation>
     </message>
     <message>
         <source>Pen will be removed from palette, drawing entities will not be affected.</source>
-        <translation>Pen will be removed from palette, drawing entities will not be affected.</translation>
+        <translation>Spalva tiks noņemta no paletes, zīmējuma elementi netiks ietekmēti.</translation>
     </message>
     <message>
         <source>Are you sure you&apos;d like to proceed?</source>
-        <translation>Are you sure you&apos;d like to proceed?</translation>
+        <translation>Vai esat pārliecināts, ka vēlaties turpināt?</translation>
     </message>
     <message>
         <source>Pen for removal:</source>
-        <translation>Pen for removal:</translation>
+        <translation>Spalva noņemšanai:</translation>
     </message>
     <message>
         <source>Remove pens</source>
-        <translation>Remove pens</translation>
+        <translation>Noņemt spalvas</translation>
     </message>
     <message>
         <source>Pens will be removed from palette, drawing entities will not be affected.</source>
-        <translation>Pens will be removed from palette, drawing entities will not be affected.</translation>
+        <translation>Spalvas tiks noņemtas no paletes, zīmējuma elementi netiks ietekmēti.</translation>
     </message>
     <message>
         <source>Pens for removal:</source>
-        <translation>Pens for removal:</translation>
+        <translation>Spalvas noņemšanai:</translation>
     </message>
     <message>
         <source>Select Entities </source>
-        <translation>Select Entities</translation>
+        <translation>Atlasīt elementus</translation>
     </message>
     <message>
         <source>There are no entities that matches pen on visible layers.</source>
-        <translation>There are no entities that matches pen on visible layers.</translation>
+        <translation>Nav neviena elementa, kas atbilstu spalvai redzamajos slāņos.</translation>
     </message>
     <message>
         <source>Such entities exist on frozen layers.
 </source>
-        <translation>Such entities exist on frozen layers.</translation>
+        <translation>Šādi elementi pastāv iesaldētajos slāņos.</translation>
     </message>
     <message>
         <source>Such entities exist on locked layers.
 </source>
-        <translation>Such entities exist on locked layers.</translation>
+        <translation>Šādi elementi pastāv bloķētajos slāņos.</translation>
     </message>
     <message>
         <source>Please use different pen attributes.</source>
-        <translation>Please use different pen attributes.</translation>
+        <translation>Lūdzu izmantojiet citus spalvas atribūtus.</translation>
     </message>
     <message>
         <source>Set pen by entity</source>
-        <translation>Set pen by entity</translation>
+        <translation>Iestatīt spalvu pēc elementa</translation>
     </message>
     <message>
         <source>Please select only one entity to pick pen setting.</source>
-        <translation>Please select only one entity to pick pen setting.</translation>
+        <translation>Lūdzu atlasiet tikai vienu elementu spalvas iestatījuma izvēlei.</translation>
     </message>
     <message>
         <source>Saving Pens Data</source>
-        <translation>Saving Pens Data</translation>
+        <translation>Saglabā spalvu datus</translation>
     </message>
     <message>
         <source>Unable to save pens data to specified pens file. Would you like to specify correct path to the file?</source>
-        <translation>Unable to save pens data to specified pens file. Would you like to specify correct path to the file?</translation>
+        <translation>Nevar saglabāt spalvu datus norādītajā spalvu failā. Vai vēlaties norādīt pareizo ceļu uz failu?</translation>
     </message>
     <message>
         <source>Layer &quot;%1&quot; and all entities on it will be removed.
 This action can NOT be undone.</source>
-        <translation>Layer &quot;%1&quot; and all entities on it will be removed.
-This action can NOT be undone.</translation>
+        <translation>Slānis "%1" un visi tā elementi tiks noņemti.
+Šo darbību NEVAR atcelt.</translation>
     </message>
     <message>
         <source>Layer &quot;%1&quot; can never be removed.</source>
-        <translation>Layer &quot;%1&quot; can never be removed.</translation>
+        <translation>Slāni "%1" nekad nevar noņemt.</translation>
     </message>
     <message>
         <source>Warning: layer &quot;0&quot; can never be removed.</source>
-        <translation>Warning: layer &quot;0&quot; can never be removed.</translation>
+        <translation>Brīdinājums: slāni "0" nekad nevar noņemt.</translation>
     </message>
     <message>
         <source>Layer Dialog</source>
-        <translation>Layer Dialog</translation>
+        <translation>Slāņa dialoglodziņš</translation>
     </message>
     <message>
         <source>Remove Block</source>
-        <translation>Remove Block</translation>
+        <translation>Noņemt bloku</translation>
     </message>
     <message>
         <source>Block &quot;%1&quot; and all its entities will be removed.</source>
-        <translation>Block &quot;%1&quot; and all its entities will be removed.</translation>
+        <translation>Bloks "%1" un visi tā elementi tiks noņemti.</translation>
     </message>
     <message numerus="yes">
         <source>Remove %n block(s)</source>
@@ -7943,18 +7940,18 @@ This action can NOT be undone.</translation>
     </message>
     <message>
         <source>Listed blocks and all their entities will be removed.</source>
-        <translation>Listed blocks and all their entities will be removed.</translation>
+        <translation>Uzskaitītie bloki un visi to elementi tiks noņemti.</translation>
     </message>
     <message>
         <source>Blocks for removal:</source>
-        <translation>Blocks for removal:</translation>
+        <translation>Bloki noņemšanai:</translation>
     </message>
 </context>
 <context>
     <name>QObject</name>
     <message>
         <source>No %1 layers found</source>
-        <translation>No %1 layers found</translation>
+        <translation>Nav atrasts neviens %1 slānis</translation>
     </message>
     <message>
         <source>R</source>
@@ -7963,7 +7960,7 @@ This action can NOT be undone.</translation>
     </message>
     <message>
         <source>: duplicated command: %1 is already taken by %2</source>
-        <translation>: duplicated command: %1 is already taken by %2</translation>
+        <translation>: dublēta komanda: %1 jau ir aizņemta ar %2</translation>
     </message>
     <message>
         <source>line2p</source>
@@ -9534,7 +9531,7 @@ This action can NOT be undone.</translation>
     </message>
     <message>
         <source>chord length</source>
-        <translation>chord length</translation>
+        <translation>arka garums</translation>
     </message>
     <message>
         <source>columns</source>
@@ -9736,11 +9733,11 @@ This action can NOT be undone.</translation>
     </message>
     <message>
         <source>mid-vert</source>
-        <translation>mid-vert</translation>
+        <translation>vidVertik</translation>
     </message>
     <message>
         <source>mid-hor</source>
-        <translation>mid-hor</translation>
+        <translation>vidHoriz</translation>
     </message>
     <message>
         <source>quad</source>
@@ -9752,7 +9749,7 @@ This action can NOT be undone.</translation>
     </message>
     <message>
         <source>angle_inner</source>
-        <translation>angle_inner</translation>
+        <translation>lenkisIekshejas</translation>
     </message>
     <message>
         <source>edges</source>
@@ -10055,39 +10052,39 @@ This action can NOT be undone.</translation>
     </message>
     <message>
         <source>Command: %1 (%2)</source>
-        <translation>Command: %1 (%2)</translation>
+        <translation>Komanda: %1 (%2)</translation>
     </message>
     <message>
         <source>RS_Commands:: command not found: %1</source>
-        <translation>RS_Commands:: command not found: %1</translation>
+        <translation>RS_Commands:: komanda nav atrasta: %1</translation>
     </message>
     <message>
         <source>Accepted keycode: %1</source>
-        <translation>Accepted keycode: %1</translation>
+        <translation>Akceptēts taustiņu kods: %1</translation>
     </message>
     <message>
         <source>Command not found: %1</source>
-        <translation>Command not found: %1</translation>
+        <translation>Komanda nav atrasta: %1</translation>
     </message>
     <message>
         <source>Available commands:</source>
-        <translation>Available commands:</translation>
+        <translation>Pieejamās komandas:</translation>
     </message>
     <message>
         <source>Hatch failed due to a gap=%1 between (%2, %3) and (%4, %5)</source>
-        <translation>Hatch failed due to a gap=%1 between (%2, %3) and (%4, %5)</translation>
+        <translation>Šķelšana neizdevās spraugas=%1 dēļ starp (%2, %3) un (%4, %5)</translation>
     </message>
     <message>
         <source>File on disk modified. Please save to another file to avoid data loss! File modified: %1</source>
-        <translation>File on disk modified. Please save to another file to avoid data loss! File modified: %1</translation>
+        <translation>Fails diskā modificēts. Lūdzu saglabājiet citā failā, lai novērstu datu zudumu! Modificētais fails: %1</translation>
     </message>
     <message>
         <source>Hatch:: no pattern found. Please set pattern path in application preferences</source>
-        <translation>Hatch:: no pattern found. Please set pattern path in application preferences</translation>
+        <translation>Šķelšana:: nav atrasts neviens raksts. Lūdzu iestatiet raksta ceļu programmas preferences</translation>
     </message>
     <message>
         <source>Hatch:: loading pattern failed: %1</source>
-        <translation>Hatch:: loading pattern failed: %1</translation>
+        <translation>Šķelšana:: raksta ielāde neizdevās: %1</translation>
     </message>
     <message>
         <source>None</source>
@@ -10108,23 +10105,23 @@ This action can NOT be undone.</translation>
     </message>
     <message>
         <source>Millimeter</source>
-        <translation>Millimeter</translation>
+        <translation>Milimetrs</translation>
     </message>
     <message>
         <source>Centimeter</source>
-        <translation>Centimeter</translation>
+        <translation>Centimetrs</translation>
     </message>
     <message>
         <source>Meter</source>
-        <translation>Meter</translation>
+        <translation>Metrs</translation>
     </message>
     <message>
         <source>Kilometer</source>
-        <translation>Kilometer</translation>
+        <translation>Kilometrs</translation>
     </message>
     <message>
         <source>Microinch</source>
-        <translation>Microinch</translation>
+        <translation>Mikrocolls</translation>
     </message>
     <message>
         <source>Mil</source>
@@ -10136,39 +10133,39 @@ This action can NOT be undone.</translation>
     </message>
     <message>
         <source>Angstrom</source>
-        <translation>Angstrom</translation>
+        <translation>Ångstrēms</translation>
     </message>
     <message>
         <source>Nanometer</source>
-        <translation>Nanometer</translation>
+        <translation>Nanometrs</translation>
     </message>
     <message>
         <source>Micron</source>
-        <translation>Micron</translation>
+        <translation>Mikrometrs</translation>
     </message>
     <message>
         <source>Decimeter</source>
-        <translation>Decimeter</translation>
+        <translation>Decimetrs</translation>
     </message>
     <message>
         <source>Decameter</source>
-        <translation>Decameter</translation>
+        <translation>Dekametrs</translation>
     </message>
     <message>
         <source>Hectometer</source>
-        <translation>Hectometer</translation>
+        <translation>Hektometrs</translation>
     </message>
     <message>
         <source>Gigameter</source>
-        <translation>Gigameter</translation>
+        <translation>Gigametrs</translation>
     </message>
     <message>
         <source>Astro</source>
-        <translation>Astro</translation>
+        <translation>Astronomiski</translation>
     </message>
     <message>
         <source>Lightyear</source>
-        <translation>Lightyear</translation>
+        <translation>Gaismas gads</translation>
     </message>
     <message>
         <source>Parsec</source>
@@ -10177,7 +10174,7 @@ This action can NOT be undone.</translation>
     <message>
         <source>Custom</source>
         <comment>Paper format</comment>
-        <translation>Custom</translation>
+        <translation>Pielāgots</translation>
     </message>
     <message>
         <source>A0</source>
@@ -10346,179 +10343,179 @@ This action can NOT be undone.</translation>
     </message>
     <message>
         <source>DWG support is not complete!</source>
-        <translation>DWG support is not complete!</translation>
+        <translation>DWG atbalsts nav pilnīgs!</translation>
     </message>
     <message>
         <source>If this file fails to open try an older DWG format</source>
-        <translation>If this file fails to open try an older DWG format</translation>
+        <translation>Ja šo failu nevar atvērt, mēģiniet vecāku DWG formātu</translation>
     </message>
     <message>
         <source>or try to find a converter to make it a DXF file.</source>
-        <translation>or try to find a converter to make it a DXF file.</translation>
+        <translation>vai mēģiniet atrast konvertoru, lai pārvērstu to par DXF failu.</translation>
     </message>
     <message>
         <source>Information</source>
-        <translation>Information</translation>
+        <translation>Informācija</translation>
     </message>
     <message>
         <source>Error</source>
         <comment>fileImport</comment>
-        <translation>Error</translation>
+        <translation>Kļūda</translation>
     </message>
     <message>
         <source>Import error:</source>
         <comment>fileImport</comment>
-        <translation>Import error:</translation>
+        <translation>Importēšanas kļūda:</translation>
     </message>
     <message>
         <source>Anyhow, there are some entities identified.</source>
         <comment>dwgImport</comment>
-        <translation>Anyhow, there are some entities identified.</translation>
+        <translation>Jebkurā gadījumā ir identificēti daži elementi.</translation>
     </message>
     <message>
         <source>If you open the file now, the drawing may be not complete or unusable.</source>
         <comment>dwgImport</comment>
-        <translation>If you open the file now, the drawing may be not complete or unusable.</translation>
+        <translation>Ja atvērsiet failu tagad, zīmējums var būt nepilnīgs vai nelietojams.</translation>
     </message>
     <message>
         <source>Ignore error and open the file?</source>
         <comment>dwgImport</comment>
-        <translation>Ignore error and open the file?</translation>
+        <translation>Ignorēt kļūdu un atvērt failu?</translation>
     </message>
     <message>
         <source>Warning</source>
-        <translation>Warning</translation>
+        <translation>Brīdinājums</translation>
     </message>
     <message>
         <source>no DXF/DWG error</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation>no DXF/DWG error</translation>
+        <translation>nav DXF/DWG kļūdas</translation>
     </message>
     <message>
         <source>error opening DXF/DWG file</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation>error opening DXF/DWG file</translation>
+        <translation>kļūda atverot DXF/DWG failu</translation>
     </message>
     <message>
         <source>unsupported DXF/DWG file version</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation>unsupported DXF/DWG file version</translation>
+        <translation>neatbalstīta DXF/DWG faila versija</translation>
     </message>
     <message>
         <source>error reading DXF/DWG meta data</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation>error reading DXF/DWG meta data</translation>
+        <translation>kļūda lasot DXF/DWG metadatus</translation>
     </message>
     <message>
         <source>error reading DXF/DWG file header</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation>error reading DXF/DWG file header</translation>
+        <translation>kļūda lasot DXF/DWG faila galveni</translation>
     </message>
     <message>
         <source>error reading DXF/DWG header dara</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation>error reading DXF/DWG header dara</translation>
+        <translation>kļūda lasot DXF/DWG galvenes datus</translation>
     </message>
     <message>
         <source>error reading DXF/DWG object map</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation>error reading DXF/DWG object map</translation>
+        <translation>kļūda lasot DXF/DWG objektu karti</translation>
     </message>
     <message>
         <source>error reading DXF/DWG classes</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation>error reading DXF/DWG classes</translation>
+        <translation>kļūda lasot DXF/DWG klases</translation>
     </message>
     <message>
         <source>error reading DXF/DWG tables</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation>error reading DXF/DWG tables</translation>
+        <translation>kļūda lasot DXF/DWG tabulas</translation>
     </message>
     <message>
         <source>error reading DXF/DWG blocks</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation>error reading DXF/DWG blocks</translation>
+        <translation>kļūda lasot DXF/DWG blokus</translation>
     </message>
     <message>
         <source>error reading DXF/DWG entities</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation>error reading DXF/DWG entities</translation>
+        <translation>kļūda lasot DXF/DWG elementus</translation>
     </message>
     <message>
         <source>error reading DXF/DWG objects</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation>error reading DXF/DWG objects</translation>
+        <translation>kļūda lasot DXF/DWG objektus</translation>
     </message>
     <message>
         <source>error reading DXF/DWG sections</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation>error reading DXF/DWG sections</translation>
+        <translation>kļūda lasot DXF/DWG sadaļas</translation>
     </message>
     <message>
         <source>error reading DXF/DWG code</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation>error reading DXF/DWG code</translation>
+        <translation>kļūda lasot DXF/DWG kodu</translation>
     </message>
     <message>
         <source>Opened dwg file version %1.</source>
-        <translation>Opened dwg file version %1.</translation>
+        <translation>Atvērta dwg faila versija %1.</translation>
     </message>
     <message>
         <source>unknown error opening dwg file</source>
-        <translation>unknown error opening dwg file</translation>
+        <translation>nezināma kļūda atverot dwg failu</translation>
     </message>
     <message>
         <source>can&apos;t open this dwg file</source>
-        <translation>can&apos;t open this dwg file</translation>
+        <translation>nevar atvērt šo dwg failu</translation>
     </message>
     <message>
         <source>unsupported dwg version</source>
-        <translation>unsupported dwg version</translation>
+        <translation>neatbalstīta dwg versija</translation>
     </message>
     <message>
         <source>error reading file metadata in dwg file</source>
-        <translation>error reading file metadata in dwg file</translation>
+        <translation>kļūda lasot faila metadatus dwg failā</translation>
     </message>
     <message>
         <source>error reading file header in dwg file</source>
-        <translation>error reading file header in dwg file</translation>
+        <translation>kļūda lasot faila galveni dwg failā</translation>
     </message>
     <message>
         <source>error reading header vars in dwg file</source>
-        <translation>error reading header vars in dwg file</translation>
+        <translation>kļūda lasot galvenes mainīgos dwg failā</translation>
     </message>
     <message>
         <source>error reading classes in dwg file</source>
-        <translation>error reading classes in dwg file</translation>
+        <translation>kļūda lasot klases dwg failā</translation>
     </message>
     <message>
         <source>error reading offsets in dwg file</source>
-        <translation>error reading offsets in dwg file</translation>
+        <translation>kļūda lasot nobīdes dwg failā</translation>
     </message>
     <message>
         <source>error reading tables in dwg file</source>
-        <translation>error reading tables in dwg file</translation>
+        <translation>kļūda lasot tabulas dwg failā</translation>
     </message>
     <message>
         <source>error reading blocks in dwg file</source>
-        <translation>error reading blocks in dwg file</translation>
+        <translation>kļūda lasot blokus dwg failā</translation>
     </message>
     <message>
         <source>error reading entities in dwg file</source>
-        <translation>error reading entities in dwg file</translation>
+        <translation>kļūda lasot elementus dwg failā</translation>
     </message>
     <message>
         <source>error reading objects in dwg file</source>
-        <translation>error reading objects in dwg file</translation>
+        <translation>kļūda lasot objektus dwg failā</translation>
     </message>
     <message>
         <source>undefined error</source>
         <comment>RS_FilterInterface</comment>
-        <translation>undefined error</translation>
+        <translation>nedefinēta kļūda</translation>
     </message>
     <message>
         <source>usage: </source>
-        <translation>usage:</translation>
+        <translation>lietojums:</translation>
     </message>
     <message>
         <source> [options] &lt;dxf_files&gt;</source>
@@ -10530,7 +10527,7 @@ This action can NOT be undone.</translation>
     </message>
     <message>
         <source>-- print all dxf files to pdf files with the same names.</source>
-        <translation>-- print all dxf files to pdf files with the same names.</translation>
+        <translation>-- drukāt visus dxf failus uz pdf failiem ar tiem pašiem nosaukumiem.</translation>
     </message>
     <message>
         <source> -o some.pdf *.dxf</source>
@@ -10538,54 +10535,54 @@ This action can NOT be undone.</translation>
     </message>
     <message>
         <source>-- print all dxf files to &apos;some.pdf&apos; file.</source>
-        <translation>-- print all dxf files to &apos;some.pdf&apos; file.</translation>
+        <translation>-- drukāt visus dxf failus uz 'some.pdf' failu.</translation>
     </message>
     <message>
         <source>Auto fit and center drawing to page.</source>
-        <translation>Auto fit and center drawing to page.</translation>
+        <translation>Automātiski pielāgot un centrēt zīmējumu lapā.</translation>
     </message>
     <message>
         <source>Auto center drawing on page.</source>
-        <translation>Auto center drawing on page.</translation>
+        <translation>Automātiski centrēt zīmējumu lapā.</translation>
     </message>
     <message>
         <source>Print grayscale.</source>
-        <translation>Print grayscale.</translation>
+        <translation>Drukāt pelēktoņos.</translation>
     </message>
     <message>
         <source>Print monochrome (black/white).</source>
-        <translation>Print monochrome (black/white).</translation>
+        <translation>Drukāt monohromiski (melns/balts).</translation>
     </message>
     <message>
         <source>Paper size (Width x Height) in mm.</source>
         <comment>WxH</comment>
-        <translation>Paper size (Width x Height) in mm.</translation>
+        <translation>Papīra izmērs (Platums x Augstums) mm.</translation>
     </message>
     <message>
         <source>Output resolution (DPI).</source>
         <comment>integer</comment>
-        <translation>Output resolution (DPI).</translation>
+        <translation>Izvades izšķirtspēja (DPI).</translation>
     </message>
     <message>
         <source>Output scale. E.g.: 0.01 (for 1:100 scale).</source>
-        <translation>Output scale. E.g.: 0.01 (for 1:100 scale).</translation>
+        <translation>Izvades mērogs. Piemēram: 0.01 (1:100 mērogam).</translation>
     </message>
     <message>
         <source>Paper margins in mm (integer or float).</source>
-        <translation>Paper margins in mm (integer or float).</translation>
+        <translation>Papīra malas mm (vesels skaitlis vai decimāls).</translation>
     </message>
     <message>
         <source>Print on multiple pages (Horiz. x Vert.).</source>
-        <translation>Print on multiple pages (Horiz. x Vert.).</translation>
+        <translation>Drukāt uz vairākām lapām (Hor. x Vert.).</translation>
     </message>
     <message>
         <source>Output PDF file.</source>
         <comment>file</comment>
-        <translation>Output PDF file.</translation>
+        <translation>Izvades PDF fails.</translation>
     </message>
     <message>
         <source>Target output directory.</source>
-        <translation>Target output directory.</translation>
+        <translation>Mērķa izvades direktorija.</translation>
     </message>
     <message>
         <source>&lt;dxf_files&gt;</source>
@@ -10593,71 +10590,71 @@ This action can NOT be undone.</translation>
     </message>
     <message>
         <source>Input DXF file(s)</source>
-        <translation>Input DXF file(s)</translation>
+        <translation>Ievades DXF fails(-i)</translation>
     </message>
     <message>
         <source>enter an integer number</source>
-        <translation>enter an integer number</translation>
+        <translation>ievadīt veselu skaitli</translation>
     </message>
     <message>
         <source>LibreCAD query</source>
-        <translation>LibreCAD query</translation>
+        <translation>LibreCAD vaicājums</translation>
     </message>
     <message>
         <source>enter a number</source>
-        <translation>enter a number</translation>
+        <translation>ievadīt skaitli</translation>
     </message>
     <message>
         <source>enter text</source>
-        <translation>enter text</translation>
+        <translation>ievadīt tekstu</translation>
     </message>
     <message>
         <source>Loading..</source>
-        <translation>Loading..</translation>
+        <translation>Ielādē..</translation>
     </message>
     <message>
         <source>Loading...</source>
-        <translation>Loading...</translation>
+        <translation>Ielādē...</translation>
     </message>
     <message>
         <source>Loading File %1..</source>
-        <translation>Loading File %1..</translation>
+        <translation>Ielādē failu %1..</translation>
     </message>
     <message>
         <source>Pen Wizard</source>
-        <translation>Pen Wizard</translation>
+        <translation>Spalvas vednis</translation>
     </message>
     <message>
         <source>Invalid objects removed:</source>
-        <translation>Invalid objects removed:</translation>
+        <translation>Noņemti nederīgi objekti:</translation>
     </message>
     <message>
         <source>License</source>
-        <translation>License</translation>
+        <translation>Licence</translation>
     </message>
     <message>
         <source>Keycode mode</source>
-        <translation>Keycode mode</translation>
+        <translation>Taustiņu koda režīms</translation>
     </message>
     <message>
         <source>Load command file</source>
-        <translation>Load command file</translation>
+        <translation>Ielādēt komandu failu</translation>
     </message>
     <message>
         <source>Paste multiple commands</source>
-        <translation>Paste multiple commands</translation>
+        <translation>Ielīmēt vairākas komandas</translation>
     </message>
     <message>
         <source>Select objects</source>
-        <translation>Select objects</translation>
+        <translation>Atlasīt objektus</translation>
     </message>
     <message>
         <source>Apply to selected</source>
-        <translation>Apply to selected</translation>
+        <translation>Pielietot atlasei</translation>
     </message>
     <message>
         <source>Remove</source>
-        <translation>Remove</translation>
+        <translation>Noņemt</translation>
     </message>
     <message>
         <source>All</source>
@@ -10665,15 +10662,15 @@ This action can NOT be undone.</translation>
     </message>
     <message>
         <source>Block</source>
-        <translation>Block</translation>
+        <translation>Bloks</translation>
     </message>
     <message>
         <source>Circle</source>
-        <translation>Circle</translation>
+        <translation>Aplis</translation>
     </message>
     <message>
         <source>Curve</source>
-        <translation>Curve</translation>
+        <translation>Līkne</translation>
     </message>
     <message>
         <source>Edit</source>
@@ -10681,7 +10678,7 @@ This action can NOT be undone.</translation>
     </message>
     <message>
         <source>Ellipse</source>
-        <translation>Ellipse</translation>
+        <translation>Elipse</translation>
     </message>
     <message>
         <source>File</source>
@@ -10689,7 +10686,7 @@ This action can NOT be undone.</translation>
     </message>
     <message>
         <source>Dimension</source>
-        <translation>Dimension</translation>
+        <translation>Izmērs</translation>
     </message>
     <message>
         <source>Info</source>
@@ -10705,27 +10702,27 @@ This action can NOT be undone.</translation>
     </message>
     <message>
         <source>Modify</source>
-        <translation>Modify</translation>
+        <translation>Modificēt</translation>
     </message>
     <message>
         <source>Options</source>
-        <translation>Options</translation>
+        <translation>Opcijas</translation>
     </message>
     <message>
         <source>Other</source>
-        <translation>Other</translation>
+        <translation>Cits</translation>
     </message>
     <message>
         <source>Polyline</source>
-        <translation>Polyline</translation>
+        <translation>Polilīnija</translation>
     </message>
     <message>
         <source>Restriction</source>
-        <translation>Restriction</translation>
+        <translation>Ierobežojums</translation>
     </message>
     <message>
         <source>Select</source>
-        <translation>Select</translation>
+        <translation>Atlasīt</translation>
     </message>
     <message>
         <source>Snap</source>
@@ -10733,7 +10730,7 @@ This action can NOT be undone.</translation>
     </message>
     <message>
         <source>Snap Extras</source>
-        <translation>Snap Extras</translation>
+        <translation>Papildu uztveršana</translation>
     </message>
     <message>
         <source>View</source>
@@ -10741,55 +10738,55 @@ This action can NOT be undone.</translation>
     </message>
     <message>
         <source>Widgets</source>
-        <translation>Widgets</translation>
+        <translation>Logrīki</translation>
     </message>
     <message>
         <source>PenTB</source>
-        <translation>PenTB</translation>
+        <translation>SpalvRJ</translation>
     </message>
     <message>
         <source>Combine all layers</source>
-        <translation>Combine all layers</translation>
+        <translation>Apvienot visus slāņus</translation>
     </message>
     <message>
         <source>File &quot;%1&quot; already exists. Do you want to replace it?</source>
-        <translation>File &quot;%1&quot; already exists. Do you want to replace it?</translation>
+        <translation>Fails "%1" jau pastāv. Vai vēlaties to aizstāt?</translation>
     </message>
     <message>
         <source>By Layer</source>
-        <translation>By Layer</translation>
+        <translation>Pēc slāņa</translation>
     </message>
     <message>
         <source>By Block</source>
-        <translation>By Block</translation>
+        <translation>Pēc bloka</translation>
     </message>
     <message>
         <source>- Unchanged -</source>
-        <translation>- Unchanged -</translation>
+        <translation>- Nemainīts -</translation>
     </message>
     <message>
         <source>Creators</source>
-        <translation>Creators</translation>
+        <translation>Veidotāji</translation>
     </message>
     <message>
         <source>/CustomColor%1</source>
-        <translation>/CustomColor%1</translation>
+        <translation>/PielāgotāKrāsa%1</translation>
     </message>
     <message>
         <source>Custom Picked</source>
-        <translation>Custom Picked</translation>
+        <translation>Pielāgota izvēle</translation>
     </message>
     <message>
         <source>User Color</source>
-        <translation>User Color</translation>
+        <translation>Lietotāja krāsa</translation>
     </message>
     <message>
         <source>You must input a distance first.</source>
-        <translation>You must input a distance first.</translation>
+        <translation>Vispirms jāievada attālums.</translation>
     </message>
     <message>
         <source>Calculator error for input: </source>
-        <translation>Calculator error for input:</translation>
+        <translation>Kalkulatora kļūda ievadei:</translation>
     </message>
     <message>
         <source>cal </source>
@@ -10807,11 +10804,11 @@ This action can NOT be undone.</translation>
     </message>
     <message>
         <source>Calculator mode: On</source>
-        <translation>Calculator mode: On</translation>
+        <translation>Kalkulatora režīms: Ieslēgts</translation>
     </message>
     <message>
         <source>Calculator mode: Off</source>
-        <translation>Calculator mode: Off</translation>
+        <translation>Kalkulatora režīms: Izslēgts</translation>
     </message>
     <message>
         <source>noname</source>
@@ -10820,79 +10817,79 @@ This action can NOT be undone.</translation>
     </message>
     <message>
         <source>All Image Files (%1)</source>
-        <translation>All Image Files (%1)</translation>
+        <translation>Visi attēla faili (%1)</translation>
     </message>
     <message>
         <source>All Files (*.*)</source>
-        <translation>All Files (*.*)</translation>
+        <translation>Visi faili (*.*)</translation>
     </message>
     <message>
         <source>Open Image</source>
-        <translation>Open Image</translation>
+        <translation>Atvērt attēlu</translation>
     </message>
     <message>
         <source>Windows Bitmap</source>
-        <translation>Windows Bitmap</translation>
+        <translation>Windows Bitmaps</translation>
     </message>
     <message>
         <source>Joint Photographic Experts Group</source>
-        <translation>Joint Photographic Experts Group</translation>
+        <translation>JPEG formāts</translation>
     </message>
     <message>
         <source>Graphics Interchange Format</source>
-        <translation>Graphics Interchange Format</translation>
+        <translation>GIF formāts</translation>
     </message>
     <message>
         <source>Multiple-image Network Graphics</source>
-        <translation>Multiple-image Network Graphics</translation>
+        <translation>MNG formāts</translation>
     </message>
     <message>
         <source>Portable Bit Map</source>
-        <translation>Portable Bit Map</translation>
+        <translation>PBM formāts</translation>
     </message>
     <message>
         <source>Portable Grey Map</source>
-        <translation>Portable Grey Map</translation>
+        <translation>PGM formāts</translation>
     </message>
     <message>
         <source>Portable Network Graphic</source>
-        <translation>Portable Network Graphic</translation>
+        <translation>PNG formāts</translation>
     </message>
     <message>
         <source>Portable Pixel Map</source>
-        <translation>Portable Pixel Map</translation>
+        <translation>PPM formāts</translation>
     </message>
     <message>
         <source>X Bitmap Format</source>
-        <translation>X Bitmap Format</translation>
+        <translation>X Bitkartes formāts</translation>
     </message>
     <message>
         <source>X Pixel Map</source>
-        <translation>X Pixel Map</translation>
+        <translation>X pikseļu karte</translation>
     </message>
     <message>
         <source>Scalable Vector Graphics</source>
-        <translation>Scalable Vector Graphics</translation>
+        <translation>Mērogojamā vektorgrafika</translation>
     </message>
     <message>
         <source>SGI Black &amp; White</source>
-        <translation>SGI Black &amp; White</translation>
+        <translation>SGI melnbalts</translation>
     </message>
     <message>
         <source>Encapsulated PostScript</source>
-        <translation>Encapsulated PostScript</translation>
+        <translation>Iekapsulētais PostScript</translation>
     </message>
     <message>
         <source>Encapsulated PostScript Format</source>
-        <translation>Encapsulated PostScript Format</translation>
+        <translation>Iekapsulētā PostScript formāts</translation>
     </message>
     <message>
         <source>Encapsulated PostScript Interchange</source>
-        <translation>Encapsulated PostScript Interchange</translation>
+        <translation>Iekapsulētā PostScript apmaiņa</translation>
     </message>
     <message>
         <source>Windows Icon</source>
-        <translation>Windows Icon</translation>
+        <translation>Windows ikona</translation>
     </message>
     <message>
         <source>JPEG 2000</source>
@@ -10912,45 +10909,45 @@ This action can NOT be undone.</translation>
     </message>
     <message>
         <source>Targa Image File</source>
-        <translation>Targa Image File</translation>
+        <translation>Targa attēla fails</translation>
     </message>
     <message>
         <source>Tagged Image File Format</source>
-        <translation>Tagged Image File Format</translation>
+        <translation>TIFF formāts</translation>
     </message>
     <message>
         <source>Save Drawing As</source>
-        <translation>Save Drawing As</translation>
+        <translation>Saglabāt zīmējumu kā</translation>
     </message>
     <message>
         <source>%1 already exists.
 Do you want to replace it?</source>
-        <translation>%1 already exists.
-Do you want to replace it?</translation>
+        <translation>%1 jau pastāv.
+Vai vēlaties to aizstāt?</translation>
     </message>
     <message>
         <source>Old Drawing Exchange %1</source>
-        <translation>Old Drawing Exchange %1</translation>
+        <translation>Vecā zīmējumu apmaiņa %1</translation>
     </message>
     <message>
         <source>Drawing Exchange %1</source>
-        <translation>Drawing Exchange %1</translation>
+        <translation>Zīmējumu apmaiņa %1</translation>
     </message>
     <message>
         <source>dwg Drawing %1</source>
-        <translation>dwg Drawing %1</translation>
+        <translation>dwg zīmējums %1</translation>
     </message>
     <message>
         <source>QCad 1.x file %1</source>
-        <translation>QCad 1.x file %1</translation>
+        <translation>QCad 1.x fails %1</translation>
     </message>
     <message>
         <source>LFF Font %1</source>
-        <translation>LFF Font %1</translation>
+        <translation>LFF fonts %1</translation>
     </message>
     <message>
         <source>Font %1</source>
-        <translation>Font %1</translation>
+        <translation>Fonts %1</translation>
     </message>
     <message>
         <source>Jww %1</source>
@@ -10958,7 +10955,7 @@ Do you want to replace it?</translation>
     </message>
     <message>
         <source>Open Drawing</source>
-        <translation>Open Drawing</translation>
+        <translation>Atvērt zīmējumu</translation>
     </message>
     <message>
         <source>-Unchanged-</source>
@@ -11077,7 +11074,7 @@ Do you want to replace it?</translation>
     <name>RS_ActionBlocksCreate</name>
     <message>
         <source>Specify reference point</source>
-        <translation>Specify reference point</translation>
+        <translation>Norādīt atskaites punktu</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -11088,25 +11085,25 @@ Do you want to replace it?</translation>
     <name>RS_ActionBlocksInsert</name>
     <message>
         <source>Block cannot contain an insert of itself.</source>
-        <translation>Block cannot contain an insert of itself.</translation>
+        <translation>Bloks nevar saturēt pats savu ievietojumu.</translation>
     </message>
     <message>
         <source> has nested insert of current block in:
 </source>
-        <translation>has nested insert of current block in:</translation>
+        <translation>ir ligzdots pašreizējā bloka ievietojums:</translation>
     </message>
     <message>
         <source>
 This block cannot be inserted.</source>
-        <translation>This block cannot be inserted.</translation>
+        <translation>Šo bloku nevar ievietot.</translation>
     </message>
     <message>
         <source>Not a valid expression</source>
-        <translation>Not a valid expression</translation>
+        <translation>Nederīga izteiksme</translation>
     </message>
     <message>
         <source>Specify reference point</source>
-        <translation>Specify reference point</translation>
+        <translation>Norādīt atskaites punktu</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -11114,41 +11111,41 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Enter angle:</source>
-        <translation>Enter angle:</translation>
+        <translation>Ievadīt leņķi:</translation>
     </message>
     <message>
         <source>Enter factor:</source>
-        <translation>Enter factor:</translation>
+        <translation>Ievadīt koeficientu:</translation>
     </message>
     <message>
         <source>Enter columns:</source>
-        <translation>Enter columns:</translation>
+        <translation>Ievadīt kolonnas:</translation>
     </message>
     <message>
         <source>Enter rows:</source>
-        <translation>Enter rows:</translation>
+        <translation>Ievadīt rindas:</translation>
     </message>
     <message>
         <source>Enter column spacing:</source>
-        <translation>Enter column spacing:</translation>
+        <translation>Ievadīt kolonnu atstarpi:</translation>
     </message>
     <message>
         <source>Enter row spacing:</source>
-        <translation>Enter row spacing:</translation>
+        <translation>Ievadīt rindu atstarpi:</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionBlocksSave</name>
     <message>
         <source>No block activated to save</source>
-        <translation>No block activated to save</translation>
+        <translation>Nav aktivizēts neviens bloks saglabāšanai</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDefault</name>
     <message>
         <source>Choose second edge</source>
-        <translation>Choose second edge</translation>
+        <translation>Izvēlēties otro malu</translation>
     </message>
     <message>
         <source>Back</source>
@@ -11159,7 +11156,7 @@ This block cannot be inserted.</source>
     <name>RS_ActionDimAligned</name>
     <message>
         <source>Specify first extension line origin</source>
-        <translation>Specify first extension line origin</translation>
+        <translation>Norādīt pirmās pagarinājuma līnijas sākumpunktu</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -11167,7 +11164,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Specify second extension line origin</source>
-        <translation>Specify second extension line origin</translation>
+        <translation>Norādīt otrās pagarinājuma līnijas sākumpunktu</translation>
     </message>
     <message>
         <source>Back</source>
@@ -11175,18 +11172,18 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Specify dimension line location</source>
-        <translation>Specify dimension line location</translation>
+        <translation>Norādīt izmēra līnijas atrašanās vietu</translation>
     </message>
     <message>
         <source>Enter dimension text:</source>
-        <translation>Enter dimension text:</translation>
+        <translation>Ievadīt izmēra tekstu:</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDimAngular</name>
     <message>
         <source>Select first line</source>
-        <translation>Select first line</translation>
+        <translation>Atlasīt pirmo līniju</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -11194,30 +11191,30 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Select second line</source>
-        <translation>Select second line</translation>
+        <translation>Atlasīt otro līniju</translation>
     </message>
     <message>
         <source>Specify dimension arc line location</source>
-        <translation>Specify dimension arc line location</translation>
+        <translation>Norādīt izmēra loka līnijas atrašanās vietu</translation>
     </message>
     <message>
         <source>Enter dimension text:</source>
-        <translation>Enter dimension text:</translation>
+        <translation>Ievadīt izmēra tekstu:</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDimDiametric</name>
     <message>
         <source>Not a circle or arc entity</source>
-        <translation>Not a circle or arc entity</translation>
+        <translation>Nav apļa vai loka elements</translation>
     </message>
     <message>
         <source>Not a valid expression</source>
-        <translation>Not a valid expression</translation>
+        <translation>Nederīga izteiksme</translation>
     </message>
     <message>
         <source>Select arc or circle entity</source>
-        <translation>Select arc or circle entity</translation>
+        <translation>Atlasīt loka vai apļa elementu</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -11225,18 +11222,18 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Specify dimension line location</source>
-        <translation>Specify dimension line location</translation>
+        <translation>Norādīt izmēra līnijas atrašanās vietu</translation>
     </message>
     <message>
         <source>Enter dimension text:</source>
-        <translation>Enter dimension text:</translation>
+        <translation>Ievadīt izmēra tekstu:</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDimLeader</name>
     <message>
         <source>Specify target point</source>
-        <translation>Specify target point</translation>
+        <translation>Norādīt mērķa punktu</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -11244,22 +11241,22 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Specify next point</source>
-        <translation>Specify next point</translation>
+        <translation>Norādīt nākamo punktu</translation>
     </message>
     <message>
         <source>Finish</source>
-        <translation>Finish</translation>
+        <translation>Pabeigt</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDimLinear</name>
     <message>
         <source>Not a valid expression</source>
-        <translation>Not a valid expression</translation>
+        <translation>Nederīga izteiksme</translation>
     </message>
     <message>
         <source>Specify first extension line origin</source>
-        <translation>Specify first extension line origin</translation>
+        <translation>Norādīt pirmās pagarinājuma līnijas sākumpunktu</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -11267,7 +11264,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Specify second extension line origin</source>
-        <translation>Specify second extension line origin</translation>
+        <translation>Norādīt otrās pagarinājuma līnijas sākumpunktu</translation>
     </message>
     <message>
         <source>Back</source>
@@ -11275,30 +11272,30 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Specify dimension line location</source>
-        <translation>Specify dimension line location</translation>
+        <translation>Norādīt izmēra līnijas atrašanās vietu</translation>
     </message>
     <message>
         <source>Enter dimension text:</source>
-        <translation>Enter dimension text:</translation>
+        <translation>Ievadīt izmēra tekstu:</translation>
     </message>
     <message>
         <source>Enter dimension line angle:</source>
-        <translation>Enter dimension line angle:</translation>
+        <translation>Ievadīt izmēra līnijas leņķi:</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDimRadial</name>
     <message>
         <source>Not a circle or arc entity</source>
-        <translation>Not a circle or arc entity</translation>
+        <translation>Nav apļa vai loka elements</translation>
     </message>
     <message>
         <source>Not a valid expression</source>
-        <translation>Not a valid expression</translation>
+        <translation>Nederīga izteiksme</translation>
     </message>
     <message>
         <source>Select arc or circle entity</source>
-        <translation>Select arc or circle entity</translation>
+        <translation>Atlasīt loka vai apļa elementu</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -11306,26 +11303,26 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Specify dimension line position or enter angle:</source>
-        <translation>Specify dimension line position or enter angle:</translation>
+        <translation>Norādīt izmēra līnijas pozīciju vai ievadīt leņķi:</translation>
     </message>
     <message>
         <source>Enter dimension text:</source>
-        <translation>Enter dimension text:</translation>
+        <translation>Ievadīt izmēra tekstu:</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawArc</name>
     <message>
         <source>Not a valid expression</source>
-        <translation>Not a valid expression</translation>
+        <translation>Nederīga izteiksme</translation>
     </message>
     <message>
         <source>Not a valid chord length</source>
-        <translation>Not a valid chord length</translation>
+        <translation>Nederīgs arka garums</translation>
     </message>
     <message>
         <source>Specify center</source>
-        <translation>Specify center</translation>
+        <translation>Norādīt centru</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -11333,7 +11330,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Specify radius</source>
-        <translation>Specify radius</translation>
+        <translation>Norādīt rādiusu</translation>
     </message>
     <message>
         <source>Back</source>
@@ -11341,30 +11338,30 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Specify start angle:</source>
-        <translation>Specify start angle:</translation>
+        <translation>Norādīt sākuma leņķi:</translation>
     </message>
     <message>
         <source>Specify end angle or [angle/chord length]</source>
-        <translation>Specify end angle or [angle/chord length]</translation>
+        <translation>Norādīt beigu leņķi vai [leņķis/arka garums]</translation>
     </message>
     <message>
         <source>Specify included angle:</source>
-        <translation>Specify included angle:</translation>
+        <translation>Norādīt iekļauto leņķi:</translation>
     </message>
     <message>
         <source>Specify chord length:</source>
-        <translation>Specify chord length:</translation>
+        <translation>Norādīt arka garumu:</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawArc3P</name>
     <message>
         <source>Invalid arc data.</source>
-        <translation>Invalid arc data.</translation>
+        <translation>Nederīgi loka dati.</translation>
     </message>
     <message>
         <source>Specify startpoint or [center]</source>
-        <translation>Specify startpoint or [center]</translation>
+        <translation>Norādīt sākuma punktu vai [centrs]</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -11372,7 +11369,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Specify second point</source>
-        <translation>Specify second point</translation>
+        <translation>Norādīt otro punktu</translation>
     </message>
     <message>
         <source>Back</source>
@@ -11380,14 +11377,14 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Specify endpoint</source>
-        <translation>Specify endpoint</translation>
+        <translation>Norādīt galapunktu</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawArcTangential</name>
     <message>
         <source>Specify base entity</source>
-        <translation>Specify base entity</translation>
+        <translation>Norādīt bāzes elementu</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -11395,7 +11392,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Specify end angle</source>
-        <translation>Specify end angle</translation>
+        <translation>Norādīt beigu leņķi</translation>
     </message>
     <message>
         <source>Back</source>
@@ -11403,18 +11400,18 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Specify end point</source>
-        <translation>Specify end point</translation>
+        <translation>Norādīt beigu punktu</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawCircle</name>
     <message>
         <source>Not a valid expression</source>
-        <translation>Not a valid expression</translation>
+        <translation>Nederīga izteiksme</translation>
     </message>
     <message>
         <source>Specify center</source>
-        <translation>Specify center</translation>
+        <translation>Norādīt centru</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -11422,7 +11419,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Specify point on circle</source>
-        <translation>Specify point on circle</translation>
+        <translation>Norādīt punktu uz apļa</translation>
     </message>
     <message>
         <source>Back</source>
@@ -11433,11 +11430,11 @@ This block cannot be inserted.</source>
     <name>RS_ActionDrawCircle2P</name>
     <message>
         <source>Invalid Circle data.</source>
-        <translation>Invalid Circle data.</translation>
+        <translation>Nederīgi apļa dati.</translation>
     </message>
     <message>
         <source>Specify first point</source>
-        <translation>Specify first point</translation>
+        <translation>Norādīt pirmo punktu</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -11445,7 +11442,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Specify second point</source>
-        <translation>Specify second point</translation>
+        <translation>Norādīt otro punktu</translation>
     </message>
     <message>
         <source>Back</source>
@@ -11456,11 +11453,11 @@ This block cannot be inserted.</source>
     <name>RS_ActionDrawCircle3P</name>
     <message>
         <source>Invalid circle data.</source>
-        <translation>Invalid circle data.</translation>
+        <translation>Nederīgi apļa dati.</translation>
     </message>
     <message>
         <source>Specify first point</source>
-        <translation>Specify first point</translation>
+        <translation>Norādīt pirmo punktu</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -11468,7 +11465,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Specify second point</source>
-        <translation>Specify second point</translation>
+        <translation>Norādīt otro punktu</translation>
     </message>
     <message>
         <source>Back</source>
@@ -11476,30 +11473,30 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Specify third point</source>
-        <translation>Specify third point</translation>
+        <translation>Norādīt trešo punktu</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawCircleCR</name>
     <message>
         <source>radius=%1 is invalid (expression)</source>
-        <translation>radius=%1 is invalid (expression)</translation>
+        <translation>rādiuss=%1 ir nederīgs (izteiksme)</translation>
     </message>
     <message>
         <source>radius=%1 is invalid (negative)</source>
-        <translation>radius=%1 is invalid (negative)</translation>
+        <translation>rādiuss=%1 ir nederīgs (negatīvs)</translation>
     </message>
     <message>
         <source>radius=%1 is invalid (zero)</source>
-        <translation>radius=%1 is invalid (zero)</translation>
+        <translation>rādiuss=%1 ir nederīgs (nulle)</translation>
     </message>
     <message>
         <source>Not a valid expression</source>
-        <translation>Not a valid expression</translation>
+        <translation>Nederīga izteiksme</translation>
     </message>
     <message>
         <source>Specify circle center</source>
-        <translation>Specify circle center</translation>
+        <translation>Norādīt apļa centru</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -11507,7 +11504,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Specify circle radius</source>
-        <translation>Specify circle radius</translation>
+        <translation>Norādīt apļa rādiusu</translation>
     </message>
     <message>
         <source>Back</source>
@@ -11518,7 +11515,7 @@ This block cannot be inserted.</source>
     <name>RS_ActionDrawCircleInscribe</name>
     <message>
         <source>Specify the first line</source>
-        <translation>Specify the first line</translation>
+        <translation>Norādīt pirmo līniju</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -11526,7 +11523,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Specify the second line</source>
-        <translation>Specify the second line</translation>
+        <translation>Norādīt otro līniju</translation>
     </message>
     <message>
         <source>Back</source>
@@ -11534,14 +11531,14 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Specify the third line</source>
-        <translation>Specify the third line</translation>
+        <translation>Norādīt trešo līniju</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawCircleTan1_2P</name>
     <message>
         <source>Specify a line/arc/circle</source>
-        <translation>Specify a line/arc/circle</translation>
+        <translation>Norādīt līniju/loku/apli</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -11549,7 +11546,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Specify the first point on the tangent circle</source>
-        <translation>Specify the first point on the tangent circle</translation>
+        <translation>Norādīt pirmo punktu uz pieskares apļa</translation>
     </message>
     <message>
         <source>Back</source>
@@ -11557,38 +11554,38 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Specify the second point on the tangent circle</source>
-        <translation>Specify the second point on the tangent circle</translation>
+        <translation>Norādīt otro punktu uz pieskares apļa</translation>
     </message>
     <message>
         <source>Select the center of the tangent circle</source>
-        <translation>Select the center of the tangent circle</translation>
+        <translation>Atlasīt pieskares apļa centru</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawCircleTan2</name>
     <message>
         <source>Invalid expression &apos;%1&apos; for radius</source>
-        <translation>Invalid expression &apos;%1&apos; for radius</translation>
+        <translation>Nederīga izteiksme '%1' rādiusam</translation>
     </message>
     <message>
         <source>Invalid negative radius &apos;%1&apos;</source>
-        <translation>Invalid negative radius &apos;%1&apos;</translation>
+        <translation>Nederīgs negatīvs rādiuss '%1'</translation>
     </message>
     <message>
         <source>Invalid zero radius &apos;%1&apos;</source>
-        <translation>Invalid zero radius &apos;%1&apos;</translation>
+        <translation>Nederīgs nulle rādiuss '%1'</translation>
     </message>
     <message>
         <source>No tangent circle possible for radius &apos;%1&apos;</source>
-        <translation>No tangent circle possible for radius &apos;%1&apos;</translation>
+        <translation>Nav iespējams pieskares aplis rādiusam '%1'</translation>
     </message>
     <message>
         <source>No common tangential circle for radius &apos;%1&apos;</source>
-        <translation>No common tangential circle for radius &apos;%1&apos;</translation>
+        <translation>Nav kopīga pieskares apļa rādiusam '%1'</translation>
     </message>
     <message>
         <source>Specify the first line/arc/circle</source>
-        <translation>Specify the first line/arc/circle</translation>
+        <translation>Norādīt pirmo līniju/loku/apli</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -11596,7 +11593,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Specify the second line/arc/circle</source>
-        <translation>Specify the second line/arc/circle</translation>
+        <translation>Norādīt otro līniju/loku/apli</translation>
     </message>
     <message>
         <source>Back</source>
@@ -11604,14 +11601,14 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Select the center of the tangent circle</source>
-        <translation>Select the center of the tangent circle</translation>
+        <translation>Atlasīt pieskares apļa centru</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawCircleTan2_1P</name>
     <message>
         <source>Specify a line/arc/circle</source>
-        <translation>Specify a line/arc/circle</translation>
+        <translation>Norādīt līniju/loku/apli</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -11619,7 +11616,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Specify the another arc/circle</source>
-        <translation>Specify the another arc/circle</translation>
+        <translation>Norādīt citu loku/apli</translation>
     </message>
     <message>
         <source>Back</source>
@@ -11627,18 +11624,18 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Specify a point on the tangent circle</source>
-        <translation>Specify a point on the tangent circle</translation>
+        <translation>Norādīt punktu uz pieskares apļa</translation>
     </message>
     <message>
         <source>Select the center of the tangent circle</source>
-        <translation>Select the center of the tangent circle</translation>
+        <translation>Atlasīt pieskares apļa centru</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawCircleTan3</name>
     <message>
         <source>Specify the first line/arc/circle</source>
-        <translation>Specify the first line/arc/circle</translation>
+        <translation>Norādīt pirmo līniju/loku/apli</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -11646,7 +11643,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Specify the second line/arc/circle</source>
-        <translation>Specify the second line/arc/circle</translation>
+        <translation>Norādīt otro līniju/loku/apli</translation>
     </message>
     <message>
         <source>Back</source>
@@ -11654,22 +11651,22 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Specify the third line/arc/circle</source>
-        <translation>Specify the third line/arc/circle</translation>
+        <translation>Norādīt trešo līniju/loku/apli</translation>
     </message>
     <message>
         <source>Select the center of the tangent circle</source>
-        <translation>Select the center of the tangent circle</translation>
+        <translation>Atlasīt pieskares apļa centru</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawEllipse4Points</name>
     <message>
         <source>Can not determine uniquely an ellipse</source>
-        <translation>Can not determine uniquely an ellipse</translation>
+        <translation>Nevar viennozīmīgi noteikt elipsi</translation>
     </message>
     <message>
         <source>Specify the first point on ellipse</source>
-        <translation>Specify the first point on ellipse</translation>
+        <translation>Norādīt pirmo punktu uz elipses</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -11677,7 +11674,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Specify the second point on ellipse</source>
-        <translation>Specify the second point on ellipse</translation>
+        <translation>Norādīt otro punktu uz elipses</translation>
     </message>
     <message>
         <source>Back</source>
@@ -11685,22 +11682,22 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Specify the third point on ellipse</source>
-        <translation>Specify the third point on ellipse</translation>
+        <translation>Norādīt trešo punktu uz elipses</translation>
     </message>
     <message>
         <source>Specify the fourth point on ellipse</source>
-        <translation>Specify the fourth point on ellipse</translation>
+        <translation>Norādīt ceturto punktu uz elipses</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawEllipseAxis</name>
     <message>
         <source>Not a valid expression</source>
-        <translation>Not a valid expression</translation>
+        <translation>Nederīga izteiksme</translation>
     </message>
     <message>
         <source>Specify ellipse center</source>
-        <translation>Specify ellipse center</translation>
+        <translation>Norādīt elipses centru</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -11708,7 +11705,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Specify endpoint of major axis</source>
-        <translation>Specify endpoint of major axis</translation>
+        <translation>Norādīt lielākās ass galapunktu</translation>
     </message>
     <message>
         <source>Back</source>
@@ -11716,22 +11713,22 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Specify endpoint or length of minor axis:</source>
-        <translation>Specify endpoint or length of minor axis:</translation>
+        <translation>Norādīt mazākās ass galapunktu vai garumu:</translation>
     </message>
     <message>
         <source>Specify start angle</source>
-        <translation>Specify start angle</translation>
+        <translation>Norādīt sākuma leņķi</translation>
     </message>
     <message>
         <source>Specify end angle</source>
-        <translation>Specify end angle</translation>
+        <translation>Norādīt beigu leņķi</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawEllipseCenter3Points</name>
     <message>
         <source>Specify the center of ellipse</source>
-        <translation>Specify the center of ellipse</translation>
+        <translation>Norādīt elipses centru</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -11739,11 +11736,11 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Specify the first point on ellipse</source>
-        <translation>Specify the first point on ellipse</translation>
+        <translation>Norādīt pirmo punktu uz elipses</translation>
     </message>
     <message>
         <source>Specify the second point on ellipse</source>
-        <translation>Specify the second point on ellipse</translation>
+        <translation>Norādīt otro punktu uz elipses</translation>
     </message>
     <message>
         <source>Back</source>
@@ -11751,26 +11748,26 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Specify the third point on ellipse</source>
-        <translation>Specify the third point on ellipse</translation>
+        <translation>Norādīt trešo punktu uz elipses</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawEllipseFociPoint</name>
     <message>
         <source>specify a point on ellipse, or total distance to foci</source>
-        <translation>specify a point on ellipse, or total distance to foci</translation>
+        <translation>norādīt punktu uz elipses vai kopējo attālumu līdz fokusiem</translation>
     </message>
     <message>
         <source>Total distance %1 is smaller than distance between foci</source>
-        <translation>Total distance %1 is smaller than distance between foci</translation>
+        <translation>Kopējais attālums %1 ir mazāks par attālumu starp fokusiem</translation>
     </message>
     <message>
         <source>Not a valid expression</source>
-        <translation>Not a valid expression</translation>
+        <translation>Nederīga izteiksme</translation>
     </message>
     <message>
         <source>Specify first focus of ellipse</source>
-        <translation>Specify first focus of ellipse</translation>
+        <translation>Norādīt elipses pirmo fokusu</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -11778,7 +11775,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Specify second focus of ellipse</source>
-        <translation>Specify second focus of ellipse</translation>
+        <translation>Norādīt elipses otro fokusu</translation>
     </message>
     <message>
         <source>Back</source>
@@ -11786,18 +11783,18 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Specify a point on ellipse or total distance to foci</source>
-        <translation>Specify a point on ellipse or total distance to foci</translation>
+        <translation>Norādīt punktu uz elipses vai kopējo attālumu līdz fokusiem</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawEllipseInscribe</name>
     <message>
         <source>Can not determine uniquely an ellipse</source>
-        <translation>Can not determine uniquely an ellipse</translation>
+        <translation>Nevar viennozīmīgi noteikt elipsi</translation>
     </message>
     <message>
         <source>Specify the first line</source>
-        <translation>Specify the first line</translation>
+        <translation>Norādīt pirmo līniju</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -11805,7 +11802,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Specify the second line</source>
-        <translation>Specify the second line</translation>
+        <translation>Norādīt otro līniju</translation>
     </message>
     <message>
         <source>Back</source>
@@ -11813,57 +11810,57 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Specify the third line</source>
-        <translation>Specify the third line</translation>
+        <translation>Norādīt trešo līniju</translation>
     </message>
     <message>
         <source>Specify the fourth line</source>
-        <translation>Specify the fourth line</translation>
+        <translation>Norādīt ceturto līniju</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawHatch</name>
     <message>
         <source>Hatch created successfully.</source>
-        <translation>Hatch created successfully.</translation>
+        <translation>Šķelšana veiksmīgi izveidota.</translation>
     </message>
     <message>
         <source>Hatch Error: Invalid contour found!</source>
-        <translation>Hatch Error: Invalid contour found!</translation>
+        <translation>Šķelšanas kļūda: atrasta nederīga kontūra!</translation>
     </message>
     <message>
         <source>Hatch Error: Pattern not found!</source>
-        <translation>Hatch Error: Pattern not found!</translation>
+        <translation>Šķelšanas kļūda: raksts nav atrasts!</translation>
     </message>
     <message>
         <source>Hatch Error: Contour or pattern too small!</source>
-        <translation>Hatch Error: Contour or pattern too small!</translation>
+        <translation>Šķelšanas kļūda: kontūra vai raksts ir pārāk mazs!</translation>
     </message>
     <message>
         <source>Hatch Error: Contour too big!</source>
-        <translation>Hatch Error: Contour too big!</translation>
+        <translation>Šķelšanas kļūda: kontūra ir pārāk liela!</translation>
     </message>
     <message>
         <source>Hatch Error: Undefined Error!</source>
-        <translation>Hatch Error: Undefined Error!</translation>
+        <translation>Šķelšanas kļūda: nedefinēta kļūda!</translation>
     </message>
     <message>
         <source>Total hatch area = %1</source>
-        <translation>Total hatch area = %1</translation>
+        <translation>Kopējais šķelšanas laukums = %1</translation>
     </message>
     <message>
         <source>Invalid hatch area. Please check that the entities chosen form one or more closed contours.</source>
-        <translation>Invalid hatch area. Please check that the entities chosen form one or more closed contours.</translation>
+        <translation>Nederīgs šķelšanas laukums. Lūdzu pārbaudiet, vai izvēlētie elementi veido vienu vai vairākas slēgtas kontūras.</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawImage</name>
     <message>
         <source>Not a valid expression</source>
-        <translation>Not a valid expression</translation>
+        <translation>Nederīga izteiksme</translation>
     </message>
     <message>
         <source>Specify reference point</source>
-        <translation>Specify reference point</translation>
+        <translation>Norādīt atskaites punktu</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -11871,22 +11868,22 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Enter angle:</source>
-        <translation>Enter angle:</translation>
+        <translation>Ievadīt leņķi:</translation>
     </message>
     <message>
         <source>Enter factor:</source>
-        <translation>Enter factor:</translation>
+        <translation>Ievadīt koeficientu:</translation>
     </message>
     <message>
         <source>Enter dpi:</source>
-        <translation>Enter dpi:</translation>
+        <translation>Ievadīt dpi:</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawLine</name>
     <message>
         <source>Specify first point</source>
-        <translation>Specify first point</translation>
+        <translation>Norādīt pirmo punktu</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -11894,7 +11891,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Specify next point or [%1]</source>
-        <translation>Specify next point or [%1]</translation>
+        <translation>Norādīt nākamo punktu vai [%1]</translation>
     </message>
     <message>
         <source>Back</source>
@@ -11902,30 +11899,30 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Specify next point</source>
-        <translation>Specify next point</translation>
+        <translation>Norādīt nākamo punktu</translation>
     </message>
     <message>
         <source>Cannot close sequence of lines: Not enough entities defined yet, or already closed.</source>
-        <translation>Cannot close sequence of lines: Not enough entities defined yet, or already closed.</translation>
+        <translation>Nevar aizvērt līniju secību: vēl nav definēts pietiekami daudz elementu, vai jau aizvērts.</translation>
     </message>
     <message>
         <source>Cannot undo: Begin of history reached</source>
-        <translation>Cannot undo: Begin of history reached</translation>
+        <translation>Nevar atcelt: sasniegts vēstures sākums</translation>
     </message>
     <message>
         <source>Cannot redo: End of history reached</source>
-        <translation>Cannot redo: End of history reached</translation>
+        <translation>Nevar atkārtot: sasniegts vēstures beigas</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawLineAngle</name>
     <message>
         <source>Not a valid expression</source>
-        <translation>Not a valid expression</translation>
+        <translation>Nederīga izteiksme</translation>
     </message>
     <message>
         <source>Specify position</source>
-        <translation>Specify position</translation>
+        <translation>Norādīt pozīciju</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -11933,7 +11930,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Enter angle:</source>
-        <translation>Enter angle:</translation>
+        <translation>Ievadīt leņķi:</translation>
     </message>
     <message>
         <source>Back</source>
@@ -11941,23 +11938,23 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Enter length:</source>
-        <translation>Enter length:</translation>
+        <translation>Ievadīt garumu:</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawLineBisector</name>
     <message>
         <source>Not a valid expression</source>
-        <translation>Not a valid expression</translation>
+        <translation>Nederīga izteiksme</translation>
     </message>
     <message>
         <source>Number sector lines not in range: </source>
         <comment>number of bisector to create must be in [1, 200]</comment>
-        <translation>Number sector lines not in range:</translation>
+        <translation>Nozares līniju skaits nav diapazonā:</translation>
     </message>
     <message>
         <source>Select first line</source>
-        <translation>Select first line</translation>
+        <translation>Atlasīt pirmo līniju</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -11965,7 +11962,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Select second line</source>
-        <translation>Select second line</translation>
+        <translation>Atlasīt otro līniju</translation>
     </message>
     <message>
         <source>Back</source>
@@ -11973,18 +11970,18 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Enter bisector length:</source>
-        <translation>Enter bisector length:</translation>
+        <translation>Ievadīt bisektrisei garumu:</translation>
     </message>
     <message>
         <source>Enter number of bisectors:</source>
-        <translation>Enter number of bisectors:</translation>
+        <translation>Ievadīt bisektriešu skaitu:</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawLineFree</name>
     <message>
         <source>Click and drag to draw a line</source>
-        <translation>Click and drag to draw a line</translation>
+        <translation>Noklikšķiniet un velciet, lai uzzīmētu līniju</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -11995,7 +11992,7 @@ This block cannot be inserted.</source>
     <name>RS_ActionDrawLineHorVert</name>
     <message>
         <source>Specify first point</source>
-        <translation>Specify first point</translation>
+        <translation>Norādīt pirmo punktu</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -12003,7 +12000,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Specify second point</source>
-        <translation>Specify second point</translation>
+        <translation>Norādīt otro punktu</translation>
     </message>
     <message>
         <source>Back</source>
@@ -12014,7 +12011,7 @@ This block cannot be inserted.</source>
     <name>RS_ActionDrawLineOrthTan</name>
     <message>
         <source>Select a line</source>
-        <translation>Select a line</translation>
+        <translation>Atlasīt līniju</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -12022,7 +12019,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Select circle, arc or ellipse</source>
-        <translation>Select circle, arc or ellipse</translation>
+        <translation>Atlasīt apli, loku vai elipsi</translation>
     </message>
     <message>
         <source>Back</source>
@@ -12041,22 +12038,22 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Enter number:</source>
-        <translation>Enter number:</translation>
+        <translation>Ievadīt numuru:</translation>
     </message>
     <message>
         <source>Not a valid expression</source>
-        <translation>Not a valid expression</translation>
+        <translation>Nederīga izteiksme</translation>
     </message>
     <message>
         <source>Not a valid number. Try 1..99</source>
-        <translation>Not a valid number. Try 1..99</translation>
+        <translation>Nederīgs numurs. Mēģiniet 1..99</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawLineParallelThrough</name>
     <message>
         <source>Select entity</source>
-        <translation>Select entity</translation>
+        <translation>Atlasīt elementu</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -12064,7 +12061,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Specify through point</source>
-        <translation>Specify through point</translation>
+        <translation>Norādīt caurplūdes punktu</translation>
     </message>
     <message>
         <source>Back</source>
@@ -12072,45 +12069,45 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Number:</source>
-        <translation>Number:</translation>
+        <translation>Numurs:</translation>
     </message>
     <message>
         <source>Not a valid number. Try 1..99</source>
-        <translation>Not a valid number. Try 1..99</translation>
+        <translation>Nederīgs numurs. Mēģiniet 1..99</translation>
     </message>
     <message>
         <source>Not a valid expression</source>
-        <translation>Not a valid expression</translation>
+        <translation>Nederīga izteiksme</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawLinePolygonCenCor</name>
     <message>
         <source>Specify center</source>
-        <translation>Specify center</translation>
+        <translation>Norādīt centru</translation>
     </message>
     <message>
         <source>Specify a corner</source>
-        <translation>Specify a corner</translation>
+        <translation>Norādīt stūri</translation>
     </message>
     <message>
         <source>Enter number:</source>
-        <translation>Enter number:</translation>
+        <translation>Ievadīt numuru:</translation>
     </message>
     <message>
         <source>Not a valid number. Try 1..9999</source>
-        <translation>Not a valid number. Try 1..9999</translation>
+        <translation>Nederīgs numurs. Mēģiniet 1..9999</translation>
     </message>
     <message>
         <source>Not a valid expression</source>
-        <translation>Not a valid expression</translation>
+        <translation>Nederīga izteiksme</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawLinePolygonCorCor</name>
     <message>
         <source>Specify first corner</source>
-        <translation>Specify first corner</translation>
+        <translation>Norādīt pirmo stūri</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -12118,7 +12115,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Specify second corner</source>
-        <translation>Specify second corner</translation>
+        <translation>Norādīt otro stūri</translation>
     </message>
     <message>
         <source>Back</source>
@@ -12126,22 +12123,22 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Number:</source>
-        <translation>Number:</translation>
+        <translation>Numurs:</translation>
     </message>
     <message>
         <source>Not a valid number. Try 1..9999</source>
-        <translation>Not a valid number. Try 1..9999</translation>
+        <translation>Nederīgs numurs. Mēģiniet 1..9999</translation>
     </message>
     <message>
         <source>Not a valid expression.</source>
-        <translation>Not a valid expression.</translation>
+        <translation>Nederīga izteiksme.</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawLineRectangle</name>
     <message>
         <source>Specify first corner</source>
-        <translation>Specify first corner</translation>
+        <translation>Norādīt pirmo stūri</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -12149,7 +12146,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Specify second corner</source>
-        <translation>Specify second corner</translation>
+        <translation>Norādīt otro stūri</translation>
     </message>
     <message>
         <source>Back</source>
@@ -12160,11 +12157,11 @@ This block cannot be inserted.</source>
     <name>RS_ActionDrawLineRelAngle</name>
     <message>
         <source>Not a valid expression</source>
-        <translation>Not a valid expression</translation>
+        <translation>Nederīga izteiksme</translation>
     </message>
     <message>
         <source>Select base entity</source>
-        <translation>Select base entity</translation>
+        <translation>Atlasīt bāzes elementu</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -12172,7 +12169,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Specify position</source>
-        <translation>Specify position</translation>
+        <translation>Norādīt pozīciju</translation>
     </message>
     <message>
         <source>Back</source>
@@ -12183,7 +12180,7 @@ This block cannot be inserted.</source>
     <name>RS_ActionDrawLineTangent1</name>
     <message>
         <source>Specify point</source>
-        <translation>Specify point</translation>
+        <translation>Norādīt punktu</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -12191,7 +12188,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Select circle, arc or ellipse</source>
-        <translation>Select circle, arc or ellipse</translation>
+        <translation>Atlasīt apli, loku vai elipsi</translation>
     </message>
     <message>
         <source>Back</source>
@@ -12202,7 +12199,7 @@ This block cannot be inserted.</source>
     <name>RS_ActionDrawLineTangent2</name>
     <message>
         <source>Select first circle/ellipse/parabola</source>
-        <translation>Select first circle/ellipse/parabola</translation>
+        <translation>Atlasīt pirmo apli/elipsi/parabolu</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -12210,7 +12207,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Select second circle/ellipse/parabola</source>
-        <translation>Select second circle/ellipse/parabola</translation>
+        <translation>Atlasīt otro apli/elipsi/parabolu</translation>
     </message>
     <message>
         <source>Back</source>
@@ -12218,14 +12215,14 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Select the tangent line closest to cursor</source>
-        <translation>Select the tangent line closest to cursor</translation>
+        <translation>Atlasīt kursoru tuvāko pieskaru līniju</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawMText</name>
     <message>
         <source>Specify insertion point</source>
-        <translation>Specify insertion point</translation>
+        <translation>Norādīt ievietošanas punktu</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -12233,7 +12230,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Enter text:</source>
-        <translation>Enter text:</translation>
+        <translation>Ievadīt tekstu:</translation>
     </message>
     <message>
         <source>Back</source>
@@ -12244,7 +12241,7 @@ This block cannot be inserted.</source>
     <name>RS_ActionDrawPoint</name>
     <message>
         <source>Specify location</source>
-        <translation>Specify location</translation>
+        <translation>Norādīt atrašanās vietu</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -12255,11 +12252,11 @@ This block cannot be inserted.</source>
     <name>RS_ActionDrawPolyline</name>
     <message>
         <source>Enter the end point x</source>
-        <translation>Enter the end point x</translation>
+        <translation>Ievadīt beigu punktu x</translation>
     </message>
     <message>
         <source>Enter number of polylines</source>
-        <translation>Enter number of polylines</translation>
+        <translation>Ievadīt polilīniju skaitu</translation>
     </message>
     <message>
         <source>equation</source>
@@ -12267,7 +12264,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Enter an equation, f(x)</source>
-        <translation>Enter an equation, f(x)</translation>
+        <translation>Ievadīt vienādojumu, f(x)</translation>
     </message>
     <message>
         <source>x</source>
@@ -12275,23 +12272,23 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Enter the start point x</source>
-        <translation>Enter the start point x</translation>
+        <translation>Ievadīt sākuma punktu x</translation>
     </message>
     <message>
         <source>The entered x is invalid.</source>
-        <translation>The entered x is invalid.</translation>
+        <translation>Ievadītais x ir nederīgs.</translation>
     </message>
     <message>
         <source>The step size entered is invalid.</source>
-        <translation>The step size entered is invalid.</translation>
+        <translation>Ievadītais soļa izmērs ir nederīgs.</translation>
     </message>
     <message>
         <source>The value x entered is invalid.</source>
-        <translation>The value x entered is invalid.</translation>
+        <translation>Ievadītā vērtība x ir nederīga.</translation>
     </message>
     <message>
         <source>Specify first point</source>
-        <translation>Specify first point</translation>
+        <translation>Norādīt pirmo punktu</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -12299,7 +12296,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Specify next point or [%1]</source>
-        <translation>Specify next point or [%1]</translation>
+        <translation>Norādīt nākamo punktu vai [%1]</translation>
     </message>
     <message>
         <source>Back</source>
@@ -12307,22 +12304,22 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Specify next point</source>
-        <translation>Specify next point</translation>
+        <translation>Norādīt nākamo punktu</translation>
     </message>
     <message>
         <source>Cannot close sequence of lines: Not enough entities defined yet.</source>
-        <translation>Cannot close sequence of lines: Not enough entities defined yet.</translation>
+        <translation>Nevar aizvērt līniju secību: vēl nav definēts pietiekami daudz elementu.</translation>
     </message>
     <message>
         <source>Cannot undo: Not enough entities defined yet.</source>
-        <translation>Cannot undo: Not enough entities defined yet.</translation>
+        <translation>Nevar atcelt: vēl nav definēts pietiekami daudz elementu.</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawSpline</name>
     <message>
         <source>Specify first control point</source>
-        <translation>Specify first control point</translation>
+        <translation>Norādīt pirmo kontrolpunktu</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -12330,7 +12327,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Specify next control point or [%1]</source>
-        <translation>Specify next control point or [%1]</translation>
+        <translation>Norādīt nākamo kontrolpunktu vai [%1]</translation>
     </message>
     <message>
         <source>Back</source>
@@ -12338,18 +12335,18 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Specify next control point</source>
-        <translation>Specify next control point</translation>
+        <translation>Norādīt nākamo kontrolpunktu</translation>
     </message>
     <message>
         <source>Cannot undo: Not enough entities defined yet.</source>
-        <translation>Cannot undo: Not enough entities defined yet.</translation>
+        <translation>Nevar atcelt: vēl nav definēts pietiekami daudz elementu.</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawText</name>
     <message>
         <source>Specify insertion point</source>
-        <translation>Specify insertion point</translation>
+        <translation>Norādīt ievietošanas punktu</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -12357,11 +12354,11 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Specify second point</source>
-        <translation>Specify second point</translation>
+        <translation>Norādīt otro punktu</translation>
     </message>
     <message>
         <source>Enter text:</source>
-        <translation>Enter text:</translation>
+        <translation>Ievadīt tekstu:</translation>
     </message>
     <message>
         <source>Back</source>
@@ -12372,7 +12369,7 @@ This block cannot be inserted.</source>
     <name>RS_ActionEditCopy</name>
     <message>
         <source>Specify reference point</source>
-        <translation>Specify reference point</translation>
+        <translation>Norādīt atskaites punktu</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -12383,7 +12380,7 @@ This block cannot be inserted.</source>
     <name>RS_ActionEditPaste</name>
     <message>
         <source>Set reference point</source>
-        <translation>Set reference point</translation>
+        <translation>Iestatīt atskaites punktu</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -12394,26 +12391,26 @@ This block cannot be inserted.</source>
     <name>RS_ActionEditUndo</name>
     <message>
         <source>Nothing to undo!</source>
-        <translation>Nothing to undo!</translation>
+        <translation>Nav ko atcelt!</translation>
     </message>
     <message>
         <source>Nothing to redo!</source>
-        <translation>Nothing to redo!</translation>
+        <translation>Nav ko atkārtot!</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionInfoAngle</name>
     <message>
         <source>Angle: %1</source>
-        <translation>Angle: %1</translation>
+        <translation>Leņķis: %1</translation>
     </message>
     <message>
         <source>Lines are parallel</source>
-        <translation>Lines are parallel</translation>
+        <translation>Līnijas ir paralēlas</translation>
     </message>
     <message>
         <source>Specify first line</source>
-        <translation>Specify first line</translation>
+        <translation>Norādīt pirmo līniju</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -12421,7 +12418,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Specify second line</source>
-        <translation>Specify second line</translation>
+        <translation>Norādīt otro līniju</translation>
     </message>
     <message>
         <source>Back</source>
@@ -12432,23 +12429,23 @@ This block cannot be inserted.</source>
     <name>RS_ActionInfoArea</name>
     <message>
         <source>Circumference: %1</source>
-        <translation>Circumference: %1</translation>
+        <translation>Apkārtmērs: %1</translation>
     </message>
     <message>
         <source>Area: %1 %2^2</source>
-        <translation>Area: %1 %2^2</translation>
+        <translation>Laukums: %1 %2^2</translation>
     </message>
     <message>
         <source>Closing Point: %1/%2</source>
-        <translation>Closing Point: %1/%2</translation>
+        <translation>Noslēdzošais punkts: %1/%2</translation>
     </message>
     <message>
         <source>Point: %1/%2</source>
-        <translation>Point: %1/%2</translation>
+        <translation>Punkts: %1/%2</translation>
     </message>
     <message>
         <source>Specify first point of polygon</source>
-        <translation>Specify first point of polygon</translation>
+        <translation>Norādīt daudzstūra pirmo punktu</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -12456,7 +12453,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Specify next point of polygon</source>
-        <translation>Specify next point of polygon</translation>
+        <translation>Norādīt daudzstūra nākamo punktu</translation>
     </message>
 </context>
 <context>
@@ -12467,7 +12464,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Specify first point of distance</source>
-        <translation>Specify first point of distance</translation>
+        <translation>Norādīt attāluma pirmo punktu</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -12475,7 +12472,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Specify second point of distance</source>
-        <translation>Specify second point of distance</translation>
+        <translation>Norādīt attāluma otro punktu</translation>
     </message>
     <message>
         <source>Back</source>
@@ -12486,11 +12483,11 @@ This block cannot be inserted.</source>
     <name>RS_ActionInfoDist2</name>
     <message>
         <source>Distance: %1</source>
-        <translation>Distance: %1</translation>
+        <translation>Attālums: %1</translation>
     </message>
     <message>
         <source>Specify entity</source>
-        <translation>Specify entity</translation>
+        <translation>Norādīt elementu</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -12498,7 +12495,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Specify point</source>
-        <translation>Specify point</translation>
+        <translation>Norādīt punktu</translation>
     </message>
     <message>
         <source>Back</source>
@@ -12509,15 +12506,15 @@ This block cannot be inserted.</source>
     <name>RS_ActionInfoInside</name>
     <message>
         <source>Point is inside selected contour.</source>
-        <translation>Point is inside selected contour.</translation>
+        <translation>Punkts ir atlasītās kontūras iekšpusē.</translation>
     </message>
     <message>
         <source>Point is outside selected contour.</source>
-        <translation>Point is outside selected contour.</translation>
+        <translation>Punkts ir ārpus atlasītās kontūras.</translation>
     </message>
     <message>
         <source>Specify point</source>
-        <translation>Specify point</translation>
+        <translation>Norādīt punktu</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -12528,30 +12525,30 @@ This block cannot be inserted.</source>
     <name>RS_ActionInfoTotalLength</name>
     <message>
         <source>Total Length of selected entities: %1</source>
-        <translation>Total Length of selected entities: %1</translation>
+        <translation>Atlasīto elementu kopējais garums: %1</translation>
     </message>
     <message>
         <source>At least one of the selected entities cannot be measured.</source>
-        <translation>At least one of the selected entities cannot be measured.</translation>
+        <translation>Vismaz viens no atlasītajiem elementiem nevar tikt izmērīts.</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionLibraryInsert</name>
     <message>
         <source>Insert Library Object</source>
-        <translation>Insert Library Object</translation>
+        <translation>Ievietot bibliotēkas objektu</translation>
     </message>
     <message>
         <source>Cannot open file &apos;%1&apos;</source>
-        <translation>Cannot open file &apos;%1&apos;</translation>
+        <translation>Nevar atvērt failu '%1'</translation>
     </message>
     <message>
         <source>Not a valid expression</source>
-        <translation>Not a valid expression</translation>
+        <translation>Nederīga izteiksme</translation>
     </message>
     <message>
         <source>Specify reference point</source>
-        <translation>Specify reference point</translation>
+        <translation>Norādīt atskaites punktu</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -12559,29 +12556,29 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Enter angle:</source>
-        <translation>Enter angle:</translation>
+        <translation>Ievadīt leņķi:</translation>
     </message>
     <message>
         <source>Enter factor:</source>
-        <translation>Enter factor:</translation>
+        <translation>Ievadīt koeficientu:</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionLockRelativeZero</name>
     <message>
         <source>(Un-)&amp;Lock Relative Zero</source>
-        <translation>(Un-)&amp;Lock Relative Zero</translation>
+        <translation>(At)bloķēt &amp;relatīvo nulli</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionModifyBevel</name>
     <message>
         <source>Not a valid expression</source>
-        <translation>Not a valid expression</translation>
+        <translation>Nederīga izteiksme</translation>
     </message>
     <message>
         <source>Select first entity</source>
-        <translation>Select first entity</translation>
+        <translation>Atlasīt pirmo elementu</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -12589,7 +12586,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Select second entity</source>
-        <translation>Select second entity</translation>
+        <translation>Atlasīt otro elementu</translation>
     </message>
     <message>
         <source>Back</source>
@@ -12597,34 +12594,34 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Enter length 1:</source>
-        <translation>Enter length 1:</translation>
+        <translation>Ievadīt garumu 1:</translation>
     </message>
     <message>
         <source>Enter length 2:</source>
-        <translation>Enter length 2:</translation>
+        <translation>Ievadīt garumu 2:</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionModifyCut</name>
     <message>
         <source>No Entity found.</source>
-        <translation>No Entity found.</translation>
+        <translation>Nav atrasts neviens elements.</translation>
     </message>
     <message>
         <source>Entity must be a line, arc, circle, ellipse or interpolation spline.</source>
-        <translation>Entity must be a line, arc, circle, ellipse or interpolation spline.</translation>
+        <translation>Elementam jābūt līnijai, lokam, aplim, elipsei vai interpolācijas splainam.</translation>
     </message>
     <message>
         <source>Cutting point is invalid.</source>
-        <translation>Cutting point is invalid.</translation>
+        <translation>Griešanas punkts ir nederīgs.</translation>
     </message>
     <message>
         <source>Cutting point is not on entity.</source>
-        <translation>Cutting point is not on entity.</translation>
+        <translation>Griešanas punkts neatrodas uz elementa.</translation>
     </message>
     <message>
         <source>Specify entity to cut</source>
-        <translation>Specify entity to cut</translation>
+        <translation>Norādīt elementu griešanai</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -12632,7 +12629,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Specify cutting point</source>
-        <translation>Specify cutting point</translation>
+        <translation>Norādīt griešanas punktu</translation>
     </message>
     <message>
         <source>Back</source>
@@ -12643,39 +12640,39 @@ This block cannot be inserted.</source>
     <name>RS_ActionModifyDeleteFree</name>
     <message>
         <source>Entities not in the same polyline.</source>
-        <translation>Entities not in the same polyline.</translation>
+        <translation>Elementi nav vienā polilīnijā.</translation>
     </message>
     <message>
         <source>Parent of second entity is not a polyline</source>
-        <translation>Parent of second entity is not a polyline</translation>
+        <translation>Otrā elementa vecākelements nav polilīnija</translation>
     </message>
     <message>
         <source>Parent of second entity is nullptr</source>
-        <translation>Parent of second entity is nullptr</translation>
+        <translation>Otrā elementa vecākelements ir nullptr</translation>
     </message>
     <message>
         <source>One of the chosen entities is nullptr</source>
-        <translation>One of the chosen entities is nullptr</translation>
+        <translation>Viens no izvēlētajiem elementiem ir nullptr</translation>
     </message>
     <message>
         <source>Parent of first entity is not a polyline</source>
-        <translation>Parent of first entity is not a polyline</translation>
+        <translation>Pirmā elementa vecākelements nav polilīnija</translation>
     </message>
     <message>
         <source>Parent of first entity is nullptr</source>
-        <translation>Parent of first entity is nullptr</translation>
+        <translation>Pirmā elementa vecākelements ir nullptr</translation>
     </message>
     <message>
         <source>First entity is nullptr</source>
-        <translation>First entity is nullptr</translation>
+        <translation>Pirmais elements ir nullptr</translation>
     </message>
     <message>
         <source>Second entity is nullptr</source>
-        <translation>Second entity is nullptr</translation>
+        <translation>Otrais elements ir nullptr</translation>
     </message>
     <message>
         <source>Specify first break point on a polyline</source>
-        <translation>Specify first break point on a polyline</translation>
+        <translation>Norādīt pirmo pārtraukuma punktu uz polilīnijas</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -12683,7 +12680,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Specify second break point on the same polyline</source>
-        <translation>Specify second break point on the same polyline</translation>
+        <translation>Norādīt otro pārtraukuma punktu uz tās pašas polilīnijas</translation>
     </message>
     <message>
         <source>Back</source>
@@ -12694,7 +12691,7 @@ This block cannot be inserted.</source>
     <name>RS_ActionModifyDeleteQuick</name>
     <message>
         <source>Pick entity to delete</source>
-        <translation>Pick entity to delete</translation>
+        <translation>Izvēlēties elementu dzēšanai</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -12705,7 +12702,7 @@ This block cannot be inserted.</source>
     <name>RS_ActionModifyEntity</name>
     <message>
         <source>Click on entity to modify</source>
-        <translation>Click on entity to modify</translation>
+        <translation>Noklikšķiniet uz elementa, lai modificētu</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -12716,7 +12713,7 @@ This block cannot be inserted.</source>
     <name>RS_ActionModifyMirror</name>
     <message>
         <source>Specify first point of mirror line</source>
-        <translation>Specify first point of mirror line</translation>
+        <translation>Norādīt spoguļlīnijas pirmo punktu</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -12724,7 +12721,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Specify second point of mirror line</source>
-        <translation>Specify second point of mirror line</translation>
+        <translation>Norādīt spoguļlīnijas otro punktu</translation>
     </message>
     <message>
         <source>Back</source>
@@ -12735,11 +12732,11 @@ This block cannot be inserted.</source>
     <name>RS_ActionModifyMove</name>
     <message>
         <source>Invalid number of copies, use %1 </source>
-        <translation>Invalid number of copies, use %1</translation>
+        <translation>Nederīgs kopiju skaits, izmantojiet %1</translation>
     </message>
     <message>
         <source>Specify reference point</source>
-        <translation>Specify reference point</translation>
+        <translation>Norādīt atskaites punktu</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -12747,7 +12744,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Specify target point</source>
-        <translation>Specify target point</translation>
+        <translation>Norādīt mērķa punktu</translation>
     </message>
     <message>
         <source>Back</source>
@@ -12758,11 +12755,11 @@ This block cannot be inserted.</source>
     <name>RS_ActionModifyMoveRotate</name>
     <message>
         <source>Not a valid expression</source>
-        <translation>Not a valid expression</translation>
+        <translation>Nederīga izteiksme</translation>
     </message>
     <message>
         <source>Specify reference point</source>
-        <translation>Specify reference point</translation>
+        <translation>Norādīt atskaites punktu</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -12770,7 +12767,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Specify target point</source>
-        <translation>Specify target point</translation>
+        <translation>Norādīt mērķa punktu</translation>
     </message>
     <message>
         <source>Back</source>
@@ -12778,14 +12775,14 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Enter rotation angle:</source>
-        <translation>Enter rotation angle:</translation>
+        <translation>Ievadīt pagriešanas leņķi:</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionModifyOffset</name>
     <message>
         <source>Specify direction of offset</source>
-        <translation>Specify direction of offset</translation>
+        <translation>Norādīt nobīdes virzienu</translation>
     </message>
     <message>
         <source>Back</source>
@@ -12796,7 +12793,7 @@ This block cannot be inserted.</source>
     <name>RS_ActionModifyRotate</name>
     <message>
         <source>Specify rotation center</source>
-        <translation>Specify rotation center</translation>
+        <translation>Norādīt pagriešanas centru</translation>
     </message>
     <message>
         <source>Back</source>
@@ -12804,18 +12801,18 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Specify reference point</source>
-        <translation>Specify reference point</translation>
+        <translation>Norādīt atskaites punktu</translation>
     </message>
     <message>
         <source>Specify target point to rotate to</source>
-        <translation>Specify target point to rotate to</translation>
+        <translation>Norādīt mērķa punktu pagriešanai</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionModifyRotate2</name>
     <message>
         <source>Specify absolute reference point</source>
-        <translation>Specify absolute reference point</translation>
+        <translation>Norādīt absolūto atskaites punktu</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -12823,7 +12820,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Specify relative reference point</source>
-        <translation>Specify relative reference point</translation>
+        <translation>Norādīt relatīvo atskaites punktu</translation>
     </message>
     <message>
         <source>Back</source>
@@ -12834,7 +12831,7 @@ This block cannot be inserted.</source>
     <name>RS_ActionModifyRound</name>
     <message>
         <source>Not a valid expression</source>
-        <translation>Not a valid expression</translation>
+        <translation>Nederīga izteiksme</translation>
     </message>
     <message>
         <source>Specify first entity or enter radius &lt;%1&gt;</source>
@@ -12846,11 +12843,11 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Specify second entity</source>
-        <translation>Specify second entity</translation>
+        <translation>Norādīt otro elementu</translation>
     </message>
     <message>
         <source>Enter radius:</source>
-        <translation>Enter radius:</translation>
+        <translation>Ievadīt rādiusu:</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -12861,7 +12858,7 @@ This block cannot be inserted.</source>
     <name>RS_ActionModifyScale</name>
     <message>
         <source>Specify scale center</source>
-        <translation>Specify scale center</translation>
+        <translation>Norādīt mērogošanas centru</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -12869,18 +12866,18 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Specify reference point</source>
-        <translation>Specify reference point</translation>
+        <translation>Norādīt atskaites punktu</translation>
     </message>
     <message>
         <source>Specify target point</source>
-        <translation>Specify target point</translation>
+        <translation>Norādīt mērķa punktu</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionModifyStretch</name>
     <message>
         <source>Specify first corner</source>
-        <translation>Specify first corner</translation>
+        <translation>Norādīt pirmo stūri</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -12888,7 +12885,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Specify second corner</source>
-        <translation>Specify second corner</translation>
+        <translation>Norādīt otro stūri</translation>
     </message>
     <message>
         <source>Back</source>
@@ -12896,18 +12893,18 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Specify reference point</source>
-        <translation>Specify reference point</translation>
+        <translation>Norādīt atskaites punktu</translation>
     </message>
     <message>
         <source>Specify target point</source>
-        <translation>Specify target point</translation>
+        <translation>Norādīt mērķa punktu</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionModifyTrim</name>
     <message>
         <source>Select first trim entity</source>
-        <translation>Select first trim entity</translation>
+        <translation>Atlasīt pirmo apgriežamo elementu</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -12915,7 +12912,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Select limiting entity</source>
-        <translation>Select limiting entity</translation>
+        <translation>Atlasīt ierobežojošo elementu</translation>
     </message>
     <message>
         <source>Back</source>
@@ -12923,34 +12920,34 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Select second trim entity</source>
-        <translation>Select second trim entity</translation>
+        <translation>Atlasīt otro apgriežamo elementu</translation>
     </message>
     <message>
         <source>Select entity to trim</source>
-        <translation>Select entity to trim</translation>
+        <translation>Atlasīt elementu apgriešanai</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionModifyTrimAmount</name>
     <message>
         <source>No entity found. </source>
-        <translation>No entity found.</translation>
+        <translation>Nav atrasts neviens elements.</translation>
     </message>
     <message>
         <source>The chosen Entity is in a block. Please edit the block.</source>
-        <translation>The chosen Entity is in a block. Please edit the block.</translation>
+        <translation>Izvēlētais elements atrodas blokā. Lūdzu rediģējiet bloku.</translation>
     </message>
     <message>
         <source>The chosen Entity is not an atomic entity or cannot be trimmed.</source>
-        <translation>The chosen Entity is not an atomic entity or cannot be trimmed.</translation>
+        <translation>Izvēlētais elements nav atomārs elements vai to nevar apgriezt.</translation>
     </message>
     <message>
         <source>Not a valid expression</source>
-        <translation>Not a valid expression</translation>
+        <translation>Nederīga izteiksme</translation>
     </message>
     <message>
         <source>Select entity to trim or enter distance:</source>
-        <translation>Select entity to trim or enter distance:</translation>
+        <translation>Atlasīt elementu apgriešanai vai ievadīt attālumu:</translation>
     </message>
     <message>
         <source>Back</source>
@@ -12961,11 +12958,11 @@ This block cannot be inserted.</source>
     <name>RS_ActionOrder</name>
     <message>
         <source>No Entity found.</source>
-        <translation>No Entity found.</translation>
+        <translation>Nav atrasts neviens elements.</translation>
     </message>
     <message>
         <source>Choose entity for order</source>
-        <translation>Choose entity for order</translation>
+        <translation>Izvēlēties elementu kārtošanai</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -12976,23 +12973,23 @@ This block cannot be inserted.</source>
     <name>RS_ActionPolylineAdd</name>
     <message>
         <source>No Entity found.</source>
-        <translation>No Entity found.</translation>
+        <translation>Nav atrasts neviens elements.</translation>
     </message>
     <message>
         <source>Entity must be a polyline.</source>
-        <translation>Entity must be a polyline.</translation>
+        <translation>Elementam jābūt polilīnijai.</translation>
     </message>
     <message>
         <source>Adding point is invalid.</source>
-        <translation>Adding point is invalid.</translation>
+        <translation>Pievienojamais punkts ir nederīgs.</translation>
     </message>
     <message>
         <source>Adding point is not on entity.</source>
-        <translation>Adding point is not on entity.</translation>
+        <translation>Pievienojamais punkts neatrodas uz elementa.</translation>
     </message>
     <message>
         <source>Specify polyline to add nodes</source>
-        <translation>Specify polyline to add nodes</translation>
+        <translation>Norādīt polilīniju mezglu pievienošanai</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -13000,7 +12997,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Specify adding node&apos;s point</source>
-        <translation>Specify adding node&apos;s point</translation>
+        <translation>Norādīt pievienojamā mezgla punktu</translation>
     </message>
     <message>
         <source>Back</source>
@@ -13011,23 +13008,23 @@ This block cannot be inserted.</source>
     <name>RS_ActionPolylineAppend</name>
     <message>
         <source>No Entity found.</source>
-        <translation>No Entity found.</translation>
+        <translation>Nav atrasts neviens elements.</translation>
     </message>
     <message>
         <source>Entity must be a polyline.</source>
-        <translation>Entity must be a polyline.</translation>
+        <translation>Elementam jābūt polilīnijai.</translation>
     </message>
     <message>
         <source>Can not append nodes in a closed polyline.</source>
-        <translation>Can not append nodes in a closed polyline.</translation>
+        <translation>Nevar pievienot mezglus slēgtā polilīnijā.</translation>
     </message>
     <message>
         <source>Click somewhere near the beginning or end of existing polyline.</source>
-        <translation>Click somewhere near the beginning or end of existing polyline.</translation>
+        <translation>Noklikšķiniet kaut kur tuvu esošās polilīnijas sākumam vai beigām.</translation>
     </message>
     <message>
         <source>Specify the polyline somewhere near the beginning or end point</source>
-        <translation>Specify the polyline somewhere near the beginning or end point</translation>
+        <translation>Norādīt polilīniju kaut kur netālu no sākuma vai beigu punkta</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -13035,7 +13032,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Specify next point or [%1]</source>
-        <translation>Specify next point or [%1]</translation>
+        <translation>Norādīt nākamo punktu vai [%1]</translation>
     </message>
     <message>
         <source>Back</source>
@@ -13043,34 +13040,34 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Specify next point</source>
-        <translation>Specify next point</translation>
+        <translation>Norādīt nākamo punktu</translation>
     </message>
     <message>
         <source>Cannot undo: Not enough entities defined yet.</source>
-        <translation>Cannot undo: Not enough entities defined yet.</translation>
+        <translation>Nevar atcelt: vēl nav definēts pietiekami daudz elementu.</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionPolylineDel</name>
     <message>
         <source>No Entity found.</source>
-        <translation>No Entity found.</translation>
+        <translation>Nav atrasts neviens elements.</translation>
     </message>
     <message>
         <source>Entity must be a polyline.</source>
-        <translation>Entity must be a polyline.</translation>
+        <translation>Elementam jābūt polilīnijai.</translation>
     </message>
     <message>
         <source>Deleting point is invalid.</source>
-        <translation>Deleting point is invalid.</translation>
+        <translation>Dzēšamais punkts ir nederīgs.</translation>
     </message>
     <message>
         <source>Deleting point is not on entity.</source>
-        <translation>Deleting point is not on entity.</translation>
+        <translation>Dzēšamais punkts neatrodas uz elementa.</translation>
     </message>
     <message>
         <source>Specify polyline to delete node</source>
-        <translation>Specify polyline to delete node</translation>
+        <translation>Norādīt polilīniju mezgla dzēšanai</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -13078,7 +13075,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Specify deleting node&apos;s point</source>
-        <translation>Specify deleting node&apos;s point</translation>
+        <translation>Norādīt dzēšamā mezgla punktu</translation>
     </message>
     <message>
         <source>Back</source>
@@ -13089,23 +13086,23 @@ This block cannot be inserted.</source>
     <name>RS_ActionPolylineDelBetween</name>
     <message>
         <source>No Entity found.</source>
-        <translation>No Entity found.</translation>
+        <translation>Nav atrasts neviens elements.</translation>
     </message>
     <message>
         <source>Entity must be a polyline.</source>
-        <translation>Entity must be a polyline.</translation>
+        <translation>Elementam jābūt polilīnijai.</translation>
     </message>
     <message>
         <source>Deleting point is invalid.</source>
-        <translation>Deleting point is invalid.</translation>
+        <translation>Dzēšamais punkts ir nederīgs.</translation>
     </message>
     <message>
         <source>Deleting point is not on entity.</source>
-        <translation>Deleting point is not on entity.</translation>
+        <translation>Dzēšamais punkts neatrodas uz elementa.</translation>
     </message>
     <message>
         <source>Specify polyline to delete between two nodes</source>
-        <translation>Specify polyline to delete between two nodes</translation>
+        <translation>Norādīt polilīniju dzēšanai starp diviem mezgliem</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -13113,7 +13110,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Specify first node</source>
-        <translation>Specify first node</translation>
+        <translation>Norādīt pirmo mezglu</translation>
     </message>
     <message>
         <source>Back</source>
@@ -13121,22 +13118,22 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Specify second node</source>
-        <translation>Specify second node</translation>
+        <translation>Norādīt otro mezglu</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionPolylineEquidistant</name>
     <message>
         <source>No Entity found.</source>
-        <translation>No Entity found.</translation>
+        <translation>Nav atrasts neviens elements.</translation>
     </message>
     <message>
         <source>Entity must be a polyline.</source>
-        <translation>Entity must be a polyline.</translation>
+        <translation>Elementam jābūt polilīnijai.</translation>
     </message>
     <message>
         <source>Choose the original polyline</source>
-        <translation>Choose the original polyline</translation>
+        <translation>Izvēlēties oriģinālo polilīniju</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -13147,19 +13144,19 @@ This block cannot be inserted.</source>
     <name>RS_ActionPolylineSegment</name>
     <message>
         <source>Polyline created</source>
-        <translation>Polyline created</translation>
+        <translation>Polilīnija izveidota</translation>
     </message>
     <message>
         <source>No Entity found.</source>
-        <translation>No Entity found.</translation>
+        <translation>Nav atrasts neviens elements.</translation>
     </message>
     <message>
         <source>Entity can not be a closed polyline.</source>
-        <translation>Entity can not be a closed polyline.</translation>
+        <translation>Elements nevar būt slēgta polilīnija.</translation>
     </message>
     <message>
         <source>Choose one of the segments on the original polyline</source>
-        <translation>Choose one of the segments on the original polyline</translation>
+        <translation>Izvēlēties vienu no segmentiem uz oriģinālās polilīnijas</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -13170,23 +13167,23 @@ This block cannot be inserted.</source>
     <name>RS_ActionPolylineTrim</name>
     <message>
         <source>No Entity found.</source>
-        <translation>No Entity found.</translation>
+        <translation>Nav atrasts neviens elements.</translation>
     </message>
     <message>
         <source>Entity must be a polyline.</source>
-        <translation>Entity must be a polyline.</translation>
+        <translation>Elementam jābūt polilīnijai.</translation>
     </message>
     <message>
         <source>Specifying point is invalid.</source>
-        <translation>Specifying point is invalid.</translation>
+        <translation>Norādāmais punkts ir nederīgs.</translation>
     </message>
     <message>
         <source>No Segment found on entity.</source>
-        <translation>No Segment found on entity.</translation>
+        <translation>Nav atrasts neviens segments uz elementa.</translation>
     </message>
     <message>
         <source>Specify polyline to trim</source>
-        <translation>Specify polyline to trim</translation>
+        <translation>Norādīt polilīniju apgriešanai</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -13194,7 +13191,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Specify first segment</source>
-        <translation>Specify first segment</translation>
+        <translation>Norādīt pirmo segmentu</translation>
     </message>
     <message>
         <source>Back</source>
@@ -13202,65 +13199,65 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Specify second segment</source>
-        <translation>Specify second segment</translation>
+        <translation>Norādīt otro segmentu</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionPrintPreview</name>
     <message>
         <source>Printout offset in paper coordinates by (%1, %2)</source>
-        <translation>Printout offset in paper coordinates by (%1, %2)</translation>
+        <translation>Drukājuma nobīde papīra koordinātēs par (%1, %2)</translation>
     </message>
     <message>
         <source>Printout offset in graph coordinates by (%1, %2)</source>
-        <translation>Printout offset in graph coordinates by (%1, %2)</translation>
+        <translation>Drukājuma nobīde grafika koordinātēs par (%1, %2)</translation>
     </message>
     <message>
         <source>Printout in Black/White</source>
-        <translation>Printout in Black/White</translation>
+        <translation>Drukājums melnbaltā</translation>
     </message>
     <message>
         <source>Printout in color</source>
-        <translation>Printout in color</translation>
+        <translation>Drukājums krāsā</translation>
     </message>
     <message>
         <source>Printout offset in graph coordinates</source>
-        <translation>Printout offset in graph coordinates</translation>
+        <translation>Drukājuma nobīde grafika koordinātēs</translation>
     </message>
     <message>
         <source>Printout offset in paper coordinates</source>
-        <translation>Printout offset in paper coordinates</translation>
+        <translation>Drukājuma nobīde papīra koordinātēs</translation>
     </message>
     <message>
         <source>: select printout offset coordinates</source>
-        <translation>: select printout offset coordinates</translation>
+        <translation>: atlasīt drukājuma nobīdes koordinātes</translation>
     </message>
     <message>
         <source>type in offset from command line to offset printout</source>
-        <translation>type in offset from command line to offset printout</translation>
+        <translation>ievadīt nobīdi no komandrlīnijas, lai nobīdītu drukājumu</translation>
     </message>
     <message>
         <source>Printout offset ignores relative zero. Ignoring &apos;@&apos;</source>
-        <translation>Printout offset ignores relative zero. Ignoring &apos;@&apos;</translation>
+        <translation>Drukājuma nobīde ignorē relatīvo nulli. Tiek ignorēts '@'</translation>
     </message>
     <message>
         <source>RS_ActionPrintPreview::fit(): Invalid paper size</source>
-        <translation>RS_ActionPrintPreview::fit(): Invalid paper size</translation>
+        <translation>RS_ActionPrintPreview::fit(): Nederīgs papīra izmērs</translation>
     </message>
     <message>
         <source>RS_ActionPrintPreview::calcPagesNum(): Limit of pages has been exceeded.</source>
-        <translation>RS_ActionPrintPreview::calcPagesNum(): Limit of pages has been exceeded.</translation>
+        <translation>RS_ActionPrintPreview::calcPagesNum(): Lapu skaita ierobežojums pārsniegts.</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionSelect</name>
     <message>
         <source>No entity selected!</source>
-        <translation>No entity selected!</translation>
+        <translation>Nav atlasīts neviens elements!</translation>
     </message>
     <message>
         <source>Select to modify attributes</source>
-        <translation>Select to modify attributes</translation>
+        <translation>Atlasīt atribūtu modificēšanai</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -13268,81 +13265,81 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Select entities to order</source>
-        <translation>Select entities to order</translation>
+        <translation>Atlasīt elementus kārtošanai</translation>
     </message>
     <message>
         <source>Select to delete</source>
-        <translation>Select to delete</translation>
+        <translation>Atlasīt dzēšanai</translation>
     </message>
     <message>
         <source>Select to delete immediately</source>
-        <translation>Select to delete immediately</translation>
+        <translation>Atlasīt tūlītējai dzēšanai</translation>
     </message>
     <message>
         <source>Select to move</source>
-        <translation>Select to move</translation>
+        <translation>Atlasīt pārvietošanai</translation>
     </message>
     <message>
         <source>Select to copy</source>
-        <translation>Select to copy</translation>
+        <translation>Atlasīt kopēšanai</translation>
     </message>
     <message>
         <source>Select to cut</source>
-        <translation>Select to cut</translation>
+        <translation>Atlasīt griešanai</translation>
     </message>
     <message>
         <source>Select to revert direction</source>
-        <translation>Select to revert direction</translation>
+        <translation>Atlasīt virziena apvēršanai</translation>
     </message>
     <message>
         <source>Select to rotate</source>
-        <translation>Select to rotate</translation>
+        <translation>Atlasīt pagriešanai</translation>
     </message>
     <message>
         <source>Select to scale</source>
-        <translation>Select to scale</translation>
+        <translation>Atlasīt mērogošanai</translation>
     </message>
     <message>
         <source>Select to mirror</source>
-        <translation>Select to mirror</translation>
+        <translation>Atlasīt spoguļošanai</translation>
     </message>
     <message>
         <source>Select to move and rotate</source>
-        <translation>Select to move and rotate</translation>
+        <translation>Atlasīt pārvietošanai un pagriešanai</translation>
     </message>
     <message>
         <source>Select to create offset</source>
-        <translation>Select to create offset</translation>
+        <translation>Atlasīt nobīdes izveidošanai</translation>
     </message>
     <message>
         <source>Select for two axis rotation</source>
-        <translation>Select for two axis rotation</translation>
+        <translation>Atlasīt divasu rotācijai</translation>
     </message>
     <message>
         <source>Select to explode text</source>
-        <translation>Select to explode text</translation>
+        <translation>Atlasīt teksta sadalīšanai</translation>
     </message>
     <message>
         <source>Select to explode block</source>
-        <translation>Select to explode block</translation>
+        <translation>Atlasīt bloka sadalīšanai</translation>
     </message>
     <message>
         <source>Select to create block</source>
-        <translation>Select to create block</translation>
+        <translation>Atlasīt bloka izveidošanai</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionSelectContour</name>
     <message>
         <source>Entity must be an Atomic Entity.</source>
-        <translation>Entity must be an Atomic Entity.</translation>
+        <translation>Elementam jābūt atomāram elementam.</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionSelectIntersected</name>
     <message>
         <source>Choose first point of intersection line</source>
-        <translation>Choose first point of intersection line</translation>
+        <translation>Izvēlēties krustpunkta līnijas pirmo punktu</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -13350,7 +13347,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Choose second point of intersection line</source>
-        <translation>Choose second point of intersection line</translation>
+        <translation>Izvēlēties krustpunkta līnijas otro punktu</translation>
     </message>
     <message>
         <source>Back</source>
@@ -13361,7 +13358,7 @@ This block cannot be inserted.</source>
     <name>RS_ActionSelectWindow</name>
     <message>
         <source>Click and drag for the selection window</source>
-        <translation>Click and drag for the selection window</translation>
+        <translation>Noklikšķiniet un velciet atlases logam</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -13369,7 +13366,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Choose second edge</source>
-        <translation>Choose second edge</translation>
+        <translation>Izvēlēties otro malu</translation>
     </message>
     <message>
         <source>Back</source>
@@ -13380,11 +13377,11 @@ This block cannot be inserted.</source>
     <name>RS_ActionSetRelativeZero</name>
     <message>
         <source>Set &amp;Relative Zero</source>
-        <translation>Set &amp;Relative Zero</translation>
+        <translation>Iestatīt &amp;relatīvo nulli</translation>
     </message>
     <message>
         <source>Set relative Zero</source>
-        <translation>Set relative Zero</translation>
+        <translation>Iestatīt relatīvo nulli</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -13395,11 +13392,11 @@ This block cannot be inserted.</source>
     <name>RS_ActionSnapIntersectionManual</name>
     <message>
         <source>I&amp;ntersection Manually</source>
-        <translation>I&amp;ntersection Manually</translation>
+        <translation>Kr&amp;ustpunkts manuāli</translation>
     </message>
     <message>
         <source>Select first entity</source>
-        <translation>Select first entity</translation>
+        <translation>Atlasīt pirmo elementu</translation>
     </message>
     <message>
         <source>Back</source>
@@ -13407,25 +13404,25 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Select second entity</source>
-        <translation>Select second entity</translation>
+        <translation>Atlasīt otro elementu</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionToolRegenerateDimensions</name>
     <message>
         <source>Regenerated %1 dimension entities</source>
-        <translation>Regenerated %1 dimension entities</translation>
+        <translation>Atjaunoti %1 izmēra elementi</translation>
     </message>
     <message>
         <source>No dimension entities found</source>
-        <translation>No dimension entities found</translation>
+        <translation>Nav atrasts neviens izmēra elements</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionZoomPan</name>
     <message>
         <source>Click and drag to pan zoom</source>
-        <translation>Click and drag to pan zoom</translation>
+        <translation>Noklikšķiniet un velciet ritināšanas tālummaiņai</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -13433,14 +13430,14 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Zoom panning</source>
-        <translation>Zoom panning</translation>
+        <translation>Tālummaiņas ritināšana</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionZoomWindow</name>
     <message>
         <source>Specify first edge</source>
-        <translation>Specify first edge</translation>
+        <translation>Norādīt pirmo malu</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -13448,7 +13445,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Specify second edge</source>
-        <translation>Specify second edge</translation>
+        <translation>Norādīt otro malu</translation>
     </message>
     <message>
         <source>Back</source>
@@ -13459,65 +13456,65 @@ This block cannot be inserted.</source>
     <name>RS_GraphicView</name>
     <message>
         <source>Draft</source>
-        <translation>Draft</translation>
+        <translation>Mets</translation>
     </message>
 </context>
 <context>
     <name>TextFileViewer</name>
     <message>
         <source>Frame</source>
-        <translation>Frame</translation>
+        <translation>Rāmis</translation>
     </message>
 </context>
 <context>
     <name>Ui_ArcOptions</name>
     <message>
         <source>Arc Options</source>
-        <translation>Arc Options</translation>
+        <translation>Loka opcijas</translation>
     </message>
     <message>
         <source>Counterclockwise</source>
-        <translation>Counterclockwise</translation>
+        <translation>Pretpulksteņa rādītāja virzienā</translation>
     </message>
     <message>
         <source>Clockwise</source>
-        <translation>Clockwise</translation>
+        <translation>Pulksteņa rādītāja virzienā</translation>
     </message>
 </context>
 <context>
     <name>Ui_ArcTangentialOptions</name>
     <message>
         <source>Tangential Arc Options</source>
-        <translation>Tangential Arc Options</translation>
+        <translation>Pieskares loka opcijas</translation>
     </message>
     <message>
         <source>Radius of the tangential arc</source>
-        <translation>Radius of the tangential arc</translation>
+        <translation>Pieskares loka rādiuss</translation>
     </message>
     <message>
         <source>Total subtending angle of the tangential arc</source>
-        <translation>Total subtending angle of the tangential arc</translation>
+        <translation>Pieskares loka kopējais ieslēgtais leņķis</translation>
     </message>
     <message>
         <source>Radius</source>
         <extracomment>Draw Tangential Arc by the given radius</extracomment>
-        <translation>Radius</translation>
+        <translation>Rādiuss</translation>
     </message>
     <message>
         <source>Angle</source>
         <extracomment>Draw Tangential Arc by the given radius</extracomment>
-        <translation>Angle</translation>
+        <translation>Leņķis</translation>
     </message>
 </context>
 <context>
     <name>Ui_BevelOptions</name>
     <message>
         <source>Bevel Options</source>
-        <translation>Bevel Options</translation>
+        <translation>Nofāzes opcijas</translation>
     </message>
     <message>
         <source>Check to trim both entities to the bevel</source>
-        <translation>Check to trim both entities to the bevel</translation>
+        <translation>Atzīmēt, lai apgrieztu abus elementus līdz nofāzei</translation>
     </message>
     <message>
         <source>Trim</source>
@@ -13525,29 +13522,29 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Length 1:</source>
-        <translation>Length 1:</translation>
+        <translation>Garums 1:</translation>
     </message>
     <message>
         <source>Length 2:</source>
-        <translation>Length 2:</translation>
+        <translation>Garums 2:</translation>
     </message>
 </context>
 <context>
     <name>Ui_CircleOptions</name>
     <message>
         <source>Circle Options</source>
-        <translation>Circle Options</translation>
+        <translation>Apļa opcijas</translation>
     </message>
     <message>
         <source>Radius:</source>
-        <translation>Radius:</translation>
+        <translation>Rādiuss:</translation>
     </message>
 </context>
 <context>
     <name>Ui_CircleTan2Options</name>
     <message>
         <source>Circle Tangential2 Options</source>
-        <translation>Circle Tangential2 Options</translation>
+        <translation>Apļa pieskares 2 opcijas</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Radius of the tangential circle to draw&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
@@ -13555,33 +13552,33 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Radius:</source>
-        <translation>Radius:</translation>
+        <translation>Rādiuss:</translation>
     </message>
     <message>
         <source>Radius of tangential circle</source>
-        <translation>Radius of tangential circle</translation>
+        <translation>Pieskares apļa rādiuss</translation>
     </message>
 </context>
 <context>
     <name>Ui_DimLinearOptions</name>
     <message>
         <source>Linear Dimension Options</source>
-        <translation>Linear Dimension Options</translation>
+        <translation>Lineārā izmēra opcijas</translation>
     </message>
     <message>
         <source>Angle:</source>
-        <translation>Angle:</translation>
+        <translation>Leņķis:</translation>
     </message>
 </context>
 <context>
     <name>Ui_DimOptions</name>
     <message>
         <source>Dimension Options</source>
-        <translation>Dimension Options</translation>
+        <translation>Izmēra opcijas</translation>
     </message>
     <message>
         <source>Label:</source>
-        <translation>Label:</translation>
+        <translation>Etiķete:</translation>
     </message>
     <message>
         <source>⌀</source>
@@ -13616,23 +13613,23 @@ This block cannot be inserted.</source>
     <name>Ui_ImageOptions</name>
     <message>
         <source>Insert Options</source>
-        <translation>Insert Options</translation>
+        <translation>Ievietošanas opcijas</translation>
     </message>
     <message>
         <source>Angle:</source>
-        <translation>Angle:</translation>
+        <translation>Leņķis:</translation>
     </message>
     <message>
         <source>Rotation Angle</source>
-        <translation>Rotation Angle</translation>
+        <translation>Pagriešanas leņķis</translation>
     </message>
     <message>
         <source>Factor:</source>
-        <translation>Factor:</translation>
+        <translation>Koeficients:</translation>
     </message>
     <message>
         <source>Scale Factor</source>
-        <translation>Scale Factor</translation>
+        <translation>Mēroga koeficients</translation>
     </message>
     <message>
         <source>DPI</source>
@@ -13640,112 +13637,112 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>DPI of Image</source>
-        <translation>DPI of Image</translation>
+        <translation>Attēla DPI</translation>
     </message>
 </context>
 <context>
     <name>Ui_InsertOptions</name>
     <message>
         <source>Insert Options</source>
-        <translation>Insert Options</translation>
+        <translation>Ievietošanas opcijas</translation>
     </message>
     <message>
         <source>Angle:</source>
-        <translation>Angle:</translation>
+        <translation>Leņķis:</translation>
     </message>
     <message>
         <source>Rotation Angle</source>
-        <translation>Rotation Angle</translation>
+        <translation>Pagriešanas leņķis</translation>
     </message>
     <message>
         <source>Factor:</source>
-        <translation>Factor:</translation>
+        <translation>Koeficients:</translation>
     </message>
     <message>
         <source>Scale Factor</source>
-        <translation>Scale Factor</translation>
+        <translation>Mēroga koeficients</translation>
     </message>
     <message>
         <source>Array:</source>
-        <translation>Array:</translation>
+        <translation>Masīvs:</translation>
     </message>
     <message>
         <source>Number of Columns</source>
-        <translation>Number of Columns</translation>
+        <translation>Kolonnu skaits</translation>
     </message>
     <message>
         <source>Number of Rows</source>
-        <translation>Number of Rows</translation>
+        <translation>Rindu skaits</translation>
     </message>
     <message>
         <source>Spacing:</source>
-        <translation>Spacing:</translation>
+        <translation>Atstarpe:</translation>
     </message>
     <message>
         <source>Column Spacing</source>
-        <translation>Column Spacing</translation>
+        <translation>Kolonnu atstarpe</translation>
     </message>
     <message>
         <source>Row Spacing</source>
-        <translation>Row Spacing</translation>
+        <translation>Rindu atstarpe</translation>
     </message>
 </context>
 <context>
     <name>Ui_LibraryInsertOptions</name>
     <message>
         <source>Library Insert Options</source>
-        <translation>Library Insert Options</translation>
+        <translation>Bibliotēkas ievietošanas opcijas</translation>
     </message>
     <message>
         <source>Angle:</source>
-        <translation>Angle:</translation>
+        <translation>Leņķis:</translation>
     </message>
     <message>
         <source>Rotation Angle</source>
-        <translation>Rotation Angle</translation>
+        <translation>Pagriešanas leņķis</translation>
     </message>
     <message>
         <source>Factor:</source>
-        <translation>Factor:</translation>
+        <translation>Koeficients:</translation>
     </message>
     <message>
         <source>Scale Factor</source>
-        <translation>Scale Factor</translation>
+        <translation>Mēroga koeficients</translation>
     </message>
 </context>
 <context>
     <name>Ui_LineAngleOptions</name>
     <message>
         <source>Line Angle Options</source>
-        <translation>Line Angle Options</translation>
+        <translation>Līnijas leņķa opcijas</translation>
     </message>
     <message>
         <source>Angle:</source>
-        <translation>Angle:</translation>
+        <translation>Leņķis:</translation>
     </message>
     <message>
         <source>Line angle</source>
-        <translation>Line angle</translation>
+        <translation>Līnijas leņķis</translation>
     </message>
     <message>
         <source>Length:</source>
-        <translation>Length:</translation>
+        <translation>Garums:</translation>
     </message>
     <message>
         <source>Length of line</source>
-        <translation>Length of line</translation>
+        <translation>Līnijas garums</translation>
     </message>
     <message>
         <source>Snap Point:</source>
-        <translation>Snap Point:</translation>
+        <translation>Uztveršanas punkts:</translation>
     </message>
     <message>
         <source>Start</source>
-        <translation>Start</translation>
+        <translation>Sākums</translation>
     </message>
     <message>
         <source>Middle</source>
-        <translation>Middle</translation>
+        <translation>Vidus</translation>
     </message>
     <message>
         <source>End</source>
@@ -13756,42 +13753,42 @@ This block cannot be inserted.</source>
     <name>Ui_LineBisectorOptions</name>
     <message>
         <source>Line Bisector Options</source>
-        <translation>Line Bisector Options</translation>
+        <translation>Līnijas bisektrisei opcijas</translation>
     </message>
     <message>
         <source>Length:</source>
-        <translation>Length:</translation>
+        <translation>Garums:</translation>
     </message>
     <message>
         <source>Length of bisector</source>
-        <translation>Length of bisector</translation>
+        <translation>Bisektrisei garums</translation>
     </message>
     <message>
         <source>Number:</source>
-        <translation>Number:</translation>
+        <translation>Numurs:</translation>
     </message>
     <message>
         <source>Number of bisectors to create</source>
-        <translation>Number of bisectors to create</translation>
+        <translation>Izveidojamo bisektriešu skaits</translation>
     </message>
 </context>
 <context>
     <name>Ui_LineOptions</name>
     <message>
         <source>Line Options</source>
-        <translation>Line Options</translation>
+        <translation>Līnijas opcijas</translation>
     </message>
     <message>
         <source>Form a closed contour from lines drawn</source>
-        <translation>Form a closed contour from lines drawn</translation>
+        <translation>Veidot slēgtu kontūru no uzzīmētajām līnijām</translation>
     </message>
     <message>
         <source>Close</source>
-        <translation>Close</translation>
+        <translation>Aizvērt</translation>
     </message>
     <message>
         <source>Undo the last line drawing</source>
-        <translation>Undo the last line drawing</translation>
+        <translation>Atcelt pēdējo līnijas zīmēšanu</translation>
     </message>
     <message>
         <source>Undo</source>
@@ -13799,7 +13796,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Redo the last line drawing</source>
-        <translation>Redo the last line drawing</translation>
+        <translation>Atkārtot pēdējo līnijas zīmēšanu</translation>
     </message>
     <message>
         <source>Redo</source>
@@ -13810,15 +13807,15 @@ This block cannot be inserted.</source>
     <name>Ui_LineOptionsRel</name>
     <message>
         <source>Line Options</source>
-        <translation>Line Options</translation>
+        <translation>Līnijas opcijas</translation>
     </message>
     <message>
         <source>Direction:</source>
-        <translation>Direction:</translation>
+        <translation>Virziens:</translation>
     </message>
     <message>
         <source>Polyline</source>
-        <translation>Polyline</translation>
+        <translation>Polilīnija</translation>
     </message>
     <message>
         <source>Y</source>
@@ -13826,7 +13823,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Angle</source>
-        <translation>Angle</translation>
+        <translation>Leņķis</translation>
     </message>
     <message>
         <source>X</source>
@@ -13838,7 +13835,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Undo the last line drawing</source>
-        <translation>Undo the last line drawing</translation>
+        <translation>Atcelt pēdējo līnijas zīmēšanu</translation>
     </message>
     <message>
         <source>Undo</source>
@@ -13846,15 +13843,15 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Form a closed contour from lines drawn</source>
-        <translation>Form a closed contour from lines drawn</translation>
+        <translation>Veidot slēgtu kontūru no uzzīmētajām līnijām</translation>
     </message>
     <message>
         <source>Close</source>
-        <translation>Close</translation>
+        <translation>Aizvērt</translation>
     </message>
     <message>
         <source>Redo the last line drawing</source>
-        <translation>Redo the last line drawing</translation>
+        <translation>Atkārtot pēdējo līnijas zīmēšanu</translation>
     </message>
     <message>
         <source>Redo</source>
@@ -13862,150 +13859,150 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Point</source>
-        <translation>Point</translation>
+        <translation>Punkts</translation>
     </message>
 </context>
 <context>
     <name>Ui_LineParallelOptions</name>
     <message>
         <source>Line Parallel Options</source>
-        <translation>Line Parallel Options</translation>
+        <translation>Paralēlās līnijas opcijas</translation>
     </message>
     <message>
         <source>Distance:</source>
-        <translation>Distance:</translation>
+        <translation>Attālums:</translation>
     </message>
     <message>
         <source>Distance to original entity</source>
-        <translation>Distance to original entity</translation>
+        <translation>Attālums līdz oriģinālajam elementam</translation>
     </message>
     <message>
         <source>Number:</source>
-        <translation>Number:</translation>
+        <translation>Numurs:</translation>
     </message>
     <message>
         <source>Number of parallels to create</source>
-        <translation>Number of parallels to create</translation>
+        <translation>Izveidojamo paralēlo skaits</translation>
     </message>
 </context>
 <context>
     <name>Ui_LineParallelThroughOptions</name>
     <message>
         <source>Line Parallel Through Options</source>
-        <translation>Line Parallel Through Options</translation>
+        <translation>Paralēlās līnijas caurplūdes opcijas</translation>
     </message>
     <message>
         <source>Number:</source>
-        <translation>Number:</translation>
+        <translation>Numurs:</translation>
     </message>
     <message>
         <source>Number of parallels to create</source>
-        <translation>Number of parallels to create</translation>
+        <translation>Izveidojamo paralēlo skaits</translation>
     </message>
 </context>
 <context>
     <name>Ui_LinePolygon2Options</name>
     <message>
         <source>Polygon Options</source>
-        <translation>Polygon Options</translation>
+        <translation>Daudzstūra opcijas</translation>
     </message>
     <message>
         <source>Number:</source>
-        <translation>Number:</translation>
+        <translation>Numurs:</translation>
     </message>
     <message>
         <source>Number of edges</source>
-        <translation>Number of edges</translation>
+        <translation>Malu skaits</translation>
     </message>
 </context>
 <context>
     <name>Ui_LinePolygonOptions</name>
     <message>
         <source>Polygon Options</source>
-        <translation>Polygon Options</translation>
+        <translation>Daudzstūra opcijas</translation>
     </message>
     <message>
         <source>Number:</source>
-        <translation>Number:</translation>
+        <translation>Numurs:</translation>
     </message>
     <message>
         <source>Number of edges</source>
-        <translation>Number of edges</translation>
+        <translation>Malu skaits</translation>
     </message>
 </context>
 <context>
     <name>Ui_LineRelAngleOptions</name>
     <message>
         <source>Line Relative Angle Options</source>
-        <translation>Line Relative Angle Options</translation>
+        <translation>Līnijas relatīvā leņķa opcijas</translation>
     </message>
     <message>
         <source>Angle:</source>
-        <translation>Angle:</translation>
+        <translation>Leņķis:</translation>
     </message>
     <message>
         <source>Line angle</source>
-        <translation>Line angle</translation>
+        <translation>Līnijas leņķis</translation>
     </message>
     <message>
         <source>Length:</source>
-        <translation>Length:</translation>
+        <translation>Garums:</translation>
     </message>
     <message>
         <source>Length of line</source>
-        <translation>Length of line</translation>
+        <translation>Līnijas garums</translation>
     </message>
 </context>
 <context>
     <name>Ui_MTextOptions</name>
     <message>
         <source>Text Options</source>
-        <translation>Text Options</translation>
+        <translation>Teksta opcijas</translation>
     </message>
     <message>
         <source>Text:</source>
-        <translation>Text:</translation>
+        <translation>Teksts:</translation>
     </message>
     <message>
         <source>Angle:</source>
-        <translation>Angle:</translation>
+        <translation>Leņķis:</translation>
     </message>
 </context>
 <context>
     <name>Ui_ModifyOffsetOptions</name>
     <message>
         <source>Modify Offset Options</source>
-        <translation>Modify Offset Options</translation>
+        <translation>Nobīdes modificēšanas opcijas</translation>
     </message>
     <message>
         <source>Distance:</source>
-        <translation>Distance:</translation>
+        <translation>Attālums:</translation>
     </message>
     <message>
         <source>Offset from original entity</source>
-        <translation>Offset from original entity</translation>
+        <translation>Nobīde no oriģinālā elementa</translation>
     </message>
 </context>
 <context>
     <name>Ui_MoveRotateOptions</name>
     <message>
         <source>Move Rotate Options</source>
-        <translation>Move Rotate Options</translation>
+        <translation>Pārvietošanas un pagriešanas opcijas</translation>
     </message>
     <message>
         <source>Angle:</source>
-        <translation>Angle:</translation>
+        <translation>Leņķis:</translation>
     </message>
 </context>
 <context>
     <name>Ui_PolylineOptions</name>
     <message>
         <source>Polyline Options</source>
-        <translation>Polyline Options</translation>
+        <translation>Polilīnijas opcijas</translation>
     </message>
     <message>
         <source>Close</source>
-        <translation>Close</translation>
+        <translation>Aizvērt</translation>
     </message>
     <message>
         <source>Undo</source>
@@ -14017,38 +14014,38 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Tangential</source>
-        <translation>Tangential</translation>
+        <translation>Pieskares</translation>
     </message>
     <message>
         <source>Tan Radius</source>
-        <translation>Tan Radius</translation>
+        <translation>Pieskares rādiuss</translation>
     </message>
     <message>
         <source>Angle</source>
-        <translation>Angle</translation>
+        <translation>Leņķis</translation>
     </message>
     <message>
         <source>Radius:</source>
-        <translation>Radius:</translation>
+        <translation>Rādiuss:</translation>
     </message>
     <message>
         <source>Angle:</source>
-        <translation>Angle:</translation>
+        <translation>Leņķis:</translation>
     </message>
     <message>
         <source>Counter Clockwise</source>
-        <translation>Counter Clockwise</translation>
+        <translation>Pretpulksteņa virzienā</translation>
     </message>
     <message>
         <source>Clockwise</source>
-        <translation>Clockwise</translation>
+        <translation>Pulksteņa rādītāja virzienā</translation>
     </message>
 </context>
 <context>
     <name>Ui_PrintPreviewOptions</name>
     <message>
         <source>Print Preview Options</source>
-        <translation>Print Preview Options</translation>
+        <translation>Drukas priekšskatījuma opcijas</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;printed size : drawing size&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
@@ -14064,34 +14061,34 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Apply Print Scale to line width</source>
-        <translation>Apply Print Scale to line width</translation>
+        <translation>Pielietot drukas mērogu līnijas platumam</translation>
     </message>
     <message>
         <source>Toggle Black / White mode</source>
-        <translation>Toggle Black / White mode</translation>
+        <translation>Pārslēgt melnbalto režīmu</translation>
     </message>
     <message>
         <source>Center to page</source>
-        <translation>Center to page</translation>
+        <translation>Centrēt lapā</translation>
     </message>
     <message>
         <source>Fit to page</source>
-        <translation>Fit to page</translation>
+        <translation>Pielāgot lapai</translation>
     </message>
     <message>
         <source>Calculate number of pages needed to contain the drawing</source>
-        <translation>Calculate number of pages needed to contain the drawing</translation>
+        <translation>Aprēķināt lapu skaitu, kas nepieciešams zīmējuma ietilpināšanai</translation>
     </message>
 </context>
 <context>
     <name>Ui_RoundOptions</name>
     <message>
         <source>Round Options</source>
-        <translation>Round Options</translation>
+        <translation>Noapaļojuma opcijas</translation>
     </message>
     <message>
         <source>Check to trim both edges to the rounding</source>
-        <translation>Check to trim both edges to the rounding</translation>
+        <translation>Atzīmēt, lai apgrieztu abas malas līdz noapaļojumam</translation>
     </message>
     <message>
         <source>Trim</source>
@@ -14099,44 +14096,44 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Radius:</source>
-        <translation>Radius:</translation>
+        <translation>Rādiuss:</translation>
     </message>
 </context>
 <context>
     <name>Ui_SnapDistOptions</name>
     <message>
         <source>Snap Distance Options</source>
-        <translation>Snap Distance Options</translation>
+        <translation>Uztveršanas attāluma opcijas</translation>
     </message>
     <message>
         <source>Distance:</source>
-        <translation>Distance:</translation>
+        <translation>Attālums:</translation>
     </message>
 </context>
 <context>
     <name>Ui_SnapMiddleOptions</name>
     <message>
         <source>Snap Distance Options</source>
-        <translation>Snap Distance Options</translation>
+        <translation>Uztveršanas attāluma opcijas</translation>
     </message>
     <message>
         <source>Middle Points:</source>
-        <translation>Middle Points:</translation>
+        <translation>Viduspunkti:</translation>
     </message>
     <message>
         <source>Number of equidistant division points</source>
-        <translation>Number of equidistant division points</translation>
+        <translation>Vienādattāluma dalīšanas punktu skaits</translation>
     </message>
 </context>
 <context>
     <name>Ui_SplineOptions</name>
     <message>
         <source>Spline Options</source>
-        <translation>Spline Options</translation>
+        <translation>Splaina opcijas</translation>
     </message>
     <message>
         <source>Degree:</source>
-        <translation>Degree:</translation>
+        <translation>Pakāpe:</translation>
     </message>
     <message>
         <source>Closed</source>
@@ -14151,45 +14148,45 @@ This block cannot be inserted.</source>
     <name>Ui_TextOptions</name>
     <message>
         <source>Text Options</source>
-        <translation>Text Options</translation>
+        <translation>Teksta opcijas</translation>
     </message>
     <message>
         <source>Text:</source>
-        <translation>Text:</translation>
+        <translation>Teksts:</translation>
     </message>
     <message>
         <source>Angle:</source>
-        <translation>Angle:</translation>
+        <translation>Leņķis:</translation>
     </message>
 </context>
 <context>
     <name>Ui_TrimAmountOptions</name>
     <message>
         <source>Trim Amount Options</source>
-        <translation>Trim Amount Options</translation>
+        <translation>Apgriešanas daudzuma opcijas</translation>
     </message>
     <message>
         <source>Distance. Negative values for trimming, positive values for extending.</source>
-        <translation>Distance. Negative values for trimming, positive values for extending.</translation>
+        <translation>Attālums. Negatīvas vērtības apgriešanai, pozitīvas vērtības pagarināšanai.</translation>
     </message>
     <message>
         <source>Length:</source>
-        <translation>Length:</translation>
+        <translation>Garums:</translation>
     </message>
     <message>
         <source>Distance. Negative values for trimming, positive values for extending. Negative sign is ignored when trimming to final total length.</source>
-        <translation>Distance. Negative values for trimming, positive values for extending. Negative sign is ignored when trimming to final total length.</translation>
+        <translation>Attālums. Negatīvas vērtības apgriešanai, pozitīvas vērtības pagarināšanai. Negatīvā zīme tiek ignorēta, apgriežot līdz galīgajam kopējam garumam.</translation>
     </message>
     <message>
         <source>The input length is used as total length after trimming, instead of length increase</source>
-        <translation>The input length is used as total length after trimming, instead of length increase</translation>
+        <translation>Ievades garums tiek izmantots kā kopējais garums pēc apgriešanas, nevis garuma pieaugums</translation>
     </message>
 </context>
 <context>
     <name>WidgetCreator</name>
     <message>
         <source>Frame</source>
-        <translation>Frame</translation>
+        <translation>Rāmis</translation>
     </message>
     <message>
         <source>&gt;</source>
@@ -14205,19 +14202,19 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Create</source>
-        <translation>Create</translation>
+        <translation>Izveidot</translation>
     </message>
     <message>
         <source>Destroy</source>
-        <translation>Destroy</translation>
+        <translation>Iznīcināt</translation>
     </message>
     <message>
         <source>Assign</source>
-        <translation>Assign</translation>
+        <translation>Piešķirt</translation>
     </message>
     <message>
         <source>Update</source>
-        <translation>Update</translation>
+        <translation>Atjaunināt</translation>
     </message>
 </context>
 <context>
@@ -14367,15 +14364,15 @@ This block cannot be inserted.</source>
     <name>divide</name>
     <message>
         <source>Divide</source>
-        <translation>Divide</translation>
+        <translation>Sadalīt</translation>
     </message>
     <message>
         <source>Select a line, circle or arc and press return</source>
-        <translation>Select a line, circle or arc and press return</translation>
+        <translation>Atlasīt līniju, apli vai loku un nospiest Enter</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation>Error</translation>
+        <translation>Kļūda</translation>
     </message>
     <message>
         <source>n</source>
@@ -14495,18 +14492,18 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>MUST be a line, circle or arc</source>
-        <translation>MUST be a line, circle or arc</translation>
+        <translation>Jābūt līnijai, aplim vai lokam</translation>
     </message>
 </context>
 <context>
     <name>dividedlg</name>
     <message>
         <source>Divide - </source>
-        <translation>Divide -</translation>
+        <translation>Sadalīt -</translation>
     </message>
     <message>
         <source>Layers</source>
-        <translation>Layers</translation>
+        <translation>Slāņi</translation>
     </message>
     <message>
         <source>OK</source>
@@ -14518,11 +14515,11 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Divide at</source>
-        <translation>Divide at</translation>
+        <translation>Sadalīt pie</translation>
     </message>
     <message>
         <source>Size</source>
-        <translation>Size</translation>
+        <translation>Izmērs</translation>
     </message>
     <message>
         <source>places</source>
@@ -14530,15 +14527,15 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Ticks - Off</source>
-        <translation>Ticks - Off</translation>
+        <translation>Atzīmes - izslēgts</translation>
     </message>
     <message>
         <source>Breaks - Off</source>
-        <translation>Breaks - Off</translation>
+        <translation>Pārtraukumi - izslēgts</translation>
     </message>
     <message>
         <source>&lt;i&gt;New&lt;/i&gt;</source>
-        <translation>&lt;i&gt;New&lt;/i&gt;</translation>
+        <translation>&lt;i&gt;Jauns&lt;/i&gt;</translation>
     </message>
     <message>
         <source>Enter start
@@ -14547,12 +14544,12 @@ decimal degrees
 0° at 3 o&apos;clock
 goes
 anti-clockwise.</source>
-        <translation>Enter start
-angle, in
-decimal degrees
-0° at 3 o&apos;clock
-goes
-anti-clockwise.</translation>
+        <translation>Ievadīt sākuma
+leņķi
+decimālajās grādos
+0° plkst. 3
+iet
+pretpulksteņa virzienā.</translation>
     </message>
     <message>
         <source>&lt;i&gt;&quot;New&quot;&lt;/i&gt;&lt;br&gt;Enter name&lt;br&gt;for a new layer&lt;br&gt;(if required?) to&lt;br&gt;draw ticks on.</source>
@@ -14560,30 +14557,30 @@ anti-clockwise.</translation>
     </message>
     <message>
         <source>Ticks</source>
-        <translation>Ticks</translation>
+        <translation>Atzīmes</translation>
     </message>
     <message>
         <source>Above</source>
-        <translation>Above</translation>
+        <translation>Augšā</translation>
     </message>
     <message>
         <source>Below</source>
-        <translation>Below</translation>
+        <translation>Zemāk</translation>
     </message>
     <message>
         <source>Outside</source>
-        <translation>Outside</translation>
+        <translation>Ārpusē</translation>
     </message>
     <message>
         <source>Inside</source>
-        <translation>Inside</translation>
+        <translation>Iekšā</translation>
     </message>
 </context>
 <context>
     <name>lc_Exptocsvdlg</name>
     <message>
         <source>Export to file</source>
-        <translation>Export to file</translation>
+        <translation>Eksportēt uz failu</translation>
     </message>
     <message>
         <source>CSV (*.csv)</source>
@@ -14591,18 +14588,18 @@ anti-clockwise.</translation>
     </message>
     <message>
         <source>Unable to open file</source>
-        <translation>Unable to open file</translation>
+        <translation>Nevar atvērt failu</translation>
     </message>
 </context>
 <context>
     <name>lc_Geardlg</name>
     <message>
         <source>Number of teeth</source>
-        <translation>Number of teeth</translation>
+        <translation>Zobu skaits</translation>
     </message>
     <message>
         <source>Pressure angle (deg)</source>
-        <translation>Pressure angle (deg)</translation>
+        <translation>Spiediena leņķis (grādi)</translation>
     </message>
     <message>
         <source>Accept</source>
@@ -14614,71 +14611,71 @@ anti-clockwise.</translation>
     </message>
     <message>
         <source>Rotation angle</source>
-        <translation>Rotation angle</translation>
+        <translation>Rotācijas leņķis</translation>
     </message>
     <message>
         <source>Modulus</source>
-        <translation>Modulus</translation>
+        <translation>Modulis</translation>
     </message>
     <message>
         <source>Addendum (rel. to modulus)</source>
-        <translation>Addendum (rel. to modulus)</translation>
+        <translation>Galotne (rel. pret moduli)</translation>
     </message>
     <message>
         <source>Dedendum (rel. to modulus)</source>
-        <translation>Dedendum (rel. to modulus)</translation>
+        <translation>Sakne (rel. pret moduli)</translation>
     </message>
     <message>
         <source>Number of segments to draw (dedendum)</source>
-        <translation>Number of segments to draw (dedendum)</translation>
+        <translation>Zīmējamo segmentu skaits (sakne)</translation>
     </message>
     <message>
         <source>Number of segments to draw (addendum)</source>
-        <translation>Number of segments to draw (addendum)</translation>
+        <translation>Zīmējamo segmentu skaits (galotne)</translation>
     </message>
     <message>
         <source>Draw all teeth?</source>
-        <translation>Draw all teeth?</translation>
+        <translation>Zīmēt visus zobus?</translation>
     </message>
     <message>
         <source>Draw symmetric face?</source>
-        <translation>Draw symmetric face?</translation>
+        <translation>Zīmēt simetrisku virsmu?</translation>
     </message>
     <message>
         <source>Use layers?</source>
-        <translation>Use layers?</translation>
+        <translation>Izmantot slāņus?</translation>
     </message>
     <message>
         <source>Draw addendum circle?</source>
-        <translation>Draw addendum circle?</translation>
+        <translation>Zīmēt galotnes apli?</translation>
     </message>
     <message>
         <source>Draw pitch circle?</source>
-        <translation>Draw pitch circle?</translation>
+        <translation>Zīmēt dalāmo apli?</translation>
     </message>
     <message>
         <source>Draw base circle?</source>
-        <translation>Draw base circle?</translation>
+        <translation>Zīmēt bāzes apli?</translation>
     </message>
     <message>
         <source>Draw root circle?</source>
-        <translation>Draw root circle?</translation>
+        <translation>Zīmēt saknes apli?</translation>
     </message>
     <message>
         <source>Draw pressure line?</source>
-        <translation>Draw pressure line?</translation>
+        <translation>Zīmēt spiediena līniju?</translation>
     </message>
     <message>
         <source>Draw pressure limits?</source>
-        <translation>Draw pressure limits?</translation>
+        <translation>Zīmēt spiediena robežas?</translation>
     </message>
     <message>
         <source>Calculate interference?</source>
-        <translation>Calculate interference?</translation>
+        <translation>Aprēķināt traucējumus?</translation>
     </message>
     <message>
         <source>Number of segments to draw (interference)</source>
-        <translation>Number of segments to draw (interference)</translation>
+        <translation>Zīmējamo segmentu skaits (traucējumi)</translation>
     </message>
 </context>
 <context>
@@ -14747,7 +14744,7 @@ anti-clockwise.</translation>
     </message>
     <message>
         <source>Scale:</source>
-        <translation>Scale:</translation>
+        <translation>Mērogs:</translation>
     </message>
     <message>
         <source>Accept</source>
@@ -14763,7 +14760,7 @@ anti-clockwise.</translation>
     </message>
     <message>
         <source>Scale Factor is empty or invalid</source>
-        <translation>Scale Factor is empty or invalid</translation>
+        <translation>Mēroga koeficients ir tukšs vai nederīgs</translation>
     </message>
     <message>
         <source>The file %1 not exist</source>
@@ -14775,19 +14772,19 @@ anti-clockwise.</translation>
     </message>
     <message>
         <source>%1 objects imported</source>
-        <translation>%1 objects imported</translation>
+        <translation>%1 objekti importēti</translation>
     </message>
     <message>
         <source>picPunto drawLine: first point is empty %1</source>
-        <translation>picPunto drawLine: first point is empty %1</translation>
+        <translation>picPunto drawLine: pirmais punkts ir tukšs %1</translation>
     </message>
     <message>
         <source>picPunto drawLine: next point is empty %1</source>
-        <translation>picPunto drawLine: next point is empty %1</translation>
+        <translation>picPunto drawLine: nākamais punkts ir tukšs %1</translation>
     </message>
     <message>
         <source>format error in %1</source>
-        <translation>format error in %1</translation>
+        <translation>formāta kļūda failā %1</translation>
     </message>
 </context>
 <context>
@@ -14846,17 +14843,17 @@ Izmantojiet savos vienādojums t vai x kā mainīgos/parametrus.
     <message>
         <source>Line Segments</source>
         <comment>Plot Equation to generate RS_Line segments</comment>
-        <translation>Line Segments</translation>
+        <translation>Līnijas segmenti</translation>
     </message>
     <message>
         <source>Polyline</source>
         <comment>Plot Equation to generate RS_Polyline</comment>
-        <translation>Polyline</translation>
+        <translation>Polilīnija</translation>
     </message>
     <message>
         <source>SplinePoints</source>
         <comment>Plot Equation to generate 2nd spline by LC_SplinePoints</comment>
-        <translation>SplinePoints</translation>
+        <translation>SplainPunkti</translation>
     </message>
 </context>
 <context>

@@ -20,7 +20,7 @@ http://forum.librecad.org/LibreCAD-dev-f4361976.html</translatorcomment>
         <location filename="../../../build/ui_colorwizard.h" line="92"/>
         <location filename="../../../generated/librecad/ui/ui_colorwizard.h" line="92"/>
         <source>Frame</source>
-        <translation>Frame</translation>
+        <translation>Marc</translation>
     </message>
     <message>
         <location filename="../../src/ui/generic/colorwizard.ui" line="35"/>
@@ -28,7 +28,7 @@ http://forum.librecad.org/LibreCAD-dev-f4361976.html</translatorcomment>
         <location filename="../../../build/ui_colorwizard.h" line="94"/>
         <location filename="../../../generated/librecad/ui/ui_colorwizard.h" line="94"/>
         <source>Add to favorites</source>
-        <translation>Add to favorites</translation>
+        <translation>Afegir als preferits</translation>
     </message>
     <message>
         <location filename="../../src/ui/generic/colorwizard.ui" line="38"/>
@@ -51,7 +51,7 @@ http://forum.librecad.org/LibreCAD-dev-f4361976.html</translatorcomment>
         <location filename="../../../build/ui_comboboxoption.h" line="71"/>
         <location filename="../../../generated/librecad/ui/ui_comboboxoption.h" line="71"/>
         <source>Frame</source>
-        <translation>Frame</translation>
+        <translation>Marc</translation>
     </message>
     <message>
         <location filename="../../src/ui/generic/comboboxoption.ui" line="26"/>
@@ -59,7 +59,7 @@ http://forum.librecad.org/LibreCAD-dev-f4361976.html</translatorcomment>
         <location filename="../../../build/ui_comboboxoption.h" line="72"/>
         <location filename="../../../generated/librecad/ui/ui_comboboxoption.h" line="72"/>
         <source>GroupBox</source>
-        <translation>GroupBox</translation>
+        <translation>Grup</translation>
     </message>
     <message>
         <location filename="../../src/ui/generic/comboboxoption.ui" line="41"/>
@@ -76,7 +76,7 @@ http://forum.librecad.org/LibreCAD-dev-f4361976.html</translatorcomment>
         <location filename="../../src/ui/generic/customtoolbarcreator.ui" line="14"/>
         <location filename="../../../build/ui_customtoolbarcreator.h" line="198"/>
         <source>Frame</source>
-        <translation>Frame</translation>
+        <translation>Marc</translation>
     </message>
     <message>
         <location filename="../../src/ui/generic/customtoolbarcreator.ui" line="86"/>
@@ -106,7 +106,7 @@ http://forum.librecad.org/LibreCAD-dev-f4361976.html</translatorcomment>
         <location filename="../../src/ui/generic/customtoolbarcreator.ui" line="156"/>
         <location filename="../../../build/ui_customtoolbarcreator.h" line="204"/>
         <source>input a name and then press +</source>
-        <translation>input a name and then press +</translation>
+        <translation>introduïu un nom i premeu +</translation>
     </message>
     <message>
         <location filename="../../src/ui/generic/customtoolbarcreator.ui" line="193"/>
@@ -121,7 +121,7 @@ http://forum.librecad.org/LibreCAD-dev-f4361976.html</translatorcomment>
         <location filename="../../src/ui/generic/customwidgetcreator.ui" line="14"/>
         <location filename="../../../build/ui_customwidgetcreator.h" line="136"/>
         <source>Frame</source>
-        <translation>Frame</translation>
+        <translation>Marc</translation>
     </message>
     <message>
         <location filename="../../src/ui/generic/customwidgetcreator.ui" line="65"/>
@@ -150,7 +150,7 @@ http://forum.librecad.org/LibreCAD-dev-f4361976.html</translatorcomment>
         <location filename="../../../build/ui_LC_DlgParabola.h" line="161"/>
         <location filename="../../../generated/librecad/ui/ui_LC_DlgParabola.h" line="161"/>
         <source>Parabola</source>
-        <translation>Parabola</translation>
+        <translation>Paràbola</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/LC_DlgParabola.ui" line="62"/>
@@ -166,7 +166,7 @@ http://forum.librecad.org/LibreCAD-dev-f4361976.html</translatorcomment>
         <location filename="../../../build/ui_LC_DlgParabola.h" line="163"/>
         <location filename="../../../generated/librecad/ui/ui_LC_DlgParabola.h" line="163"/>
         <source>Geometry</source>
-        <translation>Geometry</translation>
+        <translation>Geometria</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/LC_DlgParabola.ui" line="110"/>
@@ -178,7 +178,7 @@ http://forum.librecad.org/LibreCAD-dev-f4361976.html</translatorcomment>
         <location filename="../../../generated/librecad/ui/ui_LC_DlgParabola.h" line="165"/>
         <location filename="../../../generated/librecad/ui/ui_LC_DlgParabola.h" line="168"/>
         <source>Points on Spline</source>
-        <translation>Points on Spline</translation>
+        <translation>Punts en la spline</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/LC_DlgParabola.ui" line="142"/>
@@ -186,7 +186,7 @@ http://forum.librecad.org/LibreCAD-dev-f4361976.html</translatorcomment>
         <location filename="../../../build/ui_LC_DlgParabola.h" line="170"/>
         <location filename="../../../generated/librecad/ui/ui_LC_DlgParabola.h" line="170"/>
         <source>Control Points</source>
-        <translation>Control Points</translation>
+        <translation>Punts de control</translation>
     </message>
 </context>
 <context>
@@ -213,7 +213,7 @@ http://forum.librecad.org/LibreCAD-dev-f4361976.html</translatorcomment>
         <location filename="../../../build/ui_lc_dlgsplinepoints.h" line="178"/>
         <location filename="../../../generated/librecad/ui/ui_lc_dlgsplinepoints.h" line="178"/>
         <source>Geometry</source>
-        <translation>Geometry</translation>
+        <translation>Geometria</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_dlgsplinepoints.ui" line="101"/>
@@ -229,7 +229,7 @@ http://forum.librecad.org/LibreCAD-dev-f4361976.html</translatorcomment>
         <location filename="../../../build/ui_lc_dlgsplinepoints.h" line="180"/>
         <location filename="../../../generated/librecad/ui/ui_lc_dlgsplinepoints.h" line="180"/>
         <source>Spline Points</source>
-        <translation>Spline Points</translation>
+        <translation>Punts de spline</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_dlgsplinepoints.ui" line="120"/>
@@ -237,7 +237,7 @@ http://forum.librecad.org/LibreCAD-dev-f4361976.html</translatorcomment>
         <location filename="../../../build/ui_lc_dlgsplinepoints.h" line="181"/>
         <location filename="../../../generated/librecad/ui/ui_lc_dlgsplinepoints.h" line="181"/>
         <source>Control Points</source>
-        <translation>Control Points</translation>
+        <translation>Punts de control</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_dlgsplinepoints.ui" line="135"/>
@@ -249,7 +249,7 @@ http://forum.librecad.org/LibreCAD-dev-f4361976.html</translatorcomment>
         <location filename="../../../generated/librecad/ui/ui_lc_dlgsplinepoints.h" line="183"/>
         <location filename="../../../generated/librecad/ui/ui_lc_dlgsplinepoints.h" line="186"/>
         <source>Points on Spline</source>
-        <translation>Points on Spline</translation>
+        <translation>Punts en la spline</translation>
     </message>
 </context>
 <context>
@@ -257,7 +257,7 @@ http://forum.librecad.org/LibreCAD-dev-f4361976.html</translatorcomment>
     <message>
         <location filename="../../../plugins/pointstocsv/pointstocsv.cpp" line="34"/>
         <source>Export points to csv</source>
-        <translation>Export points to csv</translation>
+        <translation>Exportar punts a CSV</translation>
     </message>
 </context>
 <context>
@@ -265,7 +265,7 @@ http://forum.librecad.org/LibreCAD-dev-f4361976.html</translatorcomment>
     <message>
         <location filename="../../src/actions/lc_actiondimarc.cpp" line="267"/>
         <source>Select arc entity</source>
-        <translation>Select arc entity</translation>
+        <translation>Seleccioneu l'entitat arc</translation>
     </message>
     <message>
         <location filename="../../src/actions/lc_actiondimarc.cpp" line="268"/>
@@ -276,7 +276,7 @@ http://forum.librecad.org/LibreCAD-dev-f4361976.html</translatorcomment>
     <message>
         <location filename="../../src/actions/lc_actiondimarc.cpp" line="272"/>
         <source>Specify dimension arc location</source>
-        <translation>Specify dimension arc location</translation>
+        <translation>Especifiqueu la ubicació de la cota d'arc</translation>
     </message>
 </context>
 <context>
@@ -285,18 +285,18 @@ http://forum.librecad.org/LibreCAD-dev-f4361976.html</translatorcomment>
         <location filename="../../src/actions/lc_actiondrawcircle2pr.cpp" line="195"/>
         <source>radius=%1 is too small for points selected
 distance between points=%2 is larger than diameter=%3</source>
-        <translation>radius=%1 is too small for points selected
-distance between points=%2 is larger than diameter=%3</translation>
+        <translation>radi=%1 és massa petit per als punts seleccionats
+la distància entre els punts=%2 és major que el diàmetre=%3</translation>
     </message>
     <message>
         <location filename="../../src/actions/lc_actiondrawcircle2pr.cpp" line="205"/>
         <source>Select from two possible circle centers</source>
-        <translation>Select from two possible circle centers</translation>
+        <translation>Seleccioneu entre dos centres de cercle possibles</translation>
     </message>
     <message>
         <location filename="../../src/actions/lc_actiondrawcircle2pr.cpp" line="238"/>
         <source>Specify first point</source>
-        <translation>Specify first point</translation>
+        <translation>Especifiqueu el primer punt</translation>
     </message>
     <message>
         <location filename="../../src/actions/lc_actiondrawcircle2pr.cpp" line="239"/>
@@ -306,7 +306,7 @@ distance between points=%2 is larger than diameter=%3</translation>
     <message>
         <location filename="../../src/actions/lc_actiondrawcircle2pr.cpp" line="242"/>
         <source>Specify second point</source>
-        <translation>Specify second point</translation>
+        <translation>Especifiqueu el segon punt</translation>
     </message>
     <message>
         <location filename="../../src/actions/lc_actiondrawcircle2pr.cpp" line="243"/>
@@ -317,7 +317,7 @@ distance between points=%2 is larger than diameter=%3</translation>
     <message>
         <location filename="../../src/actions/lc_actiondrawcircle2pr.cpp" line="246"/>
         <source>Select circle center</source>
-        <translation>Select circle center</translation>
+        <translation>Seleccioneu el centre del cercle</translation>
     </message>
 </context>
 <context>
@@ -327,8 +327,8 @@ distance between points=%2 is larger than diameter=%3</translation>
         <location filename="../../src/actions/lc_actiondrawlinepoints.cpp" line="516"/>
         <source>Specify distance (%1)
 or [%2]</source>
-        <translation>Specify distance (%1)
-or [%2]</translation>
+        <translation>Especifiqueu la distància (%1)
+o [%2]</translation>
     </message>
     <message>
         <location filename="../../src/actions/lc_actiondrawlinepoints.cpp" line="513"/>
@@ -351,8 +351,8 @@ or [%2]</translation>
         <location filename="../../src/actions/lc_actiondrawlinepoints.cpp" line="521"/>
         <source>Specify  distance (angle %1 deg)
 or [%2]</source>
-        <translation>Specify  distance (angle %1 deg)
-or [%2]</translation>
+        <translation>Especifiqueu la distància (angle %1 graus)
+o [%2]</translation>
     </message>
 </context>
 <context>
@@ -360,27 +360,27 @@ or [%2]</translation>
     <message>
         <location filename="../../src/actions/lc_actiondrawlinepolygon3.cpp" line="140"/>
         <source>Specify center</source>
-        <translation>Specify center</translation>
+        <translation>Especifiqueu el centre</translation>
     </message>
     <message>
         <location filename="../../src/actions/lc_actiondrawlinepolygon3.cpp" line="145"/>
         <source>Specify a tangent</source>
-        <translation>Specify a tangent</translation>
+        <translation>Especifiqueu una tangent</translation>
     </message>
     <message>
         <location filename="../../src/actions/lc_actiondrawlinepolygon3.cpp" line="149"/>
         <source>Enter number:</source>
-        <translation>Enter number:</translation>
+        <translation>Introduïu un número:</translation>
     </message>
     <message>
         <location filename="../../src/actions/lc_actiondrawlinepolygon3.cpp" line="199"/>
         <source>Not a valid number. Try 1..9999</source>
-        <translation>Not a valid number. Try 1..9999</translation>
+        <translation>Número no vàlid. Proveu 1..9999</translation>
     </message>
     <message>
         <location filename="../../src/actions/lc_actiondrawlinepolygon3.cpp" line="202"/>
         <source>Not a valid expression</source>
-        <translation>Not a valid expression</translation>
+        <translation>Expressió no vàlida</translation>
     </message>
 </context>
 <context>
@@ -388,7 +388,7 @@ or [%2]</translation>
     <message>
         <location filename="../../src/actions/lc_actiondrawlinesnake.cpp" line="434"/>
         <source>Specify direction (x or y) or [%1]</source>
-        <translation>Specify direction (x or y) or [%1]</translation>
+        <translation>Especifiqueu la direcció (x o y) o [%1]</translation>
     </message>
     <message>
         <location filename="../../src/actions/lc_actiondrawlinesnake.cpp" line="434"/>
@@ -404,7 +404,7 @@ or [%2]</translation>
         <location filename="../../src/actions/lc_actiondrawlinesnake.cpp" line="448"/>
         <location filename="../../src/actions/lc_actiondrawlinesnake.cpp" line="453"/>
         <source>Specify distance (%1) or [%2]</source>
-        <translation>Specify distance (%1) or [%2]</translation>
+        <translation>Especifiqueu la distància (%1) o [%2]</translation>
     </message>
     <message>
         <location filename="../../src/actions/lc_actiondrawlinesnake.cpp" line="448"/>
@@ -419,17 +419,17 @@ or [%2]</translation>
     <message>
         <location filename="../../src/actions/lc_actiondrawlinesnake.cpp" line="459"/>
         <source>Specify distance (%1 deg) or [%2]</source>
-        <translation>Specify distance (%1 deg) or [%2]</translation>
+        <translation>Especifiqueu la distància (%1 graus) o [%2]</translation>
     </message>
     <message>
         <location filename="../../src/actions/lc_actiondrawlinesnake.cpp" line="474"/>
         <source>Specify angle or [%2]</source>
-        <translation>Specify angle or [%2]</translation>
+        <translation>Especifiqueu l'angle o [%2]</translation>
     </message>
     <message>
         <location filename="../../src/actions/lc_actiondrawlinesnake.cpp" line="486"/>
         <source>Specify point or [%1]</source>
-        <translation>Specify point or [%1]</translation>
+        <translation>Especifiqueu el punt o [%1]</translation>
     </message>
 </context>
 <context>
@@ -437,7 +437,7 @@ or [%2]</translation>
     <message>
         <location filename="../../src/actions/lc_actiondrawparabola4points.cpp" line="268"/>
         <source>Specify the first point on parabola</source>
-        <translation>Specify the first point on parabola</translation>
+        <translation>Especifiqueu el primer punt de la paràbola</translation>
     </message>
     <message>
         <location filename="../../src/actions/lc_actiondrawparabola4points.cpp" line="269"/>
@@ -447,7 +447,7 @@ or [%2]</translation>
     <message>
         <location filename="../../src/actions/lc_actiondrawparabola4points.cpp" line="273"/>
         <source>Specify the second point on parabola</source>
-        <translation>Specify the second point on parabola</translation>
+        <translation>Especifiqueu el segon punt de la paràbola</translation>
     </message>
     <message>
         <location filename="../../src/actions/lc_actiondrawparabola4points.cpp" line="274"/>
@@ -460,17 +460,17 @@ or [%2]</translation>
     <message>
         <location filename="../../src/actions/lc_actiondrawparabola4points.cpp" line="278"/>
         <source>Specify the third point on parabola</source>
-        <translation>Specify the third point on parabola</translation>
+        <translation>Especifiqueu el tercer punt de la paràbola</translation>
     </message>
     <message>
         <location filename="../../src/actions/lc_actiondrawparabola4points.cpp" line="283"/>
         <source>Specify the fourth point on parabola</source>
-        <translation>Specify the fourth point on parabola</translation>
+        <translation>Especifiqueu el quart punt de la paràbola</translation>
     </message>
     <message>
         <location filename="../../src/actions/lc_actiondrawparabola4points.cpp" line="288"/>
         <source>Specify the Axis on parabola</source>
-        <translation>Specify the Axis on parabola</translation>
+        <translation>Especifiqueu l'eix de la paràbola</translation>
     </message>
 </context>
 <context>
@@ -478,7 +478,7 @@ or [%2]</translation>
     <message>
         <location filename="../../src/actions/lc_actiondrawparabolaFD.cpp" line="290"/>
         <source>Specify the focus of parabola</source>
-        <translation>Specify the focus of parabola</translation>
+        <translation>Especifiqueu el focus de la paràbola</translation>
     </message>
     <message>
         <location filename="../../src/actions/lc_actiondrawparabolaFD.cpp" line="291"/>
@@ -488,7 +488,7 @@ or [%2]</translation>
     <message>
         <location filename="../../src/actions/lc_actiondrawparabolaFD.cpp" line="295"/>
         <source>Specify the directrix of parabola</source>
-        <translation>Specify the directrix of parabola</translation>
+        <translation>Especifiqueu la directriu de la paràbola</translation>
     </message>
     <message>
         <location filename="../../src/actions/lc_actiondrawparabolaFD.cpp" line="296"/>
@@ -500,12 +500,12 @@ or [%2]</translation>
     <message>
         <location filename="../../src/actions/lc_actiondrawparabolaFD.cpp" line="300"/>
         <source>Specify the start point on parabola</source>
-        <translation>Specify the start point on parabola</translation>
+        <translation>Especifiqueu el punt d'inici de la paràbola</translation>
     </message>
     <message>
         <location filename="../../src/actions/lc_actiondrawparabolaFD.cpp" line="305"/>
         <source>Specify the end point on parabola</source>
-        <translation>Specify the end point on parabola</translation>
+        <translation>Especifiqueu el punt final de la paràbola</translation>
     </message>
 </context>
 <context>
@@ -513,12 +513,12 @@ or [%2]</translation>
     <message>
         <location filename="../../src/actions/lc_abstractactionwithpreview.cpp" line="846"/>
         <source> is not divided as it is locked.</source>
-        <translation>is not divided as it is locked.</translation>
+        <translation>no es divideix perquè està bloquejat.</translation>
     </message>
     <message>
         <location filename="../../src/actions/lc_abstractactionwithpreview.cpp" line="854"/>
         <source> is not divided as it is part of polyline. Expand polyline first.</source>
-        <translation>is not divided as it is part of polyline. Expand polyline first.</translation>
+        <translation>no es divideix perquè és part de la polilínia. Expandiu la polilínia primer.</translation>
     </message>
     <message>
         <location filename="../../src/actions/lc_actiondrawslicedivide.cpp" line="180"/>
@@ -533,7 +533,7 @@ or [%2]</translation>
     <message>
         <location filename="../../src/actions/lc_actiondrawslicedivide.cpp" line="200"/>
         <source>Circle</source>
-        <translation>Circle</translation>
+        <translation>Cercle</translation>
     </message>
 </context>
 <context>
@@ -541,7 +541,7 @@ or [%2]</translation>
     <message>
         <location filename="../../src/actions/lc_actiondrawsplinepoints.cpp" line="251"/>
         <source>Specify first control point</source>
-        <translation>Specify first control point</translation>
+        <translation>Especifiqueu el primer punt de control</translation>
     </message>
     <message>
         <location filename="../../src/actions/lc_actiondrawsplinepoints.cpp" line="252"/>
@@ -551,7 +551,7 @@ or [%2]</translation>
     <message>
         <location filename="../../src/actions/lc_actiondrawsplinepoints.cpp" line="275"/>
         <source>Specify next control point or [%1]</source>
-        <translation>Specify next control point or [%1]</translation>
+        <translation>Especifiqueu el punt de control següent o [%1]</translation>
     </message>
     <message>
         <location filename="../../src/actions/lc_actiondrawsplinepoints.cpp" line="276"/>
@@ -562,18 +562,18 @@ or [%2]</translation>
     <message>
         <location filename="../../src/actions/lc_actiondrawsplinepoints.cpp" line="281"/>
         <source>Specify next control point</source>
-        <translation>Specify next control point</translation>
+        <translation>Especifiqueu el punt de control següent</translation>
     </message>
     <message>
         <location filename="../../src/actions/lc_actiondrawsplinepoints.cpp" line="334"/>
         <location filename="../../src/actions/lc_actiondrawsplinepoints.cpp" line="359"/>
         <source>Cannot undo: Not enough entities defined yet.</source>
-        <translation>Cannot undo: Not enough entities defined yet.</translation>
+        <translation>No es pot desfer: Encara no hi ha prou entitats definides.</translation>
     </message>
     <message>
         <location filename="../../src/actions/lc_actiondrawsplinepoints.cpp" line="380"/>
         <source>Cannot undo: Nothing could be redone.</source>
-        <translation>Cannot undo: Nothing could be redone.</translation>
+        <translation>No es pot desfer: No hi ha res a refer.</translation>
     </message>
 </context>
 <context>
@@ -581,52 +581,52 @@ or [%2]</translation>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="54"/>
         <source>Zoom &amp;Panning</source>
-        <translation>Zoom &amp;Panning</translation>
+        <translation>Zoom i &amp;Panoràmica</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="63"/>
         <source>Select Entity</source>
-        <translation>Select Entity</translation>
+        <translation>Seleccionar l'entitat</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="70"/>
         <source>Select Window</source>
-        <translation>Select Window</translation>
+        <translation>Seleccionar finestra</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="77"/>
         <source>Deselect Window</source>
-        <translation>Deselect Window</translation>
+        <translation>Desseleccionar finestra</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="84"/>
         <source>(De-)Select &amp;Contour</source>
-        <translation>(De-)Select &amp;Contour</translation>
+        <translation>(Des)Seleccionar &amp;Contorn</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="91"/>
         <source>Select Intersected Entities</source>
-        <translation>Select Intersected Entities</translation>
+        <translation>Seleccionar entitats intersectades</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="98"/>
         <source>Deselect Intersected Entities</source>
-        <translation>Deselect Intersected Entities</translation>
+        <translation>Desseleccionar entitats intersectades</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="105"/>
         <source>(De-)Select Layer</source>
-        <translation>(De-)Select Layer</translation>
+        <translation>(Des)Seleccionar capa</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="114"/>
         <source>&amp;Points</source>
-        <translation>&amp;Points</translation>
+        <translation>&amp;Punts</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="124"/>
         <source>&amp;2 Points</source>
-        <translation>&amp;2 Points</translation>
+        <translation>&amp;2 Punts</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="131"/>
@@ -637,7 +637,7 @@ or [%2]</translation>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="138"/>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="648"/>
         <source>&amp;Horizontal</source>
-        <translation>&amp;Horizontal</translation>
+        <translation>&amp;Horitzontal</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="145"/>
@@ -647,17 +647,17 @@ or [%2]</translation>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="158"/>
         <source>&amp;Freehand Line</source>
-        <translation>&amp;Freehand Line</translation>
+        <translation>Línia a &amp;mà alçada</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="165"/>
         <source>&amp;Parallel</source>
-        <translation>&amp;Parallel</translation>
+        <translation>&amp;Paral·lel</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="172"/>
         <source>Parallel through point</source>
-        <translation>Parallel through point</translation>
+        <translation>Paral·lel per un punt</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="179"/>
@@ -667,7 +667,7 @@ or [%2]</translation>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="186"/>
         <source>Bisector</source>
-        <translation>Bisector</translation>
+        <translation>Bisectriu</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="193"/>
@@ -682,72 +682,72 @@ or [%2]</translation>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="207"/>
         <source>Tangent &amp;Orthogonal</source>
-        <translation>Tangent &amp;Orthogonal</translation>
+        <translation>Tangent &amp;Ortogonal</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="214"/>
         <source>Orthogonal</source>
-        <translation>Orthogonal</translation>
+        <translation>Ortogonal</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="221"/>
         <source>Relative angle</source>
-        <translation>Relative angle</translation>
+        <translation>Angle relatiu</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="228"/>
         <source>Pol&amp;ygon (Cen,Cor)</source>
-        <translation>Pol&amp;ygon (Cen,Cor)</translation>
+        <translation>Polí&amp;gon (Cen,Can)</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="235"/>
         <source>Pol&amp;ygon (Cen,Tan)</source>
-        <translation>Pol&amp;ygon (Cen,Tan)</translation>
+        <translation>Polí&amp;gon (Cen,Tan)</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="242"/>
         <source>Polygo&amp;n (Cor,Cor)</source>
-        <translation>Polygo&amp;n (Cor,Cor)</translation>
+        <translation>Polígo&amp;n (Can,Can)</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="251"/>
         <source>Center, &amp;Point</source>
-        <translation>Center, &amp;Point</translation>
+        <translation>Centre, &amp;Punt</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="257"/>
         <source>Cross</source>
-        <translation>Cross</translation>
+        <translation>Creu</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="263"/>
         <source>Snake</source>
-        <translation>Snake</translation>
+        <translation>Serp</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="269"/>
         <source>Snake (X)</source>
-        <translation>Snake (X)</translation>
+        <translation>Serp (X)</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="275"/>
         <source>Snake (Y)</source>
-        <translation>Snake (Y)</translation>
+        <translation>Serp (Y)</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="281"/>
         <source>Rectangle (1 Point)</source>
-        <translation>Rectangle (1 Point)</translation>
+        <translation>Rectangle (1 Punt)</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="287"/>
         <source>Rectangle (2 Points)</source>
-        <translation>Rectangle (2 Points)</translation>
+        <translation>Rectangle (2 Punts)</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="293"/>
         <source>Rectangle (3 Points)</source>
-        <translation>Rectangle (3 Points)</translation>
+        <translation>Rectangle (3 Punts)</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="299"/>
@@ -757,154 +757,154 @@ or [%2]</translation>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="305"/>
         <source>Break/Divide</source>
-        <translation>Break/Divide</translation>
+        <translation>Trencar/Dividir</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="311"/>
         <source>Line Gap</source>
-        <translation>Line Gap</translation>
+        <translation>Buit de línia</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="317"/>
         <source>Angle From Line</source>
-        <translation>Angle From Line</translation>
+        <translation>Angle des de la línia</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="323"/>
         <source>Orthogonal From Line</source>
-        <translation>Orthogonal From Line</translation>
+        <translation>Ortogonal des de la línia</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="329"/>
         <source>From Point To Line</source>
-        <translation>From Point To Line</translation>
+        <translation>Des del punt fins a la línia</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="335"/>
         <source>Slice/Divide Line</source>
-        <translation>Slice/Divide Line</translation>
+        <translation>Tallar/Dividir línia</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="341"/>
         <source>Slice/Divide Circle</source>
-        <translation>Slice/Divide Circle</translation>
+        <translation>Tallar/Dividir cercle</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="347"/>
         <source>Line of Points</source>
-        <translation>Line of Points</translation>
+        <translation>Línia de punts</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="353"/>
         <source>By Arc</source>
-        <translation>By Arc</translation>
+        <translation>Per arc</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="360"/>
         <source>Center, &amp;Radius</source>
-        <translation>Center, &amp;Radius</translation>
+        <translation>Centre, &amp;Radi</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="367"/>
         <source>2 Points</source>
-        <translation>2 Points</translation>
+        <translation>2 Punts</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="374"/>
         <source>2 Points, Radius</source>
-        <translation>2 Points, Radius</translation>
+        <translation>2 Punts, Radi</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="381"/>
         <source>3 Points</source>
-        <translation>3 Points</translation>
+        <translation>3 Punts</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="388"/>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="449"/>
         <source>&amp;Concentric</source>
-        <translation>&amp;Concentric</translation>
+        <translation>&amp;Concèntric</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="396"/>
         <source>Circle &amp;Inscribed</source>
-        <translation>Circle &amp;Inscribed</translation>
+        <translation>Cercle &amp;Inscrit</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="403"/>
         <source>Tangential 2 Circles, Radius</source>
         <comment>circle tangential with two circles, and given radius</comment>
-        <translation>Tangential 2 Circles, Radius</translation>
+        <translation>Tangent a 2 Cercles, Radi</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="410"/>
         <source>Tangential 2 Circles, 1 Point</source>
-        <translation>Tangential 2 Circles, 1 Point</translation>
+        <translation>Tangent a 2 Cercles, 1 Punt</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="417"/>
         <source>Tangential &amp;3 Circles</source>
-        <translation>Tangential &amp;3 Circles</translation>
+        <translation>Tangent a &amp;3 Cercles</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="424"/>
         <source>Tangential, 2 P&amp;oints</source>
-        <translation>Tangential, 2 P&amp;oints</translation>
+        <translation>Tangent, 2 P&amp;unts</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="433"/>
         <source>&amp;Center, Point, Angles</source>
-        <translation>&amp;Center, Point, Angles</translation>
+        <translation>&amp;Centre, Punt, Angles</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="441"/>
         <source>&amp;3 Points</source>
-        <translation>&amp;3 Points</translation>
+        <translation>&amp;3 Punts</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="457"/>
         <source>Arc &amp;Tangential</source>
-        <translation>Arc &amp;Tangential</translation>
+        <translation>Arc &amp;Tangent</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="467"/>
         <source>&amp;Ellipse (Axis)</source>
-        <translation>&amp;Ellipse (Axis)</translation>
+        <translation>&amp;El·lipse (Eix)</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="474"/>
         <source>Ellipse &amp;Arc (Axis)</source>
-        <translation>Ellipse &amp;Arc (Axis)</translation>
+        <translation>Arc &amp;el·líptic (Eix)</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="481"/>
         <source>Ellipse &amp;Foci Point</source>
-        <translation>Ellipse &amp;Foci Point</translation>
+        <translation>&amp;Focos de l'el·lipse</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="488"/>
         <source>Ellipse &amp;4 Point</source>
-        <translation>Ellipse &amp;4 Point</translation>
+        <translation>El·lipse &amp;4 Punts</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="495"/>
         <source>Ellipse Center and &amp;3 Points</source>
-        <translation>Ellipse Center and &amp;3 Points</translation>
+        <translation>Centre d'el·lipse i &amp;3 Punts</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="502"/>
         <source>Ellipse &amp;Inscribed</source>
-        <translation>Ellipse &amp;Inscribed</translation>
+        <translation>El·lipse &amp;Inscrita</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="510"/>
         <source>Para&amp;bola 4 points</source>
-        <translation>Para&amp;bola 4 points</translation>
+        <translation>Para&amp;bola 4 punts</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="517"/>
         <source>Parabola &amp;Focus Directrix</source>
-        <translation>Parabola &amp;Focus Directrix</translation>
+        <translation>Paràbola &amp;Focus Directriu</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="526"/>
@@ -914,47 +914,47 @@ or [%2]</translation>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="533"/>
         <source>&amp;Spline through points</source>
-        <translation>&amp;Spline through points</translation>
+        <translation>Spline per &amp;punts</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="542"/>
         <source>&amp;Polyline</source>
-        <translation>&amp;Polyline</translation>
+        <translation>&amp;Polilínia</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="549"/>
         <source>&amp;Add node</source>
-        <translation>&amp;Add node</translation>
+        <translation>&amp;Afegir node</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="557"/>
         <source>A&amp;ppend node</source>
-        <translation>A&amp;ppend node</translation>
+        <translation>&amp;Annexar node</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="565"/>
         <source>&amp;Delete node</source>
-        <translation>&amp;Delete node</translation>
+        <translation>&amp;Esborrar node</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="573"/>
         <source>Delete &amp;between two nodes</source>
-        <translation>Delete &amp;between two nodes</translation>
+        <translation>Esborrar &amp;entre dos nodes</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="581"/>
         <source>&amp;Trim segments</source>
-        <translation>&amp;Trim segments</translation>
+        <translation>&amp;Retallar segments</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="589"/>
         <source>Create &amp;Equidistant Polylines</source>
-        <translation>Create &amp;Equidistant Polylines</translation>
+        <translation>Crear Polilínies &amp;Equidistants</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="596"/>
         <source>Create Polyline from Existing &amp;Segments</source>
-        <translation>Create Polyline from Existing &amp;Segments</translation>
+        <translation>Crear Polilínia des de &amp;Segments existents</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="605"/>
@@ -969,22 +969,22 @@ or [%2]</translation>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="618"/>
         <source>&amp;Hatch</source>
-        <translation>&amp;Hatch</translation>
+        <translation>&amp;Ratllat</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="625"/>
         <source>Insert &amp;Image</source>
-        <translation>Insert &amp;Image</translation>
+        <translation>Inserir &amp;Imatge</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="634"/>
         <source>&amp;Aligned</source>
-        <translation>&amp;Aligned</translation>
+        <translation>&amp;Alineat</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="641"/>
         <source>&amp;Linear</source>
-        <translation>&amp;Linear</translation>
+        <translation>&amp;Lineal</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="655"/>
@@ -999,7 +999,7 @@ or [%2]</translation>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="669"/>
         <source>&amp;Diametric</source>
-        <translation>&amp;Diametric</translation>
+        <translation>&amp;Diametral</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="676"/>
@@ -1014,32 +1014,32 @@ or [%2]</translation>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="690"/>
         <source>&amp;Leader</source>
-        <translation>&amp;Leader</translation>
+        <translation>&amp;Líder</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="699"/>
         <source>&amp;Attributes</source>
-        <translation>&amp;Attributes</translation>
+        <translation>&amp;Atributs</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="707"/>
         <source>&amp;Delete</source>
-        <translation>&amp;Delete</translation>
+        <translation>&amp;Esborrar</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="714"/>
         <source>Delete Freehand</source>
-        <translation>Delete Freehand</translation>
+        <translation>Esborrar a mà alçada</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="721"/>
         <source>&amp;Move / Copy</source>
-        <translation>&amp;Move / Copy</translation>
+        <translation>&amp;Moure / Copiar</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="729"/>
         <source>Re&amp;vert direction</source>
-        <translation>Re&amp;vert direction</translation>
+        <translation>In&amp;vertir direcció</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="731"/>
@@ -1049,312 +1049,312 @@ or [%2]</translation>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="737"/>
         <source>&amp;Rotate</source>
-        <translation>&amp;Rotate</translation>
+        <translation>&amp;Girar</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="745"/>
         <source>&amp;Scale</source>
-        <translation>&amp;Scale</translation>
+        <translation>&amp;Escala</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="753"/>
         <source>&amp;Mirror</source>
-        <translation>&amp;Mirror</translation>
+        <translation>&amp;Reflexió</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="761"/>
         <source>Mo&amp;ve and Rotate</source>
-        <translation>Mo&amp;ve and Rotate</translation>
+        <translation>Mo&amp;ure i Girar</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="768"/>
         <source>Rotate T&amp;wo</source>
-        <translation>Rotate T&amp;wo</translation>
+        <translation>Girar D&amp;os</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="775"/>
         <source>&amp;Properties</source>
-        <translation>&amp;Properties</translation>
+        <translation>&amp;Propietats</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="783"/>
         <source>&amp;Trim</source>
-        <translation>&amp;Trim</translation>
+        <translation>&amp;Retallar</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="791"/>
         <source>Tr&amp;im Two</source>
-        <translation>Tr&amp;im Two</translation>
+        <translation>Reta&amp;llar Dos</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="799"/>
         <source>&amp;Lengthen</source>
-        <translation>&amp;Lengthen</translation>
+        <translation>&amp;Allargar</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="807"/>
         <source>O&amp;ffset</source>
-        <translation>O&amp;ffset</translation>
+        <translation>&amp;Desplaçament</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="815"/>
         <source>&amp;Divide</source>
-        <translation>&amp;Divide</translation>
+        <translation>&amp;Dividir</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="823"/>
         <source>&amp;Stretch</source>
-        <translation>&amp;Stretch</translation>
+        <translation>&amp;Estira</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="831"/>
         <source>&amp;Bevel</source>
-        <translation>&amp;Bevel</translation>
+        <translation>&amp;Bisell</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="839"/>
         <source>&amp;Fillet</source>
-        <translation>&amp;Fillet</translation>
+        <translation>&amp;Arrodonir</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="847"/>
         <source>&amp;Explode Text into Letters</source>
-        <translation>&amp;Explode Text into Letters</translation>
+        <translation>&amp;Explotar text en lletres</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="854"/>
         <source>Ex&amp;plode</source>
-        <translation>Ex&amp;plode</translation>
+        <translation>Ex&amp;plotar</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="864"/>
         <source>&amp;Pick Pen From Entity</source>
-        <translation>&amp;Pick Pen From Entity</translation>
+        <translation>&amp;Agafar llapis de l'entitat</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="872"/>
         <source>&amp;Pick Pen From Entity (Resolved)</source>
-        <translation>&amp;Pick Pen From Entity (Resolved)</translation>
+        <translation>&amp;Agafar llapis de l'entitat (Resolt)</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="881"/>
         <source>Apply Pen to Entity</source>
-        <translation>Apply Pen to Entity</translation>
+        <translation>Aplicar llapis a l'entitat</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="889"/>
         <source>Copy Pen</source>
-        <translation>Copy Pen</translation>
+        <translation>Copiar llapis</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="897"/>
         <source>Line Join</source>
-        <translation>Line Join</translation>
+        <translation>Unió de línies</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="904"/>
         <source>Duplicate</source>
-        <translation>Duplicate</translation>
+        <translation>Duplicar</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="913"/>
         <source>Point inside contour</source>
-        <translation>Point inside contour</translation>
+        <translation>Punt dins del contorn</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="919"/>
         <source>&amp;Distance Point to Point</source>
-        <translation>&amp;Distance Point to Point</translation>
+        <translation>&amp;Distància de punt a punt</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="926"/>
         <source>&amp;Distance Entity to Point</source>
-        <translation>&amp;Distance Entity to Point</translation>
+        <translation>&amp;Distància d'entitat a punt</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="933"/>
         <source>An&amp;gle between two lines</source>
-        <translation>An&amp;gle between two lines</translation>
+        <translation>&amp;Angle entre dues línies</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="940"/>
         <source>&amp;Total length of selected entities</source>
-        <translation>&amp;Total length of selected entities</translation>
+        <translation>&amp;Longitud total de les entitats seleccionades</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="947"/>
         <source>Polygonal &amp;Area</source>
-        <translation>Polygonal &amp;Area</translation>
+        <translation>&amp;Àrea poligonal</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="966"/>
         <source>move to bottom</source>
-        <translation>move to bottom</translation>
+        <translation>moure al fons</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="974"/>
         <source>lower after entity</source>
-        <translation>lower after entity</translation>
+        <translation>baixar darrere de l'entitat</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="982"/>
         <source>raise over entity</source>
-        <translation>raise over entity</translation>
+        <translation>pujar sobre l'entitat</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="990"/>
         <source>move to top</source>
-        <translation>move to top</translation>
+        <translation>moure a dalt</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="1000"/>
         <source>&amp;Show all layers</source>
-        <translation>&amp;Show all layers</translation>
+        <translation>&amp;Mostrar totes les capes</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="1007"/>
         <source>&amp;Hide all layers</source>
-        <translation>&amp;Hide all layers</translation>
+        <translation>&amp;Ocultar totes les capes</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="1014"/>
         <source>&amp;Unlock all</source>
-        <translation>&amp;Unlock all</translation>
+        <translation>&amp;Desbloquejar tot</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="1021"/>
         <source>&amp;Lock all</source>
-        <translation>&amp;Lock all</translation>
+        <translation>&amp;Bloquejar tot</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="1028"/>
         <source>&amp;Add Layer</source>
-        <translation>&amp;Add Layer</translation>
+        <translation>&amp;Afegir capa</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="1035"/>
         <source>&amp;Remove Layer</source>
-        <translation>&amp;Remove Layer</translation>
+        <translation>&amp;Eliminar capa</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="1042"/>
         <source>&amp;Edit Layer</source>
-        <translation>&amp;Edit Layer</translation>
+        <translation>&amp;Editar capa</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="1049"/>
         <source>Toggle Layer Loc&amp;k</source>
-        <translation>Toggle Layer Loc&amp;k</translation>
+        <translation>Commutar b&amp;loqueig de capa</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="1056"/>
         <source>&amp;Toggle Layer Visibility</source>
-        <translation>&amp;Toggle Layer Visibility</translation>
+        <translation>&amp;Commutar visibilitat de capa</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="1063"/>
         <source>Toggle Layer &amp;Print</source>
-        <translation>Toggle Layer &amp;Print</translation>
+        <translation>Commutar im&amp;pressió de capa</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="1070"/>
         <source>Toggle &amp;Construction Layer</source>
-        <translation>Toggle &amp;Construction Layer</translation>
+        <translation>Commutar capa de &amp;construcció</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="1077"/>
         <source>&amp;Export Selected Layer(s)</source>
-        <translation>&amp;Export Selected Layer(s)</translation>
+        <translation>&amp;Exportar capa(es) seleccionada(es)</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="1082"/>
         <source>Export &amp;Visible Layer(s)</source>
-        <translation>Export &amp;Visible Layer(s)</translation>
+        <translation>Exportar capa(es) &amp;visible(s)</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="1089"/>
         <source>&amp;Show all blocks</source>
-        <translation>&amp;Show all blocks</translation>
+        <translation>&amp;Mostrar tots els blocs</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="1096"/>
         <source>&amp;Hide all blocks</source>
-        <translation>&amp;Hide all blocks</translation>
+        <translation>&amp;Ocultar tots els blocs</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="1103"/>
         <source>&amp;Add Block</source>
-        <translation>&amp;Add Block</translation>
+        <translation>&amp;Afegir bloc</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="1110"/>
         <source>&amp;Remove Block</source>
-        <translation>&amp;Remove Block</translation>
+        <translation>&amp;Eliminar bloc</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="1117"/>
         <source>&amp;Rename Block</source>
-        <translation>&amp;Rename Block</translation>
+        <translation>&amp;Canviar nom del bloc</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="1124"/>
         <source>&amp;Edit Block</source>
-        <translation>&amp;Edit Block</translation>
+        <translation>&amp;Editar bloc</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="1131"/>
         <source>&amp;Save Block</source>
-        <translation>&amp;Save Block</translation>
+        <translation>&amp;Desar bloc</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="1138"/>
         <source>&amp;Insert Block</source>
-        <translation>&amp;Insert Block</translation>
+        <translation>&amp;Inserir bloc</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="1145"/>
         <source>Toggle Block &amp;Visibility</source>
-        <translation>Toggle Block &amp;Visibility</translation>
+        <translation>Commutar &amp;visibilitat del bloc</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="1152"/>
         <source>&amp;Create Block</source>
-        <translation>&amp;Create Block</translation>
+        <translation>&amp;Crear bloc</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="1161"/>
         <source>&amp;Application Preferences</source>
-        <translation>&amp;Application Preferences</translation>
+        <translation>&amp;Preferències de l'aplicació</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="1169"/>
         <source>Current &amp;Drawing Preferences</source>
-        <translation>Current &amp;Drawing Preferences</translation>
+        <translation>Preferències del &amp;dibuix actual</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="1178"/>
         <source>Widget Options</source>
-        <translation>Widget Options</translation>
+        <translation>Opcions de widget</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="1184"/>
         <source>Device Options</source>
-        <translation>Device Options</translation>
+        <translation>Opcions del dispositiu</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="1192"/>
         <source>&amp;Delete selected</source>
-        <translation>&amp;Delete selected</translation>
+        <translation>&amp;Esborrar seleccionat</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="1200"/>
         <source>Select &amp;All</source>
-        <translation>Select &amp;All</translation>
+        <translation>Seleccionar &amp;tot</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="1210"/>
         <source>Deselect &amp;all</source>
-        <translation>Deselect &amp;all</translation>
+        <translation>Desseleccionar &amp;tot</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="1212"/>
@@ -1364,47 +1364,47 @@ or [%2]</translation>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="1219"/>
         <source>Invert Selection</source>
-        <translation>Invert Selection</translation>
+        <translation>Invertir selecció</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="1228"/>
         <source>Export as CA&amp;M/plain SVG...</source>
-        <translation>Export as CA&amp;M/plain SVG...</translation>
+        <translation>Exportar com CA&amp;M/SVG simple...</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="1244"/>
         <source>&amp;Export as image</source>
-        <translation>&amp;Export as image</translation>
+        <translation>Exportar com a &amp;imatge</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="1250"/>
         <source>&amp;Close</source>
-        <translation>&amp;Close</translation>
+        <translation>&amp;Tancar</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="1257"/>
         <source>Close All</source>
-        <translation>Close All</translation>
+        <translation>Tancar tot</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="1265"/>
         <source>Export as PDF</source>
-        <translation>Export as PDF</translation>
+        <translation>Exportar com a PDF</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="1271"/>
         <source>&amp;Block</source>
-        <translation>&amp;Block</translation>
+        <translation>&amp;Bloc</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="1279"/>
         <source>&amp;Fullscreen</source>
-        <translation>&amp;Fullscreen</translation>
+        <translation>&amp;Pantalla completa</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="1290"/>
         <source>&amp;Grid</source>
-        <translation>&amp;Grid</translation>
+        <translation>&amp;Graella</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="1292"/>
@@ -1415,7 +1415,7 @@ or [%2]</translation>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="1300"/>
         <source>&amp;Draft</source>
-        <translation>&amp;Draft</translation>
+        <translation>&amp;Esbós</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="1303"/>
@@ -1426,7 +1426,7 @@ or [%2]</translation>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="1309"/>
         <source>&amp;Statusbar</source>
-        <translation>&amp;Statusbar</translation>
+        <translation>&amp;Barra d'estat</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="1312"/>
@@ -1437,7 +1437,7 @@ or [%2]</translation>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="1317"/>
         <source>Focus on &amp;Command Line</source>
-        <translation>Focus on &amp;Command Line</translation>
+        <translation>Enfocar la línia d'&amp;ordres</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="1328"/>
@@ -1447,7 +1447,7 @@ or [%2]</translation>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="1337"/>
         <source>Right</source>
-        <translation>Right</translation>
+        <translation>Dreta</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="1346"/>
@@ -1457,142 +1457,142 @@ or [%2]</translation>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="1355"/>
         <source>Bottom</source>
-        <translation>Bottom</translation>
+        <translation>Inferior</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="1364"/>
         <source>Floating</source>
-        <translation>Floating</translation>
+        <translation>Flotant</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="1373"/>
         <source>Reload Style Sheet</source>
-        <translation>Reload Style Sheet</translation>
+        <translation>Recarregar full d'estil</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="1380"/>
         <source>Re-dock Widgets</source>
-        <translation>Re-dock Widgets</translation>
+        <translation>Reacollar widgets</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="1386"/>
         <source>Menu Creator</source>
-        <translation>Menu Creator</translation>
+        <translation>Creador de menú</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="1393"/>
         <source>Toolbar Creator</source>
-        <translation>Toolbar Creator</translation>
+        <translation>Creador de barra d'eines</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="1409"/>
         <source>&amp;Selection pointer</source>
-        <translation>&amp;Selection pointer</translation>
+        <translation>Punter de &amp;selecció</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="1419"/>
         <source>&amp;Undo</source>
-        <translation>&amp;Undo</translation>
+        <translation>&amp;Desfer</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="1430"/>
         <source>&amp;Redo</source>
-        <translation>&amp;Redo</translation>
+        <translation>&amp;Refer</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="1441"/>
         <source>Cu&amp;t</source>
-        <translation>Cu&amp;t</translation>
+        <translation>&amp;Tallar</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="1452"/>
         <source>&amp;Copy</source>
-        <translation>&amp;Copy</translation>
+        <translation>&amp;Copiar</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="1463"/>
         <source>&amp;Paste</source>
-        <translation>&amp;Paste</translation>
+        <translation>&amp;Enganxar</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="1476"/>
         <source>Zoom &amp;In</source>
-        <translation>Zoom &amp;In</translation>
+        <translation>Zoom &amp;Apropar</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="1486"/>
         <source>Zoom &amp;Out</source>
-        <translation>Zoom &amp;Out</translation>
+        <translation>Zoom &amp;Allunyar</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="1496"/>
         <source>&amp;Auto Zoom</source>
-        <translation>&amp;Auto Zoom</translation>
+        <translation>Zoom &amp;Automàtic</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="1506"/>
         <source>Previous &amp;View</source>
-        <translation>Previous &amp;View</translation>
+        <translation>&amp;Vista anterior</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="1517"/>
         <source>&amp;Redraw</source>
-        <translation>&amp;Redraw</translation>
+        <translation>&amp;Redibuixar</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="1528"/>
         <source>&amp;Window Zoom</source>
-        <translation>&amp;Window Zoom</translation>
+        <translation>Zoom de &amp;finestra</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="1540"/>
         <source>&amp;New</source>
-        <translation>&amp;New</translation>
+        <translation>&amp;Nou</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="1550"/>
         <source>New From &amp;Template</source>
-        <translation>New From &amp;Template</translation>
+        <translation>Nou des de &amp;Plantilla</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="1559"/>
         <source>&amp;Open...</source>
-        <translation>&amp;Open...</translation>
+        <translation>&amp;Obrir...</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="1569"/>
         <source>&amp;Save</source>
-        <translation>&amp;Save</translation>
+        <translation>&amp;Desar</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="1579"/>
         <source>Save &amp;as...</source>
-        <translation>Save &amp;as...</translation>
+        <translation>Desar &amp;com a...</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="1589"/>
         <source>Save A&amp;ll...</source>
-        <translation>Save A&amp;ll...</translation>
+        <translation>Desar &amp;tot...</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="1599"/>
         <source>&amp;Print...</source>
-        <translation>&amp;Print...</translation>
+        <translation>&amp;Imprimir...</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="1610"/>
         <source>Print Pre&amp;view</source>
-        <translation>Print Pre&amp;view</translation>
+        <translation>Pree&amp;strena d'impressió</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="1621"/>
         <source>&amp;Quit</source>
-        <translation>&amp;Quit</translation>
+        <translation>&amp;Sortir</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="1632"/>
         <source>Update Current Pen by Active Layer&apos; Pen</source>
-        <translation>Update Current Pen by Active Layer&apos; Pen</translation>
+        <translation>Actualitzar el llapis actual amb el llapis de la capa activa</translation>
     </message>
 </context>
 <context>
@@ -1600,7 +1600,7 @@ or [%2]</translation>
     <message>
         <location filename="../../src/actions/lc_actionfileexportmakercam.cpp" line="110"/>
         <source>Export as</source>
-        <translation>Export as</translation>
+        <translation>Exportar com a</translation>
     </message>
 </context>
 <context>
@@ -1608,7 +1608,7 @@ or [%2]</translation>
     <message>
         <location filename="../../src/actions/lc_actionlayersexport.cpp" line="281"/>
         <source>Saving layer &quot;%1&quot; as &quot;%2&quot; </source>
-        <translation>Saving layer &quot;%1&quot; as &quot;%2&quot;</translation>
+        <translation>Desant la capa &quot;%1&quot; com a &quot;%2&quot;</translation>
     </message>
 </context>
 <context>
@@ -1616,7 +1616,7 @@ or [%2]</translation>
     <message>
         <location filename="../../src/actions/lc_actionpenapply.cpp" line="171"/>
         <source>Specify entity to pick the pen</source>
-        <translation>Specify entity to pick the pen</translation>
+        <translation>Especifiqueu l'entitat per agafar el llapis</translation>
     </message>
     <message>
         <location filename="../../src/actions/lc_actionpenapply.cpp" line="172"/>
@@ -1627,7 +1627,7 @@ or [%2]</translation>
     <message>
         <location filename="../../src/actions/lc_actionpenapply.cpp" line="175"/>
         <source>Specify entity to apply pen</source>
-        <translation>Specify entity to apply pen</translation>
+        <translation>Especifiqueu l'entitat per aplicar el llapis</translation>
     </message>
 </context>
 <context>
@@ -1635,7 +1635,7 @@ or [%2]</translation>
     <message>
         <location filename="../../src/actions/lc_actionpenpick.cpp" line="108"/>
         <source>Specify entity to pick the pen</source>
-        <translation>Specify entity to pick the pen</translation>
+        <translation>Especifiqueu l'entitat per agafar el llapis</translation>
     </message>
     <message>
         <location filename="../../src/actions/lc_actionpenpick.cpp" line="109"/>
@@ -1648,7 +1648,7 @@ or [%2]</translation>
     <message>
         <location filename="../../src/actions/lc_actionsnapmiddlemanual.cpp" line="295"/>
         <source>Specify percentage / start-point</source>
-        <translation>Specify percentage / start-point</translation>
+        <translation>Especifiqueu el percentatge / punt inicial</translation>
     </message>
     <message>
         <location filename="../../src/actions/lc_actionsnapmiddlemanual.cpp" line="296"/>
@@ -1659,12 +1659,12 @@ or [%2]</translation>
     <message>
         <location filename="../../src/actions/lc_actionsnapmiddlemanual.cpp" line="300"/>
         <source>Specify start point</source>
-        <translation>Specify start point</translation>
+        <translation>Especifiqueu el punt d'inici</translation>
     </message>
     <message>
         <location filename="../../src/actions/lc_actionsnapmiddlemanual.cpp" line="305"/>
         <source>Specify end point</source>
-        <translation>Specify end point</translation>
+        <translation>Especifiqueu el punt final</translation>
     </message>
     <message>
         <location filename="../../src/actions/lc_actionsnapmiddlemanual.cpp" line="306"/>
@@ -1693,19 +1693,19 @@ or [%2]</translation>
     <message>
         <location filename="../../../plugins/align/align.cpp" line="50"/>
         <source>Specify base points first</source>
-        <translation>Specify base points first</translation>
+        <translation>Especifiqueu els punts base primer</translation>
     </message>
     <message>
         <location filename="../../../plugins/align/align.cpp" line="54"/>
         <source>Align Settings</source>
-        <translation>Align Settings</translation>
+        <translation>Configuració d'alineació</translation>
     </message>
     <message>
         <location filename="../../../plugins/align/align.cpp" line="57"/>
         <source>Click on options to set/unset,
 Ok to accept and start alignment.</source>
-        <translation>Click on options to set/unset,
-Ok to accept and start alignment.</translation>
+        <translation>Feu clic a les opcions per activar/desactivar,
+D'acord per acceptar i iniciar l'alineació.</translation>
     </message>
     <message>
         <location filename="../../../plugins/align/align.cpp" line="60"/>
@@ -1715,12 +1715,12 @@ Align will copy rather than move the selected objects.
 If &apos;Specify base points first&apos; is checked,
 Align will prompt for the alignment points in the order
 first base, second base, first target, second target.</source>
-        <translation>If &apos;Keep original objects&apos; is checked,
-Align will copy rather than move the selected objects.
+        <translation>Si es marca &apos;Mantenir objectes originals&apos;,
+Alinear copiarà en lloc de moure els objectes seleccionats.
 
-If &apos;Specify base points first&apos; is checked,
-Align will prompt for the alignment points in the order
-first base, second base, first target, second target.</translation>
+Si es marca &apos;Especificar punts base primer&apos;,
+Alinear sol·licitarà els punts d'alineació en l'ordre
+primer base, segon base, primer objectiu, segon objectiu.</translation>
     </message>
     <message>
         <location filename="../../../plugins/align/align.cpp" line="81"/>
@@ -1764,7 +1764,7 @@ first base, second base, first target, second target.</translation>
         <location filename="../../../generated/librecad/ui/ui_lc_circlebyarcoptions.h" line="100"/>
         <location filename="../../../generated/librecad/ui/ui_lc_circlebyarcoptions.h" line="106"/>
         <source>Active</source>
-        <translation>Active</translation>
+        <translation>Actiu</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_circlebyarcoptions.ui" line="32"/>
@@ -1784,7 +1784,7 @@ first base, second base, first target, second target.</translation>
         <location filename="../../../build/ui_lc_circlebyarcoptions.h" line="102"/>
         <location filename="../../../generated/librecad/ui/ui_lc_circlebyarcoptions.h" line="102"/>
         <source>Original Resolved</source>
-        <translation>Original Resolved</translation>
+        <translation>Original Resolt</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_circlebyarcoptions.ui" line="45"/>
@@ -1792,7 +1792,7 @@ first base, second base, first target, second target.</translation>
         <location filename="../../../build/ui_lc_circlebyarcoptions.h" line="104"/>
         <location filename="../../../generated/librecad/ui/ui_lc_circlebyarcoptions.h" line="104"/>
         <source>Radius Shift:</source>
-        <translation>Radius Shift:</translation>
+        <translation>Desplaçament de radi:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_circlebyarcoptions.ui" line="65"/>
@@ -1808,7 +1808,7 @@ first base, second base, first target, second target.</translation>
         <location filename="../../../build/ui_lc_circlebyarcoptions.h" line="109"/>
         <location filename="../../../generated/librecad/ui/ui_lc_circlebyarcoptions.h" line="109"/>
         <source>Replace arc</source>
-        <translation>Replace arc</translation>
+        <translation>Reemplaçar l'arc</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_circlebyarcoptions.ui" line="109"/>
@@ -1816,7 +1816,7 @@ first base, second base, first target, second target.</translation>
         <location filename="../../../build/ui_lc_circlebyarcoptions.h" line="110"/>
         <location filename="../../../generated/librecad/ui/ui_lc_circlebyarcoptions.h" line="110"/>
         <source>Pen:</source>
-        <translation>Pen:</translation>
+        <translation>Llapis:</translation>
     </message>
 </context>
 <context>
@@ -1835,7 +1835,7 @@ first base, second base, first target, second target.</translation>
         <location filename="../../../build/ui_lc_crossoptions.h" line="132"/>
         <location filename="../../../generated/librecad/ui/ui_lc_crossoptions.h" line="132"/>
         <source>Extension</source>
-        <translation>Extension</translation>
+        <translation>Extensió</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_crossoptions.ui" line="68"/>
@@ -1843,7 +1843,7 @@ first base, second base, first target, second target.</translation>
         <location filename="../../../build/ui_lc_crossoptions.h" line="133"/>
         <location filename="../../../generated/librecad/ui/ui_lc_crossoptions.h" line="133"/>
         <source>Total Length</source>
-        <translation>Total Length</translation>
+        <translation>Longitud total</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_crossoptions.ui" line="73"/>
@@ -1851,7 +1851,7 @@ first base, second base, first target, second target.</translation>
         <location filename="../../../build/ui_lc_crossoptions.h" line="134"/>
         <location filename="../../../generated/librecad/ui/ui_lc_crossoptions.h" line="134"/>
         <source>Percent</source>
-        <translation>Percent</translation>
+        <translation>Percentatge</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_crossoptions.ui" line="125"/>
@@ -1891,7 +1891,7 @@ first base, second base, first target, second target.</translation>
     <message>
         <location filename="../../src/ui/lc_customtoolbar.cpp" line="36"/>
         <source>Add or Remove Action</source>
-        <translation>Add or Remove Action</translation>
+        <translation>Afegir o eliminar acció</translation>
     </message>
 </context>
 <context>
@@ -1910,7 +1910,7 @@ first base, second base, first target, second target.</translation>
         <location filename="../../../build/ui_lc_deviceoptions.h" line="69"/>
         <location filename="../../../generated/librecad/ui/ui_lc_deviceoptions.h" line="69"/>
         <source>Device</source>
-        <translation>Device</translation>
+        <translation>Dispositiu</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_deviceoptions.ui" line="53"/>
@@ -1926,7 +1926,7 @@ first base, second base, first target, second target.</translation>
     <message>
         <location filename="../../src/ui/forms/LC_DlgParabola.cpp" line="112"/>
         <source>Parabola control points cannot be collinear</source>
-        <translation>Parabola control points cannot be collinear</translation>
+        <translation>Els punts de control de la paràbola no poden ser col·lineals</translation>
     </message>
 </context>
 <context>
@@ -1953,7 +1953,7 @@ first base, second base, first target, second target.</translation>
         <location filename="../../../build/ui_lc_duplicateoptions.h" line="115"/>
         <location filename="../../../generated/librecad/ui/ui_lc_duplicateoptions.h" line="115"/>
         <source>In Place</source>
-        <translation>In Place</translation>
+        <translation>En el lloc</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_duplicateoptions.ui" line="40"/>
@@ -1961,7 +1961,7 @@ first base, second base, first target, second target.</translation>
         <location filename="../../../build/ui_lc_duplicateoptions.h" line="116"/>
         <location filename="../../../generated/librecad/ui/ui_lc_duplicateoptions.h" line="116"/>
         <source>Offset X:</source>
-        <translation>Offset X:</translation>
+        <translation>Desplaçament X:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_duplicateoptions.ui" line="48"/>
@@ -1973,7 +1973,7 @@ first base, second base, first target, second target.</translation>
         <location filename="../../../generated/librecad/ui/ui_lc_duplicateoptions.h" line="117"/>
         <location filename="../../../generated/librecad/ui/ui_lc_duplicateoptions.h" line="120"/>
         <source>Active</source>
-        <translation>Active</translation>
+        <translation>Actiu</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_duplicateoptions.ui" line="53"/>
@@ -1993,7 +1993,7 @@ first base, second base, first target, second target.</translation>
         <location filename="../../../build/ui_lc_duplicateoptions.h" line="122"/>
         <location filename="../../../generated/librecad/ui/ui_lc_duplicateoptions.h" line="122"/>
         <source>Original Resolved</source>
-        <translation>Original Resolved</translation>
+        <translation>Original Resolt</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_duplicateoptions.ui" line="80"/>
@@ -2001,7 +2001,7 @@ first base, second base, first target, second target.</translation>
         <location filename="../../../build/ui_lc_duplicateoptions.h" line="124"/>
         <location filename="../../../generated/librecad/ui/ui_lc_duplicateoptions.h" line="124"/>
         <source>Offset Y:</source>
-        <translation>Offset Y:</translation>
+        <translation>Desplaçament Y:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_duplicateoptions.ui" line="103"/>
@@ -2009,7 +2009,7 @@ first base, second base, first target, second target.</translation>
         <location filename="../../../build/ui_lc_duplicateoptions.h" line="125"/>
         <location filename="../../../generated/librecad/ui/ui_lc_duplicateoptions.h" line="125"/>
         <source>Pen:</source>
-        <translation>Pen:</translation>
+        <translation>Llapis:</translation>
     </message>
 </context>
 <context>
@@ -2033,7 +2033,7 @@ first base, second base, first target, second target.</translation>
         <location filename="../../../build/ui_lc_layerdialog_ex.h" line="162"/>
         <location filename="../../../generated/librecad/ui/ui_lc_layerdialog_ex.h" line="162"/>
         <source>Layer Settings</source>
-        <translation>Layer Settings</translation>
+        <translation>Configuració de capa</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_layerdialog_ex.ui" line="61"/>
@@ -2041,7 +2041,7 @@ first base, second base, first target, second target.</translation>
         <location filename="../../../build/ui_lc_layerdialog_ex.h" line="164"/>
         <location filename="../../../generated/librecad/ui/ui_lc_layerdialog_ex.h" line="164"/>
         <source>Parent Layers Path:</source>
-        <translation>Parent Layers Path:</translation>
+        <translation>Ruta de les capes pare:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_layerdialog_ex.ui" line="78"/>
@@ -2049,7 +2049,7 @@ first base, second base, first target, second target.</translation>
         <location filename="../../../build/ui_lc_layerdialog_ex.h" line="165"/>
         <location filename="../../../generated/librecad/ui/ui_lc_layerdialog_ex.h" line="165"/>
         <source>Layer Type</source>
-        <translation>Layer Type</translation>
+        <translation>Tipus de capa</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_layerdialog_ex.ui" line="90"/>
@@ -2057,7 +2057,7 @@ first base, second base, first target, second target.</translation>
         <location filename="../../../build/ui_lc_layerdialog_ex.h" line="166"/>
         <location filename="../../../generated/librecad/ui/ui_lc_layerdialog_ex.h" line="166"/>
         <source>Informational</source>
-        <translation>Informational</translation>
+        <translation>Informativa</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_layerdialog_ex.ui" line="100"/>
@@ -2073,7 +2073,7 @@ first base, second base, first target, second target.</translation>
         <location filename="../../../build/ui_lc_layerdialog_ex.h" line="168"/>
         <location filename="../../../generated/librecad/ui/ui_lc_layerdialog_ex.h" line="168"/>
         <source>Dimensions</source>
-        <translation>Dimensions</translation>
+        <translation>Cotes</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_layerdialog_ex.ui" line="120"/>
@@ -2081,7 +2081,7 @@ first base, second base, first target, second target.</translation>
         <location filename="../../../build/ui_lc_layerdialog_ex.h" line="169"/>
         <location filename="../../../generated/librecad/ui/ui_lc_layerdialog_ex.h" line="169"/>
         <source>Alternative Position</source>
-        <translation>Alternative Position</translation>
+        <translation>Posició alternativa</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_layerdialog_ex.ui" line="133"/>
@@ -2090,8 +2090,8 @@ first base, second base, first target, second target.</translation>
         <location filename="../../../generated/librecad/ui/ui_lc_layerdialog_ex.h" line="171"/>
         <source>A Construction Layer has entities of infinite straight lines intended to be used for geometric construction.
        The contents of a Construction Layer should not appear in printout.</source>
-        <translation>A Construction Layer has entities of infinite straight lines intended to be used for geometric construction.
-       The contents of a Construction Layer should not appear in printout.</translation>
+        <translation>Una capa de construcció té entitats de línies rectes infinites destinades a ser usades per a la construcció geomètrica.
+       El contingut d'una capa de construcció no hauria d'aparèixer en la impressió.</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_layerdialog_ex.ui" line="137"/>
@@ -2099,7 +2099,7 @@ first base, second base, first target, second target.</translation>
         <location filename="../../../build/ui_lc_layerdialog_ex.h" line="174"/>
         <location filename="../../../generated/librecad/ui/ui_lc_layerdialog_ex.h" line="174"/>
         <source>Construction Layer</source>
-        <translation>Construction Layer</translation>
+        <translation>Capa de construcció</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_layerdialog_ex.ui" line="179"/>
@@ -2107,39 +2107,39 @@ first base, second base, first target, second target.</translation>
         <location filename="../../../build/ui_lc_layerdialog_ex.h" line="176"/>
         <location filename="../../../generated/librecad/ui/ui_lc_layerdialog_ex.h" line="176"/>
         <source>Layer Name:</source>
-        <translation>Layer Name:</translation>
+        <translation>Nom de capa:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_layerdialog_ex.cpp" line="58"/>
         <source>Rename Virtual Layer</source>
-        <translation>Rename Virtual Layer</translation>
+        <translation>Canviar nom de la capa virtual</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_layerdialog_ex.cpp" line="62"/>
         <source>Add Secondary Layer</source>
-        <translation>Add Secondary Layer</translation>
+        <translation>Afegir capa secundària</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_layerdialog_ex.cpp" line="67"/>
         <location filename="../../src/ui/forms/lc_layerdialog_ex.cpp" line="73"/>
         <source>Add Layer</source>
-        <translation>Add Layer</translation>
+        <translation>Afegir capa</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_layerdialog_ex.cpp" line="78"/>
         <source>Edit Layer</source>
-        <translation>Edit Layer</translation>
+        <translation>Editar capa</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_layerdialog_ex.cpp" line="165"/>
         <location filename="../../src/ui/forms/lc_layerdialog_ex.cpp" line="204"/>
         <source>Default Pen</source>
-        <translation>Default Pen</translation>
+        <translation>Llapis per defecte</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_layerdialog_ex.cpp" line="182"/>
         <source>Rename Layer</source>
-        <translation>Rename Layer</translation>
+        <translation>Canviar nom de la capa</translation>
     </message>
 </context>
 <context>
@@ -2150,7 +2150,7 @@ first base, second base, first target, second target.</translation>
         <location filename="../../../build/ui_lc_layertreeoptionsdialog.h" line="454"/>
         <location filename="../../../generated/librecad/ui/ui_lc_layertreeoptionsdialog.h" line="454"/>
         <source>Layers Tree Options</source>
-        <translation>Layers Tree Options</translation>
+        <translation>Opcions de l'arbre de capes</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_layertreeoptionsdialog.ui" line="33"/>
@@ -2158,7 +2158,7 @@ first base, second base, first target, second target.</translation>
         <location filename="../../../build/ui_lc_layertreeoptionsdialog.h" line="464"/>
         <location filename="../../../generated/librecad/ui/ui_lc_layertreeoptionsdialog.h" line="464"/>
         <source>Naming Convention</source>
-        <translation>Naming Convention</translation>
+        <translation>Convenció de nomenclatura</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_layertreeoptionsdialog.ui" line="68"/>
@@ -2166,7 +2166,7 @@ first base, second base, first target, second target.</translation>
         <location filename="../../../build/ui_lc_layertreeoptionsdialog.h" line="456"/>
         <location filename="../../../generated/librecad/ui/ui_lc_layertreeoptionsdialog.h" line="456"/>
         <source>Layer Level Name Separator</source>
-        <translation>Layer Level Name Separator</translation>
+        <translation>Separador de nom de nivell de capa</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_layertreeoptionsdialog.ui" line="88"/>
@@ -2174,7 +2174,7 @@ first base, second base, first target, second target.</translation>
         <location filename="../../../build/ui_lc_layertreeoptionsdialog.h" line="457"/>
         <location filename="../../../generated/librecad/ui/ui_lc_layertreeoptionsdialog.h" line="457"/>
         <source>Secondary Layer Suffixes</source>
-        <translation>Secondary Layer Suffixes</translation>
+        <translation>Sufixos de capa secundària</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_layertreeoptionsdialog.ui" line="94"/>
@@ -2190,7 +2190,7 @@ first base, second base, first target, second target.</translation>
         <location filename="../../../build/ui_lc_layertreeoptionsdialog.h" line="459"/>
         <location filename="../../../generated/librecad/ui/ui_lc_layertreeoptionsdialog.h" line="459"/>
         <source>Informational</source>
-        <translation>Informational</translation>
+        <translation>Informativa</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_layertreeoptionsdialog.ui" line="134"/>
@@ -2198,7 +2198,7 @@ first base, second base, first target, second target.</translation>
         <location filename="../../../build/ui_lc_layertreeoptionsdialog.h" line="460"/>
         <location filename="../../../generated/librecad/ui/ui_lc_layertreeoptionsdialog.h" line="460"/>
         <source>Alternative Position </source>
-        <translation>Alternative Position</translation>
+        <translation>Posició alternativa</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_layertreeoptionsdialog.ui" line="157"/>
@@ -2206,7 +2206,7 @@ first base, second base, first target, second target.</translation>
         <location filename="../../../build/ui_lc_layertreeoptionsdialog.h" line="461"/>
         <location filename="../../../generated/librecad/ui/ui_lc_layertreeoptionsdialog.h" line="461"/>
         <source>Duplicating Name</source>
-        <translation>Duplicating Name</translation>
+        <translation>Nom duplicat</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_layertreeoptionsdialog.ui" line="163"/>
@@ -2222,7 +2222,7 @@ first base, second base, first target, second target.</translation>
         <location filename="../../../build/ui_lc_layertreeoptionsdialog.h" line="463"/>
         <location filename="../../../generated/librecad/ui/ui_lc_layertreeoptionsdialog.h" line="463"/>
         <source>Suffix</source>
-        <translation>Suffix</translation>
+        <translation>Sufix</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_layertreeoptionsdialog.ui" line="207"/>
@@ -2230,7 +2230,7 @@ first base, second base, first target, second target.</translation>
         <location filename="../../../build/ui_lc_layertreeoptionsdialog.h" line="471"/>
         <location filename="../../../generated/librecad/ui/ui_lc_layertreeoptionsdialog.h" line="471"/>
         <source>Display and Operations</source>
-        <translation>Display and Operations</translation>
+        <translation>Visualització i operacions</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_layertreeoptionsdialog.ui" line="213"/>
@@ -2238,7 +2238,7 @@ first base, second base, first target, second target.</translation>
         <location filename="../../../build/ui_lc_layertreeoptionsdialog.h" line="465"/>
         <location filename="../../../generated/librecad/ui/ui_lc_layertreeoptionsdialog.h" line="465"/>
         <source>Show full name as ToolTip</source>
-        <translation>Show full name as ToolTip</translation>
+        <translation>Mostrar el nom complet com a ToolTip</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_layertreeoptionsdialog.ui" line="220"/>
@@ -2246,7 +2246,7 @@ first base, second base, first target, second target.</translation>
         <location filename="../../../build/ui_lc_layertreeoptionsdialog.h" line="466"/>
         <location filename="../../../generated/librecad/ui/ui_lc_layertreeoptionsdialog.h" line="466"/>
         <source>Show layer type icons</source>
-        <translation>Show layer type icons</translation>
+        <translation>Mostrar icones de tipus de capa</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_layertreeoptionsdialog.ui" line="233"/>
@@ -2254,7 +2254,7 @@ first base, second base, first target, second target.</translation>
         <location filename="../../../build/ui_lc_layertreeoptionsdialog.h" line="467"/>
         <location filename="../../../generated/librecad/ui/ui_lc_layertreeoptionsdialog.h" line="467"/>
         <source>Show indented layer names. Ident size:</source>
-        <translation>Show indented layer names. Ident size:</translation>
+        <translation>Mostrar noms de capa amb sagnat. Mida del sagnat:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_layertreeoptionsdialog.ui" line="266"/>
@@ -2262,7 +2262,7 @@ first base, second base, first target, second target.</translation>
         <location filename="../../../build/ui_lc_layertreeoptionsdialog.h" line="469"/>
         <location filename="../../../generated/librecad/ui/ui_lc_layertreeoptionsdialog.h" line="469"/>
         <source>Allow restructuring via Drag&amp;Drop</source>
-        <translation>Allow restructuring via Drag&amp;Drop</translation>
+        <translation>Permetre la reestructuració mitjançant Arrossegar&amp;Deixar anar</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_layertreeoptionsdialog.ui" line="273"/>
@@ -2270,7 +2270,7 @@ first base, second base, first target, second target.</translation>
         <location filename="../../../build/ui_lc_layertreeoptionsdialog.h" line="470"/>
         <location filename="../../../generated/librecad/ui/ui_lc_layertreeoptionsdialog.h" line="470"/>
         <source>Rename secondary layers on primary rename</source>
-        <translation>Rename secondary layers on primary rename</translation>
+        <translation>Canviar nom de les capes secundàries en canviar el nom de la primària</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_layertreeoptionsdialog.ui" line="281"/>
@@ -2286,7 +2286,7 @@ first base, second base, first target, second target.</translation>
         <location filename="../../../build/ui_lc_layertreeoptionsdialog.h" line="476"/>
         <location filename="../../../generated/librecad/ui/ui_lc_layertreeoptionsdialog.h" line="476"/>
         <source>Matched item in highlight filter mode</source>
-        <translation>Matched item in highlight filter mode</translation>
+        <translation>Element coincident en mode de filtre d'emmarcament</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_layertreeoptionsdialog.ui" line="416"/>
@@ -2302,7 +2302,7 @@ first base, second base, first target, second target.</translation>
         <location filename="../../../build/ui_lc_layertreeoptionsdialog.h" line="480"/>
         <location filename="../../../generated/librecad/ui/ui_lc_layertreeoptionsdialog.h" line="480"/>
         <source>Virtual layer background color</source>
-        <translation>Virtual layer background color</translation>
+        <translation>Color de fons de capa virtual</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_layertreeoptionsdialog.ui" line="465"/>
@@ -2310,7 +2310,7 @@ first base, second base, first target, second target.</translation>
         <location filename="../../../build/ui_lc_layertreeoptionsdialog.h" line="482"/>
         <location filename="../../../generated/librecad/ui/ui_lc_layertreeoptionsdialog.h" line="482"/>
         <source>Threeview items separator grid</source>
-        <translation>Threeview items separator grid</translation>
+        <translation>Graella separadora d'elements de tres vistes</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_layertreeoptionsdialog.ui" line="475"/>
@@ -2318,7 +2318,7 @@ first base, second base, first target, second target.</translation>
         <location filename="../../../build/ui_lc_layertreeoptionsdialog.h" line="483"/>
         <location filename="../../../generated/librecad/ui/ui_lc_layertreeoptionsdialog.h" line="483"/>
         <source>Selected items background color</source>
-        <translation>Selected items background color</translation>
+        <translation>Color de fons dels elements seleccionats</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_layertreeoptionsdialog.ui" line="504"/>
@@ -2326,7 +2326,7 @@ first base, second base, first target, second target.</translation>
         <location filename="../../../build/ui_lc_layertreeoptionsdialog.h" line="486"/>
         <location filename="../../../generated/librecad/ui/ui_lc_layertreeoptionsdialog.h" line="486"/>
         <source>Active layer background color</source>
-        <translation>Active layer background color</translation>
+        <translation>Color de fons de la capa activa</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_layertreeoptionsdialog.ui" line="525"/>
@@ -2334,32 +2334,32 @@ first base, second base, first target, second target.</translation>
         <location filename="../../../build/ui_lc_layertreeoptionsdialog.h" line="488"/>
         <location filename="../../../generated/librecad/ui/ui_lc_layertreeoptionsdialog.h" line="488"/>
         <source>Default Pens</source>
-        <translation>Default Pens</translation>
+        <translation>Llapis per defecte</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_layertreeoptionsdialog.cpp" line="71"/>
         <source>Normal Layer</source>
-        <translation>Normal Layer</translation>
+        <translation>Capa normal</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_layertreeoptionsdialog.cpp" line="72"/>
         <source>Dimensional Layer</source>
-        <translation>Dimensional Layer</translation>
+        <translation>Capa dimensional</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_layertreeoptionsdialog.cpp" line="73"/>
         <source>Informational Layer</source>
-        <translation>Informational Layer</translation>
+        <translation>Capa informativa</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_layertreeoptionsdialog.cpp" line="74"/>
         <source>Alternative Position Layer</source>
-        <translation>Alternative Position Layer</translation>
+        <translation>Capa de posició alternativa</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_layertreeoptionsdialog.cpp" line="239"/>
         <source>Select Color</source>
-        <translation>Select Color</translation>
+        <translation>Seleccionar color</translation>
     </message>
 </context>
 <context>
@@ -2367,250 +2367,250 @@ first base, second base, first target, second target.</translation>
     <message>
         <location filename="../../src/ui/lc_layertreewidget.cpp" line="144"/>
         <source>Filter</source>
-        <translation>Filter</translation>
+        <translation>Filtre</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_layertreewidget.cpp" line="146"/>
         <source>Looking for matching layer names</source>
-        <translation>Looking for matching layer names</translation>
+        <translation>Cercant noms de capa coincidents</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_layertreewidget.cpp" line="151"/>
         <source>Highlight Mode</source>
-        <translation>Highlight Mode</translation>
+        <translation>Mode d'emmarcament</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_layertreewidget.cpp" line="163"/>
         <source>Settings</source>
-        <translation>Settings</translation>
+        <translation>Configuració</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_layertreewidget.cpp" line="185"/>
         <source>Show all layers</source>
-        <translation>Show all layers</translation>
+        <translation>Mostrar totes les capes</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_layertreewidget.cpp" line="193"/>
         <source>Hide all layers</source>
-        <translation>Hide all layers</translation>
+        <translation>Ocultar totes les capes</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_layertreewidget.cpp" line="201"/>
         <source>Show Secondary Layers</source>
-        <translation>Show Secondary Layers</translation>
+        <translation>Mostrar capes secundàries</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_layertreewidget.cpp" line="212"/>
         <source>Show Active Layer Only</source>
-        <translation>Show Active Layer Only</translation>
+        <translation>Mostrar només la capa activa</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_layertreewidget.cpp" line="222"/>
         <source>Expand All</source>
-        <translation>Expand All</translation>
+        <translation>Expandir tot</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_layertreewidget.cpp" line="231"/>
         <source>Collapse All</source>
-        <translation>Collapse All</translation>
+        <translation>Contraure tot</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_layertreewidget.cpp" line="240"/>
         <source>Collapse Secondary</source>
-        <translation>Collapse Secondary</translation>
+        <translation>Contraure les secundàries</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_layertreewidget.cpp" line="251"/>
         <source>Unlock all layers</source>
-        <translation>Unlock all layers</translation>
+        <translation>Desbloquejar totes les capes</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_layertreewidget.cpp" line="259"/>
         <source>Lock all layers</source>
-        <translation>Lock all layers</translation>
+        <translation>Bloquejar totes les capes</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_layertreewidget.cpp" line="267"/>
         <source>Add a layer</source>
-        <translation>Add a layer</translation>
+        <translation>Afegir una capa</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_layertreewidget.cpp" line="275"/>
         <source>Add dimensions Layer</source>
-        <translation>Add dimensions Layer</translation>
+        <translation>Afegir capa de cotes</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_layertreewidget.cpp" line="285"/>
         <source>Remove layer</source>
-        <translation>Remove layer</translation>
+        <translation>Eliminar capa</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_layertreewidget.cpp" line="293"/>
         <source>Modify layer attributes / rename</source>
-        <translation>Modify layer attributes / rename</translation>
+        <translation>Modificar atributs de capa / canviar nom</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_layertreewidget.cpp" line="308"/>
         <source>Flat List Mode)</source>
-        <translation>Flat List Mode)</translation>
+        <translation>Mode de llista plana)</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_layertreewidget.cpp" line="653"/>
         <source>Layer Menu</source>
-        <translation>Layer Menu</translation>
+        <translation>Menú de capa</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_layertreewidget.cpp" line="672"/>
         <source>&amp;Add Child Layer</source>
-        <translation>&amp;Add Child Layer</translation>
+        <translation>&amp;Afegir capa filla</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_layertreewidget.cpp" line="673"/>
         <source>&amp;Rename</source>
-        <translation>&amp;Rename</translation>
+        <translation>&amp;Canviar nom</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_layertreewidget.cpp" line="674"/>
         <source>&amp;Remove Layers (Sub-Tree)</source>
-        <translation>&amp;Remove Layers (Sub-Tree)</translation>
+        <translation>&amp;Eliminar capes (Sub-arbre)</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_layertreewidget.cpp" line="676"/>
         <source>&amp;Copy Structure (Sub-Tree)</source>
-        <translation>&amp;Copy Structure (Sub-Tree)</translation>
+        <translation>&amp;Copiar estructura (Sub-arbre)</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_layertreewidget.cpp" line="677"/>
         <source>&amp;Duplicate Content (Sub-Tree)</source>
-        <translation>&amp;Duplicate Content (Sub-Tree)</translation>
+        <translation>&amp;Duplicar contingut (Sub-arbre)</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_layertreewidget.cpp" line="679"/>
         <source>&amp;Select Entities (Sub-Tree)</source>
-        <translation>&amp;Select Entities (Sub-Tree)</translation>
+        <translation>&amp;Seleccionar entitats (Sub-arbre)</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_layertreewidget.cpp" line="684"/>
         <source>&amp;Edit Layer &amp;Attributes</source>
-        <translation>&amp;Edit Layer &amp;Attributes</translation>
+        <translation>&amp;Editar &amp;Atributs de capa</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_layertreewidget.cpp" line="686"/>
         <source>&amp;Remove Layer</source>
-        <translation>&amp;Remove Layer</translation>
+        <translation>&amp;Eliminar capa</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_layertreewidget.cpp" line="695"/>
         <source>&amp;Add Dimensions Sub-Layer</source>
-        <translation>&amp;Add Dimensions Sub-Layer</translation>
+        <translation>&amp;Afegir Sub-capa de cotes</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_layertreewidget.cpp" line="699"/>
         <source>&amp;Add Info Sub-Layer</source>
-        <translation>&amp;Add Info Sub-Layer</translation>
+        <translation>&amp;Afegir Sub-capa d'informació</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_layertreewidget.cpp" line="703"/>
         <source>&amp;Add Alternative View Sub-Layer</source>
-        <translation>&amp;Add Alternative View Sub-Layer</translation>
+        <translation>&amp;Afegir Sub-capa de vista alternativa</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_layertreewidget.cpp" line="709"/>
         <source>&amp;Remove Sub-layers</source>
-        <translation>&amp;Remove Sub-layers</translation>
+        <translation>&amp;Eliminar sub-capes</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_layertreewidget.cpp" line="717"/>
         <location filename="../../src/ui/lc_layertreewidget.cpp" line="728"/>
         <source>Convert to Dimensional Layer</source>
-        <translation>Convert to Dimensional Layer</translation>
+        <translation>Convertir a capa dimensional</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_layertreewidget.cpp" line="718"/>
         <location filename="../../src/ui/lc_layertreewidget.cpp" line="731"/>
         <source>Convert to Info Layer</source>
-        <translation>Convert to Info Layer</translation>
+        <translation>Convertir a capa informativa</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_layertreewidget.cpp" line="719"/>
         <location filename="../../src/ui/lc_layertreewidget.cpp" line="734"/>
         <source>Convert to Alternative Position Layer</source>
-        <translation>Convert to Alternative Position Layer</translation>
+        <translation>Convertir a capa de posició alternativa</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_layertreewidget.cpp" line="726"/>
         <source>Convert to Normal Layer</source>
-        <translation>Convert to Normal Layer</translation>
+        <translation>Convertir a capa normal</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_layertreewidget.cpp" line="740"/>
         <source>&amp;Select Layer&apos;s Entities</source>
-        <translation>&amp;Select Layer&apos;s Entities</translation>
+        <translation>&amp;Seleccionar entitats de la capa</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_layertreewidget.cpp" line="743"/>
         <source>&amp;Create Layer Copy</source>
-        <translation>&amp;Create Layer Copy</translation>
+        <translation>&amp;Crear còpia de capa</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_layertreewidget.cpp" line="744"/>
         <source>&amp;Duplicate Layer With Content</source>
-        <translation>&amp;Duplicate Layer With Content</translation>
+        <translation>&amp;Duplicar capa amb contingut</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_layertreewidget.cpp" line="748"/>
         <source>Move Selection to Layer</source>
-        <translation>Move Selection to Layer</translation>
+        <translation>Moure selecció a la capa</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_layertreewidget.cpp" line="749"/>
         <source>Duplicate Selection to Layer</source>
-        <translation>Duplicate Selection to Layer</translation>
+        <translation>Duplicar selecció a la capa</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_layertreewidget.cpp" line="756"/>
         <source>&amp;Add Layer</source>
-        <translation>&amp;Add Layer</translation>
+        <translation>&amp;Afegir capa</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_layertreewidget.cpp" line="758"/>
         <source>&amp;Freeze Others Layers</source>
-        <translation>&amp;Freeze Others Layers</translation>
+        <translation>Con&amp;gelar altres capes</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_layertreewidget.cpp" line="759"/>
         <source>&amp;Defreeze All Layers</source>
-        <translation>&amp;Defreeze All Layers</translation>
+        <translation>&amp;Descongelar totes les capes</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_layertreewidget.cpp" line="760"/>
         <source>&amp;Freeze All Layers</source>
-        <translation>&amp;Freeze All Layers</translation>
+        <translation>&amp;Congelar totes les capes</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_layertreewidget.cpp" line="761"/>
         <source>&amp;Unlock All Layers</source>
-        <translation>&amp;Unlock All Layers</translation>
+        <translation>&amp;Desbloquejar totes les capes</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_layertreewidget.cpp" line="762"/>
         <source>&amp;Lock All Layers</source>
-        <translation>&amp;Lock All Layers</translation>
+        <translation>&amp;Bloquejar totes les capes</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_layertreewidget.cpp" line="763"/>
         <source>Enable &amp;Printing All Layers</source>
-        <translation>Enable &amp;Printing All Layers</translation>
+        <translation>Habilitar la &amp;impressió de totes les capes</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_layertreewidget.cpp" line="764"/>
         <source>&amp;Disable Printing All Layers</source>
-        <translation>&amp;Disable Printing All Layers</translation>
+        <translation>&amp;Deshabilitar la impressió de totes les capes</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_layertreewidget.cpp" line="766"/>
         <source>&amp;Find And Remove Empty Layers</source>
-        <translation>&amp;Find And Remove Empty Layers</translation>
+        <translation>&amp;Cercar i eliminar capes buides</translation>
     </message>
 </context>
 <context>
@@ -2629,7 +2629,7 @@ first base, second base, first target, second target.</translation>
         <location filename="../../../build/ui_lc_lineanglereloptions.h" line="161"/>
         <location filename="../../../generated/librecad/ui/ui_lc_lineanglereloptions.h" line="161"/>
         <source>Offset:</source>
-        <translation>Offset:</translation>
+        <translation>Desplaçament:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_lineanglereloptions.ui" line="50"/>
@@ -2653,7 +2653,7 @@ first base, second base, first target, second target.</translation>
         <location filename="../../../generated/librecad/ui/ui_lc_lineanglereloptions.h" line="163"/>
         <location filename="../../../generated/librecad/ui/ui_lc_lineanglereloptions.h" line="169"/>
         <source>Start</source>
-        <translation>Start</translation>
+        <translation>Inici</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_lineanglereloptions.ui" line="60"/>
@@ -2665,7 +2665,7 @@ first base, second base, first target, second target.</translation>
         <location filename="../../../generated/librecad/ui/ui_lc_lineanglereloptions.h" line="164"/>
         <location filename="../../../generated/librecad/ui/ui_lc_lineanglereloptions.h" line="170"/>
         <source>Middle</source>
-        <translation>Middle</translation>
+        <translation>Mig</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_lineanglereloptions.ui" line="65"/>
@@ -2685,7 +2685,7 @@ first base, second base, first target, second target.</translation>
         <location filename="../../../build/ui_lc_lineanglereloptions.h" line="167"/>
         <location filename="../../../generated/librecad/ui/ui_lc_lineanglereloptions.h" line="167"/>
         <source>Line Snap:</source>
-        <translation>Line Snap:</translation>
+        <translation>Referència de línia:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_lineanglereloptions.ui" line="80"/>
@@ -2709,7 +2709,7 @@ first base, second base, first target, second target.</translation>
         <location filename="../../../build/ui_lc_lineanglereloptions.h" line="174"/>
         <location filename="../../../generated/librecad/ui/ui_lc_lineanglereloptions.h" line="174"/>
         <source>Tick Snap:</source>
-        <translation>Tick Snap:</translation>
+        <translation>Referència de marca:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_lineanglereloptions.ui" line="174"/>
@@ -2717,7 +2717,7 @@ first base, second base, first target, second target.</translation>
         <location filename="../../../build/ui_lc_lineanglereloptions.h" line="175"/>
         <location filename="../../../generated/librecad/ui/ui_lc_lineanglereloptions.h" line="175"/>
         <source>Length:</source>
-        <translation>Length:</translation>
+        <translation>Longitud:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_lineanglereloptions.ui" line="201"/>
@@ -2733,7 +2733,7 @@ first base, second base, first target, second target.</translation>
         <location filename="../../../build/ui_lc_lineanglereloptions.h" line="178"/>
         <location filename="../../../generated/librecad/ui/ui_lc_lineanglereloptions.h" line="178"/>
         <source>Snap Distance:</source>
-        <translation>Snap Distance:</translation>
+        <translation>Distància de referència:</translation>
     </message>
 </context>
 <context>
@@ -2760,7 +2760,7 @@ first base, second base, first target, second target.</translation>
         <location filename="../../../build/ui_lc_linefrompointtolineoptions.h" line="192"/>
         <location filename="../../../generated/librecad/ui/ui_lc_linefrompointtolineoptions.h" line="192"/>
         <source>Size:</source>
-        <translation>Size:</translation>
+        <translation>Mida:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_linefrompointtolineoptions.ui" line="62"/>
@@ -2768,7 +2768,7 @@ first base, second base, first target, second target.</translation>
         <location filename="../../../build/ui_lc_linefrompointtolineoptions.h" line="193"/>
         <location filename="../../../generated/librecad/ui/ui_lc_linefrompointtolineoptions.h" line="193"/>
         <source>Orthogonal</source>
-        <translation>Orthogonal</translation>
+        <translation>Ortogonal</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_linefrompointtolineoptions.ui" line="105"/>
@@ -2776,7 +2776,7 @@ first base, second base, first target, second target.</translation>
         <location filename="../../../build/ui_lc_linefrompointtolineoptions.h" line="195"/>
         <location filename="../../../generated/librecad/ui/ui_lc_linefrompointtolineoptions.h" line="195"/>
         <source>To Intersection</source>
-        <translation>To Intersection</translation>
+        <translation>A la intersecció</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_linefrompointtolineoptions.ui" line="110"/>
@@ -2784,7 +2784,7 @@ first base, second base, first target, second target.</translation>
         <location filename="../../../build/ui_lc_linefrompointtolineoptions.h" line="196"/>
         <location filename="../../../generated/librecad/ui/ui_lc_linefrompointtolineoptions.h" line="196"/>
         <source>Fixed Length</source>
-        <translation>Fixed Length</translation>
+        <translation>Longitud fixa</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_linefrompointtolineoptions.ui" line="139"/>
@@ -2792,7 +2792,7 @@ first base, second base, first target, second target.</translation>
         <location filename="../../../build/ui_lc_linefrompointtolineoptions.h" line="198"/>
         <location filename="../../../generated/librecad/ui/ui_lc_linefrompointtolineoptions.h" line="198"/>
         <source>End offset:</source>
-        <translation>End offset:</translation>
+        <translation>Desplaçament final:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_linefrompointtolineoptions.ui" line="217"/>
@@ -2800,7 +2800,7 @@ first base, second base, first target, second target.</translation>
         <location filename="../../../build/ui_lc_linefrompointtolineoptions.h" line="199"/>
         <location filename="../../../generated/librecad/ui/ui_lc_linefrompointtolineoptions.h" line="199"/>
         <source>Start</source>
-        <translation>Start</translation>
+        <translation>Inici</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_linefrompointtolineoptions.ui" line="222"/>
@@ -2808,7 +2808,7 @@ first base, second base, first target, second target.</translation>
         <location filename="../../../build/ui_lc_linefrompointtolineoptions.h" line="200"/>
         <location filename="../../../generated/librecad/ui/ui_lc_linefrompointtolineoptions.h" line="200"/>
         <source>Middle</source>
-        <translation>Middle</translation>
+        <translation>Mig</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_linefrompointtolineoptions.ui" line="227"/>
@@ -2824,7 +2824,7 @@ first base, second base, first target, second target.</translation>
         <location filename="../../../build/ui_lc_linefrompointtolineoptions.h" line="203"/>
         <location filename="../../../generated/librecad/ui/ui_lc_linefrompointtolineoptions.h" line="203"/>
         <source>Length:</source>
-        <translation>Length:</translation>
+        <translation>Longitud:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_linefrompointtolineoptions.ui" line="270"/>
@@ -2832,7 +2832,7 @@ first base, second base, first target, second target.</translation>
         <location filename="../../../build/ui_lc_linefrompointtolineoptions.h" line="204"/>
         <location filename="../../../generated/librecad/ui/ui_lc_linefrompointtolineoptions.h" line="204"/>
         <source>Snap:</source>
-        <translation>Snap:</translation>
+        <translation>Referència:</translation>
     </message>
 </context>
 <context>
@@ -2855,7 +2855,7 @@ first base, second base, first target, second target.</translation>
         <location filename="../../../generated/librecad/ui/ui_lc_linejoinoptions.h" line="124"/>
         <location filename="../../../generated/librecad/ui/ui_lc_linejoinoptions.h" line="135"/>
         <source>Extend/Trim</source>
-        <translation>Extend/Trim</translation>
+        <translation>Allargar/Retallar</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_linejoinoptions.ui" line="56"/>
@@ -2867,7 +2867,7 @@ first base, second base, first target, second target.</translation>
         <location filename="../../../generated/librecad/ui/ui_lc_linejoinoptions.h" line="125"/>
         <location filename="../../../generated/librecad/ui/ui_lc_linejoinoptions.h" line="136"/>
         <source>Add segment</source>
-        <translation>Add segment</translation>
+        <translation>Afegir segment</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_linejoinoptions.ui" line="61"/>
@@ -2879,7 +2879,7 @@ first base, second base, first target, second target.</translation>
         <location filename="../../../generated/librecad/ui/ui_lc_linejoinoptions.h" line="126"/>
         <location filename="../../../generated/librecad/ui/ui_lc_linejoinoptions.h" line="137"/>
         <source>No change</source>
-        <translation>No change</translation>
+        <translation>Sense canvis</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_linejoinoptions.ui" line="69"/>
@@ -2887,7 +2887,7 @@ first base, second base, first target, second target.</translation>
         <location filename="../../../build/ui_lc_linejoinoptions.h" line="128"/>
         <location filename="../../../generated/librecad/ui/ui_lc_linejoinoptions.h" line="128"/>
         <source>Create Polyline</source>
-        <translation>Create Polyline</translation>
+        <translation>Crear polilínia</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_linejoinoptions.ui" line="76"/>
@@ -2895,7 +2895,7 @@ first base, second base, first target, second target.</translation>
         <location filename="../../../build/ui_lc_linejoinoptions.h" line="129"/>
         <location filename="../../../generated/librecad/ui/ui_lc_linejoinoptions.h" line="129"/>
         <source>Attributes:</source>
-        <translation>Attributes:</translation>
+        <translation>Atributs:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_linejoinoptions.ui" line="102"/>
@@ -2903,7 +2903,7 @@ first base, second base, first target, second target.</translation>
         <location filename="../../../build/ui_lc_linejoinoptions.h" line="130"/>
         <location filename="../../../generated/librecad/ui/ui_lc_linejoinoptions.h" line="130"/>
         <source>Active Pen</source>
-        <translation>Active Pen</translation>
+        <translation>Llapis actiu</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_linejoinoptions.ui" line="107"/>
@@ -2911,7 +2911,7 @@ first base, second base, first target, second target.</translation>
         <location filename="../../../build/ui_lc_linejoinoptions.h" line="131"/>
         <location filename="../../../generated/librecad/ui/ui_lc_linejoinoptions.h" line="131"/>
         <source>Line 1</source>
-        <translation>Line 1</translation>
+        <translation>Línia 1</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_linejoinoptions.ui" line="112"/>
@@ -2919,7 +2919,7 @@ first base, second base, first target, second target.</translation>
         <location filename="../../../build/ui_lc_linejoinoptions.h" line="132"/>
         <location filename="../../../generated/librecad/ui/ui_lc_linejoinoptions.h" line="132"/>
         <source>Line 2</source>
-        <translation>Line 2</translation>
+        <translation>Línia 2</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_linejoinoptions.ui" line="117"/>
@@ -2927,7 +2927,7 @@ first base, second base, first target, second target.</translation>
         <location filename="../../../build/ui_lc_linejoinoptions.h" line="133"/>
         <location filename="../../../generated/librecad/ui/ui_lc_linejoinoptions.h" line="133"/>
         <source>Both lines</source>
-        <translation>Both lines</translation>
+        <translation>Ambdues línies</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_linejoinoptions.ui" line="162"/>
@@ -2935,7 +2935,7 @@ first base, second base, first target, second target.</translation>
         <location filename="../../../build/ui_lc_linejoinoptions.h" line="139"/>
         <location filename="../../../generated/librecad/ui/ui_lc_linejoinoptions.h" line="139"/>
         <source>Remove originals</source>
-        <translation>Remove originals</translation>
+        <translation>Eliminar originals</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_linejoinoptions.ui" line="169"/>
@@ -2943,7 +2943,7 @@ first base, second base, first target, second target.</translation>
         <location filename="../../../build/ui_lc_linejoinoptions.h" line="140"/>
         <location filename="../../../generated/librecad/ui/ui_lc_linejoinoptions.h" line="140"/>
         <source>Line 2:</source>
-        <translation>Line 2:</translation>
+        <translation>Línia 2:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_linejoinoptions.ui" line="176"/>
@@ -2951,7 +2951,7 @@ first base, second base, first target, second target.</translation>
         <location filename="../../../build/ui_lc_linejoinoptions.h" line="141"/>
         <location filename="../../../generated/librecad/ui/ui_lc_linejoinoptions.h" line="141"/>
         <source>Line 1:</source>
-        <translation>Line 1:</translation>
+        <translation>Línia 1:</translation>
     </message>
 </context>
 <context>
@@ -2978,7 +2978,7 @@ first base, second base, first target, second target.</translation>
         <location filename="../../../build/ui_lc_linepointsoptions.h" line="161"/>
         <location filename="../../../generated/librecad/ui/ui_lc_linepointsoptions.h" line="161"/>
         <source>Fit Line</source>
-        <translation>Fit Line</translation>
+        <translation>Ajustar línia</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_linepointsoptions.ui" line="128"/>
@@ -3002,7 +3002,7 @@ first base, second base, first target, second target.</translation>
         <location filename="../../../build/ui_lc_linepointsoptions.h" line="164"/>
         <location filename="../../../generated/librecad/ui/ui_lc_linepointsoptions.h" line="164"/>
         <source>Start</source>
-        <translation>Start</translation>
+        <translation>Inici</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_linepointsoptions.ui" line="143"/>
@@ -3018,7 +3018,7 @@ first base, second base, first target, second target.</translation>
         <location filename="../../../build/ui_lc_linepointsoptions.h" line="167"/>
         <location filename="../../../generated/librecad/ui/ui_lc_linepointsoptions.h" line="167"/>
         <source>Edge Points:</source>
-        <translation>Edge Points:</translation>
+        <translation>Punts de vora:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_linepointsoptions.ui" line="196"/>
@@ -3026,7 +3026,7 @@ first base, second base, first target, second target.</translation>
         <location filename="../../../build/ui_lc_linepointsoptions.h" line="168"/>
         <location filename="../../../generated/librecad/ui/ui_lc_linepointsoptions.h" line="168"/>
         <source>Number of points:</source>
-        <translation>Number of points:</translation>
+        <translation>Nombre de punts:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_linepointsoptions.ui" line="209"/>
@@ -3034,7 +3034,7 @@ first base, second base, first target, second target.</translation>
         <location filename="../../../build/ui_lc_linepointsoptions.h" line="169"/>
         <location filename="../../../generated/librecad/ui/ui_lc_linepointsoptions.h" line="169"/>
         <source>Fixed Distance</source>
-        <translation>Fixed Distance</translation>
+        <translation>Distància fixa</translation>
     </message>
 </context>
 <context>
@@ -3131,7 +3131,7 @@ first base, second base, first target, second target.</translation>
     <message>
         <location filename="../../../plugins/list/list.cpp" line="113"/>
         <source>Inc.</source>
-        <translation>Inc.</translation>
+        <translation>Increment</translation>
     </message>
     <message>
         <location filename="../../../plugins/list/list.cpp" line="118"/>
@@ -3285,7 +3285,7 @@ first base, second base, first target, second target.</translation>
     <message>
         <location filename="../../../plugins/list/list.cpp" line="234"/>
         <source>SPLINE</source>
-        <translation>SPLINE</translation>
+        <translation>CORBA</translation>
     </message>
     <message>
         <location filename="../../../plugins/list/list.cpp" line="237"/>
@@ -3349,7 +3349,7 @@ first base, second base, first target, second target.</translation>
         <location filename="../../../build/ui_lc_modifybreakdivideoptions.h" line="60"/>
         <location filename="../../../generated/librecad/ui/ui_lc_modifybreakdivideoptions.h" line="60"/>
         <source>Remove Segments</source>
-        <translation>Remove Segments</translation>
+        <translation>Eliminar segments</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_modifybreakdivideoptions.ui" line="46"/>
@@ -3357,7 +3357,7 @@ first base, second base, first target, second target.</translation>
         <location filename="../../../build/ui_lc_modifybreakdivideoptions.h" line="61"/>
         <location filename="../../../generated/librecad/ui/ui_lc_modifybreakdivideoptions.h" line="61"/>
         <source>Remove Selected</source>
-        <translation>Remove Selected</translation>
+        <translation>Eliminar seleccionat</translation>
     </message>
 </context>
 <context>
@@ -3376,7 +3376,7 @@ first base, second base, first target, second target.</translation>
         <location filename="../../../build/ui_lc_modifygapoptions.h" line="116"/>
         <location filename="../../../generated/librecad/ui/ui_lc_modifygapoptions.h" line="116"/>
         <source>Gap Snap:</source>
-        <translation>Gap Snap:</translation>
+        <translation>Referència de buit:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_modifygapoptions.ui" line="49"/>
@@ -3384,7 +3384,7 @@ first base, second base, first target, second target.</translation>
         <location filename="../../../build/ui_lc_modifygapoptions.h" line="117"/>
         <location filename="../../../generated/librecad/ui/ui_lc_modifygapoptions.h" line="117"/>
         <source>Snap Distance:</source>
-        <translation>Snap Distance:</translation>
+        <translation>Distància de referència:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_modifygapoptions.ui" line="56"/>
@@ -3404,7 +3404,7 @@ first base, second base, first target, second target.</translation>
         <location filename="../../../build/ui_lc_modifygapoptions.h" line="119"/>
         <location filename="../../../generated/librecad/ui/ui_lc_modifygapoptions.h" line="119"/>
         <source>Gap Size:</source>
-        <translation>Gap Size:</translation>
+        <translation>Mida del buit:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_modifygapoptions.ui" line="92"/>
@@ -3416,7 +3416,7 @@ first base, second base, first target, second target.</translation>
         <location filename="../../../generated/librecad/ui/ui_lc_modifygapoptions.h" line="121"/>
         <location filename="../../../generated/librecad/ui/ui_lc_modifygapoptions.h" line="125"/>
         <source>Start</source>
-        <translation>Start</translation>
+        <translation>Inici</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_modifygapoptions.ui" line="97"/>
@@ -3428,7 +3428,7 @@ first base, second base, first target, second target.</translation>
         <location filename="../../../generated/librecad/ui/ui_lc_modifygapoptions.h" line="122"/>
         <location filename="../../../generated/librecad/ui/ui_lc_modifygapoptions.h" line="126"/>
         <source>Middle</source>
-        <translation>Middle</translation>
+        <translation>Mig</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_modifygapoptions.ui" line="102"/>
@@ -3448,7 +3448,7 @@ first base, second base, first target, second target.</translation>
         <location filename="../../../build/ui_lc_modifygapoptions.h" line="129"/>
         <location filename="../../../generated/librecad/ui/ui_lc_modifygapoptions.h" line="129"/>
         <source>Line Snap:</source>
-        <translation>Line Snap:</translation>
+        <translation>Referència de línia:</translation>
     </message>
 </context>
 <context>
@@ -3459,7 +3459,7 @@ first base, second base, first target, second target.</translation>
         <location filename="../../../build/ui_lc_penpaletteoptionsdialog.h" line="295"/>
         <location filename="../../../generated/librecad/ui/ui_lc_penpaletteoptionsdialog.h" line="295"/>
         <source>Pen Palette Settings</source>
-        <translation>Pen Palette Settings</translation>
+        <translation>Configuració de la paleta de llapis</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_penpaletteoptionsdialog.ui" line="37"/>
@@ -3467,7 +3467,7 @@ first base, second base, first target, second target.</translation>
         <location filename="../../../build/ui_lc_penpaletteoptionsdialog.h" line="296"/>
         <location filename="../../../generated/librecad/ui/ui_lc_penpaletteoptionsdialog.h" line="296"/>
         <source>Columns to display</source>
-        <translation>Columns to display</translation>
+        <translation>Columnes a mostrar</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_penpaletteoptionsdialog.ui" line="43"/>
@@ -3475,7 +3475,7 @@ first base, second base, first target, second target.</translation>
         <location filename="../../../build/ui_lc_penpaletteoptionsdialog.h" line="297"/>
         <location filename="../../../generated/librecad/ui/ui_lc_penpaletteoptionsdialog.h" line="297"/>
         <source>Line Type Name</source>
-        <translation>Line Type Name</translation>
+        <translation>Nom del tipus de línia</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_penpaletteoptionsdialog.ui" line="50"/>
@@ -3483,7 +3483,7 @@ first base, second base, first target, second target.</translation>
         <location filename="../../../build/ui_lc_penpaletteoptionsdialog.h" line="298"/>
         <location filename="../../../generated/librecad/ui/ui_lc_penpaletteoptionsdialog.h" line="298"/>
         <source>Color Name</source>
-        <translation>Color Name</translation>
+        <translation>Nom del color</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_penpaletteoptionsdialog.ui" line="57"/>
@@ -3491,7 +3491,7 @@ first base, second base, first target, second target.</translation>
         <location filename="../../../build/ui_lc_penpaletteoptionsdialog.h" line="299"/>
         <location filename="../../../generated/librecad/ui/ui_lc_penpaletteoptionsdialog.h" line="299"/>
         <source>Line Type Icon</source>
-        <translation>Line Type Icon</translation>
+        <translation>Icona del tipus de línia</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_penpaletteoptionsdialog.ui" line="64"/>
@@ -3499,7 +3499,7 @@ first base, second base, first target, second target.</translation>
         <location filename="../../../build/ui_lc_penpaletteoptionsdialog.h" line="300"/>
         <location filename="../../../generated/librecad/ui/ui_lc_penpaletteoptionsdialog.h" line="300"/>
         <source>Color Icon</source>
-        <translation>Color Icon</translation>
+        <translation>Icona de color</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_penpaletteoptionsdialog.ui" line="71"/>
@@ -3507,7 +3507,7 @@ first base, second base, first target, second target.</translation>
         <location filename="../../../build/ui_lc_penpaletteoptionsdialog.h" line="301"/>
         <location filename="../../../generated/librecad/ui/ui_lc_penpaletteoptionsdialog.h" line="301"/>
         <source>Line Width Icon</source>
-        <translation>Line Width Icon</translation>
+        <translation>Icona d'amplada de línia</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_penpaletteoptionsdialog.ui" line="78"/>
@@ -3515,7 +3515,7 @@ first base, second base, first target, second target.</translation>
         <location filename="../../../build/ui_lc_penpaletteoptionsdialog.h" line="302"/>
         <location filename="../../../generated/librecad/ui/ui_lc_penpaletteoptionsdialog.h" line="302"/>
         <source>Line Width Name</source>
-        <translation>Line Width Name</translation>
+        <translation>Nom d'amplada de línia</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_penpaletteoptionsdialog.ui" line="88"/>
@@ -3531,7 +3531,7 @@ first base, second base, first target, second target.</translation>
         <location filename="../../../build/ui_lc_penpaletteoptionsdialog.h" line="305"/>
         <location filename="../../../generated/librecad/ui/ui_lc_penpaletteoptionsdialog.h" line="305"/>
         <source>Active Pen Background:</source>
-        <translation>Active Pen Background:</translation>
+        <translation>Fons del llapis actiu:</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_penpaletteoptionsdialog.ui" line="150"/>
@@ -3539,7 +3539,7 @@ first base, second base, first target, second target.</translation>
         <location filename="../../../build/ui_lc_penpaletteoptionsdialog.h" line="307"/>
         <location filename="../../../generated/librecad/ui/ui_lc_penpaletteoptionsdialog.h" line="307"/>
         <source>Entire table row is bold for active pen</source>
-        <translation>Entire table row is bold for active pen</translation>
+        <translation>Tota la fila de la taula és en negreta per al llapis actiu</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_penpaletteoptionsdialog.ui" line="157"/>
@@ -3547,7 +3547,7 @@ first base, second base, first target, second target.</translation>
         <location filename="../../../build/ui_lc_penpaletteoptionsdialog.h" line="308"/>
         <location filename="../../../generated/librecad/ui/ui_lc_penpaletteoptionsdialog.h" line="308"/>
         <source>Grid Color:</source>
-        <translation>Grid Color:</translation>
+        <translation>Color de la graella:</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_penpaletteoptionsdialog.ui" line="164"/>
@@ -3555,7 +3555,7 @@ first base, second base, first target, second target.</translation>
         <location filename="../../../build/ui_lc_penpaletteoptionsdialog.h" line="309"/>
         <location filename="../../../generated/librecad/ui/ui_lc_penpaletteoptionsdialog.h" line="309"/>
         <source>Matched Item Color:</source>
-        <translation>Matched Item Color:</translation>
+        <translation>Color de l'element coincident:</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_penpaletteoptionsdialog.ui" line="192"/>
@@ -3563,7 +3563,7 @@ first base, second base, first target, second target.</translation>
         <location filename="../../../build/ui_lc_penpaletteoptionsdialog.h" line="311"/>
         <location filename="../../../generated/librecad/ui/ui_lc_penpaletteoptionsdialog.h" line="311"/>
         <source>Case-insensitive pens filtering</source>
-        <translation>Case-insensitive pens filtering</translation>
+        <translation>Filtratge de llapis sense distinció de majúscules</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_penpaletteoptionsdialog.ui" line="209"/>
@@ -3571,7 +3571,7 @@ first base, second base, first target, second target.</translation>
         <location filename="../../../build/ui_lc_penpaletteoptionsdialog.h" line="313"/>
         <location filename="../../../generated/librecad/ui/ui_lc_penpaletteoptionsdialog.h" line="313"/>
         <source>Controls whether tooltip will be shown for table item or not</source>
-        <translation>Controls whether tooltip will be shown for table item or not</translation>
+        <translation>Controla si es mostrarà el tooltip per a un element de la taula o no</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_penpaletteoptionsdialog.ui" line="212"/>
@@ -3579,7 +3579,7 @@ first base, second base, first target, second target.</translation>
         <location filename="../../../build/ui_lc_penpaletteoptionsdialog.h" line="315"/>
         <location filename="../../../generated/librecad/ui/ui_lc_penpaletteoptionsdialog.h" line="315"/>
         <source>Show tooltip for table items</source>
-        <translation>Show tooltip for table items</translation>
+        <translation>Mostrar tooltip per als elements de la taula</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_penpaletteoptionsdialog.ui" line="221"/>
@@ -3587,7 +3587,7 @@ first base, second base, first target, second target.</translation>
         <location filename="../../../build/ui_lc_penpaletteoptionsdialog.h" line="316"/>
         <location filename="../../../generated/librecad/ui/ui_lc_penpaletteoptionsdialog.h" line="316"/>
         <source>Pens file:</source>
-        <translation>Pens file:</translation>
+        <translation>Fitxer de llapis:</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_penpaletteoptionsdialog.ui" line="244"/>
@@ -3595,7 +3595,7 @@ first base, second base, first target, second target.</translation>
         <location filename="../../../build/ui_lc_penpaletteoptionsdialog.h" line="318"/>
         <location filename="../../../generated/librecad/ui/ui_lc_penpaletteoptionsdialog.h" line="318"/>
         <source>Show colorn name as</source>
-        <translation>Show colorn name as</translation>
+        <translation>Mostrar el nom del color com</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_penpaletteoptionsdialog.ui" line="250"/>
@@ -3619,7 +3619,7 @@ first base, second base, first target, second target.</translation>
         <location filename="../../../build/ui_lc_penpaletteoptionsdialog.h" line="321"/>
         <location filename="../../../generated/librecad/ui/ui_lc_penpaletteoptionsdialog.h" line="321"/>
         <source>Natural name where possible</source>
-        <translation>Natural name where possible</translation>
+        <translation>Nom natural on sigui possible</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_penpaletteoptionsdialog.ui" line="274"/>
@@ -3627,7 +3627,7 @@ first base, second base, first target, second target.</translation>
         <location filename="../../../build/ui_lc_penpaletteoptionsdialog.h" line="322"/>
         <location filename="../../../generated/librecad/ui/ui_lc_penpaletteoptionsdialog.h" line="322"/>
         <source>Show info message if no entities may be selected by pen</source>
-        <translation>Show info message if no entities may be selected by pen</translation>
+        <translation>Mostrar missatge d'informació si no hi ha entitats seleccionables per llapis</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_penpaletteoptionsdialog.ui" line="283"/>
@@ -3635,22 +3635,22 @@ first base, second base, first target, second target.</translation>
         <location filename="../../../build/ui_lc_penpaletteoptionsdialog.h" line="323"/>
         <location filename="../../../generated/librecad/ui/ui_lc_penpaletteoptionsdialog.h" line="323"/>
         <source>On double click on table item</source>
-        <translation>On double click on table item</translation>
+        <translation>En fer doble clic a un element de la taula</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_penpaletteoptionsdialog.cpp" line="45"/>
         <source>Do nothing</source>
-        <translation>Do nothing</translation>
+        <translation>No fer res</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_penpaletteoptionsdialog.cpp" line="46"/>
         <source>Select entities by attributes pen</source>
-        <translation>Select entities by attributes pen</translation>
+        <translation>Seleccionar entitats per llapis d'atributs</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_penpaletteoptionsdialog.cpp" line="47"/>
         <source>Select entities by drawing pen</source>
-        <translation>Select entities by drawing pen</translation>
+        <translation>Seleccionar entitats per llapis de dibuix</translation>
     </message>
 </context>
 <context>
@@ -3661,7 +3661,7 @@ first base, second base, first target, second target.</translation>
         <location filename="../../../build/ui_lc_penpalettewidget.h" line="335"/>
         <location filename="../../../generated/librecad/ui/ui_lc_penpalettewidget.h" line="335"/>
         <source>Pen Palette</source>
-        <translation>Pen Palette</translation>
+        <translation>Paleta de llapis</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_penpalettewidget.ui" line="44"/>
@@ -3669,7 +3669,7 @@ first base, second base, first target, second target.</translation>
         <location filename="../../../build/ui_lc_penpalettewidget.h" line="336"/>
         <location filename="../../../generated/librecad/ui/ui_lc_penpalettewidget.h" line="336"/>
         <source>Pen Name:</source>
-        <translation>Pen Name:</translation>
+        <translation>Nom del llapis:</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_penpalettewidget.ui" line="94"/>
@@ -3685,7 +3685,7 @@ first base, second base, first target, second target.</translation>
         <location filename="../../../build/ui_lc_penpalettewidget.h" line="338"/>
         <location filename="../../../generated/librecad/ui/ui_lc_penpalettewidget.h" line="338"/>
         <source>Filter...</source>
-        <translation>Filter...</translation>
+        <translation>Filtre...</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_penpalettewidget.ui" line="201"/>
@@ -3693,7 +3693,7 @@ first base, second base, first target, second target.</translation>
         <location filename="../../../build/ui_lc_penpalettewidget.h" line="339"/>
         <location filename="../../../generated/librecad/ui/ui_lc_penpalettewidget.h" line="339"/>
         <source>Highlight Mode</source>
-        <translation>Highlight Mode</translation>
+        <translation>Mode d'emmarcament</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_penpalettewidget.ui" line="224"/>
@@ -3701,7 +3701,7 @@ first base, second base, first target, second target.</translation>
         <location filename="../../../build/ui_lc_penpalettewidget.h" line="340"/>
         <location filename="../../../generated/librecad/ui/ui_lc_penpalettewidget.h" line="340"/>
         <source>Type:</source>
-        <translation>Type:</translation>
+        <translation>Tipus:</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_penpalettewidget.ui" line="246"/>
@@ -3709,7 +3709,7 @@ first base, second base, first target, second target.</translation>
         <location filename="../../../build/ui_lc_penpalettewidget.h" line="341"/>
         <location filename="../../../generated/librecad/ui/ui_lc_penpalettewidget.h" line="341"/>
         <source>Width:</source>
-        <translation>Width:</translation>
+        <translation>Amplada:</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_penpalettewidget.ui" line="271"/>
@@ -3717,7 +3717,7 @@ first base, second base, first target, second target.</translation>
         <location filename="../../../build/ui_lc_penpalettewidget.h" line="343"/>
         <location filename="../../../generated/librecad/ui/ui_lc_penpalettewidget.h" line="343"/>
         <source>Settings</source>
-        <translation>Settings</translation>
+        <translation>Configuració</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_penpalettewidget.ui" line="290"/>
@@ -3725,7 +3725,7 @@ first base, second base, first target, second target.</translation>
         <location filename="../../../build/ui_lc_penpalettewidget.h" line="347"/>
         <location filename="../../../generated/librecad/ui/ui_lc_penpalettewidget.h" line="347"/>
         <source>Fill Pen Editor by Entity Drawing Pen</source>
-        <translation>Fill Pen Editor by Entity Drawing Pen</translation>
+        <translation>Omplir l'editor de llapis amb el llapis de dibuix de l'entitat</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_penpalettewidget.ui" line="304"/>
@@ -3733,7 +3733,7 @@ first base, second base, first target, second target.</translation>
         <location filename="../../../build/ui_lc_penpalettewidget.h" line="351"/>
         <location filename="../../../generated/librecad/ui/ui_lc_penpalettewidget.h" line="351"/>
         <source>Fill Pen Editor by Entity Attributes</source>
-        <translation>Fill Pen Editor by Entity Attributes</translation>
+        <translation>Omplir l'editor de llapis amb els atributs de l'entitat</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_penpalettewidget.ui" line="318"/>
@@ -3741,7 +3741,7 @@ first base, second base, first target, second target.</translation>
         <location filename="../../../build/ui_lc_penpalettewidget.h" line="355"/>
         <location filename="../../../generated/librecad/ui/ui_lc_penpalettewidget.h" line="355"/>
         <source>Select Entities By Drawing Pen</source>
-        <translation>Select Entities By Drawing Pen</translation>
+        <translation>Seleccionar entitats per llapis de dibuix</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_penpalettewidget.ui" line="332"/>
@@ -3749,7 +3749,7 @@ first base, second base, first target, second target.</translation>
         <location filename="../../../build/ui_lc_penpalettewidget.h" line="359"/>
         <location filename="../../../generated/librecad/ui/ui_lc_penpalettewidget.h" line="359"/>
         <source>Select Entities By Pen Attributes</source>
-        <translation>Select Entities By Pen Attributes</translation>
+        <translation>Seleccionar entitats per atributs de llapis</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_penpalettewidget.ui" line="349"/>
@@ -3769,7 +3769,7 @@ first base, second base, first target, second target.</translation>
         <location filename="../../../build/ui_lc_penpalettewidget.h" line="367"/>
         <location filename="../../../generated/librecad/ui/ui_lc_penpalettewidget.h" line="367"/>
         <source>Apply Pen To Selection</source>
-        <translation>Apply Pen To Selection</translation>
+        <translation>Aplicar llapis a la selecció</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_penpalettewidget.ui" line="377"/>
@@ -3777,7 +3777,7 @@ first base, second base, first target, second target.</translation>
         <location filename="../../../build/ui_lc_penpalettewidget.h" line="371"/>
         <location filename="../../../generated/librecad/ui/ui_lc_penpalettewidget.h" line="371"/>
         <source>Fill Editor Pen by Current Pen</source>
-        <translation>Fill Editor Pen by Current Pen</translation>
+        <translation>Omplir el llapis de l'editor amb el llapis actual</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_penpalettewidget.ui" line="391"/>
@@ -3785,7 +3785,7 @@ first base, second base, first target, second target.</translation>
         <location filename="../../../build/ui_lc_penpalettewidget.h" line="375"/>
         <location filename="../../../generated/librecad/ui/ui_lc_penpalettewidget.h" line="375"/>
         <source>Apply Editor Pen As Current Pen</source>
-        <translation>Apply Editor Pen As Current Pen</translation>
+        <translation>Aplicar el llapis de l'editor com a llapis actual</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_penpalettewidget.ui" line="394"/>
@@ -3793,7 +3793,7 @@ first base, second base, first target, second target.</translation>
         <location filename="../../../build/ui_lc_penpalettewidget.h" line="377"/>
         <location filename="../../../generated/librecad/ui/ui_lc_penpalettewidget.h" line="377"/>
         <source>to current</source>
-        <translation>to current</translation>
+        <translation>al actual</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_penpalettewidget.ui" line="405"/>
@@ -3801,7 +3801,7 @@ first base, second base, first target, second target.</translation>
         <location filename="../../../build/ui_lc_penpalettewidget.h" line="379"/>
         <location filename="../../../generated/librecad/ui/ui_lc_penpalettewidget.h" line="379"/>
         <source>Update Current Pen by Active Layer&apos; Pen</source>
-        <translation>Update Current Pen by Active Layer&apos; Pen</translation>
+        <translation>Actualitzar el llapis actual amb el llapis de la capa activa</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_penpalettewidget.ui" line="419"/>
@@ -3809,7 +3809,7 @@ first base, second base, first target, second target.</translation>
         <location filename="../../../build/ui_lc_penpalettewidget.h" line="383"/>
         <location filename="../../../generated/librecad/ui/ui_lc_penpalettewidget.h" line="383"/>
         <source>Fill Pen Editor from Active Layer&apos;s Pen</source>
-        <translation>Fill Pen Editor from Active Layer&apos;s Pen</translation>
+        <translation>Omplir l'editor de llapis des del llapis de la capa activa</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_penpalettewidget.ui" line="422"/>
@@ -3817,7 +3817,7 @@ first base, second base, first target, second target.</translation>
         <location filename="../../../build/ui_lc_penpalettewidget.h" line="385"/>
         <location filename="../../../generated/librecad/ui/ui_lc_penpalettewidget.h" line="385"/>
         <source>Pick from Active Layer</source>
-        <translation>Pick from Active Layer</translation>
+        <translation>Agafar de la capa activa</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_penpalettewidget.ui" line="433"/>
@@ -3825,7 +3825,7 @@ first base, second base, first target, second target.</translation>
         <location filename="../../../build/ui_lc_penpalettewidget.h" line="387"/>
         <location filename="../../../generated/librecad/ui/ui_lc_penpalettewidget.h" line="387"/>
         <source>Apply Editor Pen to Active Layer Pen</source>
-        <translation>Apply Editor Pen to Active Layer Pen</translation>
+        <translation>Aplicar el llapis de l'editor al llapis de la capa activa</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_penpalettewidget.ui" line="436"/>
@@ -3833,7 +3833,7 @@ first base, second base, first target, second target.</translation>
         <location filename="../../../build/ui_lc_penpalettewidget.h" line="389"/>
         <location filename="../../../generated/librecad/ui/ui_lc_penpalettewidget.h" line="389"/>
         <source>Apply To Layer</source>
-        <translation>Apply To Layer</translation>
+        <translation>Aplicar a la capa</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_penpalettewidget.ui" line="447"/>
@@ -3841,7 +3841,7 @@ first base, second base, first target, second target.</translation>
         <location filename="../../../build/ui_lc_penpalettewidget.h" line="391"/>
         <location filename="../../../generated/librecad/ui/ui_lc_penpalettewidget.h" line="391"/>
         <source>Remove Selected Pen</source>
-        <translation>Remove Selected Pen</translation>
+        <translation>Eliminar llapis seleccionat</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_penpalettewidget.ui" line="450"/>
@@ -3849,66 +3849,66 @@ first base, second base, first target, second target.</translation>
         <location filename="../../../build/ui_lc_penpalettewidget.h" line="393"/>
         <location filename="../../../generated/librecad/ui/ui_lc_penpalettewidget.h" line="393"/>
         <source>Delete Pen</source>
-        <translation>Delete Pen</translation>
+        <translation>Esborrar llapis</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_penpalettewidget.cpp" line="255"/>
         <source>Pens Menu</source>
-        <translation>Pens Menu</translation>
+        <translation>Menú de llapis</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_penpalettewidget.cpp" line="275"/>
         <source>&amp;Apply Pen To Selection</source>
-        <translation>&amp;Apply Pen To Selection</translation>
+        <translation>&amp;Aplicar llapis a la selecció</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_penpalettewidget.cpp" line="276"/>
         <source>&amp;Set As Current Pen</source>
-        <translation>&amp;Set As Current Pen</translation>
+        <translation>&amp;Establir com a llapis actual</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_penpalettewidget.cpp" line="277"/>
         <source>&amp;Apply Pen To Active Layer</source>
-        <translation>&amp;Apply Pen To Active Layer</translation>
+        <translation>&amp;Aplicar llapis a la capa activa</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_penpalettewidget.cpp" line="278"/>
         <source>&amp;Select Entities With Attributes Pen</source>
-        <translation>&amp;Select Entities With Attributes Pen</translation>
+        <translation>&amp;Seleccionar entitats amb llapis d'atributs</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_penpalettewidget.cpp" line="279"/>
         <source>&amp;Select Entities With Drawing Pen</source>
-        <translation>&amp;Select Entities With Drawing Pen</translation>
+        <translation>&amp;Seleccionar entitats amb llapis de dibuix</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_penpalettewidget.cpp" line="282"/>
         <source>&amp;Edit Pen</source>
-        <translation>&amp;Edit Pen</translation>
+        <translation>&amp;Editar llapis</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_penpalettewidget.cpp" line="283"/>
         <source>&amp;Remove Pen</source>
-        <translation>&amp;Remove Pen</translation>
+        <translation>&amp;Eliminar llapis</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_penpalettewidget.cpp" line="286"/>
         <source>&amp;Remove Pens</source>
-        <translation>&amp;Remove Pens</translation>
+        <translation>&amp;Eliminar llapis</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_penpalettewidget.cpp" line="409"/>
         <source>Pen palette</source>
-        <translation>Pen palette</translation>
+        <translation>Paleta de llapis</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_penpalettewidget.cpp" line="410"/>
         <source>Location of pens file is changed, please restart the application so new pens file will be used.
 
 Please note that if you&apos;ll save pen via editor without restart, current pens from palette will be saved in the new file and therefore existing content of it will be overridden.</source>
-        <translation>Location of pens file is changed, please restart the application so new pens file will be used.
+        <translation>La ubicació del fitxer de llapis ha canviat, si us plau reinicieu l'aplicació per usar el nou fitxer de llapis.
 
-Please note that if you&apos;ll save pen via editor without restart, current pens from palette will be saved in the new file and therefore existing content of it will be overridden.</translation>
+Tingueu en compte que si deseu el llapis a través de l'editor sense reiniciar, els llapis actuals de la paleta es desaran al nou fitxer i, per tant, el contingut existent serà sobreescrit.</translation>
     </message>
 </context>
 <context>
@@ -3943,7 +3943,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../../../build/ui_lc_rectangle1pointoptions.h" line="206"/>
         <location filename="../../../generated/librecad/ui/ui_lc_rectangle1pointoptions.h" line="206"/>
         <source>Edges:</source>
-        <translation>Edges:</translation>
+        <translation>Vores:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_rectangle1pointoptions.ui" line="63"/>
@@ -3951,7 +3951,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../../../build/ui_lc_rectangle1pointoptions.h" line="207"/>
         <location filename="../../../generated/librecad/ui/ui_lc_rectangle1pointoptions.h" line="207"/>
         <source>Corners:</source>
-        <translation>Corners:</translation>
+        <translation>Cantonades:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_rectangle1pointoptions.ui" line="86"/>
@@ -3959,7 +3959,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../../../build/ui_lc_rectangle1pointoptions.h" line="208"/>
         <location filename="../../../generated/librecad/ui/ui_lc_rectangle1pointoptions.h" line="208"/>
         <source>Size inner</source>
-        <translation>Size inner</translation>
+        <translation>Mida interior</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_rectangle1pointoptions.ui" line="93"/>
@@ -3967,7 +3967,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../../../build/ui_lc_rectangle1pointoptions.h" line="209"/>
         <location filename="../../../generated/librecad/ui/ui_lc_rectangle1pointoptions.h" line="209"/>
         <source>Length X:</source>
-        <translation>Length X:</translation>
+        <translation>Longitud X:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_rectangle1pointoptions.ui" line="100"/>
@@ -3975,7 +3975,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../../../build/ui_lc_rectangle1pointoptions.h" line="210"/>
         <location filename="../../../generated/librecad/ui/ui_lc_rectangle1pointoptions.h" line="210"/>
         <source>Radius:</source>
-        <translation>Radius:</translation>
+        <translation>Radi:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_rectangle1pointoptions.ui" line="123"/>
@@ -3983,7 +3983,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../../../build/ui_lc_rectangle1pointoptions.h" line="211"/>
         <location filename="../../../generated/librecad/ui/ui_lc_rectangle1pointoptions.h" line="211"/>
         <source>Snap:</source>
-        <translation>Snap:</translation>
+        <translation>Referència:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_rectangle1pointoptions.ui" line="162"/>
@@ -3991,7 +3991,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../../../build/ui_lc_rectangle1pointoptions.h" line="212"/>
         <location filename="../../../generated/librecad/ui/ui_lc_rectangle1pointoptions.h" line="212"/>
         <source>Length Y:</source>
-        <translation>Length Y:</translation>
+        <translation>Longitud Y:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_rectangle1pointoptions.ui" line="170"/>
@@ -3999,7 +3999,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../../../build/ui_lc_rectangle1pointoptions.h" line="213"/>
         <location filename="../../../generated/librecad/ui/ui_lc_rectangle1pointoptions.h" line="213"/>
         <source>Top-left</source>
-        <translation>Top-left</translation>
+        <translation>Superior esquerra</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_rectangle1pointoptions.ui" line="175"/>
@@ -4015,7 +4015,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../../../build/ui_lc_rectangle1pointoptions.h" line="215"/>
         <location filename="../../../generated/librecad/ui/ui_lc_rectangle1pointoptions.h" line="215"/>
         <source>Top-right</source>
-        <translation>Top-right</translation>
+        <translation>Superior dreta</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_rectangle1pointoptions.ui" line="185"/>
@@ -4031,7 +4031,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../../../build/ui_lc_rectangle1pointoptions.h" line="217"/>
         <location filename="../../../generated/librecad/ui/ui_lc_rectangle1pointoptions.h" line="217"/>
         <source>Middle</source>
-        <translation>Middle</translation>
+        <translation>Mig</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_rectangle1pointoptions.ui" line="195"/>
@@ -4039,7 +4039,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../../../build/ui_lc_rectangle1pointoptions.h" line="218"/>
         <location filename="../../../generated/librecad/ui/ui_lc_rectangle1pointoptions.h" line="218"/>
         <source>Right</source>
-        <translation>Right</translation>
+        <translation>Dreta</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_rectangle1pointoptions.ui" line="200"/>
@@ -4047,7 +4047,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../../../build/ui_lc_rectangle1pointoptions.h" line="219"/>
         <location filename="../../../generated/librecad/ui/ui_lc_rectangle1pointoptions.h" line="219"/>
         <source>Bottom-left</source>
-        <translation>Bottom-left</translation>
+        <translation>Inferior esquerra</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_rectangle1pointoptions.ui" line="205"/>
@@ -4055,7 +4055,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../../../build/ui_lc_rectangle1pointoptions.h" line="220"/>
         <location filename="../../../generated/librecad/ui/ui_lc_rectangle1pointoptions.h" line="220"/>
         <source>Bottom</source>
-        <translation>Bottom</translation>
+        <translation>Inferior</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_rectangle1pointoptions.ui" line="210"/>
@@ -4063,7 +4063,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../../../build/ui_lc_rectangle1pointoptions.h" line="221"/>
         <location filename="../../../generated/librecad/ui/ui_lc_rectangle1pointoptions.h" line="221"/>
         <source>Bottom-right</source>
-        <translation>Bottom-right</translation>
+        <translation>Inferior dreta</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_rectangle1pointoptions.ui" line="219"/>
@@ -4071,7 +4071,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../../../build/ui_lc_rectangle1pointoptions.h" line="223"/>
         <location filename="../../../generated/librecad/ui/ui_lc_rectangle1pointoptions.h" line="223"/>
         <source>Straight</source>
-        <translation>Straight</translation>
+        <translation>Recte</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_rectangle1pointoptions.ui" line="224"/>
@@ -4079,7 +4079,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../../../build/ui_lc_rectangle1pointoptions.h" line="224"/>
         <location filename="../../../generated/librecad/ui/ui_lc_rectangle1pointoptions.h" line="224"/>
         <source>Round</source>
-        <translation>Round</translation>
+        <translation>Arrodonit</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_rectangle1pointoptions.ui" line="229"/>
@@ -4087,7 +4087,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../../../build/ui_lc_rectangle1pointoptions.h" line="225"/>
         <location filename="../../../generated/librecad/ui/ui_lc_rectangle1pointoptions.h" line="225"/>
         <source>Bevel</source>
-        <translation>Bevel</translation>
+        <translation>Bisell</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_rectangle1pointoptions.ui" line="237"/>
@@ -4095,7 +4095,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../../../build/ui_lc_rectangle1pointoptions.h" line="227"/>
         <location filename="../../../generated/librecad/ui/ui_lc_rectangle1pointoptions.h" line="227"/>
         <source>Snap shift</source>
-        <translation>Snap shift</translation>
+        <translation>Desplaçament de referència</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_rectangle1pointoptions.ui" line="245"/>
@@ -4119,7 +4119,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../../../build/ui_lc_rectangle1pointoptions.h" line="230"/>
         <location filename="../../../generated/librecad/ui/ui_lc_rectangle1pointoptions.h" line="230"/>
         <source>Horizontal</source>
-        <translation>Horizontal</translation>
+        <translation>Horitzontal</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_rectangle1pointoptions.ui" line="279"/>
@@ -4127,7 +4127,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../../../build/ui_lc_rectangle1pointoptions.h" line="232"/>
         <location filename="../../../generated/librecad/ui/ui_lc_rectangle1pointoptions.h" line="232"/>
         <source>Width:</source>
-        <translation>Width:</translation>
+        <translation>Amplada:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_rectangle1pointoptions.ui" line="286"/>
@@ -4135,7 +4135,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../../../build/ui_lc_rectangle1pointoptions.h" line="233"/>
         <location filename="../../../generated/librecad/ui/ui_lc_rectangle1pointoptions.h" line="233"/>
         <source>Base Angle:</source>
-        <translation>Base Angle:</translation>
+        <translation>Angle base:</translation>
     </message>
 </context>
 <context>
@@ -4154,7 +4154,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../../../build/ui_lc_rectangle2pointsoptions.h" line="181"/>
         <location filename="../../../generated/librecad/ui/ui_lc_rectangle2pointsoptions.h" line="181"/>
         <source>Snap shift</source>
-        <translation>Snap shift</translation>
+        <translation>Desplaçament de referència</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_rectangle2pointsoptions.ui" line="33"/>
@@ -4162,7 +4162,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../../../build/ui_lc_rectangle2pointsoptions.h" line="182"/>
         <location filename="../../../generated/librecad/ui/ui_lc_rectangle2pointsoptions.h" line="182"/>
         <source>Radius:</source>
-        <translation>Radius:</translation>
+        <translation>Radi:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_rectangle2pointsoptions.ui" line="56"/>
@@ -4170,7 +4170,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../../../build/ui_lc_rectangle2pointsoptions.h" line="183"/>
         <location filename="../../../generated/librecad/ui/ui_lc_rectangle2pointsoptions.h" line="183"/>
         <source>Edges:</source>
-        <translation>Edges:</translation>
+        <translation>Vores:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_rectangle2pointsoptions.ui" line="63"/>
@@ -4186,7 +4186,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../../../build/ui_lc_rectangle2pointsoptions.h" line="185"/>
         <location filename="../../../generated/librecad/ui/ui_lc_rectangle2pointsoptions.h" line="185"/>
         <source>End Snap:</source>
-        <translation>End Snap:</translation>
+        <translation>Referència final:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_rectangle2pointsoptions.ui" line="77"/>
@@ -4194,7 +4194,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../../../build/ui_lc_rectangle2pointsoptions.h" line="186"/>
         <location filename="../../../generated/librecad/ui/ui_lc_rectangle2pointsoptions.h" line="186"/>
         <source>Corners:</source>
-        <translation>Corners:</translation>
+        <translation>Cantonades:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_rectangle2pointsoptions.ui" line="100"/>
@@ -4202,7 +4202,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../../../build/ui_lc_rectangle2pointsoptions.h" line="187"/>
         <location filename="../../../generated/librecad/ui/ui_lc_rectangle2pointsoptions.h" line="187"/>
         <source>Length X:</source>
-        <translation>Length X:</translation>
+        <translation>Longitud X:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_rectangle2pointsoptions.ui" line="107"/>
@@ -4210,7 +4210,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../../../build/ui_lc_rectangle2pointsoptions.h" line="188"/>
         <location filename="../../../generated/librecad/ui/ui_lc_rectangle2pointsoptions.h" line="188"/>
         <source>Start Snap:</source>
-        <translation>Start Snap:</translation>
+        <translation>Referència d'inici:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_rectangle2pointsoptions.ui" line="131"/>
@@ -4222,7 +4222,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../../../generated/librecad/ui/ui_lc_rectangle2pointsoptions.h" line="189"/>
         <location filename="../../../generated/librecad/ui/ui_lc_rectangle2pointsoptions.h" line="195"/>
         <source>Corner</source>
-        <translation>Corner</translation>
+        <translation>Cantonada</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_rectangle2pointsoptions.ui" line="136"/>
@@ -4234,7 +4234,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../../../generated/librecad/ui/ui_lc_rectangle2pointsoptions.h" line="190"/>
         <location filename="../../../generated/librecad/ui/ui_lc_rectangle2pointsoptions.h" line="196"/>
         <source>Mid-Vertical</source>
-        <translation>Mid-Vertical</translation>
+        <translation>Mig-Vertical</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_rectangle2pointsoptions.ui" line="141"/>
@@ -4246,7 +4246,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../../../generated/librecad/ui/ui_lc_rectangle2pointsoptions.h" line="191"/>
         <location filename="../../../generated/librecad/ui/ui_lc_rectangle2pointsoptions.h" line="197"/>
         <source>Mid-Horizontal</source>
-        <translation>Mid-Horizontal</translation>
+        <translation>Mig-Horitzontal</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_rectangle2pointsoptions.ui" line="146"/>
@@ -4258,7 +4258,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../../../generated/librecad/ui/ui_lc_rectangle2pointsoptions.h" line="192"/>
         <location filename="../../../generated/librecad/ui/ui_lc_rectangle2pointsoptions.h" line="198"/>
         <source>Middle</source>
-        <translation>Middle</translation>
+        <translation>Mig</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_rectangle2pointsoptions.ui" line="170"/>
@@ -4266,7 +4266,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../../../build/ui_lc_rectangle2pointsoptions.h" line="194"/>
         <location filename="../../../generated/librecad/ui/ui_lc_rectangle2pointsoptions.h" line="194"/>
         <source>Base Angle:</source>
-        <translation>Base Angle:</translation>
+        <translation>Angle base:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_rectangle2pointsoptions.ui" line="202"/>
@@ -4274,7 +4274,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../../../build/ui_lc_rectangle2pointsoptions.h" line="200"/>
         <location filename="../../../generated/librecad/ui/ui_lc_rectangle2pointsoptions.h" line="200"/>
         <source>Straight</source>
-        <translation>Straight</translation>
+        <translation>Recte</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_rectangle2pointsoptions.ui" line="207"/>
@@ -4282,7 +4282,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../../../build/ui_lc_rectangle2pointsoptions.h" line="201"/>
         <location filename="../../../generated/librecad/ui/ui_lc_rectangle2pointsoptions.h" line="201"/>
         <source>Round</source>
-        <translation>Round</translation>
+        <translation>Arrodonit</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_rectangle2pointsoptions.ui" line="212"/>
@@ -4290,7 +4290,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../../../build/ui_lc_rectangle2pointsoptions.h" line="202"/>
         <location filename="../../../generated/librecad/ui/ui_lc_rectangle2pointsoptions.h" line="202"/>
         <source>Bevel</source>
-        <translation>Bevel</translation>
+        <translation>Bisell</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_rectangle2pointsoptions.ui" line="220"/>
@@ -4298,7 +4298,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../../../build/ui_lc_rectangle2pointsoptions.h" line="204"/>
         <location filename="../../../generated/librecad/ui/ui_lc_rectangle2pointsoptions.h" line="204"/>
         <source>Length Y:</source>
-        <translation>Length Y:</translation>
+        <translation>Longitud Y:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_rectangle2pointsoptions.ui" line="228"/>
@@ -4322,7 +4322,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../../../build/ui_lc_rectangle2pointsoptions.h" line="207"/>
         <location filename="../../../generated/librecad/ui/ui_lc_rectangle2pointsoptions.h" line="207"/>
         <source>Horizontal</source>
-        <translation>Horizontal</translation>
+        <translation>Horitzontal</translation>
     </message>
 </context>
 <context>
@@ -4365,7 +4365,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../../../build/ui_lc_rectangle3pointsoptions.h" line="240"/>
         <location filename="../../../generated/librecad/ui/ui_lc_rectangle3pointsoptions.h" line="240"/>
         <source>Horizontal</source>
-        <translation>Horizontal</translation>
+        <translation>Horitzontal</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_rectangle3pointsoptions.ui" line="81"/>
@@ -4373,7 +4373,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../../../build/ui_lc_rectangle3pointsoptions.h" line="242"/>
         <location filename="../../../generated/librecad/ui/ui_lc_rectangle3pointsoptions.h" line="242"/>
         <source>Edges:</source>
-        <translation>Edges:</translation>
+        <translation>Vores:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_rectangle3pointsoptions.ui" line="88"/>
@@ -4381,7 +4381,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../../../build/ui_lc_rectangle3pointsoptions.h" line="243"/>
         <location filename="../../../generated/librecad/ui/ui_lc_rectangle3pointsoptions.h" line="243"/>
         <source>Quadrangle</source>
-        <translation>Quadrangle</translation>
+        <translation>Quadrilàter</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_rectangle3pointsoptions.ui" line="95"/>
@@ -4389,7 +4389,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../../../build/ui_lc_rectangle3pointsoptions.h" line="244"/>
         <location filename="../../../generated/librecad/ui/ui_lc_rectangle3pointsoptions.h" line="244"/>
         <source>Fixed Base Angle:</source>
-        <translation>Fixed Base Angle:</translation>
+        <translation>Angle base fix:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_rectangle3pointsoptions.ui" line="130"/>
@@ -4397,7 +4397,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../../../build/ui_lc_rectangle3pointsoptions.h" line="245"/>
         <location filename="../../../generated/librecad/ui/ui_lc_rectangle3pointsoptions.h" line="245"/>
         <source>Length X:</source>
-        <translation>Length X:</translation>
+        <translation>Longitud X:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_rectangle3pointsoptions.ui" line="160"/>
@@ -4405,7 +4405,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../../../build/ui_lc_rectangle3pointsoptions.h" line="246"/>
         <location filename="../../../generated/librecad/ui/ui_lc_rectangle3pointsoptions.h" line="246"/>
         <source>Straight</source>
-        <translation>Straight</translation>
+        <translation>Recte</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_rectangle3pointsoptions.ui" line="165"/>
@@ -4413,7 +4413,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../../../build/ui_lc_rectangle3pointsoptions.h" line="247"/>
         <location filename="../../../generated/librecad/ui/ui_lc_rectangle3pointsoptions.h" line="247"/>
         <source>Round</source>
-        <translation>Round</translation>
+        <translation>Arrodonit</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_rectangle3pointsoptions.ui" line="170"/>
@@ -4421,7 +4421,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../../../build/ui_lc_rectangle3pointsoptions.h" line="248"/>
         <location filename="../../../generated/librecad/ui/ui_lc_rectangle3pointsoptions.h" line="248"/>
         <source>Bevel</source>
-        <translation>Bevel</translation>
+        <translation>Bisell</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_rectangle3pointsoptions.ui" line="178"/>
@@ -4429,7 +4429,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../../../build/ui_lc_rectangle3pointsoptions.h" line="250"/>
         <location filename="../../../generated/librecad/ui/ui_lc_rectangle3pointsoptions.h" line="250"/>
         <source>Corners:</source>
-        <translation>Corners:</translation>
+        <translation>Cantonades:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_rectangle3pointsoptions.ui" line="185"/>
@@ -4437,7 +4437,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../../../build/ui_lc_rectangle3pointsoptions.h" line="251"/>
         <location filename="../../../generated/librecad/ui/ui_lc_rectangle3pointsoptions.h" line="251"/>
         <source>Snap shift</source>
-        <translation>Snap shift</translation>
+        <translation>Desplaçament de referència</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_rectangle3pointsoptions.ui" line="192"/>
@@ -4445,7 +4445,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../../../build/ui_lc_rectangle3pointsoptions.h" line="252"/>
         <location filename="../../../generated/librecad/ui/ui_lc_rectangle3pointsoptions.h" line="252"/>
         <source>Length Y:</source>
-        <translation>Length Y:</translation>
+        <translation>Longitud Y:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_rectangle3pointsoptions.ui" line="243"/>
@@ -4453,7 +4453,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../../../build/ui_lc_rectangle3pointsoptions.h" line="253"/>
         <location filename="../../../generated/librecad/ui/ui_lc_rectangle3pointsoptions.h" line="253"/>
         <source>Radius:</source>
-        <translation>Radius:</translation>
+        <translation>Radi:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_rectangle3pointsoptions.ui" line="312"/>
@@ -4461,7 +4461,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../../../build/ui_lc_rectangle3pointsoptions.h" line="254"/>
         <location filename="../../../generated/librecad/ui/ui_lc_rectangle3pointsoptions.h" line="254"/>
         <source>Fixed Inner Angle:</source>
-        <translation>Fixed Inner Angle:</translation>
+        <translation>Angle interior fix:</translation>
     </message>
 </context>
 <context>
@@ -4497,12 +4497,12 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../../src/test/lc_simpletests.cpp" line="34"/>
         <source>De&amp;bugging</source>
-        <translation>De&amp;bugging</translation>
+        <translation>&amp;Depurar</translation>
     </message>
     <message>
         <location filename="../../src/test/lc_simpletests.cpp" line="78"/>
         <source>Insert Image</source>
-        <translation>Insert Image</translation>
+        <translation>Inserir imatge</translation>
     </message>
 </context>
 <context>
@@ -4541,7 +4541,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../../../generated/librecad/ui/ui_lc_slicedivideoptions.h" line="248"/>
         <location filename="../../../generated/librecad/ui/ui_lc_slicedivideoptions.h" line="260"/>
         <source>Start</source>
-        <translation>Start</translation>
+        <translation>Inici</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_slicedivideoptions.ui" line="63"/>
@@ -4561,7 +4561,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../../../build/ui_lc_slicedivideoptions.h" line="251"/>
         <location filename="../../../generated/librecad/ui/ui_lc_slicedivideoptions.h" line="251"/>
         <source>Edge Tick:</source>
-        <translation>Edge Tick:</translation>
+        <translation>Marca de vora:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_slicedivideoptions.ui" line="113"/>
@@ -4577,7 +4577,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../../../build/ui_lc_slicedivideoptions.h" line="253"/>
         <location filename="../../../generated/librecad/ui/ui_lc_slicedivideoptions.h" line="253"/>
         <source>Offset:</source>
-        <translation>Offset:</translation>
+        <translation>Desplaçament:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_slicedivideoptions.ui" line="158"/>
@@ -4585,7 +4585,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../../../build/ui_lc_slicedivideoptions.h" line="254"/>
         <location filename="../../../generated/librecad/ui/ui_lc_slicedivideoptions.h" line="254"/>
         <source>Count:</source>
-        <translation>Count:</translation>
+        <translation>Compte:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_slicedivideoptions.ui" line="189"/>
@@ -4593,7 +4593,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../../../build/ui_lc_slicedivideoptions.h" line="255"/>
         <location filename="../../../generated/librecad/ui/ui_lc_slicedivideoptions.h" line="255"/>
         <source>Start Circle Angle:</source>
-        <translation>Start Circle Angle:</translation>
+        <translation>Angle inicial del cercle:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_slicedivideoptions.ui" line="221"/>
@@ -4601,7 +4601,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../../../build/ui_lc_slicedivideoptions.h" line="256"/>
         <location filename="../../../generated/librecad/ui/ui_lc_slicedivideoptions.h" line="256"/>
         <source>Tick Length:</source>
-        <translation>Tick Length:</translation>
+        <translation>Longitud de la marca:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_slicedivideoptions.ui" line="228"/>
@@ -4609,7 +4609,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../../../build/ui_lc_slicedivideoptions.h" line="257"/>
         <location filename="../../../generated/librecad/ui/ui_lc_slicedivideoptions.h" line="257"/>
         <source>Tick snap:</source>
-        <translation>Tick snap:</translation>
+        <translation>Referència de marca:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_slicedivideoptions.ui" line="235"/>
@@ -4633,7 +4633,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../../../build/ui_lc_slicedivideoptions.h" line="261"/>
         <location filename="../../../generated/librecad/ui/ui_lc_slicedivideoptions.h" line="261"/>
         <source>Middle</source>
-        <translation>Middle</translation>
+        <translation>Mig</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_slicedivideoptions.ui" line="284"/>
@@ -4641,7 +4641,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../../../build/ui_lc_slicedivideoptions.h" line="264"/>
         <location filename="../../../generated/librecad/ui/ui_lc_slicedivideoptions.h" line="264"/>
         <source>Fixed </source>
-        <translation>Fixed</translation>
+        <translation>Fix</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_slicedivideoptions.ui" line="318"/>
@@ -4649,7 +4649,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../../../build/ui_lc_slicedivideoptions.h" line="265"/>
         <location filename="../../../generated/librecad/ui/ui_lc_slicedivideoptions.h" line="265"/>
         <source>Distance:</source>
-        <translation>Distance:</translation>
+        <translation>Distància:</translation>
     </message>
 </context>
 <context>
@@ -4668,7 +4668,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../../../build/ui_lc_staroptions.h" line="104"/>
         <location filename="../../../generated/librecad/ui/ui_lc_staroptions.h" line="104"/>
         <source>Radius Inner</source>
-        <translation>Radius Inner</translation>
+        <translation>Radi interior</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_staroptions.ui" line="49"/>
@@ -4684,7 +4684,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../../../build/ui_lc_staroptions.h" line="106"/>
         <location filename="../../../generated/librecad/ui/ui_lc_staroptions.h" line="106"/>
         <source>Radius Outer</source>
-        <translation>Radius Outer</translation>
+        <translation>Radi exterior</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_staroptions.ui" line="86"/>
@@ -4692,7 +4692,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../../../build/ui_lc_staroptions.h" line="107"/>
         <location filename="../../../generated/librecad/ui/ui_lc_staroptions.h" line="107"/>
         <source>Symmetric</source>
-        <translation>Symmetric</translation>
+        <translation>Simètric</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_staroptions.ui" line="93"/>
@@ -4700,7 +4700,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../../../build/ui_lc_staroptions.h" line="108"/>
         <location filename="../../../generated/librecad/ui/ui_lc_staroptions.h" line="108"/>
         <source>Number:</source>
-        <translation>Number:</translation>
+        <translation>Número:</translation>
     </message>
 </context>
 <context>
@@ -4708,12 +4708,12 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../../src/ui/lc_widgetfactory.cpp" line="378"/>
         <source>Library Browser</source>
-        <translation>Library Browser</translation>
+        <translation>Navegador de biblioteca</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_widgetfactory.cpp" line="390"/>
         <source>Command line</source>
-        <translation>Command line</translation>
+        <translation>Línia d'ordres</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_widgetfactory.cpp" line="414"/>
@@ -4723,52 +4723,52 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../../src/ui/lc_widgetfactory.cpp" line="414"/>
         <source>Float</source>
-        <translation>Float</translation>
+        <translation>Flotant</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_widgetfactory.cpp" line="598"/>
         <source>Lines</source>
-        <translation>Lines</translation>
+        <translation>Línies</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_widgetfactory.cpp" line="605"/>
         <source>Circles</source>
-        <translation>Circles</translation>
+        <translation>Cercles</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_widgetfactory.cpp" line="612"/>
         <source>Freehand</source>
-        <translation>Freehand</translation>
+        <translation>Mà alçada</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_widgetfactory.cpp" line="619"/>
         <source>Ellipses</source>
-        <translation>Ellipses</translation>
+        <translation>El·lipses</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_widgetfactory.cpp" line="626"/>
         <source>PolyLines</source>
-        <translation>PolyLines</translation>
+        <translation>Polilínies</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_widgetfactory.cpp" line="633"/>
         <source>Select</source>
-        <translation>Select</translation>
+        <translation>Seleccionar</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_widgetfactory.cpp" line="640"/>
         <source>Dimensions</source>
-        <translation>Dimensions</translation>
+        <translation>Cotes</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_widgetfactory.cpp" line="647"/>
         <source>Modify</source>
-        <translation>Modify</translation>
+        <translation>Modificar</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_widgetfactory.cpp" line="654"/>
         <source>Measure</source>
-        <translation>Measure</translation>
+        <translation>Mesurar</translation>
     </message>
 </context>
 <context>
@@ -4779,7 +4779,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../../../build/ui_lc_widgetoptionsdialog.h" line="213"/>
         <location filename="../../../generated/librecad/ui/ui_lc_widgetoptionsdialog.h" line="213"/>
         <source>Widget Options</source>
-        <translation>Widget Options</translation>
+        <translation>Opcions de widget</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_widgetoptionsdialog.ui" line="38"/>
@@ -4787,7 +4787,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../../../build/ui_lc_widgetoptionsdialog.h" line="214"/>
         <location filename="../../../generated/librecad/ui/ui_lc_widgetoptionsdialog.h" line="214"/>
         <source>Toolbar</source>
-        <translation>Toolbar</translation>
+        <translation>Barra d'eines</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_widgetoptionsdialog.ui" line="44"/>
@@ -4795,7 +4795,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../../../build/ui_lc_widgetoptionsdialog.h" line="215"/>
         <location filename="../../../generated/librecad/ui/ui_lc_widgetoptionsdialog.h" line="215"/>
         <source>Use themed icons</source>
-        <translation>Use themed icons</translation>
+        <translation>Usar icones temàtiques</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_widgetoptionsdialog.ui" line="57"/>
@@ -4803,7 +4803,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../../../build/ui_lc_widgetoptionsdialog.h" line="216"/>
         <location filename="../../../generated/librecad/ui/ui_lc_widgetoptionsdialog.h" line="216"/>
         <source>Icon Size</source>
-        <translation>Icon Size</translation>
+        <translation>Mida d'icones</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_widgetoptionsdialog.ui" line="70"/>
@@ -4811,7 +4811,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../../../build/ui_lc_widgetoptionsdialog.h" line="218"/>
         <location filename="../../../generated/librecad/ui/ui_lc_widgetoptionsdialog.h" line="218"/>
         <source>side length in pixels</source>
-        <translation>side length in pixels</translation>
+        <translation>longitud del costat en píxels</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_widgetoptionsdialog.ui" line="86"/>
@@ -4819,7 +4819,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../../../build/ui_lc_widgetoptionsdialog.h" line="220"/>
         <location filename="../../../generated/librecad/ui/ui_lc_widgetoptionsdialog.h" line="220"/>
         <source>Left toolbar columns:</source>
-        <translation>Left toolbar columns:</translation>
+        <translation>Columnes de la barra d'eines esquerra:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_widgetoptionsdialog.ui" line="109"/>
@@ -4835,7 +4835,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../../../build/ui_lc_widgetoptionsdialog.h" line="222"/>
         <location filename="../../../generated/librecad/ui/ui_lc_widgetoptionsdialog.h" line="222"/>
         <source>Style</source>
-        <translation>Style</translation>
+        <translation>Estil</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_widgetoptionsdialog.ui" line="147"/>
@@ -4843,7 +4843,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../../../build/ui_lc_widgetoptionsdialog.h" line="223"/>
         <location filename="../../../generated/librecad/ui/ui_lc_widgetoptionsdialog.h" line="223"/>
         <source>Style Sheet</source>
-        <translation>Style Sheet</translation>
+        <translation>Full d'estil</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_widgetoptionsdialog.ui" line="160"/>
@@ -4851,7 +4851,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../../../build/ui_lc_widgetoptionsdialog.h" line="225"/>
         <location filename="../../../generated/librecad/ui/ui_lc_widgetoptionsdialog.h" line="225"/>
         <source>Input the path of a Qt style sheet.</source>
-        <translation>Input the path of a Qt style sheet.</translation>
+        <translation>Introduïu la ruta d'un full d'estil Qt.</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_widgetoptionsdialog.ui" line="176"/>
@@ -4859,7 +4859,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../../../build/ui_lc_widgetoptionsdialog.h" line="227"/>
         <location filename="../../../generated/librecad/ui/ui_lc_widgetoptionsdialog.h" line="227"/>
         <source>Statusbar</source>
-        <translation>Statusbar</translation>
+        <translation>Barra d'estat</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_widgetoptionsdialog.ui" line="182"/>
@@ -4867,7 +4867,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../../../build/ui_lc_widgetoptionsdialog.h" line="228"/>
         <location filename="../../../generated/librecad/ui/ui_lc_widgetoptionsdialog.h" line="228"/>
         <source>Height</source>
-        <translation>Height</translation>
+        <translation>Alçada</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_widgetoptionsdialog.ui" line="192"/>
@@ -4875,7 +4875,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../../../build/ui_lc_widgetoptionsdialog.h" line="229"/>
         <location filename="../../../generated/librecad/ui/ui_lc_widgetoptionsdialog.h" line="229"/>
         <source>Font Size</source>
-        <translation>Font Size</translation>
+        <translation>Mida de la font</translation>
     </message>
 </context>
 <context>
@@ -4883,27 +4883,27 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../../src/ui/lg_dimzerosbox.cpp" line="34"/>
         <source>select:</source>
-        <translation>select:</translation>
+        <translation>seleccionar:</translation>
     </message>
     <message>
         <location filename="../../src/ui/lg_dimzerosbox.cpp" line="37"/>
         <source>remove left</source>
-        <translation>remove left</translation>
+        <translation>eliminar esquerra</translation>
     </message>
     <message>
         <location filename="../../src/ui/lg_dimzerosbox.cpp" line="41"/>
         <source>remove right</source>
-        <translation>remove right</translation>
+        <translation>eliminar dreta</translation>
     </message>
     <message>
         <location filename="../../src/ui/lg_dimzerosbox.cpp" line="59"/>
         <source>remove 0&apos;</source>
-        <translation>remove 0&apos;</translation>
+        <translation>eliminar 0'</translation>
     </message>
     <message>
         <location filename="../../src/ui/lg_dimzerosbox.cpp" line="63"/>
         <source>remove 0&quot;</source>
-        <translation>remove 0&quot;</translation>
+        <translation>eliminar 0"</translation>
     </message>
 </context>
 <context>
@@ -4927,7 +4927,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../../../build/ui_qg_polylineequidistantoptions.h" line="114"/>
         <location filename="../../../generated/librecad/ui/ui_qg_polylineequidistantoptions.h" line="114"/>
         <source>Line Relative Angle Options</source>
-        <translation>Line Relative Angle Options</translation>
+        <translation>Opcions d'angle relatiu de línia</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_polylineequidistantoptions.ui" line="59"/>
@@ -4935,7 +4935,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../../../build/ui_qg_polylineequidistantoptions.h" line="115"/>
         <location filename="../../../generated/librecad/ui/ui_qg_polylineequidistantoptions.h" line="115"/>
         <source>Spacing:</source>
-        <translation>Spacing:</translation>
+        <translation>Espaiat:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_polylineequidistantoptions.ui" line="84"/>
@@ -4947,7 +4947,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../../../generated/librecad/ui/ui_qg_polylineequidistantoptions.h" line="117"/>
         <location filename="../../../generated/librecad/ui/ui_qg_polylineequidistantoptions.h" line="121"/>
         <source>Distance from original polyline</source>
-        <translation>Distance from original polyline</translation>
+        <translation>Distància de la polilínia original</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_polylineequidistantoptions.ui" line="97"/>
@@ -4955,7 +4955,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../../../build/ui_qg_polylineequidistantoptions.h" line="119"/>
         <location filename="../../../generated/librecad/ui/ui_qg_polylineequidistantoptions.h" line="119"/>
         <source>Copies:</source>
-        <translation>Copies:</translation>
+        <translation>Còpies:</translation>
     </message>
 </context>
 <context>
@@ -4963,7 +4963,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../../src/plugins/intern/qc_actiongetent.cpp" line="43"/>
         <source>Select object:</source>
-        <translation>Select object:</translation>
+        <translation>Seleccioneu l'objecte:</translation>
     </message>
     <message>
         <location filename="../../src/plugins/intern/qc_actiongetent.cpp" line="51"/>
@@ -4985,7 +4985,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../../src/plugins/intern/qc_actiongetselect.cpp" line="42"/>
         <location filename="../../src/plugins/intern/qc_actiongetselect.cpp" line="51"/>
         <source>Select objects:</source>
-        <translation>Select objects:</translation>
+        <translation>Seleccioneu els objectes:</translation>
     </message>
     <message>
         <location filename="../../src/plugins/intern/qc_actiongetselect.cpp" line="62"/>
@@ -4998,32 +4998,32 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../../src/main/qc_applicationwindow.cpp" line="178"/>
         <source>Grid Status</source>
-        <translation>Grid Status</translation>
+        <translation>Estat de la graella</translation>
     </message>
     <message>
         <location filename="../../src/main/qc_applicationwindow.cpp" line="354"/>
         <source>Recent Files</source>
-        <translation>Recent Files</translation>
+        <translation>Fitxers recents</translation>
     </message>
     <message>
         <location filename="../../src/main/qc_applicationwindow.cpp" line="508"/>
         <source>Saving drawing...</source>
-        <translation>Saving drawing...</translation>
+        <translation>Desant el dibuix...</translation>
     </message>
     <message>
         <location filename="../../src/main/qc_applicationwindow.cpp" line="508"/>
         <source>Saving drawing: %1</source>
-        <translation>Saving drawing: %1</translation>
+        <translation>Desant el dibuix: %1</translation>
     </message>
     <message>
         <location filename="../../src/main/qc_applicationwindow.cpp" line="513"/>
         <source>Save cancelled</source>
-        <translation>Save cancelled</translation>
+        <translation>Desar cancel·lat</translation>
     </message>
     <message>
         <location filename="../../src/main/qc_applicationwindow.cpp" line="517"/>
         <source>Saved drawing: %1</source>
-        <translation>Saved drawing: %1</translation>
+        <translation>Dibuix desat: %1</translation>
     </message>
     <message>
         <location filename="../../src/main/qc_applicationwindow.cpp" line="527"/>
@@ -5032,69 +5032,69 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../../src/main/qc_applicationwindow.cpp" line="2861"/>
         <location filename="../../src/main/qc_applicationwindow.cpp" line="3234"/>
         <source>Draft Mode</source>
-        <translation>Draft Mode</translation>
+        <translation>Mode d'esbós</translation>
     </message>
     <message>
         <location filename="../../src/main/qc_applicationwindow.cpp" line="534"/>
         <source>Cannot save the file </source>
-        <translation>Cannot save the file</translation>
+        <translation>No es pot desar el fitxer</translation>
     </message>
     <message>
         <location filename="../../src/main/qc_applicationwindow.cpp" line="536"/>
         <source> , please check the filename and permissions.</source>
-        <translation>, please check the filename and permissions.</translation>
+        <translation>, si us plau comproveu el nom del fitxer i els permisos.</translation>
     </message>
     <message>
         <location filename="../../src/main/qc_applicationwindow.cpp" line="644"/>
         <source>Closing Drawing</source>
-        <translation>Closing Drawing</translation>
+        <translation>Tancant el dibuix</translation>
     </message>
     <message>
         <location filename="../../src/main/qc_applicationwindow.cpp" line="652"/>
         <source>Save changes to the following item?
 %1</source>
-        <translation>Save changes to the following item?
+        <translation>Desar els canvis al element següent?
 %1</translation>
     </message>
     <message>
         <location filename="../../src/main/qc_applicationwindow.cpp" line="666"/>
         <source>&amp;Save</source>
-        <translation>&amp;Save</translation>
+        <translation>&amp;Desar</translation>
     </message>
     <message>
         <location filename="../../src/main/qc_applicationwindow.cpp" line="667"/>
         <source>Save &amp;as...</source>
-        <translation>Save &amp;as...</translation>
+        <translation>Desar &amp;com a...</translation>
     </message>
     <message>
         <location filename="../../src/main/qc_applicationwindow.cpp" line="671"/>
         <source>&amp;Save %1</source>
-        <translation>&amp;Save %1</translation>
+        <translation>&amp;Desar %1</translation>
     </message>
     <message>
         <location filename="../../src/main/qc_applicationwindow.cpp" line="672"/>
         <source>Save %1 &amp;as...</source>
-        <translation>Save %1 &amp;as...</translation>
+        <translation>Desar %1 &amp;com a...</translation>
     </message>
     <message>
         <location filename="../../src/main/qc_applicationwindow.cpp" line="1158"/>
         <source>Ta&amp;b mode</source>
-        <translation>Ta&amp;b mode</translation>
+        <translation>Mode pesta&amp;nya</translation>
     </message>
     <message>
         <location filename="../../src/main/qc_applicationwindow.cpp" line="1162"/>
         <source>&amp;Window mode</source>
-        <translation>&amp;Window mode</translation>
+        <translation>Mode &amp;finestra</translation>
     </message>
     <message>
         <location filename="../../src/main/qc_applicationwindow.cpp" line="1168"/>
         <source>&amp;Layout</source>
-        <translation>&amp;Layout</translation>
+        <translation>&amp;Disposició</translation>
     </message>
     <message>
         <location filename="../../src/main/qc_applicationwindow.cpp" line="1171"/>
         <source>Rounded</source>
-        <translation>Rounded</translation>
+        <translation>Arrodonit</translation>
     </message>
     <message>
         <location filename="../../src/main/qc_applicationwindow.cpp" line="1175"/>
@@ -5104,12 +5104,12 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../../src/main/qc_applicationwindow.cpp" line="1181"/>
         <source>North</source>
-        <translation>North</translation>
+        <translation>Nord</translation>
     </message>
     <message>
         <location filename="../../src/main/qc_applicationwindow.cpp" line="1185"/>
         <source>South</source>
-        <translation>South</translation>
+        <translation>Sud</translation>
     </message>
     <message>
         <location filename="../../src/main/qc_applicationwindow.cpp" line="1189"/>
@@ -5124,115 +5124,115 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../../src/main/qc_applicationwindow.cpp" line="1198"/>
         <source>&amp;Arrange</source>
-        <translation>&amp;Arrange</translation>
+        <translation>&amp;Organitzar</translation>
     </message>
     <message>
         <location filename="../../src/main/qc_applicationwindow.cpp" line="1201"/>
         <source>&amp;Maximized</source>
-        <translation>&amp;Maximized</translation>
+        <translation>&amp;Maximitzat</translation>
     </message>
     <message>
         <location filename="../../src/main/qc_applicationwindow.cpp" line="1205"/>
         <source>&amp;Cascade</source>
-        <translation>&amp;Cascade</translation>
+        <translation>&amp;En cascada</translation>
     </message>
     <message>
         <location filename="../../src/main/qc_applicationwindow.cpp" line="1206"/>
         <source>&amp;Tile</source>
-        <translation>&amp;Tile</translation>
+        <translation>&amp;En mosaic</translation>
     </message>
     <message>
         <location filename="../../src/main/qc_applicationwindow.cpp" line="1207"/>
         <source>Tile &amp;Vertically</source>
-        <translation>Tile &amp;Vertically</translation>
+        <translation>Mosaic &amp;Vertical</translation>
     </message>
     <message>
         <location filename="../../src/main/qc_applicationwindow.cpp" line="1208"/>
         <source>Tile &amp;Horizontally</source>
-        <translation>Tile &amp;Horizontally</translation>
+        <translation>Mosaic &amp;Horitzontal</translation>
     </message>
     <message>
         <location filename="../../src/main/qc_applicationwindow.cpp" line="1524"/>
         <source>Creating new file...</source>
-        <translation>Creating new file...</translation>
+        <translation>Creant fitxer nou...</translation>
     </message>
     <message>
         <location filename="../../src/main/qc_applicationwindow.cpp" line="1570"/>
         <source>Block &apos;%1&apos;</source>
-        <translation>Block &apos;%1&apos;</translation>
+        <translation>Bloc &apos;%1&apos;</translation>
     </message>
     <message>
         <location filename="../../src/main/qc_applicationwindow.cpp" line="1572"/>
         <source>unnamed document %1</source>
-        <translation>unnamed document %1</translation>
+        <translation>document sense nom %1</translation>
     </message>
     <message>
         <location filename="../../src/main/qc_applicationwindow.cpp" line="1640"/>
         <source>New Drawing created.</source>
-        <translation>New Drawing created.</translation>
+        <translation>Nou dibuix creat.</translation>
     </message>
     <message>
         <location filename="../../src/main/qc_applicationwindow.cpp" line="1706"/>
         <source>New document from template: </source>
-        <translation>New document from template:</translation>
+        <translation>Nou document des de la plantilla:</translation>
     </message>
     <message>
         <location filename="../../src/main/qc_applicationwindow.cpp" line="1754"/>
         <source>Select Template aborted</source>
-        <translation>Select Template aborted</translation>
+        <translation>Selecció de plantilla interrompuda</translation>
     </message>
     <message>
         <location filename="../../src/main/qc_applicationwindow.cpp" line="1770"/>
         <source>Cannot open the file
 %1
 Please check the permissions.</source>
-        <translation>Cannot open the file
+        <translation>No es pot obrir el fitxer
 %1
-Please check the permissions.</translation>
+Si us plau, comproveu els permisos.</translation>
     </message>
     <message>
         <location filename="../../src/main/qc_applicationwindow.cpp" line="1870"/>
         <source>Warning: File already opened : </source>
-        <translation>Warning: File already opened :</translation>
+        <translation>Advertència: El fitxer ja està obert :</translation>
     </message>
     <message>
         <location filename="../../src/main/qc_applicationwindow.cpp" line="1913"/>
         <source>Cannot open the file
 %1
 Please check its existence and permissions.</source>
-        <translation>Cannot open the file
+        <translation>No es pot obrir el fitxer
 %1
-Please check its existence and permissions.</translation>
+Si us plau, comproveu la seva existència i els permisos.</translation>
     </message>
     <message>
         <location filename="../../src/main/qc_applicationwindow.cpp" line="1994"/>
         <source>Loaded document: </source>
-        <translation>Loaded document:</translation>
+        <translation>Document carregat:</translation>
     </message>
     <message>
         <location filename="../../src/main/qc_applicationwindow.cpp" line="1999"/>
         <source>File &apos;%1&apos; does not exist. Opening aborted</source>
-        <translation>File &apos;%1&apos; does not exist. Opening aborted</translation>
+        <translation>El fitxer &apos;%1&apos; no existeix. L'obertura s'ha interromput</translation>
     </message>
     <message>
         <location filename="../../src/main/qc_applicationwindow.cpp" line="2000"/>
         <source>Opening aborted</source>
-        <translation>Opening aborted</translation>
+        <translation>L'obertura s'ha interromput</translation>
     </message>
     <message>
         <location filename="../../src/main/qc_applicationwindow.cpp" line="2041"/>
         <source>Save All cancelled</source>
-        <translation>Save All cancelled</translation>
+        <translation>Desar tot cancel·lat</translation>
     </message>
     <message>
         <location filename="../../src/main/qc_applicationwindow.cpp" line="2066"/>
         <source>Auto-saving drawing...</source>
-        <translation>Auto-saving drawing...</translation>
+        <translation>Desant automàticament el dibuix...</translation>
     </message>
     <message>
         <location filename="../../src/main/qc_applicationwindow.cpp" line="2074"/>
         <source>Auto-saved drawing</source>
-        <translation>Auto-saved drawing</translation>
+        <translation>Dibuix desat automàticament</translation>
     </message>
     <message>
         <location filename="../../src/main/qc_applicationwindow.cpp" line="2079"/>
@@ -5240,121 +5240,121 @@ Please check its existence and permissions.</translation>
 %1
 Please check the permissions.
 Auto-save disabled.</source>
-        <translation>Cannot auto-save the file
+        <translation>No es pot desar automàticament el fitxer
 %1
-Please check the permissions.
-Auto-save disabled.</translation>
+Si us plau, comproveu els permisos.
+Desar automàticament desactivat.</translation>
     </message>
     <message>
         <location filename="../../src/main/qc_applicationwindow.cpp" line="2084"/>
         <source>Auto-saving failed</source>
-        <translation>Auto-saving failed</translation>
+        <translation>El desat automàtic ha fallat</translation>
     </message>
     <message>
         <location filename="../../src/main/qc_applicationwindow.cpp" line="2097"/>
         <source>Exporting drawing...</source>
-        <translation>Exporting drawing...</translation>
+        <translation>Exportant el dibuix...</translation>
     </message>
     <message>
         <location filename="../../src/main/qc_applicationwindow.cpp" line="2134"/>
         <source>Export as</source>
-        <translation>Export as</translation>
+        <translation>Exportar com a</translation>
     </message>
     <message>
         <location filename="../../src/main/qc_applicationwindow.cpp" line="2193"/>
         <source>Exported: %1</source>
-        <translation>Exported: %1</translation>
+        <translation>Exportat: %1</translation>
     </message>
     <message>
         <location filename="../../src/main/qc_applicationwindow.cpp" line="2233"/>
         <source>Exporting...</source>
-        <translation>Exporting...</translation>
+        <translation>Exportant...</translation>
     </message>
     <message>
         <location filename="../../src/main/qc_applicationwindow.cpp" line="2306"/>
         <source>Export complete</source>
-        <translation>Export complete</translation>
+        <translation>Exportació completa</translation>
     </message>
     <message>
         <location filename="../../src/main/qc_applicationwindow.cpp" line="2308"/>
         <source>Export failed!</source>
-        <translation>Export failed!</translation>
+        <translation>Exportació fallida!</translation>
     </message>
     <message>
         <location filename="../../src/main/qc_applicationwindow.cpp" line="2375"/>
         <source>Close All cancelled</source>
-        <translation>Close All cancelled</translation>
+        <translation>Tancar tot cancel·lat</translation>
     </message>
     <message>
         <location filename="../../src/main/qc_applicationwindow.cpp" line="2405"/>
         <source>Please adjust scaling and positioning in print preview first.</source>
-        <translation>Please adjust scaling and positioning in print preview first.</translation>
+        <translation>Si us plau, ajusteu l'escala i la posició en la previsualització d'impressió primer.</translation>
     </message>
     <message>
         <location filename="../../src/main/qc_applicationwindow.cpp" line="2417"/>
         <source>Printing...</source>
-        <translation>Printing...</translation>
+        <translation>Imprimint...</translation>
     </message>
     <message>
         <location filename="../../src/main/qc_applicationwindow.cpp" line="2469"/>
         <source>Export as PDF</source>
-        <translation>Export as PDF</translation>
+        <translation>Exportar com a PDF</translation>
     </message>
     <message>
         <location filename="../../src/main/qc_applicationwindow.cpp" line="2663"/>
         <source>Printing complete</source>
-        <translation>Printing complete</translation>
+        <translation>Impressió completa</translation>
     </message>
     <message>
         <location filename="../../src/main/qc_applicationwindow.cpp" line="2739"/>
         <source>Print preview for %1</source>
-        <translation>Print preview for %1</translation>
+        <translation>Previsualització d'impressió per a %1</translation>
     </message>
     <message>
         <location filename="../../src/main/qc_applicationwindow.cpp" line="2817"/>
         <source>Exiting application...</source>
-        <translation>Exiting application...</translation>
+        <translation>Sortint de l'aplicació...</translation>
     </message>
     <message>
         <location filename="../../src/main/qc_applicationwindow.cpp" line="3026"/>
         <location filename="../../src/ui/lc_widgetfactory.cpp" line="930"/>
         <source>About</source>
-        <translation>About</translation>
+        <translation>Quant a</translation>
     </message>
     <message>
         <location filename="../../src/main/qc_applicationwindow.cpp" line="3042"/>
         <source>Version: %1</source>
-        <translation>Version: %1</translation>
+        <translation>Versió: %1</translation>
     </message>
     <message>
         <location filename="../../src/main/qc_applicationwindow.cpp" line="3044"/>
         <source>Compiler: Clang %1.%2.%3</source>
-        <translation>Compiler: Clang %1.%2.%3</translation>
+        <translation>Compilador: Clang %1.%2.%3</translation>
     </message>
     <message>
         <location filename="../../src/main/qc_applicationwindow.cpp" line="3046"/>
         <source>Compiler: GNU GCC %1.%2.%3</source>
-        <translation>Compiler: GNU GCC %1.%2.%3</translation>
+        <translation>Compilador: GNU GCC %1.%2.%3</translation>
     </message>
     <message>
         <location filename="../../src/main/qc_applicationwindow.cpp" line="3048"/>
         <source>Compiler: Microsoft Visual C++</source>
-        <translation>Compiler: Microsoft Visual C++</translation>
+        <translation>Compilador: Microsoft Visual C++</translation>
     </message>
     <message>
         <location filename="../../src/main/qc_applicationwindow.cpp" line="3050"/>
         <source>Compiled on: %1</source>
-        <translation>Compiled on: %1</translation>
+        <translation>Compilat el: %1</translation>
     </message>
     <message>
         <location filename="../../src/main/qc_applicationwindow.cpp" line="3051"/>
         <source>Qt Version: %1</source>
-        <translation>Qt Version: %1</translation>
+        <translation>Versió de Qt: %1</translation>
     </message>
     <message>
         <location filename="../../src/main/qc_applicationwindow.cpp" line="3052"/>
         <source>Boost Version: %1.%2.%3</source>
-        <translation>Boost Version: %1.%2.%3</translation>
+        <translation>Versió de Boost: %1.%2.%3</translation>
     </message>
     <message>
         <location filename="../../src/main/qc_applicationwindow.cpp" line="3059"/>
@@ -5364,37 +5364,37 @@ Auto-save disabled.</translation>
     <message>
         <location filename="../../src/main/qc_applicationwindow.cpp" line="3070"/>
         <source>Contributors</source>
-        <translation>Contributors</translation>
+        <translation>Col·laboradors</translation>
     </message>
     <message>
         <location filename="../../src/main/qc_applicationwindow.cpp" line="3071"/>
         <source>License</source>
-        <translation>License</translation>
+        <translation>Llicència</translation>
     </message>
     <message>
         <location filename="../../src/main/qc_applicationwindow.cpp" line="3072"/>
         <source>The Code</source>
-        <translation>The Code</translation>
+        <translation>El codi</translation>
     </message>
     <message>
         <location filename="../../src/main/qc_applicationwindow.cpp" line="3081"/>
         <source>System</source>
-        <translation>System</translation>
+        <translation>Sistema</translation>
     </message>
     <message>
         <location filename="../../src/main/qc_applicationwindow.cpp" line="3274"/>
         <source>Toolbars</source>
-        <translation>Toolbars</translation>
+        <translation>Barres d'eines</translation>
     </message>
     <message>
         <location filename="../../src/main/qc_applicationwindow.cpp" line="3279"/>
         <source>Dockwidgets</source>
-        <translation>Dockwidgets</translation>
+        <translation>Widgets acoblables</translation>
     </message>
     <message>
         <location filename="../../src/main/qc_applicationwindow.cpp" line="3306"/>
         <source>Opening recent file...</source>
-        <translation>Opening recent file...</translation>
+        <translation>Obrint fitxer recent...</translation>
     </message>
     <message>
         <location filename="../../src/main/qc_applicationwindow.cpp" line="3429"/>
@@ -5404,12 +5404,12 @@ Auto-save disabled.</translation>
     <message>
         <location filename="../../src/main/qc_applicationwindow.cpp" line="3429"/>
         <source>Command line</source>
-        <translation>Command line</translation>
+        <translation>Línia d'ordres</translation>
     </message>
     <message>
         <location filename="../../src/main/qc_applicationwindow.cpp" line="3430"/>
         <source>Float</source>
-        <translation>Float</translation>
+        <translation>Flotant</translation>
     </message>
     <message>
         <location filename="../../src/main/qc_applicationwindow.cpp" line="3430"/>
@@ -5420,27 +5420,27 @@ Auto-save disabled.</translation>
     <message>
         <location filename="../../src/main/qc_applicationwindow.cpp" line="3488"/>
         <source>Device Options</source>
-        <translation>Device Options</translation>
+        <translation>Opcions del dispositiu</translation>
     </message>
     <message>
         <location filename="../../src/main/qc_applicationwindow.cpp" line="3491"/>
         <source>Device</source>
-        <translation>Device</translation>
+        <translation>Dispositiu</translation>
     </message>
     <message>
         <location filename="../../src/main/qc_applicationwindow.cpp" line="3526"/>
         <source>Toolbar Creator</source>
-        <translation>Toolbar Creator</translation>
+        <translation>Creador de barra d'eines</translation>
     </message>
     <message>
         <location filename="../../src/main/qc_applicationwindow.cpp" line="3592"/>
         <source>Menu Creator</source>
-        <translation>Menu Creator</translation>
+        <translation>Creador de menú</translation>
     </message>
     <message>
         <location filename="../../src/main/qc_applicationwindow.cpp" line="3617"/>
         <source>Menu Assigner</source>
-        <translation>Menu Assigner</translation>
+        <translation>Assignador de menú</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_widgetfactory.cpp" line="257"/>
@@ -5452,19 +5452,19 @@ Auto-save disabled.</translation>
         <location filename="../../src/ui/lc_widgetfactory.cpp" line="262"/>
         <location filename="../../src/ui/lc_widgetfactory.cpp" line="526"/>
         <source>Circle</source>
-        <translation>Circle</translation>
+        <translation>Cercle</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_widgetfactory.cpp" line="267"/>
         <location filename="../../src/ui/lc_widgetfactory.cpp" line="532"/>
         <source>Curve</source>
-        <translation>Curve</translation>
+        <translation>Corba</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_widgetfactory.cpp" line="272"/>
         <location filename="../../src/ui/lc_widgetfactory.cpp" line="538"/>
         <source>Ellipse</source>
-        <translation>Ellipse</translation>
+        <translation>El·lipse</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_widgetfactory.cpp" line="277"/>
@@ -5476,19 +5476,19 @@ Auto-save disabled.</translation>
         <location filename="../../src/ui/lc_widgetfactory.cpp" line="282"/>
         <location filename="../../src/ui/lc_widgetfactory.cpp" line="550"/>
         <source>Select</source>
-        <translation>Select</translation>
+        <translation>Seleccionar</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_widgetfactory.cpp" line="287"/>
         <location filename="../../src/ui/lc_widgetfactory.cpp" line="556"/>
         <source>Dimension</source>
-        <translation>Dimension</translation>
+        <translation>Cota</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_widgetfactory.cpp" line="292"/>
         <location filename="../../src/ui/lc_widgetfactory.cpp" line="562"/>
         <source>Modify</source>
-        <translation>Modify</translation>
+        <translation>Modificar</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_widgetfactory.cpp" line="297"/>
@@ -5500,27 +5500,27 @@ Auto-save disabled.</translation>
         <location filename="../../src/ui/lc_widgetfactory.cpp" line="302"/>
         <location filename="../../src/ui/lc_widgetfactory.cpp" line="440"/>
         <source>Order</source>
-        <translation>Order</translation>
+        <translation>Ordre</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_widgetfactory.cpp" line="336"/>
         <source>Pen Palette</source>
-        <translation>Pen Palette</translation>
+        <translation>Paleta de llapis</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_widgetfactory.cpp" line="345"/>
         <source>Layer List</source>
-        <translation>Layer List</translation>
+        <translation>Llista de capes</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_widgetfactory.cpp" line="357"/>
         <source>Layer Tree</source>
-        <translation>Layer Tree</translation>
+        <translation>Arbre de capes</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_widgetfactory.cpp" line="368"/>
         <source>Block List</source>
-        <translation>Block List</translation>
+        <translation>Llista de blocs</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_widgetfactory.cpp" line="421"/>
@@ -5540,7 +5540,7 @@ Auto-save disabled.</translation>
     <message>
         <location filename="../../src/ui/lc_widgetfactory.cpp" line="464"/>
         <source>Snap Selection</source>
-        <translation>Snap Selection</translation>
+        <translation>Selecció de referència</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_widgetfactory.cpp" line="471"/>
@@ -5550,12 +5550,12 @@ Auto-save disabled.</translation>
     <message>
         <location filename="../../src/ui/lc_widgetfactory.cpp" line="476"/>
         <source>Tool Options</source>
-        <translation>Tool Options</translation>
+        <translation>Opcions d'eina</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_widgetfactory.cpp" line="483"/>
         <source>Dock Areas</source>
-        <translation>Dock Areas</translation>
+        <translation>Àrees d'acoblament</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_widgetfactory.cpp" line="589"/>
@@ -5565,27 +5565,27 @@ Auto-save disabled.</translation>
     <message>
         <location filename="../../src/ui/lc_widgetfactory.cpp" line="674"/>
         <source>&amp;File</source>
-        <translation>&amp;File</translation>
+        <translation>&amp;Fitxer</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_widgetfactory.cpp" line="685"/>
         <source>Import</source>
-        <translation>Import</translation>
+        <translation>Importar</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_widgetfactory.cpp" line="689"/>
         <source>Export</source>
-        <translation>Export</translation>
+        <translation>Exportar</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_widgetfactory.cpp" line="705"/>
         <source>&amp;Options</source>
-        <translation>&amp;Options</translation>
+        <translation>&amp;Opcions</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_widgetfactory.cpp" line="716"/>
         <source>&amp;Edit</source>
-        <translation>&amp;Edit</translation>
+        <translation>&amp;Editar</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_widgetfactory.cpp" line="731"/>
@@ -5595,72 +5595,72 @@ Auto-save disabled.</translation>
     <message>
         <location filename="../../src/ui/lc_widgetfactory.cpp" line="737"/>
         <source>&amp;View</source>
-        <translation>&amp;View</translation>
+        <translation>&amp;Visualitzar</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_widgetfactory.cpp" line="755"/>
         <source>&amp;Tools</source>
-        <translation>&amp;Tools</translation>
+        <translation>&amp;Eines</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_widgetfactory.cpp" line="761"/>
         <source>&amp;Line</source>
-        <translation>&amp;Line</translation>
+        <translation>&amp;Línia</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_widgetfactory.cpp" line="768"/>
         <source>&amp;Circle</source>
-        <translation>&amp;Circle</translation>
+        <translation>&amp;Cercle</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_widgetfactory.cpp" line="775"/>
         <source>&amp;Curve</source>
-        <translation>&amp;Curve</translation>
+        <translation>&amp;Corba</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_widgetfactory.cpp" line="782"/>
         <source>&amp;Ellipse</source>
-        <translation>&amp;Ellipse</translation>
+        <translation>&amp;El·lipse</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_widgetfactory.cpp" line="789"/>
         <source>&amp;Polyline</source>
-        <translation>&amp;Polyline</translation>
+        <translation>&amp;Polilínia</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_widgetfactory.cpp" line="796"/>
         <source>&amp;Select</source>
-        <translation>&amp;Select</translation>
+        <translation>&amp;Seleccionar</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_widgetfactory.cpp" line="804"/>
         <source>Dime&amp;nsion</source>
-        <translation>Dime&amp;nsion</translation>
+        <translation>C&amp;ota</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_widgetfactory.cpp" line="812"/>
         <source>&amp;Modify</source>
-        <translation>&amp;Modify</translation>
+        <translation>&amp;Modificar</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_widgetfactory.cpp" line="821"/>
         <source>&amp;Info</source>
-        <translation>&amp;Info</translation>
+        <translation>&amp;Informació</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_widgetfactory.cpp" line="830"/>
         <source>&amp;Order</source>
-        <translation>&amp;Order</translation>
+        <translation>&amp;Ordre</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_widgetfactory.cpp" line="869"/>
         <source>&amp;Drawings</source>
-        <translation>&amp;Drawings</translation>
+        <translation>&amp;Dibuixos</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_widgetfactory.cpp" line="879"/>
         <source>&amp;Help</source>
-        <translation>&amp;Help</translation>
+        <translation>&amp;Ajuda</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_widgetfactory.cpp" line="883"/>
@@ -5670,17 +5670,17 @@ Auto-save disabled.</translation>
     <message>
         <location filename="../../src/ui/lc_widgetfactory.cpp" line="884"/>
         <source>User&apos;s &amp;Manual</source>
-        <translation>User&apos;s &amp;Manual</translation>
+        <translation>M&amp;anual d'usuari</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_widgetfactory.cpp" line="885"/>
         <source>&amp;Commands</source>
-        <translation>&amp;Commands</translation>
+        <translation>&amp;Ordres</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_widgetfactory.cpp" line="886"/>
         <source>&amp;Style Sheets</source>
-        <translation>&amp;Style Sheets</translation>
+        <translation>Fulls d'&amp;estil</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_widgetfactory.cpp" line="887"/>
@@ -5690,37 +5690,37 @@ Auto-save disabled.</translation>
     <message>
         <location filename="../../src/ui/lc_widgetfactory.cpp" line="888"/>
         <source>&amp;Forum</source>
-        <translation>&amp;Forum</translation>
+        <translation>&amp;Fòrum</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_widgetfactory.cpp" line="889"/>
         <source>Zulip &amp;Chat</source>
-        <translation>Zulip &amp;Chat</translation>
+        <translation>Zulip &amp;Xat</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_widgetfactory.cpp" line="890"/>
         <source>&amp;Release Information</source>
-        <translation>&amp;Release Information</translation>
+        <translation>&amp;Informació de la versió</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_widgetfactory.cpp" line="916"/>
         <source>On&amp;line</source>
-        <translation>On&amp;line</translation>
+        <translation>En &amp;línia</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_widgetfactory.cpp" line="938"/>
         <source>&amp;Donate</source>
-        <translation>&amp;Donate</translation>
+        <translation>&amp;Donar</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_widgetfactory.cpp" line="961"/>
         <source>Dock Wid&amp;gets</source>
-        <translation>Dock Wid&amp;gets</translation>
+        <translation>Wid&amp;gets acoblables</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_widgetfactory.cpp" line="988"/>
         <source>&amp;Toolbars</source>
-        <translation>&amp;Toolbars</translation>
+        <translation>&amp;Barres d'eines</translation>
     </message>
 </context>
 <context>
@@ -5728,18 +5728,18 @@ Auto-save disabled.</translation>
     <message>
         <location filename="../../src/ui/qg_actionhandler.cpp" line="1262"/>
         <source>Spacebar: restored snapping mode to normal</source>
-        <translation>Spacebar: restored snapping mode to normal</translation>
+        <translation>Barra espaiadora: mode de referència restaurat a normal</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_actionhandler.cpp" line="1263"/>
         <source>Spacebar: temporarily set snapping mode to free snapping</source>
-        <translation>Spacebar: temporarily set snapping mode to free snapping</translation>
+        <translation>Barra espaiadora: mode de referència temporalment establert a referència lliure</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_actionhandler.cpp" line="1273"/>
         <source>escape</source>
         <comment>escape, go back from action steps</comment>
-        <translation>escape</translation>
+        <translation>escapar</translation>
     </message>
 </context>
 <context>
@@ -5750,7 +5750,7 @@ Auto-save disabled.</translation>
         <location filename="../../../build/ui_qg_activelayername.h" line="80"/>
         <location filename="../../../generated/librecad/ui/ui_qg_activelayername.h" line="80"/>
         <source>Selection</source>
-        <translation>Selection</translation>
+        <translation>Selecció</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_activelayername.ui" line="71"/>
@@ -5766,7 +5766,7 @@ Auto-save disabled.</translation>
         <location filename="../../../build/ui_qg_activelayername.h" line="84"/>
         <location filename="../../../generated/librecad/ui/ui_qg_activelayername.h" line="84"/>
         <source>Current Layer</source>
-        <translation>Current Layer</translation>
+        <translation>Capa actual</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_activelayername.ui" line="105"/>
@@ -5793,7 +5793,7 @@ p, li { white-space: pre-wrap; }
         <location filename="../../../build/ui_qg_blockdialog.h" line="84"/>
         <location filename="../../../generated/librecad/ui/ui_qg_blockdialog.h" line="84"/>
         <source>Block Settings</source>
-        <translation>Block Settings</translation>
+        <translation>Configuració de bloc</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_blockdialog.ui" line="43"/>
@@ -5801,17 +5801,17 @@ p, li { white-space: pre-wrap; }
         <location filename="../../../build/ui_qg_blockdialog.h" line="85"/>
         <location filename="../../../generated/librecad/ui/ui_qg_blockdialog.h" line="85"/>
         <source>Block Name:</source>
-        <translation>Block Name:</translation>
+        <translation>Nom del bloc:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_blockdialog.cpp" line="78"/>
         <source>Renaming Block</source>
-        <translation>Renaming Block</translation>
+        <translation>Canviar nom del bloc</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_blockdialog.cpp" line="79"/>
         <source>Could not name block. A block named &quot;%1&quot; already exists.</source>
-        <translation>Could not name block. A block named &quot;%1&quot; already exists.</translation>
+        <translation>No s'ha pogut nomenar el bloc. Ja existeix un bloc amb el nom &quot;%1&quot;.</translation>
     </message>
 </context>
 <context>
@@ -5819,109 +5819,109 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../../src/ui/qg_blockwidget.cpp" line="166"/>
         <source>Show all blocks</source>
-        <translation>Show all blocks</translation>
+        <translation>Mostrar tots els blocs</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_blockwidget.cpp" line="173"/>
         <source>Hide all blocks</source>
-        <translation>Hide all blocks</translation>
+        <translation>Ocultar tots els blocs</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_blockwidget.cpp" line="180"/>
         <source>Create Block</source>
-        <translation>Create Block</translation>
+        <translation>Crear bloc</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_blockwidget.cpp" line="187"/>
         <source>Add an empty block</source>
-        <translation>Add an empty block</translation>
+        <translation>Afegir un bloc buit</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_blockwidget.cpp" line="194"/>
         <source>Remove block</source>
-        <translation>Remove block</translation>
+        <translation>Eliminar bloc</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_blockwidget.cpp" line="201"/>
         <source>Rename the active block</source>
-        <translation>Rename the active block</translation>
+        <translation>Canviar el nom del bloc actiu</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_blockwidget.cpp" line="208"/>
         <source>Edit the active block
 in a separate window</source>
-        <translation>Edit the active block
-in a separate window</translation>
+        <translation>Editar el bloc actiu
+en una finestra separada</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_blockwidget.cpp" line="216"/>
         <source>save the active block to a file</source>
-        <translation>save the active block to a file</translation>
+        <translation>desar el bloc actiu a un fitxer</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_blockwidget.cpp" line="223"/>
         <source>Insert the active block</source>
-        <translation>Insert the active block</translation>
+        <translation>Inserir el bloc actiu</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_blockwidget.cpp" line="230"/>
         <source>Filter</source>
-        <translation>Filter</translation>
+        <translation>Filtre</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_blockwidget.cpp" line="232"/>
         <source>Looking for matching block names</source>
-        <translation>Looking for matching block names</translation>
+        <translation>Cercant noms de bloc coincidents</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_blockwidget.cpp" line="387"/>
         <source>Block Menu</source>
-        <translation>Block Menu</translation>
+        <translation>Menu de bloc</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_blockwidget.cpp" line="394"/>
         <source>&amp;Defreeze all Blocks</source>
-        <translation>&amp;Defreeze all Blocks</translation>
+        <translation>&amp;Descongelar tots els blocs</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_blockwidget.cpp" line="396"/>
         <source>&amp;Freeze all Blocks</source>
-        <translation>&amp;Freeze all Blocks</translation>
+        <translation>&amp;Congelar tots els blocs</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_blockwidget.cpp" line="401"/>
         <source>&amp;Toggle Visibility</source>
-        <translation>&amp;Toggle Visibility</translation>
+        <translation>&amp;Commutar visibilitat</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_blockwidget.cpp" line="403"/>
         <source>&amp;Remove Block</source>
-        <translation>&amp;Remove Block</translation>
+        <translation>&amp;Eliminar bloc</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_blockwidget.cpp" line="407"/>
         <source>&amp;Add Block</source>
-        <translation>&amp;Add Block</translation>
+        <translation>&amp;Afegir bloc</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_blockwidget.cpp" line="409"/>
         <source>&amp;Rename Block</source>
-        <translation>&amp;Rename Block</translation>
+        <translation>&amp;Canviar nom del bloc</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_blockwidget.cpp" line="411"/>
         <source>&amp;Edit Block</source>
-        <translation>&amp;Edit Block</translation>
+        <translation>&amp;Editar bloc</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_blockwidget.cpp" line="413"/>
         <source>&amp;Insert Block</source>
-        <translation>&amp;Insert Block</translation>
+        <translation>&amp;Inserir bloc</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_blockwidget.cpp" line="415"/>
         <source>&amp;Create New Block</source>
-        <translation>&amp;Create New Block</translation>
+        <translation>&amp;Crear nou bloc</translation>
     </message>
 </context>
 <context>
@@ -5929,24 +5929,24 @@ in a separate window</translation>
     <message>
         <location filename="../../src/ui/qg_colorbox.cpp" line="103"/>
         <source>Unchanged</source>
-        <translation>Unchanged</translation>
+        <translation>Sense canvis</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_colorbox.cpp" line="106"/>
         <location filename="../../src/ui/qg_colorbox.cpp" line="282"/>
         <source>By Layer</source>
-        <translation>By Layer</translation>
+        <translation>Per capa</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_colorbox.cpp" line="107"/>
         <source>By Block</source>
-        <translation>By Block</translation>
+        <translation>Per bloc</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_colorbox.cpp" line="111"/>
         <location filename="../../src/ui/qg_colorbox.cpp" line="322"/>
         <source>Custom</source>
-        <translation>Custom</translation>
+        <translation>Personalitzat</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_colorbox.cpp" line="115"/>
@@ -5956,27 +5956,27 @@ in a separate window</translation>
     <message>
         <location filename="../../src/ui/qg_colorbox.cpp" line="119"/>
         <source>Dark Red</source>
-        <translation>Dark Red</translation>
+        <translation>Vermell fosc</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_colorbox.cpp" line="120"/>
         <source>Yellow</source>
-        <translation>Yellow</translation>
+        <translation>Groc</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_colorbox.cpp" line="121"/>
         <source>Dark Yellow</source>
-        <translation>Dark Yellow</translation>
+        <translation>Groc fosc</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_colorbox.cpp" line="122"/>
         <source>Green</source>
-        <translation>Green</translation>
+        <translation>Verd</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_colorbox.cpp" line="123"/>
         <source>Dark Green</source>
-        <translation>Dark Green</translation>
+        <translation>Verd fosc</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_colorbox.cpp" line="124"/>
@@ -5986,7 +5986,7 @@ in a separate window</translation>
     <message>
         <location filename="../../src/ui/qg_colorbox.cpp" line="125"/>
         <source>Dark Cyan</source>
-        <translation>Dark Cyan</translation>
+        <translation>Cian fosc</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_colorbox.cpp" line="126"/>
@@ -5996,7 +5996,7 @@ in a separate window</translation>
     <message>
         <location filename="../../src/ui/qg_colorbox.cpp" line="127"/>
         <source>Dark Blue</source>
-        <translation>Dark Blue</translation>
+        <translation>Blau fosc</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_colorbox.cpp" line="128"/>
@@ -6006,12 +6006,12 @@ in a separate window</translation>
     <message>
         <location filename="../../src/ui/qg_colorbox.cpp" line="129"/>
         <source>Dark Magenta</source>
-        <translation>Dark Magenta</translation>
+        <translation>Magenta fosc</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_colorbox.cpp" line="133"/>
         <source>Black / White</source>
-        <translation>Black / White</translation>
+        <translation>Negre / Blanc</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_colorbox.cpp" line="137"/>
@@ -6021,23 +6021,23 @@ in a separate window</translation>
     <message>
         <location filename="../../src/ui/qg_colorbox.cpp" line="138"/>
         <source>Dark Gray</source>
-        <translation>Dark Gray</translation>
+        <translation>Gris fosc</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_colorbox.cpp" line="139"/>
         <source>Light Gray</source>
-        <translation>Light Gray</translation>
+        <translation>Gris clar</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_colorbox.cpp" line="159"/>
         <location filename="../../src/ui/qg_colorbox.cpp" line="171"/>
         <source>/ColorBox</source>
-        <translation>/ColorBox</translation>
+        <translation>/CaixaColor</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_colorbox.cpp" line="165"/>
         <source>Custom Picked</source>
-        <translation>Custom Picked</translation>
+        <translation>Seleccionat personalitzat</translation>
     </message>
 </context>
 <context>
@@ -6045,7 +6045,7 @@ in a separate window</translation>
     <message>
         <location filename="../../src/ui/qg_commandedit.cpp" line="289"/>
         <source>clear</source>
-        <translation>clear</translation>
+        <translation>netejar</translation>
     </message>
 </context>
 <context>
@@ -6053,17 +6053,17 @@ in a separate window</translation>
     <message>
         <location filename="../../src/ui/qg_commandhistory.cpp" line="38"/>
         <source>&amp;Copy</source>
-        <translation>&amp;Copy</translation>
+        <translation>&amp;Copiar</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_commandhistory.cpp" line="45"/>
         <source>Select &amp;All</source>
-        <translation>Select &amp;All</translation>
+        <translation>Seleccionar &amp;tot</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_commandhistory.cpp" line="50"/>
         <source>Clear</source>
-        <translation>Clear</translation>
+        <translation>Netejar</translation>
     </message>
 </context>
 <context>
@@ -6074,7 +6074,7 @@ in a separate window</translation>
         <location filename="../../../build/ui_qg_commandwidget.h" line="113"/>
         <location filename="../../../generated/librecad/ui/ui_qg_commandwidget.h" line="113"/>
         <source>Command Line</source>
-        <translation>Command Line</translation>
+        <translation>Línia d'ordres</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_commandwidget.ui" line="44"/>
@@ -6082,7 +6082,7 @@ in a separate window</translation>
         <location filename="../../../build/ui_qg_commandwidget.h" line="115"/>
         <location filename="../../../generated/librecad/ui/ui_qg_commandwidget.h" line="115"/>
         <source>Command history and output</source>
-        <translation>Command history and output</translation>
+        <translation>Historial d'ordres i sortida</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_commandwidget.ui" line="82"/>
@@ -6091,7 +6091,7 @@ in a separate window</translation>
         <location filename="../../../generated/librecad/ui/ui_qg_commandwidget.h" line="117"/>
         <location filename="../../src/ui/forms/qg_commandwidget.cpp" line="183"/>
         <source>Command:</source>
-        <translation>Command:</translation>
+        <translation>Ordre:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_commandwidget.ui" line="132"/>
@@ -6110,23 +6110,23 @@ in a separate window</translation>
     <message>
         <location filename="../../src/ui/forms/qg_commandwidget.cpp" line="205"/>
         <source>Unknown command: %1</source>
-        <translation>Unknown command: %1</translation>
+        <translation>Ordre desconeguda: %1</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_commandwidget.cpp" line="249"/>
         <source>escape</source>
         <comment>escape, go back from action steps</comment>
-        <translation>escape</translation>
+        <translation>escapar</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_commandwidget.cpp" line="338"/>
         <source>Float</source>
-        <translation>Float</translation>
+        <translation>Flotant</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_commandwidget.cpp" line="339"/>
         <source>Command line</source>
-        <translation>Command line</translation>
+        <translation>Línia d'ordres</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_commandwidget.cpp" line="339"/>
@@ -6158,7 +6158,7 @@ in a separate window</translation>
         <location filename="../../../generated/librecad/ui/ui_qg_coordinatewidget.h" line="111"/>
         <location filename="../../../generated/librecad/ui/ui_qg_coordinatewidget.h" line="112"/>
         <source>Coordinates</source>
-        <translation>Coordinates</translation>
+        <translation>Coordenades</translation>
     </message>
 </context>
 <context>
@@ -6178,7 +6178,7 @@ in a separate window</translation>
         <location filename="../../../build/ui_qg_dimensionlabeleditor.h" line="169"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dimensionlabeleditor.h" line="169"/>
         <source>Dimension Label Editor</source>
-        <translation>Dimension Label Editor</translation>
+        <translation>Editor d'etiquetes de cota</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dimensionlabeleditor.ui" line="32"/>
@@ -6186,7 +6186,7 @@ in a separate window</translation>
         <location filename="../../../build/ui_qg_dimensionlabeleditor.h" line="170"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dimensionlabeleditor.h" line="170"/>
         <source>Dimension Label:</source>
-        <translation>Dimension Label:</translation>
+        <translation>Etiqueta de cota:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dimensionlabeleditor.ui" line="57"/>
@@ -6194,7 +6194,7 @@ in a separate window</translation>
         <location filename="../../../build/ui_qg_dimensionlabeleditor.h" line="171"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dimensionlabeleditor.h" line="171"/>
         <source>Label:</source>
-        <translation>Label:</translation>
+        <translation>Etiqueta:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dimensionlabeleditor.ui" line="93"/>
@@ -6210,7 +6210,7 @@ in a separate window</translation>
         <location filename="../../../build/ui_qg_dimensionlabeleditor.h" line="176"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dimensionlabeleditor.h" line="176"/>
         <source>Insert:</source>
-        <translation>Insert:</translation>
+        <translation>Inserir:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dimensionlabeleditor.ui" line="150"/>
@@ -6218,7 +6218,7 @@ in a separate window</translation>
         <location filename="../../../build/ui_qg_dimensionlabeleditor.h" line="177"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dimensionlabeleditor.h" line="177"/>
         <source>⌀ (Diameter)</source>
-        <translation>⌀ (Diameter)</translation>
+        <translation>⌀ (Diàmetre)</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dimensionlabeleditor.ui" line="155"/>
@@ -6226,7 +6226,7 @@ in a separate window</translation>
         <location filename="../../../build/ui_qg_dimensionlabeleditor.h" line="178"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dimensionlabeleditor.h" line="178"/>
         <source>° (Degree)</source>
-        <translation>° (Degree)</translation>
+        <translation>° (Grau)</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dimensionlabeleditor.ui" line="160"/>
@@ -6234,7 +6234,7 @@ in a separate window</translation>
         <location filename="../../../build/ui_qg_dimensionlabeleditor.h" line="179"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dimensionlabeleditor.h" line="179"/>
         <source>± (Plus / Minus)</source>
-        <translation>± (Plus / Minus)</translation>
+        <translation>± (Més / Menys)</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dimensionlabeleditor.ui" line="165"/>
@@ -6250,7 +6250,7 @@ in a separate window</translation>
         <location filename="../../../build/ui_qg_dimensionlabeleditor.h" line="181"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dimensionlabeleditor.h" line="181"/>
         <source>× (Times)</source>
-        <translation>× (Times)</translation>
+        <translation>× (Multiplicació)</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dimensionlabeleditor.ui" line="175"/>
@@ -6258,7 +6258,7 @@ in a separate window</translation>
         <location filename="../../../build/ui_qg_dimensionlabeleditor.h" line="182"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dimensionlabeleditor.h" line="182"/>
         <source>÷ (Division)</source>
-        <translation>÷ (Division)</translation>
+        <translation>÷ (Divisió)</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dimensionlabeleditor.cpp" line="75"/>
@@ -6298,7 +6298,7 @@ in a separate window</translation>
         <location filename="../../../build/ui_qg_dlgarc.h" line="227"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgarc.h" line="227"/>
         <source>Geometry</source>
-        <translation>Geometry</translation>
+        <translation>Geometria</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgarc.ui" line="84"/>
@@ -6306,7 +6306,7 @@ in a separate window</translation>
         <location filename="../../../build/ui_qg_dlgarc.h" line="228"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgarc.h" line="228"/>
         <source>Radius:</source>
-        <translation>Radius:</translation>
+        <translation>Radi:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgarc.ui" line="104"/>
@@ -6314,7 +6314,7 @@ in a separate window</translation>
         <location filename="../../../build/ui_qg_dlgarc.h" line="229"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgarc.h" line="229"/>
         <source>Center (y):</source>
-        <translation>Center (y):</translation>
+        <translation>Centre (y):</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgarc.ui" line="124"/>
@@ -6322,7 +6322,7 @@ in a separate window</translation>
         <location filename="../../../build/ui_qg_dlgarc.h" line="230"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgarc.h" line="230"/>
         <source>Center (x):</source>
-        <translation>Center (x):</translation>
+        <translation>Centre (x):</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgarc.ui" line="144"/>
@@ -6330,7 +6330,7 @@ in a separate window</translation>
         <location filename="../../../build/ui_qg_dlgarc.h" line="231"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgarc.h" line="231"/>
         <source>Start Angle:</source>
-        <translation>Start Angle:</translation>
+        <translation>Angle d'inici:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgarc.ui" line="174"/>
@@ -6338,7 +6338,7 @@ in a separate window</translation>
         <location filename="../../../build/ui_qg_dlgarc.h" line="232"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgarc.h" line="232"/>
         <source>End Angle:</source>
-        <translation>End Angle:</translation>
+        <translation>Angle final:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgarc.ui" line="216"/>
@@ -6346,7 +6346,7 @@ in a separate window</translation>
         <location filename="../../../build/ui_qg_dlgarc.h" line="233"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgarc.h" line="233"/>
         <source>Reversed</source>
-        <translation>Reversed</translation>
+        <translation>Invertit</translation>
     </message>
 </context>
 <context>
@@ -6357,7 +6357,7 @@ in a separate window</translation>
         <location filename="../../../build/ui_qg_dlgattributes.h" line="115"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgattributes.h" line="115"/>
         <source>Attributes</source>
-        <translation>Attributes</translation>
+        <translation>Atributs</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgattributes.ui" line="44"/>
@@ -6374,8 +6374,8 @@ in a separate window</translation>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgattributes.h" line="118"/>
         <source>Apply attributes also to all sub-entities of selected INSERT.
 This recursively modifies all entities of the Block itself.</source>
-        <translation>Apply attributes also to all sub-entities of selected INSERT.
-This recursively modifies all entities of the Block itself.</translation>
+        <translation>Aplica els atributs també a totes les sub-entitats del INSERT seleccionat.
+Aixo modifica recursivament totes les entitats del propi Bloc.</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgattributes.ui" line="73"/>
@@ -6383,7 +6383,7 @@ This recursively modifies all entities of the Block itself.</translation>
         <location filename="../../../build/ui_qg_dlgattributes.h" line="121"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgattributes.h" line="121"/>
         <source>Apply attributes Block-deep</source>
-        <translation>Apply attributes Block-deep</translation>
+        <translation>Aplicar atributs de forma recursiva al bloc</translation>
     </message>
 </context>
 <context>
@@ -6394,7 +6394,7 @@ This recursively modifies all entities of the Block itself.</translation>
         <location filename="../../../build/ui_qg_dlgcircle.h" line="180"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgcircle.h" line="180"/>
         <source>Circle</source>
-        <translation>Circle</translation>
+        <translation>Cercle</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgcircle.ui" line="44"/>
@@ -6410,7 +6410,7 @@ This recursively modifies all entities of the Block itself.</translation>
         <location filename="../../../build/ui_qg_dlgcircle.h" line="182"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgcircle.h" line="182"/>
         <source>Geometry</source>
-        <translation>Geometry</translation>
+        <translation>Geometria</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgcircle.ui" line="77"/>
@@ -6418,7 +6418,7 @@ This recursively modifies all entities of the Block itself.</translation>
         <location filename="../../../build/ui_qg_dlgcircle.h" line="183"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgcircle.h" line="183"/>
         <source>Radius:</source>
-        <translation>Radius:</translation>
+        <translation>Radi:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgcircle.ui" line="97"/>
@@ -6426,7 +6426,7 @@ This recursively modifies all entities of the Block itself.</translation>
         <location filename="../../../build/ui_qg_dlgcircle.h" line="184"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgcircle.h" line="184"/>
         <source>Center (y):</source>
-        <translation>Center (y):</translation>
+        <translation>Centre (y):</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgcircle.ui" line="117"/>
@@ -6434,7 +6434,7 @@ This recursively modifies all entities of the Block itself.</translation>
         <location filename="../../../build/ui_qg_dlgcircle.h" line="185"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgcircle.h" line="185"/>
         <source>Center (x):</source>
-        <translation>Center (x):</translation>
+        <translation>Centre (x):</translation>
     </message>
 </context>
 <context>
@@ -6445,7 +6445,7 @@ This recursively modifies all entities of the Block itself.</translation>
         <location filename="../../../build/ui_qg_dlgdimlinear.h" line="161"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgdimlinear.h" line="161"/>
         <source>Linear Dimension</source>
-        <translation>Linear Dimension</translation>
+        <translation>Cota lineal</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgdimlinear.ui" line="47"/>
@@ -6461,7 +6461,7 @@ This recursively modifies all entities of the Block itself.</translation>
         <location filename="../../../build/ui_qg_dlgdimlinear.h" line="163"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgdimlinear.h" line="163"/>
         <source>Geometry</source>
-        <translation>Geometry</translation>
+        <translation>Geometria</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgdimlinear.ui" line="103"/>
@@ -6480,7 +6480,7 @@ This recursively modifies all entities of the Block itself.</translation>
         <location filename="../../../build/ui_qg_dlgdimension.h" line="114"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgdimension.h" line="114"/>
         <source>Dimension</source>
-        <translation>Dimension</translation>
+        <translation>Cota</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgdimension.ui" line="47"/>
@@ -6499,7 +6499,7 @@ This recursively modifies all entities of the Block itself.</translation>
         <location filename="../../../build/ui_qg_dlgellipse.h" line="254"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgellipse.h" line="254"/>
         <source>Ellipse</source>
-        <translation>Ellipse</translation>
+        <translation>El·lipse</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgellipse.ui" line="51"/>
@@ -6515,7 +6515,7 @@ This recursively modifies all entities of the Block itself.</translation>
         <location filename="../../../build/ui_qg_dlgellipse.h" line="257"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgellipse.h" line="257"/>
         <source>Geometry</source>
-        <translation>Geometry</translation>
+        <translation>Geometria</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgellipse.ui" line="84"/>
@@ -6523,7 +6523,7 @@ This recursively modifies all entities of the Block itself.</translation>
         <location filename="../../../build/ui_qg_dlgellipse.h" line="258"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgellipse.h" line="258"/>
         <source>Center (y):</source>
-        <translation>Center (y):</translation>
+        <translation>Centre (y):</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgellipse.ui" line="104"/>
@@ -6531,7 +6531,7 @@ This recursively modifies all entities of the Block itself.</translation>
         <location filename="../../../build/ui_qg_dlgellipse.h" line="259"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgellipse.h" line="259"/>
         <source>Center (x):</source>
-        <translation>Center (x):</translation>
+        <translation>Centre (x):</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgellipse.ui" line="156"/>
@@ -6539,7 +6539,7 @@ This recursively modifies all entities of the Block itself.</translation>
         <location filename="../../../build/ui_qg_dlgellipse.h" line="260"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgellipse.h" line="260"/>
         <source>End Angle:</source>
-        <translation>End Angle:</translation>
+        <translation>Angle final:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgellipse.ui" line="186"/>
@@ -6547,7 +6547,7 @@ This recursively modifies all entities of the Block itself.</translation>
         <location filename="../../../build/ui_qg_dlgellipse.h" line="261"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgellipse.h" line="261"/>
         <source>Start Angle:</source>
-        <translation>Start Angle:</translation>
+        <translation>Angle d'inici:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgellipse.ui" line="196"/>
@@ -6555,7 +6555,7 @@ This recursively modifies all entities of the Block itself.</translation>
         <location filename="../../../build/ui_qg_dlgellipse.h" line="262"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgellipse.h" line="262"/>
         <source>Rotation:</source>
-        <translation>Rotation:</translation>
+        <translation>Rotació:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgellipse.ui" line="226"/>
@@ -6563,7 +6563,7 @@ This recursively modifies all entities of the Block itself.</translation>
         <location filename="../../../build/ui_qg_dlgellipse.h" line="263"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgellipse.h" line="263"/>
         <source>Minor:</source>
-        <translation>Minor:</translation>
+        <translation>Eix menor:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgellipse.ui" line="236"/>
@@ -6571,7 +6571,7 @@ This recursively modifies all entities of the Block itself.</translation>
         <location filename="../../../build/ui_qg_dlgellipse.h" line="264"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgellipse.h" line="264"/>
         <source>Major:</source>
-        <translation>Major:</translation>
+        <translation>Eix major:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgellipse.ui" line="256"/>
@@ -6579,7 +6579,7 @@ This recursively modifies all entities of the Block itself.</translation>
         <location filename="../../../build/ui_qg_dlgellipse.h" line="265"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgellipse.h" line="265"/>
         <source>Reversed</source>
-        <translation>Reversed</translation>
+        <translation>Invertit</translation>
     </message>
 </context>
 <context>
@@ -6590,7 +6590,7 @@ This recursively modifies all entities of the Block itself.</translation>
         <location filename="../../../build/ui_qg_dlghatch.h" line="176"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlghatch.h" line="176"/>
         <source>Choose Hatch Attributes</source>
-        <translation>Choose Hatch Attributes</translation>
+        <translation>Triar atributs de ratllat</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlghatch.ui" line="22"/>
@@ -6598,7 +6598,7 @@ This recursively modifies all entities of the Block itself.</translation>
         <location filename="../../../build/ui_qg_dlghatch.h" line="177"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlghatch.h" line="177"/>
         <source>Pattern</source>
-        <translation>Pattern</translation>
+        <translation>Patró</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlghatch.ui" line="34"/>
@@ -6622,7 +6622,7 @@ This recursively modifies all entities of the Block itself.</translation>
         <location filename="../../../build/ui_qg_dlghatch.h" line="180"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlghatch.h" line="180"/>
         <source>Solid Fill</source>
-        <translation>Solid Fill</translation>
+        <translation>Farciment sòlid</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlghatch.ui" line="67"/>
@@ -6630,7 +6630,7 @@ This recursively modifies all entities of the Block itself.</translation>
         <location filename="../../../build/ui_qg_dlghatch.h" line="181"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlghatch.h" line="181"/>
         <source>Preview</source>
-        <translation>Preview</translation>
+        <translation>Previsualitzar</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlghatch.ui" line="73"/>
@@ -6638,7 +6638,7 @@ This recursively modifies all entities of the Block itself.</translation>
         <location filename="../../../build/ui_qg_dlghatch.h" line="182"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlghatch.h" line="182"/>
         <source>Enable Preview</source>
-        <translation>Enable Preview</translation>
+        <translation>Habilitar previsualització</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlghatch.ui" line="86"/>
@@ -6657,7 +6657,7 @@ This recursively modifies all entities of the Block itself.</translation>
         <location filename="../../../build/ui_qg_dlgimage.h" line="281"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgimage.h" line="281"/>
         <source>Image</source>
-        <translation>Image</translation>
+        <translation>Imatge</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgimage.ui" line="44"/>
@@ -6673,7 +6673,7 @@ This recursively modifies all entities of the Block itself.</translation>
         <location filename="../../../build/ui_qg_dlgimage.h" line="283"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgimage.h" line="283"/>
         <source>Geometry</source>
-        <translation>Geometry</translation>
+        <translation>Geometria</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgimage.ui" line="86"/>
@@ -6697,7 +6697,7 @@ This recursively modifies all entities of the Block itself.</translation>
         <location filename="../../../build/ui_qg_dlgimage.h" line="286"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgimage.h" line="286"/>
         <source>insert (y):</source>
-        <translation>insert (y):</translation>
+        <translation>inserir (y):</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgimage.ui" line="153"/>
@@ -6705,7 +6705,7 @@ This recursively modifies all entities of the Block itself.</translation>
         <location filename="../../../build/ui_qg_dlgimage.h" line="287"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgimage.h" line="287"/>
         <source>Size (px):</source>
-        <translation>Size (px):</translation>
+        <translation>Mida (px):</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgimage.ui" line="196"/>
@@ -6713,7 +6713,7 @@ This recursively modifies all entities of the Block itself.</translation>
         <location filename="../../../build/ui_qg_dlgimage.h" line="288"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgimage.h" line="288"/>
         <source>path:</source>
-        <translation>path:</translation>
+        <translation>ruta:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgimage.ui" line="203"/>
@@ -6721,7 +6721,7 @@ This recursively modifies all entities of the Block itself.</translation>
         <location filename="../../../build/ui_qg_dlgimage.h" line="289"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgimage.h" line="289"/>
         <source>insert (x):</source>
-        <translation>insert (x):</translation>
+        <translation>inserir (x):</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgimage.ui" line="226"/>
@@ -6745,7 +6745,7 @@ This recursively modifies all entities of the Block itself.</translation>
         <location filename="../../../build/ui_qg_dlgimage.h" line="292"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgimage.h" line="292"/>
         <source>Width:</source>
-        <translation>Width:</translation>
+        <translation>Amplada:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgimage.ui" line="270"/>
@@ -6753,7 +6753,7 @@ This recursively modifies all entities of the Block itself.</translation>
         <location filename="../../../build/ui_qg_dlgimage.h" line="294"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgimage.h" line="294"/>
         <source>Select an image file</source>
-        <translation>Select an image file</translation>
+        <translation>Seleccioneu un fitxer d'imatge</translation>
     </message>
 </context>
 <context>
@@ -6764,7 +6764,7 @@ This recursively modifies all entities of the Block itself.</translation>
         <location filename="../../../build/ui_qg_dlginitial.h" line="148"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlginitial.h" line="148"/>
         <source>Welcome</source>
-        <translation>Welcome</translation>
+        <translation>Benvingut</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlginitial.ui" line="64"/>
@@ -6788,7 +6788,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlginitial.h" line="154"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlginitial.h" line="154"/>
         <source>Default Unit:</source>
-        <translation>Default Unit:</translation>
+        <translation>Unitat per defecte:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlginitial.ui" line="114"/>
@@ -6796,7 +6796,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlginitial.h" line="155"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlginitial.h" line="155"/>
         <source>GUI Language:</source>
-        <translation>GUI Language:</translation>
+        <translation>Idioma de la GUI:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlginitial.ui" line="124"/>
@@ -6804,7 +6804,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlginitial.h" line="156"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlginitial.h" line="156"/>
         <source>Command Language:</source>
-        <translation>Command Language:</translation>
+        <translation>Idioma de la línia d'ordres:</translation>
     </message>
 </context>
 <context>
@@ -6815,7 +6815,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlginsert.h" line="270"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlginsert.h" line="270"/>
         <source>Insert</source>
-        <translation>Insert</translation>
+        <translation>Inserir</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlginsert.ui" line="44"/>
@@ -6831,7 +6831,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlginsert.h" line="272"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlginsert.h" line="272"/>
         <source>Geometry</source>
-        <translation>Geometry</translation>
+        <translation>Geometria</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlginsert.ui" line="129"/>
@@ -6839,7 +6839,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlginsert.h" line="273"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlginsert.h" line="273"/>
         <source>Insertion point (x):</source>
-        <translation>Insertion point (x):</translation>
+        <translation>Punt d'inserció (x):</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlginsert.ui" line="139"/>
@@ -6847,7 +6847,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlginsert.h" line="274"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlginsert.h" line="274"/>
         <source>Insertion point (y):</source>
-        <translation>Insertion point (y):</translation>
+        <translation>Punt d'inserció (y):</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlginsert.ui" line="159"/>
@@ -6855,7 +6855,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlginsert.h" line="275"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlginsert.h" line="275"/>
         <source>Scale X:</source>
-        <translation>Scale X:</translation>
+        <translation>Escala X:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlginsert.ui" line="179"/>
@@ -6863,7 +6863,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlginsert.h" line="276"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlginsert.h" line="276"/>
         <source>Scale Y:</source>
-        <translation>Scale Y:</translation>
+        <translation>Escala Y:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlginsert.ui" line="189"/>
@@ -6879,7 +6879,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlginsert.h" line="278"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlginsert.h" line="278"/>
         <source>Rows:</source>
-        <translation>Rows:</translation>
+        <translation>Files:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlginsert.ui" line="239"/>
@@ -6887,7 +6887,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlginsert.h" line="279"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlginsert.h" line="279"/>
         <source>Columns:</source>
-        <translation>Columns:</translation>
+        <translation>Columnes:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlginsert.ui" line="249"/>
@@ -6895,7 +6895,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlginsert.h" line="280"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlginsert.h" line="280"/>
         <source>Row Spacing:</source>
-        <translation>Row Spacing:</translation>
+        <translation>Espaiat de files:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlginsert.ui" line="279"/>
@@ -6903,7 +6903,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlginsert.h" line="281"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlginsert.h" line="281"/>
         <source>Column Spacing:</source>
-        <translation>Column Spacing:</translation>
+        <translation>Espaiat de columnes:</translation>
     </message>
 </context>
 <context>
@@ -6938,7 +6938,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgline.h" line="203"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgline.h" line="203"/>
         <source>Geometry</source>
-        <translation>Geometry</translation>
+        <translation>Geometria</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgline.ui" line="93"/>
@@ -6946,7 +6946,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgline.h" line="204"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgline.h" line="204"/>
         <source>End point (x):</source>
-        <translation>End point (x):</translation>
+        <translation>Punt final (x):</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgline.ui" line="123"/>
@@ -6954,7 +6954,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgline.h" line="205"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgline.h" line="205"/>
         <source>End point (y):</source>
-        <translation>End point (y):</translation>
+        <translation>Punt final (y):</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgline.ui" line="133"/>
@@ -6962,7 +6962,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgline.h" line="206"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgline.h" line="206"/>
         <source>Start point (y):</source>
-        <translation>Start point (y):</translation>
+        <translation>Punt d'inici (y):</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgline.ui" line="153"/>
@@ -6970,7 +6970,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgline.h" line="207"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgline.h" line="207"/>
         <source>Start point (x):</source>
-        <translation>Start point (x):</translation>
+        <translation>Punt d'inici (x):</translation>
     </message>
 </context>
 <context>
@@ -6997,7 +6997,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="803"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="803"/>
         <source>Font Settings</source>
-        <translation>Font Settings</translation>
+        <translation>Configuració de font</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="113"/>
@@ -7005,7 +7005,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="804"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="804"/>
         <source>&amp;Line spacing:</source>
-        <translation>&amp;Line spacing:</translation>
+        <translation>&amp;Interlineat:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="132"/>
@@ -7013,7 +7013,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="805"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="805"/>
         <source>&amp;Default line spacing</source>
-        <translation>&amp;Default line spacing</translation>
+        <translation>Interlineat per &amp;defecte</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="135"/>
@@ -7029,7 +7029,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="809"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="809"/>
         <source>&amp;Height:</source>
-        <translation>&amp;Height:</translation>
+        <translation>&amp;Alçada:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="246"/>
@@ -7037,7 +7037,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="810"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="810"/>
         <source>Font:</source>
-        <translation>Font:</translation>
+        <translation>Lletra:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="298"/>
@@ -7045,7 +7045,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="811"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="811"/>
         <source>Alignment</source>
-        <translation>Alignment</translation>
+        <translation>Alineació</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="316"/>
@@ -7053,7 +7053,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="813"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="813"/>
         <source>Top Right</source>
-        <translation>Top Right</translation>
+        <translation>Superior dret</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="348"/>
@@ -7061,7 +7061,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="817"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="817"/>
         <source>Top Left</source>
-        <translation>Top Left</translation>
+        <translation>Superior esquerre</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="380"/>
@@ -7069,7 +7069,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="821"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="821"/>
         <source>Middle Left</source>
-        <translation>Middle Left</translation>
+        <translation>Mig esquerre</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="412"/>
@@ -7077,7 +7077,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="825"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="825"/>
         <source>Middle Center</source>
-        <translation>Middle Center</translation>
+        <translation>Mig centrat</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="444"/>
@@ -7085,7 +7085,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="829"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="829"/>
         <source>Middle Right</source>
-        <translation>Middle Right</translation>
+        <translation>Mig dret</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="476"/>
@@ -7093,7 +7093,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="833"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="833"/>
         <source>Bottom Left</source>
-        <translation>Bottom Left</translation>
+        <translation>Inferior esquerre</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="508"/>
@@ -7101,7 +7101,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="837"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="837"/>
         <source>Bottom Right</source>
-        <translation>Bottom Right</translation>
+        <translation>Inferior dret</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="540"/>
@@ -7109,7 +7109,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="841"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="841"/>
         <source>Bottom Center</source>
-        <translation>Bottom Center</translation>
+        <translation>Inferior centrat</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="572"/>
@@ -7117,7 +7117,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="845"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="845"/>
         <source>Top Center</source>
-        <translation>Top Center</translation>
+        <translation>Superior centrat</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="607"/>
@@ -7133,7 +7133,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="849"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="849"/>
         <source>Text Direction</source>
-        <translation>Text Direction</translation>
+        <translation>Direcció del text</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="657"/>
@@ -7141,7 +7141,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="850"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="850"/>
         <source>Left to right</source>
-        <translation>Left to right</translation>
+        <translation>D'esquerra a dreta</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="670"/>
@@ -7149,7 +7149,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="851"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="851"/>
         <source>Right to left</source>
-        <translation>Right to left</translation>
+        <translation>De dreta a esquerra</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="691"/>
@@ -7165,7 +7165,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="854"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="854"/>
         <source>Clear Text</source>
-        <translation>Clear Text</translation>
+        <translation>Netejar text</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="731"/>
@@ -7173,7 +7173,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="858"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="858"/>
         <source>Load Text From File</source>
-        <translation>Load Text From File</translation>
+        <translation>Carregar text des del fitxer</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="745"/>
@@ -7181,7 +7181,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="862"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="862"/>
         <source>Save Text To File</source>
-        <translation>Save Text To File</translation>
+        <translation>Desar text al fitxer</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="759"/>
@@ -7205,7 +7205,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="874"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="874"/>
         <source>Paste</source>
-        <translation>Paste</translation>
+        <translation>Enganxar</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="834"/>
@@ -7213,7 +7213,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="877"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="877"/>
         <source>Insert Symbol</source>
-        <translation>Insert Symbol</translation>
+        <translation>Inserir símbol</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="847"/>
@@ -7221,7 +7221,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="878"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="878"/>
         <source>Diameter (⌀)</source>
-        <translation>Diameter (⌀)</translation>
+        <translation>Diàmetre (⌀)</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="852"/>
@@ -7229,7 +7229,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="879"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="879"/>
         <source>Degree (°)</source>
-        <translation>Degree (°)</translation>
+        <translation>Grau (°)</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="857"/>
@@ -7237,7 +7237,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="880"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="880"/>
         <source>Plus / Minus (±)</source>
-        <translation>Plus / Minus (±)</translation>
+        <translation>Més / Menys (±)</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="862"/>
@@ -7245,7 +7245,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="881"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="881"/>
         <source>At (@)</source>
-        <translation>At (@)</translation>
+        <translation>Arroba (@)</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="867"/>
@@ -7253,7 +7253,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="882"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="882"/>
         <source>Hash (#)</source>
-        <translation>Hash (#)</translation>
+        <translation>Coixinet (#)</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="872"/>
@@ -7261,7 +7261,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="883"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="883"/>
         <source>Dollar ($)</source>
-        <translation>Dollar ($)</translation>
+        <translation>Dòlar ($)</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="877"/>
@@ -7269,7 +7269,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="884"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="884"/>
         <source>Copyright (©)</source>
-        <translation>Copyright (©)</translation>
+        <translation>Drets d'autor (©)</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="882"/>
@@ -7277,7 +7277,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="885"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="885"/>
         <source>Registered (®)</source>
-        <translation>Registered (®)</translation>
+        <translation>Marca registrada (®)</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="887"/>
@@ -7285,7 +7285,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="886"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="886"/>
         <source>Paragraph (§)</source>
-        <translation>Paragraph (§)</translation>
+        <translation>Paràgraf (§)</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="892"/>
@@ -7301,7 +7301,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="888"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="888"/>
         <source>Pound (£)</source>
-        <translation>Pound (£)</translation>
+        <translation>Lliura esterlina (£)</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="902"/>
@@ -7309,7 +7309,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="889"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="889"/>
         <source>Yen (¥)</source>
-        <translation>Yen (¥)</translation>
+        <translation>Ien (¥)</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="907"/>
@@ -7317,7 +7317,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="890"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="890"/>
         <source>Times (×)</source>
-        <translation>Times (×)</translation>
+        <translation>Multiplicació (×)</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="912"/>
@@ -7325,7 +7325,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="891"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="891"/>
         <source>Division (÷)</source>
-        <translation>Division (÷)</translation>
+        <translation>Divisió (÷)</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="923"/>
@@ -7333,7 +7333,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="893"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="893"/>
         <source>Insert Unicode</source>
-        <translation>Insert Unicode</translation>
+        <translation>Inserir Unicode</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="929"/>
@@ -7341,7 +7341,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="894"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="894"/>
         <source>Page:</source>
-        <translation>Page:</translation>
+        <translation>Pàgina:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="939"/>
@@ -7349,7 +7349,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="895"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="895"/>
         <source>Char:</source>
-        <translation>Char:</translation>
+        <translation>Caràcter:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="962"/>
@@ -7357,7 +7357,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="896"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="896"/>
         <source>[0000-007F] Basic Latin</source>
-        <translation>[0000-007F] Basic Latin</translation>
+        <translation>[0000-007F] Llatí bàsic</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="967"/>
@@ -7365,7 +7365,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="897"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="897"/>
         <source>[0080-00FF] Latin-1 Supplementary</source>
-        <translation>[0080-00FF] Latin-1 Supplementary</translation>
+        <translation>[0080-00FF] Llatí-1 Suplementari</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="972"/>
@@ -7373,7 +7373,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="898"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="898"/>
         <source>[0100-017F] Latin Extended-A</source>
-        <translation>[0100-017F] Latin Extended-A</translation>
+        <translation>[0100-017F] Llatí Estès-A</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="977"/>
@@ -7381,7 +7381,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="899"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="899"/>
         <source>[0180-024F] Latin Extended-B</source>
-        <translation>[0180-024F] Latin Extended-B</translation>
+        <translation>[0180-024F] Llatí Estès-B</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="982"/>
@@ -7389,7 +7389,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="900"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="900"/>
         <source>[0250-02AF] IPA Extensions</source>
-        <translation>[0250-02AF] IPA Extensions</translation>
+        <translation>[0250-02AF] Extensions de l'AFI</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="987"/>
@@ -7397,7 +7397,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="901"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="901"/>
         <source>[02B0-02FF] Spacing Modifier Letters</source>
-        <translation>[02B0-02FF] Spacing Modifier Letters</translation>
+        <translation>[02B0-02FF] Lletres modificadores d'espaiat</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="992"/>
@@ -7405,7 +7405,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="902"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="902"/>
         <source>[0300-036F] Combining Diacritical Marks</source>
-        <translation>[0300-036F] Combining Diacritical Marks</translation>
+        <translation>[0300-036F] Marques diacrítiques combinades</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="997"/>
@@ -7413,7 +7413,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="903"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="903"/>
         <source>[0370-03FF] Greek and Coptic</source>
-        <translation>[0370-03FF] Greek and Coptic</translation>
+        <translation>[0370-03FF] Grec i Copte</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="1002"/>
@@ -7421,7 +7421,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="904"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="904"/>
         <source>[0400-04FF] Cyrillic</source>
-        <translation>[0400-04FF] Cyrillic</translation>
+        <translation>[0400-04FF] Ciríl·lic</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="1007"/>
@@ -7429,7 +7429,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="905"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="905"/>
         <source>[0500-052F] Cyrillic Supplementary</source>
-        <translation>[0500-052F] Cyrillic Supplementary</translation>
+        <translation>[0500-052F] Ciríl·lic Suplementari</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="1012"/>
@@ -7437,7 +7437,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="906"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="906"/>
         <source>[0530-058F] Armenian</source>
-        <translation>[0530-058F] Armenian</translation>
+        <translation>[0530-058F] Armeni</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="1017"/>
@@ -7445,7 +7445,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="907"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="907"/>
         <source>[0590-05FF] Hebrew</source>
-        <translation>[0590-05FF] Hebrew</translation>
+        <translation>[0590-05FF] Hebreu</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="1022"/>
@@ -7453,7 +7453,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="908"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="908"/>
         <source>[0600-06FF] Arabic</source>
-        <translation>[0600-06FF] Arabic</translation>
+        <translation>[0600-06FF] Àrab</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="1027"/>
@@ -7461,7 +7461,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="909"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="909"/>
         <source>[0700-074F] Syriac</source>
-        <translation>[0700-074F] Syriac</translation>
+        <translation>[0700-074F] Siríac</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="1032"/>
@@ -7477,7 +7477,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="911"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="911"/>
         <source>[0900-097F] Devanagari</source>
-        <translation>[0900-097F] Devanagari</translation>
+        <translation>[0900-097F] Devanàgarí</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="1042"/>
@@ -7485,7 +7485,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="912"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="912"/>
         <source>[0980-09FF] Bengali</source>
-        <translation>[0980-09FF] Bengali</translation>
+        <translation>[0980-09FF] Bengalí</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="1047"/>
@@ -7541,7 +7541,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="919"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="919"/>
         <source>[0D00-0D7F] Malayalam</source>
-        <translation>[0D00-0D7F] Malayalam</translation>
+        <translation>[0D00-0D7F] Malaiàlam</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="1082"/>
@@ -7549,7 +7549,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="920"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="920"/>
         <source>[0D80-0DFF] Sinhala</source>
-        <translation>[0D80-0DFF] Sinhala</translation>
+        <translation>[0D80-0DFF] Singalès</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="1087"/>
@@ -7557,7 +7557,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="921"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="921"/>
         <source>[0E00-0E7F] Thai</source>
-        <translation>[0E00-0E7F] Thai</translation>
+        <translation>[0E00-0E7F] Tailandès</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="1092"/>
@@ -7565,7 +7565,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="922"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="922"/>
         <source>[0E80-0EFF] Lao</source>
-        <translation>[0E80-0EFF] Lao</translation>
+        <translation>[0E80-0EFF] Laosià</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="1097"/>
@@ -7573,7 +7573,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="923"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="923"/>
         <source>[0F00-0FFF] Tibetan</source>
-        <translation>[0F00-0FFF] Tibetan</translation>
+        <translation>[0F00-0FFF] Tibetà</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="1102"/>
@@ -7589,7 +7589,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="925"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="925"/>
         <source>[10A0-10FF] Georgian</source>
-        <translation>[10A0-10FF] Georgian</translation>
+        <translation>[10A0-10FF] Georgià</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="1112"/>
@@ -7605,7 +7605,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="927"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="927"/>
         <source>[1200-137F] Ethiopic</source>
-        <translation>[1200-137F] Ethiopic</translation>
+        <translation>[1200-137F] Etíop</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="1122"/>
@@ -7613,7 +7613,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="928"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="928"/>
         <source>[13A0-13FF] Cherokee</source>
-        <translation>[13A0-13FF] Cherokee</translation>
+        <translation>[13A0-13FF] Cherokí</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="1127"/>
@@ -7621,7 +7621,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="929"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="929"/>
         <source>[1400-167F] Unified Canadian Aboriginal Syllabic</source>
-        <translation>[1400-167F] Unified Canadian Aboriginal Syllabic</translation>
+        <translation>[1400-167F] Síl·labes Indígenes Canadenques Unificades</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="1132"/>
@@ -7637,7 +7637,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="931"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="931"/>
         <source>[16A0-16FF] Runic</source>
-        <translation>[16A0-16FF] Runic</translation>
+        <translation>[16A0-16FF] Rúnic</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="1142"/>
@@ -7685,7 +7685,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="937"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="937"/>
         <source>[1800-18AF] Mongolian</source>
-        <translation>[1800-18AF] Mongolian</translation>
+        <translation>[1800-18AF] Mongol</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="1172"/>
@@ -7693,7 +7693,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="938"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="938"/>
         <source>[1E00-1EFF] Latin Extended Additional</source>
-        <translation>[1E00-1EFF] Latin Extended Additional</translation>
+        <translation>[1E00-1EFF] Llatí Estès Addicional</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="1177"/>
@@ -7701,7 +7701,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="939"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="939"/>
         <source>[1F00-1FFF] Greek Extended</source>
-        <translation>[1F00-1FFF] Greek Extended</translation>
+        <translation>[1F00-1FFF] Grec Estès</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="1182"/>
@@ -7709,7 +7709,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="940"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="940"/>
         <source>[2000-206F] General Punctuation</source>
-        <translation>[2000-206F] General Punctuation</translation>
+        <translation>[2000-206F] Puntuació general</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="1187"/>
@@ -7717,7 +7717,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="941"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="941"/>
         <source>[2070-209F] Superscripts and Subscripts</source>
-        <translation>[2070-209F] Superscripts and Subscripts</translation>
+        <translation>[2070-209F] Superíndexs i subíndexs</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="1192"/>
@@ -7725,7 +7725,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="942"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="942"/>
         <source>[20A0-20CF] Currency Symbols</source>
-        <translation>[20A0-20CF] Currency Symbols</translation>
+        <translation>[20A0-20CF] Símbols monetaris</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="1197"/>
@@ -7733,7 +7733,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="943"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="943"/>
         <source>[20D0-20FF] Combining Marks for Symbols</source>
-        <translation>[20D0-20FF] Combining Marks for Symbols</translation>
+        <translation>[20D0-20FF] Marques combinades per a símbols</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="1202"/>
@@ -7741,7 +7741,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="944"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="944"/>
         <source>[2100-214F] Letterlike Symbols</source>
-        <translation>[2100-214F] Letterlike Symbols</translation>
+        <translation>[2100-214F] Símbols similars a lletres</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="1207"/>
@@ -7749,7 +7749,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="945"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="945"/>
         <source>[2150-218F] Number Forms</source>
-        <translation>[2150-218F] Number Forms</translation>
+        <translation>[2150-218F] Formes numèriques</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="1212"/>
@@ -7757,7 +7757,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="946"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="946"/>
         <source>[2190-21FF] Arrows</source>
-        <translation>[2190-21FF] Arrows</translation>
+        <translation>[2190-21FF] Fletxes</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="1217"/>
@@ -7765,7 +7765,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="947"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="947"/>
         <source>[2200-22FF] Mathematical Operators</source>
-        <translation>[2200-22FF] Mathematical Operators</translation>
+        <translation>[2200-22FF] Operadors matemàtics</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="1222"/>
@@ -7773,7 +7773,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="948"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="948"/>
         <source>[2300-23FF] Miscellaneous Technical</source>
-        <translation>[2300-23FF] Miscellaneous Technical</translation>
+        <translation>[2300-23FF] Tècnics diversos</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="1227"/>
@@ -7781,7 +7781,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="949"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="949"/>
         <source>[2400-243F] Control Pictures</source>
-        <translation>[2400-243F] Control Pictures</translation>
+        <translation>[2400-243F] Imatges de control</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="1232"/>
@@ -7789,7 +7789,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="950"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="950"/>
         <source>[2440-245F] Optical Character Recognition</source>
-        <translation>[2440-245F] Optical Character Recognition</translation>
+        <translation>[2440-245F] Reconeixement òptic de caràcters</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="1237"/>
@@ -7797,7 +7797,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="951"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="951"/>
         <source>[2460-24FF] Enclosed Alphanumerics</source>
-        <translation>[2460-24FF] Enclosed Alphanumerics</translation>
+        <translation>[2460-24FF] Alfanumèrics tancats</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="1242"/>
@@ -7805,7 +7805,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="952"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="952"/>
         <source>[2500-257F] Box Drawing</source>
-        <translation>[2500-257F] Box Drawing</translation>
+        <translation>[2500-257F] Dibuix de caixes</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="1247"/>
@@ -7813,7 +7813,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="953"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="953"/>
         <source>[2580-259F] Block Elements</source>
-        <translation>[2580-259F] Block Elements</translation>
+        <translation>[2580-259F] Elements de bloc</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="1252"/>
@@ -7821,7 +7821,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="954"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="954"/>
         <source>[25A0-25FF] Geometric Shapes</source>
-        <translation>[25A0-25FF] Geometric Shapes</translation>
+        <translation>[25A0-25FF] Formes geomètriques</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="1257"/>
@@ -7829,7 +7829,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="955"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="955"/>
         <source>[2600-26FF] Miscellaneous Symbols</source>
-        <translation>[2600-26FF] Miscellaneous Symbols</translation>
+        <translation>[2600-26FF] Símbols diversos</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="1262"/>
@@ -7845,7 +7845,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="957"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="957"/>
         <source>[27C0-27EF] Miscellaneous Mathematical Symbols-A</source>
-        <translation>[27C0-27EF] Miscellaneous Mathematical Symbols-A</translation>
+        <translation>[27C0-27EF] Símbols matemàtics diversos-A</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="1272"/>
@@ -7853,7 +7853,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="958"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="958"/>
         <source>[27F0-27FF] Supplemental Arrows-A</source>
-        <translation>[27F0-27FF] Supplemental Arrows-A</translation>
+        <translation>[27F0-27FF] Fletxes suplementàries-A</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="1277"/>
@@ -7861,7 +7861,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="959"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="959"/>
         <source>[2800-28FF] Braille Patterns</source>
-        <translation>[2800-28FF] Braille Patterns</translation>
+        <translation>[2800-28FF] Patrons Braille</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="1282"/>
@@ -7869,7 +7869,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="960"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="960"/>
         <source>[2900-297F] Supplemental Arrows-B</source>
-        <translation>[2900-297F] Supplemental Arrows-B</translation>
+        <translation>[2900-297F] Fletxes suplementàries-B</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="1287"/>
@@ -7877,7 +7877,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="961"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="961"/>
         <source>[2980-29FF] Miscellaneous Mathematical Symbols-B</source>
-        <translation>[2980-29FF] Miscellaneous Mathematical Symbols-B</translation>
+        <translation>[2980-29FF] Símbols matemàtics diversos-B</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="1292"/>
@@ -7885,7 +7885,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="962"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="962"/>
         <source>[2A00-2AFF] Supplemental Mathematical Operators</source>
-        <translation>[2A00-2AFF] Supplemental Mathematical Operators</translation>
+        <translation>[2A00-2AFF] Operadors matemàtics suplementaris</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="1297"/>
@@ -7893,7 +7893,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="963"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="963"/>
         <source>[2E80-2EFF] CJK Radicals Supplement</source>
-        <translation>[2E80-2EFF] CJK Radicals Supplement</translation>
+        <translation>[2E80-2EFF] Suplement de radicals CJK</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="1302"/>
@@ -7901,7 +7901,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="964"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="964"/>
         <source>[2F00-2FDF] Kangxi Radicals</source>
-        <translation>[2F00-2FDF] Kangxi Radicals</translation>
+        <translation>[2F00-2FDF] Radicals Kangxi</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="1307"/>
@@ -7909,7 +7909,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="965"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="965"/>
         <source>[2FF0-2FFF] Ideographic Description Characters</source>
-        <translation>[2FF0-2FFF] Ideographic Description Characters</translation>
+        <translation>[2FF0-2FFF] Caràcters de descripció ideogràfica</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="1312"/>
@@ -7917,7 +7917,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="966"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="966"/>
         <source>[3000-303F] CJK Symbols and Punctuation</source>
-        <translation>[3000-303F] CJK Symbols and Punctuation</translation>
+        <translation>[3000-303F] Símbols i puntuació CJK</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="1317"/>
@@ -7949,7 +7949,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="970"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="970"/>
         <source>[3130-318F] Hangul Compatibility Jamo</source>
-        <translation>[3130-318F] Hangul Compatibility Jamo</translation>
+        <translation>[3130-318F] Jamo de compatibilitat Hangul</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="1337"/>
@@ -7965,7 +7965,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="972"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="972"/>
         <source>[31A0-31BF] Bopomofo Extended</source>
-        <translation>[31A0-31BF] Bopomofo Extended</translation>
+        <translation>[31A0-31BF] Bopomofo Estès</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="1347"/>
@@ -7973,7 +7973,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="973"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="973"/>
         <source>[3200-32FF] Enclosed CJK Letters and Months</source>
-        <translation>[3200-32FF] Enclosed CJK Letters and Months</translation>
+        <translation>[3200-32FF] Lletres CJK tancades i mesos</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="1352"/>
@@ -7981,7 +7981,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="974"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="974"/>
         <source>[3300-33FF] CJK Compatibility</source>
-        <translation>[3300-33FF] CJK Compatibility</translation>
+        <translation>[3300-33FF] Compatibilitat CJK</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="1357"/>
@@ -7989,7 +7989,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="975"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="975"/>
         <source>[3400-4DBF] CJK Unified Ideographs Extension A</source>
-        <translation>[3400-4DBF] CJK Unified Ideographs Extension A</translation>
+        <translation>[3400-4DBF] Extensió A d'ideogràfics CJK unificats</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="1362"/>
@@ -7997,7 +7997,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="976"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="976"/>
         <source>[4E00-9FAF] CJK Unified Ideographs</source>
-        <translation>[4E00-9FAF] CJK Unified Ideographs</translation>
+        <translation>[4E00-9FAF] Ideogràfics CJK unificats</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="1367"/>
@@ -8005,7 +8005,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="977"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="977"/>
         <source>[A000-A48F] Yi Syllables</source>
-        <translation>[A000-A48F] Yi Syllables</translation>
+        <translation>[A000-A48F] Síl·labes Yi</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="1372"/>
@@ -8013,7 +8013,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="978"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="978"/>
         <source>[A490-A4CF] Yi Radicals</source>
-        <translation>[A490-A4CF] Yi Radicals</translation>
+        <translation>[A490-A4CF] Radicals Yi</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="1377"/>
@@ -8021,7 +8021,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="979"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="979"/>
         <source>[AC00-D7AF] Hangul Syllables</source>
-        <translation>[AC00-D7AF] Hangul Syllables</translation>
+        <translation>[AC00-D7AF] Síl·labes Hangul</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="1382"/>
@@ -8029,7 +8029,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="980"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="980"/>
         <source>[D800-DBFF] High Surrogates</source>
-        <translation>[D800-DBFF] High Surrogates</translation>
+        <translation>[D800-DBFF] Subrogats alts</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="1387"/>
@@ -8037,7 +8037,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="981"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="981"/>
         <source>[DC00-DFFF] Low Surrogate Area</source>
-        <translation>[DC00-DFFF] Low Surrogate Area</translation>
+        <translation>[DC00-DFFF] Àrea de subrogats baixos</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="1392"/>
@@ -8045,7 +8045,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="982"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="982"/>
         <source>[E000-F8FF] Private Use Area</source>
-        <translation>[E000-F8FF] Private Use Area</translation>
+        <translation>[E000-F8FF] Àrea d'ús privat</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="1397"/>
@@ -8053,7 +8053,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="983"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="983"/>
         <source>[F900-FAFF] CJK Compatibility Ideographs</source>
-        <translation>[F900-FAFF] CJK Compatibility Ideographs</translation>
+        <translation>[F900-FAFF] Ideogràfics de compatibilitat CJK</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="1402"/>
@@ -8061,7 +8061,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="984"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="984"/>
         <source>[FB00-FB4F] Alphabetic Presentation Forms</source>
-        <translation>[FB00-FB4F] Alphabetic Presentation Forms</translation>
+        <translation>[FB00-FB4F] Formes de presentació alfabètica</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="1407"/>
@@ -8069,7 +8069,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="985"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="985"/>
         <source>[FB50-FDFF] Arabic Presentation Forms-A</source>
-        <translation>[FB50-FDFF] Arabic Presentation Forms-A</translation>
+        <translation>[FB50-FDFF] Formes de presentació àrab-A</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="1412"/>
@@ -8077,7 +8077,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="986"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="986"/>
         <source>[FE00-FE0F] Variation Selectors</source>
-        <translation>[FE00-FE0F] Variation Selectors</translation>
+        <translation>[FE00-FE0F] Selectors de variació</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="1417"/>
@@ -8085,7 +8085,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="987"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="987"/>
         <source>[FE20-FE2F] Combining Half Marks</source>
-        <translation>[FE20-FE2F] Combining Half Marks</translation>
+        <translation>[FE20-FE2F] Mig marques combinades</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="1422"/>
@@ -8093,7 +8093,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="988"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="988"/>
         <source>[FE30-FE4F] CJK Compatibility Forms</source>
-        <translation>[FE30-FE4F] CJK Compatibility Forms</translation>
+        <translation>[FE30-FE4F] Formes de compatibilitat CJK</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="1427"/>
@@ -8101,7 +8101,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="989"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="989"/>
         <source>[FE50-FE6F] Small Form Variants</source>
-        <translation>[FE50-FE6F] Small Form Variants</translation>
+        <translation>[FE50-FE6F] Variants de forma petita</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="1432"/>
@@ -8109,7 +8109,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="990"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="990"/>
         <source>[FE70-FEFF] Arabic Presentation Forms-B</source>
-        <translation>[FE70-FEFF] Arabic Presentation Forms-B</translation>
+        <translation>[FE70-FEFF] Formes de presentació àrab-B</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="1437"/>
@@ -8117,7 +8117,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="991"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="991"/>
         <source>[FF00-FFEF] Halfwidth and Fullwidth Forms</source>
-        <translation>[FF00-FFEF] Halfwidth and Fullwidth Forms</translation>
+        <translation>[FF00-FFEF] Formes d'amplada mitja i completa</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="1442"/>
@@ -8125,7 +8125,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="992"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="992"/>
         <source>[FFF0-FFFF] Specials</source>
-        <translation>[FFF0-FFFF] Specials</translation>
+        <translation>[FFF0-FFFF] Especials</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="1447"/>
@@ -8133,7 +8133,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="993"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="993"/>
         <source>[10300-1032F] Old Italic</source>
-        <translation>[10300-1032F] Old Italic</translation>
+        <translation>[10300-1032F] Cursiva antiga</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="1452"/>
@@ -8141,7 +8141,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="994"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="994"/>
         <source>[10330-1034F] Gothic</source>
-        <translation>[10330-1034F] Gothic</translation>
+        <translation>[10330-1034F] Gòtic</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="1457"/>
@@ -8157,7 +8157,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="996"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="996"/>
         <source>[1D000-1D0FF] Byzantine Musical Symbols</source>
-        <translation>[1D000-1D0FF] Byzantine Musical Symbols</translation>
+        <translation>[1D000-1D0FF] Símbols musicals bizantins</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="1467"/>
@@ -8165,7 +8165,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="997"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="997"/>
         <source>[1D100-1D1FF] Musical Symbols</source>
-        <translation>[1D100-1D1FF] Musical Symbols</translation>
+        <translation>[1D100-1D1FF] Símbols musicals</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="1472"/>
@@ -8173,7 +8173,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="998"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="998"/>
         <source>[1D400-1D7FF] Mathematical Alphanumeric Symbols</source>
-        <translation>[1D400-1D7FF] Mathematical Alphanumeric Symbols</translation>
+        <translation>[1D400-1D7FF] Símbols alfanumèrics matemàtics</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="1477"/>
@@ -8181,7 +8181,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="999"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="999"/>
         <source>[20000-2A6DF] CJK Unified Ideographs Extension B</source>
-        <translation>[20000-2A6DF] CJK Unified Ideographs Extension B</translation>
+        <translation>[20000-2A6DF] Extensió B d'ideogràfics CJK unificats</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="1482"/>
@@ -8189,7 +8189,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="1000"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="1000"/>
         <source>[2F800-2FA1F] CJK Compatibility Ideographs Supplement</source>
-        <translation>[2F800-2FA1F] CJK Compatibility Ideographs Supplement</translation>
+        <translation>[2F800-2FA1F] Suplement d'ideogràfics de compatibilitat CJK</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="1487"/>
@@ -8197,7 +8197,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="1001"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="1001"/>
         <source>[E0000-E007F] Tags</source>
-        <translation>[E0000-E007F] Tags</translation>
+        <translation>[E0000-E007F] Etiquetes</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="1492"/>
@@ -8205,7 +8205,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="1002"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="1002"/>
         <source>[F0000-FFFFD] Supplementary Private Use Area-A</source>
-        <translation>[F0000-FFFFD] Supplementary Private Use Area-A</translation>
+        <translation>[F0000-FFFFD] Àrea d'ús privat suplementària-A</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="1497"/>
@@ -8213,7 +8213,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="1003"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="1003"/>
         <source>[100000-10FFFD] Supplementary Private Use Area-B</source>
-        <translation>[100000-10FFFD] Supplementary Private Use Area-B</translation>
+        <translation>[100000-10FFFD] Àrea d'ús privat suplementària-B</translation>
     </message>
 </context>
 <context>
@@ -8224,7 +8224,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmirror.h" line="123"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmirror.h" line="123"/>
         <source>Mirroring Options</source>
-        <translation>Mirroring Options</translation>
+        <translation>Opcions de reflexió</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmirror.ui" line="39"/>
@@ -8232,7 +8232,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmirror.h" line="124"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmirror.h" line="124"/>
         <source>Use current &amp;attributes</source>
-        <translation>Use current &amp;attributes</translation>
+        <translation>Usar els &amp;atributs actuals</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmirror.ui" line="46"/>
@@ -8240,7 +8240,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmirror.h" line="125"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmirror.h" line="125"/>
         <source>Use current &amp;layer</source>
-        <translation>Use current &amp;layer</translation>
+        <translation>Usar la &amp;capa actual</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmirror.ui" line="53"/>
@@ -8256,7 +8256,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmirror.h" line="127"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmirror.h" line="127"/>
         <source>Number of copies</source>
-        <translation>Number of copies</translation>
+        <translation>Nombre de còpies</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmirror.ui" line="88"/>
@@ -8264,7 +8264,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmirror.h" line="128"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmirror.h" line="128"/>
         <source>&amp;Delete Original</source>
-        <translation>&amp;Delete Original</translation>
+        <translation>&amp;Esborrar original</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmirror.ui" line="107"/>
@@ -8272,7 +8272,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmirror.h" line="129"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmirror.h" line="129"/>
         <source>&amp;Keep Original</source>
-        <translation>&amp;Keep Original</translation>
+        <translation>&amp;Mantenir original</translation>
     </message>
 </context>
 <context>
@@ -8283,7 +8283,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmove.h" line="142"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmove.h" line="142"/>
         <source>Move/Copy Options</source>
-        <translation>Move/Copy Options</translation>
+        <translation>Opcions de moure/copiar</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmove.ui" line="32"/>
@@ -8291,7 +8291,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmove.h" line="143"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmove.h" line="143"/>
         <source>Number of copies</source>
-        <translation>Number of copies</translation>
+        <translation>Nombre de còpies</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmove.ui" line="50"/>
@@ -8299,7 +8299,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmove.h" line="144"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmove.h" line="144"/>
         <source>&amp;Delete Original</source>
-        <translation>&amp;Delete Original</translation>
+        <translation>&amp;Esborrar original</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmove.ui" line="69"/>
@@ -8307,7 +8307,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmove.h" line="145"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmove.h" line="145"/>
         <source>&amp;Keep Original</source>
-        <translation>&amp;Keep Original</translation>
+        <translation>&amp;Mantenir original</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmove.ui" line="88"/>
@@ -8315,7 +8315,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmove.h" line="146"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmove.h" line="146"/>
         <source>&amp;Multiple Copies</source>
-        <translation>&amp;Multiple Copies</translation>
+        <translation>&amp;Múltiples còpies</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmove.ui" line="95"/>
@@ -8323,7 +8323,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmove.h" line="148"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmove.h" line="148"/>
         <source>Number of copies. Maximum 100</source>
-        <translation>Number of copies. Maximum 100</translation>
+        <translation>Nombre de còpies. Màxim 100</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmove.ui" line="121"/>
@@ -8331,7 +8331,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmove.h" line="150"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmove.h" line="150"/>
         <source>Use current &amp;attributes</source>
-        <translation>Use current &amp;attributes</translation>
+        <translation>Usar els &amp;atributs actuals</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmove.ui" line="128"/>
@@ -8339,7 +8339,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmove.h" line="151"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmove.h" line="151"/>
         <source>Use current &amp;layer</source>
-        <translation>Use current &amp;layer</translation>
+        <translation>Usar la &amp;capa actual</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmove.ui" line="135"/>
@@ -8358,7 +8358,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmoverotate.h" line="185"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmoverotate.h" line="185"/>
         <source>Move/Rotate Options</source>
-        <translation>Move/Rotate Options</translation>
+        <translation>Opcions de moure/girar</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmoverotate.ui" line="41"/>
@@ -8390,7 +8390,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmoverotate.h" line="191"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmoverotate.h" line="191"/>
         <source>Use current &amp;attributes</source>
-        <translation>Use current &amp;attributes</translation>
+        <translation>Usar els &amp;atributs actuals</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmoverotate.ui" line="104"/>
@@ -8398,7 +8398,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmoverotate.h" line="192"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmoverotate.h" line="192"/>
         <source>Use current &amp;layer</source>
-        <translation>Use current &amp;layer</translation>
+        <translation>Usar la &amp;capa actual</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmoverotate.ui" line="113"/>
@@ -8406,7 +8406,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmoverotate.h" line="193"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmoverotate.h" line="193"/>
         <source>Number of copies</source>
-        <translation>Number of copies</translation>
+        <translation>Nombre de còpies</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmoverotate.ui" line="131"/>
@@ -8414,7 +8414,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmoverotate.h" line="194"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmoverotate.h" line="194"/>
         <source>&amp;Delete Original</source>
-        <translation>&amp;Delete Original</translation>
+        <translation>&amp;Esborrar original</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmoverotate.ui" line="150"/>
@@ -8422,7 +8422,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmoverotate.h" line="195"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmoverotate.h" line="195"/>
         <source>&amp;Keep Original</source>
-        <translation>&amp;Keep Original</translation>
+        <translation>&amp;Mantenir original</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmoverotate.ui" line="169"/>
@@ -8430,7 +8430,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmoverotate.h" line="196"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmoverotate.h" line="196"/>
         <source>&amp;Multiple Copies</source>
-        <translation>&amp;Multiple Copies</translation>
+        <translation>&amp;Múltiples còpies</translation>
     </message>
 </context>
 <context>
@@ -8441,7 +8441,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsdrawing.h" line="1741"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1741"/>
         <source>Drawing Preferences</source>
-        <translation>Drawing Preferences</translation>
+        <translation>Preferències de dibuix</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsdrawing.ui" line="34"/>
@@ -8465,7 +8465,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsdrawing.h" line="1743"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1743"/>
         <source>&amp;Height:</source>
-        <translation>&amp;Height:</translation>
+        <translation>&amp;Alçada:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsdrawing.ui" line="82"/>
@@ -8473,7 +8473,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsdrawing.h" line="1744"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1744"/>
         <source>&amp;Width:</source>
-        <translation>&amp;Width:</translation>
+        <translation>&amp;Amplada:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsdrawing.ui" line="102"/>
@@ -8481,7 +8481,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsdrawing.h" line="1745"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1745"/>
         <source>Orientation</source>
-        <translation>Orientation</translation>
+        <translation>Orientació</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsdrawing.ui" line="108"/>
@@ -8489,7 +8489,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsdrawing.h" line="1746"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1746"/>
         <source>&amp;Landscape</source>
-        <translation>&amp;Landscape</translation>
+        <translation>&amp;Horitzontal</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsdrawing.ui" line="115"/>
@@ -8497,7 +8497,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsdrawing.h" line="1747"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1747"/>
         <source>P&amp;ortrait</source>
-        <translation>P&amp;ortrait</translation>
+        <translation>&amp;Vertical</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsdrawing.ui" line="138"/>
@@ -8505,7 +8505,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsdrawing.h" line="1748"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1748"/>
         <source>Margins</source>
-        <translation>Margins</translation>
+        <translation>Marges</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsdrawing.ui" line="152"/>
@@ -8533,7 +8533,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1753"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1758"/>
         <source>Bottom</source>
-        <translation>Bottom</translation>
+        <translation>Inferior</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsdrawing.ui" line="178"/>
@@ -8549,7 +8549,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1760"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1804"/>
         <source>Right</source>
-        <translation>Right</translation>
+        <translation>Dreta</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsdrawing.ui" line="195"/>
@@ -8573,7 +8573,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsdrawing.h" line="1765"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1765"/>
         <source>Number of pages</source>
-        <translation>Number of pages</translation>
+        <translation>Nombre de pàgines</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsdrawing.ui" line="246"/>
@@ -8581,7 +8581,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsdrawing.h" line="1766"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1766"/>
         <source>Horizontally:</source>
-        <translation>Horizontally:</translation>
+        <translation>Horitzontalment:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsdrawing.ui" line="263"/>
@@ -8589,7 +8589,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsdrawing.h" line="1767"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1767"/>
         <source>Vertically:</source>
-        <translation>Vertically:</translation>
+        <translation>Verticalment:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsdrawing.ui" line="285"/>
@@ -8605,7 +8605,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1775"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1780"/>
         <source>Preview</source>
-        <translation>Preview</translation>
+        <translation>Previsualitzar</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsdrawing.ui" line="326"/>
@@ -8613,7 +8613,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsdrawing.h" line="1782"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1782"/>
         <source>&amp;Units</source>
-        <translation>&amp;Units</translation>
+        <translation>&amp;Unitats</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsdrawing.ui" line="332"/>
@@ -8621,7 +8621,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsdrawing.h" line="1770"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1770"/>
         <source>Main Unit</source>
-        <translation>Main Unit</translation>
+        <translation>Unitat principal</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsdrawing.ui" line="338"/>
@@ -8629,7 +8629,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsdrawing.h" line="1771"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1771"/>
         <source>&amp;Main drawing unit:</source>
-        <translation>&amp;Main drawing unit:</translation>
+        <translation>&amp;Unitat principal del dibuix:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsdrawing.ui" line="377"/>
@@ -8637,7 +8637,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsdrawing.h" line="1772"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1772"/>
         <source>Length</source>
-        <translation>Length</translation>
+        <translation>Longitud</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsdrawing.ui" line="383"/>
@@ -8653,7 +8653,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsdrawing.h" line="1774"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1774"/>
         <source>P&amp;recision:</source>
-        <translation>P&amp;recision:</translation>
+        <translation>P&amp;recisió:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsdrawing.ui" line="456"/>
@@ -8661,7 +8661,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsdrawing.h" line="1776"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1776"/>
         <source>linear</source>
-        <translation>linear</translation>
+        <translation>lineal</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsdrawing.ui" line="473"/>
@@ -8685,7 +8685,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsdrawing.h" line="1779"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1779"/>
         <source>Pre&amp;cision:</source>
-        <translation>Pre&amp;cision:</translation>
+        <translation>Pre&amp;cisió:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsdrawing.ui" line="552"/>
@@ -8701,7 +8701,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsdrawing.h" line="1812"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1812"/>
         <source>&amp;Grid</source>
-        <translation>&amp;Grid</translation>
+        <translation>&amp;Graella</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsdrawing.ui" line="582"/>
@@ -8709,7 +8709,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsdrawing.h" line="1783"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1783"/>
         <source>Grid Settings</source>
-        <translation>Grid Settings</translation>
+        <translation>Configuració de graella</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsdrawing.ui" line="588"/>
@@ -8717,7 +8717,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsdrawing.h" line="1784"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1784"/>
         <source>Show Grid</source>
-        <translation>Show Grid</translation>
+        <translation>Mostrar graella</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsdrawing.ui" line="595"/>
@@ -8725,7 +8725,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsdrawing.h" line="1786"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1786"/>
         <source>Use orthogonal grid</source>
-        <translation>Use orthogonal grid</translation>
+        <translation>Usar graella ortogonal</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsdrawing.ui" line="598"/>
@@ -8733,7 +8733,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsdrawing.h" line="1788"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1788"/>
         <source>Orthogonal Grid</source>
-        <translation>Orthogonal Grid</translation>
+        <translation>Graella ortogonal</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsdrawing.ui" line="608"/>
@@ -8741,7 +8741,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsdrawing.h" line="1790"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1790"/>
         <source>Use isometric grid</source>
-        <translation>Use isometric grid</translation>
+        <translation>Usar graella isomètrica</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsdrawing.ui" line="611"/>
@@ -8749,7 +8749,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsdrawing.h" line="1792"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1792"/>
         <source>Isometric Grid</source>
-        <translation>Isometric Grid</translation>
+        <translation>Graella isomètrica</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsdrawing.ui" line="654"/>
@@ -8757,7 +8757,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsdrawing.h" line="1794"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1794"/>
         <source>Left crosshair with isometric grid</source>
-        <translation>Left crosshair with isometric grid</translation>
+        <translation>Punt de mira esquerre amb graella isomètrica</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsdrawing.ui" line="676"/>
@@ -8765,7 +8765,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsdrawing.h" line="1798"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1798"/>
         <source>Top crosshair with isometric grid</source>
-        <translation>Top crosshair with isometric grid</translation>
+        <translation>Punt de mira superior amb graella isomètrica</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsdrawing.ui" line="698"/>
@@ -8773,7 +8773,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsdrawing.h" line="1802"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1802"/>
         <source>Right crosshair with isometric grid</source>
-        <translation>Right crosshair with isometric grid</translation>
+        <translation>Punt de mira dret amb graella isomètrica</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsdrawing.ui" line="720"/>
@@ -8781,7 +8781,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsdrawing.h" line="1805"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1805"/>
         <source>Crosshair</source>
-        <translation>Crosshair</translation>
+        <translation>Punt de mira</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsdrawing.ui" line="741"/>
@@ -8789,7 +8789,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsdrawing.h" line="1806"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1806"/>
         <source>X Spacing:</source>
-        <translation>X Spacing:</translation>
+        <translation>Espaiat X:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsdrawing.ui" line="761"/>
@@ -8813,7 +8813,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsdrawing.h" line="1809"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1809"/>
         <source>Y Spacing:</source>
-        <translation>Y Spacing:</translation>
+        <translation>Espaiat Y:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsdrawing.ui" line="860"/>
@@ -8821,7 +8821,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsdrawing.h" line="1891"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1891"/>
         <source>&amp;Dimensions</source>
-        <translation>&amp;Dimensions</translation>
+        <translation>&amp;Cotes</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsdrawing.ui" line="885"/>
@@ -8829,7 +8829,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsdrawing.h" line="1813"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1813"/>
         <source>Text style:</source>
-        <translation>Text style:</translation>
+        <translation>Estil de text:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsdrawing.ui" line="893"/>
@@ -8837,7 +8837,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsdrawing.h" line="1814"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1814"/>
         <source>&apos;.&apos; (Period)</source>
-        <translation>&apos;.&apos; (Period)</translation>
+        <translation>'.'' (Punt)</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsdrawing.ui" line="898"/>
@@ -8845,7 +8845,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsdrawing.h" line="1815"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1815"/>
         <source>&apos;,&apos; (Comma)</source>
-        <translation>&apos;,&apos; (Comma)</translation>
+        <translation>','' (Coma)</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsdrawing.ui" line="906"/>
@@ -8853,7 +8853,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsdrawing.h" line="1817"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1817"/>
         <source>Decimal separator:</source>
-        <translation>Decimal separator:</translation>
+        <translation>Separador decimal:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsdrawing.ui" line="913"/>
@@ -8885,7 +8885,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1873"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1878"/>
         <source>units</source>
-        <translation>units</translation>
+        <translation>unitats</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsdrawing.ui" line="933"/>
@@ -8893,7 +8893,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsdrawing.h" line="1820"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1820"/>
         <source>Linear units:</source>
-        <translation>Linear units:</translation>
+        <translation>Unitats lineals:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsdrawing.ui" line="949"/>
@@ -8917,7 +8917,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsdrawing.h" line="1822"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1822"/>
         <source>Length Factor:</source>
-        <translation>Length Factor:</translation>
+        <translation>Factor de longitud:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsdrawing.ui" line="969"/>
@@ -8933,7 +8933,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsdrawing.h" line="1827"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1827"/>
         <source>Tick size:</source>
-        <translation>Tick size:</translation>
+        <translation>Mida de la marca:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1086"/>
@@ -8941,7 +8941,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsdrawing.h" line="1829"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1829"/>
         <source>Angular units:</source>
-        <translation>Angular units:</translation>
+        <translation>Unitats angulars:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1099"/>
@@ -8949,7 +8949,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsdrawing.h" line="1830"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1830"/>
         <source>Text Height:</source>
-        <translation>Text Height:</translation>
+        <translation>Alçada del text:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1109"/>
@@ -8957,7 +8957,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsdrawing.h" line="1831"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1831"/>
         <source>Linear zeros:</source>
-        <translation>Linear zeros:</translation>
+        <translation>Zeros lineals:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1116"/>
@@ -8973,7 +8973,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsdrawing.h" line="1836"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1836"/>
         <source>Format units</source>
-        <translation>Format units</translation>
+        <translation>Format d'unitats</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1153"/>
@@ -8997,7 +8997,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsdrawing.h" line="1845"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1845"/>
         <source>Text size &amp; position</source>
-        <translation>Text size &amp; position</translation>
+        <translation>Mida i posició del &amp;text</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1233"/>
@@ -9005,7 +9005,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsdrawing.h" line="1846"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1846"/>
         <source>General Scale:</source>
-        <translation>General Scale:</translation>
+        <translation>Escala general:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1271"/>
@@ -9013,7 +9013,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsdrawing.h" line="1850"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1850"/>
         <source>Length to enlarge over dimension line</source>
-        <translation>Length to enlarge over dimension line</translation>
+        <translation>Longitud per ampliar sobre la línia de cota</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1296"/>
@@ -9029,7 +9029,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsdrawing.h" line="1856"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1856"/>
         <source>Arrow size:</source>
-        <translation>Arrow size:</translation>
+        <translation>Mida de la fletxa:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1350"/>
@@ -9041,7 +9041,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1857"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1884"/>
         <source>Width:</source>
-        <translation>Width:</translation>
+        <translation>Amplada:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1370"/>
@@ -9049,7 +9049,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsdrawing.h" line="1859"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1859"/>
         <source>Dimension lines, arrows &amp; ticks</source>
-        <translation>Dimension lines, arrows &amp; ticks</translation>
+        <translation>Línies de cota, fletxes &amp; marques</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1377"/>
@@ -9057,7 +9057,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsdrawing.h" line="1860"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1860"/>
         <source>Angular zeros:</source>
-        <translation>Angular zeros:</translation>
+        <translation>Zeros angulars:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1391"/>
@@ -9065,7 +9065,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsdrawing.h" line="1862"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1862"/>
         <source>Angular precision:</source>
-        <translation>Angular precision:</translation>
+        <translation>Precisió angular:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1404"/>
@@ -9073,7 +9073,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsdrawing.h" line="1863"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1863"/>
         <source>Enlarge:</source>
-        <translation>Enlarge:</translation>
+        <translation>Ampliar:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1414"/>
@@ -9081,7 +9081,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsdrawing.h" line="1864"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1864"/>
         <source>Offset:</source>
-        <translation>Offset:</translation>
+        <translation>Desplaçament:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1427"/>
@@ -9089,7 +9089,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsdrawing.h" line="1865"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1865"/>
         <source>Linear precision:</source>
-        <translation>Linear precision:</translation>
+        <translation>Precisió lineal:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1446"/>
@@ -9105,7 +9105,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsdrawing.h" line="1866"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1866"/>
         <source>Aligned</source>
-        <translation>Aligned</translation>
+        <translation>Alineat</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1461"/>
@@ -9113,7 +9113,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsdrawing.h" line="1867"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1867"/>
         <source>Horizontal</source>
-        <translation>Horizontal</translation>
+        <translation>Horitzontal</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1502"/>
@@ -9129,7 +9129,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsdrawing.h" line="1879"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1879"/>
         <source>Text alignment:</source>
-        <translation>Text alignment:</translation>
+        <translation>Alineació del text:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1544"/>
@@ -9137,7 +9137,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsdrawing.h" line="1880"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1880"/>
         <source>Dimension line gap:</source>
-        <translation>Dimension line gap:</translation>
+        <translation>Espai de la línia de cota:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1554"/>
@@ -9145,7 +9145,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsdrawing.h" line="1881"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1881"/>
         <source>Extension lines</source>
-        <translation>Extension lines</translation>
+        <translation>Línies d'extensió</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1561"/>
@@ -9153,7 +9153,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsdrawing.h" line="1882"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1882"/>
         <source>Fixed length:</source>
-        <translation>Fixed length:</translation>
+        <translation>Longitud fixa:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1598"/>
@@ -9161,7 +9161,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsdrawing.h" line="1889"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1889"/>
         <source>fixed extension line length</source>
-        <translation>fixed extension line length</translation>
+        <translation>longitud fixa de la línia d'extensió</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1609"/>
@@ -9177,7 +9177,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsdrawing.h" line="1892"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1892"/>
         <source>Number of line segments per spline patch:</source>
-        <translation>Number of line segments per spline patch:</translation>
+        <translation>Nombre de segments de línia per pedaç d'spline:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1683"/>
@@ -9185,7 +9185,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsdrawing.h" line="1921"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1921"/>
         <source>&amp;Points</source>
-        <translation>&amp;Points</translation>
+        <translation>&amp;Punts</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1692"/>
@@ -9193,7 +9193,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsdrawing.h" line="1895"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1895"/>
         <source>Point Style</source>
-        <translation>Point Style</translation>
+        <translation>Estil del punt</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1733"/>
@@ -9285,7 +9285,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsdrawing.h" line="1916"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1916"/>
         <source>Point Size</source>
-        <translation>Point Size</translation>
+        <translation>Mida del punt</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsdrawing.ui" line="2592"/>
@@ -9294,7 +9294,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1917"/>
         <location filename="../../src/ui/forms/qg_dlgoptionsdrawing.cpp" line="1108"/>
         <source>Dwg Units</source>
-        <translation>Dwg Units</translation>
+        <translation>Unitats del dibuix</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsdrawing.ui" line="2629"/>
@@ -9302,7 +9302,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsdrawing.h" line="1918"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1918"/>
         <source>Size relative to screen</source>
-        <translation>Size relative to screen</translation>
+        <translation>Mida relativa a la pantalla</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsdrawing.ui" line="2642"/>
@@ -9310,7 +9310,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsdrawing.h" line="1919"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1919"/>
         <source>Size in drawing units</source>
-        <translation>Size in drawing units</translation>
+        <translation>Mida en unitats del dibuix</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsdrawing.ui" line="2669"/>
@@ -9318,12 +9318,12 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsdrawing.h" line="1920"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1920"/>
         <source>(0 =&gt; 5% relative to screen size)</source>
-        <translation>(0 =&gt; 5% relative to screen size)</translation>
+        <translation>(0 =&gt; 5% relatiu a la mida de la pantalla)</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsdrawing.cpp" line="117"/>
         <source>Scientific</source>
-        <translation>Scientific</translation>
+        <translation>Científic</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsdrawing.cpp" line="118"/>
@@ -9333,32 +9333,32 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsdrawing.cpp" line="119"/>
         <source>Engineering</source>
-        <translation>Engineering</translation>
+        <translation>Enginyeria</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsdrawing.cpp" line="120"/>
         <source>Architectural</source>
-        <translation>Architectural</translation>
+        <translation>Arquitectura</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsdrawing.cpp" line="121"/>
         <source>Fractional</source>
-        <translation>Fractional</translation>
+        <translation>Fraccionari</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsdrawing.cpp" line="122"/>
         <source>Architectural (metric)</source>
-        <translation>Architectural (metric)</translation>
+        <translation>Arquitectura (mètric)</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsdrawing.cpp" line="128"/>
         <source>Decimal Degrees</source>
-        <translation>Decimal Degrees</translation>
+        <translation>Graus decimals</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsdrawing.cpp" line="129"/>
         <source>Deg/min/sec</source>
-        <translation>Deg/min/sec</translation>
+        <translation>Grau/min/seg</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsdrawing.cpp" line="130"/>
@@ -9373,28 +9373,28 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsdrawing.cpp" line="132"/>
         <source>Surveyor&apos;s units</source>
-        <translation>Surveyor&apos;s units</translation>
+        <translation>Unitats de topografia</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsdrawing.cpp" line="494"/>
         <location filename="../../src/ui/forms/qg_dlgoptionsdrawing.cpp" line="504"/>
         <source>Options</source>
-        <translation>Options</translation>
+        <translation>Opcions</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsdrawing.cpp" line="495"/>
         <source>For the length formats &apos;Engineering&apos; and &apos;Architectural&apos;, the unit must be set to Inch.</source>
-        <translation>For the length formats &apos;Engineering&apos; and &apos;Architectural&apos;, the unit must be set to Inch.</translation>
+        <translation>Per als formats de longitud 'Engineering' i 'Architectural', la unitat ha d'estar establerta en Polzades.</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsdrawing.cpp" line="505"/>
         <source>For the length format &apos;Architectural (metric)&apos;, the unit must be set to Meter.</source>
-        <translation>For the length format &apos;Architectural (metric)&apos;, the unit must be set to Meter.</translation>
+        <translation>Per al format de longitud 'Architectural (metric)', la unitat ha d'estar establerta en Metres.</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsdrawing.cpp" line="1106"/>
         <source>Screen %</source>
-        <translation>Screen %</translation>
+        <translation>Pantalla %</translation>
     </message>
 </context>
 <context>
@@ -9405,7 +9405,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsgeneral.h" line="961"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="961"/>
         <source>Application Preferences</source>
-        <translation>Application Preferences</translation>
+        <translation>Preferències de l'aplicació</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsgeneral.ui" line="46"/>
@@ -9413,7 +9413,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsgeneral.h" line="1025"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="1025"/>
         <source>&amp;Appearance</source>
-        <translation>&amp;Appearance</translation>
+        <translation>&amp;Aparença</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsgeneral.ui" line="58"/>
@@ -9421,7 +9421,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsgeneral.h" line="962"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="962"/>
         <source>Language</source>
-        <translation>Language</translation>
+        <translation>Idioma</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsgeneral.ui" line="64"/>
@@ -9429,7 +9429,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsgeneral.h" line="963"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="963"/>
         <source>&amp;GUI Language:</source>
-        <translation>&amp;GUI Language:</translation>
+        <translation>&amp;Idioma de la GUI:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsgeneral.ui" line="80"/>
@@ -9437,7 +9437,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsgeneral.h" line="964"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="964"/>
         <source>&amp;Command Language:</source>
-        <translation>&amp;Command Language:</translation>
+        <translation>Idioma de la línia d'&amp;ordres:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsgeneral.ui" line="105"/>
@@ -9445,7 +9445,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsgeneral.h" line="965"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="965"/>
         <source>Graphic View</source>
-        <translation>Graphic View</translation>
+        <translation>Vista gràfica</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsgeneral.ui" line="111"/>
@@ -9453,7 +9453,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsgeneral.h" line="966"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="966"/>
         <source>Auto-panning</source>
-        <translation>Auto-panning</translation>
+        <translation>Panoràmica automàtica</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsgeneral.ui" line="118"/>
@@ -9461,7 +9461,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsgeneral.h" line="967"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="967"/>
         <source>N&amp;umber of preview entities:</source>
-        <translation>N&amp;umber of preview entities:</translation>
+        <translation>&amp;Nombre d'entitats de previsualització:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsgeneral.ui" line="131"/>
@@ -9469,7 +9469,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsgeneral.h" line="968"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="968"/>
         <source>Snap indicator shape</source>
-        <translation>Snap indicator shape</translation>
+        <translation>Forma de l'indicador de referència</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsgeneral.ui" line="185"/>
@@ -9477,7 +9477,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsgeneral.h" line="970"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="970"/>
         <source>Hide cursor when snapping</source>
-        <translation>Hide cursor when snapping</translation>
+        <translation>Ocultar cursor en referenciar</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsgeneral.ui" line="192"/>
@@ -9485,7 +9485,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsgeneral.h" line="971"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="971"/>
         <source>Scrollbars</source>
-        <translation>Scrollbars</translation>
+        <translation>Barres de desplaçament</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsgeneral.ui" line="199"/>
@@ -9493,7 +9493,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsgeneral.h" line="972"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="972"/>
         <source>Anti-aliasing</source>
-        <translation>Anti-aliasing</translation>
+        <translation>Antialiàsing</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsgeneral.ui" line="255"/>
@@ -9501,7 +9501,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsgeneral.h" line="975"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="975"/>
         <source>A&amp;utomatically scale grid</source>
-        <translation>A&amp;utomatically scale grid</translation>
+        <translation>Escalar la graella &amp;automàticament</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsgeneral.ui" line="258"/>
@@ -9517,7 +9517,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsgeneral.h" line="979"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="979"/>
         <source>Hide the relative-&amp;zero marker</source>
-        <translation>Hide the relative-&amp;zero marker</translation>
+        <translation>Ocultar el marcador de zero &amp;relatiu</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsgeneral.ui" line="268"/>
@@ -9533,7 +9533,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsgeneral.h" line="983"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="983"/>
         <source>Snap indicator lines</source>
-        <translation>Snap indicator lines</translation>
+        <translation>Línies de l'indicador de referència</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsgeneral.ui" line="278"/>
@@ -9549,7 +9549,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsgeneral.h" line="988"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="988"/>
         <source>Minimal Grid Spacing (p&amp;x):</source>
-        <translation>Minimal Grid Spacing (p&amp;x):</translation>
+        <translation>Espaiat mínim de graella (p&amp;x):</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsgeneral.ui" line="335"/>
@@ -9557,7 +9557,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsgeneral.h" line="990"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="990"/>
         <source>Visualize the entity under the cursor</source>
-        <translation>Visualize the entity under the cursor</translation>
+        <translation>Visualitzar l'entitat sota el cursor</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsgeneral.ui" line="338"/>
@@ -9565,7 +9565,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsgeneral.h" line="992"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="992"/>
         <source>Mouse-over effects</source>
-        <translation>Mouse-over effects</translation>
+        <translation>Efectes en passar el ratolí</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsgeneral.ui" line="354"/>
@@ -9573,7 +9573,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsgeneral.h" line="993"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="993"/>
         <source>Graphic Colors</source>
-        <translation>Graphic Colors</translation>
+        <translation>Colors gràfics</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsgeneral.ui" line="378"/>
@@ -9581,7 +9581,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsgeneral.h" line="995"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="995"/>
         <source>&amp;End Handle Color:</source>
-        <translation>&amp;End Handle Color:</translation>
+        <translation>Color del &amp;maneig final:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsgeneral.ui" line="388"/>
@@ -9589,7 +9589,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsgeneral.h" line="996"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="996"/>
         <source>&amp;Relative-Zero Marker Color:</source>
-        <translation>&amp;Relative-Zero Marker Color:</translation>
+        <translation>Color del marcador de &amp;zero relatiu:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsgeneral.ui" line="398"/>
@@ -9597,7 +9597,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsgeneral.h" line="997"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="997"/>
         <source>G&amp;rid Color:</source>
-        <translation>G&amp;rid Color:</translation>
+        <translation>Color de la g&amp;raella:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsgeneral.ui" line="599"/>
@@ -9605,7 +9605,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsgeneral.h" line="1009"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="1009"/>
         <source>&amp;Highlighted Color:</source>
-        <translation>&amp;Highlighted Color:</translation>
+        <translation>Color &amp;emmarcament:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsgeneral.ui" line="627"/>
@@ -9613,7 +9613,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsgeneral.h" line="1011"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="1011"/>
         <source>&amp;Meta Grid Color:</source>
-        <translation>&amp;Meta Grid Color:</translation>
+        <translation>Color de la &amp;meta-graella:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsgeneral.ui" line="655"/>
@@ -9621,7 +9621,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsgeneral.h" line="1013"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="1013"/>
         <source>S&amp;elected Color:</source>
-        <translation>S&amp;elected Color:</translation>
+        <translation>Color s&amp;eleccionat:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsgeneral.ui" line="683"/>
@@ -9629,7 +9629,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsgeneral.h" line="1015"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="1015"/>
         <source>St&amp;art Handle Color:</source>
-        <translation>St&amp;art Handle Color:</translation>
+        <translation>Color del maneig d'i&amp;nici:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsgeneral.ui" line="693"/>
@@ -9637,7 +9637,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsgeneral.h" line="1016"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="1016"/>
         <source>Backgr&amp;ound:</source>
-        <translation>Backgr&amp;ound:</translation>
+        <translation>F&amp;ons:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsgeneral.ui" line="767"/>
@@ -9645,7 +9645,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsgeneral.h" line="1020"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="1020"/>
         <source>&amp;Handle Color:</source>
-        <translation>&amp;Handle Color:</translation>
+        <translation>Color del &amp;maneig:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsgeneral.ui" line="777"/>
@@ -9653,7 +9653,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsgeneral.h" line="1021"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="1021"/>
         <source>Snap indicator:</source>
-        <translation>Snap indicator:</translation>
+        <translation>Indicador de referència:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsgeneral.ui" line="799"/>
@@ -9669,7 +9669,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsgeneral.h" line="1035"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="1035"/>
         <source>&amp;Paths</source>
-        <translation>&amp;Paths</translation>
+        <translation>&amp;Rutes</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsgeneral.ui" line="834"/>
@@ -9677,7 +9677,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsgeneral.h" line="1026"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="1026"/>
         <source>Variable File:</source>
-        <translation>Variable File:</translation>
+        <translation>Fitxer de variables:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsgeneral.ui" line="841"/>
@@ -9693,7 +9693,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsgeneral.h" line="1028"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="1028"/>
         <source>Part Libraries:</source>
-        <translation>Part Libraries:</translation>
+        <translation>Biblioteques de peces:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsgeneral.ui" line="867"/>
@@ -9701,7 +9701,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsgeneral.h" line="1029"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="1029"/>
         <source>Template:</source>
-        <translation>Template:</translation>
+        <translation>Plantilla:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsgeneral.ui" line="880"/>
@@ -9717,7 +9717,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsgeneral.h" line="1033"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="1033"/>
         <source>Translations:</source>
-        <translation>Translations:</translation>
+        <translation>Traduccions:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsgeneral.ui" line="932"/>
@@ -9725,7 +9725,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsgeneral.h" line="1034"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="1034"/>
         <source>Hatch Patterns:</source>
-        <translation>Hatch Patterns:</translation>
+        <translation>Patrons de ratllat:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsgeneral.ui" line="978"/>
@@ -9733,7 +9733,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsgeneral.h" line="1091"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="1091"/>
         <source>&amp;Defaults</source>
-        <translation>&amp;Defaults</translation>
+        <translation>&amp;Per defecte</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsgeneral.ui" line="996"/>
@@ -9741,7 +9741,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsgeneral.h" line="1036"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="1036"/>
         <source>Program Defaults</source>
-        <translation>Program Defaults</translation>
+        <translation>Valors per defecte del programa</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1002"/>
@@ -9749,7 +9749,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsgeneral.h" line="1038"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="1038"/>
         <source>When set, LibreCAD will automatically generate a backup of your current drawing.</source>
-        <translation>When set, LibreCAD will automatically generate a backup of your current drawing.</translation>
+        <translation>Quan s'activi, LibreCAD generarà automàticament una còpia de seguretat del dibuix actual.</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1005"/>
@@ -9757,7 +9757,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsgeneral.h" line="1040"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="1040"/>
         <source>Auto backup</source>
-        <translation>Auto backup</translation>
+        <translation>Còpia de seguretat automàtica</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1014"/>
@@ -9765,7 +9765,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsgeneral.h" line="1041"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="1041"/>
         <source>Auto save time (minutes):</source>
-        <translation>Auto save time (minutes):</translation>
+        <translation>Temps de desat automàtic (minuts):</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1021"/>
@@ -9773,7 +9773,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsgeneral.h" line="1043"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="1043"/>
         <source>Time between automatic saving of the document in minutes.</source>
-        <translation>Time between automatic saving of the document in minutes.</translation>
+        <translation>Temps entre desats automàtics del document, en minuts.</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1036"/>
@@ -9781,7 +9781,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsgeneral.h" line="1045"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="1045"/>
         <source>Don&apos;t use native OS file open dialog</source>
-        <translation>Don&apos;t use native OS file open dialog</translation>
+        <translation>No usar el diàleg d'obrir fitxers natiu del SO</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1043"/>
@@ -9789,7 +9789,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsgeneral.h" line="1047"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="1047"/>
         <source>Inverts scrolling direction when using mouse wheel with Shift key.</source>
-        <translation>Inverts scrolling direction when using mouse wheel with Shift key.</translation>
+        <translation>Inverteix la direcció de desplaçament en usar la roda del ratolí amb la tecla Shift.</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1046"/>
@@ -9797,7 +9797,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsgeneral.h" line="1049"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="1049"/>
         <source>Invert horizontal scrolling direction</source>
-        <translation>Invert horizontal scrolling direction</translation>
+        <translation>Invertir la direcció de desplaçament horitzontal</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1053"/>
@@ -9805,7 +9805,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsgeneral.h" line="1051"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="1051"/>
         <source>Inverts scrolling direction when using mouse wheel with Ctrl key.</source>
-        <translation>Inverts scrolling direction when using mouse wheel with Ctrl key.</translation>
+        <translation>Inverteix la direcció de desplaçament en usar la roda del ratolí amb la tecla Ctrl.</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1056"/>
@@ -9813,7 +9813,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsgeneral.h" line="1053"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="1053"/>
         <source>Invert vertical scrolling direction</source>
-        <translation>Invert vertical scrolling direction</translation>
+        <translation>Invertir la direcció de desplaçament vertical</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1063"/>
@@ -9821,7 +9821,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsgeneral.h" line="1055"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="1055"/>
         <source>Inverts zoom direction when using mouse wheel.</source>
-        <translation>Inverts zoom direction when using mouse wheel.</translation>
+        <translation>Inverteix la direcció del zoom en usar la roda del ratolí.</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1066"/>
@@ -9829,7 +9829,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsgeneral.h" line="1057"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="1057"/>
         <source>Invert zoom direction</source>
-        <translation>Invert zoom direction</translation>
+        <translation>Invertir la direcció del zoom</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1089"/>
@@ -9837,7 +9837,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsgeneral.h" line="1058"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="1058"/>
         <source>Clear Settings</source>
-        <translation>Clear Settings</translation>
+        <translation>Netejar configuració</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1101"/>
@@ -9845,7 +9845,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsgeneral.h" line="1060"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="1060"/>
         <source>restores program geometry/layout to original state</source>
-        <translation>restores program geometry/layout to original state</translation>
+        <translation>restaura la geometria/disposició del programa a l'estat original</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1104"/>
@@ -9853,7 +9853,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsgeneral.h" line="1062"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="1062"/>
         <source>Layout</source>
-        <translation>Layout</translation>
+        <translation>Disposició</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1117"/>
@@ -9861,7 +9861,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsgeneral.h" line="1064"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="1064"/>
         <source>restores the program to its original state</source>
-        <translation>restores the program to its original state</translation>
+        <translation>restaura el programa al seu estat original</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1120"/>
@@ -9877,7 +9877,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsgeneral.h" line="1067"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="1067"/>
         <source>Startup</source>
-        <translation>Startup</translation>
+        <translation>Inici</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1136"/>
@@ -9885,7 +9885,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsgeneral.h" line="1068"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="1068"/>
         <source>Display loading screen</source>
-        <translation>Display loading screen</translation>
+        <translation>Mostrar pantalla de càrrega</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1143"/>
@@ -9893,7 +9893,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsgeneral.h" line="1069"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="1069"/>
         <source>Start in tab mode</source>
-        <translation>Start in tab mode</translation>
+        <translation>Iniciar en mode de pestanyes</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1150"/>
@@ -9901,7 +9901,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsgeneral.h" line="1070"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="1070"/>
         <source>Start with main window maximized</source>
-        <translation>Start with main window maximized</translation>
+        <translation>Iniciar amb la finestra principal maximitzada</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1157"/>
@@ -9909,7 +9909,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsgeneral.h" line="1071"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="1071"/>
         <source>Open last opened files</source>
-        <translation>Open last opened files</translation>
+        <translation>Obrir els fitxers oberts anteriorment</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1164"/>
@@ -9917,7 +9917,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsgeneral.h" line="1072"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="1072"/>
         <source>Enable CAD dockwidgets</source>
-        <translation>Enable CAD dockwidgets</translation>
+        <translation>Habilitar els widgets acoblables CAD</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1171"/>
@@ -9925,7 +9925,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsgeneral.h" line="1073"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="1073"/>
         <source>Enable CAD toolbars</source>
-        <translation>Enable CAD toolbars</translation>
+        <translation>Habilitar les barres d'eines CAD</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1193"/>
@@ -9933,7 +9933,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsgeneral.h" line="1074"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="1074"/>
         <source>Defaults for new drawings</source>
-        <translation>Defaults for new drawings</translation>
+        <translation>Valors per defecte per a nous dibuixos</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1205"/>
@@ -9941,7 +9941,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsgeneral.h" line="1075"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="1075"/>
         <source>&amp;Unit:</source>
-        <translation>&amp;Unit:</translation>
+        <translation>&amp;Unitat:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1218"/>
@@ -9949,7 +9949,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsgeneral.h" line="1077"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="1077"/>
         <source>Drawing unit.</source>
-        <translation>Drawing unit.</translation>
+        <translation>Unitat de dibuix.</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1228"/>
@@ -9957,7 +9957,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsgeneral.h" line="1079"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="1079"/>
         <source>Keyboard Settings</source>
-        <translation>Keyboard Settings</translation>
+        <translation>Configuració del teclat</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1234"/>
@@ -9965,7 +9965,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsgeneral.h" line="1080"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="1080"/>
         <source>Evaluate commands when SPACE BAR is pressed</source>
-        <translation>Evaluate commands when SPACE BAR is pressed</translation>
+        <translation>Avaluar ordres en prémer la BARRA ESPAIADORA</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1241"/>
@@ -9981,7 +9981,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsgeneral.h" line="1084"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="1084"/>
         <source>Toggle free snap mode when SPACE BAR is pressed</source>
-        <translation>Toggle free snap mode when SPACE BAR is pressed</translation>
+        <translation>Commutar el mode de referència lliure en prémer la BARRA ESPAIADORA</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1254"/>
@@ -9989,7 +9989,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsgeneral.h" line="1085"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="1085"/>
         <source>CAD Preferences</source>
-        <translation>CAD Preferences</translation>
+        <translation>Preferències CAD</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1260"/>
@@ -10005,7 +10005,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsgeneral.h" line="1089"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="1089"/>
         <source>Modify layer of selected entities, at  layer activation</source>
-        <translation>Modify layer of selected entities, at  layer activation</translation>
+        <translation>Modificar la capa de les entitats seleccionades en activar la capa</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1270"/>
@@ -10013,27 +10013,27 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsgeneral.h" line="1090"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="1090"/>
         <source>Automatically zoom drawing when opening</source>
-        <translation>Automatically zoom drawing when opening</translation>
+        <translation>Fer zoom automàticament al dibuix en obrir-lo</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsgeneral.cpp" line="319"/>
         <source>Preferences</source>
-        <translation>Preferences</translation>
+        <translation>Preferències</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsgeneral.cpp" line="320"/>
         <source>Please restart the application to apply all changes.</source>
-        <translation>Please restart the application to apply all changes.</translation>
+        <translation>Si us plau, reinicieu l'aplicació per aplicar tots els canvis.</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsgeneral.cpp" line="401"/>
         <source>Clear settings</source>
-        <translation>Clear settings</translation>
+        <translation>Netejar configuració</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsgeneral.cpp" line="402"/>
         <source>This will also include custom menus and toolbars. Continue?</source>
-        <translation>This will also include custom menus and toolbars. Continue?</translation>
+        <translation>Això també inclourà menús i barres d'eines personalitzats. Continuar?</translation>
     </message>
 </context>
 <context>
@@ -10044,7 +10044,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsmakercam.h" line="259"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsmakercam.h" line="259"/>
         <source>Export as CAM/plain SVG</source>
-        <translation>Export as CAM/plain SVG</translation>
+        <translation>Exportar com CAM/SVG simple</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsmakercam.ui" line="38"/>
@@ -10060,7 +10060,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsmakercam.h" line="261"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsmakercam.h" line="261"/>
         <source>Default width of elements, mm</source>
-        <translation>Default width of elements, mm</translation>
+        <translation>Amplada per defecte dels elements, mm</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsmakercam.ui" line="73"/>
@@ -10068,7 +10068,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsmakercam.h" line="262"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsmakercam.h" line="262"/>
         <source>Export invisible layers</source>
-        <translation>Export invisible layers</translation>
+        <translation>Exportar capes invisibles</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsmakercam.ui" line="80"/>
@@ -10076,7 +10076,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsmakercam.h" line="263"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsmakercam.h" line="263"/>
         <source>Export visible construction layers</source>
-        <translation>Export visible construction layers</translation>
+        <translation>Exportar capes de construcció visibles</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsmakercam.ui" line="92"/>
@@ -10084,7 +10084,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsmakercam.h" line="264"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsmakercam.h" line="264"/>
         <source>Blocks</source>
-        <translation>Blocks</translation>
+        <translation>Blocs</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsmakercam.ui" line="100"/>
@@ -10092,7 +10092,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsmakercam.h" line="265"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsmakercam.h" line="265"/>
         <source>Convert blocks to safe inline SVG content</source>
-        <translation>Convert blocks to safe inline SVG content</translation>
+        <translation>Convertir blocs a contingut SVG en línia segur</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsmakercam.ui" line="115"/>
@@ -10100,7 +10100,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsmakercam.h" line="266"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsmakercam.h" line="266"/>
         <source>Ellipses / Ellipse arcs</source>
-        <translation>Ellipses / Ellipse arcs</translation>
+        <translation>El·lipses / Arcs el·líptics</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsmakercam.ui" line="123"/>
@@ -10108,7 +10108,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsmakercam.h" line="267"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsmakercam.h" line="267"/>
         <source>Approximate ellipses and ellipse arcs with cubic béziers</source>
-        <translation>Approximate ellipses and ellipse arcs with cubic béziers</translation>
+        <translation>Aproximar el·lipses i arcs el·líptics amb béziers cúbics</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsmakercam.ui" line="135"/>
@@ -10116,7 +10116,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsmakercam.h" line="268"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsmakercam.h" line="268"/>
         <source>Images</source>
-        <translation>Images</translation>
+        <translation>Imatges</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsmakercam.ui" line="143"/>
@@ -10124,7 +10124,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsmakercam.h" line="269"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsmakercam.h" line="269"/>
         <source>Raster Image export</source>
-        <translation>Raster Image export</translation>
+        <translation>Exportar imatge de trama</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsmakercam.ui" line="155"/>
@@ -10132,7 +10132,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsmakercam.h" line="270"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsmakercam.h" line="270"/>
         <source>Dash/Dot Lines</source>
-        <translation>Dash/Dot Lines</translation>
+        <translation>Línies de guió/punt</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsmakercam.ui" line="165"/>
@@ -10140,7 +10140,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsmakercam.h" line="271"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsmakercam.h" line="271"/>
         <source>Length of the pattern, mm</source>
-        <translation>Length of the pattern, mm</translation>
+        <translation>Longitud del patró, mm</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsmakercam.ui" line="187"/>
@@ -10148,7 +10148,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsmakercam.h" line="272"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsmakercam.h" line="272"/>
         <source>Bake dash/dot lines to SVG path</source>
-        <translation>Bake dash/dot lines to SVG path</translation>
+        <translation>Coure línies de guió/punt al camí SVG</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsmakercam.ui" line="199"/>
@@ -10156,7 +10156,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsmakercam.h" line="273"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsmakercam.h" line="273"/>
         <source>Points</source>
-        <translation>Points</translation>
+        <translation>Punts</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsmakercam.ui" line="207"/>
@@ -10164,63 +10164,63 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsmakercam.h" line="274"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsmakercam.h" line="274"/>
         <source>Export Points</source>
-        <translation>Export Points</translation>
+        <translation>Exportar punts</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsmakercam.cpp" line="33"/>
         <source>MakerCAM as of November 2014 does not hide SVG content 
 that has been set invisibe (&quot;display: none&quot; or &quot;visibility: hidden&quot;).</source>
-        <translation>MakerCAM as of November 2014 does not hide SVG content 
-that has been set invisibe (&quot;display: none&quot; or &quot;visibility: hidden&quot;).</translation>
+        <translation>El MakerCAM a partir del novembre de 2014 no amaga el contingut SVG 
+que s'ha definit com a invisible (&quot;display: none&quot; o &quot;visibility: hidden&quot;).</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsmakercam.cpp" line="34"/>
         <source>MakerCAM as of November 2014 cannot correctly deal with blocks,
 because it does not take into account the reference point in the &lt;use&gt;.</source>
-        <translation>MakerCAM as of November 2014 cannot correctly deal with blocks,
-because it does not take into account the reference point in the &lt;use&gt;.</translation>
+        <translation>MakerCAM a partir del novembre de 2014 no pot gestionar correctament els blocs,
+perquè no té en compte el punt de referència en &lt;use&gt;.</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsmakercam.cpp" line="35"/>
         <source>MakerCAM as of March 2015 cannot display ellipses and ellipse arcs correctly, 
 when they are created using the &lt;ellipse&gt; tag  with a rotation in 
 the &lt;transform&gt; attribute or as &lt;path&gt; using elliptic arc segments.</source>
-        <translation>MakerCAM as of March 2015 cannot display ellipses and ellipse arcs correctly, 
-when they are created using the &lt;ellipse&gt; tag  with a rotation in 
-the &lt;transform&gt; attribute or as &lt;path&gt; using elliptic arc segments.</translation>
+        <translation>El MakerCAM a partir del març de 2015 no pot mostrar el·lipses i arcs el·líptics correctament, 
+quan es creen amb l'etiqueta &lt;ellipse&gt;  amb una rotació a 
+l'atribut &lt;transform&gt; o com a &lt;path&gt; usant segments d'arc el·líptic.</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsmakercam.cpp" line="36"/>
         <source>Exported images can be useful in SVG editors (Inkscape, etc), 
 but avoided in some CAM&apos;s.</source>
-        <translation>Exported images can be useful in SVG editors (Inkscape, etc), 
-but avoided in some CAM&apos;s.</translation>
+        <translation>Les imatges exportades poden ser útils en editors SVG (Inkscape, etc), 
+però s'han d'evitar en alguns CAM&apos;s.</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsmakercam.cpp" line="37"/>
         <source>Many CAM&apos;s(MakerCAM, EleskCAM, LaserWeb) ignore dashed/doted line style, 
 which can be useful in lasercut of plywood or for papercraft. </source>
-        <translation>Many CAM&apos;s(MakerCAM, EleskCAM, LaserWeb) ignore dashed/doted line style, 
-which can be useful in lasercut of plywood or for papercraft.</translation>
+        <translation>Molts CAM&apos;s (MakerCAM, EleskCAM, LaserWeb) ignoren l'estil de línia de guions/punts, 
+que pot ser útil en el tall làser de contraxapat o per a manualitats en paper.</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsmakercam.cpp" line="38"/>
         <source>Default width of elements can affect some CAM&apos;s/SVG Editors, 
 but ignored by other</source>
-        <translation>Default width of elements can affect some CAM&apos;s/SVG Editors, 
-but ignored by other</translation>
+        <translation>L'amplada predeterminada dels elements pot afectar alguns CAM&apos;s/Editors SVG, 
+però és ignorada per altres</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsmakercam.cpp" line="39"/>
         <source>Length of line pattern related to zoom, 
 so default step value required for baking</source>
-        <translation>Length of line pattern related to zoom, 
-so default step value required for baking</translation>
+        <translation>La longitud del patró de línia està relacionada amb el zoom, 
+per tant cal el valor de pas predeterminat per a materialitzar</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsmakercam.cpp" line="40"/>
         <source>Whether to export points</source>
-        <translation>Whether to export points</translation>
+        <translation>Si s'han d'exportar els punts</translation>
     </message>
 </context>
 <context>
@@ -10229,7 +10229,7 @@ so default step value required for baking</translation>
         <location filename="../../src/ui/forms/qg_dlgoptionsvariables.ui" line="17"/>
         <location filename="../../../build/ui_qg_dlgoptionsvariables.h" line="91"/>
         <source>Drawing Variables</source>
-        <translation>Drawing Variables</translation>
+        <translation>Variables del dibuix</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsvariables.ui" line="54"/>
@@ -10244,13 +10244,13 @@ so default step value required for baking</translation>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsvariables.ui" line="64"/>
         <source>Value</source>
-        <translation>Value</translation>
+        <translation>Valor</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsvariables.ui" line="96"/>
         <location filename="../../../build/ui_qg_dlgoptionsvariables.h" line="92"/>
         <source>&amp;OK</source>
-        <translation>&amp;OK</translation>
+        <translation>&amp;D'acord</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsvariables.ui" line="99"/>
@@ -10279,7 +10279,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgpoint.h" line="165"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgpoint.h" line="165"/>
         <source>Point</source>
-        <translation>Point</translation>
+        <translation>Punt</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgpoint.ui" line="44"/>
@@ -10295,7 +10295,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgpoint.h" line="167"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgpoint.h" line="167"/>
         <source>Geometry</source>
-        <translation>Geometry</translation>
+        <translation>Geometria</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgpoint.ui" line="77"/>
@@ -10303,7 +10303,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgpoint.h" line="168"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgpoint.h" line="168"/>
         <source>Position (y):</source>
-        <translation>Position (y):</translation>
+        <translation>Posició (y):</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgpoint.ui" line="97"/>
@@ -10311,7 +10311,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgpoint.h" line="169"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgpoint.h" line="169"/>
         <source>Position (x):</source>
-        <translation>Position (x):</translation>
+        <translation>Posició (x):</translation>
     </message>
 </context>
 <context>
@@ -10338,7 +10338,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgpolyline.h" line="149"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgpolyline.h" line="149"/>
         <source>Geometry</source>
-        <translation>Geometry</translation>
+        <translation>Geometria</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgpolyline.ui" line="115"/>
@@ -10357,7 +10357,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgrotate.h" line="184"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgrotate.h" line="184"/>
         <source>Rotation Options</source>
-        <translation>Rotation Options</translation>
+        <translation>Opcions de rotació</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgrotate.ui" line="32"/>
@@ -10365,7 +10365,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgrotate.h" line="185"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgrotate.h" line="185"/>
         <source>Number of copies</source>
-        <translation>Number of copies</translation>
+        <translation>Nombre de còpies</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgrotate.ui" line="50"/>
@@ -10373,7 +10373,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgrotate.h" line="186"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgrotate.h" line="186"/>
         <source>&amp;Delete Original</source>
-        <translation>&amp;Delete Original</translation>
+        <translation>&amp;Esborrar original</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgrotate.ui" line="69"/>
@@ -10381,7 +10381,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgrotate.h" line="187"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgrotate.h" line="187"/>
         <source>&amp;Keep Original</source>
-        <translation>&amp;Keep Original</translation>
+        <translation>&amp;Mantenir original</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgrotate.ui" line="88"/>
@@ -10389,7 +10389,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgrotate.h" line="188"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgrotate.h" line="188"/>
         <source>&amp;Multiple Copies:</source>
-        <translation>&amp;Multiple Copies:</translation>
+        <translation>&amp;Múltiples còpies:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgrotate.ui" line="119"/>
@@ -10413,7 +10413,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgrotate.h" line="191"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgrotate.h" line="191"/>
         <source>Use current &amp;attributes</source>
-        <translation>Use current &amp;attributes</translation>
+        <translation>Usar els &amp;atributs actuals</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgrotate.ui" line="186"/>
@@ -10421,7 +10421,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgrotate.h" line="192"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgrotate.h" line="192"/>
         <source>Use current &amp;layer</source>
-        <translation>Use current &amp;layer</translation>
+        <translation>Usar la &amp;capa actual</translation>
     </message>
 </context>
 <context>
@@ -10432,7 +10432,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgrotate2.h" line="205"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgrotate2.h" line="205"/>
         <source>Rotate Two Options</source>
-        <translation>Rotate Two Options</translation>
+        <translation>Opcions de rotació de dos</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgrotate2.ui" line="32"/>
@@ -10440,7 +10440,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgrotate2.h" line="206"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgrotate2.h" line="206"/>
         <source>Number of copies</source>
-        <translation>Number of copies</translation>
+        <translation>Nombre de còpies</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgrotate2.ui" line="50"/>
@@ -10448,7 +10448,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgrotate2.h" line="207"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgrotate2.h" line="207"/>
         <source>&amp;Delete Original</source>
-        <translation>&amp;Delete Original</translation>
+        <translation>&amp;Esborrar original</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgrotate2.ui" line="69"/>
@@ -10456,7 +10456,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgrotate2.h" line="208"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgrotate2.h" line="208"/>
         <source>&amp;Keep Original</source>
-        <translation>&amp;Keep Original</translation>
+        <translation>&amp;Mantenir original</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgrotate2.ui" line="88"/>
@@ -10464,7 +10464,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgrotate2.h" line="209"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgrotate2.h" line="209"/>
         <source>&amp;Multiple Copies</source>
-        <translation>&amp;Multiple Copies</translation>
+        <translation>&amp;Múltiples còpies</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgrotate2.ui" line="119"/>
@@ -10496,7 +10496,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgrotate2.h" line="213"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgrotate2.h" line="213"/>
         <source>Use current &amp;attributes</source>
-        <translation>Use current &amp;attributes</translation>
+        <translation>Usar els &amp;atributs actuals</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgrotate2.ui" line="215"/>
@@ -10504,7 +10504,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgrotate2.h" line="214"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgrotate2.h" line="214"/>
         <source>Use current &amp;layer</source>
-        <translation>Use current &amp;layer</translation>
+        <translation>Usar la &amp;capa actual</translation>
     </message>
 </context>
 <context>
@@ -10515,7 +10515,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgscale.h" line="209"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgscale.h" line="209"/>
         <source>Scaling Options</source>
-        <translation>Scaling Options</translation>
+        <translation>Opcions d'escala</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgscale.ui" line="32"/>
@@ -10523,7 +10523,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgscale.h" line="210"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgscale.h" line="210"/>
         <source>Number of copies</source>
-        <translation>Number of copies</translation>
+        <translation>Nombre de còpies</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgscale.ui" line="50"/>
@@ -10531,7 +10531,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgscale.h" line="211"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgscale.h" line="211"/>
         <source>&amp;Delete Original</source>
-        <translation>&amp;Delete Original</translation>
+        <translation>&amp;Esborrar original</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgscale.ui" line="69"/>
@@ -10539,7 +10539,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgscale.h" line="212"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgscale.h" line="212"/>
         <source>&amp;Keep Original</source>
-        <translation>&amp;Keep Original</translation>
+        <translation>&amp;Mantenir original</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgscale.ui" line="88"/>
@@ -10547,7 +10547,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgscale.h" line="213"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgscale.h" line="213"/>
         <source>&amp;Multiple Copies</source>
-        <translation>&amp;Multiple Copies</translation>
+        <translation>&amp;Múltiples còpies</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgscale.ui" line="117"/>
@@ -10563,7 +10563,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgscale.h" line="216"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgscale.h" line="216"/>
         <source>Scale by the same factor at both x- and y- directions</source>
-        <translation>Scale by the same factor at both x- and y- directions</translation>
+        <translation>Escalar amb el mateix factor en les direccions x i y</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgscale.ui" line="139"/>
@@ -10571,7 +10571,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgscale.h" line="218"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgscale.h" line="218"/>
         <source>Isotropic Scaling</source>
-        <translation>Isotropic Scaling</translation>
+        <translation>Escala isotròpica</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgscale.ui" line="153"/>
@@ -10603,7 +10603,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgscale.h" line="225"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgscale.h" line="225"/>
         <source>Use current &amp;attributes</source>
-        <translation>Use current &amp;attributes</translation>
+        <translation>Usar els &amp;atributs actuals</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgscale.ui" line="226"/>
@@ -10611,7 +10611,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgscale.h" line="226"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgscale.h" line="226"/>
         <source>Use current &amp;layer</source>
-        <translation>Use current &amp;layer</translation>
+        <translation>Usar la &amp;capa actual</translation>
     </message>
 </context>
 <context>
@@ -10638,7 +10638,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgspline.h" line="174"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgspline.h" line="174"/>
         <source>Geometry</source>
-        <translation>Geometry</translation>
+        <translation>Geometria</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgspline.ui" line="122"/>
@@ -10646,7 +10646,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgspline.h" line="175"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgspline.h" line="175"/>
         <source>Degree:</source>
-        <translation>Degree:</translation>
+        <translation>Grau:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgspline.ui" line="132"/>
@@ -10681,7 +10681,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="797"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="797"/>
         <source>Clear Text</source>
-        <translation>Clear Text</translation>
+        <translation>Netejar text</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="73"/>
@@ -10689,7 +10689,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="801"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="801"/>
         <source>Load Text From File</source>
-        <translation>Load Text From File</translation>
+        <translation>Carregar text des del fitxer</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="87"/>
@@ -10697,7 +10697,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="805"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="805"/>
         <source>Save Text To File</source>
-        <translation>Save Text To File</translation>
+        <translation>Desar text al fitxer</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="101"/>
@@ -10721,7 +10721,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="817"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="817"/>
         <source>Paste</source>
-        <translation>Paste</translation>
+        <translation>Enganxar</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="175"/>
@@ -10737,7 +10737,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="821"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="821"/>
         <source>Font settings</source>
-        <translation>Font settings</translation>
+        <translation>Configuració de font</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="256"/>
@@ -10745,7 +10745,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="822"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="822"/>
         <source>&amp;Height:</source>
-        <translation>&amp;Height:</translation>
+        <translation>&amp;Alçada:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="269"/>
@@ -10761,7 +10761,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="824"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="824"/>
         <source>Oblique:</source>
-        <translation>Oblique:</translation>
+        <translation>Obliqua:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="328"/>
@@ -10769,7 +10769,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="825"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="825"/>
         <source>Width factor:</source>
-        <translation>Width factor:</translation>
+        <translation>Factor d'amplada:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="335"/>
@@ -10777,7 +10777,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="826"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="826"/>
         <source>Font:</source>
-        <translation>Font:</translation>
+        <translation>Lletra:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="384"/>
@@ -10785,7 +10785,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="827"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="827"/>
         <source>Alignment</source>
-        <translation>Alignment</translation>
+        <translation>Alineació</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="402"/>
@@ -10793,7 +10793,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="829"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="829"/>
         <source>Bottom Center</source>
-        <translation>Bottom Center</translation>
+        <translation>Inferior centrat</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="437"/>
@@ -10801,7 +10801,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="833"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="833"/>
         <source>Bottom Right</source>
-        <translation>Bottom Right</translation>
+        <translation>Inferior dret</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="472"/>
@@ -10809,7 +10809,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="837"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="837"/>
         <source>Middle Right</source>
-        <translation>Middle Right</translation>
+        <translation>Mig dret</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="507"/>
@@ -10817,7 +10817,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="841"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="841"/>
         <source>Bottom Left</source>
-        <translation>Bottom Left</translation>
+        <translation>Inferior esquerre</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="542"/>
@@ -10825,7 +10825,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="845"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="845"/>
         <source>Middle Left</source>
-        <translation>Middle Left</translation>
+        <translation>Mig esquerre</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="565"/>
@@ -10833,7 +10833,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="849"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="849"/>
         <source>Baseline Left</source>
-        <translation>Baseline Left</translation>
+        <translation>Línia base esquerra</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="568"/>
@@ -10857,7 +10857,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="853"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="853"/>
         <source>Top Center</source>
-        <translation>Top Center</translation>
+        <translation>Superior centrat</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="623"/>
@@ -10865,7 +10865,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="857"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="857"/>
         <source>Baseline Right</source>
-        <translation>Baseline Right</translation>
+        <translation>Línia base dreta</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="646"/>
@@ -10873,7 +10873,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="861"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="861"/>
         <source>Baseline Center</source>
-        <translation>Baseline Center</translation>
+        <translation>Línia base centrada</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="681"/>
@@ -10881,7 +10881,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="865"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="865"/>
         <source>Top Left</source>
-        <translation>Top Left</translation>
+        <translation>Superior esquerre</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="716"/>
@@ -10889,7 +10889,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="869"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="869"/>
         <source>Top Right</source>
-        <translation>Top Right</translation>
+        <translation>Superior dret</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="751"/>
@@ -10897,7 +10897,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="873"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="873"/>
         <source>Middle Center</source>
-        <translation>Middle Center</translation>
+        <translation>Mig centrat</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="774"/>
@@ -10913,7 +10913,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="877"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="877"/>
         <source>A&amp;ligned</source>
-        <translation>A&amp;ligned</translation>
+        <translation>Aline&amp;at</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="794"/>
@@ -10921,7 +10921,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="878"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="878"/>
         <source>&amp;Middle</source>
-        <translation>&amp;Middle</translation>
+        <translation>&amp;Mig</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="825"/>
@@ -10929,7 +10929,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="879"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="879"/>
         <source>Insert Symbol</source>
-        <translation>Insert Symbol</translation>
+        <translation>Inserir símbol</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="838"/>
@@ -10937,7 +10937,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="880"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="880"/>
         <source>Diameter (⌀)</source>
-        <translation>Diameter (⌀)</translation>
+        <translation>Diàmetre (⌀)</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="843"/>
@@ -10945,7 +10945,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="881"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="881"/>
         <source>Degree (°)</source>
-        <translation>Degree (°)</translation>
+        <translation>Grau (°)</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="848"/>
@@ -10953,7 +10953,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="882"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="882"/>
         <source>Plus / Minus (±)</source>
-        <translation>Plus / Minus (±)</translation>
+        <translation>Més / Menys (±)</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="853"/>
@@ -10961,7 +10961,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="883"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="883"/>
         <source>At (@)</source>
-        <translation>At (@)</translation>
+        <translation>Arroba (@)</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="858"/>
@@ -10969,7 +10969,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="884"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="884"/>
         <source>Hash (#)</source>
-        <translation>Hash (#)</translation>
+        <translation>Coixinet (#)</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="863"/>
@@ -10977,7 +10977,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="885"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="885"/>
         <source>Dollar ($)</source>
-        <translation>Dollar ($)</translation>
+        <translation>Dòlar ($)</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="868"/>
@@ -10985,7 +10985,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="886"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="886"/>
         <source>Copyright (©)</source>
-        <translation>Copyright (©)</translation>
+        <translation>Drets d'autor (©)</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="873"/>
@@ -10993,7 +10993,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="887"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="887"/>
         <source>Registered (®)</source>
-        <translation>Registered (®)</translation>
+        <translation>Marca registrada (®)</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="878"/>
@@ -11001,7 +11001,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="888"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="888"/>
         <source>Paragraph (§)</source>
-        <translation>Paragraph (§)</translation>
+        <translation>Paràgraf (§)</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="883"/>
@@ -11017,7 +11017,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="890"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="890"/>
         <source>Pound (£)</source>
-        <translation>Pound (£)</translation>
+        <translation>Lliura esterlina (£)</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="893"/>
@@ -11025,7 +11025,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="891"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="891"/>
         <source>Yen (¥)</source>
-        <translation>Yen (¥)</translation>
+        <translation>Ien (¥)</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="898"/>
@@ -11033,7 +11033,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="892"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="892"/>
         <source>Times (×)</source>
-        <translation>Times (×)</translation>
+        <translation>Multiplicació (×)</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="903"/>
@@ -11041,7 +11041,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="893"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="893"/>
         <source>Division (÷)</source>
-        <translation>Division (÷)</translation>
+        <translation>Divisió (÷)</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="914"/>
@@ -11049,7 +11049,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="895"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="895"/>
         <source>Insert Unicode</source>
-        <translation>Insert Unicode</translation>
+        <translation>Inserir Unicode</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="920"/>
@@ -11057,7 +11057,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="896"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="896"/>
         <source>Page:</source>
-        <translation>Page:</translation>
+        <translation>Pàgina:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="930"/>
@@ -11065,7 +11065,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="897"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="897"/>
         <source>Char:</source>
-        <translation>Char:</translation>
+        <translation>Caràcter:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="953"/>
@@ -11073,7 +11073,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="898"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="898"/>
         <source>[0000-007F] Basic Latin</source>
-        <translation>[0000-007F] Basic Latin</translation>
+        <translation>[0000-007F] Llatí bàsic</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="958"/>
@@ -11081,7 +11081,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="899"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="899"/>
         <source>[0080-00FF] Latin-1 Supplementary</source>
-        <translation>[0080-00FF] Latin-1 Supplementary</translation>
+        <translation>[0080-00FF] Llatí-1 Suplementari</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="963"/>
@@ -11089,7 +11089,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="900"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="900"/>
         <source>[0100-017F] Latin Extended-A</source>
-        <translation>[0100-017F] Latin Extended-A</translation>
+        <translation>[0100-017F] Llatí Estès-A</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="968"/>
@@ -11097,7 +11097,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="901"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="901"/>
         <source>[0180-024F] Latin Extended-B</source>
-        <translation>[0180-024F] Latin Extended-B</translation>
+        <translation>[0180-024F] Llatí Estès-B</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="973"/>
@@ -11105,7 +11105,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="902"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="902"/>
         <source>[0250-02AF] IPA Extensions</source>
-        <translation>[0250-02AF] IPA Extensions</translation>
+        <translation>[0250-02AF] Extensions de l'AFI</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="978"/>
@@ -11113,7 +11113,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="903"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="903"/>
         <source>[02B0-02FF] Spacing Modifier Letters</source>
-        <translation>[02B0-02FF] Spacing Modifier Letters</translation>
+        <translation>[02B0-02FF] Lletres modificadores d'espaiat</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="983"/>
@@ -11121,7 +11121,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="904"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="904"/>
         <source>[0300-036F] Combining Diacritical Marks</source>
-        <translation>[0300-036F] Combining Diacritical Marks</translation>
+        <translation>[0300-036F] Marques diacrítiques combinades</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="988"/>
@@ -11129,7 +11129,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="905"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="905"/>
         <source>[0370-03FF] Greek and Coptic</source>
-        <translation>[0370-03FF] Greek and Coptic</translation>
+        <translation>[0370-03FF] Grec i Copte</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="993"/>
@@ -11137,7 +11137,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="906"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="906"/>
         <source>[0400-04FF] Cyrillic</source>
-        <translation>[0400-04FF] Cyrillic</translation>
+        <translation>[0400-04FF] Ciríl·lic</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="998"/>
@@ -11145,7 +11145,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="907"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="907"/>
         <source>[0500-052F] Cyrillic Supplementary</source>
-        <translation>[0500-052F] Cyrillic Supplementary</translation>
+        <translation>[0500-052F] Ciríl·lic Suplementari</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="1003"/>
@@ -11153,7 +11153,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="908"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="908"/>
         <source>[0530-058F] Armenian</source>
-        <translation>[0530-058F] Armenian</translation>
+        <translation>[0530-058F] Armeni</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="1008"/>
@@ -11161,7 +11161,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="909"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="909"/>
         <source>[0590-05FF] Hebrew</source>
-        <translation>[0590-05FF] Hebrew</translation>
+        <translation>[0590-05FF] Hebreu</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="1013"/>
@@ -11169,7 +11169,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="910"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="910"/>
         <source>[0600-06FF] Arabic</source>
-        <translation>[0600-06FF] Arabic</translation>
+        <translation>[0600-06FF] Àrab</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="1018"/>
@@ -11177,7 +11177,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="911"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="911"/>
         <source>[0700-074F] Syriac</source>
-        <translation>[0700-074F] Syriac</translation>
+        <translation>[0700-074F] Siríac</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="1023"/>
@@ -11193,7 +11193,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="913"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="913"/>
         <source>[0900-097F] Devanagari</source>
-        <translation>[0900-097F] Devanagari</translation>
+        <translation>[0900-097F] Devanàgarí</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="1033"/>
@@ -11201,7 +11201,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="914"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="914"/>
         <source>[0980-09FF] Bengali</source>
-        <translation>[0980-09FF] Bengali</translation>
+        <translation>[0980-09FF] Bengalí</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="1038"/>
@@ -11257,7 +11257,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="921"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="921"/>
         <source>[0D00-0D7F] Malayalam</source>
-        <translation>[0D00-0D7F] Malayalam</translation>
+        <translation>[0D00-0D7F] Malaiàlam</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="1073"/>
@@ -11265,7 +11265,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="922"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="922"/>
         <source>[0D80-0DFF] Sinhala</source>
-        <translation>[0D80-0DFF] Sinhala</translation>
+        <translation>[0D80-0DFF] Singalès</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="1078"/>
@@ -11273,7 +11273,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="923"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="923"/>
         <source>[0E00-0E7F] Thai</source>
-        <translation>[0E00-0E7F] Thai</translation>
+        <translation>[0E00-0E7F] Tailandès</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="1083"/>
@@ -11281,7 +11281,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="924"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="924"/>
         <source>[0E80-0EFF] Lao</source>
-        <translation>[0E80-0EFF] Lao</translation>
+        <translation>[0E80-0EFF] Laosià</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="1088"/>
@@ -11289,7 +11289,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="925"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="925"/>
         <source>[0F00-0FFF] Tibetan</source>
-        <translation>[0F00-0FFF] Tibetan</translation>
+        <translation>[0F00-0FFF] Tibetà</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="1093"/>
@@ -11305,7 +11305,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="927"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="927"/>
         <source>[10A0-10FF] Georgian</source>
-        <translation>[10A0-10FF] Georgian</translation>
+        <translation>[10A0-10FF] Georgià</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="1103"/>
@@ -11321,7 +11321,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="929"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="929"/>
         <source>[1200-137F] Ethiopic</source>
-        <translation>[1200-137F] Ethiopic</translation>
+        <translation>[1200-137F] Etíop</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="1113"/>
@@ -11329,7 +11329,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="930"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="930"/>
         <source>[13A0-13FF] Cherokee</source>
-        <translation>[13A0-13FF] Cherokee</translation>
+        <translation>[13A0-13FF] Cherokí</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="1118"/>
@@ -11337,7 +11337,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="931"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="931"/>
         <source>[1400-167F] Unified Canadian Aboriginal Syllabic</source>
-        <translation>[1400-167F] Unified Canadian Aboriginal Syllabic</translation>
+        <translation>[1400-167F] Síl·labes Indígenes Canadenques Unificades</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="1123"/>
@@ -11353,7 +11353,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="933"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="933"/>
         <source>[16A0-16FF] Runic</source>
-        <translation>[16A0-16FF] Runic</translation>
+        <translation>[16A0-16FF] Rúnic</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="1133"/>
@@ -11401,7 +11401,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="939"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="939"/>
         <source>[1800-18AF] Mongolian</source>
-        <translation>[1800-18AF] Mongolian</translation>
+        <translation>[1800-18AF] Mongol</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="1163"/>
@@ -11409,7 +11409,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="940"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="940"/>
         <source>[1E00-1EFF] Latin Extended Additional</source>
-        <translation>[1E00-1EFF] Latin Extended Additional</translation>
+        <translation>[1E00-1EFF] Llatí Estès Addicional</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="1168"/>
@@ -11417,7 +11417,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="941"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="941"/>
         <source>[1F00-1FFF] Greek Extended</source>
-        <translation>[1F00-1FFF] Greek Extended</translation>
+        <translation>[1F00-1FFF] Grec Estès</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="1173"/>
@@ -11425,7 +11425,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="942"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="942"/>
         <source>[2000-206F] General Punctuation</source>
-        <translation>[2000-206F] General Punctuation</translation>
+        <translation>[2000-206F] Puntuació general</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="1178"/>
@@ -11433,7 +11433,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="943"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="943"/>
         <source>[2070-209F] Superscripts and Subscripts</source>
-        <translation>[2070-209F] Superscripts and Subscripts</translation>
+        <translation>[2070-209F] Superíndexs i subíndexs</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="1183"/>
@@ -11441,7 +11441,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="944"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="944"/>
         <source>[20A0-20CF] Currency Symbols</source>
-        <translation>[20A0-20CF] Currency Symbols</translation>
+        <translation>[20A0-20CF] Símbols monetaris</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="1188"/>
@@ -11449,7 +11449,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="945"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="945"/>
         <source>[20D0-20FF] Combining Marks for Symbols</source>
-        <translation>[20D0-20FF] Combining Marks for Symbols</translation>
+        <translation>[20D0-20FF] Marques combinades per a símbols</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="1193"/>
@@ -11457,7 +11457,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="946"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="946"/>
         <source>[2100-214F] Letterlike Symbols</source>
-        <translation>[2100-214F] Letterlike Symbols</translation>
+        <translation>[2100-214F] Símbols similars a lletres</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="1198"/>
@@ -11465,7 +11465,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="947"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="947"/>
         <source>[2150-218F] Number Forms</source>
-        <translation>[2150-218F] Number Forms</translation>
+        <translation>[2150-218F] Formes numèriques</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="1203"/>
@@ -11473,7 +11473,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="948"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="948"/>
         <source>[2190-21FF] Arrows</source>
-        <translation>[2190-21FF] Arrows</translation>
+        <translation>[2190-21FF] Fletxes</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="1208"/>
@@ -11481,7 +11481,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="949"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="949"/>
         <source>[2200-22FF] Mathematical Operators</source>
-        <translation>[2200-22FF] Mathematical Operators</translation>
+        <translation>[2200-22FF] Operadors matemàtics</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="1213"/>
@@ -11489,7 +11489,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="950"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="950"/>
         <source>[2300-23FF] Miscellaneous Technical</source>
-        <translation>[2300-23FF] Miscellaneous Technical</translation>
+        <translation>[2300-23FF] Tècnics diversos</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="1218"/>
@@ -11497,7 +11497,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="951"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="951"/>
         <source>[2400-243F] Control Pictures</source>
-        <translation>[2400-243F] Control Pictures</translation>
+        <translation>[2400-243F] Imatges de control</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="1223"/>
@@ -11505,7 +11505,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="952"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="952"/>
         <source>[2440-245F] Optical Character Recognition</source>
-        <translation>[2440-245F] Optical Character Recognition</translation>
+        <translation>[2440-245F] Reconeixement òptic de caràcters</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="1228"/>
@@ -11513,7 +11513,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="953"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="953"/>
         <source>[2460-24FF] Enclosed Alphanumerics</source>
-        <translation>[2460-24FF] Enclosed Alphanumerics</translation>
+        <translation>[2460-24FF] Alfanumèrics tancats</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="1233"/>
@@ -11521,7 +11521,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="954"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="954"/>
         <source>[2500-257F] Box Drawing</source>
-        <translation>[2500-257F] Box Drawing</translation>
+        <translation>[2500-257F] Dibuix de caixes</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="1238"/>
@@ -11529,7 +11529,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="955"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="955"/>
         <source>[2580-259F] Block Elements</source>
-        <translation>[2580-259F] Block Elements</translation>
+        <translation>[2580-259F] Elements de bloc</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="1243"/>
@@ -11537,7 +11537,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="956"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="956"/>
         <source>[25A0-25FF] Geometric Shapes</source>
-        <translation>[25A0-25FF] Geometric Shapes</translation>
+        <translation>[25A0-25FF] Formes geomètriques</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="1248"/>
@@ -11545,7 +11545,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="957"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="957"/>
         <source>[2600-26FF] Miscellaneous Symbols</source>
-        <translation>[2600-26FF] Miscellaneous Symbols</translation>
+        <translation>[2600-26FF] Símbols diversos</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="1253"/>
@@ -11561,7 +11561,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="959"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="959"/>
         <source>[27C0-27EF] Miscellaneous Mathematical Symbols-A</source>
-        <translation>[27C0-27EF] Miscellaneous Mathematical Symbols-A</translation>
+        <translation>[27C0-27EF] Símbols matemàtics diversos-A</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="1263"/>
@@ -11569,7 +11569,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="960"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="960"/>
         <source>[27F0-27FF] Supplemental Arrows-A</source>
-        <translation>[27F0-27FF] Supplemental Arrows-A</translation>
+        <translation>[27F0-27FF] Fletxes suplementàries-A</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="1268"/>
@@ -11577,7 +11577,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="961"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="961"/>
         <source>[2800-28FF] Braille Patterns</source>
-        <translation>[2800-28FF] Braille Patterns</translation>
+        <translation>[2800-28FF] Patrons Braille</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="1273"/>
@@ -11585,7 +11585,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="962"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="962"/>
         <source>[2900-297F] Supplemental Arrows-B</source>
-        <translation>[2900-297F] Supplemental Arrows-B</translation>
+        <translation>[2900-297F] Fletxes suplementàries-B</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="1278"/>
@@ -11593,7 +11593,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="963"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="963"/>
         <source>[2980-29FF] Miscellaneous Mathematical Symbols-B</source>
-        <translation>[2980-29FF] Miscellaneous Mathematical Symbols-B</translation>
+        <translation>[2980-29FF] Símbols matemàtics diversos-B</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="1283"/>
@@ -11601,7 +11601,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="964"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="964"/>
         <source>[2A00-2AFF] Supplemental Mathematical Operators</source>
-        <translation>[2A00-2AFF] Supplemental Mathematical Operators</translation>
+        <translation>[2A00-2AFF] Operadors matemàtics suplementaris</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="1288"/>
@@ -11609,7 +11609,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="965"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="965"/>
         <source>[2E80-2EFF] CJK Radicals Supplement</source>
-        <translation>[2E80-2EFF] CJK Radicals Supplement</translation>
+        <translation>[2E80-2EFF] Suplement de radicals CJK</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="1293"/>
@@ -11617,7 +11617,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="966"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="966"/>
         <source>[2F00-2FDF] Kangxi Radicals</source>
-        <translation>[2F00-2FDF] Kangxi Radicals</translation>
+        <translation>[2F00-2FDF] Radicals Kangxi</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="1298"/>
@@ -11625,7 +11625,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="967"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="967"/>
         <source>[2FF0-2FFF] Ideographic Description Characters</source>
-        <translation>[2FF0-2FFF] Ideographic Description Characters</translation>
+        <translation>[2FF0-2FFF] Caràcters de descripció ideogràfica</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="1303"/>
@@ -11633,7 +11633,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="968"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="968"/>
         <source>[3000-303F] CJK Symbols and Punctuation</source>
-        <translation>[3000-303F] CJK Symbols and Punctuation</translation>
+        <translation>[3000-303F] Símbols i puntuació CJK</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="1308"/>
@@ -11665,7 +11665,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="972"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="972"/>
         <source>[3130-318F] Hangul Compatibility Jamo</source>
-        <translation>[3130-318F] Hangul Compatibility Jamo</translation>
+        <translation>[3130-318F] Jamo de compatibilitat Hangul</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="1328"/>
@@ -11681,7 +11681,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="974"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="974"/>
         <source>[31A0-31BF] Bopomofo Extended</source>
-        <translation>[31A0-31BF] Bopomofo Extended</translation>
+        <translation>[31A0-31BF] Bopomofo Estès</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="1338"/>
@@ -11689,7 +11689,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="975"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="975"/>
         <source>[3200-32FF] Enclosed CJK Letters and Months</source>
-        <translation>[3200-32FF] Enclosed CJK Letters and Months</translation>
+        <translation>[3200-32FF] Lletres CJK tancades i mesos</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="1343"/>
@@ -11697,7 +11697,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="976"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="976"/>
         <source>[3300-33FF] CJK Compatibility</source>
-        <translation>[3300-33FF] CJK Compatibility</translation>
+        <translation>[3300-33FF] Compatibilitat CJK</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="1348"/>
@@ -11705,7 +11705,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="977"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="977"/>
         <source>[3400-4DBF] CJK Unified Ideographs Extension A</source>
-        <translation>[3400-4DBF] CJK Unified Ideographs Extension A</translation>
+        <translation>[3400-4DBF] Extensió A d'ideogràfics CJK unificats</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="1353"/>
@@ -11713,7 +11713,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="978"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="978"/>
         <source>[4E00-9FAF] CJK Unified Ideographs</source>
-        <translation>[4E00-9FAF] CJK Unified Ideographs</translation>
+        <translation>[4E00-9FAF] Ideogràfics CJK unificats</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="1358"/>
@@ -11721,7 +11721,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="979"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="979"/>
         <source>[A000-A48F] Yi Syllables</source>
-        <translation>[A000-A48F] Yi Syllables</translation>
+        <translation>[A000-A48F] Síl·labes Yi</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="1363"/>
@@ -11729,7 +11729,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="980"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="980"/>
         <source>[A490-A4CF] Yi Radicals</source>
-        <translation>[A490-A4CF] Yi Radicals</translation>
+        <translation>[A490-A4CF] Radicals Yi</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="1368"/>
@@ -11737,7 +11737,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="981"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="981"/>
         <source>[AC00-D7AF] Hangul Syllables</source>
-        <translation>[AC00-D7AF] Hangul Syllables</translation>
+        <translation>[AC00-D7AF] Síl·labes Hangul</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="1373"/>
@@ -11745,7 +11745,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="982"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="982"/>
         <source>[D800-DBFF] High Surrogates</source>
-        <translation>[D800-DBFF] High Surrogates</translation>
+        <translation>[D800-DBFF] Subrogats alts</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="1378"/>
@@ -11753,7 +11753,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="983"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="983"/>
         <source>[DC00-DFFF] Low Surrogate Area</source>
-        <translation>[DC00-DFFF] Low Surrogate Area</translation>
+        <translation>[DC00-DFFF] Àrea de subrogats baixos</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="1383"/>
@@ -11761,7 +11761,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="984"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="984"/>
         <source>[E000-F8FF] Private Use Area</source>
-        <translation>[E000-F8FF] Private Use Area</translation>
+        <translation>[E000-F8FF] Àrea d'ús privat</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="1388"/>
@@ -11769,7 +11769,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="985"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="985"/>
         <source>[F900-FAFF] CJK Compatibility Ideographs</source>
-        <translation>[F900-FAFF] CJK Compatibility Ideographs</translation>
+        <translation>[F900-FAFF] Ideogràfics de compatibilitat CJK</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="1393"/>
@@ -11777,7 +11777,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="986"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="986"/>
         <source>[FB00-FB4F] Alphabetic Presentation Forms</source>
-        <translation>[FB00-FB4F] Alphabetic Presentation Forms</translation>
+        <translation>[FB00-FB4F] Formes de presentació alfabètica</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="1398"/>
@@ -11785,7 +11785,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="987"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="987"/>
         <source>[FB50-FDFF] Arabic Presentation Forms-A</source>
-        <translation>[FB50-FDFF] Arabic Presentation Forms-A</translation>
+        <translation>[FB50-FDFF] Formes de presentació àrab-A</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="1403"/>
@@ -11793,7 +11793,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="988"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="988"/>
         <source>[FE00-FE0F] Variation Selectors</source>
-        <translation>[FE00-FE0F] Variation Selectors</translation>
+        <translation>[FE00-FE0F] Selectors de variació</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="1408"/>
@@ -11801,7 +11801,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="989"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="989"/>
         <source>[FE20-FE2F] Combining Half Marks</source>
-        <translation>[FE20-FE2F] Combining Half Marks</translation>
+        <translation>[FE20-FE2F] Mig marques combinades</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="1413"/>
@@ -11809,7 +11809,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="990"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="990"/>
         <source>[FE30-FE4F] CJK Compatibility Forms</source>
-        <translation>[FE30-FE4F] CJK Compatibility Forms</translation>
+        <translation>[FE30-FE4F] Formes de compatibilitat CJK</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="1418"/>
@@ -11817,7 +11817,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="991"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="991"/>
         <source>[FE50-FE6F] Small Form Variants</source>
-        <translation>[FE50-FE6F] Small Form Variants</translation>
+        <translation>[FE50-FE6F] Variants de forma petita</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="1423"/>
@@ -11825,7 +11825,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="992"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="992"/>
         <source>[FE70-FEFF] Arabic Presentation Forms-B</source>
-        <translation>[FE70-FEFF] Arabic Presentation Forms-B</translation>
+        <translation>[FE70-FEFF] Formes de presentació àrab-B</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="1428"/>
@@ -11833,7 +11833,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="993"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="993"/>
         <source>[FF00-FFEF] Halfwidth and Fullwidth Forms</source>
-        <translation>[FF00-FFEF] Halfwidth and Fullwidth Forms</translation>
+        <translation>[FF00-FFEF] Formes d'amplada mitja i completa</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="1433"/>
@@ -11841,7 +11841,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="994"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="994"/>
         <source>[FFF0-FFFF] Specials</source>
-        <translation>[FFF0-FFFF] Specials</translation>
+        <translation>[FFF0-FFFF] Especials</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="1438"/>
@@ -11849,7 +11849,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="995"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="995"/>
         <source>[10300-1032F] Old Italic</source>
-        <translation>[10300-1032F] Old Italic</translation>
+        <translation>[10300-1032F] Cursiva antiga</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="1443"/>
@@ -11857,7 +11857,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="996"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="996"/>
         <source>[10330-1034F] Gothic</source>
-        <translation>[10330-1034F] Gothic</translation>
+        <translation>[10330-1034F] Gòtic</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="1448"/>
@@ -11873,7 +11873,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="998"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="998"/>
         <source>[1D000-1D0FF] Byzantine Musical Symbols</source>
-        <translation>[1D000-1D0FF] Byzantine Musical Symbols</translation>
+        <translation>[1D000-1D0FF] Símbols musicals bizantins</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="1458"/>
@@ -11881,7 +11881,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="999"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="999"/>
         <source>[1D100-1D1FF] Musical Symbols</source>
-        <translation>[1D100-1D1FF] Musical Symbols</translation>
+        <translation>[1D100-1D1FF] Símbols musicals</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="1463"/>
@@ -11889,7 +11889,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="1000"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="1000"/>
         <source>[1D400-1D7FF] Mathematical Alphanumeric Symbols</source>
-        <translation>[1D400-1D7FF] Mathematical Alphanumeric Symbols</translation>
+        <translation>[1D400-1D7FF] Símbols alfanumèrics matemàtics</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="1468"/>
@@ -11897,7 +11897,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="1001"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="1001"/>
         <source>[20000-2A6DF] CJK Unified Ideographs Extension B</source>
-        <translation>[20000-2A6DF] CJK Unified Ideographs Extension B</translation>
+        <translation>[20000-2A6DF] Extensió B d'ideogràfics CJK unificats</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="1473"/>
@@ -11905,7 +11905,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="1002"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="1002"/>
         <source>[2F800-2FA1F] CJK Compatibility Ideographs Supplement</source>
-        <translation>[2F800-2FA1F] CJK Compatibility Ideographs Supplement</translation>
+        <translation>[2F800-2FA1F] Suplement d'ideogràfics de compatibilitat CJK</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="1478"/>
@@ -11913,7 +11913,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="1003"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="1003"/>
         <source>[E0000-E007F] Tags</source>
-        <translation>[E0000-E007F] Tags</translation>
+        <translation>[E0000-E007F] Etiquetes</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="1483"/>
@@ -11921,7 +11921,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="1004"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="1004"/>
         <source>[F0000-FFFFD] Supplementary Private Use Area-A</source>
-        <translation>[F0000-FFFFD] Supplementary Private Use Area-A</translation>
+        <translation>[F0000-FFFFD] Àrea d'ús privat suplementària-A</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="1488"/>
@@ -11929,7 +11929,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="1005"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="1005"/>
         <source>[100000-10FFFD] Supplementary Private Use Area-B</source>
-        <translation>[100000-10FFFD] Supplementary Private Use Area-B</translation>
+        <translation>[100000-10FFFD] Àrea d'ús privat suplementària-B</translation>
     </message>
 </context>
 <context>
@@ -11948,17 +11948,17 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_exitdialog.h" line="80"/>
         <location filename="../../../generated/librecad/ui/ui_qg_exitdialog.h" line="80"/>
         <source>again Still No Text supplied.</source>
-        <translation>again Still No Text supplied.</translation>
+        <translation>Encara no s'ha proporcionat text.</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_exitdialog.cpp" line="116"/>
         <source>Discard All</source>
-        <translation>Discard All</translation>
+        <translation>Descartar tot</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_exitdialog.cpp" line="116"/>
         <source>Discard</source>
-        <translation>Discard</translation>
+        <translation>Descartar</translation>
     </message>
 </context>
 <context>
@@ -11966,84 +11966,84 @@ so default step value required for baking</translation>
     <message>
         <location filename="../../src/ui/qg_filedialog.cpp" line="122"/>
         <source>Drawing Exchange DXF 2007 %1</source>
-        <translation>Drawing Exchange DXF 2007 %1</translation>
+        <translation>Intercanvi de dibuix DXF 2007 %1</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_filedialog.cpp" line="123"/>
         <source>Drawing Exchange DXF 2004 %1</source>
-        <translation>Drawing Exchange DXF 2004 %1</translation>
+        <translation>Intercanvi de dibuix DXF 2004 %1</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_filedialog.cpp" line="124"/>
         <source>Drawing Exchange DXF 2000 %1</source>
-        <translation>Drawing Exchange DXF 2000 %1</translation>
+        <translation>Intercanvi de dibuix DXF 2000 %1</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_filedialog.cpp" line="125"/>
         <source>Drawing Exchange DXF R14 %1</source>
-        <translation>Drawing Exchange DXF R14 %1</translation>
+        <translation>Intercanvi de dibuix DXF R14 %1</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_filedialog.cpp" line="126"/>
         <source>Drawing Exchange DXF R12 %1</source>
-        <translation>Drawing Exchange DXF R12 %1</translation>
+        <translation>Intercanvi de dibuix DXF R12 %1</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_filedialog.cpp" line="127"/>
         <source>Drawing Exchange %1</source>
-        <translation>Drawing Exchange %1</translation>
+        <translation>Intercanvi de dibuix %1</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_filedialog.cpp" line="129"/>
         <source>LFF Font %1</source>
-        <translation>LFF Font %1</translation>
+        <translation>Font LFF %1</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_filedialog.cpp" line="131"/>
         <source>dwg Drawing %1</source>
-        <translation>dwg Drawing %1</translation>
+        <translation>Dibuix dwg %1</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_filedialog.cpp" line="133"/>
         <source>QCad Font %1</source>
-        <translation>QCad Font %1</translation>
+        <translation>Font QCad %1</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_filedialog.cpp" line="134"/>
         <source>Jww Drawing %1</source>
-        <translation>Jww Drawing %1</translation>
+        <translation>Dibuix Jww %1</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_filedialog.cpp" line="135"/>
         <source>QCad 1.x file %1</source>
-        <translation>QCad 1.x file %1</translation>
+        <translation>Fitxer QCad 1.x %1</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_filedialog.cpp" line="138"/>
         <source>Block</source>
         <comment>block file</comment>
-        <translation>Block</translation>
+        <translation>Bloc</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_filedialog.cpp" line="141"/>
         <source>Drawing</source>
         <comment>drawing file</comment>
-        <translation>Drawing</translation>
+        <translation>Dibuix</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_filedialog.cpp" line="164"/>
         <source>Open %1</source>
-        <translation>Open %1</translation>
+        <translation>Obrir %1</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_filedialog.cpp" line="235"/>
         <source>Untitled</source>
-        <translation>Untitled</translation>
+        <translation>Sense títol</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_filedialog.cpp" line="246"/>
         <source>Save %1 As</source>
-        <translation>Save %1 As</translation>
+        <translation>Desar %1 com a</translation>
     </message>
 </context>
 <context>
@@ -12051,12 +12051,12 @@ so default step value required for baking</translation>
     <message>
         <location filename="../../src/ui/qg_graphicview.cpp" line="566"/>
         <source>Edit Block</source>
-        <translation>Edit Block</translation>
+        <translation>Editar bloc</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_graphicview.cpp" line="569"/>
         <source>Edit Properties</source>
-        <translation>Edit Properties</translation>
+        <translation>Editar propietats</translation>
     </message>
 </context>
 <context>
@@ -12067,7 +12067,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgimageoptions.h" line="269"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgimageoptions.h" line="269"/>
         <source>Image Export Options</source>
-        <translation>Image Export Options</translation>
+        <translation>Opcions d'exportació d'imatge</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgimageoptions.ui" line="23"/>
@@ -12075,7 +12075,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgimageoptions.h" line="270"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgimageoptions.h" line="270"/>
         <source>Bitmap Size</source>
-        <translation>Bitmap Size</translation>
+        <translation>Mida del mapa de bits</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgimageoptions.ui" line="29"/>
@@ -12083,7 +12083,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgimageoptions.h" line="271"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgimageoptions.h" line="271"/>
         <source>Resolution:</source>
-        <translation>Resolution:</translation>
+        <translation>Resolució:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgimageoptions.ui" line="43"/>
@@ -12099,7 +12099,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgimageoptions.h" line="274"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgimageoptions.h" line="274"/>
         <source>Width:</source>
-        <translation>Width:</translation>
+        <translation>Amplada:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgimageoptions.ui" line="154"/>
@@ -12115,7 +12115,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgimageoptions.h" line="276"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgimageoptions.h" line="276"/>
         <source>Background</source>
-        <translation>Background</translation>
+        <translation>Fons</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgimageoptions.ui" line="209"/>
@@ -12123,7 +12123,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgimageoptions.h" line="277"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgimageoptions.h" line="277"/>
         <source>White</source>
-        <translation>White</translation>
+        <translation>Blanc</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgimageoptions.ui" line="219"/>
@@ -12131,7 +12131,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgimageoptions.h" line="278"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgimageoptions.h" line="278"/>
         <source>B&amp;lack</source>
-        <translation>B&amp;lack</translation>
+        <translation>&amp;Negre</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgimageoptions.ui" line="258"/>
@@ -12139,7 +12139,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgimageoptions.h" line="279"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgimageoptions.h" line="279"/>
         <source>Colouring</source>
-        <translation>Colouring</translation>
+        <translation>Coloració</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgimageoptions.ui" line="264"/>
@@ -12147,7 +12147,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgimageoptions.h" line="280"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgimageoptions.h" line="280"/>
         <source>Black / White</source>
-        <translation>Black / White</translation>
+        <translation>Negre / Blanc</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgimageoptions.ui" line="274"/>
@@ -12155,7 +12155,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgimageoptions.h" line="281"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgimageoptions.h" line="281"/>
         <source>Coloured</source>
-        <translation>Coloured</translation>
+        <translation>En color</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgimageoptions.ui" line="310"/>
@@ -12163,7 +12163,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgimageoptions.h" line="282"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgimageoptions.h" line="282"/>
         <source>Borders</source>
-        <translation>Borders</translation>
+        <translation>Vores</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgimageoptions.ui" line="326"/>
@@ -12171,7 +12171,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgimageoptions.h" line="284"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgimageoptions.h" line="284"/>
         <source>Top / Bottom - Border:</source>
-        <translation>Top / Bottom - Border:</translation>
+        <translation>Superior / Inferior - Vora:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgimageoptions.ui" line="333"/>
@@ -12179,7 +12179,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgimageoptions.h" line="285"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgimageoptions.h" line="285"/>
         <source>Left / Right - Border:</source>
-        <translation>Left / Right - Border:</translation>
+        <translation>Esquerra / Dreta - Vora:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgimageoptions.ui" line="353"/>
@@ -12187,7 +12187,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgimageoptions.h" line="286"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgimageoptions.h" line="286"/>
         <source>set same size</source>
-        <translation>set same size</translation>
+        <translation>establir la mateixa mida</translation>
     </message>
 </context>
 <context>
@@ -12195,7 +12195,7 @@ so default step value required for baking</translation>
     <message>
         <location filename="../../src/ui/qg_layerbox.cpp" line="71"/>
         <source>- Unchanged -</source>
-        <translation>- Unchanged -</translation>
+        <translation>- Sense canvis -</translation>
     </message>
 </context>
 <context>
@@ -12206,7 +12206,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_layerdialog.h" line="90"/>
         <location filename="../../../generated/librecad/ui/ui_qg_layerdialog.h" line="90"/>
         <source>Layer Settings</source>
-        <translation>Layer Settings</translation>
+        <translation>Configuració de capa</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_layerdialog.ui" line="29"/>
@@ -12215,8 +12215,8 @@ so default step value required for baking</translation>
         <location filename="../../../generated/librecad/ui/ui_qg_layerdialog.h" line="92"/>
         <source>A Construction Layer has entities of infinite straight lines intended to be used for geometric construction.
 The contents of a Construction Layer should not appear in printout.</source>
-        <translation>A Construction Layer has entities of infinite straight lines intended to be used for geometric construction.
-The contents of a Construction Layer should not appear in printout.</translation>
+        <translation>Una capa de construcció té entitats de línies rectes infinites destinades a ser usades per a la construcció geomètrica.
+El contingut d'una capa de construcció no hauria d'aparèixer en la impressió.</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_layerdialog.ui" line="33"/>
@@ -12224,7 +12224,7 @@ The contents of a Construction Layer should not appear in printout.</translation
         <location filename="../../../build/ui_qg_layerdialog.h" line="95"/>
         <location filename="../../../generated/librecad/ui/ui_qg_layerdialog.h" line="95"/>
         <source>Construction Layer</source>
-        <translation>Construction Layer</translation>
+        <translation>Capa de construcció</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_layerdialog.ui" line="46"/>
@@ -12232,12 +12232,12 @@ The contents of a Construction Layer should not appear in printout.</translation
         <location filename="../../../build/ui_qg_layerdialog.h" line="96"/>
         <location filename="../../../generated/librecad/ui/ui_qg_layerdialog.h" line="96"/>
         <source>Layer Name:</source>
-        <translation>Layer Name:</translation>
+        <translation>Nom de capa:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_layerdialog.cpp" line="65"/>
         <source>Default Pen</source>
-        <translation>Default Pen</translation>
+        <translation>Llapis per defecte</translation>
     </message>
 </context>
 <context>
@@ -12245,117 +12245,117 @@ The contents of a Construction Layer should not appear in printout.</translation
     <message>
         <location filename="../../src/ui/qg_layerwidget.cpp" line="227"/>
         <source>Show all layers</source>
-        <translation>Show all layers</translation>
+        <translation>Mostrar totes les capes</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_layerwidget.cpp" line="234"/>
         <source>Hide all layers</source>
-        <translation>Hide all layers</translation>
+        <translation>Ocultar totes les capes</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_layerwidget.cpp" line="241"/>
         <source>Unlock all layers</source>
-        <translation>Unlock all layers</translation>
+        <translation>Desbloquejar totes les capes</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_layerwidget.cpp" line="248"/>
         <source>Lock all layers</source>
-        <translation>Lock all layers</translation>
+        <translation>Bloquejar totes les capes</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_layerwidget.cpp" line="255"/>
         <source>Add a layer</source>
-        <translation>Add a layer</translation>
+        <translation>Afegir una capa</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_layerwidget.cpp" line="262"/>
         <source>Remove layer</source>
-        <translation>Remove layer</translation>
+        <translation>Eliminar capa</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_layerwidget.cpp" line="269"/>
         <source>Modify layer attributes / rename</source>
-        <translation>Modify layer attributes / rename</translation>
+        <translation>Modificar atributs de capa / canviar nom</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_layerwidget.cpp" line="276"/>
         <source>Filter</source>
-        <translation>Filter</translation>
+        <translation>Filtre</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_layerwidget.cpp" line="278"/>
         <source>Looking for matching layer names</source>
-        <translation>Looking for matching layer names</translation>
+        <translation>Cercant noms de capa coincidents</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_layerwidget.cpp" line="549"/>
         <source>Layer Menu</source>
-        <translation>Layer Menu</translation>
+        <translation>Menú de capa</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_layerwidget.cpp" line="556"/>
         <source>&amp;Defreeze all Layers</source>
-        <translation>&amp;Defreeze all Layers</translation>
+        <translation>&amp;Descongelar totes les capes</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_layerwidget.cpp" line="558"/>
         <source>&amp;Freeze all Layers</source>
-        <translation>&amp;Freeze all Layers</translation>
+        <translation>&amp;Congelar totes les capes</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_layerwidget.cpp" line="560"/>
         <source>&amp;Unlock all Layers</source>
-        <translation>&amp;Unlock all Layers</translation>
+        <translation>&amp;Desbloquejar totes les capes</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_layerwidget.cpp" line="562"/>
         <source>&amp;Lock all Layers</source>
-        <translation>&amp;Lock all Layers</translation>
+        <translation>&amp;Bloquejar totes les capes</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_layerwidget.cpp" line="567"/>
         <source>Toggle Layer &amp;Visibility</source>
-        <translation>Toggle Layer &amp;Visibility</translation>
+        <translation>Commutar &amp;visibilitat de capa</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_layerwidget.cpp" line="569"/>
         <source>Toggle Layer Loc&amp;k</source>
-        <translation>Toggle Layer Loc&amp;k</translation>
+        <translation>Commutar b&amp;loqueig de capa</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_layerwidget.cpp" line="571"/>
         <source>Toggle Layer &amp;Printing</source>
-        <translation>Toggle Layer &amp;Printing</translation>
+        <translation>Commutar im&amp;pressió de capa</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_layerwidget.cpp" line="573"/>
         <source>Toggle &amp;Construction Layer</source>
-        <translation>Toggle &amp;Construction Layer</translation>
+        <translation>Commutar capa de &amp;construcció</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_layerwidget.cpp" line="575"/>
         <source>&amp;Remove Layer</source>
-        <translation>&amp;Remove Layer</translation>
+        <translation>&amp;Eliminar capa</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_layerwidget.cpp" line="579"/>
         <source>&amp;Add Layer</source>
-        <translation>&amp;Add Layer</translation>
+        <translation>&amp;Afegir capa</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_layerwidget.cpp" line="581"/>
         <source>Edit Layer &amp;Attributes</source>
-        <translation>Edit Layer &amp;Attributes</translation>
+        <translation>&amp;Editar atributs de capa</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_layerwidget.cpp" line="586"/>
         <source>&amp;Export Selected Layer(s)</source>
-        <translation>&amp;Export Selected Layer(s)</translation>
+        <translation>&amp;Exportar capa(es) seleccionada(es)</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_layerwidget.cpp" line="589"/>
         <source>Export &amp;Visible Layer(s)</source>
-        <translation>Export &amp;Visible Layer(s)</translation>
+        <translation>Exportar capa(es) &amp;visible(s)</translation>
     </message>
 </context>
 <context>
@@ -12363,22 +12363,22 @@ The contents of a Construction Layer should not appear in printout.</translation
     <message>
         <location filename="../../src/ui/qg_librarywidget.cpp" line="89"/>
         <source>Insert</source>
-        <translation>Insert</translation>
+        <translation>Inserir</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_librarywidget.cpp" line="93"/>
         <source>Refresh</source>
-        <translation>Refresh</translation>
+        <translation>Actualitzar</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_librarywidget.cpp" line="95"/>
         <source>Rebuild</source>
-        <translation>Rebuild</translation>
+        <translation>Reconstruir</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_librarywidget.cpp" line="201"/>
         <source>Directories</source>
-        <translation>Directories</translation>
+        <translation>Directoris</translation>
     </message>
 </context>
 <context>
@@ -12386,28 +12386,28 @@ The contents of a Construction Layer should not appear in printout.</translation
     <message>
         <location filename="../../src/ui/qg_linetypebox.cpp" line="75"/>
         <source>- Unchanged -</source>
-        <translation>- Unchanged -</translation>
+        <translation>- Sense canvis -</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_linetypebox.cpp" line="79"/>
         <location filename="../../src/ui/qg_linetypebox.cpp" line="189"/>
         <source>By Layer</source>
-        <translation>By Layer</translation>
+        <translation>Per capa</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_linetypebox.cpp" line="80"/>
         <source>By Block</source>
-        <translation>By Block</translation>
+        <translation>Per bloc</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_linetypebox.cpp" line="82"/>
         <source>No Pen</source>
-        <translation>No Pen</translation>
+        <translation>Sense llapis</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_linetypebox.cpp" line="83"/>
         <source>Continuous</source>
-        <translation>Continuous</translation>
+        <translation>Contínua</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_linetypebox.cpp" line="84"/>
@@ -12417,17 +12417,17 @@ The contents of a Construction Layer should not appear in printout.</translation
     <message>
         <location filename="../../src/ui/qg_linetypebox.cpp" line="85"/>
         <source>Dot (tiny)</source>
-        <translation>Dot (tiny)</translation>
+        <translation>Punt (molt petit)</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_linetypebox.cpp" line="86"/>
         <source>Dot (small)</source>
-        <translation>Dot (small)</translation>
+        <translation>Punt (petit)</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_linetypebox.cpp" line="87"/>
         <source>Dot (large)</source>
-        <translation>Dot (large)</translation>
+        <translation>Punt (gran)</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_linetypebox.cpp" line="88"/>
@@ -12437,37 +12437,37 @@ The contents of a Construction Layer should not appear in printout.</translation
     <message>
         <location filename="../../src/ui/qg_linetypebox.cpp" line="89"/>
         <source>Dash (tiny)</source>
-        <translation>Dash (tiny)</translation>
+        <translation>Guió (molt petit)</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_linetypebox.cpp" line="90"/>
         <source>Dash (small)</source>
-        <translation>Dash (small)</translation>
+        <translation>Guió (petit)</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_linetypebox.cpp" line="91"/>
         <source>Dash (large)</source>
-        <translation>Dash (large)</translation>
+        <translation>Guió (gran)</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_linetypebox.cpp" line="92"/>
         <source>Dash Dot</source>
-        <translation>Dash Dot</translation>
+        <translation>Guió punt</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_linetypebox.cpp" line="93"/>
         <source>Dash Dot (tiny)</source>
-        <translation>Dash Dot (tiny)</translation>
+        <translation>Guió punt (molt petit)</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_linetypebox.cpp" line="94"/>
         <source>Dash Dot (small)</source>
-        <translation>Dash Dot (small)</translation>
+        <translation>Guió punt (petit)</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_linetypebox.cpp" line="95"/>
         <source>Dash Dot (large)</source>
-        <translation>Dash Dot (large)</translation>
+        <translation>Guió punt (gran)</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_linetypebox.cpp" line="96"/>
@@ -12477,57 +12477,57 @@ The contents of a Construction Layer should not appear in printout.</translation
     <message>
         <location filename="../../src/ui/qg_linetypebox.cpp" line="97"/>
         <source>Divide (tiny)</source>
-        <translation>Divide (tiny)</translation>
+        <translation>Divisió (molt petit)</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_linetypebox.cpp" line="98"/>
         <source>Divide (small)</source>
-        <translation>Divide (small)</translation>
+        <translation>Divisió (petit)</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_linetypebox.cpp" line="99"/>
         <source>Divide (large)</source>
-        <translation>Divide (large)</translation>
+        <translation>Divisió (gran)</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_linetypebox.cpp" line="100"/>
         <source>Center</source>
-        <translation>Center</translation>
+        <translation>Centre</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_linetypebox.cpp" line="101"/>
         <source>Center (tiny)</source>
-        <translation>Center (tiny)</translation>
+        <translation>Centre (molt petit)</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_linetypebox.cpp" line="102"/>
         <source>Center (small)</source>
-        <translation>Center (small)</translation>
+        <translation>Centre (petit)</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_linetypebox.cpp" line="103"/>
         <source>Center (large)</source>
-        <translation>Center (large)</translation>
+        <translation>Centre (gran)</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_linetypebox.cpp" line="104"/>
         <source>Border</source>
-        <translation>Border</translation>
+        <translation>Vora</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_linetypebox.cpp" line="105"/>
         <source>Border (tiny)</source>
-        <translation>Border (tiny)</translation>
+        <translation>Vora (molt petit)</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_linetypebox.cpp" line="106"/>
         <source>Border (small)</source>
-        <translation>Border (small)</translation>
+        <translation>Vora (petit)</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_linetypebox.cpp" line="107"/>
         <source>Border (large)</source>
-        <translation>Border (large)</translation>
+        <translation>Vora (gran)</translation>
     </message>
 </context>
 <context>
@@ -12538,7 +12538,7 @@ The contents of a Construction Layer should not appear in printout.</translation
         <location filename="../../../build/ui_qg_mousewidget.h" line="88"/>
         <location filename="../../../generated/librecad/ui/ui_qg_mousewidget.h" line="88"/>
         <source>Mouse</source>
-        <translation>Mouse</translation>
+        <translation>Ratolí</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_mousewidget.ui" line="71"/>
@@ -12546,7 +12546,7 @@ The contents of a Construction Layer should not appear in printout.</translation
         <location filename="../../../build/ui_qg_mousewidget.h" line="89"/>
         <location filename="../../../generated/librecad/ui/ui_qg_mousewidget.h" line="89"/>
         <source>Right</source>
-        <translation>Right</translation>
+        <translation>Dreta</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_mousewidget.ui" line="108"/>
@@ -12578,12 +12578,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../../src/ui/qg_pentoolbar.cpp" line="44"/>
         <source>Line color</source>
-        <translation>Line color</translation>
+        <translation>Color de línia</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_pentoolbar.cpp" line="48"/>
         <source>Line width</source>
-        <translation>Line width</translation>
+        <translation>Amplada de línia</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_pentoolbar.cpp" line="52"/>
@@ -12596,7 +12596,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../../src/ui/forms/qg_polylineoptions.cpp" line="103"/>
         <source>wrong action type</source>
-        <translation>wrong action type</translation>
+        <translation>Tipus d'acció incorrecte</translation>
     </message>
 </context>
 <context>
@@ -12615,7 +12615,7 @@ p, li { white-space: pre-wrap; }
         <location filename="../../../build/ui_qg_selectionwidget.h" line="111"/>
         <location filename="../../../generated/librecad/ui/ui_qg_selectionwidget.h" line="111"/>
         <source>Selection</source>
-        <translation>Selection</translation>
+        <translation>Selecció</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_selectionwidget.ui" line="80"/>
@@ -12623,7 +12623,7 @@ p, li { white-space: pre-wrap; }
         <location filename="../../../build/ui_qg_selectionwidget.h" line="112"/>
         <location filename="../../../generated/librecad/ui/ui_qg_selectionwidget.h" line="112"/>
         <source>Selected</source>
-        <translation>Selected</translation>
+        <translation>Seleccionat</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_selectionwidget.ui" line="114"/>
@@ -12631,7 +12631,7 @@ p, li { white-space: pre-wrap; }
         <location filename="../../../build/ui_qg_selectionwidget.h" line="113"/>
         <location filename="../../../generated/librecad/ui/ui_qg_selectionwidget.h" line="113"/>
         <source>Total Length</source>
-        <translation>Total Length</translation>
+        <translation>Longitud total</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_selectionwidget.ui" line="139"/>
@@ -12682,7 +12682,7 @@ p, li { white-space: pre-wrap; }
         <location filename="../../../build/ui_qg_snaptoolbar.h" line="190"/>
         <location filename="../../../generated/librecad/ui/ui_qg_snaptoolbar.h" line="190"/>
         <source>Snap to Endpoints</source>
-        <translation>Snap to Endpoints</translation>
+        <translation>Referència a punts finals</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_snaptoolbar.ui" line="64"/>
@@ -12690,7 +12690,7 @@ p, li { white-space: pre-wrap; }
         <location filename="../../../build/ui_qg_snaptoolbar.h" line="194"/>
         <location filename="../../../generated/librecad/ui/ui_qg_snaptoolbar.h" line="194"/>
         <source>Snap to equidistant points of entity</source>
-        <translation>Snap to equidistant points of entity</translation>
+        <translation>Referència a punts equidistants de l'entitat</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_snaptoolbar.ui" line="81"/>
@@ -12698,7 +12698,7 @@ p, li { white-space: pre-wrap; }
         <location filename="../../../build/ui_qg_snaptoolbar.h" line="198"/>
         <location filename="../../../generated/librecad/ui/ui_qg_snaptoolbar.h" line="198"/>
         <source>Snap to center points</source>
-        <translation>Snap to center points</translation>
+        <translation>Referència a punts centrals</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_snaptoolbar.ui" line="98"/>
@@ -12706,7 +12706,7 @@ p, li { white-space: pre-wrap; }
         <location filename="../../../build/ui_qg_snaptoolbar.h" line="202"/>
         <location filename="../../../generated/librecad/ui/ui_qg_snaptoolbar.h" line="202"/>
         <source>Snap to intersections automatically</source>
-        <translation>Snap to intersections automatically</translation>
+        <translation>Referència a interseccions automàticament</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_snaptoolbar.ui" line="115"/>
@@ -12714,7 +12714,7 @@ p, li { white-space: pre-wrap; }
         <location filename="../../../build/ui_qg_snaptoolbar.h" line="206"/>
         <location filename="../../../generated/librecad/ui/ui_qg_snaptoolbar.h" line="206"/>
         <source>Snap to closest point on entity</source>
-        <translation>Snap to closest point on entity</translation>
+        <translation>Referència al punt més proper de l'entitat</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_snaptoolbar.ui" line="132"/>
@@ -12722,7 +12722,7 @@ p, li { white-space: pre-wrap; }
         <location filename="../../../build/ui_qg_snaptoolbar.h" line="210"/>
         <location filename="../../../generated/librecad/ui/ui_qg_snaptoolbar.h" line="210"/>
         <source>Snap to point with given distance to endpoint</source>
-        <translation>Snap to point with given distance to endpoint</translation>
+        <translation>Referència al punt amb distància donada al punt final</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_snaptoolbar.ui" line="149"/>
@@ -12730,7 +12730,7 @@ p, li { white-space: pre-wrap; }
         <location filename="../../../build/ui_qg_snaptoolbar.h" line="214"/>
         <location filename="../../../generated/librecad/ui/ui_qg_snaptoolbar.h" line="214"/>
         <source>Snap to intersections manually</source>
-        <translation>Snap to intersections manually</translation>
+        <translation>Referència a interseccions manualment</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_snaptoolbar.ui" line="166"/>
@@ -12738,7 +12738,7 @@ p, li { white-space: pre-wrap; }
         <location filename="../../../build/ui_qg_snaptoolbar.h" line="218"/>
         <location filename="../../../generated/librecad/ui/ui_qg_snaptoolbar.h" line="218"/>
         <source>Snap to grid</source>
-        <translation>Snap to grid</translation>
+        <translation>Referència a la graella</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_snaptoolbar.ui" line="183"/>
@@ -12746,7 +12746,7 @@ p, li { white-space: pre-wrap; }
         <location filename="../../../build/ui_qg_snaptoolbar.h" line="222"/>
         <location filename="../../../generated/librecad/ui/ui_qg_snaptoolbar.h" line="222"/>
         <source>Restrict Horizontally</source>
-        <translation>Restrict Horizontally</translation>
+        <translation>Restringir horitzontalment</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_snaptoolbar.ui" line="200"/>
@@ -12754,7 +12754,7 @@ p, li { white-space: pre-wrap; }
         <location filename="../../../build/ui_qg_snaptoolbar.h" line="226"/>
         <location filename="../../../generated/librecad/ui/ui_qg_snaptoolbar.h" line="226"/>
         <source>Restrict Vertically</source>
-        <translation>Restrict Vertically</translation>
+        <translation>Restringir verticalment</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_snaptoolbar.ui" line="217"/>
@@ -12762,7 +12762,7 @@ p, li { white-space: pre-wrap; }
         <location filename="../../../build/ui_qg_snaptoolbar.h" line="230"/>
         <location filename="../../../generated/librecad/ui/ui_qg_snaptoolbar.h" line="230"/>
         <source>Move relative Zero</source>
-        <translation>Move relative Zero</translation>
+        <translation>Moure zero relatiu</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_snaptoolbar.ui" line="234"/>
@@ -12770,102 +12770,102 @@ p, li { white-space: pre-wrap; }
         <location filename="../../../build/ui_qg_snaptoolbar.h" line="234"/>
         <location filename="../../../generated/librecad/ui/ui_qg_snaptoolbar.h" line="234"/>
         <source>Lock relative Zero</source>
-        <translation>Lock relative Zero</translation>
+        <translation>Bloquejar zero relatiu</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_snaptoolbar.cpp" line="43"/>
         <source>Exclusive Snap Mode</source>
-        <translation>Exclusive Snap Mode</translation>
+        <translation>Mode de referència exclusiu</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_snaptoolbar.cpp" line="52"/>
         <source>Snap Middle Manual</source>
-        <translation>Snap Middle Manual</translation>
+        <translation>Referència manual al punt mig</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_snaptoolbar.cpp" line="58"/>
         <source>Free Snap</source>
-        <translation>Free Snap</translation>
+        <translation>Referència lliure</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_snaptoolbar.cpp" line="63"/>
         <source>Snap on grid</source>
-        <translation>Snap on grid</translation>
+        <translation>Referència a la graella</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_snaptoolbar.cpp" line="68"/>
         <source>Snap on Endpoints</source>
-        <translation>Snap on Endpoints</translation>
+        <translation>Referència a punts finals</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_snaptoolbar.cpp" line="73"/>
         <source>Snap on Entity</source>
-        <translation>Snap on Entity</translation>
+        <translation>Referència a l'entitat</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_snaptoolbar.cpp" line="78"/>
         <source>Snap Center</source>
-        <translation>Snap Center</translation>
+        <translation>Referència al centre</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_snaptoolbar.cpp" line="83"/>
         <source>Snap Middle</source>
-        <translation>Snap Middle</translation>
+        <translation>Referència al punt mig</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_snaptoolbar.cpp" line="88"/>
         <source>Snap Distance</source>
-        <translation>Snap Distance</translation>
+        <translation>Distància de referència</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_snaptoolbar.cpp" line="93"/>
         <source>Snap Intersection</source>
-        <translation>Snap Intersection</translation>
+        <translation>Referència a la intersecció</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_snaptoolbar.cpp" line="102"/>
         <source>Restrict Horizontal</source>
-        <translation>Restrict Horizontal</translation>
+        <translation>Restringir horizontal</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_snaptoolbar.cpp" line="108"/>
         <source>Restrict Vertical</source>
-        <translation>Restrict Vertical</translation>
+        <translation>Restringir vertical</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_snaptoolbar.cpp" line="115"/>
         <source>Restrict Orthogonal</source>
-        <translation>Restrict Orthogonal</translation>
+        <translation>Restringir ortogonal</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_snaptoolbar.cpp" line="123"/>
         <source>Restrict Nothing</source>
-        <translation>Restrict Nothing</translation>
+        <translation>Sense restriccions</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_snaptoolbar.cpp" line="130"/>
         <source>Set relative zero position</source>
-        <translation>Set relative zero position</translation>
+        <translation>Establir posició de zero relatiu</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_snaptoolbar.cpp" line="136"/>
         <source>Lock relative zero position</source>
-        <translation>Lock relative zero position</translation>
+        <translation>Bloquejar posició de zero relatiu</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_snaptoolbar.cpp" line="220"/>
         <source>Relative zero position is %1</source>
-        <translation>Relative zero position is %1</translation>
+        <translation>La posició de zero relatiu és %1</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_snaptoolbar.cpp" line="220"/>
         <source>locked</source>
-        <translation>locked</translation>
+        <translation>bloquejat</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_snaptoolbar.cpp" line="220"/>
         <source>unlocked</source>
-        <translation>unlocked</translation>
+        <translation>desbloquejat</translation>
     </message>
 </context>
 <context>
@@ -12896,7 +12896,7 @@ p, li { white-space: pre-wrap; }
         <location filename="../../../build/ui_qg_widgetpen.h" line="141"/>
         <location filename="../../../generated/librecad/ui/ui_qg_widgetpen.h" line="141"/>
         <source>Width:</source>
-        <translation>Width:</translation>
+        <translation>Amplada:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_widgetpen.ui" line="91"/>
@@ -12904,7 +12904,7 @@ p, li { white-space: pre-wrap; }
         <location filename="../../../build/ui_qg_widgetpen.h" line="142"/>
         <location filename="../../../generated/librecad/ui/ui_qg_widgetpen.h" line="142"/>
         <source>Line type:</source>
-        <translation>Line type:</translation>
+        <translation>Tipus de línia:</translation>
     </message>
 </context>
 <context>
@@ -12912,7 +12912,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../../src/ui/qg_widthbox.cpp" line="247"/>
         <source>By Layer</source>
-        <translation>By Layer</translation>
+        <translation>Per capa</translation>
     </message>
 </context>
 <context>
@@ -12923,28 +12923,28 @@ p, li { white-space: pre-wrap; }
         <location filename="../../src/main/qc_applicationwindow.cpp" line="2078"/>
         <location filename="../../src/ui/qg_dialogfactory.cpp" line="215"/>
         <source>Warning</source>
-        <translation>Warning</translation>
+        <translation>Advertència</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_layerdialog_ex.cpp" line="213"/>
         <location filename="../../src/ui/forms/lc_layerdialog_ex.cpp" line="277"/>
         <location filename="../../src/ui/forms/qg_layerdialog.cpp" line="85"/>
         <source>Layer Properties</source>
-        <translation>Layer Properties</translation>
+        <translation>Propietats de capa</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_layerdialog_ex.cpp" line="214"/>
         <source>Layer empty name is not allowed.</source>
-        <translation>Layer empty name is not allowed.</translation>
+        <translation>No es permet el nom de capa buit.</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_layerdialog_ex.cpp" line="278"/>
         <source>Attempt to create layer with duplicating name. Duplicated layer name is 
 [%1].
 Please specify a different name.</source>
-        <translation>Attempt to create layer with duplicating name. Duplicated layer name is 
+        <translation>Intent de crear una capa amb nom duplicat. El nom de capa duplicat és 
 [%1].
-Please specify a different name.</translation>
+Si us plau, especifiqueu un nom diferent.</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_layertreeoptionsdialog.cpp" line="153"/>
@@ -12958,80 +12958,80 @@ Please specify a different name.</translation>
         <location filename="../../src/ui/forms/lc_layertreeoptionsdialog.cpp" line="154"/>
         <source>Layer list separator string is empty. It will not be possible to build layers tree.
 Please specify a different value.</source>
-        <translation>Layer list separator string is empty. It will not be possible to build layers tree.
-Please specify a different value.</translation>
+        <translation>La cadena separadora de la llista de capes és buida. No serà possible construir l'arbre de capes.
+Si us plau, especifiqueu un valor diferent.</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_layertreeoptionsdialog.cpp" line="192"/>
         <source>Invalid value provide for %1 color.
 Please specify a different value.</source>
-        <translation>Invalid value provide for %1 color.
-Please specify a different value.</translation>
+        <translation>Valor no vàlid per al color %1.
+Si us plau, especifiqueu un valor diferent.</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_layerdialog.cpp" line="86"/>
         <source>Layer with a name &quot;%1&quot; already exists. Please specify a different name.</source>
-        <translation>Layer with a name &quot;%1&quot; already exists. Please specify a different name.</translation>
+        <translation>Ja existeix una capa amb el nom &quot;%1&quot;. Si us plau, especifiqueu un nom diferent.</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_layertreewidget.cpp" line="977"/>
         <location filename="../../src/ui/lc_layertreewidget.cpp" line="987"/>
         <source>Remove empty layers</source>
-        <translation>Remove empty layers</translation>
+        <translation>Eliminar capes buides</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_layertreewidget.cpp" line="978"/>
         <source>Layer(s) without entities found, yet they are filtered and not visible.
 
 Clear filtering mask and repeat.</source>
-        <translation>Layer(s) without entities found, yet they are filtered and not visible.
+        <translation>S'han trobat capes sense entitats, però estan filtrades i no són visibles.
 
-Clear filtering mask and repeat.</translation>
+Netegeu la màscara de filtratge i repetiu.</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_layertreewidget.cpp" line="988"/>
         <source>No layers without entities found, nothing to remove.</source>
-        <translation>No layers without entities found, nothing to remove.</translation>
+        <translation>No s'han trobat capes sense entitats, res a eliminar.</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_layertreewidget.cpp" line="1129"/>
         <location filename="../../src/ui/lc_layertreewidget.cpp" line="1174"/>
         <location filename="../../src/ui/lc_layertreewidget.cpp" line="1182"/>
         <source>Add Layer</source>
-        <translation>Add Layer</translation>
+        <translation>Afegir capa</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_layertreewidget.cpp" line="1130"/>
         <source>Such child layer already exist for 
 [%1].
 Please specify a different name.</source>
-        <translation>Such child layer already exist for 
+        <translation>Aquesta capa filla ja existeix per a 
 [%1].
-Please specify a different name.</translation>
+Si us plau, especifiqueu un nom diferent.</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_layertreewidget.cpp" line="1175"/>
         <source>Such child layer already exist for 
 [%1].
 </source>
-        <translation>Such child layer already exist for 
+        <translation>Aquesta capa filla ja existeix per a 
 [%1].</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_layertreewidget.cpp" line="1183"/>
         <source>Dimensional layer may be added only for normal active layer.
 </source>
-        <translation>Dimensional layer may be added only for normal active layer.</translation>
+        <translation>La capa dimensional nomes pot ser afegida per a una capa activa normal.</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_layertreewidget.cpp" line="1246"/>
         <source>Move Selection</source>
-        <translation>Move Selection</translation>
+        <translation>Moure selecció</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_layertreewidget.cpp" line="1253"/>
         <source>Duplicate Selection</source>
-        <translation>Duplicate Selection</translation>
+        <translation>Duplicar selecció</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_layertreewidget.cpp" line="1270"/>
@@ -13040,11 +13040,11 @@ Please specify a different name.</translation>
 If Yes - entities with &quot;By Layer&quot; pens will look on new layer exactly as on previous layers and &quot;By Layer&quot; value will be replaced by resolved pens.
 
 If No - &quot;By Layer&quot; values remains and so pen of target layer will define pen for such entities.</source>
-        <translation>Replace &quot;By Layer&quot; value to source layers values?
+        <translation>Substituir el valor &quot;Per capa&quot; pels valors de les capes d'origen?
 
-If Yes - entities with &quot;By Layer&quot; pens will look on new layer exactly as on previous layers and &quot;By Layer&quot; value will be replaced by resolved pens.
+Si Sí - les entitats amb llapis &quot;Per capa&quot; es veuran a la nova capa exactament com a les capes anteriors i el valor &quot;Per capa&quot; serà substituït pels llapis resolts.
 
-If No - &quot;By Layer&quot; values remains and so pen of target layer will define pen for such entities.</translation>
+Si No - els valors &quot;Per capa&quot; romanen i per tant el llapis de la capa de destí definirà el llapis per a aquestes entitats.</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_layertreewidget.cpp" line="1758"/>
@@ -13052,13 +13052,13 @@ If No - &quot;By Layer&quot; values remains and so pen of target layer will defi
         <location filename="../../src/ui/qg_dialogfactory.cpp" line="322"/>
         <location filename="../../src/ui/qg_dialogfactory.cpp" line="384"/>
         <source>Remove Layer</source>
-        <translation>Remove Layer</translation>
+        <translation>Eliminar capa</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_layertreewidget.cpp" line="1758"/>
         <location filename="../../src/ui/qg_dialogfactory.cpp" line="385"/>
         <source>Layer &quot;0&quot; can never be removed.</source>
-        <translation>Layer &quot;0&quot; can never be removed.</translation>
+        <translation>La capa &quot;0&quot; no pot ser eliminada mai.</translation>
     </message>
     <message numerus="yes">
         <location filename="../../src/ui/lc_layertreewidget.cpp" line="1806"/>
@@ -13073,156 +13073,156 @@ If No - &quot;By Layer&quot; values remains and so pen of target layer will defi
         <location filename="../../src/ui/lc_layertreewidget.cpp" line="1807"/>
         <location filename="../../src/ui/qg_dialogfactory.cpp" line="399"/>
         <source>Listed layers and all entities on them will be removed.</source>
-        <translation>Listed layers and all entities on them will be removed.</translation>
+        <translation>Les capes llistades i totes les entitats en elles seran eliminades.</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_layertreewidget.cpp" line="1808"/>
         <location filename="../../src/ui/qg_dialogfactory.cpp" line="401"/>
         <source>Warning: this action can NOT be undone!</source>
-        <translation>Warning: this action can NOT be undone!</translation>
+        <translation>Advertència: aquesta acció NO es pot desfer!</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_layertreewidget.cpp" line="1809"/>
         <location filename="../../src/ui/qg_dialogfactory.cpp" line="410"/>
         <source>Layers for removal:</source>
-        <translation>Layers for removal:</translation>
+        <translation>Capes per eliminar:</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_layertreewidget.cpp" line="1824"/>
         <location filename="../../src/ui/lc_layertreewidget.cpp" line="1875"/>
         <source>Layer DialogEx</source>
-        <translation>Layer DialogEx</translation>
+        <translation>Diàleg de capa</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_penpaletteoptionsdialog.cpp" line="262"/>
         <source>Invalid value provided for %1 color.
 Please specify a different value.</source>
-        <translation>Invalid value provided for %1 color.
-Please specify a different value.</translation>
+        <translation>Valor no vàlid proporcionat per al color %1.
+Si us plau, especifiqueu un valor diferent.</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_penpaletteoptionsdialog.cpp" line="273"/>
         <source>Invalid path to pens file.
 %1 
 Please specify a different value.</source>
-        <translation>Invalid path to pens file.
+        <translation>Ruta no vàlida al fitxer de plomes.
 %1 
-Please specify a different value.</translation>
+Si us plau, especifiqueu un valor diferent.</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_penpalettewidget.cpp" line="1320"/>
         <source>Remove pen</source>
-        <translation>Remove pen</translation>
+        <translation>Eliminar llapis</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_penpalettewidget.cpp" line="1321"/>
         <source>Pen will be removed from palette, drawing entities will not be affected.</source>
-        <translation>Pen will be removed from palette, drawing entities will not be affected.</translation>
+        <translation>El llapis s'eliminarà de la paleta, les entitats del dibuix no es veuran afectades.</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_penpalettewidget.cpp" line="1322"/>
         <location filename="../../src/ui/lc_penpalettewidget.cpp" line="1341"/>
         <source>Are you sure you&apos;d like to proceed?</source>
-        <translation>Are you sure you&apos;d like to proceed?</translation>
+        <translation>Esteu segur que voleu continuar?</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_penpalettewidget.cpp" line="1323"/>
         <source>Pen for removal:</source>
-        <translation>Pen for removal:</translation>
+        <translation>Llapis per eliminar:</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_penpalettewidget.cpp" line="1339"/>
         <source>Remove pens</source>
-        <translation>Remove pens</translation>
+        <translation>Eliminar llapis</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_penpalettewidget.cpp" line="1340"/>
         <source>Pens will be removed from palette, drawing entities will not be affected.</source>
-        <translation>Pens will be removed from palette, drawing entities will not be affected.</translation>
+        <translation>Els llapis s'eliminaran de la paleta, les entitats del dibuix no es veuran afectades.</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_penpalettewidget.cpp" line="1342"/>
         <source>Pens for removal:</source>
-        <translation>Pens for removal:</translation>
+        <translation>Llapis per eliminar:</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_penpalettewidget.cpp" line="1363"/>
         <source>Select Entities </source>
-        <translation>Select Entities</translation>
+        <translation>Seleccionar entitats</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_penpalettewidget.cpp" line="1364"/>
         <source>There are no entities that matches pen on visible layers.</source>
-        <translation>There are no entities that matches pen on visible layers.</translation>
+        <translation>No hi ha entitats que coincideixin amb el llapis a les capes visibles.</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_penpalettewidget.cpp" line="1365"/>
         <source>Such entities exist on frozen layers.
 </source>
-        <translation>Such entities exist on frozen layers.</translation>
+        <translation>Aquestes entitats existeixen a les capes congelades.</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_penpalettewidget.cpp" line="1366"/>
         <source>Such entities exist on locked layers.
 </source>
-        <translation>Such entities exist on locked layers.</translation>
+        <translation>Aquestes entitats existeixen a les capes bloquejades.</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_penpalettewidget.cpp" line="1367"/>
         <source>Please use different pen attributes.</source>
-        <translation>Please use different pen attributes.</translation>
+        <translation>Si us plau, useu atributs de llapis diferents.</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_penpalettewidget.cpp" line="1376"/>
         <source>Set pen by entity</source>
-        <translation>Set pen by entity</translation>
+        <translation>Establir llapis per l'entitat.</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_penpalettewidget.cpp" line="1377"/>
         <source>Please select only one entity to pick pen setting.</source>
-        <translation>Please select only one entity to pick pen setting.</translation>
+        <translation>Si us plau, seleccioneu només una entitat per triar la configuració del llapis.</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_penpalettewidget.cpp" line="1387"/>
         <source>Saving Pens Data</source>
-        <translation>Saving Pens Data</translation>
+        <translation>Desant dades de llapis</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_penpalettewidget.cpp" line="1388"/>
         <source>Unable to save pens data to specified pens file. Would you like to specify correct path to the file?</source>
-        <translation>Unable to save pens data to specified pens file. Would you like to specify correct path to the file?</translation>
+        <translation>No s'ha pogut desar les dades de llapis al fitxer de llapis especificat. Voleu especificar la ruta correcta al fitxer?</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_dialogfactory.cpp" line="311"/>
         <source>Layer &quot;%1&quot; and all entities on it will be removed.
 This action can NOT be undone.</source>
-        <translation>Layer &quot;%1&quot; and all entities on it will be removed.
-This action can NOT be undone.</translation>
+        <translation>La capa &quot;%1&quot; i totes les entitats en ella seran eliminades.
+Aquesta acció NO es pot desfer.</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_dialogfactory.cpp" line="323"/>
         <source>Layer &quot;%1&quot; can never be removed.</source>
-        <translation>Layer &quot;%1&quot; can never be removed.</translation>
+        <translation>La capa &quot;%1&quot; no pot ser eliminada mai.</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_dialogfactory.cpp" line="406"/>
         <source>Warning: layer &quot;0&quot; can never be removed.</source>
-        <translation>Warning: layer &quot;0&quot; can never be removed.</translation>
+        <translation>Advertència: la capa &quot;0&quot; no pot ser eliminada mai.</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_dialogfactory.cpp" line="465"/>
         <source>Layer Dialog</source>
-        <translation>Layer Dialog</translation>
+        <translation>Diàleg de capa</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_dialogfactory.cpp" line="580"/>
         <source>Remove Block</source>
-        <translation>Remove Block</translation>
+        <translation>Eliminar bloc</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_dialogfactory.cpp" line="581"/>
         <source>Block &quot;%1&quot; and all its entities will be removed.</source>
-        <translation>Block &quot;%1&quot; and all its entities will be removed.</translation>
+        <translation>El bloc &quot;%1&quot; i totes les seves entitats seran eliminats.</translation>
     </message>
     <message numerus="yes">
         <location filename="../../src/ui/qg_dialogfactory.cpp" line="640"/>
@@ -13235,12 +13235,12 @@ This action can NOT be undone.</translation>
     <message>
         <location filename="../../src/ui/qg_dialogfactory.cpp" line="644"/>
         <source>Listed blocks and all their entities will be removed.</source>
-        <translation>Listed blocks and all their entities will be removed.</translation>
+        <translation>Els blocs llistats i totes les seves entitats seran eliminats.</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_dialogfactory.cpp" line="648"/>
         <source>Blocks for removal:</source>
-        <translation>Blocks for removal:</translation>
+        <translation>Blocs per eliminar:</translation>
     </message>
 </context>
 <context>
@@ -13248,7 +13248,7 @@ This action can NOT be undone.</translation>
     <message>
         <location filename="../../src/actions/lc_actionlayersexport.cpp" line="178"/>
         <source>No %1 layers found</source>
-        <translation>No %1 layers found</translation>
+        <translation>No s'han trobat capes %1</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondimension.cpp" line="34"/>
@@ -13259,7 +13259,7 @@ This action can NOT be undone.</translation>
     <message>
         <location filename="../../src/cmd/rs_commands.cpp" line="60"/>
         <source>: duplicated command: %1 is already taken by %2</source>
-        <translation>: duplicated command: %1 is already taken by %2</translation>
+        <translation>: ordre duplicada: %1 ja està en ús per %2</translation>
     </message>
     <message>
         <location filename="../../src/cmd/rs_commands.cpp" line="153"/>
@@ -15797,47 +15797,47 @@ This action can NOT be undone.</translation>
     <message>
         <location filename="../../src/cmd/rs_commands.cpp" line="1356"/>
         <source>Command: %1 (%2)</source>
-        <translation>Command: %1 (%2)</translation>
+        <translation>Ordre: %1 (%2)</translation>
     </message>
     <message>
         <location filename="../../src/cmd/rs_commands.cpp" line="1363"/>
         <source>RS_Commands:: command not found: %1</source>
-        <translation>RS_Commands:: command not found: %1</translation>
+        <translation>RS_Commands:: ordre no trobada: %1</translation>
     </message>
     <message>
         <location filename="../../src/cmd/rs_commands.cpp" line="1403"/>
         <source>Accepted keycode: %1</source>
-        <translation>Accepted keycode: %1</translation>
+        <translation>Codi de tecla acceptat: %1</translation>
     </message>
     <message>
         <location filename="../../src/cmd/rs_commands.cpp" line="1417"/>
         <source>Command not found: %1</source>
-        <translation>Command not found: %1</translation>
+        <translation>Ordre no trobada: %1</translation>
     </message>
     <message>
         <location filename="../../src/cmd/rs_commands.cpp" line="1456"/>
         <source>Available commands:</source>
-        <translation>Available commands:</translation>
+        <translation>Ordres disponibles:</translation>
     </message>
     <message>
         <location filename="../../src/lib/engine/rs_entitycontainer.cpp" line="1641"/>
         <source>Hatch failed due to a gap=%1 between (%2, %3) and (%4, %5)</source>
-        <translation>Hatch failed due to a gap=%1 between (%2, %3) and (%4, %5)</translation>
+        <translation>El ratllat ha fallat a causa d'un buit=%1 entre (%2, %3) i (%4, %5)</translation>
     </message>
     <message>
         <location filename="../../src/lib/engine/rs_graphic.cpp" line="350"/>
         <source>File on disk modified. Please save to another file to avoid data loss! File modified: %1</source>
-        <translation>File on disk modified. Please save to another file to avoid data loss! File modified: %1</translation>
+        <translation>El fitxer al disc ha estat modificat. Si us plau, deseu en un altre fitxer per evitar la perdua de dades! Fitxer modificat: %1</translation>
     </message>
     <message>
         <location filename="../../src/lib/engine/rs_patternlist.cpp" line="63"/>
         <source>Hatch:: no pattern found. Please set pattern path in application preferences</source>
-        <translation>Hatch:: no pattern found. Please set pattern path in application preferences</translation>
+        <translation>Hatch:: no s'ha trobat cap patro. Si us plau, configureu la ruta del patro a les preferencies de l'aplicacio</translation>
     </message>
     <message>
         <location filename="../../src/lib/engine/rs_patternlist.cpp" line="85"/>
         <source>Hatch:: loading pattern failed: %1</source>
-        <translation>Hatch:: loading pattern failed: %1</translation>
+        <translation>Hatch:: la carrega del patro ha fallat: %1</translation>
     </message>
     <message>
         <location filename="../../src/lib/engine/rs_units.cpp" line="204"/>
@@ -15867,31 +15867,31 @@ This action can NOT be undone.</translation>
         <location filename="../../src/lib/engine/rs_units.cpp" line="212"/>
         <location filename="../../src/lib/engine/rs_units.cpp" line="268"/>
         <source>Millimeter</source>
-        <translation>Millimeter</translation>
+        <translation>Mil.limetre</translation>
     </message>
     <message>
         <location filename="../../src/lib/engine/rs_units.cpp" line="214"/>
         <location filename="../../src/lib/engine/rs_units.cpp" line="270"/>
         <source>Centimeter</source>
-        <translation>Centimeter</translation>
+        <translation>Centimetre</translation>
     </message>
     <message>
         <location filename="../../src/lib/engine/rs_units.cpp" line="216"/>
         <location filename="../../src/lib/engine/rs_units.cpp" line="272"/>
         <source>Meter</source>
-        <translation>Meter</translation>
+        <translation>Metre</translation>
     </message>
     <message>
         <location filename="../../src/lib/engine/rs_units.cpp" line="218"/>
         <location filename="../../src/lib/engine/rs_units.cpp" line="274"/>
         <source>Kilometer</source>
-        <translation>Kilometer</translation>
+        <translation>Quilometre</translation>
     </message>
     <message>
         <location filename="../../src/lib/engine/rs_units.cpp" line="220"/>
         <location filename="../../src/lib/engine/rs_units.cpp" line="276"/>
         <source>Microinch</source>
-        <translation>Microinch</translation>
+        <translation>Micropollzada</translation>
     </message>
     <message>
         <location filename="../../src/lib/engine/rs_units.cpp" line="222"/>
@@ -15915,49 +15915,49 @@ This action can NOT be undone.</translation>
         <location filename="../../src/lib/engine/rs_units.cpp" line="228"/>
         <location filename="../../src/lib/engine/rs_units.cpp" line="284"/>
         <source>Nanometer</source>
-        <translation>Nanometer</translation>
+        <translation>Nanometre</translation>
     </message>
     <message>
         <location filename="../../src/lib/engine/rs_units.cpp" line="230"/>
         <location filename="../../src/lib/engine/rs_units.cpp" line="286"/>
         <source>Micron</source>
-        <translation>Micron</translation>
+        <translation>Micra</translation>
     </message>
     <message>
         <location filename="../../src/lib/engine/rs_units.cpp" line="232"/>
         <location filename="../../src/lib/engine/rs_units.cpp" line="288"/>
         <source>Decimeter</source>
-        <translation>Decimeter</translation>
+        <translation>Decimetre</translation>
     </message>
     <message>
         <location filename="../../src/lib/engine/rs_units.cpp" line="234"/>
         <location filename="../../src/lib/engine/rs_units.cpp" line="290"/>
         <source>Decameter</source>
-        <translation>Decameter</translation>
+        <translation>Decametre</translation>
     </message>
     <message>
         <location filename="../../src/lib/engine/rs_units.cpp" line="236"/>
         <location filename="../../src/lib/engine/rs_units.cpp" line="292"/>
         <source>Hectometer</source>
-        <translation>Hectometer</translation>
+        <translation>Hectometre</translation>
     </message>
     <message>
         <location filename="../../src/lib/engine/rs_units.cpp" line="238"/>
         <location filename="../../src/lib/engine/rs_units.cpp" line="294"/>
         <source>Gigameter</source>
-        <translation>Gigameter</translation>
+        <translation>Gigametre</translation>
     </message>
     <message>
         <location filename="../../src/lib/engine/rs_units.cpp" line="240"/>
         <location filename="../../src/lib/engine/rs_units.cpp" line="296"/>
         <source>Astro</source>
-        <translation>Astro</translation>
+        <translation>Astronomic</translation>
     </message>
     <message>
         <location filename="../../src/lib/engine/rs_units.cpp" line="242"/>
         <location filename="../../src/lib/engine/rs_units.cpp" line="298"/>
         <source>Lightyear</source>
-        <translation>Lightyear</translation>
+        <translation>Any llum</translation>
     </message>
     <message>
         <location filename="../../src/lib/engine/rs_units.cpp" line="244"/>
@@ -15969,7 +15969,7 @@ This action can NOT be undone.</translation>
         <location filename="../../src/lib/engine/rs_units.cpp" line="932"/>
         <source>Custom</source>
         <comment>Paper format</comment>
-        <translation>Custom</translation>
+        <translation>Personalitzat</translation>
     </message>
     <message>
         <location filename="../../src/lib/engine/rs_units.cpp" line="934"/>
@@ -16071,7 +16071,7 @@ This action can NOT be undone.</translation>
         <location filename="../../src/lib/engine/rs_units.cpp" line="974"/>
         <source>custom</source>
         <comment>Paper format</comment>
-        <translation>custom</translation>
+        <translation>personalitzat</translation>
     </message>
     <message>
         <location filename="../../src/lib/engine/rs_units.cpp" line="977"/>
@@ -16107,7 +16107,7 @@ This action can NOT be undone.</translation>
         <location filename="../../src/lib/engine/rs_units.cpp" line="990"/>
         <source>letter</source>
         <comment>Paper format</comment>
-        <translation>letter</translation>
+        <translation>carta</translation>
     </message>
     <message>
         <location filename="../../src/lib/engine/rs_units.cpp" line="992"/>
@@ -16119,7 +16119,7 @@ This action can NOT be undone.</translation>
         <location filename="../../src/lib/engine/rs_units.cpp" line="994"/>
         <source>tabloid</source>
         <comment>Paper format</comment>
-        <translation>tabloid</translation>
+        <translation>tabloide</translation>
     </message>
     <message>
         <location filename="../../src/lib/engine/rs_units.cpp" line="1001"/>
@@ -16172,22 +16172,22 @@ This action can NOT be undone.</translation>
     <message>
         <location filename="../../src/lib/fileio/rs_fileio.cpp" line="74"/>
         <source>DWG support is not complete!</source>
-        <translation>DWG support is not complete!</translation>
+        <translation>El suport de DWG no es complet!</translation>
     </message>
     <message>
         <location filename="../../src/lib/fileio/rs_fileio.cpp" line="76"/>
         <source>If this file fails to open try an older DWG format</source>
-        <translation>If this file fails to open try an older DWG format</translation>
+        <translation>Si aquest fitxer no s'obre, proveu un format DWG mes antic</translation>
     </message>
     <message>
         <location filename="../../src/lib/fileio/rs_fileio.cpp" line="77"/>
         <source>or try to find a converter to make it a DXF file.</source>
-        <translation>or try to find a converter to make it a DXF file.</translation>
+        <translation>o intenteu trobar un convertidor per fer-lo un fitxer DXF.</translation>
     </message>
     <message>
         <location filename="../../src/lib/fileio/rs_fileio.cpp" line="80"/>
         <source>Information</source>
-        <translation>Information</translation>
+        <translation>Informacio</translation>
     </message>
     <message>
         <location filename="../../src/lib/fileio/rs_fileio.cpp" line="91"/>
@@ -16199,195 +16199,195 @@ This action can NOT be undone.</translation>
         <location filename="../../src/lib/fileio/rs_fileio.cpp" line="92"/>
         <source>Import error:</source>
         <comment>fileImport</comment>
-        <translation>Import error:</translation>
+        <translation>Error d'importacio:</translation>
     </message>
     <message>
         <location filename="../../src/lib/fileio/rs_fileio.cpp" line="107"/>
         <source>Anyhow, there are some entities identified.</source>
         <comment>dwgImport</comment>
-        <translation>Anyhow, there are some entities identified.</translation>
+        <translation>De totes maneres, s'han identificat algunes entitats.</translation>
     </message>
     <message>
         <location filename="../../src/lib/fileio/rs_fileio.cpp" line="108"/>
         <source>If you open the file now, the drawing may be not complete or unusable.</source>
         <comment>dwgImport</comment>
-        <translation>If you open the file now, the drawing may be not complete or unusable.</translation>
+        <translation>Si obriu el fitxer ara, el dibuix pot estar incomplet o no ser usable.</translation>
     </message>
     <message>
         <location filename="../../src/lib/fileio/rs_fileio.cpp" line="110"/>
         <source>Ignore error and open the file?</source>
         <comment>dwgImport</comment>
-        <translation>Ignore error and open the file?</translation>
+        <translation>Ignorar l'error i obrir el fitxer?</translation>
     </message>
     <message>
         <location filename="../../src/lib/fileio/rs_fileio.cpp" line="113"/>
         <source>Warning</source>
-        <translation>Warning</translation>
+        <translation>Advertència</translation>
     </message>
     <message>
         <location filename="../../src/lib/filters/rs_filterdxfrw.cpp" line="103"/>
         <source>no DXF/DWG error</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation>no DXF/DWG error</translation>
+        <translation>sense error DXF/DWG</translation>
     </message>
     <message>
         <location filename="../../src/lib/filters/rs_filterdxfrw.cpp" line="105"/>
         <source>error opening DXF/DWG file</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation>error opening DXF/DWG file</translation>
+        <translation>error en obrir el fitxer DXF/DWG</translation>
     </message>
     <message>
         <location filename="../../src/lib/filters/rs_filterdxfrw.cpp" line="107"/>
         <source>unsupported DXF/DWG file version</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation>unsupported DXF/DWG file version</translation>
+        <translation>versio de fitxer DXF/DWG no admesa</translation>
     </message>
     <message>
         <location filename="../../src/lib/filters/rs_filterdxfrw.cpp" line="109"/>
         <source>error reading DXF/DWG meta data</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation>error reading DXF/DWG meta data</translation>
+        <translation>error en llegir les metadades DXF/DWG</translation>
     </message>
     <message>
         <location filename="../../src/lib/filters/rs_filterdxfrw.cpp" line="111"/>
         <source>error reading DXF/DWG file header</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation>error reading DXF/DWG file header</translation>
+        <translation>error en llegir la capcalera del fitxer DXF/DWG</translation>
     </message>
     <message>
         <location filename="../../src/lib/filters/rs_filterdxfrw.cpp" line="113"/>
         <source>error reading DXF/DWG header dara</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation>error reading DXF/DWG header dara</translation>
+        <translation>error en llegir les dades de la capcalera DXF/DWG</translation>
     </message>
     <message>
         <location filename="../../src/lib/filters/rs_filterdxfrw.cpp" line="115"/>
         <source>error reading DXF/DWG object map</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation>error reading DXF/DWG object map</translation>
+        <translation>error en llegir el mapa d'objectes DXF/DWG</translation>
     </message>
     <message>
         <location filename="../../src/lib/filters/rs_filterdxfrw.cpp" line="117"/>
         <source>error reading DXF/DWG classes</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation>error reading DXF/DWG classes</translation>
+        <translation>error en llegir les classes DXF/DWG</translation>
     </message>
     <message>
         <location filename="../../src/lib/filters/rs_filterdxfrw.cpp" line="119"/>
         <source>error reading DXF/DWG tables</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation>error reading DXF/DWG tables</translation>
+        <translation>error en llegir les taules DXF/DWG</translation>
     </message>
     <message>
         <location filename="../../src/lib/filters/rs_filterdxfrw.cpp" line="121"/>
         <source>error reading DXF/DWG blocks</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation>error reading DXF/DWG blocks</translation>
+        <translation>error en llegir els blocs DXF/DWG</translation>
     </message>
     <message>
         <location filename="../../src/lib/filters/rs_filterdxfrw.cpp" line="123"/>
         <source>error reading DXF/DWG entities</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation>error reading DXF/DWG entities</translation>
+        <translation>error en llegir les entitats DXF/DWG</translation>
     </message>
     <message>
         <location filename="../../src/lib/filters/rs_filterdxfrw.cpp" line="125"/>
         <source>error reading DXF/DWG objects</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation>error reading DXF/DWG objects</translation>
+        <translation>error en llegir els objectes DXF/DWG</translation>
     </message>
     <message>
         <location filename="../../src/lib/filters/rs_filterdxfrw.cpp" line="127"/>
         <source>error reading DXF/DWG sections</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation>error reading DXF/DWG sections</translation>
+        <translation>error en llegir les seccions DXF/DWG</translation>
     </message>
     <message>
         <location filename="../../src/lib/filters/rs_filterdxfrw.cpp" line="129"/>
         <source>error reading DXF/DWG code</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation>error reading DXF/DWG code</translation>
+        <translation>error en llegir el codi DXF/DWG</translation>
     </message>
     <message>
         <location filename="../../src/lib/filters/rs_filterdxfrw.cpp" line="177"/>
         <source>Opened dwg file version %1.</source>
-        <translation>Opened dwg file version %1.</translation>
+        <translation>S'ha obert el fitxer dwg versio %1.</translation>
     </message>
     <message>
         <location filename="../../src/lib/filters/rs_filterdxfrw.cpp" line="4035"/>
         <source>unknown error opening dwg file</source>
-        <translation>unknown error opening dwg file</translation>
+        <translation>error desconegut en obrir el fitxer dwg</translation>
     </message>
     <message>
         <location filename="../../src/lib/filters/rs_filterdxfrw.cpp" line="4039"/>
         <source>can&apos;t open this dwg file</source>
-        <translation>can&apos;t open this dwg file</translation>
+        <translation>no es pot obrir aquest fitxer dwg</translation>
     </message>
     <message>
         <location filename="../../src/lib/filters/rs_filterdxfrw.cpp" line="4043"/>
         <source>unsupported dwg version</source>
-        <translation>unsupported dwg version</translation>
+        <translation>versio dwg no admesa</translation>
     </message>
     <message>
         <location filename="../../src/lib/filters/rs_filterdxfrw.cpp" line="4047"/>
         <source>error reading file metadata in dwg file</source>
-        <translation>error reading file metadata in dwg file</translation>
+        <translation>error en llegir les metadades del fitxer dwg</translation>
     </message>
     <message>
         <location filename="../../src/lib/filters/rs_filterdxfrw.cpp" line="4051"/>
         <source>error reading file header in dwg file</source>
-        <translation>error reading file header in dwg file</translation>
+        <translation>error en llegir la capcalera del fitxer dwg</translation>
     </message>
     <message>
         <location filename="../../src/lib/filters/rs_filterdxfrw.cpp" line="4055"/>
         <source>error reading header vars in dwg file</source>
-        <translation>error reading header vars in dwg file</translation>
+        <translation>error en llegir les variables de la capcalera del fitxer dwg</translation>
     </message>
     <message>
         <location filename="../../src/lib/filters/rs_filterdxfrw.cpp" line="4059"/>
         <source>error reading classes in dwg file</source>
-        <translation>error reading classes in dwg file</translation>
+        <translation>error en llegir les classes del fitxer dwg</translation>
     </message>
     <message>
         <location filename="../../src/lib/filters/rs_filterdxfrw.cpp" line="4063"/>
         <source>error reading offsets in dwg file</source>
-        <translation>error reading offsets in dwg file</translation>
+        <translation>error en llegir els desplacaments del fitxer dwg</translation>
     </message>
     <message>
         <location filename="../../src/lib/filters/rs_filterdxfrw.cpp" line="4067"/>
         <source>error reading tables in dwg file</source>
-        <translation>error reading tables in dwg file</translation>
+        <translation>error en llegir les taules del fitxer dwg</translation>
     </message>
     <message>
         <location filename="../../src/lib/filters/rs_filterdxfrw.cpp" line="4071"/>
         <source>error reading blocks in dwg file</source>
-        <translation>error reading blocks in dwg file</translation>
+        <translation>error en llegir els blocs del fitxer dwg</translation>
     </message>
     <message>
         <location filename="../../src/lib/filters/rs_filterdxfrw.cpp" line="4075"/>
         <source>error reading entities in dwg file</source>
-        <translation>error reading entities in dwg file</translation>
+        <translation>error en llegir les entitats del fitxer dwg</translation>
     </message>
     <message>
         <location filename="../../src/lib/filters/rs_filterdxfrw.cpp" line="4079"/>
         <source>error reading objects in dwg file</source>
-        <translation>error reading objects in dwg file</translation>
+        <translation>error en llegir els objectes del fitxer dwg</translation>
     </message>
     <message>
         <location filename="../../src/lib/filters/rs_filterinterface.h" line="92"/>
         <source>undefined error</source>
         <comment>RS_FilterInterface</comment>
-        <translation>undefined error</translation>
+        <translation>error no definit</translation>
     </message>
     <message>
         <location filename="../../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="67"/>
         <source>usage: </source>
-        <translation>usage:</translation>
+        <translation>us:</translation>
     </message>
     <message>
         <location filename="../../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="67"/>
         <source> [options] &lt;dxf_files&gt;</source>
-        <translation>[options] &lt;dxf_files&gt;</translation>
+        <translation>[opcions] &lt;fitxers_dxf&gt;</translation>
     </message>
     <message>
         <location filename="../../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="74"/>
@@ -16397,7 +16397,7 @@ This action can NOT be undone.</translation>
     <message>
         <location filename="../../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="75"/>
         <source>-- print all dxf files to pdf files with the same names.</source>
-        <translation>-- print all dxf files to pdf files with the same names.</translation>
+        <translation>-- imprimir tots els fitxers dxf a fitxers pdf amb els mateixos noms.</translation>
     </message>
     <message>
         <location filename="../../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="77"/>
@@ -16407,65 +16407,65 @@ This action can NOT be undone.</translation>
     <message>
         <location filename="../../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="78"/>
         <source>-- print all dxf files to &apos;some.pdf&apos; file.</source>
-        <translation>-- print all dxf files to &apos;some.pdf&apos; file.</translation>
+        <translation>-- imprimir tots els fitxers dxf al fitxer &apos;some.pdf&apos;.</translation>
     </message>
     <message>
         <location filename="../../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="85"/>
         <source>Auto fit and center drawing to page.</source>
-        <translation>Auto fit and center drawing to page.</translation>
+        <translation>Ajustar automaticament i centrar el dibuix a la pagina.</translation>
     </message>
     <message>
         <location filename="../../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="89"/>
         <source>Auto center drawing on page.</source>
-        <translation>Auto center drawing on page.</translation>
+        <translation>Centrar automaticament el dibuix a la pagina.</translation>
     </message>
     <message>
         <location filename="../../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="93"/>
         <source>Print grayscale.</source>
-        <translation>Print grayscale.</translation>
+        <translation>Imprimir en escala de grisos.</translation>
     </message>
     <message>
         <location filename="../../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="97"/>
         <source>Print monochrome (black/white).</source>
-        <translation>Print monochrome (black/white).</translation>
+        <translation>Imprimir en monocrom (negre/blanc).</translation>
     </message>
     <message>
         <location filename="../../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="101"/>
         <source>Paper size (Width x Height) in mm.</source>
         <comment>WxH</comment>
-        <translation>Paper size (Width x Height) in mm.</translation>
+        <translation>Mida del paper (Amplada x Alcada) en mm.</translation>
     </message>
     <message>
         <location filename="../../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="105"/>
         <source>Output resolution (DPI).</source>
         <comment>integer</comment>
-        <translation>Output resolution (DPI).</translation>
+        <translation>Resolucio de sortida (DPI).</translation>
     </message>
     <message>
         <location filename="../../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="109"/>
         <source>Output scale. E.g.: 0.01 (for 1:100 scale).</source>
-        <translation>Output scale. E.g.: 0.01 (for 1:100 scale).</translation>
+        <translation>Escala de sortida. P. ex.: 0.01 (per a l'escala 1:100).</translation>
     </message>
     <message>
         <location filename="../../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="113"/>
         <source>Paper margins in mm (integer or float).</source>
-        <translation>Paper margins in mm (integer or float).</translation>
+        <translation>Marges del paper en mm (enter o decimal).</translation>
     </message>
     <message>
         <location filename="../../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="117"/>
         <source>Print on multiple pages (Horiz. x Vert.).</source>
-        <translation>Print on multiple pages (Horiz. x Vert.).</translation>
+        <translation>Imprimir en multiples pagines (Horiz. x Vert.).</translation>
     </message>
     <message>
         <location filename="../../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="121"/>
         <source>Output PDF file.</source>
         <comment>file</comment>
-        <translation>Output PDF file.</translation>
+        <translation>Fitxer PDF de sortida.</translation>
     </message>
     <message>
         <location filename="../../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="125"/>
         <source>Target output directory.</source>
-        <translation>Target output directory.</translation>
+        <translation>Directori de sortida de destinacio.</translation>
     </message>
     <message>
         <location filename="../../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="128"/>
@@ -16475,90 +16475,90 @@ This action can NOT be undone.</translation>
     <message>
         <location filename="../../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="128"/>
         <source>Input DXF file(s)</source>
-        <translation>Input DXF file(s)</translation>
+        <translation>Fitxer(s) DXF d'entrada</translation>
     </message>
     <message>
         <location filename="../../src/main/doc_plugin_interface.cpp" line="1354"/>
         <source>enter an integer number</source>
-        <translation>enter an integer number</translation>
+        <translation>introduiu un nombre enter</translation>
     </message>
     <message>
         <location filename="../../src/main/doc_plugin_interface.cpp" line="1358"/>
         <location filename="../../src/main/doc_plugin_interface.cpp" line="1376"/>
         <location filename="../../src/main/doc_plugin_interface.cpp" line="1393"/>
         <source>LibreCAD query</source>
-        <translation>LibreCAD query</translation>
+        <translation>Consulta de LibreCAD</translation>
     </message>
     <message>
         <location filename="../../src/main/doc_plugin_interface.cpp" line="1372"/>
         <source>enter a number</source>
-        <translation>enter a number</translation>
+        <translation>introduiu un nombre</translation>
     </message>
     <message>
         <location filename="../../src/main/doc_plugin_interface.cpp" line="1389"/>
         <source>enter text</source>
-        <translation>enter text</translation>
+        <translation>introduiu text</translation>
     </message>
     <message>
         <location filename="../../src/main/main.cpp" line="256"/>
         <source>Loading..</source>
-        <translation>Loading..</translation>
+        <translation>Carregant..</translation>
     </message>
     <message>
         <location filename="../../src/main/main.cpp" line="320"/>
         <source>Loading...</source>
-        <translation>Loading...</translation>
+        <translation>Carregant...</translation>
     </message>
     <message>
         <location filename="../../src/main/main.cpp" line="356"/>
         <source>Loading File %1..</source>
-        <translation>Loading File %1..</translation>
+        <translation>Carregant fitxer %1..</translation>
     </message>
     <message>
         <location filename="../../src/main/qc_applicationwindow.cpp" line="140"/>
         <source>Pen Wizard</source>
-        <translation>Pen Wizard</translation>
+        <translation>Assistent de llapis</translation>
     </message>
     <message>
         <location filename="../../src/main/qc_applicationwindow.cpp" line="1947"/>
         <source>Invalid objects removed:</source>
-        <translation>Invalid objects removed:</translation>
+        <translation>Objectes no valids eliminats:</translation>
     </message>
     <message>
         <location filename="../../src/main/qc_applicationwindow.cpp" line="3804"/>
         <location filename="../../src/ui/lc_widgetfactory.cpp" line="934"/>
         <source>License</source>
-        <translation>License</translation>
+        <translation>Llicència</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_commandwidget.cpp" line="66"/>
         <source>Keycode mode</source>
-        <translation>Keycode mode</translation>
+        <translation>Mode de codi de tecla</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_commandwidget.cpp" line="79"/>
         <source>Load command file</source>
-        <translation>Load command file</translation>
+        <translation>Carregar fitxer d'ordres</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_commandwidget.cpp" line="83"/>
         <source>Paste multiple commands</source>
-        <translation>Paste multiple commands</translation>
+        <translation>Enganxar multiples ordres</translation>
     </message>
     <message>
         <location filename="../../src/ui/generic/colorwizard.cpp" line="54"/>
         <source>Select objects</source>
-        <translation>Select objects</translation>
+        <translation>Seleccionar objectes</translation>
     </message>
     <message>
         <location filename="../../src/ui/generic/colorwizard.cpp" line="58"/>
         <source>Apply to selected</source>
-        <translation>Apply to selected</translation>
+        <translation>Aplicar als seleccionats</translation>
     </message>
     <message>
         <location filename="../../src/ui/generic/colorwizard.cpp" line="62"/>
         <source>Remove</source>
-        <translation>Remove</translation>
+        <translation>Eliminar</translation>
     </message>
     <message>
         <location filename="../../src/ui/generic/widgetcreator.cpp" line="59"/>
@@ -16570,17 +16570,17 @@ This action can NOT be undone.</translation>
     <message>
         <location filename="../../src/ui/lc_actiongroupmanager.cpp" line="64"/>
         <source>Block</source>
-        <translation>Block</translation>
+        <translation>Bloc</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actiongroupmanager.cpp" line="65"/>
         <source>Circle</source>
-        <translation>Circle</translation>
+        <translation>Cercle</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actiongroupmanager.cpp" line="66"/>
         <source>Curve</source>
-        <translation>Curve</translation>
+        <translation>Corba</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actiongroupmanager.cpp" line="67"/>
@@ -16590,7 +16590,7 @@ This action can NOT be undone.</translation>
     <message>
         <location filename="../../src/ui/lc_actiongroupmanager.cpp" line="68"/>
         <source>Ellipse</source>
-        <translation>Ellipse</translation>
+        <translation>El·lipse</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actiongroupmanager.cpp" line="69"/>
@@ -16601,7 +16601,7 @@ This action can NOT be undone.</translation>
     <message>
         <location filename="../../src/ui/lc_actiongroupmanager.cpp" line="70"/>
         <source>Dimension</source>
-        <translation>Dimension</translation>
+        <translation>Cota</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actiongroupmanager.cpp" line="71"/>
@@ -16621,18 +16621,18 @@ This action can NOT be undone.</translation>
     <message>
         <location filename="../../src/ui/lc_actiongroupmanager.cpp" line="74"/>
         <source>Modify</source>
-        <translation>Modify</translation>
+        <translation>Modificar</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actiongroupmanager.cpp" line="75"/>
         <location filename="../../src/ui/lc_actiongroupmanager.cpp" line="89"/>
         <source>Options</source>
-        <translation>Options</translation>
+        <translation>Opcions</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actiongroupmanager.cpp" line="76"/>
         <source>Other</source>
-        <translation>Other</translation>
+        <translation>Altres</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actiongroupmanager.cpp" line="77"/>
@@ -16642,12 +16642,12 @@ This action can NOT be undone.</translation>
     <message>
         <location filename="../../src/ui/lc_actiongroupmanager.cpp" line="78"/>
         <source>Restriction</source>
-        <translation>Restriction</translation>
+        <translation>Restriccio</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actiongroupmanager.cpp" line="79"/>
         <source>Select</source>
-        <translation>Select</translation>
+        <translation>Seleccionar</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actiongroupmanager.cpp" line="80"/>
@@ -16657,7 +16657,7 @@ This action can NOT be undone.</translation>
     <message>
         <location filename="../../src/ui/lc_actiongroupmanager.cpp" line="81"/>
         <source>Snap Extras</source>
-        <translation>Snap Extras</translation>
+        <translation>Opcions addicionals de referencia</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actiongroupmanager.cpp" line="82"/>
@@ -16677,32 +16677,32 @@ This action can NOT be undone.</translation>
     <message>
         <location filename="../../src/ui/lc_filedialogservice.cpp" line="221"/>
         <source>Combine all layers</source>
-        <translation>Combine all layers</translation>
+        <translation>Combinar totes les capes</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_filedialogservice.cpp" line="252"/>
         <source>File &quot;%1&quot; already exists. Do you want to replace it?</source>
-        <translation>File &quot;%1&quot; already exists. Do you want to replace it?</translation>
+        <translation>El fitxer &quot;%1&quot; ja existeix. Voleu reemplazar-lo?</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_peninforegistry.cpp" line="204"/>
         <source>By Layer</source>
-        <translation>By Layer</translation>
+        <translation>Per capa</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_peninforegistry.cpp" line="207"/>
         <source>By Block</source>
-        <translation>By Block</translation>
+        <translation>Per bloc</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_peninforegistry.cpp" line="210"/>
         <source>- Unchanged -</source>
-        <translation>- Unchanged -</translation>
+        <translation>- Sense canvis -</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_widgetfactory.cpp" line="495"/>
         <source>Creators</source>
-        <translation>Creators</translation>
+        <translation>Creadors</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_colorbox.cpp" line="42"/>
@@ -16712,22 +16712,22 @@ This action can NOT be undone.</translation>
     <message>
         <location filename="../../src/ui/qg_colorbox.cpp" line="43"/>
         <source>Custom Picked</source>
-        <translation>Custom Picked</translation>
+        <translation>Seleccionat personalitzat</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_colorbox.cpp" line="44"/>
         <source>User Color</source>
-        <translation>User Color</translation>
+        <translation>Color d'usuari</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_commandedit.cpp" line="120"/>
         <source>You must input a distance first.</source>
-        <translation>You must input a distance first.</translation>
+        <translation>Primer heu d'introduir una distancia.</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_commandedit.cpp" line="198"/>
         <source>Calculator error for input: </source>
-        <translation>Calculator error for input:</translation>
+        <translation>Error de calculadora per a l'entrada:</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_commandedit.cpp" line="258"/>
@@ -16739,7 +16739,7 @@ This action can NOT be undone.</translation>
         <location filename="../../src/ui/qg_commandedit.cpp" line="259"/>
         <source>calculate </source>
         <comment>command to trigger cli calculator</comment>
-        <translation>calculate</translation>
+        <translation>calcular</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_commandedit.cpp" line="297"/>
@@ -16749,38 +16749,38 @@ This action can NOT be undone.</translation>
     <message>
         <location filename="../../src/ui/qg_commandedit.cpp" line="301"/>
         <source>Calculator mode: On</source>
-        <translation>Calculator mode: On</translation>
+        <translation>Mode calculadora: Activat</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_commandedit.cpp" line="303"/>
         <source>Calculator mode: Off</source>
-        <translation>Calculator mode: Off</translation>
+        <translation>Mode calculadora: Desactivat</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_dialogfactory.cpp" line="236"/>
         <source>noname</source>
         <comment>default layer name</comment>
-        <translation>noname</translation>
+        <translation>senseNom</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_dialogfactory.cpp" line="704"/>
         <source>All Image Files (%1)</source>
-        <translation>All Image Files (%1)</translation>
+        <translation>Tots els fitxers d'imatge (%1)</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_dialogfactory.cpp" line="706"/>
         <source>All Files (*.*)</source>
-        <translation>All Files (*.*)</translation>
+        <translation>Tots els fitxers (*.*)</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_dialogfactory.cpp" line="711"/>
         <source>Open Image</source>
-        <translation>Open Image</translation>
+        <translation>Obrir imatge</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_dialogfactory.cpp" line="1793"/>
         <source>Windows Bitmap</source>
-        <translation>Windows Bitmap</translation>
+        <translation>Mapa de bits de Windows</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_dialogfactory.cpp" line="1795"/>
@@ -16790,72 +16790,72 @@ This action can NOT be undone.</translation>
     <message>
         <location filename="../../src/ui/qg_dialogfactory.cpp" line="1797"/>
         <source>Graphics Interchange Format</source>
-        <translation>Graphics Interchange Format</translation>
+        <translation>Format d'intercanvi de grafics</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_dialogfactory.cpp" line="1799"/>
         <source>Multiple-image Network Graphics</source>
-        <translation>Multiple-image Network Graphics</translation>
+        <translation>Grafics de xarxa d'imatges multiples</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_dialogfactory.cpp" line="1801"/>
         <source>Portable Bit Map</source>
-        <translation>Portable Bit Map</translation>
+        <translation>Mapa de bits portable</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_dialogfactory.cpp" line="1803"/>
         <source>Portable Grey Map</source>
-        <translation>Portable Grey Map</translation>
+        <translation>Mapa de grisos portable</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_dialogfactory.cpp" line="1805"/>
         <source>Portable Network Graphic</source>
-        <translation>Portable Network Graphic</translation>
+        <translation>Grafic de xarxa portable</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_dialogfactory.cpp" line="1807"/>
         <source>Portable Pixel Map</source>
-        <translation>Portable Pixel Map</translation>
+        <translation>Mapa de pixels portable</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_dialogfactory.cpp" line="1809"/>
         <source>X Bitmap Format</source>
-        <translation>X Bitmap Format</translation>
+        <translation>Format de mapa de bits X</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_dialogfactory.cpp" line="1811"/>
         <source>X Pixel Map</source>
-        <translation>X Pixel Map</translation>
+        <translation>Mapa de pixels X</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_dialogfactory.cpp" line="1813"/>
         <source>Scalable Vector Graphics</source>
-        <translation>Scalable Vector Graphics</translation>
+        <translation>Grafics vectorials escalables</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_dialogfactory.cpp" line="1815"/>
         <source>SGI Black &amp; White</source>
-        <translation>SGI Black &amp; White</translation>
+        <translation>SGI Negre &amp; Blanc</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_dialogfactory.cpp" line="1817"/>
         <source>Encapsulated PostScript</source>
-        <translation>Encapsulated PostScript</translation>
+        <translation>PostScript encapsulat</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_dialogfactory.cpp" line="1819"/>
         <source>Encapsulated PostScript Format</source>
-        <translation>Encapsulated PostScript Format</translation>
+        <translation>Format PostScript encapsulat</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_dialogfactory.cpp" line="1821"/>
         <source>Encapsulated PostScript Interchange</source>
-        <translation>Encapsulated PostScript Interchange</translation>
+        <translation>Intercanvi PostScript encapsulat</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_dialogfactory.cpp" line="1823"/>
         <source>Windows Icon</source>
-        <translation>Windows Icon</translation>
+        <translation>Icona de Windows</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_dialogfactory.cpp" line="1825"/>
@@ -16875,55 +16875,55 @@ This action can NOT be undone.</translation>
     <message>
         <location filename="../../src/ui/qg_dialogfactory.cpp" line="1831"/>
         <source>SGI-Bilddatei</source>
-        <translation>SGI-Bilddatei</translation>
+        <translation>Fitxer d'imatge SGI</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_dialogfactory.cpp" line="1833"/>
         <source>Targa Image File</source>
-        <translation>Targa Image File</translation>
+        <translation>Fitxer d'imatge Targa</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_dialogfactory.cpp" line="1835"/>
         <source>Tagged Image File Format</source>
-        <translation>Tagged Image File Format</translation>
+        <translation>Format de fitxer d'imatge etiquetat</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_filedialog.cpp" line="324"/>
         <location filename="../../src/ui/qg_filedialog.cpp" line="377"/>
         <source>Save Drawing As</source>
-        <translation>Save Drawing As</translation>
+        <translation>Desar dibuix com a</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_filedialog.cpp" line="378"/>
         <source>%1 already exists.
 Do you want to replace it?</source>
-        <translation>%1 already exists.
-Do you want to replace it?</translation>
+        <translation>%1 ja existeix.
+Voleu reemplazar-lo?</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_filedialog.cpp" line="443"/>
         <source>Old Drawing Exchange %1</source>
-        <translation>Old Drawing Exchange %1</translation>
+        <translation>Intercanvi de dibuix antic %1</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_filedialog.cpp" line="444"/>
         <source>Drawing Exchange %1</source>
-        <translation>Drawing Exchange %1</translation>
+        <translation>Intercanvi de dibuix %1</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_filedialog.cpp" line="447"/>
         <source>dwg Drawing %1</source>
-        <translation>dwg Drawing %1</translation>
+        <translation>Dibuix dwg %1</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_filedialog.cpp" line="449"/>
         <source>QCad 1.x file %1</source>
-        <translation>QCad 1.x file %1</translation>
+        <translation>Fitxer QCad 1.x %1</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_filedialog.cpp" line="450"/>
         <source>LFF Font %1</source>
-        <translation>LFF Font %1</translation>
+        <translation>Font LFF %1</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_filedialog.cpp" line="451"/>
@@ -16938,27 +16938,27 @@ Do you want to replace it?</translation>
     <message>
         <location filename="../../src/ui/qg_filedialog.cpp" line="476"/>
         <source>Open Drawing</source>
-        <translation>Open Drawing</translation>
+        <translation>Obrir dibuix</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_widthbox.cpp" line="35"/>
         <source>-Unchanged-</source>
-        <translation>-Unchanged-</translation>
+        <translation>-Sense canvis-</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_widthbox.cpp" line="37"/>
         <source>ByLayer</source>
-        <translation>ByLayer</translation>
+        <translation>PerCapa</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_widthbox.cpp" line="39"/>
         <source>ByBlock</source>
-        <translation>ByBlock</translation>
+        <translation>PerBloc</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_widthbox.cpp" line="41"/>
         <source>Default</source>
-        <translation>Default</translation>
+        <translation>Per defecte</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_widthbox.cpp" line="43"/>
@@ -17086,7 +17086,7 @@ Do you want to replace it?</translation>
     <message>
         <location filename="../../src/actions/rs_actionblockscreate.cpp" line="149"/>
         <source>Specify reference point</source>
-        <translation>Specify reference point</translation>
+        <translation>Especifiqueu el punt de referencia</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionblockscreate.cpp" line="150"/>
@@ -17099,19 +17099,19 @@ Do you want to replace it?</translation>
     <message>
         <location filename="../../src/actions/rs_actionblocksinsert.cpp" line="74"/>
         <source>Block cannot contain an insert of itself.</source>
-        <translation>Block cannot contain an insert of itself.</translation>
+        <translation>Un bloc no pot contenir una insercio de si mateix.</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionblocksinsert.cpp" line="80"/>
         <source> has nested insert of current block in:
 </source>
-        <translation>has nested insert of current block in:</translation>
+        <translation>te una insercio imbricada del bloc actual a:</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionblocksinsert.cpp" line="82"/>
         <source>
 This block cannot be inserted.</source>
-        <translation>This block cannot be inserted.</translation>
+        <translation>Aquest bloc no pot ser inserit.</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionblocksinsert.cpp" line="217"/>
@@ -17121,12 +17121,12 @@ This block cannot be inserted.</source>
         <location filename="../../src/actions/rs_actionblocksinsert.cpp" line="269"/>
         <location filename="../../src/actions/rs_actionblocksinsert.cpp" line="282"/>
         <source>Not a valid expression</source>
-        <translation>Not a valid expression</translation>
+        <translation>Expressió no vàlida</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionblocksinsert.cpp" line="381"/>
         <source>Specify reference point</source>
-        <translation>Specify reference point</translation>
+        <translation>Especifiqueu el punt de referencia</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionblocksinsert.cpp" line="382"/>
@@ -17136,32 +17136,32 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actionblocksinsert.cpp" line="385"/>
         <source>Enter angle:</source>
-        <translation>Enter angle:</translation>
+        <translation>Introduiu l'angle:</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionblocksinsert.cpp" line="389"/>
         <source>Enter factor:</source>
-        <translation>Enter factor:</translation>
+        <translation>Introduiu el factor:</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionblocksinsert.cpp" line="393"/>
         <source>Enter columns:</source>
-        <translation>Enter columns:</translation>
+        <translation>Introduiu les columnes:</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionblocksinsert.cpp" line="397"/>
         <source>Enter rows:</source>
-        <translation>Enter rows:</translation>
+        <translation>Introduiu les files:</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionblocksinsert.cpp" line="401"/>
         <source>Enter column spacing:</source>
-        <translation>Enter column spacing:</translation>
+        <translation>Introduiu l'espaiat de columnes:</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionblocksinsert.cpp" line="405"/>
         <source>Enter row spacing:</source>
-        <translation>Enter row spacing:</translation>
+        <translation>Introduiu l'espaiat de files:</translation>
     </message>
 </context>
 <context>
@@ -17169,7 +17169,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actionblockssave.cpp" line="95"/>
         <source>No block activated to save</source>
-        <translation>No block activated to save</translation>
+        <translation>No hi ha cap bloc actiu per desar</translation>
     </message>
 </context>
 <context>
@@ -17177,7 +17177,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondefault.cpp" line="500"/>
         <source>Choose second edge</source>
-        <translation>Choose second edge</translation>
+        <translation>Trieu la segona vora</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondefault.cpp" line="501"/>
@@ -17190,7 +17190,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondimaligned.cpp" line="252"/>
         <source>Specify first extension line origin</source>
-        <translation>Specify first extension line origin</translation>
+        <translation>Especifiqueu l'origen de la primera linia d'extensio</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondimaligned.cpp" line="253"/>
@@ -17200,7 +17200,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondimaligned.cpp" line="257"/>
         <source>Specify second extension line origin</source>
-        <translation>Specify second extension line origin</translation>
+        <translation>Especifiqueu l'origen de la segona linia d'extensio</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondimaligned.cpp" line="258"/>
@@ -17211,12 +17211,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondimaligned.cpp" line="262"/>
         <source>Specify dimension line location</source>
-        <translation>Specify dimension line location</translation>
+        <translation>Especifiqueu la ubicacio de la linia de cota</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondimaligned.cpp" line="266"/>
         <source>Enter dimension text:</source>
-        <translation>Enter dimension text:</translation>
+        <translation>Introduiu el text de la cota:</translation>
     </message>
 </context>
 <context>
@@ -17224,7 +17224,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondimangular.cpp" line="239"/>
         <source>Select first line</source>
-        <translation>Select first line</translation>
+        <translation>Seleccioneu la primera linia</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondimangular.cpp" line="240"/>
@@ -17236,17 +17236,17 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondimangular.cpp" line="244"/>
         <source>Select second line</source>
-        <translation>Select second line</translation>
+        <translation>Seleccioneu la segona linia</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondimangular.cpp" line="249"/>
         <source>Specify dimension arc line location</source>
-        <translation>Specify dimension arc line location</translation>
+        <translation>Especifiqueu la ubicacio de la linia d'arc de cota</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondimangular.cpp" line="254"/>
         <source>Enter dimension text:</source>
-        <translation>Enter dimension text:</translation>
+        <translation>Introduiu el text de la cota:</translation>
     </message>
 </context>
 <context>
@@ -17254,17 +17254,17 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondimdiametric.cpp" line="180"/>
         <source>Not a circle or arc entity</source>
-        <translation>Not a circle or arc entity</translation>
+        <translation>No es una entitat de cercle o arc</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondimdiametric.cpp" line="258"/>
         <source>Not a valid expression</source>
-        <translation>Not a valid expression</translation>
+        <translation>Expressió no vàlida</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondimdiametric.cpp" line="286"/>
         <source>Select arc or circle entity</source>
-        <translation>Select arc or circle entity</translation>
+        <translation>Seleccioneu l'entitat arc o cercle</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondimdiametric.cpp" line="287"/>
@@ -17275,12 +17275,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondimdiametric.cpp" line="291"/>
         <source>Specify dimension line location</source>
-        <translation>Specify dimension line location</translation>
+        <translation>Especifiqueu la ubicacio de la linia de cota</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondimdiametric.cpp" line="294"/>
         <source>Enter dimension text:</source>
-        <translation>Enter dimension text:</translation>
+        <translation>Introduiu el text de la cota:</translation>
     </message>
 </context>
 <context>
@@ -17288,7 +17288,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondimleader.cpp" line="227"/>
         <source>Specify target point</source>
-        <translation>Specify target point</translation>
+        <translation>Especifiqueu el punt de destinacio</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondimleader.cpp" line="228"/>
@@ -17298,12 +17298,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondimleader.cpp" line="231"/>
         <source>Specify next point</source>
-        <translation>Specify next point</translation>
+        <translation>Especifiqueu el punt seguent</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondimleader.cpp" line="232"/>
         <source>Finish</source>
-        <translation>Finish</translation>
+        <translation>Finalitzar</translation>
     </message>
 </context>
 <context>
@@ -17311,12 +17311,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondimlinear.cpp" line="235"/>
         <source>Not a valid expression</source>
-        <translation>Not a valid expression</translation>
+        <translation>Expressió no vàlida</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondimlinear.cpp" line="283"/>
         <source>Specify first extension line origin</source>
-        <translation>Specify first extension line origin</translation>
+        <translation>Especifiqueu l'origen de la primera linia d'extensio</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondimlinear.cpp" line="284"/>
@@ -17326,7 +17326,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondimlinear.cpp" line="288"/>
         <source>Specify second extension line origin</source>
-        <translation>Specify second extension line origin</translation>
+        <translation>Especifiqueu l'origen de la segona linia d'extensio</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondimlinear.cpp" line="289"/>
@@ -17337,17 +17337,17 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondimlinear.cpp" line="293"/>
         <source>Specify dimension line location</source>
-        <translation>Specify dimension line location</translation>
+        <translation>Especifiqueu la ubicacio de la linia de cota</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondimlinear.cpp" line="297"/>
         <source>Enter dimension text:</source>
-        <translation>Enter dimension text:</translation>
+        <translation>Introduiu el text de la cota:</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondimlinear.cpp" line="301"/>
         <source>Enter dimension line angle:</source>
-        <translation>Enter dimension line angle:</translation>
+        <translation>Introduiu l'angle de la linia de cota:</translation>
     </message>
 </context>
 <context>
@@ -17355,17 +17355,17 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondimradial.cpp" line="173"/>
         <source>Not a circle or arc entity</source>
-        <translation>Not a circle or arc entity</translation>
+        <translation>No es una entitat de cercle o arc</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondimradial.cpp" line="251"/>
         <source>Not a valid expression</source>
-        <translation>Not a valid expression</translation>
+        <translation>Expressió no vàlida</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondimradial.cpp" line="278"/>
         <source>Select arc or circle entity</source>
-        <translation>Select arc or circle entity</translation>
+        <translation>Seleccioneu l'entitat arc o cercle</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondimradial.cpp" line="279"/>
@@ -17376,12 +17376,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondimradial.cpp" line="283"/>
         <source>Specify dimension line position or enter angle:</source>
-        <translation>Specify dimension line position or enter angle:</translation>
+        <translation>Especifiqueu la posicio de la linia de cota o introduiu l'angle:</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondimradial.cpp" line="287"/>
         <source>Enter dimension text:</source>
-        <translation>Enter dimension text:</translation>
+        <translation>Introduiu el text de la cota:</translation>
     </message>
 </context>
 <context>
@@ -17393,17 +17393,17 @@ This block cannot be inserted.</source>
         <location filename="../../src/actions/rs_actiondrawarc.cpp" line="303"/>
         <location filename="../../src/actions/rs_actiondrawarc.cpp" line="318"/>
         <source>Not a valid expression</source>
-        <translation>Not a valid expression</translation>
+        <translation>Expressió no vàlida</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawarc.cpp" line="315"/>
         <source>Not a valid chord length</source>
-        <translation>Not a valid chord length</translation>
+        <translation>Longitud de corda no valida</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawarc.cpp" line="336"/>
         <source>Specify center</source>
-        <translation>Specify center</translation>
+        <translation>Especifiqueu el centre</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawarc.cpp" line="336"/>
@@ -17413,7 +17413,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawarc.cpp" line="339"/>
         <source>Specify radius</source>
-        <translation>Specify radius</translation>
+        <translation>Especifiqueu el radi</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawarc.cpp" line="339"/>
@@ -17427,22 +17427,22 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawarc.cpp" line="343"/>
         <source>Specify start angle:</source>
-        <translation>Specify start angle:</translation>
+        <translation>Especifiqueu l'angle d'inici:</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawarc.cpp" line="347"/>
         <source>Specify end angle or [angle/chord length]</source>
-        <translation>Specify end angle or [angle/chord length]</translation>
+        <translation>Especifiqueu l'angle final o [angle/longitud de corda]</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawarc.cpp" line="351"/>
         <source>Specify included angle:</source>
-        <translation>Specify included angle:</translation>
+        <translation>Especifiqueu l'angle inclos:</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawarc.cpp" line="355"/>
         <source>Specify chord length:</source>
-        <translation>Specify chord length:</translation>
+        <translation>Especifiqueu la longitud de la corda:</translation>
     </message>
 </context>
 <context>
@@ -17450,12 +17450,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawarc3p.cpp" line="108"/>
         <source>Invalid arc data.</source>
-        <translation>Invalid arc data.</translation>
+        <translation>Dades d'arc no valides.</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawarc3p.cpp" line="233"/>
         <source>Specify startpoint or [center]</source>
-        <translation>Specify startpoint or [center]</translation>
+        <translation>Especifiqueu el punt d'inici o [centre]</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawarc3p.cpp" line="234"/>
@@ -17465,7 +17465,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawarc3p.cpp" line="238"/>
         <source>Specify second point</source>
-        <translation>Specify second point</translation>
+        <translation>Especifiqueu el segon punt</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawarc3p.cpp" line="238"/>
@@ -17476,7 +17476,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawarc3p.cpp" line="242"/>
         <source>Specify endpoint</source>
-        <translation>Specify endpoint</translation>
+        <translation>Especifiqueu el punt final</translation>
     </message>
 </context>
 <context>
@@ -17484,7 +17484,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawarctangential.cpp" line="226"/>
         <source>Specify base entity</source>
-        <translation>Specify base entity</translation>
+        <translation>Especifiqueu l'entitat base</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawarctangential.cpp" line="227"/>
@@ -17494,7 +17494,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawarctangential.cpp" line="232"/>
         <source>Specify end angle</source>
-        <translation>Specify end angle</translation>
+        <translation>Especifiqueu l'angle final</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawarctangential.cpp" line="232"/>
@@ -17505,7 +17505,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawarctangential.cpp" line="235"/>
         <source>Specify end point</source>
-        <translation>Specify end point</translation>
+        <translation>Especifiqueu el punt final</translation>
     </message>
 </context>
 <context>
@@ -17513,12 +17513,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawcircle.cpp" line="189"/>
         <source>Not a valid expression</source>
-        <translation>Not a valid expression</translation>
+        <translation>Expressió no vàlida</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawcircle.cpp" line="201"/>
         <source>Specify center</source>
-        <translation>Specify center</translation>
+        <translation>Especifiqueu el centre</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawcircle.cpp" line="201"/>
@@ -17528,7 +17528,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawcircle.cpp" line="204"/>
         <source>Specify point on circle</source>
-        <translation>Specify point on circle</translation>
+        <translation>Especifiqueu el punt al cercle</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawcircle.cpp" line="204"/>
@@ -17541,12 +17541,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawcircle2p.cpp" line="103"/>
         <source>Invalid Circle data.</source>
-        <translation>Invalid Circle data.</translation>
+        <translation>Dades del cercle no valides.</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawcircle2p.cpp" line="184"/>
         <source>Specify first point</source>
-        <translation>Specify first point</translation>
+        <translation>Especifiqueu el primer punt</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawcircle2p.cpp" line="184"/>
@@ -17556,7 +17556,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawcircle2p.cpp" line="188"/>
         <source>Specify second point</source>
-        <translation>Specify second point</translation>
+        <translation>Especifiqueu el segon punt</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawcircle2p.cpp" line="188"/>
@@ -17569,12 +17569,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawcircle3p.cpp" line="95"/>
         <source>Invalid circle data.</source>
-        <translation>Invalid circle data.</translation>
+        <translation>Dades del cercle no valides.</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawcircle3p.cpp" line="186"/>
         <source>Specify first point</source>
-        <translation>Specify first point</translation>
+        <translation>Especifiqueu el primer punt</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawcircle3p.cpp" line="187"/>
@@ -17584,7 +17584,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawcircle3p.cpp" line="190"/>
         <source>Specify second point</source>
-        <translation>Specify second point</translation>
+        <translation>Especifiqueu el segon punt</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawcircle3p.cpp" line="191"/>
@@ -17595,7 +17595,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawcircle3p.cpp" line="194"/>
         <source>Specify third point</source>
-        <translation>Specify third point</translation>
+        <translation>Especifiqueu el tercer punt</translation>
     </message>
 </context>
 <context>
@@ -17603,27 +17603,27 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawcirclecr.cpp" line="106"/>
         <source>radius=%1 is invalid (expression)</source>
-        <translation>radius=%1 is invalid (expression)</translation>
+        <translation>radi=%1 no es valid (expressio)</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawcirclecr.cpp" line="108"/>
         <source>radius=%1 is invalid (negative)</source>
-        <translation>radius=%1 is invalid (negative)</translation>
+        <translation>radi=%1 no es valid (negatiu)</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawcirclecr.cpp" line="111"/>
         <source>radius=%1 is invalid (zero)</source>
-        <translation>radius=%1 is invalid (zero)</translation>
+        <translation>radi=%1 no es valid (zero)</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawcirclecr.cpp" line="193"/>
         <source>Not a valid expression</source>
-        <translation>Not a valid expression</translation>
+        <translation>Expressió no vàlida</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawcirclecr.cpp" line="223"/>
         <source>Specify circle center</source>
-        <translation>Specify circle center</translation>
+        <translation>Especifiqueu el centre del cercle</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawcirclecr.cpp" line="224"/>
@@ -17633,7 +17633,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawcirclecr.cpp" line="227"/>
         <source>Specify circle radius</source>
-        <translation>Specify circle radius</translation>
+        <translation>Especifiqueu el radi del cercle</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawcirclecr.cpp" line="228"/>
@@ -17646,7 +17646,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawcircleinscribe.cpp" line="269"/>
         <source>Specify the first line</source>
-        <translation>Specify the first line</translation>
+        <translation>Especifiqueu la primera linia</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawcircleinscribe.cpp" line="270"/>
@@ -17656,7 +17656,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawcircleinscribe.cpp" line="274"/>
         <source>Specify the second line</source>
-        <translation>Specify the second line</translation>
+        <translation>Especifiqueu la segona linia</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawcircleinscribe.cpp" line="275"/>
@@ -17667,7 +17667,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawcircleinscribe.cpp" line="279"/>
         <source>Specify the third line</source>
-        <translation>Specify the third line</translation>
+        <translation>Especifiqueu la tercera linia</translation>
     </message>
 </context>
 <context>
@@ -17675,7 +17675,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawcircletan1_2p.cpp" line="425"/>
         <source>Specify a line/arc/circle</source>
-        <translation>Specify a line/arc/circle</translation>
+        <translation>Especifiqueu una linia/arc/cercle</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawcircletan1_2p.cpp" line="426"/>
@@ -17685,7 +17685,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawcircletan1_2p.cpp" line="430"/>
         <source>Specify the first point on the tangent circle</source>
-        <translation>Specify the first point on the tangent circle</translation>
+        <translation>Especifiqueu el primer punt al cercle tangent</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawcircletan1_2p.cpp" line="431"/>
@@ -17697,12 +17697,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawcircletan1_2p.cpp" line="435"/>
         <source>Specify the second point on the tangent circle</source>
-        <translation>Specify the second point on the tangent circle</translation>
+        <translation>Especifiqueu el segon punt al cercle tangent</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawcircletan1_2p.cpp" line="439"/>
         <source>Select the center of the tangent circle</source>
-        <translation>Select the center of the tangent circle</translation>
+        <translation>Seleccioneu el centre del cercle tangent</translation>
     </message>
 </context>
 <context>
@@ -17710,32 +17710,32 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawcircletan2.cpp" line="156"/>
         <source>Invalid expression &apos;%1&apos; for radius</source>
-        <translation>Invalid expression &apos;%1&apos; for radius</translation>
+        <translation>Expressio &apos;%1&apos; no valida per al radi</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawcircletan2.cpp" line="158"/>
         <source>Invalid negative radius &apos;%1&apos;</source>
-        <translation>Invalid negative radius &apos;%1&apos;</translation>
+        <translation>Radi negatiu &apos;%1&apos; no valid</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawcircletan2.cpp" line="161"/>
         <source>Invalid zero radius &apos;%1&apos;</source>
-        <translation>Invalid zero radius &apos;%1&apos;</translation>
+        <translation>Radi zero &apos;%1&apos; no valid</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawcircletan2.cpp" line="169"/>
         <source>No tangent circle possible for radius &apos;%1&apos;</source>
-        <translation>No tangent circle possible for radius &apos;%1&apos;</translation>
+        <translation>No es possible cap cercle tangent per al radi &apos;%1&apos;</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawcircletan2.cpp" line="183"/>
         <source>No common tangential circle for radius &apos;%1&apos;</source>
-        <translation>No common tangential circle for radius &apos;%1&apos;</translation>
+        <translation>No hi ha cercle tangent comu per al radi &apos;%1&apos;</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawcircletan2.cpp" line="328"/>
         <source>Specify the first line/arc/circle</source>
-        <translation>Specify the first line/arc/circle</translation>
+        <translation>Especifiqueu la primera linia/arc/cercle</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawcircletan2.cpp" line="329"/>
@@ -17745,7 +17745,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawcircletan2.cpp" line="333"/>
         <source>Specify the second line/arc/circle</source>
-        <translation>Specify the second line/arc/circle</translation>
+        <translation>Especifiqueu la segona linia/arc/cercle</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawcircletan2.cpp" line="334"/>
@@ -17756,7 +17756,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawcircletan2.cpp" line="338"/>
         <source>Select the center of the tangent circle</source>
-        <translation>Select the center of the tangent circle</translation>
+        <translation>Seleccioneu el centre del cercle tangent</translation>
     </message>
 </context>
 <context>
@@ -17764,7 +17764,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawcircletan2_1p.cpp" line="333"/>
         <source>Specify a line/arc/circle</source>
-        <translation>Specify a line/arc/circle</translation>
+        <translation>Especifiqueu una linia/arc/cercle</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawcircletan2_1p.cpp" line="334"/>
@@ -17774,7 +17774,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawcircletan2_1p.cpp" line="338"/>
         <source>Specify the another arc/circle</source>
-        <translation>Specify the another arc/circle</translation>
+        <translation>Especifiqueu un altre arc/cercle</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawcircletan2_1p.cpp" line="339"/>
@@ -17786,12 +17786,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawcircletan2_1p.cpp" line="343"/>
         <source>Specify a point on the tangent circle</source>
-        <translation>Specify a point on the tangent circle</translation>
+        <translation>Especifiqueu un punt al cercle tangent</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawcircletan2_1p.cpp" line="347"/>
         <source>Select the center of the tangent circle</source>
-        <translation>Select the center of the tangent circle</translation>
+        <translation>Seleccioneu el centre del cercle tangent</translation>
     </message>
 </context>
 <context>
@@ -17799,7 +17799,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawcircletan3.cpp" line="463"/>
         <source>Specify the first line/arc/circle</source>
-        <translation>Specify the first line/arc/circle</translation>
+        <translation>Especifiqueu la primera linia/arc/cercle</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawcircletan3.cpp" line="464"/>
@@ -17809,7 +17809,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawcircletan3.cpp" line="468"/>
         <source>Specify the second line/arc/circle</source>
-        <translation>Specify the second line/arc/circle</translation>
+        <translation>Especifiqueu la segona linia/arc/cercle</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawcircletan3.cpp" line="469"/>
@@ -17821,12 +17821,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawcircletan3.cpp" line="472"/>
         <source>Specify the third line/arc/circle</source>
-        <translation>Specify the third line/arc/circle</translation>
+        <translation>Especifiqueu la tercera linia/arc/cercle</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawcircletan3.cpp" line="477"/>
         <source>Select the center of the tangent circle</source>
-        <translation>Select the center of the tangent circle</translation>
+        <translation>Seleccioneu el centre del cercle tangent</translation>
     </message>
 </context>
 <context>
@@ -17834,12 +17834,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawellipse4points.cpp" line="156"/>
         <source>Can not determine uniquely an ellipse</source>
-        <translation>Can not determine uniquely an ellipse</translation>
+        <translation>No es pot determinar de forma unica una el.lipse</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawellipse4points.cpp" line="284"/>
         <source>Specify the first point on ellipse</source>
-        <translation>Specify the first point on ellipse</translation>
+        <translation>Especifiqueu el primer punt de l'el.lipse</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawellipse4points.cpp" line="285"/>
@@ -17849,7 +17849,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawellipse4points.cpp" line="289"/>
         <source>Specify the second point on ellipse</source>
-        <translation>Specify the second point on ellipse</translation>
+        <translation>Especifiqueu el segon punt de l'el.lipse</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawellipse4points.cpp" line="290"/>
@@ -17861,12 +17861,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawellipse4points.cpp" line="294"/>
         <source>Specify the third point on ellipse</source>
-        <translation>Specify the third point on ellipse</translation>
+        <translation>Especifiqueu el tercer punt de l'el.lipse</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawellipse4points.cpp" line="299"/>
         <source>Specify the fourth point on ellipse</source>
-        <translation>Specify the fourth point on ellipse</translation>
+        <translation>Especifiqueu el quart punt de l'el.lipse</translation>
     </message>
 </context>
 <context>
@@ -17876,12 +17876,12 @@ This block cannot be inserted.</source>
         <location filename="../../src/actions/rs_actiondrawellipseaxis.cpp" line="325"/>
         <location filename="../../src/actions/rs_actiondrawellipseaxis.cpp" line="337"/>
         <source>Not a valid expression</source>
-        <translation>Not a valid expression</translation>
+        <translation>Expressió no vàlida</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawellipseaxis.cpp" line="350"/>
         <source>Specify ellipse center</source>
-        <translation>Specify ellipse center</translation>
+        <translation>Especifiqueu el centre de l'el.lipse</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawellipseaxis.cpp" line="351"/>
@@ -17891,7 +17891,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawellipseaxis.cpp" line="355"/>
         <source>Specify endpoint of major axis</source>
-        <translation>Specify endpoint of major axis</translation>
+        <translation>Especifiqueu el punt final de l'eix major</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawellipseaxis.cpp" line="356"/>
@@ -17904,17 +17904,17 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawellipseaxis.cpp" line="361"/>
         <source>Specify endpoint or length of minor axis:</source>
-        <translation>Specify endpoint or length of minor axis:</translation>
+        <translation>Especifiqueu el punt final o la longitud de l'eix menor:</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawellipseaxis.cpp" line="366"/>
         <source>Specify start angle</source>
-        <translation>Specify start angle</translation>
+        <translation>Especifiqueu l'angle d'inici</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawellipseaxis.cpp" line="371"/>
         <source>Specify end angle</source>
-        <translation>Specify end angle</translation>
+        <translation>Especifiqueu l'angle final</translation>
     </message>
 </context>
 <context>
@@ -17922,7 +17922,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawellipsecenter3points.cpp" line="282"/>
         <source>Specify the center of ellipse</source>
-        <translation>Specify the center of ellipse</translation>
+        <translation>Especifiqueu el centre de l'el.lipse</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawellipsecenter3points.cpp" line="283"/>
@@ -17933,12 +17933,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawellipsecenter3points.cpp" line="287"/>
         <source>Specify the first point on ellipse</source>
-        <translation>Specify the first point on ellipse</translation>
+        <translation>Especifiqueu el primer punt de l'el.lipse</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawellipsecenter3points.cpp" line="291"/>
         <source>Specify the second point on ellipse</source>
-        <translation>Specify the second point on ellipse</translation>
+        <translation>Especifiqueu el segon punt de l'el.lipse</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawellipsecenter3points.cpp" line="292"/>
@@ -17949,7 +17949,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawellipsecenter3points.cpp" line="296"/>
         <source>Specify the third point on ellipse</source>
-        <translation>Specify the third point on ellipse</translation>
+        <translation>Especifiqueu el tercer punt de l'el.lipse</translation>
     </message>
 </context>
 <context>
@@ -17957,22 +17957,22 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawellipsefocipoint.cpp" line="207"/>
         <source>specify a point on ellipse, or total distance to foci</source>
-        <translation>specify a point on ellipse, or total distance to foci</translation>
+        <translation>especifiqueu un punt de l'el.lipse, o la distancia total als focos</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawellipsefocipoint.cpp" line="221"/>
         <source>Total distance %1 is smaller than distance between foci</source>
-        <translation>Total distance %1 is smaller than distance between foci</translation>
+        <translation>La distancia total %1 es menor que la distancia entre els focos</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawellipsefocipoint.cpp" line="223"/>
         <source>Not a valid expression</source>
-        <translation>Not a valid expression</translation>
+        <translation>Expressió no vàlida</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawellipsefocipoint.cpp" line="238"/>
         <source>Specify first focus of ellipse</source>
-        <translation>Specify first focus of ellipse</translation>
+        <translation>Especifiqueu el primer focus de l'el.lipse</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawellipsefocipoint.cpp" line="239"/>
@@ -17982,7 +17982,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawellipsefocipoint.cpp" line="243"/>
         <source>Specify second focus of ellipse</source>
-        <translation>Specify second focus of ellipse</translation>
+        <translation>Especifiqueu el segon focus de l'el.lipse</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawellipsefocipoint.cpp" line="244"/>
@@ -17993,7 +17993,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawellipsefocipoint.cpp" line="249"/>
         <source>Specify a point on ellipse or total distance to foci</source>
-        <translation>Specify a point on ellipse or total distance to foci</translation>
+        <translation>Especifiqueu un punt de l'el.lipse o la distancia total als focos</translation>
     </message>
 </context>
 <context>
@@ -18001,12 +18001,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawellipseinscribe.cpp" line="157"/>
         <source>Can not determine uniquely an ellipse</source>
-        <translation>Can not determine uniquely an ellipse</translation>
+        <translation>No es pot determinar de forma unica una el.lipse</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawellipseinscribe.cpp" line="279"/>
         <source>Specify the first line</source>
-        <translation>Specify the first line</translation>
+        <translation>Especifiqueu la primera linia</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawellipseinscribe.cpp" line="280"/>
@@ -18016,7 +18016,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawellipseinscribe.cpp" line="284"/>
         <source>Specify the second line</source>
-        <translation>Specify the second line</translation>
+        <translation>Especifiqueu la segona linia</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawellipseinscribe.cpp" line="285"/>
@@ -18028,12 +18028,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawellipseinscribe.cpp" line="289"/>
         <source>Specify the third line</source>
-        <translation>Specify the third line</translation>
+        <translation>Especifiqueu la tercera linia</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawellipseinscribe.cpp" line="294"/>
         <source>Specify the fourth line</source>
-        <translation>Specify the fourth line</translation>
+        <translation>Especifiqueu la quarta linia</translation>
     </message>
 </context>
 <context>
@@ -18041,42 +18041,42 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawhatch.cpp" line="150"/>
         <source>Hatch created successfully.</source>
-        <translation>Hatch created successfully.</translation>
+        <translation>Ratllat creat amb exit.</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawhatch.cpp" line="153"/>
         <source>Hatch Error: Invalid contour found!</source>
-        <translation>Hatch Error: Invalid contour found!</translation>
+        <translation>Error de ratllat: S'ha trobat un contorn no valid!</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawhatch.cpp" line="157"/>
         <source>Hatch Error: Pattern not found!</source>
-        <translation>Hatch Error: Pattern not found!</translation>
+        <translation>Error de ratllat: Patro no trobat!</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawhatch.cpp" line="160"/>
         <source>Hatch Error: Contour or pattern too small!</source>
-        <translation>Hatch Error: Contour or pattern too small!</translation>
+        <translation>Error de ratllat: Contorn o patro massa petit!</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawhatch.cpp" line="163"/>
         <source>Hatch Error: Contour too big!</source>
-        <translation>Hatch Error: Contour too big!</translation>
+        <translation>Error de ratllat: Contorn massa gran!</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawhatch.cpp" line="166"/>
         <source>Hatch Error: Undefined Error!</source>
-        <translation>Hatch Error: Undefined Error!</translation>
+        <translation>Error de ratllat: Error no definit!</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawhatch.cpp" line="171"/>
         <source>Total hatch area = %1</source>
-        <translation>Total hatch area = %1</translation>
+        <translation>Area total del ratllat = %1</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawhatch.cpp" line="179"/>
         <source>Invalid hatch area. Please check that the entities chosen form one or more closed contours.</source>
-        <translation>Invalid hatch area. Please check that the entities chosen form one or more closed contours.</translation>
+        <translation>Area de ratllat no valida. Si us plau, comproveu que les entitats triades formen un o mes contorns tancats.</translation>
     </message>
 </context>
 <context>
@@ -18086,12 +18086,12 @@ This block cannot be inserted.</source>
         <location filename="../../src/actions/rs_actiondrawimage.cpp" line="210"/>
         <location filename="../../src/actions/rs_actiondrawimage.cpp" line="224"/>
         <source>Not a valid expression</source>
-        <translation>Not a valid expression</translation>
+        <translation>Expressió no vàlida</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawimage.cpp" line="308"/>
         <source>Specify reference point</source>
-        <translation>Specify reference point</translation>
+        <translation>Especifiqueu el punt de referencia</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawimage.cpp" line="309"/>
@@ -18101,17 +18101,17 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawimage.cpp" line="312"/>
         <source>Enter angle:</source>
-        <translation>Enter angle:</translation>
+        <translation>Introduiu l'angle:</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawimage.cpp" line="316"/>
         <source>Enter factor:</source>
-        <translation>Enter factor:</translation>
+        <translation>Introduiu el factor:</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawimage.cpp" line="320"/>
         <source>Enter dpi:</source>
-        <translation>Enter dpi:</translation>
+        <translation>Introduiu els dpi:</translation>
     </message>
 </context>
 <context>
@@ -18119,7 +18119,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawline.cpp" line="313"/>
         <source>Specify first point</source>
-        <translation>Specify first point</translation>
+        <translation>Especifiqueu el primer punt</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawline.cpp" line="314"/>
@@ -18129,7 +18129,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawline.cpp" line="337"/>
         <source>Specify next point or [%1]</source>
-        <translation>Specify next point or [%1]</translation>
+        <translation>Especifiqueu el punt seguent o [%1]</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawline.cpp" line="338"/>
@@ -18140,22 +18140,22 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawline.cpp" line="341"/>
         <source>Specify next point</source>
-        <translation>Specify next point</translation>
+        <translation>Especifiqueu el punt seguent</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawline.cpp" line="389"/>
         <source>Cannot close sequence of lines: Not enough entities defined yet, or already closed.</source>
-        <translation>Cannot close sequence of lines: Not enough entities defined yet, or already closed.</translation>
+        <translation>No es pot tancar la sequencia de linies: Encara no hi ha prou entitats definides, o ja es tancada.</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawline.cpp" line="443"/>
         <source>Cannot undo: Begin of history reached</source>
-        <translation>Cannot undo: Begin of history reached</translation>
+        <translation>No es pot desfer: S'ha arribat al principi de l'historial</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawline.cpp" line="478"/>
         <source>Cannot redo: End of history reached</source>
-        <translation>Cannot redo: End of history reached</translation>
+        <translation>No es pot refer: S'ha arribat al final de l'historial</translation>
     </message>
 </context>
 <context>
@@ -18164,12 +18164,12 @@ This block cannot be inserted.</source>
         <location filename="../../src/actions/rs_actiondrawlineangle.cpp" line="219"/>
         <location filename="../../src/actions/rs_actiondrawlineangle.cpp" line="233"/>
         <source>Not a valid expression</source>
-        <translation>Not a valid expression</translation>
+        <translation>Expressió no vàlida</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawlineangle.cpp" line="300"/>
         <source>Specify position</source>
-        <translation>Specify position</translation>
+        <translation>Especifiqueu la posicio</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawlineangle.cpp" line="301"/>
@@ -18179,7 +18179,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawlineangle.cpp" line="305"/>
         <source>Enter angle:</source>
-        <translation>Enter angle:</translation>
+        <translation>Introduiu l'angle:</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawlineangle.cpp" line="305"/>
@@ -18190,7 +18190,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawlineangle.cpp" line="309"/>
         <source>Enter length:</source>
-        <translation>Enter length:</translation>
+        <translation>Introduiu la longitud:</translation>
     </message>
 </context>
 <context>
@@ -18199,18 +18199,18 @@ This block cannot be inserted.</source>
         <location filename="../../src/actions/rs_actiondrawlinebisector.cpp" line="236"/>
         <location filename="../../src/actions/rs_actiondrawlinebisector.cpp" line="253"/>
         <source>Not a valid expression</source>
-        <translation>Not a valid expression</translation>
+        <translation>Expressió no vàlida</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawlinebisector.cpp" line="251"/>
         <source>Number sector lines not in range: </source>
         <comment>number of bisector to create must be in [1, 200]</comment>
-        <translation>Number sector lines not in range:</translation>
+        <translation>El nombre de linies de sector no es en el rang:</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawlinebisector.cpp" line="288"/>
         <source>Select first line</source>
-        <translation>Select first line</translation>
+        <translation>Seleccioneu la primera linia</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawlinebisector.cpp" line="289"/>
@@ -18220,7 +18220,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawlinebisector.cpp" line="292"/>
         <source>Select second line</source>
-        <translation>Select second line</translation>
+        <translation>Seleccioneu la segona linia</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawlinebisector.cpp" line="293"/>
@@ -18232,12 +18232,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawlinebisector.cpp" line="296"/>
         <source>Enter bisector length:</source>
-        <translation>Enter bisector length:</translation>
+        <translation>Introduiu la longitud de la bisectriu:</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawlinebisector.cpp" line="300"/>
         <source>Enter number of bisectors:</source>
-        <translation>Enter number of bisectors:</translation>
+        <translation>Introduiu el nombre de bisectrius:</translation>
     </message>
 </context>
 <context>
@@ -18245,7 +18245,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawlinefree.cpp" line="141"/>
         <source>Click and drag to draw a line</source>
-        <translation>Click and drag to draw a line</translation>
+        <translation>Feu clic i arrossegueu per dibuixar una linia</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawlinefree.cpp" line="141"/>
@@ -18258,7 +18258,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawlinehorvert.cpp" line="157"/>
         <source>Specify first point</source>
-        <translation>Specify first point</translation>
+        <translation>Especifiqueu el primer punt</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawlinehorvert.cpp" line="158"/>
@@ -18268,7 +18268,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawlinehorvert.cpp" line="161"/>
         <source>Specify second point</source>
-        <translation>Specify second point</translation>
+        <translation>Especifiqueu el segon punt</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawlinehorvert.cpp" line="162"/>
@@ -18281,7 +18281,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawlineorthtan.cpp" line="185"/>
         <source>Select a line</source>
-        <translation>Select a line</translation>
+        <translation>Seleccioneu una linia</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawlineorthtan.cpp" line="186"/>
@@ -18291,7 +18291,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawlineorthtan.cpp" line="189"/>
         <source>Select circle, arc or ellipse</source>
-        <translation>Select circle, arc or ellipse</translation>
+        <translation>Seleccioneu cercle, arc o el.lipse</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawlineorthtan.cpp" line="190"/>
@@ -18304,7 +18304,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawlineparallel.cpp" line="125"/>
         <source>Specify Distance &lt;%1&gt; or select entity or [%2]</source>
-        <translation>Specify Distance &lt;%1&gt; or select entity or [%2]</translation>
+        <translation>Especifiqueu la distancia &lt;%1&gt; o seleccioneu entitat o [%2]</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawlineparallel.cpp" line="127"/>
@@ -18314,18 +18314,18 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawlineparallel.cpp" line="131"/>
         <source>Enter number:</source>
-        <translation>Enter number:</translation>
+        <translation>Introduïu un número:</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawlineparallel.cpp" line="179"/>
         <location filename="../../src/actions/rs_actiondrawlineparallel.cpp" line="198"/>
         <source>Not a valid expression</source>
-        <translation>Not a valid expression</translation>
+        <translation>Expressió no vàlida</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawlineparallel.cpp" line="195"/>
         <source>Not a valid number. Try 1..99</source>
-        <translation>Not a valid number. Try 1..99</translation>
+        <translation>Numero no valid. Proveu 1..99</translation>
     </message>
 </context>
 <context>
@@ -18333,7 +18333,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawlineparallelthrough.cpp" line="176"/>
         <source>Select entity</source>
-        <translation>Select entity</translation>
+        <translation>Seleccioneu l'entitat</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawlineparallelthrough.cpp" line="176"/>
@@ -18343,7 +18343,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawlineparallelthrough.cpp" line="180"/>
         <source>Specify through point</source>
-        <translation>Specify through point</translation>
+        <translation>Especifiqueu el punt de pas</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawlineparallelthrough.cpp" line="181"/>
@@ -18354,17 +18354,17 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawlineparallelthrough.cpp" line="185"/>
         <source>Number:</source>
-        <translation>Number:</translation>
+        <translation>Número:</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawlineparallelthrough.cpp" line="241"/>
         <source>Not a valid number. Try 1..99</source>
-        <translation>Not a valid number. Try 1..99</translation>
+        <translation>Numero no valid. Proveu 1..99</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawlineparallelthrough.cpp" line="245"/>
         <source>Not a valid expression</source>
-        <translation>Not a valid expression</translation>
+        <translation>Expressió no vàlida</translation>
     </message>
 </context>
 <context>
@@ -18372,27 +18372,27 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawlinepolygon.cpp" line="138"/>
         <source>Specify center</source>
-        <translation>Specify center</translation>
+        <translation>Especifiqueu el centre</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawlinepolygon.cpp" line="143"/>
         <source>Specify a corner</source>
-        <translation>Specify a corner</translation>
+        <translation>Especifiqueu una cantonada</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawlinepolygon.cpp" line="147"/>
         <source>Enter number:</source>
-        <translation>Enter number:</translation>
+        <translation>Introduïu un número:</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawlinepolygon.cpp" line="197"/>
         <source>Not a valid number. Try 1..9999</source>
-        <translation>Not a valid number. Try 1..9999</translation>
+        <translation>Número no vàlid. Proveu 1..9999</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawlinepolygon.cpp" line="200"/>
         <source>Not a valid expression</source>
-        <translation>Not a valid expression</translation>
+        <translation>Expressió no vàlida</translation>
     </message>
 </context>
 <context>
@@ -18400,7 +18400,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawlinepolygon2.cpp" line="144"/>
         <source>Specify first corner</source>
-        <translation>Specify first corner</translation>
+        <translation>Especifiqueu la primera cantonada</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawlinepolygon2.cpp" line="145"/>
@@ -18410,7 +18410,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawlinepolygon2.cpp" line="149"/>
         <source>Specify second corner</source>
-        <translation>Specify second corner</translation>
+        <translation>Especifiqueu la segona cantonada</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawlinepolygon2.cpp" line="150"/>
@@ -18421,17 +18421,17 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawlinepolygon2.cpp" line="154"/>
         <source>Number:</source>
-        <translation>Number:</translation>
+        <translation>Número:</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawlinepolygon2.cpp" line="208"/>
         <source>Not a valid number. Try 1..9999</source>
-        <translation>Not a valid number. Try 1..9999</translation>
+        <translation>Número no vàlid. Proveu 1..9999</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawlinepolygon2.cpp" line="211"/>
         <source>Not a valid expression.</source>
-        <translation>Not a valid expression.</translation>
+        <translation>Expressio no valida.</translation>
     </message>
 </context>
 <context>
@@ -18439,7 +18439,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawlinerectangle.cpp" line="155"/>
         <source>Specify first corner</source>
-        <translation>Specify first corner</translation>
+        <translation>Especifiqueu la primera cantonada</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawlinerectangle.cpp" line="156"/>
@@ -18449,7 +18449,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawlinerectangle.cpp" line="159"/>
         <source>Specify second corner</source>
-        <translation>Specify second corner</translation>
+        <translation>Especifiqueu la segona cantonada</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawlinerectangle.cpp" line="160"/>
@@ -18463,12 +18463,12 @@ This block cannot be inserted.</source>
         <location filename="../../src/actions/rs_actiondrawlinerelangle.cpp" line="225"/>
         <location filename="../../src/actions/rs_actiondrawlinerelangle.cpp" line="238"/>
         <source>Not a valid expression</source>
-        <translation>Not a valid expression</translation>
+        <translation>Expressió no vàlida</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawlinerelangle.cpp" line="274"/>
         <source>Select base entity</source>
-        <translation>Select base entity</translation>
+        <translation>Seleccioneu l'entitat base</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawlinerelangle.cpp" line="275"/>
@@ -18478,7 +18478,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawlinerelangle.cpp" line="278"/>
         <source>Specify position</source>
-        <translation>Specify position</translation>
+        <translation>Especifiqueu la posicio</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawlinerelangle.cpp" line="279"/>
@@ -18491,7 +18491,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawlinetangent1.cpp" line="181"/>
         <source>Specify point</source>
-        <translation>Specify point</translation>
+        <translation>Especifiqueu el punt</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawlinetangent1.cpp" line="182"/>
@@ -18501,7 +18501,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawlinetangent1.cpp" line="185"/>
         <source>Select circle, arc or ellipse</source>
-        <translation>Select circle, arc or ellipse</translation>
+        <translation>Seleccioneu cercle, arc o el.lipse</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawlinetangent1.cpp" line="186"/>
@@ -18514,7 +18514,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawlinetangent2.cpp" line="282"/>
         <source>Select first circle/ellipse/parabola</source>
-        <translation>Select first circle/ellipse/parabola</translation>
+        <translation>Seleccioneu el primer cercle/el.lipse/parabola</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawlinetangent2.cpp" line="283"/>
@@ -18524,7 +18524,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawlinetangent2.cpp" line="286"/>
         <source>Select second circle/ellipse/parabola</source>
-        <translation>Select second circle/ellipse/parabola</translation>
+        <translation>Seleccioneu el segon cercle/el.lipse/parabola</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawlinetangent2.cpp" line="287"/>
@@ -18535,7 +18535,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawlinetangent2.cpp" line="290"/>
         <source>Select the tangent line closest to cursor</source>
-        <translation>Select the tangent line closest to cursor</translation>
+        <translation>Seleccioneu la linia tangent mes propera al cursor</translation>
     </message>
 </context>
 <context>
@@ -18543,7 +18543,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawmtext.cpp" line="255"/>
         <source>Specify insertion point</source>
-        <translation>Specify insertion point</translation>
+        <translation>Especifiqueu el punt d'insercio</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawmtext.cpp" line="256"/>
@@ -18553,7 +18553,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawmtext.cpp" line="260"/>
         <source>Enter text:</source>
-        <translation>Enter text:</translation>
+        <translation>Introduiu el text:</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawmtext.cpp" line="261"/>
@@ -18566,7 +18566,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawpoint.cpp" line="117"/>
         <source>Specify location</source>
-        <translation>Specify location</translation>
+        <translation>Especifiqueu la ubicacio</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawpoint.cpp" line="117"/>
@@ -18580,13 +18580,13 @@ This block cannot be inserted.</source>
         <location filename="../../src/actions/rs_actiondrawpolyline.cpp" line="340"/>
         <location filename="../../src/actions/rs_actiondrawpolyline.cpp" line="509"/>
         <source>Enter the end point x</source>
-        <translation>Enter the end point x</translation>
+        <translation>Introduiu el punt final x</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawpolyline.cpp" line="375"/>
         <location filename="../../src/actions/rs_actiondrawpolyline.cpp" line="520"/>
         <source>Enter number of polylines</source>
-        <translation>Enter number of polylines</translation>
+        <translation>Introduiu el nombre de polilinies</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawpolyline.cpp" line="459"/>
@@ -18596,7 +18596,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawpolyline.cpp" line="461"/>
         <source>Enter an equation, f(x)</source>
-        <translation>Enter an equation, f(x)</translation>
+        <translation>Introduiu una equacio, f(x)</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawpolyline.cpp" line="479"/>
@@ -18606,27 +18606,27 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawpolyline.cpp" line="487"/>
         <source>Enter the start point x</source>
-        <translation>Enter the start point x</translation>
+        <translation>Introduiu el punt d'inici x</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawpolyline.cpp" line="495"/>
         <source>The entered x is invalid.</source>
-        <translation>The entered x is invalid.</translation>
+        <translation>El valor x introduit no es valid.</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawpolyline.cpp" line="541"/>
         <source>The step size entered is invalid.</source>
-        <translation>The step size entered is invalid.</translation>
+        <translation>La mida del pas introduida no es valida.</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawpolyline.cpp" line="575"/>
         <source>The value x entered is invalid.</source>
-        <translation>The value x entered is invalid.</translation>
+        <translation>El valor x introduit no es valid.</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawpolyline.cpp" line="678"/>
         <source>Specify first point</source>
-        <translation>Specify first point</translation>
+        <translation>Especifiqueu el primer punt</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawpolyline.cpp" line="679"/>
@@ -18636,7 +18636,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawpolyline.cpp" line="694"/>
         <source>Specify next point or [%1]</source>
-        <translation>Specify next point or [%1]</translation>
+        <translation>Especifiqueu el punt seguent o [%1]</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawpolyline.cpp" line="695"/>
@@ -18647,17 +18647,17 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawpolyline.cpp" line="698"/>
         <source>Specify next point</source>
-        <translation>Specify next point</translation>
+        <translation>Especifiqueu el punt seguent</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawpolyline.cpp" line="745"/>
         <source>Cannot close sequence of lines: Not enough entities defined yet.</source>
-        <translation>Cannot close sequence of lines: Not enough entities defined yet.</translation>
+        <translation>No es pot tancar la sequencia de linies: Encara no hi ha prou entitats definides.</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawpolyline.cpp" line="772"/>
         <source>Cannot undo: Not enough entities defined yet.</source>
-        <translation>Cannot undo: Not enough entities defined yet.</translation>
+        <translation>No es pot desfer: Encara no hi ha prou entitats definides.</translation>
     </message>
 </context>
 <context>
@@ -18665,7 +18665,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawspline.cpp" line="276"/>
         <source>Specify first control point</source>
-        <translation>Specify first control point</translation>
+        <translation>Especifiqueu el primer punt de control</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawspline.cpp" line="277"/>
@@ -18675,7 +18675,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawspline.cpp" line="289"/>
         <source>Specify next control point or [%1]</source>
-        <translation>Specify next control point or [%1]</translation>
+        <translation>Especifiqueu el punt de control següent o [%1]</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawspline.cpp" line="290"/>
@@ -18686,12 +18686,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawspline.cpp" line="293"/>
         <source>Specify next control point</source>
-        <translation>Specify next control point</translation>
+        <translation>Especifiqueu el punt de control següent</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawspline.cpp" line="365"/>
         <source>Cannot undo: Not enough entities defined yet.</source>
-        <translation>Cannot undo: Not enough entities defined yet.</translation>
+        <translation>No es pot desfer: Encara no hi ha prou entitats definides.</translation>
     </message>
 </context>
 <context>
@@ -18699,7 +18699,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawtext.cpp" line="281"/>
         <source>Specify insertion point</source>
-        <translation>Specify insertion point</translation>
+        <translation>Especifiqueu el punt d'insercio</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawtext.cpp" line="282"/>
@@ -18710,12 +18710,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawtext.cpp" line="285"/>
         <source>Specify second point</source>
-        <translation>Specify second point</translation>
+        <translation>Especifiqueu el segon punt</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawtext.cpp" line="290"/>
         <source>Enter text:</source>
-        <translation>Enter text:</translation>
+        <translation>Introduiu el text:</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawtext.cpp" line="291"/>
@@ -18728,7 +18728,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actioneditcopy.cpp" line="104"/>
         <source>Specify reference point</source>
-        <translation>Specify reference point</translation>
+        <translation>Especifiqueu el punt de referencia</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actioneditcopy.cpp" line="105"/>
@@ -18741,7 +18741,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actioneditpaste.cpp" line="120"/>
         <source>Set reference point</source>
-        <translation>Set reference point</translation>
+        <translation>Establir el punt de referencia</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actioneditpaste.cpp" line="121"/>
@@ -18754,12 +18754,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actioneditundo.cpp" line="65"/>
         <source>Nothing to undo!</source>
-        <translation>Nothing to undo!</translation>
+        <translation>Res per desfer!</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actioneditundo.cpp" line="68"/>
         <source>Nothing to redo!</source>
-        <translation>Nothing to redo!</translation>
+        <translation>Res per refer!</translation>
     </message>
 </context>
 <context>
@@ -18772,12 +18772,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actioninfoangle.cpp" line="97"/>
         <source>Lines are parallel</source>
-        <translation>Lines are parallel</translation>
+        <translation>Les linies son paral.leles</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actioninfoangle.cpp" line="139"/>
         <source>Specify first line</source>
-        <translation>Specify first line</translation>
+        <translation>Especifiqueu la primera linia</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actioninfoangle.cpp" line="140"/>
@@ -18787,7 +18787,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actioninfoangle.cpp" line="144"/>
         <source>Specify second line</source>
-        <translation>Specify second line</translation>
+        <translation>Especifiqueu la segona linia</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actioninfoangle.cpp" line="145"/>
@@ -18800,27 +18800,27 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actioninfoarea.cpp" line="92"/>
         <source>Circumference: %1</source>
-        <translation>Circumference: %1</translation>
+        <translation>Circumferencia: %1</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actioninfoarea.cpp" line="93"/>
         <source>Area: %1 %2^2</source>
-        <translation>Area: %1 %2^2</translation>
+        <translation>Àrea: %1 %2^2</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actioninfoarea.cpp" line="137"/>
         <source>Closing Point: %1/%2</source>
-        <translation>Closing Point: %1/%2</translation>
+        <translation>Punt de tancament: %1/%2</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actioninfoarea.cpp" line="145"/>
         <source>Point: %1/%2</source>
-        <translation>Point: %1/%2</translation>
+        <translation>Punt: %1/%2</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actioninfoarea.cpp" line="165"/>
         <source>Specify first point of polygon</source>
-        <translation>Specify first point of polygon</translation>
+        <translation>Especifiqueu el primer punt del poligon</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actioninfoarea.cpp" line="166"/>
@@ -18831,7 +18831,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actioninfoarea.cpp" line="170"/>
         <source>Specify next point of polygon</source>
-        <translation>Specify next point of polygon</translation>
+        <translation>Especifiqueu el punt seguent del poligon</translation>
     </message>
 </context>
 <context>
@@ -18839,12 +18839,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actioninfodist.cpp" line="80"/>
         <source>Distance: %1 Cartesian: (%2 , %3), Polar: (%4&lt;%5)</source>
-        <translation>Distance: %1 Cartesian: (%2 , %3), Polar: (%4&lt;%5)</translation>
+        <translation>Distancia: %1 Cartesia: (%2 , %3), Polar: (%4&lt;%5)</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actioninfodist.cpp" line="169"/>
         <source>Specify first point of distance</source>
-        <translation>Specify first point of distance</translation>
+        <translation>Especifiqueu el primer punt de la distancia</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actioninfodist.cpp" line="170"/>
@@ -18854,7 +18854,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actioninfodist.cpp" line="174"/>
         <source>Specify second point of distance</source>
-        <translation>Specify second point of distance</translation>
+        <translation>Especifiqueu el segon punt de la distancia</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actioninfodist.cpp" line="175"/>
@@ -18867,12 +18867,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actioninfodist2.cpp" line="73"/>
         <source>Distance: %1</source>
-        <translation>Distance: %1</translation>
+        <translation>Distancia: %1</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actioninfodist2.cpp" line="155"/>
         <source>Specify entity</source>
-        <translation>Specify entity</translation>
+        <translation>Especifiqueu l'entitat</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actioninfodist2.cpp" line="156"/>
@@ -18882,7 +18882,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actioninfodist2.cpp" line="160"/>
         <source>Specify point</source>
-        <translation>Specify point</translation>
+        <translation>Especifiqueu el punt</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actioninfodist2.cpp" line="161"/>
@@ -18895,17 +18895,17 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actioninfoinside.cpp" line="56"/>
         <source>Point is inside selected contour.</source>
-        <translation>Point is inside selected contour.</translation>
+        <translation>El punt es dins del contorn seleccionat.</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actioninfoinside.cpp" line="58"/>
         <source>Point is outside selected contour.</source>
-        <translation>Point is outside selected contour.</translation>
+        <translation>El punt es fora del contorn seleccionat.</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actioninfoinside.cpp" line="84"/>
         <source>Specify point</source>
-        <translation>Specify point</translation>
+        <translation>Especifiqueu el punt</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actioninfoinside.cpp" line="85"/>
@@ -18918,12 +18918,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actioninfototallength.cpp" line="59"/>
         <source>Total Length of selected entities: %1</source>
-        <translation>Total Length of selected entities: %1</translation>
+        <translation>Longitud total de les entitats seleccionades: %1</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actioninfototallength.cpp" line="61"/>
         <source>At least one of the selected entities cannot be measured.</source>
-        <translation>At least one of the selected entities cannot be measured.</translation>
+        <translation>Almenys una de les entitats seleccionades no es pot mesurar.</translation>
     </message>
 </context>
 <context>
@@ -18931,23 +18931,23 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actionlibraryinsert.cpp" line="60"/>
         <source>Insert Library Object</source>
-        <translation>Insert Library Object</translation>
+        <translation>Inserir objecte de biblioteca</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionlibraryinsert.cpp" line="78"/>
         <source>Cannot open file &apos;%1&apos;</source>
-        <translation>Cannot open file &apos;%1&apos;</translation>
+        <translation>No es pot obrir el fitxer &apos;%1&apos;</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionlibraryinsert.cpp" line="186"/>
         <location filename="../../src/actions/rs_actionlibraryinsert.cpp" line="199"/>
         <source>Not a valid expression</source>
-        <translation>Not a valid expression</translation>
+        <translation>Expressió no vàlida</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionlibraryinsert.cpp" line="248"/>
         <source>Specify reference point</source>
-        <translation>Specify reference point</translation>
+        <translation>Especifiqueu el punt de referencia</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionlibraryinsert.cpp" line="249"/>
@@ -18957,12 +18957,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actionlibraryinsert.cpp" line="252"/>
         <source>Enter angle:</source>
-        <translation>Enter angle:</translation>
+        <translation>Introduiu l'angle:</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionlibraryinsert.cpp" line="256"/>
         <source>Enter factor:</source>
-        <translation>Enter factor:</translation>
+        <translation>Introduiu el factor:</translation>
     </message>
 </context>
 <context>
@@ -18970,7 +18970,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actionlockrelativezero.cpp" line="43"/>
         <source>(Un-)&amp;Lock Relative Zero</source>
-        <translation>(Un-)&amp;Lock Relative Zero</translation>
+        <translation>(Des)Bloquejar Zero Relatiu</translation>
     </message>
 </context>
 <context>
@@ -18979,12 +18979,12 @@ This block cannot be inserted.</source>
         <location filename="../../src/actions/rs_actionmodifybevel.cpp" line="191"/>
         <location filename="../../src/actions/rs_actionmodifybevel.cpp" line="204"/>
         <source>Not a valid expression</source>
-        <translation>Not a valid expression</translation>
+        <translation>Expressió no vàlida</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionmodifybevel.cpp" line="270"/>
         <source>Select first entity</source>
-        <translation>Select first entity</translation>
+        <translation>Seleccioneu la primera entitat</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionmodifybevel.cpp" line="271"/>
@@ -18994,7 +18994,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actionmodifybevel.cpp" line="274"/>
         <source>Select second entity</source>
-        <translation>Select second entity</translation>
+        <translation>Seleccioneu la segona entitat</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionmodifybevel.cpp" line="275"/>
@@ -19006,12 +19006,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actionmodifybevel.cpp" line="278"/>
         <source>Enter length 1:</source>
-        <translation>Enter length 1:</translation>
+        <translation>Introduiu la longitud 1:</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionmodifybevel.cpp" line="282"/>
         <source>Enter length 2:</source>
-        <translation>Enter length 2:</translation>
+        <translation>Introduiu la longitud 2:</translation>
     </message>
 </context>
 <context>
@@ -19020,27 +19020,27 @@ This block cannot be inserted.</source>
         <location filename="../../src/actions/rs_actionmodifycut.cpp" line="103"/>
         <location filename="../../src/actions/rs_actionmodifycut.cpp" line="116"/>
         <source>No Entity found.</source>
-        <translation>No Entity found.</translation>
+        <translation>No s'ha trobat cap entitat.</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionmodifycut.cpp" line="110"/>
         <source>Entity must be a line, arc, circle, ellipse or interpolation spline.</source>
-        <translation>Entity must be a line, arc, circle, ellipse or interpolation spline.</translation>
+        <translation>L'entitat ha de ser una linia, arc, cercle, el.lipse o spline d'interpolacio.</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionmodifycut.cpp" line="118"/>
         <source>Cutting point is invalid.</source>
-        <translation>Cutting point is invalid.</translation>
+        <translation>El punt de tall no es valid.</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionmodifycut.cpp" line="121"/>
         <source>Cutting point is not on entity.</source>
-        <translation>Cutting point is not on entity.</translation>
+        <translation>El punt de tall no es a l'entitat.</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionmodifycut.cpp" line="145"/>
         <source>Specify entity to cut</source>
-        <translation>Specify entity to cut</translation>
+        <translation>Especifiqueu l'entitat per tallar</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionmodifycut.cpp" line="146"/>
@@ -19050,7 +19050,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actionmodifycut.cpp" line="149"/>
         <source>Specify cutting point</source>
-        <translation>Specify cutting point</translation>
+        <translation>Especifiqueu el punt de tall</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionmodifycut.cpp" line="150"/>
@@ -19063,47 +19063,47 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actionmodifydeletefree.cpp" line="101"/>
         <source>Entities not in the same polyline.</source>
-        <translation>Entities not in the same polyline.</translation>
+        <translation>Les entitats no estan a la mateixa polilinia.</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionmodifydeletefree.cpp" line="104"/>
         <source>Parent of second entity is not a polyline</source>
-        <translation>Parent of second entity is not a polyline</translation>
+        <translation>El pare de la segona entitat no es una polilinia</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionmodifydeletefree.cpp" line="107"/>
         <source>Parent of second entity is nullptr</source>
-        <translation>Parent of second entity is nullptr</translation>
+        <translation>El pare de la segona entitat es nul</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionmodifydeletefree.cpp" line="110"/>
         <source>One of the chosen entities is nullptr</source>
-        <translation>One of the chosen entities is nullptr</translation>
+        <translation>Una de les entitats triades es nul.la</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionmodifydeletefree.cpp" line="133"/>
         <source>Parent of first entity is not a polyline</source>
-        <translation>Parent of first entity is not a polyline</translation>
+        <translation>El pare de la primera entitat no es una polilinia</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionmodifydeletefree.cpp" line="137"/>
         <source>Parent of first entity is nullptr</source>
-        <translation>Parent of first entity is nullptr</translation>
+        <translation>El pare de la primera entitat es nul</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionmodifydeletefree.cpp" line="141"/>
         <source>First entity is nullptr</source>
-        <translation>First entity is nullptr</translation>
+        <translation>La primera entitat es nul.la</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionmodifydeletefree.cpp" line="153"/>
         <source>Second entity is nullptr</source>
-        <translation>Second entity is nullptr</translation>
+        <translation>La segona entitat es nul.la</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionmodifydeletefree.cpp" line="166"/>
         <source>Specify first break point on a polyline</source>
-        <translation>Specify first break point on a polyline</translation>
+        <translation>Especifiqueu el primer punt de trencament a la polilinia</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionmodifydeletefree.cpp" line="167"/>
@@ -19113,7 +19113,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actionmodifydeletefree.cpp" line="170"/>
         <source>Specify second break point on the same polyline</source>
-        <translation>Specify second break point on the same polyline</translation>
+        <translation>Especifiqueu el segon punt de trencament a la mateixa polilinia</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionmodifydeletefree.cpp" line="172"/>
@@ -19126,7 +19126,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actionmodifydeletequick.cpp" line="92"/>
         <source>Pick entity to delete</source>
-        <translation>Pick entity to delete</translation>
+        <translation>Trieu l'entitat per esborrar</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionmodifydeletequick.cpp" line="93"/>
@@ -19139,7 +19139,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actionmodifyentity.cpp" line="109"/>
         <source>Click on entity to modify</source>
-        <translation>Click on entity to modify</translation>
+        <translation>Feu clic a l'entitat per modificar</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionmodifyentity.cpp" line="109"/>
@@ -19152,7 +19152,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actionmodifymirror.cpp" line="161"/>
         <source>Specify first point of mirror line</source>
-        <translation>Specify first point of mirror line</translation>
+        <translation>Especifiqueu el primer punt de la linia de reflexio</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionmodifymirror.cpp" line="162"/>
@@ -19162,7 +19162,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actionmodifymirror.cpp" line="166"/>
         <source>Specify second point of mirror line</source>
-        <translation>Specify second point of mirror line</translation>
+        <translation>Especifiqueu el segon punt de la linia de reflexio</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionmodifymirror.cpp" line="167"/>
@@ -19175,12 +19175,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actionmodifymove.cpp" line="150"/>
         <source>Invalid number of copies, use %1 </source>
-        <translation>Invalid number of copies, use %1</translation>
+        <translation>Nombre de copies no valid, s'utilitza %1</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionmodifymove.cpp" line="170"/>
         <source>Specify reference point</source>
-        <translation>Specify reference point</translation>
+        <translation>Especifiqueu el punt de referencia</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionmodifymove.cpp" line="171"/>
@@ -19190,7 +19190,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actionmodifymove.cpp" line="174"/>
         <source>Specify target point</source>
-        <translation>Specify target point</translation>
+        <translation>Especifiqueu el punt de destinacio</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionmodifymove.cpp" line="175"/>
@@ -19203,12 +19203,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actionmodifymoverotate.cpp" line="177"/>
         <source>Not a valid expression</source>
-        <translation>Not a valid expression</translation>
+        <translation>Expressió no vàlida</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionmodifymoverotate.cpp" line="235"/>
         <source>Specify reference point</source>
-        <translation>Specify reference point</translation>
+        <translation>Especifiqueu el punt de referencia</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionmodifymoverotate.cpp" line="236"/>
@@ -19218,7 +19218,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actionmodifymoverotate.cpp" line="239"/>
         <source>Specify target point</source>
-        <translation>Specify target point</translation>
+        <translation>Especifiqueu el punt de destinacio</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionmodifymoverotate.cpp" line="240"/>
@@ -19229,7 +19229,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actionmodifymoverotate.cpp" line="243"/>
         <source>Enter rotation angle:</source>
-        <translation>Enter rotation angle:</translation>
+        <translation>Introduiu l'angle de rotacio:</translation>
     </message>
 </context>
 <context>
@@ -19237,7 +19237,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actionmodifyoffset.cpp" line="101"/>
         <source>Specify direction of offset</source>
-        <translation>Specify direction of offset</translation>
+        <translation>Especifiqueu la direccio del desplacament</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionmodifyoffset.cpp" line="101"/>
@@ -19250,7 +19250,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actionmodifyrotate.cpp" line="144"/>
         <source>Specify rotation center</source>
-        <translation>Specify rotation center</translation>
+        <translation>Especifiqueu el centre de rotacio</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionmodifyrotate.cpp" line="145"/>
@@ -19262,12 +19262,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actionmodifyrotate.cpp" line="149"/>
         <source>Specify reference point</source>
-        <translation>Specify reference point</translation>
+        <translation>Especifiqueu el punt de referencia</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionmodifyrotate.cpp" line="153"/>
         <source>Specify target point to rotate to</source>
-        <translation>Specify target point to rotate to</translation>
+        <translation>Especifiqueu el punt de destinacio per girar</translation>
     </message>
 </context>
 <context>
@@ -19275,7 +19275,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actionmodifyrotate2.cpp" line="148"/>
         <source>Specify absolute reference point</source>
-        <translation>Specify absolute reference point</translation>
+        <translation>Especifiqueu el punt de referencia absolut</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionmodifyrotate2.cpp" line="149"/>
@@ -19285,7 +19285,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actionmodifyrotate2.cpp" line="152"/>
         <source>Specify relative reference point</source>
-        <translation>Specify relative reference point</translation>
+        <translation>Especifiqueu el punt de referencia relatiu</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionmodifyrotate2.cpp" line="153"/>
@@ -19299,12 +19299,12 @@ This block cannot be inserted.</source>
         <location filename="../../src/actions/rs_actionmodifyround.cpp" line="319"/>
         <location filename="../../src/actions/rs_actionmodifyround.cpp" line="332"/>
         <source>Not a valid expression</source>
-        <translation>Not a valid expression</translation>
+        <translation>Expressió no vàlida</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionmodifyround.cpp" line="410"/>
         <source>Specify first entity or enter radius &lt;%1&gt;</source>
-        <translation>Specify first entity or enter radius &lt;%1&gt;</translation>
+        <translation>Especifiqueu la primera entitat o introduiu el radi &lt;%1&gt;</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionmodifyround.cpp" line="411"/>
@@ -19315,12 +19315,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actionmodifyround.cpp" line="414"/>
         <source>Specify second entity</source>
-        <translation>Specify second entity</translation>
+        <translation>Especifiqueu la segona entitat</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionmodifyround.cpp" line="418"/>
         <source>Enter radius:</source>
-        <translation>Enter radius:</translation>
+        <translation>Introduiu el radi:</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionmodifyround.cpp" line="419"/>
@@ -19333,7 +19333,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actionmodifyscale.cpp" line="227"/>
         <source>Specify scale center</source>
-        <translation>Specify scale center</translation>
+        <translation>Especifiqueu el centre d'escala</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionmodifyscale.cpp" line="228"/>
@@ -19345,12 +19345,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actionmodifyscale.cpp" line="232"/>
         <source>Specify reference point</source>
-        <translation>Specify reference point</translation>
+        <translation>Especifiqueu el punt de referencia</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionmodifyscale.cpp" line="236"/>
         <source>Specify target point</source>
-        <translation>Specify target point</translation>
+        <translation>Especifiqueu el punt de destinacio</translation>
     </message>
 </context>
 <context>
@@ -19358,7 +19358,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actionmodifystretch.cpp" line="175"/>
         <source>Specify first corner</source>
-        <translation>Specify first corner</translation>
+        <translation>Especifiqueu la primera cantonada</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionmodifystretch.cpp" line="176"/>
@@ -19368,7 +19368,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actionmodifystretch.cpp" line="179"/>
         <source>Specify second corner</source>
-        <translation>Specify second corner</translation>
+        <translation>Especifiqueu la segona cantonada</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionmodifystretch.cpp" line="180"/>
@@ -19380,12 +19380,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actionmodifystretch.cpp" line="183"/>
         <source>Specify reference point</source>
-        <translation>Specify reference point</translation>
+        <translation>Especifiqueu el punt de referencia</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionmodifystretch.cpp" line="187"/>
         <source>Specify target point</source>
-        <translation>Specify target point</translation>
+        <translation>Especifiqueu el punt de destinacio</translation>
     </message>
 </context>
 <context>
@@ -19393,7 +19393,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actionmodifytrim.cpp" line="177"/>
         <source>Select first trim entity</source>
-        <translation>Select first trim entity</translation>
+        <translation>Seleccioneu la primera entitat per retallar</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionmodifytrim.cpp" line="178"/>
@@ -19404,7 +19404,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actionmodifytrim.cpp" line="180"/>
         <source>Select limiting entity</source>
-        <translation>Select limiting entity</translation>
+        <translation>Seleccioneu l'entitat limitadora</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionmodifytrim.cpp" line="181"/>
@@ -19415,12 +19415,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actionmodifytrim.cpp" line="186"/>
         <source>Select second trim entity</source>
-        <translation>Select second trim entity</translation>
+        <translation>Seleccioneu la segona entitat per retallar</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionmodifytrim.cpp" line="189"/>
         <source>Select entity to trim</source>
-        <translation>Select entity to trim</translation>
+        <translation>Seleccioneu l'entitat per retallar</translation>
     </message>
 </context>
 <context>
@@ -19428,27 +19428,27 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actionmodifytrimamount.cpp" line="101"/>
         <source>No entity found. </source>
-        <translation>No entity found.</translation>
+        <translation>No s'ha trobat cap entitat.</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionmodifytrimamount.cpp" line="104"/>
         <source>The chosen Entity is in a block. Please edit the block.</source>
-        <translation>The chosen Entity is in a block. Please edit the block.</translation>
+        <translation>L'entitat triada es en un bloc. Si us plau, editeu el bloc.</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionmodifytrimamount.cpp" line="108"/>
         <source>The chosen Entity is not an atomic entity or cannot be trimmed.</source>
-        <translation>The chosen Entity is not an atomic entity or cannot be trimmed.</translation>
+        <translation>L'entitat triada no es una entitat atomica o no es pot retallar.</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionmodifytrimamount.cpp" line="139"/>
         <source>Not a valid expression</source>
-        <translation>Not a valid expression</translation>
+        <translation>Expressió no vàlida</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionmodifytrimamount.cpp" line="186"/>
         <source>Select entity to trim or enter distance:</source>
-        <translation>Select entity to trim or enter distance:</translation>
+        <translation>Seleccioneu l'entitat per retallar o introduiu la distancia:</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionmodifytrimamount.cpp" line="187"/>
@@ -19461,12 +19461,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actionorder.cpp" line="124"/>
         <source>No Entity found.</source>
-        <translation>No Entity found.</translation>
+        <translation>No s'ha trobat cap entitat.</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionorder.cpp" line="150"/>
         <source>Choose entity for order</source>
-        <translation>Choose entity for order</translation>
+        <translation>Trieu l'entitat per ordenar</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionorder.cpp" line="151"/>
@@ -19480,27 +19480,27 @@ This block cannot be inserted.</source>
         <location filename="../../src/actions/rs_actionpolylineadd.cpp" line="105"/>
         <location filename="../../src/actions/rs_actionpolylineadd.cpp" line="121"/>
         <source>No Entity found.</source>
-        <translation>No Entity found.</translation>
+        <translation>No s'ha trobat cap entitat.</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionpolylineadd.cpp" line="109"/>
         <source>Entity must be a polyline.</source>
-        <translation>Entity must be a polyline.</translation>
+        <translation>L'entitat ha de ser una polilinia.</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionpolylineadd.cpp" line="123"/>
         <source>Adding point is invalid.</source>
-        <translation>Adding point is invalid.</translation>
+        <translation>El punt d'afegir no es valid.</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionpolylineadd.cpp" line="131"/>
         <source>Adding point is not on entity.</source>
-        <translation>Adding point is not on entity.</translation>
+        <translation>El punt d'afegir no es a l'entitat.</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionpolylineadd.cpp" line="157"/>
         <source>Specify polyline to add nodes</source>
-        <translation>Specify polyline to add nodes</translation>
+        <translation>Especifiqueu la polilinia per afegir nodes</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionpolylineadd.cpp" line="158"/>
@@ -19510,7 +19510,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actionpolylineadd.cpp" line="161"/>
         <source>Specify adding node&apos;s point</source>
-        <translation>Specify adding node&apos;s point</translation>
+        <translation>Especifiqueu el punt del node a afegir</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionpolylineadd.cpp" line="162"/>
@@ -19523,27 +19523,27 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actionpolylineappend.cpp" line="91"/>
         <source>No Entity found.</source>
-        <translation>No Entity found.</translation>
+        <translation>No s'ha trobat cap entitat.</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionpolylineappend.cpp" line="95"/>
         <source>Entity must be a polyline.</source>
-        <translation>Entity must be a polyline.</translation>
+        <translation>L'entitat ha de ser una polilinia.</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionpolylineappend.cpp" line="99"/>
         <source>Can not append nodes in a closed polyline.</source>
-        <translation>Can not append nodes in a closed polyline.</translation>
+        <translation>No es poden annexar nodes a una polilinia tancada.</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionpolylineappend.cpp" line="119"/>
         <source>Click somewhere near the beginning or end of existing polyline.</source>
-        <translation>Click somewhere near the beginning or end of existing polyline.</translation>
+        <translation>Feu clic a prop del principi o del final de la polilinia existent.</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionpolylineappend.cpp" line="191"/>
         <source>Specify the polyline somewhere near the beginning or end point</source>
-        <translation>Specify the polyline somewhere near the beginning or end point</translation>
+        <translation>Especifiqueu la polilinia a prop del punt inicial o final</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionpolylineappend.cpp" line="192"/>
@@ -19553,7 +19553,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actionpolylineappend.cpp" line="207"/>
         <source>Specify next point or [%1]</source>
-        <translation>Specify next point or [%1]</translation>
+        <translation>Especifiqueu el punt seguent o [%1]</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionpolylineappend.cpp" line="208"/>
@@ -19564,12 +19564,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actionpolylineappend.cpp" line="211"/>
         <source>Specify next point</source>
-        <translation>Specify next point</translation>
+        <translation>Especifiqueu el punt seguent</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionpolylineappend.cpp" line="230"/>
         <source>Cannot undo: Not enough entities defined yet.</source>
-        <translation>Cannot undo: Not enough entities defined yet.</translation>
+        <translation>No es pot desfer: Encara no hi ha prou entitats definides.</translation>
     </message>
 </context>
 <context>
@@ -19578,27 +19578,27 @@ This block cannot be inserted.</source>
         <location filename="../../src/actions/rs_actionpolylinedel.cpp" line="108"/>
         <location filename="../../src/actions/rs_actionpolylinedel.cpp" line="127"/>
         <source>No Entity found.</source>
-        <translation>No Entity found.</translation>
+        <translation>No s'ha trobat cap entitat.</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionpolylinedel.cpp" line="112"/>
         <source>Entity must be a polyline.</source>
-        <translation>Entity must be a polyline.</translation>
+        <translation>L'entitat ha de ser una polilinia.</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionpolylinedel.cpp" line="129"/>
         <source>Deleting point is invalid.</source>
-        <translation>Deleting point is invalid.</translation>
+        <translation>El punt d'esborrar no es valid.</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionpolylinedel.cpp" line="132"/>
         <source>Deleting point is not on entity.</source>
-        <translation>Deleting point is not on entity.</translation>
+        <translation>El punt d'esborrar no es a l'entitat.</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionpolylinedel.cpp" line="158"/>
         <source>Specify polyline to delete node</source>
-        <translation>Specify polyline to delete node</translation>
+        <translation>Especifiqueu la polilinia per esborrar el node</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionpolylinedel.cpp" line="159"/>
@@ -19608,7 +19608,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actionpolylinedel.cpp" line="162"/>
         <source>Specify deleting node&apos;s point</source>
-        <translation>Specify deleting node&apos;s point</translation>
+        <translation>Especifiqueu el punt del node a esborrar</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionpolylinedel.cpp" line="163"/>
@@ -19623,29 +19623,29 @@ This block cannot be inserted.</source>
         <location filename="../../src/actions/rs_actionpolylinedelbetween.cpp" line="144"/>
         <location filename="../../src/actions/rs_actionpolylinedelbetween.cpp" line="157"/>
         <source>No Entity found.</source>
-        <translation>No Entity found.</translation>
+        <translation>No s'ha trobat cap entitat.</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionpolylinedelbetween.cpp" line="123"/>
         <source>Entity must be a polyline.</source>
-        <translation>Entity must be a polyline.</translation>
+        <translation>L'entitat ha de ser una polilinia.</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionpolylinedelbetween.cpp" line="146"/>
         <location filename="../../src/actions/rs_actionpolylinedelbetween.cpp" line="159"/>
         <source>Deleting point is invalid.</source>
-        <translation>Deleting point is invalid.</translation>
+        <translation>El punt d'esborrar no es valid.</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionpolylinedelbetween.cpp" line="149"/>
         <location filename="../../src/actions/rs_actionpolylinedelbetween.cpp" line="162"/>
         <source>Deleting point is not on entity.</source>
-        <translation>Deleting point is not on entity.</translation>
+        <translation>El punt d'esborrar no es a l'entitat.</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionpolylinedelbetween.cpp" line="189"/>
         <source>Specify polyline to delete between two nodes</source>
-        <translation>Specify polyline to delete between two nodes</translation>
+        <translation>Especifiqueu la polilinia per esborrar entre dos nodes</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionpolylinedelbetween.cpp" line="190"/>
@@ -19655,7 +19655,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actionpolylinedelbetween.cpp" line="193"/>
         <source>Specify first node</source>
-        <translation>Specify first node</translation>
+        <translation>Especifiqueu el primer node</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionpolylinedelbetween.cpp" line="194"/>
@@ -19666,7 +19666,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actionpolylinedelbetween.cpp" line="197"/>
         <source>Specify second node</source>
-        <translation>Specify second node</translation>
+        <translation>Especifiqueu el segon node</translation>
     </message>
 </context>
 <context>
@@ -19674,17 +19674,17 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actionpolylineequidistant.cpp" line="305"/>
         <source>No Entity found.</source>
-        <translation>No Entity found.</translation>
+        <translation>No s'ha trobat cap entitat.</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionpolylineequidistant.cpp" line="309"/>
         <source>Entity must be a polyline.</source>
-        <translation>Entity must be a polyline.</translation>
+        <translation>L'entitat ha de ser una polilinia.</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionpolylineequidistant.cpp" line="369"/>
         <source>Choose the original polyline</source>
-        <translation>Choose the original polyline</translation>
+        <translation>Trieu la polilinia original</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionpolylineequidistant.cpp" line="370"/>
@@ -19698,22 +19698,22 @@ This block cannot be inserted.</source>
         <location filename="../../src/actions/rs_actionpolylinesegment.cpp" line="65"/>
         <location filename="../../src/actions/rs_actionpolylinesegment.cpp" line="86"/>
         <source>Polyline created</source>
-        <translation>Polyline created</translation>
+        <translation>Polilinia creada</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionpolylinesegment.cpp" line="306"/>
         <source>No Entity found.</source>
-        <translation>No Entity found.</translation>
+        <translation>No s'ha trobat cap entitat.</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionpolylinesegment.cpp" line="309"/>
         <source>Entity can not be a closed polyline.</source>
-        <translation>Entity can not be a closed polyline.</translation>
+        <translation>L'entitat no pot ser una polilinia tancada.</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionpolylinesegment.cpp" line="350"/>
         <source>Choose one of the segments on the original polyline</source>
-        <translation>Choose one of the segments on the original polyline</translation>
+        <translation>Trieu un dels segments de la polilinia original</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionpolylinesegment.cpp" line="351"/>
@@ -19728,29 +19728,29 @@ This block cannot be inserted.</source>
         <location filename="../../src/actions/rs_actionpolylinetrim.cpp" line="124"/>
         <location filename="../../src/actions/rs_actionpolylinetrim.cpp" line="143"/>
         <source>No Entity found.</source>
-        <translation>No Entity found.</translation>
+        <translation>No s'ha trobat cap entitat.</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionpolylinetrim.cpp" line="110"/>
         <source>Entity must be a polyline.</source>
-        <translation>Entity must be a polyline.</translation>
+        <translation>L'entitat ha de ser una polilinia.</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionpolylinetrim.cpp" line="126"/>
         <location filename="../../src/actions/rs_actionpolylinetrim.cpp" line="145"/>
         <source>Specifying point is invalid.</source>
-        <translation>Specifying point is invalid.</translation>
+        <translation>El punt especificat no es valid.</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionpolylinetrim.cpp" line="129"/>
         <location filename="../../src/actions/rs_actionpolylinetrim.cpp" line="148"/>
         <source>No Segment found on entity.</source>
-        <translation>No Segment found on entity.</translation>
+        <translation>No s'ha trobat cap segment a l'entitat.</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionpolylinetrim.cpp" line="181"/>
         <source>Specify polyline to trim</source>
-        <translation>Specify polyline to trim</translation>
+        <translation>Especifiqueu la polilinia per retallar</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionpolylinetrim.cpp" line="182"/>
@@ -19760,7 +19760,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actionpolylinetrim.cpp" line="185"/>
         <source>Specify first segment</source>
-        <translation>Specify first segment</translation>
+        <translation>Especifiqueu el primer segment</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionpolylinetrim.cpp" line="186"/>
@@ -19771,7 +19771,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actionpolylinetrim.cpp" line="189"/>
         <source>Specify second segment</source>
-        <translation>Specify second segment</translation>
+        <translation>Especifiqueu el segon segment</translation>
     </message>
 </context>
 <context>
@@ -19779,57 +19779,57 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actionprintpreview.cpp" line="138"/>
         <source>Printout offset in paper coordinates by (%1, %2)</source>
-        <translation>Printout offset in paper coordinates by (%1, %2)</translation>
+        <translation>Desplacament d'impressio en coordenades de paper per (%1, %2)</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionprintpreview.cpp" line="141"/>
         <source>Printout offset in graph coordinates by (%1, %2)</source>
-        <translation>Printout offset in graph coordinates by (%1, %2)</translation>
+        <translation>Desplacament d'impressio en coordenades del grafic per (%1, %2)</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionprintpreview.cpp" line="158"/>
         <source>Printout in Black/White</source>
-        <translation>Printout in Black/White</translation>
+        <translation>Impressio en Negre/Blanc</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionprintpreview.cpp" line="163"/>
         <source>Printout in color</source>
-        <translation>Printout in color</translation>
+        <translation>Impressio en color</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionprintpreview.cpp" line="168"/>
         <source>Printout offset in graph coordinates</source>
-        <translation>Printout offset in graph coordinates</translation>
+        <translation>Desplacament d'impressio en coordenades del grafic</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionprintpreview.cpp" line="173"/>
         <source>Printout offset in paper coordinates</source>
-        <translation>Printout offset in paper coordinates</translation>
+        <translation>Desplacament d'impressio en coordenades de paper</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionprintpreview.cpp" line="178"/>
         <source>: select printout offset coordinates</source>
-        <translation>: select printout offset coordinates</translation>
+        <translation>: seleccioneu les coordenades de desplacament d'impressio</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionprintpreview.cpp" line="179"/>
         <source>type in offset from command line to offset printout</source>
-        <translation>type in offset from command line to offset printout</translation>
+        <translation>introduiu el desplacament des de la linia d'ordres per desplacar la impressio</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionprintpreview.cpp" line="187"/>
         <source>Printout offset ignores relative zero. Ignoring &apos;@&apos;</source>
-        <translation>Printout offset ignores relative zero. Ignoring &apos;@&apos;</translation>
+        <translation>El desplacament d'impressio ignora el zero relatiu. S'ignora &apos;@&apos;</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionprintpreview.cpp" line="272"/>
         <source>RS_ActionPrintPreview::fit(): Invalid paper size</source>
-        <translation>RS_ActionPrintPreview::fit(): Invalid paper size</translation>
+        <translation>RS_ActionPrintPreview::fit(): Mida de paper no valida</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionprintpreview.cpp" line="356"/>
         <source>RS_ActionPrintPreview::calcPagesNum(): Limit of pages has been exceeded.</source>
-        <translation>RS_ActionPrintPreview::calcPagesNum(): Limit of pages has been exceeded.</translation>
+        <translation>RS_ActionPrintPreview::calcPagesNum(): S'ha superat el limit de pagines.</translation>
     </message>
 </context>
 <context>
@@ -19837,12 +19837,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actionselect.cpp" line="75"/>
         <source>No entity selected!</source>
-        <translation>No entity selected!</translation>
+        <translation>Cap entitat seleccionada!</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionselect.cpp" line="83"/>
         <source>Select to modify attributes</source>
-        <translation>Select to modify attributes</translation>
+        <translation>Seleccioneu per modificar atributs</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionselect.cpp" line="83"/>
@@ -19868,82 +19868,82 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actionselect.cpp" line="86"/>
         <source>Select entities to order</source>
-        <translation>Select entities to order</translation>
+        <translation>Seleccioneu entitats per ordenar</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionselect.cpp" line="89"/>
         <source>Select to delete</source>
-        <translation>Select to delete</translation>
+        <translation>Seleccioneu per esborrar</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionselect.cpp" line="92"/>
         <source>Select to delete immediately</source>
-        <translation>Select to delete immediately</translation>
+        <translation>Seleccioneu per esborrar immediatament</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionselect.cpp" line="95"/>
         <source>Select to move</source>
-        <translation>Select to move</translation>
+        <translation>Seleccioneu per moure</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionselect.cpp" line="98"/>
         <source>Select to copy</source>
-        <translation>Select to copy</translation>
+        <translation>Seleccioneu per copiar</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionselect.cpp" line="101"/>
         <source>Select to cut</source>
-        <translation>Select to cut</translation>
+        <translation>Seleccioneu per tallar</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionselect.cpp" line="104"/>
         <source>Select to revert direction</source>
-        <translation>Select to revert direction</translation>
+        <translation>Seleccioneu per invertir la direccio</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionselect.cpp" line="107"/>
         <source>Select to rotate</source>
-        <translation>Select to rotate</translation>
+        <translation>Seleccioneu per girar</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionselect.cpp" line="110"/>
         <source>Select to scale</source>
-        <translation>Select to scale</translation>
+        <translation>Seleccioneu per escalar</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionselect.cpp" line="113"/>
         <source>Select to mirror</source>
-        <translation>Select to mirror</translation>
+        <translation>Seleccioneu per reflexionar</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionselect.cpp" line="116"/>
         <source>Select to move and rotate</source>
-        <translation>Select to move and rotate</translation>
+        <translation>Seleccioneu per moure i girar</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionselect.cpp" line="119"/>
         <source>Select to create offset</source>
-        <translation>Select to create offset</translation>
+        <translation>Seleccioneu per crear desplacament</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionselect.cpp" line="122"/>
         <source>Select for two axis rotation</source>
-        <translation>Select for two axis rotation</translation>
+        <translation>Seleccioneu per a rotacio de dos eixos</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionselect.cpp" line="125"/>
         <source>Select to explode text</source>
-        <translation>Select to explode text</translation>
+        <translation>Seleccioneu per explotar el text</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionselect.cpp" line="128"/>
         <source>Select to explode block</source>
-        <translation>Select to explode block</translation>
+        <translation>Seleccioneu per explotar el bloc</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionselect.cpp" line="131"/>
         <source>Select to create block</source>
-        <translation>Select to create block</translation>
+        <translation>Seleccioneu per crear el bloc</translation>
     </message>
 </context>
 <context>
@@ -19951,7 +19951,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actionselectcontour.cpp" line="57"/>
         <source>Entity must be an Atomic Entity.</source>
-        <translation>Entity must be an Atomic Entity.</translation>
+        <translation>L'entitat ha de ser una entitat atomica.</translation>
     </message>
 </context>
 <context>
@@ -19959,7 +19959,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actionselectintersected.cpp" line="140"/>
         <source>Choose first point of intersection line</source>
-        <translation>Choose first point of intersection line</translation>
+        <translation>Trieu el primer punt de la linia d'interseccio</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionselectintersected.cpp" line="140"/>
@@ -19969,7 +19969,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actionselectintersected.cpp" line="143"/>
         <source>Choose second point of intersection line</source>
-        <translation>Choose second point of intersection line</translation>
+        <translation>Trieu el segon punt de la linia d'interseccio</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionselectintersected.cpp" line="143"/>
@@ -19982,7 +19982,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actionselectwindow.cpp" line="181"/>
         <source>Click and drag for the selection window</source>
-        <translation>Click and drag for the selection window</translation>
+        <translation>Feu clic i arrossegueu per a la finestra de seleccio</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionselectwindow.cpp" line="181"/>
@@ -19992,7 +19992,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actionselectwindow.cpp" line="184"/>
         <source>Choose second edge</source>
-        <translation>Choose second edge</translation>
+        <translation>Trieu la segona vora</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionselectwindow.cpp" line="184"/>
@@ -20005,12 +20005,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actionsetrelativezero.cpp" line="50"/>
         <source>Set &amp;Relative Zero</source>
-        <translation>Set &amp;Relative Zero</translation>
+        <translation>Establir el &amp;Zero Relatiu</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionsetrelativezero.cpp" line="99"/>
         <source>Set relative Zero</source>
-        <translation>Set relative Zero</translation>
+        <translation>Establir el zero relatiu</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionsetrelativezero.cpp" line="99"/>
@@ -20023,12 +20023,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actionsnapintersectionmanual.cpp" line="58"/>
         <source>I&amp;ntersection Manually</source>
-        <translation>I&amp;ntersection Manually</translation>
+        <translation>I&amp;nterseccio manualment</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionsnapintersectionmanual.cpp" line="182"/>
         <source>Select first entity</source>
-        <translation>Select first entity</translation>
+        <translation>Seleccioneu la primera entitat</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionsnapintersectionmanual.cpp" line="183"/>
@@ -20039,7 +20039,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actionsnapintersectionmanual.cpp" line="186"/>
         <source>Select second entity</source>
-        <translation>Select second entity</translation>
+        <translation>Seleccioneu la segona entitat</translation>
     </message>
 </context>
 <context>
@@ -20047,12 +20047,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiontoolregeneratedimensions.cpp" line="70"/>
         <source>Regenerated %1 dimension entities</source>
-        <translation>Regenerated %1 dimension entities</translation>
+        <translation>S'han regenerat %1 entitats de cota</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiontoolregeneratedimensions.cpp" line="72"/>
         <source>No dimension entities found</source>
-        <translation>No dimension entities found</translation>
+        <translation>No s'han trobat entitats de cota</translation>
     </message>
 </context>
 <context>
@@ -20060,7 +20060,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actionzoompan.cpp" line="119"/>
         <source>Click and drag to pan zoom</source>
-        <translation>Click and drag to pan zoom</translation>
+        <translation>Feu clic i arrossegueu per desplacar-se en zoom</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionzoompan.cpp" line="120"/>
@@ -20071,7 +20071,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actionzoompan.cpp" line="123"/>
         <source>Zoom panning</source>
-        <translation>Zoom panning</translation>
+        <translation>Desplacament del zoom</translation>
     </message>
 </context>
 <context>
@@ -20079,7 +20079,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actionzoomwindow.cpp" line="151"/>
         <source>Specify first edge</source>
-        <translation>Specify first edge</translation>
+        <translation>Especifiqueu la primera vora</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionzoomwindow.cpp" line="151"/>
@@ -20089,7 +20089,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actionzoomwindow.cpp" line="154"/>
         <source>Specify second edge</source>
-        <translation>Specify second edge</translation>
+        <translation>Especifiqueu la segona vora</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionzoomwindow.cpp" line="154"/>
@@ -20102,7 +20102,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/lib/gui/rs_graphicview.cpp" line="1542"/>
         <source>Draft</source>
-        <translation>Draft</translation>
+        <translation>Esbos</translation>
     </message>
 </context>
 <context>
@@ -20113,7 +20113,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_textfileviewer.h" line="67"/>
         <location filename="../../../generated/librecad/ui/ui_textfileviewer.h" line="67"/>
         <source>Frame</source>
-        <translation>Frame</translation>
+        <translation>Marc</translation>
     </message>
 </context>
 <context>
@@ -20124,7 +20124,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_arcoptions.h" line="109"/>
         <location filename="../../../generated/librecad/ui/ui_qg_arcoptions.h" line="109"/>
         <source>Arc Options</source>
-        <translation>Arc Options</translation>
+        <translation>Opcions de l'arc</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_arcoptions.ui" line="77"/>
@@ -20132,7 +20132,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_arcoptions.h" line="112"/>
         <location filename="../../../generated/librecad/ui/ui_qg_arcoptions.h" line="112"/>
         <source>Counterclockwise</source>
-        <translation>Counterclockwise</translation>
+        <translation>Sentit antihorari</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_arcoptions.ui" line="122"/>
@@ -20140,7 +20140,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_arcoptions.h" line="116"/>
         <location filename="../../../generated/librecad/ui/ui_qg_arcoptions.h" line="116"/>
         <source>Clockwise</source>
-        <translation>Clockwise</translation>
+        <translation>Sentit horari</translation>
     </message>
 </context>
 <context>
@@ -20151,7 +20151,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_arctangentialoptions.h" line="82"/>
         <location filename="../../../generated/librecad/ui/ui_qg_arctangentialoptions.h" line="82"/>
         <source>Tangential Arc Options</source>
-        <translation>Tangential Arc Options</translation>
+        <translation>Opcions de l'arc tangencial</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_arctangentialoptions.ui" line="66"/>
@@ -20159,7 +20159,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_arctangentialoptions.h" line="84"/>
         <location filename="../../../generated/librecad/ui/ui_qg_arctangentialoptions.h" line="84"/>
         <source>Radius of the tangential arc</source>
-        <translation>Radius of the tangential arc</translation>
+        <translation>Radi de l'arc tangencial</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_arctangentialoptions.ui" line="85"/>
@@ -20167,7 +20167,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_arctangentialoptions.h" line="87"/>
         <location filename="../../../generated/librecad/ui/ui_qg_arctangentialoptions.h" line="87"/>
         <source>Total subtending angle of the tangential arc</source>
-        <translation>Total subtending angle of the tangential arc</translation>
+        <translation>Angle total subtendit de l'arc tangencial</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_arctangentialoptions.ui" line="98"/>
@@ -20176,7 +20176,7 @@ This block cannot be inserted.</source>
         <location filename="../../../generated/librecad/ui/ui_qg_arctangentialoptions.h" line="89"/>
         <source>Radius</source>
         <extracomment>Draw Tangential Arc by the given radius</extracomment>
-        <translation>Radius</translation>
+        <translation>Radi</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_arctangentialoptions.ui" line="120"/>
@@ -20196,7 +20196,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_beveloptions.h" line="111"/>
         <location filename="../../../generated/librecad/ui/ui_qg_beveloptions.h" line="111"/>
         <source>Bevel Options</source>
-        <translation>Bevel Options</translation>
+        <translation>Opcions de bisell</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_beveloptions.ui" line="53"/>
@@ -20204,7 +20204,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_beveloptions.h" line="116"/>
         <location filename="../../../generated/librecad/ui/ui_qg_beveloptions.h" line="116"/>
         <source>Check to trim both entities to the bevel</source>
-        <translation>Check to trim both entities to the bevel</translation>
+        <translation>Marqueu per retallar les dues entitats al bisell</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_beveloptions.ui" line="56"/>
@@ -20220,7 +20220,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_beveloptions.h" line="119"/>
         <location filename="../../../generated/librecad/ui/ui_qg_beveloptions.h" line="119"/>
         <source>Length 1:</source>
-        <translation>Length 1:</translation>
+        <translation>Longitud 1:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_beveloptions.ui" line="92"/>
@@ -20228,7 +20228,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_beveloptions.h" line="120"/>
         <location filename="../../../generated/librecad/ui/ui_qg_beveloptions.h" line="120"/>
         <source>Length 2:</source>
-        <translation>Length 2:</translation>
+        <translation>Longitud 2:</translation>
     </message>
 </context>
 <context>
@@ -20239,7 +20239,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_circleoptions.h" line="79"/>
         <location filename="../../../generated/librecad/ui/ui_qg_circleoptions.h" line="79"/>
         <source>Circle Options</source>
-        <translation>Circle Options</translation>
+        <translation>Opcions de cercle</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_circleoptions.ui" line="50"/>
@@ -20247,7 +20247,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_circleoptions.h" line="80"/>
         <location filename="../../../generated/librecad/ui/ui_qg_circleoptions.h" line="80"/>
         <source>Radius:</source>
-        <translation>Radius:</translation>
+        <translation>Radi:</translation>
     </message>
 </context>
 <context>
@@ -20258,7 +20258,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_circletan2options.h" line="84"/>
         <location filename="../../../generated/librecad/ui/ui_qg_circletan2options.h" line="84"/>
         <source>Circle Tangential2 Options</source>
-        <translation>Circle Tangential2 Options</translation>
+        <translation>Opcions de cercle tangent a 2</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_circletan2options.ui" line="56"/>
@@ -20274,7 +20274,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_circletan2options.h" line="88"/>
         <location filename="../../../generated/librecad/ui/ui_qg_circletan2options.h" line="88"/>
         <source>Radius:</source>
-        <translation>Radius:</translation>
+        <translation>Radi:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_circletan2options.ui" line="69"/>
@@ -20282,7 +20282,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_circletan2options.h" line="90"/>
         <location filename="../../../generated/librecad/ui/ui_qg_circletan2options.h" line="90"/>
         <source>Radius of tangential circle</source>
-        <translation>Radius of tangential circle</translation>
+        <translation>Radi del cercle tangent</translation>
     </message>
 </context>
 <context>
@@ -20293,7 +20293,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_dimlinearoptions.h" line="119"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dimlinearoptions.h" line="119"/>
         <source>Linear Dimension Options</source>
-        <translation>Linear Dimension Options</translation>
+        <translation>Opcions de cota lineal</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dimlinearoptions.ui" line="68"/>
@@ -20312,7 +20312,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_dimoptions.h" line="164"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dimoptions.h" line="164"/>
         <source>Dimension Options</source>
-        <translation>Dimension Options</translation>
+        <translation>Opcions de cota</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dimoptions.ui" line="62"/>
@@ -20320,7 +20320,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_dimoptions.h" line="165"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dimoptions.h" line="165"/>
         <source>Label:</source>
-        <translation>Label:</translation>
+        <translation>Etiqueta:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dimoptions.ui" line="109"/>
@@ -20391,7 +20391,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_imageoptions.h" line="111"/>
         <location filename="../../../generated/librecad/ui/ui_qg_imageoptions.h" line="111"/>
         <source>Insert Options</source>
-        <translation>Insert Options</translation>
+        <translation>Opcions d'insercio</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_imageoptions.ui" line="53"/>
@@ -20407,7 +20407,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_imageoptions.h" line="117"/>
         <location filename="../../../generated/librecad/ui/ui_qg_imageoptions.h" line="117"/>
         <source>Rotation Angle</source>
-        <translation>Rotation Angle</translation>
+        <translation>Angle de rotacio</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_imageoptions.ui" line="70"/>
@@ -20423,7 +20423,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_imageoptions.h" line="121"/>
         <location filename="../../../generated/librecad/ui/ui_qg_imageoptions.h" line="121"/>
         <source>Scale Factor</source>
-        <translation>Scale Factor</translation>
+        <translation>Factor d'escala</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_imageoptions.ui" line="93"/>
@@ -20439,7 +20439,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_imageoptions.h" line="125"/>
         <location filename="../../../generated/librecad/ui/ui_qg_imageoptions.h" line="125"/>
         <source>DPI of Image</source>
-        <translation>DPI of Image</translation>
+        <translation>DPI de la imatge</translation>
     </message>
 </context>
 <context>
@@ -20450,7 +20450,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_insertoptions.h" line="183"/>
         <location filename="../../../generated/librecad/ui/ui_qg_insertoptions.h" line="183"/>
         <source>Insert Options</source>
-        <translation>Insert Options</translation>
+        <translation>Opcions d'insercio</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_insertoptions.ui" line="65"/>
@@ -20466,7 +20466,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_insertoptions.h" line="189"/>
         <location filename="../../../generated/librecad/ui/ui_qg_insertoptions.h" line="189"/>
         <source>Rotation Angle</source>
-        <translation>Rotation Angle</translation>
+        <translation>Angle de rotacio</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_insertoptions.ui" line="106"/>
@@ -20482,7 +20482,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_insertoptions.h" line="193"/>
         <location filename="../../../generated/librecad/ui/ui_qg_insertoptions.h" line="193"/>
         <source>Scale Factor</source>
-        <translation>Scale Factor</translation>
+        <translation>Factor d'escala</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_insertoptions.ui" line="163"/>
@@ -20490,7 +20490,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_insertoptions.h" line="195"/>
         <location filename="../../../generated/librecad/ui/ui_qg_insertoptions.h" line="195"/>
         <source>Array:</source>
-        <translation>Array:</translation>
+        <translation>Matriu:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_insertoptions.ui" line="185"/>
@@ -20498,7 +20498,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_insertoptions.h" line="197"/>
         <location filename="../../../generated/librecad/ui/ui_qg_insertoptions.h" line="197"/>
         <source>Number of Columns</source>
-        <translation>Number of Columns</translation>
+        <translation>Nombre de columnes</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_insertoptions.ui" line="210"/>
@@ -20506,7 +20506,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_insertoptions.h" line="200"/>
         <location filename="../../../generated/librecad/ui/ui_qg_insertoptions.h" line="200"/>
         <source>Number of Rows</source>
-        <translation>Number of Rows</translation>
+        <translation>Nombre de files</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_insertoptions.ui" line="235"/>
@@ -20514,7 +20514,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_insertoptions.h" line="202"/>
         <location filename="../../../generated/librecad/ui/ui_qg_insertoptions.h" line="202"/>
         <source>Spacing:</source>
-        <translation>Spacing:</translation>
+        <translation>Espaiat:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_insertoptions.ui" line="257"/>
@@ -20522,7 +20522,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_insertoptions.h" line="204"/>
         <location filename="../../../generated/librecad/ui/ui_qg_insertoptions.h" line="204"/>
         <source>Column Spacing</source>
-        <translation>Column Spacing</translation>
+        <translation>Espaiat de columnes</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_insertoptions.ui" line="276"/>
@@ -20530,7 +20530,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_insertoptions.h" line="207"/>
         <location filename="../../../generated/librecad/ui/ui_qg_insertoptions.h" line="207"/>
         <source>Row Spacing</source>
-        <translation>Row Spacing</translation>
+        <translation>Espaiat de files</translation>
     </message>
 </context>
 <context>
@@ -20541,7 +20541,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_libraryinsertoptions.h" line="93"/>
         <location filename="../../../generated/librecad/ui/ui_qg_libraryinsertoptions.h" line="93"/>
         <source>Library Insert Options</source>
-        <translation>Library Insert Options</translation>
+        <translation>Opcions d'insercio de biblioteca</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_libraryinsertoptions.ui" line="53"/>
@@ -20557,7 +20557,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_libraryinsertoptions.h" line="99"/>
         <location filename="../../../generated/librecad/ui/ui_qg_libraryinsertoptions.h" line="99"/>
         <source>Rotation Angle</source>
-        <translation>Rotation Angle</translation>
+        <translation>Angle de rotacio</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_libraryinsertoptions.ui" line="70"/>
@@ -20573,7 +20573,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_libraryinsertoptions.h" line="103"/>
         <location filename="../../../generated/librecad/ui/ui_qg_libraryinsertoptions.h" line="103"/>
         <source>Scale Factor</source>
-        <translation>Scale Factor</translation>
+        <translation>Factor d'escala</translation>
     </message>
 </context>
 <context>
@@ -20584,7 +20584,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_lineangleoptions.h" line="135"/>
         <location filename="../../../generated/librecad/ui/ui_qg_lineangleoptions.h" line="135"/>
         <source>Line Angle Options</source>
-        <translation>Line Angle Options</translation>
+        <translation>Opcions d'angle de linia</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_lineangleoptions.ui" line="65"/>
@@ -20600,7 +20600,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_lineangleoptions.h" line="138"/>
         <location filename="../../../generated/librecad/ui/ui_qg_lineangleoptions.h" line="138"/>
         <source>Line angle</source>
-        <translation>Line angle</translation>
+        <translation>Angle de linia</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_lineangleoptions.ui" line="109"/>
@@ -20608,7 +20608,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_lineangleoptions.h" line="140"/>
         <location filename="../../../generated/librecad/ui/ui_qg_lineangleoptions.h" line="140"/>
         <source>Length:</source>
-        <translation>Length:</translation>
+        <translation>Longitud:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_lineangleoptions.ui" line="134"/>
@@ -20616,7 +20616,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_lineangleoptions.h" line="142"/>
         <location filename="../../../generated/librecad/ui/ui_qg_lineangleoptions.h" line="142"/>
         <source>Length of line</source>
-        <translation>Length of line</translation>
+        <translation>Longitud de la linia</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_lineangleoptions.ui" line="147"/>
@@ -20624,7 +20624,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_lineangleoptions.h" line="144"/>
         <location filename="../../../generated/librecad/ui/ui_qg_lineangleoptions.h" line="144"/>
         <source>Snap Point:</source>
-        <translation>Snap Point:</translation>
+        <translation>Punt de referencia:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_lineangleoptions.ui" line="170"/>
@@ -20632,7 +20632,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_lineangleoptions.h" line="145"/>
         <location filename="../../../generated/librecad/ui/ui_qg_lineangleoptions.h" line="145"/>
         <source>Start</source>
-        <translation>Start</translation>
+        <translation>Inici</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_lineangleoptions.ui" line="175"/>
@@ -20640,7 +20640,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_lineangleoptions.h" line="146"/>
         <location filename="../../../generated/librecad/ui/ui_qg_lineangleoptions.h" line="146"/>
         <source>Middle</source>
-        <translation>Middle</translation>
+        <translation>Mig</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_lineangleoptions.ui" line="180"/>
@@ -20659,7 +20659,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_linebisectoroptions.h" line="100"/>
         <location filename="../../../generated/librecad/ui/ui_qg_linebisectoroptions.h" line="100"/>
         <source>Line Bisector Options</source>
-        <translation>Line Bisector Options</translation>
+        <translation>Opcions de bisectriu de linia</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_linebisectoroptions.ui" line="56"/>
@@ -20667,7 +20667,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_linebisectoroptions.h" line="101"/>
         <location filename="../../../generated/librecad/ui/ui_qg_linebisectoroptions.h" line="101"/>
         <source>Length:</source>
-        <translation>Length:</translation>
+        <translation>Longitud:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_linebisectoroptions.ui" line="66"/>
@@ -20675,7 +20675,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_linebisectoroptions.h" line="103"/>
         <location filename="../../../generated/librecad/ui/ui_qg_linebisectoroptions.h" line="103"/>
         <source>Length of bisector</source>
-        <translation>Length of bisector</translation>
+        <translation>Longitud de la bisectriu</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_linebisectoroptions.ui" line="73"/>
@@ -20683,7 +20683,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_linebisectoroptions.h" line="105"/>
         <location filename="../../../generated/librecad/ui/ui_qg_linebisectoroptions.h" line="105"/>
         <source>Number:</source>
-        <translation>Number:</translation>
+        <translation>Número:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_linebisectoroptions.ui" line="83"/>
@@ -20691,7 +20691,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_linebisectoroptions.h" line="107"/>
         <location filename="../../../generated/librecad/ui/ui_qg_linebisectoroptions.h" line="107"/>
         <source>Number of bisectors to create</source>
-        <translation>Number of bisectors to create</translation>
+        <translation>Nombre de bisectrius a crear</translation>
     </message>
 </context>
 <context>
@@ -20702,7 +20702,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_lineoptions.h" line="87"/>
         <location filename="../../../generated/librecad/ui/ui_qg_lineoptions.h" line="87"/>
         <source>Line Options</source>
-        <translation>Line Options</translation>
+        <translation>Opcions de linia</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_lineoptions.ui" line="53"/>
@@ -20710,7 +20710,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_lineoptions.h" line="89"/>
         <location filename="../../../generated/librecad/ui/ui_qg_lineoptions.h" line="89"/>
         <source>Form a closed contour from lines drawn</source>
-        <translation>Form a closed contour from lines drawn</translation>
+        <translation>Formar un contorn tancat a partir de les linies dibuixades</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_lineoptions.ui" line="56"/>
@@ -20718,7 +20718,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_lineoptions.h" line="91"/>
         <location filename="../../../generated/librecad/ui/ui_qg_lineoptions.h" line="91"/>
         <source>Close</source>
-        <translation>Close</translation>
+        <translation>Tancar</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_lineoptions.ui" line="72"/>
@@ -20726,7 +20726,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_lineoptions.h" line="93"/>
         <location filename="../../../generated/librecad/ui/ui_qg_lineoptions.h" line="93"/>
         <source>Undo the last line drawing</source>
-        <translation>Undo the last line drawing</translation>
+        <translation>Desfer l'ultim dibuix de linia</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_lineoptions.ui" line="75"/>
@@ -20742,7 +20742,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_lineoptions.h" line="97"/>
         <location filename="../../../generated/librecad/ui/ui_qg_lineoptions.h" line="97"/>
         <source>Redo the last line drawing</source>
-        <translation>Redo the last line drawing</translation>
+        <translation>Refer l'ultim dibuix de linia</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_lineoptions.ui" line="85"/>
@@ -20761,7 +20761,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_lc_lineoptions.h" line="202"/>
         <location filename="../../../generated/librecad/ui/ui_lc_lineoptions.h" line="202"/>
         <source>Line Options</source>
-        <translation>Line Options</translation>
+        <translation>Opcions de linia</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_lineoptions.ui" line="56"/>
@@ -20769,7 +20769,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_lc_lineoptions.h" line="203"/>
         <location filename="../../../generated/librecad/ui/ui_lc_lineoptions.h" line="203"/>
         <source>Direction:</source>
-        <translation>Direction:</translation>
+        <translation>Direccio:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_lineoptions.ui" line="103"/>
@@ -20817,7 +20817,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_lc_lineoptions.h" line="213"/>
         <location filename="../../../generated/librecad/ui/ui_lc_lineoptions.h" line="213"/>
         <source>Undo the last line drawing</source>
-        <translation>Undo the last line drawing</translation>
+        <translation>Desfer l'ultim dibuix de linia</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_lineoptions.ui" line="227"/>
@@ -20833,7 +20833,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_lc_lineoptions.h" line="217"/>
         <location filename="../../../generated/librecad/ui/ui_lc_lineoptions.h" line="217"/>
         <source>Form a closed contour from lines drawn</source>
-        <translation>Form a closed contour from lines drawn</translation>
+        <translation>Formar un contorn tancat a partir de les linies dibuixades</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_lineoptions.ui" line="237"/>
@@ -20841,7 +20841,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_lc_lineoptions.h" line="219"/>
         <location filename="../../../generated/librecad/ui/ui_lc_lineoptions.h" line="219"/>
         <source>Close</source>
-        <translation>Close</translation>
+        <translation>Tancar</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_lineoptions.ui" line="253"/>
@@ -20849,7 +20849,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_lc_lineoptions.h" line="221"/>
         <location filename="../../../generated/librecad/ui/ui_lc_lineoptions.h" line="221"/>
         <source>Redo the last line drawing</source>
-        <translation>Redo the last line drawing</translation>
+        <translation>Refer l'ultim dibuix de linia</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_lineoptions.ui" line="256"/>
@@ -20865,7 +20865,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_lc_lineoptions.h" line="224"/>
         <location filename="../../../generated/librecad/ui/ui_lc_lineoptions.h" line="224"/>
         <source>Point</source>
-        <translation>Point</translation>
+        <translation>Punt</translation>
     </message>
 </context>
 <context>
@@ -20876,7 +20876,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_lineparalleloptions.h" line="107"/>
         <location filename="../../../generated/librecad/ui/ui_qg_lineparalleloptions.h" line="107"/>
         <source>Line Parallel Options</source>
-        <translation>Line Parallel Options</translation>
+        <translation>Opcions de linia paral.lela</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_lineparalleloptions.ui" line="56"/>
@@ -20884,7 +20884,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_lineparalleloptions.h" line="108"/>
         <location filename="../../../generated/librecad/ui/ui_qg_lineparalleloptions.h" line="108"/>
         <source>Distance:</source>
-        <translation>Distance:</translation>
+        <translation>Distància:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_lineparalleloptions.ui" line="72"/>
@@ -20892,7 +20892,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_lineparalleloptions.h" line="110"/>
         <location filename="../../../generated/librecad/ui/ui_qg_lineparalleloptions.h" line="110"/>
         <source>Distance to original entity</source>
-        <translation>Distance to original entity</translation>
+        <translation>Distancia a l'entitat original</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_lineparalleloptions.ui" line="85"/>
@@ -20900,7 +20900,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_lineparalleloptions.h" line="112"/>
         <location filename="../../../generated/librecad/ui/ui_qg_lineparalleloptions.h" line="112"/>
         <source>Number:</source>
-        <translation>Number:</translation>
+        <translation>Número:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_lineparalleloptions.ui" line="95"/>
@@ -20908,7 +20908,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_lineparalleloptions.h" line="114"/>
         <location filename="../../../generated/librecad/ui/ui_qg_lineparalleloptions.h" line="114"/>
         <source>Number of parallels to create</source>
-        <translation>Number of parallels to create</translation>
+        <translation>Nombre de paral.leles a crear</translation>
     </message>
 </context>
 <context>
@@ -20919,7 +20919,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_lineparallelthroughoptions.h" line="85"/>
         <location filename="../../../generated/librecad/ui/ui_qg_lineparallelthroughoptions.h" line="85"/>
         <source>Line Parallel Through Options</source>
-        <translation>Line Parallel Through Options</translation>
+        <translation>Opcions de linia paral.lela per punt</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_lineparallelthroughoptions.ui" line="56"/>
@@ -20927,7 +20927,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_lineparallelthroughoptions.h" line="86"/>
         <location filename="../../../generated/librecad/ui/ui_qg_lineparallelthroughoptions.h" line="86"/>
         <source>Number:</source>
-        <translation>Number:</translation>
+        <translation>Número:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_lineparallelthroughoptions.ui" line="66"/>
@@ -20935,7 +20935,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_lineparallelthroughoptions.h" line="88"/>
         <location filename="../../../generated/librecad/ui/ui_qg_lineparallelthroughoptions.h" line="88"/>
         <source>Number of parallels to create</source>
-        <translation>Number of parallels to create</translation>
+        <translation>Nombre de paral.leles a crear</translation>
     </message>
 </context>
 <context>
@@ -20946,7 +20946,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_linepolygon2options.h" line="86"/>
         <location filename="../../../generated/librecad/ui/ui_qg_linepolygon2options.h" line="86"/>
         <source>Polygon Options</source>
-        <translation>Polygon Options</translation>
+        <translation>Opcions de poligon</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_linepolygon2options.ui" line="56"/>
@@ -20954,7 +20954,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_linepolygon2options.h" line="87"/>
         <location filename="../../../generated/librecad/ui/ui_qg_linepolygon2options.h" line="87"/>
         <source>Number:</source>
-        <translation>Number:</translation>
+        <translation>Número:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_linepolygon2options.ui" line="66"/>
@@ -20962,7 +20962,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_linepolygon2options.h" line="89"/>
         <location filename="../../../generated/librecad/ui/ui_qg_linepolygon2options.h" line="89"/>
         <source>Number of edges</source>
-        <translation>Number of edges</translation>
+        <translation>Nombre de costats</translation>
     </message>
 </context>
 <context>
@@ -20973,7 +20973,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_linepolygonoptions.h" line="86"/>
         <location filename="../../../generated/librecad/ui/ui_qg_linepolygonoptions.h" line="86"/>
         <source>Polygon Options</source>
-        <translation>Polygon Options</translation>
+        <translation>Opcions de poligon</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_linepolygonoptions.ui" line="56"/>
@@ -20981,7 +20981,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_linepolygonoptions.h" line="87"/>
         <location filename="../../../generated/librecad/ui/ui_qg_linepolygonoptions.h" line="87"/>
         <source>Number:</source>
-        <translation>Number:</translation>
+        <translation>Número:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_linepolygonoptions.ui" line="66"/>
@@ -20989,7 +20989,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_linepolygonoptions.h" line="89"/>
         <location filename="../../../generated/librecad/ui/ui_qg_linepolygonoptions.h" line="89"/>
         <source>Number of edges</source>
-        <translation>Number of edges</translation>
+        <translation>Nombre de costats</translation>
     </message>
 </context>
 <context>
@@ -21000,7 +21000,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_linerelangleoptions.h" line="107"/>
         <location filename="../../../generated/librecad/ui/ui_qg_linerelangleoptions.h" line="107"/>
         <source>Line Relative Angle Options</source>
-        <translation>Line Relative Angle Options</translation>
+        <translation>Opcions d'angle relatiu de línia</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_linerelangleoptions.ui" line="56"/>
@@ -21016,7 +21016,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_linerelangleoptions.h" line="110"/>
         <location filename="../../../generated/librecad/ui/ui_qg_linerelangleoptions.h" line="110"/>
         <source>Line angle</source>
-        <translation>Line angle</translation>
+        <translation>Angle de linia</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_linerelangleoptions.ui" line="85"/>
@@ -21024,7 +21024,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_linerelangleoptions.h" line="112"/>
         <location filename="../../../generated/librecad/ui/ui_qg_linerelangleoptions.h" line="112"/>
         <source>Length:</source>
-        <translation>Length:</translation>
+        <translation>Longitud:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_linerelangleoptions.ui" line="101"/>
@@ -21032,7 +21032,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_linerelangleoptions.h" line="114"/>
         <location filename="../../../generated/librecad/ui/ui_qg_linerelangleoptions.h" line="114"/>
         <source>Length of line</source>
-        <translation>Length of line</translation>
+        <translation>Longitud de la linia</translation>
     </message>
 </context>
 <context>
@@ -21043,7 +21043,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_mtextoptions.h" line="103"/>
         <location filename="../../../generated/librecad/ui/ui_qg_mtextoptions.h" line="103"/>
         <source>Text Options</source>
-        <translation>Text Options</translation>
+        <translation>Opcions de text</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_mtextoptions.ui" line="53"/>
@@ -21070,7 +21070,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_modifyoffsetoptions.h" line="89"/>
         <location filename="../../../generated/librecad/ui/ui_qg_modifyoffsetoptions.h" line="89"/>
         <source>Modify Offset Options</source>
-        <translation>Modify Offset Options</translation>
+        <translation>Opcions de modificacio de desplacament</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_modifyoffsetoptions.ui" line="56"/>
@@ -21078,7 +21078,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_modifyoffsetoptions.h" line="90"/>
         <location filename="../../../generated/librecad/ui/ui_qg_modifyoffsetoptions.h" line="90"/>
         <source>Distance:</source>
-        <translation>Distance:</translation>
+        <translation>Distància:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_modifyoffsetoptions.ui" line="72"/>
@@ -21086,7 +21086,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_modifyoffsetoptions.h" line="92"/>
         <location filename="../../../generated/librecad/ui/ui_qg_modifyoffsetoptions.h" line="92"/>
         <source>Offset from original entity</source>
-        <translation>Offset from original entity</translation>
+        <translation>Desplacament des de l'entitat original</translation>
     </message>
 </context>
 <context>
@@ -21097,7 +21097,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_moverotateoptions.h" line="79"/>
         <location filename="../../../generated/librecad/ui/ui_qg_moverotateoptions.h" line="79"/>
         <source>Move Rotate Options</source>
-        <translation>Move Rotate Options</translation>
+        <translation>Opcions de moure-rotar</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_moverotateoptions.ui" line="50"/>
@@ -21116,7 +21116,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_polylineoptions.h" line="167"/>
         <location filename="../../../generated/librecad/ui/ui_qg_polylineoptions.h" line="167"/>
         <source>Polyline Options</source>
-        <translation>Polyline Options</translation>
+        <translation>Opcions de polilinia</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_polylineoptions.ui" line="53"/>
@@ -21124,7 +21124,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_polylineoptions.h" line="168"/>
         <location filename="../../../generated/librecad/ui/ui_qg_polylineoptions.h" line="168"/>
         <source>Close</source>
-        <translation>Close</translation>
+        <translation>Tancar</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_polylineoptions.ui" line="60"/>
@@ -21148,7 +21148,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_polylineoptions.h" line="171"/>
         <location filename="../../../generated/librecad/ui/ui_qg_polylineoptions.h" line="171"/>
         <source>Tangential</source>
-        <translation>Tangential</translation>
+        <translation>Tangencial</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_polylineoptions.ui" line="90"/>
@@ -21156,7 +21156,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_polylineoptions.h" line="172"/>
         <location filename="../../../generated/librecad/ui/ui_qg_polylineoptions.h" line="172"/>
         <source>Tan Radius</source>
-        <translation>Tan Radius</translation>
+        <translation>Radi tangent</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_polylineoptions.ui" line="95"/>
@@ -21172,7 +21172,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_polylineoptions.h" line="175"/>
         <location filename="../../../generated/librecad/ui/ui_qg_polylineoptions.h" line="175"/>
         <source>Radius:</source>
-        <translation>Radius:</translation>
+        <translation>Radi:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_polylineoptions.ui" line="126"/>
@@ -21188,7 +21188,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_polylineoptions.h" line="179"/>
         <location filename="../../../generated/librecad/ui/ui_qg_polylineoptions.h" line="179"/>
         <source>Counter Clockwise</source>
-        <translation>Counter Clockwise</translation>
+        <translation>Sentit antihorari</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_polylineoptions.ui" line="204"/>
@@ -21196,7 +21196,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_polylineoptions.h" line="183"/>
         <location filename="../../../generated/librecad/ui/ui_qg_polylineoptions.h" line="183"/>
         <source>Clockwise</source>
-        <translation>Clockwise</translation>
+        <translation>Sentit horari</translation>
     </message>
 </context>
 <context>
@@ -21207,7 +21207,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_printpreviewoptions.h" line="164"/>
         <location filename="../../../generated/librecad/ui/ui_qg_printpreviewoptions.h" line="164"/>
         <source>Print Preview Options</source>
-        <translation>Print Preview Options</translation>
+        <translation>Opcions de previsualitzacio d'impressio</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_printpreviewoptions.ui" line="56"/>
@@ -21231,7 +21231,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_printpreviewoptions.h" line="174"/>
         <location filename="../../../generated/librecad/ui/ui_qg_printpreviewoptions.h" line="174"/>
         <source>fixed</source>
-        <translation>fixed</translation>
+        <translation>fix</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_printpreviewoptions.ui" line="116"/>
@@ -21239,7 +21239,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_printpreviewoptions.h" line="176"/>
         <location filename="../../../generated/librecad/ui/ui_qg_printpreviewoptions.h" line="176"/>
         <source>Apply Print Scale to line width</source>
-        <translation>Apply Print Scale to line width</translation>
+        <translation>Aplicar l'escala d'impressio a l'amplada de linia</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_printpreviewoptions.ui" line="145"/>
@@ -21247,7 +21247,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_printpreviewoptions.h" line="180"/>
         <location filename="../../../generated/librecad/ui/ui_qg_printpreviewoptions.h" line="180"/>
         <source>Toggle Black / White mode</source>
-        <translation>Toggle Black / White mode</translation>
+        <translation>Commutar el mode Negre / Blanc</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_printpreviewoptions.ui" line="174"/>
@@ -21255,7 +21255,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_printpreviewoptions.h" line="184"/>
         <location filename="../../../generated/librecad/ui/ui_qg_printpreviewoptions.h" line="184"/>
         <source>Center to page</source>
-        <translation>Center to page</translation>
+        <translation>Centrar a la pagina</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_printpreviewoptions.ui" line="200"/>
@@ -21263,7 +21263,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_printpreviewoptions.h" line="188"/>
         <location filename="../../../generated/librecad/ui/ui_qg_printpreviewoptions.h" line="188"/>
         <source>Fit to page</source>
-        <translation>Fit to page</translation>
+        <translation>Ajustar a la pagina</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_printpreviewoptions.ui" line="226"/>
@@ -21271,7 +21271,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_printpreviewoptions.h" line="192"/>
         <location filename="../../../generated/librecad/ui/ui_qg_printpreviewoptions.h" line="192"/>
         <source>Calculate number of pages needed to contain the drawing</source>
-        <translation>Calculate number of pages needed to contain the drawing</translation>
+        <translation>Calcular el nombre de pagines necessaries per contenir el dibuix</translation>
     </message>
 </context>
 <context>
@@ -21282,7 +21282,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_roundoptions.h" line="97"/>
         <location filename="../../../generated/librecad/ui/ui_qg_roundoptions.h" line="97"/>
         <source>Round Options</source>
-        <translation>Round Options</translation>
+        <translation>Opcions d'arrodoniment</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_roundoptions.ui" line="53"/>
@@ -21290,7 +21290,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_roundoptions.h" line="102"/>
         <location filename="../../../generated/librecad/ui/ui_qg_roundoptions.h" line="102"/>
         <source>Check to trim both edges to the rounding</source>
-        <translation>Check to trim both edges to the rounding</translation>
+        <translation>Marqueu per retallar les dues vores a l'arrodoniment</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_roundoptions.ui" line="56"/>
@@ -21306,7 +21306,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_roundoptions.h" line="105"/>
         <location filename="../../../generated/librecad/ui/ui_qg_roundoptions.h" line="105"/>
         <source>Radius:</source>
-        <translation>Radius:</translation>
+        <translation>Radi:</translation>
     </message>
 </context>
 <context>
@@ -21317,7 +21317,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_snapdistoptions.h" line="81"/>
         <location filename="../../../generated/librecad/ui/ui_qg_snapdistoptions.h" line="81"/>
         <source>Snap Distance Options</source>
-        <translation>Snap Distance Options</translation>
+        <translation>Opcions de distancia de referencia</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_snapdistoptions.ui" line="50"/>
@@ -21325,7 +21325,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_snapdistoptions.h" line="82"/>
         <location filename="../../../generated/librecad/ui/ui_qg_snapdistoptions.h" line="82"/>
         <source>Distance:</source>
-        <translation>Distance:</translation>
+        <translation>Distància:</translation>
     </message>
 </context>
 <context>
@@ -21336,7 +21336,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_snapmiddleoptions.h" line="58"/>
         <location filename="../../../generated/librecad/ui/ui_qg_snapmiddleoptions.h" line="58"/>
         <source>Snap Distance Options</source>
-        <translation>Snap Distance Options</translation>
+        <translation>Opcions de distancia de referencia</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_snapmiddleoptions.ui" line="47"/>
@@ -21344,7 +21344,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_snapmiddleoptions.h" line="59"/>
         <location filename="../../../generated/librecad/ui/ui_qg_snapmiddleoptions.h" line="59"/>
         <source>Middle Points:</source>
-        <translation>Middle Points:</translation>
+        <translation>Punts mig:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_snapmiddleoptions.ui" line="63"/>
@@ -21352,7 +21352,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_snapmiddleoptions.h" line="61"/>
         <location filename="../../../generated/librecad/ui/ui_qg_snapmiddleoptions.h" line="61"/>
         <source>Number of equidistant division points</source>
-        <translation>Number of equidistant division points</translation>
+        <translation>Nombre de punts de divisio equidistants</translation>
     </message>
 </context>
 <context>
@@ -21363,7 +21363,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_splineoptions.h" line="113"/>
         <location filename="../../../generated/librecad/ui/ui_qg_splineoptions.h" line="113"/>
         <source>Spline Options</source>
-        <translation>Spline Options</translation>
+        <translation>Opcions de spline</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_splineoptions.ui" line="56"/>
@@ -21371,7 +21371,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_splineoptions.h" line="114"/>
         <location filename="../../../generated/librecad/ui/ui_qg_splineoptions.h" line="114"/>
         <source>Degree:</source>
-        <translation>Degree:</translation>
+        <translation>Grau:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_splineoptions.ui" line="91"/>
@@ -21398,7 +21398,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_textoptions.h" line="103"/>
         <location filename="../../../generated/librecad/ui/ui_qg_textoptions.h" line="103"/>
         <source>Text Options</source>
-        <translation>Text Options</translation>
+        <translation>Opcions de text</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_textoptions.ui" line="53"/>
@@ -21425,7 +21425,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_trimamountoptions.h" line="103"/>
         <location filename="../../../generated/librecad/ui/ui_qg_trimamountoptions.h" line="103"/>
         <source>Trim Amount Options</source>
-        <translation>Trim Amount Options</translation>
+        <translation>Opcions de quantitat de retall</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_trimamountoptions.ui" line="23"/>
@@ -21433,7 +21433,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_trimamountoptions.h" line="105"/>
         <location filename="../../../generated/librecad/ui/ui_qg_trimamountoptions.h" line="105"/>
         <source>Distance. Negative values for trimming, positive values for extending.</source>
-        <translation>Distance. Negative values for trimming, positive values for extending.</translation>
+        <translation>Distancia. Valors negatius per retallar, valors positius per allargar.</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_trimamountoptions.ui" line="56"/>
@@ -21441,7 +21441,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_trimamountoptions.h" line="107"/>
         <location filename="../../../generated/librecad/ui/ui_qg_trimamountoptions.h" line="107"/>
         <source>Length:</source>
-        <translation>Length:</translation>
+        <translation>Longitud:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_trimamountoptions.ui" line="78"/>
@@ -21449,7 +21449,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_trimamountoptions.h" line="109"/>
         <location filename="../../../generated/librecad/ui/ui_qg_trimamountoptions.h" line="109"/>
         <source>Distance. Negative values for trimming, positive values for extending. Negative sign is ignored when trimming to final total length.</source>
-        <translation>Distance. Negative values for trimming, positive values for extending. Negative sign is ignored when trimming to final total length.</translation>
+        <translation>Distancia. Valors negatius per retallar, valors positius per allargar. El signe negatiu s'ignora en retallar a la longitud total final.</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_trimamountoptions.ui" line="97"/>
@@ -21457,7 +21457,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_trimamountoptions.h" line="112"/>
         <location filename="../../../generated/librecad/ui/ui_qg_trimamountoptions.h" line="112"/>
         <source>The input length is used as total length after trimming, instead of length increase</source>
-        <translation>The input length is used as total length after trimming, instead of length increase</translation>
+        <translation>La longitud d'entrada s'usa com a longitud total despres de retallar, en lloc d'augment de longitud</translation>
     </message>
 </context>
 <context>
@@ -21468,7 +21468,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_widgetcreator.h" line="222"/>
         <location filename="../../../generated/librecad/ui/ui_widgetcreator.h" line="222"/>
         <source>Frame</source>
-        <translation>Frame</translation>
+        <translation>Marc</translation>
     </message>
     <message>
         <location filename="../../src/ui/generic/widgetcreator.ui" line="96"/>
@@ -21500,7 +21500,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_widgetcreator.h" line="226"/>
         <location filename="../../../generated/librecad/ui/ui_widgetcreator.h" line="226"/>
         <source>Create</source>
-        <translation>Create</translation>
+        <translation>Crear</translation>
     </message>
     <message>
         <location filename="../../src/ui/generic/widgetcreator.ui" line="209"/>
@@ -21508,7 +21508,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_widgetcreator.h" line="227"/>
         <location filename="../../../generated/librecad/ui/ui_widgetcreator.h" line="227"/>
         <source>Destroy</source>
-        <translation>Destroy</translation>
+        <translation>Destruir</translation>
     </message>
     <message>
         <location filename="../../src/ui/generic/widgetcreator.ui" line="216"/>
@@ -21516,7 +21516,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_widgetcreator.h" line="228"/>
         <location filename="../../../generated/librecad/ui/ui_widgetcreator.h" line="228"/>
         <source>Assign</source>
-        <translation>Assign</translation>
+        <translation>Assignar</translation>
     </message>
     <message>
         <location filename="../../src/ui/generic/widgetcreator.ui" line="223"/>
@@ -21524,7 +21524,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_widgetcreator.h" line="229"/>
         <location filename="../../../generated/librecad/ui/ui_widgetcreator.h" line="229"/>
         <source>Update</source>
-        <translation>Update</translation>
+        <translation>Actualitzar</translation>
     </message>
 </context>
 <context>
@@ -21797,7 +21797,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../../plugins/divide/divide.cpp" line="494"/>
         <source>Inc.</source>
-        <translation>Inc.</translation>
+        <translation>Increment</translation>
     </message>
     <message>
         <location filename="../../../plugins/divide/divide.cpp" line="499"/>
@@ -21918,12 +21918,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../../plugins/divide/dividedlg.cpp" line="126"/>
         <source>Ticks - Off</source>
-        <translation>Ticks - Off</translation>
+        <translation>Marques - Apagat</translation>
     </message>
     <message>
         <location filename="../../../plugins/divide/dividedlg.cpp" line="134"/>
         <source>Breaks - Off</source>
-        <translation>Breaks - Off</translation>
+        <translation>Trencaments - Apagat</translation>
     </message>
     <message>
         <location filename="../../../plugins/divide/dividedlg.cpp" line="179"/>
@@ -21953,7 +21953,7 @@ antihorari.</translation>
     <message>
         <location filename="../../../plugins/divide/dividedlg.cpp" line="252"/>
         <source>Ticks</source>
-        <translation>Ticks</translation>
+        <translation>Marques</translation>
     </message>
     <message>
         <location filename="../../../plugins/divide/dividedlg.cpp" line="258"/>
@@ -21981,7 +21981,7 @@ antihorari.</translation>
     <message>
         <location filename="../../../plugins/pointstocsv/pointstocsv.cpp" line="122"/>
         <source>Export to file</source>
-        <translation>Export to file</translation>
+        <translation>Exportar al fitxer</translation>
     </message>
     <message>
         <location filename="../../../plugins/pointstocsv/pointstocsv.cpp" line="122"/>
@@ -21991,7 +21991,7 @@ antihorari.</translation>
     <message>
         <location filename="../../../plugins/pointstocsv/pointstocsv.cpp" line="130"/>
         <source>Unable to open file</source>
-        <translation>Unable to open file</translation>
+        <translation>No es pot obrir el fitxer</translation>
     </message>
 </context>
 <context>
@@ -22019,12 +22019,12 @@ antihorari.</translation>
     <message>
         <location filename="../../../plugins/gear/gear.cpp" line="117"/>
         <source>Addendum (rel. to modulus)</source>
-        <translation>Addendum (rel. to modulus)</translation>
+        <translation>Addenda (rel. al modul)</translation>
     </message>
     <message>
         <location filename="../../../plugins/gear/gear.cpp" line="118"/>
         <source>Dedendum (rel. to modulus)</source>
-        <translation>Dedendum (rel. to modulus)</translation>
+        <translation>Dedenda (rel. al modul)</translation>
     </message>
     <message>
         <location filename="../../../plugins/gear/gear.cpp" line="119"/>

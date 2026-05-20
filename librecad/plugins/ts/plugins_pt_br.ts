@@ -195,7 +195,7 @@
         <location filename="../../../build/ui_lc_dlgsplinepoints.h" line="176"/>
         <location filename="../../../generated/librecad/ui/ui_lc_dlgsplinepoints.h" line="176"/>
         <source>SplinePoints</source>
-        <translation>SplinePoints</translation>
+        <translation>PontosSpline</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_dlgsplinepoints.ui" line="62"/>
@@ -957,7 +957,7 @@ ou [%2]</translation>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="605"/>
         <source>&amp;MText</source>
-        <translation>&amp;MText</translation>
+        <translation>&amp;MTexto</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="611"/>
@@ -1092,7 +1092,7 @@ ou [%2]</translation>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="807"/>
         <source>O&amp;ffset</source>
-        <translation>O&amp;ffset</translation>
+        <translation>D&amp;eslocamento</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="815"/>
@@ -1959,7 +1959,7 @@ primeiro base, segundo base, primeiro alvo, segundo alvo.</translation>
         <location filename="../../../build/ui_lc_duplicateoptions.h" line="116"/>
         <location filename="../../../generated/librecad/ui/ui_lc_duplicateoptions.h" line="116"/>
         <source>Offset X:</source>
-        <translation>Offset X:</translation>
+        <translation>Deslocamento X:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_duplicateoptions.ui" line="48"/>
@@ -1999,7 +1999,7 @@ primeiro base, segundo base, primeiro alvo, segundo alvo.</translation>
         <location filename="../../../build/ui_lc_duplicateoptions.h" line="124"/>
         <location filename="../../../generated/librecad/ui/ui_lc_duplicateoptions.h" line="124"/>
         <source>Offset Y:</source>
-        <translation>Offset Y:</translation>
+        <translation>Deslocamento Y:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_duplicateoptions.ui" line="103"/>
@@ -2627,7 +2627,7 @@ primeiro base, segundo base, primeiro alvo, segundo alvo.</translation>
         <location filename="../../../build/ui_lc_lineanglereloptions.h" line="161"/>
         <location filename="../../../generated/librecad/ui/ui_lc_lineanglereloptions.h" line="161"/>
         <source>Offset:</source>
-        <translation>Offset:</translation>
+        <translation>Deslocamento:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_lineanglereloptions.ui" line="50"/>
@@ -2830,7 +2830,7 @@ primeiro base, segundo base, primeiro alvo, segundo alvo.</translation>
         <location filename="../../../build/ui_lc_linefrompointtolineoptions.h" line="204"/>
         <location filename="../../../generated/librecad/ui/ui_lc_linefrompointtolineoptions.h" line="204"/>
         <source>Snap:</source>
-        <translation>Snap:</translation>
+        <translation>Referência:</translation>
     </message>
 </context>
 <context>
@@ -3129,7 +3129,7 @@ primeiro base, segundo base, primeiro alvo, segundo alvo.</translation>
     <message>
         <location filename="../../../plugins/list/list.cpp" line="113"/>
         <source>Inc.</source>
-        <translation>Inc.</translation>
+        <translation>Incr.</translation>
     </message>
     <message>
         <location filename="../../../plugins/list/list.cpp" line="118"/>
@@ -3193,7 +3193,7 @@ primeiro base, segundo base, primeiro alvo, segundo alvo.</translation>
     <message>
         <location filename="../../../plugins/list/list.cpp" line="169"/>
         <source>OVERLAYBOX</source>
-        <translation>OVERLAYBOX</translation>
+        <translation>CAIXA DE SOBREPOSIÇÃO</translation>
     </message>
     <message>
         <location filename="../../../plugins/list/list.cpp" line="172"/>
@@ -3203,7 +3203,7 @@ primeiro base, segundo base, primeiro alvo, segundo alvo.</translation>
     <message>
         <location filename="../../../plugins/list/list.cpp" line="176"/>
         <source>MTEXT</source>
-        <translation>MTEXT</translation>
+        <translation>TEXTO MULTILINHA</translation>
     </message>
     <message>
         <location filename="../../../plugins/list/list.cpp" line="179"/>
@@ -3213,7 +3213,7 @@ primeiro base, segundo base, primeiro alvo, segundo alvo.</translation>
     <message>
         <location filename="../../../plugins/list/list.cpp" line="183"/>
         <source>TEXTCONTENT</source>
-        <translation>TEXTCONTENT</translation>
+        <translation>CONTEÚDO DO TEXTO</translation>
     </message>
     <message>
         <location filename="../../../plugins/list/list.cpp" line="186"/>
@@ -3298,32 +3298,32 @@ primeiro base, segundo base, primeiro alvo, segundo alvo.</translation>
     <message>
         <location filename="../../../plugins/list/list.cpp" line="243"/>
         <source>DIMLEADER</source>
-        <translation>DIMLEADER</translation>
+        <translation>LINHA DE CHAMADA</translation>
     </message>
     <message>
         <location filename="../../../plugins/list/list.cpp" line="246"/>
         <source>DIMALIGNED</source>
-        <translation>DIMALIGNED</translation>
+        <translation>COTA ALINHADA</translation>
     </message>
     <message>
         <location filename="../../../plugins/list/list.cpp" line="249"/>
         <source>DIMLINEAR</source>
-        <translation>DIMLINEAR</translation>
+        <translation>COTA LINEAR</translation>
     </message>
     <message>
         <location filename="../../../plugins/list/list.cpp" line="252"/>
         <source>DIMRADIAL</source>
-        <translation>DIMRADIAL</translation>
+        <translation>COTA RADIAL</translation>
     </message>
     <message>
         <location filename="../../../plugins/list/list.cpp" line="255"/>
         <source>DIMDIAMETRIC</source>
-        <translation>DIMDIAMETRIC</translation>
+        <translation>COTA DIAMETRAL</translation>
     </message>
     <message>
         <location filename="../../../plugins/list/list.cpp" line="258"/>
         <source>DIMANGULAR</source>
-        <translation>DIMANGULAR</translation>
+        <translation>COTA ANGULAR</translation>
     </message>
     <message>
         <location filename="../../../plugins/list/list.cpp" line="261"/>
@@ -3925,7 +3925,7 @@ Observe que se você salvar a caneta via editor sem reiniciar, as canetas atuais
         <location filename="../../../build/ui_lc_rectangle1pointoptions.h" line="204"/>
         <location filename="../../../generated/librecad/ui/ui_lc_rectangle1pointoptions.h" line="204"/>
         <source>Polyline</source>
-        <translation>Polyline</translation>
+        <translation>Polilinha</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_rectangle1pointoptions.ui" line="33"/>
@@ -3981,7 +3981,7 @@ Observe que se você salvar a caneta via editor sem reiniciar, as canetas atuais
         <location filename="../../../build/ui_lc_rectangle1pointoptions.h" line="211"/>
         <location filename="../../../generated/librecad/ui/ui_lc_rectangle1pointoptions.h" line="211"/>
         <source>Snap:</source>
-        <translation>Snap:</translation>
+        <translation>Referência:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_rectangle1pointoptions.ui" line="162"/>
@@ -4176,7 +4176,7 @@ Observe que se você salvar a caneta via editor sem reiniciar, as canetas atuais
         <location filename="../../../build/ui_lc_rectangle2pointsoptions.h" line="184"/>
         <location filename="../../../generated/librecad/ui/ui_lc_rectangle2pointsoptions.h" line="184"/>
         <source>Polyline</source>
-        <translation>Polyline</translation>
+        <translation>Polilinha</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_rectangle2pointsoptions.ui" line="70"/>
@@ -4339,7 +4339,7 @@ Observe que se você salvar a caneta via editor sem reiniciar, as canetas atuais
         <location filename="../../../build/ui_lc_rectangle3pointsoptions.h" line="237"/>
         <location filename="../../../generated/librecad/ui/ui_lc_rectangle3pointsoptions.h" line="237"/>
         <source>Polyline</source>
-        <translation>Polyline</translation>
+        <translation>Polilinha</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_rectangle3pointsoptions.ui" line="63"/>
@@ -4575,7 +4575,7 @@ Observe que se você salvar a caneta via editor sem reiniciar, as canetas atuais
         <location filename="../../../build/ui_lc_slicedivideoptions.h" line="253"/>
         <location filename="../../../generated/librecad/ui/ui_lc_slicedivideoptions.h" line="253"/>
         <source>Offset:</source>
-        <translation>Offset:</translation>
+        <translation>Deslocamento:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_slicedivideoptions.ui" line="158"/>
@@ -4674,7 +4674,7 @@ Observe que se você salvar a caneta via editor sem reiniciar, as canetas atuais
         <location filename="../../../build/ui_lc_staroptions.h" line="105"/>
         <location filename="../../../generated/librecad/ui/ui_lc_staroptions.h" line="105"/>
         <source>Polyline</source>
-        <translation>Polyline</translation>
+        <translation>Polilinha</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_staroptions.ui" line="56"/>
@@ -5468,7 +5468,7 @@ Salvamento automático desativado.</translation>
         <location filename="../../src/ui/lc_widgetfactory.cpp" line="277"/>
         <location filename="../../src/ui/lc_widgetfactory.cpp" line="544"/>
         <source>Polyline</source>
-        <translation>Polyline</translation>
+        <translation>Polilinha</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_widgetfactory.cpp" line="282"/>
@@ -5643,7 +5643,7 @@ Salvamento automático desativado.</translation>
     <message>
         <location filename="../../src/ui/lc_widgetfactory.cpp" line="821"/>
         <source>&amp;Info</source>
-        <translation>&amp;Info</translation>
+        <translation>&amp;Informações</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_widgetfactory.cpp" line="830"/>
@@ -5703,7 +5703,7 @@ Salvamento automático desativado.</translation>
     <message>
         <location filename="../../src/ui/lc_widgetfactory.cpp" line="916"/>
         <source>On&amp;line</source>
-        <translation>On&amp;line</translation>
+        <translation>On-&amp;line</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_widgetfactory.cpp" line="938"/>
@@ -5737,7 +5737,7 @@ Salvamento automático desativado.</translation>
         <location filename="../../src/ui/qg_actionhandler.cpp" line="1273"/>
         <source>escape</source>
         <comment>escape, go back from action steps</comment>
-        <translation>escape</translation>
+        <translation>Escape</translation>
     </message>
 </context>
 <context>
@@ -6030,7 +6030,7 @@ em uma janela separada</translation>
         <location filename="../../src/ui/qg_colorbox.cpp" line="159"/>
         <location filename="../../src/ui/qg_colorbox.cpp" line="171"/>
         <source>/ColorBox</source>
-        <translation>/ColorBox</translation>
+        <translation>/CaixaDeCor</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_colorbox.cpp" line="165"/>
@@ -6114,7 +6114,7 @@ em uma janela separada</translation>
         <location filename="../../src/ui/forms/qg_commandwidget.cpp" line="249"/>
         <source>escape</source>
         <comment>escape, go back from action steps</comment>
-        <translation>escape</translation>
+        <translation>Escape</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_commandwidget.cpp" line="338"/>
@@ -6979,7 +6979,7 @@ Escolha a unidade que deseja usar para novos desenhos e seu idioma preferido.&lt
         <location filename="../../../build/ui_qg_dlgmtext.h" line="801"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="801"/>
         <source>MText</source>
-        <translation>MText</translation>
+        <translation>MTexto</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="45"/>
@@ -8195,7 +8195,7 @@ Escolha a unidade que deseja usar para novos desenhos e seu idioma preferido.&lt
         <location filename="../../../build/ui_qg_dlgmtext.h" line="1001"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="1001"/>
         <source>[E0000-E007F] Tags</source>
-        <translation>[E0000-E007F] Tags</translation>
+        <translation>[E0000-E007F] Marcadores</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="1492"/>
@@ -9079,7 +9079,7 @@ Escolha a unidade que deseja usar para novos desenhos e seu idioma preferido.&lt
         <location filename="../../../build/ui_qg_dlgoptionsdrawing.h" line="1864"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1864"/>
         <source>Offset:</source>
-        <translation>Offset:</translation>
+        <translation>Deslocamento:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1427"/>
@@ -10050,7 +10050,7 @@ Escolha a unidade que deseja usar para novos desenhos e seu idioma preferido.&lt
         <location filename="../../../build/ui_qg_dlgoptionsmakercam.h" line="260"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsmakercam.h" line="260"/>
         <source>Layers</source>
-        <translation>Layers</translation>
+        <translation>Camadas</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsmakercam.ui" line="48"/>
@@ -10168,8 +10168,8 @@ Escolha a unidade que deseja usar para novos desenhos e seu idioma preferido.&lt
         <location filename="../../src/ui/forms/qg_dlgoptionsmakercam.cpp" line="33"/>
         <source>MakerCAM as of November 2014 does not hide SVG content 
 that has been set invisibe (&quot;display: none&quot; or &quot;visibility: hidden&quot;).</source>
-        <translation>MakerCAM as of November 2014 does not hide SVG content 
-that has been set invisibe (&quot;display: none&quot; or &quot;visibility: hidden&quot;).</translation>
+        <translation>O MakerCAM a partir de novembro de 2014 não oculta conteúdo SVG 
+que foi definido como invisível (&quot;display: none&quot; ou &quot;visibility: hidden&quot;).</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsmakercam.cpp" line="34"/>
@@ -10183,37 +10183,37 @@ pois não considera o ponto de referência no &lt;use&gt;.</translation>
         <source>MakerCAM as of March 2015 cannot display ellipses and ellipse arcs correctly, 
 when they are created using the &lt;ellipse&gt; tag  with a rotation in 
 the &lt;transform&gt; attribute or as &lt;path&gt; using elliptic arc segments.</source>
-        <translation>MakerCAM as of March 2015 cannot display ellipses and ellipse arcs correctly, 
-when they are created using the &lt;ellipse&gt; tag  with a rotation in 
-the &lt;transform&gt; attribute or as &lt;path&gt; using elliptic arc segments.</translation>
+        <translation>O MakerCAM a partir de março de 2015 não consegue exibir elipses e arcos de elipse corretamente, 
+quando são criados usando a tag &lt;ellipse&gt;  com uma rotação no 
+atributo &lt;transform&gt; ou como &lt;path&gt; usando segmentos de arco elíptico.</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsmakercam.cpp" line="36"/>
         <source>Exported images can be useful in SVG editors (Inkscape, etc), 
 but avoided in some CAM&apos;s.</source>
-        <translation>Exported images can be useful in SVG editors (Inkscape, etc), 
-but avoided in some CAM&apos;s.</translation>
+        <translation>As imagens exportadas podem ser úteis em editores SVG (Inkscape, etc), 
+mas devem ser evitadas em alguns CAM&apos;s.</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsmakercam.cpp" line="37"/>
         <source>Many CAM&apos;s(MakerCAM, EleskCAM, LaserWeb) ignore dashed/doted line style, 
 which can be useful in lasercut of plywood or for papercraft. </source>
-        <translation>Many CAM&apos;s(MakerCAM, EleskCAM, LaserWeb) ignore dashed/doted line style, 
-which can be useful in lasercut of plywood or for papercraft.</translation>
+        <translation>Muitos CAM&apos;s (MakerCAM, EleskCAM, LaserWeb) ignoram o estilo de linha tracejada/pontilhada, 
+que pode ser útil no corte a laser de compensado ou para artesanato em papel.</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsmakercam.cpp" line="38"/>
         <source>Default width of elements can affect some CAM&apos;s/SVG Editors, 
 but ignored by other</source>
-        <translation>Default width of elements can affect some CAM&apos;s/SVG Editors, 
-but ignored by other</translation>
+        <translation>A largura padrão dos elementos pode afetar alguns CAM&apos;s/Editores SVG, 
+mas é ignorada por outros</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsmakercam.cpp" line="39"/>
         <source>Length of line pattern related to zoom, 
 so default step value required for baking</source>
-        <translation>Length of line pattern related to zoom, 
-so default step value required for baking</translation>
+        <translation>O comprimento do padrão de linha está relacionado ao zoom, 
+portanto o valor de passo padrão é necessário para materializar</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsmakercam.cpp" line="40"/>
@@ -10320,7 +10320,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgpolyline.h" line="147"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgpolyline.h" line="147"/>
         <source>Polyline</source>
-        <translation>Polyline</translation>
+        <translation>Polilinha</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgpolyline.ui" line="44"/>
@@ -11911,7 +11911,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="1003"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="1003"/>
         <source>[E0000-E007F] Tags</source>
-        <translation>[E0000-E007F] Tags</translation>
+        <translation>[E0000-E007F] Marcadores</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="1483"/>
@@ -12818,52 +12818,52 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../../src/ui/forms/qg_snaptoolbar.cpp" line="93"/>
         <source>Snap Intersection</source>
-        <translation>Snap Intersection</translation>
+        <translation>Capturar Interseção</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_snaptoolbar.cpp" line="102"/>
         <source>Restrict Horizontal</source>
-        <translation>Restrict Horizontal</translation>
+        <translation>Restringir Horizontal</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_snaptoolbar.cpp" line="108"/>
         <source>Restrict Vertical</source>
-        <translation>Restrict Vertical</translation>
+        <translation>Restringir Vertical</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_snaptoolbar.cpp" line="115"/>
         <source>Restrict Orthogonal</source>
-        <translation>Restrict Orthogonal</translation>
+        <translation>Restringir Ortogonal</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_snaptoolbar.cpp" line="123"/>
         <source>Restrict Nothing</source>
-        <translation>Restrict Nothing</translation>
+        <translation>Sem Restrição</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_snaptoolbar.cpp" line="130"/>
         <source>Set relative zero position</source>
-        <translation>Set relative zero position</translation>
+        <translation>Definir posição do zero relativo</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_snaptoolbar.cpp" line="136"/>
         <source>Lock relative zero position</source>
-        <translation>Lock relative zero position</translation>
+        <translation>Bloquear posição do zero relativo</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_snaptoolbar.cpp" line="220"/>
         <source>Relative zero position is %1</source>
-        <translation>Relative zero position is %1</translation>
+        <translation>Posição do zero relativo é %1</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_snaptoolbar.cpp" line="220"/>
         <source>locked</source>
-        <translation>locked</translation>
+        <translation>bloqueado</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_snaptoolbar.cpp" line="220"/>
         <source>unlocked</source>
-        <translation>unlocked</translation>
+        <translation>desbloqueado</translation>
     </message>
 </context>
 <context>
@@ -12902,7 +12902,7 @@ p, li { white-space: pre-wrap; }
         <location filename="../../../build/ui_qg_widgetpen.h" line="142"/>
         <location filename="../../../generated/librecad/ui/ui_qg_widgetpen.h" line="142"/>
         <source>Line type:</source>
-        <translation>Line type:</translation>
+        <translation>Tipo de linha:</translation>
     </message>
 </context>
 <context>
@@ -12921,28 +12921,28 @@ p, li { white-space: pre-wrap; }
         <location filename="../../src/main/qc_applicationwindow.cpp" line="2078"/>
         <location filename="../../src/ui/qg_dialogfactory.cpp" line="215"/>
         <source>Warning</source>
-        <translation>Warning</translation>
+        <translation>Aviso</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_layerdialog_ex.cpp" line="213"/>
         <location filename="../../src/ui/forms/lc_layerdialog_ex.cpp" line="277"/>
         <location filename="../../src/ui/forms/qg_layerdialog.cpp" line="85"/>
         <source>Layer Properties</source>
-        <translation>Layer Properties</translation>
+        <translation>Propriedades da Camada</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_layerdialog_ex.cpp" line="214"/>
         <source>Layer empty name is not allowed.</source>
-        <translation>Layer empty name is not allowed.</translation>
+        <translation>Nome de camada vazio não é permitido.</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_layerdialog_ex.cpp" line="278"/>
         <source>Attempt to create layer with duplicating name. Duplicated layer name is 
 [%1].
 Please specify a different name.</source>
-        <translation>Attempt to create layer with duplicating name. Duplicated layer name is 
+        <translation>Tentativa de criar uma camada com nome duplicado. O nome de camada duplicado é 
 [%1].
-Please specify a different name.</translation>
+Por favor, especifique um nome diferente.</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_layertreeoptionsdialog.cpp" line="153"/>
@@ -12950,46 +12950,46 @@ Please specify a different name.</translation>
         <location filename="../../src/ui/lc_penpaletteoptionsdialog.cpp" line="261"/>
         <location filename="../../src/ui/lc_penpaletteoptionsdialog.cpp" line="272"/>
         <source>Error</source>
-        <translation>Error</translation>
+        <translation>Erro</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_layertreeoptionsdialog.cpp" line="154"/>
         <source>Layer list separator string is empty. It will not be possible to build layers tree.
 Please specify a different value.</source>
-        <translation>Layer list separator string is empty. It will not be possible to build layers tree.
-Please specify a different value.</translation>
+        <translation>A string separadora da lista de camadas está vazia. Não será possível construir a árvore de camadas.
+Especifique um valor diferente.</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_layertreeoptionsdialog.cpp" line="192"/>
         <source>Invalid value provide for %1 color.
 Please specify a different value.</source>
-        <translation>Invalid value provide for %1 color.
-Please specify a different value.</translation>
+        <translation>Valor inválido fornecido para a cor %1.
+Especifique um valor diferente.</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_layerdialog.cpp" line="86"/>
         <source>Layer with a name &quot;%1&quot; already exists. Please specify a different name.</source>
-        <translation>Layer with a name &quot;%1&quot; already exists. Please specify a different name.</translation>
+        <translation>Já existe uma camada com o nome &quot;%1&quot;. Especifique um nome diferente.</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_layertreewidget.cpp" line="977"/>
         <location filename="../../src/ui/lc_layertreewidget.cpp" line="987"/>
         <source>Remove empty layers</source>
-        <translation>Remove empty layers</translation>
+        <translation>Remover camadas vazias</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_layertreewidget.cpp" line="978"/>
         <source>Layer(s) without entities found, yet they are filtered and not visible.
 
 Clear filtering mask and repeat.</source>
-        <translation>Layer(s) without entities found, yet they are filtered and not visible.
+        <translation>Camada(s) sem entidades encontrada(s), porém estão filtradas e não visíveis.
 
-Clear filtering mask and repeat.</translation>
+Limpe o filtro e repita.</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_layertreewidget.cpp" line="988"/>
         <source>No layers without entities found, nothing to remove.</source>
-        <translation>No layers without entities found, nothing to remove.</translation>
+        <translation>Nenhuma camada sem entidades encontrada, nada a remover.</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_layertreewidget.cpp" line="1129"/>
@@ -13003,33 +13003,33 @@ Clear filtering mask and repeat.</translation>
         <source>Such child layer already exist for 
 [%1].
 Please specify a different name.</source>
-        <translation>Such child layer already exist for 
+        <translation>Tal camada filha já existe para 
 [%1].
-Please specify a different name.</translation>
+Por favor, especifique um nome diferente.</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_layertreewidget.cpp" line="1175"/>
         <source>Such child layer already exist for 
 [%1].
 </source>
-        <translation>Such child layer already exist for 
+        <translation>Tal camada filha já existe para 
 [%1].</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_layertreewidget.cpp" line="1183"/>
         <source>Dimensional layer may be added only for normal active layer.
 </source>
-        <translation>Dimensional layer may be added only for normal active layer.</translation>
+        <translation>A camada dimensional só pode ser adicionada para uma camada ativa normal.</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_layertreewidget.cpp" line="1246"/>
         <source>Move Selection</source>
-        <translation>Move Selection</translation>
+        <translation>Mover Seleção</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_layertreewidget.cpp" line="1253"/>
         <source>Duplicate Selection</source>
-        <translation>Duplicate Selection</translation>
+        <translation>Duplicar Seleção</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_layertreewidget.cpp" line="1270"/>
@@ -13038,11 +13038,11 @@ Please specify a different name.</translation>
 If Yes - entities with &quot;By Layer&quot; pens will look on new layer exactly as on previous layers and &quot;By Layer&quot; value will be replaced by resolved pens.
 
 If No - &quot;By Layer&quot; values remains and so pen of target layer will define pen for such entities.</source>
-        <translation>Replace &quot;By Layer&quot; value to source layers values?
+        <translation>Substituir o valor &quot;Por Camada&quot; pelos valores das camadas de origem?
 
-If Yes - entities with &quot;By Layer&quot; pens will look on new layer exactly as on previous layers and &quot;By Layer&quot; value will be replaced by resolved pens.
+Se Sim - as entidades com canetas &quot;Por Camada&quot; aparecerão na nova camada exatamente como nas camadas anteriores e o valor &quot;Por Camada&quot; será substituído pelas canetas resolvidas.
 
-If No - &quot;By Layer&quot; values remains and so pen of target layer will define pen for such entities.</translation>
+Se Não - os valores &quot;Por Camada&quot; permanecem e assim a caneta da camada de destino definirá a caneta para essas entidades.</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_layertreewidget.cpp" line="1758"/>
@@ -13050,13 +13050,13 @@ If No - &quot;By Layer&quot; values remains and so pen of target layer will defi
         <location filename="../../src/ui/qg_dialogfactory.cpp" line="322"/>
         <location filename="../../src/ui/qg_dialogfactory.cpp" line="384"/>
         <source>Remove Layer</source>
-        <translation>Remove Layer</translation>
+        <translation>Remover Camada</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_layertreewidget.cpp" line="1758"/>
         <location filename="../../src/ui/qg_dialogfactory.cpp" line="385"/>
         <source>Layer &quot;0&quot; can never be removed.</source>
-        <translation>Layer &quot;0&quot; can never be removed.</translation>
+        <translation>A camada &quot;0&quot; nunca pode ser removida.</translation>
     </message>
     <message numerus="yes">
         <location filename="../../src/ui/lc_layertreewidget.cpp" line="1806"/>
@@ -13071,156 +13071,156 @@ If No - &quot;By Layer&quot; values remains and so pen of target layer will defi
         <location filename="../../src/ui/lc_layertreewidget.cpp" line="1807"/>
         <location filename="../../src/ui/qg_dialogfactory.cpp" line="399"/>
         <source>Listed layers and all entities on them will be removed.</source>
-        <translation>Listed layers and all entities on them will be removed.</translation>
+        <translation>As camadas listadas e todas as entidades nelas serão removidas.</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_layertreewidget.cpp" line="1808"/>
         <location filename="../../src/ui/qg_dialogfactory.cpp" line="401"/>
         <source>Warning: this action can NOT be undone!</source>
-        <translation>Warning: this action can NOT be undone!</translation>
+        <translation>Aviso: esta ação NÃO pode ser desfeita!</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_layertreewidget.cpp" line="1809"/>
         <location filename="../../src/ui/qg_dialogfactory.cpp" line="410"/>
         <source>Layers for removal:</source>
-        <translation>Layers for removal:</translation>
+        <translation>Camadas para remoção:</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_layertreewidget.cpp" line="1824"/>
         <location filename="../../src/ui/lc_layertreewidget.cpp" line="1875"/>
         <source>Layer DialogEx</source>
-        <translation>Layer DialogEx</translation>
+        <translation>Diálogo de Camada Avançado</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_penpaletteoptionsdialog.cpp" line="262"/>
         <source>Invalid value provided for %1 color.
 Please specify a different value.</source>
-        <translation>Invalid value provided for %1 color.
-Please specify a different value.</translation>
+        <translation>Valor inválido fornecido para a cor %1.
+Especifique um valor diferente.</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_penpaletteoptionsdialog.cpp" line="273"/>
         <source>Invalid path to pens file.
 %1 
 Please specify a different value.</source>
-        <translation>Invalid path to pens file.
+        <translation>Caminho inválido para o arquivo de canetas.
 %1 
-Please specify a different value.</translation>
+Por favor, especifique um valor diferente.</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_penpalettewidget.cpp" line="1320"/>
         <source>Remove pen</source>
-        <translation>Remove pen</translation>
+        <translation>Remover caneta</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_penpalettewidget.cpp" line="1321"/>
         <source>Pen will be removed from palette, drawing entities will not be affected.</source>
-        <translation>Pen will be removed from palette, drawing entities will not be affected.</translation>
+        <translation>A caneta será removida da paleta, as entidades do desenho não serão afetadas.</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_penpalettewidget.cpp" line="1322"/>
         <location filename="../../src/ui/lc_penpalettewidget.cpp" line="1341"/>
         <source>Are you sure you&apos;d like to proceed?</source>
-        <translation>Are you sure you&apos;d like to proceed?</translation>
+        <translation>Tem certeza que deseja continuar?</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_penpalettewidget.cpp" line="1323"/>
         <source>Pen for removal:</source>
-        <translation>Pen for removal:</translation>
+        <translation>Caneta para remoção:</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_penpalettewidget.cpp" line="1339"/>
         <source>Remove pens</source>
-        <translation>Remove pens</translation>
+        <translation>Remover canetas</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_penpalettewidget.cpp" line="1340"/>
         <source>Pens will be removed from palette, drawing entities will not be affected.</source>
-        <translation>Pens will be removed from palette, drawing entities will not be affected.</translation>
+        <translation>As canetas serão removidas da paleta, as entidades do desenho não serão afetadas.</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_penpalettewidget.cpp" line="1342"/>
         <source>Pens for removal:</source>
-        <translation>Pens for removal:</translation>
+        <translation>Canetas para remoção:</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_penpalettewidget.cpp" line="1363"/>
         <source>Select Entities </source>
-        <translation>Select Entities</translation>
+        <translation>Selecionar Entidades</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_penpalettewidget.cpp" line="1364"/>
         <source>There are no entities that matches pen on visible layers.</source>
-        <translation>There are no entities that matches pen on visible layers.</translation>
+        <translation>Não há entidades correspondentes à caneta nas camadas visíveis.</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_penpalettewidget.cpp" line="1365"/>
         <source>Such entities exist on frozen layers.
 </source>
-        <translation>Such entities exist on frozen layers.</translation>
+        <translation>Tais entidades existem em camadas congeladas.</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_penpalettewidget.cpp" line="1366"/>
         <source>Such entities exist on locked layers.
 </source>
-        <translation>Such entities exist on locked layers.</translation>
+        <translation>Tais entidades existem em camadas bloqueadas.</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_penpalettewidget.cpp" line="1367"/>
         <source>Please use different pen attributes.</source>
-        <translation>Please use different pen attributes.</translation>
+        <translation>Use atributos de caneta diferentes.</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_penpalettewidget.cpp" line="1376"/>
         <source>Set pen by entity</source>
-        <translation>Set pen by entity</translation>
+        <translation>Definir caneta pela entidade</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_penpalettewidget.cpp" line="1377"/>
         <source>Please select only one entity to pick pen setting.</source>
-        <translation>Please select only one entity to pick pen setting.</translation>
+        <translation>Selecione apenas uma entidade para definir a configuração da caneta.</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_penpalettewidget.cpp" line="1387"/>
         <source>Saving Pens Data</source>
-        <translation>Saving Pens Data</translation>
+        <translation>Salvando dados das canetas</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_penpalettewidget.cpp" line="1388"/>
         <source>Unable to save pens data to specified pens file. Would you like to specify correct path to the file?</source>
-        <translation>Unable to save pens data to specified pens file. Would you like to specify correct path to the file?</translation>
+        <translation>Não é possível salvar os dados das canetas no arquivo especificado. Deseja especificar o caminho correto para o arquivo?</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_dialogfactory.cpp" line="311"/>
         <source>Layer &quot;%1&quot; and all entities on it will be removed.
 This action can NOT be undone.</source>
-        <translation>Layer &quot;%1&quot; and all entities on it will be removed.
-This action can NOT be undone.</translation>
+        <translation>A camada &quot;%1&quot; e todas as entidades nela serão removidas.
+Esta ação NÃO pode ser desfeita.</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_dialogfactory.cpp" line="323"/>
         <source>Layer &quot;%1&quot; can never be removed.</source>
-        <translation>Layer &quot;%1&quot; can never be removed.</translation>
+        <translation>A camada &quot;%1&quot; nunca pode ser removida.</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_dialogfactory.cpp" line="406"/>
         <source>Warning: layer &quot;0&quot; can never be removed.</source>
-        <translation>Warning: layer &quot;0&quot; can never be removed.</translation>
+        <translation>Aviso: a camada &quot;0&quot; nunca pode ser removida.</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_dialogfactory.cpp" line="465"/>
         <source>Layer Dialog</source>
-        <translation>Layer Dialog</translation>
+        <translation>Diálogo de Camada</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_dialogfactory.cpp" line="580"/>
         <source>Remove Block</source>
-        <translation>Remove Block</translation>
+        <translation>Remover Bloco</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_dialogfactory.cpp" line="581"/>
         <source>Block &quot;%1&quot; and all its entities will be removed.</source>
-        <translation>Block &quot;%1&quot; and all its entities will be removed.</translation>
+        <translation>O bloco &quot;%1&quot; e todas as suas entidades serão removidos.</translation>
     </message>
     <message numerus="yes">
         <location filename="../../src/ui/qg_dialogfactory.cpp" line="640"/>
@@ -13233,12 +13233,12 @@ This action can NOT be undone.</translation>
     <message>
         <location filename="../../src/ui/qg_dialogfactory.cpp" line="644"/>
         <source>Listed blocks and all their entities will be removed.</source>
-        <translation>Listed blocks and all their entities will be removed.</translation>
+        <translation>Os blocos listados e todas as suas entidades serão removidos.</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_dialogfactory.cpp" line="648"/>
         <source>Blocks for removal:</source>
-        <translation>Blocks for removal:</translation>
+        <translation>Blocos para remoção:</translation>
     </message>
 </context>
 <context>
@@ -13246,7 +13246,7 @@ This action can NOT be undone.</translation>
     <message>
         <location filename="../../src/actions/lc_actionlayersexport.cpp" line="178"/>
         <source>No %1 layers found</source>
-        <translation>No %1 layers found</translation>
+        <translation>Nenhuma camada %1 encontrada</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondimension.cpp" line="34"/>
@@ -13257,13 +13257,13 @@ This action can NOT be undone.</translation>
     <message>
         <location filename="../../src/cmd/rs_commands.cpp" line="60"/>
         <source>: duplicated command: %1 is already taken by %2</source>
-        <translation>: duplicated command: %1 is already taken by %2</translation>
+        <translation>: comando duplicado: %1 já está em uso por %2</translation>
     </message>
     <message>
         <location filename="../../src/cmd/rs_commands.cpp" line="153"/>
         <source>line2p</source>
         <comment>draw line</comment>
-        <translation>line2p</translation>
+        <translation>linha2p</translation>
     </message>
     <message>
         <location filename="../../src/cmd/rs_commands.cpp" line="154"/>
@@ -13479,7 +13479,7 @@ This action can NOT be undone.</translation>
         <location filename="../../src/cmd/rs_commands.cpp" line="249"/>
         <source>linepoints</source>
         <comment>draw line of points</comment>
-        <translation>linepoints</translation>
+        <translation>pontosnalinha</translation>
     </message>
     <message>
         <location filename="../../src/cmd/rs_commands.cpp" line="250"/>
@@ -13491,7 +13491,7 @@ This action can NOT be undone.</translation>
         <location filename="../../src/cmd/rs_commands.cpp" line="255"/>
         <source>criclebyarc</source>
         <comment>draw circle by arc</comment>
-        <translation>criclebyarc</translation>
+        <translation>circuloporarco</translation>
     </message>
     <message>
         <location filename="../../src/cmd/rs_commands.cpp" line="256"/>
@@ -13503,7 +13503,7 @@ This action can NOT be undone.</translation>
         <location filename="../../src/cmd/rs_commands.cpp" line="261"/>
         <source>duplicate</source>
         <comment>duplicate entity</comment>
-        <translation>duplicate</translation>
+        <translation>duplicar</translation>
     </message>
     <message>
         <location filename="../../src/cmd/rs_commands.cpp" line="262"/>
@@ -13515,7 +13515,7 @@ This action can NOT be undone.</translation>
         <location filename="../../src/cmd/rs_commands.cpp" line="267"/>
         <source>linejoin</source>
         <comment>lines join</comment>
-        <translation>linejoin</translation>
+        <translation>unirlinha</translation>
     </message>
     <message>
         <location filename="../../src/cmd/rs_commands.cpp" line="268"/>
@@ -13665,7 +13665,7 @@ This action can NOT be undone.</translation>
         <location filename="../../src/cmd/rs_commands.cpp" line="328"/>
         <source>ortho</source>
         <comment>perpendicular line</comment>
-        <translation>ortho</translation>
+        <translation>orto</translation>
     </message>
     <message>
         <location filename="../../src/cmd/rs_commands.cpp" line="333"/>
@@ -13707,7 +13707,7 @@ This action can NOT be undone.</translation>
         <location filename="../../src/cmd/rs_commands.cpp" line="347"/>
         <source>polygoncentan</source>
         <comment>polygon centre vertex</comment>
-        <translation>polygoncentan</translation>
+        <translation>policenttan</translation>
     </message>
     <message>
         <location filename="../../src/cmd/rs_commands.cpp" line="348"/>
@@ -13719,7 +13719,7 @@ This action can NOT be undone.</translation>
         <location filename="../../src/cmd/rs_commands.cpp" line="349"/>
         <source>polyct</source>
         <comment>polygon centre vertex</comment>
-        <translation>polyct</translation>
+        <translation>polycont</translation>
     </message>
     <message>
         <location filename="../../src/cmd/rs_commands.cpp" line="354"/>
@@ -15147,7 +15147,7 @@ This action can NOT be undone.</translation>
         <location filename="../../src/cmd/rs_commands.cpp" line="1066"/>
         <location filename="../../src/cmd/rs_commands.cpp" line="1164"/>
         <source>chord length</source>
-        <translation>chord length</translation>
+        <translation>comprimento da corda</translation>
     </message>
     <message>
         <location filename="../../src/cmd/rs_commands.cpp" line="1067"/>
@@ -15795,47 +15795,47 @@ This action can NOT be undone.</translation>
     <message>
         <location filename="../../src/cmd/rs_commands.cpp" line="1356"/>
         <source>Command: %1 (%2)</source>
-        <translation>Command: %1 (%2)</translation>
+        <translation>Comando: %1 (%2)</translation>
     </message>
     <message>
         <location filename="../../src/cmd/rs_commands.cpp" line="1363"/>
         <source>RS_Commands:: command not found: %1</source>
-        <translation>RS_Commands:: command not found: %1</translation>
+        <translation>RS_Commands:: comando não encontrado: %1</translation>
     </message>
     <message>
         <location filename="../../src/cmd/rs_commands.cpp" line="1403"/>
         <source>Accepted keycode: %1</source>
-        <translation>Accepted keycode: %1</translation>
+        <translation>Código de tecla aceito: %1</translation>
     </message>
     <message>
         <location filename="../../src/cmd/rs_commands.cpp" line="1417"/>
         <source>Command not found: %1</source>
-        <translation>Command not found: %1</translation>
+        <translation>Comando não encontrado: %1</translation>
     </message>
     <message>
         <location filename="../../src/cmd/rs_commands.cpp" line="1456"/>
         <source>Available commands:</source>
-        <translation>Available commands:</translation>
+        <translation>Comandos disponíveis:</translation>
     </message>
     <message>
         <location filename="../../src/lib/engine/rs_entitycontainer.cpp" line="1641"/>
         <source>Hatch failed due to a gap=%1 between (%2, %3) and (%4, %5)</source>
-        <translation>Hatch failed due to a gap=%1 between (%2, %3) and (%4, %5)</translation>
+        <translation>Hachura falhou devido a uma lacuna=%1 entre (%2, %3) e (%4, %5)</translation>
     </message>
     <message>
         <location filename="../../src/lib/engine/rs_graphic.cpp" line="350"/>
         <source>File on disk modified. Please save to another file to avoid data loss! File modified: %1</source>
-        <translation>File on disk modified. Please save to another file to avoid data loss! File modified: %1</translation>
+        <translation>Arquivo em disco modificado. Salve em outro arquivo para evitar perda de dados! Arquivo modificado: %1</translation>
     </message>
     <message>
         <location filename="../../src/lib/engine/rs_patternlist.cpp" line="63"/>
         <source>Hatch:: no pattern found. Please set pattern path in application preferences</source>
-        <translation>Hatch:: no pattern found. Please set pattern path in application preferences</translation>
+        <translation>Hachura:: nenhum padrão encontrado. Defina o caminho do padrão nas preferências do aplicativo</translation>
     </message>
     <message>
         <location filename="../../src/lib/engine/rs_patternlist.cpp" line="85"/>
         <source>Hatch:: loading pattern failed: %1</source>
-        <translation>Hatch:: loading pattern failed: %1</translation>
+        <translation>Hachura:: falha ao carregar padrão: %1</translation>
     </message>
     <message>
         <location filename="../../src/lib/engine/rs_units.cpp" line="204"/>
@@ -15865,31 +15865,31 @@ This action can NOT be undone.</translation>
         <location filename="../../src/lib/engine/rs_units.cpp" line="212"/>
         <location filename="../../src/lib/engine/rs_units.cpp" line="268"/>
         <source>Millimeter</source>
-        <translation>Millimeter</translation>
+        <translation>Milímetro</translation>
     </message>
     <message>
         <location filename="../../src/lib/engine/rs_units.cpp" line="214"/>
         <location filename="../../src/lib/engine/rs_units.cpp" line="270"/>
         <source>Centimeter</source>
-        <translation>Centimeter</translation>
+        <translation>Centímetro</translation>
     </message>
     <message>
         <location filename="../../src/lib/engine/rs_units.cpp" line="216"/>
         <location filename="../../src/lib/engine/rs_units.cpp" line="272"/>
         <source>Meter</source>
-        <translation>Meter</translation>
+        <translation>Metro</translation>
     </message>
     <message>
         <location filename="../../src/lib/engine/rs_units.cpp" line="218"/>
         <location filename="../../src/lib/engine/rs_units.cpp" line="274"/>
         <source>Kilometer</source>
-        <translation>Kilometer</translation>
+        <translation>Quilômetro</translation>
     </message>
     <message>
         <location filename="../../src/lib/engine/rs_units.cpp" line="220"/>
         <location filename="../../src/lib/engine/rs_units.cpp" line="276"/>
         <source>Microinch</source>
-        <translation>Microinch</translation>
+        <translation>Micropolegada</translation>
     </message>
     <message>
         <location filename="../../src/lib/engine/rs_units.cpp" line="222"/>
@@ -15913,49 +15913,49 @@ This action can NOT be undone.</translation>
         <location filename="../../src/lib/engine/rs_units.cpp" line="228"/>
         <location filename="../../src/lib/engine/rs_units.cpp" line="284"/>
         <source>Nanometer</source>
-        <translation>Nanometer</translation>
+        <translation>Nanômetro</translation>
     </message>
     <message>
         <location filename="../../src/lib/engine/rs_units.cpp" line="230"/>
         <location filename="../../src/lib/engine/rs_units.cpp" line="286"/>
         <source>Micron</source>
-        <translation>Micron</translation>
+        <translation>Mícron</translation>
     </message>
     <message>
         <location filename="../../src/lib/engine/rs_units.cpp" line="232"/>
         <location filename="../../src/lib/engine/rs_units.cpp" line="288"/>
         <source>Decimeter</source>
-        <translation>Decimeter</translation>
+        <translation>Decímetro</translation>
     </message>
     <message>
         <location filename="../../src/lib/engine/rs_units.cpp" line="234"/>
         <location filename="../../src/lib/engine/rs_units.cpp" line="290"/>
         <source>Decameter</source>
-        <translation>Decameter</translation>
+        <translation>Decâmetro</translation>
     </message>
     <message>
         <location filename="../../src/lib/engine/rs_units.cpp" line="236"/>
         <location filename="../../src/lib/engine/rs_units.cpp" line="292"/>
         <source>Hectometer</source>
-        <translation>Hectometer</translation>
+        <translation>Hectômetro</translation>
     </message>
     <message>
         <location filename="../../src/lib/engine/rs_units.cpp" line="238"/>
         <location filename="../../src/lib/engine/rs_units.cpp" line="294"/>
         <source>Gigameter</source>
-        <translation>Gigameter</translation>
+        <translation>Gigâmetro</translation>
     </message>
     <message>
         <location filename="../../src/lib/engine/rs_units.cpp" line="240"/>
         <location filename="../../src/lib/engine/rs_units.cpp" line="296"/>
         <source>Astro</source>
-        <translation>Astro</translation>
+        <translation>Unidade Astronômica</translation>
     </message>
     <message>
         <location filename="../../src/lib/engine/rs_units.cpp" line="242"/>
         <location filename="../../src/lib/engine/rs_units.cpp" line="298"/>
         <source>Lightyear</source>
-        <translation>Lightyear</translation>
+        <translation>Ano-luz</translation>
     </message>
     <message>
         <location filename="../../src/lib/engine/rs_units.cpp" line="244"/>
@@ -16123,19 +16123,19 @@ This action can NOT be undone.</translation>
         <location filename="../../src/lib/engine/rs_units.cpp" line="1001"/>
         <source>ansi c</source>
         <comment>Paper format</comment>
-        <translation>ansi c</translation>
+        <translation>ANSI C</translation>
     </message>
     <message>
         <location filename="../../src/lib/engine/rs_units.cpp" line="1003"/>
         <source>ansi d</source>
         <comment>Paper format</comment>
-        <translation>ansi d</translation>
+        <translation>ANSI D</translation>
     </message>
     <message>
         <location filename="../../src/lib/engine/rs_units.cpp" line="1005"/>
         <source>ansi e</source>
         <comment>Paper format</comment>
-        <translation>ansi e</translation>
+        <translation>ANSI E</translation>
     </message>
     <message>
         <location filename="../../src/lib/engine/rs_units.cpp" line="1008"/>
@@ -16170,222 +16170,222 @@ This action can NOT be undone.</translation>
     <message>
         <location filename="../../src/lib/fileio/rs_fileio.cpp" line="74"/>
         <source>DWG support is not complete!</source>
-        <translation>DWG support is not complete!</translation>
+        <translation>O suporte a DWG não está completo!</translation>
     </message>
     <message>
         <location filename="../../src/lib/fileio/rs_fileio.cpp" line="76"/>
         <source>If this file fails to open try an older DWG format</source>
-        <translation>If this file fails to open try an older DWG format</translation>
+        <translation>Se este arquivo não abrir, tente um formato DWG mais antigo</translation>
     </message>
     <message>
         <location filename="../../src/lib/fileio/rs_fileio.cpp" line="77"/>
         <source>or try to find a converter to make it a DXF file.</source>
-        <translation>or try to find a converter to make it a DXF file.</translation>
+        <translation>ou tente encontrar um conversor para transformá-lo em arquivo DXF.</translation>
     </message>
     <message>
         <location filename="../../src/lib/fileio/rs_fileio.cpp" line="80"/>
         <source>Information</source>
-        <translation>Information</translation>
+        <translation>Informação</translation>
     </message>
     <message>
         <location filename="../../src/lib/fileio/rs_fileio.cpp" line="91"/>
         <source>Error</source>
         <comment>fileImport</comment>
-        <translation>Error</translation>
+        <translation>Erro</translation>
     </message>
     <message>
         <location filename="../../src/lib/fileio/rs_fileio.cpp" line="92"/>
         <source>Import error:</source>
         <comment>fileImport</comment>
-        <translation>Import error:</translation>
+        <translation>Erro de importação:</translation>
     </message>
     <message>
         <location filename="../../src/lib/fileio/rs_fileio.cpp" line="107"/>
         <source>Anyhow, there are some entities identified.</source>
         <comment>dwgImport</comment>
-        <translation>Anyhow, there are some entities identified.</translation>
+        <translation>De qualquer forma, algumas entidades foram identificadas.</translation>
     </message>
     <message>
         <location filename="../../src/lib/fileio/rs_fileio.cpp" line="108"/>
         <source>If you open the file now, the drawing may be not complete or unusable.</source>
         <comment>dwgImport</comment>
-        <translation>If you open the file now, the drawing may be not complete or unusable.</translation>
+        <translation>Se abrir o arquivo agora, o desenho pode estar incompleto ou inutilizável.</translation>
     </message>
     <message>
         <location filename="../../src/lib/fileio/rs_fileio.cpp" line="110"/>
         <source>Ignore error and open the file?</source>
         <comment>dwgImport</comment>
-        <translation>Ignore error and open the file?</translation>
+        <translation>Ignorar o erro e abrir o arquivo?</translation>
     </message>
     <message>
         <location filename="../../src/lib/fileio/rs_fileio.cpp" line="113"/>
         <source>Warning</source>
-        <translation>Warning</translation>
+        <translation>Aviso</translation>
     </message>
     <message>
         <location filename="../../src/lib/filters/rs_filterdxfrw.cpp" line="103"/>
         <source>no DXF/DWG error</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation>no DXF/DWG error</translation>
+        <translation>sem erro DXF/DWG</translation>
     </message>
     <message>
         <location filename="../../src/lib/filters/rs_filterdxfrw.cpp" line="105"/>
         <source>error opening DXF/DWG file</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation>error opening DXF/DWG file</translation>
+        <translation>erro ao abrir arquivo DXF/DWG</translation>
     </message>
     <message>
         <location filename="../../src/lib/filters/rs_filterdxfrw.cpp" line="107"/>
         <source>unsupported DXF/DWG file version</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation>unsupported DXF/DWG file version</translation>
+        <translation>versão de arquivo DXF/DWG não suportada</translation>
     </message>
     <message>
         <location filename="../../src/lib/filters/rs_filterdxfrw.cpp" line="109"/>
         <source>error reading DXF/DWG meta data</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation>error reading DXF/DWG meta data</translation>
+        <translation>erro ao ler metadados DXF/DWG</translation>
     </message>
     <message>
         <location filename="../../src/lib/filters/rs_filterdxfrw.cpp" line="111"/>
         <source>error reading DXF/DWG file header</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation>error reading DXF/DWG file header</translation>
+        <translation>erro ao ler cabeçalho do arquivo DXF/DWG</translation>
     </message>
     <message>
         <location filename="../../src/lib/filters/rs_filterdxfrw.cpp" line="113"/>
         <source>error reading DXF/DWG header dara</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation>error reading DXF/DWG header dara</translation>
+        <translation>erro ao ler dados do cabeçalho DXF/DWG</translation>
     </message>
     <message>
         <location filename="../../src/lib/filters/rs_filterdxfrw.cpp" line="115"/>
         <source>error reading DXF/DWG object map</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation>error reading DXF/DWG object map</translation>
+        <translation>erro ao ler mapa de objetos DXF/DWG</translation>
     </message>
     <message>
         <location filename="../../src/lib/filters/rs_filterdxfrw.cpp" line="117"/>
         <source>error reading DXF/DWG classes</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation>error reading DXF/DWG classes</translation>
+        <translation>erro ao ler classes DXF/DWG</translation>
     </message>
     <message>
         <location filename="../../src/lib/filters/rs_filterdxfrw.cpp" line="119"/>
         <source>error reading DXF/DWG tables</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation>error reading DXF/DWG tables</translation>
+        <translation>erro ao ler tabelas DXF/DWG</translation>
     </message>
     <message>
         <location filename="../../src/lib/filters/rs_filterdxfrw.cpp" line="121"/>
         <source>error reading DXF/DWG blocks</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation>error reading DXF/DWG blocks</translation>
+        <translation>erro ao ler blocos DXF/DWG</translation>
     </message>
     <message>
         <location filename="../../src/lib/filters/rs_filterdxfrw.cpp" line="123"/>
         <source>error reading DXF/DWG entities</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation>error reading DXF/DWG entities</translation>
+        <translation>erro ao ler entidades DXF/DWG</translation>
     </message>
     <message>
         <location filename="../../src/lib/filters/rs_filterdxfrw.cpp" line="125"/>
         <source>error reading DXF/DWG objects</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation>error reading DXF/DWG objects</translation>
+        <translation>erro ao ler objetos DXF/DWG</translation>
     </message>
     <message>
         <location filename="../../src/lib/filters/rs_filterdxfrw.cpp" line="127"/>
         <source>error reading DXF/DWG sections</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation>error reading DXF/DWG sections</translation>
+        <translation>erro ao ler seções DXF/DWG</translation>
     </message>
     <message>
         <location filename="../../src/lib/filters/rs_filterdxfrw.cpp" line="129"/>
         <source>error reading DXF/DWG code</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation>error reading DXF/DWG code</translation>
+        <translation>erro ao ler código DXF/DWG</translation>
     </message>
     <message>
         <location filename="../../src/lib/filters/rs_filterdxfrw.cpp" line="177"/>
         <source>Opened dwg file version %1.</source>
-        <translation>Opened dwg file version %1.</translation>
+        <translation>Arquivo DWG versão %1 aberto.</translation>
     </message>
     <message>
         <location filename="../../src/lib/filters/rs_filterdxfrw.cpp" line="4035"/>
         <source>unknown error opening dwg file</source>
-        <translation>unknown error opening dwg file</translation>
+        <translation>erro desconhecido ao abrir arquivo DWG</translation>
     </message>
     <message>
         <location filename="../../src/lib/filters/rs_filterdxfrw.cpp" line="4039"/>
         <source>can&apos;t open this dwg file</source>
-        <translation>can&apos;t open this dwg file</translation>
+        <translation>não é possível abrir este arquivo DWG</translation>
     </message>
     <message>
         <location filename="../../src/lib/filters/rs_filterdxfrw.cpp" line="4043"/>
         <source>unsupported dwg version</source>
-        <translation>unsupported dwg version</translation>
+        <translation>versão DWG não suportada</translation>
     </message>
     <message>
         <location filename="../../src/lib/filters/rs_filterdxfrw.cpp" line="4047"/>
         <source>error reading file metadata in dwg file</source>
-        <translation>error reading file metadata in dwg file</translation>
+        <translation>erro ao ler metadados no arquivo DWG</translation>
     </message>
     <message>
         <location filename="../../src/lib/filters/rs_filterdxfrw.cpp" line="4051"/>
         <source>error reading file header in dwg file</source>
-        <translation>error reading file header in dwg file</translation>
+        <translation>erro ao ler cabeçalho no arquivo DWG</translation>
     </message>
     <message>
         <location filename="../../src/lib/filters/rs_filterdxfrw.cpp" line="4055"/>
         <source>error reading header vars in dwg file</source>
-        <translation>error reading header vars in dwg file</translation>
+        <translation>erro ao ler variáveis de cabeçalho no arquivo DWG</translation>
     </message>
     <message>
         <location filename="../../src/lib/filters/rs_filterdxfrw.cpp" line="4059"/>
         <source>error reading classes in dwg file</source>
-        <translation>error reading classes in dwg file</translation>
+        <translation>erro ao ler classes no arquivo DWG</translation>
     </message>
     <message>
         <location filename="../../src/lib/filters/rs_filterdxfrw.cpp" line="4063"/>
         <source>error reading offsets in dwg file</source>
-        <translation>error reading offsets in dwg file</translation>
+        <translation>erro ao ler deslocamentos no arquivo DWG</translation>
     </message>
     <message>
         <location filename="../../src/lib/filters/rs_filterdxfrw.cpp" line="4067"/>
         <source>error reading tables in dwg file</source>
-        <translation>error reading tables in dwg file</translation>
+        <translation>erro ao ler tabelas no arquivo DWG</translation>
     </message>
     <message>
         <location filename="../../src/lib/filters/rs_filterdxfrw.cpp" line="4071"/>
         <source>error reading blocks in dwg file</source>
-        <translation>error reading blocks in dwg file</translation>
+        <translation>erro ao ler blocos no arquivo DWG</translation>
     </message>
     <message>
         <location filename="../../src/lib/filters/rs_filterdxfrw.cpp" line="4075"/>
         <source>error reading entities in dwg file</source>
-        <translation>error reading entities in dwg file</translation>
+        <translation>erro ao ler entidades no arquivo DWG</translation>
     </message>
     <message>
         <location filename="../../src/lib/filters/rs_filterdxfrw.cpp" line="4079"/>
         <source>error reading objects in dwg file</source>
-        <translation>error reading objects in dwg file</translation>
+        <translation>erro ao ler objetos no arquivo DWG</translation>
     </message>
     <message>
         <location filename="../../src/lib/filters/rs_filterinterface.h" line="92"/>
         <source>undefined error</source>
         <comment>RS_FilterInterface</comment>
-        <translation>undefined error</translation>
+        <translation>erro indefinido</translation>
     </message>
     <message>
         <location filename="../../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="67"/>
         <source>usage: </source>
-        <translation>usage:</translation>
+        <translation>uso:</translation>
     </message>
     <message>
         <location filename="../../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="67"/>
         <source> [options] &lt;dxf_files&gt;</source>
-        <translation>[options] &lt;dxf_files&gt;</translation>
+        <translation>[opções] &lt;arquivos_dxf&gt;</translation>
     </message>
     <message>
         <location filename="../../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="74"/>
@@ -16395,7 +16395,7 @@ This action can NOT be undone.</translation>
     <message>
         <location filename="../../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="75"/>
         <source>-- print all dxf files to pdf files with the same names.</source>
-        <translation>-- print all dxf files to pdf files with the same names.</translation>
+        <translation>-- imprimir todos os arquivos DXF em arquivos PDF com os mesmos nomes.</translation>
     </message>
     <message>
         <location filename="../../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="77"/>
@@ -16405,65 +16405,65 @@ This action can NOT be undone.</translation>
     <message>
         <location filename="../../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="78"/>
         <source>-- print all dxf files to &apos;some.pdf&apos; file.</source>
-        <translation>-- print all dxf files to &apos;some.pdf&apos; file.</translation>
+        <translation>-- imprimir todos os arquivos DXF no arquivo &apos;some.pdf&apos;.</translation>
     </message>
     <message>
         <location filename="../../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="85"/>
         <source>Auto fit and center drawing to page.</source>
-        <translation>Auto fit and center drawing to page.</translation>
+        <translation>Ajustar e centralizar automaticamente o desenho na página.</translation>
     </message>
     <message>
         <location filename="../../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="89"/>
         <source>Auto center drawing on page.</source>
-        <translation>Auto center drawing on page.</translation>
+        <translation>Centralizar automaticamente o desenho na página.</translation>
     </message>
     <message>
         <location filename="../../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="93"/>
         <source>Print grayscale.</source>
-        <translation>Print grayscale.</translation>
+        <translation>Imprimir em escala de cinza.</translation>
     </message>
     <message>
         <location filename="../../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="97"/>
         <source>Print monochrome (black/white).</source>
-        <translation>Print monochrome (black/white).</translation>
+        <translation>Imprimir em monocromático (preto/branco).</translation>
     </message>
     <message>
         <location filename="../../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="101"/>
         <source>Paper size (Width x Height) in mm.</source>
         <comment>WxH</comment>
-        <translation>Paper size (Width x Height) in mm.</translation>
+        <translation>Tamanho do papel (Largura x Altura) em mm.</translation>
     </message>
     <message>
         <location filename="../../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="105"/>
         <source>Output resolution (DPI).</source>
         <comment>integer</comment>
-        <translation>Output resolution (DPI).</translation>
+        <translation>Resolução de saída (DPI).</translation>
     </message>
     <message>
         <location filename="../../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="109"/>
         <source>Output scale. E.g.: 0.01 (for 1:100 scale).</source>
-        <translation>Output scale. E.g.: 0.01 (for 1:100 scale).</translation>
+        <translation>Escala de saída. Ex.: 0,01 (para escala 1:100).</translation>
     </message>
     <message>
         <location filename="../../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="113"/>
         <source>Paper margins in mm (integer or float).</source>
-        <translation>Paper margins in mm (integer or float).</translation>
+        <translation>Margens do papel em mm (inteiro ou decimal).</translation>
     </message>
     <message>
         <location filename="../../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="117"/>
         <source>Print on multiple pages (Horiz. x Vert.).</source>
-        <translation>Print on multiple pages (Horiz. x Vert.).</translation>
+        <translation>Imprimir em múltiplas páginas (Horiz. x Vert.).</translation>
     </message>
     <message>
         <location filename="../../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="121"/>
         <source>Output PDF file.</source>
         <comment>file</comment>
-        <translation>Output PDF file.</translation>
+        <translation>Arquivo PDF de saída.</translation>
     </message>
     <message>
         <location filename="../../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="125"/>
         <source>Target output directory.</source>
-        <translation>Target output directory.</translation>
+        <translation>Diretório de saída de destino.</translation>
     </message>
     <message>
         <location filename="../../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="128"/>
@@ -16473,54 +16473,54 @@ This action can NOT be undone.</translation>
     <message>
         <location filename="../../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="128"/>
         <source>Input DXF file(s)</source>
-        <translation>Input DXF file(s)</translation>
+        <translation>Arquivo(s) DXF de entrada</translation>
     </message>
     <message>
         <location filename="../../src/main/doc_plugin_interface.cpp" line="1354"/>
         <source>enter an integer number</source>
-        <translation>enter an integer number</translation>
+        <translation>insira um número inteiro</translation>
     </message>
     <message>
         <location filename="../../src/main/doc_plugin_interface.cpp" line="1358"/>
         <location filename="../../src/main/doc_plugin_interface.cpp" line="1376"/>
         <location filename="../../src/main/doc_plugin_interface.cpp" line="1393"/>
         <source>LibreCAD query</source>
-        <translation>LibreCAD query</translation>
+        <translation>Consulta LibreCAD</translation>
     </message>
     <message>
         <location filename="../../src/main/doc_plugin_interface.cpp" line="1372"/>
         <source>enter a number</source>
-        <translation>enter a number</translation>
+        <translation>insira um número</translation>
     </message>
     <message>
         <location filename="../../src/main/doc_plugin_interface.cpp" line="1389"/>
         <source>enter text</source>
-        <translation>enter text</translation>
+        <translation>insira texto</translation>
     </message>
     <message>
         <location filename="../../src/main/main.cpp" line="256"/>
         <source>Loading..</source>
-        <translation>Loading..</translation>
+        <translation>Carregando..</translation>
     </message>
     <message>
         <location filename="../../src/main/main.cpp" line="320"/>
         <source>Loading...</source>
-        <translation>Loading...</translation>
+        <translation>Carregando...</translation>
     </message>
     <message>
         <location filename="../../src/main/main.cpp" line="356"/>
         <source>Loading File %1..</source>
-        <translation>Loading File %1..</translation>
+        <translation>Carregando arquivo %1..</translation>
     </message>
     <message>
         <location filename="../../src/main/qc_applicationwindow.cpp" line="140"/>
         <source>Pen Wizard</source>
-        <translation>Pen Wizard</translation>
+        <translation>Assistente de Caneta</translation>
     </message>
     <message>
         <location filename="../../src/main/qc_applicationwindow.cpp" line="1947"/>
         <source>Invalid objects removed:</source>
-        <translation>Invalid objects removed:</translation>
+        <translation>Objetos inválidos removidos:</translation>
     </message>
     <message>
         <location filename="../../src/main/qc_applicationwindow.cpp" line="3804"/>
@@ -16531,32 +16531,32 @@ This action can NOT be undone.</translation>
     <message>
         <location filename="../../src/ui/forms/qg_commandwidget.cpp" line="66"/>
         <source>Keycode mode</source>
-        <translation>Keycode mode</translation>
+        <translation>Modo de código de tecla</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_commandwidget.cpp" line="79"/>
         <source>Load command file</source>
-        <translation>Load command file</translation>
+        <translation>Carregar arquivo de comandos</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_commandwidget.cpp" line="83"/>
         <source>Paste multiple commands</source>
-        <translation>Paste multiple commands</translation>
+        <translation>Colar múltiplos comandos</translation>
     </message>
     <message>
         <location filename="../../src/ui/generic/colorwizard.cpp" line="54"/>
         <source>Select objects</source>
-        <translation>Select objects</translation>
+        <translation>Selecionar objetos</translation>
     </message>
     <message>
         <location filename="../../src/ui/generic/colorwizard.cpp" line="58"/>
         <source>Apply to selected</source>
-        <translation>Apply to selected</translation>
+        <translation>Aplicar à seleção</translation>
     </message>
     <message>
         <location filename="../../src/ui/generic/colorwizard.cpp" line="62"/>
         <source>Remove</source>
-        <translation>Remove</translation>
+        <translation>Remover</translation>
     </message>
     <message>
         <location filename="../../src/ui/generic/widgetcreator.cpp" line="59"/>
@@ -16630,17 +16630,17 @@ This action can NOT be undone.</translation>
     <message>
         <location filename="../../src/ui/lc_actiongroupmanager.cpp" line="76"/>
         <source>Other</source>
-        <translation>Other</translation>
+        <translation>Outro</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actiongroupmanager.cpp" line="77"/>
         <source>Polyline</source>
-        <translation>Polyline</translation>
+        <translation>Polilinha</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actiongroupmanager.cpp" line="78"/>
         <source>Restriction</source>
-        <translation>Restriction</translation>
+        <translation>Restrição</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actiongroupmanager.cpp" line="79"/>
@@ -16655,7 +16655,7 @@ This action can NOT be undone.</translation>
     <message>
         <location filename="../../src/ui/lc_actiongroupmanager.cpp" line="81"/>
         <source>Snap Extras</source>
-        <translation>Snap Extras</translation>
+        <translation>Opções de Captura</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actiongroupmanager.cpp" line="82"/>
@@ -16670,17 +16670,17 @@ This action can NOT be undone.</translation>
     <message>
         <location filename="../../src/ui/lc_actiongroupmanager.cpp" line="84"/>
         <source>PenTB</source>
-        <translation>PenTB</translation>
+        <translation>Barra de Caneta</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_filedialogservice.cpp" line="221"/>
         <source>Combine all layers</source>
-        <translation>Combine all layers</translation>
+        <translation>Combinar todas as camadas</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_filedialogservice.cpp" line="252"/>
         <source>File &quot;%1&quot; already exists. Do you want to replace it?</source>
-        <translation>File &quot;%1&quot; already exists. Do you want to replace it?</translation>
+        <translation>O arquivo &quot;%1&quot; já existe. Deseja substituí-lo?</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_peninforegistry.cpp" line="204"/>
@@ -16700,12 +16700,12 @@ This action can NOT be undone.</translation>
     <message>
         <location filename="../../src/ui/lc_widgetfactory.cpp" line="495"/>
         <source>Creators</source>
-        <translation>Creators</translation>
+        <translation>Criadores</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_colorbox.cpp" line="42"/>
         <source>/CustomColor%1</source>
-        <translation>/CustomColor%1</translation>
+        <translation>/CorPersonalizada%1</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_colorbox.cpp" line="43"/>
@@ -16715,17 +16715,17 @@ This action can NOT be undone.</translation>
     <message>
         <location filename="../../src/ui/qg_colorbox.cpp" line="44"/>
         <source>User Color</source>
-        <translation>User Color</translation>
+        <translation>Cor do Usuário</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_commandedit.cpp" line="120"/>
         <source>You must input a distance first.</source>
-        <translation>You must input a distance first.</translation>
+        <translation>Você deve inserir uma distância primeiro.</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_commandedit.cpp" line="198"/>
         <source>Calculator error for input: </source>
-        <translation>Calculator error for input:</translation>
+        <translation>Erro de calculadora para entrada:</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_commandedit.cpp" line="258"/>
@@ -16747,12 +16747,12 @@ This action can NOT be undone.</translation>
     <message>
         <location filename="../../src/ui/qg_commandedit.cpp" line="301"/>
         <source>Calculator mode: On</source>
-        <translation>Calculator mode: On</translation>
+        <translation>Modo calculadora: Ligado</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_commandedit.cpp" line="303"/>
         <source>Calculator mode: Off</source>
-        <translation>Calculator mode: Off</translation>
+        <translation>Modo calculadora: Desligado</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_dialogfactory.cpp" line="236"/>
@@ -16763,22 +16763,22 @@ This action can NOT be undone.</translation>
     <message>
         <location filename="../../src/ui/qg_dialogfactory.cpp" line="704"/>
         <source>All Image Files (%1)</source>
-        <translation>All Image Files (%1)</translation>
+        <translation>Todos os Arquivos de Imagem (%1)</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_dialogfactory.cpp" line="706"/>
         <source>All Files (*.*)</source>
-        <translation>All Files (*.*)</translation>
+        <translation>Todos os Arquivos (*.*)</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_dialogfactory.cpp" line="711"/>
         <source>Open Image</source>
-        <translation>Open Image</translation>
+        <translation>Abrir Imagem</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_dialogfactory.cpp" line="1793"/>
         <source>Windows Bitmap</source>
-        <translation>Windows Bitmap</translation>
+        <translation>Bitmap do Windows</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_dialogfactory.cpp" line="1795"/>
@@ -16828,32 +16828,32 @@ This action can NOT be undone.</translation>
     <message>
         <location filename="../../src/ui/qg_dialogfactory.cpp" line="1813"/>
         <source>Scalable Vector Graphics</source>
-        <translation>Scalable Vector Graphics</translation>
+        <translation>Gráficos vetoriais escaláveis</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_dialogfactory.cpp" line="1815"/>
         <source>SGI Black &amp; White</source>
-        <translation>SGI Black &amp; White</translation>
+        <translation>SGI Preto &amp; Branco</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_dialogfactory.cpp" line="1817"/>
         <source>Encapsulated PostScript</source>
-        <translation>Encapsulated PostScript</translation>
+        <translation>PostScript Encapsulado</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_dialogfactory.cpp" line="1819"/>
         <source>Encapsulated PostScript Format</source>
-        <translation>Encapsulated PostScript Format</translation>
+        <translation>Formato PostScript Encapsulado</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_dialogfactory.cpp" line="1821"/>
         <source>Encapsulated PostScript Interchange</source>
-        <translation>Encapsulated PostScript Interchange</translation>
+        <translation>Intercâmbio PostScript Encapsulado</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_dialogfactory.cpp" line="1823"/>
         <source>Windows Icon</source>
-        <translation>Windows Icon</translation>
+        <translation>Ícone do Windows</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_dialogfactory.cpp" line="1825"/>
@@ -16873,12 +16873,12 @@ This action can NOT be undone.</translation>
     <message>
         <location filename="../../src/ui/qg_dialogfactory.cpp" line="1831"/>
         <source>SGI-Bilddatei</source>
-        <translation>SGI-Bilddatei</translation>
+        <translation>Arquivo de imagem SGI</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_dialogfactory.cpp" line="1833"/>
         <source>Targa Image File</source>
-        <translation>Targa Image File</translation>
+        <translation>Arquivo de Imagem Targa</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_dialogfactory.cpp" line="1835"/>
@@ -16889,19 +16889,19 @@ This action can NOT be undone.</translation>
         <location filename="../../src/ui/qg_filedialog.cpp" line="324"/>
         <location filename="../../src/ui/qg_filedialog.cpp" line="377"/>
         <source>Save Drawing As</source>
-        <translation>Save Drawing As</translation>
+        <translation>Salvar Desenho Como</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_filedialog.cpp" line="378"/>
         <source>%1 already exists.
 Do you want to replace it?</source>
-        <translation>%1 already exists.
-Do you want to replace it?</translation>
+        <translation>%1 já existe.
+Deseja substituí-lo?</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_filedialog.cpp" line="443"/>
         <source>Old Drawing Exchange %1</source>
-        <translation>Old Drawing Exchange %1</translation>
+        <translation>Troca de Desenho Antigo %1</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_filedialog.cpp" line="444"/>
@@ -16926,7 +16926,7 @@ Do you want to replace it?</translation>
     <message>
         <location filename="../../src/ui/qg_filedialog.cpp" line="451"/>
         <source>Font %1</source>
-        <translation>Font %1</translation>
+        <translation>Fonte %1</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_filedialog.cpp" line="452"/>
@@ -16936,27 +16936,27 @@ Do you want to replace it?</translation>
     <message>
         <location filename="../../src/ui/qg_filedialog.cpp" line="476"/>
         <source>Open Drawing</source>
-        <translation>Open Drawing</translation>
+        <translation>Abrir Desenho</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_widthbox.cpp" line="35"/>
         <source>-Unchanged-</source>
-        <translation>-Unchanged-</translation>
+        <translation>-Sem alteração-</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_widthbox.cpp" line="37"/>
         <source>ByLayer</source>
-        <translation>ByLayer</translation>
+        <translation>Por Camada</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_widthbox.cpp" line="39"/>
         <source>ByBlock</source>
-        <translation>ByBlock</translation>
+        <translation>Por Bloco</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_widthbox.cpp" line="41"/>
         <source>Default</source>
-        <translation>Default</translation>
+        <translation>Padrão</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_widthbox.cpp" line="43"/>
@@ -17084,7 +17084,7 @@ Do you want to replace it?</translation>
     <message>
         <location filename="../../src/actions/rs_actionblockscreate.cpp" line="149"/>
         <source>Specify reference point</source>
-        <translation>Specify reference point</translation>
+        <translation>Especifique o ponto de referência</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionblockscreate.cpp" line="150"/>
@@ -17097,19 +17097,19 @@ Do you want to replace it?</translation>
     <message>
         <location filename="../../src/actions/rs_actionblocksinsert.cpp" line="74"/>
         <source>Block cannot contain an insert of itself.</source>
-        <translation>Block cannot contain an insert of itself.</translation>
+        <translation>Um bloco não pode conter uma inserção de si mesmo.</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionblocksinsert.cpp" line="80"/>
         <source> has nested insert of current block in:
 </source>
-        <translation>has nested insert of current block in:</translation>
+        <translation>tem inserção aninhada do bloco atual em:</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionblocksinsert.cpp" line="82"/>
         <source>
 This block cannot be inserted.</source>
-        <translation>This block cannot be inserted.</translation>
+        <translation>Este bloco não pode ser inserido.</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionblocksinsert.cpp" line="217"/>
@@ -17124,7 +17124,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actionblocksinsert.cpp" line="381"/>
         <source>Specify reference point</source>
-        <translation>Specify reference point</translation>
+        <translation>Especifique o ponto de referência</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionblocksinsert.cpp" line="382"/>
@@ -17134,32 +17134,32 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actionblocksinsert.cpp" line="385"/>
         <source>Enter angle:</source>
-        <translation>Enter angle:</translation>
+        <translation>Insira o ângulo:</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionblocksinsert.cpp" line="389"/>
         <source>Enter factor:</source>
-        <translation>Enter factor:</translation>
+        <translation>Insira o fator:</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionblocksinsert.cpp" line="393"/>
         <source>Enter columns:</source>
-        <translation>Enter columns:</translation>
+        <translation>Insira as colunas:</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionblocksinsert.cpp" line="397"/>
         <source>Enter rows:</source>
-        <translation>Enter rows:</translation>
+        <translation>Insira as linhas:</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionblocksinsert.cpp" line="401"/>
         <source>Enter column spacing:</source>
-        <translation>Enter column spacing:</translation>
+        <translation>Insira o espaçamento de colunas:</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionblocksinsert.cpp" line="405"/>
         <source>Enter row spacing:</source>
-        <translation>Enter row spacing:</translation>
+        <translation>Insira o espaçamento de linhas:</translation>
     </message>
 </context>
 <context>
@@ -17167,7 +17167,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actionblockssave.cpp" line="95"/>
         <source>No block activated to save</source>
-        <translation>No block activated to save</translation>
+        <translation>Nenhum bloco ativado para salvar</translation>
     </message>
 </context>
 <context>
@@ -17175,7 +17175,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondefault.cpp" line="500"/>
         <source>Choose second edge</source>
-        <translation>Choose second edge</translation>
+        <translation>Escolha a segunda aresta</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondefault.cpp" line="501"/>
@@ -17188,7 +17188,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondimaligned.cpp" line="252"/>
         <source>Specify first extension line origin</source>
-        <translation>Specify first extension line origin</translation>
+        <translation>Especifique a origem da primeira linha de extensão</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondimaligned.cpp" line="253"/>
@@ -17198,7 +17198,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondimaligned.cpp" line="257"/>
         <source>Specify second extension line origin</source>
-        <translation>Specify second extension line origin</translation>
+        <translation>Especifique a origem da segunda linha de extensão</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondimaligned.cpp" line="258"/>
@@ -17209,12 +17209,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondimaligned.cpp" line="262"/>
         <source>Specify dimension line location</source>
-        <translation>Specify dimension line location</translation>
+        <translation>Especifique a posição da linha de cota</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondimaligned.cpp" line="266"/>
         <source>Enter dimension text:</source>
-        <translation>Enter dimension text:</translation>
+        <translation>Insira o texto da cota:</translation>
     </message>
 </context>
 <context>
@@ -17222,7 +17222,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondimangular.cpp" line="239"/>
         <source>Select first line</source>
-        <translation>Select first line</translation>
+        <translation>Selecione a primeira linha</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondimangular.cpp" line="240"/>
@@ -17234,17 +17234,17 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondimangular.cpp" line="244"/>
         <source>Select second line</source>
-        <translation>Select second line</translation>
+        <translation>Selecione a segunda linha</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondimangular.cpp" line="249"/>
         <source>Specify dimension arc line location</source>
-        <translation>Specify dimension arc line location</translation>
+        <translation>Especifique a posição da linha de arco da cota</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondimangular.cpp" line="254"/>
         <source>Enter dimension text:</source>
-        <translation>Enter dimension text:</translation>
+        <translation>Insira o texto da cota:</translation>
     </message>
 </context>
 <context>
@@ -17252,7 +17252,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondimdiametric.cpp" line="180"/>
         <source>Not a circle or arc entity</source>
-        <translation>Not a circle or arc entity</translation>
+        <translation>Não é uma entidade de círculo ou arco</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondimdiametric.cpp" line="258"/>
@@ -17262,7 +17262,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondimdiametric.cpp" line="286"/>
         <source>Select arc or circle entity</source>
-        <translation>Select arc or circle entity</translation>
+        <translation>Selecione uma entidade de arco ou círculo</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondimdiametric.cpp" line="287"/>
@@ -17273,12 +17273,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondimdiametric.cpp" line="291"/>
         <source>Specify dimension line location</source>
-        <translation>Specify dimension line location</translation>
+        <translation>Especifique a posição da linha de cota</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondimdiametric.cpp" line="294"/>
         <source>Enter dimension text:</source>
-        <translation>Enter dimension text:</translation>
+        <translation>Insira o texto da cota:</translation>
     </message>
 </context>
 <context>
@@ -17286,7 +17286,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondimleader.cpp" line="227"/>
         <source>Specify target point</source>
-        <translation>Specify target point</translation>
+        <translation>Especifique o ponto de destino</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondimleader.cpp" line="228"/>
@@ -17296,12 +17296,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondimleader.cpp" line="231"/>
         <source>Specify next point</source>
-        <translation>Specify next point</translation>
+        <translation>Especifique o próximo ponto</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondimleader.cpp" line="232"/>
         <source>Finish</source>
-        <translation>Finish</translation>
+        <translation>Concluir</translation>
     </message>
 </context>
 <context>
@@ -17314,7 +17314,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondimlinear.cpp" line="283"/>
         <source>Specify first extension line origin</source>
-        <translation>Specify first extension line origin</translation>
+        <translation>Especifique a origem da primeira linha de extensão</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondimlinear.cpp" line="284"/>
@@ -17324,7 +17324,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondimlinear.cpp" line="288"/>
         <source>Specify second extension line origin</source>
-        <translation>Specify second extension line origin</translation>
+        <translation>Especifique a origem da segunda linha de extensão</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondimlinear.cpp" line="289"/>
@@ -17335,17 +17335,17 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondimlinear.cpp" line="293"/>
         <source>Specify dimension line location</source>
-        <translation>Specify dimension line location</translation>
+        <translation>Especifique a posição da linha de cota</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondimlinear.cpp" line="297"/>
         <source>Enter dimension text:</source>
-        <translation>Enter dimension text:</translation>
+        <translation>Insira o texto da cota:</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondimlinear.cpp" line="301"/>
         <source>Enter dimension line angle:</source>
-        <translation>Enter dimension line angle:</translation>
+        <translation>Insira o ângulo da linha de cota:</translation>
     </message>
 </context>
 <context>
@@ -17353,7 +17353,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondimradial.cpp" line="173"/>
         <source>Not a circle or arc entity</source>
-        <translation>Not a circle or arc entity</translation>
+        <translation>Não é uma entidade de círculo ou arco</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondimradial.cpp" line="251"/>
@@ -17363,7 +17363,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondimradial.cpp" line="278"/>
         <source>Select arc or circle entity</source>
-        <translation>Select arc or circle entity</translation>
+        <translation>Selecione uma entidade de arco ou círculo</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondimradial.cpp" line="279"/>
@@ -17374,12 +17374,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondimradial.cpp" line="283"/>
         <source>Specify dimension line position or enter angle:</source>
-        <translation>Specify dimension line position or enter angle:</translation>
+        <translation>Especifique a posição da linha de cota ou insira o ângulo:</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondimradial.cpp" line="287"/>
         <source>Enter dimension text:</source>
-        <translation>Enter dimension text:</translation>
+        <translation>Insira o texto da cota:</translation>
     </message>
 </context>
 <context>
@@ -17396,7 +17396,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawarc.cpp" line="315"/>
         <source>Not a valid chord length</source>
-        <translation>Not a valid chord length</translation>
+        <translation>Comprimento de corda inválido</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawarc.cpp" line="336"/>
@@ -17411,7 +17411,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawarc.cpp" line="339"/>
         <source>Specify radius</source>
-        <translation>Specify radius</translation>
+        <translation>Especifique o raio</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawarc.cpp" line="339"/>
@@ -17425,22 +17425,22 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawarc.cpp" line="343"/>
         <source>Specify start angle:</source>
-        <translation>Specify start angle:</translation>
+        <translation>Especifique o ângulo inicial:</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawarc.cpp" line="347"/>
         <source>Specify end angle or [angle/chord length]</source>
-        <translation>Specify end angle or [angle/chord length]</translation>
+        <translation>Especifique o ângulo final ou [ângulo/comprimento da corda]</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawarc.cpp" line="351"/>
         <source>Specify included angle:</source>
-        <translation>Specify included angle:</translation>
+        <translation>Especifique o ângulo incluso:</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawarc.cpp" line="355"/>
         <source>Specify chord length:</source>
-        <translation>Specify chord length:</translation>
+        <translation>Especifique o comprimento da corda:</translation>
     </message>
 </context>
 <context>
@@ -17448,12 +17448,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawarc3p.cpp" line="108"/>
         <source>Invalid arc data.</source>
-        <translation>Invalid arc data.</translation>
+        <translation>Dados de arco inválidos.</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawarc3p.cpp" line="233"/>
         <source>Specify startpoint or [center]</source>
-        <translation>Specify startpoint or [center]</translation>
+        <translation>Especifique o ponto inicial ou [centro]</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawarc3p.cpp" line="234"/>
@@ -17474,7 +17474,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawarc3p.cpp" line="242"/>
         <source>Specify endpoint</source>
-        <translation>Specify endpoint</translation>
+        <translation>Especifique o ponto final</translation>
     </message>
 </context>
 <context>
@@ -17482,7 +17482,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawarctangential.cpp" line="226"/>
         <source>Specify base entity</source>
-        <translation>Specify base entity</translation>
+        <translation>Especifique a entidade base</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawarctangential.cpp" line="227"/>
@@ -17492,7 +17492,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawarctangential.cpp" line="232"/>
         <source>Specify end angle</source>
-        <translation>Specify end angle</translation>
+        <translation>Especifique o ângulo final</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawarctangential.cpp" line="232"/>
@@ -17526,7 +17526,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawcircle.cpp" line="204"/>
         <source>Specify point on circle</source>
-        <translation>Specify point on circle</translation>
+        <translation>Especifique o ponto no círculo</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawcircle.cpp" line="204"/>
@@ -17539,7 +17539,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawcircle2p.cpp" line="103"/>
         <source>Invalid Circle data.</source>
-        <translation>Invalid Circle data.</translation>
+        <translation>Dados de círculo inválidos.</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawcircle2p.cpp" line="184"/>
@@ -17567,7 +17567,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawcircle3p.cpp" line="95"/>
         <source>Invalid circle data.</source>
-        <translation>Invalid circle data.</translation>
+        <translation>Dados de círculo inválidos.</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawcircle3p.cpp" line="186"/>
@@ -17593,7 +17593,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawcircle3p.cpp" line="194"/>
         <source>Specify third point</source>
-        <translation>Specify third point</translation>
+        <translation>Especifique o terceiro ponto</translation>
     </message>
 </context>
 <context>
@@ -17601,17 +17601,17 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawcirclecr.cpp" line="106"/>
         <source>radius=%1 is invalid (expression)</source>
-        <translation>radius=%1 is invalid (expression)</translation>
+        <translation>raio=%1 é inválido (expressão)</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawcirclecr.cpp" line="108"/>
         <source>radius=%1 is invalid (negative)</source>
-        <translation>radius=%1 is invalid (negative)</translation>
+        <translation>raio=%1 é inválido (negativo)</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawcirclecr.cpp" line="111"/>
         <source>radius=%1 is invalid (zero)</source>
-        <translation>radius=%1 is invalid (zero)</translation>
+        <translation>raio=%1 é inválido (zero)</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawcirclecr.cpp" line="193"/>
@@ -17621,7 +17621,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawcirclecr.cpp" line="223"/>
         <source>Specify circle center</source>
-        <translation>Specify circle center</translation>
+        <translation>Especifique o centro do círculo</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawcirclecr.cpp" line="224"/>
@@ -17631,7 +17631,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawcirclecr.cpp" line="227"/>
         <source>Specify circle radius</source>
-        <translation>Specify circle radius</translation>
+        <translation>Especifique o raio do círculo</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawcirclecr.cpp" line="228"/>
@@ -17644,7 +17644,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawcircleinscribe.cpp" line="269"/>
         <source>Specify the first line</source>
-        <translation>Specify the first line</translation>
+        <translation>Especifique a primeira linha</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawcircleinscribe.cpp" line="270"/>
@@ -17654,7 +17654,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawcircleinscribe.cpp" line="274"/>
         <source>Specify the second line</source>
-        <translation>Specify the second line</translation>
+        <translation>Especifique a segunda linha</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawcircleinscribe.cpp" line="275"/>
@@ -17665,7 +17665,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawcircleinscribe.cpp" line="279"/>
         <source>Specify the third line</source>
-        <translation>Specify the third line</translation>
+        <translation>Especifique a terceira linha</translation>
     </message>
 </context>
 <context>
@@ -17673,7 +17673,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawcircletan1_2p.cpp" line="425"/>
         <source>Specify a line/arc/circle</source>
-        <translation>Specify a line/arc/circle</translation>
+        <translation>Especifique uma linha/arco/círculo</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawcircletan1_2p.cpp" line="426"/>
@@ -17683,7 +17683,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawcircletan1_2p.cpp" line="430"/>
         <source>Specify the first point on the tangent circle</source>
-        <translation>Specify the first point on the tangent circle</translation>
+        <translation>Especifique o primeiro ponto no círculo tangente</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawcircletan1_2p.cpp" line="431"/>
@@ -17695,12 +17695,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawcircletan1_2p.cpp" line="435"/>
         <source>Specify the second point on the tangent circle</source>
-        <translation>Specify the second point on the tangent circle</translation>
+        <translation>Especifique o segundo ponto no círculo tangente</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawcircletan1_2p.cpp" line="439"/>
         <source>Select the center of the tangent circle</source>
-        <translation>Select the center of the tangent circle</translation>
+        <translation>Selecione o centro do círculo tangente</translation>
     </message>
 </context>
 <context>
@@ -17708,32 +17708,32 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawcircletan2.cpp" line="156"/>
         <source>Invalid expression &apos;%1&apos; for radius</source>
-        <translation>Invalid expression &apos;%1&apos; for radius</translation>
+        <translation>Expressão inválida &apos;%1&apos; para o raio</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawcircletan2.cpp" line="158"/>
         <source>Invalid negative radius &apos;%1&apos;</source>
-        <translation>Invalid negative radius &apos;%1&apos;</translation>
+        <translation>Raio negativo inválido &apos;%1&apos;</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawcircletan2.cpp" line="161"/>
         <source>Invalid zero radius &apos;%1&apos;</source>
-        <translation>Invalid zero radius &apos;%1&apos;</translation>
+        <translation>Raio zero inválido &apos;%1&apos;</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawcircletan2.cpp" line="169"/>
         <source>No tangent circle possible for radius &apos;%1&apos;</source>
-        <translation>No tangent circle possible for radius &apos;%1&apos;</translation>
+        <translation>Nenhum círculo tangente possível para o raio &apos;%1&apos;</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawcircletan2.cpp" line="183"/>
         <source>No common tangential circle for radius &apos;%1&apos;</source>
-        <translation>No common tangential circle for radius &apos;%1&apos;</translation>
+        <translation>Nenhum círculo tangencial comum para o raio &apos;%1&apos;</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawcircletan2.cpp" line="328"/>
         <source>Specify the first line/arc/circle</source>
-        <translation>Specify the first line/arc/circle</translation>
+        <translation>Especifique a primeira linha/arco/círculo</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawcircletan2.cpp" line="329"/>
@@ -17743,7 +17743,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawcircletan2.cpp" line="333"/>
         <source>Specify the second line/arc/circle</source>
-        <translation>Specify the second line/arc/circle</translation>
+        <translation>Especifique a segunda linha/arco/círculo</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawcircletan2.cpp" line="334"/>
@@ -17754,7 +17754,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawcircletan2.cpp" line="338"/>
         <source>Select the center of the tangent circle</source>
-        <translation>Select the center of the tangent circle</translation>
+        <translation>Selecione o centro do círculo tangente</translation>
     </message>
 </context>
 <context>
@@ -17762,7 +17762,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawcircletan2_1p.cpp" line="333"/>
         <source>Specify a line/arc/circle</source>
-        <translation>Specify a line/arc/circle</translation>
+        <translation>Especifique uma linha/arco/círculo</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawcircletan2_1p.cpp" line="334"/>
@@ -17772,7 +17772,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawcircletan2_1p.cpp" line="338"/>
         <source>Specify the another arc/circle</source>
-        <translation>Specify the another arc/circle</translation>
+        <translation>Especifique outro arco/círculo</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawcircletan2_1p.cpp" line="339"/>
@@ -17784,12 +17784,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawcircletan2_1p.cpp" line="343"/>
         <source>Specify a point on the tangent circle</source>
-        <translation>Specify a point on the tangent circle</translation>
+        <translation>Especifique um ponto no círculo tangente</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawcircletan2_1p.cpp" line="347"/>
         <source>Select the center of the tangent circle</source>
-        <translation>Select the center of the tangent circle</translation>
+        <translation>Selecione o centro do círculo tangente</translation>
     </message>
 </context>
 <context>
@@ -17797,7 +17797,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawcircletan3.cpp" line="463"/>
         <source>Specify the first line/arc/circle</source>
-        <translation>Specify the first line/arc/circle</translation>
+        <translation>Especifique a primeira linha/arco/círculo</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawcircletan3.cpp" line="464"/>
@@ -17807,7 +17807,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawcircletan3.cpp" line="468"/>
         <source>Specify the second line/arc/circle</source>
-        <translation>Specify the second line/arc/circle</translation>
+        <translation>Especifique a segunda linha/arco/círculo</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawcircletan3.cpp" line="469"/>
@@ -17819,12 +17819,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawcircletan3.cpp" line="472"/>
         <source>Specify the third line/arc/circle</source>
-        <translation>Specify the third line/arc/circle</translation>
+        <translation>Especifique a terceira linha/arco/círculo</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawcircletan3.cpp" line="477"/>
         <source>Select the center of the tangent circle</source>
-        <translation>Select the center of the tangent circle</translation>
+        <translation>Selecione o centro do círculo tangente</translation>
     </message>
 </context>
 <context>
@@ -17832,12 +17832,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawellipse4points.cpp" line="156"/>
         <source>Can not determine uniquely an ellipse</source>
-        <translation>Can not determine uniquely an ellipse</translation>
+        <translation>Não é possível determinar uma elipse de forma única</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawellipse4points.cpp" line="284"/>
         <source>Specify the first point on ellipse</source>
-        <translation>Specify the first point on ellipse</translation>
+        <translation>Especifique o primeiro ponto na elipse</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawellipse4points.cpp" line="285"/>
@@ -17847,7 +17847,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawellipse4points.cpp" line="289"/>
         <source>Specify the second point on ellipse</source>
-        <translation>Specify the second point on ellipse</translation>
+        <translation>Especifique o segundo ponto na elipse</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawellipse4points.cpp" line="290"/>
@@ -17859,12 +17859,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawellipse4points.cpp" line="294"/>
         <source>Specify the third point on ellipse</source>
-        <translation>Specify the third point on ellipse</translation>
+        <translation>Especifique o terceiro ponto na elipse</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawellipse4points.cpp" line="299"/>
         <source>Specify the fourth point on ellipse</source>
-        <translation>Specify the fourth point on ellipse</translation>
+        <translation>Especifique o quarto ponto na elipse</translation>
     </message>
 </context>
 <context>
@@ -17879,7 +17879,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawellipseaxis.cpp" line="350"/>
         <source>Specify ellipse center</source>
-        <translation>Specify ellipse center</translation>
+        <translation>Especifique o centro da elipse</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawellipseaxis.cpp" line="351"/>
@@ -17889,7 +17889,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawellipseaxis.cpp" line="355"/>
         <source>Specify endpoint of major axis</source>
-        <translation>Specify endpoint of major axis</translation>
+        <translation>Especifique o ponto final do eixo maior</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawellipseaxis.cpp" line="356"/>
@@ -17902,17 +17902,17 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawellipseaxis.cpp" line="361"/>
         <source>Specify endpoint or length of minor axis:</source>
-        <translation>Specify endpoint or length of minor axis:</translation>
+        <translation>Especifique o ponto final ou comprimento do eixo menor:</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawellipseaxis.cpp" line="366"/>
         <source>Specify start angle</source>
-        <translation>Specify start angle</translation>
+        <translation>Especifique o ângulo inicial</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawellipseaxis.cpp" line="371"/>
         <source>Specify end angle</source>
-        <translation>Specify end angle</translation>
+        <translation>Especifique o ângulo final</translation>
     </message>
 </context>
 <context>
@@ -17920,7 +17920,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawellipsecenter3points.cpp" line="282"/>
         <source>Specify the center of ellipse</source>
-        <translation>Specify the center of ellipse</translation>
+        <translation>Especifique o centro da elipse</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawellipsecenter3points.cpp" line="283"/>
@@ -17931,12 +17931,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawellipsecenter3points.cpp" line="287"/>
         <source>Specify the first point on ellipse</source>
-        <translation>Specify the first point on ellipse</translation>
+        <translation>Especifique o primeiro ponto na elipse</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawellipsecenter3points.cpp" line="291"/>
         <source>Specify the second point on ellipse</source>
-        <translation>Specify the second point on ellipse</translation>
+        <translation>Especifique o segundo ponto na elipse</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawellipsecenter3points.cpp" line="292"/>
@@ -17947,7 +17947,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawellipsecenter3points.cpp" line="296"/>
         <source>Specify the third point on ellipse</source>
-        <translation>Specify the third point on ellipse</translation>
+        <translation>Especifique o terceiro ponto na elipse</translation>
     </message>
 </context>
 <context>
@@ -17955,12 +17955,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawellipsefocipoint.cpp" line="207"/>
         <source>specify a point on ellipse, or total distance to foci</source>
-        <translation>specify a point on ellipse, or total distance to foci</translation>
+        <translation>especifique um ponto na elipse ou a distância total aos focos</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawellipsefocipoint.cpp" line="221"/>
         <source>Total distance %1 is smaller than distance between foci</source>
-        <translation>Total distance %1 is smaller than distance between foci</translation>
+        <translation>A distância total %1 é menor que a distância entre os focos</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawellipsefocipoint.cpp" line="223"/>
@@ -17970,7 +17970,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawellipsefocipoint.cpp" line="238"/>
         <source>Specify first focus of ellipse</source>
-        <translation>Specify first focus of ellipse</translation>
+        <translation>Especifique o primeiro foco da elipse</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawellipsefocipoint.cpp" line="239"/>
@@ -17980,7 +17980,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawellipsefocipoint.cpp" line="243"/>
         <source>Specify second focus of ellipse</source>
-        <translation>Specify second focus of ellipse</translation>
+        <translation>Especifique o segundo foco da elipse</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawellipsefocipoint.cpp" line="244"/>
@@ -17991,7 +17991,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawellipsefocipoint.cpp" line="249"/>
         <source>Specify a point on ellipse or total distance to foci</source>
-        <translation>Specify a point on ellipse or total distance to foci</translation>
+        <translation>Especifique um ponto na elipse ou a distância total aos focos</translation>
     </message>
 </context>
 <context>
@@ -17999,12 +17999,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawellipseinscribe.cpp" line="157"/>
         <source>Can not determine uniquely an ellipse</source>
-        <translation>Can not determine uniquely an ellipse</translation>
+        <translation>Não é possível determinar uma elipse de forma única</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawellipseinscribe.cpp" line="279"/>
         <source>Specify the first line</source>
-        <translation>Specify the first line</translation>
+        <translation>Especifique a primeira linha</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawellipseinscribe.cpp" line="280"/>
@@ -18014,7 +18014,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawellipseinscribe.cpp" line="284"/>
         <source>Specify the second line</source>
-        <translation>Specify the second line</translation>
+        <translation>Especifique a segunda linha</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawellipseinscribe.cpp" line="285"/>
@@ -18026,12 +18026,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawellipseinscribe.cpp" line="289"/>
         <source>Specify the third line</source>
-        <translation>Specify the third line</translation>
+        <translation>Especifique a terceira linha</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawellipseinscribe.cpp" line="294"/>
         <source>Specify the fourth line</source>
-        <translation>Specify the fourth line</translation>
+        <translation>Especifique a quarta linha</translation>
     </message>
 </context>
 <context>
@@ -18039,42 +18039,42 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawhatch.cpp" line="150"/>
         <source>Hatch created successfully.</source>
-        <translation>Hatch created successfully.</translation>
+        <translation>Hachura criada com sucesso.</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawhatch.cpp" line="153"/>
         <source>Hatch Error: Invalid contour found!</source>
-        <translation>Hatch Error: Invalid contour found!</translation>
+        <translation>Erro de hachura: contorno inválido encontrado!</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawhatch.cpp" line="157"/>
         <source>Hatch Error: Pattern not found!</source>
-        <translation>Hatch Error: Pattern not found!</translation>
+        <translation>Erro de hachura: padrão não encontrado!</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawhatch.cpp" line="160"/>
         <source>Hatch Error: Contour or pattern too small!</source>
-        <translation>Hatch Error: Contour or pattern too small!</translation>
+        <translation>Erro de hachura: contorno ou padrão muito pequeno!</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawhatch.cpp" line="163"/>
         <source>Hatch Error: Contour too big!</source>
-        <translation>Hatch Error: Contour too big!</translation>
+        <translation>Erro de hachura: contorno muito grande!</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawhatch.cpp" line="166"/>
         <source>Hatch Error: Undefined Error!</source>
-        <translation>Hatch Error: Undefined Error!</translation>
+        <translation>Erro de hachura: erro indefinido!</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawhatch.cpp" line="171"/>
         <source>Total hatch area = %1</source>
-        <translation>Total hatch area = %1</translation>
+        <translation>Área total de hachura = %1</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawhatch.cpp" line="179"/>
         <source>Invalid hatch area. Please check that the entities chosen form one or more closed contours.</source>
-        <translation>Invalid hatch area. Please check that the entities chosen form one or more closed contours.</translation>
+        <translation>Área de hachura inválida. Verifique se as entidades escolhidas formam um ou mais contornos fechados.</translation>
     </message>
 </context>
 <context>
@@ -18089,7 +18089,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawimage.cpp" line="308"/>
         <source>Specify reference point</source>
-        <translation>Specify reference point</translation>
+        <translation>Especifique o ponto de referência</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawimage.cpp" line="309"/>
@@ -18099,17 +18099,17 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawimage.cpp" line="312"/>
         <source>Enter angle:</source>
-        <translation>Enter angle:</translation>
+        <translation>Insira o ângulo:</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawimage.cpp" line="316"/>
         <source>Enter factor:</source>
-        <translation>Enter factor:</translation>
+        <translation>Insira o fator:</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawimage.cpp" line="320"/>
         <source>Enter dpi:</source>
-        <translation>Enter dpi:</translation>
+        <translation>Insira o DPI:</translation>
     </message>
 </context>
 <context>
@@ -18127,7 +18127,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawline.cpp" line="337"/>
         <source>Specify next point or [%1]</source>
-        <translation>Specify next point or [%1]</translation>
+        <translation>Especifique o próximo ponto ou [%1]</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawline.cpp" line="338"/>
@@ -18138,22 +18138,22 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawline.cpp" line="341"/>
         <source>Specify next point</source>
-        <translation>Specify next point</translation>
+        <translation>Especifique o próximo ponto</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawline.cpp" line="389"/>
         <source>Cannot close sequence of lines: Not enough entities defined yet, or already closed.</source>
-        <translation>Cannot close sequence of lines: Not enough entities defined yet, or already closed.</translation>
+        <translation>Não é possível fechar a sequência de linhas: entidades insuficientes definidas ou já fechada.</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawline.cpp" line="443"/>
         <source>Cannot undo: Begin of history reached</source>
-        <translation>Cannot undo: Begin of history reached</translation>
+        <translation>Não é possível desfazer: início do histórico atingido</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawline.cpp" line="478"/>
         <source>Cannot redo: End of history reached</source>
-        <translation>Cannot redo: End of history reached</translation>
+        <translation>Não é possível refazer: fim do histórico atingido</translation>
     </message>
 </context>
 <context>
@@ -18167,7 +18167,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawlineangle.cpp" line="300"/>
         <source>Specify position</source>
-        <translation>Specify position</translation>
+        <translation>Especifique a posição</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawlineangle.cpp" line="301"/>
@@ -18177,7 +18177,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawlineangle.cpp" line="305"/>
         <source>Enter angle:</source>
-        <translation>Enter angle:</translation>
+        <translation>Insira o ângulo:</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawlineangle.cpp" line="305"/>
@@ -18188,7 +18188,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawlineangle.cpp" line="309"/>
         <source>Enter length:</source>
-        <translation>Enter length:</translation>
+        <translation>Insira o comprimento:</translation>
     </message>
 </context>
 <context>
@@ -18203,12 +18203,12 @@ This block cannot be inserted.</source>
         <location filename="../../src/actions/rs_actiondrawlinebisector.cpp" line="251"/>
         <source>Number sector lines not in range: </source>
         <comment>number of bisector to create must be in [1, 200]</comment>
-        <translation>Number sector lines not in range:</translation>
+        <translation>Número de linhas de setor fora do intervalo:</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawlinebisector.cpp" line="288"/>
         <source>Select first line</source>
-        <translation>Select first line</translation>
+        <translation>Selecione a primeira linha</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawlinebisector.cpp" line="289"/>
@@ -18218,7 +18218,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawlinebisector.cpp" line="292"/>
         <source>Select second line</source>
-        <translation>Select second line</translation>
+        <translation>Selecione a segunda linha</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawlinebisector.cpp" line="293"/>
@@ -18230,12 +18230,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawlinebisector.cpp" line="296"/>
         <source>Enter bisector length:</source>
-        <translation>Enter bisector length:</translation>
+        <translation>Insira o comprimento da bissetriz:</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawlinebisector.cpp" line="300"/>
         <source>Enter number of bisectors:</source>
-        <translation>Enter number of bisectors:</translation>
+        <translation>Insira o número de bissetrizes:</translation>
     </message>
 </context>
 <context>
@@ -18243,7 +18243,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawlinefree.cpp" line="141"/>
         <source>Click and drag to draw a line</source>
-        <translation>Click and drag to draw a line</translation>
+        <translation>Clique e arraste para desenhar uma linha</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawlinefree.cpp" line="141"/>
@@ -18279,7 +18279,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawlineorthtan.cpp" line="185"/>
         <source>Select a line</source>
-        <translation>Select a line</translation>
+        <translation>Selecione uma linha</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawlineorthtan.cpp" line="186"/>
@@ -18289,7 +18289,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawlineorthtan.cpp" line="189"/>
         <source>Select circle, arc or ellipse</source>
-        <translation>Select circle, arc or ellipse</translation>
+        <translation>Selecione círculo, arco ou elipse</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawlineorthtan.cpp" line="190"/>
@@ -18302,7 +18302,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawlineparallel.cpp" line="125"/>
         <source>Specify Distance &lt;%1&gt; or select entity or [%2]</source>
-        <translation>Specify Distance &lt;%1&gt; or select entity or [%2]</translation>
+        <translation>Especifique a distância &lt;%1&gt; ou selecione a entidade ou [%2]</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawlineparallel.cpp" line="127"/>
@@ -18323,7 +18323,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawlineparallel.cpp" line="195"/>
         <source>Not a valid number. Try 1..99</source>
-        <translation>Not a valid number. Try 1..99</translation>
+        <translation>Número inválido. Tente 1..99</translation>
     </message>
 </context>
 <context>
@@ -18331,7 +18331,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawlineparallelthrough.cpp" line="176"/>
         <source>Select entity</source>
-        <translation>Select entity</translation>
+        <translation>Selecione a entidade</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawlineparallelthrough.cpp" line="176"/>
@@ -18341,7 +18341,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawlineparallelthrough.cpp" line="180"/>
         <source>Specify through point</source>
-        <translation>Specify through point</translation>
+        <translation>Especifique o ponto de passagem</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawlineparallelthrough.cpp" line="181"/>
@@ -18357,7 +18357,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawlineparallelthrough.cpp" line="241"/>
         <source>Not a valid number. Try 1..99</source>
-        <translation>Not a valid number. Try 1..99</translation>
+        <translation>Número inválido. Tente 1..99</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawlineparallelthrough.cpp" line="245"/>
@@ -18375,7 +18375,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawlinepolygon.cpp" line="143"/>
         <source>Specify a corner</source>
-        <translation>Specify a corner</translation>
+        <translation>Especifique um canto</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawlinepolygon.cpp" line="147"/>
@@ -18398,7 +18398,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawlinepolygon2.cpp" line="144"/>
         <source>Specify first corner</source>
-        <translation>Specify first corner</translation>
+        <translation>Especifique o primeiro canto</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawlinepolygon2.cpp" line="145"/>
@@ -18408,7 +18408,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawlinepolygon2.cpp" line="149"/>
         <source>Specify second corner</source>
-        <translation>Specify second corner</translation>
+        <translation>Especifique o segundo canto</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawlinepolygon2.cpp" line="150"/>
@@ -18429,7 +18429,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawlinepolygon2.cpp" line="211"/>
         <source>Not a valid expression.</source>
-        <translation>Not a valid expression.</translation>
+        <translation>Expressão inválida.</translation>
     </message>
 </context>
 <context>
@@ -18437,7 +18437,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawlinerectangle.cpp" line="155"/>
         <source>Specify first corner</source>
-        <translation>Specify first corner</translation>
+        <translation>Especifique o primeiro canto</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawlinerectangle.cpp" line="156"/>
@@ -18447,7 +18447,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawlinerectangle.cpp" line="159"/>
         <source>Specify second corner</source>
-        <translation>Specify second corner</translation>
+        <translation>Especifique o segundo canto</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawlinerectangle.cpp" line="160"/>
@@ -18466,7 +18466,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawlinerelangle.cpp" line="274"/>
         <source>Select base entity</source>
-        <translation>Select base entity</translation>
+        <translation>Selecione a entidade base</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawlinerelangle.cpp" line="275"/>
@@ -18476,7 +18476,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawlinerelangle.cpp" line="278"/>
         <source>Specify position</source>
-        <translation>Specify position</translation>
+        <translation>Especifique a posição</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawlinerelangle.cpp" line="279"/>
@@ -18489,7 +18489,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawlinetangent1.cpp" line="181"/>
         <source>Specify point</source>
-        <translation>Specify point</translation>
+        <translation>Especifique o ponto</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawlinetangent1.cpp" line="182"/>
@@ -18499,7 +18499,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawlinetangent1.cpp" line="185"/>
         <source>Select circle, arc or ellipse</source>
-        <translation>Select circle, arc or ellipse</translation>
+        <translation>Selecione círculo, arco ou elipse</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawlinetangent1.cpp" line="186"/>
@@ -18512,7 +18512,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawlinetangent2.cpp" line="282"/>
         <source>Select first circle/ellipse/parabola</source>
-        <translation>Select first circle/ellipse/parabola</translation>
+        <translation>Selecione o primeiro círculo/elipse/parábola</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawlinetangent2.cpp" line="283"/>
@@ -18522,7 +18522,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawlinetangent2.cpp" line="286"/>
         <source>Select second circle/ellipse/parabola</source>
-        <translation>Select second circle/ellipse/parabola</translation>
+        <translation>Selecione o segundo círculo/elipse/parábola</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawlinetangent2.cpp" line="287"/>
@@ -18533,7 +18533,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawlinetangent2.cpp" line="290"/>
         <source>Select the tangent line closest to cursor</source>
-        <translation>Select the tangent line closest to cursor</translation>
+        <translation>Selecione a linha tangente mais próxima do cursor</translation>
     </message>
 </context>
 <context>
@@ -18541,7 +18541,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawmtext.cpp" line="255"/>
         <source>Specify insertion point</source>
-        <translation>Specify insertion point</translation>
+        <translation>Especifique o ponto de inserção</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawmtext.cpp" line="256"/>
@@ -18551,7 +18551,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawmtext.cpp" line="260"/>
         <source>Enter text:</source>
-        <translation>Enter text:</translation>
+        <translation>Insira o texto:</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawmtext.cpp" line="261"/>
@@ -18564,7 +18564,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawpoint.cpp" line="117"/>
         <source>Specify location</source>
-        <translation>Specify location</translation>
+        <translation>Especifique a localização</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawpoint.cpp" line="117"/>
@@ -18578,13 +18578,13 @@ This block cannot be inserted.</source>
         <location filename="../../src/actions/rs_actiondrawpolyline.cpp" line="340"/>
         <location filename="../../src/actions/rs_actiondrawpolyline.cpp" line="509"/>
         <source>Enter the end point x</source>
-        <translation>Enter the end point x</translation>
+        <translation>Insira o ponto final x</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawpolyline.cpp" line="375"/>
         <location filename="../../src/actions/rs_actiondrawpolyline.cpp" line="520"/>
         <source>Enter number of polylines</source>
-        <translation>Enter number of polylines</translation>
+        <translation>Insira o número de polilinhas</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawpolyline.cpp" line="459"/>
@@ -18594,7 +18594,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawpolyline.cpp" line="461"/>
         <source>Enter an equation, f(x)</source>
-        <translation>Enter an equation, f(x)</translation>
+        <translation>Insira uma equação, f(x)</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawpolyline.cpp" line="479"/>
@@ -18604,22 +18604,22 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawpolyline.cpp" line="487"/>
         <source>Enter the start point x</source>
-        <translation>Enter the start point x</translation>
+        <translation>Insira o ponto inicial x</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawpolyline.cpp" line="495"/>
         <source>The entered x is invalid.</source>
-        <translation>The entered x is invalid.</translation>
+        <translation>O x inserido é inválido.</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawpolyline.cpp" line="541"/>
         <source>The step size entered is invalid.</source>
-        <translation>The step size entered is invalid.</translation>
+        <translation>O tamanho do passo inserido é inválido.</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawpolyline.cpp" line="575"/>
         <source>The value x entered is invalid.</source>
-        <translation>The value x entered is invalid.</translation>
+        <translation>O valor x inserido é inválido.</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawpolyline.cpp" line="678"/>
@@ -18634,7 +18634,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawpolyline.cpp" line="694"/>
         <source>Specify next point or [%1]</source>
-        <translation>Specify next point or [%1]</translation>
+        <translation>Especifique o próximo ponto ou [%1]</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawpolyline.cpp" line="695"/>
@@ -18645,12 +18645,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawpolyline.cpp" line="698"/>
         <source>Specify next point</source>
-        <translation>Specify next point</translation>
+        <translation>Especifique o próximo ponto</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawpolyline.cpp" line="745"/>
         <source>Cannot close sequence of lines: Not enough entities defined yet.</source>
-        <translation>Cannot close sequence of lines: Not enough entities defined yet.</translation>
+        <translation>Não é possível fechar a sequência de linhas: entidades insuficientes definidas.</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawpolyline.cpp" line="772"/>
@@ -18697,7 +18697,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawtext.cpp" line="281"/>
         <source>Specify insertion point</source>
-        <translation>Specify insertion point</translation>
+        <translation>Especifique o ponto de inserção</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawtext.cpp" line="282"/>
@@ -18713,7 +18713,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawtext.cpp" line="290"/>
         <source>Enter text:</source>
-        <translation>Enter text:</translation>
+        <translation>Insira o texto:</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawtext.cpp" line="291"/>
@@ -18726,7 +18726,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actioneditcopy.cpp" line="104"/>
         <source>Specify reference point</source>
-        <translation>Specify reference point</translation>
+        <translation>Especifique o ponto de referência</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actioneditcopy.cpp" line="105"/>
@@ -18739,7 +18739,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actioneditpaste.cpp" line="120"/>
         <source>Set reference point</source>
-        <translation>Set reference point</translation>
+        <translation>Definir ponto de referência</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actioneditpaste.cpp" line="121"/>
@@ -18752,12 +18752,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actioneditundo.cpp" line="65"/>
         <source>Nothing to undo!</source>
-        <translation>Nothing to undo!</translation>
+        <translation>Nada para desfazer!</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actioneditundo.cpp" line="68"/>
         <source>Nothing to redo!</source>
-        <translation>Nothing to redo!</translation>
+        <translation>Nada para refazer!</translation>
     </message>
 </context>
 <context>
@@ -18765,17 +18765,17 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actioninfoangle.cpp" line="94"/>
         <source>Angle: %1</source>
-        <translation>Angle: %1</translation>
+        <translation>Ângulo: %1</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actioninfoangle.cpp" line="97"/>
         <source>Lines are parallel</source>
-        <translation>Lines are parallel</translation>
+        <translation>As linhas são paralelas</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actioninfoangle.cpp" line="139"/>
         <source>Specify first line</source>
-        <translation>Specify first line</translation>
+        <translation>Especifique a primeira linha</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actioninfoangle.cpp" line="140"/>
@@ -18785,7 +18785,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actioninfoangle.cpp" line="144"/>
         <source>Specify second line</source>
-        <translation>Specify second line</translation>
+        <translation>Especifique a segunda linha</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actioninfoangle.cpp" line="145"/>
@@ -18798,27 +18798,27 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actioninfoarea.cpp" line="92"/>
         <source>Circumference: %1</source>
-        <translation>Circumference: %1</translation>
+        <translation>Circunferência: %1</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actioninfoarea.cpp" line="93"/>
         <source>Area: %1 %2^2</source>
-        <translation>Area: %1 %2^2</translation>
+        <translation>Área: %1 %2^2</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actioninfoarea.cpp" line="137"/>
         <source>Closing Point: %1/%2</source>
-        <translation>Closing Point: %1/%2</translation>
+        <translation>Ponto de fechamento: %1/%2</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actioninfoarea.cpp" line="145"/>
         <source>Point: %1/%2</source>
-        <translation>Point: %1/%2</translation>
+        <translation>Ponto: %1/%2</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actioninfoarea.cpp" line="165"/>
         <source>Specify first point of polygon</source>
-        <translation>Specify first point of polygon</translation>
+        <translation>Especifique o primeiro ponto do polígono</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actioninfoarea.cpp" line="166"/>
@@ -18829,7 +18829,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actioninfoarea.cpp" line="170"/>
         <source>Specify next point of polygon</source>
-        <translation>Specify next point of polygon</translation>
+        <translation>Especifique o próximo ponto do polígono</translation>
     </message>
 </context>
 <context>
@@ -18837,12 +18837,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actioninfodist.cpp" line="80"/>
         <source>Distance: %1 Cartesian: (%2 , %3), Polar: (%4&lt;%5)</source>
-        <translation>Distance: %1 Cartesian: (%2 , %3), Polar: (%4&lt;%5)</translation>
+        <translation>Distância: %1 Cartesiano: (%2 , %3), Polar: (%4&lt;%5)</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actioninfodist.cpp" line="169"/>
         <source>Specify first point of distance</source>
-        <translation>Specify first point of distance</translation>
+        <translation>Especifique o primeiro ponto da distância</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actioninfodist.cpp" line="170"/>
@@ -18852,7 +18852,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actioninfodist.cpp" line="174"/>
         <source>Specify second point of distance</source>
-        <translation>Specify second point of distance</translation>
+        <translation>Especifique o segundo ponto da distância</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actioninfodist.cpp" line="175"/>
@@ -18865,12 +18865,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actioninfodist2.cpp" line="73"/>
         <source>Distance: %1</source>
-        <translation>Distance: %1</translation>
+        <translation>Distância: %1</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actioninfodist2.cpp" line="155"/>
         <source>Specify entity</source>
-        <translation>Specify entity</translation>
+        <translation>Especifique a entidade</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actioninfodist2.cpp" line="156"/>
@@ -18880,7 +18880,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actioninfodist2.cpp" line="160"/>
         <source>Specify point</source>
-        <translation>Specify point</translation>
+        <translation>Especifique o ponto</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actioninfodist2.cpp" line="161"/>
@@ -18893,17 +18893,17 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actioninfoinside.cpp" line="56"/>
         <source>Point is inside selected contour.</source>
-        <translation>Point is inside selected contour.</translation>
+        <translation>O ponto está dentro do contorno selecionado.</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actioninfoinside.cpp" line="58"/>
         <source>Point is outside selected contour.</source>
-        <translation>Point is outside selected contour.</translation>
+        <translation>O ponto está fora do contorno selecionado.</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actioninfoinside.cpp" line="84"/>
         <source>Specify point</source>
-        <translation>Specify point</translation>
+        <translation>Especifique o ponto</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actioninfoinside.cpp" line="85"/>
@@ -18916,12 +18916,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actioninfototallength.cpp" line="59"/>
         <source>Total Length of selected entities: %1</source>
-        <translation>Total Length of selected entities: %1</translation>
+        <translation>Comprimento total das entidades selecionadas: %1</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actioninfototallength.cpp" line="61"/>
         <source>At least one of the selected entities cannot be measured.</source>
-        <translation>At least one of the selected entities cannot be measured.</translation>
+        <translation>Pelo menos uma das entidades selecionadas não pode ser medida.</translation>
     </message>
 </context>
 <context>
@@ -18929,12 +18929,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actionlibraryinsert.cpp" line="60"/>
         <source>Insert Library Object</source>
-        <translation>Insert Library Object</translation>
+        <translation>Inserir Objeto da Biblioteca</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionlibraryinsert.cpp" line="78"/>
         <source>Cannot open file &apos;%1&apos;</source>
-        <translation>Cannot open file &apos;%1&apos;</translation>
+        <translation>Não é possível abrir o arquivo &apos;%1&apos;</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionlibraryinsert.cpp" line="186"/>
@@ -18945,7 +18945,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actionlibraryinsert.cpp" line="248"/>
         <source>Specify reference point</source>
-        <translation>Specify reference point</translation>
+        <translation>Especifique o ponto de referência</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionlibraryinsert.cpp" line="249"/>
@@ -18955,12 +18955,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actionlibraryinsert.cpp" line="252"/>
         <source>Enter angle:</source>
-        <translation>Enter angle:</translation>
+        <translation>Insira o ângulo:</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionlibraryinsert.cpp" line="256"/>
         <source>Enter factor:</source>
-        <translation>Enter factor:</translation>
+        <translation>Insira o fator:</translation>
     </message>
 </context>
 <context>
@@ -18968,7 +18968,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actionlockrelativezero.cpp" line="43"/>
         <source>(Un-)&amp;Lock Relative Zero</source>
-        <translation>(Un-)&amp;Lock Relative Zero</translation>
+        <translation>Bloquear/Desbloquear Zero Relativo (&amp;L)</translation>
     </message>
 </context>
 <context>
@@ -18982,7 +18982,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actionmodifybevel.cpp" line="270"/>
         <source>Select first entity</source>
-        <translation>Select first entity</translation>
+        <translation>Selecione a primeira entidade</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionmodifybevel.cpp" line="271"/>
@@ -18992,7 +18992,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actionmodifybevel.cpp" line="274"/>
         <source>Select second entity</source>
-        <translation>Select second entity</translation>
+        <translation>Selecione a segunda entidade</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionmodifybevel.cpp" line="275"/>
@@ -19004,12 +19004,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actionmodifybevel.cpp" line="278"/>
         <source>Enter length 1:</source>
-        <translation>Enter length 1:</translation>
+        <translation>Insira o comprimento 1:</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionmodifybevel.cpp" line="282"/>
         <source>Enter length 2:</source>
-        <translation>Enter length 2:</translation>
+        <translation>Insira o comprimento 2:</translation>
     </message>
 </context>
 <context>
@@ -19018,27 +19018,27 @@ This block cannot be inserted.</source>
         <location filename="../../src/actions/rs_actionmodifycut.cpp" line="103"/>
         <location filename="../../src/actions/rs_actionmodifycut.cpp" line="116"/>
         <source>No Entity found.</source>
-        <translation>No Entity found.</translation>
+        <translation>Nenhuma entidade encontrada.</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionmodifycut.cpp" line="110"/>
         <source>Entity must be a line, arc, circle, ellipse or interpolation spline.</source>
-        <translation>Entity must be a line, arc, circle, ellipse or interpolation spline.</translation>
+        <translation>A entidade deve ser uma linha, arco, círculo, elipse ou spline de interpolação.</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionmodifycut.cpp" line="118"/>
         <source>Cutting point is invalid.</source>
-        <translation>Cutting point is invalid.</translation>
+        <translation>Ponto de corte inválido.</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionmodifycut.cpp" line="121"/>
         <source>Cutting point is not on entity.</source>
-        <translation>Cutting point is not on entity.</translation>
+        <translation>O ponto de corte não está na entidade.</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionmodifycut.cpp" line="145"/>
         <source>Specify entity to cut</source>
-        <translation>Specify entity to cut</translation>
+        <translation>Especifique a entidade a cortar</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionmodifycut.cpp" line="146"/>
@@ -19048,7 +19048,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actionmodifycut.cpp" line="149"/>
         <source>Specify cutting point</source>
-        <translation>Specify cutting point</translation>
+        <translation>Especifique o ponto de corte</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionmodifycut.cpp" line="150"/>
@@ -19061,47 +19061,47 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actionmodifydeletefree.cpp" line="101"/>
         <source>Entities not in the same polyline.</source>
-        <translation>Entities not in the same polyline.</translation>
+        <translation>Entidades não pertencem à mesma polilinha.</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionmodifydeletefree.cpp" line="104"/>
         <source>Parent of second entity is not a polyline</source>
-        <translation>Parent of second entity is not a polyline</translation>
+        <translation>O pai da segunda entidade não é uma polilinha</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionmodifydeletefree.cpp" line="107"/>
         <source>Parent of second entity is nullptr</source>
-        <translation>Parent of second entity is nullptr</translation>
+        <translation>O pai da segunda entidade é nulo</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionmodifydeletefree.cpp" line="110"/>
         <source>One of the chosen entities is nullptr</source>
-        <translation>One of the chosen entities is nullptr</translation>
+        <translation>Uma das entidades escolhidas é nula</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionmodifydeletefree.cpp" line="133"/>
         <source>Parent of first entity is not a polyline</source>
-        <translation>Parent of first entity is not a polyline</translation>
+        <translation>O pai da primeira entidade não é uma polilinha</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionmodifydeletefree.cpp" line="137"/>
         <source>Parent of first entity is nullptr</source>
-        <translation>Parent of first entity is nullptr</translation>
+        <translation>O pai da primeira entidade é nulo</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionmodifydeletefree.cpp" line="141"/>
         <source>First entity is nullptr</source>
-        <translation>First entity is nullptr</translation>
+        <translation>A primeira entidade é nula</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionmodifydeletefree.cpp" line="153"/>
         <source>Second entity is nullptr</source>
-        <translation>Second entity is nullptr</translation>
+        <translation>A segunda entidade é nula</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionmodifydeletefree.cpp" line="166"/>
         <source>Specify first break point on a polyline</source>
-        <translation>Specify first break point on a polyline</translation>
+        <translation>Especifique o primeiro ponto de quebra na polilinha</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionmodifydeletefree.cpp" line="167"/>
@@ -19111,7 +19111,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actionmodifydeletefree.cpp" line="170"/>
         <source>Specify second break point on the same polyline</source>
-        <translation>Specify second break point on the same polyline</translation>
+        <translation>Especifique o segundo ponto de quebra na mesma polilinha</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionmodifydeletefree.cpp" line="172"/>
@@ -19124,7 +19124,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actionmodifydeletequick.cpp" line="92"/>
         <source>Pick entity to delete</source>
-        <translation>Pick entity to delete</translation>
+        <translation>Selecione a entidade a excluir</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionmodifydeletequick.cpp" line="93"/>
@@ -19137,7 +19137,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actionmodifyentity.cpp" line="109"/>
         <source>Click on entity to modify</source>
-        <translation>Click on entity to modify</translation>
+        <translation>Clique na entidade para modificar</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionmodifyentity.cpp" line="109"/>
@@ -19150,7 +19150,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actionmodifymirror.cpp" line="161"/>
         <source>Specify first point of mirror line</source>
-        <translation>Specify first point of mirror line</translation>
+        <translation>Especifique o primeiro ponto da linha espelho</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionmodifymirror.cpp" line="162"/>
@@ -19160,7 +19160,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actionmodifymirror.cpp" line="166"/>
         <source>Specify second point of mirror line</source>
-        <translation>Specify second point of mirror line</translation>
+        <translation>Especifique o segundo ponto da linha espelho</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionmodifymirror.cpp" line="167"/>
@@ -19173,12 +19173,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actionmodifymove.cpp" line="150"/>
         <source>Invalid number of copies, use %1 </source>
-        <translation>Invalid number of copies, use %1</translation>
+        <translation>Número de cópias inválido, usar %1</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionmodifymove.cpp" line="170"/>
         <source>Specify reference point</source>
-        <translation>Specify reference point</translation>
+        <translation>Especifique o ponto de referência</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionmodifymove.cpp" line="171"/>
@@ -19188,7 +19188,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actionmodifymove.cpp" line="174"/>
         <source>Specify target point</source>
-        <translation>Specify target point</translation>
+        <translation>Especifique o ponto de destino</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionmodifymove.cpp" line="175"/>
@@ -19206,7 +19206,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actionmodifymoverotate.cpp" line="235"/>
         <source>Specify reference point</source>
-        <translation>Specify reference point</translation>
+        <translation>Especifique o ponto de referência</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionmodifymoverotate.cpp" line="236"/>
@@ -19216,7 +19216,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actionmodifymoverotate.cpp" line="239"/>
         <source>Specify target point</source>
-        <translation>Specify target point</translation>
+        <translation>Especifique o ponto de destino</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionmodifymoverotate.cpp" line="240"/>
@@ -19227,7 +19227,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actionmodifymoverotate.cpp" line="243"/>
         <source>Enter rotation angle:</source>
-        <translation>Enter rotation angle:</translation>
+        <translation>Insira o ângulo de rotação:</translation>
     </message>
 </context>
 <context>
@@ -19235,7 +19235,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actionmodifyoffset.cpp" line="101"/>
         <source>Specify direction of offset</source>
-        <translation>Specify direction of offset</translation>
+        <translation>Especifique a direção do deslocamento</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionmodifyoffset.cpp" line="101"/>
@@ -19248,7 +19248,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actionmodifyrotate.cpp" line="144"/>
         <source>Specify rotation center</source>
-        <translation>Specify rotation center</translation>
+        <translation>Especifique o centro de rotação</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionmodifyrotate.cpp" line="145"/>
@@ -19260,12 +19260,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actionmodifyrotate.cpp" line="149"/>
         <source>Specify reference point</source>
-        <translation>Specify reference point</translation>
+        <translation>Especifique o ponto de referência</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionmodifyrotate.cpp" line="153"/>
         <source>Specify target point to rotate to</source>
-        <translation>Specify target point to rotate to</translation>
+        <translation>Especifique o ponto de destino para rotacionar</translation>
     </message>
 </context>
 <context>
@@ -19273,7 +19273,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actionmodifyrotate2.cpp" line="148"/>
         <source>Specify absolute reference point</source>
-        <translation>Specify absolute reference point</translation>
+        <translation>Especifique o ponto de referência absoluto</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionmodifyrotate2.cpp" line="149"/>
@@ -19283,7 +19283,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actionmodifyrotate2.cpp" line="152"/>
         <source>Specify relative reference point</source>
-        <translation>Specify relative reference point</translation>
+        <translation>Especifique o ponto de referência relativo</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionmodifyrotate2.cpp" line="153"/>
@@ -19302,7 +19302,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actionmodifyround.cpp" line="410"/>
         <source>Specify first entity or enter radius &lt;%1&gt;</source>
-        <translation>Specify first entity or enter radius &lt;%1&gt;</translation>
+        <translation>Especifique a primeira entidade ou insira o raio &lt;%1&gt;</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionmodifyround.cpp" line="411"/>
@@ -19313,12 +19313,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actionmodifyround.cpp" line="414"/>
         <source>Specify second entity</source>
-        <translation>Specify second entity</translation>
+        <translation>Especifique a segunda entidade</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionmodifyround.cpp" line="418"/>
         <source>Enter radius:</source>
-        <translation>Enter radius:</translation>
+        <translation>Insira o raio:</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionmodifyround.cpp" line="419"/>
@@ -19331,7 +19331,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actionmodifyscale.cpp" line="227"/>
         <source>Specify scale center</source>
-        <translation>Specify scale center</translation>
+        <translation>Especifique o centro de escala</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionmodifyscale.cpp" line="228"/>
@@ -19343,12 +19343,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actionmodifyscale.cpp" line="232"/>
         <source>Specify reference point</source>
-        <translation>Specify reference point</translation>
+        <translation>Especifique o ponto de referência</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionmodifyscale.cpp" line="236"/>
         <source>Specify target point</source>
-        <translation>Specify target point</translation>
+        <translation>Especifique o ponto de destino</translation>
     </message>
 </context>
 <context>
@@ -19356,7 +19356,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actionmodifystretch.cpp" line="175"/>
         <source>Specify first corner</source>
-        <translation>Specify first corner</translation>
+        <translation>Especifique o primeiro canto</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionmodifystretch.cpp" line="176"/>
@@ -19366,7 +19366,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actionmodifystretch.cpp" line="179"/>
         <source>Specify second corner</source>
-        <translation>Specify second corner</translation>
+        <translation>Especifique o segundo canto</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionmodifystretch.cpp" line="180"/>
@@ -19378,12 +19378,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actionmodifystretch.cpp" line="183"/>
         <source>Specify reference point</source>
-        <translation>Specify reference point</translation>
+        <translation>Especifique o ponto de referência</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionmodifystretch.cpp" line="187"/>
         <source>Specify target point</source>
-        <translation>Specify target point</translation>
+        <translation>Especifique o ponto de destino</translation>
     </message>
 </context>
 <context>
@@ -19391,7 +19391,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actionmodifytrim.cpp" line="177"/>
         <source>Select first trim entity</source>
-        <translation>Select first trim entity</translation>
+        <translation>Selecione a primeira entidade de aparamento</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionmodifytrim.cpp" line="178"/>
@@ -19402,7 +19402,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actionmodifytrim.cpp" line="180"/>
         <source>Select limiting entity</source>
-        <translation>Select limiting entity</translation>
+        <translation>Selecione a entidade limitante</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionmodifytrim.cpp" line="181"/>
@@ -19413,12 +19413,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actionmodifytrim.cpp" line="186"/>
         <source>Select second trim entity</source>
-        <translation>Select second trim entity</translation>
+        <translation>Selecione a segunda entidade de aparamento</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionmodifytrim.cpp" line="189"/>
         <source>Select entity to trim</source>
-        <translation>Select entity to trim</translation>
+        <translation>Selecione a entidade para aparar</translation>
     </message>
 </context>
 <context>
@@ -19426,17 +19426,17 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actionmodifytrimamount.cpp" line="101"/>
         <source>No entity found. </source>
-        <translation>No entity found.</translation>
+        <translation>Nenhuma entidade encontrada.</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionmodifytrimamount.cpp" line="104"/>
         <source>The chosen Entity is in a block. Please edit the block.</source>
-        <translation>The chosen Entity is in a block. Please edit the block.</translation>
+        <translation>A entidade escolhida está em um bloco. Por favor, edite o bloco.</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionmodifytrimamount.cpp" line="108"/>
         <source>The chosen Entity is not an atomic entity or cannot be trimmed.</source>
-        <translation>The chosen Entity is not an atomic entity or cannot be trimmed.</translation>
+        <translation>A entidade escolhida não é uma entidade atômica ou não pode ser aparada.</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionmodifytrimamount.cpp" line="139"/>
@@ -19446,7 +19446,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actionmodifytrimamount.cpp" line="186"/>
         <source>Select entity to trim or enter distance:</source>
-        <translation>Select entity to trim or enter distance:</translation>
+        <translation>Selecione a entidade para aparar ou insira a distância:</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionmodifytrimamount.cpp" line="187"/>
@@ -19459,12 +19459,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actionorder.cpp" line="124"/>
         <source>No Entity found.</source>
-        <translation>No Entity found.</translation>
+        <translation>Nenhuma entidade encontrada.</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionorder.cpp" line="150"/>
         <source>Choose entity for order</source>
-        <translation>Choose entity for order</translation>
+        <translation>Escolha a entidade para ordenar</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionorder.cpp" line="151"/>
@@ -19478,27 +19478,27 @@ This block cannot be inserted.</source>
         <location filename="../../src/actions/rs_actionpolylineadd.cpp" line="105"/>
         <location filename="../../src/actions/rs_actionpolylineadd.cpp" line="121"/>
         <source>No Entity found.</source>
-        <translation>No Entity found.</translation>
+        <translation>Nenhuma entidade encontrada.</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionpolylineadd.cpp" line="109"/>
         <source>Entity must be a polyline.</source>
-        <translation>Entity must be a polyline.</translation>
+        <translation>A entidade deve ser uma polilinha.</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionpolylineadd.cpp" line="123"/>
         <source>Adding point is invalid.</source>
-        <translation>Adding point is invalid.</translation>
+        <translation>Ponto de adição inválido.</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionpolylineadd.cpp" line="131"/>
         <source>Adding point is not on entity.</source>
-        <translation>Adding point is not on entity.</translation>
+        <translation>O ponto de adição não está na entidade.</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionpolylineadd.cpp" line="157"/>
         <source>Specify polyline to add nodes</source>
-        <translation>Specify polyline to add nodes</translation>
+        <translation>Especifique a polilinha para adicionar nós</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionpolylineadd.cpp" line="158"/>
@@ -19508,7 +19508,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actionpolylineadd.cpp" line="161"/>
         <source>Specify adding node&apos;s point</source>
-        <translation>Specify adding node&apos;s point</translation>
+        <translation>Especifique o ponto do nó a adicionar</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionpolylineadd.cpp" line="162"/>
@@ -19521,27 +19521,27 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actionpolylineappend.cpp" line="91"/>
         <source>No Entity found.</source>
-        <translation>No Entity found.</translation>
+        <translation>Nenhuma entidade encontrada.</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionpolylineappend.cpp" line="95"/>
         <source>Entity must be a polyline.</source>
-        <translation>Entity must be a polyline.</translation>
+        <translation>A entidade deve ser uma polilinha.</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionpolylineappend.cpp" line="99"/>
         <source>Can not append nodes in a closed polyline.</source>
-        <translation>Can not append nodes in a closed polyline.</translation>
+        <translation>Não é possível adicionar nós em uma polilinha fechada.</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionpolylineappend.cpp" line="119"/>
         <source>Click somewhere near the beginning or end of existing polyline.</source>
-        <translation>Click somewhere near the beginning or end of existing polyline.</translation>
+        <translation>Clique próximo ao início ou fim da polilinha existente.</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionpolylineappend.cpp" line="191"/>
         <source>Specify the polyline somewhere near the beginning or end point</source>
-        <translation>Specify the polyline somewhere near the beginning or end point</translation>
+        <translation>Especifique a polilinha próximo ao ponto inicial ou final</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionpolylineappend.cpp" line="192"/>
@@ -19551,7 +19551,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actionpolylineappend.cpp" line="207"/>
         <source>Specify next point or [%1]</source>
-        <translation>Specify next point or [%1]</translation>
+        <translation>Especifique o próximo ponto ou [%1]</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionpolylineappend.cpp" line="208"/>
@@ -19562,7 +19562,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actionpolylineappend.cpp" line="211"/>
         <source>Specify next point</source>
-        <translation>Specify next point</translation>
+        <translation>Especifique o próximo ponto</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionpolylineappend.cpp" line="230"/>
@@ -19576,27 +19576,27 @@ This block cannot be inserted.</source>
         <location filename="../../src/actions/rs_actionpolylinedel.cpp" line="108"/>
         <location filename="../../src/actions/rs_actionpolylinedel.cpp" line="127"/>
         <source>No Entity found.</source>
-        <translation>No Entity found.</translation>
+        <translation>Nenhuma entidade encontrada.</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionpolylinedel.cpp" line="112"/>
         <source>Entity must be a polyline.</source>
-        <translation>Entity must be a polyline.</translation>
+        <translation>A entidade deve ser uma polilinha.</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionpolylinedel.cpp" line="129"/>
         <source>Deleting point is invalid.</source>
-        <translation>Deleting point is invalid.</translation>
+        <translation>Ponto de exclusão inválido.</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionpolylinedel.cpp" line="132"/>
         <source>Deleting point is not on entity.</source>
-        <translation>Deleting point is not on entity.</translation>
+        <translation>O ponto de exclusão não está na entidade.</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionpolylinedel.cpp" line="158"/>
         <source>Specify polyline to delete node</source>
-        <translation>Specify polyline to delete node</translation>
+        <translation>Especifique a polilinha para excluir o nó</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionpolylinedel.cpp" line="159"/>
@@ -19606,7 +19606,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actionpolylinedel.cpp" line="162"/>
         <source>Specify deleting node&apos;s point</source>
-        <translation>Specify deleting node&apos;s point</translation>
+        <translation>Especifique o ponto do nó a excluir</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionpolylinedel.cpp" line="163"/>
@@ -19621,29 +19621,29 @@ This block cannot be inserted.</source>
         <location filename="../../src/actions/rs_actionpolylinedelbetween.cpp" line="144"/>
         <location filename="../../src/actions/rs_actionpolylinedelbetween.cpp" line="157"/>
         <source>No Entity found.</source>
-        <translation>No Entity found.</translation>
+        <translation>Nenhuma entidade encontrada.</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionpolylinedelbetween.cpp" line="123"/>
         <source>Entity must be a polyline.</source>
-        <translation>Entity must be a polyline.</translation>
+        <translation>A entidade deve ser uma polilinha.</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionpolylinedelbetween.cpp" line="146"/>
         <location filename="../../src/actions/rs_actionpolylinedelbetween.cpp" line="159"/>
         <source>Deleting point is invalid.</source>
-        <translation>Deleting point is invalid.</translation>
+        <translation>Ponto de exclusão inválido.</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionpolylinedelbetween.cpp" line="149"/>
         <location filename="../../src/actions/rs_actionpolylinedelbetween.cpp" line="162"/>
         <source>Deleting point is not on entity.</source>
-        <translation>Deleting point is not on entity.</translation>
+        <translation>O ponto de exclusão não está na entidade.</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionpolylinedelbetween.cpp" line="189"/>
         <source>Specify polyline to delete between two nodes</source>
-        <translation>Specify polyline to delete between two nodes</translation>
+        <translation>Especifique a polilinha para excluir entre dois nós</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionpolylinedelbetween.cpp" line="190"/>
@@ -19653,7 +19653,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actionpolylinedelbetween.cpp" line="193"/>
         <source>Specify first node</source>
-        <translation>Specify first node</translation>
+        <translation>Especifique o primeiro nó</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionpolylinedelbetween.cpp" line="194"/>
@@ -19664,7 +19664,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actionpolylinedelbetween.cpp" line="197"/>
         <source>Specify second node</source>
-        <translation>Specify second node</translation>
+        <translation>Especifique o segundo nó</translation>
     </message>
 </context>
 <context>
@@ -19672,17 +19672,17 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actionpolylineequidistant.cpp" line="305"/>
         <source>No Entity found.</source>
-        <translation>No Entity found.</translation>
+        <translation>Nenhuma entidade encontrada.</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionpolylineequidistant.cpp" line="309"/>
         <source>Entity must be a polyline.</source>
-        <translation>Entity must be a polyline.</translation>
+        <translation>A entidade deve ser uma polilinha.</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionpolylineequidistant.cpp" line="369"/>
         <source>Choose the original polyline</source>
-        <translation>Choose the original polyline</translation>
+        <translation>Escolha a polilinha original</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionpolylineequidistant.cpp" line="370"/>
@@ -19696,22 +19696,22 @@ This block cannot be inserted.</source>
         <location filename="../../src/actions/rs_actionpolylinesegment.cpp" line="65"/>
         <location filename="../../src/actions/rs_actionpolylinesegment.cpp" line="86"/>
         <source>Polyline created</source>
-        <translation>Polyline created</translation>
+        <translation>Polilinha criada</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionpolylinesegment.cpp" line="306"/>
         <source>No Entity found.</source>
-        <translation>No Entity found.</translation>
+        <translation>Nenhuma entidade encontrada.</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionpolylinesegment.cpp" line="309"/>
         <source>Entity can not be a closed polyline.</source>
-        <translation>Entity can not be a closed polyline.</translation>
+        <translation>A entidade não pode ser uma polilinha fechada.</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionpolylinesegment.cpp" line="350"/>
         <source>Choose one of the segments on the original polyline</source>
-        <translation>Choose one of the segments on the original polyline</translation>
+        <translation>Escolha um dos segmentos da polilinha original</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionpolylinesegment.cpp" line="351"/>
@@ -19726,29 +19726,29 @@ This block cannot be inserted.</source>
         <location filename="../../src/actions/rs_actionpolylinetrim.cpp" line="124"/>
         <location filename="../../src/actions/rs_actionpolylinetrim.cpp" line="143"/>
         <source>No Entity found.</source>
-        <translation>No Entity found.</translation>
+        <translation>Nenhuma entidade encontrada.</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionpolylinetrim.cpp" line="110"/>
         <source>Entity must be a polyline.</source>
-        <translation>Entity must be a polyline.</translation>
+        <translation>A entidade deve ser uma polilinha.</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionpolylinetrim.cpp" line="126"/>
         <location filename="../../src/actions/rs_actionpolylinetrim.cpp" line="145"/>
         <source>Specifying point is invalid.</source>
-        <translation>Specifying point is invalid.</translation>
+        <translation>Ponto especificado inválido.</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionpolylinetrim.cpp" line="129"/>
         <location filename="../../src/actions/rs_actionpolylinetrim.cpp" line="148"/>
         <source>No Segment found on entity.</source>
-        <translation>No Segment found on entity.</translation>
+        <translation>Nenhum segmento encontrado na entidade.</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionpolylinetrim.cpp" line="181"/>
         <source>Specify polyline to trim</source>
-        <translation>Specify polyline to trim</translation>
+        <translation>Especifique a polilinha para aparar</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionpolylinetrim.cpp" line="182"/>
@@ -19758,7 +19758,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actionpolylinetrim.cpp" line="185"/>
         <source>Specify first segment</source>
-        <translation>Specify first segment</translation>
+        <translation>Especifique o primeiro segmento</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionpolylinetrim.cpp" line="186"/>
@@ -19769,7 +19769,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actionpolylinetrim.cpp" line="189"/>
         <source>Specify second segment</source>
-        <translation>Specify second segment</translation>
+        <translation>Especifique o segundo segmento</translation>
     </message>
 </context>
 <context>
@@ -19777,57 +19777,57 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actionprintpreview.cpp" line="138"/>
         <source>Printout offset in paper coordinates by (%1, %2)</source>
-        <translation>Printout offset in paper coordinates by (%1, %2)</translation>
+        <translation>Deslocamento de impressão nas coordenadas do papel por (%1, %2)</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionprintpreview.cpp" line="141"/>
         <source>Printout offset in graph coordinates by (%1, %2)</source>
-        <translation>Printout offset in graph coordinates by (%1, %2)</translation>
+        <translation>Deslocamento de impressão nas coordenadas do gráfico por (%1, %2)</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionprintpreview.cpp" line="158"/>
         <source>Printout in Black/White</source>
-        <translation>Printout in Black/White</translation>
+        <translation>Impressão em Preto/Branco</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionprintpreview.cpp" line="163"/>
         <source>Printout in color</source>
-        <translation>Printout in color</translation>
+        <translation>Impressão em cores</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionprintpreview.cpp" line="168"/>
         <source>Printout offset in graph coordinates</source>
-        <translation>Printout offset in graph coordinates</translation>
+        <translation>Deslocamento de impressão nas coordenadas do gráfico</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionprintpreview.cpp" line="173"/>
         <source>Printout offset in paper coordinates</source>
-        <translation>Printout offset in paper coordinates</translation>
+        <translation>Deslocamento de impressão nas coordenadas do papel</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionprintpreview.cpp" line="178"/>
         <source>: select printout offset coordinates</source>
-        <translation>: select printout offset coordinates</translation>
+        <translation>: selecione as coordenadas de deslocamento de impressão</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionprintpreview.cpp" line="179"/>
         <source>type in offset from command line to offset printout</source>
-        <translation>type in offset from command line to offset printout</translation>
+        <translation>insira o deslocamento pela linha de comando para deslocar a impressão</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionprintpreview.cpp" line="187"/>
         <source>Printout offset ignores relative zero. Ignoring &apos;@&apos;</source>
-        <translation>Printout offset ignores relative zero. Ignoring &apos;@&apos;</translation>
+        <translation>O deslocamento de impressão ignora o zero relativo. Ignorando &apos;@&apos;</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionprintpreview.cpp" line="272"/>
         <source>RS_ActionPrintPreview::fit(): Invalid paper size</source>
-        <translation>RS_ActionPrintPreview::fit(): Invalid paper size</translation>
+        <translation>RS_ActionPrintPreview::fit(): Tamanho de papel inválido</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionprintpreview.cpp" line="356"/>
         <source>RS_ActionPrintPreview::calcPagesNum(): Limit of pages has been exceeded.</source>
-        <translation>RS_ActionPrintPreview::calcPagesNum(): Limit of pages has been exceeded.</translation>
+        <translation>RS_ActionPrintPreview::calcPagesNum(): O limite de páginas foi excedido.</translation>
     </message>
 </context>
 <context>
@@ -19835,12 +19835,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actionselect.cpp" line="75"/>
         <source>No entity selected!</source>
-        <translation>No entity selected!</translation>
+        <translation>Nenhuma entidade selecionada!</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionselect.cpp" line="83"/>
         <source>Select to modify attributes</source>
-        <translation>Select to modify attributes</translation>
+        <translation>Selecione para modificar atributos</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionselect.cpp" line="83"/>
@@ -19866,82 +19866,82 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actionselect.cpp" line="86"/>
         <source>Select entities to order</source>
-        <translation>Select entities to order</translation>
+        <translation>Selecione entidades para ordenar</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionselect.cpp" line="89"/>
         <source>Select to delete</source>
-        <translation>Select to delete</translation>
+        <translation>Selecione para excluir</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionselect.cpp" line="92"/>
         <source>Select to delete immediately</source>
-        <translation>Select to delete immediately</translation>
+        <translation>Selecione para excluir imediatamente</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionselect.cpp" line="95"/>
         <source>Select to move</source>
-        <translation>Select to move</translation>
+        <translation>Selecione para mover</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionselect.cpp" line="98"/>
         <source>Select to copy</source>
-        <translation>Select to copy</translation>
+        <translation>Selecione para copiar</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionselect.cpp" line="101"/>
         <source>Select to cut</source>
-        <translation>Select to cut</translation>
+        <translation>Selecione para recortar</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionselect.cpp" line="104"/>
         <source>Select to revert direction</source>
-        <translation>Select to revert direction</translation>
+        <translation>Selecione para reverter direção</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionselect.cpp" line="107"/>
         <source>Select to rotate</source>
-        <translation>Select to rotate</translation>
+        <translation>Selecione para girar</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionselect.cpp" line="110"/>
         <source>Select to scale</source>
-        <translation>Select to scale</translation>
+        <translation>Selecione para escalonar</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionselect.cpp" line="113"/>
         <source>Select to mirror</source>
-        <translation>Select to mirror</translation>
+        <translation>Selecione para espelhar</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionselect.cpp" line="116"/>
         <source>Select to move and rotate</source>
-        <translation>Select to move and rotate</translation>
+        <translation>Selecione para mover e girar</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionselect.cpp" line="119"/>
         <source>Select to create offset</source>
-        <translation>Select to create offset</translation>
+        <translation>Selecione para criar deslocamento</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionselect.cpp" line="122"/>
         <source>Select for two axis rotation</source>
-        <translation>Select for two axis rotation</translation>
+        <translation>Selecione para rotação em dois eixos</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionselect.cpp" line="125"/>
         <source>Select to explode text</source>
-        <translation>Select to explode text</translation>
+        <translation>Selecione para explodir texto</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionselect.cpp" line="128"/>
         <source>Select to explode block</source>
-        <translation>Select to explode block</translation>
+        <translation>Selecione para explodir bloco</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionselect.cpp" line="131"/>
         <source>Select to create block</source>
-        <translation>Select to create block</translation>
+        <translation>Selecione para criar bloco</translation>
     </message>
 </context>
 <context>
@@ -19949,7 +19949,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actionselectcontour.cpp" line="57"/>
         <source>Entity must be an Atomic Entity.</source>
-        <translation>Entity must be an Atomic Entity.</translation>
+        <translation>A entidade deve ser uma Entidade Atômica.</translation>
     </message>
 </context>
 <context>
@@ -19957,7 +19957,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actionselectintersected.cpp" line="140"/>
         <source>Choose first point of intersection line</source>
-        <translation>Choose first point of intersection line</translation>
+        <translation>Escolha o primeiro ponto da linha de interseção</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionselectintersected.cpp" line="140"/>
@@ -19967,7 +19967,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actionselectintersected.cpp" line="143"/>
         <source>Choose second point of intersection line</source>
-        <translation>Choose second point of intersection line</translation>
+        <translation>Escolha o segundo ponto da linha de interseção</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionselectintersected.cpp" line="143"/>
@@ -19980,7 +19980,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actionselectwindow.cpp" line="181"/>
         <source>Click and drag for the selection window</source>
-        <translation>Click and drag for the selection window</translation>
+        <translation>Clique e arraste para a janela de seleção</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionselectwindow.cpp" line="181"/>
@@ -19990,7 +19990,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actionselectwindow.cpp" line="184"/>
         <source>Choose second edge</source>
-        <translation>Choose second edge</translation>
+        <translation>Escolha a segunda aresta</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionselectwindow.cpp" line="184"/>
@@ -20003,12 +20003,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actionsetrelativezero.cpp" line="50"/>
         <source>Set &amp;Relative Zero</source>
-        <translation>Set &amp;Relative Zero</translation>
+        <translation>Definir Zero &amp;Relativo</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionsetrelativezero.cpp" line="99"/>
         <source>Set relative Zero</source>
-        <translation>Set relative Zero</translation>
+        <translation>Definir zero relativo</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionsetrelativezero.cpp" line="99"/>
@@ -20021,12 +20021,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actionsnapintersectionmanual.cpp" line="58"/>
         <source>I&amp;ntersection Manually</source>
-        <translation>I&amp;ntersection Manually</translation>
+        <translation>&amp;Interseção Manualmente</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionsnapintersectionmanual.cpp" line="182"/>
         <source>Select first entity</source>
-        <translation>Select first entity</translation>
+        <translation>Selecione a primeira entidade</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionsnapintersectionmanual.cpp" line="183"/>
@@ -20037,7 +20037,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actionsnapintersectionmanual.cpp" line="186"/>
         <source>Select second entity</source>
-        <translation>Select second entity</translation>
+        <translation>Selecione a segunda entidade</translation>
     </message>
 </context>
 <context>
@@ -20045,12 +20045,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiontoolregeneratedimensions.cpp" line="70"/>
         <source>Regenerated %1 dimension entities</source>
-        <translation>Regenerated %1 dimension entities</translation>
+        <translation>Regeneradas %1 entidades de cota</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiontoolregeneratedimensions.cpp" line="72"/>
         <source>No dimension entities found</source>
-        <translation>No dimension entities found</translation>
+        <translation>Nenhuma entidade de cota encontrada</translation>
     </message>
 </context>
 <context>
@@ -20058,7 +20058,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actionzoompan.cpp" line="119"/>
         <source>Click and drag to pan zoom</source>
-        <translation>Click and drag to pan zoom</translation>
+        <translation>Clique e arraste para panorâmica/zoom</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionzoompan.cpp" line="120"/>
@@ -20069,7 +20069,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actionzoompan.cpp" line="123"/>
         <source>Zoom panning</source>
-        <translation>Zoom panning</translation>
+        <translation>Panorâmica de zoom</translation>
     </message>
 </context>
 <context>
@@ -20077,7 +20077,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actionzoomwindow.cpp" line="151"/>
         <source>Specify first edge</source>
-        <translation>Specify first edge</translation>
+        <translation>Especifique a primeira aresta</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionzoomwindow.cpp" line="151"/>
@@ -20087,7 +20087,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actionzoomwindow.cpp" line="154"/>
         <source>Specify second edge</source>
-        <translation>Specify second edge</translation>
+        <translation>Especifique a segunda aresta</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionzoomwindow.cpp" line="154"/>
@@ -20100,7 +20100,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/lib/gui/rs_graphicview.cpp" line="1542"/>
         <source>Draft</source>
-        <translation>Draft</translation>
+        <translation>Rascunho</translation>
     </message>
 </context>
 <context>
@@ -20122,7 +20122,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_arcoptions.h" line="109"/>
         <location filename="../../../generated/librecad/ui/ui_qg_arcoptions.h" line="109"/>
         <source>Arc Options</source>
-        <translation>Arc Options</translation>
+        <translation>Opções de Arco</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_arcoptions.ui" line="77"/>
@@ -20130,7 +20130,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_arcoptions.h" line="112"/>
         <location filename="../../../generated/librecad/ui/ui_qg_arcoptions.h" line="112"/>
         <source>Counterclockwise</source>
-        <translation>Counterclockwise</translation>
+        <translation>Anti-horário</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_arcoptions.ui" line="122"/>
@@ -20138,7 +20138,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_arcoptions.h" line="116"/>
         <location filename="../../../generated/librecad/ui/ui_qg_arcoptions.h" line="116"/>
         <source>Clockwise</source>
-        <translation>Clockwise</translation>
+        <translation>Horário</translation>
     </message>
 </context>
 <context>
@@ -20149,7 +20149,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_arctangentialoptions.h" line="82"/>
         <location filename="../../../generated/librecad/ui/ui_qg_arctangentialoptions.h" line="82"/>
         <source>Tangential Arc Options</source>
-        <translation>Tangential Arc Options</translation>
+        <translation>Opções de Arco Tangencial</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_arctangentialoptions.ui" line="66"/>
@@ -20157,7 +20157,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_arctangentialoptions.h" line="84"/>
         <location filename="../../../generated/librecad/ui/ui_qg_arctangentialoptions.h" line="84"/>
         <source>Radius of the tangential arc</source>
-        <translation>Radius of the tangential arc</translation>
+        <translation>Raio do arco tangencial</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_arctangentialoptions.ui" line="85"/>
@@ -20165,7 +20165,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_arctangentialoptions.h" line="87"/>
         <location filename="../../../generated/librecad/ui/ui_qg_arctangentialoptions.h" line="87"/>
         <source>Total subtending angle of the tangential arc</source>
-        <translation>Total subtending angle of the tangential arc</translation>
+        <translation>Ângulo total inscrito do arco tangencial</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_arctangentialoptions.ui" line="98"/>
@@ -20174,7 +20174,7 @@ This block cannot be inserted.</source>
         <location filename="../../../generated/librecad/ui/ui_qg_arctangentialoptions.h" line="89"/>
         <source>Radius</source>
         <extracomment>Draw Tangential Arc by the given radius</extracomment>
-        <translation>Radius</translation>
+        <translation>Raio</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_arctangentialoptions.ui" line="120"/>
@@ -20194,7 +20194,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_beveloptions.h" line="111"/>
         <location filename="../../../generated/librecad/ui/ui_qg_beveloptions.h" line="111"/>
         <source>Bevel Options</source>
-        <translation>Bevel Options</translation>
+        <translation>Opções de Chanfro</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_beveloptions.ui" line="53"/>
@@ -20202,7 +20202,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_beveloptions.h" line="116"/>
         <location filename="../../../generated/librecad/ui/ui_qg_beveloptions.h" line="116"/>
         <source>Check to trim both entities to the bevel</source>
-        <translation>Check to trim both entities to the bevel</translation>
+        <translation>Marque para aparar ambas as entidades ao chanfro</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_beveloptions.ui" line="56"/>
@@ -20218,7 +20218,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_beveloptions.h" line="119"/>
         <location filename="../../../generated/librecad/ui/ui_qg_beveloptions.h" line="119"/>
         <source>Length 1:</source>
-        <translation>Length 1:</translation>
+        <translation>Comprimento 1:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_beveloptions.ui" line="92"/>
@@ -20226,7 +20226,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_beveloptions.h" line="120"/>
         <location filename="../../../generated/librecad/ui/ui_qg_beveloptions.h" line="120"/>
         <source>Length 2:</source>
-        <translation>Length 2:</translation>
+        <translation>Comprimento 2:</translation>
     </message>
 </context>
 <context>
@@ -20237,7 +20237,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_circleoptions.h" line="79"/>
         <location filename="../../../generated/librecad/ui/ui_qg_circleoptions.h" line="79"/>
         <source>Circle Options</source>
-        <translation>Circle Options</translation>
+        <translation>Opções de Círculo</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_circleoptions.ui" line="50"/>
@@ -20256,7 +20256,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_circletan2options.h" line="84"/>
         <location filename="../../../generated/librecad/ui/ui_qg_circletan2options.h" line="84"/>
         <source>Circle Tangential2 Options</source>
-        <translation>Circle Tangential2 Options</translation>
+        <translation>Opções de Círculo Tangente2</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_circletan2options.ui" line="56"/>
@@ -20280,7 +20280,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_circletan2options.h" line="90"/>
         <location filename="../../../generated/librecad/ui/ui_qg_circletan2options.h" line="90"/>
         <source>Radius of tangential circle</source>
-        <translation>Radius of tangential circle</translation>
+        <translation>Raio do círculo tangente</translation>
     </message>
 </context>
 <context>
@@ -20291,7 +20291,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_dimlinearoptions.h" line="119"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dimlinearoptions.h" line="119"/>
         <source>Linear Dimension Options</source>
-        <translation>Linear Dimension Options</translation>
+        <translation>Opções de Cota Linear</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dimlinearoptions.ui" line="68"/>
@@ -20310,7 +20310,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_dimoptions.h" line="164"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dimoptions.h" line="164"/>
         <source>Dimension Options</source>
-        <translation>Dimension Options</translation>
+        <translation>Opções de Cota</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dimoptions.ui" line="62"/>
@@ -20389,7 +20389,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_imageoptions.h" line="111"/>
         <location filename="../../../generated/librecad/ui/ui_qg_imageoptions.h" line="111"/>
         <source>Insert Options</source>
-        <translation>Insert Options</translation>
+        <translation>Opções de Inserção</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_imageoptions.ui" line="53"/>
@@ -20405,7 +20405,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_imageoptions.h" line="117"/>
         <location filename="../../../generated/librecad/ui/ui_qg_imageoptions.h" line="117"/>
         <source>Rotation Angle</source>
-        <translation>Rotation Angle</translation>
+        <translation>Ângulo de Rotação</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_imageoptions.ui" line="70"/>
@@ -20413,7 +20413,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_imageoptions.h" line="119"/>
         <location filename="../../../generated/librecad/ui/ui_qg_imageoptions.h" line="119"/>
         <source>Factor:</source>
-        <translation>Factor:</translation>
+        <translation>Fator:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_imageoptions.ui" line="86"/>
@@ -20421,7 +20421,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_imageoptions.h" line="121"/>
         <location filename="../../../generated/librecad/ui/ui_qg_imageoptions.h" line="121"/>
         <source>Scale Factor</source>
-        <translation>Scale Factor</translation>
+        <translation>Fator de Escala</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_imageoptions.ui" line="93"/>
@@ -20437,7 +20437,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_imageoptions.h" line="125"/>
         <location filename="../../../generated/librecad/ui/ui_qg_imageoptions.h" line="125"/>
         <source>DPI of Image</source>
-        <translation>DPI of Image</translation>
+        <translation>DPI da Imagem</translation>
     </message>
 </context>
 <context>
@@ -20448,7 +20448,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_insertoptions.h" line="183"/>
         <location filename="../../../generated/librecad/ui/ui_qg_insertoptions.h" line="183"/>
         <source>Insert Options</source>
-        <translation>Insert Options</translation>
+        <translation>Opções de Inserção</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_insertoptions.ui" line="65"/>
@@ -20464,7 +20464,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_insertoptions.h" line="189"/>
         <location filename="../../../generated/librecad/ui/ui_qg_insertoptions.h" line="189"/>
         <source>Rotation Angle</source>
-        <translation>Rotation Angle</translation>
+        <translation>Ângulo de Rotação</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_insertoptions.ui" line="106"/>
@@ -20472,7 +20472,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_insertoptions.h" line="191"/>
         <location filename="../../../generated/librecad/ui/ui_qg_insertoptions.h" line="191"/>
         <source>Factor:</source>
-        <translation>Factor:</translation>
+        <translation>Fator:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_insertoptions.ui" line="128"/>
@@ -20480,7 +20480,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_insertoptions.h" line="193"/>
         <location filename="../../../generated/librecad/ui/ui_qg_insertoptions.h" line="193"/>
         <source>Scale Factor</source>
-        <translation>Scale Factor</translation>
+        <translation>Fator de Escala</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_insertoptions.ui" line="163"/>
@@ -20488,7 +20488,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_insertoptions.h" line="195"/>
         <location filename="../../../generated/librecad/ui/ui_qg_insertoptions.h" line="195"/>
         <source>Array:</source>
-        <translation>Array:</translation>
+        <translation>Matriz:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_insertoptions.ui" line="185"/>
@@ -20496,7 +20496,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_insertoptions.h" line="197"/>
         <location filename="../../../generated/librecad/ui/ui_qg_insertoptions.h" line="197"/>
         <source>Number of Columns</source>
-        <translation>Number of Columns</translation>
+        <translation>Número de Colunas</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_insertoptions.ui" line="210"/>
@@ -20504,7 +20504,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_insertoptions.h" line="200"/>
         <location filename="../../../generated/librecad/ui/ui_qg_insertoptions.h" line="200"/>
         <source>Number of Rows</source>
-        <translation>Number of Rows</translation>
+        <translation>Número de Linhas</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_insertoptions.ui" line="235"/>
@@ -20520,7 +20520,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_insertoptions.h" line="204"/>
         <location filename="../../../generated/librecad/ui/ui_qg_insertoptions.h" line="204"/>
         <source>Column Spacing</source>
-        <translation>Column Spacing</translation>
+        <translation>Espaçamento de Colunas</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_insertoptions.ui" line="276"/>
@@ -20528,7 +20528,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_insertoptions.h" line="207"/>
         <location filename="../../../generated/librecad/ui/ui_qg_insertoptions.h" line="207"/>
         <source>Row Spacing</source>
-        <translation>Row Spacing</translation>
+        <translation>Espaçamento de Linhas</translation>
     </message>
 </context>
 <context>
@@ -20539,7 +20539,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_libraryinsertoptions.h" line="93"/>
         <location filename="../../../generated/librecad/ui/ui_qg_libraryinsertoptions.h" line="93"/>
         <source>Library Insert Options</source>
-        <translation>Library Insert Options</translation>
+        <translation>Opções de Inserção de Biblioteca</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_libraryinsertoptions.ui" line="53"/>
@@ -20555,7 +20555,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_libraryinsertoptions.h" line="99"/>
         <location filename="../../../generated/librecad/ui/ui_qg_libraryinsertoptions.h" line="99"/>
         <source>Rotation Angle</source>
-        <translation>Rotation Angle</translation>
+        <translation>Ângulo de Rotação</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_libraryinsertoptions.ui" line="70"/>
@@ -20563,7 +20563,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_libraryinsertoptions.h" line="101"/>
         <location filename="../../../generated/librecad/ui/ui_qg_libraryinsertoptions.h" line="101"/>
         <source>Factor:</source>
-        <translation>Factor:</translation>
+        <translation>Fator:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_libraryinsertoptions.ui" line="80"/>
@@ -20571,7 +20571,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_libraryinsertoptions.h" line="103"/>
         <location filename="../../../generated/librecad/ui/ui_qg_libraryinsertoptions.h" line="103"/>
         <source>Scale Factor</source>
-        <translation>Scale Factor</translation>
+        <translation>Fator de Escala</translation>
     </message>
 </context>
 <context>
@@ -20582,7 +20582,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_lineangleoptions.h" line="135"/>
         <location filename="../../../generated/librecad/ui/ui_qg_lineangleoptions.h" line="135"/>
         <source>Line Angle Options</source>
-        <translation>Line Angle Options</translation>
+        <translation>Opções de Ângulo de Linha</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_lineangleoptions.ui" line="65"/>
@@ -20598,7 +20598,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_lineangleoptions.h" line="138"/>
         <location filename="../../../generated/librecad/ui/ui_qg_lineangleoptions.h" line="138"/>
         <source>Line angle</source>
-        <translation>Line angle</translation>
+        <translation>Ângulo da linha</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_lineangleoptions.ui" line="109"/>
@@ -20614,7 +20614,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_lineangleoptions.h" line="142"/>
         <location filename="../../../generated/librecad/ui/ui_qg_lineangleoptions.h" line="142"/>
         <source>Length of line</source>
-        <translation>Length of line</translation>
+        <translation>Comprimento da linha</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_lineangleoptions.ui" line="147"/>
@@ -20622,7 +20622,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_lineangleoptions.h" line="144"/>
         <location filename="../../../generated/librecad/ui/ui_qg_lineangleoptions.h" line="144"/>
         <source>Snap Point:</source>
-        <translation>Snap Point:</translation>
+        <translation>Ponto de captura:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_lineangleoptions.ui" line="170"/>
@@ -20657,7 +20657,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_linebisectoroptions.h" line="100"/>
         <location filename="../../../generated/librecad/ui/ui_qg_linebisectoroptions.h" line="100"/>
         <source>Line Bisector Options</source>
-        <translation>Line Bisector Options</translation>
+        <translation>Opções de Bissetriz de Linha</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_linebisectoroptions.ui" line="56"/>
@@ -20673,7 +20673,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_linebisectoroptions.h" line="103"/>
         <location filename="../../../generated/librecad/ui/ui_qg_linebisectoroptions.h" line="103"/>
         <source>Length of bisector</source>
-        <translation>Length of bisector</translation>
+        <translation>Comprimento da bissetriz</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_linebisectoroptions.ui" line="73"/>
@@ -20689,7 +20689,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_linebisectoroptions.h" line="107"/>
         <location filename="../../../generated/librecad/ui/ui_qg_linebisectoroptions.h" line="107"/>
         <source>Number of bisectors to create</source>
-        <translation>Number of bisectors to create</translation>
+        <translation>Número de bissetrizes a criar</translation>
     </message>
 </context>
 <context>
@@ -20700,7 +20700,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_lineoptions.h" line="87"/>
         <location filename="../../../generated/librecad/ui/ui_qg_lineoptions.h" line="87"/>
         <source>Line Options</source>
-        <translation>Line Options</translation>
+        <translation>Opções de Linha</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_lineoptions.ui" line="53"/>
@@ -20708,7 +20708,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_lineoptions.h" line="89"/>
         <location filename="../../../generated/librecad/ui/ui_qg_lineoptions.h" line="89"/>
         <source>Form a closed contour from lines drawn</source>
-        <translation>Form a closed contour from lines drawn</translation>
+        <translation>Formar um contorno fechado a partir das linhas desenhadas</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_lineoptions.ui" line="56"/>
@@ -20716,7 +20716,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_lineoptions.h" line="91"/>
         <location filename="../../../generated/librecad/ui/ui_qg_lineoptions.h" line="91"/>
         <source>Close</source>
-        <translation>Close</translation>
+        <translation>Fechar</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_lineoptions.ui" line="72"/>
@@ -20724,7 +20724,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_lineoptions.h" line="93"/>
         <location filename="../../../generated/librecad/ui/ui_qg_lineoptions.h" line="93"/>
         <source>Undo the last line drawing</source>
-        <translation>Undo the last line drawing</translation>
+        <translation>Desfazer o último desenho de linha</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_lineoptions.ui" line="75"/>
@@ -20740,7 +20740,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_lineoptions.h" line="97"/>
         <location filename="../../../generated/librecad/ui/ui_qg_lineoptions.h" line="97"/>
         <source>Redo the last line drawing</source>
-        <translation>Redo the last line drawing</translation>
+        <translation>Refazer o último desenho de linha</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_lineoptions.ui" line="85"/>
@@ -20759,7 +20759,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_lc_lineoptions.h" line="202"/>
         <location filename="../../../generated/librecad/ui/ui_lc_lineoptions.h" line="202"/>
         <source>Line Options</source>
-        <translation>Line Options</translation>
+        <translation>Opções de Linha</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_lineoptions.ui" line="56"/>
@@ -20767,7 +20767,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_lc_lineoptions.h" line="203"/>
         <location filename="../../../generated/librecad/ui/ui_lc_lineoptions.h" line="203"/>
         <source>Direction:</source>
-        <translation>Direction:</translation>
+        <translation>Direção:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_lineoptions.ui" line="103"/>
@@ -20775,7 +20775,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_lc_lineoptions.h" line="204"/>
         <location filename="../../../generated/librecad/ui/ui_lc_lineoptions.h" line="204"/>
         <source>Polyline</source>
-        <translation>Polyline</translation>
+        <translation>Polilinha</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_lineoptions.ui" line="122"/>
@@ -20815,7 +20815,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_lc_lineoptions.h" line="213"/>
         <location filename="../../../generated/librecad/ui/ui_lc_lineoptions.h" line="213"/>
         <source>Undo the last line drawing</source>
-        <translation>Undo the last line drawing</translation>
+        <translation>Desfazer o último desenho de linha</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_lineoptions.ui" line="227"/>
@@ -20831,7 +20831,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_lc_lineoptions.h" line="217"/>
         <location filename="../../../generated/librecad/ui/ui_lc_lineoptions.h" line="217"/>
         <source>Form a closed contour from lines drawn</source>
-        <translation>Form a closed contour from lines drawn</translation>
+        <translation>Formar um contorno fechado a partir das linhas desenhadas</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_lineoptions.ui" line="237"/>
@@ -20839,7 +20839,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_lc_lineoptions.h" line="219"/>
         <location filename="../../../generated/librecad/ui/ui_lc_lineoptions.h" line="219"/>
         <source>Close</source>
-        <translation>Close</translation>
+        <translation>Fechar</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_lineoptions.ui" line="253"/>
@@ -20847,7 +20847,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_lc_lineoptions.h" line="221"/>
         <location filename="../../../generated/librecad/ui/ui_lc_lineoptions.h" line="221"/>
         <source>Redo the last line drawing</source>
-        <translation>Redo the last line drawing</translation>
+        <translation>Refazer o último desenho de linha</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_lineoptions.ui" line="256"/>
@@ -20874,7 +20874,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_lineparalleloptions.h" line="107"/>
         <location filename="../../../generated/librecad/ui/ui_qg_lineparalleloptions.h" line="107"/>
         <source>Line Parallel Options</source>
-        <translation>Line Parallel Options</translation>
+        <translation>Opções de Linha Paralela</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_lineparalleloptions.ui" line="56"/>
@@ -20890,7 +20890,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_lineparalleloptions.h" line="110"/>
         <location filename="../../../generated/librecad/ui/ui_qg_lineparalleloptions.h" line="110"/>
         <source>Distance to original entity</source>
-        <translation>Distance to original entity</translation>
+        <translation>Distância à entidade original</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_lineparalleloptions.ui" line="85"/>
@@ -20906,7 +20906,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_lineparalleloptions.h" line="114"/>
         <location filename="../../../generated/librecad/ui/ui_qg_lineparalleloptions.h" line="114"/>
         <source>Number of parallels to create</source>
-        <translation>Number of parallels to create</translation>
+        <translation>Número de paralelas a criar</translation>
     </message>
 </context>
 <context>
@@ -20917,7 +20917,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_lineparallelthroughoptions.h" line="85"/>
         <location filename="../../../generated/librecad/ui/ui_qg_lineparallelthroughoptions.h" line="85"/>
         <source>Line Parallel Through Options</source>
-        <translation>Line Parallel Through Options</translation>
+        <translation>Opções de Linha Paralela Passando Por</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_lineparallelthroughoptions.ui" line="56"/>
@@ -20933,7 +20933,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_lineparallelthroughoptions.h" line="88"/>
         <location filename="../../../generated/librecad/ui/ui_qg_lineparallelthroughoptions.h" line="88"/>
         <source>Number of parallels to create</source>
-        <translation>Number of parallels to create</translation>
+        <translation>Número de paralelas a criar</translation>
     </message>
 </context>
 <context>
@@ -20944,7 +20944,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_linepolygon2options.h" line="86"/>
         <location filename="../../../generated/librecad/ui/ui_qg_linepolygon2options.h" line="86"/>
         <source>Polygon Options</source>
-        <translation>Polygon Options</translation>
+        <translation>Opções de Polígono</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_linepolygon2options.ui" line="56"/>
@@ -20960,7 +20960,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_linepolygon2options.h" line="89"/>
         <location filename="../../../generated/librecad/ui/ui_qg_linepolygon2options.h" line="89"/>
         <source>Number of edges</source>
-        <translation>Number of edges</translation>
+        <translation>Número de arestas</translation>
     </message>
 </context>
 <context>
@@ -20971,7 +20971,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_linepolygonoptions.h" line="86"/>
         <location filename="../../../generated/librecad/ui/ui_qg_linepolygonoptions.h" line="86"/>
         <source>Polygon Options</source>
-        <translation>Polygon Options</translation>
+        <translation>Opções de Polígono</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_linepolygonoptions.ui" line="56"/>
@@ -20987,7 +20987,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_linepolygonoptions.h" line="89"/>
         <location filename="../../../generated/librecad/ui/ui_qg_linepolygonoptions.h" line="89"/>
         <source>Number of edges</source>
-        <translation>Number of edges</translation>
+        <translation>Número de arestas</translation>
     </message>
 </context>
 <context>
@@ -21014,7 +21014,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_linerelangleoptions.h" line="110"/>
         <location filename="../../../generated/librecad/ui/ui_qg_linerelangleoptions.h" line="110"/>
         <source>Line angle</source>
-        <translation>Line angle</translation>
+        <translation>Ângulo da linha</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_linerelangleoptions.ui" line="85"/>
@@ -21030,7 +21030,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_linerelangleoptions.h" line="114"/>
         <location filename="../../../generated/librecad/ui/ui_qg_linerelangleoptions.h" line="114"/>
         <source>Length of line</source>
-        <translation>Length of line</translation>
+        <translation>Comprimento da linha</translation>
     </message>
 </context>
 <context>
@@ -21041,7 +21041,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_mtextoptions.h" line="103"/>
         <location filename="../../../generated/librecad/ui/ui_qg_mtextoptions.h" line="103"/>
         <source>Text Options</source>
-        <translation>Text Options</translation>
+        <translation>Opções de Texto</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_mtextoptions.ui" line="53"/>
@@ -21068,7 +21068,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_modifyoffsetoptions.h" line="89"/>
         <location filename="../../../generated/librecad/ui/ui_qg_modifyoffsetoptions.h" line="89"/>
         <source>Modify Offset Options</source>
-        <translation>Modify Offset Options</translation>
+        <translation>Opções de Modificação de Deslocamento</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_modifyoffsetoptions.ui" line="56"/>
@@ -21084,7 +21084,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_modifyoffsetoptions.h" line="92"/>
         <location filename="../../../generated/librecad/ui/ui_qg_modifyoffsetoptions.h" line="92"/>
         <source>Offset from original entity</source>
-        <translation>Offset from original entity</translation>
+        <translation>Deslocamento da entidade original</translation>
     </message>
 </context>
 <context>
@@ -21095,7 +21095,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_moverotateoptions.h" line="79"/>
         <location filename="../../../generated/librecad/ui/ui_qg_moverotateoptions.h" line="79"/>
         <source>Move Rotate Options</source>
-        <translation>Move Rotate Options</translation>
+        <translation>Opções de Mover e Girar</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_moverotateoptions.ui" line="50"/>
@@ -21114,7 +21114,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_polylineoptions.h" line="167"/>
         <location filename="../../../generated/librecad/ui/ui_qg_polylineoptions.h" line="167"/>
         <source>Polyline Options</source>
-        <translation>Polyline Options</translation>
+        <translation>Opções de Polilinha</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_polylineoptions.ui" line="53"/>
@@ -21122,7 +21122,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_polylineoptions.h" line="168"/>
         <location filename="../../../generated/librecad/ui/ui_qg_polylineoptions.h" line="168"/>
         <source>Close</source>
-        <translation>Close</translation>
+        <translation>Fechar</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_polylineoptions.ui" line="60"/>
@@ -21146,7 +21146,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_polylineoptions.h" line="171"/>
         <location filename="../../../generated/librecad/ui/ui_qg_polylineoptions.h" line="171"/>
         <source>Tangential</source>
-        <translation>Tangential</translation>
+        <translation>Tangencial</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_polylineoptions.ui" line="90"/>
@@ -21154,7 +21154,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_polylineoptions.h" line="172"/>
         <location filename="../../../generated/librecad/ui/ui_qg_polylineoptions.h" line="172"/>
         <source>Tan Radius</source>
-        <translation>Tan Radius</translation>
+        <translation>Raio Tangente</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_polylineoptions.ui" line="95"/>
@@ -21186,7 +21186,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_polylineoptions.h" line="179"/>
         <location filename="../../../generated/librecad/ui/ui_qg_polylineoptions.h" line="179"/>
         <source>Counter Clockwise</source>
-        <translation>Counter Clockwise</translation>
+        <translation>Anti-horário</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_polylineoptions.ui" line="204"/>
@@ -21194,7 +21194,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_polylineoptions.h" line="183"/>
         <location filename="../../../generated/librecad/ui/ui_qg_polylineoptions.h" line="183"/>
         <source>Clockwise</source>
-        <translation>Clockwise</translation>
+        <translation>Horário</translation>
     </message>
 </context>
 <context>
@@ -21205,7 +21205,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_printpreviewoptions.h" line="164"/>
         <location filename="../../../generated/librecad/ui/ui_qg_printpreviewoptions.h" line="164"/>
         <source>Print Preview Options</source>
-        <translation>Print Preview Options</translation>
+        <translation>Opções de Pré-visualização de Impressão</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_printpreviewoptions.ui" line="56"/>
@@ -21237,7 +21237,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_printpreviewoptions.h" line="176"/>
         <location filename="../../../generated/librecad/ui/ui_qg_printpreviewoptions.h" line="176"/>
         <source>Apply Print Scale to line width</source>
-        <translation>Apply Print Scale to line width</translation>
+        <translation>Aplicar escala de impressão à largura da linha</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_printpreviewoptions.ui" line="145"/>
@@ -21245,7 +21245,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_printpreviewoptions.h" line="180"/>
         <location filename="../../../generated/librecad/ui/ui_qg_printpreviewoptions.h" line="180"/>
         <source>Toggle Black / White mode</source>
-        <translation>Toggle Black / White mode</translation>
+        <translation>Alternar modo Preto / Branco</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_printpreviewoptions.ui" line="174"/>
@@ -21253,7 +21253,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_printpreviewoptions.h" line="184"/>
         <location filename="../../../generated/librecad/ui/ui_qg_printpreviewoptions.h" line="184"/>
         <source>Center to page</source>
-        <translation>Center to page</translation>
+        <translation>Centralizar na página</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_printpreviewoptions.ui" line="200"/>
@@ -21261,7 +21261,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_printpreviewoptions.h" line="188"/>
         <location filename="../../../generated/librecad/ui/ui_qg_printpreviewoptions.h" line="188"/>
         <source>Fit to page</source>
-        <translation>Fit to page</translation>
+        <translation>Ajustar à página</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_printpreviewoptions.ui" line="226"/>
@@ -21269,7 +21269,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_printpreviewoptions.h" line="192"/>
         <location filename="../../../generated/librecad/ui/ui_qg_printpreviewoptions.h" line="192"/>
         <source>Calculate number of pages needed to contain the drawing</source>
-        <translation>Calculate number of pages needed to contain the drawing</translation>
+        <translation>Calcular o número de páginas necessárias para conter o desenho</translation>
     </message>
 </context>
 <context>
@@ -21280,7 +21280,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_roundoptions.h" line="97"/>
         <location filename="../../../generated/librecad/ui/ui_qg_roundoptions.h" line="97"/>
         <source>Round Options</source>
-        <translation>Round Options</translation>
+        <translation>Opções de Arredondamento</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_roundoptions.ui" line="53"/>
@@ -21288,7 +21288,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_roundoptions.h" line="102"/>
         <location filename="../../../generated/librecad/ui/ui_qg_roundoptions.h" line="102"/>
         <source>Check to trim both edges to the rounding</source>
-        <translation>Check to trim both edges to the rounding</translation>
+        <translation>Marque para aparar ambas as arestas ao arredondamento</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_roundoptions.ui" line="56"/>
@@ -21315,7 +21315,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_snapdistoptions.h" line="81"/>
         <location filename="../../../generated/librecad/ui/ui_qg_snapdistoptions.h" line="81"/>
         <source>Snap Distance Options</source>
-        <translation>Snap Distance Options</translation>
+        <translation>Opções de Distância de Captura</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_snapdistoptions.ui" line="50"/>
@@ -21334,7 +21334,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_snapmiddleoptions.h" line="58"/>
         <location filename="../../../generated/librecad/ui/ui_qg_snapmiddleoptions.h" line="58"/>
         <source>Snap Distance Options</source>
-        <translation>Snap Distance Options</translation>
+        <translation>Opções de Distância de Captura</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_snapmiddleoptions.ui" line="47"/>
@@ -21342,7 +21342,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_snapmiddleoptions.h" line="59"/>
         <location filename="../../../generated/librecad/ui/ui_qg_snapmiddleoptions.h" line="59"/>
         <source>Middle Points:</source>
-        <translation>Middle Points:</translation>
+        <translation>Pontos intermediários:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_snapmiddleoptions.ui" line="63"/>
@@ -21350,7 +21350,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_snapmiddleoptions.h" line="61"/>
         <location filename="../../../generated/librecad/ui/ui_qg_snapmiddleoptions.h" line="61"/>
         <source>Number of equidistant division points</source>
-        <translation>Number of equidistant division points</translation>
+        <translation>Número de pontos de divisão equidistantes</translation>
     </message>
 </context>
 <context>
@@ -21361,7 +21361,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_splineoptions.h" line="113"/>
         <location filename="../../../generated/librecad/ui/ui_qg_splineoptions.h" line="113"/>
         <source>Spline Options</source>
-        <translation>Spline Options</translation>
+        <translation>Opções de Spline</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_splineoptions.ui" line="56"/>
@@ -21396,7 +21396,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_textoptions.h" line="103"/>
         <location filename="../../../generated/librecad/ui/ui_qg_textoptions.h" line="103"/>
         <source>Text Options</source>
-        <translation>Text Options</translation>
+        <translation>Opções de Texto</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_textoptions.ui" line="53"/>
@@ -21423,7 +21423,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_trimamountoptions.h" line="103"/>
         <location filename="../../../generated/librecad/ui/ui_qg_trimamountoptions.h" line="103"/>
         <source>Trim Amount Options</source>
-        <translation>Trim Amount Options</translation>
+        <translation>Opções de Quantidade de Aparamento</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_trimamountoptions.ui" line="23"/>
@@ -21431,7 +21431,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_trimamountoptions.h" line="105"/>
         <location filename="../../../generated/librecad/ui/ui_qg_trimamountoptions.h" line="105"/>
         <source>Distance. Negative values for trimming, positive values for extending.</source>
-        <translation>Distance. Negative values for trimming, positive values for extending.</translation>
+        <translation>Distância. Valores negativos para aparar, valores positivos para estender.</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_trimamountoptions.ui" line="56"/>
@@ -21447,7 +21447,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_trimamountoptions.h" line="109"/>
         <location filename="../../../generated/librecad/ui/ui_qg_trimamountoptions.h" line="109"/>
         <source>Distance. Negative values for trimming, positive values for extending. Negative sign is ignored when trimming to final total length.</source>
-        <translation>Distance. Negative values for trimming, positive values for extending. Negative sign is ignored when trimming to final total length.</translation>
+        <translation>Distância. Valores negativos para aparar, valores positivos para estender. O sinal negativo é ignorado ao aparar para o comprimento total final.</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_trimamountoptions.ui" line="97"/>
@@ -21455,7 +21455,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_trimamountoptions.h" line="112"/>
         <location filename="../../../generated/librecad/ui/ui_qg_trimamountoptions.h" line="112"/>
         <source>The input length is used as total length after trimming, instead of length increase</source>
-        <translation>The input length is used as total length after trimming, instead of length increase</translation>
+        <translation>O comprimento de entrada é usado como comprimento total após aparamento, em vez de aumento de comprimento</translation>
     </message>
 </context>
 <context>
@@ -21498,7 +21498,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_widgetcreator.h" line="226"/>
         <location filename="../../../generated/librecad/ui/ui_widgetcreator.h" line="226"/>
         <source>Create</source>
-        <translation>Create</translation>
+        <translation>Criar</translation>
     </message>
     <message>
         <location filename="../../src/ui/generic/widgetcreator.ui" line="209"/>
@@ -21506,7 +21506,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_widgetcreator.h" line="227"/>
         <location filename="../../../generated/librecad/ui/ui_widgetcreator.h" line="227"/>
         <source>Destroy</source>
-        <translation>Destroy</translation>
+        <translation>Destruir</translation>
     </message>
     <message>
         <location filename="../../src/ui/generic/widgetcreator.ui" line="216"/>
@@ -21514,7 +21514,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_widgetcreator.h" line="228"/>
         <location filename="../../../generated/librecad/ui/ui_widgetcreator.h" line="228"/>
         <source>Assign</source>
-        <translation>Assign</translation>
+        <translation>Atribuir</translation>
     </message>
     <message>
         <location filename="../../src/ui/generic/widgetcreator.ui" line="223"/>
@@ -21522,7 +21522,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_widgetcreator.h" line="229"/>
         <location filename="../../../generated/librecad/ui/ui_widgetcreator.h" line="229"/>
         <source>Update</source>
-        <translation>Update</translation>
+        <translation>Atualizar</translation>
     </message>
 </context>
 <context>
@@ -21714,12 +21714,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../../plugins/divide/divide.cpp" line="56"/>
         <source>Select a line, circle or arc and press return</source>
-        <translation>Select a line, circle or arc and press return</translation>
+        <translation>Selecione uma linha, círculo ou arco e pressione Enter</translation>
     </message>
     <message>
         <location filename="../../../plugins/divide/divide.cpp" line="67"/>
         <source>Error</source>
-        <translation>Error</translation>
+        <translation>Erro</translation>
     </message>
     <message>
         <location filename="../../../plugins/divide/divide.cpp" line="104"/>
@@ -21795,7 +21795,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../../plugins/divide/divide.cpp" line="494"/>
         <source>Inc.</source>
-        <translation>Inc.</translation>
+        <translation>Incr.</translation>
     </message>
     <message>
         <location filename="../../../plugins/divide/divide.cpp" line="499"/>
@@ -21873,7 +21873,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../../plugins/divide/divide.cpp" line="555"/>
         <source>MUST be a line, circle or arc</source>
-        <translation>MUST be a line, circle or arc</translation>
+        <translation>DEVE ser uma linha, círculo ou arco</translation>
     </message>
 </context>
 <context>
@@ -21881,12 +21881,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../../plugins/divide/dividedlg.cpp" line="48"/>
         <source>Divide - </source>
-        <translation>Divide -</translation>
+        <translation>Dividir -</translation>
     </message>
     <message>
         <location filename="../../../plugins/divide/dividedlg.cpp" line="69"/>
         <source>Layers</source>
-        <translation>Layers</translation>
+        <translation>Camadas</translation>
     </message>
     <message>
         <location filename="../../../plugins/divide/dividedlg.cpp" line="75"/>
@@ -21901,12 +21901,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../../plugins/divide/dividedlg.cpp" line="85"/>
         <source>Divide at</source>
-        <translation>Divide at</translation>
+        <translation>Dividir em</translation>
     </message>
     <message>
         <location filename="../../../plugins/divide/dividedlg.cpp" line="92"/>
         <source>Size</source>
-        <translation>Size</translation>
+        <translation>Tamanho</translation>
     </message>
     <message>
         <location filename="../../../plugins/divide/dividedlg.cpp" line="115"/>
@@ -21916,17 +21916,17 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../../plugins/divide/dividedlg.cpp" line="126"/>
         <source>Ticks - Off</source>
-        <translation>Ticks - Off</translation>
+        <translation>Marcas - Desligado</translation>
     </message>
     <message>
         <location filename="../../../plugins/divide/dividedlg.cpp" line="134"/>
         <source>Breaks - Off</source>
-        <translation>Breaks - Off</translation>
+        <translation>Quebras - Desligado</translation>
     </message>
     <message>
         <location filename="../../../plugins/divide/dividedlg.cpp" line="179"/>
         <source>&lt;i&gt;New&lt;/i&gt;</source>
-        <translation>&lt;i&gt;New&lt;/i&gt;</translation>
+        <translation>&lt;i&gt;Novo&lt;/i&gt;</translation>
     </message>
     <message>
         <location filename="../../../plugins/divide/dividedlg.cpp" line="210"/>
@@ -21936,42 +21936,42 @@ decimal degrees
 0° at 3 o&apos;clock
 goes
 anti-clockwise.</source>
-        <translation>Enter start
-angle, in
-decimal degrees
-0° at 3 o&apos;clock
-goes
-anti-clockwise.</translation>
+        <translation>Insira o ângulo
+inicial, em
+graus decimais
+0° na posição 3 horas
+no sentido
+anti-horário.</translation>
     </message>
     <message>
         <location filename="../../../plugins/divide/dividedlg.cpp" line="246"/>
         <source>&lt;i&gt;&quot;New&quot;&lt;/i&gt;&lt;br&gt;Enter name&lt;br&gt;for a new layer&lt;br&gt;(if required?) to&lt;br&gt;draw ticks on.</source>
-        <translation>&lt;i&gt;&quot;New&quot;&lt;/i&gt;&lt;br&gt;Enter name&lt;br&gt;for a new layer&lt;br&gt;(if required?) to&lt;br&gt;draw ticks on.</translation>
+        <translation>&lt;i&gt;&quot;Novo&quot;&lt;/i&gt;&lt;br&gt;Insira o nome&lt;br&gt;para uma nova camada&lt;br&gt;(se necessário?) para&lt;br&gt;desenhar marcas.</translation>
     </message>
     <message>
         <location filename="../../../plugins/divide/dividedlg.cpp" line="252"/>
         <source>Ticks</source>
-        <translation>Ticks</translation>
+        <translation>Marcas</translation>
     </message>
     <message>
         <location filename="../../../plugins/divide/dividedlg.cpp" line="258"/>
         <source>Above</source>
-        <translation>Above</translation>
+        <translation>Acima</translation>
     </message>
     <message>
         <location filename="../../../plugins/divide/dividedlg.cpp" line="259"/>
         <source>Below</source>
-        <translation>Below</translation>
+        <translation>Abaixo</translation>
     </message>
     <message>
         <location filename="../../../plugins/divide/dividedlg.cpp" line="263"/>
         <source>Outside</source>
-        <translation>Outside</translation>
+        <translation>Fora</translation>
     </message>
     <message>
         <location filename="../../../plugins/divide/dividedlg.cpp" line="264"/>
         <source>Inside</source>
-        <translation>Inside</translation>
+        <translation>Dentro</translation>
     </message>
 </context>
 <context>
@@ -21979,7 +21979,7 @@ anti-clockwise.</translation>
     <message>
         <location filename="../../../plugins/pointstocsv/pointstocsv.cpp" line="122"/>
         <source>Export to file</source>
-        <translation>Export to file</translation>
+        <translation>Exportar para arquivo</translation>
     </message>
     <message>
         <location filename="../../../plugins/pointstocsv/pointstocsv.cpp" line="122"/>
@@ -21989,7 +21989,7 @@ anti-clockwise.</translation>
     <message>
         <location filename="../../../plugins/pointstocsv/pointstocsv.cpp" line="130"/>
         <source>Unable to open file</source>
-        <translation>Unable to open file</translation>
+        <translation>Não é possível abrir o arquivo</translation>
     </message>
 </context>
 <context>
@@ -22007,87 +22007,87 @@ anti-clockwise.</translation>
     <message>
         <location filename="../../../plugins/gear/gear.cpp" line="113"/>
         <source>Rotation angle</source>
-        <translation>Rotation angle</translation>
+        <translation>Ângulo de rotação</translation>
     </message>
     <message>
         <location filename="../../../plugins/gear/gear.cpp" line="115"/>
         <source>Modulus</source>
-        <translation>Modulus</translation>
+        <translation>Módulo</translation>
     </message>
     <message>
         <location filename="../../../plugins/gear/gear.cpp" line="117"/>
         <source>Addendum (rel. to modulus)</source>
-        <translation>Addendum (rel. to modulus)</translation>
+        <translation>Adendo (relativo ao módulo)</translation>
     </message>
     <message>
         <location filename="../../../plugins/gear/gear.cpp" line="118"/>
         <source>Dedendum (rel. to modulus)</source>
-        <translation>Dedendum (rel. to modulus)</translation>
+        <translation>Dedendo (relativo ao módulo)</translation>
     </message>
     <message>
         <location filename="../../../plugins/gear/gear.cpp" line="119"/>
         <source>Number of segments to draw (dedendum)</source>
-        <translation>Number of segments to draw (dedendum)</translation>
+        <translation>Número de segmentos a desenhar (dedendo)</translation>
     </message>
     <message>
         <location filename="../../../plugins/gear/gear.cpp" line="120"/>
         <source>Number of segments to draw (addendum)</source>
-        <translation>Number of segments to draw (addendum)</translation>
+        <translation>Número de segmentos a desenhar (adendo)</translation>
     </message>
     <message>
         <location filename="../../../plugins/gear/gear.cpp" line="121"/>
         <source>Draw all teeth?</source>
-        <translation>Draw all teeth?</translation>
+        <translation>Desenhar todos os dentes?</translation>
     </message>
     <message>
         <location filename="../../../plugins/gear/gear.cpp" line="122"/>
         <source>Draw symmetric face?</source>
-        <translation>Draw symmetric face?</translation>
+        <translation>Desenhar face simétrica?</translation>
     </message>
     <message>
         <location filename="../../../plugins/gear/gear.cpp" line="124"/>
         <source>Use layers?</source>
-        <translation>Use layers?</translation>
+        <translation>Usar camadas?</translation>
     </message>
     <message>
         <location filename="../../../plugins/gear/gear.cpp" line="125"/>
         <source>Draw addendum circle?</source>
-        <translation>Draw addendum circle?</translation>
+        <translation>Desenhar círculo de adendo?</translation>
     </message>
     <message>
         <location filename="../../../plugins/gear/gear.cpp" line="126"/>
         <source>Draw pitch circle?</source>
-        <translation>Draw pitch circle?</translation>
+        <translation>Desenhar círculo primitivo?</translation>
     </message>
     <message>
         <location filename="../../../plugins/gear/gear.cpp" line="127"/>
         <source>Draw base circle?</source>
-        <translation>Draw base circle?</translation>
+        <translation>Desenhar círculo de base?</translation>
     </message>
     <message>
         <location filename="../../../plugins/gear/gear.cpp" line="128"/>
         <source>Draw root circle?</source>
-        <translation>Draw root circle?</translation>
+        <translation>Desenhar círculo de raiz?</translation>
     </message>
     <message>
         <location filename="../../../plugins/gear/gear.cpp" line="129"/>
         <source>Draw pressure line?</source>
-        <translation>Draw pressure line?</translation>
+        <translation>Desenhar linha de pressão?</translation>
     </message>
     <message>
         <location filename="../../../plugins/gear/gear.cpp" line="130"/>
         <source>Draw pressure limits?</source>
-        <translation>Draw pressure limits?</translation>
+        <translation>Desenhar limites de pressão?</translation>
     </message>
     <message>
         <location filename="../../../plugins/gear/gear.cpp" line="132"/>
         <source>Calculate interference?</source>
-        <translation>Calculate interference?</translation>
+        <translation>Calcular interferência?</translation>
     </message>
     <message>
         <location filename="../../../plugins/gear/gear.cpp" line="133"/>
         <source>Number of segments to draw (interference)</source>
-        <translation>Number of segments to draw (interference)</translation>
+        <translation>Número de segmentos a desenhar (interferência)</translation>
     </message>
     <message>
         <location filename="../../../plugins/gear/gear.cpp" line="135"/>
@@ -22216,23 +22216,23 @@ anti-clockwise.</translation>
     <message>
         <location filename="../../../plugins/picfile/picfile.cpp" line="144"/>
         <source>%1 objects imported</source>
-        <translation>%1 objects imported</translation>
+        <translation>%1 objetos importados</translation>
     </message>
     <message>
         <location filename="../../../plugins/picfile/picfile.cpp" line="166"/>
         <source>picPunto drawLine: first point is empty %1</source>
-        <translation>picPunto drawLine: first point is empty %1</translation>
+        <translation>picPunto drawLine: o primeiro ponto está vazio %1</translation>
     </message>
     <message>
         <location filename="../../../plugins/picfile/picfile.cpp" line="179"/>
         <source>picPunto drawLine: next point is empty %1</source>
-        <translation>picPunto drawLine: next point is empty %1</translation>
+        <translation>picPunto drawLine: o ponto seguinte está vazio %1</translation>
     </message>
     <message>
         <location filename="../../../plugins/picfile/picfile.cpp" line="262"/>
         <location filename="../../../plugins/picfile/picfile.cpp" line="271"/>
         <source>format error in %1</source>
-        <translation>format error in %1</translation>
+        <translation>erro de formato em %1</translation>
     </message>
 </context>
 <context>
@@ -22299,19 +22299,19 @@ Use t or x in your equation as a variable/parameter.
         <location filename="../../../plugins/plotequation/plotdialog.cpp" line="59"/>
         <source>Line Segments</source>
         <comment>Plot Equation to generate RS_Line segments</comment>
-        <translation>Line Segments</translation>
+        <translation>Segmentos de linha</translation>
     </message>
     <message>
         <location filename="../../../plugins/plotequation/plotdialog.cpp" line="60"/>
         <source>Polyline</source>
         <comment>Plot Equation to generate RS_Polyline</comment>
-        <translation>Polyline</translation>
+        <translation>Polilinha</translation>
     </message>
     <message>
         <location filename="../../../plugins/plotequation/plotdialog.cpp" line="61"/>
         <source>SplinePoints</source>
         <comment>Plot Equation to generate 2nd spline by LC_SplinePoints</comment>
-        <translation>SplinePoints</translation>
+        <translation>PontosSpline</translation>
     </message>
 </context>
 <context>

@@ -7,7 +7,7 @@
         <location filename="../../../plugins/asciifile/asciifile.cpp" line="35"/>
         <location filename="../../../plugins/asciifile/asciifile.cpp" line="41"/>
         <source>Read ascii points</source>
-        <translation>Read ascii points</translation>
+        <translation>ASCII 점 읽기</translation>
     </message>
 </context>
 <context>
@@ -195,7 +195,7 @@
         <location filename="../../../build/ui_lc_dlgsplinepoints.h" line="176"/>
         <location filename="../../../generated/librecad/ui/ui_lc_dlgsplinepoints.h" line="176"/>
         <source>SplinePoints</source>
-        <translation>SplinePoints</translation>
+        <translation>스플라인점</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_dlgsplinepoints.ui" line="62"/>
@@ -219,7 +219,7 @@
         <location filename="../../../build/ui_lc_dlgsplinepoints.h" line="179"/>
         <location filename="../../../generated/librecad/ui/ui_lc_dlgsplinepoints.h" line="179"/>
         <source>Closed</source>
-        <translation>Closed</translation>
+        <translation>닫힘</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_dlgsplinepoints.ui" line="110"/>
@@ -1681,12 +1681,12 @@ or [%2]</source>
     <message>
         <location filename="../../../plugins/align/align.cpp" line="32"/>
         <source>Align settings...</source>
-        <translation>Align settings...</translation>
+        <translation>정렬 설정...</translation>
     </message>
     <message>
         <location filename="../../../plugins/align/align.cpp" line="49"/>
         <source>Keep original objects</source>
-        <translation>Keep original objects</translation>
+        <translation>원본 객체 유지</translation>
     </message>
     <message>
         <location filename="../../../plugins/align/align.cpp" line="50"/>
@@ -1696,7 +1696,7 @@ or [%2]</source>
     <message>
         <location filename="../../../plugins/align/align.cpp" line="54"/>
         <source>Align Settings</source>
-        <translation>Align Settings</translation>
+        <translation>정렬 설정</translation>
     </message>
     <message>
         <location filename="../../../plugins/align/align.cpp" line="57"/>
@@ -2011,12 +2011,12 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../../../plugins/gear/gear.cpp" line="33"/>
         <source>Gear creation plugin</source>
-        <translation>Gear creation plugin</translation>
+        <translation>기어 생성 플러그인</translation>
     </message>
     <message>
         <location filename="../../../plugins/gear/gear.cpp" line="40"/>
         <source>Gear plugin</source>
-        <translation>Gear plugin</translation>
+        <translation>기어 플러그인</translation>
     </message>
 </context>
 <context>
@@ -3087,14 +3087,14 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../../../plugins/list/list.cpp" line="88"/>
         <source>POINT</source>
-        <translation>POINT</translation>
+        <translation>점</translation>
     </message>
     <message>
         <location filename="../../../plugins/list/list.cpp" line="89"/>
         <location filename="../../../plugins/list/list.cpp" line="180"/>
         <location filename="../../../plugins/list/list.cpp" line="222"/>
         <source>in point</source>
-        <translation>in point</translation>
+        <translation>입력점</translation>
     </message>
     <message>
         <location filename="../../../plugins/list/list.cpp" line="94"/>
@@ -3104,23 +3104,23 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../../../plugins/list/list.cpp" line="99"/>
         <source>from point</source>
-        <translation>from point</translation>
+        <translation>시작점</translation>
     </message>
     <message>
         <location filename="../../../plugins/list/list.cpp" line="102"/>
         <source>to point</source>
-        <translation>to point</translation>
+        <translation>끝점</translation>
     </message>
     <message>
         <location filename="../../../plugins/list/list.cpp" line="107"/>
         <location filename="../../../plugins/list/list.cpp" line="131"/>
         <source>length</source>
-        <translation>length</translation>
+        <translation>길이</translation>
     </message>
     <message>
         <location filename="../../../plugins/list/list.cpp" line="112"/>
         <source>Angle in XY plane</source>
-        <translation>Angle in XY plane</translation>
+        <translation>XY 평면의 각도</translation>
     </message>
     <message>
         <location filename="../../../plugins/list/list.cpp" line="113"/>
@@ -3137,34 +3137,34 @@ first base, second base, first target, second target.</source>
         <location filename="../../../plugins/list/list.cpp" line="135"/>
         <location filename="../../../plugins/list/list.cpp" line="145"/>
         <source>center point</source>
-        <translation>center point</translation>
+        <translation>중심점</translation>
     </message>
     <message>
         <location filename="../../../plugins/list/list.cpp" line="125"/>
         <location filename="../../../plugins/list/list.cpp" line="139"/>
         <location filename="../../../plugins/list/list.cpp" line="226"/>
         <source>radius</source>
-        <translation>radius</translation>
+        <translation>반지름</translation>
     </message>
     <message>
         <location filename="../../../plugins/list/list.cpp" line="126"/>
         <source>initial angle</source>
-        <translation>initial angle</translation>
+        <translation>시작 각도</translation>
     </message>
     <message>
         <location filename="../../../plugins/list/list.cpp" line="127"/>
         <source>final angle</source>
-        <translation>final angle</translation>
+        <translation>끝 각도</translation>
     </message>
     <message>
         <location filename="../../../plugins/list/list.cpp" line="134"/>
         <source>CIRCLE</source>
-        <translation>CIRCLE</translation>
+        <translation>원</translation>
     </message>
     <message>
         <location filename="../../../plugins/list/list.cpp" line="140"/>
         <source>circumference</source>
-        <translation>circumference</translation>
+        <translation>원주</translation>
     </message>
     <message>
         <location filename="../../../plugins/list/list.cpp" line="141"/>
@@ -3174,7 +3174,7 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../../../plugins/list/list.cpp" line="144"/>
         <source>ELLIPSE</source>
-        <translation>ELLIPSE</translation>
+        <translation>타원</translation>
     </message>
     <message>
         <location filename="../../../plugins/list/list.cpp" line="148"/>
@@ -3184,22 +3184,22 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../../../plugins/list/list.cpp" line="166"/>
         <source>CONSTRUCTIONLINE</source>
-        <translation>CONSTRUCTIONLINE</translation>
+        <translation>보조선</translation>
     </message>
     <message>
         <location filename="../../../plugins/list/list.cpp" line="169"/>
         <source>OVERLAYBOX</source>
-        <translation>OVERLAYBOX</translation>
+        <translation>오버레이박스</translation>
     </message>
     <message>
         <location filename="../../../plugins/list/list.cpp" line="172"/>
         <source>SOLID</source>
-        <translation>SOLID</translation>
+        <translation>솔리드</translation>
     </message>
     <message>
         <location filename="../../../plugins/list/list.cpp" line="176"/>
         <source>MTEXT</source>
-        <translation>MTEXT</translation>
+        <translation>다중텍스트</translation>
     </message>
     <message>
         <location filename="../../../plugins/list/list.cpp" line="179"/>
@@ -3209,12 +3209,12 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../../../plugins/list/list.cpp" line="183"/>
         <source>TEXTCONTENT</source>
-        <translation>TEXTCONTENT</translation>
+        <translation>텍스트내용</translation>
     </message>
     <message>
         <location filename="../../../plugins/list/list.cpp" line="186"/>
         <source>INSERT</source>
-        <translation>INSERT</translation>
+        <translation>삽입</translation>
     </message>
     <message>
         <location filename="../../../plugins/list/list.cpp" line="189"/>
@@ -3224,37 +3224,37 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../../../plugins/list/list.cpp" line="191"/>
         <source>Insertion point</source>
-        <translation>Insertion point</translation>
+        <translation>삽입점</translation>
     </message>
     <message>
         <location filename="../../../plugins/list/list.cpp" line="194"/>
         <source>Scale</source>
-        <translation>Scale</translation>
+        <translation>축척</translation>
     </message>
     <message>
         <location filename="../../../plugins/list/list.cpp" line="197"/>
         <source>Rotation</source>
-        <translation>Rotation</translation>
+        <translation>회전</translation>
     </message>
     <message>
         <location filename="../../../plugins/list/list.cpp" line="203"/>
         <source>Columns/Rows</source>
-        <translation>Columns/Rows</translation>
+        <translation>열/행</translation>
     </message>
     <message>
         <location filename="../../../plugins/list/list.cpp" line="207"/>
         <source>Column/Row Spacing</source>
-        <translation>Column/Row Spacing</translation>
+        <translation>열/행 간격</translation>
     </message>
     <message>
         <location filename="../../../plugins/list/list.cpp" line="214"/>
         <source>POLYLINE</source>
-        <translation>POLYLINE</translation>
+        <translation>폴리선</translation>
     </message>
     <message>
         <location filename="../../../plugins/list/list.cpp" line="215"/>
         <source>Closed</source>
-        <translation>Closed</translation>
+        <translation>닫힘</translation>
     </message>
     <message>
         <location filename="../../../plugins/list/list.cpp" line="216"/>
@@ -3269,62 +3269,62 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../../../plugins/list/list.cpp" line="217"/>
         <source>Vertices</source>
-        <translation>Vertices</translation>
+        <translation>꼭짓점</translation>
     </message>
     <message>
         <location filename="../../../plugins/list/list.cpp" line="231"/>
         <source>IMAGE</source>
-        <translation>IMAGE</translation>
+        <translation>이미지</translation>
     </message>
     <message>
         <location filename="../../../plugins/list/list.cpp" line="234"/>
         <source>SPLINE</source>
-        <translation>SPLINE</translation>
+        <translation>스플라인</translation>
     </message>
     <message>
         <location filename="../../../plugins/list/list.cpp" line="237"/>
         <source>SPLINEPOINTS</source>
-        <translation>SPLINEPOINTS</translation>
+        <translation>스플라인점</translation>
     </message>
     <message>
         <location filename="../../../plugins/list/list.cpp" line="240"/>
         <source>HATCH</source>
-        <translation>HATCH</translation>
+        <translation>해칭</translation>
     </message>
     <message>
         <location filename="../../../plugins/list/list.cpp" line="243"/>
         <source>DIMLEADER</source>
-        <translation>DIMLEADER</translation>
+        <translation>치수지시선</translation>
     </message>
     <message>
         <location filename="../../../plugins/list/list.cpp" line="246"/>
         <source>DIMALIGNED</source>
-        <translation>DIMALIGNED</translation>
+        <translation>평행치수</translation>
     </message>
     <message>
         <location filename="../../../plugins/list/list.cpp" line="249"/>
         <source>DIMLINEAR</source>
-        <translation>DIMLINEAR</translation>
+        <translation>선형치수</translation>
     </message>
     <message>
         <location filename="../../../plugins/list/list.cpp" line="252"/>
         <source>DIMRADIAL</source>
-        <translation>DIMRADIAL</translation>
+        <translation>반지름치수</translation>
     </message>
     <message>
         <location filename="../../../plugins/list/list.cpp" line="255"/>
         <source>DIMDIAMETRIC</source>
-        <translation>DIMDIAMETRIC</translation>
+        <translation>지름치수</translation>
     </message>
     <message>
         <location filename="../../../plugins/list/list.cpp" line="258"/>
         <source>DIMANGULAR</source>
-        <translation>DIMANGULAR</translation>
+        <translation>각도치수</translation>
     </message>
     <message>
         <location filename="../../../plugins/list/list.cpp" line="261"/>
         <source>UNKNOWN</source>
-        <translation>UNKNOWN</translation>
+        <translation>알수없음</translation>
     </message>
 </context>
 <context>
@@ -3921,7 +3921,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../../../build/ui_lc_rectangle1pointoptions.h" line="204"/>
         <location filename="../../../generated/librecad/ui/ui_lc_rectangle1pointoptions.h" line="204"/>
         <source>Polyline</source>
-        <translation>Polyline</translation>
+        <translation>폴리선</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_rectangle1pointoptions.ui" line="33"/>
@@ -4172,7 +4172,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../../../build/ui_lc_rectangle2pointsoptions.h" line="184"/>
         <location filename="../../../generated/librecad/ui/ui_lc_rectangle2pointsoptions.h" line="184"/>
         <source>Polyline</source>
-        <translation>Polyline</translation>
+        <translation>폴리선</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_rectangle2pointsoptions.ui" line="70"/>
@@ -4335,7 +4335,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../../../build/ui_lc_rectangle3pointsoptions.h" line="237"/>
         <location filename="../../../generated/librecad/ui/ui_lc_rectangle3pointsoptions.h" line="237"/>
         <source>Polyline</source>
-        <translation>Polyline</translation>
+        <translation>폴리선</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_rectangle3pointsoptions.ui" line="63"/>
@@ -4464,17 +4464,17 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../../../plugins/sameprop/sameprop.cpp" line="21"/>
         <location filename="../../../plugins/sameprop/sameprop.cpp" line="28"/>
         <source>Same properties</source>
-        <translation>Same properties</translation>
+        <translation>동일 속성</translation>
     </message>
     <message>
         <location filename="../../../plugins/sameprop/sameprop.cpp" line="41"/>
         <source>select original entity:</source>
-        <translation>select original entity:</translation>
+        <translation>원본 엔티티 선택:</translation>
     </message>
     <message>
         <location filename="../../../plugins/sameprop/sameprop.cpp" line="43"/>
         <source>select entities to change</source>
-        <translation>select entities to change</translation>
+        <translation>변경할 엔티티 선택</translation>
     </message>
 </context>
 <context>
@@ -4483,7 +4483,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../../../plugins/sample/sample.cpp" line="26"/>
         <location filename="../../../plugins/sample/sample.cpp" line="33"/>
         <source>Sample plugin</source>
-        <translation>Sample plugin</translation>
+        <translation>샘플 플러그인</translation>
     </message>
 </context>
 <context>
@@ -4670,7 +4670,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../../../build/ui_lc_staroptions.h" line="105"/>
         <location filename="../../../generated/librecad/ui/ui_lc_staroptions.h" line="105"/>
         <source>Polyline</source>
-        <translation>Polyline</translation>
+        <translation>폴리선</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_staroptions.ui" line="56"/>
@@ -4905,12 +4905,12 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../../../plugins/picfile/picfile.cpp" line="36"/>
         <source>Read PIC file</source>
-        <translation>Read PIC file</translation>
+        <translation>PIC 파일 읽기</translation>
     </message>
     <message>
         <location filename="../../../plugins/picfile/picfile.cpp" line="42"/>
         <source>import PIC file</source>
-        <translation>import PIC file</translation>
+        <translation>PIC 파일 가져오기</translation>
     </message>
 </context>
 <context>
@@ -5464,7 +5464,7 @@ Auto-save disabled.</source>
         <location filename="../../src/ui/lc_widgetfactory.cpp" line="277"/>
         <location filename="../../src/ui/lc_widgetfactory.cpp" line="544"/>
         <source>Polyline</source>
-        <translation>Polyline</translation>
+        <translation>폴리선</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_widgetfactory.cpp" line="282"/>
@@ -6025,7 +6025,7 @@ in a separate window</source>
         <location filename="../../src/ui/qg_colorbox.cpp" line="159"/>
         <location filename="../../src/ui/qg_colorbox.cpp" line="171"/>
         <source>/ColorBox</source>
-        <translation>/ColorBox</translation>
+        <translation>/색상상자</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_colorbox.cpp" line="165"/>
@@ -6607,7 +6607,7 @@ This recursively modifies all entities of the Block itself.</source>
         <location filename="../../../build/ui_qg_dlghatch.h" line="179"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlghatch.h" line="179"/>
         <source>Scale:</source>
-        <translation>Scale:</translation>
+        <translation>축척:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlghatch.ui" line="57"/>
@@ -6722,7 +6722,7 @@ This recursively modifies all entities of the Block itself.</source>
         <location filename="../../../build/ui_qg_dlgimage.h" line="290"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgimage.h" line="290"/>
         <source>Scale:</source>
-        <translation>Scale:</translation>
+        <translation>축척:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgimage.ui" line="246"/>
@@ -10041,7 +10041,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsmakercam.h" line="260"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsmakercam.h" line="260"/>
         <source>Layers</source>
-        <translation>Layers</translation>
+        <translation>레이어</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsmakercam.ui" line="48"/>
@@ -10159,8 +10159,8 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../src/ui/forms/qg_dlgoptionsmakercam.cpp" line="33"/>
         <source>MakerCAM as of November 2014 does not hide SVG content 
 that has been set invisibe (&quot;display: none&quot; or &quot;visibility: hidden&quot;).</source>
-        <translation>MakerCAM as of November 2014 does not hide SVG content 
-that has been set invisibe (&quot;display: none&quot; or &quot;visibility: hidden&quot;).</translation>
+        <translation>2014년 11월 기준 MakerCAM은 비표시로 설정된 SVG 콘텐츠
+(&quot;display: none&quot; 또는 &quot;visibility: hidden&quot;)를 숨기지 않습니다.</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsmakercam.cpp" line="34"/>
@@ -10173,37 +10173,37 @@ because it does not take into account the reference point in the &lt;use&gt;.</s
         <source>MakerCAM as of March 2015 cannot display ellipses and ellipse arcs correctly, 
 when they are created using the &lt;ellipse&gt; tag  with a rotation in 
 the &lt;transform&gt; attribute or as &lt;path&gt; using elliptic arc segments.</source>
-        <translation>MakerCAM as of March 2015 cannot display ellipses and ellipse arcs correctly, 
-when they are created using the &lt;ellipse&gt; tag  with a rotation in 
-the &lt;transform&gt; attribute or as &lt;path&gt; using elliptic arc segments.</translation>
+        <translation>2015년 3월 기준 MakerCAM은 &lt;ellipse&gt; 태그와 &lt;transform&gt; 속성의
+회전을 사용하거나 타원호 세그먼트를 사용한 &lt;path&gt;로 생성된
+타원 및 타원호를 올바르게 표시할 수 없습니다.</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsmakercam.cpp" line="36"/>
         <source>Exported images can be useful in SVG editors (Inkscape, etc), 
 but avoided in some CAM&apos;s.</source>
-        <translation>Exported images can be useful in SVG editors (Inkscape, etc), 
-but avoided in some CAM&apos;s.</translation>
+        <translation>내보낸 이미지는 SVG 편집기(Inkscape 등)에서 유용하지만,
+일부 CAM에서는 사용을 피하세요.</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsmakercam.cpp" line="37"/>
         <source>Many CAM&apos;s(MakerCAM, EleskCAM, LaserWeb) ignore dashed/doted line style, 
 which can be useful in lasercut of plywood or for papercraft. </source>
-        <translation>Many CAM&apos;s(MakerCAM, EleskCAM, LaserWeb) ignore dashed/doted line style, 
-which can be useful in lasercut of plywood or for papercraft.</translation>
+        <translation>많은 CAM(MakerCAM, EleskCAM, LaserWeb)은 파선/점선 스타일을 무시하지만,
+합판 레이저 커팅이나 종이 공예에 유용할 수 있습니다.</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsmakercam.cpp" line="38"/>
         <source>Default width of elements can affect some CAM&apos;s/SVG Editors, 
 but ignored by other</source>
-        <translation>Default width of elements can affect some CAM&apos;s/SVG Editors, 
-but ignored by other</translation>
+        <translation>요소의 기본 너비는 일부 CAM/SVG 편집기에 영향을 줄 수 있지만,
+다른 것들에서는 무시됩니다.</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsmakercam.cpp" line="39"/>
         <source>Length of line pattern related to zoom, 
 so default step value required for baking</source>
-        <translation>Length of line pattern related to zoom, 
-so default step value required for baking</translation>
+        <translation>선 패턴의 길이는 줌과 관련되어 있으므로,
+변환을 위해 기본 스텝 값이 필요합니다.</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsmakercam.cpp" line="40"/>
@@ -10310,7 +10310,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgpolyline.h" line="147"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgpolyline.h" line="147"/>
         <source>Polyline</source>
-        <translation>Polyline</translation>
+        <translation>폴리선</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgpolyline.ui" line="44"/>
@@ -10334,7 +10334,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgpolyline.h" line="150"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgpolyline.h" line="150"/>
         <source>Closed</source>
-        <translation>Closed</translation>
+        <translation>닫힘</translation>
     </message>
 </context>
 <context>
@@ -10642,7 +10642,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgspline.h" line="176"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgspline.h" line="176"/>
         <source>Closed</source>
-        <translation>Closed</translation>
+        <translation>닫힘</translation>
     </message>
 </context>
 <context>
@@ -12926,9 +12926,9 @@ p, li { white-space: pre-wrap; }
         <source>Attempt to create layer with duplicating name. Duplicated layer name is 
 [%1].
 Please specify a different name.</source>
-        <translation>Attempt to create layer with duplicating name. Duplicated layer name is 
-[%1].
-Please specify a different name.</translation>
+        <translation>중복된 이름으로 레이어를 만들려고 했습니다. 중복된 레이어 이름은 
+[%1]입니다.
+다른 이름을 지정하세요.</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_layertreeoptionsdialog.cpp" line="153"/>
@@ -12936,7 +12936,7 @@ Please specify a different name.</translation>
         <location filename="../../src/ui/lc_penpaletteoptionsdialog.cpp" line="261"/>
         <location filename="../../src/ui/lc_penpaletteoptionsdialog.cpp" line="272"/>
         <source>Error</source>
-        <translation>Error</translation>
+        <translation>오류</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_layertreeoptionsdialog.cpp" line="154"/>
@@ -12987,17 +12987,17 @@ Clear filtering mask and repeat.</source>
         <source>Such child layer already exist for 
 [%1].
 Please specify a different name.</source>
-        <translation>Such child layer already exist for 
-[%1].
-Please specify a different name.</translation>
+        <translation>해당 자식 레이어가 
+[%1]에 이미 존재합니다.
+다른 이름을 지정하세요.</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_layertreewidget.cpp" line="1175"/>
         <source>Such child layer already exist for 
 [%1].
 </source>
-        <translation>Such child layer already exist for 
-[%1].</translation>
+        <translation>해당 자식 레이어가 
+[%1]에 이미 존재합니다.</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_layertreewidget.cpp" line="1183"/>
@@ -13086,9 +13086,9 @@ Please specify a different value.</source>
         <source>Invalid path to pens file.
 %1 
 Please specify a different value.</source>
-        <translation>Invalid path to pens file.
+        <translation>펜 파일의 경로가 잘못되었습니다.
 %1 
-Please specify a different value.</translation>
+다른 값을 지정하세요.</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_penpalettewidget.cpp" line="1320"/>
@@ -15157,7 +15157,7 @@ This action can NOT be undone.</source>
     <message>
         <location filename="../../src/cmd/rs_commands.cpp" line="1071"/>
         <source>length</source>
-        <translation>length</translation>
+        <translation>길이</translation>
     </message>
     <message>
         <location filename="../../src/cmd/rs_commands.cpp" line="1072"/>
@@ -15180,7 +15180,7 @@ This action can NOT be undone.</source>
         <location filename="../../src/cmd/rs_commands.cpp" line="1075"/>
         <location filename="../../src/cmd/rs_commands.cpp" line="1206"/>
         <source>radius</source>
-        <translation>radius</translation>
+        <translation>반지름</translation>
     </message>
     <message>
         <location filename="../../src/cmd/rs_commands.cpp" line="1076"/>
@@ -15594,7 +15594,7 @@ This action can NOT be undone.</source>
         <location filename="../../src/cmd/rs_commands.cpp" line="1190"/>
         <source>length</source>
         <comment>length</comment>
-        <translation>length</translation>
+        <translation>길이</translation>
     </message>
     <message>
         <location filename="../../src/cmd/rs_commands.cpp" line="1191"/>
@@ -16173,7 +16173,7 @@ This action can NOT be undone.</source>
         <location filename="../../src/lib/fileio/rs_fileio.cpp" line="91"/>
         <source>Error</source>
         <comment>fileImport</comment>
-        <translation>Error</translation>
+        <translation>오류</translation>
     </message>
     <message>
         <location filename="../../src/lib/fileio/rs_fileio.cpp" line="92"/>
@@ -16617,7 +16617,7 @@ This action can NOT be undone.</source>
     <message>
         <location filename="../../src/ui/lc_actiongroupmanager.cpp" line="77"/>
         <source>Polyline</source>
-        <translation>Polyline</translation>
+        <translation>폴리선</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actiongroupmanager.cpp" line="78"/>
@@ -20757,7 +20757,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_lc_lineoptions.h" line="204"/>
         <location filename="../../../generated/librecad/ui/ui_lc_lineoptions.h" line="204"/>
         <source>Polyline</source>
-        <translation>Polyline</translation>
+        <translation>폴리선</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_lineoptions.ui" line="122"/>
@@ -21359,7 +21359,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_splineoptions.h" line="116"/>
         <location filename="../../../generated/librecad/ui/ui_qg_splineoptions.h" line="116"/>
         <source>Closed</source>
-        <translation>Closed</translation>
+        <translation>닫힘</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_splineoptions.ui" line="104"/>
@@ -21512,97 +21512,97 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../../plugins/asciifile/asciifile.cpp" line="220"/>
         <source>Read ascii points</source>
-        <translation>Read ascii points</translation>
+        <translation>ASCII 점 읽기</translation>
     </message>
     <message>
         <location filename="../../../plugins/asciifile/asciifile.cpp" line="226"/>
         <source>File...</source>
-        <translation>File...</translation>
+        <translation>파일...</translation>
     </message>
     <message>
         <location filename="../../../plugins/asciifile/asciifile.cpp" line="233"/>
         <source>Format:</source>
-        <translation>Format:</translation>
+        <translation>형식:</translation>
     </message>
     <message>
         <location filename="../../../plugins/asciifile/asciifile.cpp" line="235"/>
         <source>Space Separator</source>
-        <translation>Space Separator</translation>
+        <translation>공백 구분자</translation>
     </message>
     <message>
         <location filename="../../../plugins/asciifile/asciifile.cpp" line="235"/>
         <source>Tab Separator</source>
-        <translation>Tab Separator</translation>
+        <translation>탭 구분자</translation>
     </message>
     <message>
         <location filename="../../../plugins/asciifile/asciifile.cpp" line="235"/>
         <source>Comma Separator</source>
-        <translation>Comma Separator</translation>
+        <translation>쉼표 구분자</translation>
     </message>
     <message>
         <location filename="../../../plugins/asciifile/asciifile.cpp" line="235"/>
         <source>Space in Columns</source>
-        <translation>Space in Columns</translation>
+        <translation>열 내 공백</translation>
     </message>
     <message>
         <location filename="../../../plugins/asciifile/asciifile.cpp" line="235"/>
         <source>*.odb for Psion 2</source>
-        <translation>*.odb for Psion 2</translation>
+        <translation>Psion 2용 *.odb</translation>
     </message>
     <message>
         <location filename="../../../plugins/asciifile/asciifile.cpp" line="237"/>
         <source>Connect points</source>
-        <translation>Connect points</translation>
+        <translation>점 연결</translation>
     </message>
     <message>
         <location filename="../../../plugins/asciifile/asciifile.cpp" line="245"/>
         <source>2D Point</source>
-        <translation>2D Point</translation>
+        <translation>2D 점</translation>
     </message>
     <message>
         <location filename="../../../plugins/asciifile/asciifile.cpp" line="245"/>
         <source>Draw 2D Point</source>
-        <translation>Draw 2D Point</translation>
+        <translation>2D 점 그리기</translation>
     </message>
     <message>
         <location filename="../../../plugins/asciifile/asciifile.cpp" line="246"/>
         <source>3D Point</source>
-        <translation>3D Point</translation>
+        <translation>3D 점</translation>
     </message>
     <message>
         <location filename="../../../plugins/asciifile/asciifile.cpp" line="246"/>
         <source>Draw 3D Point</source>
-        <translation>Draw 3D Point</translation>
+        <translation>3D 점 그리기</translation>
     </message>
     <message>
         <location filename="../../../plugins/asciifile/asciifile.cpp" line="247"/>
         <source>Point Number</source>
-        <translation>Point Number</translation>
+        <translation>점 번호</translation>
     </message>
     <message>
         <location filename="../../../plugins/asciifile/asciifile.cpp" line="247"/>
         <source>Draw point number</source>
-        <translation>Draw point number</translation>
+        <translation>점 번호 그리기</translation>
     </message>
     <message>
         <location filename="../../../plugins/asciifile/asciifile.cpp" line="248"/>
         <source>Point Elevation</source>
-        <translation>Point Elevation</translation>
+        <translation>점 표고</translation>
     </message>
     <message>
         <location filename="../../../plugins/asciifile/asciifile.cpp" line="248"/>
         <source>Draw point elevation</source>
-        <translation>Draw point elevation</translation>
+        <translation>점 표고 그리기</translation>
     </message>
     <message>
         <location filename="../../../plugins/asciifile/asciifile.cpp" line="249"/>
         <source>Point Code</source>
-        <translation>Point Code</translation>
+        <translation>점 코드</translation>
     </message>
     <message>
         <location filename="../../../plugins/asciifile/asciifile.cpp" line="249"/>
         <source>Draw point code</source>
-        <translation>Draw point code</translation>
+        <translation>점 코드 그리기</translation>
     </message>
     <message>
         <location filename="../../../plugins/asciifile/asciifile.cpp" line="263"/>
@@ -21617,72 +21617,72 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../../plugins/asciifile/asciifile.cpp" line="298"/>
         <source>Select file</source>
-        <translation>Select file</translation>
+        <translation>파일 선택</translation>
     </message>
     <message>
         <location filename="../../../plugins/asciifile/asciifile.cpp" line="305"/>
         <source>Point 2D layer is empty</source>
-        <translation>Point 2D layer is empty</translation>
+        <translation>2D 점 레이어가 비어 있습니다</translation>
     </message>
     <message>
         <location filename="../../../plugins/asciifile/asciifile.cpp" line="308"/>
         <source>Point 3D layer is empty</source>
-        <translation>Point 3D layer is empty</translation>
+        <translation>3D 점 레이어가 비어 있습니다</translation>
     </message>
     <message>
         <location filename="../../../plugins/asciifile/asciifile.cpp" line="311"/>
         <source>Point elevation layer is empty</source>
-        <translation>Point elevation layer is empty</translation>
+        <translation>점 표고 레이어가 비어 있습니다</translation>
     </message>
     <message>
         <location filename="../../../plugins/asciifile/asciifile.cpp" line="312"/>
         <source>Point elevation height is empty</source>
-        <translation>Point elevation height is empty</translation>
+        <translation>점 표고 높이가 비어 있습니다</translation>
     </message>
     <message>
         <location filename="../../../plugins/asciifile/asciifile.cpp" line="313"/>
         <source>Point elevation separation is empty</source>
-        <translation>Point elevation separation is empty</translation>
+        <translation>점 표고 간격이 비어 있습니다</translation>
     </message>
     <message>
         <location filename="../../../plugins/asciifile/asciifile.cpp" line="316"/>
         <source>Point number layer is empty</source>
-        <translation>Point number layer is empty</translation>
+        <translation>점 번호 레이어가 비어 있습니다</translation>
     </message>
     <message>
         <location filename="../../../plugins/asciifile/asciifile.cpp" line="317"/>
         <source>Point number height is empty</source>
-        <translation>Point number height is empty</translation>
+        <translation>점 번호 높이가 비어 있습니다</translation>
     </message>
     <message>
         <location filename="../../../plugins/asciifile/asciifile.cpp" line="318"/>
         <source>Point number separation is empty</source>
-        <translation>Point number separation is empty</translation>
+        <translation>점 번호 간격이 비어 있습니다</translation>
     </message>
     <message>
         <location filename="../../../plugins/asciifile/asciifile.cpp" line="321"/>
         <source>Point code layer is empty</source>
-        <translation>Point code layer is empty</translation>
+        <translation>점 코드 레이어가 비어 있습니다</translation>
     </message>
     <message>
         <location filename="../../../plugins/asciifile/asciifile.cpp" line="322"/>
         <source>Point code height is empty</source>
-        <translation>Point code height is empty</translation>
+        <translation>점 코드 높이가 비어 있습니다</translation>
     </message>
     <message>
         <location filename="../../../plugins/asciifile/asciifile.cpp" line="323"/>
         <source>Point code separation is empty</source>
-        <translation>Point code separation is empty</translation>
+        <translation>점 코드 간격이 비어 있습니다</translation>
     </message>
     <message>
         <location filename="../../../plugins/asciifile/asciifile.cpp" line="359"/>
         <source>The file %1 not exist</source>
-        <translation>The file %1 not exist</translation>
+        <translation>파일 %1 이(가) 존재하지 않습니다</translation>
     </message>
     <message>
         <location filename="../../../plugins/asciifile/asciifile.cpp" line="364"/>
         <source>Can&apos;t open the file %1</source>
-        <translation>Can&apos;t open the file %1</translation>
+        <translation>파일 %1 을(를) 열 수 없습니다</translation>
     </message>
 </context>
 <context>
@@ -21701,7 +21701,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../../plugins/divide/divide.cpp" line="67"/>
         <source>Error</source>
-        <translation>Error</translation>
+        <translation>오류</translation>
     </message>
     <message>
         <location filename="../../../plugins/divide/divide.cpp" line="104"/>
@@ -21756,23 +21756,23 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../../plugins/divide/divide.cpp" line="479"/>
         <source>from point</source>
-        <translation>from point</translation>
+        <translation>시작점</translation>
     </message>
     <message>
         <location filename="../../../plugins/divide/divide.cpp" line="482"/>
         <source>to point</source>
-        <translation>to point</translation>
+        <translation>끝점</translation>
     </message>
     <message>
         <location filename="../../../plugins/divide/divide.cpp" line="487"/>
         <location filename="../../../plugins/divide/divide.cpp" line="514"/>
         <source>length</source>
-        <translation>length</translation>
+        <translation>길이</translation>
     </message>
     <message>
         <location filename="../../../plugins/divide/divide.cpp" line="492"/>
         <source>Angle in XY plane</source>
-        <translation>Angle in XY plane</translation>
+        <translation>XY 평면의 각도</translation>
     </message>
     <message>
         <location filename="../../../plugins/divide/divide.cpp" line="494"/>
@@ -21788,34 +21788,34 @@ This block cannot be inserted.</source>
         <location filename="../../../plugins/divide/divide.cpp" line="500"/>
         <location filename="../../../plugins/divide/divide.cpp" line="519"/>
         <source>center point</source>
-        <translation>center point</translation>
+        <translation>중심점</translation>
     </message>
     <message>
         <location filename="../../../plugins/divide/divide.cpp" line="506"/>
         <location filename="../../../plugins/divide/divide.cpp" line="523"/>
         <location filename="../../../plugins/divide/divide.cpp" line="545"/>
         <source>radius</source>
-        <translation>radius</translation>
+        <translation>반지름</translation>
     </message>
     <message>
         <location filename="../../../plugins/divide/divide.cpp" line="507"/>
         <source>initial angle</source>
-        <translation>initial angle</translation>
+        <translation>시작 각도</translation>
     </message>
     <message>
         <location filename="../../../plugins/divide/divide.cpp" line="509"/>
         <source>final angle</source>
-        <translation>final angle</translation>
+        <translation>끝 각도</translation>
     </message>
     <message>
         <location filename="../../../plugins/divide/divide.cpp" line="518"/>
         <source>CIRCLE</source>
-        <translation>CIRCLE</translation>
+        <translation>원</translation>
     </message>
     <message>
         <location filename="../../../plugins/divide/divide.cpp" line="524"/>
         <source>circumference</source>
-        <translation>circumference</translation>
+        <translation>원주</translation>
     </message>
     <message>
         <location filename="../../../plugins/divide/divide.cpp" line="526"/>
@@ -21825,12 +21825,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../../plugins/divide/divide.cpp" line="530"/>
         <source>POLYLINE</source>
-        <translation>POLYLINE</translation>
+        <translation>폴리선</translation>
     </message>
     <message>
         <location filename="../../../plugins/divide/divide.cpp" line="531"/>
         <source>Closed</source>
-        <translation>Closed</translation>
+        <translation>닫힘</translation>
     </message>
     <message>
         <location filename="../../../plugins/divide/divide.cpp" line="533"/>
@@ -21845,12 +21845,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../../plugins/divide/divide.cpp" line="534"/>
         <source>Vertices</source>
-        <translation>Vertices</translation>
+        <translation>꼭짓점</translation>
     </message>
     <message>
         <location filename="../../../plugins/divide/divide.cpp" line="539"/>
         <source>in point</source>
-        <translation>in point</translation>
+        <translation>입력점</translation>
     </message>
     <message>
         <location filename="../../../plugins/divide/divide.cpp" line="555"/>
@@ -21868,7 +21868,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../../plugins/divide/dividedlg.cpp" line="69"/>
         <source>Layers</source>
-        <translation>Layers</translation>
+        <translation>레이어</translation>
     </message>
     <message>
         <location filename="../../../plugins/divide/dividedlg.cpp" line="75"/>
@@ -21937,22 +21937,22 @@ anti-clockwise.</source>
     <message>
         <location filename="../../../plugins/divide/dividedlg.cpp" line="258"/>
         <source>Above</source>
-        <translation>Above</translation>
+        <translation>위</translation>
     </message>
     <message>
         <location filename="../../../plugins/divide/dividedlg.cpp" line="259"/>
         <source>Below</source>
-        <translation>Below</translation>
+        <translation>아래</translation>
     </message>
     <message>
         <location filename="../../../plugins/divide/dividedlg.cpp" line="263"/>
         <source>Outside</source>
-        <translation>Outside</translation>
+        <translation>바깥</translation>
     </message>
     <message>
         <location filename="../../../plugins/divide/dividedlg.cpp" line="264"/>
         <source>Inside</source>
-        <translation>Inside</translation>
+        <translation>안쪽</translation>
     </message>
 </context>
 <context>
@@ -21978,17 +21978,17 @@ anti-clockwise.</source>
     <message>
         <location filename="../../../plugins/gear/gear.cpp" line="114"/>
         <source>Number of teeth</source>
-        <translation>Number of teeth</translation>
+        <translation>잇수</translation>
     </message>
     <message>
         <location filename="../../../plugins/gear/gear.cpp" line="116"/>
         <source>Pressure angle (deg)</source>
-        <translation>Pressure angle (deg)</translation>
+        <translation>압력각 (도)</translation>
     </message>
     <message>
         <location filename="../../../plugins/gear/gear.cpp" line="113"/>
         <source>Rotation angle</source>
-        <translation>Rotation angle</translation>
+        <translation>회전 각도</translation>
     </message>
     <message>
         <location filename="../../../plugins/gear/gear.cpp" line="115"/>
@@ -22018,7 +22018,7 @@ anti-clockwise.</source>
     <message>
         <location filename="../../../plugins/gear/gear.cpp" line="121"/>
         <source>Draw all teeth?</source>
-        <translation>Draw all teeth?</translation>
+        <translation>모든 이빨을 그리겠습니까?</translation>
     </message>
     <message>
         <location filename="../../../plugins/gear/gear.cpp" line="122"/>
@@ -22028,7 +22028,7 @@ anti-clockwise.</source>
     <message>
         <location filename="../../../plugins/gear/gear.cpp" line="124"/>
         <source>Use layers?</source>
-        <translation>Use layers?</translation>
+        <translation>레이어를 사용하겠습니까?</translation>
     </message>
     <message>
         <location filename="../../../plugins/gear/gear.cpp" line="125"/>
@@ -22094,27 +22094,27 @@ anti-clockwise.</source>
     <message>
         <location filename="../../../plugins/sample/sample.cpp" line="54"/>
         <source>Draw line</source>
-        <translation>Draw line</translation>
+        <translation>선 그리기</translation>
     </message>
     <message>
         <location filename="../../../plugins/sample/sample.cpp" line="60"/>
         <source>Start X:</source>
-        <translation>Start X:</translation>
+        <translation>시작 X:</translation>
     </message>
     <message>
         <location filename="../../../plugins/sample/sample.cpp" line="66"/>
         <source>Start Y:</source>
-        <translation>Start Y:</translation>
+        <translation>시작 Y:</translation>
     </message>
     <message>
         <location filename="../../../plugins/sample/sample.cpp" line="72"/>
         <source>End X:</source>
-        <translation>End X:</translation>
+        <translation>끝 X:</translation>
     </message>
     <message>
         <location filename="../../../plugins/sample/sample.cpp" line="78"/>
         <source>End Y:</source>
-        <translation>End Y:</translation>
+        <translation>끝 Y:</translation>
     </message>
     <message>
         <location filename="../../../plugins/sample/sample.cpp" line="86"/>
@@ -22129,27 +22129,27 @@ anti-clockwise.</source>
     <message>
         <location filename="../../../plugins/sample/sample.cpp" line="107"/>
         <source>Start X is empty</source>
-        <translation>Start X is empty</translation>
+        <translation>시작 X가 비어 있습니다</translation>
     </message>
     <message>
         <location filename="../../../plugins/sample/sample.cpp" line="108"/>
         <source>Start Y is empty</source>
-        <translation>Start Y is empty</translation>
+        <translation>시작 Y가 비어 있습니다</translation>
     </message>
     <message>
         <location filename="../../../plugins/sample/sample.cpp" line="109"/>
         <source>End X is empty</source>
-        <translation>End X is empty</translation>
+        <translation>끝 X가 비어 있습니다</translation>
     </message>
     <message>
         <location filename="../../../plugins/sample/sample.cpp" line="110"/>
         <source>End Y is empty</source>
-        <translation>End Y is empty</translation>
+        <translation>끝 Y가 비어 있습니다</translation>
     </message>
     <message>
         <location filename="../../../plugins/sample/sample.cpp" line="132"/>
         <source>Sample plugin</source>
-        <translation>Sample plugin</translation>
+        <translation>샘플 플러그인</translation>
     </message>
 </context>
 <context>
@@ -22157,12 +22157,12 @@ anti-clockwise.</source>
     <message>
         <location filename="../../../plugins/picfile/picfile.cpp" line="65"/>
         <source>File...</source>
-        <translation>File...</translation>
+        <translation>파일...</translation>
     </message>
     <message>
         <location filename="../../../plugins/picfile/picfile.cpp" line="75"/>
         <source>Scale:</source>
-        <translation>Scale:</translation>
+        <translation>축척:</translation>
     </message>
     <message>
         <location filename="../../../plugins/picfile/picfile.cpp" line="79"/>
@@ -22177,43 +22177,43 @@ anti-clockwise.</source>
     <message>
         <location filename="../../../plugins/picfile/picfile.cpp" line="111"/>
         <source>Select file</source>
-        <translation>Select file</translation>
+        <translation>파일 선택</translation>
     </message>
     <message>
         <location filename="../../../plugins/picfile/picfile.cpp" line="119"/>
         <source>Scale Factor is empty or invalid</source>
-        <translation>Scale Factor is empty or invalid</translation>
+        <translation>축척 계수가 비어 있거나 잘못되었습니다</translation>
     </message>
     <message>
         <location filename="../../../plugins/picfile/picfile.cpp" line="132"/>
         <source>The file %1 not exist</source>
-        <translation>The file %1 not exist</translation>
+        <translation>파일 %1 이(가) 존재하지 않습니다</translation>
     </message>
     <message>
         <location filename="../../../plugins/picfile/picfile.cpp" line="137"/>
         <source>Can&apos;t open the file %1</source>
-        <translation>Can&apos;t open the file %1</translation>
+        <translation>파일 %1 을(를) 열 수 없습니다</translation>
     </message>
     <message>
         <location filename="../../../plugins/picfile/picfile.cpp" line="144"/>
         <source>%1 objects imported</source>
-        <translation>%1 objects imported</translation>
+        <translation>%1 개 객체를 가져왔습니다</translation>
     </message>
     <message>
         <location filename="../../../plugins/picfile/picfile.cpp" line="166"/>
         <source>picPunto drawLine: first point is empty %1</source>
-        <translation>picPunto drawLine: first point is empty %1</translation>
+        <translation>picPunto drawLine: 첫 번째 점이 비어 있습니다 %1</translation>
     </message>
     <message>
         <location filename="../../../plugins/picfile/picfile.cpp" line="179"/>
         <source>picPunto drawLine: next point is empty %1</source>
-        <translation>picPunto drawLine: next point is empty %1</translation>
+        <translation>picPunto drawLine: 다음 점이 비어 있습니다 %1</translation>
     </message>
     <message>
         <location filename="../../../plugins/picfile/picfile.cpp" line="262"/>
         <location filename="../../../plugins/picfile/picfile.cpp" line="271"/>
         <source>format error in %1</source>
-        <translation>format error in %1</translation>
+        <translation>%1 의 형식 오류</translation>
     </message>
 </context>
 <context>
@@ -22222,7 +22222,7 @@ anti-clockwise.</source>
         <location filename="../../../plugins/plotequation/plot.cpp" line="30"/>
         <location filename="../../../plugins/plotequation/plot.cpp" line="37"/>
         <source>Plot plugin</source>
-        <translation>Plot plugin</translation>
+        <translation>수식 그래프 플러그인</translation>
     </message>
 </context>
 <context>
@@ -22230,7 +22230,7 @@ anti-clockwise.</source>
     <message>
         <location filename="../../../plugins/plotequation/plotdialog.cpp" line="15"/>
         <source>Plot equation</source>
-        <translation>Plot equation</translation>
+        <translation>수식 그래프</translation>
     </message>
     <message>
         <location filename="../../../plugins/plotequation/plotdialog.cpp" line="18"/>
@@ -22239,35 +22239,35 @@ If you don&apos;t want to use the parametric form, just leave out &quot;Equation
 You can use pi when you need the value of pi (i.e. (3*pi)).
 Use t or x in your equation as a variable/parameter.
 </source>
-        <translation>This plugin allows you to plot mathematical equations.
-If you don&apos;t want to use the parametric form, just leave out &quot;Equation2&quot;.
-You can use pi when you need the value of pi (i.e. (3*pi)).
-Use t or x in your equation as a variable/parameter.</translation>
+        <translation>이 플러그인을 사용하여 수학 방정식의 그래프를 그릴 수 있습니다.
+매개변수 형식을 사용하지 않으려면 &quot;Equation2&quot;를 비워 두십시오.
+pi 값이 필요할 때 pi를 사용할 수 있습니다 (예: (3*pi)).
+방정식에서 변수/매개변수로 t 또는 x를 사용하십시오.</translation>
     </message>
     <message>
         <location filename="../../../plugins/plotequation/plotdialog.cpp" line="22"/>
         <source>Equation 1:</source>
-        <translation>Equation 1:</translation>
+        <translation>방정식 1:</translation>
     </message>
     <message>
         <location filename="../../../plugins/plotequation/plotdialog.cpp" line="23"/>
         <source>Equation 2:</source>
-        <translation>Equation 2:</translation>
+        <translation>방정식 2:</translation>
     </message>
     <message>
         <location filename="../../../plugins/plotequation/plotdialog.cpp" line="26"/>
         <source>start value:</source>
-        <translation>start value:</translation>
+        <translation>시작 값:</translation>
     </message>
     <message>
         <location filename="../../../plugins/plotequation/plotdialog.cpp" line="27"/>
         <source>end value:</source>
-        <translation>end value:</translation>
+        <translation>끝 값:</translation>
     </message>
     <message>
         <location filename="../../../plugins/plotequation/plotdialog.cpp" line="28"/>
         <source>step size:</source>
-        <translation>step size:</translation>
+        <translation>단계 크기:</translation>
     </message>
     <message>
         <location filename="../../../plugins/plotequation/plotdialog.cpp" line="32"/>
@@ -22283,19 +22283,19 @@ Use t or x in your equation as a variable/parameter.</translation>
         <location filename="../../../plugins/plotequation/plotdialog.cpp" line="59"/>
         <source>Line Segments</source>
         <comment>Plot Equation to generate RS_Line segments</comment>
-        <translation>Line Segments</translation>
+        <translation>선분</translation>
     </message>
     <message>
         <location filename="../../../plugins/plotequation/plotdialog.cpp" line="60"/>
         <source>Polyline</source>
         <comment>Plot Equation to generate RS_Polyline</comment>
-        <translation>Polyline</translation>
+        <translation>폴리선</translation>
     </message>
     <message>
         <location filename="../../../plugins/plotequation/plotdialog.cpp" line="61"/>
         <source>SplinePoints</source>
         <comment>Plot Equation to generate 2nd spline by LC_SplinePoints</comment>
-        <translation>SplinePoints</translation>
+        <translation>스플라인점</translation>
     </message>
 </context>
 <context>
@@ -22321,7 +22321,7 @@ Use t or x in your equation as a variable/parameter.</translation>
     <message>
         <location filename="../../../plugins/asciifile/asciifile.cpp" line="206"/>
         <source>Separation</source>
-        <translation>Separation</translation>
+        <translation>간격</translation>
     </message>
 </context>
 </TS>

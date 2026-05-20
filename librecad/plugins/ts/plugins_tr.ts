@@ -907,7 +907,7 @@ veya [%2]</translation>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="526"/>
         <source>&amp;Spline</source>
-        <translation>&amp;Spline</translation>
+        <translation>&amp;Eğri</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="533"/>
@@ -2063,7 +2063,7 @@ birinci kaynak, ikinci kaynak, birinci hedef, ikinci hedef.</translation>
         <location filename="../../../build/ui_lc_layerdialog_ex.h" line="167"/>
         <location filename="../../../generated/librecad/ui/ui_lc_layerdialog_ex.h" line="167"/>
         <source>Normal</source>
-        <translation>Normal</translation>
+        <translation>Standart</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_layerdialog_ex.ui" line="110"/>
@@ -3193,7 +3193,7 @@ birinci kaynak, ikinci kaynak, birinci hedef, ikinci hedef.</translation>
     <message>
         <location filename="../../../plugins/list/list.cpp" line="169"/>
         <source>OVERLAYBOX</source>
-        <translation>OVERLAYBOX</translation>
+        <translation>KAPLAMA KUTUSU</translation>
     </message>
     <message>
         <location filename="../../../plugins/list/list.cpp" line="172"/>
@@ -5663,7 +5663,7 @@ Otomatik kaydetme devre dışı bırakıldı.</translation>
     <message>
         <location filename="../../src/ui/lc_widgetfactory.cpp" line="883"/>
         <source>&amp;Wiki</source>
-        <translation>&amp;Wiki</translation>
+        <translation>&amp;Viki</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_widgetfactory.cpp" line="884"/>
@@ -6030,7 +6030,7 @@ ayrı bir pencerede düzenle</translation>
         <location filename="../../src/ui/qg_colorbox.cpp" line="159"/>
         <location filename="../../src/ui/qg_colorbox.cpp" line="171"/>
         <source>/ColorBox</source>
-        <translation>/ColorBox</translation>
+        <translation>/RenkKutusu</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_colorbox.cpp" line="165"/>
@@ -10168,8 +10168,8 @@ Yeni çizimler için kullanmak istediğiniz birimi ve tercih ettiğiniz dili se�
         <location filename="../../src/ui/forms/qg_dlgoptionsmakercam.cpp" line="33"/>
         <source>MakerCAM as of November 2014 does not hide SVG content 
 that has been set invisibe (&quot;display: none&quot; or &quot;visibility: hidden&quot;).</source>
-        <translation>MakerCAM as of November 2014 does not hide SVG content 
-that has been set invisibe (&quot;display: none&quot; or &quot;visibility: hidden&quot;).</translation>
+        <translation>MakerCAM, Kasım 2014 itibarıyla görünmez olarak ayarlanmış SVG içeriğini 
+gizlememektedir (&quot;display: none&quot; veya &quot;visibility: hidden&quot;).</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsmakercam.cpp" line="34"/>
@@ -10183,37 +10183,37 @@ because it does not take into account the reference point in the &lt;use&gt;.</s
         <source>MakerCAM as of March 2015 cannot display ellipses and ellipse arcs correctly, 
 when they are created using the &lt;ellipse&gt; tag  with a rotation in 
 the &lt;transform&gt; attribute or as &lt;path&gt; using elliptic arc segments.</source>
-        <translation>MakerCAM as of March 2015 cannot display ellipses and ellipse arcs correctly, 
-when they are created using the &lt;ellipse&gt; tag  with a rotation in 
-the &lt;transform&gt; attribute or as &lt;path&gt; using elliptic arc segments.</translation>
+        <translation>MakerCAM, Mart 2015 itibarıyla elipsleri ve elips yaylarını doğru görüntüleyememektedir; 
+bunlar &lt;transform&gt; özniteliğinde döndürme ile &lt;ellipse&gt; etiketi kullanılarak 
+veya eliptik yay kesimleri kullanılarak &lt;path&gt; olarak oluşturulduğunda.</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsmakercam.cpp" line="36"/>
         <source>Exported images can be useful in SVG editors (Inkscape, etc), 
 but avoided in some CAM&apos;s.</source>
-        <translation>Exported images can be useful in SVG editors (Inkscape, etc), 
-but avoided in some CAM&apos;s.</translation>
+        <translation>Dışa aktarılan görseller SVG düzenleyicilerde (Inkscape, vb.) kullanışlı olabilir, 
+ancak bazı CAM&apos;larda bunlardan kaçınılır.</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsmakercam.cpp" line="37"/>
         <source>Many CAM&apos;s(MakerCAM, EleskCAM, LaserWeb) ignore dashed/doted line style, 
 which can be useful in lasercut of plywood or for papercraft. </source>
-        <translation>Many CAM&apos;s(MakerCAM, EleskCAM, LaserWeb) ignore dashed/doted line style, 
-which can be useful in lasercut of plywood or for papercraft.</translation>
+        <translation>Birçok CAM&apos;ı (MakerCAM, EleskCAM, LaserWeb) kesikli/noktalı çizgi stilini yok sayar; 
+bu stil kontrplak lazer kesiminde veya kağıt el işlerinde kullanışlı olabilir.</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsmakercam.cpp" line="38"/>
         <source>Default width of elements can affect some CAM&apos;s/SVG Editors, 
 but ignored by other</source>
-        <translation>Default width of elements can affect some CAM&apos;s/SVG Editors, 
-but ignored by other</translation>
+        <translation>Öğelerin varsayılan genişliği bazı CAM&apos;ları/SVG Düzenleyicileri etkileyebilir, 
+ancak diğerleri tarafından yoksayılır.</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsmakercam.cpp" line="39"/>
         <source>Length of line pattern related to zoom, 
 so default step value required for baking</source>
-        <translation>Length of line pattern related to zoom, 
-so default step value required for baking</translation>
+        <translation>Çizgi deseni uzunluğu yakınlaştırmayla ilişkilidir, 
+bu nedenle dönüştürme için varsayılan adım değeri gereklidir.</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsmakercam.cpp" line="40"/>
@@ -10620,7 +10620,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgspline.h" line="171"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgspline.h" line="171"/>
         <source>Spline</source>
-        <translation>Spline</translation>
+        <translation>Eğri</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgspline.ui" line="51"/>
@@ -12940,9 +12940,9 @@ p, li { white-space: pre-wrap; }
         <source>Attempt to create layer with duplicating name. Duplicated layer name is 
 [%1].
 Please specify a different name.</source>
-        <translation>Attempt to create layer with duplicating name. Duplicated layer name is 
+        <translation>Yinelenen adla katman oluşturma girişimi. Yinelenen katman adı 
 [%1].
-Please specify a different name.</translation>
+Lütfen farklı bir ad belirtin.</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_layertreeoptionsdialog.cpp" line="153"/>
@@ -13003,17 +13003,17 @@ Filtre maskesini temizleyip tekrar deneyin.</translation>
         <source>Such child layer already exist for 
 [%1].
 Please specify a different name.</source>
-        <translation>Such child layer already exist for 
-[%1].
-Please specify a different name.</translation>
+        <translation>Bu alt katman 
+[%1] için zaten mevcut.
+Lütfen farklı bir ad belirtin.</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_layertreewidget.cpp" line="1175"/>
         <source>Such child layer already exist for 
 [%1].
 </source>
-        <translation>Such child layer already exist for 
-[%1].</translation>
+        <translation>Bu alt katman 
+[%1] için zaten mevcut.</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_layertreewidget.cpp" line="1183"/>
@@ -13102,9 +13102,9 @@ Lütfen farklı bir değer belirtin.</translation>
         <source>Invalid path to pens file.
 %1 
 Please specify a different value.</source>
-        <translation>Invalid path to pens file.
+        <translation>Kalem dosyasına geçersiz yol.
 %1 
-Please specify a different value.</translation>
+Lütfen farklı bir değer belirtin.</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_penpalettewidget.cpp" line="1320"/>
@@ -13261,7 +13261,7 @@ Bu işlem GERİ ALINAMAZ.</translation>
         <location filename="../../src/cmd/rs_commands.cpp" line="153"/>
         <source>line2p</source>
         <comment>draw line</comment>
-        <translation>line2p</translation>
+        <translation>cizgi2n</translation>
     </message>
     <message>
         <location filename="../../src/cmd/rs_commands.cpp" line="154"/>
@@ -13477,7 +13477,7 @@ Bu işlem GERİ ALINAMAZ.</translation>
         <location filename="../../src/cmd/rs_commands.cpp" line="249"/>
         <source>linepoints</source>
         <comment>draw line of points</comment>
-        <translation>linepoints</translation>
+        <translation>cizgnoktalar</translation>
     </message>
     <message>
         <location filename="../../src/cmd/rs_commands.cpp" line="250"/>
@@ -13489,7 +13489,7 @@ Bu işlem GERİ ALINAMAZ.</translation>
         <location filename="../../src/cmd/rs_commands.cpp" line="255"/>
         <source>criclebyarc</source>
         <comment>draw circle by arc</comment>
-        <translation>criclebyarc</translation>
+        <translation>cemberyay</translation>
     </message>
     <message>
         <location filename="../../src/cmd/rs_commands.cpp" line="256"/>
@@ -13513,7 +13513,7 @@ Bu işlem GERİ ALINAMAZ.</translation>
         <location filename="../../src/cmd/rs_commands.cpp" line="267"/>
         <source>linejoin</source>
         <comment>lines join</comment>
-        <translation>linejoin</translation>
+        <translation>cizgibilestir</translation>
     </message>
     <message>
         <location filename="../../src/cmd/rs_commands.cpp" line="268"/>
@@ -13663,7 +13663,7 @@ Bu işlem GERİ ALINAMAZ.</translation>
         <location filename="../../src/cmd/rs_commands.cpp" line="328"/>
         <source>ortho</source>
         <comment>perpendicular line</comment>
-        <translation>ortho</translation>
+        <translation>ortogonal</translation>
     </message>
     <message>
         <location filename="../../src/cmd/rs_commands.cpp" line="333"/>
@@ -13705,7 +13705,7 @@ Bu işlem GERİ ALINAMAZ.</translation>
         <location filename="../../src/cmd/rs_commands.cpp" line="347"/>
         <source>polygoncentan</source>
         <comment>polygon centre vertex</comment>
-        <translation>polygoncentan</translation>
+        <translation>cokgenmerkeztanj</translation>
     </message>
     <message>
         <location filename="../../src/cmd/rs_commands.cpp" line="348"/>
@@ -13717,13 +13717,13 @@ Bu işlem GERİ ALINAMAZ.</translation>
         <location filename="../../src/cmd/rs_commands.cpp" line="349"/>
         <source>polyct</source>
         <comment>polygon centre vertex</comment>
-        <translation>polyct</translation>
+        <translation>cokgensay</translation>
     </message>
     <message>
         <location filename="../../src/cmd/rs_commands.cpp" line="354"/>
         <source>polygon2v</source>
         <comment>polygon by 2 vertices</comment>
-        <translation>polygon2v</translation>
+        <translation>cokgen2k</translation>
     </message>
     <message>
         <location filename="../../src/cmd/rs_commands.cpp" line="355"/>
@@ -13735,13 +13735,13 @@ Bu işlem GERİ ALINAMAZ.</translation>
         <location filename="../../src/cmd/rs_commands.cpp" line="356"/>
         <source>poly2</source>
         <comment>polygon by 2 vertices</comment>
-        <translation>poly2</translation>
+        <translation>cokgen2</translation>
     </message>
     <message>
         <location filename="../../src/cmd/rs_commands.cpp" line="363"/>
         <source>circle</source>
         <comment>draw circle</comment>
-        <translation>circle</translation>
+        <translation>cember</translation>
     </message>
     <message>
         <location filename="../../src/cmd/rs_commands.cpp" line="364"/>
@@ -13759,7 +13759,7 @@ Bu işlem GERİ ALINAMAZ.</translation>
         <location filename="../../src/cmd/rs_commands.cpp" line="370"/>
         <source>circle2p</source>
         <comment>circle 2 points</comment>
-        <translation>circle2p</translation>
+        <translation>cember2n</translation>
     </message>
     <message>
         <location filename="../../src/cmd/rs_commands.cpp" line="371"/>
@@ -13777,7 +13777,7 @@ Bu işlem GERİ ALINAMAZ.</translation>
         <location filename="../../src/cmd/rs_commands.cpp" line="377"/>
         <source>circle2pr</source>
         <comment>circle 2 points radius</comment>
-        <translation>circle2pr</translation>
+        <translation>cember2nt</translation>
     </message>
     <message>
         <location filename="../../src/cmd/rs_commands.cpp" line="378"/>
@@ -13789,7 +13789,7 @@ Bu işlem GERİ ALINAMAZ.</translation>
         <location filename="../../src/cmd/rs_commands.cpp" line="383"/>
         <source>circle3p</source>
         <comment>circle 3 points</comment>
-        <translation>circle3p</translation>
+        <translation>cember3n</translation>
     </message>
     <message>
         <location filename="../../src/cmd/rs_commands.cpp" line="384"/>
@@ -13807,7 +13807,7 @@ Bu işlem GERİ ALINAMAZ.</translation>
         <location filename="../../src/cmd/rs_commands.cpp" line="390"/>
         <source>circlecr</source>
         <comment>circle point radius</comment>
-        <translation>circlecr</translation>
+        <translation>cemberty</translation>
     </message>
     <message>
         <location filename="../../src/cmd/rs_commands.cpp" line="391"/>
@@ -13915,7 +13915,7 @@ Bu işlem GERİ ALINAMAZ.</translation>
         <location filename="../../src/cmd/rs_commands.cpp" line="440"/>
         <source>arctan</source>
         <comment>arc tangent</comment>
-        <translation>arctan</translation>
+        <translation>arktanj</translation>
     </message>
     <message>
         <location filename="../../src/cmd/rs_commands.cpp" line="441"/>
@@ -13927,7 +13927,7 @@ Bu işlem GERİ ALINAMAZ.</translation>
         <location filename="../../src/cmd/rs_commands.cpp" line="446"/>
         <source>spline</source>
         <comment>draw spline</comment>
-        <translation>spline</translation>
+        <translation>egri</translation>
     </message>
     <message>
         <location filename="../../src/cmd/rs_commands.cpp" line="447"/>
@@ -14065,7 +14065,7 @@ Bu işlem GERİ ALINAMAZ.</translation>
         <location filename="../../src/cmd/rs_commands.cpp" line="511"/>
         <source>ellipseinscribed</source>
         <comment>inscribed ellipse</comment>
-        <translation>ellipseinscribed</translation>
+        <translation>elipsyazili</translation>
     </message>
     <message>
         <location filename="../../src/cmd/rs_commands.cpp" line="512"/>
@@ -14083,7 +14083,7 @@ Bu işlem GERİ ALINAMAZ.</translation>
         <location filename="../../src/cmd/rs_commands.cpp" line="520"/>
         <source>polyline</source>
         <comment>draw polyline</comment>
-        <translation>polyline</translation>
+        <translation>poliizgi</translation>
     </message>
     <message>
         <location filename="../../src/cmd/rs_commands.cpp" line="521"/>
@@ -14096,13 +14096,13 @@ Bu işlem GERİ ALINAMAZ.</translation>
         <location filename="../../src/cmd/rs_commands.cpp" line="527"/>
         <source>angleline</source>
         <comment>draw angle from line</comment>
-        <translation>angleline</translation>
+        <translation>acicizgi</translation>
     </message>
     <message>
         <location filename="../../src/cmd/rs_commands.cpp" line="532"/>
         <source>rortoline</source>
         <comment>draw orthogonal</comment>
-        <translation>rortoline</translation>
+        <translation>donaycizgi</translation>
     </message>
     <message>
         <location filename="../../src/cmd/rs_commands.cpp" line="533"/>
@@ -14114,7 +14114,7 @@ Bu işlem GERİ ALINAMAZ.</translation>
         <location filename="../../src/cmd/rs_commands.cpp" line="538"/>
         <source>point2line</source>
         <comment>draw line from point to line</comment>
-        <translation>point2line</translation>
+        <translation>nokta2cizgi</translation>
     </message>
     <message>
         <location filename="../../src/cmd/rs_commands.cpp" line="539"/>
@@ -14210,7 +14210,7 @@ Bu işlem GERİ ALINAMAZ.</translation>
         <location filename="../../src/cmd/rs_commands.cpp" line="589"/>
         <source>selectall</source>
         <comment>Select all entities</comment>
-        <translation>selectall</translation>
+        <translation>tumunusec</translation>
     </message>
     <message>
         <location filename="../../src/cmd/rs_commands.cpp" line="590"/>
@@ -14222,7 +14222,7 @@ Bu işlem GERİ ALINAMAZ.</translation>
         <location filename="../../src/cmd/rs_commands.cpp" line="595"/>
         <source>deselectall</source>
         <comment>deselect all entities</comment>
-        <translation>deselectall</translation>
+        <translation>secimikaldir</translation>
     </message>
     <message>
         <location filename="../../src/cmd/rs_commands.cpp" line="596"/>
@@ -14240,7 +14240,7 @@ Bu işlem GERİ ALINAMAZ.</translation>
         <location filename="../../src/cmd/rs_commands.cpp" line="602"/>
         <source>invertselect</source>
         <comment>invert select</comment>
-        <translation>invertselect</translation>
+        <translation>secimters</translation>
     </message>
     <message>
         <location filename="../../src/cmd/rs_commands.cpp" line="603"/>
@@ -14252,7 +14252,7 @@ Bu işlem GERİ ALINAMAZ.</translation>
         <location filename="../../src/cmd/rs_commands.cpp" line="611"/>
         <source>dimaligned</source>
         <comment>dimension - aligned</comment>
-        <translation>dimaligned</translation>
+        <translation>kotahizali</translation>
     </message>
     <message>
         <location filename="../../src/cmd/rs_commands.cpp" line="612"/>
@@ -14264,7 +14264,7 @@ Bu işlem GERİ ALINAMAZ.</translation>
         <location filename="../../src/cmd/rs_commands.cpp" line="617"/>
         <source>dimlinear</source>
         <comment>dimension - linear</comment>
-        <translation>dimlinear</translation>
+        <translation>kotadogrusal</translation>
     </message>
     <message>
         <location filename="../../src/cmd/rs_commands.cpp" line="618"/>
@@ -14276,7 +14276,7 @@ Bu işlem GERİ ALINAMAZ.</translation>
         <location filename="../../src/cmd/rs_commands.cpp" line="623"/>
         <source>dimhorizontal</source>
         <comment>dimension - horizontal</comment>
-        <translation>dimhorizontal</translation>
+        <translation>kotayatay</translation>
     </message>
     <message>
         <location filename="../../src/cmd/rs_commands.cpp" line="624"/>
@@ -14288,7 +14288,7 @@ Bu işlem GERİ ALINAMAZ.</translation>
         <location filename="../../src/cmd/rs_commands.cpp" line="629"/>
         <source>dimvertical</source>
         <comment>dimension - vertical</comment>
-        <translation>dimvertical</translation>
+        <translation>kotadikey</translation>
     </message>
     <message>
         <location filename="../../src/cmd/rs_commands.cpp" line="630"/>
@@ -14300,13 +14300,13 @@ Bu işlem GERİ ALINAMAZ.</translation>
         <location filename="../../src/cmd/rs_commands.cpp" line="635"/>
         <source>dimradius</source>
         <comment>dimension - radial</comment>
-        <translation>dimradius</translation>
+        <translation>kotayaricap</translation>
     </message>
     <message>
         <location filename="../../src/cmd/rs_commands.cpp" line="636"/>
         <source>dimradial</source>
         <comment>dimension - radial</comment>
-        <translation>dimradial</translation>
+        <translation>kotaradyal</translation>
     </message>
     <message>
         <location filename="../../src/cmd/rs_commands.cpp" line="637"/>
@@ -14318,7 +14318,7 @@ Bu işlem GERİ ALINAMAZ.</translation>
         <location filename="../../src/cmd/rs_commands.cpp" line="642"/>
         <source>dimdiameter</source>
         <comment>dimension - diametric</comment>
-        <translation>dimdiameter</translation>
+        <translation>kotacap</translation>
     </message>
     <message>
         <location filename="../../src/cmd/rs_commands.cpp" line="643"/>
@@ -14330,13 +14330,13 @@ Bu işlem GERİ ALINAMAZ.</translation>
         <location filename="../../src/cmd/rs_commands.cpp" line="644"/>
         <source>dimdiametric</source>
         <comment>dimension - diametric</comment>
-        <translation>dimdiametric</translation>
+        <translation>kotacapsal</translation>
     </message>
     <message>
         <location filename="../../src/cmd/rs_commands.cpp" line="649"/>
         <source>dimangular</source>
         <comment>dimension - angular</comment>
-        <translation>dimangular</translation>
+        <translation>kotaacili</translation>
     </message>
     <message>
         <location filename="../../src/cmd/rs_commands.cpp" line="650"/>
@@ -14354,7 +14354,7 @@ Bu işlem GERİ ALINAMAZ.</translation>
         <location filename="../../src/cmd/rs_commands.cpp" line="656"/>
         <source>dimleader</source>
         <comment>dimension - leader</comment>
-        <translation>dimleader</translation>
+        <translation>kotagostarici</translation>
     </message>
     <message>
         <location filename="../../src/cmd/rs_commands.cpp" line="657"/>
@@ -14732,7 +14732,7 @@ Bu işlem GERİ ALINAMAZ.</translation>
         <location filename="../../src/cmd/rs_commands.cpp" line="823"/>
         <source>infoarea</source>
         <comment>measure area</comment>
-        <translation>infoarea</translation>
+        <translation>bilgialani</translation>
     </message>
     <message>
         <location filename="../../src/cmd/rs_commands.cpp" line="824"/>
@@ -14780,7 +14780,7 @@ Bu işlem GERİ ALINAMAZ.</translation>
         <location filename="../../src/cmd/rs_commands.cpp" line="845"/>
         <source>hatch</source>
         <comment>draw hatch</comment>
-        <translation>hatch</translation>
+        <translation>tarama</translation>
     </message>
     <message>
         <location filename="../../src/cmd/rs_commands.cpp" line="846"/>
@@ -14792,7 +14792,7 @@ Bu işlem GERİ ALINAMAZ.</translation>
         <location filename="../../src/cmd/rs_commands.cpp" line="851"/>
         <source>point</source>
         <comment>draw point</comment>
-        <translation>point</translation>
+        <translation>nokta</translation>
     </message>
     <message>
         <location filename="../../src/cmd/rs_commands.cpp" line="852"/>
@@ -14804,7 +14804,7 @@ Bu işlem GERİ ALINAMAZ.</translation>
         <location filename="../../src/cmd/rs_commands.cpp" line="866"/>
         <source>snapfree</source>
         <comment>snap - free</comment>
-        <translation>snapfree</translation>
+        <translation>yakalamaberbest</translation>
     </message>
     <message>
         <location filename="../../src/cmd/rs_commands.cpp" line="867"/>
@@ -14822,7 +14822,7 @@ Bu işlem GERİ ALINAMAZ.</translation>
         <location filename="../../src/cmd/rs_commands.cpp" line="873"/>
         <source>snapcenter</source>
         <comment>snap - center</comment>
-        <translation>snapcenter</translation>
+        <translation>yakalamamarkez</translation>
     </message>
     <message>
         <location filename="../../src/cmd/rs_commands.cpp" line="874"/>
@@ -14834,7 +14834,7 @@ Bu işlem GERİ ALINAMAZ.</translation>
         <location filename="../../src/cmd/rs_commands.cpp" line="879"/>
         <source>snapdist</source>
         <comment>snap - distance to endpoints</comment>
-        <translation>snapdist</translation>
+        <translation>yakalamauzaklik</translation>
     </message>
     <message>
         <location filename="../../src/cmd/rs_commands.cpp" line="880"/>
@@ -14912,13 +14912,13 @@ Bu işlem GERİ ALINAMAZ.</translation>
         <location filename="../../src/cmd/rs_commands.cpp" line="918"/>
         <source>snapmiddlemanual</source>
         <comment>snap middle manual</comment>
-        <translation>snapmiddlemanual</translation>
+        <translation>yakalamaortamanuel</translation>
     </message>
     <message>
         <location filename="../../src/cmd/rs_commands.cpp" line="919"/>
         <source>snapmanual</source>
         <comment>snap middle manual</comment>
-        <translation>snapmanual</translation>
+        <translation>yakalamamanuel</translation>
     </message>
     <message>
         <location filename="../../src/cmd/rs_commands.cpp" line="920"/>
@@ -14930,7 +14930,7 @@ Bu işlem GERİ ALINAMAZ.</translation>
         <location filename="../../src/cmd/rs_commands.cpp" line="927"/>
         <source>setrelativezero</source>
         <comment>set relative zero position</comment>
-        <translation>setrelativezero</translation>
+        <translation>gorecesifirla</translation>
     </message>
     <message>
         <location filename="../../src/cmd/rs_commands.cpp" line="928"/>
@@ -14942,7 +14942,7 @@ Bu işlem GERİ ALINAMAZ.</translation>
         <location filename="../../src/cmd/rs_commands.cpp" line="933"/>
         <source>restrictnothing</source>
         <comment>restrict - nothing</comment>
-        <translation>restrictnothing</translation>
+        <translation>kisitlamamayok</translation>
     </message>
     <message>
         <location filename="../../src/cmd/rs_commands.cpp" line="934"/>
@@ -14954,7 +14954,7 @@ Bu işlem GERİ ALINAMAZ.</translation>
         <location filename="../../src/cmd/rs_commands.cpp" line="939"/>
         <source>restrictorthogonal</source>
         <comment>restrict - orthogonal</comment>
-        <translation>restrictorthogonal</translation>
+        <translation>kisitlamaortogonal</translation>
     </message>
     <message>
         <location filename="../../src/cmd/rs_commands.cpp" line="940"/>
@@ -14966,7 +14966,7 @@ Bu işlem GERİ ALINAMAZ.</translation>
         <location filename="../../src/cmd/rs_commands.cpp" line="945"/>
         <source>restricthorizontal</source>
         <comment>restrict - horizontal</comment>
-        <translation>restricthorizontal</translation>
+        <translation>kisitlamayatay</translation>
     </message>
     <message>
         <location filename="../../src/cmd/rs_commands.cpp" line="946"/>
@@ -14978,7 +14978,7 @@ Bu işlem GERİ ALINAMAZ.</translation>
         <location filename="../../src/cmd/rs_commands.cpp" line="951"/>
         <source>restrictvertical</source>
         <comment>restrict - vertical</comment>
-        <translation>restrictvertical</translation>
+        <translation>kisitlamadikey</translation>
     </message>
     <message>
         <location filename="../../src/cmd/rs_commands.cpp" line="952"/>
@@ -15056,13 +15056,13 @@ Bu işlem GERİ ALINAMAZ.</translation>
         <location filename="../../src/cmd/rs_commands.cpp" line="991"/>
         <source>regen</source>
         <comment>zoom - redraw</comment>
-        <translation>regen</translation>
+        <translation>yenile</translation>
     </message>
     <message>
         <location filename="../../src/cmd/rs_commands.cpp" line="992"/>
         <source>redraw</source>
         <comment>zoom - redraw</comment>
-        <translation>redraw</translation>
+        <translation>yenidenizle</translation>
     </message>
     <message>
         <location filename="../../src/cmd/rs_commands.cpp" line="993"/>
@@ -15080,7 +15080,7 @@ Bu işlem GERİ ALINAMAZ.</translation>
         <location filename="../../src/cmd/rs_commands.cpp" line="999"/>
         <source>zoomauto</source>
         <comment>zoom - auto</comment>
-        <translation>zoomauto</translation>
+        <translation>zomotomatik</translation>
     </message>
     <message>
         <location filename="../../src/cmd/rs_commands.cpp" line="1000"/>
@@ -15092,7 +15092,7 @@ Bu işlem GERİ ALINAMAZ.</translation>
         <location filename="../../src/cmd/rs_commands.cpp" line="1005"/>
         <source>zoomprevious</source>
         <comment>zoom - previous</comment>
-        <translation>zoomprevious</translation>
+        <translation>zomonceki</translation>
     </message>
     <message>
         <location filename="../../src/cmd/rs_commands.cpp" line="1006"/>
@@ -15104,7 +15104,7 @@ Bu işlem GERİ ALINAMAZ.</translation>
         <location filename="../../src/cmd/rs_commands.cpp" line="1011"/>
         <source>zoomwindow</source>
         <comment>zoom - window</comment>
-        <translation>zoomwindow</translation>
+        <translation>zompeg</translation>
     </message>
     <message>
         <location filename="../../src/cmd/rs_commands.cpp" line="1012"/>
@@ -15116,7 +15116,7 @@ Bu işlem GERİ ALINAMAZ.</translation>
         <location filename="../../src/cmd/rs_commands.cpp" line="1017"/>
         <source>zoompan</source>
         <comment>zoom - pan</comment>
-        <translation>zoompan</translation>
+        <translation>zomkaydir</translation>
     </message>
     <message>
         <location filename="../../src/cmd/rs_commands.cpp" line="1018"/>
@@ -15196,7 +15196,7 @@ Bu işlem GERİ ALINAMAZ.</translation>
         <location filename="../../src/cmd/rs_commands.cpp" line="1075"/>
         <location filename="../../src/cmd/rs_commands.cpp" line="1206"/>
         <source>radius</source>
-        <translation>radius</translation>
+        <translation>yarıçap</translation>
     </message>
     <message>
         <location filename="../../src/cmd/rs_commands.cpp" line="1076"/>
@@ -15905,7 +15905,7 @@ Bu işlem GERİ ALINAMAZ.</translation>
         <location filename="../../src/lib/engine/rs_units.cpp" line="226"/>
         <location filename="../../src/lib/engine/rs_units.cpp" line="282"/>
         <source>Angstrom</source>
-        <translation>Angstrom</translation>
+        <translation>Angström</translation>
     </message>
     <message>
         <location filename="../../src/lib/engine/rs_units.cpp" line="228"/>
@@ -16103,13 +16103,13 @@ Bu işlem GERİ ALINAMAZ.</translation>
         <location filename="../../src/lib/engine/rs_units.cpp" line="990"/>
         <source>letter</source>
         <comment>Paper format</comment>
-        <translation>letter</translation>
+        <translation>mektup</translation>
     </message>
     <message>
         <location filename="../../src/lib/engine/rs_units.cpp" line="992"/>
         <source>legal</source>
         <comment>Paper format</comment>
-        <translation>legal</translation>
+        <translation>hukuki</translation>
     </message>
     <message>
         <location filename="../../src/lib/engine/rs_units.cpp" line="994"/>
@@ -16121,19 +16121,19 @@ Bu işlem GERİ ALINAMAZ.</translation>
         <location filename="../../src/lib/engine/rs_units.cpp" line="1001"/>
         <source>ansi c</source>
         <comment>Paper format</comment>
-        <translation>ansi c</translation>
+        <translation>ANSI C</translation>
     </message>
     <message>
         <location filename="../../src/lib/engine/rs_units.cpp" line="1003"/>
         <source>ansi d</source>
         <comment>Paper format</comment>
-        <translation>ansi d</translation>
+        <translation>ANSI D</translation>
     </message>
     <message>
         <location filename="../../src/lib/engine/rs_units.cpp" line="1005"/>
         <source>ansi e</source>
         <comment>Paper format</comment>
-        <translation>ansi e</translation>
+        <translation>ANSI E</translation>
     </message>
     <message>
         <location filename="../../src/lib/engine/rs_units.cpp" line="1008"/>
@@ -16861,7 +16861,7 @@ Bu işlem GERİ ALINAMAZ.</translation>
     <message>
         <location filename="../../src/ui/qg_dialogfactory.cpp" line="1827"/>
         <source>ZSoft Paintbrush</source>
-        <translation>ZSoft Paintbrush</translation>
+        <translation>ZSoft Fırça</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_dialogfactory.cpp" line="1829"/>

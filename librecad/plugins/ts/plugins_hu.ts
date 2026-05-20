@@ -18,7 +18,7 @@
         <location filename="../../../build/ui_colorwizard.h" line="92"/>
         <location filename="../../../generated/librecad/ui/ui_colorwizard.h" line="92"/>
         <source>Frame</source>
-        <translation>Frame</translation>
+        <translation>Keret</translation>
     </message>
     <message>
         <location filename="../../src/ui/generic/colorwizard.ui" line="35"/>
@@ -26,7 +26,7 @@
         <location filename="../../../build/ui_colorwizard.h" line="94"/>
         <location filename="../../../generated/librecad/ui/ui_colorwizard.h" line="94"/>
         <source>Add to favorites</source>
-        <translation>Add to favorites</translation>
+        <translation>Hozzáadás a kedvencekhez</translation>
     </message>
     <message>
         <location filename="../../src/ui/generic/colorwizard.ui" line="38"/>
@@ -49,7 +49,7 @@
         <location filename="../../../build/ui_comboboxoption.h" line="71"/>
         <location filename="../../../generated/librecad/ui/ui_comboboxoption.h" line="71"/>
         <source>Frame</source>
-        <translation>Frame</translation>
+        <translation>Keret</translation>
     </message>
     <message>
         <location filename="../../src/ui/generic/comboboxoption.ui" line="26"/>
@@ -57,7 +57,7 @@
         <location filename="../../../build/ui_comboboxoption.h" line="72"/>
         <location filename="../../../generated/librecad/ui/ui_comboboxoption.h" line="72"/>
         <source>GroupBox</source>
-        <translation>GroupBox</translation>
+        <translation>Csoportdoboz</translation>
     </message>
     <message>
         <location filename="../../src/ui/generic/comboboxoption.ui" line="41"/>
@@ -74,7 +74,7 @@
         <location filename="../../src/ui/generic/customtoolbarcreator.ui" line="14"/>
         <location filename="../../../build/ui_customtoolbarcreator.h" line="198"/>
         <source>Frame</source>
-        <translation>Frame</translation>
+        <translation>Keret</translation>
     </message>
     <message>
         <location filename="../../src/ui/generic/customtoolbarcreator.ui" line="86"/>
@@ -104,7 +104,7 @@
         <location filename="../../src/ui/generic/customtoolbarcreator.ui" line="156"/>
         <location filename="../../../build/ui_customtoolbarcreator.h" line="204"/>
         <source>input a name and then press +</source>
-        <translation>input a name and then press +</translation>
+        <translation>Adjon meg egy nevet, majd nyomja meg a +-t</translation>
     </message>
     <message>
         <location filename="../../src/ui/generic/customtoolbarcreator.ui" line="193"/>
@@ -119,7 +119,7 @@
         <location filename="../../src/ui/generic/customwidgetcreator.ui" line="14"/>
         <location filename="../../../build/ui_customwidgetcreator.h" line="136"/>
         <source>Frame</source>
-        <translation>Frame</translation>
+        <translation>Keret</translation>
     </message>
     <message>
         <location filename="../../src/ui/generic/customwidgetcreator.ui" line="65"/>
@@ -164,7 +164,7 @@
         <location filename="../../../build/ui_LC_DlgParabola.h" line="163"/>
         <location filename="../../../generated/librecad/ui/ui_LC_DlgParabola.h" line="163"/>
         <source>Geometry</source>
-        <translation>Geometry</translation>
+        <translation>Geometria</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/LC_DlgParabola.ui" line="110"/>
@@ -176,7 +176,7 @@
         <location filename="../../../generated/librecad/ui/ui_LC_DlgParabola.h" line="165"/>
         <location filename="../../../generated/librecad/ui/ui_LC_DlgParabola.h" line="168"/>
         <source>Points on Spline</source>
-        <translation>Points on Spline</translation>
+        <translation>Pontok a görbén</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/LC_DlgParabola.ui" line="142"/>
@@ -184,7 +184,7 @@
         <location filename="../../../build/ui_LC_DlgParabola.h" line="170"/>
         <location filename="../../../generated/librecad/ui/ui_LC_DlgParabola.h" line="170"/>
         <source>Control Points</source>
-        <translation>Control Points</translation>
+        <translation>Vezérlőpontok</translation>
     </message>
 </context>
 <context>
@@ -211,7 +211,7 @@
         <location filename="../../../build/ui_lc_dlgsplinepoints.h" line="178"/>
         <location filename="../../../generated/librecad/ui/ui_lc_dlgsplinepoints.h" line="178"/>
         <source>Geometry</source>
-        <translation>Geometry</translation>
+        <translation>Geometria</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_dlgsplinepoints.ui" line="101"/>
@@ -227,7 +227,7 @@
         <location filename="../../../build/ui_lc_dlgsplinepoints.h" line="180"/>
         <location filename="../../../generated/librecad/ui/ui_lc_dlgsplinepoints.h" line="180"/>
         <source>Spline Points</source>
-        <translation>Spline Points</translation>
+        <translation>Görbepontok</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_dlgsplinepoints.ui" line="120"/>
@@ -235,7 +235,7 @@
         <location filename="../../../build/ui_lc_dlgsplinepoints.h" line="181"/>
         <location filename="../../../generated/librecad/ui/ui_lc_dlgsplinepoints.h" line="181"/>
         <source>Control Points</source>
-        <translation>Control Points</translation>
+        <translation>Vezérlőpontok</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_dlgsplinepoints.ui" line="135"/>
@@ -247,7 +247,7 @@
         <location filename="../../../generated/librecad/ui/ui_lc_dlgsplinepoints.h" line="183"/>
         <location filename="../../../generated/librecad/ui/ui_lc_dlgsplinepoints.h" line="186"/>
         <source>Points on Spline</source>
-        <translation>Points on Spline</translation>
+        <translation>Pontok a görbén</translation>
     </message>
 </context>
 <context>
@@ -255,7 +255,7 @@
     <message>
         <location filename="../../../plugins/pointstocsv/pointstocsv.cpp" line="34"/>
         <source>Export points to csv</source>
-        <translation>Export points to csv</translation>
+        <translation>Pontok exportálása CSV-be</translation>
     </message>
 </context>
 <context>
@@ -263,7 +263,7 @@
     <message>
         <location filename="../../src/actions/lc_actiondimarc.cpp" line="267"/>
         <source>Select arc entity</source>
-        <translation>Select arc entity</translation>
+        <translation>Válasszon ív elemet</translation>
     </message>
     <message>
         <location filename="../../src/actions/lc_actiondimarc.cpp" line="268"/>
@@ -274,7 +274,7 @@
     <message>
         <location filename="../../src/actions/lc_actiondimarc.cpp" line="272"/>
         <source>Specify dimension arc location</source>
-        <translation>Specify dimension arc location</translation>
+        <translation>Adja meg a méretezési ív helyét</translation>
     </message>
 </context>
 <context>
@@ -283,18 +283,18 @@
         <location filename="../../src/actions/lc_actiondrawcircle2pr.cpp" line="195"/>
         <source>radius=%1 is too small for points selected
 distance between points=%2 is larger than diameter=%3</source>
-        <translation>radius=%1 is too small for points selected
-distance between points=%2 is larger than diameter=%3</translation>
+        <translation>sugár=%1 túl kicsi a kiválasztott pontokhoz
+távolság a pontok között=%2 </translation>
     </message>
     <message>
         <location filename="../../src/actions/lc_actiondrawcircle2pr.cpp" line="205"/>
         <source>Select from two possible circle centers</source>
-        <translation>Select from two possible circle centers</translation>
+        <translation>Válasszon a két lehetséges körközéppont közül</translation>
     </message>
     <message>
         <location filename="../../src/actions/lc_actiondrawcircle2pr.cpp" line="238"/>
         <source>Specify first point</source>
-        <translation>Specify first point</translation>
+        <translation>Adja meg az első pontot</translation>
     </message>
     <message>
         <location filename="../../src/actions/lc_actiondrawcircle2pr.cpp" line="239"/>
@@ -304,7 +304,7 @@ distance between points=%2 is larger than diameter=%3</translation>
     <message>
         <location filename="../../src/actions/lc_actiondrawcircle2pr.cpp" line="242"/>
         <source>Specify second point</source>
-        <translation>Specify second point</translation>
+        <translation>Adja meg a második pontot</translation>
     </message>
     <message>
         <location filename="../../src/actions/lc_actiondrawcircle2pr.cpp" line="243"/>
@@ -315,7 +315,7 @@ distance between points=%2 is larger than diameter=%3</translation>
     <message>
         <location filename="../../src/actions/lc_actiondrawcircle2pr.cpp" line="246"/>
         <source>Select circle center</source>
-        <translation>Select circle center</translation>
+        <translation>Válasszon körközéppontot</translation>
     </message>
 </context>
 <context>
@@ -325,8 +325,8 @@ distance between points=%2 is larger than diameter=%3</translation>
         <location filename="../../src/actions/lc_actiondrawlinepoints.cpp" line="516"/>
         <source>Specify distance (%1)
 or [%2]</source>
-        <translation>Specify distance (%1)
-or [%2]</translation>
+        <translation>Adja meg a távolságot (%1)
+vagy [%2]</translation>
     </message>
     <message>
         <location filename="../../src/actions/lc_actiondrawlinepoints.cpp" line="513"/>
@@ -349,8 +349,8 @@ or [%2]</translation>
         <location filename="../../src/actions/lc_actiondrawlinepoints.cpp" line="521"/>
         <source>Specify  distance (angle %1 deg)
 or [%2]</source>
-        <translation>Specify  distance (angle %1 deg)
-or [%2]</translation>
+        <translation>Adja meg a távolságot (szög %1 fok)
+vagy [%2]</translation>
     </message>
 </context>
 <context>
@@ -358,27 +358,27 @@ or [%2]</translation>
     <message>
         <location filename="../../src/actions/lc_actiondrawlinepolygon3.cpp" line="140"/>
         <source>Specify center</source>
-        <translation>Specify center</translation>
+        <translation>Adja meg a középpontot</translation>
     </message>
     <message>
         <location filename="../../src/actions/lc_actiondrawlinepolygon3.cpp" line="145"/>
         <source>Specify a tangent</source>
-        <translation>Specify a tangent</translation>
+        <translation>Adjon meg egy érintőt</translation>
     </message>
     <message>
         <location filename="../../src/actions/lc_actiondrawlinepolygon3.cpp" line="149"/>
         <source>Enter number:</source>
-        <translation>Enter number:</translation>
+        <translation>Adjon meg egy számot:</translation>
     </message>
     <message>
         <location filename="../../src/actions/lc_actiondrawlinepolygon3.cpp" line="199"/>
         <source>Not a valid number. Try 1..9999</source>
-        <translation>Not a valid number. Try 1..9999</translation>
+        <translation>Érvénytelen szám. Próbáljon 1..9999 értéket</translation>
     </message>
     <message>
         <location filename="../../src/actions/lc_actiondrawlinepolygon3.cpp" line="202"/>
         <source>Not a valid expression</source>
-        <translation>Not a valid expression</translation>
+        <translation>Érvénytelen kifejezés</translation>
     </message>
 </context>
 <context>
@@ -386,7 +386,7 @@ or [%2]</translation>
     <message>
         <location filename="../../src/actions/lc_actiondrawlinesnake.cpp" line="434"/>
         <source>Specify direction (x or y) or [%1]</source>
-        <translation>Specify direction (x or y) or [%1]</translation>
+        <translation>Adja meg az irányt (x vagy y) vagy [%1]</translation>
     </message>
     <message>
         <location filename="../../src/actions/lc_actiondrawlinesnake.cpp" line="434"/>
@@ -402,7 +402,7 @@ or [%2]</translation>
         <location filename="../../src/actions/lc_actiondrawlinesnake.cpp" line="448"/>
         <location filename="../../src/actions/lc_actiondrawlinesnake.cpp" line="453"/>
         <source>Specify distance (%1) or [%2]</source>
-        <translation>Specify distance (%1) or [%2]</translation>
+        <translation>Adja meg a távolságot (%1) vagy [%2]</translation>
     </message>
     <message>
         <location filename="../../src/actions/lc_actiondrawlinesnake.cpp" line="448"/>
@@ -417,17 +417,17 @@ or [%2]</translation>
     <message>
         <location filename="../../src/actions/lc_actiondrawlinesnake.cpp" line="459"/>
         <source>Specify distance (%1 deg) or [%2]</source>
-        <translation>Specify distance (%1 deg) or [%2]</translation>
+        <translation>Adja meg a távolságot (%1 fok) vagy [%2]</translation>
     </message>
     <message>
         <location filename="../../src/actions/lc_actiondrawlinesnake.cpp" line="474"/>
         <source>Specify angle or [%2]</source>
-        <translation>Specify angle or [%2]</translation>
+        <translation>Adja meg a szöget vagy [%2]</translation>
     </message>
     <message>
         <location filename="../../src/actions/lc_actiondrawlinesnake.cpp" line="486"/>
         <source>Specify point or [%1]</source>
-        <translation>Specify point or [%1]</translation>
+        <translation>Adja meg a pontot vagy [%1]</translation>
     </message>
 </context>
 <context>
@@ -435,7 +435,7 @@ or [%2]</translation>
     <message>
         <location filename="../../src/actions/lc_actiondrawparabola4points.cpp" line="268"/>
         <source>Specify the first point on parabola</source>
-        <translation>Specify the first point on parabola</translation>
+        <translation>Adja meg a parabola első pontját</translation>
     </message>
     <message>
         <location filename="../../src/actions/lc_actiondrawparabola4points.cpp" line="269"/>
@@ -445,7 +445,7 @@ or [%2]</translation>
     <message>
         <location filename="../../src/actions/lc_actiondrawparabola4points.cpp" line="273"/>
         <source>Specify the second point on parabola</source>
-        <translation>Specify the second point on parabola</translation>
+        <translation>Adja meg a parabola második pontját</translation>
     </message>
     <message>
         <location filename="../../src/actions/lc_actiondrawparabola4points.cpp" line="274"/>
@@ -458,17 +458,17 @@ or [%2]</translation>
     <message>
         <location filename="../../src/actions/lc_actiondrawparabola4points.cpp" line="278"/>
         <source>Specify the third point on parabola</source>
-        <translation>Specify the third point on parabola</translation>
+        <translation>Adja meg a parabola harmadik pontját</translation>
     </message>
     <message>
         <location filename="../../src/actions/lc_actiondrawparabola4points.cpp" line="283"/>
         <source>Specify the fourth point on parabola</source>
-        <translation>Specify the fourth point on parabola</translation>
+        <translation>Adja meg a parabola negyedik pontját</translation>
     </message>
     <message>
         <location filename="../../src/actions/lc_actiondrawparabola4points.cpp" line="288"/>
         <source>Specify the Axis on parabola</source>
-        <translation>Specify the Axis on parabola</translation>
+        <translation>Adja meg a parabola tengelyét</translation>
     </message>
 </context>
 <context>
@@ -476,7 +476,7 @@ or [%2]</translation>
     <message>
         <location filename="../../src/actions/lc_actiondrawparabolaFD.cpp" line="290"/>
         <source>Specify the focus of parabola</source>
-        <translation>Specify the focus of parabola</translation>
+        <translation>Adja meg a parabola fókuszát</translation>
     </message>
     <message>
         <location filename="../../src/actions/lc_actiondrawparabolaFD.cpp" line="291"/>
@@ -486,7 +486,7 @@ or [%2]</translation>
     <message>
         <location filename="../../src/actions/lc_actiondrawparabolaFD.cpp" line="295"/>
         <source>Specify the directrix of parabola</source>
-        <translation>Specify the directrix of parabola</translation>
+        <translation>Adja meg a parabola direktrixét</translation>
     </message>
     <message>
         <location filename="../../src/actions/lc_actiondrawparabolaFD.cpp" line="296"/>
@@ -498,12 +498,12 @@ or [%2]</translation>
     <message>
         <location filename="../../src/actions/lc_actiondrawparabolaFD.cpp" line="300"/>
         <source>Specify the start point on parabola</source>
-        <translation>Specify the start point on parabola</translation>
+        <translation>Adja meg a parabola kezdőpontját</translation>
     </message>
     <message>
         <location filename="../../src/actions/lc_actiondrawparabolaFD.cpp" line="305"/>
         <source>Specify the end point on parabola</source>
-        <translation>Specify the end point on parabola</translation>
+        <translation>Adja meg a parabola végpontját</translation>
     </message>
 </context>
 <context>
@@ -511,12 +511,12 @@ or [%2]</translation>
     <message>
         <location filename="../../src/actions/lc_abstractactionwithpreview.cpp" line="846"/>
         <source> is not divided as it is locked.</source>
-        <translation>is not divided as it is locked.</translation>
+        <translation>nincs felosztva, mert zárolva van.</translation>
     </message>
     <message>
         <location filename="../../src/actions/lc_abstractactionwithpreview.cpp" line="854"/>
         <source> is not divided as it is part of polyline. Expand polyline first.</source>
-        <translation>is not divided as it is part of polyline. Expand polyline first.</translation>
+        <translation>nincs felosztva, mert töröttvonal része. Először bontsa ki a töröttvonalat.</translation>
     </message>
     <message>
         <location filename="../../src/actions/lc_actiondrawslicedivide.cpp" line="180"/>
@@ -531,7 +531,7 @@ or [%2]</translation>
     <message>
         <location filename="../../src/actions/lc_actiondrawslicedivide.cpp" line="200"/>
         <source>Circle</source>
-        <translation>Circle</translation>
+        <translation>Kör</translation>
     </message>
 </context>
 <context>
@@ -539,7 +539,7 @@ or [%2]</translation>
     <message>
         <location filename="../../src/actions/lc_actiondrawsplinepoints.cpp" line="251"/>
         <source>Specify first control point</source>
-        <translation>Specify first control point</translation>
+        <translation>Adja meg az első vezérlőpontot</translation>
     </message>
     <message>
         <location filename="../../src/actions/lc_actiondrawsplinepoints.cpp" line="252"/>
@@ -549,7 +549,7 @@ or [%2]</translation>
     <message>
         <location filename="../../src/actions/lc_actiondrawsplinepoints.cpp" line="275"/>
         <source>Specify next control point or [%1]</source>
-        <translation>Specify next control point or [%1]</translation>
+        <translation>Adja meg a következő vezérlőpontot vagy [%1]</translation>
     </message>
     <message>
         <location filename="../../src/actions/lc_actiondrawsplinepoints.cpp" line="276"/>
@@ -560,18 +560,18 @@ or [%2]</translation>
     <message>
         <location filename="../../src/actions/lc_actiondrawsplinepoints.cpp" line="281"/>
         <source>Specify next control point</source>
-        <translation>Specify next control point</translation>
+        <translation>Adja meg a következő vezérlőpontot</translation>
     </message>
     <message>
         <location filename="../../src/actions/lc_actiondrawsplinepoints.cpp" line="334"/>
         <location filename="../../src/actions/lc_actiondrawsplinepoints.cpp" line="359"/>
         <source>Cannot undo: Not enough entities defined yet.</source>
-        <translation>Cannot undo: Not enough entities defined yet.</translation>
+        <translation>Nem lehet visszavonni: Még nem elég az elemek száma.</translation>
     </message>
     <message>
         <location filename="../../src/actions/lc_actiondrawsplinepoints.cpp" line="380"/>
         <source>Cannot undo: Nothing could be redone.</source>
-        <translation>Cannot undo: Nothing could be redone.</translation>
+        <translation>Nem lehet visszavonni: Nincs visszaállítható művelet.</translation>
     </message>
 </context>
 <context>
@@ -579,173 +579,173 @@ or [%2]</translation>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="54"/>
         <source>Zoom &amp;Panning</source>
-        <translation>Zoom &amp;Panning</translation>
+        <translation>Nagyítás és &pásztázás</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="63"/>
         <source>Select Entity</source>
-        <translation>Select Entity</translation>
+        <translation>Elem kiválasztása</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="70"/>
         <source>Select Window</source>
-        <translation>Select Window</translation>
+        <translation>Kiválasztási ablak</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="77"/>
         <source>Deselect Window</source>
-        <translation>Deselect Window</translation>
+        <translation>Kiválasztás megszüntetése ablakkal</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="84"/>
         <source>(De-)Select &amp;Contour</source>
-        <translation>(De-)Select &amp;Contour</translation>
+        <translation>(Ki-)Választás &kontúr</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="91"/>
         <source>Select Intersected Entities</source>
-        <translation>Select Intersected Entities</translation>
+        <translation>Metszett elemek kiválasztása</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="98"/>
         <source>Deselect Intersected Entities</source>
-        <translation>Deselect Intersected Entities</translation>
+        <translation>Metszett elemek kiválasztásának törlése</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="105"/>
         <source>(De-)Select Layer</source>
-        <translation>(De-)Select Layer</translation>
+        <translation>Réteg (ki-)választása</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="114"/>
         <source>&amp;Points</source>
-        <translation>&amp;Points</translation>
+        <translation>&Pontok</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="124"/>
         <source>&amp;2 Points</source>
-        <translation>&amp;2 Points</translation>
+        <translation>&2 Pont</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="131"/>
         <source>&amp;Angle</source>
-        <translation>&amp;Angle</translation>
+        <translation>&Szög</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="138"/>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="648"/>
         <source>&amp;Horizontal</source>
-        <translation>&amp;Horizontal</translation>
+        <translation>&Vízszintes</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="145"/>
         <source>Vertical</source>
-        <translation>Vertical</translation>
+        <translation>Függőleges</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="158"/>
         <source>&amp;Freehand Line</source>
-        <translation>&amp;Freehand Line</translation>
+        <translation>&Szabadkézi vonal</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="165"/>
         <source>&amp;Parallel</source>
-        <translation>&amp;Parallel</translation>
+        <translation>&Párhuzamos</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="172"/>
         <source>Parallel through point</source>
-        <translation>Parallel through point</translation>
+        <translation>Párhuzamos ponton át</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="179"/>
         <source>Rectangle</source>
-        <translation>Rectangle</translation>
+        <translation>Téglalap</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="186"/>
         <source>Bisector</source>
-        <translation>Bisector</translation>
+        <translation>Száraszfelező</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="193"/>
         <source>Tangent (P,C)</source>
-        <translation>Tangent (P,C)</translation>
+        <translation>Érintő (P,K)</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="200"/>
         <source>Tangent (C,C)</source>
-        <translation>Tangent (C,C)</translation>
+        <translation>Érintő (K,K)</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="207"/>
         <source>Tangent &amp;Orthogonal</source>
-        <translation>Tangent &amp;Orthogonal</translation>
+        <translation>Érintő &merőleges</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="214"/>
         <source>Orthogonal</source>
-        <translation>Orthogonal</translation>
+        <translation>Merőleges</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="221"/>
         <source>Relative angle</source>
-        <translation>Relative angle</translation>
+        <translation>Relatív szög</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="228"/>
         <source>Pol&amp;ygon (Cen,Cor)</source>
-        <translation>Pol&amp;ygon (Cen,Cor)</translation>
+        <translation>Sok&szög (Közép,Sarok)</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="235"/>
         <source>Pol&amp;ygon (Cen,Tan)</source>
-        <translation>Pol&amp;ygon (Cen,Tan)</translation>
+        <translation>Sok&szög (Közép,Érintő)</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="242"/>
         <source>Polygo&amp;n (Cor,Cor)</source>
-        <translation>Polygo&amp;n (Cor,Cor)</translation>
+        <translation>Sokszö&g (Sarok,Sarok)</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="251"/>
         <source>Center, &amp;Point</source>
-        <translation>Center, &amp;Point</translation>
+        <translation>Középpont, &Pont</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="257"/>
         <source>Cross</source>
-        <translation>Cross</translation>
+        <translation>Kereszt</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="263"/>
         <source>Snake</source>
-        <translation>Snake</translation>
+        <translation>Kígyó</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="269"/>
         <source>Snake (X)</source>
-        <translation>Snake (X)</translation>
+        <translation>Kígyó (X)</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="275"/>
         <source>Snake (Y)</source>
-        <translation>Snake (Y)</translation>
+        <translation>Kígyó (Y)</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="281"/>
         <source>Rectangle (1 Point)</source>
-        <translation>Rectangle (1 Point)</translation>
+        <translation>Téglalap (1 pont)</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="287"/>
         <source>Rectangle (2 Points)</source>
-        <translation>Rectangle (2 Points)</translation>
+        <translation>Téglalap (2 pont)</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="293"/>
         <source>Rectangle (3 Points)</source>
-        <translation>Rectangle (3 Points)</translation>
+        <translation>Téglalap (3 pont)</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="299"/>
@@ -755,289 +755,289 @@ or [%2]</translation>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="305"/>
         <source>Break/Divide</source>
-        <translation>Break/Divide</translation>
+        <translation>Törés/Felosztás</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="311"/>
         <source>Line Gap</source>
-        <translation>Line Gap</translation>
+        <translation>Vonalhézag</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="317"/>
         <source>Angle From Line</source>
-        <translation>Angle From Line</translation>
+        <translation>Szög vonalból</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="323"/>
         <source>Orthogonal From Line</source>
-        <translation>Orthogonal From Line</translation>
+        <translation>Merőleges vonalból</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="329"/>
         <source>From Point To Line</source>
-        <translation>From Point To Line</translation>
+        <translation>Ponttól vonalig</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="335"/>
         <source>Slice/Divide Line</source>
-        <translation>Slice/Divide Line</translation>
+        <translation>Vonal szeletelése/felosztása</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="341"/>
         <source>Slice/Divide Circle</source>
-        <translation>Slice/Divide Circle</translation>
+        <translation>Kör szeletelése/felosztása</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="347"/>
         <source>Line of Points</source>
-        <translation>Line of Points</translation>
+        <translation>Pontsor</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="353"/>
         <source>By Arc</source>
-        <translation>By Arc</translation>
+        <translation>Ívvel</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="360"/>
         <source>Center, &amp;Radius</source>
-        <translation>Center, &amp;Radius</translation>
+        <translation>Középpont, &Sugár</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="367"/>
         <source>2 Points</source>
-        <translation>2 Points</translation>
+        <translation>2 Pont</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="374"/>
         <source>2 Points, Radius</source>
-        <translation>2 Points, Radius</translation>
+        <translation>2 Pont, Sugár</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="381"/>
         <source>3 Points</source>
-        <translation>3 Points</translation>
+        <translation>3 Pont</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="388"/>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="449"/>
         <source>&amp;Concentric</source>
-        <translation>&amp;Concentric</translation>
+        <translation>&Koncentrikus</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="396"/>
         <source>Circle &amp;Inscribed</source>
-        <translation>Circle &amp;Inscribed</translation>
+        <translation>Beírt &kör</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="403"/>
         <source>Tangential 2 Circles, Radius</source>
         <comment>circle tangential with two circles, and given radius</comment>
-        <translation>Tangential 2 Circles, Radius</translation>
+        <translation>Érintő 2 körhöz, Sugár</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="410"/>
         <source>Tangential 2 Circles, 1 Point</source>
-        <translation>Tangential 2 Circles, 1 Point</translation>
+        <translation>Érintő 2 körhöz, 1 Pont</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="417"/>
         <source>Tangential &amp;3 Circles</source>
-        <translation>Tangential &amp;3 Circles</translation>
+        <translation>Érintő &3 körhöz</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="424"/>
         <source>Tangential, 2 P&amp;oints</source>
-        <translation>Tangential, 2 P&amp;oints</translation>
+        <translation>Érintő, 2 P&ont</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="433"/>
         <source>&amp;Center, Point, Angles</source>
-        <translation>&amp;Center, Point, Angles</translation>
+        <translation>&Középpont, Pont, Szögek</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="441"/>
         <source>&amp;3 Points</source>
-        <translation>&amp;3 Points</translation>
+        <translation>&3 Pont</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="457"/>
         <source>Arc &amp;Tangential</source>
-        <translation>Arc &amp;Tangential</translation>
+        <translation>Ív &érintőleges</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="467"/>
         <source>&amp;Ellipse (Axis)</source>
-        <translation>&amp;Ellipse (Axis)</translation>
+        <translation>&Ellipszis (Tengely)</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="474"/>
         <source>Ellipse &amp;Arc (Axis)</source>
-        <translation>Ellipse &amp;Arc (Axis)</translation>
+        <translation>Ellipszis &ív (Tengely)</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="481"/>
         <source>Ellipse &amp;Foci Point</source>
-        <translation>Ellipse &amp;Foci Point</translation>
+        <translation>Ellipszis &Fókuszpont</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="488"/>
         <source>Ellipse &amp;4 Point</source>
-        <translation>Ellipse &amp;4 Point</translation>
+        <translation>Ellipszis &4 Pont</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="495"/>
         <source>Ellipse Center and &amp;3 Points</source>
-        <translation>Ellipse Center and &amp;3 Points</translation>
+        <translation>Ellipszis középpont és &3 Pont</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="502"/>
         <source>Ellipse &amp;Inscribed</source>
-        <translation>Ellipse &amp;Inscribed</translation>
+        <translation>Ellipszis &Beírt</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="510"/>
         <source>Para&amp;bola 4 points</source>
-        <translation>Para&amp;bola 4 points</translation>
+        <translation>Para&bola 4 pont</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="517"/>
         <source>Parabola &amp;Focus Directrix</source>
-        <translation>Parabola &amp;Focus Directrix</translation>
+        <translation>Parabola &Fókusz Direktrix</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="526"/>
         <source>&amp;Spline</source>
-        <translation>&amp;Spline</translation>
+        <translation>&Görbe</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="533"/>
         <source>&amp;Spline through points</source>
-        <translation>&amp;Spline through points</translation>
+        <translation>&Görbe pontokon át</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="542"/>
         <source>&amp;Polyline</source>
-        <translation>&amp;Polyline</translation>
+        <translation>&Töröttvonal</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="549"/>
         <source>&amp;Add node</source>
-        <translation>&amp;Add node</translation>
+        <translation>&Csomópont hozzáadása</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="557"/>
         <source>A&amp;ppend node</source>
-        <translation>A&amp;ppend node</translation>
+        <translation>Csomópont &hozzáfűzése</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="565"/>
         <source>&amp;Delete node</source>
-        <translation>&amp;Delete node</translation>
+        <translation>&Csomópont törlése</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="573"/>
         <source>Delete &amp;between two nodes</source>
-        <translation>Delete &amp;between two nodes</translation>
+        <translation>Törlés &két csomópont között</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="581"/>
         <source>&amp;Trim segments</source>
-        <translation>&amp;Trim segments</translation>
+        <translation>&Szegmensek levágása</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="589"/>
         <source>Create &amp;Equidistant Polylines</source>
-        <translation>Create &amp;Equidistant Polylines</translation>
+        <translation>&Egyenlő közű töröttvonalak létrehozása</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="596"/>
         <source>Create Polyline from Existing &amp;Segments</source>
-        <translation>Create Polyline from Existing &amp;Segments</translation>
+        <translation>Töröttvonal létrehozása meglévő &szegmensekből</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="605"/>
         <source>&amp;MText</source>
-        <translation>&amp;MText</translation>
+        <translation>&Többsoros szöveg</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="611"/>
         <source>&amp;Text</source>
-        <translation>&amp;Text</translation>
+        <translation>&Szöveg</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="618"/>
         <source>&amp;Hatch</source>
-        <translation>&amp;Hatch</translation>
+        <translation>&Sraffozás</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="625"/>
         <source>Insert &amp;Image</source>
-        <translation>Insert &amp;Image</translation>
+        <translation>&Kép beillesztése</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="634"/>
         <source>&amp;Aligned</source>
-        <translation>&amp;Aligned</translation>
+        <translation>&Igazított</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="641"/>
         <source>&amp;Linear</source>
-        <translation>&amp;Linear</translation>
+        <translation>&Lineáris</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="655"/>
         <source>&amp;Vertical</source>
-        <translation>&amp;Vertical</translation>
+        <translation>&Függőleges</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="662"/>
         <source>&amp;Radial</source>
-        <translation>&amp;Radial</translation>
+        <translation>&Radális</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="669"/>
         <source>&amp;Diametric</source>
-        <translation>&amp;Diametric</translation>
+        <translation>&Átmérő</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="676"/>
         <source>&amp;Angular</source>
-        <translation>&amp;Angular</translation>
+        <translation>&Szöges</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="683"/>
         <source>&amp;Arc</source>
-        <translation>&amp;Arc</translation>
+        <translation>&Ív</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="690"/>
         <source>&amp;Leader</source>
-        <translation>&amp;Leader</translation>
+        <translation>&Nyíl</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="699"/>
         <source>&amp;Attributes</source>
-        <translation>&amp;Attributes</translation>
+        <translation>&Attribútumok</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="707"/>
         <source>&amp;Delete</source>
-        <translation>&amp;Delete</translation>
+        <translation>&Törlés</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="714"/>
         <source>Delete Freehand</source>
-        <translation>Delete Freehand</translation>
+        <translation>Szabadkézi törlés</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="721"/>
         <source>&amp;Move / Copy</source>
-        <translation>&amp;Move / Copy</translation>
+        <translation>&Mozgatás / Másolás</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="729"/>
         <source>Re&amp;vert direction</source>
-        <translation>Re&amp;vert direction</translation>
+        <translation>Irány &megfordítása</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="731"/>
@@ -1047,312 +1047,312 @@ or [%2]</translation>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="737"/>
         <source>&amp;Rotate</source>
-        <translation>&amp;Rotate</translation>
+        <translation>&Forgatás</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="745"/>
         <source>&amp;Scale</source>
-        <translation>&amp;Scale</translation>
+        <translation>&Méretezés</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="753"/>
         <source>&amp;Mirror</source>
-        <translation>&amp;Mirror</translation>
+        <translation>&Tükrözés</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="761"/>
         <source>Mo&amp;ve and Rotate</source>
-        <translation>Mo&amp;ve and Rotate</translation>
+        <translation>Mozgatás és &Forgatás</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="768"/>
         <source>Rotate T&amp;wo</source>
-        <translation>Rotate T&amp;wo</translation>
+        <translation>Két&tengelyes forgatás</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="775"/>
         <source>&amp;Properties</source>
-        <translation>&amp;Properties</translation>
+        <translation>&Tulajdonságok</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="783"/>
         <source>&amp;Trim</source>
-        <translation>&amp;Trim</translation>
+        <translation>&Levágás</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="791"/>
         <source>Tr&amp;im Two</source>
-        <translation>Tr&amp;im Two</translation>
+        <translation>Ke&ttős levágás</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="799"/>
         <source>&amp;Lengthen</source>
-        <translation>&amp;Lengthen</translation>
+        <translation>&Nyújtás</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="807"/>
         <source>O&amp;ffset</source>
-        <translation>O&amp;ffset</translation>
+        <translation>El&tolás</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="815"/>
         <source>&amp;Divide</source>
-        <translation>&amp;Divide</translation>
+        <translation>&Felosztás</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="823"/>
         <source>&amp;Stretch</source>
-        <translation>&amp;Stretch</translation>
+        <translation>&Nyújtás</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="831"/>
         <source>&amp;Bevel</source>
-        <translation>&amp;Bevel</translation>
+        <translation>&Fazetta</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="839"/>
         <source>&amp;Fillet</source>
-        <translation>&amp;Fillet</translation>
+        <translation>&Lekerekítés</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="847"/>
         <source>&amp;Explode Text into Letters</source>
-        <translation>&amp;Explode Text into Letters</translation>
+        <translation>&Szöveg betűkre bontása</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="854"/>
         <source>Ex&amp;plode</source>
-        <translation>Ex&amp;plode</translation>
+        <translation>Szé&tbontás</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="864"/>
         <source>&amp;Pick Pen From Entity</source>
-        <translation>&amp;Pick Pen From Entity</translation>
+        <translation>&Toll kiolvasása elemből</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="872"/>
         <source>&amp;Pick Pen From Entity (Resolved)</source>
-        <translation>&amp;Pick Pen From Entity (Resolved)</translation>
+        <translation>&Toll kiolvasása elemből (Kibontva)</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="881"/>
         <source>Apply Pen to Entity</source>
-        <translation>Apply Pen to Entity</translation>
+        <translation>Toll alkalmazása elemre</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="889"/>
         <source>Copy Pen</source>
-        <translation>Copy Pen</translation>
+        <translation>Toll másolása</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="897"/>
         <source>Line Join</source>
-        <translation>Line Join</translation>
+        <translation>Vonalegyesítés</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="904"/>
         <source>Duplicate</source>
-        <translation>Duplicate</translation>
+        <translation>Duplikálás</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="913"/>
         <source>Point inside contour</source>
-        <translation>Point inside contour</translation>
+        <translation>Pont a kontúron belül</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="919"/>
         <source>&amp;Distance Point to Point</source>
-        <translation>&amp;Distance Point to Point</translation>
+        <translation>&Távolság pont-pont</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="926"/>
         <source>&amp;Distance Entity to Point</source>
-        <translation>&amp;Distance Entity to Point</translation>
+        <translation>&Távolság elem-pont</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="933"/>
         <source>An&amp;gle between two lines</source>
-        <translation>An&amp;gle between two lines</translation>
+        <translation>&Szög két vonal között</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="940"/>
         <source>&amp;Total length of selected entities</source>
-        <translation>&amp;Total length of selected entities</translation>
+        <translation>&Kiválasztott elemek teljes hossza</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="947"/>
         <source>Polygonal &amp;Area</source>
-        <translation>Polygonal &amp;Area</translation>
+        <translation>Sokszögű &terület</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="966"/>
         <source>move to bottom</source>
-        <translation>move to bottom</translation>
+        <translation>áthelyezés az aljára</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="974"/>
         <source>lower after entity</source>
-        <translation>lower after entity</translation>
+        <translation>elem alá süllyesztés</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="982"/>
         <source>raise over entity</source>
-        <translation>raise over entity</translation>
+        <translation>elem fölé emelés</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="990"/>
         <source>move to top</source>
-        <translation>move to top</translation>
+        <translation>áthelyezés a tetejére</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="1000"/>
         <source>&amp;Show all layers</source>
-        <translation>&amp;Show all layers</translation>
+        <translation>&Minden réteg megjelenítése</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="1007"/>
         <source>&amp;Hide all layers</source>
-        <translation>&amp;Hide all layers</translation>
+        <translation>&Minden réteg elrejtése</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="1014"/>
         <source>&amp;Unlock all</source>
-        <translation>&amp;Unlock all</translation>
+        <translation>&Minden oldás</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="1021"/>
         <source>&amp;Lock all</source>
-        <translation>&amp;Lock all</translation>
+        <translation>&Minden zárolása</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="1028"/>
         <source>&amp;Add Layer</source>
-        <translation>&amp;Add Layer</translation>
+        <translation>&Réteg hozzáadása</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="1035"/>
         <source>&amp;Remove Layer</source>
-        <translation>&amp;Remove Layer</translation>
+        <translation>&Réteg eltávolítása</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="1042"/>
         <source>&amp;Edit Layer</source>
-        <translation>&amp;Edit Layer</translation>
+        <translation>&Réteg szerkesztése</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="1049"/>
         <source>Toggle Layer Loc&amp;k</source>
-        <translation>Toggle Layer Loc&amp;k</translation>
+        <translation>Réteg zárolásának &váltása</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="1056"/>
         <source>&amp;Toggle Layer Visibility</source>
-        <translation>&amp;Toggle Layer Visibility</translation>
+        <translation>&Réteg láthatóságának váltása</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="1063"/>
         <source>Toggle Layer &amp;Print</source>
-        <translation>Toggle Layer &amp;Print</translation>
+        <translation>Réteg &nyomtatásának váltása</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="1070"/>
         <source>Toggle &amp;Construction Layer</source>
-        <translation>Toggle &amp;Construction Layer</translation>
+        <translation>&Szerkesztő réteg váltása</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="1077"/>
         <source>&amp;Export Selected Layer(s)</source>
-        <translation>&amp;Export Selected Layer(s)</translation>
+        <translation>&Kiválasztott réteg(ek) exportálása</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="1082"/>
         <source>Export &amp;Visible Layer(s)</source>
-        <translation>Export &amp;Visible Layer(s)</translation>
+        <translation>&Látható réteg(ek) exportálása</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="1089"/>
         <source>&amp;Show all blocks</source>
-        <translation>&amp;Show all blocks</translation>
+        <translation>&Minden blokk megjelenítése</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="1096"/>
         <source>&amp;Hide all blocks</source>
-        <translation>&amp;Hide all blocks</translation>
+        <translation>&Minden blokk elrejtése</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="1103"/>
         <source>&amp;Add Block</source>
-        <translation>&amp;Add Block</translation>
+        <translation>&Blokk hozzáadása</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="1110"/>
         <source>&amp;Remove Block</source>
-        <translation>&amp;Remove Block</translation>
+        <translation>&Blokk eltávolítása</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="1117"/>
         <source>&amp;Rename Block</source>
-        <translation>&amp;Rename Block</translation>
+        <translation>&Blokk átnevezése</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="1124"/>
         <source>&amp;Edit Block</source>
-        <translation>&amp;Edit Block</translation>
+        <translation>&Blokk szerkesztése</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="1131"/>
         <source>&amp;Save Block</source>
-        <translation>&amp;Save Block</translation>
+        <translation>&Blokk mentése</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="1138"/>
         <source>&amp;Insert Block</source>
-        <translation>&amp;Insert Block</translation>
+        <translation>&Blokk beillesztése</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="1145"/>
         <source>Toggle Block &amp;Visibility</source>
-        <translation>Toggle Block &amp;Visibility</translation>
+        <translation>Blokk &láthatóságának váltása</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="1152"/>
         <source>&amp;Create Block</source>
-        <translation>&amp;Create Block</translation>
+        <translation>&Blokk létrehozása</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="1161"/>
         <source>&amp;Application Preferences</source>
-        <translation>&amp;Application Preferences</translation>
+        <translation>&Alkalmazás beállításai</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="1169"/>
         <source>Current &amp;Drawing Preferences</source>
-        <translation>Current &amp;Drawing Preferences</translation>
+        <translation>Aktuális &rajz beállításai</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="1178"/>
         <source>Widget Options</source>
-        <translation>Widget Options</translation>
+        <translation>Widget beállítások</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="1184"/>
         <source>Device Options</source>
-        <translation>Device Options</translation>
+        <translation>Eszköz beállítások</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="1192"/>
         <source>&amp;Delete selected</source>
-        <translation>&amp;Delete selected</translation>
+        <translation>&Kiválasztottak törlése</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="1200"/>
         <source>Select &amp;All</source>
-        <translation>Select &amp;All</translation>
+        <translation>&Minden kiválasztása</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="1210"/>
         <source>Deselect &amp;all</source>
-        <translation>Deselect &amp;all</translation>
+        <translation>&Minden kiválasztás törlése</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="1212"/>
@@ -1362,47 +1362,47 @@ or [%2]</translation>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="1219"/>
         <source>Invert Selection</source>
-        <translation>Invert Selection</translation>
+        <translation>Kiválasztás megfordítása</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="1228"/>
         <source>Export as CA&amp;M/plain SVG...</source>
-        <translation>Export as CA&amp;M/plain SVG...</translation>
+        <translation>Exportálás CA&M/sima SVG-ként...</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="1244"/>
         <source>&amp;Export as image</source>
-        <translation>&amp;Export as image</translation>
+        <translation>&Exportálás képként</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="1250"/>
         <source>&amp;Close</source>
-        <translation>&amp;Close</translation>
+        <translation>&Bezárás</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="1257"/>
         <source>Close All</source>
-        <translation>Close All</translation>
+        <translation>Összes bezárása</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="1265"/>
         <source>Export as PDF</source>
-        <translation>Export as PDF</translation>
+        <translation>Exportálás PDF-ként</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="1271"/>
         <source>&amp;Block</source>
-        <translation>&amp;Block</translation>
+        <translation>&Blokk</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="1279"/>
         <source>&amp;Fullscreen</source>
-        <translation>&amp;Fullscreen</translation>
+        <translation>&Teljes képernyő</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="1290"/>
         <source>&amp;Grid</source>
-        <translation>&amp;Grid</translation>
+        <translation>&Rács</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="1292"/>
@@ -1413,7 +1413,7 @@ or [%2]</translation>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="1300"/>
         <source>&amp;Draft</source>
-        <translation>&amp;Draft</translation>
+        <translation>&Vázlat</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="1303"/>
@@ -1424,7 +1424,7 @@ or [%2]</translation>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="1309"/>
         <source>&amp;Statusbar</source>
-        <translation>&amp;Statusbar</translation>
+        <translation>&Állapotsor</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="1312"/>
@@ -1435,7 +1435,7 @@ or [%2]</translation>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="1317"/>
         <source>Focus on &amp;Command Line</source>
-        <translation>Focus on &amp;Command Line</translation>
+        <translation>Fókusz a &Parancssorra</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="1328"/>
@@ -1445,7 +1445,7 @@ or [%2]</translation>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="1337"/>
         <source>Right</source>
-        <translation>Right</translation>
+        <translation>Jobb</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="1346"/>
@@ -1455,142 +1455,142 @@ or [%2]</translation>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="1355"/>
         <source>Bottom</source>
-        <translation>Bottom</translation>
+        <translation>Alul</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="1364"/>
         <source>Floating</source>
-        <translation>Floating</translation>
+        <translation>Lebegő</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="1373"/>
         <source>Reload Style Sheet</source>
-        <translation>Reload Style Sheet</translation>
+        <translation>Stíluslap újratöltése</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="1380"/>
         <source>Re-dock Widgets</source>
-        <translation>Re-dock Widgets</translation>
+        <translation>Widgetek visszadokkolása</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="1386"/>
         <source>Menu Creator</source>
-        <translation>Menu Creator</translation>
+        <translation>Menü-létrehozó</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="1393"/>
         <source>Toolbar Creator</source>
-        <translation>Toolbar Creator</translation>
+        <translation>Eszköztár-létrehozó</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="1409"/>
         <source>&amp;Selection pointer</source>
-        <translation>&amp;Selection pointer</translation>
+        <translation>&Kiválasztási mutató</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="1419"/>
         <source>&amp;Undo</source>
-        <translation>&amp;Undo</translation>
+        <translation>&Visszavonás</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="1430"/>
         <source>&amp;Redo</source>
-        <translation>&amp;Redo</translation>
+        <translation>&Újra</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="1441"/>
         <source>Cu&amp;t</source>
-        <translation>Cu&amp;t</translation>
+        <translation>Ki&vágás</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="1452"/>
         <source>&amp;Copy</source>
-        <translation>&amp;Copy</translation>
+        <translation>&Másolás</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="1463"/>
         <source>&amp;Paste</source>
-        <translation>&amp;Paste</translation>
+        <translation>&Beillesztés</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="1476"/>
         <source>Zoom &amp;In</source>
-        <translation>Zoom &amp;In</translation>
+        <translation>Nagyítás &be</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="1486"/>
         <source>Zoom &amp;Out</source>
-        <translation>Zoom &amp;Out</translation>
+        <translation>Nagyítás &ki</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="1496"/>
         <source>&amp;Auto Zoom</source>
-        <translation>&amp;Auto Zoom</translation>
+        <translation>&Auto nagyítás</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="1506"/>
         <source>Previous &amp;View</source>
-        <translation>Previous &amp;View</translation>
+        <translation>Előző &nézet</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="1517"/>
         <source>&amp;Redraw</source>
-        <translation>&amp;Redraw</translation>
+        <translation>&Újrarajzolás</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="1528"/>
         <source>&amp;Window Zoom</source>
-        <translation>&amp;Window Zoom</translation>
+        <translation>&Ablak nagyítás</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="1540"/>
         <source>&amp;New</source>
-        <translation>&amp;New</translation>
+        <translation>&Új</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="1550"/>
         <source>New From &amp;Template</source>
-        <translation>New From &amp;Template</translation>
+        <translation>Új &sablonból</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="1559"/>
         <source>&amp;Open...</source>
-        <translation>&amp;Open...</translation>
+        <translation>&Megnyitás...</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="1569"/>
         <source>&amp;Save</source>
-        <translation>&amp;Save</translation>
+        <translation>&Mentés</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="1579"/>
         <source>Save &amp;as...</source>
-        <translation>Save &amp;as...</translation>
+        <translation>Mentés &másként...</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="1589"/>
         <source>Save A&amp;ll...</source>
-        <translation>Save A&amp;ll...</translation>
+        <translation>Mentés m&ind...</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="1599"/>
         <source>&amp;Print...</source>
-        <translation>&amp;Print...</translation>
+        <translation>&Nyomtatás...</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="1610"/>
         <source>Print Pre&amp;view</source>
-        <translation>Print Pre&amp;view</translation>
+        <translation>Nyomtatási elő&nézet</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="1621"/>
         <source>&amp;Quit</source>
-        <translation>&amp;Quit</translation>
+        <translation>&Kilépés</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actionfactory.cpp" line="1632"/>
         <source>Update Current Pen by Active Layer&apos; Pen</source>
-        <translation>Update Current Pen by Active Layer&apos; Pen</translation>
+        <translation>Aktuális toll frissítése az aktív réteg tollával</translation>
     </message>
 </context>
 <context>
@@ -1598,7 +1598,7 @@ or [%2]</translation>
     <message>
         <location filename="../../src/actions/lc_actionfileexportmakercam.cpp" line="110"/>
         <source>Export as</source>
-        <translation>Export as</translation>
+        <translation>Exportálás mint</translation>
     </message>
 </context>
 <context>
@@ -1606,7 +1606,7 @@ or [%2]</translation>
     <message>
         <location filename="../../src/actions/lc_actionlayersexport.cpp" line="281"/>
         <source>Saving layer &quot;%1&quot; as &quot;%2&quot; </source>
-        <translation>Saving layer &quot;%1&quot; as &quot;%2&quot;</translation>
+        <translation>Réteg mentése: "%1" mint "%2"</translation>
     </message>
 </context>
 <context>
@@ -1614,7 +1614,7 @@ or [%2]</translation>
     <message>
         <location filename="../../src/actions/lc_actionpenapply.cpp" line="171"/>
         <source>Specify entity to pick the pen</source>
-        <translation>Specify entity to pick the pen</translation>
+        <translation>Adja meg az elemet a toll kiolvasásához</translation>
     </message>
     <message>
         <location filename="../../src/actions/lc_actionpenapply.cpp" line="172"/>
@@ -1625,7 +1625,7 @@ or [%2]</translation>
     <message>
         <location filename="../../src/actions/lc_actionpenapply.cpp" line="175"/>
         <source>Specify entity to apply pen</source>
-        <translation>Specify entity to apply pen</translation>
+        <translation>Adja meg az elemet a toll alkalmazásához</translation>
     </message>
 </context>
 <context>
@@ -1633,7 +1633,7 @@ or [%2]</translation>
     <message>
         <location filename="../../src/actions/lc_actionpenpick.cpp" line="108"/>
         <source>Specify entity to pick the pen</source>
-        <translation>Specify entity to pick the pen</translation>
+        <translation>Adja meg az elemet a toll kiolvasásához</translation>
     </message>
     <message>
         <location filename="../../src/actions/lc_actionpenpick.cpp" line="109"/>
@@ -1646,7 +1646,7 @@ or [%2]</translation>
     <message>
         <location filename="../../src/actions/lc_actionsnapmiddlemanual.cpp" line="295"/>
         <source>Specify percentage / start-point</source>
-        <translation>Specify percentage / start-point</translation>
+        <translation>Adja meg a százalékot / kezdőpontot</translation>
     </message>
     <message>
         <location filename="../../src/actions/lc_actionsnapmiddlemanual.cpp" line="296"/>
@@ -1657,12 +1657,12 @@ or [%2]</translation>
     <message>
         <location filename="../../src/actions/lc_actionsnapmiddlemanual.cpp" line="300"/>
         <source>Specify start point</source>
-        <translation>Specify start point</translation>
+        <translation>Adja meg a kezdőpontot</translation>
     </message>
     <message>
         <location filename="../../src/actions/lc_actionsnapmiddlemanual.cpp" line="305"/>
         <source>Specify end point</source>
-        <translation>Specify end point</translation>
+        <translation>Adja meg a végpontot</translation>
     </message>
     <message>
         <location filename="../../src/actions/lc_actionsnapmiddlemanual.cpp" line="306"/>
@@ -1762,7 +1762,7 @@ első bázis, második bázis, első cél, második cél.</translation>
         <location filename="../../../generated/librecad/ui/ui_lc_circlebyarcoptions.h" line="100"/>
         <location filename="../../../generated/librecad/ui/ui_lc_circlebyarcoptions.h" line="106"/>
         <source>Active</source>
-        <translation>Active</translation>
+        <translation>Aktív</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_circlebyarcoptions.ui" line="32"/>
@@ -1774,7 +1774,7 @@ első bázis, második bázis, első cél, második cél.</translation>
         <location filename="../../../generated/librecad/ui/ui_lc_circlebyarcoptions.h" line="101"/>
         <location filename="../../../generated/librecad/ui/ui_lc_circlebyarcoptions.h" line="107"/>
         <source>Original</source>
-        <translation>Original</translation>
+        <translation>Eredeti</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_circlebyarcoptions.ui" line="37"/>
@@ -1782,7 +1782,7 @@ első bázis, második bázis, első cél, második cél.</translation>
         <location filename="../../../build/ui_lc_circlebyarcoptions.h" line="102"/>
         <location filename="../../../generated/librecad/ui/ui_lc_circlebyarcoptions.h" line="102"/>
         <source>Original Resolved</source>
-        <translation>Original Resolved</translation>
+        <translation>Kibontott eredeti</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_circlebyarcoptions.ui" line="45"/>
@@ -1790,7 +1790,7 @@ első bázis, második bázis, első cél, második cél.</translation>
         <location filename="../../../build/ui_lc_circlebyarcoptions.h" line="104"/>
         <location filename="../../../generated/librecad/ui/ui_lc_circlebyarcoptions.h" line="104"/>
         <source>Radius Shift:</source>
-        <translation>Radius Shift:</translation>
+        <translation>Sugáreltolás:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_circlebyarcoptions.ui" line="65"/>
@@ -1806,7 +1806,7 @@ első bázis, második bázis, első cél, második cél.</translation>
         <location filename="../../../build/ui_lc_circlebyarcoptions.h" line="109"/>
         <location filename="../../../generated/librecad/ui/ui_lc_circlebyarcoptions.h" line="109"/>
         <source>Replace arc</source>
-        <translation>Replace arc</translation>
+        <translation>Ív cseréje</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_circlebyarcoptions.ui" line="109"/>
@@ -1814,7 +1814,7 @@ első bázis, második bázis, első cél, második cél.</translation>
         <location filename="../../../build/ui_lc_circlebyarcoptions.h" line="110"/>
         <location filename="../../../generated/librecad/ui/ui_lc_circlebyarcoptions.h" line="110"/>
         <source>Pen:</source>
-        <translation>Pen:</translation>
+        <translation>Toll:</translation>
     </message>
 </context>
 <context>
@@ -1833,7 +1833,7 @@ első bázis, második bázis, első cél, második cél.</translation>
         <location filename="../../../build/ui_lc_crossoptions.h" line="132"/>
         <location filename="../../../generated/librecad/ui/ui_lc_crossoptions.h" line="132"/>
         <source>Extension</source>
-        <translation>Extension</translation>
+        <translation>Hosszabbítás</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_crossoptions.ui" line="68"/>
@@ -1841,7 +1841,7 @@ első bázis, második bázis, első cél, második cél.</translation>
         <location filename="../../../build/ui_lc_crossoptions.h" line="133"/>
         <location filename="../../../generated/librecad/ui/ui_lc_crossoptions.h" line="133"/>
         <source>Total Length</source>
-        <translation>Total Length</translation>
+        <translation>Teljes hossz</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_crossoptions.ui" line="73"/>
@@ -1849,7 +1849,7 @@ első bázis, második bázis, első cél, második cél.</translation>
         <location filename="../../../build/ui_lc_crossoptions.h" line="134"/>
         <location filename="../../../generated/librecad/ui/ui_lc_crossoptions.h" line="134"/>
         <source>Percent</source>
-        <translation>Percent</translation>
+        <translation>Százalék</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_crossoptions.ui" line="125"/>
@@ -1881,7 +1881,7 @@ első bázis, második bázis, első cél, második cél.</translation>
         <location filename="../../../build/ui_lc_crossoptions.h" line="139"/>
         <location filename="../../../generated/librecad/ui/ui_lc_crossoptions.h" line="139"/>
         <source>Angle:</source>
-        <translation>Angle:</translation>
+        <translation>Szög:</translation>
     </message>
 </context>
 <context>
@@ -1889,7 +1889,7 @@ első bázis, második bázis, első cél, második cél.</translation>
     <message>
         <location filename="../../src/ui/lc_customtoolbar.cpp" line="36"/>
         <source>Add or Remove Action</source>
-        <translation>Add or Remove Action</translation>
+        <translation>Művelet hozzáadása vagy eltávolítása</translation>
     </message>
 </context>
 <context>
@@ -1908,7 +1908,7 @@ első bázis, második bázis, első cél, második cél.</translation>
         <location filename="../../../build/ui_lc_deviceoptions.h" line="69"/>
         <location filename="../../../generated/librecad/ui/ui_lc_deviceoptions.h" line="69"/>
         <source>Device</source>
-        <translation>Device</translation>
+        <translation>Eszköz</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_deviceoptions.ui" line="53"/>
@@ -1924,7 +1924,7 @@ első bázis, második bázis, első cél, második cél.</translation>
     <message>
         <location filename="../../src/ui/forms/LC_DlgParabola.cpp" line="112"/>
         <source>Parabola control points cannot be collinear</source>
-        <translation>Parabola control points cannot be collinear</translation>
+        <translation>A parabola vezérlőpontjai nem lehetnek kollineárisak</translation>
     </message>
 </context>
 <context>
@@ -1951,7 +1951,7 @@ első bázis, második bázis, első cél, második cél.</translation>
         <location filename="../../../build/ui_lc_duplicateoptions.h" line="115"/>
         <location filename="../../../generated/librecad/ui/ui_lc_duplicateoptions.h" line="115"/>
         <source>In Place</source>
-        <translation>In Place</translation>
+        <translation>Helyben</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_duplicateoptions.ui" line="40"/>
@@ -1959,7 +1959,7 @@ első bázis, második bázis, első cél, második cél.</translation>
         <location filename="../../../build/ui_lc_duplicateoptions.h" line="116"/>
         <location filename="../../../generated/librecad/ui/ui_lc_duplicateoptions.h" line="116"/>
         <source>Offset X:</source>
-        <translation>Offset X:</translation>
+        <translation>Eltolás X:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_duplicateoptions.ui" line="48"/>
@@ -1971,7 +1971,7 @@ első bázis, második bázis, első cél, második cél.</translation>
         <location filename="../../../generated/librecad/ui/ui_lc_duplicateoptions.h" line="117"/>
         <location filename="../../../generated/librecad/ui/ui_lc_duplicateoptions.h" line="120"/>
         <source>Active</source>
-        <translation>Active</translation>
+        <translation>Aktív</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_duplicateoptions.ui" line="53"/>
@@ -1983,7 +1983,7 @@ első bázis, második bázis, első cél, második cél.</translation>
         <location filename="../../../generated/librecad/ui/ui_lc_duplicateoptions.h" line="118"/>
         <location filename="../../../generated/librecad/ui/ui_lc_duplicateoptions.h" line="121"/>
         <source>Original</source>
-        <translation>Original</translation>
+        <translation>Eredeti</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_duplicateoptions.ui" line="72"/>
@@ -1991,7 +1991,7 @@ első bázis, második bázis, első cél, második cél.</translation>
         <location filename="../../../build/ui_lc_duplicateoptions.h" line="122"/>
         <location filename="../../../generated/librecad/ui/ui_lc_duplicateoptions.h" line="122"/>
         <source>Original Resolved</source>
-        <translation>Original Resolved</translation>
+        <translation>Kibontott eredeti</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_duplicateoptions.ui" line="80"/>
@@ -1999,7 +1999,7 @@ első bázis, második bázis, első cél, második cél.</translation>
         <location filename="../../../build/ui_lc_duplicateoptions.h" line="124"/>
         <location filename="../../../generated/librecad/ui/ui_lc_duplicateoptions.h" line="124"/>
         <source>Offset Y:</source>
-        <translation>Offset Y:</translation>
+        <translation>Eltolás Y:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_duplicateoptions.ui" line="103"/>
@@ -2007,7 +2007,7 @@ első bázis, második bázis, első cél, második cél.</translation>
         <location filename="../../../build/ui_lc_duplicateoptions.h" line="125"/>
         <location filename="../../../generated/librecad/ui/ui_lc_duplicateoptions.h" line="125"/>
         <source>Pen:</source>
-        <translation>Pen:</translation>
+        <translation>Toll:</translation>
     </message>
 </context>
 <context>
@@ -2015,12 +2015,12 @@ első bázis, második bázis, első cél, második cél.</translation>
     <message>
         <location filename="../../../plugins/gear/gear.cpp" line="33"/>
         <source>Gear creation plugin</source>
-        <translation>Gear creation plugin</translation>
+        <translation>Fogaskerék-létrehozó bővítmény</translation>
     </message>
     <message>
         <location filename="../../../plugins/gear/gear.cpp" line="40"/>
         <source>Gear plugin</source>
-        <translation>Gear plugin</translation>
+        <translation>Fogaskerék bővítmény</translation>
     </message>
 </context>
 <context>
@@ -2031,7 +2031,7 @@ első bázis, második bázis, első cél, második cél.</translation>
         <location filename="../../../build/ui_lc_layerdialog_ex.h" line="162"/>
         <location filename="../../../generated/librecad/ui/ui_lc_layerdialog_ex.h" line="162"/>
         <source>Layer Settings</source>
-        <translation>Layer Settings</translation>
+        <translation>Réteg beállítások</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_layerdialog_ex.ui" line="61"/>
@@ -2039,7 +2039,7 @@ első bázis, második bázis, első cél, második cél.</translation>
         <location filename="../../../build/ui_lc_layerdialog_ex.h" line="164"/>
         <location filename="../../../generated/librecad/ui/ui_lc_layerdialog_ex.h" line="164"/>
         <source>Parent Layers Path:</source>
-        <translation>Parent Layers Path:</translation>
+        <translation>Szülőrétegek útvonala:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_layerdialog_ex.ui" line="78"/>
@@ -2047,7 +2047,7 @@ első bázis, második bázis, első cél, második cél.</translation>
         <location filename="../../../build/ui_lc_layerdialog_ex.h" line="165"/>
         <location filename="../../../generated/librecad/ui/ui_lc_layerdialog_ex.h" line="165"/>
         <source>Layer Type</source>
-        <translation>Layer Type</translation>
+        <translation>Réteg típusa</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_layerdialog_ex.ui" line="90"/>
@@ -2055,7 +2055,7 @@ első bázis, második bázis, első cél, második cél.</translation>
         <location filename="../../../build/ui_lc_layerdialog_ex.h" line="166"/>
         <location filename="../../../generated/librecad/ui/ui_lc_layerdialog_ex.h" line="166"/>
         <source>Informational</source>
-        <translation>Informational</translation>
+        <translation>Tájékoztató</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_layerdialog_ex.ui" line="100"/>
@@ -2063,7 +2063,7 @@ első bázis, második bázis, első cél, második cél.</translation>
         <location filename="../../../build/ui_lc_layerdialog_ex.h" line="167"/>
         <location filename="../../../generated/librecad/ui/ui_lc_layerdialog_ex.h" line="167"/>
         <source>Normal</source>
-        <translation>Normal</translation>
+        <translation>Normál</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_layerdialog_ex.ui" line="110"/>
@@ -2071,7 +2071,7 @@ első bázis, második bázis, első cél, második cél.</translation>
         <location filename="../../../build/ui_lc_layerdialog_ex.h" line="168"/>
         <location filename="../../../generated/librecad/ui/ui_lc_layerdialog_ex.h" line="168"/>
         <source>Dimensions</source>
-        <translation>Dimensions</translation>
+        <translation>Méretek</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_layerdialog_ex.ui" line="120"/>
@@ -2079,7 +2079,7 @@ első bázis, második bázis, első cél, második cél.</translation>
         <location filename="../../../build/ui_lc_layerdialog_ex.h" line="169"/>
         <location filename="../../../generated/librecad/ui/ui_lc_layerdialog_ex.h" line="169"/>
         <source>Alternative Position</source>
-        <translation>Alternative Position</translation>
+        <translation>Alternatív pozíció</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_layerdialog_ex.ui" line="133"/>
@@ -2088,8 +2088,7 @@ első bázis, második bázis, első cél, második cél.</translation>
         <location filename="../../../generated/librecad/ui/ui_lc_layerdialog_ex.h" line="171"/>
         <source>A Construction Layer has entities of infinite straight lines intended to be used for geometric construction.
        The contents of a Construction Layer should not appear in printout.</source>
-        <translation>A Construction Layer has entities of infinite straight lines intended to be used for geometric construction.
-       The contents of a Construction Layer should not appear in printout.</translation>
+        <translation>A Szerkesztő réteg végtelen egyenes vonalakból álló elemeket tartalmaz, amelyek segédvonalként szolgálnak</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_layerdialog_ex.ui" line="137"/>
@@ -2097,7 +2096,7 @@ első bázis, második bázis, első cél, második cél.</translation>
         <location filename="../../../build/ui_lc_layerdialog_ex.h" line="174"/>
         <location filename="../../../generated/librecad/ui/ui_lc_layerdialog_ex.h" line="174"/>
         <source>Construction Layer</source>
-        <translation>Construction Layer</translation>
+        <translation>Szerkesztő réteg</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_layerdialog_ex.ui" line="179"/>
@@ -2105,39 +2104,39 @@ első bázis, második bázis, első cél, második cél.</translation>
         <location filename="../../../build/ui_lc_layerdialog_ex.h" line="176"/>
         <location filename="../../../generated/librecad/ui/ui_lc_layerdialog_ex.h" line="176"/>
         <source>Layer Name:</source>
-        <translation>Layer Name:</translation>
+        <translation>Réteg neve:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_layerdialog_ex.cpp" line="58"/>
         <source>Rename Virtual Layer</source>
-        <translation>Rename Virtual Layer</translation>
+        <translation>Virtuális réteg átnevezése</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_layerdialog_ex.cpp" line="62"/>
         <source>Add Secondary Layer</source>
-        <translation>Add Secondary Layer</translation>
+        <translation>Másodlagos réteg hozzáadása</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_layerdialog_ex.cpp" line="67"/>
         <location filename="../../src/ui/forms/lc_layerdialog_ex.cpp" line="73"/>
         <source>Add Layer</source>
-        <translation>Add Layer</translation>
+        <translation>Réteg hozzáadása</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_layerdialog_ex.cpp" line="78"/>
         <source>Edit Layer</source>
-        <translation>Edit Layer</translation>
+        <translation>Réteg szerkesztése</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_layerdialog_ex.cpp" line="165"/>
         <location filename="../../src/ui/forms/lc_layerdialog_ex.cpp" line="204"/>
         <source>Default Pen</source>
-        <translation>Default Pen</translation>
+        <translation>Alapértelmezett toll</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_layerdialog_ex.cpp" line="182"/>
         <source>Rename Layer</source>
-        <translation>Rename Layer</translation>
+        <translation>Réteg átnevezése</translation>
     </message>
 </context>
 <context>
@@ -2148,7 +2147,7 @@ első bázis, második bázis, első cél, második cél.</translation>
         <location filename="../../../build/ui_lc_layertreeoptionsdialog.h" line="454"/>
         <location filename="../../../generated/librecad/ui/ui_lc_layertreeoptionsdialog.h" line="454"/>
         <source>Layers Tree Options</source>
-        <translation>Layers Tree Options</translation>
+        <translation>Rétegfa beállítások</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_layertreeoptionsdialog.ui" line="33"/>
@@ -2156,7 +2155,7 @@ első bázis, második bázis, első cél, második cél.</translation>
         <location filename="../../../build/ui_lc_layertreeoptionsdialog.h" line="464"/>
         <location filename="../../../generated/librecad/ui/ui_lc_layertreeoptionsdialog.h" line="464"/>
         <source>Naming Convention</source>
-        <translation>Naming Convention</translation>
+        <translation>Elnevezési konvenció</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_layertreeoptionsdialog.ui" line="68"/>
@@ -2164,7 +2163,7 @@ első bázis, második bázis, első cél, második cél.</translation>
         <location filename="../../../build/ui_lc_layertreeoptionsdialog.h" line="456"/>
         <location filename="../../../generated/librecad/ui/ui_lc_layertreeoptionsdialog.h" line="456"/>
         <source>Layer Level Name Separator</source>
-        <translation>Layer Level Name Separator</translation>
+        <translation>Rétegszint-elválasztó karakter</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_layertreeoptionsdialog.ui" line="88"/>
@@ -2172,7 +2171,7 @@ első bázis, második bázis, első cél, második cél.</translation>
         <location filename="../../../build/ui_lc_layertreeoptionsdialog.h" line="457"/>
         <location filename="../../../generated/librecad/ui/ui_lc_layertreeoptionsdialog.h" line="457"/>
         <source>Secondary Layer Suffixes</source>
-        <translation>Secondary Layer Suffixes</translation>
+        <translation>Másodlagos réteg utótagok</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_layertreeoptionsdialog.ui" line="94"/>
@@ -2180,7 +2179,7 @@ első bázis, második bázis, első cél, második cél.</translation>
         <location filename="../../../build/ui_lc_layertreeoptionsdialog.h" line="458"/>
         <location filename="../../../generated/librecad/ui/ui_lc_layertreeoptionsdialog.h" line="458"/>
         <source>Dimensional</source>
-        <translation>Dimensional</translation>
+        <translation>Méretezési</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_layertreeoptionsdialog.ui" line="114"/>
@@ -2188,7 +2187,7 @@ első bázis, második bázis, első cél, második cél.</translation>
         <location filename="../../../build/ui_lc_layertreeoptionsdialog.h" line="459"/>
         <location filename="../../../generated/librecad/ui/ui_lc_layertreeoptionsdialog.h" line="459"/>
         <source>Informational</source>
-        <translation>Informational</translation>
+        <translation>Tájékoztató</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_layertreeoptionsdialog.ui" line="134"/>
@@ -2196,7 +2195,7 @@ első bázis, második bázis, első cél, második cél.</translation>
         <location filename="../../../build/ui_lc_layertreeoptionsdialog.h" line="460"/>
         <location filename="../../../generated/librecad/ui/ui_lc_layertreeoptionsdialog.h" line="460"/>
         <source>Alternative Position </source>
-        <translation>Alternative Position</translation>
+        <translation>Alternatív pozíció</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_layertreeoptionsdialog.ui" line="157"/>
@@ -2204,7 +2203,7 @@ első bázis, második bázis, első cél, második cél.</translation>
         <location filename="../../../build/ui_lc_layertreeoptionsdialog.h" line="461"/>
         <location filename="../../../generated/librecad/ui/ui_lc_layertreeoptionsdialog.h" line="461"/>
         <source>Duplicating Name</source>
-        <translation>Duplicating Name</translation>
+        <translation>Duplikált név</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_layertreeoptionsdialog.ui" line="163"/>
@@ -2212,7 +2211,7 @@ első bázis, második bázis, első cél, második cél.</translation>
         <location filename="../../../build/ui_lc_layertreeoptionsdialog.h" line="462"/>
         <location filename="../../../generated/librecad/ui/ui_lc_layertreeoptionsdialog.h" line="462"/>
         <source>Prefix</source>
-        <translation>Prefix</translation>
+        <translation>Előtag</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_layertreeoptionsdialog.ui" line="183"/>
@@ -2220,7 +2219,7 @@ első bázis, második bázis, első cél, második cél.</translation>
         <location filename="../../../build/ui_lc_layertreeoptionsdialog.h" line="463"/>
         <location filename="../../../generated/librecad/ui/ui_lc_layertreeoptionsdialog.h" line="463"/>
         <source>Suffix</source>
-        <translation>Suffix</translation>
+        <translation>Utótag</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_layertreeoptionsdialog.ui" line="207"/>
@@ -2228,7 +2227,7 @@ első bázis, második bázis, első cél, második cél.</translation>
         <location filename="../../../build/ui_lc_layertreeoptionsdialog.h" line="471"/>
         <location filename="../../../generated/librecad/ui/ui_lc_layertreeoptionsdialog.h" line="471"/>
         <source>Display and Operations</source>
-        <translation>Display and Operations</translation>
+        <translation>Megjelenítés és műveletek</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_layertreeoptionsdialog.ui" line="213"/>
@@ -2236,7 +2235,7 @@ első bázis, második bázis, első cél, második cél.</translation>
         <location filename="../../../build/ui_lc_layertreeoptionsdialog.h" line="465"/>
         <location filename="../../../generated/librecad/ui/ui_lc_layertreeoptionsdialog.h" line="465"/>
         <source>Show full name as ToolTip</source>
-        <translation>Show full name as ToolTip</translation>
+        <translation>Teljes név megjelenítése elemleírásként</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_layertreeoptionsdialog.ui" line="220"/>
@@ -2244,7 +2243,7 @@ első bázis, második bázis, első cél, második cél.</translation>
         <location filename="../../../build/ui_lc_layertreeoptionsdialog.h" line="466"/>
         <location filename="../../../generated/librecad/ui/ui_lc_layertreeoptionsdialog.h" line="466"/>
         <source>Show layer type icons</source>
-        <translation>Show layer type icons</translation>
+        <translation>Rétegtípus ikonok megjelenítése</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_layertreeoptionsdialog.ui" line="233"/>
@@ -2252,7 +2251,7 @@ első bázis, második bázis, első cél, második cél.</translation>
         <location filename="../../../build/ui_lc_layertreeoptionsdialog.h" line="467"/>
         <location filename="../../../generated/librecad/ui/ui_lc_layertreeoptionsdialog.h" line="467"/>
         <source>Show indented layer names. Ident size:</source>
-        <translation>Show indented layer names. Ident size:</translation>
+        <translation>Behúzott rétegnevek megjelenítése. Behúzás mérete:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_layertreeoptionsdialog.ui" line="266"/>
@@ -2260,7 +2259,7 @@ első bázis, második bázis, első cél, második cél.</translation>
         <location filename="../../../build/ui_lc_layertreeoptionsdialog.h" line="469"/>
         <location filename="../../../generated/librecad/ui/ui_lc_layertreeoptionsdialog.h" line="469"/>
         <source>Allow restructuring via Drag&amp;Drop</source>
-        <translation>Allow restructuring via Drag&amp;Drop</translation>
+        <translation>Átstrukturálás engedélyezése &húzással</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_layertreeoptionsdialog.ui" line="273"/>
@@ -2268,7 +2267,7 @@ első bázis, második bázis, első cél, második cél.</translation>
         <location filename="../../../build/ui_lc_layertreeoptionsdialog.h" line="470"/>
         <location filename="../../../generated/librecad/ui/ui_lc_layertreeoptionsdialog.h" line="470"/>
         <source>Rename secondary layers on primary rename</source>
-        <translation>Rename secondary layers on primary rename</translation>
+        <translation>Másodlagos rétegek átnevezése elsődleges átnevezésnél</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_layertreeoptionsdialog.ui" line="281"/>
@@ -2276,7 +2275,7 @@ első bázis, második bázis, első cél, második cél.</translation>
         <location filename="../../../build/ui_lc_layertreeoptionsdialog.h" line="487"/>
         <location filename="../../../generated/librecad/ui/ui_lc_layertreeoptionsdialog.h" line="487"/>
         <source>Colors</source>
-        <translation>Colors</translation>
+        <translation>Színek</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_layertreeoptionsdialog.ui" line="384"/>
@@ -2284,7 +2283,7 @@ első bázis, második bázis, első cél, második cél.</translation>
         <location filename="../../../build/ui_lc_layertreeoptionsdialog.h" line="476"/>
         <location filename="../../../generated/librecad/ui/ui_lc_layertreeoptionsdialog.h" line="476"/>
         <source>Matched item in highlight filter mode</source>
-        <translation>Matched item in highlight filter mode</translation>
+        <translation>Megegyező elem kiemelő szűrő módban</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_layertreeoptionsdialog.ui" line="416"/>
@@ -2300,7 +2299,7 @@ első bázis, második bázis, első cél, második cél.</translation>
         <location filename="../../../build/ui_lc_layertreeoptionsdialog.h" line="480"/>
         <location filename="../../../generated/librecad/ui/ui_lc_layertreeoptionsdialog.h" line="480"/>
         <source>Virtual layer background color</source>
-        <translation>Virtual layer background color</translation>
+        <translation>Virtuális réteg háttérszíne</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_layertreeoptionsdialog.ui" line="465"/>
@@ -2308,7 +2307,7 @@ első bázis, második bázis, első cél, második cél.</translation>
         <location filename="../../../build/ui_lc_layertreeoptionsdialog.h" line="482"/>
         <location filename="../../../generated/librecad/ui/ui_lc_layertreeoptionsdialog.h" line="482"/>
         <source>Threeview items separator grid</source>
-        <translation>Threeview items separator grid</translation>
+        <translation>Háromszetes elemek elválasztó rácsa</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_layertreeoptionsdialog.ui" line="475"/>
@@ -2316,7 +2315,7 @@ első bázis, második bázis, első cél, második cél.</translation>
         <location filename="../../../build/ui_lc_layertreeoptionsdialog.h" line="483"/>
         <location filename="../../../generated/librecad/ui/ui_lc_layertreeoptionsdialog.h" line="483"/>
         <source>Selected items background color</source>
-        <translation>Selected items background color</translation>
+        <translation>Kiválasztott elemek háttérszíne</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_layertreeoptionsdialog.ui" line="504"/>
@@ -2324,7 +2323,7 @@ első bázis, második bázis, első cél, második cél.</translation>
         <location filename="../../../build/ui_lc_layertreeoptionsdialog.h" line="486"/>
         <location filename="../../../generated/librecad/ui/ui_lc_layertreeoptionsdialog.h" line="486"/>
         <source>Active layer background color</source>
-        <translation>Active layer background color</translation>
+        <translation>Aktív réteg háttérszíne</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_layertreeoptionsdialog.ui" line="525"/>
@@ -2332,32 +2331,32 @@ első bázis, második bázis, első cél, második cél.</translation>
         <location filename="../../../build/ui_lc_layertreeoptionsdialog.h" line="488"/>
         <location filename="../../../generated/librecad/ui/ui_lc_layertreeoptionsdialog.h" line="488"/>
         <source>Default Pens</source>
-        <translation>Default Pens</translation>
+        <translation>Alapértelmezett tollak</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_layertreeoptionsdialog.cpp" line="71"/>
         <source>Normal Layer</source>
-        <translation>Normal Layer</translation>
+        <translation>Normál réteg</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_layertreeoptionsdialog.cpp" line="72"/>
         <source>Dimensional Layer</source>
-        <translation>Dimensional Layer</translation>
+        <translation>Méretezési réteg</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_layertreeoptionsdialog.cpp" line="73"/>
         <source>Informational Layer</source>
-        <translation>Informational Layer</translation>
+        <translation>Tájékoztató réteg</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_layertreeoptionsdialog.cpp" line="74"/>
         <source>Alternative Position Layer</source>
-        <translation>Alternative Position Layer</translation>
+        <translation>Alternatív pozíció réteg</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_layertreeoptionsdialog.cpp" line="239"/>
         <source>Select Color</source>
-        <translation>Select Color</translation>
+        <translation>Szín kiválasztása</translation>
     </message>
 </context>
 <context>
@@ -2365,250 +2364,250 @@ első bázis, második bázis, első cél, második cél.</translation>
     <message>
         <location filename="../../src/ui/lc_layertreewidget.cpp" line="144"/>
         <source>Filter</source>
-        <translation>Filter</translation>
+        <translation>Szűrő</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_layertreewidget.cpp" line="146"/>
         <source>Looking for matching layer names</source>
-        <translation>Looking for matching layer names</translation>
+        <translation>Egyező rétegnevek keresése</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_layertreewidget.cpp" line="151"/>
         <source>Highlight Mode</source>
-        <translation>Highlight Mode</translation>
+        <translation>Kiemelési mód</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_layertreewidget.cpp" line="163"/>
         <source>Settings</source>
-        <translation>Settings</translation>
+        <translation>Beállítások</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_layertreewidget.cpp" line="185"/>
         <source>Show all layers</source>
-        <translation>Show all layers</translation>
+        <translation>Minden réteg megjelenítése</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_layertreewidget.cpp" line="193"/>
         <source>Hide all layers</source>
-        <translation>Hide all layers</translation>
+        <translation>Minden réteg elrejtése</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_layertreewidget.cpp" line="201"/>
         <source>Show Secondary Layers</source>
-        <translation>Show Secondary Layers</translation>
+        <translation>Másodlagos rétegek megjelenítése</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_layertreewidget.cpp" line="212"/>
         <source>Show Active Layer Only</source>
-        <translation>Show Active Layer Only</translation>
+        <translation>Csak az aktív réteg megjelenítése</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_layertreewidget.cpp" line="222"/>
         <source>Expand All</source>
-        <translation>Expand All</translation>
+        <translation>Összes kibontása</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_layertreewidget.cpp" line="231"/>
         <source>Collapse All</source>
-        <translation>Collapse All</translation>
+        <translation>Összes összecsukása</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_layertreewidget.cpp" line="240"/>
         <source>Collapse Secondary</source>
-        <translation>Collapse Secondary</translation>
+        <translation>Másodlagos rétegek összecsukása</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_layertreewidget.cpp" line="251"/>
         <source>Unlock all layers</source>
-        <translation>Unlock all layers</translation>
+        <translation>Minden réteg feloldása</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_layertreewidget.cpp" line="259"/>
         <source>Lock all layers</source>
-        <translation>Lock all layers</translation>
+        <translation>Minden réteg zárolása</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_layertreewidget.cpp" line="267"/>
         <source>Add a layer</source>
-        <translation>Add a layer</translation>
+        <translation>Réteg hozzáadása</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_layertreewidget.cpp" line="275"/>
         <source>Add dimensions Layer</source>
-        <translation>Add dimensions Layer</translation>
+        <translation>Méretezési réteg hozzáadása</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_layertreewidget.cpp" line="285"/>
         <source>Remove layer</source>
-        <translation>Remove layer</translation>
+        <translation>Réteg eltávolítása</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_layertreewidget.cpp" line="293"/>
         <source>Modify layer attributes / rename</source>
-        <translation>Modify layer attributes / rename</translation>
+        <translation>Réteg attribútumainak módosítása / átnevezése</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_layertreewidget.cpp" line="308"/>
         <source>Flat List Mode)</source>
-        <translation>Flat List Mode)</translation>
+        <translation>Sima lista mód)</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_layertreewidget.cpp" line="653"/>
         <source>Layer Menu</source>
-        <translation>Layer Menu</translation>
+        <translation>Réteg menü</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_layertreewidget.cpp" line="672"/>
         <source>&amp;Add Child Layer</source>
-        <translation>&amp;Add Child Layer</translation>
+        <translation>&Alréteg hozzáadása</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_layertreewidget.cpp" line="673"/>
         <source>&amp;Rename</source>
-        <translation>&amp;Rename</translation>
+        <translation>&Átnevezés</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_layertreewidget.cpp" line="674"/>
         <source>&amp;Remove Layers (Sub-Tree)</source>
-        <translation>&amp;Remove Layers (Sub-Tree)</translation>
+        <translation>&Rétegek eltávolítása (Alstruktúra)</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_layertreewidget.cpp" line="676"/>
         <source>&amp;Copy Structure (Sub-Tree)</source>
-        <translation>&amp;Copy Structure (Sub-Tree)</translation>
+        <translation>&Struktúra másolása (Alstruktúra)</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_layertreewidget.cpp" line="677"/>
         <source>&amp;Duplicate Content (Sub-Tree)</source>
-        <translation>&amp;Duplicate Content (Sub-Tree)</translation>
+        <translation>&Tartalom duplikálása (Alstruktúra)</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_layertreewidget.cpp" line="679"/>
         <source>&amp;Select Entities (Sub-Tree)</source>
-        <translation>&amp;Select Entities (Sub-Tree)</translation>
+        <translation>&Elemek kiválasztása (Alstruktúra)</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_layertreewidget.cpp" line="684"/>
         <source>&amp;Edit Layer &amp;Attributes</source>
-        <translation>&amp;Edit Layer &amp;Attributes</translation>
+        <translation>&Réteg &attribútumainak szerkesztése</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_layertreewidget.cpp" line="686"/>
         <source>&amp;Remove Layer</source>
-        <translation>&amp;Remove Layer</translation>
+        <translation>&Réteg eltávolítása</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_layertreewidget.cpp" line="695"/>
         <source>&amp;Add Dimensions Sub-Layer</source>
-        <translation>&amp;Add Dimensions Sub-Layer</translation>
+        <translation>&Méretezési alréteg hozzáadása</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_layertreewidget.cpp" line="699"/>
         <source>&amp;Add Info Sub-Layer</source>
-        <translation>&amp;Add Info Sub-Layer</translation>
+        <translation>&Tájékoztató alréteg hozzáadása</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_layertreewidget.cpp" line="703"/>
         <source>&amp;Add Alternative View Sub-Layer</source>
-        <translation>&amp;Add Alternative View Sub-Layer</translation>
+        <translation>&Alternatív nézet alréteg hozzáadása</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_layertreewidget.cpp" line="709"/>
         <source>&amp;Remove Sub-layers</source>
-        <translation>&amp;Remove Sub-layers</translation>
+        <translation>&Alrétegek eltávolítása</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_layertreewidget.cpp" line="717"/>
         <location filename="../../src/ui/lc_layertreewidget.cpp" line="728"/>
         <source>Convert to Dimensional Layer</source>
-        <translation>Convert to Dimensional Layer</translation>
+        <translation>Átalakítás méretezési réteggé</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_layertreewidget.cpp" line="718"/>
         <location filename="../../src/ui/lc_layertreewidget.cpp" line="731"/>
         <source>Convert to Info Layer</source>
-        <translation>Convert to Info Layer</translation>
+        <translation>Átalakítás tájékoztató réteggé</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_layertreewidget.cpp" line="719"/>
         <location filename="../../src/ui/lc_layertreewidget.cpp" line="734"/>
         <source>Convert to Alternative Position Layer</source>
-        <translation>Convert to Alternative Position Layer</translation>
+        <translation>Átalakítás alternatív pozíció réteggé</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_layertreewidget.cpp" line="726"/>
         <source>Convert to Normal Layer</source>
-        <translation>Convert to Normal Layer</translation>
+        <translation>Átalakítás normál réteggé</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_layertreewidget.cpp" line="740"/>
         <source>&amp;Select Layer&apos;s Entities</source>
-        <translation>&amp;Select Layer&apos;s Entities</translation>
+        <translation>&Réteg elemeinek kiválasztása</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_layertreewidget.cpp" line="743"/>
         <source>&amp;Create Layer Copy</source>
-        <translation>&amp;Create Layer Copy</translation>
+        <translation>&Rétezmásolat létrehozása</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_layertreewidget.cpp" line="744"/>
         <source>&amp;Duplicate Layer With Content</source>
-        <translation>&amp;Duplicate Layer With Content</translation>
+        <translation>&Réteg másolása tartalommal</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_layertreewidget.cpp" line="748"/>
         <source>Move Selection to Layer</source>
-        <translation>Move Selection to Layer</translation>
+        <translation>Kiválasztás áthelyezése rétegre</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_layertreewidget.cpp" line="749"/>
         <source>Duplicate Selection to Layer</source>
-        <translation>Duplicate Selection to Layer</translation>
+        <translation>Kiválasztás duplikálása rétegre</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_layertreewidget.cpp" line="756"/>
         <source>&amp;Add Layer</source>
-        <translation>&amp;Add Layer</translation>
+        <translation>&Réteg hozzáadása</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_layertreewidget.cpp" line="758"/>
         <source>&amp;Freeze Others Layers</source>
-        <translation>&amp;Freeze Others Layers</translation>
+        <translation>&Többi réteg befagyasztása</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_layertreewidget.cpp" line="759"/>
         <source>&amp;Defreeze All Layers</source>
-        <translation>&amp;Defreeze All Layers</translation>
+        <translation>&Minden réteg felengedése</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_layertreewidget.cpp" line="760"/>
         <source>&amp;Freeze All Layers</source>
-        <translation>&amp;Freeze All Layers</translation>
+        <translation>&Minden réteg befagyasztása</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_layertreewidget.cpp" line="761"/>
         <source>&amp;Unlock All Layers</source>
-        <translation>&amp;Unlock All Layers</translation>
+        <translation>&Minden réteg feloldása</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_layertreewidget.cpp" line="762"/>
         <source>&amp;Lock All Layers</source>
-        <translation>&amp;Lock All Layers</translation>
+        <translation>&Minden réteg zárolása</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_layertreewidget.cpp" line="763"/>
         <source>Enable &amp;Printing All Layers</source>
-        <translation>Enable &amp;Printing All Layers</translation>
+        <translation>Nyomtatás &engedélyezése minden rétegen</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_layertreewidget.cpp" line="764"/>
         <source>&amp;Disable Printing All Layers</source>
-        <translation>&amp;Disable Printing All Layers</translation>
+        <translation>&Nyomtatás tiltása minden rétegen</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_layertreewidget.cpp" line="766"/>
         <source>&amp;Find And Remove Empty Layers</source>
-        <translation>&amp;Find And Remove Empty Layers</translation>
+        <translation>&Üres rétegek keresése és eltávolítása</translation>
     </message>
 </context>
 <context>
@@ -2627,7 +2626,7 @@ első bázis, második bázis, első cél, második cél.</translation>
         <location filename="../../../build/ui_lc_lineanglereloptions.h" line="161"/>
         <location filename="../../../generated/librecad/ui/ui_lc_lineanglereloptions.h" line="161"/>
         <source>Offset:</source>
-        <translation>Offset:</translation>
+        <translation>Eltolás:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_lineanglereloptions.ui" line="50"/>
@@ -2651,7 +2650,7 @@ első bázis, második bázis, első cél, második cél.</translation>
         <location filename="../../../generated/librecad/ui/ui_lc_lineanglereloptions.h" line="163"/>
         <location filename="../../../generated/librecad/ui/ui_lc_lineanglereloptions.h" line="169"/>
         <source>Start</source>
-        <translation>Start</translation>
+        <translation>Kezdet</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_lineanglereloptions.ui" line="60"/>
@@ -2663,7 +2662,7 @@ első bázis, második bázis, első cél, második cél.</translation>
         <location filename="../../../generated/librecad/ui/ui_lc_lineanglereloptions.h" line="164"/>
         <location filename="../../../generated/librecad/ui/ui_lc_lineanglereloptions.h" line="170"/>
         <source>Middle</source>
-        <translation>Middle</translation>
+        <translation>Közép</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_lineanglereloptions.ui" line="65"/>
@@ -2683,7 +2682,7 @@ első bázis, második bázis, első cél, második cél.</translation>
         <location filename="../../../build/ui_lc_lineanglereloptions.h" line="167"/>
         <location filename="../../../generated/librecad/ui/ui_lc_lineanglereloptions.h" line="167"/>
         <source>Line Snap:</source>
-        <translation>Line Snap:</translation>
+        <translation>Vonal illesztés:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_lineanglereloptions.ui" line="80"/>
@@ -2707,7 +2706,7 @@ első bázis, második bázis, első cél, második cél.</translation>
         <location filename="../../../build/ui_lc_lineanglereloptions.h" line="174"/>
         <location filename="../../../generated/librecad/ui/ui_lc_lineanglereloptions.h" line="174"/>
         <source>Tick Snap:</source>
-        <translation>Tick Snap:</translation>
+        <translation>Pipa illesztés:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_lineanglereloptions.ui" line="174"/>
@@ -2715,7 +2714,7 @@ első bázis, második bázis, első cél, második cél.</translation>
         <location filename="../../../build/ui_lc_lineanglereloptions.h" line="175"/>
         <location filename="../../../generated/librecad/ui/ui_lc_lineanglereloptions.h" line="175"/>
         <source>Length:</source>
-        <translation>Length:</translation>
+        <translation>Hossz:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_lineanglereloptions.ui" line="201"/>
@@ -2723,7 +2722,7 @@ első bázis, második bázis, első cél, második cél.</translation>
         <location filename="../../../build/ui_lc_lineanglereloptions.h" line="177"/>
         <location filename="../../../generated/librecad/ui/ui_lc_lineanglereloptions.h" line="177"/>
         <source>Angle:</source>
-        <translation>Angle:</translation>
+        <translation>Szög:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_lineanglereloptions.ui" line="208"/>
@@ -2731,7 +2730,7 @@ első bázis, második bázis, első cél, második cél.</translation>
         <location filename="../../../build/ui_lc_lineanglereloptions.h" line="178"/>
         <location filename="../../../generated/librecad/ui/ui_lc_lineanglereloptions.h" line="178"/>
         <source>Snap Distance:</source>
-        <translation>Snap Distance:</translation>
+        <translation>Illesztési távolság:</translation>
     </message>
 </context>
 <context>
@@ -2750,7 +2749,7 @@ első bázis, második bázis, első cél, második cél.</translation>
         <location filename="../../../build/ui_lc_linefrompointtolineoptions.h" line="191"/>
         <location filename="../../../generated/librecad/ui/ui_lc_linefrompointtolineoptions.h" line="191"/>
         <source>Angle:</source>
-        <translation>Angle:</translation>
+        <translation>Szög:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_linefrompointtolineoptions.ui" line="55"/>
@@ -2758,7 +2757,7 @@ első bázis, második bázis, első cél, második cél.</translation>
         <location filename="../../../build/ui_lc_linefrompointtolineoptions.h" line="192"/>
         <location filename="../../../generated/librecad/ui/ui_lc_linefrompointtolineoptions.h" line="192"/>
         <source>Size:</source>
-        <translation>Size:</translation>
+        <translation>Méret:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_linefrompointtolineoptions.ui" line="62"/>
@@ -2766,7 +2765,7 @@ első bázis, második bázis, első cél, második cél.</translation>
         <location filename="../../../build/ui_lc_linefrompointtolineoptions.h" line="193"/>
         <location filename="../../../generated/librecad/ui/ui_lc_linefrompointtolineoptions.h" line="193"/>
         <source>Orthogonal</source>
-        <translation>Orthogonal</translation>
+        <translation>Merőleges</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_linefrompointtolineoptions.ui" line="105"/>
@@ -2774,7 +2773,7 @@ első bázis, második bázis, első cél, második cél.</translation>
         <location filename="../../../build/ui_lc_linefrompointtolineoptions.h" line="195"/>
         <location filename="../../../generated/librecad/ui/ui_lc_linefrompointtolineoptions.h" line="195"/>
         <source>To Intersection</source>
-        <translation>To Intersection</translation>
+        <translation>Metszéspontig</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_linefrompointtolineoptions.ui" line="110"/>
@@ -2782,7 +2781,7 @@ első bázis, második bázis, első cél, második cél.</translation>
         <location filename="../../../build/ui_lc_linefrompointtolineoptions.h" line="196"/>
         <location filename="../../../generated/librecad/ui/ui_lc_linefrompointtolineoptions.h" line="196"/>
         <source>Fixed Length</source>
-        <translation>Fixed Length</translation>
+        <translation>Rögzített hossz</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_linefrompointtolineoptions.ui" line="139"/>
@@ -2790,7 +2789,7 @@ első bázis, második bázis, első cél, második cél.</translation>
         <location filename="../../../build/ui_lc_linefrompointtolineoptions.h" line="198"/>
         <location filename="../../../generated/librecad/ui/ui_lc_linefrompointtolineoptions.h" line="198"/>
         <source>End offset:</source>
-        <translation>End offset:</translation>
+        <translation>Vég eltolás:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_linefrompointtolineoptions.ui" line="217"/>
@@ -2798,7 +2797,7 @@ első bázis, második bázis, első cél, második cél.</translation>
         <location filename="../../../build/ui_lc_linefrompointtolineoptions.h" line="199"/>
         <location filename="../../../generated/librecad/ui/ui_lc_linefrompointtolineoptions.h" line="199"/>
         <source>Start</source>
-        <translation>Start</translation>
+        <translation>Kezdet</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_linefrompointtolineoptions.ui" line="222"/>
@@ -2806,7 +2805,7 @@ első bázis, második bázis, első cél, második cél.</translation>
         <location filename="../../../build/ui_lc_linefrompointtolineoptions.h" line="200"/>
         <location filename="../../../generated/librecad/ui/ui_lc_linefrompointtolineoptions.h" line="200"/>
         <source>Middle</source>
-        <translation>Middle</translation>
+        <translation>Közép</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_linefrompointtolineoptions.ui" line="227"/>
@@ -2822,7 +2821,7 @@ első bázis, második bázis, első cél, második cél.</translation>
         <location filename="../../../build/ui_lc_linefrompointtolineoptions.h" line="203"/>
         <location filename="../../../generated/librecad/ui/ui_lc_linefrompointtolineoptions.h" line="203"/>
         <source>Length:</source>
-        <translation>Length:</translation>
+        <translation>Hossz:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_linefrompointtolineoptions.ui" line="270"/>
@@ -2830,7 +2829,7 @@ első bázis, második bázis, első cél, második cél.</translation>
         <location filename="../../../build/ui_lc_linefrompointtolineoptions.h" line="204"/>
         <location filename="../../../generated/librecad/ui/ui_lc_linefrompointtolineoptions.h" line="204"/>
         <source>Snap:</source>
-        <translation>Snap:</translation>
+        <translation>Illesztés:</translation>
     </message>
 </context>
 <context>
@@ -2853,7 +2852,7 @@ első bázis, második bázis, első cél, második cél.</translation>
         <location filename="../../../generated/librecad/ui/ui_lc_linejoinoptions.h" line="124"/>
         <location filename="../../../generated/librecad/ui/ui_lc_linejoinoptions.h" line="135"/>
         <source>Extend/Trim</source>
-        <translation>Extend/Trim</translation>
+        <translation>Nyújtás/Levágás</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_linejoinoptions.ui" line="56"/>
@@ -2865,7 +2864,7 @@ első bázis, második bázis, első cél, második cél.</translation>
         <location filename="../../../generated/librecad/ui/ui_lc_linejoinoptions.h" line="125"/>
         <location filename="../../../generated/librecad/ui/ui_lc_linejoinoptions.h" line="136"/>
         <source>Add segment</source>
-        <translation>Add segment</translation>
+        <translation>Szegmens hozzáadása</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_linejoinoptions.ui" line="61"/>
@@ -2877,7 +2876,7 @@ első bázis, második bázis, első cél, második cél.</translation>
         <location filename="../../../generated/librecad/ui/ui_lc_linejoinoptions.h" line="126"/>
         <location filename="../../../generated/librecad/ui/ui_lc_linejoinoptions.h" line="137"/>
         <source>No change</source>
-        <translation>No change</translation>
+        <translation>Nincs változás</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_linejoinoptions.ui" line="69"/>
@@ -2885,7 +2884,7 @@ első bázis, második bázis, első cél, második cél.</translation>
         <location filename="../../../build/ui_lc_linejoinoptions.h" line="128"/>
         <location filename="../../../generated/librecad/ui/ui_lc_linejoinoptions.h" line="128"/>
         <source>Create Polyline</source>
-        <translation>Create Polyline</translation>
+        <translation>Töröttvonal létrehozása</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_linejoinoptions.ui" line="76"/>
@@ -2893,7 +2892,7 @@ első bázis, második bázis, első cél, második cél.</translation>
         <location filename="../../../build/ui_lc_linejoinoptions.h" line="129"/>
         <location filename="../../../generated/librecad/ui/ui_lc_linejoinoptions.h" line="129"/>
         <source>Attributes:</source>
-        <translation>Attributes:</translation>
+        <translation>Attribútumok:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_linejoinoptions.ui" line="102"/>
@@ -2901,7 +2900,7 @@ első bázis, második bázis, első cél, második cél.</translation>
         <location filename="../../../build/ui_lc_linejoinoptions.h" line="130"/>
         <location filename="../../../generated/librecad/ui/ui_lc_linejoinoptions.h" line="130"/>
         <source>Active Pen</source>
-        <translation>Active Pen</translation>
+        <translation>Aktív toll</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_linejoinoptions.ui" line="107"/>
@@ -2909,7 +2908,7 @@ első bázis, második bázis, első cél, második cél.</translation>
         <location filename="../../../build/ui_lc_linejoinoptions.h" line="131"/>
         <location filename="../../../generated/librecad/ui/ui_lc_linejoinoptions.h" line="131"/>
         <source>Line 1</source>
-        <translation>Line 1</translation>
+        <translation>1. vonal</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_linejoinoptions.ui" line="112"/>
@@ -2917,7 +2916,7 @@ első bázis, második bázis, első cél, második cél.</translation>
         <location filename="../../../build/ui_lc_linejoinoptions.h" line="132"/>
         <location filename="../../../generated/librecad/ui/ui_lc_linejoinoptions.h" line="132"/>
         <source>Line 2</source>
-        <translation>Line 2</translation>
+        <translation>2. vonal</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_linejoinoptions.ui" line="117"/>
@@ -2925,7 +2924,7 @@ első bázis, második bázis, első cél, második cél.</translation>
         <location filename="../../../build/ui_lc_linejoinoptions.h" line="133"/>
         <location filename="../../../generated/librecad/ui/ui_lc_linejoinoptions.h" line="133"/>
         <source>Both lines</source>
-        <translation>Both lines</translation>
+        <translation>Mindkét vonal</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_linejoinoptions.ui" line="162"/>
@@ -2933,7 +2932,7 @@ első bázis, második bázis, első cél, második cél.</translation>
         <location filename="../../../build/ui_lc_linejoinoptions.h" line="139"/>
         <location filename="../../../generated/librecad/ui/ui_lc_linejoinoptions.h" line="139"/>
         <source>Remove originals</source>
-        <translation>Remove originals</translation>
+        <translation>Eredetik eltávolítása</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_linejoinoptions.ui" line="169"/>
@@ -2941,7 +2940,7 @@ első bázis, második bázis, első cél, második cél.</translation>
         <location filename="../../../build/ui_lc_linejoinoptions.h" line="140"/>
         <location filename="../../../generated/librecad/ui/ui_lc_linejoinoptions.h" line="140"/>
         <source>Line 2:</source>
-        <translation>Line 2:</translation>
+        <translation>2. vonal:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_linejoinoptions.ui" line="176"/>
@@ -2949,7 +2948,7 @@ első bázis, második bázis, első cél, második cél.</translation>
         <location filename="../../../build/ui_lc_linejoinoptions.h" line="141"/>
         <location filename="../../../generated/librecad/ui/ui_lc_linejoinoptions.h" line="141"/>
         <source>Line 1:</source>
-        <translation>Line 1:</translation>
+        <translation>1. vonal:</translation>
     </message>
 </context>
 <context>
@@ -2968,7 +2967,7 @@ első bázis, második bázis, első cél, második cél.</translation>
         <location filename="../../../build/ui_lc_linepointsoptions.h" line="160"/>
         <location filename="../../../generated/librecad/ui/ui_lc_linepointsoptions.h" line="160"/>
         <source>Angle:</source>
-        <translation>Angle:</translation>
+        <translation>Szög:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_linepointsoptions.ui" line="73"/>
@@ -2976,7 +2975,7 @@ első bázis, második bázis, első cél, második cél.</translation>
         <location filename="../../../build/ui_lc_linepointsoptions.h" line="161"/>
         <location filename="../../../generated/librecad/ui/ui_lc_linepointsoptions.h" line="161"/>
         <source>Fit Line</source>
-        <translation>Fit Line</translation>
+        <translation>Simított vonal</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_linepointsoptions.ui" line="128"/>
@@ -3000,7 +2999,7 @@ első bázis, második bázis, első cél, második cél.</translation>
         <location filename="../../../build/ui_lc_linepointsoptions.h" line="164"/>
         <location filename="../../../generated/librecad/ui/ui_lc_linepointsoptions.h" line="164"/>
         <source>Start</source>
-        <translation>Start</translation>
+        <translation>Kezdet</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_linepointsoptions.ui" line="143"/>
@@ -3016,7 +3015,7 @@ első bázis, második bázis, első cél, második cél.</translation>
         <location filename="../../../build/ui_lc_linepointsoptions.h" line="167"/>
         <location filename="../../../generated/librecad/ui/ui_lc_linepointsoptions.h" line="167"/>
         <source>Edge Points:</source>
-        <translation>Edge Points:</translation>
+        <translation>Élpontok:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_linepointsoptions.ui" line="196"/>
@@ -3024,7 +3023,7 @@ első bázis, második bázis, első cél, második cél.</translation>
         <location filename="../../../build/ui_lc_linepointsoptions.h" line="168"/>
         <location filename="../../../generated/librecad/ui/ui_lc_linepointsoptions.h" line="168"/>
         <source>Number of points:</source>
-        <translation>Number of points:</translation>
+        <translation>Pontok száma:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_linepointsoptions.ui" line="209"/>
@@ -3032,7 +3031,7 @@ első bázis, második bázis, első cél, második cél.</translation>
         <location filename="../../../build/ui_lc_linepointsoptions.h" line="169"/>
         <location filename="../../../generated/librecad/ui/ui_lc_linepointsoptions.h" line="169"/>
         <source>Fixed Distance</source>
-        <translation>Fixed Distance</translation>
+        <translation>Rögzített távolság</translation>
     </message>
 </context>
 <context>
@@ -3098,7 +3097,7 @@ első bázis, második bázis, első cél, második cél.</translation>
         <location filename="../../../plugins/list/list.cpp" line="180"/>
         <location filename="../../../plugins/list/list.cpp" line="222"/>
         <source>in point</source>
-        <translation>in point</translation>
+        <translation>pontban</translation>
     </message>
     <message>
         <location filename="../../../plugins/list/list.cpp" line="94"/>
@@ -3129,7 +3128,7 @@ első bázis, második bázis, első cél, második cél.</translation>
     <message>
         <location filename="../../../plugins/list/list.cpp" line="113"/>
         <source>Inc.</source>
-        <translation>Inc.</translation>
+        <translation>Növekmény</translation>
     </message>
     <message>
         <location filename="../../../plugins/list/list.cpp" line="118"/>
@@ -3193,7 +3192,7 @@ első bázis, második bázis, első cél, második cél.</translation>
     <message>
         <location filename="../../../plugins/list/list.cpp" line="169"/>
         <source>OVERLAYBOX</source>
-        <translation>OVERLAYBOX</translation>
+        <translation>FEDŐDOBOZ</translation>
     </message>
     <message>
         <location filename="../../../plugins/list/list.cpp" line="172"/>
@@ -3283,7 +3282,7 @@ első bázis, második bázis, első cél, második cél.</translation>
     <message>
         <location filename="../../../plugins/list/list.cpp" line="234"/>
         <source>SPLINE</source>
-        <translation>SPLINE</translation>
+        <translation>GÖRBE</translation>
     </message>
     <message>
         <location filename="../../../plugins/list/list.cpp" line="237"/>
@@ -3308,27 +3307,27 @@ első bázis, második bázis, első cél, második cél.</translation>
     <message>
         <location filename="../../../plugins/list/list.cpp" line="249"/>
         <source>DIMLINEAR</source>
-        <translation>DIMLINEAR</translation>
+        <translation>LINEÁRISMÉRET</translation>
     </message>
     <message>
         <location filename="../../../plugins/list/list.cpp" line="252"/>
         <source>DIMRADIAL</source>
-        <translation>DIMRADIAL</translation>
+        <translation>SUGÁRMÉRET</translation>
     </message>
     <message>
         <location filename="../../../plugins/list/list.cpp" line="255"/>
         <source>DIMDIAMETRIC</source>
-        <translation>DIMDIAMETRIC</translation>
+        <translation>ÁTMÉRŐMÉRET</translation>
     </message>
     <message>
         <location filename="../../../plugins/list/list.cpp" line="258"/>
         <source>DIMANGULAR</source>
-        <translation>DIMANGULAR</translation>
+        <translation>SZÖGMÉRET</translation>
     </message>
     <message>
         <location filename="../../../plugins/list/list.cpp" line="261"/>
         <source>UNKNOWN</source>
-        <translation>UNKNOWN</translation>
+        <translation>ISMERETLEN</translation>
     </message>
 </context>
 <context>
@@ -3347,7 +3346,7 @@ első bázis, második bázis, első cél, második cél.</translation>
         <location filename="../../../build/ui_lc_modifybreakdivideoptions.h" line="60"/>
         <location filename="../../../generated/librecad/ui/ui_lc_modifybreakdivideoptions.h" line="60"/>
         <source>Remove Segments</source>
-        <translation>Remove Segments</translation>
+        <translation>Szegmensek eltávolítása</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_modifybreakdivideoptions.ui" line="46"/>
@@ -3355,7 +3354,7 @@ első bázis, második bázis, első cél, második cél.</translation>
         <location filename="../../../build/ui_lc_modifybreakdivideoptions.h" line="61"/>
         <location filename="../../../generated/librecad/ui/ui_lc_modifybreakdivideoptions.h" line="61"/>
         <source>Remove Selected</source>
-        <translation>Remove Selected</translation>
+        <translation>Kiválasztottak eltávolítása</translation>
     </message>
 </context>
 <context>
@@ -3374,7 +3373,7 @@ első bázis, második bázis, első cél, második cél.</translation>
         <location filename="../../../build/ui_lc_modifygapoptions.h" line="116"/>
         <location filename="../../../generated/librecad/ui/ui_lc_modifygapoptions.h" line="116"/>
         <source>Gap Snap:</source>
-        <translation>Gap Snap:</translation>
+        <translation>Hézag illesztés:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_modifygapoptions.ui" line="49"/>
@@ -3382,7 +3381,7 @@ első bázis, második bázis, első cél, második cél.</translation>
         <location filename="../../../build/ui_lc_modifygapoptions.h" line="117"/>
         <location filename="../../../generated/librecad/ui/ui_lc_modifygapoptions.h" line="117"/>
         <source>Snap Distance:</source>
-        <translation>Snap Distance:</translation>
+        <translation>Illesztési távolság:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_modifygapoptions.ui" line="56"/>
@@ -3402,7 +3401,7 @@ első bázis, második bázis, első cél, második cél.</translation>
         <location filename="../../../build/ui_lc_modifygapoptions.h" line="119"/>
         <location filename="../../../generated/librecad/ui/ui_lc_modifygapoptions.h" line="119"/>
         <source>Gap Size:</source>
-        <translation>Gap Size:</translation>
+        <translation>Hézag mérete:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_modifygapoptions.ui" line="92"/>
@@ -3414,7 +3413,7 @@ első bázis, második bázis, első cél, második cél.</translation>
         <location filename="../../../generated/librecad/ui/ui_lc_modifygapoptions.h" line="121"/>
         <location filename="../../../generated/librecad/ui/ui_lc_modifygapoptions.h" line="125"/>
         <source>Start</source>
-        <translation>Start</translation>
+        <translation>Kezdet</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_modifygapoptions.ui" line="97"/>
@@ -3426,7 +3425,7 @@ első bázis, második bázis, első cél, második cél.</translation>
         <location filename="../../../generated/librecad/ui/ui_lc_modifygapoptions.h" line="122"/>
         <location filename="../../../generated/librecad/ui/ui_lc_modifygapoptions.h" line="126"/>
         <source>Middle</source>
-        <translation>Middle</translation>
+        <translation>Közép</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_modifygapoptions.ui" line="102"/>
@@ -3446,7 +3445,7 @@ első bázis, második bázis, első cél, második cél.</translation>
         <location filename="../../../build/ui_lc_modifygapoptions.h" line="129"/>
         <location filename="../../../generated/librecad/ui/ui_lc_modifygapoptions.h" line="129"/>
         <source>Line Snap:</source>
-        <translation>Line Snap:</translation>
+        <translation>Vonal illesztés:</translation>
     </message>
 </context>
 <context>
@@ -3457,7 +3456,7 @@ első bázis, második bázis, első cél, második cél.</translation>
         <location filename="../../../build/ui_lc_penpaletteoptionsdialog.h" line="295"/>
         <location filename="../../../generated/librecad/ui/ui_lc_penpaletteoptionsdialog.h" line="295"/>
         <source>Pen Palette Settings</source>
-        <translation>Pen Palette Settings</translation>
+        <translation>Toll paletta beállítások</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_penpaletteoptionsdialog.ui" line="37"/>
@@ -3465,7 +3464,7 @@ első bázis, második bázis, első cél, második cél.</translation>
         <location filename="../../../build/ui_lc_penpaletteoptionsdialog.h" line="296"/>
         <location filename="../../../generated/librecad/ui/ui_lc_penpaletteoptionsdialog.h" line="296"/>
         <source>Columns to display</source>
-        <translation>Columns to display</translation>
+        <translation>Megjelenítendő oszlopok</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_penpaletteoptionsdialog.ui" line="43"/>
@@ -3473,7 +3472,7 @@ első bázis, második bázis, első cél, második cél.</translation>
         <location filename="../../../build/ui_lc_penpaletteoptionsdialog.h" line="297"/>
         <location filename="../../../generated/librecad/ui/ui_lc_penpaletteoptionsdialog.h" line="297"/>
         <source>Line Type Name</source>
-        <translation>Line Type Name</translation>
+        <translation>Vonaltípus neve</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_penpaletteoptionsdialog.ui" line="50"/>
@@ -3481,7 +3480,7 @@ első bázis, második bázis, első cél, második cél.</translation>
         <location filename="../../../build/ui_lc_penpaletteoptionsdialog.h" line="298"/>
         <location filename="../../../generated/librecad/ui/ui_lc_penpaletteoptionsdialog.h" line="298"/>
         <source>Color Name</source>
-        <translation>Color Name</translation>
+        <translation>Szín neve</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_penpaletteoptionsdialog.ui" line="57"/>
@@ -3489,7 +3488,7 @@ első bázis, második bázis, első cél, második cél.</translation>
         <location filename="../../../build/ui_lc_penpaletteoptionsdialog.h" line="299"/>
         <location filename="../../../generated/librecad/ui/ui_lc_penpaletteoptionsdialog.h" line="299"/>
         <source>Line Type Icon</source>
-        <translation>Line Type Icon</translation>
+        <translation>Vonaltípus ikon</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_penpaletteoptionsdialog.ui" line="64"/>
@@ -3497,7 +3496,7 @@ első bázis, második bázis, első cél, második cél.</translation>
         <location filename="../../../build/ui_lc_penpaletteoptionsdialog.h" line="300"/>
         <location filename="../../../generated/librecad/ui/ui_lc_penpaletteoptionsdialog.h" line="300"/>
         <source>Color Icon</source>
-        <translation>Color Icon</translation>
+        <translation>Szín ikon</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_penpaletteoptionsdialog.ui" line="71"/>
@@ -3505,7 +3504,7 @@ első bázis, második bázis, első cél, második cél.</translation>
         <location filename="../../../build/ui_lc_penpaletteoptionsdialog.h" line="301"/>
         <location filename="../../../generated/librecad/ui/ui_lc_penpaletteoptionsdialog.h" line="301"/>
         <source>Line Width Icon</source>
-        <translation>Line Width Icon</translation>
+        <translation>Vonalvastagság ikon</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_penpaletteoptionsdialog.ui" line="78"/>
@@ -3513,7 +3512,7 @@ első bázis, második bázis, első cél, második cél.</translation>
         <location filename="../../../build/ui_lc_penpaletteoptionsdialog.h" line="302"/>
         <location filename="../../../generated/librecad/ui/ui_lc_penpaletteoptionsdialog.h" line="302"/>
         <source>Line Width Name</source>
-        <translation>Line Width Name</translation>
+        <translation>Vonalvastagság neve</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_penpaletteoptionsdialog.ui" line="88"/>
@@ -3521,7 +3520,7 @@ első bázis, második bázis, első cél, második cél.</translation>
         <location filename="../../../build/ui_lc_penpaletteoptionsdialog.h" line="303"/>
         <location filename="../../../generated/librecad/ui/ui_lc_penpaletteoptionsdialog.h" line="303"/>
         <source>Colors</source>
-        <translation>Colors</translation>
+        <translation>Színek</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_penpaletteoptionsdialog.ui" line="132"/>
@@ -3529,7 +3528,7 @@ első bázis, második bázis, első cél, második cél.</translation>
         <location filename="../../../build/ui_lc_penpaletteoptionsdialog.h" line="305"/>
         <location filename="../../../generated/librecad/ui/ui_lc_penpaletteoptionsdialog.h" line="305"/>
         <source>Active Pen Background:</source>
-        <translation>Active Pen Background:</translation>
+        <translation>Aktív toll háttere:</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_penpaletteoptionsdialog.ui" line="150"/>
@@ -3537,7 +3536,7 @@ első bázis, második bázis, első cél, második cél.</translation>
         <location filename="../../../build/ui_lc_penpaletteoptionsdialog.h" line="307"/>
         <location filename="../../../generated/librecad/ui/ui_lc_penpaletteoptionsdialog.h" line="307"/>
         <source>Entire table row is bold for active pen</source>
-        <translation>Entire table row is bold for active pen</translation>
+        <translation>A teljes sor félkövér az aktív tollnál</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_penpaletteoptionsdialog.ui" line="157"/>
@@ -3545,7 +3544,7 @@ első bázis, második bázis, első cél, második cél.</translation>
         <location filename="../../../build/ui_lc_penpaletteoptionsdialog.h" line="308"/>
         <location filename="../../../generated/librecad/ui/ui_lc_penpaletteoptionsdialog.h" line="308"/>
         <source>Grid Color:</source>
-        <translation>Grid Color:</translation>
+        <translation>Rács színe:</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_penpaletteoptionsdialog.ui" line="164"/>
@@ -3553,7 +3552,7 @@ első bázis, második bázis, első cél, második cél.</translation>
         <location filename="../../../build/ui_lc_penpaletteoptionsdialog.h" line="309"/>
         <location filename="../../../generated/librecad/ui/ui_lc_penpaletteoptionsdialog.h" line="309"/>
         <source>Matched Item Color:</source>
-        <translation>Matched Item Color:</translation>
+        <translation>Egyező elem színe:</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_penpaletteoptionsdialog.ui" line="192"/>
@@ -3561,7 +3560,7 @@ első bázis, második bázis, első cél, második cél.</translation>
         <location filename="../../../build/ui_lc_penpaletteoptionsdialog.h" line="311"/>
         <location filename="../../../generated/librecad/ui/ui_lc_penpaletteoptionsdialog.h" line="311"/>
         <source>Case-insensitive pens filtering</source>
-        <translation>Case-insensitive pens filtering</translation>
+        <translation>Tollak szűrése kis/nagybetű érzéketlenül</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_penpaletteoptionsdialog.ui" line="209"/>
@@ -3569,7 +3568,7 @@ első bázis, második bázis, első cél, második cél.</translation>
         <location filename="../../../build/ui_lc_penpaletteoptionsdialog.h" line="313"/>
         <location filename="../../../generated/librecad/ui/ui_lc_penpaletteoptionsdialog.h" line="313"/>
         <source>Controls whether tooltip will be shown for table item or not</source>
-        <translation>Controls whether tooltip will be shown for table item or not</translation>
+        <translation>Meghatározza, hogy megjelenjen-e elemleírás a táblázat elemnél</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_penpaletteoptionsdialog.ui" line="212"/>
@@ -3577,7 +3576,7 @@ első bázis, második bázis, első cél, második cél.</translation>
         <location filename="../../../build/ui_lc_penpaletteoptionsdialog.h" line="315"/>
         <location filename="../../../generated/librecad/ui/ui_lc_penpaletteoptionsdialog.h" line="315"/>
         <source>Show tooltip for table items</source>
-        <translation>Show tooltip for table items</translation>
+        <translation>Elemleírás megjelenítése táblázat elemeknél</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_penpaletteoptionsdialog.ui" line="221"/>
@@ -3585,7 +3584,7 @@ első bázis, második bázis, első cél, második cél.</translation>
         <location filename="../../../build/ui_lc_penpaletteoptionsdialog.h" line="316"/>
         <location filename="../../../generated/librecad/ui/ui_lc_penpaletteoptionsdialog.h" line="316"/>
         <source>Pens file:</source>
-        <translation>Pens file:</translation>
+        <translation>Tollak fájlja:</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_penpaletteoptionsdialog.ui" line="244"/>
@@ -3593,7 +3592,7 @@ első bázis, második bázis, első cél, második cél.</translation>
         <location filename="../../../build/ui_lc_penpaletteoptionsdialog.h" line="318"/>
         <location filename="../../../generated/librecad/ui/ui_lc_penpaletteoptionsdialog.h" line="318"/>
         <source>Show colorn name as</source>
-        <translation>Show colorn name as</translation>
+        <translation>Szín neve mint</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_penpaletteoptionsdialog.ui" line="250"/>
@@ -3617,7 +3616,7 @@ első bázis, második bázis, első cél, második cél.</translation>
         <location filename="../../../build/ui_lc_penpaletteoptionsdialog.h" line="321"/>
         <location filename="../../../generated/librecad/ui/ui_lc_penpaletteoptionsdialog.h" line="321"/>
         <source>Natural name where possible</source>
-        <translation>Natural name where possible</translation>
+        <translation>Természetes név ahol lehetséges</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_penpaletteoptionsdialog.ui" line="274"/>
@@ -3625,7 +3624,7 @@ első bázis, második bázis, első cél, második cél.</translation>
         <location filename="../../../build/ui_lc_penpaletteoptionsdialog.h" line="322"/>
         <location filename="../../../generated/librecad/ui/ui_lc_penpaletteoptionsdialog.h" line="322"/>
         <source>Show info message if no entities may be selected by pen</source>
-        <translation>Show info message if no entities may be selected by pen</translation>
+        <translation>Értesítés, ha nincs elem kiválasztható a toll szerint</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_penpaletteoptionsdialog.ui" line="283"/>
@@ -3633,22 +3632,22 @@ első bázis, második bázis, első cél, második cél.</translation>
         <location filename="../../../build/ui_lc_penpaletteoptionsdialog.h" line="323"/>
         <location filename="../../../generated/librecad/ui/ui_lc_penpaletteoptionsdialog.h" line="323"/>
         <source>On double click on table item</source>
-        <translation>On double click on table item</translation>
+        <translation>Táblázat elemre kattintáskor</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_penpaletteoptionsdialog.cpp" line="45"/>
         <source>Do nothing</source>
-        <translation>Do nothing</translation>
+        <translation>Ne csináljon semmit</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_penpaletteoptionsdialog.cpp" line="46"/>
         <source>Select entities by attributes pen</source>
-        <translation>Select entities by attributes pen</translation>
+        <translation>Elemek kiválasztása attribútum tollal</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_penpaletteoptionsdialog.cpp" line="47"/>
         <source>Select entities by drawing pen</source>
-        <translation>Select entities by drawing pen</translation>
+        <translation>Elemek kiválasztása rajz tollal</translation>
     </message>
 </context>
 <context>
@@ -3659,7 +3658,7 @@ első bázis, második bázis, első cél, második cél.</translation>
         <location filename="../../../build/ui_lc_penpalettewidget.h" line="335"/>
         <location filename="../../../generated/librecad/ui/ui_lc_penpalettewidget.h" line="335"/>
         <source>Pen Palette</source>
-        <translation>Pen Palette</translation>
+        <translation>Toll paletta</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_penpalettewidget.ui" line="44"/>
@@ -3667,7 +3666,7 @@ első bázis, második bázis, első cél, második cél.</translation>
         <location filename="../../../build/ui_lc_penpalettewidget.h" line="336"/>
         <location filename="../../../generated/librecad/ui/ui_lc_penpalettewidget.h" line="336"/>
         <source>Pen Name:</source>
-        <translation>Pen Name:</translation>
+        <translation>Toll neve:</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_penpalettewidget.ui" line="94"/>
@@ -3675,7 +3674,7 @@ első bázis, második bázis, első cél, második cél.</translation>
         <location filename="../../../build/ui_lc_penpalettewidget.h" line="337"/>
         <location filename="../../../generated/librecad/ui/ui_lc_penpalettewidget.h" line="337"/>
         <source>Color:</source>
-        <translation>Color:</translation>
+        <translation>Szín:</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_penpalettewidget.ui" line="191"/>
@@ -3683,7 +3682,7 @@ első bázis, második bázis, első cél, második cél.</translation>
         <location filename="../../../build/ui_lc_penpalettewidget.h" line="338"/>
         <location filename="../../../generated/librecad/ui/ui_lc_penpalettewidget.h" line="338"/>
         <source>Filter...</source>
-        <translation>Filter...</translation>
+        <translation>Szűrő...</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_penpalettewidget.ui" line="201"/>
@@ -3691,7 +3690,7 @@ első bázis, második bázis, első cél, második cél.</translation>
         <location filename="../../../build/ui_lc_penpalettewidget.h" line="339"/>
         <location filename="../../../generated/librecad/ui/ui_lc_penpalettewidget.h" line="339"/>
         <source>Highlight Mode</source>
-        <translation>Highlight Mode</translation>
+        <translation>Kiemelési mód</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_penpalettewidget.ui" line="224"/>
@@ -3699,7 +3698,7 @@ első bázis, második bázis, első cél, második cél.</translation>
         <location filename="../../../build/ui_lc_penpalettewidget.h" line="340"/>
         <location filename="../../../generated/librecad/ui/ui_lc_penpalettewidget.h" line="340"/>
         <source>Type:</source>
-        <translation>Type:</translation>
+        <translation>Típus:</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_penpalettewidget.ui" line="246"/>
@@ -3707,7 +3706,7 @@ első bázis, második bázis, első cél, második cél.</translation>
         <location filename="../../../build/ui_lc_penpalettewidget.h" line="341"/>
         <location filename="../../../generated/librecad/ui/ui_lc_penpalettewidget.h" line="341"/>
         <source>Width:</source>
-        <translation>Width:</translation>
+        <translation>Vastagság:</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_penpalettewidget.ui" line="271"/>
@@ -3715,7 +3714,7 @@ első bázis, második bázis, első cél, második cél.</translation>
         <location filename="../../../build/ui_lc_penpalettewidget.h" line="343"/>
         <location filename="../../../generated/librecad/ui/ui_lc_penpalettewidget.h" line="343"/>
         <source>Settings</source>
-        <translation>Settings</translation>
+        <translation>Beállítások</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_penpalettewidget.ui" line="290"/>
@@ -3723,7 +3722,7 @@ első bázis, második bázis, első cél, második cél.</translation>
         <location filename="../../../build/ui_lc_penpalettewidget.h" line="347"/>
         <location filename="../../../generated/librecad/ui/ui_lc_penpalettewidget.h" line="347"/>
         <source>Fill Pen Editor by Entity Drawing Pen</source>
-        <translation>Fill Pen Editor by Entity Drawing Pen</translation>
+        <translation>Toll szerkesztő kitöltése elem rajz tollával</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_penpalettewidget.ui" line="304"/>
@@ -3731,7 +3730,7 @@ első bázis, második bázis, első cél, második cél.</translation>
         <location filename="../../../build/ui_lc_penpalettewidget.h" line="351"/>
         <location filename="../../../generated/librecad/ui/ui_lc_penpalettewidget.h" line="351"/>
         <source>Fill Pen Editor by Entity Attributes</source>
-        <translation>Fill Pen Editor by Entity Attributes</translation>
+        <translation>Toll szerkesztő kitöltése elem attribútumokkal</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_penpalettewidget.ui" line="318"/>
@@ -3739,7 +3738,7 @@ első bázis, második bázis, első cél, második cél.</translation>
         <location filename="../../../build/ui_lc_penpalettewidget.h" line="355"/>
         <location filename="../../../generated/librecad/ui/ui_lc_penpalettewidget.h" line="355"/>
         <source>Select Entities By Drawing Pen</source>
-        <translation>Select Entities By Drawing Pen</translation>
+        <translation>Elemek kiválasztása rajz toll szerint</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_penpalettewidget.ui" line="332"/>
@@ -3747,7 +3746,7 @@ első bázis, második bázis, első cél, második cél.</translation>
         <location filename="../../../build/ui_lc_penpalettewidget.h" line="359"/>
         <location filename="../../../generated/librecad/ui/ui_lc_penpalettewidget.h" line="359"/>
         <source>Select Entities By Pen Attributes</source>
-        <translation>Select Entities By Pen Attributes</translation>
+        <translation>Elemek kiválasztása toll attribútumok szerint</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_penpalettewidget.ui" line="349"/>
@@ -3767,7 +3766,7 @@ első bázis, második bázis, első cél, második cél.</translation>
         <location filename="../../../build/ui_lc_penpalettewidget.h" line="367"/>
         <location filename="../../../generated/librecad/ui/ui_lc_penpalettewidget.h" line="367"/>
         <source>Apply Pen To Selection</source>
-        <translation>Apply Pen To Selection</translation>
+        <translation>Toll alkalmazása kiválasztásra</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_penpalettewidget.ui" line="377"/>
@@ -3775,7 +3774,7 @@ első bázis, második bázis, első cél, második cél.</translation>
         <location filename="../../../build/ui_lc_penpalettewidget.h" line="371"/>
         <location filename="../../../generated/librecad/ui/ui_lc_penpalettewidget.h" line="371"/>
         <source>Fill Editor Pen by Current Pen</source>
-        <translation>Fill Editor Pen by Current Pen</translation>
+        <translation>Szerkesztő toll kitöltése aktuális tollal</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_penpalettewidget.ui" line="391"/>
@@ -3783,7 +3782,7 @@ első bázis, második bázis, első cél, második cél.</translation>
         <location filename="../../../build/ui_lc_penpalettewidget.h" line="375"/>
         <location filename="../../../generated/librecad/ui/ui_lc_penpalettewidget.h" line="375"/>
         <source>Apply Editor Pen As Current Pen</source>
-        <translation>Apply Editor Pen As Current Pen</translation>
+        <translation>Szerkesztő toll alkalmazása aktuális tollként</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_penpalettewidget.ui" line="394"/>
@@ -3791,7 +3790,7 @@ első bázis, második bázis, első cél, második cél.</translation>
         <location filename="../../../build/ui_lc_penpalettewidget.h" line="377"/>
         <location filename="../../../generated/librecad/ui/ui_lc_penpalettewidget.h" line="377"/>
         <source>to current</source>
-        <translation>to current</translation>
+        <translation>aktuálishoz</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_penpalettewidget.ui" line="405"/>
@@ -3799,7 +3798,7 @@ első bázis, második bázis, első cél, második cél.</translation>
         <location filename="../../../build/ui_lc_penpalettewidget.h" line="379"/>
         <location filename="../../../generated/librecad/ui/ui_lc_penpalettewidget.h" line="379"/>
         <source>Update Current Pen by Active Layer&apos; Pen</source>
-        <translation>Update Current Pen by Active Layer&apos; Pen</translation>
+        <translation>Aktuális toll frissítése az aktív réteg tollával</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_penpalettewidget.ui" line="419"/>
@@ -3807,7 +3806,7 @@ első bázis, második bázis, első cél, második cél.</translation>
         <location filename="../../../build/ui_lc_penpalettewidget.h" line="383"/>
         <location filename="../../../generated/librecad/ui/ui_lc_penpalettewidget.h" line="383"/>
         <source>Fill Pen Editor from Active Layer&apos;s Pen</source>
-        <translation>Fill Pen Editor from Active Layer&apos;s Pen</translation>
+        <translation>Toll szerkesztő kitöltése aktív réteg tollával</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_penpalettewidget.ui" line="422"/>
@@ -3815,7 +3814,7 @@ első bázis, második bázis, első cél, második cél.</translation>
         <location filename="../../../build/ui_lc_penpalettewidget.h" line="385"/>
         <location filename="../../../generated/librecad/ui/ui_lc_penpalettewidget.h" line="385"/>
         <source>Pick from Active Layer</source>
-        <translation>Pick from Active Layer</translation>
+        <translation>Kiolvasás aktív rétegből</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_penpalettewidget.ui" line="433"/>
@@ -3823,7 +3822,7 @@ első bázis, második bázis, első cél, második cél.</translation>
         <location filename="../../../build/ui_lc_penpalettewidget.h" line="387"/>
         <location filename="../../../generated/librecad/ui/ui_lc_penpalettewidget.h" line="387"/>
         <source>Apply Editor Pen to Active Layer Pen</source>
-        <translation>Apply Editor Pen to Active Layer Pen</translation>
+        <translation>Szerkesztő toll alkalmazása aktív réteg tollára</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_penpalettewidget.ui" line="436"/>
@@ -3831,7 +3830,7 @@ első bázis, második bázis, első cél, második cél.</translation>
         <location filename="../../../build/ui_lc_penpalettewidget.h" line="389"/>
         <location filename="../../../generated/librecad/ui/ui_lc_penpalettewidget.h" line="389"/>
         <source>Apply To Layer</source>
-        <translation>Apply To Layer</translation>
+        <translation>Alkalmazás rétegre</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_penpalettewidget.ui" line="447"/>
@@ -3839,7 +3838,7 @@ első bázis, második bázis, első cél, második cél.</translation>
         <location filename="../../../build/ui_lc_penpalettewidget.h" line="391"/>
         <location filename="../../../generated/librecad/ui/ui_lc_penpalettewidget.h" line="391"/>
         <source>Remove Selected Pen</source>
-        <translation>Remove Selected Pen</translation>
+        <translation>Kiválasztott toll eltávolítása</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_penpalettewidget.ui" line="450"/>
@@ -3847,66 +3846,64 @@ első bázis, második bázis, első cél, második cél.</translation>
         <location filename="../../../build/ui_lc_penpalettewidget.h" line="393"/>
         <location filename="../../../generated/librecad/ui/ui_lc_penpalettewidget.h" line="393"/>
         <source>Delete Pen</source>
-        <translation>Delete Pen</translation>
+        <translation>Toll törlése</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_penpalettewidget.cpp" line="255"/>
         <source>Pens Menu</source>
-        <translation>Pens Menu</translation>
+        <translation>Tollak menü</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_penpalettewidget.cpp" line="275"/>
         <source>&amp;Apply Pen To Selection</source>
-        <translation>&amp;Apply Pen To Selection</translation>
+        <translation>&Toll alkalmazása kiválasztásra</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_penpalettewidget.cpp" line="276"/>
         <source>&amp;Set As Current Pen</source>
-        <translation>&amp;Set As Current Pen</translation>
+        <translation>&Beállítás aktuális tollként</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_penpalettewidget.cpp" line="277"/>
         <source>&amp;Apply Pen To Active Layer</source>
-        <translation>&amp;Apply Pen To Active Layer</translation>
+        <translation>&Toll alkalmazása aktív rétegre</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_penpalettewidget.cpp" line="278"/>
         <source>&amp;Select Entities With Attributes Pen</source>
-        <translation>&amp;Select Entities With Attributes Pen</translation>
+        <translation>&Elemek kiválasztása attribútum tollal</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_penpalettewidget.cpp" line="279"/>
         <source>&amp;Select Entities With Drawing Pen</source>
-        <translation>&amp;Select Entities With Drawing Pen</translation>
+        <translation>&Elemek kiválasztása rajz tollal</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_penpalettewidget.cpp" line="282"/>
         <source>&amp;Edit Pen</source>
-        <translation>&amp;Edit Pen</translation>
+        <translation>&Toll szerkesztése</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_penpalettewidget.cpp" line="283"/>
         <source>&amp;Remove Pen</source>
-        <translation>&amp;Remove Pen</translation>
+        <translation>&Toll eltávolítása</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_penpalettewidget.cpp" line="286"/>
         <source>&amp;Remove Pens</source>
-        <translation>&amp;Remove Pens</translation>
+        <translation>&Tollak eltávolítása</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_penpalettewidget.cpp" line="409"/>
         <source>Pen palette</source>
-        <translation>Pen palette</translation>
+        <translation>Toll paletta</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_penpalettewidget.cpp" line="410"/>
         <source>Location of pens file is changed, please restart the application so new pens file will be used.
 
 Please note that if you&apos;ll save pen via editor without restart, current pens from palette will be saved in the new file and therefore existing content of it will be overridden.</source>
-        <translation>Location of pens file is changed, please restart the application so new pens file will be used.
-
-Please note that if you&apos;ll save pen via editor without restart, current pens from palette will be saved in the new file and therefore existing content of it will be overridden.</translation>
+        <translation>A tollak fájl helye megváltozott, kérem indítsa újra az alkalmazást az új tollak fájl betöltéséhez</translation>
     </message>
 </context>
 <context>
@@ -3941,7 +3938,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../../../build/ui_lc_rectangle1pointoptions.h" line="206"/>
         <location filename="../../../generated/librecad/ui/ui_lc_rectangle1pointoptions.h" line="206"/>
         <source>Edges:</source>
-        <translation>Edges:</translation>
+        <translation>Élek:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_rectangle1pointoptions.ui" line="63"/>
@@ -3949,7 +3946,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../../../build/ui_lc_rectangle1pointoptions.h" line="207"/>
         <location filename="../../../generated/librecad/ui/ui_lc_rectangle1pointoptions.h" line="207"/>
         <source>Corners:</source>
-        <translation>Corners:</translation>
+        <translation>Sarkok:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_rectangle1pointoptions.ui" line="86"/>
@@ -3957,7 +3954,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../../../build/ui_lc_rectangle1pointoptions.h" line="208"/>
         <location filename="../../../generated/librecad/ui/ui_lc_rectangle1pointoptions.h" line="208"/>
         <source>Size inner</source>
-        <translation>Size inner</translation>
+        <translation>Belső méret</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_rectangle1pointoptions.ui" line="93"/>
@@ -3965,7 +3962,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../../../build/ui_lc_rectangle1pointoptions.h" line="209"/>
         <location filename="../../../generated/librecad/ui/ui_lc_rectangle1pointoptions.h" line="209"/>
         <source>Length X:</source>
-        <translation>Length X:</translation>
+        <translation>X hossz:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_rectangle1pointoptions.ui" line="100"/>
@@ -3973,7 +3970,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../../../build/ui_lc_rectangle1pointoptions.h" line="210"/>
         <location filename="../../../generated/librecad/ui/ui_lc_rectangle1pointoptions.h" line="210"/>
         <source>Radius:</source>
-        <translation>Radius:</translation>
+        <translation>Sugár:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_rectangle1pointoptions.ui" line="123"/>
@@ -3981,7 +3978,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../../../build/ui_lc_rectangle1pointoptions.h" line="211"/>
         <location filename="../../../generated/librecad/ui/ui_lc_rectangle1pointoptions.h" line="211"/>
         <source>Snap:</source>
-        <translation>Snap:</translation>
+        <translation>Illesztés:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_rectangle1pointoptions.ui" line="162"/>
@@ -3989,7 +3986,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../../../build/ui_lc_rectangle1pointoptions.h" line="212"/>
         <location filename="../../../generated/librecad/ui/ui_lc_rectangle1pointoptions.h" line="212"/>
         <source>Length Y:</source>
-        <translation>Length Y:</translation>
+        <translation>Y hossz:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_rectangle1pointoptions.ui" line="170"/>
@@ -3997,7 +3994,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../../../build/ui_lc_rectangle1pointoptions.h" line="213"/>
         <location filename="../../../generated/librecad/ui/ui_lc_rectangle1pointoptions.h" line="213"/>
         <source>Top-left</source>
-        <translation>Top-left</translation>
+        <translation>Bal felső</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_rectangle1pointoptions.ui" line="175"/>
@@ -4013,7 +4010,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../../../build/ui_lc_rectangle1pointoptions.h" line="215"/>
         <location filename="../../../generated/librecad/ui/ui_lc_rectangle1pointoptions.h" line="215"/>
         <source>Top-right</source>
-        <translation>Top-right</translation>
+        <translation>Jobb felső</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_rectangle1pointoptions.ui" line="185"/>
@@ -4029,7 +4026,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../../../build/ui_lc_rectangle1pointoptions.h" line="217"/>
         <location filename="../../../generated/librecad/ui/ui_lc_rectangle1pointoptions.h" line="217"/>
         <source>Middle</source>
-        <translation>Middle</translation>
+        <translation>Közép</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_rectangle1pointoptions.ui" line="195"/>
@@ -4037,7 +4034,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../../../build/ui_lc_rectangle1pointoptions.h" line="218"/>
         <location filename="../../../generated/librecad/ui/ui_lc_rectangle1pointoptions.h" line="218"/>
         <source>Right</source>
-        <translation>Right</translation>
+        <translation>Jobb</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_rectangle1pointoptions.ui" line="200"/>
@@ -4045,7 +4042,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../../../build/ui_lc_rectangle1pointoptions.h" line="219"/>
         <location filename="../../../generated/librecad/ui/ui_lc_rectangle1pointoptions.h" line="219"/>
         <source>Bottom-left</source>
-        <translation>Bottom-left</translation>
+        <translation>Bal alsó</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_rectangle1pointoptions.ui" line="205"/>
@@ -4053,7 +4050,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../../../build/ui_lc_rectangle1pointoptions.h" line="220"/>
         <location filename="../../../generated/librecad/ui/ui_lc_rectangle1pointoptions.h" line="220"/>
         <source>Bottom</source>
-        <translation>Bottom</translation>
+        <translation>Alul</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_rectangle1pointoptions.ui" line="210"/>
@@ -4061,7 +4058,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../../../build/ui_lc_rectangle1pointoptions.h" line="221"/>
         <location filename="../../../generated/librecad/ui/ui_lc_rectangle1pointoptions.h" line="221"/>
         <source>Bottom-right</source>
-        <translation>Bottom-right</translation>
+        <translation>Jobb alsó</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_rectangle1pointoptions.ui" line="219"/>
@@ -4069,7 +4066,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../../../build/ui_lc_rectangle1pointoptions.h" line="223"/>
         <location filename="../../../generated/librecad/ui/ui_lc_rectangle1pointoptions.h" line="223"/>
         <source>Straight</source>
-        <translation>Straight</translation>
+        <translation>Egyenes</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_rectangle1pointoptions.ui" line="224"/>
@@ -4077,7 +4074,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../../../build/ui_lc_rectangle1pointoptions.h" line="224"/>
         <location filename="../../../generated/librecad/ui/ui_lc_rectangle1pointoptions.h" line="224"/>
         <source>Round</source>
-        <translation>Round</translation>
+        <translation>Lekerekített</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_rectangle1pointoptions.ui" line="229"/>
@@ -4085,7 +4082,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../../../build/ui_lc_rectangle1pointoptions.h" line="225"/>
         <location filename="../../../generated/librecad/ui/ui_lc_rectangle1pointoptions.h" line="225"/>
         <source>Bevel</source>
-        <translation>Bevel</translation>
+        <translation>Fazetta</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_rectangle1pointoptions.ui" line="237"/>
@@ -4093,7 +4090,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../../../build/ui_lc_rectangle1pointoptions.h" line="227"/>
         <location filename="../../../generated/librecad/ui/ui_lc_rectangle1pointoptions.h" line="227"/>
         <source>Snap shift</source>
-        <translation>Snap shift</translation>
+        <translation>Illesztés eltolás</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_rectangle1pointoptions.ui" line="245"/>
@@ -4109,7 +4106,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../../../build/ui_lc_rectangle1pointoptions.h" line="229"/>
         <location filename="../../../generated/librecad/ui/ui_lc_rectangle1pointoptions.h" line="229"/>
         <source>Vertical</source>
-        <translation>Vertical</translation>
+        <translation>Függőleges</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_rectangle1pointoptions.ui" line="255"/>
@@ -4117,7 +4114,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../../../build/ui_lc_rectangle1pointoptions.h" line="230"/>
         <location filename="../../../generated/librecad/ui/ui_lc_rectangle1pointoptions.h" line="230"/>
         <source>Horizontal</source>
-        <translation>Horizontal</translation>
+        <translation>Vízszintes</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_rectangle1pointoptions.ui" line="279"/>
@@ -4125,7 +4122,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../../../build/ui_lc_rectangle1pointoptions.h" line="232"/>
         <location filename="../../../generated/librecad/ui/ui_lc_rectangle1pointoptions.h" line="232"/>
         <source>Width:</source>
-        <translation>Width:</translation>
+        <translation>Vastagság:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_rectangle1pointoptions.ui" line="286"/>
@@ -4133,7 +4130,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../../../build/ui_lc_rectangle1pointoptions.h" line="233"/>
         <location filename="../../../generated/librecad/ui/ui_lc_rectangle1pointoptions.h" line="233"/>
         <source>Base Angle:</source>
-        <translation>Base Angle:</translation>
+        <translation>Alapszög:</translation>
     </message>
 </context>
 <context>
@@ -4152,7 +4149,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../../../build/ui_lc_rectangle2pointsoptions.h" line="181"/>
         <location filename="../../../generated/librecad/ui/ui_lc_rectangle2pointsoptions.h" line="181"/>
         <source>Snap shift</source>
-        <translation>Snap shift</translation>
+        <translation>Illesztés eltolás</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_rectangle2pointsoptions.ui" line="33"/>
@@ -4160,7 +4157,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../../../build/ui_lc_rectangle2pointsoptions.h" line="182"/>
         <location filename="../../../generated/librecad/ui/ui_lc_rectangle2pointsoptions.h" line="182"/>
         <source>Radius:</source>
-        <translation>Radius:</translation>
+        <translation>Sugár:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_rectangle2pointsoptions.ui" line="56"/>
@@ -4168,7 +4165,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../../../build/ui_lc_rectangle2pointsoptions.h" line="183"/>
         <location filename="../../../generated/librecad/ui/ui_lc_rectangle2pointsoptions.h" line="183"/>
         <source>Edges:</source>
-        <translation>Edges:</translation>
+        <translation>Élek:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_rectangle2pointsoptions.ui" line="63"/>
@@ -4184,7 +4181,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../../../build/ui_lc_rectangle2pointsoptions.h" line="185"/>
         <location filename="../../../generated/librecad/ui/ui_lc_rectangle2pointsoptions.h" line="185"/>
         <source>End Snap:</source>
-        <translation>End Snap:</translation>
+        <translation>Vég illesztés:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_rectangle2pointsoptions.ui" line="77"/>
@@ -4192,7 +4189,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../../../build/ui_lc_rectangle2pointsoptions.h" line="186"/>
         <location filename="../../../generated/librecad/ui/ui_lc_rectangle2pointsoptions.h" line="186"/>
         <source>Corners:</source>
-        <translation>Corners:</translation>
+        <translation>Sarkok:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_rectangle2pointsoptions.ui" line="100"/>
@@ -4200,7 +4197,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../../../build/ui_lc_rectangle2pointsoptions.h" line="187"/>
         <location filename="../../../generated/librecad/ui/ui_lc_rectangle2pointsoptions.h" line="187"/>
         <source>Length X:</source>
-        <translation>Length X:</translation>
+        <translation>X hossz:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_rectangle2pointsoptions.ui" line="107"/>
@@ -4208,7 +4205,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../../../build/ui_lc_rectangle2pointsoptions.h" line="188"/>
         <location filename="../../../generated/librecad/ui/ui_lc_rectangle2pointsoptions.h" line="188"/>
         <source>Start Snap:</source>
-        <translation>Start Snap:</translation>
+        <translation>Kezdő illesztés:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_rectangle2pointsoptions.ui" line="131"/>
@@ -4220,7 +4217,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../../../generated/librecad/ui/ui_lc_rectangle2pointsoptions.h" line="189"/>
         <location filename="../../../generated/librecad/ui/ui_lc_rectangle2pointsoptions.h" line="195"/>
         <source>Corner</source>
-        <translation>Corner</translation>
+        <translation>Sarok</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_rectangle2pointsoptions.ui" line="136"/>
@@ -4232,7 +4229,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../../../generated/librecad/ui/ui_lc_rectangle2pointsoptions.h" line="190"/>
         <location filename="../../../generated/librecad/ui/ui_lc_rectangle2pointsoptions.h" line="196"/>
         <source>Mid-Vertical</source>
-        <translation>Mid-Vertical</translation>
+        <translation>Függőleges közép</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_rectangle2pointsoptions.ui" line="141"/>
@@ -4244,7 +4241,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../../../generated/librecad/ui/ui_lc_rectangle2pointsoptions.h" line="191"/>
         <location filename="../../../generated/librecad/ui/ui_lc_rectangle2pointsoptions.h" line="197"/>
         <source>Mid-Horizontal</source>
-        <translation>Mid-Horizontal</translation>
+        <translation>Vízszintes közép</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_rectangle2pointsoptions.ui" line="146"/>
@@ -4256,7 +4253,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../../../generated/librecad/ui/ui_lc_rectangle2pointsoptions.h" line="192"/>
         <location filename="../../../generated/librecad/ui/ui_lc_rectangle2pointsoptions.h" line="198"/>
         <source>Middle</source>
-        <translation>Middle</translation>
+        <translation>Közép</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_rectangle2pointsoptions.ui" line="170"/>
@@ -4264,7 +4261,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../../../build/ui_lc_rectangle2pointsoptions.h" line="194"/>
         <location filename="../../../generated/librecad/ui/ui_lc_rectangle2pointsoptions.h" line="194"/>
         <source>Base Angle:</source>
-        <translation>Base Angle:</translation>
+        <translation>Alapszög:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_rectangle2pointsoptions.ui" line="202"/>
@@ -4272,7 +4269,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../../../build/ui_lc_rectangle2pointsoptions.h" line="200"/>
         <location filename="../../../generated/librecad/ui/ui_lc_rectangle2pointsoptions.h" line="200"/>
         <source>Straight</source>
-        <translation>Straight</translation>
+        <translation>Egyenes</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_rectangle2pointsoptions.ui" line="207"/>
@@ -4280,7 +4277,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../../../build/ui_lc_rectangle2pointsoptions.h" line="201"/>
         <location filename="../../../generated/librecad/ui/ui_lc_rectangle2pointsoptions.h" line="201"/>
         <source>Round</source>
-        <translation>Round</translation>
+        <translation>Lekerekített</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_rectangle2pointsoptions.ui" line="212"/>
@@ -4288,7 +4285,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../../../build/ui_lc_rectangle2pointsoptions.h" line="202"/>
         <location filename="../../../generated/librecad/ui/ui_lc_rectangle2pointsoptions.h" line="202"/>
         <source>Bevel</source>
-        <translation>Bevel</translation>
+        <translation>Fazetta</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_rectangle2pointsoptions.ui" line="220"/>
@@ -4296,7 +4293,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../../../build/ui_lc_rectangle2pointsoptions.h" line="204"/>
         <location filename="../../../generated/librecad/ui/ui_lc_rectangle2pointsoptions.h" line="204"/>
         <source>Length Y:</source>
-        <translation>Length Y:</translation>
+        <translation>Y hossz:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_rectangle2pointsoptions.ui" line="228"/>
@@ -4312,7 +4309,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../../../build/ui_lc_rectangle2pointsoptions.h" line="206"/>
         <location filename="../../../generated/librecad/ui/ui_lc_rectangle2pointsoptions.h" line="206"/>
         <source>Vertical</source>
-        <translation>Vertical</translation>
+        <translation>Függőleges</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_rectangle2pointsoptions.ui" line="238"/>
@@ -4320,7 +4317,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../../../build/ui_lc_rectangle2pointsoptions.h" line="207"/>
         <location filename="../../../generated/librecad/ui/ui_lc_rectangle2pointsoptions.h" line="207"/>
         <source>Horizontal</source>
-        <translation>Horizontal</translation>
+        <translation>Vízszintes</translation>
     </message>
 </context>
 <context>
@@ -4355,7 +4352,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../../../build/ui_lc_rectangle3pointsoptions.h" line="239"/>
         <location filename="../../../generated/librecad/ui/ui_lc_rectangle3pointsoptions.h" line="239"/>
         <source>Vertical</source>
-        <translation>Vertical</translation>
+        <translation>Függőleges</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_rectangle3pointsoptions.ui" line="73"/>
@@ -4363,7 +4360,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../../../build/ui_lc_rectangle3pointsoptions.h" line="240"/>
         <location filename="../../../generated/librecad/ui/ui_lc_rectangle3pointsoptions.h" line="240"/>
         <source>Horizontal</source>
-        <translation>Horizontal</translation>
+        <translation>Vízszintes</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_rectangle3pointsoptions.ui" line="81"/>
@@ -4371,7 +4368,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../../../build/ui_lc_rectangle3pointsoptions.h" line="242"/>
         <location filename="../../../generated/librecad/ui/ui_lc_rectangle3pointsoptions.h" line="242"/>
         <source>Edges:</source>
-        <translation>Edges:</translation>
+        <translation>Élek:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_rectangle3pointsoptions.ui" line="88"/>
@@ -4379,7 +4376,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../../../build/ui_lc_rectangle3pointsoptions.h" line="243"/>
         <location filename="../../../generated/librecad/ui/ui_lc_rectangle3pointsoptions.h" line="243"/>
         <source>Quadrangle</source>
-        <translation>Quadrangle</translation>
+        <translation>Négyszög</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_rectangle3pointsoptions.ui" line="95"/>
@@ -4387,7 +4384,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../../../build/ui_lc_rectangle3pointsoptions.h" line="244"/>
         <location filename="../../../generated/librecad/ui/ui_lc_rectangle3pointsoptions.h" line="244"/>
         <source>Fixed Base Angle:</source>
-        <translation>Fixed Base Angle:</translation>
+        <translation>Rögzített alapszög:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_rectangle3pointsoptions.ui" line="130"/>
@@ -4395,7 +4392,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../../../build/ui_lc_rectangle3pointsoptions.h" line="245"/>
         <location filename="../../../generated/librecad/ui/ui_lc_rectangle3pointsoptions.h" line="245"/>
         <source>Length X:</source>
-        <translation>Length X:</translation>
+        <translation>X hossz:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_rectangle3pointsoptions.ui" line="160"/>
@@ -4403,7 +4400,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../../../build/ui_lc_rectangle3pointsoptions.h" line="246"/>
         <location filename="../../../generated/librecad/ui/ui_lc_rectangle3pointsoptions.h" line="246"/>
         <source>Straight</source>
-        <translation>Straight</translation>
+        <translation>Egyenes</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_rectangle3pointsoptions.ui" line="165"/>
@@ -4411,7 +4408,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../../../build/ui_lc_rectangle3pointsoptions.h" line="247"/>
         <location filename="../../../generated/librecad/ui/ui_lc_rectangle3pointsoptions.h" line="247"/>
         <source>Round</source>
-        <translation>Round</translation>
+        <translation>Lekerekített</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_rectangle3pointsoptions.ui" line="170"/>
@@ -4419,7 +4416,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../../../build/ui_lc_rectangle3pointsoptions.h" line="248"/>
         <location filename="../../../generated/librecad/ui/ui_lc_rectangle3pointsoptions.h" line="248"/>
         <source>Bevel</source>
-        <translation>Bevel</translation>
+        <translation>Fazetta</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_rectangle3pointsoptions.ui" line="178"/>
@@ -4427,7 +4424,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../../../build/ui_lc_rectangle3pointsoptions.h" line="250"/>
         <location filename="../../../generated/librecad/ui/ui_lc_rectangle3pointsoptions.h" line="250"/>
         <source>Corners:</source>
-        <translation>Corners:</translation>
+        <translation>Sarkok:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_rectangle3pointsoptions.ui" line="185"/>
@@ -4435,7 +4432,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../../../build/ui_lc_rectangle3pointsoptions.h" line="251"/>
         <location filename="../../../generated/librecad/ui/ui_lc_rectangle3pointsoptions.h" line="251"/>
         <source>Snap shift</source>
-        <translation>Snap shift</translation>
+        <translation>Illesztés eltolás</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_rectangle3pointsoptions.ui" line="192"/>
@@ -4443,7 +4440,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../../../build/ui_lc_rectangle3pointsoptions.h" line="252"/>
         <location filename="../../../generated/librecad/ui/ui_lc_rectangle3pointsoptions.h" line="252"/>
         <source>Length Y:</source>
-        <translation>Length Y:</translation>
+        <translation>Y hossz:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_rectangle3pointsoptions.ui" line="243"/>
@@ -4451,7 +4448,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../../../build/ui_lc_rectangle3pointsoptions.h" line="253"/>
         <location filename="../../../generated/librecad/ui/ui_lc_rectangle3pointsoptions.h" line="253"/>
         <source>Radius:</source>
-        <translation>Radius:</translation>
+        <translation>Sugár:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_rectangle3pointsoptions.ui" line="312"/>
@@ -4459,7 +4456,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../../../build/ui_lc_rectangle3pointsoptions.h" line="254"/>
         <location filename="../../../generated/librecad/ui/ui_lc_rectangle3pointsoptions.h" line="254"/>
         <source>Fixed Inner Angle:</source>
-        <translation>Fixed Inner Angle:</translation>
+        <translation>Rögzített belső szög:</translation>
     </message>
 </context>
 <context>
@@ -4468,7 +4465,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../../../plugins/sameprop/sameprop.cpp" line="21"/>
         <location filename="../../../plugins/sameprop/sameprop.cpp" line="28"/>
         <source>Same properties</source>
-        <translation>Same properties</translation>
+        <translation>Azonos tulajdonságok</translation>
     </message>
     <message>
         <location filename="../../../plugins/sameprop/sameprop.cpp" line="41"/>
@@ -4495,12 +4492,12 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../../src/test/lc_simpletests.cpp" line="34"/>
         <source>De&amp;bugging</source>
-        <translation>De&amp;bugging</translation>
+        <translation>&Hibakeresés</translation>
     </message>
     <message>
         <location filename="../../src/test/lc_simpletests.cpp" line="78"/>
         <source>Insert Image</source>
-        <translation>Insert Image</translation>
+        <translation>Kép beillesztése</translation>
     </message>
 </context>
 <context>
@@ -4539,7 +4536,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../../../generated/librecad/ui/ui_lc_slicedivideoptions.h" line="248"/>
         <location filename="../../../generated/librecad/ui/ui_lc_slicedivideoptions.h" line="260"/>
         <source>Start</source>
-        <translation>Start</translation>
+        <translation>Kezdet</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_slicedivideoptions.ui" line="63"/>
@@ -4559,7 +4556,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../../../build/ui_lc_slicedivideoptions.h" line="251"/>
         <location filename="../../../generated/librecad/ui/ui_lc_slicedivideoptions.h" line="251"/>
         <source>Edge Tick:</source>
-        <translation>Edge Tick:</translation>
+        <translation>Él pipa:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_slicedivideoptions.ui" line="113"/>
@@ -4575,7 +4572,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../../../build/ui_lc_slicedivideoptions.h" line="253"/>
         <location filename="../../../generated/librecad/ui/ui_lc_slicedivideoptions.h" line="253"/>
         <source>Offset:</source>
-        <translation>Offset:</translation>
+        <translation>Eltolás:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_slicedivideoptions.ui" line="158"/>
@@ -4583,7 +4580,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../../../build/ui_lc_slicedivideoptions.h" line="254"/>
         <location filename="../../../generated/librecad/ui/ui_lc_slicedivideoptions.h" line="254"/>
         <source>Count:</source>
-        <translation>Count:</translation>
+        <translation>Szám:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_slicedivideoptions.ui" line="189"/>
@@ -4591,7 +4588,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../../../build/ui_lc_slicedivideoptions.h" line="255"/>
         <location filename="../../../generated/librecad/ui/ui_lc_slicedivideoptions.h" line="255"/>
         <source>Start Circle Angle:</source>
-        <translation>Start Circle Angle:</translation>
+        <translation>Kör kezdőszöge:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_slicedivideoptions.ui" line="221"/>
@@ -4599,7 +4596,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../../../build/ui_lc_slicedivideoptions.h" line="256"/>
         <location filename="../../../generated/librecad/ui/ui_lc_slicedivideoptions.h" line="256"/>
         <source>Tick Length:</source>
-        <translation>Tick Length:</translation>
+        <translation>Pipa hossza:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_slicedivideoptions.ui" line="228"/>
@@ -4607,7 +4604,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../../../build/ui_lc_slicedivideoptions.h" line="257"/>
         <location filename="../../../generated/librecad/ui/ui_lc_slicedivideoptions.h" line="257"/>
         <source>Tick snap:</source>
-        <translation>Tick snap:</translation>
+        <translation>Pipa illesztés:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_slicedivideoptions.ui" line="235"/>
@@ -4615,7 +4612,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../../../build/ui_lc_slicedivideoptions.h" line="258"/>
         <location filename="../../../generated/librecad/ui/ui_lc_slicedivideoptions.h" line="258"/>
         <source>Angle:</source>
-        <translation>Angle:</translation>
+        <translation>Szög:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_slicedivideoptions.ui" line="242"/>
@@ -4631,7 +4628,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../../../build/ui_lc_slicedivideoptions.h" line="261"/>
         <location filename="../../../generated/librecad/ui/ui_lc_slicedivideoptions.h" line="261"/>
         <source>Middle</source>
-        <translation>Middle</translation>
+        <translation>Közép</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_slicedivideoptions.ui" line="284"/>
@@ -4639,7 +4636,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../../../build/ui_lc_slicedivideoptions.h" line="264"/>
         <location filename="../../../generated/librecad/ui/ui_lc_slicedivideoptions.h" line="264"/>
         <source>Fixed </source>
-        <translation>Fixed</translation>
+        <translation>Rögzített</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_slicedivideoptions.ui" line="318"/>
@@ -4647,7 +4644,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../../../build/ui_lc_slicedivideoptions.h" line="265"/>
         <location filename="../../../generated/librecad/ui/ui_lc_slicedivideoptions.h" line="265"/>
         <source>Distance:</source>
-        <translation>Distance:</translation>
+        <translation>Távolság:</translation>
     </message>
 </context>
 <context>
@@ -4666,7 +4663,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../../../build/ui_lc_staroptions.h" line="104"/>
         <location filename="../../../generated/librecad/ui/ui_lc_staroptions.h" line="104"/>
         <source>Radius Inner</source>
-        <translation>Radius Inner</translation>
+        <translation>Belső sugár</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_staroptions.ui" line="49"/>
@@ -4682,7 +4679,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../../../build/ui_lc_staroptions.h" line="106"/>
         <location filename="../../../generated/librecad/ui/ui_lc_staroptions.h" line="106"/>
         <source>Radius Outer</source>
-        <translation>Radius Outer</translation>
+        <translation>Külső sugár</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_staroptions.ui" line="86"/>
@@ -4690,7 +4687,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../../../build/ui_lc_staroptions.h" line="107"/>
         <location filename="../../../generated/librecad/ui/ui_lc_staroptions.h" line="107"/>
         <source>Symmetric</source>
-        <translation>Symmetric</translation>
+        <translation>Szimmetrikus</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_staroptions.ui" line="93"/>
@@ -4698,7 +4695,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../../../build/ui_lc_staroptions.h" line="108"/>
         <location filename="../../../generated/librecad/ui/ui_lc_staroptions.h" line="108"/>
         <source>Number:</source>
-        <translation>Number:</translation>
+        <translation>Szám:</translation>
     </message>
 </context>
 <context>
@@ -4706,12 +4703,12 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../../src/ui/lc_widgetfactory.cpp" line="378"/>
         <source>Library Browser</source>
-        <translation>Library Browser</translation>
+        <translation>Könyvtárböngésző</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_widgetfactory.cpp" line="390"/>
         <source>Command line</source>
-        <translation>Command line</translation>
+        <translation>Parancssor</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_widgetfactory.cpp" line="414"/>
@@ -4721,52 +4718,52 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../../src/ui/lc_widgetfactory.cpp" line="414"/>
         <source>Float</source>
-        <translation>Float</translation>
+        <translation>Lebegő</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_widgetfactory.cpp" line="598"/>
         <source>Lines</source>
-        <translation>Lines</translation>
+        <translation>Vonalak</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_widgetfactory.cpp" line="605"/>
         <source>Circles</source>
-        <translation>Circles</translation>
+        <translation>Körök</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_widgetfactory.cpp" line="612"/>
         <source>Freehand</source>
-        <translation>Freehand</translation>
+        <translation>Szabadkézi</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_widgetfactory.cpp" line="619"/>
         <source>Ellipses</source>
-        <translation>Ellipses</translation>
+        <translation>Ellipszisek</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_widgetfactory.cpp" line="626"/>
         <source>PolyLines</source>
-        <translation>PolyLines</translation>
+        <translation>Töröttvonalak</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_widgetfactory.cpp" line="633"/>
         <source>Select</source>
-        <translation>Select</translation>
+        <translation>Kiválasztás</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_widgetfactory.cpp" line="640"/>
         <source>Dimensions</source>
-        <translation>Dimensions</translation>
+        <translation>Méretek</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_widgetfactory.cpp" line="647"/>
         <source>Modify</source>
-        <translation>Modify</translation>
+        <translation>Módosítás</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_widgetfactory.cpp" line="654"/>
         <source>Measure</source>
-        <translation>Measure</translation>
+        <translation>Mérés</translation>
     </message>
 </context>
 <context>
@@ -4777,7 +4774,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../../../build/ui_lc_widgetoptionsdialog.h" line="213"/>
         <location filename="../../../generated/librecad/ui/ui_lc_widgetoptionsdialog.h" line="213"/>
         <source>Widget Options</source>
-        <translation>Widget Options</translation>
+        <translation>Widget beállítások</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_widgetoptionsdialog.ui" line="38"/>
@@ -4785,7 +4782,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../../../build/ui_lc_widgetoptionsdialog.h" line="214"/>
         <location filename="../../../generated/librecad/ui/ui_lc_widgetoptionsdialog.h" line="214"/>
         <source>Toolbar</source>
-        <translation>Toolbar</translation>
+        <translation>Eszköztár</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_widgetoptionsdialog.ui" line="44"/>
@@ -4793,7 +4790,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../../../build/ui_lc_widgetoptionsdialog.h" line="215"/>
         <location filename="../../../generated/librecad/ui/ui_lc_widgetoptionsdialog.h" line="215"/>
         <source>Use themed icons</source>
-        <translation>Use themed icons</translation>
+        <translation>Témázott ikonok használata</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_widgetoptionsdialog.ui" line="57"/>
@@ -4801,7 +4798,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../../../build/ui_lc_widgetoptionsdialog.h" line="216"/>
         <location filename="../../../generated/librecad/ui/ui_lc_widgetoptionsdialog.h" line="216"/>
         <source>Icon Size</source>
-        <translation>Icon Size</translation>
+        <translation>Ikon mérete</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_widgetoptionsdialog.ui" line="70"/>
@@ -4809,7 +4806,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../../../build/ui_lc_widgetoptionsdialog.h" line="218"/>
         <location filename="../../../generated/librecad/ui/ui_lc_widgetoptionsdialog.h" line="218"/>
         <source>side length in pixels</source>
-        <translation>side length in pixels</translation>
+        <translation>Oldalhossz pixelben</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_widgetoptionsdialog.ui" line="86"/>
@@ -4817,7 +4814,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../../../build/ui_lc_widgetoptionsdialog.h" line="220"/>
         <location filename="../../../generated/librecad/ui/ui_lc_widgetoptionsdialog.h" line="220"/>
         <source>Left toolbar columns:</source>
-        <translation>Left toolbar columns:</translation>
+        <translation>Bal eszköztár oszlopok:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_widgetoptionsdialog.ui" line="109"/>
@@ -4825,7 +4822,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../../../build/ui_lc_widgetoptionsdialog.h" line="221"/>
         <location filename="../../../generated/librecad/ui/ui_lc_widgetoptionsdialog.h" line="221"/>
         <source>General</source>
-        <translation>General</translation>
+        <translation>Általános</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_widgetoptionsdialog.ui" line="121"/>
@@ -4833,7 +4830,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../../../build/ui_lc_widgetoptionsdialog.h" line="222"/>
         <location filename="../../../generated/librecad/ui/ui_lc_widgetoptionsdialog.h" line="222"/>
         <source>Style</source>
-        <translation>Style</translation>
+        <translation>Stílus</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_widgetoptionsdialog.ui" line="147"/>
@@ -4841,7 +4838,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../../../build/ui_lc_widgetoptionsdialog.h" line="223"/>
         <location filename="../../../generated/librecad/ui/ui_lc_widgetoptionsdialog.h" line="223"/>
         <source>Style Sheet</source>
-        <translation>Style Sheet</translation>
+        <translation>Stíluslap</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_widgetoptionsdialog.ui" line="160"/>
@@ -4849,7 +4846,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../../../build/ui_lc_widgetoptionsdialog.h" line="225"/>
         <location filename="../../../generated/librecad/ui/ui_lc_widgetoptionsdialog.h" line="225"/>
         <source>Input the path of a Qt style sheet.</source>
-        <translation>Input the path of a Qt style sheet.</translation>
+        <translation>Adja meg a Qt stíluslap elérési útját.</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_widgetoptionsdialog.ui" line="176"/>
@@ -4857,7 +4854,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../../../build/ui_lc_widgetoptionsdialog.h" line="227"/>
         <location filename="../../../generated/librecad/ui/ui_lc_widgetoptionsdialog.h" line="227"/>
         <source>Statusbar</source>
-        <translation>Statusbar</translation>
+        <translation>Állapotsor</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_widgetoptionsdialog.ui" line="182"/>
@@ -4865,7 +4862,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../../../build/ui_lc_widgetoptionsdialog.h" line="228"/>
         <location filename="../../../generated/librecad/ui/ui_lc_widgetoptionsdialog.h" line="228"/>
         <source>Height</source>
-        <translation>Height</translation>
+        <translation>Magasság</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_widgetoptionsdialog.ui" line="192"/>
@@ -4873,7 +4870,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../../../build/ui_lc_widgetoptionsdialog.h" line="229"/>
         <location filename="../../../generated/librecad/ui/ui_lc_widgetoptionsdialog.h" line="229"/>
         <source>Font Size</source>
-        <translation>Font Size</translation>
+        <translation>Betűméret</translation>
     </message>
 </context>
 <context>
@@ -4881,27 +4878,27 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../../src/ui/lg_dimzerosbox.cpp" line="34"/>
         <source>select:</source>
-        <translation>select:</translation>
+        <translation>Válasszon:</translation>
     </message>
     <message>
         <location filename="../../src/ui/lg_dimzerosbox.cpp" line="37"/>
         <source>remove left</source>
-        <translation>remove left</translation>
+        <translation>bal eltávolítása</translation>
     </message>
     <message>
         <location filename="../../src/ui/lg_dimzerosbox.cpp" line="41"/>
         <source>remove right</source>
-        <translation>remove right</translation>
+        <translation>jobb eltávolítása</translation>
     </message>
     <message>
         <location filename="../../src/ui/lg_dimzerosbox.cpp" line="59"/>
         <source>remove 0&apos;</source>
-        <translation>remove 0&apos;</translation>
+        <translation>0' eltávolítása</translation>
     </message>
     <message>
         <location filename="../../src/ui/lg_dimzerosbox.cpp" line="63"/>
         <source>remove 0&quot;</source>
-        <translation>remove 0&quot;</translation>
+        <translation>0" eltávolítása</translation>
     </message>
 </context>
 <context>
@@ -4925,7 +4922,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../../../build/ui_qg_polylineequidistantoptions.h" line="114"/>
         <location filename="../../../generated/librecad/ui/ui_qg_polylineequidistantoptions.h" line="114"/>
         <source>Line Relative Angle Options</source>
-        <translation>Line Relative Angle Options</translation>
+        <translation>Vonal relatív szög beállítások</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_polylineequidistantoptions.ui" line="59"/>
@@ -4933,7 +4930,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../../../build/ui_qg_polylineequidistantoptions.h" line="115"/>
         <location filename="../../../generated/librecad/ui/ui_qg_polylineequidistantoptions.h" line="115"/>
         <source>Spacing:</source>
-        <translation>Spacing:</translation>
+        <translation>Térköz:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_polylineequidistantoptions.ui" line="84"/>
@@ -4945,7 +4942,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../../../generated/librecad/ui/ui_qg_polylineequidistantoptions.h" line="117"/>
         <location filename="../../../generated/librecad/ui/ui_qg_polylineequidistantoptions.h" line="121"/>
         <source>Distance from original polyline</source>
-        <translation>Distance from original polyline</translation>
+        <translation>Távolság az eredeti töröttvonaltól</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_polylineequidistantoptions.ui" line="97"/>
@@ -4953,7 +4950,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../../../build/ui_qg_polylineequidistantoptions.h" line="119"/>
         <location filename="../../../generated/librecad/ui/ui_qg_polylineequidistantoptions.h" line="119"/>
         <source>Copies:</source>
-        <translation>Copies:</translation>
+        <translation>Másolatok:</translation>
     </message>
 </context>
 <context>
@@ -4961,7 +4958,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../../src/plugins/intern/qc_actiongetent.cpp" line="43"/>
         <source>Select object:</source>
-        <translation>Select object:</translation>
+        <translation>Elem kiválasztása:</translation>
     </message>
     <message>
         <location filename="../../src/plugins/intern/qc_actiongetent.cpp" line="51"/>
@@ -4983,7 +4980,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../../src/plugins/intern/qc_actiongetselect.cpp" line="42"/>
         <location filename="../../src/plugins/intern/qc_actiongetselect.cpp" line="51"/>
         <source>Select objects:</source>
-        <translation>Select objects:</translation>
+        <translation>Elemek kiválasztása:</translation>
     </message>
     <message>
         <location filename="../../src/plugins/intern/qc_actiongetselect.cpp" line="62"/>
@@ -4996,32 +4993,32 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../../src/main/qc_applicationwindow.cpp" line="178"/>
         <source>Grid Status</source>
-        <translation>Grid Status</translation>
+        <translation>Rács állapot</translation>
     </message>
     <message>
         <location filename="../../src/main/qc_applicationwindow.cpp" line="354"/>
         <source>Recent Files</source>
-        <translation>Recent Files</translation>
+        <translation>Legutóbbi fájlok</translation>
     </message>
     <message>
         <location filename="../../src/main/qc_applicationwindow.cpp" line="508"/>
         <source>Saving drawing...</source>
-        <translation>Saving drawing...</translation>
+        <translation>Rajz mentése...</translation>
     </message>
     <message>
         <location filename="../../src/main/qc_applicationwindow.cpp" line="508"/>
         <source>Saving drawing: %1</source>
-        <translation>Saving drawing: %1</translation>
+        <translation>Rajz mentése: %1</translation>
     </message>
     <message>
         <location filename="../../src/main/qc_applicationwindow.cpp" line="513"/>
         <source>Save cancelled</source>
-        <translation>Save cancelled</translation>
+        <translation>Mentés megszakítva</translation>
     </message>
     <message>
         <location filename="../../src/main/qc_applicationwindow.cpp" line="517"/>
         <source>Saved drawing: %1</source>
-        <translation>Saved drawing: %1</translation>
+        <translation>Rajz mentve: %1</translation>
     </message>
     <message>
         <location filename="../../src/main/qc_applicationwindow.cpp" line="527"/>
@@ -5030,84 +5027,84 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../../src/main/qc_applicationwindow.cpp" line="2861"/>
         <location filename="../../src/main/qc_applicationwindow.cpp" line="3234"/>
         <source>Draft Mode</source>
-        <translation>Draft Mode</translation>
+        <translation>Vázlat mód</translation>
     </message>
     <message>
         <location filename="../../src/main/qc_applicationwindow.cpp" line="534"/>
         <source>Cannot save the file </source>
-        <translation>Cannot save the file</translation>
+        <translation>A fájl nem menthető</translation>
     </message>
     <message>
         <location filename="../../src/main/qc_applicationwindow.cpp" line="536"/>
         <source> , please check the filename and permissions.</source>
-        <translation>, please check the filename and permissions.</translation>
+        <translation>, kérem ellenőrizze a fájlnevet és az engedélyeket.</translation>
     </message>
     <message>
         <location filename="../../src/main/qc_applicationwindow.cpp" line="644"/>
         <source>Closing Drawing</source>
-        <translation>Closing Drawing</translation>
+        <translation>Rajz bezárása</translation>
     </message>
     <message>
         <location filename="../../src/main/qc_applicationwindow.cpp" line="652"/>
         <source>Save changes to the following item?
 %1</source>
-        <translation>Save changes to the following item?
+        <translation>Menti a változtatásokat a következő elemhez?
 %1</translation>
     </message>
     <message>
         <location filename="../../src/main/qc_applicationwindow.cpp" line="666"/>
         <source>&amp;Save</source>
-        <translation>&amp;Save</translation>
+        <translation>&Mentés</translation>
     </message>
     <message>
         <location filename="../../src/main/qc_applicationwindow.cpp" line="667"/>
         <source>Save &amp;as...</source>
-        <translation>Save &amp;as...</translation>
+        <translation>Mentés &másként...</translation>
     </message>
     <message>
         <location filename="../../src/main/qc_applicationwindow.cpp" line="671"/>
         <source>&amp;Save %1</source>
-        <translation>&amp;Save %1</translation>
+        <translation>&Mentés %1</translation>
     </message>
     <message>
         <location filename="../../src/main/qc_applicationwindow.cpp" line="672"/>
         <source>Save %1 &amp;as...</source>
-        <translation>Save %1 &amp;as...</translation>
+        <translation>%1 mentése &másként...</translation>
     </message>
     <message>
         <location filename="../../src/main/qc_applicationwindow.cpp" line="1158"/>
         <source>Ta&amp;b mode</source>
-        <translation>Ta&amp;b mode</translation>
+        <translation>Fül&es mód</translation>
     </message>
     <message>
         <location filename="../../src/main/qc_applicationwindow.cpp" line="1162"/>
         <source>&amp;Window mode</source>
-        <translation>&amp;Window mode</translation>
+        <translation>&Ablak mód</translation>
     </message>
     <message>
         <location filename="../../src/main/qc_applicationwindow.cpp" line="1168"/>
         <source>&amp;Layout</source>
-        <translation>&amp;Layout</translation>
+        <translation>&Elrendezés</translation>
     </message>
     <message>
         <location filename="../../src/main/qc_applicationwindow.cpp" line="1171"/>
         <source>Rounded</source>
-        <translation>Rounded</translation>
+        <translation>Lekerekített</translation>
     </message>
     <message>
         <location filename="../../src/main/qc_applicationwindow.cpp" line="1175"/>
         <source>Triangular</source>
-        <translation>Triangular</translation>
+        <translation>Háromszögű</translation>
     </message>
     <message>
         <location filename="../../src/main/qc_applicationwindow.cpp" line="1181"/>
         <source>North</source>
-        <translation>North</translation>
+        <translation>Észak</translation>
     </message>
     <message>
         <location filename="../../src/main/qc_applicationwindow.cpp" line="1185"/>
         <source>South</source>
-        <translation>South</translation>
+        <translation>Dél</translation>
     </message>
     <message>
         <location filename="../../src/main/qc_applicationwindow.cpp" line="1189"/>
@@ -5122,115 +5119,115 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../../src/main/qc_applicationwindow.cpp" line="1198"/>
         <source>&amp;Arrange</source>
-        <translation>&amp;Arrange</translation>
+        <translation>&Rendezés</translation>
     </message>
     <message>
         <location filename="../../src/main/qc_applicationwindow.cpp" line="1201"/>
         <source>&amp;Maximized</source>
-        <translation>&amp;Maximized</translation>
+        <translation>&Maximalizálva</translation>
     </message>
     <message>
         <location filename="../../src/main/qc_applicationwindow.cpp" line="1205"/>
         <source>&amp;Cascade</source>
-        <translation>&amp;Cascade</translation>
+        <translation>&Kaszkád</translation>
     </message>
     <message>
         <location filename="../../src/main/qc_applicationwindow.cpp" line="1206"/>
         <source>&amp;Tile</source>
-        <translation>&amp;Tile</translation>
+        <translation>&Mozaik</translation>
     </message>
     <message>
         <location filename="../../src/main/qc_applicationwindow.cpp" line="1207"/>
         <source>Tile &amp;Vertically</source>
-        <translation>Tile &amp;Vertically</translation>
+        <translation>Mozaik &Függőlegesen</translation>
     </message>
     <message>
         <location filename="../../src/main/qc_applicationwindow.cpp" line="1208"/>
         <source>Tile &amp;Horizontally</source>
-        <translation>Tile &amp;Horizontally</translation>
+        <translation>Mozaik &Vízszintesen</translation>
     </message>
     <message>
         <location filename="../../src/main/qc_applicationwindow.cpp" line="1524"/>
         <source>Creating new file...</source>
-        <translation>Creating new file...</translation>
+        <translation>Új fájl létrehozása...</translation>
     </message>
     <message>
         <location filename="../../src/main/qc_applicationwindow.cpp" line="1570"/>
         <source>Block &apos;%1&apos;</source>
-        <translation>Block &apos;%1&apos;</translation>
+        <translation>Blokk '%1'</translation>
     </message>
     <message>
         <location filename="../../src/main/qc_applicationwindow.cpp" line="1572"/>
         <source>unnamed document %1</source>
-        <translation>unnamed document %1</translation>
+        <translation>névtelen dokumentum %1</translation>
     </message>
     <message>
         <location filename="../../src/main/qc_applicationwindow.cpp" line="1640"/>
         <source>New Drawing created.</source>
-        <translation>New Drawing created.</translation>
+        <translation>Új rajz létrehozva.</translation>
     </message>
     <message>
         <location filename="../../src/main/qc_applicationwindow.cpp" line="1706"/>
         <source>New document from template: </source>
-        <translation>New document from template:</translation>
+        <translation>Új dokumentum sablonból:</translation>
     </message>
     <message>
         <location filename="../../src/main/qc_applicationwindow.cpp" line="1754"/>
         <source>Select Template aborted</source>
-        <translation>Select Template aborted</translation>
+        <translation>Sablon kiválasztása megszakítva</translation>
     </message>
     <message>
         <location filename="../../src/main/qc_applicationwindow.cpp" line="1770"/>
         <source>Cannot open the file
 %1
 Please check the permissions.</source>
-        <translation>Cannot open the file
+        <translation>Nem lehet megnyitni a fájlt
 %1
-Please check the permissions.</translation>
+Kérem ellenőrizze az engedélyeket.</translation>
     </message>
     <message>
         <location filename="../../src/main/qc_applicationwindow.cpp" line="1870"/>
         <source>Warning: File already opened : </source>
-        <translation>Warning: File already opened :</translation>
+        <translation>Figyelmeztetés: A fájl már meg van nyitva:</translation>
     </message>
     <message>
         <location filename="../../src/main/qc_applicationwindow.cpp" line="1913"/>
         <source>Cannot open the file
 %1
 Please check its existence and permissions.</source>
-        <translation>Cannot open the file
+        <translation>Nem lehet megnyitni a fájlt
 %1
-Please check its existence and permissions.</translation>
+Kérem ellenőrizze a fájl létezését és az engedélyeket.</translation>
     </message>
     <message>
         <location filename="../../src/main/qc_applicationwindow.cpp" line="1994"/>
         <source>Loaded document: </source>
-        <translation>Loaded document:</translation>
+        <translation>Dokumentum betöltve:</translation>
     </message>
     <message>
         <location filename="../../src/main/qc_applicationwindow.cpp" line="1999"/>
         <source>File &apos;%1&apos; does not exist. Opening aborted</source>
-        <translation>File &apos;%1&apos; does not exist. Opening aborted</translation>
+        <translation>A '%1' fájl nem létezik. Megnyitás megszakítva</translation>
     </message>
     <message>
         <location filename="../../src/main/qc_applicationwindow.cpp" line="2000"/>
         <source>Opening aborted</source>
-        <translation>Opening aborted</translation>
+        <translation>Megnyitás megszakítva</translation>
     </message>
     <message>
         <location filename="../../src/main/qc_applicationwindow.cpp" line="2041"/>
         <source>Save All cancelled</source>
-        <translation>Save All cancelled</translation>
+        <translation>Összes mentése megszakítva</translation>
     </message>
     <message>
         <location filename="../../src/main/qc_applicationwindow.cpp" line="2066"/>
         <source>Auto-saving drawing...</source>
-        <translation>Auto-saving drawing...</translation>
+        <translation>Automatikus mentés folyamatban...</translation>
     </message>
     <message>
         <location filename="../../src/main/qc_applicationwindow.cpp" line="2074"/>
         <source>Auto-saved drawing</source>
-        <translation>Auto-saved drawing</translation>
+        <translation>Automatikusan mentve</translation>
     </message>
     <message>
         <location filename="../../src/main/qc_applicationwindow.cpp" line="2079"/>
@@ -5238,121 +5235,121 @@ Please check its existence and permissions.</translation>
 %1
 Please check the permissions.
 Auto-save disabled.</source>
-        <translation>Cannot auto-save the file
+        <translation>Nem lehet automatikusan menteni a fájlt
 %1
-Please check the permissions.
-Auto-save disabled.</translation>
+Kérem ellenőrizze az engedélyeket.
+Automatikus mentés letiltva.</translation>
     </message>
     <message>
         <location filename="../../src/main/qc_applicationwindow.cpp" line="2084"/>
         <source>Auto-saving failed</source>
-        <translation>Auto-saving failed</translation>
+        <translation>Automatikus mentés sikertelen</translation>
     </message>
     <message>
         <location filename="../../src/main/qc_applicationwindow.cpp" line="2097"/>
         <source>Exporting drawing...</source>
-        <translation>Exporting drawing...</translation>
+        <translation>Rajz exportálása...</translation>
     </message>
     <message>
         <location filename="../../src/main/qc_applicationwindow.cpp" line="2134"/>
         <source>Export as</source>
-        <translation>Export as</translation>
+        <translation>Exportálás mint</translation>
     </message>
     <message>
         <location filename="../../src/main/qc_applicationwindow.cpp" line="2193"/>
         <source>Exported: %1</source>
-        <translation>Exported: %1</translation>
+        <translation>Exportálva: %1</translation>
     </message>
     <message>
         <location filename="../../src/main/qc_applicationwindow.cpp" line="2233"/>
         <source>Exporting...</source>
-        <translation>Exporting...</translation>
+        <translation>Exportálás...</translation>
     </message>
     <message>
         <location filename="../../src/main/qc_applicationwindow.cpp" line="2306"/>
         <source>Export complete</source>
-        <translation>Export complete</translation>
+        <translation>Exportálás kész</translation>
     </message>
     <message>
         <location filename="../../src/main/qc_applicationwindow.cpp" line="2308"/>
         <source>Export failed!</source>
-        <translation>Export failed!</translation>
+        <translation>Exportálás sikertelen!</translation>
     </message>
     <message>
         <location filename="../../src/main/qc_applicationwindow.cpp" line="2375"/>
         <source>Close All cancelled</source>
-        <translation>Close All cancelled</translation>
+        <translation>Összes bezárása megszakítva</translation>
     </message>
     <message>
         <location filename="../../src/main/qc_applicationwindow.cpp" line="2405"/>
         <source>Please adjust scaling and positioning in print preview first.</source>
-        <translation>Please adjust scaling and positioning in print preview first.</translation>
+        <translation>Kérem először állítsa be a méretezést és az elhelyezést a nyomtatási előnézetben.</translation>
     </message>
     <message>
         <location filename="../../src/main/qc_applicationwindow.cpp" line="2417"/>
         <source>Printing...</source>
-        <translation>Printing...</translation>
+        <translation>Nyomtatás...</translation>
     </message>
     <message>
         <location filename="../../src/main/qc_applicationwindow.cpp" line="2469"/>
         <source>Export as PDF</source>
-        <translation>Export as PDF</translation>
+        <translation>Exportálás PDF-ként</translation>
     </message>
     <message>
         <location filename="../../src/main/qc_applicationwindow.cpp" line="2663"/>
         <source>Printing complete</source>
-        <translation>Printing complete</translation>
+        <translation>Nyomtatás kész</translation>
     </message>
     <message>
         <location filename="../../src/main/qc_applicationwindow.cpp" line="2739"/>
         <source>Print preview for %1</source>
-        <translation>Print preview for %1</translation>
+        <translation>Nyomtatási előnézet: %1</translation>
     </message>
     <message>
         <location filename="../../src/main/qc_applicationwindow.cpp" line="2817"/>
         <source>Exiting application...</source>
-        <translation>Exiting application...</translation>
+        <translation>Alkalmazás bezárása...</translation>
     </message>
     <message>
         <location filename="../../src/main/qc_applicationwindow.cpp" line="3026"/>
         <location filename="../../src/ui/lc_widgetfactory.cpp" line="930"/>
         <source>About</source>
-        <translation>About</translation>
+        <translation>Névjegy</translation>
     </message>
     <message>
         <location filename="../../src/main/qc_applicationwindow.cpp" line="3042"/>
         <source>Version: %1</source>
-        <translation>Version: %1</translation>
+        <translation>Verzió: %1</translation>
     </message>
     <message>
         <location filename="../../src/main/qc_applicationwindow.cpp" line="3044"/>
         <source>Compiler: Clang %1.%2.%3</source>
-        <translation>Compiler: Clang %1.%2.%3</translation>
+        <translation>Fordító: Clang %1.%2.%3</translation>
     </message>
     <message>
         <location filename="../../src/main/qc_applicationwindow.cpp" line="3046"/>
         <source>Compiler: GNU GCC %1.%2.%3</source>
-        <translation>Compiler: GNU GCC %1.%2.%3</translation>
+        <translation>Fordító: GNU GCC %1.%2.%3</translation>
     </message>
     <message>
         <location filename="../../src/main/qc_applicationwindow.cpp" line="3048"/>
         <source>Compiler: Microsoft Visual C++</source>
-        <translation>Compiler: Microsoft Visual C++</translation>
+        <translation>Fordító: Microsoft Visual C++</translation>
     </message>
     <message>
         <location filename="../../src/main/qc_applicationwindow.cpp" line="3050"/>
         <source>Compiled on: %1</source>
-        <translation>Compiled on: %1</translation>
+        <translation>Lefordítva: %1</translation>
     </message>
     <message>
         <location filename="../../src/main/qc_applicationwindow.cpp" line="3051"/>
         <source>Qt Version: %1</source>
-        <translation>Qt Version: %1</translation>
+        <translation>Qt verzió: %1</translation>
     </message>
     <message>
         <location filename="../../src/main/qc_applicationwindow.cpp" line="3052"/>
         <source>Boost Version: %1.%2.%3</source>
-        <translation>Boost Version: %1.%2.%3</translation>
+        <translation>Boost verzió: %1.%2.%3</translation>
     </message>
     <message>
         <location filename="../../src/main/qc_applicationwindow.cpp" line="3059"/>
@@ -5362,37 +5359,37 @@ Auto-save disabled.</translation>
     <message>
         <location filename="../../src/main/qc_applicationwindow.cpp" line="3070"/>
         <source>Contributors</source>
-        <translation>Contributors</translation>
+        <translation>Közreműködők</translation>
     </message>
     <message>
         <location filename="../../src/main/qc_applicationwindow.cpp" line="3071"/>
         <source>License</source>
-        <translation>License</translation>
+        <translation>Licenc</translation>
     </message>
     <message>
         <location filename="../../src/main/qc_applicationwindow.cpp" line="3072"/>
         <source>The Code</source>
-        <translation>The Code</translation>
+        <translation>A kód</translation>
     </message>
     <message>
         <location filename="../../src/main/qc_applicationwindow.cpp" line="3081"/>
         <source>System</source>
-        <translation>System</translation>
+        <translation>Rendszer</translation>
     </message>
     <message>
         <location filename="../../src/main/qc_applicationwindow.cpp" line="3274"/>
         <source>Toolbars</source>
-        <translation>Toolbars</translation>
+        <translation>Eszköztárak</translation>
     </message>
     <message>
         <location filename="../../src/main/qc_applicationwindow.cpp" line="3279"/>
         <source>Dockwidgets</source>
-        <translation>Dockwidgets</translation>
+        <translation>Dockwidgetek</translation>
     </message>
     <message>
         <location filename="../../src/main/qc_applicationwindow.cpp" line="3306"/>
         <source>Opening recent file...</source>
-        <translation>Opening recent file...</translation>
+        <translation>Legutóbbi fájl megnyitása...</translation>
     </message>
     <message>
         <location filename="../../src/main/qc_applicationwindow.cpp" line="3429"/>
@@ -5402,12 +5399,12 @@ Auto-save disabled.</translation>
     <message>
         <location filename="../../src/main/qc_applicationwindow.cpp" line="3429"/>
         <source>Command line</source>
-        <translation>Command line</translation>
+        <translation>Parancssor</translation>
     </message>
     <message>
         <location filename="../../src/main/qc_applicationwindow.cpp" line="3430"/>
         <source>Float</source>
-        <translation>Float</translation>
+        <translation>Lebegő</translation>
     </message>
     <message>
         <location filename="../../src/main/qc_applicationwindow.cpp" line="3430"/>
@@ -5418,27 +5415,27 @@ Auto-save disabled.</translation>
     <message>
         <location filename="../../src/main/qc_applicationwindow.cpp" line="3488"/>
         <source>Device Options</source>
-        <translation>Device Options</translation>
+        <translation>Eszköz beállítások</translation>
     </message>
     <message>
         <location filename="../../src/main/qc_applicationwindow.cpp" line="3491"/>
         <source>Device</source>
-        <translation>Device</translation>
+        <translation>Eszköz</translation>
     </message>
     <message>
         <location filename="../../src/main/qc_applicationwindow.cpp" line="3526"/>
         <source>Toolbar Creator</source>
-        <translation>Toolbar Creator</translation>
+        <translation>Eszköztár-létrehozó</translation>
     </message>
     <message>
         <location filename="../../src/main/qc_applicationwindow.cpp" line="3592"/>
         <source>Menu Creator</source>
-        <translation>Menu Creator</translation>
+        <translation>Menü-létrehozó</translation>
     </message>
     <message>
         <location filename="../../src/main/qc_applicationwindow.cpp" line="3617"/>
         <source>Menu Assigner</source>
-        <translation>Menu Assigner</translation>
+        <translation>Menühozzárendelő</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_widgetfactory.cpp" line="257"/>
@@ -5450,19 +5447,19 @@ Auto-save disabled.</translation>
         <location filename="../../src/ui/lc_widgetfactory.cpp" line="262"/>
         <location filename="../../src/ui/lc_widgetfactory.cpp" line="526"/>
         <source>Circle</source>
-        <translation>Circle</translation>
+        <translation>Kör</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_widgetfactory.cpp" line="267"/>
         <location filename="../../src/ui/lc_widgetfactory.cpp" line="532"/>
         <source>Curve</source>
-        <translation>Curve</translation>
+        <translation>Görbe</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_widgetfactory.cpp" line="272"/>
         <location filename="../../src/ui/lc_widgetfactory.cpp" line="538"/>
         <source>Ellipse</source>
-        <translation>Ellipse</translation>
+        <translation>Ellipszis</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_widgetfactory.cpp" line="277"/>
@@ -5474,19 +5471,19 @@ Auto-save disabled.</translation>
         <location filename="../../src/ui/lc_widgetfactory.cpp" line="282"/>
         <location filename="../../src/ui/lc_widgetfactory.cpp" line="550"/>
         <source>Select</source>
-        <translation>Select</translation>
+        <translation>Kiválasztás</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_widgetfactory.cpp" line="287"/>
         <location filename="../../src/ui/lc_widgetfactory.cpp" line="556"/>
         <source>Dimension</source>
-        <translation>Dimension</translation>
+        <translation>Méret</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_widgetfactory.cpp" line="292"/>
         <location filename="../../src/ui/lc_widgetfactory.cpp" line="562"/>
         <source>Modify</source>
-        <translation>Modify</translation>
+        <translation>Módosítás</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_widgetfactory.cpp" line="297"/>
@@ -5498,27 +5495,27 @@ Auto-save disabled.</translation>
         <location filename="../../src/ui/lc_widgetfactory.cpp" line="302"/>
         <location filename="../../src/ui/lc_widgetfactory.cpp" line="440"/>
         <source>Order</source>
-        <translation>Order</translation>
+        <translation>Sorrend</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_widgetfactory.cpp" line="336"/>
         <source>Pen Palette</source>
-        <translation>Pen Palette</translation>
+        <translation>Toll paletta</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_widgetfactory.cpp" line="345"/>
         <source>Layer List</source>
-        <translation>Layer List</translation>
+        <translation>Réteglista</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_widgetfactory.cpp" line="357"/>
         <source>Layer Tree</source>
-        <translation>Layer Tree</translation>
+        <translation>Rétegfa</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_widgetfactory.cpp" line="368"/>
         <source>Block List</source>
-        <translation>Block List</translation>
+        <translation>Blokklista</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_widgetfactory.cpp" line="421"/>
@@ -5538,7 +5535,7 @@ Auto-save disabled.</translation>
     <message>
         <location filename="../../src/ui/lc_widgetfactory.cpp" line="464"/>
         <source>Snap Selection</source>
-        <translation>Snap Selection</translation>
+        <translation>Illesztés kiválasztása</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_widgetfactory.cpp" line="471"/>
@@ -5548,22 +5545,22 @@ Auto-save disabled.</translation>
     <message>
         <location filename="../../src/ui/lc_widgetfactory.cpp" line="476"/>
         <source>Tool Options</source>
-        <translation>Tool Options</translation>
+        <translation>Eszköz beállítások</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_widgetfactory.cpp" line="483"/>
         <source>Dock Areas</source>
-        <translation>Dock Areas</translation>
+        <translation>Dok területek</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_widgetfactory.cpp" line="589"/>
         <source>Categories</source>
-        <translation>Categories</translation>
+        <translation>Kategóriák</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_widgetfactory.cpp" line="674"/>
         <source>&amp;File</source>
-        <translation>&amp;File</translation>
+        <translation>&Fájl</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_widgetfactory.cpp" line="685"/>
@@ -5578,147 +5575,147 @@ Auto-save disabled.</translation>
     <message>
         <location filename="../../src/ui/lc_widgetfactory.cpp" line="705"/>
         <source>&amp;Options</source>
-        <translation>&amp;Options</translation>
+        <translation>&Beállítások</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_widgetfactory.cpp" line="716"/>
         <source>&amp;Edit</source>
-        <translation>&amp;Edit</translation>
+        <translation>&Szerkesztés</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_widgetfactory.cpp" line="731"/>
         <source>Pl&amp;ugins</source>
-        <translation>Pl&amp;ugins</translation>
+        <translation>B&ővítmények</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_widgetfactory.cpp" line="737"/>
         <source>&amp;View</source>
-        <translation>&amp;View</translation>
+        <translation>&Nézet</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_widgetfactory.cpp" line="755"/>
         <source>&amp;Tools</source>
-        <translation>&amp;Tools</translation>
+        <translation>&Eszközök</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_widgetfactory.cpp" line="761"/>
         <source>&amp;Line</source>
-        <translation>&amp;Line</translation>
+        <translation>&Vonal</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_widgetfactory.cpp" line="768"/>
         <source>&amp;Circle</source>
-        <translation>&amp;Circle</translation>
+        <translation>&Kör</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_widgetfactory.cpp" line="775"/>
         <source>&amp;Curve</source>
-        <translation>&amp;Curve</translation>
+        <translation>&Görbe</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_widgetfactory.cpp" line="782"/>
         <source>&amp;Ellipse</source>
-        <translation>&amp;Ellipse</translation>
+        <translation>&Ellipszis</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_widgetfactory.cpp" line="789"/>
         <source>&amp;Polyline</source>
-        <translation>&amp;Polyline</translation>
+        <translation>&Töröttvonal</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_widgetfactory.cpp" line="796"/>
         <source>&amp;Select</source>
-        <translation>&amp;Select</translation>
+        <translation>&Kiválasztás</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_widgetfactory.cpp" line="804"/>
         <source>Dime&amp;nsion</source>
-        <translation>Dime&amp;nsion</translation>
+        <translation>Mérete&zés</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_widgetfactory.cpp" line="812"/>
         <source>&amp;Modify</source>
-        <translation>&amp;Modify</translation>
+        <translation>&Módosítás</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_widgetfactory.cpp" line="821"/>
         <source>&amp;Info</source>
-        <translation>&amp;Info</translation>
+        <translation>&Info</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_widgetfactory.cpp" line="830"/>
         <source>&amp;Order</source>
-        <translation>&amp;Order</translation>
+        <translation>&Sorrend</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_widgetfactory.cpp" line="869"/>
         <source>&amp;Drawings</source>
-        <translation>&amp;Drawings</translation>
+        <translation>&Rajzok</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_widgetfactory.cpp" line="879"/>
         <source>&amp;Help</source>
-        <translation>&amp;Help</translation>
+        <translation>&Súgó</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_widgetfactory.cpp" line="883"/>
         <source>&amp;Wiki</source>
-        <translation>&amp;Wiki</translation>
+        <translation>&Wiki</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_widgetfactory.cpp" line="884"/>
         <source>User&apos;s &amp;Manual</source>
-        <translation>User&apos;s &amp;Manual</translation>
+        <translation>Felhasználói &kézikönyv</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_widgetfactory.cpp" line="885"/>
         <source>&amp;Commands</source>
-        <translation>&amp;Commands</translation>
+        <translation>&Parancsok</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_widgetfactory.cpp" line="886"/>
         <source>&amp;Style Sheets</source>
-        <translation>&amp;Style Sheets</translation>
+        <translation>&Stíluslapok</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_widgetfactory.cpp" line="887"/>
         <source>Wid&amp;gets</source>
-        <translation>Wid&amp;gets</translation>
+        <translation>Wid&getek</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_widgetfactory.cpp" line="888"/>
         <source>&amp;Forum</source>
-        <translation>&amp;Forum</translation>
+        <translation>&Fórum</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_widgetfactory.cpp" line="889"/>
         <source>Zulip &amp;Chat</source>
-        <translation>Zulip &amp;Chat</translation>
+        <translation>Zulip &Chat</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_widgetfactory.cpp" line="890"/>
         <source>&amp;Release Information</source>
-        <translation>&amp;Release Information</translation>
+        <translation>&Kiadási információk</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_widgetfactory.cpp" line="916"/>
         <source>On&amp;line</source>
-        <translation>On&amp;line</translation>
+        <translation>On&line</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_widgetfactory.cpp" line="938"/>
         <source>&amp;Donate</source>
-        <translation>&amp;Donate</translation>
+        <translation>&Adományozás</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_widgetfactory.cpp" line="961"/>
         <source>Dock Wid&amp;gets</source>
-        <translation>Dock Wid&amp;gets</translation>
+        <translation>Dok wid&getek</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_widgetfactory.cpp" line="988"/>
         <source>&amp;Toolbars</source>
-        <translation>&amp;Toolbars</translation>
+        <translation>&Eszköztárak</translation>
     </message>
 </context>
 <context>
@@ -5726,12 +5723,12 @@ Auto-save disabled.</translation>
     <message>
         <location filename="../../src/ui/qg_actionhandler.cpp" line="1262"/>
         <source>Spacebar: restored snapping mode to normal</source>
-        <translation>Spacebar: restored snapping mode to normal</translation>
+        <translation>Szóköz: illesztési mód visszaállítva normálisra</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_actionhandler.cpp" line="1263"/>
         <source>Spacebar: temporarily set snapping mode to free snapping</source>
-        <translation>Spacebar: temporarily set snapping mode to free snapping</translation>
+        <translation>Szóköz: illesztési mód ideiglenesen szabad illesztésre állítva</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_actionhandler.cpp" line="1273"/>
@@ -5748,7 +5745,7 @@ Auto-save disabled.</translation>
         <location filename="../../../build/ui_qg_activelayername.h" line="80"/>
         <location filename="../../../generated/librecad/ui/ui_qg_activelayername.h" line="80"/>
         <source>Selection</source>
-        <translation>Selection</translation>
+        <translation>Kiválasztás</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_activelayername.ui" line="71"/>
@@ -5764,7 +5761,7 @@ Auto-save disabled.</translation>
         <location filename="../../../build/ui_qg_activelayername.h" line="84"/>
         <location filename="../../../generated/librecad/ui/ui_qg_activelayername.h" line="84"/>
         <source>Current Layer</source>
-        <translation>Current Layer</translation>
+        <translation>Aktuális réteg</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_activelayername.ui" line="105"/>
@@ -5791,7 +5788,7 @@ p, li { white-space: pre-wrap; }
         <location filename="../../../build/ui_qg_blockdialog.h" line="84"/>
         <location filename="../../../generated/librecad/ui/ui_qg_blockdialog.h" line="84"/>
         <source>Block Settings</source>
-        <translation>Block Settings</translation>
+        <translation>Blokk beállítások</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_blockdialog.ui" line="43"/>
@@ -5799,17 +5796,17 @@ p, li { white-space: pre-wrap; }
         <location filename="../../../build/ui_qg_blockdialog.h" line="85"/>
         <location filename="../../../generated/librecad/ui/ui_qg_blockdialog.h" line="85"/>
         <source>Block Name:</source>
-        <translation>Block Name:</translation>
+        <translation>Blokk neve:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_blockdialog.cpp" line="78"/>
         <source>Renaming Block</source>
-        <translation>Renaming Block</translation>
+        <translation>Blokk átnevezése</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_blockdialog.cpp" line="79"/>
         <source>Could not name block. A block named &quot;%1&quot; already exists.</source>
-        <translation>Could not name block. A block named &quot;%1&quot; already exists.</translation>
+        <translation>A blokk nem nevezhető el. Már létezik "%1" nevű blokk.</translation>
     </message>
 </context>
 <context>
@@ -5817,109 +5814,109 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../../src/ui/qg_blockwidget.cpp" line="166"/>
         <source>Show all blocks</source>
-        <translation>Show all blocks</translation>
+        <translation>Minden blokk megjelenítése</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_blockwidget.cpp" line="173"/>
         <source>Hide all blocks</source>
-        <translation>Hide all blocks</translation>
+        <translation>Minden blokk elrejtése</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_blockwidget.cpp" line="180"/>
         <source>Create Block</source>
-        <translation>Create Block</translation>
+        <translation>Blokk létrehozása</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_blockwidget.cpp" line="187"/>
         <source>Add an empty block</source>
-        <translation>Add an empty block</translation>
+        <translation>Üres blokk hozzáadása</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_blockwidget.cpp" line="194"/>
         <source>Remove block</source>
-        <translation>Remove block</translation>
+        <translation>Blokk eltávolítása</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_blockwidget.cpp" line="201"/>
         <source>Rename the active block</source>
-        <translation>Rename the active block</translation>
+        <translation>Az aktív blokk átnevezése</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_blockwidget.cpp" line="208"/>
         <source>Edit the active block
 in a separate window</source>
-        <translation>Edit the active block
-in a separate window</translation>
+        <translation>Az aktív blokk szerkesztése
+külön ablakban</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_blockwidget.cpp" line="216"/>
         <source>save the active block to a file</source>
-        <translation>save the active block to a file</translation>
+        <translation>Az aktív blokk mentése fájlba</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_blockwidget.cpp" line="223"/>
         <source>Insert the active block</source>
-        <translation>Insert the active block</translation>
+        <translation>Az aktív blokk beillesztése</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_blockwidget.cpp" line="230"/>
         <source>Filter</source>
-        <translation>Filter</translation>
+        <translation>Szűrő</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_blockwidget.cpp" line="232"/>
         <source>Looking for matching block names</source>
-        <translation>Looking for matching block names</translation>
+        <translation>Egyező blokk nevek keresése</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_blockwidget.cpp" line="387"/>
         <source>Block Menu</source>
-        <translation>Block Menu</translation>
+        <translation>Blokk menü</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_blockwidget.cpp" line="394"/>
         <source>&amp;Defreeze all Blocks</source>
-        <translation>&amp;Defreeze all Blocks</translation>
+        <translation>&Minden blokk felengedése</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_blockwidget.cpp" line="396"/>
         <source>&amp;Freeze all Blocks</source>
-        <translation>&amp;Freeze all Blocks</translation>
+        <translation>&Minden blokk befagyasztása</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_blockwidget.cpp" line="401"/>
         <source>&amp;Toggle Visibility</source>
-        <translation>&amp;Toggle Visibility</translation>
+        <translation>&Láthatóság váltása</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_blockwidget.cpp" line="403"/>
         <source>&amp;Remove Block</source>
-        <translation>&amp;Remove Block</translation>
+        <translation>&Blokk eltávolítása</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_blockwidget.cpp" line="407"/>
         <source>&amp;Add Block</source>
-        <translation>&amp;Add Block</translation>
+        <translation>&Blokk hozzáadása</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_blockwidget.cpp" line="409"/>
         <source>&amp;Rename Block</source>
-        <translation>&amp;Rename Block</translation>
+        <translation>&Blokk átnevezése</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_blockwidget.cpp" line="411"/>
         <source>&amp;Edit Block</source>
-        <translation>&amp;Edit Block</translation>
+        <translation>&Blokk szerkesztése</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_blockwidget.cpp" line="413"/>
         <source>&amp;Insert Block</source>
-        <translation>&amp;Insert Block</translation>
+        <translation>&Blokk beillesztése</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_blockwidget.cpp" line="415"/>
         <source>&amp;Create New Block</source>
-        <translation>&amp;Create New Block</translation>
+        <translation>&Új blokk létrehozása</translation>
     </message>
 </context>
 <context>
@@ -5927,24 +5924,24 @@ in a separate window</translation>
     <message>
         <location filename="../../src/ui/qg_colorbox.cpp" line="103"/>
         <source>Unchanged</source>
-        <translation>Unchanged</translation>
+        <translation>Változatlan</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_colorbox.cpp" line="106"/>
         <location filename="../../src/ui/qg_colorbox.cpp" line="282"/>
         <source>By Layer</source>
-        <translation>By Layer</translation>
+        <translation>Réteg szerint</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_colorbox.cpp" line="107"/>
         <source>By Block</source>
-        <translation>By Block</translation>
+        <translation>Blokk szerint</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_colorbox.cpp" line="111"/>
         <location filename="../../src/ui/qg_colorbox.cpp" line="322"/>
         <source>Custom</source>
-        <translation>Custom</translation>
+        <translation>Egyéni</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_colorbox.cpp" line="115"/>
@@ -5954,27 +5951,27 @@ in a separate window</translation>
     <message>
         <location filename="../../src/ui/qg_colorbox.cpp" line="119"/>
         <source>Dark Red</source>
-        <translation>Dark Red</translation>
+        <translation>Sötét piros</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_colorbox.cpp" line="120"/>
         <source>Yellow</source>
-        <translation>Yellow</translation>
+        <translation>Sárga</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_colorbox.cpp" line="121"/>
         <source>Dark Yellow</source>
-        <translation>Dark Yellow</translation>
+        <translation>Sötét sárga</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_colorbox.cpp" line="122"/>
         <source>Green</source>
-        <translation>Green</translation>
+        <translation>Zöld</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_colorbox.cpp" line="123"/>
         <source>Dark Green</source>
-        <translation>Dark Green</translation>
+        <translation>Sötét zöld</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_colorbox.cpp" line="124"/>
@@ -5984,7 +5981,7 @@ in a separate window</translation>
     <message>
         <location filename="../../src/ui/qg_colorbox.cpp" line="125"/>
         <source>Dark Cyan</source>
-        <translation>Dark Cyan</translation>
+        <translation>Sötét cián</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_colorbox.cpp" line="126"/>
@@ -5994,22 +5991,22 @@ in a separate window</translation>
     <message>
         <location filename="../../src/ui/qg_colorbox.cpp" line="127"/>
         <source>Dark Blue</source>
-        <translation>Dark Blue</translation>
+        <translation>Sötét kék</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_colorbox.cpp" line="128"/>
         <source>Magenta</source>
-        <translation>Magenta</translation>
+        <translation>Bíbor</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_colorbox.cpp" line="129"/>
         <source>Dark Magenta</source>
-        <translation>Dark Magenta</translation>
+        <translation>Sötét bíbor</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_colorbox.cpp" line="133"/>
         <source>Black / White</source>
-        <translation>Black / White</translation>
+        <translation>Fekete / Fehér</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_colorbox.cpp" line="137"/>
@@ -6019,23 +6016,23 @@ in a separate window</translation>
     <message>
         <location filename="../../src/ui/qg_colorbox.cpp" line="138"/>
         <source>Dark Gray</source>
-        <translation>Dark Gray</translation>
+        <translation>Sötét szürke</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_colorbox.cpp" line="139"/>
         <source>Light Gray</source>
-        <translation>Light Gray</translation>
+        <translation>Világos szürke</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_colorbox.cpp" line="159"/>
         <location filename="../../src/ui/qg_colorbox.cpp" line="171"/>
         <source>/ColorBox</source>
-        <translation>/ColorBox</translation>
+        <translation>/SzínDoboz</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_colorbox.cpp" line="165"/>
         <source>Custom Picked</source>
-        <translation>Custom Picked</translation>
+        <translation>Egyéni kiválasztás</translation>
     </message>
 </context>
 <context>
@@ -6043,7 +6040,7 @@ in a separate window</translation>
     <message>
         <location filename="../../src/ui/qg_commandedit.cpp" line="289"/>
         <source>clear</source>
-        <translation>clear</translation>
+        <translation>törlés</translation>
     </message>
 </context>
 <context>
@@ -6051,17 +6048,17 @@ in a separate window</translation>
     <message>
         <location filename="../../src/ui/qg_commandhistory.cpp" line="38"/>
         <source>&amp;Copy</source>
-        <translation>&amp;Copy</translation>
+        <translation>&Másolás</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_commandhistory.cpp" line="45"/>
         <source>Select &amp;All</source>
-        <translation>Select &amp;All</translation>
+        <translation>&Minden kiválasztása</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_commandhistory.cpp" line="50"/>
         <source>Clear</source>
-        <translation>Clear</translation>
+        <translation>Törlés</translation>
     </message>
 </context>
 <context>
@@ -6072,7 +6069,7 @@ in a separate window</translation>
         <location filename="../../../build/ui_qg_commandwidget.h" line="113"/>
         <location filename="../../../generated/librecad/ui/ui_qg_commandwidget.h" line="113"/>
         <source>Command Line</source>
-        <translation>Command Line</translation>
+        <translation>Parancssor</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_commandwidget.ui" line="44"/>
@@ -6080,7 +6077,7 @@ in a separate window</translation>
         <location filename="../../../build/ui_qg_commandwidget.h" line="115"/>
         <location filename="../../../generated/librecad/ui/ui_qg_commandwidget.h" line="115"/>
         <source>Command history and output</source>
-        <translation>Command history and output</translation>
+        <translation>Parancselőzmények és kimenet</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_commandwidget.ui" line="82"/>
@@ -6089,7 +6086,7 @@ in a separate window</translation>
         <location filename="../../../generated/librecad/ui/ui_qg_commandwidget.h" line="117"/>
         <location filename="../../src/ui/forms/qg_commandwidget.cpp" line="183"/>
         <source>Command:</source>
-        <translation>Command:</translation>
+        <translation>Parancs:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_commandwidget.ui" line="132"/>
@@ -6108,7 +6105,7 @@ in a separate window</translation>
     <message>
         <location filename="../../src/ui/forms/qg_commandwidget.cpp" line="205"/>
         <source>Unknown command: %1</source>
-        <translation>Unknown command: %1</translation>
+        <translation>Ismeretlen parancs: %1</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_commandwidget.cpp" line="249"/>
@@ -6119,12 +6116,12 @@ in a separate window</translation>
     <message>
         <location filename="../../src/ui/forms/qg_commandwidget.cpp" line="338"/>
         <source>Float</source>
-        <translation>Float</translation>
+        <translation>Lebegő</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_commandwidget.cpp" line="339"/>
         <source>Command line</source>
-        <translation>Command line</translation>
+        <translation>Parancssor</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_commandwidget.cpp" line="339"/>
@@ -6156,7 +6153,7 @@ in a separate window</translation>
         <location filename="../../../generated/librecad/ui/ui_qg_coordinatewidget.h" line="111"/>
         <location filename="../../../generated/librecad/ui/ui_qg_coordinatewidget.h" line="112"/>
         <source>Coordinates</source>
-        <translation>Coordinates</translation>
+        <translation>Koordináták</translation>
     </message>
 </context>
 <context>
@@ -6176,7 +6173,7 @@ in a separate window</translation>
         <location filename="../../../build/ui_qg_dimensionlabeleditor.h" line="169"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dimensionlabeleditor.h" line="169"/>
         <source>Dimension Label Editor</source>
-        <translation>Dimension Label Editor</translation>
+        <translation>Méretfelirat szerkesztő</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dimensionlabeleditor.ui" line="32"/>
@@ -6184,7 +6181,7 @@ in a separate window</translation>
         <location filename="../../../build/ui_qg_dimensionlabeleditor.h" line="170"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dimensionlabeleditor.h" line="170"/>
         <source>Dimension Label:</source>
-        <translation>Dimension Label:</translation>
+        <translation>Méretfelirat:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dimensionlabeleditor.ui" line="57"/>
@@ -6192,7 +6189,7 @@ in a separate window</translation>
         <location filename="../../../build/ui_qg_dimensionlabeleditor.h" line="171"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dimensionlabeleditor.h" line="171"/>
         <source>Label:</source>
-        <translation>Label:</translation>
+        <translation>Felirat:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dimensionlabeleditor.ui" line="93"/>
@@ -6208,7 +6205,7 @@ in a separate window</translation>
         <location filename="../../../build/ui_qg_dimensionlabeleditor.h" line="176"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dimensionlabeleditor.h" line="176"/>
         <source>Insert:</source>
-        <translation>Insert:</translation>
+        <translation>Beillesztés:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dimensionlabeleditor.ui" line="150"/>
@@ -6216,7 +6213,7 @@ in a separate window</translation>
         <location filename="../../../build/ui_qg_dimensionlabeleditor.h" line="177"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dimensionlabeleditor.h" line="177"/>
         <source>⌀ (Diameter)</source>
-        <translation>⌀ (Diameter)</translation>
+        <translation>⌀ (Átmérő)</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dimensionlabeleditor.ui" line="155"/>
@@ -6224,7 +6221,7 @@ in a separate window</translation>
         <location filename="../../../build/ui_qg_dimensionlabeleditor.h" line="178"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dimensionlabeleditor.h" line="178"/>
         <source>° (Degree)</source>
-        <translation>° (Degree)</translation>
+        <translation>° (Fok)</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dimensionlabeleditor.ui" line="160"/>
@@ -6232,7 +6229,7 @@ in a separate window</translation>
         <location filename="../../../build/ui_qg_dimensionlabeleditor.h" line="179"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dimensionlabeleditor.h" line="179"/>
         <source>± (Plus / Minus)</source>
-        <translation>± (Plus / Minus)</translation>
+        <translation>± (Plusz / Mínusz)</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dimensionlabeleditor.ui" line="165"/>
@@ -6248,7 +6245,7 @@ in a separate window</translation>
         <location filename="../../../build/ui_qg_dimensionlabeleditor.h" line="181"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dimensionlabeleditor.h" line="181"/>
         <source>× (Times)</source>
-        <translation>× (Times)</translation>
+        <translation>× (Szorzás)</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dimensionlabeleditor.ui" line="175"/>
@@ -6256,7 +6253,7 @@ in a separate window</translation>
         <location filename="../../../build/ui_qg_dimensionlabeleditor.h" line="182"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dimensionlabeleditor.h" line="182"/>
         <source>÷ (Division)</source>
-        <translation>÷ (Division)</translation>
+        <translation>÷ (Osztás)</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dimensionlabeleditor.cpp" line="75"/>
@@ -6296,7 +6293,7 @@ in a separate window</translation>
         <location filename="../../../build/ui_qg_dlgarc.h" line="227"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgarc.h" line="227"/>
         <source>Geometry</source>
-        <translation>Geometry</translation>
+        <translation>Geometria</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgarc.ui" line="84"/>
@@ -6304,7 +6301,7 @@ in a separate window</translation>
         <location filename="../../../build/ui_qg_dlgarc.h" line="228"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgarc.h" line="228"/>
         <source>Radius:</source>
-        <translation>Radius:</translation>
+        <translation>Sugár:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgarc.ui" line="104"/>
@@ -6312,7 +6309,7 @@ in a separate window</translation>
         <location filename="../../../build/ui_qg_dlgarc.h" line="229"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgarc.h" line="229"/>
         <source>Center (y):</source>
-        <translation>Center (y):</translation>
+        <translation>Középpont (y):</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgarc.ui" line="124"/>
@@ -6320,7 +6317,7 @@ in a separate window</translation>
         <location filename="../../../build/ui_qg_dlgarc.h" line="230"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgarc.h" line="230"/>
         <source>Center (x):</source>
-        <translation>Center (x):</translation>
+        <translation>Középpont (x):</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgarc.ui" line="144"/>
@@ -6328,7 +6325,7 @@ in a separate window</translation>
         <location filename="../../../build/ui_qg_dlgarc.h" line="231"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgarc.h" line="231"/>
         <source>Start Angle:</source>
-        <translation>Start Angle:</translation>
+        <translation>Kezdőszög:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgarc.ui" line="174"/>
@@ -6336,7 +6333,7 @@ in a separate window</translation>
         <location filename="../../../build/ui_qg_dlgarc.h" line="232"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgarc.h" line="232"/>
         <source>End Angle:</source>
-        <translation>End Angle:</translation>
+        <translation>Végszög:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgarc.ui" line="216"/>
@@ -6344,7 +6341,7 @@ in a separate window</translation>
         <location filename="../../../build/ui_qg_dlgarc.h" line="233"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgarc.h" line="233"/>
         <source>Reversed</source>
-        <translation>Reversed</translation>
+        <translation>Megfordított</translation>
     </message>
 </context>
 <context>
@@ -6355,7 +6352,7 @@ in a separate window</translation>
         <location filename="../../../build/ui_qg_dlgattributes.h" line="115"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgattributes.h" line="115"/>
         <source>Attributes</source>
-        <translation>Attributes</translation>
+        <translation>Attribútumok</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgattributes.ui" line="44"/>
@@ -6372,8 +6369,8 @@ in a separate window</translation>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgattributes.h" line="118"/>
         <source>Apply attributes also to all sub-entities of selected INSERT.
 This recursively modifies all entities of the Block itself.</source>
-        <translation>Apply attributes also to all sub-entities of selected INSERT.
-This recursively modifies all entities of the Block itself.</translation>
+        <translation>Attribútumok alkalmazása a kiválasztott INSERT összes aleleméra.
+Ez rekurzívan módosítja</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgattributes.ui" line="73"/>
@@ -6381,7 +6378,7 @@ This recursively modifies all entities of the Block itself.</translation>
         <location filename="../../../build/ui_qg_dlgattributes.h" line="121"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgattributes.h" line="121"/>
         <source>Apply attributes Block-deep</source>
-        <translation>Apply attributes Block-deep</translation>
+        <translation>Attribútumok alkalmazása blokk mélységig</translation>
     </message>
 </context>
 <context>
@@ -6392,7 +6389,7 @@ This recursively modifies all entities of the Block itself.</translation>
         <location filename="../../../build/ui_qg_dlgcircle.h" line="180"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgcircle.h" line="180"/>
         <source>Circle</source>
-        <translation>Circle</translation>
+        <translation>Kör</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgcircle.ui" line="44"/>
@@ -6408,7 +6405,7 @@ This recursively modifies all entities of the Block itself.</translation>
         <location filename="../../../build/ui_qg_dlgcircle.h" line="182"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgcircle.h" line="182"/>
         <source>Geometry</source>
-        <translation>Geometry</translation>
+        <translation>Geometria</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgcircle.ui" line="77"/>
@@ -6416,7 +6413,7 @@ This recursively modifies all entities of the Block itself.</translation>
         <location filename="../../../build/ui_qg_dlgcircle.h" line="183"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgcircle.h" line="183"/>
         <source>Radius:</source>
-        <translation>Radius:</translation>
+        <translation>Sugár:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgcircle.ui" line="97"/>
@@ -6424,7 +6421,7 @@ This recursively modifies all entities of the Block itself.</translation>
         <location filename="../../../build/ui_qg_dlgcircle.h" line="184"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgcircle.h" line="184"/>
         <source>Center (y):</source>
-        <translation>Center (y):</translation>
+        <translation>Középpont (y):</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgcircle.ui" line="117"/>
@@ -6432,7 +6429,7 @@ This recursively modifies all entities of the Block itself.</translation>
         <location filename="../../../build/ui_qg_dlgcircle.h" line="185"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgcircle.h" line="185"/>
         <source>Center (x):</source>
-        <translation>Center (x):</translation>
+        <translation>Középpont (x):</translation>
     </message>
 </context>
 <context>
@@ -6443,7 +6440,7 @@ This recursively modifies all entities of the Block itself.</translation>
         <location filename="../../../build/ui_qg_dlgdimlinear.h" line="161"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgdimlinear.h" line="161"/>
         <source>Linear Dimension</source>
-        <translation>Linear Dimension</translation>
+        <translation>Lineáris méret</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgdimlinear.ui" line="47"/>
@@ -6459,7 +6456,7 @@ This recursively modifies all entities of the Block itself.</translation>
         <location filename="../../../build/ui_qg_dlgdimlinear.h" line="163"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgdimlinear.h" line="163"/>
         <source>Geometry</source>
-        <translation>Geometry</translation>
+        <translation>Geometria</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgdimlinear.ui" line="103"/>
@@ -6467,7 +6464,7 @@ This recursively modifies all entities of the Block itself.</translation>
         <location filename="../../../build/ui_qg_dlgdimlinear.h" line="164"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgdimlinear.h" line="164"/>
         <source>Angle:</source>
-        <translation>Angle:</translation>
+        <translation>Szög:</translation>
     </message>
 </context>
 <context>
@@ -6478,7 +6475,7 @@ This recursively modifies all entities of the Block itself.</translation>
         <location filename="../../../build/ui_qg_dlgdimension.h" line="114"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgdimension.h" line="114"/>
         <source>Dimension</source>
-        <translation>Dimension</translation>
+        <translation>Méret</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgdimension.ui" line="47"/>
@@ -6497,7 +6494,7 @@ This recursively modifies all entities of the Block itself.</translation>
         <location filename="../../../build/ui_qg_dlgellipse.h" line="254"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgellipse.h" line="254"/>
         <source>Ellipse</source>
-        <translation>Ellipse</translation>
+        <translation>Ellipszis</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgellipse.ui" line="51"/>
@@ -6513,7 +6510,7 @@ This recursively modifies all entities of the Block itself.</translation>
         <location filename="../../../build/ui_qg_dlgellipse.h" line="257"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgellipse.h" line="257"/>
         <source>Geometry</source>
-        <translation>Geometry</translation>
+        <translation>Geometria</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgellipse.ui" line="84"/>
@@ -6521,7 +6518,7 @@ This recursively modifies all entities of the Block itself.</translation>
         <location filename="../../../build/ui_qg_dlgellipse.h" line="258"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgellipse.h" line="258"/>
         <source>Center (y):</source>
-        <translation>Center (y):</translation>
+        <translation>Középpont (y):</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgellipse.ui" line="104"/>
@@ -6529,7 +6526,7 @@ This recursively modifies all entities of the Block itself.</translation>
         <location filename="../../../build/ui_qg_dlgellipse.h" line="259"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgellipse.h" line="259"/>
         <source>Center (x):</source>
-        <translation>Center (x):</translation>
+        <translation>Középpont (x):</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgellipse.ui" line="156"/>
@@ -6537,7 +6534,7 @@ This recursively modifies all entities of the Block itself.</translation>
         <location filename="../../../build/ui_qg_dlgellipse.h" line="260"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgellipse.h" line="260"/>
         <source>End Angle:</source>
-        <translation>End Angle:</translation>
+        <translation>Végszög:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgellipse.ui" line="186"/>
@@ -6545,7 +6542,7 @@ This recursively modifies all entities of the Block itself.</translation>
         <location filename="../../../build/ui_qg_dlgellipse.h" line="261"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgellipse.h" line="261"/>
         <source>Start Angle:</source>
-        <translation>Start Angle:</translation>
+        <translation>Kezdőszög:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgellipse.ui" line="196"/>
@@ -6553,7 +6550,7 @@ This recursively modifies all entities of the Block itself.</translation>
         <location filename="../../../build/ui_qg_dlgellipse.h" line="262"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgellipse.h" line="262"/>
         <source>Rotation:</source>
-        <translation>Rotation:</translation>
+        <translation>Forgatás:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgellipse.ui" line="226"/>
@@ -6561,7 +6558,7 @@ This recursively modifies all entities of the Block itself.</translation>
         <location filename="../../../build/ui_qg_dlgellipse.h" line="263"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgellipse.h" line="263"/>
         <source>Minor:</source>
-        <translation>Minor:</translation>
+        <translation>Kis tengely:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgellipse.ui" line="236"/>
@@ -6569,7 +6566,7 @@ This recursively modifies all entities of the Block itself.</translation>
         <location filename="../../../build/ui_qg_dlgellipse.h" line="264"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgellipse.h" line="264"/>
         <source>Major:</source>
-        <translation>Major:</translation>
+        <translation>Nagy tengely:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgellipse.ui" line="256"/>
@@ -6577,7 +6574,7 @@ This recursively modifies all entities of the Block itself.</translation>
         <location filename="../../../build/ui_qg_dlgellipse.h" line="265"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgellipse.h" line="265"/>
         <source>Reversed</source>
-        <translation>Reversed</translation>
+        <translation>Megfordított</translation>
     </message>
 </context>
 <context>
@@ -6588,7 +6585,7 @@ This recursively modifies all entities of the Block itself.</translation>
         <location filename="../../../build/ui_qg_dlghatch.h" line="176"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlghatch.h" line="176"/>
         <source>Choose Hatch Attributes</source>
-        <translation>Choose Hatch Attributes</translation>
+        <translation>Sraffozás attribútumok megadása</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlghatch.ui" line="22"/>
@@ -6596,7 +6593,7 @@ This recursively modifies all entities of the Block itself.</translation>
         <location filename="../../../build/ui_qg_dlghatch.h" line="177"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlghatch.h" line="177"/>
         <source>Pattern</source>
-        <translation>Pattern</translation>
+        <translation>Minta</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlghatch.ui" line="34"/>
@@ -6604,7 +6601,7 @@ This recursively modifies all entities of the Block itself.</translation>
         <location filename="../../../build/ui_qg_dlghatch.h" line="178"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlghatch.h" line="178"/>
         <source>Angle:</source>
-        <translation>Angle:</translation>
+        <translation>Szög:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlghatch.ui" line="44"/>
@@ -6620,7 +6617,7 @@ This recursively modifies all entities of the Block itself.</translation>
         <location filename="../../../build/ui_qg_dlghatch.h" line="180"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlghatch.h" line="180"/>
         <source>Solid Fill</source>
-        <translation>Solid Fill</translation>
+        <translation>Tömör kitöltés</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlghatch.ui" line="67"/>
@@ -6628,7 +6625,7 @@ This recursively modifies all entities of the Block itself.</translation>
         <location filename="../../../build/ui_qg_dlghatch.h" line="181"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlghatch.h" line="181"/>
         <source>Preview</source>
-        <translation>Preview</translation>
+        <translation>Előnézet</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlghatch.ui" line="73"/>
@@ -6636,7 +6633,7 @@ This recursively modifies all entities of the Block itself.</translation>
         <location filename="../../../build/ui_qg_dlghatch.h" line="182"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlghatch.h" line="182"/>
         <source>Enable Preview</source>
-        <translation>Enable Preview</translation>
+        <translation>Előnézet engedélyezése</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlghatch.ui" line="86"/>
@@ -6655,7 +6652,7 @@ This recursively modifies all entities of the Block itself.</translation>
         <location filename="../../../build/ui_qg_dlgimage.h" line="281"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgimage.h" line="281"/>
         <source>Image</source>
-        <translation>Image</translation>
+        <translation>Kép</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgimage.ui" line="44"/>
@@ -6671,7 +6668,7 @@ This recursively modifies all entities of the Block itself.</translation>
         <location filename="../../../build/ui_qg_dlgimage.h" line="283"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgimage.h" line="283"/>
         <source>Geometry</source>
-        <translation>Geometry</translation>
+        <translation>Geometria</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgimage.ui" line="86"/>
@@ -6679,7 +6676,7 @@ This recursively modifies all entities of the Block itself.</translation>
         <location filename="../../../build/ui_qg_dlgimage.h" line="284"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgimage.h" line="284"/>
         <source>Angle:</source>
-        <translation>Angle:</translation>
+        <translation>Szög:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgimage.ui" line="93"/>
@@ -6695,7 +6692,7 @@ This recursively modifies all entities of the Block itself.</translation>
         <location filename="../../../build/ui_qg_dlgimage.h" line="286"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgimage.h" line="286"/>
         <source>insert (y):</source>
-        <translation>insert (y):</translation>
+        <translation>beillesztés (y):</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgimage.ui" line="153"/>
@@ -6703,7 +6700,7 @@ This recursively modifies all entities of the Block itself.</translation>
         <location filename="../../../build/ui_qg_dlgimage.h" line="287"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgimage.h" line="287"/>
         <source>Size (px):</source>
-        <translation>Size (px):</translation>
+        <translation>Méret (px):</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgimage.ui" line="196"/>
@@ -6711,7 +6708,7 @@ This recursively modifies all entities of the Block itself.</translation>
         <location filename="../../../build/ui_qg_dlgimage.h" line="288"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgimage.h" line="288"/>
         <source>path:</source>
-        <translation>path:</translation>
+        <translation>Elérési út:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgimage.ui" line="203"/>
@@ -6719,7 +6716,7 @@ This recursively modifies all entities of the Block itself.</translation>
         <location filename="../../../build/ui_qg_dlgimage.h" line="289"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgimage.h" line="289"/>
         <source>insert (x):</source>
-        <translation>insert (x):</translation>
+        <translation>beillesztés (x):</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgimage.ui" line="226"/>
@@ -6743,7 +6740,7 @@ This recursively modifies all entities of the Block itself.</translation>
         <location filename="../../../build/ui_qg_dlgimage.h" line="292"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgimage.h" line="292"/>
         <source>Width:</source>
-        <translation>Width:</translation>
+        <translation>Vastagság:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgimage.ui" line="270"/>
@@ -6751,7 +6748,7 @@ This recursively modifies all entities of the Block itself.</translation>
         <location filename="../../../build/ui_qg_dlgimage.h" line="294"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgimage.h" line="294"/>
         <source>Select an image file</source>
-        <translation>Select an image file</translation>
+        <translation>Képfájl kiválasztása</translation>
     </message>
 </context>
 <context>
@@ -6762,7 +6759,7 @@ This recursively modifies all entities of the Block itself.</translation>
         <location filename="../../../build/ui_qg_dlginitial.h" line="148"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlginitial.h" line="148"/>
         <source>Welcome</source>
-        <translation>Welcome</translation>
+        <translation>Üdvözlés</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlginitial.ui" line="64"/>
@@ -6786,7 +6783,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlginitial.h" line="154"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlginitial.h" line="154"/>
         <source>Default Unit:</source>
-        <translation>Default Unit:</translation>
+        <translation>Alapértelmezett mértékegység:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlginitial.ui" line="114"/>
@@ -6794,7 +6791,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlginitial.h" line="155"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlginitial.h" line="155"/>
         <source>GUI Language:</source>
-        <translation>GUI Language:</translation>
+        <translation>GUI Nyelv:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlginitial.ui" line="124"/>
@@ -6802,7 +6799,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlginitial.h" line="156"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlginitial.h" line="156"/>
         <source>Command Language:</source>
-        <translation>Command Language:</translation>
+        <translation>Parancs Nyelv:</translation>
     </message>
 </context>
 <context>
@@ -6813,7 +6810,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlginsert.h" line="270"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlginsert.h" line="270"/>
         <source>Insert</source>
-        <translation>Insert</translation>
+        <translation>Beillesztés</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlginsert.ui" line="44"/>
@@ -6829,7 +6826,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlginsert.h" line="272"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlginsert.h" line="272"/>
         <source>Geometry</source>
-        <translation>Geometry</translation>
+        <translation>Geometria</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlginsert.ui" line="129"/>
@@ -6837,7 +6834,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlginsert.h" line="273"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlginsert.h" line="273"/>
         <source>Insertion point (x):</source>
-        <translation>Insertion point (x):</translation>
+        <translation>Beillesztési pont (x):</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlginsert.ui" line="139"/>
@@ -6845,7 +6842,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlginsert.h" line="274"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlginsert.h" line="274"/>
         <source>Insertion point (y):</source>
-        <translation>Insertion point (y):</translation>
+        <translation>Beillesztési pont (y):</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlginsert.ui" line="159"/>
@@ -6853,7 +6850,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlginsert.h" line="275"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlginsert.h" line="275"/>
         <source>Scale X:</source>
-        <translation>Scale X:</translation>
+        <translation>Méretezés X:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlginsert.ui" line="179"/>
@@ -6861,7 +6858,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlginsert.h" line="276"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlginsert.h" line="276"/>
         <source>Scale Y:</source>
-        <translation>Scale Y:</translation>
+        <translation>Méretezés Y:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlginsert.ui" line="189"/>
@@ -6869,7 +6866,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlginsert.h" line="277"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlginsert.h" line="277"/>
         <source>Angle:</source>
-        <translation>Angle:</translation>
+        <translation>Szög:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlginsert.ui" line="209"/>
@@ -6877,7 +6874,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlginsert.h" line="278"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlginsert.h" line="278"/>
         <source>Rows:</source>
-        <translation>Rows:</translation>
+        <translation>Sorok:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlginsert.ui" line="239"/>
@@ -6885,7 +6882,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlginsert.h" line="279"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlginsert.h" line="279"/>
         <source>Columns:</source>
-        <translation>Columns:</translation>
+        <translation>Oszlopok:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlginsert.ui" line="249"/>
@@ -6893,7 +6890,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlginsert.h" line="280"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlginsert.h" line="280"/>
         <source>Row Spacing:</source>
-        <translation>Row Spacing:</translation>
+        <translation>Sor térköz:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlginsert.ui" line="279"/>
@@ -6901,7 +6898,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlginsert.h" line="281"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlginsert.h" line="281"/>
         <source>Column Spacing:</source>
-        <translation>Column Spacing:</translation>
+        <translation>Oszlop térköz:</translation>
     </message>
 </context>
 <context>
@@ -6936,7 +6933,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgline.h" line="203"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgline.h" line="203"/>
         <source>Geometry</source>
-        <translation>Geometry</translation>
+        <translation>Geometria</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgline.ui" line="93"/>
@@ -6944,7 +6941,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgline.h" line="204"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgline.h" line="204"/>
         <source>End point (x):</source>
-        <translation>End point (x):</translation>
+        <translation>Végpont (x):</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgline.ui" line="123"/>
@@ -6952,7 +6949,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgline.h" line="205"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgline.h" line="205"/>
         <source>End point (y):</source>
-        <translation>End point (y):</translation>
+        <translation>Végpont (y):</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgline.ui" line="133"/>
@@ -6960,7 +6957,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgline.h" line="206"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgline.h" line="206"/>
         <source>Start point (y):</source>
-        <translation>Start point (y):</translation>
+        <translation>Kezdőpont (y):</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgline.ui" line="153"/>
@@ -6968,7 +6965,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgline.h" line="207"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgline.h" line="207"/>
         <source>Start point (x):</source>
-        <translation>Start point (x):</translation>
+        <translation>Kezdőpont (x):</translation>
     </message>
 </context>
 <context>
@@ -6979,7 +6976,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="801"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="801"/>
         <source>MText</source>
-        <translation>MText</translation>
+        <translation>Többsoros szöveg</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="45"/>
@@ -6995,7 +6992,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="803"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="803"/>
         <source>Font Settings</source>
-        <translation>Font Settings</translation>
+        <translation>Betűtípus beállítások</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="113"/>
@@ -7003,7 +7000,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="804"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="804"/>
         <source>&amp;Line spacing:</source>
-        <translation>&amp;Line spacing:</translation>
+        <translation>&Sorköz:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="132"/>
@@ -7011,7 +7008,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="805"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="805"/>
         <source>&amp;Default line spacing</source>
-        <translation>&amp;Default line spacing</translation>
+        <translation>&Alapértelmezett sorköz</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="135"/>
@@ -7027,7 +7024,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="809"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="809"/>
         <source>&amp;Height:</source>
-        <translation>&amp;Height:</translation>
+        <translation>&Magasság:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="246"/>
@@ -7035,7 +7032,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="810"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="810"/>
         <source>Font:</source>
-        <translation>Font:</translation>
+        <translation>Betűtípus:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="298"/>
@@ -7043,7 +7040,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="811"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="811"/>
         <source>Alignment</source>
-        <translation>Alignment</translation>
+        <translation>Igazítás</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="316"/>
@@ -7051,7 +7048,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="813"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="813"/>
         <source>Top Right</source>
-        <translation>Top Right</translation>
+        <translation>Jobb felső</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="348"/>
@@ -7059,7 +7056,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="817"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="817"/>
         <source>Top Left</source>
-        <translation>Top Left</translation>
+        <translation>Bal felső</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="380"/>
@@ -7067,7 +7064,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="821"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="821"/>
         <source>Middle Left</source>
-        <translation>Middle Left</translation>
+        <translation>Bal közép</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="412"/>
@@ -7075,7 +7072,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="825"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="825"/>
         <source>Middle Center</source>
-        <translation>Middle Center</translation>
+        <translation>Középen középre</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="444"/>
@@ -7083,7 +7080,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="829"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="829"/>
         <source>Middle Right</source>
-        <translation>Middle Right</translation>
+        <translation>Jobb közép</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="476"/>
@@ -7091,7 +7088,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="833"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="833"/>
         <source>Bottom Left</source>
-        <translation>Bottom Left</translation>
+        <translation>Bal alsó</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="508"/>
@@ -7099,7 +7096,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="837"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="837"/>
         <source>Bottom Right</source>
-        <translation>Bottom Right</translation>
+        <translation>Jobb alsó</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="540"/>
@@ -7107,7 +7104,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="841"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="841"/>
         <source>Bottom Center</source>
-        <translation>Bottom Center</translation>
+        <translation>Alsó közép</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="572"/>
@@ -7115,7 +7112,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="845"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="845"/>
         <source>Top Center</source>
-        <translation>Top Center</translation>
+        <translation>Felső közép</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="607"/>
@@ -7123,7 +7120,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="848"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="848"/>
         <source>Angle</source>
-        <translation>Angle</translation>
+        <translation>Szög</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="645"/>
@@ -7131,7 +7128,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="849"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="849"/>
         <source>Text Direction</source>
-        <translation>Text Direction</translation>
+        <translation>Szöveg iránya</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="657"/>
@@ -7139,7 +7136,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="850"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="850"/>
         <source>Left to right</source>
-        <translation>Left to right</translation>
+        <translation>Balról jobbra</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="670"/>
@@ -7147,7 +7144,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="851"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="851"/>
         <source>Right to left</source>
-        <translation>Right to left</translation>
+        <translation>Jobbról balra</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="691"/>
@@ -7155,7 +7152,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="852"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="852"/>
         <source>Text:</source>
-        <translation>Text:</translation>
+        <translation>Szöveg:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="717"/>
@@ -7163,7 +7160,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="854"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="854"/>
         <source>Clear Text</source>
-        <translation>Clear Text</translation>
+        <translation>Szöveg törlése</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="731"/>
@@ -7171,7 +7168,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="858"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="858"/>
         <source>Load Text From File</source>
-        <translation>Load Text From File</translation>
+        <translation>Szöveg betöltése fájlból</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="745"/>
@@ -7179,7 +7176,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="862"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="862"/>
         <source>Save Text To File</source>
-        <translation>Save Text To File</translation>
+        <translation>Szöveg mentése fájlba</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="759"/>
@@ -7203,7 +7200,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="874"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="874"/>
         <source>Paste</source>
-        <translation>Paste</translation>
+        <translation>Beillesztés</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="834"/>
@@ -7211,7 +7208,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="877"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="877"/>
         <source>Insert Symbol</source>
-        <translation>Insert Symbol</translation>
+        <translation>Szimbólum beillesztése</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="847"/>
@@ -7219,7 +7216,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="878"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="878"/>
         <source>Diameter (⌀)</source>
-        <translation>Diameter (⌀)</translation>
+        <translation>Átmérő (⌀)</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="852"/>
@@ -7227,7 +7224,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="879"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="879"/>
         <source>Degree (°)</source>
-        <translation>Degree (°)</translation>
+        <translation>Fok (°)</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="857"/>
@@ -7235,7 +7232,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="880"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="880"/>
         <source>Plus / Minus (±)</source>
-        <translation>Plus / Minus (±)</translation>
+        <translation>Plusz / Mínusz (±)</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="862"/>
@@ -7243,7 +7240,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="881"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="881"/>
         <source>At (@)</source>
-        <translation>At (@)</translation>
+        <translation>Kukac (@)</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="867"/>
@@ -7251,7 +7248,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="882"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="882"/>
         <source>Hash (#)</source>
-        <translation>Hash (#)</translation>
+        <translation>Kettőskereszt (#)</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="872"/>
@@ -7259,7 +7256,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="883"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="883"/>
         <source>Dollar ($)</source>
-        <translation>Dollar ($)</translation>
+        <translation>Dollár ($)</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="877"/>
@@ -7267,7 +7264,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="884"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="884"/>
         <source>Copyright (©)</source>
-        <translation>Copyright (©)</translation>
+        <translation>Szerzői jog (©)</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="882"/>
@@ -7275,7 +7272,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="885"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="885"/>
         <source>Registered (®)</source>
-        <translation>Registered (®)</translation>
+        <translation>Bejegyzett védjegy (®)</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="887"/>
@@ -7283,7 +7280,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="886"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="886"/>
         <source>Paragraph (§)</source>
-        <translation>Paragraph (§)</translation>
+        <translation>Bekezdésjel (§)</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="892"/>
@@ -7299,7 +7296,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="888"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="888"/>
         <source>Pound (£)</source>
-        <translation>Pound (£)</translation>
+        <translation>Font (£)</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="902"/>
@@ -7307,7 +7304,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="889"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="889"/>
         <source>Yen (¥)</source>
-        <translation>Yen (¥)</translation>
+        <translation>Jen (¥)</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="907"/>
@@ -7315,7 +7312,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="890"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="890"/>
         <source>Times (×)</source>
-        <translation>Times (×)</translation>
+        <translation>Szorzás (×)</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="912"/>
@@ -7323,7 +7320,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="891"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="891"/>
         <source>Division (÷)</source>
-        <translation>Division (÷)</translation>
+        <translation>Osztás (÷)</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="923"/>
@@ -7331,7 +7328,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="893"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="893"/>
         <source>Insert Unicode</source>
-        <translation>Insert Unicode</translation>
+        <translation>Unicode beillesztése</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="929"/>
@@ -7339,7 +7336,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="894"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="894"/>
         <source>Page:</source>
-        <translation>Page:</translation>
+        <translation>Oldal:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="939"/>
@@ -7347,7 +7344,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="895"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="895"/>
         <source>Char:</source>
-        <translation>Char:</translation>
+        <translation>Karakter:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="962"/>
@@ -7355,7 +7352,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="896"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="896"/>
         <source>[0000-007F] Basic Latin</source>
-        <translation>[0000-007F] Basic Latin</translation>
+        <translation>[0000-007F] Alap latin</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="967"/>
@@ -7363,7 +7360,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="897"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="897"/>
         <source>[0080-00FF] Latin-1 Supplementary</source>
-        <translation>[0080-00FF] Latin-1 Supplementary</translation>
+        <translation>[0080-00FF] Latin-1 kiegészítő</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="972"/>
@@ -7371,7 +7368,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="898"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="898"/>
         <source>[0100-017F] Latin Extended-A</source>
-        <translation>[0100-017F] Latin Extended-A</translation>
+        <translation>[0100-017F] Bővített latin-A</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="977"/>
@@ -7379,7 +7376,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="899"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="899"/>
         <source>[0180-024F] Latin Extended-B</source>
-        <translation>[0180-024F] Latin Extended-B</translation>
+        <translation>[0180-024F] Bővített latin-B</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="982"/>
@@ -7387,7 +7384,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="900"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="900"/>
         <source>[0250-02AF] IPA Extensions</source>
-        <translation>[0250-02AF] IPA Extensions</translation>
+        <translation>[0250-02AF] IPA-kiterjesztések</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="987"/>
@@ -7395,7 +7392,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="901"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="901"/>
         <source>[02B0-02FF] Spacing Modifier Letters</source>
-        <translation>[02B0-02FF] Spacing Modifier Letters</translation>
+        <translation>[02B0-02FF] Elválasztó módosítóbetűk</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="992"/>
@@ -7403,7 +7400,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="902"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="902"/>
         <source>[0300-036F] Combining Diacritical Marks</source>
-        <translation>[0300-036F] Combining Diacritical Marks</translation>
+        <translation>[0300-036F] Kombinálható diakritikus jelek</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="997"/>
@@ -7411,7 +7408,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="903"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="903"/>
         <source>[0370-03FF] Greek and Coptic</source>
-        <translation>[0370-03FF] Greek and Coptic</translation>
+        <translation>[0370-03FF] Görög és kopt</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="1002"/>
@@ -7419,7 +7416,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="904"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="904"/>
         <source>[0400-04FF] Cyrillic</source>
-        <translation>[0400-04FF] Cyrillic</translation>
+        <translation>[0400-04FF] Cirill</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="1007"/>
@@ -7427,7 +7424,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="905"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="905"/>
         <source>[0500-052F] Cyrillic Supplementary</source>
-        <translation>[0500-052F] Cyrillic Supplementary</translation>
+        <translation>[0500-052F] Cirill kiegészítő</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="1012"/>
@@ -7435,7 +7432,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="906"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="906"/>
         <source>[0530-058F] Armenian</source>
-        <translation>[0530-058F] Armenian</translation>
+        <translation>[0530-058F] Örmény</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="1017"/>
@@ -7443,7 +7440,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="907"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="907"/>
         <source>[0590-05FF] Hebrew</source>
-        <translation>[0590-05FF] Hebrew</translation>
+        <translation>[0590-05FF] Héber</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="1022"/>
@@ -7451,7 +7448,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="908"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="908"/>
         <source>[0600-06FF] Arabic</source>
-        <translation>[0600-06FF] Arabic</translation>
+        <translation>[0600-06FF] Arab</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="1027"/>
@@ -7459,7 +7456,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="909"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="909"/>
         <source>[0700-074F] Syriac</source>
-        <translation>[0700-074F] Syriac</translation>
+        <translation>[0700-074F] Szír</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="1032"/>
@@ -7483,7 +7480,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="912"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="912"/>
         <source>[0980-09FF] Bengali</source>
-        <translation>[0980-09FF] Bengali</translation>
+        <translation>[0980-09FF] Bengáli</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="1047"/>
@@ -7547,7 +7544,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="920"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="920"/>
         <source>[0D80-0DFF] Sinhala</source>
-        <translation>[0D80-0DFF] Sinhala</translation>
+        <translation>[0D80-0DFF] Szingaléz</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="1087"/>
@@ -7571,7 +7568,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="923"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="923"/>
         <source>[0F00-0FFF] Tibetan</source>
-        <translation>[0F00-0FFF] Tibetan</translation>
+        <translation>[0F00-0FFF] Tibeti</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="1102"/>
@@ -7579,7 +7576,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="924"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="924"/>
         <source>[1000-109F] Myanmar</source>
-        <translation>[1000-109F] Myanmar</translation>
+        <translation>[1000-109F] Burmai</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="1107"/>
@@ -7587,7 +7584,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="925"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="925"/>
         <source>[10A0-10FF] Georgian</source>
-        <translation>[10A0-10FF] Georgian</translation>
+        <translation>[10A0-10FF] Grúz</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="1112"/>
@@ -7603,7 +7600,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="927"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="927"/>
         <source>[1200-137F] Ethiopic</source>
-        <translation>[1200-137F] Ethiopic</translation>
+        <translation>[1200-137F] Etióp</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="1122"/>
@@ -7611,7 +7608,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="928"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="928"/>
         <source>[13A0-13FF] Cherokee</source>
-        <translation>[13A0-13FF] Cherokee</translation>
+        <translation>[13A0-13FF] Cseroki</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="1127"/>
@@ -7619,7 +7616,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="929"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="929"/>
         <source>[1400-167F] Unified Canadian Aboriginal Syllabic</source>
-        <translation>[1400-167F] Unified Canadian Aboriginal Syllabic</translation>
+        <translation>[1400-167F] Egységesített kanadai bennszülött szótagírás</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="1132"/>
@@ -7635,7 +7632,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="931"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="931"/>
         <source>[16A0-16FF] Runic</source>
-        <translation>[16A0-16FF] Runic</translation>
+        <translation>[16A0-16FF] Rúna</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="1142"/>
@@ -7683,7 +7680,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="937"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="937"/>
         <source>[1800-18AF] Mongolian</source>
-        <translation>[1800-18AF] Mongolian</translation>
+        <translation>[1800-18AF] Mongol</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="1172"/>
@@ -7691,7 +7688,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="938"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="938"/>
         <source>[1E00-1EFF] Latin Extended Additional</source>
-        <translation>[1E00-1EFF] Latin Extended Additional</translation>
+        <translation>[1E00-1EFF] Bővített latin – további karakterek</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="1177"/>
@@ -7699,7 +7696,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="939"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="939"/>
         <source>[1F00-1FFF] Greek Extended</source>
-        <translation>[1F00-1FFF] Greek Extended</translation>
+        <translation>[1F00-1FFF] Bővített görög</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="1182"/>
@@ -7707,7 +7704,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="940"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="940"/>
         <source>[2000-206F] General Punctuation</source>
-        <translation>[2000-206F] General Punctuation</translation>
+        <translation>[2000-206F] Általános írásjelek</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="1187"/>
@@ -7715,7 +7712,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="941"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="941"/>
         <source>[2070-209F] Superscripts and Subscripts</source>
-        <translation>[2070-209F] Superscripts and Subscripts</translation>
+        <translation>[2070-209F] Felső- és alsó indexek</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="1192"/>
@@ -7723,7 +7720,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="942"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="942"/>
         <source>[20A0-20CF] Currency Symbols</source>
-        <translation>[20A0-20CF] Currency Symbols</translation>
+        <translation>[20A0-20CF] Pénznemszimbólumok</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="1197"/>
@@ -7731,7 +7728,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="943"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="943"/>
         <source>[20D0-20FF] Combining Marks for Symbols</source>
-        <translation>[20D0-20FF] Combining Marks for Symbols</translation>
+        <translation>[20D0-20FF] Szimbólumokhoz kombinálható jelek</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="1202"/>
@@ -7739,7 +7736,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="944"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="944"/>
         <source>[2100-214F] Letterlike Symbols</source>
-        <translation>[2100-214F] Letterlike Symbols</translation>
+        <translation>[2100-214F] Betűszerű szimbólumok</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="1207"/>
@@ -7747,7 +7744,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="945"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="945"/>
         <source>[2150-218F] Number Forms</source>
-        <translation>[2150-218F] Number Forms</translation>
+        <translation>[2150-218F] Számformák</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="1212"/>
@@ -7755,7 +7752,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="946"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="946"/>
         <source>[2190-21FF] Arrows</source>
-        <translation>[2190-21FF] Arrows</translation>
+        <translation>[2190-21FF] Nyilak</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="1217"/>
@@ -7763,7 +7760,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="947"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="947"/>
         <source>[2200-22FF] Mathematical Operators</source>
-        <translation>[2200-22FF] Mathematical Operators</translation>
+        <translation>[2200-22FF] Matematikai operátorok</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="1222"/>
@@ -7771,7 +7768,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="948"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="948"/>
         <source>[2300-23FF] Miscellaneous Technical</source>
-        <translation>[2300-23FF] Miscellaneous Technical</translation>
+        <translation>[2300-23FF] Vegyes műszaki jelek</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="1227"/>
@@ -7779,7 +7776,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="949"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="949"/>
         <source>[2400-243F] Control Pictures</source>
-        <translation>[2400-243F] Control Pictures</translation>
+        <translation>[2400-243F] Vezérlőkarakter-képek</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="1232"/>
@@ -7787,7 +7784,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="950"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="950"/>
         <source>[2440-245F] Optical Character Recognition</source>
-        <translation>[2440-245F] Optical Character Recognition</translation>
+        <translation>[2440-245F] Optikai karakterfelismerés</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="1237"/>
@@ -7795,7 +7792,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="951"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="951"/>
         <source>[2460-24FF] Enclosed Alphanumerics</source>
-        <translation>[2460-24FF] Enclosed Alphanumerics</translation>
+        <translation>[2460-24FF] Keretezett alfanumerikus karakterek</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="1242"/>
@@ -7803,7 +7800,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="952"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="952"/>
         <source>[2500-257F] Box Drawing</source>
-        <translation>[2500-257F] Box Drawing</translation>
+        <translation>[2500-257F] Dobozrajzoló karakterek</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="1247"/>
@@ -7811,7 +7808,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="953"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="953"/>
         <source>[2580-259F] Block Elements</source>
-        <translation>[2580-259F] Block Elements</translation>
+        <translation>[2580-259F] Blokkelemek</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="1252"/>
@@ -7819,7 +7816,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="954"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="954"/>
         <source>[25A0-25FF] Geometric Shapes</source>
-        <translation>[25A0-25FF] Geometric Shapes</translation>
+        <translation>[25A0-25FF] Geometriai alakzatok</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="1257"/>
@@ -7827,7 +7824,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="955"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="955"/>
         <source>[2600-26FF] Miscellaneous Symbols</source>
-        <translation>[2600-26FF] Miscellaneous Symbols</translation>
+        <translation>[2600-26FF] Vegyes szimbólumok</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="1262"/>
@@ -7835,7 +7832,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="956"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="956"/>
         <source>[2700-27BF] Dingbats</source>
-        <translation>[2700-27BF] Dingbats</translation>
+        <translation>[2700-27BF] Díszítőjelek</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="1267"/>
@@ -7843,7 +7840,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="957"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="957"/>
         <source>[27C0-27EF] Miscellaneous Mathematical Symbols-A</source>
-        <translation>[27C0-27EF] Miscellaneous Mathematical Symbols-A</translation>
+        <translation>[27C0-27EF] Vegyes matematikai szimbólumok-A</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="1272"/>
@@ -7851,7 +7848,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="958"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="958"/>
         <source>[27F0-27FF] Supplemental Arrows-A</source>
-        <translation>[27F0-27FF] Supplemental Arrows-A</translation>
+        <translation>[27F0-27FF] Kiegészítő nyilak-A</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="1277"/>
@@ -7859,7 +7856,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="959"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="959"/>
         <source>[2800-28FF] Braille Patterns</source>
-        <translation>[2800-28FF] Braille Patterns</translation>
+        <translation>[2800-28FF] Braille-minták</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="1282"/>
@@ -7867,7 +7864,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="960"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="960"/>
         <source>[2900-297F] Supplemental Arrows-B</source>
-        <translation>[2900-297F] Supplemental Arrows-B</translation>
+        <translation>[2900-297F] Kiegészítő nyilak-B</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="1287"/>
@@ -7875,7 +7872,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="961"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="961"/>
         <source>[2980-29FF] Miscellaneous Mathematical Symbols-B</source>
-        <translation>[2980-29FF] Miscellaneous Mathematical Symbols-B</translation>
+        <translation>[2980-29FF] Vegyes matematikai szimbólumok-B</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="1292"/>
@@ -7883,7 +7880,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="962"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="962"/>
         <source>[2A00-2AFF] Supplemental Mathematical Operators</source>
-        <translation>[2A00-2AFF] Supplemental Mathematical Operators</translation>
+        <translation>[2A00-2AFF] Kiegészítő matematikai operátorok</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="1297"/>
@@ -7891,7 +7888,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="963"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="963"/>
         <source>[2E80-2EFF] CJK Radicals Supplement</source>
-        <translation>[2E80-2EFF] CJK Radicals Supplement</translation>
+        <translation>[2E80-2EFF] CJK gyökök kiegészítő</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="1302"/>
@@ -7899,7 +7896,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="964"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="964"/>
         <source>[2F00-2FDF] Kangxi Radicals</source>
-        <translation>[2F00-2FDF] Kangxi Radicals</translation>
+        <translation>[2F00-2FDF] Kangxi gyökök</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="1307"/>
@@ -7907,7 +7904,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="965"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="965"/>
         <source>[2FF0-2FFF] Ideographic Description Characters</source>
-        <translation>[2FF0-2FFF] Ideographic Description Characters</translation>
+        <translation>[2FF0-2FFF] Ideografikus leíró karakterek</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="1312"/>
@@ -7915,7 +7912,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="966"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="966"/>
         <source>[3000-303F] CJK Symbols and Punctuation</source>
-        <translation>[3000-303F] CJK Symbols and Punctuation</translation>
+        <translation>[3000-303F] CJK szimbólumok és írásjelek</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="1317"/>
@@ -7947,7 +7944,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="970"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="970"/>
         <source>[3130-318F] Hangul Compatibility Jamo</source>
-        <translation>[3130-318F] Hangul Compatibility Jamo</translation>
+        <translation>[3130-318F] Hangul kompatibilitási jamo</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="1337"/>
@@ -7963,7 +7960,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="972"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="972"/>
         <source>[31A0-31BF] Bopomofo Extended</source>
-        <translation>[31A0-31BF] Bopomofo Extended</translation>
+        <translation>[31A0-31BF] Bővített bopomofo</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="1347"/>
@@ -7971,7 +7968,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="973"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="973"/>
         <source>[3200-32FF] Enclosed CJK Letters and Months</source>
-        <translation>[3200-32FF] Enclosed CJK Letters and Months</translation>
+        <translation>[3200-32FF] Keretezett CJK betűk és hónapok</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="1352"/>
@@ -7979,7 +7976,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="974"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="974"/>
         <source>[3300-33FF] CJK Compatibility</source>
-        <translation>[3300-33FF] CJK Compatibility</translation>
+        <translation>[3300-33FF] CJK kompatibilitás</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="1357"/>
@@ -7987,7 +7984,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="975"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="975"/>
         <source>[3400-4DBF] CJK Unified Ideographs Extension A</source>
-        <translation>[3400-4DBF] CJK Unified Ideographs Extension A</translation>
+        <translation>[3400-4DBF] CJK egységesített ideográfok – A kiterjesztés</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="1362"/>
@@ -7995,7 +7992,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="976"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="976"/>
         <source>[4E00-9FAF] CJK Unified Ideographs</source>
-        <translation>[4E00-9FAF] CJK Unified Ideographs</translation>
+        <translation>[4E00-9FAF] CJK egységesített ideográfok</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="1367"/>
@@ -8003,7 +8000,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="977"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="977"/>
         <source>[A000-A48F] Yi Syllables</source>
-        <translation>[A000-A48F] Yi Syllables</translation>
+        <translation>[A000-A48F] Ji szótagok</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="1372"/>
@@ -8011,7 +8008,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="978"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="978"/>
         <source>[A490-A4CF] Yi Radicals</source>
-        <translation>[A490-A4CF] Yi Radicals</translation>
+        <translation>[A490-A4CF] Ji gyökök</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="1377"/>
@@ -8019,7 +8016,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="979"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="979"/>
         <source>[AC00-D7AF] Hangul Syllables</source>
-        <translation>[AC00-D7AF] Hangul Syllables</translation>
+        <translation>[AC00-D7AF] Hangul szótagok</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="1382"/>
@@ -8027,7 +8024,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="980"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="980"/>
         <source>[D800-DBFF] High Surrogates</source>
-        <translation>[D800-DBFF] High Surrogates</translation>
+        <translation>[D800-DBFF] Magas helyettesítők</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="1387"/>
@@ -8035,7 +8032,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="981"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="981"/>
         <source>[DC00-DFFF] Low Surrogate Area</source>
-        <translation>[DC00-DFFF] Low Surrogate Area</translation>
+        <translation>[DC00-DFFF] Alacsony helyettesítők területe</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="1392"/>
@@ -8043,7 +8040,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="982"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="982"/>
         <source>[E000-F8FF] Private Use Area</source>
-        <translation>[E000-F8FF] Private Use Area</translation>
+        <translation>[E000-F8FF] Magánhasználatú terület</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="1397"/>
@@ -8051,7 +8048,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="983"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="983"/>
         <source>[F900-FAFF] CJK Compatibility Ideographs</source>
-        <translation>[F900-FAFF] CJK Compatibility Ideographs</translation>
+        <translation>[F900-FAFF] CJK kompatibilitási ideográfok</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="1402"/>
@@ -8059,7 +8056,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="984"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="984"/>
         <source>[FB00-FB4F] Alphabetic Presentation Forms</source>
-        <translation>[FB00-FB4F] Alphabetic Presentation Forms</translation>
+        <translation>[FB00-FB4F] Ábécés megjelenítési formák</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="1407"/>
@@ -8067,7 +8064,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="985"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="985"/>
         <source>[FB50-FDFF] Arabic Presentation Forms-A</source>
-        <translation>[FB50-FDFF] Arabic Presentation Forms-A</translation>
+        <translation>[FB50-FDFF] Arab megjelenítési formák-A</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="1412"/>
@@ -8075,7 +8072,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="986"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="986"/>
         <source>[FE00-FE0F] Variation Selectors</source>
-        <translation>[FE00-FE0F] Variation Selectors</translation>
+        <translation>[FE00-FE0F] Változatválasztók</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="1417"/>
@@ -8083,7 +8080,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="987"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="987"/>
         <source>[FE20-FE2F] Combining Half Marks</source>
-        <translation>[FE20-FE2F] Combining Half Marks</translation>
+        <translation>[FE20-FE2F] Kombinálható féljelek</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="1422"/>
@@ -8091,7 +8088,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="988"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="988"/>
         <source>[FE30-FE4F] CJK Compatibility Forms</source>
-        <translation>[FE30-FE4F] CJK Compatibility Forms</translation>
+        <translation>[FE30-FE4F] CJK kompatibilitási formák</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="1427"/>
@@ -8099,7 +8096,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="989"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="989"/>
         <source>[FE50-FE6F] Small Form Variants</source>
-        <translation>[FE50-FE6F] Small Form Variants</translation>
+        <translation>[FE50-FE6F] Kis forma változatok</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="1432"/>
@@ -8107,7 +8104,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="990"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="990"/>
         <source>[FE70-FEFF] Arabic Presentation Forms-B</source>
-        <translation>[FE70-FEFF] Arabic Presentation Forms-B</translation>
+        <translation>[FE70-FEFF] Arab megjelenítési formák-B</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="1437"/>
@@ -8115,7 +8112,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="991"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="991"/>
         <source>[FF00-FFEF] Halfwidth and Fullwidth Forms</source>
-        <translation>[FF00-FFEF] Halfwidth and Fullwidth Forms</translation>
+        <translation>[FF00-FFEF] Félszélességű és teljes szélességű formák</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="1442"/>
@@ -8123,7 +8120,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="992"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="992"/>
         <source>[FFF0-FFFF] Specials</source>
-        <translation>[FFF0-FFFF] Specials</translation>
+        <translation>[FFF0-FFFF] Különleges karakterek</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="1447"/>
@@ -8131,7 +8128,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="993"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="993"/>
         <source>[10300-1032F] Old Italic</source>
-        <translation>[10300-1032F] Old Italic</translation>
+        <translation>[10300-1032F] Ó-itáliai</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="1452"/>
@@ -8139,7 +8136,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="994"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="994"/>
         <source>[10330-1034F] Gothic</source>
-        <translation>[10330-1034F] Gothic</translation>
+        <translation>[10330-1034F] Gót</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="1457"/>
@@ -8155,7 +8152,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="996"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="996"/>
         <source>[1D000-1D0FF] Byzantine Musical Symbols</source>
-        <translation>[1D000-1D0FF] Byzantine Musical Symbols</translation>
+        <translation>[1D000-1D0FF] Bizánci zenei szimbólumok</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="1467"/>
@@ -8163,7 +8160,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="997"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="997"/>
         <source>[1D100-1D1FF] Musical Symbols</source>
-        <translation>[1D100-1D1FF] Musical Symbols</translation>
+        <translation>[1D100-1D1FF] Zenei szimbólumok</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="1472"/>
@@ -8171,7 +8168,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="998"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="998"/>
         <source>[1D400-1D7FF] Mathematical Alphanumeric Symbols</source>
-        <translation>[1D400-1D7FF] Mathematical Alphanumeric Symbols</translation>
+        <translation>[1D400-1D7FF] Matematikai alfanumerikus szimbólumok</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="1477"/>
@@ -8179,7 +8176,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="999"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="999"/>
         <source>[20000-2A6DF] CJK Unified Ideographs Extension B</source>
-        <translation>[20000-2A6DF] CJK Unified Ideographs Extension B</translation>
+        <translation>[20000-2A6DF] CJK egységesített ideográfok – B kiterjesztés</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="1482"/>
@@ -8187,7 +8184,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="1000"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="1000"/>
         <source>[2F800-2FA1F] CJK Compatibility Ideographs Supplement</source>
-        <translation>[2F800-2FA1F] CJK Compatibility Ideographs Supplement</translation>
+        <translation>[2F800-2FA1F] CJK kompatibilitási ideográfok kiegészítő</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="1487"/>
@@ -8195,7 +8192,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="1001"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="1001"/>
         <source>[E0000-E007F] Tags</source>
-        <translation>[E0000-E007F] Tags</translation>
+        <translation>[E0000-E007F] Címkék</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="1492"/>
@@ -8203,7 +8200,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="1002"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="1002"/>
         <source>[F0000-FFFFD] Supplementary Private Use Area-A</source>
-        <translation>[F0000-FFFFD] Supplementary Private Use Area-A</translation>
+        <translation>[F0000-FFFFD] Kiegészítő magánhasználatú terület-A</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmtext.ui" line="1497"/>
@@ -8211,7 +8208,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmtext.h" line="1003"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmtext.h" line="1003"/>
         <source>[100000-10FFFD] Supplementary Private Use Area-B</source>
-        <translation>[100000-10FFFD] Supplementary Private Use Area-B</translation>
+        <translation>[100000-10FFFD] Kiegészítő magánhasználatú terület-B</translation>
     </message>
 </context>
 <context>
@@ -8222,7 +8219,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmirror.h" line="123"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmirror.h" line="123"/>
         <source>Mirroring Options</source>
-        <translation>Mirroring Options</translation>
+        <translation>Tükrözési beállítások</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmirror.ui" line="39"/>
@@ -8230,7 +8227,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmirror.h" line="124"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmirror.h" line="124"/>
         <source>Use current &amp;attributes</source>
-        <translation>Use current &amp;attributes</translation>
+        <translation>Aktuális &attribútumok használata</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmirror.ui" line="46"/>
@@ -8238,7 +8235,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmirror.h" line="125"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmirror.h" line="125"/>
         <source>Use current &amp;layer</source>
-        <translation>Use current &amp;layer</translation>
+        <translation>Aktuális &réteg használata</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmirror.ui" line="53"/>
@@ -8254,7 +8251,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmirror.h" line="127"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmirror.h" line="127"/>
         <source>Number of copies</source>
-        <translation>Number of copies</translation>
+        <translation>Másolatok száma</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmirror.ui" line="88"/>
@@ -8262,7 +8259,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmirror.h" line="128"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmirror.h" line="128"/>
         <source>&amp;Delete Original</source>
-        <translation>&amp;Delete Original</translation>
+        <translation>&Eredeti törlése</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmirror.ui" line="107"/>
@@ -8270,7 +8267,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmirror.h" line="129"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmirror.h" line="129"/>
         <source>&amp;Keep Original</source>
-        <translation>&amp;Keep Original</translation>
+        <translation>&Eredeti megtartása</translation>
     </message>
 </context>
 <context>
@@ -8281,7 +8278,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmove.h" line="142"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmove.h" line="142"/>
         <source>Move/Copy Options</source>
-        <translation>Move/Copy Options</translation>
+        <translation>Mozgatás/Másolás beállítások</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmove.ui" line="32"/>
@@ -8289,7 +8286,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmove.h" line="143"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmove.h" line="143"/>
         <source>Number of copies</source>
-        <translation>Number of copies</translation>
+        <translation>Másolatok száma</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmove.ui" line="50"/>
@@ -8297,7 +8294,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmove.h" line="144"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmove.h" line="144"/>
         <source>&amp;Delete Original</source>
-        <translation>&amp;Delete Original</translation>
+        <translation>&Eredeti törlése</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmove.ui" line="69"/>
@@ -8305,7 +8302,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmove.h" line="145"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmove.h" line="145"/>
         <source>&amp;Keep Original</source>
-        <translation>&amp;Keep Original</translation>
+        <translation>&Eredeti megtartása</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmove.ui" line="88"/>
@@ -8313,7 +8310,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmove.h" line="146"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmove.h" line="146"/>
         <source>&amp;Multiple Copies</source>
-        <translation>&amp;Multiple Copies</translation>
+        <translation>&Többszörös másolás</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmove.ui" line="95"/>
@@ -8321,7 +8318,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmove.h" line="148"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmove.h" line="148"/>
         <source>Number of copies. Maximum 100</source>
-        <translation>Number of copies. Maximum 100</translation>
+        <translation>Másolatok száma. Maximum 100</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmove.ui" line="121"/>
@@ -8329,7 +8326,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmove.h" line="150"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmove.h" line="150"/>
         <source>Use current &amp;attributes</source>
-        <translation>Use current &amp;attributes</translation>
+        <translation>Aktuális &attribútumok használata</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmove.ui" line="128"/>
@@ -8337,7 +8334,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmove.h" line="151"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmove.h" line="151"/>
         <source>Use current &amp;layer</source>
-        <translation>Use current &amp;layer</translation>
+        <translation>Aktuális &réteg használata</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmove.ui" line="135"/>
@@ -8356,7 +8353,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmoverotate.h" line="185"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmoverotate.h" line="185"/>
         <source>Move/Rotate Options</source>
-        <translation>Move/Rotate Options</translation>
+        <translation>Mozgatás/Forgatás beállítások</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmoverotate.ui" line="41"/>
@@ -8380,7 +8377,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmoverotate.h" line="190"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmoverotate.h" line="190"/>
         <source>&amp;Angle (a):</source>
-        <translation>&amp;Angle (a):</translation>
+        <translation>&Szög (a):</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmoverotate.ui" line="97"/>
@@ -8388,7 +8385,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmoverotate.h" line="191"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmoverotate.h" line="191"/>
         <source>Use current &amp;attributes</source>
-        <translation>Use current &amp;attributes</translation>
+        <translation>Aktuális &attribútumok használata</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmoverotate.ui" line="104"/>
@@ -8396,7 +8393,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmoverotate.h" line="192"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmoverotate.h" line="192"/>
         <source>Use current &amp;layer</source>
-        <translation>Use current &amp;layer</translation>
+        <translation>Aktuális &réteg használata</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmoverotate.ui" line="113"/>
@@ -8404,7 +8401,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmoverotate.h" line="193"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmoverotate.h" line="193"/>
         <source>Number of copies</source>
-        <translation>Number of copies</translation>
+        <translation>Másolatok száma</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmoverotate.ui" line="131"/>
@@ -8412,7 +8409,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmoverotate.h" line="194"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmoverotate.h" line="194"/>
         <source>&amp;Delete Original</source>
-        <translation>&amp;Delete Original</translation>
+        <translation>&Eredeti törlése</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmoverotate.ui" line="150"/>
@@ -8420,7 +8417,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmoverotate.h" line="195"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmoverotate.h" line="195"/>
         <source>&amp;Keep Original</source>
-        <translation>&amp;Keep Original</translation>
+        <translation>&Eredeti megtartása</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgmoverotate.ui" line="169"/>
@@ -8428,7 +8425,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgmoverotate.h" line="196"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgmoverotate.h" line="196"/>
         <source>&amp;Multiple Copies</source>
-        <translation>&amp;Multiple Copies</translation>
+        <translation>&Többszörös másolás</translation>
     </message>
 </context>
 <context>
@@ -8439,7 +8436,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsdrawing.h" line="1741"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1741"/>
         <source>Drawing Preferences</source>
-        <translation>Drawing Preferences</translation>
+        <translation>Rajzbeállítások</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsdrawing.ui" line="34"/>
@@ -8447,7 +8444,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsdrawing.h" line="1769"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1769"/>
         <source>&amp;Paper</source>
-        <translation>&amp;Paper</translation>
+        <translation>&Papír</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsdrawing.ui" line="44"/>
@@ -8455,7 +8452,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsdrawing.h" line="1742"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1742"/>
         <source>Format</source>
-        <translation>Format</translation>
+        <translation>Formátum</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsdrawing.ui" line="66"/>
@@ -8463,7 +8460,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsdrawing.h" line="1743"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1743"/>
         <source>&amp;Height:</source>
-        <translation>&amp;Height:</translation>
+        <translation>&Magasság:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsdrawing.ui" line="82"/>
@@ -8471,7 +8468,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsdrawing.h" line="1744"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1744"/>
         <source>&amp;Width:</source>
-        <translation>&amp;Width:</translation>
+        <translation>&Szélesség:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsdrawing.ui" line="102"/>
@@ -8479,7 +8476,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsdrawing.h" line="1745"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1745"/>
         <source>Orientation</source>
-        <translation>Orientation</translation>
+        <translation>Tájolás</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsdrawing.ui" line="108"/>
@@ -8487,7 +8484,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsdrawing.h" line="1746"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1746"/>
         <source>&amp;Landscape</source>
-        <translation>&amp;Landscape</translation>
+        <translation>&Fekvő</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsdrawing.ui" line="115"/>
@@ -8495,7 +8492,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsdrawing.h" line="1747"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1747"/>
         <source>P&amp;ortrait</source>
-        <translation>P&amp;ortrait</translation>
+        <translation>Á&lló</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsdrawing.ui" line="138"/>
@@ -8503,7 +8500,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsdrawing.h" line="1748"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1748"/>
         <source>Margins</source>
-        <translation>Margins</translation>
+        <translation>Margók</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsdrawing.ui" line="152"/>
@@ -8531,7 +8528,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1753"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1758"/>
         <source>Bottom</source>
-        <translation>Bottom</translation>
+        <translation>Alul</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsdrawing.ui" line="178"/>
@@ -8547,7 +8544,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1760"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1804"/>
         <source>Right</source>
-        <translation>Right</translation>
+        <translation>Jobb</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsdrawing.ui" line="195"/>
@@ -8571,7 +8568,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsdrawing.h" line="1765"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1765"/>
         <source>Number of pages</source>
-        <translation>Number of pages</translation>
+        <translation>Oldalak száma</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsdrawing.ui" line="246"/>
@@ -8579,7 +8576,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsdrawing.h" line="1766"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1766"/>
         <source>Horizontally:</source>
-        <translation>Horizontally:</translation>
+        <translation>Vízszintesen:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsdrawing.ui" line="263"/>
@@ -8587,7 +8584,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsdrawing.h" line="1767"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1767"/>
         <source>Vertically:</source>
-        <translation>Vertically:</translation>
+        <translation>Függőlegesen:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsdrawing.ui" line="285"/>
@@ -8603,7 +8600,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1775"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1780"/>
         <source>Preview</source>
-        <translation>Preview</translation>
+        <translation>Előnézet</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsdrawing.ui" line="326"/>
@@ -8611,7 +8608,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsdrawing.h" line="1782"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1782"/>
         <source>&amp;Units</source>
-        <translation>&amp;Units</translation>
+        <translation>&Mértékegységek</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsdrawing.ui" line="332"/>
@@ -8619,7 +8616,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsdrawing.h" line="1770"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1770"/>
         <source>Main Unit</source>
-        <translation>Main Unit</translation>
+        <translation>Fő mértékegység</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsdrawing.ui" line="338"/>
@@ -8627,7 +8624,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsdrawing.h" line="1771"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1771"/>
         <source>&amp;Main drawing unit:</source>
-        <translation>&amp;Main drawing unit:</translation>
+        <translation>&Fő rajzi mértékegység:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsdrawing.ui" line="377"/>
@@ -8635,7 +8632,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsdrawing.h" line="1772"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1772"/>
         <source>Length</source>
-        <translation>Length</translation>
+        <translation>Hossz</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsdrawing.ui" line="383"/>
@@ -8643,7 +8640,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsdrawing.h" line="1773"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1773"/>
         <source>&amp;Format:</source>
-        <translation>&amp;Format:</translation>
+        <translation>&Formátum:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsdrawing.ui" line="402"/>
@@ -8651,7 +8648,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsdrawing.h" line="1774"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1774"/>
         <source>P&amp;recision:</source>
-        <translation>P&amp;recision:</translation>
+        <translation>P&ontosság:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsdrawing.ui" line="456"/>
@@ -8659,7 +8656,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsdrawing.h" line="1776"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1776"/>
         <source>linear</source>
-        <translation>linear</translation>
+        <translation>lineáris</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsdrawing.ui" line="473"/>
@@ -8667,7 +8664,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsdrawing.h" line="1777"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1777"/>
         <source>Angle</source>
-        <translation>Angle</translation>
+        <translation>Szög</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsdrawing.ui" line="479"/>
@@ -8675,7 +8672,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsdrawing.h" line="1778"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1778"/>
         <source>F&amp;ormat:</source>
-        <translation>F&amp;ormat:</translation>
+        <translation>F&ormátum:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsdrawing.ui" line="527"/>
@@ -8683,7 +8680,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsdrawing.h" line="1779"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1779"/>
         <source>Pre&amp;cision:</source>
-        <translation>Pre&amp;cision:</translation>
+        <translation>Pre&cizitás:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsdrawing.ui" line="552"/>
@@ -8691,7 +8688,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsdrawing.h" line="1781"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1781"/>
         <source>angular</source>
-        <translation>angular</translation>
+        <translation>szöges</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsdrawing.ui" line="570"/>
@@ -8699,7 +8696,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsdrawing.h" line="1812"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1812"/>
         <source>&amp;Grid</source>
-        <translation>&amp;Grid</translation>
+        <translation>&Rács</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsdrawing.ui" line="582"/>
@@ -8707,7 +8704,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsdrawing.h" line="1783"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1783"/>
         <source>Grid Settings</source>
-        <translation>Grid Settings</translation>
+        <translation>Rács beállítások</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsdrawing.ui" line="588"/>
@@ -8715,7 +8712,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsdrawing.h" line="1784"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1784"/>
         <source>Show Grid</source>
-        <translation>Show Grid</translation>
+        <translation>Rács megjelenítése</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsdrawing.ui" line="595"/>
@@ -8723,7 +8720,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsdrawing.h" line="1786"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1786"/>
         <source>Use orthogonal grid</source>
-        <translation>Use orthogonal grid</translation>
+        <translation>Derékszögű rács használata</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsdrawing.ui" line="598"/>
@@ -8731,7 +8728,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsdrawing.h" line="1788"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1788"/>
         <source>Orthogonal Grid</source>
-        <translation>Orthogonal Grid</translation>
+        <translation>Derékszögű rács</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsdrawing.ui" line="608"/>
@@ -8739,7 +8736,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsdrawing.h" line="1790"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1790"/>
         <source>Use isometric grid</source>
-        <translation>Use isometric grid</translation>
+        <translation>Izometrikus rács használata</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsdrawing.ui" line="611"/>
@@ -8747,7 +8744,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsdrawing.h" line="1792"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1792"/>
         <source>Isometric Grid</source>
-        <translation>Isometric Grid</translation>
+        <translation>Izometrikus rács</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsdrawing.ui" line="654"/>
@@ -8755,7 +8752,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsdrawing.h" line="1794"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1794"/>
         <source>Left crosshair with isometric grid</source>
-        <translation>Left crosshair with isometric grid</translation>
+        <translation>Bal kereszthaj izometrikus ráccsal</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsdrawing.ui" line="676"/>
@@ -8763,7 +8760,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsdrawing.h" line="1798"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1798"/>
         <source>Top crosshair with isometric grid</source>
-        <translation>Top crosshair with isometric grid</translation>
+        <translation>Felső kereszthaj izometrikus ráccsal</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsdrawing.ui" line="698"/>
@@ -8771,7 +8768,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsdrawing.h" line="1802"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1802"/>
         <source>Right crosshair with isometric grid</source>
-        <translation>Right crosshair with isometric grid</translation>
+        <translation>Jobb kereszthaj izometrikus ráccsal</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsdrawing.ui" line="720"/>
@@ -8779,7 +8776,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsdrawing.h" line="1805"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1805"/>
         <source>Crosshair</source>
-        <translation>Crosshair</translation>
+        <translation>Kereszthaj</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsdrawing.ui" line="741"/>
@@ -8787,7 +8784,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsdrawing.h" line="1806"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1806"/>
         <source>X Spacing:</source>
-        <translation>X Spacing:</translation>
+        <translation>X térköz:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsdrawing.ui" line="761"/>
@@ -8811,7 +8808,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsdrawing.h" line="1809"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1809"/>
         <source>Y Spacing:</source>
-        <translation>Y Spacing:</translation>
+        <translation>Y térköz:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsdrawing.ui" line="860"/>
@@ -8819,7 +8816,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsdrawing.h" line="1891"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1891"/>
         <source>&amp;Dimensions</source>
-        <translation>&amp;Dimensions</translation>
+        <translation>&Méretek</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsdrawing.ui" line="885"/>
@@ -8827,7 +8824,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsdrawing.h" line="1813"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1813"/>
         <source>Text style:</source>
-        <translation>Text style:</translation>
+        <translation>Szövegstílus:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsdrawing.ui" line="893"/>
@@ -8835,7 +8832,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsdrawing.h" line="1814"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1814"/>
         <source>&apos;.&apos; (Period)</source>
-        <translation>&apos;.&apos; (Period)</translation>
+        <translation>'.' (Pont)</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsdrawing.ui" line="898"/>
@@ -8843,7 +8840,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsdrawing.h" line="1815"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1815"/>
         <source>&apos;,&apos; (Comma)</source>
-        <translation>&apos;,&apos; (Comma)</translation>
+        <translation>',' (Vessző)</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsdrawing.ui" line="906"/>
@@ -8851,7 +8848,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsdrawing.h" line="1817"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1817"/>
         <source>Decimal separator:</source>
-        <translation>Decimal separator:</translation>
+        <translation>Tizedesjel:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsdrawing.ui" line="913"/>
@@ -8883,7 +8880,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1873"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1878"/>
         <source>units</source>
-        <translation>units</translation>
+        <translation>mértékegységek</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsdrawing.ui" line="933"/>
@@ -8891,7 +8888,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsdrawing.h" line="1820"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1820"/>
         <source>Linear units:</source>
-        <translation>Linear units:</translation>
+        <translation>Lineáris mértékegységek:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsdrawing.ui" line="949"/>
@@ -8907,7 +8904,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1861"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1883"/>
         <source>Color:</source>
-        <translation>Color:</translation>
+        <translation>Szín:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsdrawing.ui" line="959"/>
@@ -8915,7 +8912,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsdrawing.h" line="1822"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1822"/>
         <source>Length Factor:</source>
-        <translation>Length Factor:</translation>
+        <translation>Hossz szorzó:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsdrawing.ui" line="969"/>
@@ -8931,7 +8928,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsdrawing.h" line="1827"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1827"/>
         <source>Tick size:</source>
-        <translation>Tick size:</translation>
+        <translation>Pipa mérete:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1086"/>
@@ -8939,7 +8936,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsdrawing.h" line="1829"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1829"/>
         <source>Angular units:</source>
-        <translation>Angular units:</translation>
+        <translation>Szöges mértékegységek:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1099"/>
@@ -8947,7 +8944,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsdrawing.h" line="1830"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1830"/>
         <source>Text Height:</source>
-        <translation>Text Height:</translation>
+        <translation>Szöveg magassága:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1109"/>
@@ -8955,7 +8952,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsdrawing.h" line="1831"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1831"/>
         <source>Linear zeros:</source>
-        <translation>Linear zeros:</translation>
+        <translation>Lineáris nullák:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1116"/>
@@ -8971,7 +8968,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsdrawing.h" line="1836"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1836"/>
         <source>Format units</source>
-        <translation>Format units</translation>
+        <translation>Formázási mértékegységek</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1153"/>
@@ -8995,7 +8992,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsdrawing.h" line="1845"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1845"/>
         <source>Text size &amp; position</source>
-        <translation>Text size &amp; position</translation>
+        <translation>Szöveg mérete és &pozíciója</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1233"/>
@@ -9003,7 +9000,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsdrawing.h" line="1846"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1846"/>
         <source>General Scale:</source>
-        <translation>General Scale:</translation>
+        <translation>Általános méretezés:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1271"/>
@@ -9011,7 +9008,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsdrawing.h" line="1850"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1850"/>
         <source>Length to enlarge over dimension line</source>
-        <translation>Length to enlarge over dimension line</translation>
+        <translation>Méretvonal fölötti hosszabbítás</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1296"/>
@@ -9027,7 +9024,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsdrawing.h" line="1856"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1856"/>
         <source>Arrow size:</source>
-        <translation>Arrow size:</translation>
+        <translation>Nyíl mérete:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1350"/>
@@ -9039,7 +9036,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1857"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1884"/>
         <source>Width:</source>
-        <translation>Width:</translation>
+        <translation>Vastagság:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1370"/>
@@ -9047,7 +9044,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsdrawing.h" line="1859"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1859"/>
         <source>Dimension lines, arrows &amp; ticks</source>
-        <translation>Dimension lines, arrows &amp; ticks</translation>
+        <translation>Méretvonalak, nyilak és pipák</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1377"/>
@@ -9055,7 +9052,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsdrawing.h" line="1860"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1860"/>
         <source>Angular zeros:</source>
-        <translation>Angular zeros:</translation>
+        <translation>Szöges nullák:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1391"/>
@@ -9063,7 +9060,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsdrawing.h" line="1862"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1862"/>
         <source>Angular precision:</source>
-        <translation>Angular precision:</translation>
+        <translation>Szöges pontosság:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1404"/>
@@ -9071,7 +9068,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsdrawing.h" line="1863"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1863"/>
         <source>Enlarge:</source>
-        <translation>Enlarge:</translation>
+        <translation>Nagyítás:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1414"/>
@@ -9079,7 +9076,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsdrawing.h" line="1864"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1864"/>
         <source>Offset:</source>
-        <translation>Offset:</translation>
+        <translation>Eltolás:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1427"/>
@@ -9087,7 +9084,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsdrawing.h" line="1865"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1865"/>
         <source>Linear precision:</source>
-        <translation>Linear precision:</translation>
+        <translation>Lineáris pontosság:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1446"/>
@@ -9103,7 +9100,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsdrawing.h" line="1866"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1866"/>
         <source>Aligned</source>
-        <translation>Aligned</translation>
+        <translation>Igazított</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1461"/>
@@ -9111,7 +9108,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsdrawing.h" line="1867"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1867"/>
         <source>Horizontal</source>
-        <translation>Horizontal</translation>
+        <translation>Vízszintes</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1502"/>
@@ -9127,7 +9124,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsdrawing.h" line="1879"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1879"/>
         <source>Text alignment:</source>
-        <translation>Text alignment:</translation>
+        <translation>Szöveg igazítása:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1544"/>
@@ -9135,7 +9132,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsdrawing.h" line="1880"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1880"/>
         <source>Dimension line gap:</source>
-        <translation>Dimension line gap:</translation>
+        <translation>Méretvonal hézag:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1554"/>
@@ -9143,7 +9140,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsdrawing.h" line="1881"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1881"/>
         <source>Extension lines</source>
-        <translation>Extension lines</translation>
+        <translation>Kiterjedési vonalak</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1561"/>
@@ -9151,7 +9148,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsdrawing.h" line="1882"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1882"/>
         <source>Fixed length:</source>
-        <translation>Fixed length:</translation>
+        <translation>Rögzített hossz:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1598"/>
@@ -9159,7 +9156,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsdrawing.h" line="1889"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1889"/>
         <source>fixed extension line length</source>
-        <translation>fixed extension line length</translation>
+        <translation>rögzített kiterjedési vonal hossz</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1609"/>
@@ -9167,7 +9164,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsdrawing.h" line="1894"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1894"/>
         <source>&amp;Splines</source>
-        <translation>&amp;Splines</translation>
+        <translation>&Görbék</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1617"/>
@@ -9175,7 +9172,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsdrawing.h" line="1892"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1892"/>
         <source>Number of line segments per spline patch:</source>
-        <translation>Number of line segments per spline patch:</translation>
+        <translation>Görbedarabonkénti vonalszegmensek száma:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1683"/>
@@ -9183,7 +9180,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsdrawing.h" line="1921"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1921"/>
         <source>&amp;Points</source>
-        <translation>&amp;Points</translation>
+        <translation>&Pontok</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1692"/>
@@ -9191,7 +9188,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsdrawing.h" line="1895"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1895"/>
         <source>Point Style</source>
-        <translation>Point Style</translation>
+        <translation>Pont stílus</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1733"/>
@@ -9283,7 +9280,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsdrawing.h" line="1916"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1916"/>
         <source>Point Size</source>
-        <translation>Point Size</translation>
+        <translation>Pont mérete</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsdrawing.ui" line="2592"/>
@@ -9292,7 +9289,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1917"/>
         <location filename="../../src/ui/forms/qg_dlgoptionsdrawing.cpp" line="1108"/>
         <source>Dwg Units</source>
-        <translation>Dwg Units</translation>
+        <translation>Rajz mértékegységek</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsdrawing.ui" line="2629"/>
@@ -9300,7 +9297,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsdrawing.h" line="1918"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1918"/>
         <source>Size relative to screen</source>
-        <translation>Size relative to screen</translation>
+        <translation>Méret viszonyítva a képernyőhöz</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsdrawing.ui" line="2642"/>
@@ -9308,7 +9305,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsdrawing.h" line="1919"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1919"/>
         <source>Size in drawing units</source>
-        <translation>Size in drawing units</translation>
+        <translation>Méret rajzi mértékegységekben</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsdrawing.ui" line="2669"/>
@@ -9316,83 +9313,83 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsdrawing.h" line="1920"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsdrawing.h" line="1920"/>
         <source>(0 =&gt; 5% relative to screen size)</source>
-        <translation>(0 =&gt; 5% relative to screen size)</translation>
+        <translation>(0 => 5% viszonyítva a képernyőmérethez)</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsdrawing.cpp" line="117"/>
         <source>Scientific</source>
-        <translation>Scientific</translation>
+        <translation>Tudományos</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsdrawing.cpp" line="118"/>
         <source>Decimal</source>
-        <translation>Decimal</translation>
+        <translation>Tizedes</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsdrawing.cpp" line="119"/>
         <source>Engineering</source>
-        <translation>Engineering</translation>
+        <translation>Mérnöki</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsdrawing.cpp" line="120"/>
         <source>Architectural</source>
-        <translation>Architectural</translation>
+        <translation>Építészeti</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsdrawing.cpp" line="121"/>
         <source>Fractional</source>
-        <translation>Fractional</translation>
+        <translation>Törtszám</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsdrawing.cpp" line="122"/>
         <source>Architectural (metric)</source>
-        <translation>Architectural (metric)</translation>
+        <translation>Építészeti (metrikus)</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsdrawing.cpp" line="128"/>
         <source>Decimal Degrees</source>
-        <translation>Decimal Degrees</translation>
+        <translation>Tizedfok</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsdrawing.cpp" line="129"/>
         <source>Deg/min/sec</source>
-        <translation>Deg/min/sec</translation>
+        <translation>Fok/perc/másodperc</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsdrawing.cpp" line="130"/>
         <source>Gradians</source>
-        <translation>Gradians</translation>
+        <translation>Gon</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsdrawing.cpp" line="131"/>
         <source>Radians</source>
-        <translation>Radians</translation>
+        <translation>Radián</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsdrawing.cpp" line="132"/>
         <source>Surveyor&apos;s units</source>
-        <translation>Surveyor&apos;s units</translation>
+        <translation>Geodéziai mértékegységek</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsdrawing.cpp" line="494"/>
         <location filename="../../src/ui/forms/qg_dlgoptionsdrawing.cpp" line="504"/>
         <source>Options</source>
-        <translation>Options</translation>
+        <translation>Beállítások</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsdrawing.cpp" line="495"/>
         <source>For the length formats &apos;Engineering&apos; and &apos;Architectural&apos;, the unit must be set to Inch.</source>
-        <translation>For the length formats &apos;Engineering&apos; and &apos;Architectural&apos;, the unit must be set to Inch.</translation>
+        <translation>A 'Mérnöki' és 'Építészeti' hosszformátumokhoz a mértékegységet hüvelykre kell állítani</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsdrawing.cpp" line="505"/>
         <source>For the length format &apos;Architectural (metric)&apos;, the unit must be set to Meter.</source>
-        <translation>For the length format &apos;Architectural (metric)&apos;, the unit must be set to Meter.</translation>
+        <translation>Az 'Építészeti (metrikus)' hosszformátumhoz a mértékegységet milliméterbe kell állítani</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsdrawing.cpp" line="1106"/>
         <source>Screen %</source>
-        <translation>Screen %</translation>
+        <translation>Képernyő %</translation>
     </message>
 </context>
 <context>
@@ -9403,7 +9400,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsgeneral.h" line="961"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="961"/>
         <source>Application Preferences</source>
-        <translation>Application Preferences</translation>
+        <translation>Alkalmazás beállítások</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsgeneral.ui" line="46"/>
@@ -9411,7 +9408,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsgeneral.h" line="1025"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="1025"/>
         <source>&amp;Appearance</source>
-        <translation>&amp;Appearance</translation>
+        <translation>&Megjelenés</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsgeneral.ui" line="58"/>
@@ -9419,7 +9416,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsgeneral.h" line="962"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="962"/>
         <source>Language</source>
-        <translation>Language</translation>
+        <translation>Nyelv</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsgeneral.ui" line="64"/>
@@ -9427,7 +9424,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsgeneral.h" line="963"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="963"/>
         <source>&amp;GUI Language:</source>
-        <translation>&amp;GUI Language:</translation>
+        <translation>&GUI Nyelv:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsgeneral.ui" line="80"/>
@@ -9435,7 +9432,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsgeneral.h" line="964"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="964"/>
         <source>&amp;Command Language:</source>
-        <translation>&amp;Command Language:</translation>
+        <translation>&Parancs Nyelv:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsgeneral.ui" line="105"/>
@@ -9443,7 +9440,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsgeneral.h" line="965"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="965"/>
         <source>Graphic View</source>
-        <translation>Graphic View</translation>
+        <translation>Grafikai nézet</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsgeneral.ui" line="111"/>
@@ -9451,7 +9448,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsgeneral.h" line="966"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="966"/>
         <source>Auto-panning</source>
-        <translation>Auto-panning</translation>
+        <translation>Automatikus pásztázás</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsgeneral.ui" line="118"/>
@@ -9459,7 +9456,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsgeneral.h" line="967"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="967"/>
         <source>N&amp;umber of preview entities:</source>
-        <translation>N&amp;umber of preview entities:</translation>
+        <translation>Előnézeti elemek &száma:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsgeneral.ui" line="131"/>
@@ -9467,7 +9464,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsgeneral.h" line="968"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="968"/>
         <source>Snap indicator shape</source>
-        <translation>Snap indicator shape</translation>
+        <translation>Illesztési jelző alakja</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsgeneral.ui" line="185"/>
@@ -9475,7 +9472,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsgeneral.h" line="970"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="970"/>
         <source>Hide cursor when snapping</source>
-        <translation>Hide cursor when snapping</translation>
+        <translation>Kurzor elrejtése illesztéskor</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsgeneral.ui" line="192"/>
@@ -9483,7 +9480,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsgeneral.h" line="971"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="971"/>
         <source>Scrollbars</source>
-        <translation>Scrollbars</translation>
+        <translation>Görgetősávok</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsgeneral.ui" line="199"/>
@@ -9491,7 +9488,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsgeneral.h" line="972"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="972"/>
         <source>Anti-aliasing</source>
-        <translation>Anti-aliasing</translation>
+        <translation>Élsimítás</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsgeneral.ui" line="255"/>
@@ -9499,7 +9496,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsgeneral.h" line="975"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="975"/>
         <source>A&amp;utomatically scale grid</source>
-        <translation>A&amp;utomatically scale grid</translation>
+        <translation>&Rács automatikus méretezése</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsgeneral.ui" line="258"/>
@@ -9515,7 +9512,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsgeneral.h" line="979"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="979"/>
         <source>Hide the relative-&amp;zero marker</source>
-        <translation>Hide the relative-&amp;zero marker</translation>
+        <translation>Relatív &nulla jelző elrejtése</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsgeneral.ui" line="268"/>
@@ -9531,7 +9528,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsgeneral.h" line="983"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="983"/>
         <source>Snap indicator lines</source>
-        <translation>Snap indicator lines</translation>
+        <translation>Illesztési jelző vonalak</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsgeneral.ui" line="278"/>
@@ -9547,7 +9544,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsgeneral.h" line="988"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="988"/>
         <source>Minimal Grid Spacing (p&amp;x):</source>
-        <translation>Minimal Grid Spacing (p&amp;x):</translation>
+        <translation>Minimális rács térköz (p&x):</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsgeneral.ui" line="335"/>
@@ -9555,7 +9552,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsgeneral.h" line="990"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="990"/>
         <source>Visualize the entity under the cursor</source>
-        <translation>Visualize the entity under the cursor</translation>
+        <translation>Kurzor alatti elem megjelenítése</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsgeneral.ui" line="338"/>
@@ -9563,7 +9560,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsgeneral.h" line="992"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="992"/>
         <source>Mouse-over effects</source>
-        <translation>Mouse-over effects</translation>
+        <translation>Egér-rámozdítás effektek</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsgeneral.ui" line="354"/>
@@ -9571,7 +9568,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsgeneral.h" line="993"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="993"/>
         <source>Graphic Colors</source>
-        <translation>Graphic Colors</translation>
+        <translation>Grafikai színek</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsgeneral.ui" line="378"/>
@@ -9579,7 +9576,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsgeneral.h" line="995"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="995"/>
         <source>&amp;End Handle Color:</source>
-        <translation>&amp;End Handle Color:</translation>
+        <translation>&Végpont fogantyú szín:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsgeneral.ui" line="388"/>
@@ -9587,7 +9584,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsgeneral.h" line="996"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="996"/>
         <source>&amp;Relative-Zero Marker Color:</source>
-        <translation>&amp;Relative-Zero Marker Color:</translation>
+        <translation>&Relatív nulla jelző szín:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsgeneral.ui" line="398"/>
@@ -9595,7 +9592,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsgeneral.h" line="997"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="997"/>
         <source>G&amp;rid Color:</source>
-        <translation>G&amp;rid Color:</translation>
+        <translation>R&ács szín:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsgeneral.ui" line="599"/>
@@ -9603,7 +9600,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsgeneral.h" line="1009"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="1009"/>
         <source>&amp;Highlighted Color:</source>
-        <translation>&amp;Highlighted Color:</translation>
+        <translation>&Kiemelés szín:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsgeneral.ui" line="627"/>
@@ -9611,7 +9608,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsgeneral.h" line="1011"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="1011"/>
         <source>&amp;Meta Grid Color:</source>
-        <translation>&amp;Meta Grid Color:</translation>
+        <translation>&Meta rács szín:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsgeneral.ui" line="655"/>
@@ -9619,7 +9616,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsgeneral.h" line="1013"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="1013"/>
         <source>S&amp;elected Color:</source>
-        <translation>S&amp;elected Color:</translation>
+        <translation>Ki&jelölt szín:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsgeneral.ui" line="683"/>
@@ -9627,7 +9624,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsgeneral.h" line="1015"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="1015"/>
         <source>St&amp;art Handle Color:</source>
-        <translation>St&amp;art Handle Color:</translation>
+        <translation>K&ezdőpont fogantyú szín:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsgeneral.ui" line="693"/>
@@ -9635,7 +9632,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsgeneral.h" line="1016"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="1016"/>
         <source>Backgr&amp;ound:</source>
-        <translation>Backgr&amp;ound:</translation>
+        <translation>Hát&tér:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsgeneral.ui" line="767"/>
@@ -9643,7 +9640,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsgeneral.h" line="1020"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="1020"/>
         <source>&amp;Handle Color:</source>
-        <translation>&amp;Handle Color:</translation>
+        <translation>&Fogantyú szín:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsgeneral.ui" line="777"/>
@@ -9651,7 +9648,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsgeneral.h" line="1021"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="1021"/>
         <source>Snap indicator:</source>
-        <translation>Snap indicator:</translation>
+        <translation>Illesztési jelző:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsgeneral.ui" line="799"/>
@@ -9667,7 +9664,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsgeneral.h" line="1035"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="1035"/>
         <source>&amp;Paths</source>
-        <translation>&amp;Paths</translation>
+        <translation>&Útvonalak</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsgeneral.ui" line="834"/>
@@ -9675,7 +9672,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsgeneral.h" line="1026"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="1026"/>
         <source>Variable File:</source>
-        <translation>Variable File:</translation>
+        <translation>Változó fájl:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsgeneral.ui" line="841"/>
@@ -9683,7 +9680,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsgeneral.h" line="1027"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="1027"/>
         <source>Fonts:</source>
-        <translation>Fonts:</translation>
+        <translation>Betűtípusok:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsgeneral.ui" line="854"/>
@@ -9691,7 +9688,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsgeneral.h" line="1028"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="1028"/>
         <source>Part Libraries:</source>
-        <translation>Part Libraries:</translation>
+        <translation>Alkatrész könyvtárak:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsgeneral.ui" line="867"/>
@@ -9699,7 +9696,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsgeneral.h" line="1029"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="1029"/>
         <source>Template:</source>
-        <translation>Template:</translation>
+        <translation>Sablon:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsgeneral.ui" line="880"/>
@@ -9715,7 +9712,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsgeneral.h" line="1033"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="1033"/>
         <source>Translations:</source>
-        <translation>Translations:</translation>
+        <translation>Fordítások:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsgeneral.ui" line="932"/>
@@ -9723,7 +9720,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsgeneral.h" line="1034"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="1034"/>
         <source>Hatch Patterns:</source>
-        <translation>Hatch Patterns:</translation>
+        <translation>Sraffozási minták:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsgeneral.ui" line="978"/>
@@ -9731,7 +9728,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsgeneral.h" line="1091"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="1091"/>
         <source>&amp;Defaults</source>
-        <translation>&amp;Defaults</translation>
+        <translation>&Alapértelmezések</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsgeneral.ui" line="996"/>
@@ -9739,7 +9736,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsgeneral.h" line="1036"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="1036"/>
         <source>Program Defaults</source>
-        <translation>Program Defaults</translation>
+        <translation>Programértelmezések</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1002"/>
@@ -9747,7 +9744,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsgeneral.h" line="1038"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="1038"/>
         <source>When set, LibreCAD will automatically generate a backup of your current drawing.</source>
-        <translation>When set, LibreCAD will automatically generate a backup of your current drawing.</translation>
+        <translation>Ha be van állítva, a LibreCAD automatikusan biztonsági másolatot készít az aktuális rajzról.</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1005"/>
@@ -9755,7 +9752,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsgeneral.h" line="1040"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="1040"/>
         <source>Auto backup</source>
-        <translation>Auto backup</translation>
+        <translation>Automatikus biztonsági mentés</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1014"/>
@@ -9763,7 +9760,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsgeneral.h" line="1041"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="1041"/>
         <source>Auto save time (minutes):</source>
-        <translation>Auto save time (minutes):</translation>
+        <translation>Automatikus mentés ideje (perc):</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1021"/>
@@ -9771,7 +9768,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsgeneral.h" line="1043"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="1043"/>
         <source>Time between automatic saving of the document in minutes.</source>
-        <translation>Time between automatic saving of the document in minutes.</translation>
+        <translation>Az automatikus mentés ideje percekben.</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1036"/>
@@ -9779,7 +9776,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsgeneral.h" line="1045"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="1045"/>
         <source>Don&apos;t use native OS file open dialog</source>
-        <translation>Don&apos;t use native OS file open dialog</translation>
+        <translation>Ne használja a natív OS fájl megnyitás párbeszédablakot</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1043"/>
@@ -9787,7 +9784,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsgeneral.h" line="1047"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="1047"/>
         <source>Inverts scrolling direction when using mouse wheel with Shift key.</source>
-        <translation>Inverts scrolling direction when using mouse wheel with Shift key.</translation>
+        <translation>Megfordítja a görgetési irányt, ha az egérgörgőt a Shift billentyűvel használja.</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1046"/>
@@ -9795,7 +9792,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsgeneral.h" line="1049"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="1049"/>
         <source>Invert horizontal scrolling direction</source>
-        <translation>Invert horizontal scrolling direction</translation>
+        <translation>Vízszintes görgetési irány megfordítása</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1053"/>
@@ -9803,7 +9800,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsgeneral.h" line="1051"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="1051"/>
         <source>Inverts scrolling direction when using mouse wheel with Ctrl key.</source>
-        <translation>Inverts scrolling direction when using mouse wheel with Ctrl key.</translation>
+        <translation>Megfordítja a görgetési irányt, ha az egérgörgőt a Ctrl billentyűvel használja.</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1056"/>
@@ -9811,7 +9808,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsgeneral.h" line="1053"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="1053"/>
         <source>Invert vertical scrolling direction</source>
-        <translation>Invert vertical scrolling direction</translation>
+        <translation>Függőleges görgetési irány megfordítása</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1063"/>
@@ -9819,7 +9816,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsgeneral.h" line="1055"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="1055"/>
         <source>Inverts zoom direction when using mouse wheel.</source>
-        <translation>Inverts zoom direction when using mouse wheel.</translation>
+        <translation>Megfordítja a nagyítási irányt az egérgörgő használatakor.</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1066"/>
@@ -9827,7 +9824,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsgeneral.h" line="1057"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="1057"/>
         <source>Invert zoom direction</source>
-        <translation>Invert zoom direction</translation>
+        <translation>Nagyítási irány megfordítása</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1089"/>
@@ -9835,7 +9832,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsgeneral.h" line="1058"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="1058"/>
         <source>Clear Settings</source>
-        <translation>Clear Settings</translation>
+        <translation>Beállítások törlése</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1101"/>
@@ -9843,7 +9840,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsgeneral.h" line="1060"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="1060"/>
         <source>restores program geometry/layout to original state</source>
-        <translation>restores program geometry/layout to original state</translation>
+        <translation>A program geometriáját/elrendezését az eredeti állapotra állítja vissza</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1104"/>
@@ -9851,7 +9848,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsgeneral.h" line="1062"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="1062"/>
         <source>Layout</source>
-        <translation>Layout</translation>
+        <translation>Elrendezés</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1117"/>
@@ -9859,7 +9856,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsgeneral.h" line="1064"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="1064"/>
         <source>restores the program to its original state</source>
-        <translation>restores the program to its original state</translation>
+        <translation>A programot az eredeti állapotára állítja vissza</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1120"/>
@@ -9875,7 +9872,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsgeneral.h" line="1067"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="1067"/>
         <source>Startup</source>
-        <translation>Startup</translation>
+        <translation>Indítás</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1136"/>
@@ -9883,7 +9880,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsgeneral.h" line="1068"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="1068"/>
         <source>Display loading screen</source>
-        <translation>Display loading screen</translation>
+        <translation>Betöltési képernyő megjelenítése</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1143"/>
@@ -9891,7 +9888,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsgeneral.h" line="1069"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="1069"/>
         <source>Start in tab mode</source>
-        <translation>Start in tab mode</translation>
+        <translation>Indítás füleshártyás módban</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1150"/>
@@ -9899,7 +9896,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsgeneral.h" line="1070"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="1070"/>
         <source>Start with main window maximized</source>
-        <translation>Start with main window maximized</translation>
+        <translation>Indítás maximalizált főablakkal</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1157"/>
@@ -9907,7 +9904,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsgeneral.h" line="1071"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="1071"/>
         <source>Open last opened files</source>
-        <translation>Open last opened files</translation>
+        <translation>Utoljára megnyitott fájlok megnyitása</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1164"/>
@@ -9915,7 +9912,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsgeneral.h" line="1072"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="1072"/>
         <source>Enable CAD dockwidgets</source>
-        <translation>Enable CAD dockwidgets</translation>
+        <translation>CAD dokk-widgetek engedélyezése</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1171"/>
@@ -9923,7 +9920,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsgeneral.h" line="1073"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="1073"/>
         <source>Enable CAD toolbars</source>
-        <translation>Enable CAD toolbars</translation>
+        <translation>CAD eszköztárak engedélyezése</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1193"/>
@@ -9931,7 +9928,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsgeneral.h" line="1074"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="1074"/>
         <source>Defaults for new drawings</source>
-        <translation>Defaults for new drawings</translation>
+        <translation>Alapértelmezések új rajzokhoz</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1205"/>
@@ -9939,7 +9936,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsgeneral.h" line="1075"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="1075"/>
         <source>&amp;Unit:</source>
-        <translation>&amp;Unit:</translation>
+        <translation>&Mértékegység:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1218"/>
@@ -9947,7 +9944,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsgeneral.h" line="1077"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="1077"/>
         <source>Drawing unit.</source>
-        <translation>Drawing unit.</translation>
+        <translation>Rajzi mértékegység.</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1228"/>
@@ -9955,7 +9952,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsgeneral.h" line="1079"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="1079"/>
         <source>Keyboard Settings</source>
-        <translation>Keyboard Settings</translation>
+        <translation>Billentyűzet beállítások</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1234"/>
@@ -9963,7 +9960,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsgeneral.h" line="1080"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="1080"/>
         <source>Evaluate commands when SPACE BAR is pressed</source>
-        <translation>Evaluate commands when SPACE BAR is pressed</translation>
+        <translation>Parancsok kiértékelése a SZÓKÖZ billentyű megnyomásakor</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1241"/>
@@ -9979,7 +9976,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsgeneral.h" line="1084"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="1084"/>
         <source>Toggle free snap mode when SPACE BAR is pressed</source>
-        <translation>Toggle free snap mode when SPACE BAR is pressed</translation>
+        <translation>Szabad illesztés mód váltása a SZÓKÖZ billentyű megnyomásakor</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1254"/>
@@ -9987,7 +9984,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsgeneral.h" line="1085"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="1085"/>
         <source>CAD Preferences</source>
-        <translation>CAD Preferences</translation>
+        <translation>CAD Beállítások</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1260"/>
@@ -10003,7 +10000,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsgeneral.h" line="1089"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="1089"/>
         <source>Modify layer of selected entities, at  layer activation</source>
-        <translation>Modify layer of selected entities, at  layer activation</translation>
+        <translation>Kiválasztott elemek rétegének módosítása réteg aktiválásakor</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1270"/>
@@ -10011,27 +10008,27 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsgeneral.h" line="1090"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsgeneral.h" line="1090"/>
         <source>Automatically zoom drawing when opening</source>
-        <translation>Automatically zoom drawing when opening</translation>
+        <translation>Rajz automatikus nagyítása megnyitáskor</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsgeneral.cpp" line="319"/>
         <source>Preferences</source>
-        <translation>Preferences</translation>
+        <translation>Beállítások</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsgeneral.cpp" line="320"/>
         <source>Please restart the application to apply all changes.</source>
-        <translation>Please restart the application to apply all changes.</translation>
+        <translation>Kérem indítsa újra az alkalmazást az összes változtatás alkalmazásához.</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsgeneral.cpp" line="401"/>
         <source>Clear settings</source>
-        <translation>Clear settings</translation>
+        <translation>Beállítások törlése</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsgeneral.cpp" line="402"/>
         <source>This will also include custom menus and toolbars. Continue?</source>
-        <translation>This will also include custom menus and toolbars. Continue?</translation>
+        <translation>Ez egyéni menüket és eszköztárakat is tartalmaz. Folytatja?</translation>
     </message>
 </context>
 <context>
@@ -10042,7 +10039,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsmakercam.h" line="259"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsmakercam.h" line="259"/>
         <source>Export as CAM/plain SVG</source>
-        <translation>Export as CAM/plain SVG</translation>
+        <translation>Exportálás CAM/sima SVG-ként</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsmakercam.ui" line="38"/>
@@ -10058,7 +10055,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsmakercam.h" line="261"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsmakercam.h" line="261"/>
         <source>Default width of elements, mm</source>
-        <translation>Default width of elements, mm</translation>
+        <translation>Elemek alapértelmezett vastagsága, mm</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsmakercam.ui" line="73"/>
@@ -10066,7 +10063,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsmakercam.h" line="262"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsmakercam.h" line="262"/>
         <source>Export invisible layers</source>
-        <translation>Export invisible layers</translation>
+        <translation>Láthatatlan rétegek exportálása</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsmakercam.ui" line="80"/>
@@ -10074,7 +10071,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsmakercam.h" line="263"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsmakercam.h" line="263"/>
         <source>Export visible construction layers</source>
-        <translation>Export visible construction layers</translation>
+        <translation>Látható szerkesztő rétegek exportálása</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsmakercam.ui" line="92"/>
@@ -10082,7 +10079,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsmakercam.h" line="264"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsmakercam.h" line="264"/>
         <source>Blocks</source>
-        <translation>Blocks</translation>
+        <translation>Blokkok</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsmakercam.ui" line="100"/>
@@ -10090,7 +10087,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsmakercam.h" line="265"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsmakercam.h" line="265"/>
         <source>Convert blocks to safe inline SVG content</source>
-        <translation>Convert blocks to safe inline SVG content</translation>
+        <translation>Blokkok konvertálása biztonságos beágyazott SVG tartalommá</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsmakercam.ui" line="115"/>
@@ -10098,7 +10095,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsmakercam.h" line="266"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsmakercam.h" line="266"/>
         <source>Ellipses / Ellipse arcs</source>
-        <translation>Ellipses / Ellipse arcs</translation>
+        <translation>Ellipszisek / Ellipszis ívek</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsmakercam.ui" line="123"/>
@@ -10106,7 +10103,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsmakercam.h" line="267"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsmakercam.h" line="267"/>
         <source>Approximate ellipses and ellipse arcs with cubic béziers</source>
-        <translation>Approximate ellipses and ellipse arcs with cubic béziers</translation>
+        <translation>Ellipszisek és ellipszis ívek közelítése köbös bezier-görbékkel</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsmakercam.ui" line="135"/>
@@ -10114,7 +10111,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsmakercam.h" line="268"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsmakercam.h" line="268"/>
         <source>Images</source>
-        <translation>Images</translation>
+        <translation>Képek</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsmakercam.ui" line="143"/>
@@ -10122,7 +10119,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsmakercam.h" line="269"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsmakercam.h" line="269"/>
         <source>Raster Image export</source>
-        <translation>Raster Image export</translation>
+        <translation>Raszterképek exportálása</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsmakercam.ui" line="155"/>
@@ -10130,7 +10127,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsmakercam.h" line="270"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsmakercam.h" line="270"/>
         <source>Dash/Dot Lines</source>
-        <translation>Dash/Dot Lines</translation>
+        <translation>Szaggatott/Pontozásos vonalak</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsmakercam.ui" line="165"/>
@@ -10138,7 +10135,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsmakercam.h" line="271"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsmakercam.h" line="271"/>
         <source>Length of the pattern, mm</source>
-        <translation>Length of the pattern, mm</translation>
+        <translation>A minta hossza, mm</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsmakercam.ui" line="187"/>
@@ -10146,7 +10143,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsmakercam.h" line="272"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsmakercam.h" line="272"/>
         <source>Bake dash/dot lines to SVG path</source>
-        <translation>Bake dash/dot lines to SVG path</translation>
+        <translation>Szaggatott/pontozásos vonalak konvertálása SVG útvonallá</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsmakercam.ui" line="199"/>
@@ -10154,7 +10151,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsmakercam.h" line="273"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsmakercam.h" line="273"/>
         <source>Points</source>
-        <translation>Points</translation>
+        <translation>Pontok</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsmakercam.ui" line="207"/>
@@ -10162,63 +10159,63 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../../../build/ui_qg_dlgoptionsmakercam.h" line="274"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgoptionsmakercam.h" line="274"/>
         <source>Export Points</source>
-        <translation>Export Points</translation>
+        <translation>Pontok exportálása</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsmakercam.cpp" line="33"/>
         <source>MakerCAM as of November 2014 does not hide SVG content 
 that has been set invisibe (&quot;display: none&quot; or &quot;visibility: hidden&quot;).</source>
-        <translation>MakerCAM as of November 2014 does not hide SVG content 
-that has been set invisibe (&quot;display: none&quot; or &quot;visibility: hidden&quot;).</translation>
+        <translation>A MakerCAM 2014 novemberétől nem rejti el a láthatatlanra állított SVG tartalmat 
+(&quot;display: none&quot; vagy &quot;visibility: hidden&quot;).</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsmakercam.cpp" line="34"/>
         <source>MakerCAM as of November 2014 cannot correctly deal with blocks,
 because it does not take into account the reference point in the &lt;use&gt;.</source>
-        <translation>MakerCAM as of November 2014 cannot correctly deal with blocks,
-because it does not take into account the reference point in the &lt;use&gt;.</translation>
+        <translation>A MakerCAM 2014 novembere óta nem tud megfelelően kezelni blokkokat,
+mert nem...</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsmakercam.cpp" line="35"/>
         <source>MakerCAM as of March 2015 cannot display ellipses and ellipse arcs correctly, 
 when they are created using the &lt;ellipse&gt; tag  with a rotation in 
 the &lt;transform&gt; attribute or as &lt;path&gt; using elliptic arc segments.</source>
-        <translation>MakerCAM as of March 2015 cannot display ellipses and ellipse arcs correctly, 
-when they are created using the &lt;ellipse&gt; tag  with a rotation in 
-the &lt;transform&gt; attribute or as &lt;path&gt; using elliptic arc segments.</translation>
+        <translation>A MakerCAM 2015 márciusától nem tudja helyesen megjeleníteni az ellipsziseket és ellipszis íveket, 
+ha azokat a &lt;transform&gt; attribútumban elforgatással rendelkező &lt;ellipse&gt; tag segítségével 
+vagy elliptikus ívszakaszokat alkalmazó &lt;path&gt;-ként hozzák létre.</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsmakercam.cpp" line="36"/>
         <source>Exported images can be useful in SVG editors (Inkscape, etc), 
 but avoided in some CAM&apos;s.</source>
-        <translation>Exported images can be useful in SVG editors (Inkscape, etc), 
-but avoided in some CAM&apos;s.</translation>
+        <translation>Az exportált képek hasznosak lehetnek az SVG szerkesztőkben (Inkscape stb.), 
+de egyes CAM&apos;okban kerülendők.</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsmakercam.cpp" line="37"/>
         <source>Many CAM&apos;s(MakerCAM, EleskCAM, LaserWeb) ignore dashed/doted line style, 
 which can be useful in lasercut of plywood or for papercraft. </source>
-        <translation>Many CAM&apos;s(MakerCAM, EleskCAM, LaserWeb) ignore dashed/doted line style, 
-which can be useful in lasercut of plywood or for papercraft.</translation>
+        <translation>Sok CAM&apos; (MakerCAM, EleskCAM, LaserWeb) figyelmen kívül hagyja a szaggatott/pontozott vonalstílust, 
+ami hasznos lehet rétegelt lemez lézervágásánál vagy papírkézimunkánál.</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsmakercam.cpp" line="38"/>
         <source>Default width of elements can affect some CAM&apos;s/SVG Editors, 
 but ignored by other</source>
-        <translation>Default width of elements can affect some CAM&apos;s/SVG Editors, 
-but ignored by other</translation>
+        <translation>Az elemek alapértelmezett szélessége hatással lehet egyes CAM&apos;okra/SVG szerkesztőkre, 
+mások azonban figyelmen kívül hagyják.</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsmakercam.cpp" line="39"/>
         <source>Length of line pattern related to zoom, 
 so default step value required for baking</source>
-        <translation>Length of line pattern related to zoom, 
-so default step value required for baking</translation>
+        <translation>A vonalminta hossza a nagyításhoz kapcsolódik, 
+ezért az átalakításhoz alapértelmezett lépésértékre van szükség.</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsmakercam.cpp" line="40"/>
         <source>Whether to export points</source>
-        <translation>Whether to export points</translation>
+        <translation>Pontok exportálásának engedélyezése</translation>
     </message>
 </context>
 <context>
@@ -10227,12 +10224,12 @@ so default step value required for baking</translation>
         <location filename="../../src/ui/forms/qg_dlgoptionsvariables.ui" line="17"/>
         <location filename="../../../build/ui_qg_dlgoptionsvariables.h" line="91"/>
         <source>Drawing Variables</source>
-        <translation>Drawing Variables</translation>
+        <translation>Rajz változók</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsvariables.ui" line="54"/>
         <source>Variable</source>
-        <translation>Variable</translation>
+        <translation>Változó</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsvariables.ui" line="59"/>
@@ -10242,13 +10239,13 @@ so default step value required for baking</translation>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsvariables.ui" line="64"/>
         <source>Value</source>
-        <translation>Value</translation>
+        <translation>Érték</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsvariables.ui" line="96"/>
         <location filename="../../../build/ui_qg_dlgoptionsvariables.h" line="92"/>
         <source>&amp;OK</source>
-        <translation>&amp;OK</translation>
+        <translation>&OK</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgoptionsvariables.ui" line="99"/>
@@ -10277,7 +10274,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgpoint.h" line="165"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgpoint.h" line="165"/>
         <source>Point</source>
-        <translation>Point</translation>
+        <translation>Pont</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgpoint.ui" line="44"/>
@@ -10293,7 +10290,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgpoint.h" line="167"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgpoint.h" line="167"/>
         <source>Geometry</source>
-        <translation>Geometry</translation>
+        <translation>Geometria</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgpoint.ui" line="77"/>
@@ -10301,7 +10298,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgpoint.h" line="168"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgpoint.h" line="168"/>
         <source>Position (y):</source>
-        <translation>Position (y):</translation>
+        <translation>Pozíció (y):</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgpoint.ui" line="97"/>
@@ -10309,7 +10306,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgpoint.h" line="169"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgpoint.h" line="169"/>
         <source>Position (x):</source>
-        <translation>Position (x):</translation>
+        <translation>Pozíció (x):</translation>
     </message>
 </context>
 <context>
@@ -10336,7 +10333,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgpolyline.h" line="149"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgpolyline.h" line="149"/>
         <source>Geometry</source>
-        <translation>Geometry</translation>
+        <translation>Geometria</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgpolyline.ui" line="115"/>
@@ -10355,7 +10352,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgrotate.h" line="184"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgrotate.h" line="184"/>
         <source>Rotation Options</source>
-        <translation>Rotation Options</translation>
+        <translation>Forgatás beállítások</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgrotate.ui" line="32"/>
@@ -10363,7 +10360,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgrotate.h" line="185"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgrotate.h" line="185"/>
         <source>Number of copies</source>
-        <translation>Number of copies</translation>
+        <translation>Másolatok száma</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgrotate.ui" line="50"/>
@@ -10371,7 +10368,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgrotate.h" line="186"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgrotate.h" line="186"/>
         <source>&amp;Delete Original</source>
-        <translation>&amp;Delete Original</translation>
+        <translation>&Eredeti törlése</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgrotate.ui" line="69"/>
@@ -10379,7 +10376,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgrotate.h" line="187"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgrotate.h" line="187"/>
         <source>&amp;Keep Original</source>
-        <translation>&amp;Keep Original</translation>
+        <translation>&Eredeti megtartása</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgrotate.ui" line="88"/>
@@ -10387,7 +10384,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgrotate.h" line="188"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgrotate.h" line="188"/>
         <source>&amp;Multiple Copies:</source>
-        <translation>&amp;Multiple Copies:</translation>
+        <translation>&Többszörös másolatok:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgrotate.ui" line="119"/>
@@ -10403,7 +10400,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgrotate.h" line="190"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgrotate.h" line="190"/>
         <source>&amp;Angle (a):</source>
-        <translation>&amp;Angle (a):</translation>
+        <translation>&Szög (a):</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgrotate.ui" line="179"/>
@@ -10411,7 +10408,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgrotate.h" line="191"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgrotate.h" line="191"/>
         <source>Use current &amp;attributes</source>
-        <translation>Use current &amp;attributes</translation>
+        <translation>Aktuális &attribútumok használata</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgrotate.ui" line="186"/>
@@ -10419,7 +10416,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgrotate.h" line="192"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgrotate.h" line="192"/>
         <source>Use current &amp;layer</source>
-        <translation>Use current &amp;layer</translation>
+        <translation>Aktuális &réteg használata</translation>
     </message>
 </context>
 <context>
@@ -10430,7 +10427,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgrotate2.h" line="205"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgrotate2.h" line="205"/>
         <source>Rotate Two Options</source>
-        <translation>Rotate Two Options</translation>
+        <translation>Két tengelyes forgatás beállítások</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgrotate2.ui" line="32"/>
@@ -10438,7 +10435,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgrotate2.h" line="206"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgrotate2.h" line="206"/>
         <source>Number of copies</source>
-        <translation>Number of copies</translation>
+        <translation>Másolatok száma</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgrotate2.ui" line="50"/>
@@ -10446,7 +10443,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgrotate2.h" line="207"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgrotate2.h" line="207"/>
         <source>&amp;Delete Original</source>
-        <translation>&amp;Delete Original</translation>
+        <translation>&Eredeti törlése</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgrotate2.ui" line="69"/>
@@ -10454,7 +10451,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgrotate2.h" line="208"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgrotate2.h" line="208"/>
         <source>&amp;Keep Original</source>
-        <translation>&amp;Keep Original</translation>
+        <translation>&Eredeti megtartása</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgrotate2.ui" line="88"/>
@@ -10462,7 +10459,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgrotate2.h" line="209"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgrotate2.h" line="209"/>
         <source>&amp;Multiple Copies</source>
-        <translation>&amp;Multiple Copies</translation>
+        <translation>&Többszörös másolás</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgrotate2.ui" line="119"/>
@@ -10478,7 +10475,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgrotate2.h" line="211"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgrotate2.h" line="211"/>
         <source>Angle (&amp;a):</source>
-        <translation>Angle (&amp;a):</translation>
+        <translation>Szög (&a):</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgrotate2.ui" line="174"/>
@@ -10486,7 +10483,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgrotate2.h" line="212"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgrotate2.h" line="212"/>
         <source>Angle (&amp;b):</source>
-        <translation>Angle (&amp;b):</translation>
+        <translation>Szög (&b):</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgrotate2.ui" line="208"/>
@@ -10494,7 +10491,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgrotate2.h" line="213"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgrotate2.h" line="213"/>
         <source>Use current &amp;attributes</source>
-        <translation>Use current &amp;attributes</translation>
+        <translation>Aktuális &attribútumok használata</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgrotate2.ui" line="215"/>
@@ -10502,7 +10499,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgrotate2.h" line="214"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgrotate2.h" line="214"/>
         <source>Use current &amp;layer</source>
-        <translation>Use current &amp;layer</translation>
+        <translation>Aktuális &réteg használata</translation>
     </message>
 </context>
 <context>
@@ -10513,7 +10510,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgscale.h" line="209"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgscale.h" line="209"/>
         <source>Scaling Options</source>
-        <translation>Scaling Options</translation>
+        <translation>Méretezési beállítások</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgscale.ui" line="32"/>
@@ -10521,7 +10518,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgscale.h" line="210"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgscale.h" line="210"/>
         <source>Number of copies</source>
-        <translation>Number of copies</translation>
+        <translation>Másolatok száma</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgscale.ui" line="50"/>
@@ -10529,7 +10526,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgscale.h" line="211"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgscale.h" line="211"/>
         <source>&amp;Delete Original</source>
-        <translation>&amp;Delete Original</translation>
+        <translation>&Eredeti törlése</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgscale.ui" line="69"/>
@@ -10537,7 +10534,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgscale.h" line="212"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgscale.h" line="212"/>
         <source>&amp;Keep Original</source>
-        <translation>&amp;Keep Original</translation>
+        <translation>&Eredeti megtartása</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgscale.ui" line="88"/>
@@ -10545,7 +10542,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgscale.h" line="213"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgscale.h" line="213"/>
         <source>&amp;Multiple Copies</source>
-        <translation>&amp;Multiple Copies</translation>
+        <translation>&Többszörös másolás</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgscale.ui" line="117"/>
@@ -10561,7 +10558,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgscale.h" line="216"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgscale.h" line="216"/>
         <source>Scale by the same factor at both x- and y- directions</source>
-        <translation>Scale by the same factor at both x- and y- directions</translation>
+        <translation>Azonos arányban méretez x és y irányban</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgscale.ui" line="139"/>
@@ -10569,7 +10566,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgscale.h" line="218"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgscale.h" line="218"/>
         <source>Isotropic Scaling</source>
-        <translation>Isotropic Scaling</translation>
+        <translation>Izotropikus méretezés</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgscale.ui" line="153"/>
@@ -10601,7 +10598,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgscale.h" line="225"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgscale.h" line="225"/>
         <source>Use current &amp;attributes</source>
-        <translation>Use current &amp;attributes</translation>
+        <translation>Aktuális &attribútumok használata</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgscale.ui" line="226"/>
@@ -10609,7 +10606,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgscale.h" line="226"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgscale.h" line="226"/>
         <source>Use current &amp;layer</source>
-        <translation>Use current &amp;layer</translation>
+        <translation>Aktuális &réteg használata</translation>
     </message>
 </context>
 <context>
@@ -10620,7 +10617,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgspline.h" line="171"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgspline.h" line="171"/>
         <source>Spline</source>
-        <translation>Spline</translation>
+        <translation>Görbe</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgspline.ui" line="51"/>
@@ -10636,7 +10633,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgspline.h" line="174"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgspline.h" line="174"/>
         <source>Geometry</source>
-        <translation>Geometry</translation>
+        <translation>Geometria</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgspline.ui" line="122"/>
@@ -10644,7 +10641,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgspline.h" line="175"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgspline.h" line="175"/>
         <source>Degree:</source>
-        <translation>Degree:</translation>
+        <translation>Fokszám:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgspline.ui" line="132"/>
@@ -10671,7 +10668,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="795"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="795"/>
         <source>Text:</source>
-        <translation>Text:</translation>
+        <translation>Szöveg:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="59"/>
@@ -10679,7 +10676,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="797"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="797"/>
         <source>Clear Text</source>
-        <translation>Clear Text</translation>
+        <translation>Szöveg törlése</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="73"/>
@@ -10687,7 +10684,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="801"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="801"/>
         <source>Load Text From File</source>
-        <translation>Load Text From File</translation>
+        <translation>Szöveg betöltése fájlból</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="87"/>
@@ -10695,7 +10692,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="805"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="805"/>
         <source>Save Text To File</source>
-        <translation>Save Text To File</translation>
+        <translation>Szöveg mentése fájlba</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="101"/>
@@ -10719,7 +10716,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="817"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="817"/>
         <source>Paste</source>
-        <translation>Paste</translation>
+        <translation>Beillesztés</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="175"/>
@@ -10735,7 +10732,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="821"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="821"/>
         <source>Font settings</source>
-        <translation>Font settings</translation>
+        <translation>Betűtípus beállítások</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="256"/>
@@ -10743,7 +10740,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="822"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="822"/>
         <source>&amp;Height:</source>
-        <translation>&amp;Height:</translation>
+        <translation>&Magasság:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="269"/>
@@ -10751,7 +10748,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="823"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="823"/>
         <source>Angle:</source>
-        <translation>Angle:</translation>
+        <translation>Szög:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="318"/>
@@ -10759,7 +10756,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="824"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="824"/>
         <source>Oblique:</source>
-        <translation>Oblique:</translation>
+        <translation>Dőlés:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="328"/>
@@ -10767,7 +10764,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="825"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="825"/>
         <source>Width factor:</source>
-        <translation>Width factor:</translation>
+        <translation>Szélességi tényező:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="335"/>
@@ -10775,7 +10772,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="826"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="826"/>
         <source>Font:</source>
-        <translation>Font:</translation>
+        <translation>Betűtípus:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="384"/>
@@ -10783,7 +10780,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="827"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="827"/>
         <source>Alignment</source>
-        <translation>Alignment</translation>
+        <translation>Igazítás</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="402"/>
@@ -10791,7 +10788,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="829"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="829"/>
         <source>Bottom Center</source>
-        <translation>Bottom Center</translation>
+        <translation>Alsó közép</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="437"/>
@@ -10799,7 +10796,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="833"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="833"/>
         <source>Bottom Right</source>
-        <translation>Bottom Right</translation>
+        <translation>Jobb alsó</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="472"/>
@@ -10807,7 +10804,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="837"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="837"/>
         <source>Middle Right</source>
-        <translation>Middle Right</translation>
+        <translation>Jobb közép</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="507"/>
@@ -10815,7 +10812,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="841"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="841"/>
         <source>Bottom Left</source>
-        <translation>Bottom Left</translation>
+        <translation>Bal alsó</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="542"/>
@@ -10823,7 +10820,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="845"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="845"/>
         <source>Middle Left</source>
-        <translation>Middle Left</translation>
+        <translation>Bal közép</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="565"/>
@@ -10831,7 +10828,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="849"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="849"/>
         <source>Baseline Left</source>
-        <translation>Baseline Left</translation>
+        <translation>Alap bal</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="568"/>
@@ -10855,7 +10852,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="853"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="853"/>
         <source>Top Center</source>
-        <translation>Top Center</translation>
+        <translation>Felső közép</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="623"/>
@@ -10863,7 +10860,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="857"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="857"/>
         <source>Baseline Right</source>
-        <translation>Baseline Right</translation>
+        <translation>Alap jobb</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="646"/>
@@ -10871,7 +10868,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="861"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="861"/>
         <source>Baseline Center</source>
-        <translation>Baseline Center</translation>
+        <translation>Alap közép</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="681"/>
@@ -10879,7 +10876,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="865"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="865"/>
         <source>Top Left</source>
-        <translation>Top Left</translation>
+        <translation>Bal felső</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="716"/>
@@ -10887,7 +10884,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="869"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="869"/>
         <source>Top Right</source>
-        <translation>Top Right</translation>
+        <translation>Jobb felső</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="751"/>
@@ -10895,7 +10892,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="873"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="873"/>
         <source>Middle Center</source>
-        <translation>Middle Center</translation>
+        <translation>Középen középre</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="774"/>
@@ -10911,7 +10908,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="877"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="877"/>
         <source>A&amp;ligned</source>
-        <translation>A&amp;ligned</translation>
+        <translation>I&gazított</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="794"/>
@@ -10919,7 +10916,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="878"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="878"/>
         <source>&amp;Middle</source>
-        <translation>&amp;Middle</translation>
+        <translation>&Közép</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="825"/>
@@ -10927,7 +10924,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="879"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="879"/>
         <source>Insert Symbol</source>
-        <translation>Insert Symbol</translation>
+        <translation>Szimbólum beillesztése</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="838"/>
@@ -10935,7 +10932,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="880"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="880"/>
         <source>Diameter (⌀)</source>
-        <translation>Diameter (⌀)</translation>
+        <translation>Átmérő (⌀)</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="843"/>
@@ -10943,7 +10940,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="881"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="881"/>
         <source>Degree (°)</source>
-        <translation>Degree (°)</translation>
+        <translation>Fok (°)</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="848"/>
@@ -10951,7 +10948,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="882"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="882"/>
         <source>Plus / Minus (±)</source>
-        <translation>Plus / Minus (±)</translation>
+        <translation>Plusz / Mínusz (±)</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="853"/>
@@ -10959,7 +10956,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="883"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="883"/>
         <source>At (@)</source>
-        <translation>At (@)</translation>
+        <translation>Kukac (@)</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="858"/>
@@ -10967,7 +10964,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="884"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="884"/>
         <source>Hash (#)</source>
-        <translation>Hash (#)</translation>
+        <translation>Kettőskereszt (#)</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="863"/>
@@ -10975,7 +10972,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="885"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="885"/>
         <source>Dollar ($)</source>
-        <translation>Dollar ($)</translation>
+        <translation>Dollár ($)</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="868"/>
@@ -10983,7 +10980,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="886"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="886"/>
         <source>Copyright (©)</source>
-        <translation>Copyright (©)</translation>
+        <translation>Szerzői jog (©)</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="873"/>
@@ -10991,7 +10988,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="887"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="887"/>
         <source>Registered (®)</source>
-        <translation>Registered (®)</translation>
+        <translation>Bejegyzett védjegy (®)</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="878"/>
@@ -10999,7 +10996,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="888"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="888"/>
         <source>Paragraph (§)</source>
-        <translation>Paragraph (§)</translation>
+        <translation>Bekezdésjel (§)</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="883"/>
@@ -11015,7 +11012,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="890"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="890"/>
         <source>Pound (£)</source>
-        <translation>Pound (£)</translation>
+        <translation>Font (£)</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="893"/>
@@ -11023,7 +11020,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="891"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="891"/>
         <source>Yen (¥)</source>
-        <translation>Yen (¥)</translation>
+        <translation>Jen (¥)</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="898"/>
@@ -11031,7 +11028,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="892"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="892"/>
         <source>Times (×)</source>
-        <translation>Times (×)</translation>
+        <translation>Szorzás (×)</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="903"/>
@@ -11039,7 +11036,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="893"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="893"/>
         <source>Division (÷)</source>
-        <translation>Division (÷)</translation>
+        <translation>Osztás (÷)</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="914"/>
@@ -11047,7 +11044,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="895"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="895"/>
         <source>Insert Unicode</source>
-        <translation>Insert Unicode</translation>
+        <translation>Unicode beillesztése</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="920"/>
@@ -11055,7 +11052,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="896"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="896"/>
         <source>Page:</source>
-        <translation>Page:</translation>
+        <translation>Oldal:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="930"/>
@@ -11063,7 +11060,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="897"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="897"/>
         <source>Char:</source>
-        <translation>Char:</translation>
+        <translation>Karakter:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="953"/>
@@ -11071,7 +11068,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="898"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="898"/>
         <source>[0000-007F] Basic Latin</source>
-        <translation>[0000-007F] Basic Latin</translation>
+        <translation>[0000-007F] Alap latin</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="958"/>
@@ -11079,7 +11076,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="899"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="899"/>
         <source>[0080-00FF] Latin-1 Supplementary</source>
-        <translation>[0080-00FF] Latin-1 Supplementary</translation>
+        <translation>[0080-00FF] Latin-1 kiegészítő</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="963"/>
@@ -11087,7 +11084,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="900"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="900"/>
         <source>[0100-017F] Latin Extended-A</source>
-        <translation>[0100-017F] Latin Extended-A</translation>
+        <translation>[0100-017F] Bővített latin-A</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="968"/>
@@ -11095,7 +11092,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="901"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="901"/>
         <source>[0180-024F] Latin Extended-B</source>
-        <translation>[0180-024F] Latin Extended-B</translation>
+        <translation>[0180-024F] Bővített latin-B</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="973"/>
@@ -11103,7 +11100,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="902"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="902"/>
         <source>[0250-02AF] IPA Extensions</source>
-        <translation>[0250-02AF] IPA Extensions</translation>
+        <translation>[0250-02AF] IPA-kiterjesztések</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="978"/>
@@ -11111,7 +11108,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="903"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="903"/>
         <source>[02B0-02FF] Spacing Modifier Letters</source>
-        <translation>[02B0-02FF] Spacing Modifier Letters</translation>
+        <translation>[02B0-02FF] Elválasztó módosítóbetűk</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="983"/>
@@ -11119,7 +11116,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="904"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="904"/>
         <source>[0300-036F] Combining Diacritical Marks</source>
-        <translation>[0300-036F] Combining Diacritical Marks</translation>
+        <translation>[0300-036F] Kombinálható diakritikus jelek</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="988"/>
@@ -11127,7 +11124,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="905"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="905"/>
         <source>[0370-03FF] Greek and Coptic</source>
-        <translation>[0370-03FF] Greek and Coptic</translation>
+        <translation>[0370-03FF] Görög és kopt</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="993"/>
@@ -11135,7 +11132,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="906"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="906"/>
         <source>[0400-04FF] Cyrillic</source>
-        <translation>[0400-04FF] Cyrillic</translation>
+        <translation>[0400-04FF] Cirill</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="998"/>
@@ -11143,7 +11140,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="907"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="907"/>
         <source>[0500-052F] Cyrillic Supplementary</source>
-        <translation>[0500-052F] Cyrillic Supplementary</translation>
+        <translation>[0500-052F] Cirill kiegészítő</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="1003"/>
@@ -11151,7 +11148,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="908"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="908"/>
         <source>[0530-058F] Armenian</source>
-        <translation>[0530-058F] Armenian</translation>
+        <translation>[0530-058F] Örmény</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="1008"/>
@@ -11159,7 +11156,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="909"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="909"/>
         <source>[0590-05FF] Hebrew</source>
-        <translation>[0590-05FF] Hebrew</translation>
+        <translation>[0590-05FF] Héber</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="1013"/>
@@ -11167,7 +11164,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="910"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="910"/>
         <source>[0600-06FF] Arabic</source>
-        <translation>[0600-06FF] Arabic</translation>
+        <translation>[0600-06FF] Arab</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="1018"/>
@@ -11175,7 +11172,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="911"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="911"/>
         <source>[0700-074F] Syriac</source>
-        <translation>[0700-074F] Syriac</translation>
+        <translation>[0700-074F] Szír</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="1023"/>
@@ -11199,7 +11196,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="914"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="914"/>
         <source>[0980-09FF] Bengali</source>
-        <translation>[0980-09FF] Bengali</translation>
+        <translation>[0980-09FF] Bengáli</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="1038"/>
@@ -11263,7 +11260,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="922"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="922"/>
         <source>[0D80-0DFF] Sinhala</source>
-        <translation>[0D80-0DFF] Sinhala</translation>
+        <translation>[0D80-0DFF] Szingaléz</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="1078"/>
@@ -11287,7 +11284,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="925"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="925"/>
         <source>[0F00-0FFF] Tibetan</source>
-        <translation>[0F00-0FFF] Tibetan</translation>
+        <translation>[0F00-0FFF] Tibeti</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="1093"/>
@@ -11295,7 +11292,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="926"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="926"/>
         <source>[1000-109F] Myanmar</source>
-        <translation>[1000-109F] Myanmar</translation>
+        <translation>[1000-109F] Burmai</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="1098"/>
@@ -11303,7 +11300,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="927"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="927"/>
         <source>[10A0-10FF] Georgian</source>
-        <translation>[10A0-10FF] Georgian</translation>
+        <translation>[10A0-10FF] Grúz</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="1103"/>
@@ -11319,7 +11316,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="929"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="929"/>
         <source>[1200-137F] Ethiopic</source>
-        <translation>[1200-137F] Ethiopic</translation>
+        <translation>[1200-137F] Etióp</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="1113"/>
@@ -11327,7 +11324,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="930"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="930"/>
         <source>[13A0-13FF] Cherokee</source>
-        <translation>[13A0-13FF] Cherokee</translation>
+        <translation>[13A0-13FF] Cseroki</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="1118"/>
@@ -11335,7 +11332,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="931"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="931"/>
         <source>[1400-167F] Unified Canadian Aboriginal Syllabic</source>
-        <translation>[1400-167F] Unified Canadian Aboriginal Syllabic</translation>
+        <translation>[1400-167F] Egységesített kanadai bennszülött szótagírás</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="1123"/>
@@ -11351,7 +11348,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="933"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="933"/>
         <source>[16A0-16FF] Runic</source>
-        <translation>[16A0-16FF] Runic</translation>
+        <translation>[16A0-16FF] Rúna</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="1133"/>
@@ -11399,7 +11396,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="939"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="939"/>
         <source>[1800-18AF] Mongolian</source>
-        <translation>[1800-18AF] Mongolian</translation>
+        <translation>[1800-18AF] Mongol</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="1163"/>
@@ -11407,7 +11404,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="940"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="940"/>
         <source>[1E00-1EFF] Latin Extended Additional</source>
-        <translation>[1E00-1EFF] Latin Extended Additional</translation>
+        <translation>[1E00-1EFF] Bővített latin – további karakterek</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="1168"/>
@@ -11415,7 +11412,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="941"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="941"/>
         <source>[1F00-1FFF] Greek Extended</source>
-        <translation>[1F00-1FFF] Greek Extended</translation>
+        <translation>[1F00-1FFF] Bővített görög</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="1173"/>
@@ -11423,7 +11420,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="942"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="942"/>
         <source>[2000-206F] General Punctuation</source>
-        <translation>[2000-206F] General Punctuation</translation>
+        <translation>[2000-206F] Általános írásjelek</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="1178"/>
@@ -11431,7 +11428,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="943"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="943"/>
         <source>[2070-209F] Superscripts and Subscripts</source>
-        <translation>[2070-209F] Superscripts and Subscripts</translation>
+        <translation>[2070-209F] Felső- és alsó indexek</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="1183"/>
@@ -11439,7 +11436,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="944"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="944"/>
         <source>[20A0-20CF] Currency Symbols</source>
-        <translation>[20A0-20CF] Currency Symbols</translation>
+        <translation>[20A0-20CF] Pénznemszimbólumok</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="1188"/>
@@ -11447,7 +11444,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="945"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="945"/>
         <source>[20D0-20FF] Combining Marks for Symbols</source>
-        <translation>[20D0-20FF] Combining Marks for Symbols</translation>
+        <translation>[20D0-20FF] Szimbólumokhoz kombinálható jelek</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="1193"/>
@@ -11455,7 +11452,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="946"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="946"/>
         <source>[2100-214F] Letterlike Symbols</source>
-        <translation>[2100-214F] Letterlike Symbols</translation>
+        <translation>[2100-214F] Betűszerű szimbólumok</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="1198"/>
@@ -11463,7 +11460,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="947"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="947"/>
         <source>[2150-218F] Number Forms</source>
-        <translation>[2150-218F] Number Forms</translation>
+        <translation>[2150-218F] Számformák</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="1203"/>
@@ -11471,7 +11468,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="948"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="948"/>
         <source>[2190-21FF] Arrows</source>
-        <translation>[2190-21FF] Arrows</translation>
+        <translation>[2190-21FF] Nyilak</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="1208"/>
@@ -11479,7 +11476,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="949"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="949"/>
         <source>[2200-22FF] Mathematical Operators</source>
-        <translation>[2200-22FF] Mathematical Operators</translation>
+        <translation>[2200-22FF] Matematikai operátorok</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="1213"/>
@@ -11487,7 +11484,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="950"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="950"/>
         <source>[2300-23FF] Miscellaneous Technical</source>
-        <translation>[2300-23FF] Miscellaneous Technical</translation>
+        <translation>[2300-23FF] Vegyes műszaki jelek</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="1218"/>
@@ -11495,7 +11492,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="951"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="951"/>
         <source>[2400-243F] Control Pictures</source>
-        <translation>[2400-243F] Control Pictures</translation>
+        <translation>[2400-243F] Vezérlőkarakter-képek</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="1223"/>
@@ -11503,7 +11500,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="952"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="952"/>
         <source>[2440-245F] Optical Character Recognition</source>
-        <translation>[2440-245F] Optical Character Recognition</translation>
+        <translation>[2440-245F] Optikai karakterfelismerés</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="1228"/>
@@ -11511,7 +11508,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="953"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="953"/>
         <source>[2460-24FF] Enclosed Alphanumerics</source>
-        <translation>[2460-24FF] Enclosed Alphanumerics</translation>
+        <translation>[2460-24FF] Keretezett alfanumerikus karakterek</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="1233"/>
@@ -11519,7 +11516,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="954"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="954"/>
         <source>[2500-257F] Box Drawing</source>
-        <translation>[2500-257F] Box Drawing</translation>
+        <translation>[2500-257F] Dobozrajzoló karakterek</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="1238"/>
@@ -11527,7 +11524,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="955"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="955"/>
         <source>[2580-259F] Block Elements</source>
-        <translation>[2580-259F] Block Elements</translation>
+        <translation>[2580-259F] Blokkelemek</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="1243"/>
@@ -11535,7 +11532,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="956"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="956"/>
         <source>[25A0-25FF] Geometric Shapes</source>
-        <translation>[25A0-25FF] Geometric Shapes</translation>
+        <translation>[25A0-25FF] Geometriai alakzatok</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="1248"/>
@@ -11543,7 +11540,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="957"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="957"/>
         <source>[2600-26FF] Miscellaneous Symbols</source>
-        <translation>[2600-26FF] Miscellaneous Symbols</translation>
+        <translation>[2600-26FF] Vegyes szimbólumok</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="1253"/>
@@ -11551,7 +11548,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="958"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="958"/>
         <source>[2700-27BF] Dingbats</source>
-        <translation>[2700-27BF] Dingbats</translation>
+        <translation>[2700-27BF] Díszítőjelek</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="1258"/>
@@ -11559,7 +11556,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="959"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="959"/>
         <source>[27C0-27EF] Miscellaneous Mathematical Symbols-A</source>
-        <translation>[27C0-27EF] Miscellaneous Mathematical Symbols-A</translation>
+        <translation>[27C0-27EF] Vegyes matematikai szimbólumok-A</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="1263"/>
@@ -11567,7 +11564,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="960"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="960"/>
         <source>[27F0-27FF] Supplemental Arrows-A</source>
-        <translation>[27F0-27FF] Supplemental Arrows-A</translation>
+        <translation>[27F0-27FF] Kiegészítő nyilak-A</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="1268"/>
@@ -11575,7 +11572,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="961"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="961"/>
         <source>[2800-28FF] Braille Patterns</source>
-        <translation>[2800-28FF] Braille Patterns</translation>
+        <translation>[2800-28FF] Braille-minták</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="1273"/>
@@ -11583,7 +11580,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="962"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="962"/>
         <source>[2900-297F] Supplemental Arrows-B</source>
-        <translation>[2900-297F] Supplemental Arrows-B</translation>
+        <translation>[2900-297F] Kiegészítő nyilak-B</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="1278"/>
@@ -11591,7 +11588,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="963"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="963"/>
         <source>[2980-29FF] Miscellaneous Mathematical Symbols-B</source>
-        <translation>[2980-29FF] Miscellaneous Mathematical Symbols-B</translation>
+        <translation>[2980-29FF] Vegyes matematikai szimbólumok-B</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="1283"/>
@@ -11599,7 +11596,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="964"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="964"/>
         <source>[2A00-2AFF] Supplemental Mathematical Operators</source>
-        <translation>[2A00-2AFF] Supplemental Mathematical Operators</translation>
+        <translation>[2A00-2AFF] Kiegészítő matematikai operátorok</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="1288"/>
@@ -11607,7 +11604,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="965"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="965"/>
         <source>[2E80-2EFF] CJK Radicals Supplement</source>
-        <translation>[2E80-2EFF] CJK Radicals Supplement</translation>
+        <translation>[2E80-2EFF] CJK gyökök kiegészítő</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="1293"/>
@@ -11615,7 +11612,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="966"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="966"/>
         <source>[2F00-2FDF] Kangxi Radicals</source>
-        <translation>[2F00-2FDF] Kangxi Radicals</translation>
+        <translation>[2F00-2FDF] Kangxi gyökök</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="1298"/>
@@ -11623,7 +11620,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="967"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="967"/>
         <source>[2FF0-2FFF] Ideographic Description Characters</source>
-        <translation>[2FF0-2FFF] Ideographic Description Characters</translation>
+        <translation>[2FF0-2FFF] Ideografikus leíró karakterek</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="1303"/>
@@ -11631,7 +11628,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="968"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="968"/>
         <source>[3000-303F] CJK Symbols and Punctuation</source>
-        <translation>[3000-303F] CJK Symbols and Punctuation</translation>
+        <translation>[3000-303F] CJK szimbólumok és írásjelek</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="1308"/>
@@ -11663,7 +11660,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="972"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="972"/>
         <source>[3130-318F] Hangul Compatibility Jamo</source>
-        <translation>[3130-318F] Hangul Compatibility Jamo</translation>
+        <translation>[3130-318F] Hangul kompatibilitási jamo</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="1328"/>
@@ -11679,7 +11676,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="974"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="974"/>
         <source>[31A0-31BF] Bopomofo Extended</source>
-        <translation>[31A0-31BF] Bopomofo Extended</translation>
+        <translation>[31A0-31BF] Bővített bopomofo</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="1338"/>
@@ -11687,7 +11684,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="975"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="975"/>
         <source>[3200-32FF] Enclosed CJK Letters and Months</source>
-        <translation>[3200-32FF] Enclosed CJK Letters and Months</translation>
+        <translation>[3200-32FF] Keretezett CJK betűk és hónapok</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="1343"/>
@@ -11695,7 +11692,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="976"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="976"/>
         <source>[3300-33FF] CJK Compatibility</source>
-        <translation>[3300-33FF] CJK Compatibility</translation>
+        <translation>[3300-33FF] CJK kompatibilitás</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="1348"/>
@@ -11703,7 +11700,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="977"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="977"/>
         <source>[3400-4DBF] CJK Unified Ideographs Extension A</source>
-        <translation>[3400-4DBF] CJK Unified Ideographs Extension A</translation>
+        <translation>[3400-4DBF] CJK egységesített ideográfok – A kiterjesztés</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="1353"/>
@@ -11711,7 +11708,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="978"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="978"/>
         <source>[4E00-9FAF] CJK Unified Ideographs</source>
-        <translation>[4E00-9FAF] CJK Unified Ideographs</translation>
+        <translation>[4E00-9FAF] CJK egységesített ideográfok</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="1358"/>
@@ -11719,7 +11716,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="979"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="979"/>
         <source>[A000-A48F] Yi Syllables</source>
-        <translation>[A000-A48F] Yi Syllables</translation>
+        <translation>[A000-A48F] Ji szótagok</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="1363"/>
@@ -11727,7 +11724,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="980"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="980"/>
         <source>[A490-A4CF] Yi Radicals</source>
-        <translation>[A490-A4CF] Yi Radicals</translation>
+        <translation>[A490-A4CF] Ji gyökök</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="1368"/>
@@ -11735,7 +11732,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="981"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="981"/>
         <source>[AC00-D7AF] Hangul Syllables</source>
-        <translation>[AC00-D7AF] Hangul Syllables</translation>
+        <translation>[AC00-D7AF] Hangul szótagok</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="1373"/>
@@ -11743,7 +11740,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="982"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="982"/>
         <source>[D800-DBFF] High Surrogates</source>
-        <translation>[D800-DBFF] High Surrogates</translation>
+        <translation>[D800-DBFF] Magas helyettesítők</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="1378"/>
@@ -11751,7 +11748,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="983"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="983"/>
         <source>[DC00-DFFF] Low Surrogate Area</source>
-        <translation>[DC00-DFFF] Low Surrogate Area</translation>
+        <translation>[DC00-DFFF] Alacsony helyettesítők területe</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="1383"/>
@@ -11759,7 +11756,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="984"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="984"/>
         <source>[E000-F8FF] Private Use Area</source>
-        <translation>[E000-F8FF] Private Use Area</translation>
+        <translation>[E000-F8FF] Magánhasználatú terület</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="1388"/>
@@ -11767,7 +11764,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="985"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="985"/>
         <source>[F900-FAFF] CJK Compatibility Ideographs</source>
-        <translation>[F900-FAFF] CJK Compatibility Ideographs</translation>
+        <translation>[F900-FAFF] CJK kompatibilitási ideográfok</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="1393"/>
@@ -11775,7 +11772,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="986"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="986"/>
         <source>[FB00-FB4F] Alphabetic Presentation Forms</source>
-        <translation>[FB00-FB4F] Alphabetic Presentation Forms</translation>
+        <translation>[FB00-FB4F] Ábécés megjelenítési formák</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="1398"/>
@@ -11783,7 +11780,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="987"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="987"/>
         <source>[FB50-FDFF] Arabic Presentation Forms-A</source>
-        <translation>[FB50-FDFF] Arabic Presentation Forms-A</translation>
+        <translation>[FB50-FDFF] Arab megjelenítési formák-A</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="1403"/>
@@ -11791,7 +11788,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="988"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="988"/>
         <source>[FE00-FE0F] Variation Selectors</source>
-        <translation>[FE00-FE0F] Variation Selectors</translation>
+        <translation>[FE00-FE0F] Változatválasztók</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="1408"/>
@@ -11799,7 +11796,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="989"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="989"/>
         <source>[FE20-FE2F] Combining Half Marks</source>
-        <translation>[FE20-FE2F] Combining Half Marks</translation>
+        <translation>[FE20-FE2F] Kombinálható féljelek</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="1413"/>
@@ -11807,7 +11804,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="990"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="990"/>
         <source>[FE30-FE4F] CJK Compatibility Forms</source>
-        <translation>[FE30-FE4F] CJK Compatibility Forms</translation>
+        <translation>[FE30-FE4F] CJK kompatibilitási formák</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="1418"/>
@@ -11815,7 +11812,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="991"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="991"/>
         <source>[FE50-FE6F] Small Form Variants</source>
-        <translation>[FE50-FE6F] Small Form Variants</translation>
+        <translation>[FE50-FE6F] Kis forma változatok</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="1423"/>
@@ -11823,7 +11820,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="992"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="992"/>
         <source>[FE70-FEFF] Arabic Presentation Forms-B</source>
-        <translation>[FE70-FEFF] Arabic Presentation Forms-B</translation>
+        <translation>[FE70-FEFF] Arab megjelenítési formák-B</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="1428"/>
@@ -11831,7 +11828,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="993"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="993"/>
         <source>[FF00-FFEF] Halfwidth and Fullwidth Forms</source>
-        <translation>[FF00-FFEF] Halfwidth and Fullwidth Forms</translation>
+        <translation>[FF00-FFEF] Félszélességű és teljes szélességű formák</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="1433"/>
@@ -11839,7 +11836,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="994"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="994"/>
         <source>[FFF0-FFFF] Specials</source>
-        <translation>[FFF0-FFFF] Specials</translation>
+        <translation>[FFF0-FFFF] Különleges karakterek</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="1438"/>
@@ -11847,7 +11844,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="995"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="995"/>
         <source>[10300-1032F] Old Italic</source>
-        <translation>[10300-1032F] Old Italic</translation>
+        <translation>[10300-1032F] Ó-itáliai</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="1443"/>
@@ -11855,7 +11852,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="996"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="996"/>
         <source>[10330-1034F] Gothic</source>
-        <translation>[10330-1034F] Gothic</translation>
+        <translation>[10330-1034F] Gót</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="1448"/>
@@ -11871,7 +11868,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="998"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="998"/>
         <source>[1D000-1D0FF] Byzantine Musical Symbols</source>
-        <translation>[1D000-1D0FF] Byzantine Musical Symbols</translation>
+        <translation>[1D000-1D0FF] Bizánci zenei szimbólumok</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="1458"/>
@@ -11879,7 +11876,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="999"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="999"/>
         <source>[1D100-1D1FF] Musical Symbols</source>
-        <translation>[1D100-1D1FF] Musical Symbols</translation>
+        <translation>[1D100-1D1FF] Zenei szimbólumok</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="1463"/>
@@ -11887,7 +11884,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="1000"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="1000"/>
         <source>[1D400-1D7FF] Mathematical Alphanumeric Symbols</source>
-        <translation>[1D400-1D7FF] Mathematical Alphanumeric Symbols</translation>
+        <translation>[1D400-1D7FF] Matematikai alfanumerikus szimbólumok</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="1468"/>
@@ -11895,7 +11892,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="1001"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="1001"/>
         <source>[20000-2A6DF] CJK Unified Ideographs Extension B</source>
-        <translation>[20000-2A6DF] CJK Unified Ideographs Extension B</translation>
+        <translation>[20000-2A6DF] CJK egységesített ideográfok – B kiterjesztés</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="1473"/>
@@ -11903,7 +11900,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="1002"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="1002"/>
         <source>[2F800-2FA1F] CJK Compatibility Ideographs Supplement</source>
-        <translation>[2F800-2FA1F] CJK Compatibility Ideographs Supplement</translation>
+        <translation>[2F800-2FA1F] CJK kompatibilitási ideográfok kiegészítő</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="1478"/>
@@ -11911,7 +11908,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="1003"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="1003"/>
         <source>[E0000-E007F] Tags</source>
-        <translation>[E0000-E007F] Tags</translation>
+        <translation>[E0000-E007F] Címkék</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="1483"/>
@@ -11919,7 +11916,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="1004"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="1004"/>
         <source>[F0000-FFFFD] Supplementary Private Use Area-A</source>
-        <translation>[F0000-FFFFD] Supplementary Private Use Area-A</translation>
+        <translation>[F0000-FFFFD] Kiegészítő magánhasználatú terület-A</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgtext.ui" line="1488"/>
@@ -11927,7 +11924,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgtext.h" line="1005"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgtext.h" line="1005"/>
         <source>[100000-10FFFD] Supplementary Private Use Area-B</source>
-        <translation>[100000-10FFFD] Supplementary Private Use Area-B</translation>
+        <translation>[100000-10FFFD] Kiegészítő magánhasználatú terület-B</translation>
     </message>
 </context>
 <context>
@@ -11946,17 +11943,17 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_exitdialog.h" line="80"/>
         <location filename="../../../generated/librecad/ui/ui_qg_exitdialog.h" line="80"/>
         <source>again Still No Text supplied.</source>
-        <translation>again Still No Text supplied.</translation>
+        <translation>még mindig nincs szöveg megadva.</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_exitdialog.cpp" line="116"/>
         <source>Discard All</source>
-        <translation>Discard All</translation>
+        <translation>Összes elvetése</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_exitdialog.cpp" line="116"/>
         <source>Discard</source>
-        <translation>Discard</translation>
+        <translation>Elvetés</translation>
     </message>
 </context>
 <context>
@@ -11964,84 +11961,84 @@ so default step value required for baking</translation>
     <message>
         <location filename="../../src/ui/qg_filedialog.cpp" line="122"/>
         <source>Drawing Exchange DXF 2007 %1</source>
-        <translation>Drawing Exchange DXF 2007 %1</translation>
+        <translation>Rajzcsere DXF 2007 %1</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_filedialog.cpp" line="123"/>
         <source>Drawing Exchange DXF 2004 %1</source>
-        <translation>Drawing Exchange DXF 2004 %1</translation>
+        <translation>Rajzcsere DXF 2004 %1</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_filedialog.cpp" line="124"/>
         <source>Drawing Exchange DXF 2000 %1</source>
-        <translation>Drawing Exchange DXF 2000 %1</translation>
+        <translation>Rajzcsere DXF 2000 %1</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_filedialog.cpp" line="125"/>
         <source>Drawing Exchange DXF R14 %1</source>
-        <translation>Drawing Exchange DXF R14 %1</translation>
+        <translation>Rajzcsere DXF R14 %1</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_filedialog.cpp" line="126"/>
         <source>Drawing Exchange DXF R12 %1</source>
-        <translation>Drawing Exchange DXF R12 %1</translation>
+        <translation>Rajzcsere DXF R12 %1</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_filedialog.cpp" line="127"/>
         <source>Drawing Exchange %1</source>
-        <translation>Drawing Exchange %1</translation>
+        <translation>Rajzcsere %1</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_filedialog.cpp" line="129"/>
         <source>LFF Font %1</source>
-        <translation>LFF Font %1</translation>
+        <translation>LFF Betűtípus %1</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_filedialog.cpp" line="131"/>
         <source>dwg Drawing %1</source>
-        <translation>dwg Drawing %1</translation>
+        <translation>DWG Rajz %1</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_filedialog.cpp" line="133"/>
         <source>QCad Font %1</source>
-        <translation>QCad Font %1</translation>
+        <translation>QCad Betűtípus %1</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_filedialog.cpp" line="134"/>
         <source>Jww Drawing %1</source>
-        <translation>Jww Drawing %1</translation>
+        <translation>Jww Rajz %1</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_filedialog.cpp" line="135"/>
         <source>QCad 1.x file %1</source>
-        <translation>QCad 1.x file %1</translation>
+        <translation>QCad 1.x fájl %1</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_filedialog.cpp" line="138"/>
         <source>Block</source>
         <comment>block file</comment>
-        <translation>Block</translation>
+        <translation>Blokk</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_filedialog.cpp" line="141"/>
         <source>Drawing</source>
         <comment>drawing file</comment>
-        <translation>Drawing</translation>
+        <translation>Rajz</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_filedialog.cpp" line="164"/>
         <source>Open %1</source>
-        <translation>Open %1</translation>
+        <translation>Megnyitás: %1</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_filedialog.cpp" line="235"/>
         <source>Untitled</source>
-        <translation>Untitled</translation>
+        <translation>Névtelen</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_filedialog.cpp" line="246"/>
         <source>Save %1 As</source>
-        <translation>Save %1 As</translation>
+        <translation>Mentés: %1 Másként</translation>
     </message>
 </context>
 <context>
@@ -12049,12 +12046,12 @@ so default step value required for baking</translation>
     <message>
         <location filename="../../src/ui/qg_graphicview.cpp" line="566"/>
         <source>Edit Block</source>
-        <translation>Edit Block</translation>
+        <translation>Blokk szerkesztése</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_graphicview.cpp" line="569"/>
         <source>Edit Properties</source>
-        <translation>Edit Properties</translation>
+        <translation>Tulajdonságok szerkesztése</translation>
     </message>
 </context>
 <context>
@@ -12065,7 +12062,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgimageoptions.h" line="269"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgimageoptions.h" line="269"/>
         <source>Image Export Options</source>
-        <translation>Image Export Options</translation>
+        <translation>Képexportálás beállítások</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgimageoptions.ui" line="23"/>
@@ -12073,7 +12070,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgimageoptions.h" line="270"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgimageoptions.h" line="270"/>
         <source>Bitmap Size</source>
-        <translation>Bitmap Size</translation>
+        <translation>Bitképméret</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgimageoptions.ui" line="29"/>
@@ -12081,7 +12078,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgimageoptions.h" line="271"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgimageoptions.h" line="271"/>
         <source>Resolution:</source>
-        <translation>Resolution:</translation>
+        <translation>Felbontás:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgimageoptions.ui" line="43"/>
@@ -12097,7 +12094,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgimageoptions.h" line="274"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgimageoptions.h" line="274"/>
         <source>Width:</source>
-        <translation>Width:</translation>
+        <translation>Vastagság:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgimageoptions.ui" line="154"/>
@@ -12113,7 +12110,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgimageoptions.h" line="276"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgimageoptions.h" line="276"/>
         <source>Background</source>
-        <translation>Background</translation>
+        <translation>Háttér</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgimageoptions.ui" line="209"/>
@@ -12121,7 +12118,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgimageoptions.h" line="277"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgimageoptions.h" line="277"/>
         <source>White</source>
-        <translation>White</translation>
+        <translation>Fehér</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgimageoptions.ui" line="219"/>
@@ -12129,7 +12126,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgimageoptions.h" line="278"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgimageoptions.h" line="278"/>
         <source>B&amp;lack</source>
-        <translation>B&amp;lack</translation>
+        <translation>Fe&kete</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgimageoptions.ui" line="258"/>
@@ -12137,7 +12134,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgimageoptions.h" line="279"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgimageoptions.h" line="279"/>
         <source>Colouring</source>
-        <translation>Colouring</translation>
+        <translation>Színezés</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgimageoptions.ui" line="264"/>
@@ -12145,7 +12142,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgimageoptions.h" line="280"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgimageoptions.h" line="280"/>
         <source>Black / White</source>
-        <translation>Black / White</translation>
+        <translation>Fekete / Fehér</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgimageoptions.ui" line="274"/>
@@ -12153,7 +12150,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgimageoptions.h" line="281"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgimageoptions.h" line="281"/>
         <source>Coloured</source>
-        <translation>Coloured</translation>
+        <translation>Színes</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgimageoptions.ui" line="310"/>
@@ -12161,7 +12158,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgimageoptions.h" line="282"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgimageoptions.h" line="282"/>
         <source>Borders</source>
-        <translation>Borders</translation>
+        <translation>Szegélyek</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgimageoptions.ui" line="326"/>
@@ -12169,7 +12166,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgimageoptions.h" line="284"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgimageoptions.h" line="284"/>
         <source>Top / Bottom - Border:</source>
-        <translation>Top / Bottom - Border:</translation>
+        <translation>Felső / Alsó szegély:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgimageoptions.ui" line="333"/>
@@ -12177,7 +12174,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgimageoptions.h" line="285"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgimageoptions.h" line="285"/>
         <source>Left / Right - Border:</source>
-        <translation>Left / Right - Border:</translation>
+        <translation>Bal / Jobb szegély:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dlgimageoptions.ui" line="353"/>
@@ -12185,7 +12182,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_dlgimageoptions.h" line="286"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dlgimageoptions.h" line="286"/>
         <source>set same size</source>
-        <translation>set same size</translation>
+        <translation>azonos méret beállítása</translation>
     </message>
 </context>
 <context>
@@ -12193,7 +12190,7 @@ so default step value required for baking</translation>
     <message>
         <location filename="../../src/ui/qg_layerbox.cpp" line="71"/>
         <source>- Unchanged -</source>
-        <translation>- Unchanged -</translation>
+        <translation>- Változatlan -</translation>
     </message>
 </context>
 <context>
@@ -12204,7 +12201,7 @@ so default step value required for baking</translation>
         <location filename="../../../build/ui_qg_layerdialog.h" line="90"/>
         <location filename="../../../generated/librecad/ui/ui_qg_layerdialog.h" line="90"/>
         <source>Layer Settings</source>
-        <translation>Layer Settings</translation>
+        <translation>Réteg beállítások</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_layerdialog.ui" line="29"/>
@@ -12213,8 +12210,7 @@ so default step value required for baking</translation>
         <location filename="../../../generated/librecad/ui/ui_qg_layerdialog.h" line="92"/>
         <source>A Construction Layer has entities of infinite straight lines intended to be used for geometric construction.
 The contents of a Construction Layer should not appear in printout.</source>
-        <translation>A Construction Layer has entities of infinite straight lines intended to be used for geometric construction.
-The contents of a Construction Layer should not appear in printout.</translation>
+        <translation>A Szerkesztő réteg végtelen egyenes vonalakból álló elemeket tartalmaz, amelyek segédvonalként szolgálnak</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_layerdialog.ui" line="33"/>
@@ -12222,7 +12218,7 @@ The contents of a Construction Layer should not appear in printout.</translation
         <location filename="../../../build/ui_qg_layerdialog.h" line="95"/>
         <location filename="../../../generated/librecad/ui/ui_qg_layerdialog.h" line="95"/>
         <source>Construction Layer</source>
-        <translation>Construction Layer</translation>
+        <translation>Szerkesztő réteg</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_layerdialog.ui" line="46"/>
@@ -12230,12 +12226,12 @@ The contents of a Construction Layer should not appear in printout.</translation
         <location filename="../../../build/ui_qg_layerdialog.h" line="96"/>
         <location filename="../../../generated/librecad/ui/ui_qg_layerdialog.h" line="96"/>
         <source>Layer Name:</source>
-        <translation>Layer Name:</translation>
+        <translation>Réteg neve:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_layerdialog.cpp" line="65"/>
         <source>Default Pen</source>
-        <translation>Default Pen</translation>
+        <translation>Alapértelmezett toll</translation>
     </message>
 </context>
 <context>
@@ -12243,117 +12239,117 @@ The contents of a Construction Layer should not appear in printout.</translation
     <message>
         <location filename="../../src/ui/qg_layerwidget.cpp" line="227"/>
         <source>Show all layers</source>
-        <translation>Show all layers</translation>
+        <translation>Minden réteg megjelenítése</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_layerwidget.cpp" line="234"/>
         <source>Hide all layers</source>
-        <translation>Hide all layers</translation>
+        <translation>Minden réteg elrejtése</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_layerwidget.cpp" line="241"/>
         <source>Unlock all layers</source>
-        <translation>Unlock all layers</translation>
+        <translation>Minden réteg feloldása</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_layerwidget.cpp" line="248"/>
         <source>Lock all layers</source>
-        <translation>Lock all layers</translation>
+        <translation>Minden réteg zárolása</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_layerwidget.cpp" line="255"/>
         <source>Add a layer</source>
-        <translation>Add a layer</translation>
+        <translation>Réteg hozzáadása</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_layerwidget.cpp" line="262"/>
         <source>Remove layer</source>
-        <translation>Remove layer</translation>
+        <translation>Réteg eltávolítása</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_layerwidget.cpp" line="269"/>
         <source>Modify layer attributes / rename</source>
-        <translation>Modify layer attributes / rename</translation>
+        <translation>Réteg attribútumainak módosítása / átnevezése</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_layerwidget.cpp" line="276"/>
         <source>Filter</source>
-        <translation>Filter</translation>
+        <translation>Szűrő</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_layerwidget.cpp" line="278"/>
         <source>Looking for matching layer names</source>
-        <translation>Looking for matching layer names</translation>
+        <translation>Egyező rétegnevek keresése</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_layerwidget.cpp" line="549"/>
         <source>Layer Menu</source>
-        <translation>Layer Menu</translation>
+        <translation>Réteg menü</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_layerwidget.cpp" line="556"/>
         <source>&amp;Defreeze all Layers</source>
-        <translation>&amp;Defreeze all Layers</translation>
+        <translation>&Minden réteg felengedése</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_layerwidget.cpp" line="558"/>
         <source>&amp;Freeze all Layers</source>
-        <translation>&amp;Freeze all Layers</translation>
+        <translation>&Minden réteg befagyasztása</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_layerwidget.cpp" line="560"/>
         <source>&amp;Unlock all Layers</source>
-        <translation>&amp;Unlock all Layers</translation>
+        <translation>&Minden réteg feloldása</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_layerwidget.cpp" line="562"/>
         <source>&amp;Lock all Layers</source>
-        <translation>&amp;Lock all Layers</translation>
+        <translation>&Minden réteg zárolása</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_layerwidget.cpp" line="567"/>
         <source>Toggle Layer &amp;Visibility</source>
-        <translation>Toggle Layer &amp;Visibility</translation>
+        <translation>Réteg &láthatóságának váltása</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_layerwidget.cpp" line="569"/>
         <source>Toggle Layer Loc&amp;k</source>
-        <translation>Toggle Layer Loc&amp;k</translation>
+        <translation>Réteg zárolásának &váltása</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_layerwidget.cpp" line="571"/>
         <source>Toggle Layer &amp;Printing</source>
-        <translation>Toggle Layer &amp;Printing</translation>
+        <translation>Réteg &nyomtatásának váltása</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_layerwidget.cpp" line="573"/>
         <source>Toggle &amp;Construction Layer</source>
-        <translation>Toggle &amp;Construction Layer</translation>
+        <translation>&Szerkesztő réteg váltása</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_layerwidget.cpp" line="575"/>
         <source>&amp;Remove Layer</source>
-        <translation>&amp;Remove Layer</translation>
+        <translation>&Réteg eltávolítása</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_layerwidget.cpp" line="579"/>
         <source>&amp;Add Layer</source>
-        <translation>&amp;Add Layer</translation>
+        <translation>&Réteg hozzáadása</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_layerwidget.cpp" line="581"/>
         <source>Edit Layer &amp;Attributes</source>
-        <translation>Edit Layer &amp;Attributes</translation>
+        <translation>Réteg &attribútumainak szerkesztése</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_layerwidget.cpp" line="586"/>
         <source>&amp;Export Selected Layer(s)</source>
-        <translation>&amp;Export Selected Layer(s)</translation>
+        <translation>&Kiválasztott réteg(ek) exportálása</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_layerwidget.cpp" line="589"/>
         <source>Export &amp;Visible Layer(s)</source>
-        <translation>Export &amp;Visible Layer(s)</translation>
+        <translation>&Látható réteg(ek) exportálása</translation>
     </message>
 </context>
 <context>
@@ -12361,22 +12357,22 @@ The contents of a Construction Layer should not appear in printout.</translation
     <message>
         <location filename="../../src/ui/qg_librarywidget.cpp" line="89"/>
         <source>Insert</source>
-        <translation>Insert</translation>
+        <translation>Beillesztés</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_librarywidget.cpp" line="93"/>
         <source>Refresh</source>
-        <translation>Refresh</translation>
+        <translation>Frissítés</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_librarywidget.cpp" line="95"/>
         <source>Rebuild</source>
-        <translation>Rebuild</translation>
+        <translation>Újraépítés</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_librarywidget.cpp" line="201"/>
         <source>Directories</source>
-        <translation>Directories</translation>
+        <translation>Könyvtárak</translation>
     </message>
 </context>
 <context>
@@ -12384,28 +12380,28 @@ The contents of a Construction Layer should not appear in printout.</translation
     <message>
         <location filename="../../src/ui/qg_linetypebox.cpp" line="75"/>
         <source>- Unchanged -</source>
-        <translation>- Unchanged -</translation>
+        <translation>- Változatlan -</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_linetypebox.cpp" line="79"/>
         <location filename="../../src/ui/qg_linetypebox.cpp" line="189"/>
         <source>By Layer</source>
-        <translation>By Layer</translation>
+        <translation>Réteg szerint</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_linetypebox.cpp" line="80"/>
         <source>By Block</source>
-        <translation>By Block</translation>
+        <translation>Blokk szerint</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_linetypebox.cpp" line="82"/>
         <source>No Pen</source>
-        <translation>No Pen</translation>
+        <translation>Nincs toll</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_linetypebox.cpp" line="83"/>
         <source>Continuous</source>
-        <translation>Continuous</translation>
+        <translation>Folyamatos</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_linetypebox.cpp" line="84"/>
@@ -12415,17 +12411,17 @@ The contents of a Construction Layer should not appear in printout.</translation
     <message>
         <location filename="../../src/ui/qg_linetypebox.cpp" line="85"/>
         <source>Dot (tiny)</source>
-        <translation>Dot (tiny)</translation>
+        <translation>Pont (apró)</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_linetypebox.cpp" line="86"/>
         <source>Dot (small)</source>
-        <translation>Dot (small)</translation>
+        <translation>Pont (kis)</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_linetypebox.cpp" line="87"/>
         <source>Dot (large)</source>
-        <translation>Dot (large)</translation>
+        <translation>Pont (nagy)</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_linetypebox.cpp" line="88"/>
@@ -12435,37 +12431,37 @@ The contents of a Construction Layer should not appear in printout.</translation
     <message>
         <location filename="../../src/ui/qg_linetypebox.cpp" line="89"/>
         <source>Dash (tiny)</source>
-        <translation>Dash (tiny)</translation>
+        <translation>Szaggatott (apró)</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_linetypebox.cpp" line="90"/>
         <source>Dash (small)</source>
-        <translation>Dash (small)</translation>
+        <translation>Szaggatott (kis)</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_linetypebox.cpp" line="91"/>
         <source>Dash (large)</source>
-        <translation>Dash (large)</translation>
+        <translation>Szaggatott (nagy)</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_linetypebox.cpp" line="92"/>
         <source>Dash Dot</source>
-        <translation>Dash Dot</translation>
+        <translation>Szaggatott-pont</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_linetypebox.cpp" line="93"/>
         <source>Dash Dot (tiny)</source>
-        <translation>Dash Dot (tiny)</translation>
+        <translation>Szaggatott-pont (apró)</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_linetypebox.cpp" line="94"/>
         <source>Dash Dot (small)</source>
-        <translation>Dash Dot (small)</translation>
+        <translation>Szaggatott-pont (kis)</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_linetypebox.cpp" line="95"/>
         <source>Dash Dot (large)</source>
-        <translation>Dash Dot (large)</translation>
+        <translation>Szaggatott-pont (nagy)</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_linetypebox.cpp" line="96"/>
@@ -12475,57 +12471,57 @@ The contents of a Construction Layer should not appear in printout.</translation
     <message>
         <location filename="../../src/ui/qg_linetypebox.cpp" line="97"/>
         <source>Divide (tiny)</source>
-        <translation>Divide (tiny)</translation>
+        <translation>Felosztás (apró)</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_linetypebox.cpp" line="98"/>
         <source>Divide (small)</source>
-        <translation>Divide (small)</translation>
+        <translation>Felosztás (kis)</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_linetypebox.cpp" line="99"/>
         <source>Divide (large)</source>
-        <translation>Divide (large)</translation>
+        <translation>Felosztás (nagy)</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_linetypebox.cpp" line="100"/>
         <source>Center</source>
-        <translation>Center</translation>
+        <translation>Közép</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_linetypebox.cpp" line="101"/>
         <source>Center (tiny)</source>
-        <translation>Center (tiny)</translation>
+        <translation>Közép (apró)</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_linetypebox.cpp" line="102"/>
         <source>Center (small)</source>
-        <translation>Center (small)</translation>
+        <translation>Közép (kis)</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_linetypebox.cpp" line="103"/>
         <source>Center (large)</source>
-        <translation>Center (large)</translation>
+        <translation>Közép (nagy)</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_linetypebox.cpp" line="104"/>
         <source>Border</source>
-        <translation>Border</translation>
+        <translation>Szegély</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_linetypebox.cpp" line="105"/>
         <source>Border (tiny)</source>
-        <translation>Border (tiny)</translation>
+        <translation>Szegély (apró)</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_linetypebox.cpp" line="106"/>
         <source>Border (small)</source>
-        <translation>Border (small)</translation>
+        <translation>Szegély (kis)</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_linetypebox.cpp" line="107"/>
         <source>Border (large)</source>
-        <translation>Border (large)</translation>
+        <translation>Szegély (nagy)</translation>
     </message>
 </context>
 <context>
@@ -12536,7 +12532,7 @@ The contents of a Construction Layer should not appear in printout.</translation
         <location filename="../../../build/ui_qg_mousewidget.h" line="88"/>
         <location filename="../../../generated/librecad/ui/ui_qg_mousewidget.h" line="88"/>
         <source>Mouse</source>
-        <translation>Mouse</translation>
+        <translation>Egér</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_mousewidget.ui" line="71"/>
@@ -12544,7 +12540,7 @@ The contents of a Construction Layer should not appear in printout.</translation
         <location filename="../../../build/ui_qg_mousewidget.h" line="89"/>
         <location filename="../../../generated/librecad/ui/ui_qg_mousewidget.h" line="89"/>
         <source>Right</source>
-        <translation>Right</translation>
+        <translation>Jobb</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_mousewidget.ui" line="108"/>
@@ -12576,12 +12572,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../../src/ui/qg_pentoolbar.cpp" line="44"/>
         <source>Line color</source>
-        <translation>Line color</translation>
+        <translation>Vonalszín</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_pentoolbar.cpp" line="48"/>
         <source>Line width</source>
-        <translation>Line width</translation>
+        <translation>Vonalvastagság</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_pentoolbar.cpp" line="52"/>
@@ -12594,7 +12590,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../../src/ui/forms/qg_polylineoptions.cpp" line="103"/>
         <source>wrong action type</source>
-        <translation>wrong action type</translation>
+        <translation>hibás művelet típus</translation>
     </message>
 </context>
 <context>
@@ -12602,7 +12598,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../../src/ui/qg_recentfiles.cpp" line="180"/>
         <source>&amp;%1 %2</source>
-        <translation>&amp;%1 %2</translation>
+        <translation>&%1 %2</translation>
     </message>
 </context>
 <context>
@@ -12613,7 +12609,7 @@ p, li { white-space: pre-wrap; }
         <location filename="../../../build/ui_qg_selectionwidget.h" line="111"/>
         <location filename="../../../generated/librecad/ui/ui_qg_selectionwidget.h" line="111"/>
         <source>Selection</source>
-        <translation>Selection</translation>
+        <translation>Kiválasztás</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_selectionwidget.ui" line="80"/>
@@ -12621,7 +12617,7 @@ p, li { white-space: pre-wrap; }
         <location filename="../../../build/ui_qg_selectionwidget.h" line="112"/>
         <location filename="../../../generated/librecad/ui/ui_qg_selectionwidget.h" line="112"/>
         <source>Selected</source>
-        <translation>Selected</translation>
+        <translation>Kijelölt</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_selectionwidget.ui" line="114"/>
@@ -12629,7 +12625,7 @@ p, li { white-space: pre-wrap; }
         <location filename="../../../build/ui_qg_selectionwidget.h" line="113"/>
         <location filename="../../../generated/librecad/ui/ui_qg_selectionwidget.h" line="113"/>
         <source>Total Length</source>
-        <translation>Total Length</translation>
+        <translation>Teljes hossz</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_selectionwidget.ui" line="139"/>
@@ -12680,7 +12676,7 @@ p, li { white-space: pre-wrap; }
         <location filename="../../../build/ui_qg_snaptoolbar.h" line="190"/>
         <location filename="../../../generated/librecad/ui/ui_qg_snaptoolbar.h" line="190"/>
         <source>Snap to Endpoints</source>
-        <translation>Snap to Endpoints</translation>
+        <translation>Illesztés végpontokhoz</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_snaptoolbar.ui" line="64"/>
@@ -12688,7 +12684,7 @@ p, li { white-space: pre-wrap; }
         <location filename="../../../build/ui_qg_snaptoolbar.h" line="194"/>
         <location filename="../../../generated/librecad/ui/ui_qg_snaptoolbar.h" line="194"/>
         <source>Snap to equidistant points of entity</source>
-        <translation>Snap to equidistant points of entity</translation>
+        <translation>Illesztés az elem egyenlő távolságú pontjaihoz</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_snaptoolbar.ui" line="81"/>
@@ -12696,7 +12692,7 @@ p, li { white-space: pre-wrap; }
         <location filename="../../../build/ui_qg_snaptoolbar.h" line="198"/>
         <location filename="../../../generated/librecad/ui/ui_qg_snaptoolbar.h" line="198"/>
         <source>Snap to center points</source>
-        <translation>Snap to center points</translation>
+        <translation>Illesztés középpontokhoz</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_snaptoolbar.ui" line="98"/>
@@ -12704,7 +12700,7 @@ p, li { white-space: pre-wrap; }
         <location filename="../../../build/ui_qg_snaptoolbar.h" line="202"/>
         <location filename="../../../generated/librecad/ui/ui_qg_snaptoolbar.h" line="202"/>
         <source>Snap to intersections automatically</source>
-        <translation>Snap to intersections automatically</translation>
+        <translation>Automatikus illesztés metszéspontokhoz</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_snaptoolbar.ui" line="115"/>
@@ -12712,7 +12708,7 @@ p, li { white-space: pre-wrap; }
         <location filename="../../../build/ui_qg_snaptoolbar.h" line="206"/>
         <location filename="../../../generated/librecad/ui/ui_qg_snaptoolbar.h" line="206"/>
         <source>Snap to closest point on entity</source>
-        <translation>Snap to closest point on entity</translation>
+        <translation>Illesztés az elem legközelebbi pontjához</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_snaptoolbar.ui" line="132"/>
@@ -12720,7 +12716,7 @@ p, li { white-space: pre-wrap; }
         <location filename="../../../build/ui_qg_snaptoolbar.h" line="210"/>
         <location filename="../../../generated/librecad/ui/ui_qg_snaptoolbar.h" line="210"/>
         <source>Snap to point with given distance to endpoint</source>
-        <translation>Snap to point with given distance to endpoint</translation>
+        <translation>Illesztés adott távolságra a végponttól</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_snaptoolbar.ui" line="149"/>
@@ -12728,7 +12724,7 @@ p, li { white-space: pre-wrap; }
         <location filename="../../../build/ui_qg_snaptoolbar.h" line="214"/>
         <location filename="../../../generated/librecad/ui/ui_qg_snaptoolbar.h" line="214"/>
         <source>Snap to intersections manually</source>
-        <translation>Snap to intersections manually</translation>
+        <translation>Kézi illesztés metszéspontokhoz</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_snaptoolbar.ui" line="166"/>
@@ -12736,7 +12732,7 @@ p, li { white-space: pre-wrap; }
         <location filename="../../../build/ui_qg_snaptoolbar.h" line="218"/>
         <location filename="../../../generated/librecad/ui/ui_qg_snaptoolbar.h" line="218"/>
         <source>Snap to grid</source>
-        <translation>Snap to grid</translation>
+        <translation>Illesztés rácshoz</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_snaptoolbar.ui" line="183"/>
@@ -12744,7 +12740,7 @@ p, li { white-space: pre-wrap; }
         <location filename="../../../build/ui_qg_snaptoolbar.h" line="222"/>
         <location filename="../../../generated/librecad/ui/ui_qg_snaptoolbar.h" line="222"/>
         <source>Restrict Horizontally</source>
-        <translation>Restrict Horizontally</translation>
+        <translation>Vízszintes korlátozás</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_snaptoolbar.ui" line="200"/>
@@ -12752,7 +12748,7 @@ p, li { white-space: pre-wrap; }
         <location filename="../../../build/ui_qg_snaptoolbar.h" line="226"/>
         <location filename="../../../generated/librecad/ui/ui_qg_snaptoolbar.h" line="226"/>
         <source>Restrict Vertically</source>
-        <translation>Restrict Vertically</translation>
+        <translation>Függőleges korlátozás</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_snaptoolbar.ui" line="217"/>
@@ -12760,7 +12756,7 @@ p, li { white-space: pre-wrap; }
         <location filename="../../../build/ui_qg_snaptoolbar.h" line="230"/>
         <location filename="../../../generated/librecad/ui/ui_qg_snaptoolbar.h" line="230"/>
         <source>Move relative Zero</source>
-        <translation>Move relative Zero</translation>
+        <translation>Relatív nulla mozgatása</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_snaptoolbar.ui" line="234"/>
@@ -12768,102 +12764,102 @@ p, li { white-space: pre-wrap; }
         <location filename="../../../build/ui_qg_snaptoolbar.h" line="234"/>
         <location filename="../../../generated/librecad/ui/ui_qg_snaptoolbar.h" line="234"/>
         <source>Lock relative Zero</source>
-        <translation>Lock relative Zero</translation>
+        <translation>Relatív nulla zárolása</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_snaptoolbar.cpp" line="43"/>
         <source>Exclusive Snap Mode</source>
-        <translation>Exclusive Snap Mode</translation>
+        <translation>Kizárólagos illesztési mód</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_snaptoolbar.cpp" line="52"/>
         <source>Snap Middle Manual</source>
-        <translation>Snap Middle Manual</translation>
+        <translation>Kézi közép illesztés</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_snaptoolbar.cpp" line="58"/>
         <source>Free Snap</source>
-        <translation>Free Snap</translation>
+        <translation>Szabad illesztés</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_snaptoolbar.cpp" line="63"/>
         <source>Snap on grid</source>
-        <translation>Snap on grid</translation>
+        <translation>Illesztés rácsra</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_snaptoolbar.cpp" line="68"/>
         <source>Snap on Endpoints</source>
-        <translation>Snap on Endpoints</translation>
+        <translation>Illesztés végpontokra</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_snaptoolbar.cpp" line="73"/>
         <source>Snap on Entity</source>
-        <translation>Snap on Entity</translation>
+        <translation>Illesztés elemre</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_snaptoolbar.cpp" line="78"/>
         <source>Snap Center</source>
-        <translation>Snap Center</translation>
+        <translation>Illesztés középpontra</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_snaptoolbar.cpp" line="83"/>
         <source>Snap Middle</source>
-        <translation>Snap Middle</translation>
+        <translation>Illesztés közepére</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_snaptoolbar.cpp" line="88"/>
         <source>Snap Distance</source>
-        <translation>Snap Distance</translation>
+        <translation>Illesztés távolságra</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_snaptoolbar.cpp" line="93"/>
         <source>Snap Intersection</source>
-        <translation>Snap Intersection</translation>
+        <translation>Illesztés metszéspontra</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_snaptoolbar.cpp" line="102"/>
         <source>Restrict Horizontal</source>
-        <translation>Restrict Horizontal</translation>
+        <translation>Vízszintes korlátozás</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_snaptoolbar.cpp" line="108"/>
         <source>Restrict Vertical</source>
-        <translation>Restrict Vertical</translation>
+        <translation>Függőleges korlátozás</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_snaptoolbar.cpp" line="115"/>
         <source>Restrict Orthogonal</source>
-        <translation>Restrict Orthogonal</translation>
+        <translation>Derékszögű korlátozás</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_snaptoolbar.cpp" line="123"/>
         <source>Restrict Nothing</source>
-        <translation>Restrict Nothing</translation>
+        <translation>Nincs korlátozás</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_snaptoolbar.cpp" line="130"/>
         <source>Set relative zero position</source>
-        <translation>Set relative zero position</translation>
+        <translation>Relatív nulla pozíció beállítása</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_snaptoolbar.cpp" line="136"/>
         <source>Lock relative zero position</source>
-        <translation>Lock relative zero position</translation>
+        <translation>Relatív nulla pozíció zárolása</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_snaptoolbar.cpp" line="220"/>
         <source>Relative zero position is %1</source>
-        <translation>Relative zero position is %1</translation>
+        <translation>A relatív nulla pozíció: %1</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_snaptoolbar.cpp" line="220"/>
         <source>locked</source>
-        <translation>locked</translation>
+        <translation>zárolva</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_snaptoolbar.cpp" line="220"/>
         <source>unlocked</source>
-        <translation>unlocked</translation>
+        <translation>feloldva</translation>
     </message>
 </context>
 <context>
@@ -12886,7 +12882,7 @@ p, li { white-space: pre-wrap; }
         <location filename="../../../build/ui_qg_widgetpen.h" line="140"/>
         <location filename="../../../generated/librecad/ui/ui_qg_widgetpen.h" line="140"/>
         <source>Color:</source>
-        <translation>Color:</translation>
+        <translation>Szín:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_widgetpen.ui" line="75"/>
@@ -12894,7 +12890,7 @@ p, li { white-space: pre-wrap; }
         <location filename="../../../build/ui_qg_widgetpen.h" line="141"/>
         <location filename="../../../generated/librecad/ui/ui_qg_widgetpen.h" line="141"/>
         <source>Width:</source>
-        <translation>Width:</translation>
+        <translation>Vastagság:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_widgetpen.ui" line="91"/>
@@ -12902,7 +12898,7 @@ p, li { white-space: pre-wrap; }
         <location filename="../../../build/ui_qg_widgetpen.h" line="142"/>
         <location filename="../../../generated/librecad/ui/ui_qg_widgetpen.h" line="142"/>
         <source>Line type:</source>
-        <translation>Line type:</translation>
+        <translation>Vonaltípus:</translation>
     </message>
 </context>
 <context>
@@ -12910,7 +12906,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../../src/ui/qg_widthbox.cpp" line="247"/>
         <source>By Layer</source>
-        <translation>By Layer</translation>
+        <translation>Réteg szerint</translation>
     </message>
 </context>
 <context>
@@ -12921,28 +12917,28 @@ p, li { white-space: pre-wrap; }
         <location filename="../../src/main/qc_applicationwindow.cpp" line="2078"/>
         <location filename="../../src/ui/qg_dialogfactory.cpp" line="215"/>
         <source>Warning</source>
-        <translation>Warning</translation>
+        <translation>Figyelmeztetés</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_layerdialog_ex.cpp" line="213"/>
         <location filename="../../src/ui/forms/lc_layerdialog_ex.cpp" line="277"/>
         <location filename="../../src/ui/forms/qg_layerdialog.cpp" line="85"/>
         <source>Layer Properties</source>
-        <translation>Layer Properties</translation>
+        <translation>Réteg tulajdonságok</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_layerdialog_ex.cpp" line="214"/>
         <source>Layer empty name is not allowed.</source>
-        <translation>Layer empty name is not allowed.</translation>
+        <translation>Üres réteg neve nem megengedett.</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_layerdialog_ex.cpp" line="278"/>
         <source>Attempt to create layer with duplicating name. Duplicated layer name is 
 [%1].
 Please specify a different name.</source>
-        <translation>Attempt to create layer with duplicating name. Duplicated layer name is 
+        <translation>Kísérlet duplikált nevű réteg létrehozására. A duplikált rétegnév: 
 [%1].
-Please specify a different name.</translation>
+Kérjük, adjon meg egy másik nevet.</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_layertreeoptionsdialog.cpp" line="153"/>
@@ -12956,80 +12952,79 @@ Please specify a different name.</translation>
         <location filename="../../src/ui/forms/lc_layertreeoptionsdialog.cpp" line="154"/>
         <source>Layer list separator string is empty. It will not be possible to build layers tree.
 Please specify a different value.</source>
-        <translation>Layer list separator string is empty. It will not be possible to build layers tree.
-Please specify a different value.</translation>
+        <translation>A réteg lista elválasztó karakterlánc üres. Nem lesz lehetséges rétegstruktúra építése.</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_layertreeoptionsdialog.cpp" line="192"/>
         <source>Invalid value provide for %1 color.
 Please specify a different value.</source>
-        <translation>Invalid value provide for %1 color.
-Please specify a different value.</translation>
+        <translation>Érvénytelen érték a %1 színhez.
+Kérem adjon meg egy másik értéket.</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_layerdialog.cpp" line="86"/>
         <source>Layer with a name &quot;%1&quot; already exists. Please specify a different name.</source>
-        <translation>Layer with a name &quot;%1&quot; already exists. Please specify a different name.</translation>
+        <translation>"%1" nevű réteg már létezik. Kérem adjon meg egy másik nevet.</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_layertreewidget.cpp" line="977"/>
         <location filename="../../src/ui/lc_layertreewidget.cpp" line="987"/>
         <source>Remove empty layers</source>
-        <translation>Remove empty layers</translation>
+        <translation>Üres rétegek eltávolítása</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_layertreewidget.cpp" line="978"/>
         <source>Layer(s) without entities found, yet they are filtered and not visible.
 
 Clear filtering mask and repeat.</source>
-        <translation>Layer(s) without entities found, yet they are filtered and not visible.
+        <translation>Entitás nélküli réteg(ek) találhatók, de szűrve vannak és nem láthatók.
 
-Clear filtering mask and repeat.</translation>
+Szűrő törlése</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_layertreewidget.cpp" line="988"/>
         <source>No layers without entities found, nothing to remove.</source>
-        <translation>No layers without entities found, nothing to remove.</translation>
+        <translation>Nem találhatók entitás nélküli rétegek, nincs mit eltávolítani.</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_layertreewidget.cpp" line="1129"/>
         <location filename="../../src/ui/lc_layertreewidget.cpp" line="1174"/>
         <location filename="../../src/ui/lc_layertreewidget.cpp" line="1182"/>
         <source>Add Layer</source>
-        <translation>Add Layer</translation>
+        <translation>Réteg hozzáadása</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_layertreewidget.cpp" line="1130"/>
         <source>Such child layer already exist for 
 [%1].
 Please specify a different name.</source>
-        <translation>Such child layer already exist for 
+        <translation>Ilyen gyermekréteg már létezik a következőhöz: 
 [%1].
-Please specify a different name.</translation>
+Kérjük, adjon meg egy másik nevet.</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_layertreewidget.cpp" line="1175"/>
         <source>Such child layer already exist for 
 [%1].
 </source>
-        <translation>Such child layer already exist for 
+        <translation>Ilyen gyermekréteg már létezik a következőhöz: 
 [%1].</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_layertreewidget.cpp" line="1183"/>
         <source>Dimensional layer may be added only for normal active layer.
 </source>
-        <translation>Dimensional layer may be added only for normal active layer.</translation>
+        <translation>Méretezési réteg csak normál aktív réteghez adható.</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_layertreewidget.cpp" line="1246"/>
         <source>Move Selection</source>
-        <translation>Move Selection</translation>
+        <translation>Kiválasztás mozgatása</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_layertreewidget.cpp" line="1253"/>
         <source>Duplicate Selection</source>
-        <translation>Duplicate Selection</translation>
+        <translation>Kiválasztás duplikálása</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_layertreewidget.cpp" line="1270"/>
@@ -13038,11 +13033,9 @@ Please specify a different name.</translation>
 If Yes - entities with &quot;By Layer&quot; pens will look on new layer exactly as on previous layers and &quot;By Layer&quot; value will be replaced by resolved pens.
 
 If No - &quot;By Layer&quot; values remains and so pen of target layer will define pen for such entities.</source>
-        <translation>Replace &quot;By Layer&quot; value to source layers values?
+        <translation>Cseréli a 'Réteg szerint' értéket a forrásrétegek értékeire?
 
-If Yes - entities with &quot;By Layer&quot; pens will look on new layer exactly as on previous layers and &quot;By Layer&quot; value will be replaced by resolved pens.
-
-If No - &quot;By Layer&quot; values remains and so pen of target layer will define pen for such entities.</translation>
+Ha Igen - az elemek...</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_layertreewidget.cpp" line="1758"/>
@@ -13050,13 +13043,13 @@ If No - &quot;By Layer&quot; values remains and so pen of target layer will defi
         <location filename="../../src/ui/qg_dialogfactory.cpp" line="322"/>
         <location filename="../../src/ui/qg_dialogfactory.cpp" line="384"/>
         <source>Remove Layer</source>
-        <translation>Remove Layer</translation>
+        <translation>Réteg eltávolítása</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_layertreewidget.cpp" line="1758"/>
         <location filename="../../src/ui/qg_dialogfactory.cpp" line="385"/>
         <source>Layer &quot;0&quot; can never be removed.</source>
-        <translation>Layer &quot;0&quot; can never be removed.</translation>
+        <translation>A "0" réteg soha nem távolítható el.</translation>
     </message>
     <message numerus="yes">
         <location filename="../../src/ui/lc_layertreewidget.cpp" line="1806"/>
@@ -13070,156 +13063,156 @@ If No - &quot;By Layer&quot; values remains and so pen of target layer will defi
         <location filename="../../src/ui/lc_layertreewidget.cpp" line="1807"/>
         <location filename="../../src/ui/qg_dialogfactory.cpp" line="399"/>
         <source>Listed layers and all entities on them will be removed.</source>
-        <translation>Listed layers and all entities on them will be removed.</translation>
+        <translation>A listában szereplő rétegek és az összes rajtuk lévő elem el lesz távolítva.</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_layertreewidget.cpp" line="1808"/>
         <location filename="../../src/ui/qg_dialogfactory.cpp" line="401"/>
         <source>Warning: this action can NOT be undone!</source>
-        <translation>Warning: this action can NOT be undone!</translation>
+        <translation>Figyelmeztetés: ez a művelet NEM vonható vissza!</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_layertreewidget.cpp" line="1809"/>
         <location filename="../../src/ui/qg_dialogfactory.cpp" line="410"/>
         <source>Layers for removal:</source>
-        <translation>Layers for removal:</translation>
+        <translation>Eltávolítandó rétegek:</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_layertreewidget.cpp" line="1824"/>
         <location filename="../../src/ui/lc_layertreewidget.cpp" line="1875"/>
         <source>Layer DialogEx</source>
-        <translation>Layer DialogEx</translation>
+        <translation>Réteg párbeszéd</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_penpaletteoptionsdialog.cpp" line="262"/>
         <source>Invalid value provided for %1 color.
 Please specify a different value.</source>
-        <translation>Invalid value provided for %1 color.
-Please specify a different value.</translation>
+        <translation>Érvénytelen érték a %1 színhez.
+Kérem adjon meg egy másik értéket.</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_penpaletteoptionsdialog.cpp" line="273"/>
         <source>Invalid path to pens file.
 %1 
 Please specify a different value.</source>
-        <translation>Invalid path to pens file.
+        <translation>Érvénytelen elérési út a tollakhoz való fájlhoz.
 %1 
-Please specify a different value.</translation>
+Kérjük, adjon meg egy másik értéket.</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_penpalettewidget.cpp" line="1320"/>
         <source>Remove pen</source>
-        <translation>Remove pen</translation>
+        <translation>Toll eltávolítása</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_penpalettewidget.cpp" line="1321"/>
         <source>Pen will be removed from palette, drawing entities will not be affected.</source>
-        <translation>Pen will be removed from palette, drawing entities will not be affected.</translation>
+        <translation>A toll el lesz távolítva a palettából, a rajzelemek nem lesznek érintve.</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_penpalettewidget.cpp" line="1322"/>
         <location filename="../../src/ui/lc_penpalettewidget.cpp" line="1341"/>
         <source>Are you sure you&apos;d like to proceed?</source>
-        <translation>Are you sure you&apos;d like to proceed?</translation>
+        <translation>Biztosan folytatni szeretné?</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_penpalettewidget.cpp" line="1323"/>
         <source>Pen for removal:</source>
-        <translation>Pen for removal:</translation>
+        <translation>Eltávolítandó toll:</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_penpalettewidget.cpp" line="1339"/>
         <source>Remove pens</source>
-        <translation>Remove pens</translation>
+        <translation>Tollak eltávolítása</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_penpalettewidget.cpp" line="1340"/>
         <source>Pens will be removed from palette, drawing entities will not be affected.</source>
-        <translation>Pens will be removed from palette, drawing entities will not be affected.</translation>
+        <translation>A tollak el lesznek távolítva a palettából, a rajzelemek nem lesznek érintve.</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_penpalettewidget.cpp" line="1342"/>
         <source>Pens for removal:</source>
-        <translation>Pens for removal:</translation>
+        <translation>Eltávolítandó tollak:</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_penpalettewidget.cpp" line="1363"/>
         <source>Select Entities </source>
-        <translation>Select Entities</translation>
+        <translation>Elemek kiválasztása</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_penpalettewidget.cpp" line="1364"/>
         <source>There are no entities that matches pen on visible layers.</source>
-        <translation>There are no entities that matches pen on visible layers.</translation>
+        <translation>Nincsenek elemek, amelyek egyeznek a tollal látható rétegeken.</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_penpalettewidget.cpp" line="1365"/>
         <source>Such entities exist on frozen layers.
 </source>
-        <translation>Such entities exist on frozen layers.</translation>
+        <translation>Ilyen elemek befagyasztott rétegeken vannak.</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_penpalettewidget.cpp" line="1366"/>
         <source>Such entities exist on locked layers.
 </source>
-        <translation>Such entities exist on locked layers.</translation>
+        <translation>Ilyen elemek zárolt rétegeken vannak.</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_penpalettewidget.cpp" line="1367"/>
         <source>Please use different pen attributes.</source>
-        <translation>Please use different pen attributes.</translation>
+        <translation>Kérem használjon más toll attribútumokat.</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_penpalettewidget.cpp" line="1376"/>
         <source>Set pen by entity</source>
-        <translation>Set pen by entity</translation>
+        <translation>Toll beállítása elem szerint</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_penpalettewidget.cpp" line="1377"/>
         <source>Please select only one entity to pick pen setting.</source>
-        <translation>Please select only one entity to pick pen setting.</translation>
+        <translation>Kérem csak egy elemet válasszon a toll beállítás kiolvasásához.</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_penpalettewidget.cpp" line="1387"/>
         <source>Saving Pens Data</source>
-        <translation>Saving Pens Data</translation>
+        <translation>Toll adatok mentése</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_penpalettewidget.cpp" line="1388"/>
         <source>Unable to save pens data to specified pens file. Would you like to specify correct path to the file?</source>
-        <translation>Unable to save pens data to specified pens file. Would you like to specify correct path to the file?</translation>
+        <translation>Nem lehet menteni a toll adatokat a megadott toll fájlba. Szeretne másik fájlt megadni?</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_dialogfactory.cpp" line="311"/>
         <source>Layer &quot;%1&quot; and all entities on it will be removed.
 This action can NOT be undone.</source>
-        <translation>Layer &quot;%1&quot; and all entities on it will be removed.
-This action can NOT be undone.</translation>
+        <translation>"%1" réteg és az összes eleme el lesz távolítva.
+Ez a művelet NEM vonható vissza!</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_dialogfactory.cpp" line="323"/>
         <source>Layer &quot;%1&quot; can never be removed.</source>
-        <translation>Layer &quot;%1&quot; can never be removed.</translation>
+        <translation>"%1" réteg soha nem távolítható el.</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_dialogfactory.cpp" line="406"/>
         <source>Warning: layer &quot;0&quot; can never be removed.</source>
-        <translation>Warning: layer &quot;0&quot; can never be removed.</translation>
+        <translation>Figyelmeztetés: a "0" réteg soha nem távolítható el.</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_dialogfactory.cpp" line="465"/>
         <source>Layer Dialog</source>
-        <translation>Layer Dialog</translation>
+        <translation>Réteg párbeszéd</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_dialogfactory.cpp" line="580"/>
         <source>Remove Block</source>
-        <translation>Remove Block</translation>
+        <translation>Blokk eltávolítása</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_dialogfactory.cpp" line="581"/>
         <source>Block &quot;%1&quot; and all its entities will be removed.</source>
-        <translation>Block &quot;%1&quot; and all its entities will be removed.</translation>
+        <translation>"%1" blokk és az összes eleme el lesz távolítva.</translation>
     </message>
     <message numerus="yes">
         <location filename="../../src/ui/qg_dialogfactory.cpp" line="640"/>
@@ -13231,12 +13224,12 @@ This action can NOT be undone.</translation>
     <message>
         <location filename="../../src/ui/qg_dialogfactory.cpp" line="644"/>
         <source>Listed blocks and all their entities will be removed.</source>
-        <translation>Listed blocks and all their entities will be removed.</translation>
+        <translation>A listában szereplő blokkok és az összes elemük el lesz távolítva.</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_dialogfactory.cpp" line="648"/>
         <source>Blocks for removal:</source>
-        <translation>Blocks for removal:</translation>
+        <translation>Eltávolítandó blokkok:</translation>
     </message>
 </context>
 <context>
@@ -13244,7 +13237,7 @@ This action can NOT be undone.</translation>
     <message>
         <location filename="../../src/actions/lc_actionlayersexport.cpp" line="178"/>
         <source>No %1 layers found</source>
-        <translation>No %1 layers found</translation>
+        <translation>Nem találhatók %1 rétegek</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondimension.cpp" line="34"/>
@@ -13255,7 +13248,7 @@ This action can NOT be undone.</translation>
     <message>
         <location filename="../../src/cmd/rs_commands.cpp" line="60"/>
         <source>: duplicated command: %1 is already taken by %2</source>
-        <translation>: duplicated command: %1 is already taken by %2</translation>
+        <translation>: duplikált parancs: %1 már foglalt: %2</translation>
     </message>
     <message>
         <location filename="../../src/cmd/rs_commands.cpp" line="153"/>
@@ -15793,47 +15786,47 @@ This action can NOT be undone.</translation>
     <message>
         <location filename="../../src/cmd/rs_commands.cpp" line="1356"/>
         <source>Command: %1 (%2)</source>
-        <translation>Command: %1 (%2)</translation>
+        <translation>Parancs: %1 (%2)</translation>
     </message>
     <message>
         <location filename="../../src/cmd/rs_commands.cpp" line="1363"/>
         <source>RS_Commands:: command not found: %1</source>
-        <translation>RS_Commands:: command not found: %1</translation>
+        <translation>RS_Commands:: parancs nem található: %1</translation>
     </message>
     <message>
         <location filename="../../src/cmd/rs_commands.cpp" line="1403"/>
         <source>Accepted keycode: %1</source>
-        <translation>Accepted keycode: %1</translation>
+        <translation>Fogadott billentyűkód: %1</translation>
     </message>
     <message>
         <location filename="../../src/cmd/rs_commands.cpp" line="1417"/>
         <source>Command not found: %1</source>
-        <translation>Command not found: %1</translation>
+        <translation>Parancs nem található: %1</translation>
     </message>
     <message>
         <location filename="../../src/cmd/rs_commands.cpp" line="1456"/>
         <source>Available commands:</source>
-        <translation>Available commands:</translation>
+        <translation>Elérhető parancsok:</translation>
     </message>
     <message>
         <location filename="../../src/lib/engine/rs_entitycontainer.cpp" line="1641"/>
         <source>Hatch failed due to a gap=%1 between (%2, %3) and (%4, %5)</source>
-        <translation>Hatch failed due to a gap=%1 between (%2, %3) and (%4, %5)</translation>
+        <translation>Sraffozás sikertelen, hézag=%1 (%2, %3) és (%4, %5) között</translation>
     </message>
     <message>
         <location filename="../../src/lib/engine/rs_graphic.cpp" line="350"/>
         <source>File on disk modified. Please save to another file to avoid data loss! File modified: %1</source>
-        <translation>File on disk modified. Please save to another file to avoid data loss! File modified: %1</translation>
+        <translation>A fájl módosult a lemezen. Kérem mentse másik fájlba az adatvesztés elkerülése érdekében! A fájl módosítva:</translation>
     </message>
     <message>
         <location filename="../../src/lib/engine/rs_patternlist.cpp" line="63"/>
         <source>Hatch:: no pattern found. Please set pattern path in application preferences</source>
-        <translation>Hatch:: no pattern found. Please set pattern path in application preferences</translation>
+        <translation>Sraffozás:: nem található minta. Kérem állítsa be a minta útvonalát az alkalmazás beállításaiban</translation>
     </message>
     <message>
         <location filename="../../src/lib/engine/rs_patternlist.cpp" line="85"/>
         <source>Hatch:: loading pattern failed: %1</source>
-        <translation>Hatch:: loading pattern failed: %1</translation>
+        <translation>Sraffozás:: minta betöltése sikertelen: %1</translation>
     </message>
     <message>
         <location filename="../../src/lib/engine/rs_units.cpp" line="204"/>
@@ -15863,31 +15856,31 @@ This action can NOT be undone.</translation>
         <location filename="../../src/lib/engine/rs_units.cpp" line="212"/>
         <location filename="../../src/lib/engine/rs_units.cpp" line="268"/>
         <source>Millimeter</source>
-        <translation>Millimeter</translation>
+        <translation>Milliméter</translation>
     </message>
     <message>
         <location filename="../../src/lib/engine/rs_units.cpp" line="214"/>
         <location filename="../../src/lib/engine/rs_units.cpp" line="270"/>
         <source>Centimeter</source>
-        <translation>Centimeter</translation>
+        <translation>Centiméter</translation>
     </message>
     <message>
         <location filename="../../src/lib/engine/rs_units.cpp" line="216"/>
         <location filename="../../src/lib/engine/rs_units.cpp" line="272"/>
         <source>Meter</source>
-        <translation>Meter</translation>
+        <translation>Méter</translation>
     </message>
     <message>
         <location filename="../../src/lib/engine/rs_units.cpp" line="218"/>
         <location filename="../../src/lib/engine/rs_units.cpp" line="274"/>
         <source>Kilometer</source>
-        <translation>Kilometer</translation>
+        <translation>Kilométer</translation>
     </message>
     <message>
         <location filename="../../src/lib/engine/rs_units.cpp" line="220"/>
         <location filename="../../src/lib/engine/rs_units.cpp" line="276"/>
         <source>Microinch</source>
-        <translation>Microinch</translation>
+        <translation>Mikrohüvelyk</translation>
     </message>
     <message>
         <location filename="../../src/lib/engine/rs_units.cpp" line="222"/>
@@ -15905,55 +15898,55 @@ This action can NOT be undone.</translation>
         <location filename="../../src/lib/engine/rs_units.cpp" line="226"/>
         <location filename="../../src/lib/engine/rs_units.cpp" line="282"/>
         <source>Angstrom</source>
-        <translation>Angstrom</translation>
+        <translation>Angström</translation>
     </message>
     <message>
         <location filename="../../src/lib/engine/rs_units.cpp" line="228"/>
         <location filename="../../src/lib/engine/rs_units.cpp" line="284"/>
         <source>Nanometer</source>
-        <translation>Nanometer</translation>
+        <translation>Nanométer</translation>
     </message>
     <message>
         <location filename="../../src/lib/engine/rs_units.cpp" line="230"/>
         <location filename="../../src/lib/engine/rs_units.cpp" line="286"/>
         <source>Micron</source>
-        <translation>Micron</translation>
+        <translation>Mikron</translation>
     </message>
     <message>
         <location filename="../../src/lib/engine/rs_units.cpp" line="232"/>
         <location filename="../../src/lib/engine/rs_units.cpp" line="288"/>
         <source>Decimeter</source>
-        <translation>Decimeter</translation>
+        <translation>Deciméter</translation>
     </message>
     <message>
         <location filename="../../src/lib/engine/rs_units.cpp" line="234"/>
         <location filename="../../src/lib/engine/rs_units.cpp" line="290"/>
         <source>Decameter</source>
-        <translation>Decameter</translation>
+        <translation>Dekamétere</translation>
     </message>
     <message>
         <location filename="../../src/lib/engine/rs_units.cpp" line="236"/>
         <location filename="../../src/lib/engine/rs_units.cpp" line="292"/>
         <source>Hectometer</source>
-        <translation>Hectometer</translation>
+        <translation>Hektométer</translation>
     </message>
     <message>
         <location filename="../../src/lib/engine/rs_units.cpp" line="238"/>
         <location filename="../../src/lib/engine/rs_units.cpp" line="294"/>
         <source>Gigameter</source>
-        <translation>Gigameter</translation>
+        <translation>Gigaméter</translation>
     </message>
     <message>
         <location filename="../../src/lib/engine/rs_units.cpp" line="240"/>
         <location filename="../../src/lib/engine/rs_units.cpp" line="296"/>
         <source>Astro</source>
-        <translation>Astro</translation>
+        <translation>Asztronómiai egység</translation>
     </message>
     <message>
         <location filename="../../src/lib/engine/rs_units.cpp" line="242"/>
         <location filename="../../src/lib/engine/rs_units.cpp" line="298"/>
         <source>Lightyear</source>
-        <translation>Lightyear</translation>
+        <translation>Fényév</translation>
     </message>
     <message>
         <location filename="../../src/lib/engine/rs_units.cpp" line="244"/>
@@ -15965,7 +15958,7 @@ This action can NOT be undone.</translation>
         <location filename="../../src/lib/engine/rs_units.cpp" line="932"/>
         <source>Custom</source>
         <comment>Paper format</comment>
-        <translation>Custom</translation>
+        <translation>Egyéni</translation>
     </message>
     <message>
         <location filename="../../src/lib/engine/rs_units.cpp" line="934"/>
@@ -16067,7 +16060,7 @@ This action can NOT be undone.</translation>
         <location filename="../../src/lib/engine/rs_units.cpp" line="974"/>
         <source>custom</source>
         <comment>Paper format</comment>
-        <translation>custom</translation>
+        <translation>egyéni</translation>
     </message>
     <message>
         <location filename="../../src/lib/engine/rs_units.cpp" line="977"/>
@@ -16103,13 +16096,13 @@ This action can NOT be undone.</translation>
         <location filename="../../src/lib/engine/rs_units.cpp" line="990"/>
         <source>letter</source>
         <comment>Paper format</comment>
-        <translation>letter</translation>
+        <translation>levél</translation>
     </message>
     <message>
         <location filename="../../src/lib/engine/rs_units.cpp" line="992"/>
         <source>legal</source>
         <comment>Paper format</comment>
-        <translation>legal</translation>
+        <translation>jogi</translation>
     </message>
     <message>
         <location filename="../../src/lib/engine/rs_units.cpp" line="994"/>
@@ -16168,22 +16161,22 @@ This action can NOT be undone.</translation>
     <message>
         <location filename="../../src/lib/fileio/rs_fileio.cpp" line="74"/>
         <source>DWG support is not complete!</source>
-        <translation>DWG support is not complete!</translation>
+        <translation>A DWG támogatás nem teljes!</translation>
     </message>
     <message>
         <location filename="../../src/lib/fileio/rs_fileio.cpp" line="76"/>
         <source>If this file fails to open try an older DWG format</source>
-        <translation>If this file fails to open try an older DWG format</translation>
+        <translation>Ha ez a fájl nem nyílik meg, próbáljon régebbi DWG formátumot</translation>
     </message>
     <message>
         <location filename="../../src/lib/fileio/rs_fileio.cpp" line="77"/>
         <source>or try to find a converter to make it a DXF file.</source>
-        <translation>or try to find a converter to make it a DXF file.</translation>
+        <translation>vagy próbáljon egy konvertert a DXF formátumba való átalakításhoz.</translation>
     </message>
     <message>
         <location filename="../../src/lib/fileio/rs_fileio.cpp" line="80"/>
         <source>Information</source>
-        <translation>Information</translation>
+        <translation>Információ</translation>
     </message>
     <message>
         <location filename="../../src/lib/fileio/rs_fileio.cpp" line="91"/>
@@ -16195,195 +16188,195 @@ This action can NOT be undone.</translation>
         <location filename="../../src/lib/fileio/rs_fileio.cpp" line="92"/>
         <source>Import error:</source>
         <comment>fileImport</comment>
-        <translation>Import error:</translation>
+        <translation>Importálási hiba:</translation>
     </message>
     <message>
         <location filename="../../src/lib/fileio/rs_fileio.cpp" line="107"/>
         <source>Anyhow, there are some entities identified.</source>
         <comment>dwgImport</comment>
-        <translation>Anyhow, there are some entities identified.</translation>
+        <translation>Mindenesetre néhány elem azonosítva van.</translation>
     </message>
     <message>
         <location filename="../../src/lib/fileio/rs_fileio.cpp" line="108"/>
         <source>If you open the file now, the drawing may be not complete or unusable.</source>
         <comment>dwgImport</comment>
-        <translation>If you open the file now, the drawing may be not complete or unusable.</translation>
+        <translation>Ha most megnyitja a fájlt, a rajz nem lehet teljes vagy használhatatlan.</translation>
     </message>
     <message>
         <location filename="../../src/lib/fileio/rs_fileio.cpp" line="110"/>
         <source>Ignore error and open the file?</source>
         <comment>dwgImport</comment>
-        <translation>Ignore error and open the file?</translation>
+        <translation>Figyelmen kívül hagyja a hibát és megnyitja a fájlt?</translation>
     </message>
     <message>
         <location filename="../../src/lib/fileio/rs_fileio.cpp" line="113"/>
         <source>Warning</source>
-        <translation>Warning</translation>
+        <translation>Figyelmeztetés</translation>
     </message>
     <message>
         <location filename="../../src/lib/filters/rs_filterdxfrw.cpp" line="103"/>
         <source>no DXF/DWG error</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation>no DXF/DWG error</translation>
+        <translation>nincs DXF/DWG hiba</translation>
     </message>
     <message>
         <location filename="../../src/lib/filters/rs_filterdxfrw.cpp" line="105"/>
         <source>error opening DXF/DWG file</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation>error opening DXF/DWG file</translation>
+        <translation>hiba a DXF/DWG fájl megnyitásakor</translation>
     </message>
     <message>
         <location filename="../../src/lib/filters/rs_filterdxfrw.cpp" line="107"/>
         <source>unsupported DXF/DWG file version</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation>unsupported DXF/DWG file version</translation>
+        <translation>nem támogatott DXF/DWG fájlverzió</translation>
     </message>
     <message>
         <location filename="../../src/lib/filters/rs_filterdxfrw.cpp" line="109"/>
         <source>error reading DXF/DWG meta data</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation>error reading DXF/DWG meta data</translation>
+        <translation>hiba a DXF/DWG metaadatok olvasásakor</translation>
     </message>
     <message>
         <location filename="../../src/lib/filters/rs_filterdxfrw.cpp" line="111"/>
         <source>error reading DXF/DWG file header</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation>error reading DXF/DWG file header</translation>
+        <translation>hiba a DXF/DWG fájl fejléc olvasásakor</translation>
     </message>
     <message>
         <location filename="../../src/lib/filters/rs_filterdxfrw.cpp" line="113"/>
         <source>error reading DXF/DWG header dara</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation>error reading DXF/DWG header dara</translation>
+        <translation>hiba a DXF/DWG fejléc adatok olvasásakor</translation>
     </message>
     <message>
         <location filename="../../src/lib/filters/rs_filterdxfrw.cpp" line="115"/>
         <source>error reading DXF/DWG object map</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation>error reading DXF/DWG object map</translation>
+        <translation>hiba a DXF/DWG objektumtérkép olvasásakor</translation>
     </message>
     <message>
         <location filename="../../src/lib/filters/rs_filterdxfrw.cpp" line="117"/>
         <source>error reading DXF/DWG classes</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation>error reading DXF/DWG classes</translation>
+        <translation>hiba a DXF/DWG osztályok olvasásakor</translation>
     </message>
     <message>
         <location filename="../../src/lib/filters/rs_filterdxfrw.cpp" line="119"/>
         <source>error reading DXF/DWG tables</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation>error reading DXF/DWG tables</translation>
+        <translation>hiba a DXF/DWG táblák olvasásakor</translation>
     </message>
     <message>
         <location filename="../../src/lib/filters/rs_filterdxfrw.cpp" line="121"/>
         <source>error reading DXF/DWG blocks</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation>error reading DXF/DWG blocks</translation>
+        <translation>hiba a DXF/DWG blokkok olvasásakor</translation>
     </message>
     <message>
         <location filename="../../src/lib/filters/rs_filterdxfrw.cpp" line="123"/>
         <source>error reading DXF/DWG entities</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation>error reading DXF/DWG entities</translation>
+        <translation>hiba a DXF/DWG elemek olvasásakor</translation>
     </message>
     <message>
         <location filename="../../src/lib/filters/rs_filterdxfrw.cpp" line="125"/>
         <source>error reading DXF/DWG objects</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation>error reading DXF/DWG objects</translation>
+        <translation>hiba a DXF/DWG objektumok olvasásakor</translation>
     </message>
     <message>
         <location filename="../../src/lib/filters/rs_filterdxfrw.cpp" line="127"/>
         <source>error reading DXF/DWG sections</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation>error reading DXF/DWG sections</translation>
+        <translation>hiba a DXF/DWG szekciók olvasásakor</translation>
     </message>
     <message>
         <location filename="../../src/lib/filters/rs_filterdxfrw.cpp" line="129"/>
         <source>error reading DXF/DWG code</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation>error reading DXF/DWG code</translation>
+        <translation>hiba a DXF/DWG kód olvasásakor</translation>
     </message>
     <message>
         <location filename="../../src/lib/filters/rs_filterdxfrw.cpp" line="177"/>
         <source>Opened dwg file version %1.</source>
-        <translation>Opened dwg file version %1.</translation>
+        <translation>Megnyitott dwg fájl verziója: %1.</translation>
     </message>
     <message>
         <location filename="../../src/lib/filters/rs_filterdxfrw.cpp" line="4035"/>
         <source>unknown error opening dwg file</source>
-        <translation>unknown error opening dwg file</translation>
+        <translation>ismeretlen hiba a dwg fájl megnyitásakor</translation>
     </message>
     <message>
         <location filename="../../src/lib/filters/rs_filterdxfrw.cpp" line="4039"/>
         <source>can&apos;t open this dwg file</source>
-        <translation>can&apos;t open this dwg file</translation>
+        <translation>nem lehet megnyitni ezt a dwg fájlt</translation>
     </message>
     <message>
         <location filename="../../src/lib/filters/rs_filterdxfrw.cpp" line="4043"/>
         <source>unsupported dwg version</source>
-        <translation>unsupported dwg version</translation>
+        <translation>nem támogatott dwg verzió</translation>
     </message>
     <message>
         <location filename="../../src/lib/filters/rs_filterdxfrw.cpp" line="4047"/>
         <source>error reading file metadata in dwg file</source>
-        <translation>error reading file metadata in dwg file</translation>
+        <translation>hiba a fájl metaadatok olvasásakor a dwg fájlban</translation>
     </message>
     <message>
         <location filename="../../src/lib/filters/rs_filterdxfrw.cpp" line="4051"/>
         <source>error reading file header in dwg file</source>
-        <translation>error reading file header in dwg file</translation>
+        <translation>hiba a fájl fejléc olvasásakor a dwg fájlban</translation>
     </message>
     <message>
         <location filename="../../src/lib/filters/rs_filterdxfrw.cpp" line="4055"/>
         <source>error reading header vars in dwg file</source>
-        <translation>error reading header vars in dwg file</translation>
+        <translation>hiba a fejléc változók olvasásakor a dwg fájlban</translation>
     </message>
     <message>
         <location filename="../../src/lib/filters/rs_filterdxfrw.cpp" line="4059"/>
         <source>error reading classes in dwg file</source>
-        <translation>error reading classes in dwg file</translation>
+        <translation>hiba az osztályok olvasásakor a dwg fájlban</translation>
     </message>
     <message>
         <location filename="../../src/lib/filters/rs_filterdxfrw.cpp" line="4063"/>
         <source>error reading offsets in dwg file</source>
-        <translation>error reading offsets in dwg file</translation>
+        <translation>hiba az eltolások olvasásakor a dwg fájlban</translation>
     </message>
     <message>
         <location filename="../../src/lib/filters/rs_filterdxfrw.cpp" line="4067"/>
         <source>error reading tables in dwg file</source>
-        <translation>error reading tables in dwg file</translation>
+        <translation>hiba a táblák olvasásakor a dwg fájlban</translation>
     </message>
     <message>
         <location filename="../../src/lib/filters/rs_filterdxfrw.cpp" line="4071"/>
         <source>error reading blocks in dwg file</source>
-        <translation>error reading blocks in dwg file</translation>
+        <translation>hiba a blokkok olvasásakor a dwg fájlban</translation>
     </message>
     <message>
         <location filename="../../src/lib/filters/rs_filterdxfrw.cpp" line="4075"/>
         <source>error reading entities in dwg file</source>
-        <translation>error reading entities in dwg file</translation>
+        <translation>hiba az elemek olvasásakor a dwg fájlban</translation>
     </message>
     <message>
         <location filename="../../src/lib/filters/rs_filterdxfrw.cpp" line="4079"/>
         <source>error reading objects in dwg file</source>
-        <translation>error reading objects in dwg file</translation>
+        <translation>hiba az objektumok olvasásakor a dwg fájlban</translation>
     </message>
     <message>
         <location filename="../../src/lib/filters/rs_filterinterface.h" line="92"/>
         <source>undefined error</source>
         <comment>RS_FilterInterface</comment>
-        <translation>undefined error</translation>
+        <translation>meghatározatlan hiba</translation>
     </message>
     <message>
         <location filename="../../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="67"/>
         <source>usage: </source>
-        <translation>usage:</translation>
+        <translation>használat:</translation>
     </message>
     <message>
         <location filename="../../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="67"/>
         <source> [options] &lt;dxf_files&gt;</source>
-        <translation>[options] &lt;dxf_files&gt;</translation>
+        <translation>[opciók] &lt;dxf_fájlok&gt;</translation>
     </message>
     <message>
         <location filename="../../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="74"/>
@@ -16393,7 +16386,7 @@ This action can NOT be undone.</translation>
     <message>
         <location filename="../../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="75"/>
         <source>-- print all dxf files to pdf files with the same names.</source>
-        <translation>-- print all dxf files to pdf files with the same names.</translation>
+        <translation>-- minden dxf fájlt nyomtat azonos nevű pdf fájlokba.</translation>
     </message>
     <message>
         <location filename="../../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="77"/>
@@ -16403,65 +16396,65 @@ This action can NOT be undone.</translation>
     <message>
         <location filename="../../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="78"/>
         <source>-- print all dxf files to &apos;some.pdf&apos; file.</source>
-        <translation>-- print all dxf files to &apos;some.pdf&apos; file.</translation>
+        <translation>-- minden dxf fájlt nyomtat 'some.pdf' fájlba.</translation>
     </message>
     <message>
         <location filename="../../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="85"/>
         <source>Auto fit and center drawing to page.</source>
-        <translation>Auto fit and center drawing to page.</translation>
+        <translation>Rajz automatikus illesztése és középre igazítása az oldalon.</translation>
     </message>
     <message>
         <location filename="../../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="89"/>
         <source>Auto center drawing on page.</source>
-        <translation>Auto center drawing on page.</translation>
+        <translation>Rajz automatikus középre igazítása az oldalon.</translation>
     </message>
     <message>
         <location filename="../../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="93"/>
         <source>Print grayscale.</source>
-        <translation>Print grayscale.</translation>
+        <translation>Nyomtatás szürkeskálában.</translation>
     </message>
     <message>
         <location filename="../../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="97"/>
         <source>Print monochrome (black/white).</source>
-        <translation>Print monochrome (black/white).</translation>
+        <translation>Nyomtatás monokrómban (fekete/fehér).</translation>
     </message>
     <message>
         <location filename="../../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="101"/>
         <source>Paper size (Width x Height) in mm.</source>
         <comment>WxH</comment>
-        <translation>Paper size (Width x Height) in mm.</translation>
+        <translation>Papírméret (Szélesség x Magasság) mm-ben.</translation>
     </message>
     <message>
         <location filename="../../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="105"/>
         <source>Output resolution (DPI).</source>
         <comment>integer</comment>
-        <translation>Output resolution (DPI).</translation>
+        <translation>Kimeneti felbontás (DPI).</translation>
     </message>
     <message>
         <location filename="../../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="109"/>
         <source>Output scale. E.g.: 0.01 (for 1:100 scale).</source>
-        <translation>Output scale. E.g.: 0.01 (for 1:100 scale).</translation>
+        <translation>Kimeneti méretezés. Pl.: 0.01 (1:100 méretarányhoz).</translation>
     </message>
     <message>
         <location filename="../../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="113"/>
         <source>Paper margins in mm (integer or float).</source>
-        <translation>Paper margins in mm (integer or float).</translation>
+        <translation>Papír margók mm-ben (egész vagy tizedes szám).</translation>
     </message>
     <message>
         <location filename="../../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="117"/>
         <source>Print on multiple pages (Horiz. x Vert.).</source>
-        <translation>Print on multiple pages (Horiz. x Vert.).</translation>
+        <translation>Nyomtatás több oldalon (Vízszintes x Függőleges).</translation>
     </message>
     <message>
         <location filename="../../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="121"/>
         <source>Output PDF file.</source>
         <comment>file</comment>
-        <translation>Output PDF file.</translation>
+        <translation>Kimeneti PDF fájl.</translation>
     </message>
     <message>
         <location filename="../../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="125"/>
         <source>Target output directory.</source>
-        <translation>Target output directory.</translation>
+        <translation>Cél kimeneti könyvtár.</translation>
     </message>
     <message>
         <location filename="../../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="128"/>
@@ -16471,90 +16464,90 @@ This action can NOT be undone.</translation>
     <message>
         <location filename="../../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="128"/>
         <source>Input DXF file(s)</source>
-        <translation>Input DXF file(s)</translation>
+        <translation>Bemeneti DXF fájl(ok)</translation>
     </message>
     <message>
         <location filename="../../src/main/doc_plugin_interface.cpp" line="1354"/>
         <source>enter an integer number</source>
-        <translation>enter an integer number</translation>
+        <translation>adjon meg egy egész számot</translation>
     </message>
     <message>
         <location filename="../../src/main/doc_plugin_interface.cpp" line="1358"/>
         <location filename="../../src/main/doc_plugin_interface.cpp" line="1376"/>
         <location filename="../../src/main/doc_plugin_interface.cpp" line="1393"/>
         <source>LibreCAD query</source>
-        <translation>LibreCAD query</translation>
+        <translation>LibreCAD lekérdezés</translation>
     </message>
     <message>
         <location filename="../../src/main/doc_plugin_interface.cpp" line="1372"/>
         <source>enter a number</source>
-        <translation>enter a number</translation>
+        <translation>adjon meg egy számot</translation>
     </message>
     <message>
         <location filename="../../src/main/doc_plugin_interface.cpp" line="1389"/>
         <source>enter text</source>
-        <translation>enter text</translation>
+        <translation>adjon meg szöveget</translation>
     </message>
     <message>
         <location filename="../../src/main/main.cpp" line="256"/>
         <source>Loading..</source>
-        <translation>Loading..</translation>
+        <translation>Betöltés..</translation>
     </message>
     <message>
         <location filename="../../src/main/main.cpp" line="320"/>
         <source>Loading...</source>
-        <translation>Loading...</translation>
+        <translation>Betöltés...</translation>
     </message>
     <message>
         <location filename="../../src/main/main.cpp" line="356"/>
         <source>Loading File %1..</source>
-        <translation>Loading File %1..</translation>
+        <translation>Fájl betöltése: %1..</translation>
     </message>
     <message>
         <location filename="../../src/main/qc_applicationwindow.cpp" line="140"/>
         <source>Pen Wizard</source>
-        <translation>Pen Wizard</translation>
+        <translation>Toll varázsló</translation>
     </message>
     <message>
         <location filename="../../src/main/qc_applicationwindow.cpp" line="1947"/>
         <source>Invalid objects removed:</source>
-        <translation>Invalid objects removed:</translation>
+        <translation>Eltávolított érvénytelen objektumok:</translation>
     </message>
     <message>
         <location filename="../../src/main/qc_applicationwindow.cpp" line="3804"/>
         <location filename="../../src/ui/lc_widgetfactory.cpp" line="934"/>
         <source>License</source>
-        <translation>License</translation>
+        <translation>Licenc</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_commandwidget.cpp" line="66"/>
         <source>Keycode mode</source>
-        <translation>Keycode mode</translation>
+        <translation>Billentyűkód mód</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_commandwidget.cpp" line="79"/>
         <source>Load command file</source>
-        <translation>Load command file</translation>
+        <translation>Parancsfile betöltése</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_commandwidget.cpp" line="83"/>
         <source>Paste multiple commands</source>
-        <translation>Paste multiple commands</translation>
+        <translation>Több parancs beillesztése</translation>
     </message>
     <message>
         <location filename="../../src/ui/generic/colorwizard.cpp" line="54"/>
         <source>Select objects</source>
-        <translation>Select objects</translation>
+        <translation>Objektumok kiválasztása</translation>
     </message>
     <message>
         <location filename="../../src/ui/generic/colorwizard.cpp" line="58"/>
         <source>Apply to selected</source>
-        <translation>Apply to selected</translation>
+        <translation>Alkalmazás a kiválasztottakra</translation>
     </message>
     <message>
         <location filename="../../src/ui/generic/colorwizard.cpp" line="62"/>
         <source>Remove</source>
-        <translation>Remove</translation>
+        <translation>Eltávolítás</translation>
     </message>
     <message>
         <location filename="../../src/ui/generic/widgetcreator.cpp" line="59"/>
@@ -16566,17 +16559,17 @@ This action can NOT be undone.</translation>
     <message>
         <location filename="../../src/ui/lc_actiongroupmanager.cpp" line="64"/>
         <source>Block</source>
-        <translation>Block</translation>
+        <translation>Blokk</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actiongroupmanager.cpp" line="65"/>
         <source>Circle</source>
-        <translation>Circle</translation>
+        <translation>Kör</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actiongroupmanager.cpp" line="66"/>
         <source>Curve</source>
-        <translation>Curve</translation>
+        <translation>Görbe</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actiongroupmanager.cpp" line="67"/>
@@ -16586,7 +16579,7 @@ This action can NOT be undone.</translation>
     <message>
         <location filename="../../src/ui/lc_actiongroupmanager.cpp" line="68"/>
         <source>Ellipse</source>
-        <translation>Ellipse</translation>
+        <translation>Ellipszis</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actiongroupmanager.cpp" line="69"/>
@@ -16597,7 +16590,7 @@ This action can NOT be undone.</translation>
     <message>
         <location filename="../../src/ui/lc_actiongroupmanager.cpp" line="70"/>
         <source>Dimension</source>
-        <translation>Dimension</translation>
+        <translation>Méret</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actiongroupmanager.cpp" line="71"/>
@@ -16617,18 +16610,18 @@ This action can NOT be undone.</translation>
     <message>
         <location filename="../../src/ui/lc_actiongroupmanager.cpp" line="74"/>
         <source>Modify</source>
-        <translation>Modify</translation>
+        <translation>Módosítás</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actiongroupmanager.cpp" line="75"/>
         <location filename="../../src/ui/lc_actiongroupmanager.cpp" line="89"/>
         <source>Options</source>
-        <translation>Options</translation>
+        <translation>Beállítások</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actiongroupmanager.cpp" line="76"/>
         <source>Other</source>
-        <translation>Other</translation>
+        <translation>Egyéb</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actiongroupmanager.cpp" line="77"/>
@@ -16638,12 +16631,12 @@ This action can NOT be undone.</translation>
     <message>
         <location filename="../../src/ui/lc_actiongroupmanager.cpp" line="78"/>
         <source>Restriction</source>
-        <translation>Restriction</translation>
+        <translation>Korlátozás</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actiongroupmanager.cpp" line="79"/>
         <source>Select</source>
-        <translation>Select</translation>
+        <translation>Kiválasztás</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actiongroupmanager.cpp" line="80"/>
@@ -16653,7 +16646,7 @@ This action can NOT be undone.</translation>
     <message>
         <location filename="../../src/ui/lc_actiongroupmanager.cpp" line="81"/>
         <source>Snap Extras</source>
-        <translation>Snap Extras</translation>
+        <translation>Illesztési kiegészítők</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actiongroupmanager.cpp" line="82"/>
@@ -16663,42 +16656,42 @@ This action can NOT be undone.</translation>
     <message>
         <location filename="../../src/ui/lc_actiongroupmanager.cpp" line="83"/>
         <source>Widgets</source>
-        <translation>Widgets</translation>
+        <translation>Widgetek</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_actiongroupmanager.cpp" line="84"/>
         <source>PenTB</source>
-        <translation>PenTB</translation>
+        <translation>TollEB</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_filedialogservice.cpp" line="221"/>
         <source>Combine all layers</source>
-        <translation>Combine all layers</translation>
+        <translation>Minden réteg egyesítése</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_filedialogservice.cpp" line="252"/>
         <source>File &quot;%1&quot; already exists. Do you want to replace it?</source>
-        <translation>File &quot;%1&quot; already exists. Do you want to replace it?</translation>
+        <translation>"%1" fájl már létezik. Le szeretné cserélni?</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_peninforegistry.cpp" line="204"/>
         <source>By Layer</source>
-        <translation>By Layer</translation>
+        <translation>Réteg szerint</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_peninforegistry.cpp" line="207"/>
         <source>By Block</source>
-        <translation>By Block</translation>
+        <translation>Blokk szerint</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_peninforegistry.cpp" line="210"/>
         <source>- Unchanged -</source>
-        <translation>- Unchanged -</translation>
+        <translation>- Változatlan -</translation>
     </message>
     <message>
         <location filename="../../src/ui/lc_widgetfactory.cpp" line="495"/>
         <source>Creators</source>
-        <translation>Creators</translation>
+        <translation>Alkotók</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_colorbox.cpp" line="42"/>
@@ -16708,22 +16701,22 @@ This action can NOT be undone.</translation>
     <message>
         <location filename="../../src/ui/qg_colorbox.cpp" line="43"/>
         <source>Custom Picked</source>
-        <translation>Custom Picked</translation>
+        <translation>Egyéni kiválasztás</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_colorbox.cpp" line="44"/>
         <source>User Color</source>
-        <translation>User Color</translation>
+        <translation>Felhasználói szín</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_commandedit.cpp" line="120"/>
         <source>You must input a distance first.</source>
-        <translation>You must input a distance first.</translation>
+        <translation>Először meg kell adnia egy távolságot.</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_commandedit.cpp" line="198"/>
         <source>Calculator error for input: </source>
-        <translation>Calculator error for input:</translation>
+        <translation>Számológép hiba a bemenethez:</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_commandedit.cpp" line="258"/>
@@ -16735,7 +16728,7 @@ This action can NOT be undone.</translation>
         <location filename="../../src/ui/qg_commandedit.cpp" line="259"/>
         <source>calculate </source>
         <comment>command to trigger cli calculator</comment>
-        <translation>calculate</translation>
+        <translation>számolás</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_commandedit.cpp" line="297"/>
@@ -16745,33 +16738,33 @@ This action can NOT be undone.</translation>
     <message>
         <location filename="../../src/ui/qg_commandedit.cpp" line="301"/>
         <source>Calculator mode: On</source>
-        <translation>Calculator mode: On</translation>
+        <translation>Számológép mód: Be</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_commandedit.cpp" line="303"/>
         <source>Calculator mode: Off</source>
-        <translation>Calculator mode: Off</translation>
+        <translation>Számológép mód: Ki</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_dialogfactory.cpp" line="236"/>
         <source>noname</source>
         <comment>default layer name</comment>
-        <translation>noname</translation>
+        <translation>névtelen</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_dialogfactory.cpp" line="704"/>
         <source>All Image Files (%1)</source>
-        <translation>All Image Files (%1)</translation>
+        <translation>Minden képfájl (%1)</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_dialogfactory.cpp" line="706"/>
         <source>All Files (*.*)</source>
-        <translation>All Files (*.*)</translation>
+        <translation>Minden fájl (*.*)</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_dialogfactory.cpp" line="711"/>
         <source>Open Image</source>
-        <translation>Open Image</translation>
+        <translation>Kép megnyitása</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_dialogfactory.cpp" line="1793"/>
@@ -16831,7 +16824,7 @@ This action can NOT be undone.</translation>
     <message>
         <location filename="../../src/ui/qg_dialogfactory.cpp" line="1815"/>
         <source>SGI Black &amp; White</source>
-        <translation>SGI Black &amp; White</translation>
+        <translation>SGI Fekete &amp; Fehér</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_dialogfactory.cpp" line="1817"/>
@@ -16851,7 +16844,7 @@ This action can NOT be undone.</translation>
     <message>
         <location filename="../../src/ui/qg_dialogfactory.cpp" line="1823"/>
         <source>Windows Icon</source>
-        <translation>Windows Icon</translation>
+        <translation>Windows Ikon</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_dialogfactory.cpp" line="1825"/>
@@ -16876,7 +16869,7 @@ This action can NOT be undone.</translation>
     <message>
         <location filename="../../src/ui/qg_dialogfactory.cpp" line="1833"/>
         <source>Targa Image File</source>
-        <translation>Targa Image File</translation>
+        <translation>Targa képfájl</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_dialogfactory.cpp" line="1835"/>
@@ -16887,44 +16880,44 @@ This action can NOT be undone.</translation>
         <location filename="../../src/ui/qg_filedialog.cpp" line="324"/>
         <location filename="../../src/ui/qg_filedialog.cpp" line="377"/>
         <source>Save Drawing As</source>
-        <translation>Save Drawing As</translation>
+        <translation>Rajz mentése másként</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_filedialog.cpp" line="378"/>
         <source>%1 already exists.
 Do you want to replace it?</source>
-        <translation>%1 already exists.
-Do you want to replace it?</translation>
+        <translation>%1 már létezik.
+Le szeretné cserélni?</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_filedialog.cpp" line="443"/>
         <source>Old Drawing Exchange %1</source>
-        <translation>Old Drawing Exchange %1</translation>
+        <translation>Régi rajzcsere %1</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_filedialog.cpp" line="444"/>
         <source>Drawing Exchange %1</source>
-        <translation>Drawing Exchange %1</translation>
+        <translation>Rajzcsere %1</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_filedialog.cpp" line="447"/>
         <source>dwg Drawing %1</source>
-        <translation>dwg Drawing %1</translation>
+        <translation>DWG Rajz %1</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_filedialog.cpp" line="449"/>
         <source>QCad 1.x file %1</source>
-        <translation>QCad 1.x file %1</translation>
+        <translation>QCad 1.x fájl %1</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_filedialog.cpp" line="450"/>
         <source>LFF Font %1</source>
-        <translation>LFF Font %1</translation>
+        <translation>LFF Betűtípus %1</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_filedialog.cpp" line="451"/>
         <source>Font %1</source>
-        <translation>Font %1</translation>
+        <translation>Betűtípus %1</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_filedialog.cpp" line="452"/>
@@ -16934,27 +16927,27 @@ Do you want to replace it?</translation>
     <message>
         <location filename="../../src/ui/qg_filedialog.cpp" line="476"/>
         <source>Open Drawing</source>
-        <translation>Open Drawing</translation>
+        <translation>Rajz megnyitása</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_widthbox.cpp" line="35"/>
         <source>-Unchanged-</source>
-        <translation>-Unchanged-</translation>
+        <translation>-Változatlan-</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_widthbox.cpp" line="37"/>
         <source>ByLayer</source>
-        <translation>ByLayer</translation>
+        <translation>RétegSzerint</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_widthbox.cpp" line="39"/>
         <source>ByBlock</source>
-        <translation>ByBlock</translation>
+        <translation>BlokkSzerint</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_widthbox.cpp" line="41"/>
         <source>Default</source>
-        <translation>Default</translation>
+        <translation>Alapértelmezett</translation>
     </message>
     <message>
         <location filename="../../src/ui/qg_widthbox.cpp" line="43"/>
@@ -17082,7 +17075,7 @@ Do you want to replace it?</translation>
     <message>
         <location filename="../../src/actions/rs_actionblockscreate.cpp" line="149"/>
         <source>Specify reference point</source>
-        <translation>Specify reference point</translation>
+        <translation>Adja meg a referencia pontot</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionblockscreate.cpp" line="150"/>
@@ -17095,19 +17088,19 @@ Do you want to replace it?</translation>
     <message>
         <location filename="../../src/actions/rs_actionblocksinsert.cpp" line="74"/>
         <source>Block cannot contain an insert of itself.</source>
-        <translation>Block cannot contain an insert of itself.</translation>
+        <translation>A blokk nem tartalmazhat önmagát beillesztve.</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionblocksinsert.cpp" line="80"/>
         <source> has nested insert of current block in:
 </source>
-        <translation>has nested insert of current block in:</translation>
+        <translation>tartalmaz egymásba ágyazott beillesztést az aktuális blokkból:</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionblocksinsert.cpp" line="82"/>
         <source>
 This block cannot be inserted.</source>
-        <translation>This block cannot be inserted.</translation>
+        <translation>Ez a blokk nem illeszthető be.</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionblocksinsert.cpp" line="217"/>
@@ -17117,12 +17110,12 @@ This block cannot be inserted.</source>
         <location filename="../../src/actions/rs_actionblocksinsert.cpp" line="269"/>
         <location filename="../../src/actions/rs_actionblocksinsert.cpp" line="282"/>
         <source>Not a valid expression</source>
-        <translation>Not a valid expression</translation>
+        <translation>Érvénytelen kifejezés</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionblocksinsert.cpp" line="381"/>
         <source>Specify reference point</source>
-        <translation>Specify reference point</translation>
+        <translation>Adja meg a referencia pontot</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionblocksinsert.cpp" line="382"/>
@@ -17132,32 +17125,32 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actionblocksinsert.cpp" line="385"/>
         <source>Enter angle:</source>
-        <translation>Enter angle:</translation>
+        <translation>Adjon meg szöget:</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionblocksinsert.cpp" line="389"/>
         <source>Enter factor:</source>
-        <translation>Enter factor:</translation>
+        <translation>Adjon meg tényezőt:</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionblocksinsert.cpp" line="393"/>
         <source>Enter columns:</source>
-        <translation>Enter columns:</translation>
+        <translation>Adja meg az oszlopok számát:</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionblocksinsert.cpp" line="397"/>
         <source>Enter rows:</source>
-        <translation>Enter rows:</translation>
+        <translation>Adja meg a sorok számát:</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionblocksinsert.cpp" line="401"/>
         <source>Enter column spacing:</source>
-        <translation>Enter column spacing:</translation>
+        <translation>Adja meg az oszlopok közötti távolságot:</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionblocksinsert.cpp" line="405"/>
         <source>Enter row spacing:</source>
-        <translation>Enter row spacing:</translation>
+        <translation>Adja meg a sorok közötti távolságot:</translation>
     </message>
 </context>
 <context>
@@ -17165,7 +17158,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actionblockssave.cpp" line="95"/>
         <source>No block activated to save</source>
-        <translation>No block activated to save</translation>
+        <translation>Nincs aktív blokk mentéshez</translation>
     </message>
 </context>
 <context>
@@ -17173,7 +17166,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondefault.cpp" line="500"/>
         <source>Choose second edge</source>
-        <translation>Choose second edge</translation>
+        <translation>Válassza ki a második élt</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondefault.cpp" line="501"/>
@@ -17186,7 +17179,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondimaligned.cpp" line="252"/>
         <source>Specify first extension line origin</source>
-        <translation>Specify first extension line origin</translation>
+        <translation>Adja meg az első kiterjedési vonal kiindulópontját</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondimaligned.cpp" line="253"/>
@@ -17196,7 +17189,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondimaligned.cpp" line="257"/>
         <source>Specify second extension line origin</source>
-        <translation>Specify second extension line origin</translation>
+        <translation>Adja meg a második kiterjedési vonal kiindulópontját</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondimaligned.cpp" line="258"/>
@@ -17207,12 +17200,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondimaligned.cpp" line="262"/>
         <source>Specify dimension line location</source>
-        <translation>Specify dimension line location</translation>
+        <translation>Adja meg a méretvonal helyét</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondimaligned.cpp" line="266"/>
         <source>Enter dimension text:</source>
-        <translation>Enter dimension text:</translation>
+        <translation>Adja meg a méret szövegét:</translation>
     </message>
 </context>
 <context>
@@ -17220,7 +17213,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondimangular.cpp" line="239"/>
         <source>Select first line</source>
-        <translation>Select first line</translation>
+        <translation>Válassza ki az első vonalat</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondimangular.cpp" line="240"/>
@@ -17232,17 +17225,17 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondimangular.cpp" line="244"/>
         <source>Select second line</source>
-        <translation>Select second line</translation>
+        <translation>Válassza ki a második vonalat</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondimangular.cpp" line="249"/>
         <source>Specify dimension arc line location</source>
-        <translation>Specify dimension arc line location</translation>
+        <translation>Adja meg a méret ív vonalának helyét</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondimangular.cpp" line="254"/>
         <source>Enter dimension text:</source>
-        <translation>Enter dimension text:</translation>
+        <translation>Adja meg a méret szövegét:</translation>
     </message>
 </context>
 <context>
@@ -17250,17 +17243,17 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondimdiametric.cpp" line="180"/>
         <source>Not a circle or arc entity</source>
-        <translation>Not a circle or arc entity</translation>
+        <translation>Nem kör vagy ív elem</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondimdiametric.cpp" line="258"/>
         <source>Not a valid expression</source>
-        <translation>Not a valid expression</translation>
+        <translation>Érvénytelen kifejezés</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondimdiametric.cpp" line="286"/>
         <source>Select arc or circle entity</source>
-        <translation>Select arc or circle entity</translation>
+        <translation>Válasszon ív vagy kör elemet</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondimdiametric.cpp" line="287"/>
@@ -17271,12 +17264,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondimdiametric.cpp" line="291"/>
         <source>Specify dimension line location</source>
-        <translation>Specify dimension line location</translation>
+        <translation>Adja meg a méretvonal helyét</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondimdiametric.cpp" line="294"/>
         <source>Enter dimension text:</source>
-        <translation>Enter dimension text:</translation>
+        <translation>Adja meg a méret szövegét:</translation>
     </message>
 </context>
 <context>
@@ -17284,7 +17277,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondimleader.cpp" line="227"/>
         <source>Specify target point</source>
-        <translation>Specify target point</translation>
+        <translation>Adja meg a célpontot</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondimleader.cpp" line="228"/>
@@ -17294,12 +17287,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondimleader.cpp" line="231"/>
         <source>Specify next point</source>
-        <translation>Specify next point</translation>
+        <translation>Adja meg a következő pontot</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondimleader.cpp" line="232"/>
         <source>Finish</source>
-        <translation>Finish</translation>
+        <translation>Befejezés</translation>
     </message>
 </context>
 <context>
@@ -17307,12 +17300,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondimlinear.cpp" line="235"/>
         <source>Not a valid expression</source>
-        <translation>Not a valid expression</translation>
+        <translation>Érvénytelen kifejezés</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondimlinear.cpp" line="283"/>
         <source>Specify first extension line origin</source>
-        <translation>Specify first extension line origin</translation>
+        <translation>Adja meg az első kiterjedési vonal kiindulópontját</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondimlinear.cpp" line="284"/>
@@ -17322,7 +17315,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondimlinear.cpp" line="288"/>
         <source>Specify second extension line origin</source>
-        <translation>Specify second extension line origin</translation>
+        <translation>Adja meg a második kiterjedési vonal kiindulópontját</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondimlinear.cpp" line="289"/>
@@ -17333,17 +17326,17 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondimlinear.cpp" line="293"/>
         <source>Specify dimension line location</source>
-        <translation>Specify dimension line location</translation>
+        <translation>Adja meg a méretvonal helyét</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondimlinear.cpp" line="297"/>
         <source>Enter dimension text:</source>
-        <translation>Enter dimension text:</translation>
+        <translation>Adja meg a méret szövegét:</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondimlinear.cpp" line="301"/>
         <source>Enter dimension line angle:</source>
-        <translation>Enter dimension line angle:</translation>
+        <translation>Adja meg a méretvonal szögét:</translation>
     </message>
 </context>
 <context>
@@ -17351,17 +17344,17 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondimradial.cpp" line="173"/>
         <source>Not a circle or arc entity</source>
-        <translation>Not a circle or arc entity</translation>
+        <translation>Nem kör vagy ív elem</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondimradial.cpp" line="251"/>
         <source>Not a valid expression</source>
-        <translation>Not a valid expression</translation>
+        <translation>Érvénytelen kifejezés</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondimradial.cpp" line="278"/>
         <source>Select arc or circle entity</source>
-        <translation>Select arc or circle entity</translation>
+        <translation>Válasszon ív vagy kör elemet</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondimradial.cpp" line="279"/>
@@ -17372,12 +17365,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondimradial.cpp" line="283"/>
         <source>Specify dimension line position or enter angle:</source>
-        <translation>Specify dimension line position or enter angle:</translation>
+        <translation>Adja meg a méretvonal helyét vagy adjon meg szöget:</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondimradial.cpp" line="287"/>
         <source>Enter dimension text:</source>
-        <translation>Enter dimension text:</translation>
+        <translation>Adja meg a méret szövegét:</translation>
     </message>
 </context>
 <context>
@@ -17389,17 +17382,17 @@ This block cannot be inserted.</source>
         <location filename="../../src/actions/rs_actiondrawarc.cpp" line="303"/>
         <location filename="../../src/actions/rs_actiondrawarc.cpp" line="318"/>
         <source>Not a valid expression</source>
-        <translation>Not a valid expression</translation>
+        <translation>Érvénytelen kifejezés</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawarc.cpp" line="315"/>
         <source>Not a valid chord length</source>
-        <translation>Not a valid chord length</translation>
+        <translation>Érvénytelen húrhossz</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawarc.cpp" line="336"/>
         <source>Specify center</source>
-        <translation>Specify center</translation>
+        <translation>Adja meg a középpontot</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawarc.cpp" line="336"/>
@@ -17409,7 +17402,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawarc.cpp" line="339"/>
         <source>Specify radius</source>
-        <translation>Specify radius</translation>
+        <translation>Adja meg a sugarat</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawarc.cpp" line="339"/>
@@ -17423,22 +17416,22 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawarc.cpp" line="343"/>
         <source>Specify start angle:</source>
-        <translation>Specify start angle:</translation>
+        <translation>Adja meg a kezdőszöget:</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawarc.cpp" line="347"/>
         <source>Specify end angle or [angle/chord length]</source>
-        <translation>Specify end angle or [angle/chord length]</translation>
+        <translation>Adja meg a végszöget vagy [szög/húrhossz]</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawarc.cpp" line="351"/>
         <source>Specify included angle:</source>
-        <translation>Specify included angle:</translation>
+        <translation>Adja meg a befoglalt szöget:</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawarc.cpp" line="355"/>
         <source>Specify chord length:</source>
-        <translation>Specify chord length:</translation>
+        <translation>Adja meg a húrhosszt:</translation>
     </message>
 </context>
 <context>
@@ -17446,12 +17439,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawarc3p.cpp" line="108"/>
         <source>Invalid arc data.</source>
-        <translation>Invalid arc data.</translation>
+        <translation>Érvénytelen ív adatok.</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawarc3p.cpp" line="233"/>
         <source>Specify startpoint or [center]</source>
-        <translation>Specify startpoint or [center]</translation>
+        <translation>Adja meg a kezdőpontot vagy [középpont]</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawarc3p.cpp" line="234"/>
@@ -17461,7 +17454,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawarc3p.cpp" line="238"/>
         <source>Specify second point</source>
-        <translation>Specify second point</translation>
+        <translation>Adja meg a második pontot</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawarc3p.cpp" line="238"/>
@@ -17472,7 +17465,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawarc3p.cpp" line="242"/>
         <source>Specify endpoint</source>
-        <translation>Specify endpoint</translation>
+        <translation>Adja meg a végpontot</translation>
     </message>
 </context>
 <context>
@@ -17480,7 +17473,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawarctangential.cpp" line="226"/>
         <source>Specify base entity</source>
-        <translation>Specify base entity</translation>
+        <translation>Adja meg az alap elemet</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawarctangential.cpp" line="227"/>
@@ -17490,7 +17483,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawarctangential.cpp" line="232"/>
         <source>Specify end angle</source>
-        <translation>Specify end angle</translation>
+        <translation>Adja meg a végszöget</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawarctangential.cpp" line="232"/>
@@ -17501,7 +17494,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawarctangential.cpp" line="235"/>
         <source>Specify end point</source>
-        <translation>Specify end point</translation>
+        <translation>Adja meg a végpontot</translation>
     </message>
 </context>
 <context>
@@ -17509,12 +17502,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawcircle.cpp" line="189"/>
         <source>Not a valid expression</source>
-        <translation>Not a valid expression</translation>
+        <translation>Érvénytelen kifejezés</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawcircle.cpp" line="201"/>
         <source>Specify center</source>
-        <translation>Specify center</translation>
+        <translation>Adja meg a középpontot</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawcircle.cpp" line="201"/>
@@ -17524,7 +17517,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawcircle.cpp" line="204"/>
         <source>Specify point on circle</source>
-        <translation>Specify point on circle</translation>
+        <translation>Adja meg a körön lévő pontot</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawcircle.cpp" line="204"/>
@@ -17537,12 +17530,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawcircle2p.cpp" line="103"/>
         <source>Invalid Circle data.</source>
-        <translation>Invalid Circle data.</translation>
+        <translation>Érvénytelen kör adatok.</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawcircle2p.cpp" line="184"/>
         <source>Specify first point</source>
-        <translation>Specify first point</translation>
+        <translation>Adja meg az első pontot</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawcircle2p.cpp" line="184"/>
@@ -17552,7 +17545,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawcircle2p.cpp" line="188"/>
         <source>Specify second point</source>
-        <translation>Specify second point</translation>
+        <translation>Adja meg a második pontot</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawcircle2p.cpp" line="188"/>
@@ -17565,12 +17558,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawcircle3p.cpp" line="95"/>
         <source>Invalid circle data.</source>
-        <translation>Invalid circle data.</translation>
+        <translation>Érvénytelen kör adatok.</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawcircle3p.cpp" line="186"/>
         <source>Specify first point</source>
-        <translation>Specify first point</translation>
+        <translation>Adja meg az első pontot</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawcircle3p.cpp" line="187"/>
@@ -17580,7 +17573,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawcircle3p.cpp" line="190"/>
         <source>Specify second point</source>
-        <translation>Specify second point</translation>
+        <translation>Adja meg a második pontot</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawcircle3p.cpp" line="191"/>
@@ -17591,7 +17584,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawcircle3p.cpp" line="194"/>
         <source>Specify third point</source>
-        <translation>Specify third point</translation>
+        <translation>Adja meg a harmadik pontot</translation>
     </message>
 </context>
 <context>
@@ -17599,27 +17592,27 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawcirclecr.cpp" line="106"/>
         <source>radius=%1 is invalid (expression)</source>
-        <translation>radius=%1 is invalid (expression)</translation>
+        <translation>sugár=%1 érvénytelen (kifejezés)</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawcirclecr.cpp" line="108"/>
         <source>radius=%1 is invalid (negative)</source>
-        <translation>radius=%1 is invalid (negative)</translation>
+        <translation>sugár=%1 érvénytelen (negatív)</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawcirclecr.cpp" line="111"/>
         <source>radius=%1 is invalid (zero)</source>
-        <translation>radius=%1 is invalid (zero)</translation>
+        <translation>sugár=%1 érvénytelen (nulla)</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawcirclecr.cpp" line="193"/>
         <source>Not a valid expression</source>
-        <translation>Not a valid expression</translation>
+        <translation>Érvénytelen kifejezés</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawcirclecr.cpp" line="223"/>
         <source>Specify circle center</source>
-        <translation>Specify circle center</translation>
+        <translation>Adja meg a kör középpontját</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawcirclecr.cpp" line="224"/>
@@ -17629,7 +17622,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawcirclecr.cpp" line="227"/>
         <source>Specify circle radius</source>
-        <translation>Specify circle radius</translation>
+        <translation>Adja meg a kör sugarát</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawcirclecr.cpp" line="228"/>
@@ -17642,7 +17635,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawcircleinscribe.cpp" line="269"/>
         <source>Specify the first line</source>
-        <translation>Specify the first line</translation>
+        <translation>Adja meg az első vonalat</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawcircleinscribe.cpp" line="270"/>
@@ -17652,7 +17645,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawcircleinscribe.cpp" line="274"/>
         <source>Specify the second line</source>
-        <translation>Specify the second line</translation>
+        <translation>Adja meg a második vonalat</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawcircleinscribe.cpp" line="275"/>
@@ -17663,7 +17656,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawcircleinscribe.cpp" line="279"/>
         <source>Specify the third line</source>
-        <translation>Specify the third line</translation>
+        <translation>Adja meg a harmadik vonalat</translation>
     </message>
 </context>
 <context>
@@ -17671,7 +17664,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawcircletan1_2p.cpp" line="425"/>
         <source>Specify a line/arc/circle</source>
-        <translation>Specify a line/arc/circle</translation>
+        <translation>Adjon meg egy vonal/ív/kör elemet</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawcircletan1_2p.cpp" line="426"/>
@@ -17681,7 +17674,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawcircletan1_2p.cpp" line="430"/>
         <source>Specify the first point on the tangent circle</source>
-        <translation>Specify the first point on the tangent circle</translation>
+        <translation>Adja meg az érintő kör első pontját</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawcircletan1_2p.cpp" line="431"/>
@@ -17693,12 +17686,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawcircletan1_2p.cpp" line="435"/>
         <source>Specify the second point on the tangent circle</source>
-        <translation>Specify the second point on the tangent circle</translation>
+        <translation>Adja meg az érintő kör második pontját</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawcircletan1_2p.cpp" line="439"/>
         <source>Select the center of the tangent circle</source>
-        <translation>Select the center of the tangent circle</translation>
+        <translation>Válassza ki az érintő kör középpontját</translation>
     </message>
 </context>
 <context>
@@ -17706,32 +17699,32 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawcircletan2.cpp" line="156"/>
         <source>Invalid expression &apos;%1&apos; for radius</source>
-        <translation>Invalid expression &apos;%1&apos; for radius</translation>
+        <translation>Érvénytelen '%1' kifejezés a sugárhoz</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawcircletan2.cpp" line="158"/>
         <source>Invalid negative radius &apos;%1&apos;</source>
-        <translation>Invalid negative radius &apos;%1&apos;</translation>
+        <translation>Érvénytelen negatív sugár '%1'</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawcircletan2.cpp" line="161"/>
         <source>Invalid zero radius &apos;%1&apos;</source>
-        <translation>Invalid zero radius &apos;%1&apos;</translation>
+        <translation>Érvénytelen nulla sugár '%1'</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawcircletan2.cpp" line="169"/>
         <source>No tangent circle possible for radius &apos;%1&apos;</source>
-        <translation>No tangent circle possible for radius &apos;%1&apos;</translation>
+        <translation>Nem lehetséges érintő kör a '%1' sugárhoz</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawcircletan2.cpp" line="183"/>
         <source>No common tangential circle for radius &apos;%1&apos;</source>
-        <translation>No common tangential circle for radius &apos;%1&apos;</translation>
+        <translation>Nincs közös érintő kör a '%1' sugárhoz</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawcircletan2.cpp" line="328"/>
         <source>Specify the first line/arc/circle</source>
-        <translation>Specify the first line/arc/circle</translation>
+        <translation>Adja meg az első vonal/ív/kör elemet</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawcircletan2.cpp" line="329"/>
@@ -17741,7 +17734,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawcircletan2.cpp" line="333"/>
         <source>Specify the second line/arc/circle</source>
-        <translation>Specify the second line/arc/circle</translation>
+        <translation>Adja meg a második vonal/ív/kör elemet</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawcircletan2.cpp" line="334"/>
@@ -17752,7 +17745,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawcircletan2.cpp" line="338"/>
         <source>Select the center of the tangent circle</source>
-        <translation>Select the center of the tangent circle</translation>
+        <translation>Válassza ki az érintő kör középpontját</translation>
     </message>
 </context>
 <context>
@@ -17760,7 +17753,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawcircletan2_1p.cpp" line="333"/>
         <source>Specify a line/arc/circle</source>
-        <translation>Specify a line/arc/circle</translation>
+        <translation>Adjon meg egy vonal/ív/kör elemet</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawcircletan2_1p.cpp" line="334"/>
@@ -17770,7 +17763,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawcircletan2_1p.cpp" line="338"/>
         <source>Specify the another arc/circle</source>
-        <translation>Specify the another arc/circle</translation>
+        <translation>Adja meg a másik ív/kör elemet</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawcircletan2_1p.cpp" line="339"/>
@@ -17782,12 +17775,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawcircletan2_1p.cpp" line="343"/>
         <source>Specify a point on the tangent circle</source>
-        <translation>Specify a point on the tangent circle</translation>
+        <translation>Adja meg az érintő körön lévő pontot</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawcircletan2_1p.cpp" line="347"/>
         <source>Select the center of the tangent circle</source>
-        <translation>Select the center of the tangent circle</translation>
+        <translation>Válassza ki az érintő kör középpontját</translation>
     </message>
 </context>
 <context>
@@ -17795,7 +17788,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawcircletan3.cpp" line="463"/>
         <source>Specify the first line/arc/circle</source>
-        <translation>Specify the first line/arc/circle</translation>
+        <translation>Adja meg az első vonal/ív/kör elemet</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawcircletan3.cpp" line="464"/>
@@ -17805,7 +17798,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawcircletan3.cpp" line="468"/>
         <source>Specify the second line/arc/circle</source>
-        <translation>Specify the second line/arc/circle</translation>
+        <translation>Adja meg a második vonal/ív/kör elemet</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawcircletan3.cpp" line="469"/>
@@ -17817,12 +17810,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawcircletan3.cpp" line="472"/>
         <source>Specify the third line/arc/circle</source>
-        <translation>Specify the third line/arc/circle</translation>
+        <translation>Adja meg a harmadik vonal/ív/kör elemet</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawcircletan3.cpp" line="477"/>
         <source>Select the center of the tangent circle</source>
-        <translation>Select the center of the tangent circle</translation>
+        <translation>Válassza ki az érintő kör középpontját</translation>
     </message>
 </context>
 <context>
@@ -17830,12 +17823,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawellipse4points.cpp" line="156"/>
         <source>Can not determine uniquely an ellipse</source>
-        <translation>Can not determine uniquely an ellipse</translation>
+        <translation>Nem lehet egyértelműen meghatározni ellipszist</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawellipse4points.cpp" line="284"/>
         <source>Specify the first point on ellipse</source>
-        <translation>Specify the first point on ellipse</translation>
+        <translation>Adja meg az ellipszis első pontját</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawellipse4points.cpp" line="285"/>
@@ -17845,7 +17838,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawellipse4points.cpp" line="289"/>
         <source>Specify the second point on ellipse</source>
-        <translation>Specify the second point on ellipse</translation>
+        <translation>Adja meg az ellipszis második pontját</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawellipse4points.cpp" line="290"/>
@@ -17857,12 +17850,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawellipse4points.cpp" line="294"/>
         <source>Specify the third point on ellipse</source>
-        <translation>Specify the third point on ellipse</translation>
+        <translation>Adja meg az ellipszis harmadik pontját</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawellipse4points.cpp" line="299"/>
         <source>Specify the fourth point on ellipse</source>
-        <translation>Specify the fourth point on ellipse</translation>
+        <translation>Adja meg az ellipszis negyedik pontját</translation>
     </message>
 </context>
 <context>
@@ -17872,12 +17865,12 @@ This block cannot be inserted.</source>
         <location filename="../../src/actions/rs_actiondrawellipseaxis.cpp" line="325"/>
         <location filename="../../src/actions/rs_actiondrawellipseaxis.cpp" line="337"/>
         <source>Not a valid expression</source>
-        <translation>Not a valid expression</translation>
+        <translation>Érvénytelen kifejezés</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawellipseaxis.cpp" line="350"/>
         <source>Specify ellipse center</source>
-        <translation>Specify ellipse center</translation>
+        <translation>Adja meg az ellipszis középpontját</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawellipseaxis.cpp" line="351"/>
@@ -17887,7 +17880,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawellipseaxis.cpp" line="355"/>
         <source>Specify endpoint of major axis</source>
-        <translation>Specify endpoint of major axis</translation>
+        <translation>Adja meg a nagy tengely végpontját</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawellipseaxis.cpp" line="356"/>
@@ -17900,17 +17893,17 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawellipseaxis.cpp" line="361"/>
         <source>Specify endpoint or length of minor axis:</source>
-        <translation>Specify endpoint or length of minor axis:</translation>
+        <translation>Adja meg a kis tengely végpontját vagy hosszát:</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawellipseaxis.cpp" line="366"/>
         <source>Specify start angle</source>
-        <translation>Specify start angle</translation>
+        <translation>Adja meg a kezdőszöget</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawellipseaxis.cpp" line="371"/>
         <source>Specify end angle</source>
-        <translation>Specify end angle</translation>
+        <translation>Adja meg a végszöget</translation>
     </message>
 </context>
 <context>
@@ -17918,7 +17911,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawellipsecenter3points.cpp" line="282"/>
         <source>Specify the center of ellipse</source>
-        <translation>Specify the center of ellipse</translation>
+        <translation>Adja meg az ellipszis középpontját</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawellipsecenter3points.cpp" line="283"/>
@@ -17929,12 +17922,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawellipsecenter3points.cpp" line="287"/>
         <source>Specify the first point on ellipse</source>
-        <translation>Specify the first point on ellipse</translation>
+        <translation>Adja meg az ellipszis első pontját</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawellipsecenter3points.cpp" line="291"/>
         <source>Specify the second point on ellipse</source>
-        <translation>Specify the second point on ellipse</translation>
+        <translation>Adja meg az ellipszis második pontját</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawellipsecenter3points.cpp" line="292"/>
@@ -17945,7 +17938,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawellipsecenter3points.cpp" line="296"/>
         <source>Specify the third point on ellipse</source>
-        <translation>Specify the third point on ellipse</translation>
+        <translation>Adja meg az ellipszis harmadik pontját</translation>
     </message>
 </context>
 <context>
@@ -17953,22 +17946,22 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawellipsefocipoint.cpp" line="207"/>
         <source>specify a point on ellipse, or total distance to foci</source>
-        <translation>specify a point on ellipse, or total distance to foci</translation>
+        <translation>adjon meg egy pontot az ellipszisen, vagy a fókuszpontoktól való össztávolságot</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawellipsefocipoint.cpp" line="221"/>
         <source>Total distance %1 is smaller than distance between foci</source>
-        <translation>Total distance %1 is smaller than distance between foci</translation>
+        <translation>A(z) %1 össztávolság kisebb, mint a fókuszpontok távolsága</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawellipsefocipoint.cpp" line="223"/>
         <source>Not a valid expression</source>
-        <translation>Not a valid expression</translation>
+        <translation>Érvénytelen kifejezés</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawellipsefocipoint.cpp" line="238"/>
         <source>Specify first focus of ellipse</source>
-        <translation>Specify first focus of ellipse</translation>
+        <translation>Adja meg az ellipszis első fókuszpontját</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawellipsefocipoint.cpp" line="239"/>
@@ -17978,7 +17971,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawellipsefocipoint.cpp" line="243"/>
         <source>Specify second focus of ellipse</source>
-        <translation>Specify second focus of ellipse</translation>
+        <translation>Adja meg az ellipszis második fókuszpontját</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawellipsefocipoint.cpp" line="244"/>
@@ -17989,7 +17982,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawellipsefocipoint.cpp" line="249"/>
         <source>Specify a point on ellipse or total distance to foci</source>
-        <translation>Specify a point on ellipse or total distance to foci</translation>
+        <translation>Adjon meg egy pontot az ellipszisen, vagy a fókuszpontoktól való össztávolságot</translation>
     </message>
 </context>
 <context>
@@ -17997,12 +17990,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawellipseinscribe.cpp" line="157"/>
         <source>Can not determine uniquely an ellipse</source>
-        <translation>Can not determine uniquely an ellipse</translation>
+        <translation>Nem lehet egyértelműen meghatározni ellipszist</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawellipseinscribe.cpp" line="279"/>
         <source>Specify the first line</source>
-        <translation>Specify the first line</translation>
+        <translation>Adja meg az első vonalat</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawellipseinscribe.cpp" line="280"/>
@@ -18012,7 +18005,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawellipseinscribe.cpp" line="284"/>
         <source>Specify the second line</source>
-        <translation>Specify the second line</translation>
+        <translation>Adja meg a második vonalat</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawellipseinscribe.cpp" line="285"/>
@@ -18024,12 +18017,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawellipseinscribe.cpp" line="289"/>
         <source>Specify the third line</source>
-        <translation>Specify the third line</translation>
+        <translation>Adja meg a harmadik vonalat</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawellipseinscribe.cpp" line="294"/>
         <source>Specify the fourth line</source>
-        <translation>Specify the fourth line</translation>
+        <translation>Adja meg a negyedik vonalat</translation>
     </message>
 </context>
 <context>
@@ -18037,42 +18030,42 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawhatch.cpp" line="150"/>
         <source>Hatch created successfully.</source>
-        <translation>Hatch created successfully.</translation>
+        <translation>Sraffozás sikeresen létrehozva.</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawhatch.cpp" line="153"/>
         <source>Hatch Error: Invalid contour found!</source>
-        <translation>Hatch Error: Invalid contour found!</translation>
+        <translation>Sraffozási hiba: Érvénytelen kontúr!</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawhatch.cpp" line="157"/>
         <source>Hatch Error: Pattern not found!</source>
-        <translation>Hatch Error: Pattern not found!</translation>
+        <translation>Sraffozási hiba: Minta nem található!</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawhatch.cpp" line="160"/>
         <source>Hatch Error: Contour or pattern too small!</source>
-        <translation>Hatch Error: Contour or pattern too small!</translation>
+        <translation>Sraffozási hiba: Kontúr vagy minta túl kicsi!</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawhatch.cpp" line="163"/>
         <source>Hatch Error: Contour too big!</source>
-        <translation>Hatch Error: Contour too big!</translation>
+        <translation>Sraffozási hiba: Kontúr túl nagy!</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawhatch.cpp" line="166"/>
         <source>Hatch Error: Undefined Error!</source>
-        <translation>Hatch Error: Undefined Error!</translation>
+        <translation>Sraffozási hiba: Meghatározatlan hiba!</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawhatch.cpp" line="171"/>
         <source>Total hatch area = %1</source>
-        <translation>Total hatch area = %1</translation>
+        <translation>Teljes sraffozási terület = %1</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawhatch.cpp" line="179"/>
         <source>Invalid hatch area. Please check that the entities chosen form one or more closed contours.</source>
-        <translation>Invalid hatch area. Please check that the entities chosen form one or more closed contours.</translation>
+        <translation>Érvénytelen sraffozási terület. Kérem ellenőrizze, hogy a kiválasztott elemek egy vagy több zárt kontúrt alkotnak-e.</translation>
     </message>
 </context>
 <context>
@@ -18082,12 +18075,12 @@ This block cannot be inserted.</source>
         <location filename="../../src/actions/rs_actiondrawimage.cpp" line="210"/>
         <location filename="../../src/actions/rs_actiondrawimage.cpp" line="224"/>
         <source>Not a valid expression</source>
-        <translation>Not a valid expression</translation>
+        <translation>Érvénytelen kifejezés</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawimage.cpp" line="308"/>
         <source>Specify reference point</source>
-        <translation>Specify reference point</translation>
+        <translation>Adja meg a referencia pontot</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawimage.cpp" line="309"/>
@@ -18097,17 +18090,17 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawimage.cpp" line="312"/>
         <source>Enter angle:</source>
-        <translation>Enter angle:</translation>
+        <translation>Adjon meg szöget:</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawimage.cpp" line="316"/>
         <source>Enter factor:</source>
-        <translation>Enter factor:</translation>
+        <translation>Adjon meg tényezőt:</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawimage.cpp" line="320"/>
         <source>Enter dpi:</source>
-        <translation>Enter dpi:</translation>
+        <translation>Adjon meg DPI értéket:</translation>
     </message>
 </context>
 <context>
@@ -18115,7 +18108,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawline.cpp" line="313"/>
         <source>Specify first point</source>
-        <translation>Specify first point</translation>
+        <translation>Adja meg az első pontot</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawline.cpp" line="314"/>
@@ -18125,7 +18118,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawline.cpp" line="337"/>
         <source>Specify next point or [%1]</source>
-        <translation>Specify next point or [%1]</translation>
+        <translation>Adja meg a következő pontot vagy [%1]</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawline.cpp" line="338"/>
@@ -18136,22 +18129,22 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawline.cpp" line="341"/>
         <source>Specify next point</source>
-        <translation>Specify next point</translation>
+        <translation>Adja meg a következő pontot</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawline.cpp" line="389"/>
         <source>Cannot close sequence of lines: Not enough entities defined yet, or already closed.</source>
-        <translation>Cannot close sequence of lines: Not enough entities defined yet, or already closed.</translation>
+        <translation>Nem lehet bezárni a vonalsorozatot: Még nem elég az elemek száma, vagy már be van zárva.</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawline.cpp" line="443"/>
         <source>Cannot undo: Begin of history reached</source>
-        <translation>Cannot undo: Begin of history reached</translation>
+        <translation>Nem lehet visszavonni: Az előzmények elejére ért</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawline.cpp" line="478"/>
         <source>Cannot redo: End of history reached</source>
-        <translation>Cannot redo: End of history reached</translation>
+        <translation>Nem lehet újra elvégezni: Az előzmények végére ért</translation>
     </message>
 </context>
 <context>
@@ -18160,12 +18153,12 @@ This block cannot be inserted.</source>
         <location filename="../../src/actions/rs_actiondrawlineangle.cpp" line="219"/>
         <location filename="../../src/actions/rs_actiondrawlineangle.cpp" line="233"/>
         <source>Not a valid expression</source>
-        <translation>Not a valid expression</translation>
+        <translation>Érvénytelen kifejezés</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawlineangle.cpp" line="300"/>
         <source>Specify position</source>
-        <translation>Specify position</translation>
+        <translation>Adja meg a pozíciót</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawlineangle.cpp" line="301"/>
@@ -18175,7 +18168,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawlineangle.cpp" line="305"/>
         <source>Enter angle:</source>
-        <translation>Enter angle:</translation>
+        <translation>Adjon meg szöget:</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawlineangle.cpp" line="305"/>
@@ -18186,7 +18179,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawlineangle.cpp" line="309"/>
         <source>Enter length:</source>
-        <translation>Enter length:</translation>
+        <translation>Adjon meg hosszt:</translation>
     </message>
 </context>
 <context>
@@ -18195,18 +18188,18 @@ This block cannot be inserted.</source>
         <location filename="../../src/actions/rs_actiondrawlinebisector.cpp" line="236"/>
         <location filename="../../src/actions/rs_actiondrawlinebisector.cpp" line="253"/>
         <source>Not a valid expression</source>
-        <translation>Not a valid expression</translation>
+        <translation>Érvénytelen kifejezés</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawlinebisector.cpp" line="251"/>
         <source>Number sector lines not in range: </source>
         <comment>number of bisector to create must be in [1, 200]</comment>
-        <translation>Number sector lines not in range:</translation>
+        <translation>A szektorsugarak száma nincs a tartományon belül:</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawlinebisector.cpp" line="288"/>
         <source>Select first line</source>
-        <translation>Select first line</translation>
+        <translation>Válassza ki az első vonalat</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawlinebisector.cpp" line="289"/>
@@ -18216,7 +18209,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawlinebisector.cpp" line="292"/>
         <source>Select second line</source>
-        <translation>Select second line</translation>
+        <translation>Válassza ki a második vonalat</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawlinebisector.cpp" line="293"/>
@@ -18228,12 +18221,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawlinebisector.cpp" line="296"/>
         <source>Enter bisector length:</source>
-        <translation>Enter bisector length:</translation>
+        <translation>Adja meg a felezővonal hosszát:</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawlinebisector.cpp" line="300"/>
         <source>Enter number of bisectors:</source>
-        <translation>Enter number of bisectors:</translation>
+        <translation>Adja meg a felezők számát:</translation>
     </message>
 </context>
 <context>
@@ -18241,7 +18234,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawlinefree.cpp" line="141"/>
         <source>Click and drag to draw a line</source>
-        <translation>Click and drag to draw a line</translation>
+        <translation>Kattintson és húzza a vonal rajzolásához</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawlinefree.cpp" line="141"/>
@@ -18254,7 +18247,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawlinehorvert.cpp" line="157"/>
         <source>Specify first point</source>
-        <translation>Specify first point</translation>
+        <translation>Adja meg az első pontot</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawlinehorvert.cpp" line="158"/>
@@ -18264,7 +18257,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawlinehorvert.cpp" line="161"/>
         <source>Specify second point</source>
-        <translation>Specify second point</translation>
+        <translation>Adja meg a második pontot</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawlinehorvert.cpp" line="162"/>
@@ -18277,7 +18270,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawlineorthtan.cpp" line="185"/>
         <source>Select a line</source>
-        <translation>Select a line</translation>
+        <translation>Válasszon egy vonalat</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawlineorthtan.cpp" line="186"/>
@@ -18287,7 +18280,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawlineorthtan.cpp" line="189"/>
         <source>Select circle, arc or ellipse</source>
-        <translation>Select circle, arc or ellipse</translation>
+        <translation>Válasszon kört, ívet vagy ellipszist</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawlineorthtan.cpp" line="190"/>
@@ -18300,7 +18293,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawlineparallel.cpp" line="125"/>
         <source>Specify Distance &lt;%1&gt; or select entity or [%2]</source>
-        <translation>Specify Distance &lt;%1&gt; or select entity or [%2]</translation>
+        <translation>Adja meg a távolságot &lt;%1&gt; vagy válasszon elemet vagy [%2]</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawlineparallel.cpp" line="127"/>
@@ -18310,18 +18303,18 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawlineparallel.cpp" line="131"/>
         <source>Enter number:</source>
-        <translation>Enter number:</translation>
+        <translation>Adjon meg egy számot:</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawlineparallel.cpp" line="179"/>
         <location filename="../../src/actions/rs_actiondrawlineparallel.cpp" line="198"/>
         <source>Not a valid expression</source>
-        <translation>Not a valid expression</translation>
+        <translation>Érvénytelen kifejezés</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawlineparallel.cpp" line="195"/>
         <source>Not a valid number. Try 1..99</source>
-        <translation>Not a valid number. Try 1..99</translation>
+        <translation>Érvénytelen szám. Próbáljon 1..99 értéket</translation>
     </message>
 </context>
 <context>
@@ -18329,7 +18322,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawlineparallelthrough.cpp" line="176"/>
         <source>Select entity</source>
-        <translation>Select entity</translation>
+        <translation>Elem kiválasztása</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawlineparallelthrough.cpp" line="176"/>
@@ -18339,7 +18332,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawlineparallelthrough.cpp" line="180"/>
         <source>Specify through point</source>
-        <translation>Specify through point</translation>
+        <translation>Adja meg az átmenő pontot</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawlineparallelthrough.cpp" line="181"/>
@@ -18350,17 +18343,17 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawlineparallelthrough.cpp" line="185"/>
         <source>Number:</source>
-        <translation>Number:</translation>
+        <translation>Szám:</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawlineparallelthrough.cpp" line="241"/>
         <source>Not a valid number. Try 1..99</source>
-        <translation>Not a valid number. Try 1..99</translation>
+        <translation>Érvénytelen szám. Próbáljon 1..99 értéket</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawlineparallelthrough.cpp" line="245"/>
         <source>Not a valid expression</source>
-        <translation>Not a valid expression</translation>
+        <translation>Érvénytelen kifejezés</translation>
     </message>
 </context>
 <context>
@@ -18368,27 +18361,27 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawlinepolygon.cpp" line="138"/>
         <source>Specify center</source>
-        <translation>Specify center</translation>
+        <translation>Adja meg a középpontot</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawlinepolygon.cpp" line="143"/>
         <source>Specify a corner</source>
-        <translation>Specify a corner</translation>
+        <translation>Adja meg a sarkot</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawlinepolygon.cpp" line="147"/>
         <source>Enter number:</source>
-        <translation>Enter number:</translation>
+        <translation>Adjon meg egy számot:</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawlinepolygon.cpp" line="197"/>
         <source>Not a valid number. Try 1..9999</source>
-        <translation>Not a valid number. Try 1..9999</translation>
+        <translation>Érvénytelen szám. Próbáljon 1..9999 értéket</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawlinepolygon.cpp" line="200"/>
         <source>Not a valid expression</source>
-        <translation>Not a valid expression</translation>
+        <translation>Érvénytelen kifejezés</translation>
     </message>
 </context>
 <context>
@@ -18396,7 +18389,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawlinepolygon2.cpp" line="144"/>
         <source>Specify first corner</source>
-        <translation>Specify first corner</translation>
+        <translation>Adja meg az első sarkot</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawlinepolygon2.cpp" line="145"/>
@@ -18406,7 +18399,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawlinepolygon2.cpp" line="149"/>
         <source>Specify second corner</source>
-        <translation>Specify second corner</translation>
+        <translation>Adja meg a második sarkot</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawlinepolygon2.cpp" line="150"/>
@@ -18417,17 +18410,17 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawlinepolygon2.cpp" line="154"/>
         <source>Number:</source>
-        <translation>Number:</translation>
+        <translation>Szám:</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawlinepolygon2.cpp" line="208"/>
         <source>Not a valid number. Try 1..9999</source>
-        <translation>Not a valid number. Try 1..9999</translation>
+        <translation>Érvénytelen szám. Próbáljon 1..9999 értéket</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawlinepolygon2.cpp" line="211"/>
         <source>Not a valid expression.</source>
-        <translation>Not a valid expression.</translation>
+        <translation>Érvénytelen kifejezés.</translation>
     </message>
 </context>
 <context>
@@ -18435,7 +18428,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawlinerectangle.cpp" line="155"/>
         <source>Specify first corner</source>
-        <translation>Specify first corner</translation>
+        <translation>Adja meg az első sarkot</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawlinerectangle.cpp" line="156"/>
@@ -18445,7 +18438,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawlinerectangle.cpp" line="159"/>
         <source>Specify second corner</source>
-        <translation>Specify second corner</translation>
+        <translation>Adja meg a második sarkot</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawlinerectangle.cpp" line="160"/>
@@ -18459,12 +18452,12 @@ This block cannot be inserted.</source>
         <location filename="../../src/actions/rs_actiondrawlinerelangle.cpp" line="225"/>
         <location filename="../../src/actions/rs_actiondrawlinerelangle.cpp" line="238"/>
         <source>Not a valid expression</source>
-        <translation>Not a valid expression</translation>
+        <translation>Érvénytelen kifejezés</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawlinerelangle.cpp" line="274"/>
         <source>Select base entity</source>
-        <translation>Select base entity</translation>
+        <translation>Válassza ki az alap elemet</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawlinerelangle.cpp" line="275"/>
@@ -18474,7 +18467,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawlinerelangle.cpp" line="278"/>
         <source>Specify position</source>
-        <translation>Specify position</translation>
+        <translation>Adja meg a pozíciót</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawlinerelangle.cpp" line="279"/>
@@ -18487,7 +18480,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawlinetangent1.cpp" line="181"/>
         <source>Specify point</source>
-        <translation>Specify point</translation>
+        <translation>Adja meg a pontot</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawlinetangent1.cpp" line="182"/>
@@ -18497,7 +18490,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawlinetangent1.cpp" line="185"/>
         <source>Select circle, arc or ellipse</source>
-        <translation>Select circle, arc or ellipse</translation>
+        <translation>Válasszon kört, ívet vagy ellipszist</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawlinetangent1.cpp" line="186"/>
@@ -18510,7 +18503,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawlinetangent2.cpp" line="282"/>
         <source>Select first circle/ellipse/parabola</source>
-        <translation>Select first circle/ellipse/parabola</translation>
+        <translation>Válasszon első kör/ellipszis/parabola elemet</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawlinetangent2.cpp" line="283"/>
@@ -18520,7 +18513,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawlinetangent2.cpp" line="286"/>
         <source>Select second circle/ellipse/parabola</source>
-        <translation>Select second circle/ellipse/parabola</translation>
+        <translation>Válasszon második kör/ellipszis/parabola elemet</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawlinetangent2.cpp" line="287"/>
@@ -18531,7 +18524,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawlinetangent2.cpp" line="290"/>
         <source>Select the tangent line closest to cursor</source>
-        <translation>Select the tangent line closest to cursor</translation>
+        <translation>Válassza ki a kurzorhoz legközelebb lévő érintő vonalat</translation>
     </message>
 </context>
 <context>
@@ -18539,7 +18532,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawmtext.cpp" line="255"/>
         <source>Specify insertion point</source>
-        <translation>Specify insertion point</translation>
+        <translation>Adja meg a beillesztési pontot</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawmtext.cpp" line="256"/>
@@ -18549,7 +18542,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawmtext.cpp" line="260"/>
         <source>Enter text:</source>
-        <translation>Enter text:</translation>
+        <translation>Adjon meg szöveget:</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawmtext.cpp" line="261"/>
@@ -18562,7 +18555,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawpoint.cpp" line="117"/>
         <source>Specify location</source>
-        <translation>Specify location</translation>
+        <translation>Adja meg a helyet</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawpoint.cpp" line="117"/>
@@ -18576,13 +18569,13 @@ This block cannot be inserted.</source>
         <location filename="../../src/actions/rs_actiondrawpolyline.cpp" line="340"/>
         <location filename="../../src/actions/rs_actiondrawpolyline.cpp" line="509"/>
         <source>Enter the end point x</source>
-        <translation>Enter the end point x</translation>
+        <translation>Adja meg a végpont x koordinátáját</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawpolyline.cpp" line="375"/>
         <location filename="../../src/actions/rs_actiondrawpolyline.cpp" line="520"/>
         <source>Enter number of polylines</source>
-        <translation>Enter number of polylines</translation>
+        <translation>Adja meg a töröttvonalak számát</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawpolyline.cpp" line="459"/>
@@ -18592,7 +18585,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawpolyline.cpp" line="461"/>
         <source>Enter an equation, f(x)</source>
-        <translation>Enter an equation, f(x)</translation>
+        <translation>Adjon meg egy egyenletet, f(x)</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawpolyline.cpp" line="479"/>
@@ -18602,27 +18595,27 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawpolyline.cpp" line="487"/>
         <source>Enter the start point x</source>
-        <translation>Enter the start point x</translation>
+        <translation>Adja meg a kezdőpont x koordinátáját</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawpolyline.cpp" line="495"/>
         <source>The entered x is invalid.</source>
-        <translation>The entered x is invalid.</translation>
+        <translation>A megadott x érték érvénytelen.</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawpolyline.cpp" line="541"/>
         <source>The step size entered is invalid.</source>
-        <translation>The step size entered is invalid.</translation>
+        <translation>A megadott lépésméret érvénytelen.</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawpolyline.cpp" line="575"/>
         <source>The value x entered is invalid.</source>
-        <translation>The value x entered is invalid.</translation>
+        <translation>A megadott x érték érvénytelen.</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawpolyline.cpp" line="678"/>
         <source>Specify first point</source>
-        <translation>Specify first point</translation>
+        <translation>Adja meg az első pontot</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawpolyline.cpp" line="679"/>
@@ -18632,7 +18625,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawpolyline.cpp" line="694"/>
         <source>Specify next point or [%1]</source>
-        <translation>Specify next point or [%1]</translation>
+        <translation>Adja meg a következő pontot vagy [%1]</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawpolyline.cpp" line="695"/>
@@ -18643,17 +18636,17 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawpolyline.cpp" line="698"/>
         <source>Specify next point</source>
-        <translation>Specify next point</translation>
+        <translation>Adja meg a következő pontot</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawpolyline.cpp" line="745"/>
         <source>Cannot close sequence of lines: Not enough entities defined yet.</source>
-        <translation>Cannot close sequence of lines: Not enough entities defined yet.</translation>
+        <translation>Nem lehet bezárni a vonalsorozatot: Még nem elég az elemek száma.</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawpolyline.cpp" line="772"/>
         <source>Cannot undo: Not enough entities defined yet.</source>
-        <translation>Cannot undo: Not enough entities defined yet.</translation>
+        <translation>Nem lehet visszavonni: Még nem elég az elemek száma.</translation>
     </message>
 </context>
 <context>
@@ -18661,7 +18654,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawspline.cpp" line="276"/>
         <source>Specify first control point</source>
-        <translation>Specify first control point</translation>
+        <translation>Adja meg az első vezérlőpontot</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawspline.cpp" line="277"/>
@@ -18671,7 +18664,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawspline.cpp" line="289"/>
         <source>Specify next control point or [%1]</source>
-        <translation>Specify next control point or [%1]</translation>
+        <translation>Adja meg a következő vezérlőpontot vagy [%1]</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawspline.cpp" line="290"/>
@@ -18682,12 +18675,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawspline.cpp" line="293"/>
         <source>Specify next control point</source>
-        <translation>Specify next control point</translation>
+        <translation>Adja meg a következő vezérlőpontot</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawspline.cpp" line="365"/>
         <source>Cannot undo: Not enough entities defined yet.</source>
-        <translation>Cannot undo: Not enough entities defined yet.</translation>
+        <translation>Nem lehet visszavonni: Még nem elég az elemek száma.</translation>
     </message>
 </context>
 <context>
@@ -18695,7 +18688,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawtext.cpp" line="281"/>
         <source>Specify insertion point</source>
-        <translation>Specify insertion point</translation>
+        <translation>Adja meg a beillesztési pontot</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawtext.cpp" line="282"/>
@@ -18706,12 +18699,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiondrawtext.cpp" line="285"/>
         <source>Specify second point</source>
-        <translation>Specify second point</translation>
+        <translation>Adja meg a második pontot</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawtext.cpp" line="290"/>
         <source>Enter text:</source>
-        <translation>Enter text:</translation>
+        <translation>Adjon meg szöveget:</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiondrawtext.cpp" line="291"/>
@@ -18724,7 +18717,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actioneditcopy.cpp" line="104"/>
         <source>Specify reference point</source>
-        <translation>Specify reference point</translation>
+        <translation>Adja meg a referencia pontot</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actioneditcopy.cpp" line="105"/>
@@ -18737,7 +18730,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actioneditpaste.cpp" line="120"/>
         <source>Set reference point</source>
-        <translation>Set reference point</translation>
+        <translation>Referencia pont beállítása</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actioneditpaste.cpp" line="121"/>
@@ -18750,12 +18743,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actioneditundo.cpp" line="65"/>
         <source>Nothing to undo!</source>
-        <translation>Nothing to undo!</translation>
+        <translation>Nincs visszavonható művelet!</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actioneditundo.cpp" line="68"/>
         <source>Nothing to redo!</source>
-        <translation>Nothing to redo!</translation>
+        <translation>Nincs újra elvégezhető művelet!</translation>
     </message>
 </context>
 <context>
@@ -18763,17 +18756,17 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actioninfoangle.cpp" line="94"/>
         <source>Angle: %1</source>
-        <translation>Angle: %1</translation>
+        <translation>Szög: %1</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actioninfoangle.cpp" line="97"/>
         <source>Lines are parallel</source>
-        <translation>Lines are parallel</translation>
+        <translation>A vonalak párhuzamosak</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actioninfoangle.cpp" line="139"/>
         <source>Specify first line</source>
-        <translation>Specify first line</translation>
+        <translation>Adja meg az első vonalat</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actioninfoangle.cpp" line="140"/>
@@ -18783,7 +18776,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actioninfoangle.cpp" line="144"/>
         <source>Specify second line</source>
-        <translation>Specify second line</translation>
+        <translation>Adja meg a második vonalat</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actioninfoangle.cpp" line="145"/>
@@ -18796,27 +18789,27 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actioninfoarea.cpp" line="92"/>
         <source>Circumference: %1</source>
-        <translation>Circumference: %1</translation>
+        <translation>Kerület: %1</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actioninfoarea.cpp" line="93"/>
         <source>Area: %1 %2^2</source>
-        <translation>Area: %1 %2^2</translation>
+        <translation>Terület: %1 %2^2</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actioninfoarea.cpp" line="137"/>
         <source>Closing Point: %1/%2</source>
-        <translation>Closing Point: %1/%2</translation>
+        <translation>Záró pont: %1/%2</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actioninfoarea.cpp" line="145"/>
         <source>Point: %1/%2</source>
-        <translation>Point: %1/%2</translation>
+        <translation>Pont: %1/%2</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actioninfoarea.cpp" line="165"/>
         <source>Specify first point of polygon</source>
-        <translation>Specify first point of polygon</translation>
+        <translation>Adja meg a sokszög első pontját</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actioninfoarea.cpp" line="166"/>
@@ -18827,7 +18820,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actioninfoarea.cpp" line="170"/>
         <source>Specify next point of polygon</source>
-        <translation>Specify next point of polygon</translation>
+        <translation>Adja meg a sokszög következő pontját</translation>
     </message>
 </context>
 <context>
@@ -18835,12 +18828,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actioninfodist.cpp" line="80"/>
         <source>Distance: %1 Cartesian: (%2 , %3), Polar: (%4&lt;%5)</source>
-        <translation>Distance: %1 Cartesian: (%2 , %3), Polar: (%4&lt;%5)</translation>
+        <translation>Távolság: %1 Descartes: (%2 , %3), Polár: (%4&lt;%5)</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actioninfodist.cpp" line="169"/>
         <source>Specify first point of distance</source>
-        <translation>Specify first point of distance</translation>
+        <translation>Adja meg a távolság első pontját</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actioninfodist.cpp" line="170"/>
@@ -18850,7 +18843,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actioninfodist.cpp" line="174"/>
         <source>Specify second point of distance</source>
-        <translation>Specify second point of distance</translation>
+        <translation>Adja meg a távolság második pontját</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actioninfodist.cpp" line="175"/>
@@ -18863,12 +18856,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actioninfodist2.cpp" line="73"/>
         <source>Distance: %1</source>
-        <translation>Distance: %1</translation>
+        <translation>Távolság: %1</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actioninfodist2.cpp" line="155"/>
         <source>Specify entity</source>
-        <translation>Specify entity</translation>
+        <translation>Adja meg az elemet</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actioninfodist2.cpp" line="156"/>
@@ -18878,7 +18871,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actioninfodist2.cpp" line="160"/>
         <source>Specify point</source>
-        <translation>Specify point</translation>
+        <translation>Adja meg a pontot</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actioninfodist2.cpp" line="161"/>
@@ -18891,17 +18884,17 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actioninfoinside.cpp" line="56"/>
         <source>Point is inside selected contour.</source>
-        <translation>Point is inside selected contour.</translation>
+        <translation>A pont a kiválasztott kontúron belül van.</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actioninfoinside.cpp" line="58"/>
         <source>Point is outside selected contour.</source>
-        <translation>Point is outside selected contour.</translation>
+        <translation>A pont a kiválasztott kontúron kívül van.</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actioninfoinside.cpp" line="84"/>
         <source>Specify point</source>
-        <translation>Specify point</translation>
+        <translation>Adja meg a pontot</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actioninfoinside.cpp" line="85"/>
@@ -18914,12 +18907,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actioninfototallength.cpp" line="59"/>
         <source>Total Length of selected entities: %1</source>
-        <translation>Total Length of selected entities: %1</translation>
+        <translation>A kiválasztott elemek összes hossza: %1</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actioninfototallength.cpp" line="61"/>
         <source>At least one of the selected entities cannot be measured.</source>
-        <translation>At least one of the selected entities cannot be measured.</translation>
+        <translation>Legalább egy kiválasztott elem nem mérhető.</translation>
     </message>
 </context>
 <context>
@@ -18927,23 +18920,23 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actionlibraryinsert.cpp" line="60"/>
         <source>Insert Library Object</source>
-        <translation>Insert Library Object</translation>
+        <translation>Könyvtári objektum beillesztése</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionlibraryinsert.cpp" line="78"/>
         <source>Cannot open file &apos;%1&apos;</source>
-        <translation>Cannot open file &apos;%1&apos;</translation>
+        <translation>Nem lehet megnyitni a '%1' fájlt</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionlibraryinsert.cpp" line="186"/>
         <location filename="../../src/actions/rs_actionlibraryinsert.cpp" line="199"/>
         <source>Not a valid expression</source>
-        <translation>Not a valid expression</translation>
+        <translation>Érvénytelen kifejezés</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionlibraryinsert.cpp" line="248"/>
         <source>Specify reference point</source>
-        <translation>Specify reference point</translation>
+        <translation>Adja meg a referencia pontot</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionlibraryinsert.cpp" line="249"/>
@@ -18953,12 +18946,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actionlibraryinsert.cpp" line="252"/>
         <source>Enter angle:</source>
-        <translation>Enter angle:</translation>
+        <translation>Adjon meg szöget:</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionlibraryinsert.cpp" line="256"/>
         <source>Enter factor:</source>
-        <translation>Enter factor:</translation>
+        <translation>Adjon meg tényezőt:</translation>
     </message>
 </context>
 <context>
@@ -18966,7 +18959,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actionlockrelativezero.cpp" line="43"/>
         <source>(Un-)&amp;Lock Relative Zero</source>
-        <translation>(Un-)&amp;Lock Relative Zero</translation>
+        <translation>(Be/Ki-)&Zárolás Relatív Nulla</translation>
     </message>
 </context>
 <context>
@@ -18975,12 +18968,12 @@ This block cannot be inserted.</source>
         <location filename="../../src/actions/rs_actionmodifybevel.cpp" line="191"/>
         <location filename="../../src/actions/rs_actionmodifybevel.cpp" line="204"/>
         <source>Not a valid expression</source>
-        <translation>Not a valid expression</translation>
+        <translation>Érvénytelen kifejezés</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionmodifybevel.cpp" line="270"/>
         <source>Select first entity</source>
-        <translation>Select first entity</translation>
+        <translation>Válassza ki az első elemet</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionmodifybevel.cpp" line="271"/>
@@ -18990,7 +18983,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actionmodifybevel.cpp" line="274"/>
         <source>Select second entity</source>
-        <translation>Select second entity</translation>
+        <translation>Válassza ki a második elemet</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionmodifybevel.cpp" line="275"/>
@@ -19002,12 +18995,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actionmodifybevel.cpp" line="278"/>
         <source>Enter length 1:</source>
-        <translation>Enter length 1:</translation>
+        <translation>Adja meg az 1. hosszt:</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionmodifybevel.cpp" line="282"/>
         <source>Enter length 2:</source>
-        <translation>Enter length 2:</translation>
+        <translation>Adja meg a 2. hosszt:</translation>
     </message>
 </context>
 <context>
@@ -19016,27 +19009,27 @@ This block cannot be inserted.</source>
         <location filename="../../src/actions/rs_actionmodifycut.cpp" line="103"/>
         <location filename="../../src/actions/rs_actionmodifycut.cpp" line="116"/>
         <source>No Entity found.</source>
-        <translation>No Entity found.</translation>
+        <translation>Nem található elem.</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionmodifycut.cpp" line="110"/>
         <source>Entity must be a line, arc, circle, ellipse or interpolation spline.</source>
-        <translation>Entity must be a line, arc, circle, ellipse or interpolation spline.</translation>
+        <translation>Az elemnek vonalnak, ívnek, körnek, ellipszisnek vagy interpolációs görbének kell lennie.</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionmodifycut.cpp" line="118"/>
         <source>Cutting point is invalid.</source>
-        <translation>Cutting point is invalid.</translation>
+        <translation>A vágási pont érvénytelen.</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionmodifycut.cpp" line="121"/>
         <source>Cutting point is not on entity.</source>
-        <translation>Cutting point is not on entity.</translation>
+        <translation>A vágási pont nem az elemen van.</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionmodifycut.cpp" line="145"/>
         <source>Specify entity to cut</source>
-        <translation>Specify entity to cut</translation>
+        <translation>Adja meg a vágandó elemet</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionmodifycut.cpp" line="146"/>
@@ -19046,7 +19039,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actionmodifycut.cpp" line="149"/>
         <source>Specify cutting point</source>
-        <translation>Specify cutting point</translation>
+        <translation>Adja meg a vágási pontot</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionmodifycut.cpp" line="150"/>
@@ -19059,47 +19052,47 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actionmodifydeletefree.cpp" line="101"/>
         <source>Entities not in the same polyline.</source>
-        <translation>Entities not in the same polyline.</translation>
+        <translation>Az elemek nem ugyanazon a töröttvonalban vannak.</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionmodifydeletefree.cpp" line="104"/>
         <source>Parent of second entity is not a polyline</source>
-        <translation>Parent of second entity is not a polyline</translation>
+        <translation>A második elem szülője nem töröttvonal</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionmodifydeletefree.cpp" line="107"/>
         <source>Parent of second entity is nullptr</source>
-        <translation>Parent of second entity is nullptr</translation>
+        <translation>A második elem szülője nullptr</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionmodifydeletefree.cpp" line="110"/>
         <source>One of the chosen entities is nullptr</source>
-        <translation>One of the chosen entities is nullptr</translation>
+        <translation>Az egyik kiválasztott elem nullptr</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionmodifydeletefree.cpp" line="133"/>
         <source>Parent of first entity is not a polyline</source>
-        <translation>Parent of first entity is not a polyline</translation>
+        <translation>Az első elem szülője nem töröttvonal</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionmodifydeletefree.cpp" line="137"/>
         <source>Parent of first entity is nullptr</source>
-        <translation>Parent of first entity is nullptr</translation>
+        <translation>Az első elem szülője nullptr</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionmodifydeletefree.cpp" line="141"/>
         <source>First entity is nullptr</source>
-        <translation>First entity is nullptr</translation>
+        <translation>Az első elem nullptr</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionmodifydeletefree.cpp" line="153"/>
         <source>Second entity is nullptr</source>
-        <translation>Second entity is nullptr</translation>
+        <translation>A második elem nullptr</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionmodifydeletefree.cpp" line="166"/>
         <source>Specify first break point on a polyline</source>
-        <translation>Specify first break point on a polyline</translation>
+        <translation>Adja meg az első törési pontot a töröttvonalra</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionmodifydeletefree.cpp" line="167"/>
@@ -19109,7 +19102,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actionmodifydeletefree.cpp" line="170"/>
         <source>Specify second break point on the same polyline</source>
-        <translation>Specify second break point on the same polyline</translation>
+        <translation>Adja meg a második törési pontot ugyanazon a töröttvonalra</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionmodifydeletefree.cpp" line="172"/>
@@ -19122,7 +19115,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actionmodifydeletequick.cpp" line="92"/>
         <source>Pick entity to delete</source>
-        <translation>Pick entity to delete</translation>
+        <translation>Válassza ki a törölni kívánt elemet</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionmodifydeletequick.cpp" line="93"/>
@@ -19135,7 +19128,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actionmodifyentity.cpp" line="109"/>
         <source>Click on entity to modify</source>
-        <translation>Click on entity to modify</translation>
+        <translation>Kattintson a módosítandó elemre</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionmodifyentity.cpp" line="109"/>
@@ -19148,7 +19141,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actionmodifymirror.cpp" line="161"/>
         <source>Specify first point of mirror line</source>
-        <translation>Specify first point of mirror line</translation>
+        <translation>Adja meg a tükörvonal első pontját</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionmodifymirror.cpp" line="162"/>
@@ -19158,7 +19151,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actionmodifymirror.cpp" line="166"/>
         <source>Specify second point of mirror line</source>
-        <translation>Specify second point of mirror line</translation>
+        <translation>Adja meg a tükörvonal második pontját</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionmodifymirror.cpp" line="167"/>
@@ -19171,12 +19164,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actionmodifymove.cpp" line="150"/>
         <source>Invalid number of copies, use %1 </source>
-        <translation>Invalid number of copies, use %1</translation>
+        <translation>Érvénytelen másolatszám, használja: %1</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionmodifymove.cpp" line="170"/>
         <source>Specify reference point</source>
-        <translation>Specify reference point</translation>
+        <translation>Adja meg a referencia pontot</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionmodifymove.cpp" line="171"/>
@@ -19186,7 +19179,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actionmodifymove.cpp" line="174"/>
         <source>Specify target point</source>
-        <translation>Specify target point</translation>
+        <translation>Adja meg a célpontot</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionmodifymove.cpp" line="175"/>
@@ -19199,12 +19192,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actionmodifymoverotate.cpp" line="177"/>
         <source>Not a valid expression</source>
-        <translation>Not a valid expression</translation>
+        <translation>Érvénytelen kifejezés</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionmodifymoverotate.cpp" line="235"/>
         <source>Specify reference point</source>
-        <translation>Specify reference point</translation>
+        <translation>Adja meg a referencia pontot</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionmodifymoverotate.cpp" line="236"/>
@@ -19214,7 +19207,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actionmodifymoverotate.cpp" line="239"/>
         <source>Specify target point</source>
-        <translation>Specify target point</translation>
+        <translation>Adja meg a célpontot</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionmodifymoverotate.cpp" line="240"/>
@@ -19225,7 +19218,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actionmodifymoverotate.cpp" line="243"/>
         <source>Enter rotation angle:</source>
-        <translation>Enter rotation angle:</translation>
+        <translation>Adja meg a forgatási szöget:</translation>
     </message>
 </context>
 <context>
@@ -19233,7 +19226,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actionmodifyoffset.cpp" line="101"/>
         <source>Specify direction of offset</source>
-        <translation>Specify direction of offset</translation>
+        <translation>Adja meg az eltolás irányát</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionmodifyoffset.cpp" line="101"/>
@@ -19246,7 +19239,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actionmodifyrotate.cpp" line="144"/>
         <source>Specify rotation center</source>
-        <translation>Specify rotation center</translation>
+        <translation>Adja meg a forgásközpontot</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionmodifyrotate.cpp" line="145"/>
@@ -19258,12 +19251,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actionmodifyrotate.cpp" line="149"/>
         <source>Specify reference point</source>
-        <translation>Specify reference point</translation>
+        <translation>Adja meg a referencia pontot</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionmodifyrotate.cpp" line="153"/>
         <source>Specify target point to rotate to</source>
-        <translation>Specify target point to rotate to</translation>
+        <translation>Adja meg a célpontot a forgatáshoz</translation>
     </message>
 </context>
 <context>
@@ -19271,7 +19264,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actionmodifyrotate2.cpp" line="148"/>
         <source>Specify absolute reference point</source>
-        <translation>Specify absolute reference point</translation>
+        <translation>Adja meg az abszolút referencia pontot</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionmodifyrotate2.cpp" line="149"/>
@@ -19281,7 +19274,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actionmodifyrotate2.cpp" line="152"/>
         <source>Specify relative reference point</source>
-        <translation>Specify relative reference point</translation>
+        <translation>Adja meg a relatív referencia pontot</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionmodifyrotate2.cpp" line="153"/>
@@ -19295,12 +19288,12 @@ This block cannot be inserted.</source>
         <location filename="../../src/actions/rs_actionmodifyround.cpp" line="319"/>
         <location filename="../../src/actions/rs_actionmodifyround.cpp" line="332"/>
         <source>Not a valid expression</source>
-        <translation>Not a valid expression</translation>
+        <translation>Érvénytelen kifejezés</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionmodifyround.cpp" line="410"/>
         <source>Specify first entity or enter radius &lt;%1&gt;</source>
-        <translation>Specify first entity or enter radius &lt;%1&gt;</translation>
+        <translation>Adja meg az első elemet vagy adjon meg sugarat &lt;%1&gt;</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionmodifyround.cpp" line="411"/>
@@ -19311,12 +19304,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actionmodifyround.cpp" line="414"/>
         <source>Specify second entity</source>
-        <translation>Specify second entity</translation>
+        <translation>Adja meg a második elemet</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionmodifyround.cpp" line="418"/>
         <source>Enter radius:</source>
-        <translation>Enter radius:</translation>
+        <translation>Adjon meg sugarat:</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionmodifyround.cpp" line="419"/>
@@ -19329,7 +19322,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actionmodifyscale.cpp" line="227"/>
         <source>Specify scale center</source>
-        <translation>Specify scale center</translation>
+        <translation>Adja meg a méretezési középpontot</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionmodifyscale.cpp" line="228"/>
@@ -19341,12 +19334,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actionmodifyscale.cpp" line="232"/>
         <source>Specify reference point</source>
-        <translation>Specify reference point</translation>
+        <translation>Adja meg a referencia pontot</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionmodifyscale.cpp" line="236"/>
         <source>Specify target point</source>
-        <translation>Specify target point</translation>
+        <translation>Adja meg a célpontot</translation>
     </message>
 </context>
 <context>
@@ -19354,7 +19347,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actionmodifystretch.cpp" line="175"/>
         <source>Specify first corner</source>
-        <translation>Specify first corner</translation>
+        <translation>Adja meg az első sarkot</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionmodifystretch.cpp" line="176"/>
@@ -19364,7 +19357,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actionmodifystretch.cpp" line="179"/>
         <source>Specify second corner</source>
-        <translation>Specify second corner</translation>
+        <translation>Adja meg a második sarkot</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionmodifystretch.cpp" line="180"/>
@@ -19376,12 +19369,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actionmodifystretch.cpp" line="183"/>
         <source>Specify reference point</source>
-        <translation>Specify reference point</translation>
+        <translation>Adja meg a referencia pontot</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionmodifystretch.cpp" line="187"/>
         <source>Specify target point</source>
-        <translation>Specify target point</translation>
+        <translation>Adja meg a célpontot</translation>
     </message>
 </context>
 <context>
@@ -19389,7 +19382,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actionmodifytrim.cpp" line="177"/>
         <source>Select first trim entity</source>
-        <translation>Select first trim entity</translation>
+        <translation>Válassza ki az első levágandó elemet</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionmodifytrim.cpp" line="178"/>
@@ -19400,7 +19393,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actionmodifytrim.cpp" line="180"/>
         <source>Select limiting entity</source>
-        <translation>Select limiting entity</translation>
+        <translation>Válassza ki a határoló elemet</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionmodifytrim.cpp" line="181"/>
@@ -19411,12 +19404,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actionmodifytrim.cpp" line="186"/>
         <source>Select second trim entity</source>
-        <translation>Select second trim entity</translation>
+        <translation>Válassza ki a második levágandó elemet</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionmodifytrim.cpp" line="189"/>
         <source>Select entity to trim</source>
-        <translation>Select entity to trim</translation>
+        <translation>Válassza ki a levágandó elemet</translation>
     </message>
 </context>
 <context>
@@ -19424,27 +19417,27 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actionmodifytrimamount.cpp" line="101"/>
         <source>No entity found. </source>
-        <translation>No entity found.</translation>
+        <translation>Nem található elem.</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionmodifytrimamount.cpp" line="104"/>
         <source>The chosen Entity is in a block. Please edit the block.</source>
-        <translation>The chosen Entity is in a block. Please edit the block.</translation>
+        <translation>A kiválasztott elem egy blokkban van. Kérem szerkessze a blokkot.</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionmodifytrimamount.cpp" line="108"/>
         <source>The chosen Entity is not an atomic entity or cannot be trimmed.</source>
-        <translation>The chosen Entity is not an atomic entity or cannot be trimmed.</translation>
+        <translation>A kiválasztott elem nem atomi elem, vagy nem vágható.</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionmodifytrimamount.cpp" line="139"/>
         <source>Not a valid expression</source>
-        <translation>Not a valid expression</translation>
+        <translation>Érvénytelen kifejezés</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionmodifytrimamount.cpp" line="186"/>
         <source>Select entity to trim or enter distance:</source>
-        <translation>Select entity to trim or enter distance:</translation>
+        <translation>Válasszon elemet a levágáshoz vagy adjon meg távolságot:</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionmodifytrimamount.cpp" line="187"/>
@@ -19457,12 +19450,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actionorder.cpp" line="124"/>
         <source>No Entity found.</source>
-        <translation>No Entity found.</translation>
+        <translation>Nem található elem.</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionorder.cpp" line="150"/>
         <source>Choose entity for order</source>
-        <translation>Choose entity for order</translation>
+        <translation>Válasszon elemet a sorrendezéshez</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionorder.cpp" line="151"/>
@@ -19476,27 +19469,27 @@ This block cannot be inserted.</source>
         <location filename="../../src/actions/rs_actionpolylineadd.cpp" line="105"/>
         <location filename="../../src/actions/rs_actionpolylineadd.cpp" line="121"/>
         <source>No Entity found.</source>
-        <translation>No Entity found.</translation>
+        <translation>Nem található elem.</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionpolylineadd.cpp" line="109"/>
         <source>Entity must be a polyline.</source>
-        <translation>Entity must be a polyline.</translation>
+        <translation>Az elemnek töröttvonalnak kell lennie.</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionpolylineadd.cpp" line="123"/>
         <source>Adding point is invalid.</source>
-        <translation>Adding point is invalid.</translation>
+        <translation>A hozzáadandó pont érvénytelen.</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionpolylineadd.cpp" line="131"/>
         <source>Adding point is not on entity.</source>
-        <translation>Adding point is not on entity.</translation>
+        <translation>A hozzáadandó pont nem az elemen van.</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionpolylineadd.cpp" line="157"/>
         <source>Specify polyline to add nodes</source>
-        <translation>Specify polyline to add nodes</translation>
+        <translation>Adja meg a töröttvonalat csomópont hozzáadáshoz</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionpolylineadd.cpp" line="158"/>
@@ -19506,7 +19499,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actionpolylineadd.cpp" line="161"/>
         <source>Specify adding node&apos;s point</source>
-        <translation>Specify adding node&apos;s point</translation>
+        <translation>Adja meg a hozzáadandó csomópont pozícióját</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionpolylineadd.cpp" line="162"/>
@@ -19519,27 +19512,27 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actionpolylineappend.cpp" line="91"/>
         <source>No Entity found.</source>
-        <translation>No Entity found.</translation>
+        <translation>Nem található elem.</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionpolylineappend.cpp" line="95"/>
         <source>Entity must be a polyline.</source>
-        <translation>Entity must be a polyline.</translation>
+        <translation>Az elemnek töröttvonalnak kell lennie.</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionpolylineappend.cpp" line="99"/>
         <source>Can not append nodes in a closed polyline.</source>
-        <translation>Can not append nodes in a closed polyline.</translation>
+        <translation>Zárt töröttvonalhoz nem lehet csomópontot hozzáfűzni.</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionpolylineappend.cpp" line="119"/>
         <source>Click somewhere near the beginning or end of existing polyline.</source>
-        <translation>Click somewhere near the beginning or end of existing polyline.</translation>
+        <translation>Kattintson a meglévő töröttvonal elejéhez vagy végéhez közel.</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionpolylineappend.cpp" line="191"/>
         <source>Specify the polyline somewhere near the beginning or end point</source>
-        <translation>Specify the polyline somewhere near the beginning or end point</translation>
+        <translation>Adja meg a töröttvonalat a kezdő- vagy végponthoz közel</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionpolylineappend.cpp" line="192"/>
@@ -19549,7 +19542,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actionpolylineappend.cpp" line="207"/>
         <source>Specify next point or [%1]</source>
-        <translation>Specify next point or [%1]</translation>
+        <translation>Adja meg a következő pontot vagy [%1]</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionpolylineappend.cpp" line="208"/>
@@ -19560,12 +19553,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actionpolylineappend.cpp" line="211"/>
         <source>Specify next point</source>
-        <translation>Specify next point</translation>
+        <translation>Adja meg a következő pontot</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionpolylineappend.cpp" line="230"/>
         <source>Cannot undo: Not enough entities defined yet.</source>
-        <translation>Cannot undo: Not enough entities defined yet.</translation>
+        <translation>Nem lehet visszavonni: Még nem elég az elemek száma.</translation>
     </message>
 </context>
 <context>
@@ -19574,27 +19567,27 @@ This block cannot be inserted.</source>
         <location filename="../../src/actions/rs_actionpolylinedel.cpp" line="108"/>
         <location filename="../../src/actions/rs_actionpolylinedel.cpp" line="127"/>
         <source>No Entity found.</source>
-        <translation>No Entity found.</translation>
+        <translation>Nem található elem.</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionpolylinedel.cpp" line="112"/>
         <source>Entity must be a polyline.</source>
-        <translation>Entity must be a polyline.</translation>
+        <translation>Az elemnek töröttvonalnak kell lennie.</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionpolylinedel.cpp" line="129"/>
         <source>Deleting point is invalid.</source>
-        <translation>Deleting point is invalid.</translation>
+        <translation>A törlendő pont érvénytelen.</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionpolylinedel.cpp" line="132"/>
         <source>Deleting point is not on entity.</source>
-        <translation>Deleting point is not on entity.</translation>
+        <translation>A törlendő pont nem az elemen van.</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionpolylinedel.cpp" line="158"/>
         <source>Specify polyline to delete node</source>
-        <translation>Specify polyline to delete node</translation>
+        <translation>Adja meg a töröttvonalat csomópont törléséhez</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionpolylinedel.cpp" line="159"/>
@@ -19604,7 +19597,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actionpolylinedel.cpp" line="162"/>
         <source>Specify deleting node&apos;s point</source>
-        <translation>Specify deleting node&apos;s point</translation>
+        <translation>Adja meg a törlendő csomópont pozícióját</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionpolylinedel.cpp" line="163"/>
@@ -19619,29 +19612,29 @@ This block cannot be inserted.</source>
         <location filename="../../src/actions/rs_actionpolylinedelbetween.cpp" line="144"/>
         <location filename="../../src/actions/rs_actionpolylinedelbetween.cpp" line="157"/>
         <source>No Entity found.</source>
-        <translation>No Entity found.</translation>
+        <translation>Nem található elem.</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionpolylinedelbetween.cpp" line="123"/>
         <source>Entity must be a polyline.</source>
-        <translation>Entity must be a polyline.</translation>
+        <translation>Az elemnek töröttvonalnak kell lennie.</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionpolylinedelbetween.cpp" line="146"/>
         <location filename="../../src/actions/rs_actionpolylinedelbetween.cpp" line="159"/>
         <source>Deleting point is invalid.</source>
-        <translation>Deleting point is invalid.</translation>
+        <translation>A törlendő pont érvénytelen.</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionpolylinedelbetween.cpp" line="149"/>
         <location filename="../../src/actions/rs_actionpolylinedelbetween.cpp" line="162"/>
         <source>Deleting point is not on entity.</source>
-        <translation>Deleting point is not on entity.</translation>
+        <translation>A törlendő pont nem az elemen van.</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionpolylinedelbetween.cpp" line="189"/>
         <source>Specify polyline to delete between two nodes</source>
-        <translation>Specify polyline to delete between two nodes</translation>
+        <translation>Adja meg a töröttvonalat két csomópont közötti törléshez</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionpolylinedelbetween.cpp" line="190"/>
@@ -19651,7 +19644,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actionpolylinedelbetween.cpp" line="193"/>
         <source>Specify first node</source>
-        <translation>Specify first node</translation>
+        <translation>Adja meg az első csomópontot</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionpolylinedelbetween.cpp" line="194"/>
@@ -19662,7 +19655,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actionpolylinedelbetween.cpp" line="197"/>
         <source>Specify second node</source>
-        <translation>Specify second node</translation>
+        <translation>Adja meg a második csomópontot</translation>
     </message>
 </context>
 <context>
@@ -19670,17 +19663,17 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actionpolylineequidistant.cpp" line="305"/>
         <source>No Entity found.</source>
-        <translation>No Entity found.</translation>
+        <translation>Nem található elem.</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionpolylineequidistant.cpp" line="309"/>
         <source>Entity must be a polyline.</source>
-        <translation>Entity must be a polyline.</translation>
+        <translation>Az elemnek töröttvonalnak kell lennie.</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionpolylineequidistant.cpp" line="369"/>
         <source>Choose the original polyline</source>
-        <translation>Choose the original polyline</translation>
+        <translation>Válassza ki az eredeti töröttvonalat</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionpolylineequidistant.cpp" line="370"/>
@@ -19694,22 +19687,22 @@ This block cannot be inserted.</source>
         <location filename="../../src/actions/rs_actionpolylinesegment.cpp" line="65"/>
         <location filename="../../src/actions/rs_actionpolylinesegment.cpp" line="86"/>
         <source>Polyline created</source>
-        <translation>Polyline created</translation>
+        <translation>Töröttvonal létrehozva</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionpolylinesegment.cpp" line="306"/>
         <source>No Entity found.</source>
-        <translation>No Entity found.</translation>
+        <translation>Nem található elem.</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionpolylinesegment.cpp" line="309"/>
         <source>Entity can not be a closed polyline.</source>
-        <translation>Entity can not be a closed polyline.</translation>
+        <translation>Az elem nem lehet zárt töröttvonal.</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionpolylinesegment.cpp" line="350"/>
         <source>Choose one of the segments on the original polyline</source>
-        <translation>Choose one of the segments on the original polyline</translation>
+        <translation>Válasszon egy szegmenst az eredeti töröttvonalról</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionpolylinesegment.cpp" line="351"/>
@@ -19724,29 +19717,29 @@ This block cannot be inserted.</source>
         <location filename="../../src/actions/rs_actionpolylinetrim.cpp" line="124"/>
         <location filename="../../src/actions/rs_actionpolylinetrim.cpp" line="143"/>
         <source>No Entity found.</source>
-        <translation>No Entity found.</translation>
+        <translation>Nem található elem.</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionpolylinetrim.cpp" line="110"/>
         <source>Entity must be a polyline.</source>
-        <translation>Entity must be a polyline.</translation>
+        <translation>Az elemnek töröttvonalnak kell lennie.</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionpolylinetrim.cpp" line="126"/>
         <location filename="../../src/actions/rs_actionpolylinetrim.cpp" line="145"/>
         <source>Specifying point is invalid.</source>
-        <translation>Specifying point is invalid.</translation>
+        <translation>A megadott pont érvénytelen.</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionpolylinetrim.cpp" line="129"/>
         <location filename="../../src/actions/rs_actionpolylinetrim.cpp" line="148"/>
         <source>No Segment found on entity.</source>
-        <translation>No Segment found on entity.</translation>
+        <translation>Nem található szegmens az elemen.</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionpolylinetrim.cpp" line="181"/>
         <source>Specify polyline to trim</source>
-        <translation>Specify polyline to trim</translation>
+        <translation>Adja meg a levágandó töröttvonalat</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionpolylinetrim.cpp" line="182"/>
@@ -19756,7 +19749,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actionpolylinetrim.cpp" line="185"/>
         <source>Specify first segment</source>
-        <translation>Specify first segment</translation>
+        <translation>Adja meg az első szegmenst</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionpolylinetrim.cpp" line="186"/>
@@ -19767,7 +19760,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actionpolylinetrim.cpp" line="189"/>
         <source>Specify second segment</source>
-        <translation>Specify second segment</translation>
+        <translation>Adja meg a második szegmenst</translation>
     </message>
 </context>
 <context>
@@ -19775,57 +19768,57 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actionprintpreview.cpp" line="138"/>
         <source>Printout offset in paper coordinates by (%1, %2)</source>
-        <translation>Printout offset in paper coordinates by (%1, %2)</translation>
+        <translation>Nyomtatási eltolás papírkoordinátákban: (%1, %2)</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionprintpreview.cpp" line="141"/>
         <source>Printout offset in graph coordinates by (%1, %2)</source>
-        <translation>Printout offset in graph coordinates by (%1, %2)</translation>
+        <translation>Nyomtatási eltolás grafikus koordinátákban: (%1, %2)</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionprintpreview.cpp" line="158"/>
         <source>Printout in Black/White</source>
-        <translation>Printout in Black/White</translation>
+        <translation>Nyomtatás fekete-fehérben</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionprintpreview.cpp" line="163"/>
         <source>Printout in color</source>
-        <translation>Printout in color</translation>
+        <translation>Nyomtatás színesben</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionprintpreview.cpp" line="168"/>
         <source>Printout offset in graph coordinates</source>
-        <translation>Printout offset in graph coordinates</translation>
+        <translation>Nyomtatási eltolás grafikus koordinátákban</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionprintpreview.cpp" line="173"/>
         <source>Printout offset in paper coordinates</source>
-        <translation>Printout offset in paper coordinates</translation>
+        <translation>Nyomtatási eltolás papírkoordinátákban</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionprintpreview.cpp" line="178"/>
         <source>: select printout offset coordinates</source>
-        <translation>: select printout offset coordinates</translation>
+        <translation>: nyomtatási eltolás koordináták kiválasztása</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionprintpreview.cpp" line="179"/>
         <source>type in offset from command line to offset printout</source>
-        <translation>type in offset from command line to offset printout</translation>
+        <translation>adja meg az eltolást a parancssorban a nyomtatási eltoláshoz</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionprintpreview.cpp" line="187"/>
         <source>Printout offset ignores relative zero. Ignoring &apos;@&apos;</source>
-        <translation>Printout offset ignores relative zero. Ignoring &apos;@&apos;</translation>
+        <translation>A nyomtatási eltolás figyelmen kívül hagyja a relatív nullát. '@' figyelmen kívül hagyva</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionprintpreview.cpp" line="272"/>
         <source>RS_ActionPrintPreview::fit(): Invalid paper size</source>
-        <translation>RS_ActionPrintPreview::fit(): Invalid paper size</translation>
+        <translation>RS_ActionPrintPreview::fit(): Érvénytelen papírméret</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionprintpreview.cpp" line="356"/>
         <source>RS_ActionPrintPreview::calcPagesNum(): Limit of pages has been exceeded.</source>
-        <translation>RS_ActionPrintPreview::calcPagesNum(): Limit of pages has been exceeded.</translation>
+        <translation>RS_ActionPrintPreview::calcPagesNum(): Az oldalkorlátot túllépte.</translation>
     </message>
 </context>
 <context>
@@ -19833,12 +19826,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actionselect.cpp" line="75"/>
         <source>No entity selected!</source>
-        <translation>No entity selected!</translation>
+        <translation>Nincs kiválasztott elem!</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionselect.cpp" line="83"/>
         <source>Select to modify attributes</source>
-        <translation>Select to modify attributes</translation>
+        <translation>Válasszon elemet attribútumok módosításához</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionselect.cpp" line="83"/>
@@ -19864,82 +19857,82 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actionselect.cpp" line="86"/>
         <source>Select entities to order</source>
-        <translation>Select entities to order</translation>
+        <translation>Válasszon elemeket sorrendezéshez</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionselect.cpp" line="89"/>
         <source>Select to delete</source>
-        <translation>Select to delete</translation>
+        <translation>Válasszon elemet törléséhez</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionselect.cpp" line="92"/>
         <source>Select to delete immediately</source>
-        <translation>Select to delete immediately</translation>
+        <translation>Válasszon elemet azonnali törléshez</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionselect.cpp" line="95"/>
         <source>Select to move</source>
-        <translation>Select to move</translation>
+        <translation>Válasszon elemet mozgatáshoz</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionselect.cpp" line="98"/>
         <source>Select to copy</source>
-        <translation>Select to copy</translation>
+        <translation>Válasszon elemet másoláshoz</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionselect.cpp" line="101"/>
         <source>Select to cut</source>
-        <translation>Select to cut</translation>
+        <translation>Válasszon elemet kivágáshoz</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionselect.cpp" line="104"/>
         <source>Select to revert direction</source>
-        <translation>Select to revert direction</translation>
+        <translation>Válasszon elemet irány megfordításához</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionselect.cpp" line="107"/>
         <source>Select to rotate</source>
-        <translation>Select to rotate</translation>
+        <translation>Válasszon elemet forgatáshoz</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionselect.cpp" line="110"/>
         <source>Select to scale</source>
-        <translation>Select to scale</translation>
+        <translation>Válasszon elemet méretezéshez</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionselect.cpp" line="113"/>
         <source>Select to mirror</source>
-        <translation>Select to mirror</translation>
+        <translation>Válasszon elemet tükrözéshez</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionselect.cpp" line="116"/>
         <source>Select to move and rotate</source>
-        <translation>Select to move and rotate</translation>
+        <translation>Válasszon elemet mozgatáshoz és forgatáshoz</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionselect.cpp" line="119"/>
         <source>Select to create offset</source>
-        <translation>Select to create offset</translation>
+        <translation>Válasszon elemet eltolás létrehozásához</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionselect.cpp" line="122"/>
         <source>Select for two axis rotation</source>
-        <translation>Select for two axis rotation</translation>
+        <translation>Válasszon elemet kéttengelyes forgatáshoz</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionselect.cpp" line="125"/>
         <source>Select to explode text</source>
-        <translation>Select to explode text</translation>
+        <translation>Válasszon elemet szöveg szétbontáshoz</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionselect.cpp" line="128"/>
         <source>Select to explode block</source>
-        <translation>Select to explode block</translation>
+        <translation>Válasszon elemet blokk szétbontáshoz</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionselect.cpp" line="131"/>
         <source>Select to create block</source>
-        <translation>Select to create block</translation>
+        <translation>Válasszon elemet blokk létrehozáshoz</translation>
     </message>
 </context>
 <context>
@@ -19947,7 +19940,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actionselectcontour.cpp" line="57"/>
         <source>Entity must be an Atomic Entity.</source>
-        <translation>Entity must be an Atomic Entity.</translation>
+        <translation>Az elemnek atomi elemnek kell lennie.</translation>
     </message>
 </context>
 <context>
@@ -19955,7 +19948,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actionselectintersected.cpp" line="140"/>
         <source>Choose first point of intersection line</source>
-        <translation>Choose first point of intersection line</translation>
+        <translation>Válassza ki a metszésvonal első pontját</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionselectintersected.cpp" line="140"/>
@@ -19965,7 +19958,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actionselectintersected.cpp" line="143"/>
         <source>Choose second point of intersection line</source>
-        <translation>Choose second point of intersection line</translation>
+        <translation>Válassza ki a metszésvonal második pontját</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionselectintersected.cpp" line="143"/>
@@ -19978,7 +19971,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actionselectwindow.cpp" line="181"/>
         <source>Click and drag for the selection window</source>
-        <translation>Click and drag for the selection window</translation>
+        <translation>Kattintson és húzza a kiválasztási ablakhoz</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionselectwindow.cpp" line="181"/>
@@ -19988,7 +19981,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actionselectwindow.cpp" line="184"/>
         <source>Choose second edge</source>
-        <translation>Choose second edge</translation>
+        <translation>Válassza ki a második élt</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionselectwindow.cpp" line="184"/>
@@ -20001,12 +19994,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actionsetrelativezero.cpp" line="50"/>
         <source>Set &amp;Relative Zero</source>
-        <translation>Set &amp;Relative Zero</translation>
+        <translation>Relatív &Nulla beállítása</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionsetrelativezero.cpp" line="99"/>
         <source>Set relative Zero</source>
-        <translation>Set relative Zero</translation>
+        <translation>Relatív Nulla beállítása</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionsetrelativezero.cpp" line="99"/>
@@ -20019,12 +20012,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actionsnapintersectionmanual.cpp" line="58"/>
         <source>I&amp;ntersection Manually</source>
-        <translation>I&amp;ntersection Manually</translation>
+        <translation>Kézi &Metszéspont</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionsnapintersectionmanual.cpp" line="182"/>
         <source>Select first entity</source>
-        <translation>Select first entity</translation>
+        <translation>Válassza ki az első elemet</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionsnapintersectionmanual.cpp" line="183"/>
@@ -20035,7 +20028,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actionsnapintersectionmanual.cpp" line="186"/>
         <source>Select second entity</source>
-        <translation>Select second entity</translation>
+        <translation>Válassza ki a második elemet</translation>
     </message>
 </context>
 <context>
@@ -20043,12 +20036,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actiontoolregeneratedimensions.cpp" line="70"/>
         <source>Regenerated %1 dimension entities</source>
-        <translation>Regenerated %1 dimension entities</translation>
+        <translation>%1 méret elem frissítve</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actiontoolregeneratedimensions.cpp" line="72"/>
         <source>No dimension entities found</source>
-        <translation>No dimension entities found</translation>
+        <translation>Nem találhatók méret elemek</translation>
     </message>
 </context>
 <context>
@@ -20056,7 +20049,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actionzoompan.cpp" line="119"/>
         <source>Click and drag to pan zoom</source>
-        <translation>Click and drag to pan zoom</translation>
+        <translation>Kattintson és húzza a pásztázó nagyításhoz</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionzoompan.cpp" line="120"/>
@@ -20067,7 +20060,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actionzoompan.cpp" line="123"/>
         <source>Zoom panning</source>
-        <translation>Zoom panning</translation>
+        <translation>Pásztázó nagyítás</translation>
     </message>
 </context>
 <context>
@@ -20075,7 +20068,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actionzoomwindow.cpp" line="151"/>
         <source>Specify first edge</source>
-        <translation>Specify first edge</translation>
+        <translation>Adja meg az első élt</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionzoomwindow.cpp" line="151"/>
@@ -20085,7 +20078,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/actions/rs_actionzoomwindow.cpp" line="154"/>
         <source>Specify second edge</source>
-        <translation>Specify second edge</translation>
+        <translation>Adja meg a második élt</translation>
     </message>
     <message>
         <location filename="../../src/actions/rs_actionzoomwindow.cpp" line="154"/>
@@ -20098,7 +20091,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../src/lib/gui/rs_graphicview.cpp" line="1542"/>
         <source>Draft</source>
-        <translation>Draft</translation>
+        <translation>Vázlat</translation>
     </message>
 </context>
 <context>
@@ -20109,7 +20102,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_textfileviewer.h" line="67"/>
         <location filename="../../../generated/librecad/ui/ui_textfileviewer.h" line="67"/>
         <source>Frame</source>
-        <translation>Frame</translation>
+        <translation>Keret</translation>
     </message>
 </context>
 <context>
@@ -20120,7 +20113,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_arcoptions.h" line="109"/>
         <location filename="../../../generated/librecad/ui/ui_qg_arcoptions.h" line="109"/>
         <source>Arc Options</source>
-        <translation>Arc Options</translation>
+        <translation>Ív beállítások</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_arcoptions.ui" line="77"/>
@@ -20128,7 +20121,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_arcoptions.h" line="112"/>
         <location filename="../../../generated/librecad/ui/ui_qg_arcoptions.h" line="112"/>
         <source>Counterclockwise</source>
-        <translation>Counterclockwise</translation>
+        <translation>Óramutató járásával ellentétes</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_arcoptions.ui" line="122"/>
@@ -20136,7 +20129,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_arcoptions.h" line="116"/>
         <location filename="../../../generated/librecad/ui/ui_qg_arcoptions.h" line="116"/>
         <source>Clockwise</source>
-        <translation>Clockwise</translation>
+        <translation>Óramutató járásával megegyező</translation>
     </message>
 </context>
 <context>
@@ -20147,7 +20140,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_arctangentialoptions.h" line="82"/>
         <location filename="../../../generated/librecad/ui/ui_qg_arctangentialoptions.h" line="82"/>
         <source>Tangential Arc Options</source>
-        <translation>Tangential Arc Options</translation>
+        <translation>Érintő ív beállítások</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_arctangentialoptions.ui" line="66"/>
@@ -20155,7 +20148,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_arctangentialoptions.h" line="84"/>
         <location filename="../../../generated/librecad/ui/ui_qg_arctangentialoptions.h" line="84"/>
         <source>Radius of the tangential arc</source>
-        <translation>Radius of the tangential arc</translation>
+        <translation>Az érintő ív sugara</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_arctangentialoptions.ui" line="85"/>
@@ -20163,7 +20156,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_arctangentialoptions.h" line="87"/>
         <location filename="../../../generated/librecad/ui/ui_qg_arctangentialoptions.h" line="87"/>
         <source>Total subtending angle of the tangential arc</source>
-        <translation>Total subtending angle of the tangential arc</translation>
+        <translation>Az érintő ív teljes középponti szöge</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_arctangentialoptions.ui" line="98"/>
@@ -20172,7 +20165,7 @@ This block cannot be inserted.</source>
         <location filename="../../../generated/librecad/ui/ui_qg_arctangentialoptions.h" line="89"/>
         <source>Radius</source>
         <extracomment>Draw Tangential Arc by the given radius</extracomment>
-        <translation>Radius</translation>
+        <translation>Sugár</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_arctangentialoptions.ui" line="120"/>
@@ -20181,7 +20174,7 @@ This block cannot be inserted.</source>
         <location filename="../../../generated/librecad/ui/ui_qg_arctangentialoptions.h" line="90"/>
         <source>Angle</source>
         <extracomment>Draw Tangential Arc by the given radius</extracomment>
-        <translation>Angle</translation>
+        <translation>Szög</translation>
     </message>
 </context>
 <context>
@@ -20192,7 +20185,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_beveloptions.h" line="111"/>
         <location filename="../../../generated/librecad/ui/ui_qg_beveloptions.h" line="111"/>
         <source>Bevel Options</source>
-        <translation>Bevel Options</translation>
+        <translation>Fazetta beállítások</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_beveloptions.ui" line="53"/>
@@ -20200,7 +20193,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_beveloptions.h" line="116"/>
         <location filename="../../../generated/librecad/ui/ui_qg_beveloptions.h" line="116"/>
         <source>Check to trim both entities to the bevel</source>
-        <translation>Check to trim both entities to the bevel</translation>
+        <translation>Jelölje be mindkét elem levágásához a fazettánál</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_beveloptions.ui" line="56"/>
@@ -20216,7 +20209,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_beveloptions.h" line="119"/>
         <location filename="../../../generated/librecad/ui/ui_qg_beveloptions.h" line="119"/>
         <source>Length 1:</source>
-        <translation>Length 1:</translation>
+        <translation>1. hossz:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_beveloptions.ui" line="92"/>
@@ -20224,7 +20217,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_beveloptions.h" line="120"/>
         <location filename="../../../generated/librecad/ui/ui_qg_beveloptions.h" line="120"/>
         <source>Length 2:</source>
-        <translation>Length 2:</translation>
+        <translation>2. hossz:</translation>
     </message>
 </context>
 <context>
@@ -20235,7 +20228,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_circleoptions.h" line="79"/>
         <location filename="../../../generated/librecad/ui/ui_qg_circleoptions.h" line="79"/>
         <source>Circle Options</source>
-        <translation>Circle Options</translation>
+        <translation>Kör beállítások</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_circleoptions.ui" line="50"/>
@@ -20243,7 +20236,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_circleoptions.h" line="80"/>
         <location filename="../../../generated/librecad/ui/ui_qg_circleoptions.h" line="80"/>
         <source>Radius:</source>
-        <translation>Radius:</translation>
+        <translation>Sugár:</translation>
     </message>
 </context>
 <context>
@@ -20254,7 +20247,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_circletan2options.h" line="84"/>
         <location filename="../../../generated/librecad/ui/ui_qg_circletan2options.h" line="84"/>
         <source>Circle Tangential2 Options</source>
-        <translation>Circle Tangential2 Options</translation>
+        <translation>Kör Érintő2 beállítások</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_circletan2options.ui" line="56"/>
@@ -20270,7 +20263,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_circletan2options.h" line="88"/>
         <location filename="../../../generated/librecad/ui/ui_qg_circletan2options.h" line="88"/>
         <source>Radius:</source>
-        <translation>Radius:</translation>
+        <translation>Sugár:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_circletan2options.ui" line="69"/>
@@ -20278,7 +20271,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_circletan2options.h" line="90"/>
         <location filename="../../../generated/librecad/ui/ui_qg_circletan2options.h" line="90"/>
         <source>Radius of tangential circle</source>
-        <translation>Radius of tangential circle</translation>
+        <translation>Érintő kör sugara</translation>
     </message>
 </context>
 <context>
@@ -20289,7 +20282,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_dimlinearoptions.h" line="119"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dimlinearoptions.h" line="119"/>
         <source>Linear Dimension Options</source>
-        <translation>Linear Dimension Options</translation>
+        <translation>Lineáris méret beállítások</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dimlinearoptions.ui" line="68"/>
@@ -20297,7 +20290,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_dimlinearoptions.h" line="120"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dimlinearoptions.h" line="120"/>
         <source>Angle:</source>
-        <translation>Angle:</translation>
+        <translation>Szög:</translation>
     </message>
 </context>
 <context>
@@ -20308,7 +20301,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_dimoptions.h" line="164"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dimoptions.h" line="164"/>
         <source>Dimension Options</source>
-        <translation>Dimension Options</translation>
+        <translation>Méret beállítások</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dimoptions.ui" line="62"/>
@@ -20316,7 +20309,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_dimoptions.h" line="165"/>
         <location filename="../../../generated/librecad/ui/ui_qg_dimoptions.h" line="165"/>
         <source>Label:</source>
-        <translation>Label:</translation>
+        <translation>Felirat:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_dimoptions.ui" line="109"/>
@@ -20387,7 +20380,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_imageoptions.h" line="111"/>
         <location filename="../../../generated/librecad/ui/ui_qg_imageoptions.h" line="111"/>
         <source>Insert Options</source>
-        <translation>Insert Options</translation>
+        <translation>Beillesztés beállítások</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_imageoptions.ui" line="53"/>
@@ -20395,7 +20388,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_imageoptions.h" line="115"/>
         <location filename="../../../generated/librecad/ui/ui_qg_imageoptions.h" line="115"/>
         <source>Angle:</source>
-        <translation>Angle:</translation>
+        <translation>Szög:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_imageoptions.ui" line="63"/>
@@ -20403,7 +20396,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_imageoptions.h" line="117"/>
         <location filename="../../../generated/librecad/ui/ui_qg_imageoptions.h" line="117"/>
         <source>Rotation Angle</source>
-        <translation>Rotation Angle</translation>
+        <translation>Forgatási szög</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_imageoptions.ui" line="70"/>
@@ -20411,7 +20404,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_imageoptions.h" line="119"/>
         <location filename="../../../generated/librecad/ui/ui_qg_imageoptions.h" line="119"/>
         <source>Factor:</source>
-        <translation>Factor:</translation>
+        <translation>Tényező:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_imageoptions.ui" line="86"/>
@@ -20419,7 +20412,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_imageoptions.h" line="121"/>
         <location filename="../../../generated/librecad/ui/ui_qg_imageoptions.h" line="121"/>
         <source>Scale Factor</source>
-        <translation>Scale Factor</translation>
+        <translation>Méretezési tényező</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_imageoptions.ui" line="93"/>
@@ -20435,7 +20428,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_imageoptions.h" line="125"/>
         <location filename="../../../generated/librecad/ui/ui_qg_imageoptions.h" line="125"/>
         <source>DPI of Image</source>
-        <translation>DPI of Image</translation>
+        <translation>Kép DPI-je</translation>
     </message>
 </context>
 <context>
@@ -20446,7 +20439,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_insertoptions.h" line="183"/>
         <location filename="../../../generated/librecad/ui/ui_qg_insertoptions.h" line="183"/>
         <source>Insert Options</source>
-        <translation>Insert Options</translation>
+        <translation>Beillesztés beállítások</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_insertoptions.ui" line="65"/>
@@ -20454,7 +20447,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_insertoptions.h" line="187"/>
         <location filename="../../../generated/librecad/ui/ui_qg_insertoptions.h" line="187"/>
         <source>Angle:</source>
-        <translation>Angle:</translation>
+        <translation>Szög:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_insertoptions.ui" line="87"/>
@@ -20462,7 +20455,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_insertoptions.h" line="189"/>
         <location filename="../../../generated/librecad/ui/ui_qg_insertoptions.h" line="189"/>
         <source>Rotation Angle</source>
-        <translation>Rotation Angle</translation>
+        <translation>Forgatási szög</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_insertoptions.ui" line="106"/>
@@ -20470,7 +20463,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_insertoptions.h" line="191"/>
         <location filename="../../../generated/librecad/ui/ui_qg_insertoptions.h" line="191"/>
         <source>Factor:</source>
-        <translation>Factor:</translation>
+        <translation>Tényező:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_insertoptions.ui" line="128"/>
@@ -20478,7 +20471,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_insertoptions.h" line="193"/>
         <location filename="../../../generated/librecad/ui/ui_qg_insertoptions.h" line="193"/>
         <source>Scale Factor</source>
-        <translation>Scale Factor</translation>
+        <translation>Méretezési tényező</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_insertoptions.ui" line="163"/>
@@ -20486,7 +20479,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_insertoptions.h" line="195"/>
         <location filename="../../../generated/librecad/ui/ui_qg_insertoptions.h" line="195"/>
         <source>Array:</source>
-        <translation>Array:</translation>
+        <translation>Tömb:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_insertoptions.ui" line="185"/>
@@ -20494,7 +20487,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_insertoptions.h" line="197"/>
         <location filename="../../../generated/librecad/ui/ui_qg_insertoptions.h" line="197"/>
         <source>Number of Columns</source>
-        <translation>Number of Columns</translation>
+        <translation>Oszlopok száma</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_insertoptions.ui" line="210"/>
@@ -20502,7 +20495,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_insertoptions.h" line="200"/>
         <location filename="../../../generated/librecad/ui/ui_qg_insertoptions.h" line="200"/>
         <source>Number of Rows</source>
-        <translation>Number of Rows</translation>
+        <translation>Sorok száma</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_insertoptions.ui" line="235"/>
@@ -20510,7 +20503,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_insertoptions.h" line="202"/>
         <location filename="../../../generated/librecad/ui/ui_qg_insertoptions.h" line="202"/>
         <source>Spacing:</source>
-        <translation>Spacing:</translation>
+        <translation>Térköz:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_insertoptions.ui" line="257"/>
@@ -20518,7 +20511,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_insertoptions.h" line="204"/>
         <location filename="../../../generated/librecad/ui/ui_qg_insertoptions.h" line="204"/>
         <source>Column Spacing</source>
-        <translation>Column Spacing</translation>
+        <translation>Oszlop közötti távolság</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_insertoptions.ui" line="276"/>
@@ -20526,7 +20519,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_insertoptions.h" line="207"/>
         <location filename="../../../generated/librecad/ui/ui_qg_insertoptions.h" line="207"/>
         <source>Row Spacing</source>
-        <translation>Row Spacing</translation>
+        <translation>Sor közötti távolság</translation>
     </message>
 </context>
 <context>
@@ -20537,7 +20530,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_libraryinsertoptions.h" line="93"/>
         <location filename="../../../generated/librecad/ui/ui_qg_libraryinsertoptions.h" line="93"/>
         <source>Library Insert Options</source>
-        <translation>Library Insert Options</translation>
+        <translation>Könyvtár beillesztés beállítások</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_libraryinsertoptions.ui" line="53"/>
@@ -20545,7 +20538,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_libraryinsertoptions.h" line="97"/>
         <location filename="../../../generated/librecad/ui/ui_qg_libraryinsertoptions.h" line="97"/>
         <source>Angle:</source>
-        <translation>Angle:</translation>
+        <translation>Szög:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_libraryinsertoptions.ui" line="63"/>
@@ -20553,7 +20546,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_libraryinsertoptions.h" line="99"/>
         <location filename="../../../generated/librecad/ui/ui_qg_libraryinsertoptions.h" line="99"/>
         <source>Rotation Angle</source>
-        <translation>Rotation Angle</translation>
+        <translation>Forgatási szög</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_libraryinsertoptions.ui" line="70"/>
@@ -20561,7 +20554,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_libraryinsertoptions.h" line="101"/>
         <location filename="../../../generated/librecad/ui/ui_qg_libraryinsertoptions.h" line="101"/>
         <source>Factor:</source>
-        <translation>Factor:</translation>
+        <translation>Tényező:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_libraryinsertoptions.ui" line="80"/>
@@ -20569,7 +20562,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_libraryinsertoptions.h" line="103"/>
         <location filename="../../../generated/librecad/ui/ui_qg_libraryinsertoptions.h" line="103"/>
         <source>Scale Factor</source>
-        <translation>Scale Factor</translation>
+        <translation>Méretezési tényező</translation>
     </message>
 </context>
 <context>
@@ -20580,7 +20573,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_lineangleoptions.h" line="135"/>
         <location filename="../../../generated/librecad/ui/ui_qg_lineangleoptions.h" line="135"/>
         <source>Line Angle Options</source>
-        <translation>Line Angle Options</translation>
+        <translation>Vonal szög beállítások</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_lineangleoptions.ui" line="65"/>
@@ -20588,7 +20581,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_lineangleoptions.h" line="136"/>
         <location filename="../../../generated/librecad/ui/ui_qg_lineangleoptions.h" line="136"/>
         <source>Angle:</source>
-        <translation>Angle:</translation>
+        <translation>Szög:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_lineangleoptions.ui" line="90"/>
@@ -20596,7 +20589,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_lineangleoptions.h" line="138"/>
         <location filename="../../../generated/librecad/ui/ui_qg_lineangleoptions.h" line="138"/>
         <source>Line angle</source>
-        <translation>Line angle</translation>
+        <translation>Vonal szöge</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_lineangleoptions.ui" line="109"/>
@@ -20604,7 +20597,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_lineangleoptions.h" line="140"/>
         <location filename="../../../generated/librecad/ui/ui_qg_lineangleoptions.h" line="140"/>
         <source>Length:</source>
-        <translation>Length:</translation>
+        <translation>Hossz:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_lineangleoptions.ui" line="134"/>
@@ -20612,7 +20605,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_lineangleoptions.h" line="142"/>
         <location filename="../../../generated/librecad/ui/ui_qg_lineangleoptions.h" line="142"/>
         <source>Length of line</source>
-        <translation>Length of line</translation>
+        <translation>Vonal hossza</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_lineangleoptions.ui" line="147"/>
@@ -20620,7 +20613,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_lineangleoptions.h" line="144"/>
         <location filename="../../../generated/librecad/ui/ui_qg_lineangleoptions.h" line="144"/>
         <source>Snap Point:</source>
-        <translation>Snap Point:</translation>
+        <translation>Illesztési pont:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_lineangleoptions.ui" line="170"/>
@@ -20628,7 +20621,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_lineangleoptions.h" line="145"/>
         <location filename="../../../generated/librecad/ui/ui_qg_lineangleoptions.h" line="145"/>
         <source>Start</source>
-        <translation>Start</translation>
+        <translation>Kezdet</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_lineangleoptions.ui" line="175"/>
@@ -20636,7 +20629,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_lineangleoptions.h" line="146"/>
         <location filename="../../../generated/librecad/ui/ui_qg_lineangleoptions.h" line="146"/>
         <source>Middle</source>
-        <translation>Middle</translation>
+        <translation>Közép</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_lineangleoptions.ui" line="180"/>
@@ -20655,7 +20648,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_linebisectoroptions.h" line="100"/>
         <location filename="../../../generated/librecad/ui/ui_qg_linebisectoroptions.h" line="100"/>
         <source>Line Bisector Options</source>
-        <translation>Line Bisector Options</translation>
+        <translation>Vonal felezővonal beállítások</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_linebisectoroptions.ui" line="56"/>
@@ -20663,7 +20656,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_linebisectoroptions.h" line="101"/>
         <location filename="../../../generated/librecad/ui/ui_qg_linebisectoroptions.h" line="101"/>
         <source>Length:</source>
-        <translation>Length:</translation>
+        <translation>Hossz:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_linebisectoroptions.ui" line="66"/>
@@ -20671,7 +20664,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_linebisectoroptions.h" line="103"/>
         <location filename="../../../generated/librecad/ui/ui_qg_linebisectoroptions.h" line="103"/>
         <source>Length of bisector</source>
-        <translation>Length of bisector</translation>
+        <translation>Felezővonal hossza</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_linebisectoroptions.ui" line="73"/>
@@ -20679,7 +20672,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_linebisectoroptions.h" line="105"/>
         <location filename="../../../generated/librecad/ui/ui_qg_linebisectoroptions.h" line="105"/>
         <source>Number:</source>
-        <translation>Number:</translation>
+        <translation>Szám:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_linebisectoroptions.ui" line="83"/>
@@ -20687,7 +20680,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_linebisectoroptions.h" line="107"/>
         <location filename="../../../generated/librecad/ui/ui_qg_linebisectoroptions.h" line="107"/>
         <source>Number of bisectors to create</source>
-        <translation>Number of bisectors to create</translation>
+        <translation>Létrehozandó felezők száma</translation>
     </message>
 </context>
 <context>
@@ -20698,7 +20691,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_lineoptions.h" line="87"/>
         <location filename="../../../generated/librecad/ui/ui_qg_lineoptions.h" line="87"/>
         <source>Line Options</source>
-        <translation>Line Options</translation>
+        <translation>Vonal beállítások</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_lineoptions.ui" line="53"/>
@@ -20706,7 +20699,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_lineoptions.h" line="89"/>
         <location filename="../../../generated/librecad/ui/ui_qg_lineoptions.h" line="89"/>
         <source>Form a closed contour from lines drawn</source>
-        <translation>Form a closed contour from lines drawn</translation>
+        <translation>Zárt kontúr létrehozása a rajzolt vonalakból</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_lineoptions.ui" line="56"/>
@@ -20714,7 +20707,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_lineoptions.h" line="91"/>
         <location filename="../../../generated/librecad/ui/ui_qg_lineoptions.h" line="91"/>
         <source>Close</source>
-        <translation>Close</translation>
+        <translation>Bezárás</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_lineoptions.ui" line="72"/>
@@ -20722,7 +20715,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_lineoptions.h" line="93"/>
         <location filename="../../../generated/librecad/ui/ui_qg_lineoptions.h" line="93"/>
         <source>Undo the last line drawing</source>
-        <translation>Undo the last line drawing</translation>
+        <translation>Utolsó vonalrajzolás visszavonása</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_lineoptions.ui" line="75"/>
@@ -20738,7 +20731,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_lineoptions.h" line="97"/>
         <location filename="../../../generated/librecad/ui/ui_qg_lineoptions.h" line="97"/>
         <source>Redo the last line drawing</source>
-        <translation>Redo the last line drawing</translation>
+        <translation>Utolsó vonalrajzolás újra elvégzése</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_lineoptions.ui" line="85"/>
@@ -20757,7 +20750,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_lc_lineoptions.h" line="202"/>
         <location filename="../../../generated/librecad/ui/ui_lc_lineoptions.h" line="202"/>
         <source>Line Options</source>
-        <translation>Line Options</translation>
+        <translation>Vonal beállítások</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_lineoptions.ui" line="56"/>
@@ -20765,7 +20758,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_lc_lineoptions.h" line="203"/>
         <location filename="../../../generated/librecad/ui/ui_lc_lineoptions.h" line="203"/>
         <source>Direction:</source>
-        <translation>Direction:</translation>
+        <translation>Irány:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_lineoptions.ui" line="103"/>
@@ -20789,7 +20782,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_lc_lineoptions.h" line="206"/>
         <location filename="../../../generated/librecad/ui/ui_lc_lineoptions.h" line="206"/>
         <source>Angle</source>
-        <translation>Angle</translation>
+        <translation>Szög</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_lineoptions.ui" line="160"/>
@@ -20813,7 +20806,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_lc_lineoptions.h" line="213"/>
         <location filename="../../../generated/librecad/ui/ui_lc_lineoptions.h" line="213"/>
         <source>Undo the last line drawing</source>
-        <translation>Undo the last line drawing</translation>
+        <translation>Utolsó vonalrajzolás visszavonása</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_lineoptions.ui" line="227"/>
@@ -20829,7 +20822,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_lc_lineoptions.h" line="217"/>
         <location filename="../../../generated/librecad/ui/ui_lc_lineoptions.h" line="217"/>
         <source>Form a closed contour from lines drawn</source>
-        <translation>Form a closed contour from lines drawn</translation>
+        <translation>Zárt kontúr létrehozása a rajzolt vonalakból</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_lineoptions.ui" line="237"/>
@@ -20837,7 +20830,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_lc_lineoptions.h" line="219"/>
         <location filename="../../../generated/librecad/ui/ui_lc_lineoptions.h" line="219"/>
         <source>Close</source>
-        <translation>Close</translation>
+        <translation>Bezárás</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_lineoptions.ui" line="253"/>
@@ -20845,7 +20838,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_lc_lineoptions.h" line="221"/>
         <location filename="../../../generated/librecad/ui/ui_lc_lineoptions.h" line="221"/>
         <source>Redo the last line drawing</source>
-        <translation>Redo the last line drawing</translation>
+        <translation>Utolsó vonalrajzolás újra elvégzése</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/lc_lineoptions.ui" line="256"/>
@@ -20861,7 +20854,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_lc_lineoptions.h" line="224"/>
         <location filename="../../../generated/librecad/ui/ui_lc_lineoptions.h" line="224"/>
         <source>Point</source>
-        <translation>Point</translation>
+        <translation>Pont</translation>
     </message>
 </context>
 <context>
@@ -20872,7 +20865,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_lineparalleloptions.h" line="107"/>
         <location filename="../../../generated/librecad/ui/ui_qg_lineparalleloptions.h" line="107"/>
         <source>Line Parallel Options</source>
-        <translation>Line Parallel Options</translation>
+        <translation>Párhuzamos vonal beállítások</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_lineparalleloptions.ui" line="56"/>
@@ -20880,7 +20873,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_lineparalleloptions.h" line="108"/>
         <location filename="../../../generated/librecad/ui/ui_qg_lineparalleloptions.h" line="108"/>
         <source>Distance:</source>
-        <translation>Distance:</translation>
+        <translation>Távolság:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_lineparalleloptions.ui" line="72"/>
@@ -20888,7 +20881,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_lineparalleloptions.h" line="110"/>
         <location filename="../../../generated/librecad/ui/ui_qg_lineparalleloptions.h" line="110"/>
         <source>Distance to original entity</source>
-        <translation>Distance to original entity</translation>
+        <translation>Távolság az eredeti elemtől</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_lineparalleloptions.ui" line="85"/>
@@ -20896,7 +20889,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_lineparalleloptions.h" line="112"/>
         <location filename="../../../generated/librecad/ui/ui_qg_lineparalleloptions.h" line="112"/>
         <source>Number:</source>
-        <translation>Number:</translation>
+        <translation>Szám:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_lineparalleloptions.ui" line="95"/>
@@ -20904,7 +20897,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_lineparalleloptions.h" line="114"/>
         <location filename="../../../generated/librecad/ui/ui_qg_lineparalleloptions.h" line="114"/>
         <source>Number of parallels to create</source>
-        <translation>Number of parallels to create</translation>
+        <translation>Létrehozandó párhuzamosok száma</translation>
     </message>
 </context>
 <context>
@@ -20915,7 +20908,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_lineparallelthroughoptions.h" line="85"/>
         <location filename="../../../generated/librecad/ui/ui_qg_lineparallelthroughoptions.h" line="85"/>
         <source>Line Parallel Through Options</source>
-        <translation>Line Parallel Through Options</translation>
+        <translation>Párhuzamos ponton át beállítások</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_lineparallelthroughoptions.ui" line="56"/>
@@ -20923,7 +20916,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_lineparallelthroughoptions.h" line="86"/>
         <location filename="../../../generated/librecad/ui/ui_qg_lineparallelthroughoptions.h" line="86"/>
         <source>Number:</source>
-        <translation>Number:</translation>
+        <translation>Szám:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_lineparallelthroughoptions.ui" line="66"/>
@@ -20931,7 +20924,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_lineparallelthroughoptions.h" line="88"/>
         <location filename="../../../generated/librecad/ui/ui_qg_lineparallelthroughoptions.h" line="88"/>
         <source>Number of parallels to create</source>
-        <translation>Number of parallels to create</translation>
+        <translation>Létrehozandó párhuzamosok száma</translation>
     </message>
 </context>
 <context>
@@ -20942,7 +20935,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_linepolygon2options.h" line="86"/>
         <location filename="../../../generated/librecad/ui/ui_qg_linepolygon2options.h" line="86"/>
         <source>Polygon Options</source>
-        <translation>Polygon Options</translation>
+        <translation>Sokszög beállítások</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_linepolygon2options.ui" line="56"/>
@@ -20950,7 +20943,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_linepolygon2options.h" line="87"/>
         <location filename="../../../generated/librecad/ui/ui_qg_linepolygon2options.h" line="87"/>
         <source>Number:</source>
-        <translation>Number:</translation>
+        <translation>Szám:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_linepolygon2options.ui" line="66"/>
@@ -20958,7 +20951,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_linepolygon2options.h" line="89"/>
         <location filename="../../../generated/librecad/ui/ui_qg_linepolygon2options.h" line="89"/>
         <source>Number of edges</source>
-        <translation>Number of edges</translation>
+        <translation>Élek száma</translation>
     </message>
 </context>
 <context>
@@ -20969,7 +20962,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_linepolygonoptions.h" line="86"/>
         <location filename="../../../generated/librecad/ui/ui_qg_linepolygonoptions.h" line="86"/>
         <source>Polygon Options</source>
-        <translation>Polygon Options</translation>
+        <translation>Sokszög beállítások</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_linepolygonoptions.ui" line="56"/>
@@ -20977,7 +20970,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_linepolygonoptions.h" line="87"/>
         <location filename="../../../generated/librecad/ui/ui_qg_linepolygonoptions.h" line="87"/>
         <source>Number:</source>
-        <translation>Number:</translation>
+        <translation>Szám:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_linepolygonoptions.ui" line="66"/>
@@ -20985,7 +20978,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_linepolygonoptions.h" line="89"/>
         <location filename="../../../generated/librecad/ui/ui_qg_linepolygonoptions.h" line="89"/>
         <source>Number of edges</source>
-        <translation>Number of edges</translation>
+        <translation>Élek száma</translation>
     </message>
 </context>
 <context>
@@ -20996,7 +20989,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_linerelangleoptions.h" line="107"/>
         <location filename="../../../generated/librecad/ui/ui_qg_linerelangleoptions.h" line="107"/>
         <source>Line Relative Angle Options</source>
-        <translation>Line Relative Angle Options</translation>
+        <translation>Vonal relatív szög beállítások</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_linerelangleoptions.ui" line="56"/>
@@ -21004,7 +20997,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_linerelangleoptions.h" line="108"/>
         <location filename="../../../generated/librecad/ui/ui_qg_linerelangleoptions.h" line="108"/>
         <source>Angle:</source>
-        <translation>Angle:</translation>
+        <translation>Szög:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_linerelangleoptions.ui" line="72"/>
@@ -21012,7 +21005,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_linerelangleoptions.h" line="110"/>
         <location filename="../../../generated/librecad/ui/ui_qg_linerelangleoptions.h" line="110"/>
         <source>Line angle</source>
-        <translation>Line angle</translation>
+        <translation>Vonal szöge</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_linerelangleoptions.ui" line="85"/>
@@ -21020,7 +21013,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_linerelangleoptions.h" line="112"/>
         <location filename="../../../generated/librecad/ui/ui_qg_linerelangleoptions.h" line="112"/>
         <source>Length:</source>
-        <translation>Length:</translation>
+        <translation>Hossz:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_linerelangleoptions.ui" line="101"/>
@@ -21028,7 +21021,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_linerelangleoptions.h" line="114"/>
         <location filename="../../../generated/librecad/ui/ui_qg_linerelangleoptions.h" line="114"/>
         <source>Length of line</source>
-        <translation>Length of line</translation>
+        <translation>Vonal hossza</translation>
     </message>
 </context>
 <context>
@@ -21039,7 +21032,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_mtextoptions.h" line="103"/>
         <location filename="../../../generated/librecad/ui/ui_qg_mtextoptions.h" line="103"/>
         <source>Text Options</source>
-        <translation>Text Options</translation>
+        <translation>Szöveg beállítások</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_mtextoptions.ui" line="53"/>
@@ -21047,7 +21040,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_mtextoptions.h" line="107"/>
         <location filename="../../../generated/librecad/ui/ui_qg_mtextoptions.h" line="107"/>
         <source>Text:</source>
-        <translation>Text:</translation>
+        <translation>Szöveg:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_mtextoptions.ui" line="91"/>
@@ -21055,7 +21048,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_mtextoptions.h" line="108"/>
         <location filename="../../../generated/librecad/ui/ui_qg_mtextoptions.h" line="108"/>
         <source>Angle:</source>
-        <translation>Angle:</translation>
+        <translation>Szög:</translation>
     </message>
 </context>
 <context>
@@ -21066,7 +21059,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_modifyoffsetoptions.h" line="89"/>
         <location filename="../../../generated/librecad/ui/ui_qg_modifyoffsetoptions.h" line="89"/>
         <source>Modify Offset Options</source>
-        <translation>Modify Offset Options</translation>
+        <translation>Eltolás módosítás beállítások</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_modifyoffsetoptions.ui" line="56"/>
@@ -21074,7 +21067,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_modifyoffsetoptions.h" line="90"/>
         <location filename="../../../generated/librecad/ui/ui_qg_modifyoffsetoptions.h" line="90"/>
         <source>Distance:</source>
-        <translation>Distance:</translation>
+        <translation>Távolság:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_modifyoffsetoptions.ui" line="72"/>
@@ -21082,7 +21075,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_modifyoffsetoptions.h" line="92"/>
         <location filename="../../../generated/librecad/ui/ui_qg_modifyoffsetoptions.h" line="92"/>
         <source>Offset from original entity</source>
-        <translation>Offset from original entity</translation>
+        <translation>Eltolás az eredeti elemtől</translation>
     </message>
 </context>
 <context>
@@ -21093,7 +21086,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_moverotateoptions.h" line="79"/>
         <location filename="../../../generated/librecad/ui/ui_qg_moverotateoptions.h" line="79"/>
         <source>Move Rotate Options</source>
-        <translation>Move Rotate Options</translation>
+        <translation>Mozgatás-forgatás beállítások</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_moverotateoptions.ui" line="50"/>
@@ -21101,7 +21094,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_moverotateoptions.h" line="80"/>
         <location filename="../../../generated/librecad/ui/ui_qg_moverotateoptions.h" line="80"/>
         <source>Angle:</source>
-        <translation>Angle:</translation>
+        <translation>Szög:</translation>
     </message>
 </context>
 <context>
@@ -21112,7 +21105,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_polylineoptions.h" line="167"/>
         <location filename="../../../generated/librecad/ui/ui_qg_polylineoptions.h" line="167"/>
         <source>Polyline Options</source>
-        <translation>Polyline Options</translation>
+        <translation>Töröttvonal beállítások</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_polylineoptions.ui" line="53"/>
@@ -21120,7 +21113,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_polylineoptions.h" line="168"/>
         <location filename="../../../generated/librecad/ui/ui_qg_polylineoptions.h" line="168"/>
         <source>Close</source>
-        <translation>Close</translation>
+        <translation>Bezárás</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_polylineoptions.ui" line="60"/>
@@ -21144,7 +21137,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_polylineoptions.h" line="171"/>
         <location filename="../../../generated/librecad/ui/ui_qg_polylineoptions.h" line="171"/>
         <source>Tangential</source>
-        <translation>Tangential</translation>
+        <translation>Érintőleges</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_polylineoptions.ui" line="90"/>
@@ -21152,7 +21145,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_polylineoptions.h" line="172"/>
         <location filename="../../../generated/librecad/ui/ui_qg_polylineoptions.h" line="172"/>
         <source>Tan Radius</source>
-        <translation>Tan Radius</translation>
+        <translation>Érintő sugár</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_polylineoptions.ui" line="95"/>
@@ -21160,7 +21153,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_polylineoptions.h" line="173"/>
         <location filename="../../../generated/librecad/ui/ui_qg_polylineoptions.h" line="173"/>
         <source>Angle</source>
-        <translation>Angle</translation>
+        <translation>Szög</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_polylineoptions.ui" line="103"/>
@@ -21168,7 +21161,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_polylineoptions.h" line="175"/>
         <location filename="../../../generated/librecad/ui/ui_qg_polylineoptions.h" line="175"/>
         <source>Radius:</source>
-        <translation>Radius:</translation>
+        <translation>Sugár:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_polylineoptions.ui" line="126"/>
@@ -21176,7 +21169,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_polylineoptions.h" line="176"/>
         <location filename="../../../generated/librecad/ui/ui_qg_polylineoptions.h" line="176"/>
         <source>Angle:</source>
-        <translation>Angle:</translation>
+        <translation>Szög:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_polylineoptions.ui" line="181"/>
@@ -21184,7 +21177,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_polylineoptions.h" line="179"/>
         <location filename="../../../generated/librecad/ui/ui_qg_polylineoptions.h" line="179"/>
         <source>Counter Clockwise</source>
-        <translation>Counter Clockwise</translation>
+        <translation>Óramutató járásával ellentétes</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_polylineoptions.ui" line="204"/>
@@ -21192,7 +21185,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_polylineoptions.h" line="183"/>
         <location filename="../../../generated/librecad/ui/ui_qg_polylineoptions.h" line="183"/>
         <source>Clockwise</source>
-        <translation>Clockwise</translation>
+        <translation>Óramutató járásával megegyező</translation>
     </message>
 </context>
 <context>
@@ -21203,7 +21196,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_printpreviewoptions.h" line="164"/>
         <location filename="../../../generated/librecad/ui/ui_qg_printpreviewoptions.h" line="164"/>
         <source>Print Preview Options</source>
-        <translation>Print Preview Options</translation>
+        <translation>Nyomtatási előnézet beállítások</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_printpreviewoptions.ui" line="56"/>
@@ -21227,7 +21220,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_printpreviewoptions.h" line="174"/>
         <location filename="../../../generated/librecad/ui/ui_qg_printpreviewoptions.h" line="174"/>
         <source>fixed</source>
-        <translation>fixed</translation>
+        <translation>rögzített</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_printpreviewoptions.ui" line="116"/>
@@ -21235,7 +21228,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_printpreviewoptions.h" line="176"/>
         <location filename="../../../generated/librecad/ui/ui_qg_printpreviewoptions.h" line="176"/>
         <source>Apply Print Scale to line width</source>
-        <translation>Apply Print Scale to line width</translation>
+        <translation>Nyomtatási méretezés alkalmazása a vonalvastagságra</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_printpreviewoptions.ui" line="145"/>
@@ -21243,7 +21236,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_printpreviewoptions.h" line="180"/>
         <location filename="../../../generated/librecad/ui/ui_qg_printpreviewoptions.h" line="180"/>
         <source>Toggle Black / White mode</source>
-        <translation>Toggle Black / White mode</translation>
+        <translation>Fekete / Fehér mód váltása</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_printpreviewoptions.ui" line="174"/>
@@ -21251,7 +21244,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_printpreviewoptions.h" line="184"/>
         <location filename="../../../generated/librecad/ui/ui_qg_printpreviewoptions.h" line="184"/>
         <source>Center to page</source>
-        <translation>Center to page</translation>
+        <translation>Középre igazítás az oldalon</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_printpreviewoptions.ui" line="200"/>
@@ -21259,7 +21252,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_printpreviewoptions.h" line="188"/>
         <location filename="../../../generated/librecad/ui/ui_qg_printpreviewoptions.h" line="188"/>
         <source>Fit to page</source>
-        <translation>Fit to page</translation>
+        <translation>Illesztés az oldalhoz</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_printpreviewoptions.ui" line="226"/>
@@ -21267,7 +21260,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_printpreviewoptions.h" line="192"/>
         <location filename="../../../generated/librecad/ui/ui_qg_printpreviewoptions.h" line="192"/>
         <source>Calculate number of pages needed to contain the drawing</source>
-        <translation>Calculate number of pages needed to contain the drawing</translation>
+        <translation>A rajz tárolásához szükséges oldalak számának kiszámítása</translation>
     </message>
 </context>
 <context>
@@ -21278,7 +21271,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_roundoptions.h" line="97"/>
         <location filename="../../../generated/librecad/ui/ui_qg_roundoptions.h" line="97"/>
         <source>Round Options</source>
-        <translation>Round Options</translation>
+        <translation>Kerekítés beállítások</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_roundoptions.ui" line="53"/>
@@ -21286,7 +21279,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_roundoptions.h" line="102"/>
         <location filename="../../../generated/librecad/ui/ui_qg_roundoptions.h" line="102"/>
         <source>Check to trim both edges to the rounding</source>
-        <translation>Check to trim both edges to the rounding</translation>
+        <translation>Jelölje be mindkét él levágásához a kerekítésnél</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_roundoptions.ui" line="56"/>
@@ -21302,7 +21295,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_roundoptions.h" line="105"/>
         <location filename="../../../generated/librecad/ui/ui_qg_roundoptions.h" line="105"/>
         <source>Radius:</source>
-        <translation>Radius:</translation>
+        <translation>Sugár:</translation>
     </message>
 </context>
 <context>
@@ -21313,7 +21306,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_snapdistoptions.h" line="81"/>
         <location filename="../../../generated/librecad/ui/ui_qg_snapdistoptions.h" line="81"/>
         <source>Snap Distance Options</source>
-        <translation>Snap Distance Options</translation>
+        <translation>Illesztési távolság beállítások</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_snapdistoptions.ui" line="50"/>
@@ -21321,7 +21314,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_snapdistoptions.h" line="82"/>
         <location filename="../../../generated/librecad/ui/ui_qg_snapdistoptions.h" line="82"/>
         <source>Distance:</source>
-        <translation>Distance:</translation>
+        <translation>Távolság:</translation>
     </message>
 </context>
 <context>
@@ -21332,7 +21325,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_snapmiddleoptions.h" line="58"/>
         <location filename="../../../generated/librecad/ui/ui_qg_snapmiddleoptions.h" line="58"/>
         <source>Snap Distance Options</source>
-        <translation>Snap Distance Options</translation>
+        <translation>Illesztési távolság beállítások</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_snapmiddleoptions.ui" line="47"/>
@@ -21340,7 +21333,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_snapmiddleoptions.h" line="59"/>
         <location filename="../../../generated/librecad/ui/ui_qg_snapmiddleoptions.h" line="59"/>
         <source>Middle Points:</source>
-        <translation>Middle Points:</translation>
+        <translation>Közbülső pontok:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_snapmiddleoptions.ui" line="63"/>
@@ -21348,7 +21341,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_snapmiddleoptions.h" line="61"/>
         <location filename="../../../generated/librecad/ui/ui_qg_snapmiddleoptions.h" line="61"/>
         <source>Number of equidistant division points</source>
-        <translation>Number of equidistant division points</translation>
+        <translation>Egyenlő távolságú osztópontok száma</translation>
     </message>
 </context>
 <context>
@@ -21359,7 +21352,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_splineoptions.h" line="113"/>
         <location filename="../../../generated/librecad/ui/ui_qg_splineoptions.h" line="113"/>
         <source>Spline Options</source>
-        <translation>Spline Options</translation>
+        <translation>Görbe beállítások</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_splineoptions.ui" line="56"/>
@@ -21367,7 +21360,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_splineoptions.h" line="114"/>
         <location filename="../../../generated/librecad/ui/ui_qg_splineoptions.h" line="114"/>
         <source>Degree:</source>
-        <translation>Degree:</translation>
+        <translation>Fokszám:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_splineoptions.ui" line="91"/>
@@ -21394,7 +21387,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_textoptions.h" line="103"/>
         <location filename="../../../generated/librecad/ui/ui_qg_textoptions.h" line="103"/>
         <source>Text Options</source>
-        <translation>Text Options</translation>
+        <translation>Szöveg beállítások</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_textoptions.ui" line="53"/>
@@ -21402,7 +21395,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_textoptions.h" line="107"/>
         <location filename="../../../generated/librecad/ui/ui_qg_textoptions.h" line="107"/>
         <source>Text:</source>
-        <translation>Text:</translation>
+        <translation>Szöveg:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_textoptions.ui" line="91"/>
@@ -21410,7 +21403,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_textoptions.h" line="108"/>
         <location filename="../../../generated/librecad/ui/ui_qg_textoptions.h" line="108"/>
         <source>Angle:</source>
-        <translation>Angle:</translation>
+        <translation>Szög:</translation>
     </message>
 </context>
 <context>
@@ -21421,7 +21414,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_trimamountoptions.h" line="103"/>
         <location filename="../../../generated/librecad/ui/ui_qg_trimamountoptions.h" line="103"/>
         <source>Trim Amount Options</source>
-        <translation>Trim Amount Options</translation>
+        <translation>Levágás mennyiség beállítások</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_trimamountoptions.ui" line="23"/>
@@ -21429,7 +21422,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_trimamountoptions.h" line="105"/>
         <location filename="../../../generated/librecad/ui/ui_qg_trimamountoptions.h" line="105"/>
         <source>Distance. Negative values for trimming, positive values for extending.</source>
-        <translation>Distance. Negative values for trimming, positive values for extending.</translation>
+        <translation>Távolság. Negatív értékek levágáshoz, pozitív értékek nyújtáshoz.</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_trimamountoptions.ui" line="56"/>
@@ -21437,7 +21430,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_trimamountoptions.h" line="107"/>
         <location filename="../../../generated/librecad/ui/ui_qg_trimamountoptions.h" line="107"/>
         <source>Length:</source>
-        <translation>Length:</translation>
+        <translation>Hossz:</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_trimamountoptions.ui" line="78"/>
@@ -21445,7 +21438,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_trimamountoptions.h" line="109"/>
         <location filename="../../../generated/librecad/ui/ui_qg_trimamountoptions.h" line="109"/>
         <source>Distance. Negative values for trimming, positive values for extending. Negative sign is ignored when trimming to final total length.</source>
-        <translation>Distance. Negative values for trimming, positive values for extending. Negative sign is ignored when trimming to final total length.</translation>
+        <translation>Távolság. Negatív értékek levágáshoz, pozitív értékek nyújtáshoz. Negatív...</translation>
     </message>
     <message>
         <location filename="../../src/ui/forms/qg_trimamountoptions.ui" line="97"/>
@@ -21453,7 +21446,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_qg_trimamountoptions.h" line="112"/>
         <location filename="../../../generated/librecad/ui/ui_qg_trimamountoptions.h" line="112"/>
         <source>The input length is used as total length after trimming, instead of length increase</source>
-        <translation>The input length is used as total length after trimming, instead of length increase</translation>
+        <translation>A megadott hosszt a levágás utáni teljes hosszként kell értelmezni, nem hossznövekedésként.</translation>
     </message>
 </context>
 <context>
@@ -21464,7 +21457,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_widgetcreator.h" line="222"/>
         <location filename="../../../generated/librecad/ui/ui_widgetcreator.h" line="222"/>
         <source>Frame</source>
-        <translation>Frame</translation>
+        <translation>Keret</translation>
     </message>
     <message>
         <location filename="../../src/ui/generic/widgetcreator.ui" line="96"/>
@@ -21496,7 +21489,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_widgetcreator.h" line="226"/>
         <location filename="../../../generated/librecad/ui/ui_widgetcreator.h" line="226"/>
         <source>Create</source>
-        <translation>Create</translation>
+        <translation>Létrehozás</translation>
     </message>
     <message>
         <location filename="../../src/ui/generic/widgetcreator.ui" line="209"/>
@@ -21504,7 +21497,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_widgetcreator.h" line="227"/>
         <location filename="../../../generated/librecad/ui/ui_widgetcreator.h" line="227"/>
         <source>Destroy</source>
-        <translation>Destroy</translation>
+        <translation>Megsemmisítés</translation>
     </message>
     <message>
         <location filename="../../src/ui/generic/widgetcreator.ui" line="216"/>
@@ -21512,7 +21505,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_widgetcreator.h" line="228"/>
         <location filename="../../../generated/librecad/ui/ui_widgetcreator.h" line="228"/>
         <source>Assign</source>
-        <translation>Assign</translation>
+        <translation>Hozzárendelés</translation>
     </message>
     <message>
         <location filename="../../src/ui/generic/widgetcreator.ui" line="223"/>
@@ -21520,7 +21513,7 @@ This block cannot be inserted.</source>
         <location filename="../../../build/ui_widgetcreator.h" line="229"/>
         <location filename="../../../generated/librecad/ui/ui_widgetcreator.h" line="229"/>
         <source>Update</source>
-        <translation>Update</translation>
+        <translation>Frissítés</translation>
     </message>
 </context>
 <context>
@@ -21538,7 +21531,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../../plugins/asciifile/asciifile.cpp" line="233"/>
         <source>Format:</source>
-        <translation>Format:</translation>
+        <translation>Formátum:</translation>
     </message>
     <message>
         <location filename="../../../plugins/asciifile/asciifile.cpp" line="235"/>
@@ -21563,7 +21556,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../../plugins/asciifile/asciifile.cpp" line="235"/>
         <source>*.odb for Psion 2</source>
-        <translation>*.odb for Psion 2</translation>
+        <translation>*.odb Psion 2-höz</translation>
     </message>
     <message>
         <location filename="../../../plugins/asciifile/asciifile.cpp" line="237"/>
@@ -21598,27 +21591,27 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../../plugins/asciifile/asciifile.cpp" line="247"/>
         <source>Draw point number</source>
-        <translation>Draw point number</translation>
+        <translation>Pontszám rajzolása</translation>
     </message>
     <message>
         <location filename="../../../plugins/asciifile/asciifile.cpp" line="248"/>
         <source>Point Elevation</source>
-        <translation>Point Elevation</translation>
+        <translation>Pontmagasság</translation>
     </message>
     <message>
         <location filename="../../../plugins/asciifile/asciifile.cpp" line="248"/>
         <source>Draw point elevation</source>
-        <translation>Draw point elevation</translation>
+        <translation>Pontmagasság rajzolása</translation>
     </message>
     <message>
         <location filename="../../../plugins/asciifile/asciifile.cpp" line="249"/>
         <source>Point Code</source>
-        <translation>Point Code</translation>
+        <translation>Pontkód</translation>
     </message>
     <message>
         <location filename="../../../plugins/asciifile/asciifile.cpp" line="249"/>
         <source>Draw point code</source>
-        <translation>Draw point code</translation>
+        <translation>Pontkód rajzolása</translation>
     </message>
     <message>
         <location filename="../../../plugins/asciifile/asciifile.cpp" line="263"/>
@@ -21653,42 +21646,42 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../../plugins/asciifile/asciifile.cpp" line="312"/>
         <source>Point elevation height is empty</source>
-        <translation>Point elevation height is empty</translation>
+        <translation>A pontmagasság magassága üres</translation>
     </message>
     <message>
         <location filename="../../../plugins/asciifile/asciifile.cpp" line="313"/>
         <source>Point elevation separation is empty</source>
-        <translation>Point elevation separation is empty</translation>
+        <translation>A pontmagasság elválasztása üres</translation>
     </message>
     <message>
         <location filename="../../../plugins/asciifile/asciifile.cpp" line="316"/>
         <source>Point number layer is empty</source>
-        <translation>Point number layer is empty</translation>
+        <translation>A pontszám rétege üres</translation>
     </message>
     <message>
         <location filename="../../../plugins/asciifile/asciifile.cpp" line="317"/>
         <source>Point number height is empty</source>
-        <translation>Point number height is empty</translation>
+        <translation>A pontszám magassága üres</translation>
     </message>
     <message>
         <location filename="../../../plugins/asciifile/asciifile.cpp" line="318"/>
         <source>Point number separation is empty</source>
-        <translation>Point number separation is empty</translation>
+        <translation>A pontszám elválasztása üres</translation>
     </message>
     <message>
         <location filename="../../../plugins/asciifile/asciifile.cpp" line="321"/>
         <source>Point code layer is empty</source>
-        <translation>Point code layer is empty</translation>
+        <translation>A pontkód rétege üres</translation>
     </message>
     <message>
         <location filename="../../../plugins/asciifile/asciifile.cpp" line="322"/>
         <source>Point code height is empty</source>
-        <translation>Point code height is empty</translation>
+        <translation>A pontkód magassága üres</translation>
     </message>
     <message>
         <location filename="../../../plugins/asciifile/asciifile.cpp" line="323"/>
         <source>Point code separation is empty</source>
-        <translation>Point code separation is empty</translation>
+        <translation>A pontkód elválasztása üres</translation>
     </message>
     <message>
         <location filename="../../../plugins/asciifile/asciifile.cpp" line="359"/>
@@ -21793,7 +21786,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../../plugins/divide/divide.cpp" line="494"/>
         <source>Inc.</source>
-        <translation>Inc.</translation>
+        <translation>Növekmény</translation>
     </message>
     <message>
         <location filename="../../../plugins/divide/divide.cpp" line="499"/>
@@ -21866,12 +21859,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../../plugins/divide/divide.cpp" line="539"/>
         <source>in point</source>
-        <translation>in point</translation>
+        <translation>pontban</translation>
     </message>
     <message>
         <location filename="../../../plugins/divide/divide.cpp" line="555"/>
         <source>MUST be a line, circle or arc</source>
-        <translation>MUST be a line, circle or arc</translation>
+        <translation>KÖTELEZŐ vonal, kör vagy ív legyen</translation>
     </message>
 </context>
 <context>
@@ -21879,7 +21872,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../../plugins/divide/dividedlg.cpp" line="48"/>
         <source>Divide - </source>
-        <translation>Divide -</translation>
+        <translation>Felosztás -</translation>
     </message>
     <message>
         <location filename="../../../plugins/divide/dividedlg.cpp" line="69"/>
@@ -21899,32 +21892,32 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../../../plugins/divide/dividedlg.cpp" line="85"/>
         <source>Divide at</source>
-        <translation>Divide at</translation>
+        <translation>Felosztás:</translation>
     </message>
     <message>
         <location filename="../../../plugins/divide/dividedlg.cpp" line="92"/>
         <source>Size</source>
-        <translation>Size</translation>
+        <translation>Méret</translation>
     </message>
     <message>
         <location filename="../../../plugins/divide/dividedlg.cpp" line="115"/>
         <source>places</source>
-        <translation>places</translation>
+        <translation>helyen</translation>
     </message>
     <message>
         <location filename="../../../plugins/divide/dividedlg.cpp" line="126"/>
         <source>Ticks - Off</source>
-        <translation>Ticks - Off</translation>
+        <translation>Pipák - Ki</translation>
     </message>
     <message>
         <location filename="../../../plugins/divide/dividedlg.cpp" line="134"/>
         <source>Breaks - Off</source>
-        <translation>Breaks - Off</translation>
+        <translation>Törések - Ki</translation>
     </message>
     <message>
         <location filename="../../../plugins/divide/dividedlg.cpp" line="179"/>
         <source>&lt;i&gt;New&lt;/i&gt;</source>
-        <translation>&lt;i&gt;New&lt;/i&gt;</translation>
+        <translation>&lt;i&gt;Új&lt;/i&gt;</translation>
     </message>
     <message>
         <location filename="../../../plugins/divide/dividedlg.cpp" line="210"/>
@@ -21934,12 +21927,11 @@ decimal degrees
 0° at 3 o&apos;clock
 goes
 anti-clockwise.</source>
-        <translation>Enter start
-angle, in
-decimal degrees
-0° at 3 o&apos;clock
-goes
-anti-clockwise.</translation>
+        <translation>Adja meg a kezdőszöget,
+tizedfokban
+0° 3 óra irányában
+megy
+óramutató járásával ellentétesen.</translation>
     </message>
     <message>
         <location filename="../../../plugins/divide/dividedlg.cpp" line="246"/>
@@ -21949,7 +21941,7 @@ anti-clockwise.</translation>
     <message>
         <location filename="../../../plugins/divide/dividedlg.cpp" line="252"/>
         <source>Ticks</source>
-        <translation>Ticks</translation>
+        <translation>Pipák</translation>
     </message>
     <message>
         <location filename="../../../plugins/divide/dividedlg.cpp" line="258"/>
@@ -21977,7 +21969,7 @@ anti-clockwise.</translation>
     <message>
         <location filename="../../../plugins/pointstocsv/pointstocsv.cpp" line="122"/>
         <source>Export to file</source>
-        <translation>Export to file</translation>
+        <translation>Exportálás fájlba</translation>
     </message>
     <message>
         <location filename="../../../plugins/pointstocsv/pointstocsv.cpp" line="122"/>
@@ -21987,7 +21979,7 @@ anti-clockwise.</translation>
     <message>
         <location filename="../../../plugins/pointstocsv/pointstocsv.cpp" line="130"/>
         <source>Unable to open file</source>
-        <translation>Unable to open file</translation>
+        <translation>Nem lehet megnyitni a fájlt</translation>
     </message>
 </context>
 <context>
@@ -22010,7 +22002,7 @@ anti-clockwise.</translation>
     <message>
         <location filename="../../../plugins/gear/gear.cpp" line="115"/>
         <source>Modulus</source>
-        <translation>Modulus</translation>
+        <translation>Modul</translation>
     </message>
     <message>
         <location filename="../../../plugins/gear/gear.cpp" line="117"/>
@@ -22020,17 +22012,17 @@ anti-clockwise.</translation>
     <message>
         <location filename="../../../plugins/gear/gear.cpp" line="118"/>
         <source>Dedendum (rel. to modulus)</source>
-        <translation>Dedendum (rel. to modulus)</translation>
+        <translation>Dedendum (modul relatív)</translation>
     </message>
     <message>
         <location filename="../../../plugins/gear/gear.cpp" line="119"/>
         <source>Number of segments to draw (dedendum)</source>
-        <translation>Number of segments to draw (dedendum)</translation>
+        <translation>Szegmensek száma (dedendum)</translation>
     </message>
     <message>
         <location filename="../../../plugins/gear/gear.cpp" line="120"/>
         <source>Number of segments to draw (addendum)</source>
-        <translation>Number of segments to draw (addendum)</translation>
+        <translation>Szegmensek száma (addendum)</translation>
     </message>
     <message>
         <location filename="../../../plugins/gear/gear.cpp" line="121"/>
@@ -22055,37 +22047,37 @@ anti-clockwise.</translation>
     <message>
         <location filename="../../../plugins/gear/gear.cpp" line="126"/>
         <source>Draw pitch circle?</source>
-        <translation>Draw pitch circle?</translation>
+        <translation>Osztókör rajzolása?</translation>
     </message>
     <message>
         <location filename="../../../plugins/gear/gear.cpp" line="127"/>
         <source>Draw base circle?</source>
-        <translation>Draw base circle?</translation>
+        <translation>Alap kör rajzolása?</translation>
     </message>
     <message>
         <location filename="../../../plugins/gear/gear.cpp" line="128"/>
         <source>Draw root circle?</source>
-        <translation>Draw root circle?</translation>
+        <translation>Gyök kör rajzolása?</translation>
     </message>
     <message>
         <location filename="../../../plugins/gear/gear.cpp" line="129"/>
         <source>Draw pressure line?</source>
-        <translation>Draw pressure line?</translation>
+        <translation>Nyomásvonal rajzolása?</translation>
     </message>
     <message>
         <location filename="../../../plugins/gear/gear.cpp" line="130"/>
         <source>Draw pressure limits?</source>
-        <translation>Draw pressure limits?</translation>
+        <translation>Nyomáshatárok rajzolása?</translation>
     </message>
     <message>
         <location filename="../../../plugins/gear/gear.cpp" line="132"/>
         <source>Calculate interference?</source>
-        <translation>Calculate interference?</translation>
+        <translation>Interferencia kiszámítása?</translation>
     </message>
     <message>
         <location filename="../../../plugins/gear/gear.cpp" line="133"/>
         <source>Number of segments to draw (interference)</source>
-        <translation>Number of segments to draw (interference)</translation>
+        <translation>Szegmensek száma (interferencia)</translation>
     </message>
     <message>
         <location filename="../../../plugins/gear/gear.cpp" line="135"/>
@@ -22111,27 +22103,27 @@ anti-clockwise.</translation>
     <message>
         <location filename="../../../plugins/sample/sample.cpp" line="54"/>
         <source>Draw line</source>
-        <translation>Draw line</translation>
+        <translation>Vonal rajzolása</translation>
     </message>
     <message>
         <location filename="../../../plugins/sample/sample.cpp" line="60"/>
         <source>Start X:</source>
-        <translation>Start X:</translation>
+        <translation>Kezdő X:</translation>
     </message>
     <message>
         <location filename="../../../plugins/sample/sample.cpp" line="66"/>
         <source>Start Y:</source>
-        <translation>Start Y:</translation>
+        <translation>Kezdő Y:</translation>
     </message>
     <message>
         <location filename="../../../plugins/sample/sample.cpp" line="72"/>
         <source>End X:</source>
-        <translation>End X:</translation>
+        <translation>Záró X:</translation>
     </message>
     <message>
         <location filename="../../../plugins/sample/sample.cpp" line="78"/>
         <source>End Y:</source>
-        <translation>End Y:</translation>
+        <translation>Záró Y:</translation>
     </message>
     <message>
         <location filename="../../../plugins/sample/sample.cpp" line="86"/>
@@ -22146,22 +22138,22 @@ anti-clockwise.</translation>
     <message>
         <location filename="../../../plugins/sample/sample.cpp" line="107"/>
         <source>Start X is empty</source>
-        <translation>Start X is empty</translation>
+        <translation>A kezdő X üres</translation>
     </message>
     <message>
         <location filename="../../../plugins/sample/sample.cpp" line="108"/>
         <source>Start Y is empty</source>
-        <translation>Start Y is empty</translation>
+        <translation>A kezdő Y üres</translation>
     </message>
     <message>
         <location filename="../../../plugins/sample/sample.cpp" line="109"/>
         <source>End X is empty</source>
-        <translation>End X is empty</translation>
+        <translation>A záró X üres</translation>
     </message>
     <message>
         <location filename="../../../plugins/sample/sample.cpp" line="110"/>
         <source>End Y is empty</source>
-        <translation>End Y is empty</translation>
+        <translation>A záró Y üres</translation>
     </message>
     <message>
         <location filename="../../../plugins/sample/sample.cpp" line="132"/>
@@ -22199,7 +22191,7 @@ anti-clockwise.</translation>
     <message>
         <location filename="../../../plugins/picfile/picfile.cpp" line="119"/>
         <source>Scale Factor is empty or invalid</source>
-        <translation>Scale Factor is empty or invalid</translation>
+        <translation>A méretarány tényező üres vagy érvénytelen</translation>
     </message>
     <message>
         <location filename="../../../plugins/picfile/picfile.cpp" line="132"/>
@@ -22214,23 +22206,23 @@ anti-clockwise.</translation>
     <message>
         <location filename="../../../plugins/picfile/picfile.cpp" line="144"/>
         <source>%1 objects imported</source>
-        <translation>%1 objects imported</translation>
+        <translation>%1 objektum importálva</translation>
     </message>
     <message>
         <location filename="../../../plugins/picfile/picfile.cpp" line="166"/>
         <source>picPunto drawLine: first point is empty %1</source>
-        <translation>picPunto drawLine: first point is empty %1</translation>
+        <translation>picPunto drawLine: az első pont üres %1</translation>
     </message>
     <message>
         <location filename="../../../plugins/picfile/picfile.cpp" line="179"/>
         <source>picPunto drawLine: next point is empty %1</source>
-        <translation>picPunto drawLine: next point is empty %1</translation>
+        <translation>picPunto drawLine: a következő pont üres %1</translation>
     </message>
     <message>
         <location filename="../../../plugins/picfile/picfile.cpp" line="262"/>
         <location filename="../../../plugins/picfile/picfile.cpp" line="271"/>
         <source>format error in %1</source>
-        <translation>format error in %1</translation>
+        <translation>formátumhiba itt: %1</translation>
     </message>
 </context>
 <context>
@@ -22239,7 +22231,7 @@ anti-clockwise.</translation>
         <location filename="../../../plugins/plotequation/plot.cpp" line="30"/>
         <location filename="../../../plugins/plotequation/plot.cpp" line="37"/>
         <source>Plot plugin</source>
-        <translation>Plot plugin</translation>
+        <translation>Görbérajzoló bővítmény</translation>
     </message>
 </context>
 <context>
@@ -22247,7 +22239,7 @@ anti-clockwise.</translation>
     <message>
         <location filename="../../../plugins/plotequation/plotdialog.cpp" line="15"/>
         <source>Plot equation</source>
-        <translation>Plot equation</translation>
+        <translation>Egyenlet ábrázolása</translation>
     </message>
     <message>
         <location filename="../../../plugins/plotequation/plotdialog.cpp" line="18"/>
@@ -22256,40 +22248,40 @@ If you don&apos;t want to use the parametric form, just leave out &quot;Equation
 You can use pi when you need the value of pi (i.e. (3*pi)).
 Use t or x in your equation as a variable/parameter.
 </source>
-        <translation>This plugin allows you to plot mathematical equations.
-If you don&apos;t want to use the parametric form, just leave out &quot;Equation2&quot;.
-You can use pi when you need the value of pi (i.e. (3*pi)).
-Use t or x in your equation as a variable/parameter.</translation>
+        <translation>Ez a bővítmény lehetővé teszi matematikai egyenletek ábrázolását.
+Ha nem szeretné használni a paraméteres formát, hagyja üresen a &quot;2. egyenlet&quot; mezőt.
+Használhatja a pi értéket, ha szüksége van Pi értékére (pl. (3*pi)).
+Használja a t vagy x változót az egyenletben változóként/paraméterként.</translation>
     </message>
     <message>
         <location filename="../../../plugins/plotequation/plotdialog.cpp" line="22"/>
         <source>Equation 1:</source>
-        <translation>Equation 1:</translation>
+        <translation>1. egyenlet:</translation>
     </message>
     <message>
         <location filename="../../../plugins/plotequation/plotdialog.cpp" line="23"/>
         <source>Equation 2:</source>
-        <translation>Equation 2:</translation>
+        <translation>2. egyenlet:</translation>
     </message>
     <message>
         <location filename="../../../plugins/plotequation/plotdialog.cpp" line="26"/>
         <source>start value:</source>
-        <translation>start value:</translation>
+        <translation>kezdőérték:</translation>
     </message>
     <message>
         <location filename="../../../plugins/plotequation/plotdialog.cpp" line="27"/>
         <source>end value:</source>
-        <translation>end value:</translation>
+        <translation>záróérték:</translation>
     </message>
     <message>
         <location filename="../../../plugins/plotequation/plotdialog.cpp" line="28"/>
         <source>step size:</source>
-        <translation>step size:</translation>
+        <translation>lépésköz:</translation>
     </message>
     <message>
         <location filename="../../../plugins/plotequation/plotdialog.cpp" line="32"/>
         <source>Draw</source>
-        <translation>Draw</translation>
+        <translation>Rajz</translation>
     </message>
     <message>
         <location filename="../../../plugins/plotequation/plotdialog.cpp" line="33"/>
