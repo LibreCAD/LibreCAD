@@ -4730,6 +4730,80 @@ bool DRW_DimAngular3p::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 
 }
 
 // ----------------------------------------------------------------------------
+// DRW_DimArc::parseCode  (DXF group-code parser)
+// ----------------------------------------------------------------------------
+bool DRW_DimArc::parseCode(int code, const std::unique_ptr<dxfReader>& reader) {
+    if (code == 100) {
+        std::string s = reader->getString();
+        if (s == "AcDbArcDimension") m_arcSubclassSeen = true;
+        return true;
+    }
+    if (m_arcSubclassSeen) {
+        switch (code) {
+        case 40: arcStartAngle = reader->getDouble();         return true;
+        case 41: arcEndAngle   = reader->getDouble();         return true;
+        case 70: arcSymbol     = reader->getInt32();          return true;
+        case 71: isPartial     = reader->getInt32() != 0;    return true;
+        }
+    }
+    switch (code) {
+    case 17: leaderPt2.x = reader->getDouble(); return true;
+    case 27: leaderPt2.y = reader->getDouble(); return true;
+    case 37: leaderPt2.z = reader->getDouble(); return true;
+    }
+    return DRW_Dimension::parseCode(code, reader);
+}
+
+// ----------------------------------------------------------------------------
+// DRW_DimArc::parseDwg  (ODA DWG spec §20.4.19)
+// ----------------------------------------------------------------------------
+bool DRW_DimArc::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs) {
+    if (!DRW_Dimension::parseDwg(version, buf, nullptr, bs)) return false;
+    setDefPoint(buf->get3BitDouble());   // arc dim-line arc point (code 10)
+    setPt3(buf->get3BitDouble());        // extension line 1 (code 13)
+    setPt4(buf->get3BitDouble());        // extension line 2 (code 14)
+    setPt5(buf->get3BitDouble());        // arc center (code 15)
+    isPartial     = buf->getBit() != 0;
+    arcStartAngle = buf->getBitDouble();
+    arcEndAngle   = buf->getBitDouble();
+    hasLeader     = buf->getBit() != 0;
+    if (hasLeader) {
+        setPt6(buf->get3BitDouble());         // leader point 1 (code 16)
+        leaderPt2 = buf->get3BitDouble();     // leader point 2 (code 17)
+    }
+    if (!DRW_Entity::parseDwgEntHandle(version, buf)) return false;
+    dimStyleH = buf->getHandle();
+    blockH    = buf->getHandle();
+    return buf->isGood();
+}
+
+// ----------------------------------------------------------------------------
+// DRW_DimArc::encodeDwg  (oType=500 — dynamic class, classNum from writeDwgClasses)
+// ----------------------------------------------------------------------------
+bool DRW_DimArc::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs,
+                             dwgBufferW *strBuf, dwgBufferW *handleBuf) {
+    (void)bs;
+    oType = 500;  // classNum assigned in writeDwgClasses; reader resolves via classesmap
+    if (!encodeDwgCommon(version, buf)) return false;
+    if (!encodeDwgDimBase(version, buf, strBuf)) return false;
+    buf->put3BitDouble(getDefPoint());   // arc dim-line arc point (code 10)
+    buf->put3BitDouble(getPt3());        // extension line 1 (code 13)
+    buf->put3BitDouble(getPt4());        // extension line 2 (code 14)
+    buf->put3BitDouble(getPt5());        // arc center (code 15)
+    buf->putBit(isPartial ? 1 : 0);
+    buf->putBitDouble(arcStartAngle);
+    buf->putBitDouble(arcEndAngle);
+    buf->putBit(hasLeader ? 1 : 0);
+    if (hasLeader) {
+        buf->put3BitDouble(getPt6());    // leader point 1 (code 16)
+        buf->put3BitDouble(leaderPt2);   // leader point 2 (code 17)
+    }
+    if (!encodeDwgEntHandle(version, buf, handleBuf)) return false;
+    putDimHandles(buf, dimStyleH, blockH, handleBuf);
+    return true;
+}
+
+// ----------------------------------------------------------------------------
 // DRW_DimOrdinate::encodeDwg  (oType=20)
 // ----------------------------------------------------------------------------
 bool DRW_DimOrdinate::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs, dwgBufferW *strBuf, dwgBufferW *handleBuf) {

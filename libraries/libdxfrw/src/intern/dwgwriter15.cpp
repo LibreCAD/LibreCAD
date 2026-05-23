@@ -278,13 +278,31 @@ bool dwgWriter15::writeDwgClasses() {
     m_sectionOffsets[recno::CLASSES] = static_cast<duint32>(sectionStart);
 
     size_t sizeOffset = beginSentinelSection(dwgSentinels::CLASSES_BEGIN);
-    // Zero classes — but emit one dummy padding byte.  The reader at
-    // [dwgreader15.cpp:155](../intern/dwgreader15.cpp) does a `size--`
-    // before its `while (size > buff.getPosition())` loop, which
-    // underflows to 0xFFFFFFFF when size==0 and spins indefinitely.
-    // With size==1 the underflow is avoided: `size--` yields 0 and the
-    // loop terminates cleanly without reading any class.
-    m_buf.putRawChar8(0);
+
+    // ARC_DIMENSION class entry (ODA §17.1 class section format).
+    // Field layout mirrors DRW_Class::parseDwg:
+    //   BS  classNum   — must equal oType used in DRW_DimArc::encodeDwg (500)
+    //   BS  proxyFlag  — 0x4B1: standard ACAD proxy entity
+    //   TV  appName
+    //   TV  className  (AcDbXxx C++ class name)
+    //   TV  recName    (DXF entity name)
+    //   B   wasaProxyFlag  (0 = not a zombie)
+    //   BS  entityFlag     (0x1F2 → parsed as 1 = is entity, not object)
+    //   For version > AC1015 (R2004+): 5 × BL (instanceCount, dwgVer, maintVer, unk1, unk2)
+    m_buf.putBitShort(500);
+    m_buf.putBitShort(0x4B1);
+    m_buf.putVariableText(m_version, "ACAD");
+    m_buf.putVariableText(m_version, "AcDbArcDimension");
+    m_buf.putVariableText(m_version, "ARC_DIMENSION");
+    m_buf.putBit(0);         // wasaProxyFlag
+    m_buf.putBitShort(0x1F2); // entityFlag
+    if (m_version > DRW::AC1015) {
+        m_buf.putBitLong(0); // instanceCount
+        m_buf.putBitLong(0); // dwgVersion
+        m_buf.putBitLong(0); // maintenanceVersion
+        m_buf.putBitLong(0); // unknown 1
+        m_buf.putBitLong(0); // unknown 2
+    }
 
     endSentinelSection(sectionStart, sizeOffset, dwgSentinels::CLASSES_END);
 

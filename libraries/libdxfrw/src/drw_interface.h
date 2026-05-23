@@ -185,9 +185,14 @@ public:
      * Called for every ordinate dimension entity. 
      */
     virtual void addDimOrdinate(const DRW_DimOrdinate *data) = 0;
-    
-    /** 
-	 * Called for every leader start. 
+
+    /**
+     * Called for every arc length dimension entity (ARC_DIMENSION).
+     */
+    virtual void addDimArc(const DRW_DimArc *data) = 0;
+
+    /**
+	 * Called for every leader start.
 	 */
     virtual void addLeader(const DRW_Leader *data) = 0;
 	

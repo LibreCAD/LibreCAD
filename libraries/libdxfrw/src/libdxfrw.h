@@ -153,11 +153,13 @@ private:
     bool processWipeout();
     bool processMultiLeader();
     bool processDimension();
+    bool processArcDimension();
     bool processLeader();
     bool processPlotSettings();
 
 //    bool writeHeader();
     bool writeEntity(DRW_Entity *ent);
+    bool writeArcDimension(DRW_DimArc *d);
     bool writeTables();
     bool writeBlocks();
     bool writeObjects();

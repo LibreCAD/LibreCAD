@@ -184,6 +184,7 @@ public:
   void addDimDiametric(const DRW_DimDiametric *e) override { track(*e); }
   void addDimAngular(const DRW_DimAngular *e) override { track(*e); }
   void addDimAngular3P(const DRW_DimAngular3p *e) override { track(*e); }
+  void addDimArc(const DRW_DimArc *e) override { track(*e); }
   void addDimOrdinate(const DRW_DimOrdinate *e) override { track(*e); }
   void addLeader(const DRW_Leader *e) override { track(*e); }
   void addHatch(const DRW_Hatch *e) override { track(*e); }
@@ -527,6 +528,9 @@ public:
   }
   void addDimAngular3P(const DRW_DimAngular3p *e) override {
     trackT(*e, "DIM_ANGULAR3P");
+  }
+  void addDimArc(const DRW_DimArc *e) override {
+    trackT(*e, "ARC_DIMENSION");
   }
   void addDimOrdinate(const DRW_DimOrdinate *e) override {
     trackT(*e, "DIM_ORDINATE");

@@ -138,6 +138,7 @@ public:
   void addDimDiametric(const DRW_DimDiametric *) override {}
   void addDimAngular(const DRW_DimAngular *) override {}
   void addDimAngular3P(const DRW_DimAngular3p *) override {}
+  void addDimArc(const DRW_DimArc *) override {}
   void addDimOrdinate(const DRW_DimOrdinate *) override {}
   void addLeader(const DRW_Leader *) override {}
   void addHatch(const DRW_Hatch *) override {}

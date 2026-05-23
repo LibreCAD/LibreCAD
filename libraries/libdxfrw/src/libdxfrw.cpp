@@ -1294,7 +1294,60 @@ bool dxfRW::writeLeader(DRW_Leader *ent){
     }
     return true;
 }
+bool dxfRW::writeArcDimension(DRW_DimArc *d) {
+    if (version <= DRW::AC1009)
+        return true;
+    writer->writeString(0, "ARC_DIMENSION");
+    writeEntity(d);
+    writer->writeString(100, "AcDbDimension");
+    if (!d->getName().empty())
+        writer->writeString(2, d->getName());
+    writer->writeDouble(10, d->getArcDefPoint().x);
+    writer->writeDouble(20, d->getArcDefPoint().y);
+    writer->writeDouble(30, d->getArcDefPoint().z);
+    writer->writeDouble(11, d->getTextPoint().x);
+    writer->writeDouble(21, d->getTextPoint().y);
+    writer->writeDouble(31, d->getTextPoint().z);
+    d->type = 8;
+    if (!(d->type & 32)) d->type += 32;
+    writer->writeInt16(70, d->type);
+    if (!d->getText().empty())
+        writer->writeUtf8String(1, d->getText());
+    writer->writeInt16(71, d->getAlign());
+    if (d->getTextLineStyle() != 1)
+        writer->writeInt16(72, d->getTextLineStyle());
+    if (d->getTextLineFactor() != 1)
+        writer->writeDouble(41, d->getTextLineFactor());
+    writer->writeUtf8String(3, d->getStyle());
+    if (d->getTextLineFactor() != 0)
+        writer->writeDouble(53, d->getDir());
+    writer->writeDouble(210, d->getExtrusion().x);
+    writer->writeDouble(220, d->getExtrusion().y);
+    writer->writeDouble(230, d->getExtrusion().z);
+    writer->writeString(100, "AcDbArcDimension");
+    writer->writeDouble(13, d->getExtLine1().x);
+    writer->writeDouble(23, d->getExtLine1().y);
+    writer->writeDouble(33, d->getExtLine1().z);
+    writer->writeDouble(14, d->getExtLine2().x);
+    writer->writeDouble(24, d->getExtLine2().y);
+    writer->writeDouble(34, d->getExtLine2().z);
+    writer->writeDouble(15, d->getArcCenter().x);
+    writer->writeDouble(25, d->getArcCenter().y);
+    writer->writeDouble(35, d->getArcCenter().z);
+    writer->writeInt16(70, d->arcSymbol);
+    writer->writeDouble(40, d->arcStartAngle);
+    writer->writeDouble(41, d->arcEndAngle);
+    writer->writeInt16(71, d->isPartial ? 1 : 0);
+    DRW_Coord lp1 = d->hasLeader ? d->getLeaderPt1() : d->getExtLine1();
+    DRW_Coord lp2 = d->hasLeader ? d->leaderPt2      : d->getExtLine2();
+    writer->writeDouble(16, lp1.x); writer->writeDouble(26, lp1.y); writer->writeDouble(36, lp1.z);
+    writer->writeDouble(17, lp2.x); writer->writeDouble(27, lp2.y); writer->writeDouble(37, lp2.z);
+    return true;
+}
+
 bool dxfRW::writeDimension(DRW_Dimension *ent) {
+    if (ent->eType == DRW::DIMARC)
+        return writeArcDimension(static_cast<DRW_DimArc*>(ent));
     if (version > DRW::AC1009) {
         writer->writeString(0, "DIMENSION");
         writeEntity(ent);
@@ -1385,6 +1438,7 @@ bool dxfRW::writeDimension(DRW_Dimension *ent) {
             break; }
         case DRW::DIMANGULAR3P: {
             DRW_DimAngular3p * dd = (DRW_DimAngular3p*)ent;
+            writer->writeString(100, "AcDb3PointAngularDimension");
             writer->writeDouble(13, dd->getFirstLine().x);
             writer->writeDouble(23, dd->getFirstLine().y);
             writer->writeDouble(33, dd->getFirstLine().z);
@@ -2843,6 +2897,8 @@ bool dxfRW::processEntities(bool isblock) {
             processed = processMultiLeader();
         } else if (nextentity == "DIMENSION") {
             processed = processDimension();
+        } else if (nextentity == "ARC_DIMENSION") {
+            processed = processArcDimension();
         } else if (nextentity == "LEADER") {
             processed = processLeader();
         } else if (nextentity == "RAY") {
@@ -3444,6 +3500,24 @@ bool dxfRW::processDimension() {
         }
     }
 
+    return setError(DRW::BAD_READ_ENTITIES);
+}
+
+bool dxfRW::processArcDimension() {
+    DRW_DBG("dxfRW::processArcDimension");
+    int code;
+    DRW_DimArc d;
+    while (reader->readRec(&code)) {
+        DRW_DBG(code); DRW_DBG("\n");
+        if (code == 0) {
+            nextentity = reader->getString();
+            DRW_DBG(nextentity); DRW_DBG("\n");
+            iface->addDimArc(&d);
+            return true;
+        }
+        if (!d.parseCode(code, reader))
+            return setError(DRW::BAD_CODE_PARSED);
+    }
     return setError(DRW::BAD_READ_ENTITIES);
 }
 

@@ -49,6 +49,7 @@ namespace DRW {
         DIMANGULAR,
         DIMANGULAR3P,
         DIMORDINATE,
+        DIMARC,
         ELLIPSE,
         HATCH,
 //        HELIX,
@@ -1597,6 +1598,39 @@ public:
 protected:
     virtual bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) override;
     virtual bool encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs=0, dwgBufferW *strBuf=nullptr, dwgBufferW *handleBuf=nullptr) override;
+};
+
+//! Class to handle arc length dimension entity (ARC_DIMENSION / AcDbArcDimension)
+class DRW_DimArc : public DRW_Dimension {
+    SETENTFRIENDS
+public:
+    DRW_DimArc() { eType = DRW::DIMARC; }
+    DRW_DimArc(const DRW_Dimension& d) : DRW_Dimension(d) { eType = DRW::DIMARC; }
+
+    DRW_Coord getArcDefPoint() const { return getDefPoint(); }   /*!< Arc dim-line arc point, code 10 */
+    void setArcDefPoint(DRW_Coord p) { setDefPoint(p); }
+    DRW_Coord getExtLine1() const { return getPt3(); }           /*!< Extension line 1 start, code 13 */
+    void setExtLine1(DRW_Coord p) { setPt3(p); }
+    DRW_Coord getExtLine2() const { return getPt4(); }           /*!< Extension line 2 start, code 14 */
+    void setExtLine2(DRW_Coord p) { setPt4(p); }
+    DRW_Coord getArcCenter() const { return getPt5(); }          /*!< Arc center point, code 15 */
+    void setArcCenter(DRW_Coord p) { setPt5(p); }
+    DRW_Coord getLeaderPt1() const { return getPt6(); }          /*!< Leader point 1, code 16 */
+    void setLeaderPt1(DRW_Coord p) { setPt6(p); }
+
+    DRW_Coord leaderPt2;           /*!< Leader point 2, code 17/27/37 */
+    double arcStartAngle = 0.;     /*!< Arc start angle, code 40 in AcDbArcDimension */
+    double arcEndAngle   = 0.;     /*!< Arc end angle, code 41 in AcDbArcDimension */
+    int    arcSymbol     = 0;      /*!< Arc symbol type, code 70 in AcDbArcDimension */
+    bool   isPartial     = false;  /*!< Partial arc flag, code 71 */
+    bool   hasLeader     = false;  /*!< Has leader flag (DWG only) */
+
+protected:
+    bool parseCode(int code, const std::unique_ptr<dxfReader>& reader) override;
+    virtual bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) override;
+    virtual bool encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs=0, dwgBufferW *strBuf=nullptr, dwgBufferW *handleBuf=nullptr) override;
+private:
+    bool m_arcSubclassSeen = false;
 };
 
 //! Class to handle ordinate dimension entity

@@ -1405,6 +1405,16 @@ bool dwgReader::readDwgEntity(dwgBuffer *dbuf, objHandle& obj, DRW_Interface& in
                 // "intentionally-skipped custom class".
                 auto cit = classesmap.find(oType);
                 if (cit != classesmap.end() && cit->second
+                    && (cit->second->recName == "ARC_DIMENSION"
+                        || cit->second->className == "AcDbArcDimension")) {
+                    DRW_DimArc e;
+                    if (entryParse(e, buff, bs, ret)) {
+                        e.style = findTableName(DRW::DIMSTYLE, e.dimStyleH.ref);
+                        intfa.addDimArc(&e);
+                    }
+                    break;
+                }
+                if (cit != classesmap.end() && cit->second
                     && cit->second->recName == "WIPEOUT") {
                     // WIPEOUT inherits the IMAGE binary layout; reuse parser.
                     // Polygon vertices are now stored in DRW_Image::clipPath.

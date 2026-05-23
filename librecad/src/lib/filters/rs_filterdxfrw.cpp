@@ -38,6 +38,7 @@
 #include "dxf_format.h"
 #include "lc_containertraverser.h"
 #include "lc_defaults.h"
+#include "lc_dimarc.h"
 #include "lc_dimarrowregistry.h"
 #include "lc_dimordinate.h"
 #include "lc_dimstyle.h"
@@ -2944,6 +2945,24 @@ void RS_FilterDXFRW::addDimAngular3P(const DRW_DimAngular3p* data) {
     m_currentContainer->addEntity(entity);
 }
 
+void RS_FilterDXFRW::addDimArc(const DRW_DimArc* data) {
+    RS_DEBUG->print("RS_FilterDXFRW::addDimArc");
+    RS_DimensionData dd = convDimensionData(data);
+    RS_Vector centre(data->getArcCenter().x, data->getArcCenter().y);
+    double radius = dd.definitionPoint.distanceTo(centre);
+    LC_DimArcData arcData(
+        radius,
+        radius * std::abs(data->arcEndAngle - data->arcStartAngle),
+        centre,
+        RS_Vector::polar(1.0, data->arcEndAngle),
+        RS_Vector::polar(1.0, data->arcStartAngle)
+    );
+    auto dimEntity = new LC_DimArc(m_currentContainer, dd, arcData);
+    setEntityAttributes(dimEntity, data);
+    dimEntity->update();
+    m_currentContainer->addEntity(dimEntity);
+}
+
 void RS_FilterDXFRW::addDimOrdinate(const DRW_DimOrdinate* data) {
     RS_DEBUG->print("RS_FilterDXFRW::addDimOrdinate(const DL_DimensionData&, const DL_DimOrdinateData&) not yet implemented");
     RS_DimensionData dimensionData = convDimensionData(data);
@@ -5695,10 +5714,10 @@ void RS_FilterDXFRW::writeDimension(RS_Dimension* d) {
                 auto* dd = new DRW_DimAngular3p();
                 dim = dd;
                 dim->type = 5 + 32;
-                dd->setFirstLine(DRW_Coord(da->getDefinitionPoint().x, da->getDefinitionPoint().y, 0.0)); //13
-                dd->setSecondLine(DRW_Coord(da->getDefinitionPoint().x, da->getDefinitionPoint().y, 0.0)); //14
-                dd->SetVertexPoint(DRW_Coord(da->getDefinitionPoint().x, da->getDefinitionPoint().y, 0.0)); //15
-                dd->setDimPoint(DRW_Coord(da->getDefinitionPoint().x, da->getDefinitionPoint().y, 0.0)); //10
+                dd->setFirstLine  (DRW_Coord(da->getDefinitionPoint1().x, da->getDefinitionPoint1().y, 0.0)); //13
+                dd->setSecondLine (DRW_Coord(da->getDefinitionPoint2().x, da->getDefinitionPoint2().y, 0.0)); //14
+                dd->SetVertexPoint(DRW_Coord(da->getDefinitionPoint3().x, da->getDefinitionPoint3().y, 0.0)); //15
+                dd->setDimPoint   (DRW_Coord(da->getDefinitionPoint().x,  da->getDefinitionPoint().y,  0.0)); //10
             }
             else {
                 auto* dd = new DRW_DimAngular();
@@ -5723,6 +5742,26 @@ void RS_FilterDXFRW::writeDimension(RS_Dimension* d) {
             dd->setOriginPoint(DRW_Coord(da->getDefinitionPoint().x, da->getDefinitionPoint().y, 0.0));
             dd->setSecondLine(DRW_Coord(da->getLeaderEndPoint().x, da->getLeaderEndPoint().y, 0.0));
             dd->setFirstLine(DRW_Coord(da->getFeaturePoint().x, da->getFeaturePoint().y, 0.0));
+            break;
+        }
+        case RS2::EntityDimArc: {
+            auto* da = static_cast<LC_DimArc*>(d);
+            auto* dd = new DRW_DimArc();
+            dim = dd;
+            RS_Vector centre = da->getCenter();
+            double r = da->getRadius();
+            double a0 = da->getStartAngle();
+            double a1 = da->getEndAngle();
+            double amid = (a0 + a1) / 2.0;
+            dd->setArcCenter  (DRW_Coord(centre.x, centre.y, 0.));
+            dd->setArcDefPoint(DRW_Coord(centre.x + r * std::cos(amid),
+                                          centre.y + r * std::sin(amid), 0.));
+            dd->setExtLine1   (DRW_Coord(centre.x + r * std::cos(a0),
+                                          centre.y + r * std::sin(a0), 0.));
+            dd->setExtLine2   (DRW_Coord(centre.x + r * std::cos(a1),
+                                          centre.y + r * std::sin(a1), 0.));
+            dd->arcStartAngle = a0;
+            dd->arcEndAngle   = a1;
             break;
         }
         default: {
