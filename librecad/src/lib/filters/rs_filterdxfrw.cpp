@@ -2957,6 +2957,11 @@ void RS_FilterDXFRW::addDimArc(const DRW_DimArc* data) {
         RS_Vector::polar(1.0, data->arcEndAngle),
         RS_Vector::polar(1.0, data->arcStartAngle)
     );
+    arcData.arcSymbol = data->arcSymbol;
+    arcData.isPartial = data->isPartial;
+    arcData.hasLeader = data->hasLeader;
+    arcData.leaderPt1 = RS_Vector(data->getLeaderPt1().x, data->getLeaderPt1().y);
+    arcData.leaderPt2 = RS_Vector(data->leaderPt2.x, data->leaderPt2.y);
     auto dimEntity = new LC_DimArc(m_currentContainer, dd, arcData);
     setEntityAttributes(dimEntity, data);
     dimEntity->update();
@@ -5762,6 +5767,13 @@ void RS_FilterDXFRW::writeDimension(RS_Dimension* d) {
                                           centre.y + r * std::sin(a1), 0.));
             dd->arcStartAngle = a0;
             dd->arcEndAngle   = a1;
+            dd->arcSymbol = da->getArcSymbol();
+            dd->isPartial = da->getIsPartial();
+            dd->hasLeader = da->getHasLeader();
+            if (da->getLeaderPt1().valid)
+                dd->setLeaderPt1(DRW_Coord(da->getLeaderPt1().x, da->getLeaderPt1().y, 0.));
+            if (da->getLeaderPt2().valid)
+                dd->leaderPt2 = DRW_Coord(da->getLeaderPt2().x, da->getLeaderPt2().y, 0.);
             break;
         }
         default: {

@@ -1604,6 +1604,7 @@ protected:
 class DRW_DimArc : public DRW_Dimension {
     SETENTFRIENDS
 public:
+    static constexpr duint16 kDwgClassNum = 500; /*!< DWG class number — must match writeDwgClasses */
     DRW_DimArc() { eType = DRW::DIMARC; }
     DRW_DimArc(const DRW_Dimension& d) : DRW_Dimension(d) { eType = DRW::DIMARC; }
 

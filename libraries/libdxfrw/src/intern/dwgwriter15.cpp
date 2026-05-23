@@ -282,15 +282,15 @@ bool dwgWriter15::writeDwgClasses() {
     // ARC_DIMENSION class entry (ODA §17.1 class section format).
     // Field layout mirrors DRW_Class::parseDwg:
     //   BS  classNum   — must equal oType used in DRW_DimArc::encodeDwg (500)
-    //   BS  proxyFlag  — 0x4B1: standard ACAD proxy entity
+    //   BS  proxyFlag  — 0x401 per ODA §20.4.19 and AutoCAD CLASS section
     //   TV  appName
     //   TV  className  (AcDbXxx C++ class name)
     //   TV  recName    (DXF entity name)
     //   B   wasaProxyFlag  (0 = not a zombie)
     //   BS  entityFlag     (0x1F2 → parsed as 1 = is entity, not object)
     //   For version > AC1015 (R2004+): 5 × BL (instanceCount, dwgVer, maintVer, unk1, unk2)
-    m_buf.putBitShort(500);
-    m_buf.putBitShort(0x4B1);
+    m_buf.putBitShort(DRW_DimArc::kDwgClassNum);
+    m_buf.putBitShort(0x401);
     m_buf.putVariableText(m_version, "ACAD");
     m_buf.putVariableText(m_version, "AcDbArcDimension");
     m_buf.putVariableText(m_version, "ARC_DIMENSION");

@@ -4577,6 +4577,10 @@ bool DRW_DimOrdinate::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs)
 // ----------------------------------------------------------------------------
 bool DRW_Dimension::encodeDwgDimBase(DRW::Version version, dwgBufferW *buf,
                                      dwgBufferW *strBuf) const {
+    // ODA §20.4.22: version RC present for R2010+ (mirrors parseDwg read at version > AC1021)
+    if (version > DRW::AC1021)
+        buf->putRawChar8(0);
+    // TODO: AC1021+ strBuf routing — string fields must go through separate strBuf for R2007+
     buf->putExtrusion(extPoint, true);   // BE (R2000 style)
     // Five unknown bits (present for R2000 = version > AC1014)
     buf->putBit(0); buf->putBit(0); buf->putBit(0); buf->putBit(0); buf->putBit(0);
@@ -4735,8 +4739,12 @@ bool DRW_DimAngular3p::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 
 bool DRW_DimArc::parseCode(int code, const std::unique_ptr<dxfReader>& reader) {
     if (code == 100) {
         std::string s = reader->getString();
-        if (s == "AcDbArcDimension") m_arcSubclassSeen = true;
-        return true;
+        if (s == "AcDbArcDimension") {
+            m_arcSubclassSeen = true;
+            return true;
+        }
+        // Fall through for AcDbEntity / AcDbDimension so base classes see them
+        return DRW_Dimension::parseCode(code, reader);
     }
     if (m_arcSubclassSeen) {
         switch (code) {
@@ -4767,10 +4775,9 @@ bool DRW_DimArc::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs) {
     arcStartAngle = buf->getBitDouble();
     arcEndAngle   = buf->getBitDouble();
     hasLeader     = buf->getBit() != 0;
-    if (hasLeader) {
-        setPt6(buf->get3BitDouble());         // leader point 1 (code 16)
-        leaderPt2 = buf->get3BitDouble();     // leader point 2 (code 17)
-    }
+    // ODA §20.4.19: leader points are UNCONDITIONAL — always present in the stream
+    setPt6(buf->get3BitDouble());         // leader point 1 (code 16)
+    leaderPt2 = buf->get3BitDouble();     // leader point 2 (code 17)
     if (!DRW_Entity::parseDwgEntHandle(version, buf)) return false;
     dimStyleH = buf->getHandle();
     blockH    = buf->getHandle();
@@ -4783,7 +4790,7 @@ bool DRW_DimArc::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs) {
 bool DRW_DimArc::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs,
                              dwgBufferW *strBuf, dwgBufferW *handleBuf) {
     (void)bs;
-    oType = 500;  // classNum assigned in writeDwgClasses; reader resolves via classesmap
+    oType = DRW_DimArc::kDwgClassNum;  // assigned in writeDwgClasses; reader resolves via classesmap
     if (!encodeDwgCommon(version, buf)) return false;
     if (!encodeDwgDimBase(version, buf, strBuf)) return false;
     buf->put3BitDouble(getDefPoint());   // arc dim-line arc point (code 10)
@@ -4794,10 +4801,11 @@ bool DRW_DimArc::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs,
     buf->putBitDouble(arcStartAngle);
     buf->putBitDouble(arcEndAngle);
     buf->putBit(hasLeader ? 1 : 0);
-    if (hasLeader) {
-        buf->put3BitDouble(getPt6());    // leader point 1 (code 16)
-        buf->put3BitDouble(leaderPt2);   // leader point 2 (code 17)
-    }
+    // ODA §20.4.19: leader points are UNCONDITIONAL — always written; default to ext-line pts
+    DRW_Coord lp1 = hasLeader ? getPt6()    : getPt3();
+    DRW_Coord lp2 = hasLeader ? leaderPt2   : getPt4();
+    buf->put3BitDouble(lp1);             // leader point 1 (code 16)
+    buf->put3BitDouble(lp2);             // leader point 2 (code 17)
     if (!encodeDwgEntHandle(version, buf, handleBuf)) return false;
     putDimHandles(buf, dimStyleH, blockH, handleBuf);
     return true;

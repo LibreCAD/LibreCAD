@@ -46,6 +46,11 @@ struct LC_DimArcData {
     RS_Vector centre;
     RS_Vector endAngle;
     RS_Vector startAngle;
+    int     arcSymbol = 0;       /*!< Arc symbol position: 0=before text, 1=above text, 2=none (DXF code 70) */
+    bool    isPartial = false;   /*!< Only end side has arrow and extension line (DXF code 71) */
+    bool    hasLeader = false;   /*!< Leader lines are present (DWG hasLeader bit) */
+    RS_Vector leaderPt1;         /*!< Leader point 1 (DXF code 16) */
+    RS_Vector leaderPt2;         /*!< Leader point 2 (DXF code 17) */
 };
 
 std::ostream& operator <<(std::ostream& os, const LC_DimArcData& input_dimArcData);
@@ -87,6 +92,12 @@ public:
     RS_Vector getCenter() const override {
         return m_dimArcData.centre;
     }
+
+    int getArcSymbol()  const { return m_dimArcData.arcSymbol; }
+    bool getIsPartial() const { return m_dimArcData.isPartial; }
+    bool getHasLeader() const { return m_dimArcData.hasLeader; }
+    RS_Vector getLeaderPt1() const { return m_dimArcData.leaderPt1; }
+    RS_Vector getLeaderPt2() const { return m_dimArcData.leaderPt2; }
 
     QString getMeasuredLabel() override;
 

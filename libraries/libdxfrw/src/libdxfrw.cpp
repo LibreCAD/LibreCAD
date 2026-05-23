@@ -1300,6 +1300,8 @@ bool dxfRW::writeArcDimension(DRW_DimArc *d) {
     writer->writeString(0, "ARC_DIMENSION");
     writeEntity(d);
     writer->writeString(100, "AcDbDimension");
+    if (version >= DRW::AC1021)
+        writer->writeInt16(280, 0);   // AcDbDimension version, 0 = R2010+
     if (!d->getName().empty())
         writer->writeString(2, d->getName());
     writer->writeDouble(10, d->getArcDefPoint().x);
@@ -1308,7 +1310,8 @@ bool dxfRW::writeArcDimension(DRW_DimArc *d) {
     writer->writeDouble(11, d->getTextPoint().x);
     writer->writeDouble(21, d->getTextPoint().y);
     writer->writeDouble(31, d->getTextPoint().z);
-    d->type = 8;
+    // ARC_DIMENSION: subtype 5 in low 3 bits (same as angular3p); preserve high bits
+    d->type = (d->type & ~0x07) | 5;
     if (!(d->type & 32)) d->type += 32;
     writer->writeInt16(70, d->type);
     if (!d->getText().empty())
@@ -1319,7 +1322,7 @@ bool dxfRW::writeArcDimension(DRW_DimArc *d) {
     if (d->getTextLineFactor() != 1)
         writer->writeDouble(41, d->getTextLineFactor());
     writer->writeUtf8String(3, d->getStyle());
-    if (d->getTextLineFactor() != 0)
+    if (d->getDir() != 0)
         writer->writeDouble(53, d->getDir());
     writer->writeDouble(210, d->getExtrusion().x);
     writer->writeDouble(220, d->getExtrusion().y);
@@ -1352,6 +1355,8 @@ bool dxfRW::writeDimension(DRW_Dimension *ent) {
         writer->writeString(0, "DIMENSION");
         writeEntity(ent);
         writer->writeString(100, "AcDbDimension");
+        if (version >= DRW::AC1021)
+            writer->writeInt16(280, 0);   // AcDbDimension version, 0 = R2010+
         if (!ent->getName().empty()){
             writer->writeString(2, ent->getName());
         }
