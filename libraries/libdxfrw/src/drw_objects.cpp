@@ -36,6 +36,104 @@ dwgHandle makeSoftOwnerW(duint32 ref) {
 }
 dwgHandle makeNullHandleW() { dwgHandle h; h.code = 0; h.size = 0; h.ref = 0; return h; }
 
+void seekObjectHandleStream(DRW::Version version, dwgBuffer *buf, duint32 objSize) {
+    if (version > DRW::AC1018) {
+        buf->setPosition(objSize >> 3);
+        buf->setBitPos(objSize & 7);
+    }
+}
+
+void readCommonObjectHandles(dwgBuffer *buf, duint32 baseHandle,
+                             dint32 numReactors, duint8 xDictFlag,
+                             int *parentHandle = nullptr) {
+    dwgHandle parentH = buf->getOffsetHandle(baseHandle);
+    if (parentHandle)
+        *parentHandle = parentH.ref;
+    for (int i = 0; i < numReactors; ++i)
+        buf->getOffsetHandle(baseHandle);
+    if (xDictFlag != 1)
+        buf->getOffsetHandle(baseHandle);
+}
+
+UTF8STRING readXRecordText(DRW::Version version, dwgBuffer *buf) {
+    if (version > DRW::AC1018) {
+        duint16 chars = buf->getRawShort16();
+        if (chars == 0)
+            return UTF8STRING();
+        std::vector<duint8> raw(static_cast<size_t>(chars) * 2);
+        if (!buf->getBytes(raw.data(), raw.size()))
+            return UTF8STRING();
+        std::string s(reinterpret_cast<const char*>(raw.data()), raw.size());
+        if (buf->decoder)
+            s = buf->decoder->toUtf8(s);
+        while (!s.empty() && s.back() == '\0')
+            s.pop_back();
+        return s;
+    }
+
+    duint16 len = buf->getRawShort16();
+    duint8 codePage = buf->getRawChar8();
+    DRW_UNUSED(codePage);
+    if (len == 0)
+        return UTF8STRING();
+    std::vector<duint8> raw(len);
+    if (!buf->getBytes(raw.data(), raw.size()))
+        return UTF8STRING();
+    std::string s(reinterpret_cast<const char*>(raw.data()), raw.size());
+    if (buf->decoder)
+        s = buf->decoder->toUtf8(s);
+    while (!s.empty() && s.back() == '\0')
+        s.pop_back();
+    return s;
+}
+
+bool xRecordCodeIsString(int code) {
+    return (code >= 0 && code <= 9) || (code >= 100 && code <= 102) ||
+           (code >= 300 && code <= 309) || (code >= 410 && code <= 419) ||
+           (code >= 430 && code <= 439) || (code >= 470 && code <= 479) ||
+           code == 999 ||
+           (code >= 1000 && code <= 1003);
+}
+
+bool xRecordCodeIsPoint3D(int code) {
+    return (code >= 10 && code <= 37) || (code >= 110 && code <= 139) ||
+           (code >= 210 && code <= 269) || (code >= 1010 && code <= 1039);
+}
+
+bool xRecordCodeIsDouble(int code) {
+    return (code >= 38 && code <= 59) || (code >= 140 && code <= 149) ||
+           (code >= 460 && code <= 469) || (code >= 1040 && code <= 1042);
+}
+
+bool xRecordCodeIsInt16(int code) {
+    return (code >= 60 && code <= 79) || (code >= 170 && code <= 179) ||
+           (code >= 270 && code <= 279) || (code >= 370 && code <= 389) ||
+           (code >= 400 && code <= 409) || (code >= 1060 && code <= 1070);
+}
+
+bool xRecordCodeIsInt32(int code) {
+    return (code >= 90 && code <= 99) || (code >= 420 && code <= 429) ||
+           (code >= 440 && code <= 459) || code == 1071;
+}
+
+bool xRecordCodeIsBool(int code) {
+    return code >= 290 && code <= 299;
+}
+
+bool xRecordCodeIsByte(int code) {
+    return code >= 280 && code <= 289;
+}
+
+bool xRecordCodeIsBinary(int code) {
+    return (code >= 310 && code <= 319) || code == 1004;
+}
+
+bool xRecordCodeIsHandle(int code) {
+    return (code >= 320 && code <= 369) || (code >= 390 && code <= 399) ||
+           (code >= 480 && code <= 481) || code == 5 || code == 105 ||
+           (code >= 1005 && code <= 1009);
+}
+
 } // namespace
 
 //! Base class for tables entries
@@ -1765,11 +1863,10 @@ bool DRW_AppId::encodeDwg(DRW::Version version, dwgBufferW *buf,
     return true;
 }
 
-//Minimal parseDwg for DRW_Dictionary / DRW_Layout / DRW_MLineStyle.
-//Each delegates to DRW_TableEntry::parseDwg for base fields (handle,
-//parentHandle, reactors, extData) + reads name. Class-specific fields
-//(Dictionary entries, Layout extents, MLineStyle dash defs) stay at
-//reset defaults until sample-validated implementations land.
+//Early OBJECTS support: keep DWG import from failing on common non-graphical
+//objects that do not affect LibreCAD's 2D model directly. These parsers read
+//enough sample-validated metadata to preserve references without promoting
+//metadata-tail uncertainty to a geometry read failure.
 
 bool DRW_Dictionary::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
     dwgBuffer sBuff = *buf;
@@ -1781,9 +1878,270 @@ bool DRW_Dictionary::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
     DRW_DBG("\n***************************** parsing Dictionary (base) ***************************************\n");
     if (!ret)
         return ret;
-    name = sBuf->getVariableText(version, false);
-    DRW_DBG("dictionary name: "); DRW_DBG(name); DRW_DBG("\n");
-    return buf->isGood();
+    duint32 numItems = buf->getBitLong();
+    if (version == DRW::AC1014)
+        buf->getRawChar8();
+    if (version > DRW::AC1014) {
+        cloning = buf->getBitShort();
+        hardOwner = buf->getRawChar8();
+    }
+    if (numItems > 100000)
+        return false;
+
+    std::vector<UTF8STRING> names;
+    names.reserve(numItems);
+    for (duint32 i = 0; i < numItems; ++i)
+        names.push_back(sBuf->getVariableText(version, false));
+
+    seekObjectHandleStream(version, buf, objSize);
+    readCommonObjectHandles(buf, handle, numReactors, xDictFlag, &parentHandle);
+
+    m_entries.clear();
+    m_entries.reserve(numItems);
+    for (duint32 i = 0; i < numItems; ++i) {
+        dwgHandle itemH = buf->getOffsetHandle(handle);
+        if (!names[i].empty() || itemH.ref != 0)
+            m_entries.push_back({names[i], itemH.ref});
+    }
+    DRW_DBG("dictionary entries: "); DRW_DBG(static_cast<int>(m_entries.size())); DRW_DBG("\n");
+    return true;
+}
+
+bool DRW_DictionaryWithDefault::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
+    bool ret = DRW_Dictionary::parseDwg(version, buf, bs);
+    DRW_DBG("\n***************************** parsing DictionaryWithDefault ******************************\n");
+    if (!ret)
+        return ret;
+    dwgHandle defaultH = buf->getOffsetHandle(handle);
+    m_defaultEntryHandle = defaultH.ref;
+    DRW_DBG("default entry Handle: "); DRW_DBGHL(defaultH.code, defaultH.size, defaultH.ref); DRW_DBG("\n");
+    return true;
+}
+
+bool DRW_DictionaryVar::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
+    dwgBuffer sBuff = *buf;
+    dwgBuffer *sBuf = buf;
+    if (version > DRW::AC1018) {
+        sBuf = &sBuff;
+    }
+    bool ret = DRW_TableEntry::parseDwg(version, buf, sBuf, bs);
+    DRW_DBG("\n***************************** parsing DictionaryVar ***************************************\n");
+    if (!ret)
+        return ret;
+    m_schema = buf->getRawChar8();
+    m_value = sBuf->getVariableText(version, false);
+
+    seekObjectHandleStream(version, buf, objSize);
+    readCommonObjectHandles(buf, handle, numReactors, xDictFlag, &parentHandle);
+    DRW_DBG("dictionary var schema: "); DRW_DBG(m_schema);
+    DRW_DBG(" value: "); DRW_DBG(m_value); DRW_DBG("\n");
+    return true;
+}
+
+bool DRW_XRecord::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
+    bool ret = DRW_TableEntry::parseDwg(version, buf, nullptr, bs);
+    DRW_DBG("\n***************************** parsing XRecord ***************************************\n");
+    if (!ret)
+        return ret;
+
+    duint32 numDataBytes = buf->getBitLong();
+    const duint64 dataEnd = buf->getPosition() + numDataBytes;
+    m_values.clear();
+    m_handleValues.clear();
+
+    while (buf->isGood() && buf->getPosition() < dataEnd) {
+        const int code = static_cast<int>(buf->getRawShort16());
+        if (xRecordCodeIsString(code)) {
+            m_values.emplace_back(code, readXRecordText(version, buf));
+        } else if (xRecordCodeIsPoint3D(code)) {
+            DRW_Coord c;
+            c.x = buf->getRawDouble();
+            c.y = buf->getRawDouble();
+            c.z = buf->getRawDouble();
+            m_values.emplace_back(code, c);
+        } else if (xRecordCodeIsDouble(code)) {
+            m_values.emplace_back(code, buf->getRawDouble());
+        } else if (xRecordCodeIsByte(code)) {
+            m_values.emplace_back(code, static_cast<int>(buf->getRawChar8()));
+        } else if (xRecordCodeIsBool(code)) {
+            m_values.emplace_back(code, static_cast<int>(buf->getRawChar8() != 0));
+        } else if (xRecordCodeIsInt16(code)) {
+            m_values.emplace_back(code, static_cast<int>(buf->getRawShort16()));
+        } else if (xRecordCodeIsInt32(code)) {
+            m_values.emplace_back(code, static_cast<dint32>(buf->getRawLong32()));
+        } else if (code >= 160 && code <= 169) {
+            duint64 raw = buf->getRawLong64();
+            m_values.emplace_back(code, static_cast<dint32>(raw & 0xffffffffu));
+        } else if (xRecordCodeIsBinary(code)) {
+            duint8 len = buf->getRawChar8();
+            std::vector<duint8> raw(len);
+            if (len > 0)
+                buf->getBytes(raw.data(), raw.size());
+            m_values.emplace_back(code, std::move(raw));
+        } else if (xRecordCodeIsHandle(code)) {
+            duint64 raw = buf->getRawLong64();
+            m_handleValues.emplace_back(code, static_cast<duint32>(raw & 0xffffffffu));
+        } else {
+            DRW_DBG("unhandled XRECORD group code: "); DRW_DBG(code); DRW_DBG("\n");
+            buf->setPosition(dataEnd);
+            buf->setBitPos(0);
+            break;
+        }
+    }
+
+    if (version > DRW::AC1014)
+        m_cloning = buf->getBitShort();
+
+    seekObjectHandleStream(version, buf, objSize);
+    readCommonObjectHandles(buf, handle, numReactors, xDictFlag, &parentHandle);
+    while (buf->isGood() && buf->numRemainingBytes() > 0) {
+        dwgHandle h = buf->getOffsetHandle(handle);
+        if (!buf->isGood())
+            break;
+        if (h.ref != 0)
+            m_handleValues.emplace_back(0, h.ref);
+    }
+
+    DRW_DBG("xrecord values: "); DRW_DBG(static_cast<int>(m_values.size()));
+    DRW_DBG(" handles: "); DRW_DBG(static_cast<int>(m_handleValues.size())); DRW_DBG("\n");
+    return true;
+}
+
+bool DRW_FieldList::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
+    bool ret = DRW_TableEntry::parseDwg(version, buf, nullptr, bs);
+    DRW_DBG("\n***************************** parsing FieldList ******************************\n");
+    if (!ret)
+        return ret;
+
+    duint32 numFields = buf->getBitLong();
+    m_unknown = buf->getBit();
+    if (numFields > 100000)
+        return false;
+
+    seekObjectHandleStream(version, buf, objSize);
+    readCommonObjectHandles(buf, handle, numReactors, xDictFlag, &parentHandle);
+
+    m_fieldHandles.clear();
+    m_fieldHandles.reserve(numFields);
+    for (duint32 i = 0; i < numFields && buf->isGood(); ++i) {
+        dwgHandle fieldH = buf->getOffsetHandle(handle);
+        if (fieldH.ref != 0)
+            m_fieldHandles.push_back(fieldH.ref);
+    }
+    DRW_DBG("fieldlist fields: "); DRW_DBG(static_cast<int>(m_fieldHandles.size())); DRW_DBG("\n");
+    return true;
+}
+
+bool DRW_RasterVariables::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
+    bool ret = DRW_TableEntry::parseDwg(version, buf, nullptr, bs);
+    DRW_DBG("\n***************************** parsing RasterVariables ************************\n");
+    if (!ret)
+        return ret;
+
+    m_classVersion = buf->getBitLong();
+    m_imageFrame = buf->getBitShort();
+    m_imageQuality = buf->getBitShort();
+    m_units = buf->getBitShort();
+
+    seekObjectHandleStream(version, buf, objSize);
+    readCommonObjectHandles(buf, handle, numReactors, xDictFlag, &parentHandle);
+
+    DRW_DBG("raster variables classVersion: "); DRW_DBG(m_classVersion);
+    DRW_DBG(" frame: "); DRW_DBG(m_imageFrame);
+    DRW_DBG(" quality: "); DRW_DBG(m_imageQuality);
+    DRW_DBG(" units: "); DRW_DBG(m_units); DRW_DBG("\n");
+    return true;
+}
+
+bool DRW_SortEntsTable::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
+    bool ret = DRW_TableEntry::parseDwg(version, buf, nullptr, bs);
+    DRW_DBG("\n***************************** parsing SortEntsTable **************************\n");
+    if (!ret)
+        return ret;
+
+    duint32 numEntries = buf->getBitLong();
+    if (numEntries > 100000)
+        return false;
+
+    m_sortHandles.clear();
+    m_sortHandles.reserve(numEntries);
+    for (duint32 i = 0; i < numEntries && buf->isGood(); ++i) {
+        dwgHandle sortH = buf->getOffsetHandle(handle);
+        if (sortH.ref != 0)
+            m_sortHandles.push_back(sortH.ref);
+    }
+
+    seekObjectHandleStream(version, buf, objSize);
+    readCommonObjectHandles(buf, handle, numReactors, xDictFlag, &parentHandle);
+
+    dwgHandle ownerH = buf->getOffsetHandle(handle);
+    m_blockOwnerHandle = ownerH.ref;
+
+    m_entityHandles.clear();
+    m_entityHandles.reserve(numEntries);
+    for (duint32 i = 0; i < numEntries && buf->isGood(); ++i) {
+        dwgHandle entH = buf->getOffsetHandle(handle);
+        if (entH.ref != 0)
+            m_entityHandles.push_back(entH.ref);
+    }
+
+    DRW_DBG("sortents entries: "); DRW_DBG(static_cast<int>(m_entityHandles.size())); DRW_DBG("\n");
+    return true;
+}
+
+bool DRW_Material::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
+    dwgBuffer sBuff = *buf;
+    dwgBuffer *sBuf = buf;
+    if (version > DRW::AC1018)
+        sBuf = &sBuff;
+    bool ret = DRW_TableEntry::parseDwg(version, buf, sBuf, bs);
+    DRW_DBG("\n***************************** parsing Material *******************************\n");
+    if (!ret)
+        return ret;
+
+    m_name = sBuf->getVariableText(version, false);
+    m_description = sBuf->getVariableText(version, false);
+
+    if (version > DRW::AC1018) {
+        seekObjectHandleStream(version, buf, objSize);
+        readCommonObjectHandles(buf, handle, numReactors, xDictFlag, &parentHandle);
+    }
+
+    DRW_DBG("material name: "); DRW_DBG(m_name.c_str());
+    DRW_DBG(" description: "); DRW_DBG(m_description.c_str()); DRW_DBG("\n");
+    return true;
+}
+
+bool DRW_TableStyle::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
+    dwgBuffer sBuff = *buf;
+    dwgBuffer *sBuf = buf;
+    if (version > DRW::AC1018)
+        sBuf = &sBuff;
+    bool ret = DRW_TableEntry::parseDwg(version, buf, sBuf, bs);
+    DRW_DBG("\n***************************** parsing TableStyle *****************************\n");
+    if (!ret)
+        return ret;
+
+    if (version > DRW::AC1021)
+        buf->getRawChar8();
+    m_name = sBuf->getVariableText(version, false);
+
+    if (version <= DRW::AC1021) {
+        m_flowDirection = buf->getBitShort();
+        m_flags = buf->getBitShort();
+        m_horizontalCellMargin = buf->getBitDouble();
+        m_verticalCellMargin = buf->getBitDouble();
+        m_titleSuppressed = buf->getBit();
+        m_headerSuppressed = buf->getBit();
+    }
+
+    if (version > DRW::AC1018) {
+        seekObjectHandleStream(version, buf, objSize);
+        readCommonObjectHandles(buf, handle, numReactors, xDictFlag, &parentHandle);
+    }
+
+    DRW_DBG("table style name: "); DRW_DBG(m_name.c_str()); DRW_DBG("\n");
+    return true;
 }
 
 bool DRW_Layout::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){

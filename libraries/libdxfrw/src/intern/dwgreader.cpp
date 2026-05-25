@@ -1540,6 +1540,11 @@ bool dwgReader::readDwgObject(dwgBuffer *dbuf, objHandle& obj, DRW_Interface& in
             ret = e.parseDwg(version, &buff, bs);
             intfa.addDictionary(e);
             break; }
+        case 79: { //XRECORD (ODA fixed type 0x4f)
+            DRW_XRecord e;
+            ret = e.parseDwg(version, &buff, bs);
+            if (ret) intfa.addXRecord(e);
+            break; }
         case 73: { //MLINESTYLE (ODA fixed type 73)
             DRW_MLineStyle e;
             ret = e.parseDwg(version, &buff, bs);
@@ -1571,6 +1576,63 @@ bool dwgReader::readDwgObject(dwgBuffer *dbuf, objHandle& obj, DRW_Interface& in
                 auto cit = classesmap.find(oType);
                 if (cit != classesmap.end() && cit->second) {
                     const std::string& rn = cit->second->recName;
+                    if (rn == "DICTIONARYVAR"
+                        || cit->second->className == "AcDbDictionaryVar") {
+                        DRW_DictionaryVar e;
+                        ret = e.parseDwg(version, &buff, bs);
+                        if (ret) intfa.addDictionaryVar(e);
+                        break;
+                    }
+                    if (rn == "ACDBDICTIONARYWDFLT"
+                        || rn == "DICTIONARYWDFLT"
+                        || cit->second->className == "AcDbDictionaryWithDefault") {
+                        DRW_DictionaryWithDefault e;
+                        ret = e.parseDwg(version, &buff, bs);
+                        if (ret) intfa.addDictionaryWithDefault(e);
+                        break;
+                    }
+                    if (rn == "XRECORD"
+                        || cit->second->className == "AcDbXrecord") {
+                        DRW_XRecord e;
+                        ret = e.parseDwg(version, &buff, bs);
+                        if (ret) intfa.addXRecord(e);
+                        break;
+                    }
+                    if (rn == "FIELDLIST"
+                        || cit->second->className == "AcDbFieldList") {
+                        DRW_FieldList e;
+                        ret = e.parseDwg(version, &buff, bs);
+                        if (ret) intfa.addFieldList(e);
+                        break;
+                    }
+                    if (rn == "RASTERVARIABLES"
+                        || cit->second->className == "AcDbRasterVariables") {
+                        DRW_RasterVariables e;
+                        ret = e.parseDwg(version, &buff, bs);
+                        if (ret) intfa.addRasterVariables(e);
+                        break;
+                    }
+                    if (rn == "SORTENTSTABLE"
+                        || cit->second->className == "AcDbSortentsTable") {
+                        DRW_SortEntsTable e;
+                        ret = e.parseDwg(version, &buff, bs);
+                        if (ret) intfa.addSortEntsTable(e);
+                        break;
+                    }
+                    if (rn == "MATERIAL"
+                        || cit->second->className == "AcDbMaterial") {
+                        DRW_Material e;
+                        ret = e.parseDwg(version, &buff, bs);
+                        if (ret) intfa.addMaterial(e);
+                        break;
+                    }
+                    if (rn == "TABLESTYLE"
+                        || cit->second->className == "AcDbTableStyle") {
+                        DRW_TableStyle e;
+                        ret = e.parseDwg(version, &buff, bs);
+                        if (ret) intfa.addTableStyle(e);
+                        break;
+                    }
                     if (rn == "MLEADERSTYLE") {
                         DRW_MLeaderStyle e;
                         ret = e.parseDwg(version, &buff, bs);
@@ -1724,4 +1786,3 @@ int unkData=0;
     }
     return buf->isGood();
 }
-

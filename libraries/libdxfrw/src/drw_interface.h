@@ -56,6 +56,22 @@ public:
     virtual void addTolerance(const DRW_Tolerance& data) { (void) data; }
     /** Called for every Dictionary (named-object container, ODA fixed type 42). */
     virtual void addDictionary(const DRW_Dictionary& data) { (void) data; }
+    /** Called for every Dictionary-with-default object. */
+    virtual void addDictionaryWithDefault(const DRW_DictionaryWithDefault& data) { (void) data; }
+    /** Called for every DictionaryVar object. */
+    virtual void addDictionaryVar(const DRW_DictionaryVar& data) { (void) data; }
+    /** Called for every XRECORD object. */
+    virtual void addXRecord(const DRW_XRecord& data) { (void) data; }
+    /** Called for every FIELDLIST object. */
+    virtual void addFieldList(const DRW_FieldList& data) { (void) data; }
+    /** Called for every RASTERVARIABLES object. */
+    virtual void addRasterVariables(const DRW_RasterVariables& data) { (void) data; }
+    /** Called for every SORTENTSTABLE object. */
+    virtual void addSortEntsTable(const DRW_SortEntsTable& data) { (void) data; }
+    /** Called for every MATERIAL object. */
+    virtual void addMaterial(const DRW_Material& data) { (void) data; }
+    /** Called for every TABLESTYLE object. */
+    virtual void addTableStyle(const DRW_TableStyle& data) { (void) data; }
     /** Called for every Layout (paperspace, ODA fixed type 82). */
     virtual void addLayout(const DRW_Layout& data) { (void) data; }
     /** Called for every MLineStyle (ODA fixed type 73). */

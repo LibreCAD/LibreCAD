@@ -45,6 +45,14 @@ namespace DRW {
          MLINESTYLE,
          LAYOUT,
          DICTIONARY,
+         DICTIONARYVAR,
+         DICTIONARYWDFLT,
+         XRECORD,
+         FIELDLIST,
+         RASTERVARIABLES,
+         SORTENTSTABLE,
+         MATERIAL,
+         TABLESTYLE,
          MLEADERSTYLE,
          DBCOLOR,
          VISUALSTYLE,
@@ -52,11 +60,11 @@ namespace DRW {
          SCALE
      };
 
-//pending VP_ENT_HDR, GROUP, LONG_TRANSACTION, XRECORD,
-//ACDBPLACEHOLDER, VBA_PROJECT, ACAD_TABLE, CELLSTYLEMAP, DICTIONARYVAR,
-//DICTIONARYWDFLT, FIELD, IDBUFFER, IMAGEDEF, IMAGEDEFREACTOR, LAYER_INDEX,
-//MATERIAL, PLACEHOLDER, PLOTSETTINGS, RASTERVARIABLES, SORTENTSTABLE,
-//SPATIAL_INDEX, SPATIAL_FILTER, TABLEGEOMETRY, TABLESTYLES,
+//pending VP_ENT_HDR, GROUP, LONG_TRANSACTION,
+//ACDBPLACEHOLDER, VBA_PROJECT, ACAD_TABLE, CELLSTYLEMAP,
+//FIELD, IDBUFFER, IMAGEDEF, IMAGEDEFREACTOR, LAYER_INDEX,
+//PLACEHOLDER, PLOTSETTINGS, SPATIAL_INDEX, SPATIAL_FILTER,
+//TABLEGEOMETRY,
 }
 
 class dwgBufferW;
@@ -679,10 +687,9 @@ public:
                    dwgBufferW *strBuf = nullptr, dwgBufferW *hdlBuf = nullptr) const;
 };
 
-//! Class to handle Dictionary (ODA spec sec 19.4.30 fixed type 42)
+//! Class to handle Dictionary (ODA spec sec 20.4.44 fixed type 42)
 /*!
-*  Minimal carrier for named-object dictionaries; full entry-list parsing
-*  pending sample-validated implementation.
+*  Carrier for named-object dictionaries, including entry names and handles.
 */
 class DRW_Dictionary : public DRW_TableEntry {
     SETOBJFRIENDS
@@ -693,13 +700,178 @@ public:
         cloning = 0;
         hardOwner = 0;
         name.clear();
+        m_entries.clear();
     }
 protected:
     bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) override;
 public:
+    struct Entry {
+        UTF8STRING m_name;
+        duint32 m_handle = 0;
+    };
     int cloning;     /*!< duplicate-record handling (BS) */
     int hardOwner;   /*!< hard-owner flag (RC, R2007+) */
-    //future: std::vector<std::pair<UTF8STRING, duint32>> entries; per ODA 19.4.30
+    std::vector<Entry> m_entries; /*!< dictionary entry names and item handles */
+};
+
+//! Class to handle DICTIONARYWDFLT (AcDbDictionaryWithDefault).
+class DRW_DictionaryWithDefault : public DRW_Dictionary {
+    SETOBJFRIENDS
+public:
+    DRW_DictionaryWithDefault() { reset(); }
+    void reset(){
+        DRW_Dictionary::reset();
+        tType = DRW::DICTIONARYWDFLT;
+        m_defaultEntryHandle = 0;
+    }
+protected:
+    bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) override;
+public:
+    duint32 m_defaultEntryHandle = 0;
+};
+
+//! Class to handle DICTIONARYVAR (AcDbDictionaryVar).
+class DRW_DictionaryVar : public DRW_TableEntry {
+    SETOBJFRIENDS
+public:
+    DRW_DictionaryVar() { reset(); }
+    void reset(){
+        tType = DRW::DICTIONARYVAR;
+        m_schema = 0;
+        m_value.clear();
+        DRW_TableEntry::reset();
+    }
+protected:
+    bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) override;
+public:
+    int m_schema = 0;       /*!< code 280 */
+    UTF8STRING m_value;     /*!< code 1 */
+};
+
+//! Class to handle XRECORD (fixed type 0x4f).
+class DRW_XRecord : public DRW_TableEntry {
+    SETOBJFRIENDS
+public:
+    DRW_XRecord() { reset(); }
+    void reset(){
+        tType = DRW::XRECORD;
+        m_cloning = 0;
+        m_values.clear();
+        m_handleValues.clear();
+        DRW_TableEntry::reset();
+    }
+protected:
+    bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) override;
+public:
+    int m_cloning = 0; /*!< duplicate-record handling, code 280 */
+    std::vector<DRW_Variant> m_values;
+    std::vector<std::pair<int, duint32>> m_handleValues; /*!< DXF code + object id */
+};
+
+//! Class to handle FIELDLIST (AcDbFieldList).
+class DRW_FieldList : public DRW_TableEntry {
+    SETOBJFRIENDS
+public:
+    DRW_FieldList() { reset(); }
+    void reset(){
+        tType = DRW::FIELDLIST;
+        m_unknown = 0;
+        m_fieldHandles.clear();
+        DRW_TableEntry::reset();
+    }
+protected:
+    bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) override;
+public:
+    int m_unknown = 0;
+    std::vector<duint32> m_fieldHandles;
+};
+
+//! Class to handle RASTERVARIABLES (AcDbRasterVariables).
+class DRW_RasterVariables : public DRW_TableEntry {
+    SETOBJFRIENDS
+public:
+    DRW_RasterVariables() { reset(); }
+    void reset(){
+        tType = DRW::RASTERVARIABLES;
+        m_classVersion = 0;
+        m_imageFrame = 0;
+        m_imageQuality = 0;
+        m_units = 0;
+        DRW_TableEntry::reset();
+    }
+protected:
+    bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) override;
+public:
+    int m_classVersion = 0;
+    int m_imageFrame = 0;
+    int m_imageQuality = 0;
+    int m_units = 0;
+};
+
+//! Class to handle SORTENTSTABLE (AcDbSortentsTable).
+class DRW_SortEntsTable : public DRW_TableEntry {
+    SETOBJFRIENDS
+public:
+    DRW_SortEntsTable() { reset(); }
+    void reset(){
+        tType = DRW::SORTENTSTABLE;
+        m_sortHandles.clear();
+        m_blockOwnerHandle = 0;
+        m_entityHandles.clear();
+        DRW_TableEntry::reset();
+    }
+protected:
+    bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) override;
+public:
+    std::vector<duint32> m_sortHandles;
+    duint32 m_blockOwnerHandle = 0;
+    std::vector<duint32> m_entityHandles;
+};
+
+//! Class to handle MATERIAL (AcDbMaterial) identity fields.
+class DRW_Material : public DRW_TableEntry {
+    SETOBJFRIENDS
+public:
+    DRW_Material() { reset(); }
+    void reset(){
+        tType = DRW::MATERIAL;
+        m_name.clear();
+        m_description.clear();
+        DRW_TableEntry::reset();
+    }
+protected:
+    bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) override;
+public:
+    UTF8STRING m_name;
+    UTF8STRING m_description;
+};
+
+//! Class to handle TABLESTYLE (AcDbTableStyle) identity/core fields.
+class DRW_TableStyle : public DRW_TableEntry {
+    SETOBJFRIENDS
+public:
+    DRW_TableStyle() { reset(); }
+    void reset(){
+        tType = DRW::TABLESTYLE;
+        m_name.clear();
+        m_flowDirection = 0;
+        m_flags = 0;
+        m_horizontalCellMargin = 0.0;
+        m_verticalCellMargin = 0.0;
+        m_titleSuppressed = false;
+        m_headerSuppressed = false;
+        DRW_TableEntry::reset();
+    }
+protected:
+    bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) override;
+public:
+    UTF8STRING m_name;
+    int m_flowDirection = 0;
+    int m_flags = 0;
+    double m_horizontalCellMargin = 0.0;
+    double m_verticalCellMargin = 0.0;
+    bool m_titleSuppressed = false;
+    bool m_headerSuppressed = false;
 };
 
 //! Class to handle Layout (ODA spec sec 19.4.85 fixed type 82)
@@ -1228,4 +1400,3 @@ const unsigned char dxfColors[][3] = {
 #endif
 
 // EOF
-

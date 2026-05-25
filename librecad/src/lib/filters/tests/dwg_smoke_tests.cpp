@@ -4359,3 +4359,84 @@ TEST_CASE("DWG arch_multileaders: SCALE table delivery") {
   CHECK(byFactor.count(48.0) == 1u);
   CHECK(foundUnit); // at least one 1:1 entry present
 }
+
+TEST_CASE("DWG arch_multileaders: OBJECTS metadata delivery") {
+  const char *home = getenv("HOME");
+  if (!home) {
+    SUCCEED("HOME not set");
+    return;
+  }
+  const std::string path =
+      std::string(home) +
+      "/doc/dwg/architectural_-_annotation_scaling_and_multileaders.dwg";
+  if (!std::filesystem::is_regular_file(path)) {
+    SUCCEED("fixture not present; skipping");
+    return;
+  }
+
+  class MetadataIface : public TypeTrackingIface {
+  public:
+    int dictionaries = 0;
+    int dictionaryEntries = 0;
+    int dictionariesWithDefault = 0;
+    int dictionaryVars = 0;
+    int dictionaryVarsWithValue = 0;
+    int xrecords = 0;
+    int xrecordValues = 0;
+    int xrecordHandles = 0;
+    int materials = 0;
+    int materialsWithName = 0;
+    int tableStyles = 0;
+    int tableStylesWithName = 0;
+
+    void addDictionary(const DRW_Dictionary &d) override {
+      ++dictionaries;
+      dictionaryEntries += static_cast<int>(d.m_entries.size());
+    }
+    void addDictionaryWithDefault(const DRW_DictionaryWithDefault &d) override {
+      ++dictionariesWithDefault;
+      dictionaryEntries += static_cast<int>(d.m_entries.size());
+      if (d.m_defaultEntryHandle != 0)
+        ++xrecordHandles;
+    }
+    void addDictionaryVar(const DRW_DictionaryVar &d) override {
+      ++dictionaryVars;
+      if (!d.m_value.empty())
+        ++dictionaryVarsWithValue;
+    }
+    void addXRecord(const DRW_XRecord &r) override {
+      ++xrecords;
+      xrecordValues += static_cast<int>(r.m_values.size());
+      xrecordHandles += static_cast<int>(r.m_handleValues.size());
+    }
+    void addMaterial(const DRW_Material &m) override {
+      ++materials;
+      if (!m.m_name.empty())
+        ++materialsWithName;
+    }
+    void addTableStyle(const DRW_TableStyle &t) override {
+      ++tableStyles;
+      if (!t.m_name.empty())
+        ++tableStylesWithName;
+    }
+  };
+
+  MetadataIface iface;
+  {
+    dwgR reader(path.c_str());
+    REQUIRE(reader.read(&iface, true));
+    REQUIRE(reader.getError() == DRW::BAD_NONE);
+  }
+
+  CHECK(iface.dictionaries >= 1);
+  CHECK(iface.dictionaryEntries >= 1);
+  CHECK(iface.dictionariesWithDefault >= 1);
+  CHECK(iface.dictionaryVars >= 1);
+  CHECK(iface.dictionaryVarsWithValue >= 1);
+  CHECK(iface.xrecords >= 1);
+  CHECK((iface.xrecordValues + iface.xrecordHandles) >= 1);
+  CHECK(iface.materials >= 1);
+  CHECK(iface.materialsWithName >= 1);
+  CHECK(iface.tableStyles >= 1);
+  CHECK(iface.tableStylesWithName >= 1);
+}
