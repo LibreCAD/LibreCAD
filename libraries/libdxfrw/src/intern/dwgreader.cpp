@@ -1436,6 +1436,16 @@ bool dwgReader::readDwgEntity(dwgBuffer *dbuf, objHandle& obj, DRW_Interface& in
                     }
                     break;
                 }
+                if (version > DRW::AC1018 && cit != classesmap.end() && cit->second
+                    && (cit->second->recName == "ACAD_TABLE"
+                        || cit->second->className == "AcDbTable")) {
+                    DRW_Table e;
+                    if (entryParse(e, buff, bs, ret)) {
+                        e.name = findTableName(DRW::BLOCK_RECORD, e.blockRecH.ref);
+                        intfa.addTable(e);
+                    }
+                    break;
+                }
                 if (cit != classesmap.end() && cit->second) {
                     const std::string& rn = cit->second->recName;
                     const std::string& cn = cit->second->className;

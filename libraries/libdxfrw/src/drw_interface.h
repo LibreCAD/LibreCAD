@@ -153,6 +153,8 @@ public:
 
     /** Called for every insert. */
     virtual void addInsert(const DRW_Insert& data) = 0;
+    /** Called for every ACAD_TABLE entity. Defaults to INSERT rendering. */
+    virtual void addTable(const DRW_Table& data) { addInsert(data); }
     
     /** Called for every trace start */
     virtual void addTrace(const DRW_Trace& data) = 0;

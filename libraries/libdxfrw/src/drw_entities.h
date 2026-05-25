@@ -22,6 +22,7 @@
 #include <string>
 #include <vector>
 #include "drw_base.h"
+#include "drw_objects.h"
 
 class dxfReader;
 class dwgBuffer;
@@ -77,7 +78,7 @@ namespace DRW {
         SPLINE,
 //        SUN,
 //        SURFACE, //encrypted proprietary data can be four types
-//        TABLE,
+        TABLE,
         TEXT,
         TOLERANCE,
         DXF_TRACE,
@@ -620,6 +621,70 @@ public: //only for read dwg
     dwgHandle seqendH; //RLZ: on implement attrib remove this handle from obj list (see pline/vertex code)
     /*!< Handles of attached ATTRIBs, captured from DRW_Insert::parseDwg. */
     std::vector<dwgHandle> attribHandles;
+};
+
+//! Minimal semantic payload for ACAD_TABLE / TABLECONTENT.
+struct DRW_TableCellContent {
+    int m_type = 0;          /*!< 1=value, 2=FIELD, 4=block */
+    UTF8STRING m_text;
+    DRW_CadValue m_value;
+    duint32 m_handle = 0;
+};
+
+struct DRW_TableCell {
+    int m_flags = 0;
+    UTF8STRING m_toolTip;
+    int m_styleId = 0;
+    double m_width = 0.0;
+    double m_height = 0.0;
+    std::vector<DRW_TableCellContent> m_contents;
+};
+
+struct DRW_TableColumn {
+    UTF8STRING m_name;
+    double m_width = 0.0;
+};
+
+struct DRW_TableRow {
+    double m_height = 0.0;
+    std::vector<DRW_TableCell> m_cells;
+};
+
+struct DRW_TableMergedRange {
+    int m_topRow = 0;
+    int m_leftColumn = 0;
+    int m_bottomRow = 0;
+    int m_rightColumn = 0;
+};
+
+struct DRW_TableContent {
+    UTF8STRING m_name;
+    UTF8STRING m_description;
+    std::vector<DRW_TableColumn> m_columns;
+    std::vector<DRW_TableRow> m_rows;
+    std::vector<duint32> m_fieldHandles;
+    std::vector<DRW_TableMergedRange> m_mergedRanges;
+    duint32 m_tableStyleHandle = 0;
+};
+
+//! Class to handle ACAD_TABLE (AcDbTable).
+class DRW_Table : public DRW_Insert {
+    SETENTFRIENDS
+public:
+    DRW_Table() {
+        eType = DRW::TABLE;
+    }
+
+protected:
+    bool parseDwg(DRW::Version v, dwgBuffer *buf, duint32 bs=0) override;
+
+public:
+    int m_valueFlag = 0;
+    DRW_Coord m_horizontalDirection;
+    bool m_hasSemanticContent = false;
+    bool m_semanticContentComplete = false;
+    duint32 m_tableStyleHandle = 0;
+    DRW_TableContent m_content;
 };
 
 //! Class to handle lwpolyline entity
@@ -1972,4 +2037,3 @@ private:
 #endif
 
 // EOF
-

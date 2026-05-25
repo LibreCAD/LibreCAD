@@ -1670,6 +1670,10 @@ void RS_FilterDXFRW::addInsert(const DRW_Insert& data) {
     }
 }
 
+void RS_FilterDXFRW::addTable(const DRW_Table& data) {
+    addInsert(data);
+}
+
 void RS_FilterDXFRW::prepareTextStyleName(QString& sty) const {
     // use default style for the drawing:
     if (sty.isEmpty()) {

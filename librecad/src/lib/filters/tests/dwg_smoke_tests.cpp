@@ -4440,3 +4440,54 @@ TEST_CASE("DWG arch_multileaders: OBJECTS metadata delivery") {
   CHECK(iface.tableStyles >= 1);
   CHECK(iface.tableStylesWithName >= 1);
 }
+
+TEST_CASE("DWG ACAD_TABLE entities render through anonymous table blocks") {
+  const char *home = getenv("HOME");
+  if (!home) {
+    SUCCEED("HOME not set; skipping ACAD_TABLE corpus test");
+    return;
+  }
+
+  const std::string path =
+      std::string(home) + "/doc/dwg/blocks_and_tables_-_metric.dwg";
+  if (!std::filesystem::is_regular_file(path)) {
+    SUCCEED("DWG table corpus file not found at " << path << "; skipping");
+    return;
+  }
+
+  struct TableProbe : CountingIface {
+    int tables = 0;
+    int semanticTables = 0;
+    int tableColumns = 0;
+    int tableRows = 0;
+    int tableCells = 0;
+    int anonymousBlockTables = 0;
+
+    void addTable(const DRW_Table &t) override {
+      track(t);
+      ++tables;
+      if (t.m_hasSemanticContent)
+        ++semanticTables;
+      tableColumns += static_cast<int>(t.m_content.m_columns.size());
+      tableRows += static_cast<int>(t.m_content.m_rows.size());
+      for (const auto &row : t.m_content.m_rows)
+        tableCells += static_cast<int>(row.m_cells.size());
+      if (!t.name.empty() && t.name.rfind("*T", 0) == 0)
+        ++anonymousBlockTables;
+    }
+  };
+
+  TableProbe iface;
+  dwgR reader(path.c_str());
+  REQUIRE(reader.read(&iface, true));
+  REQUIRE(reader.getError() == DRW::BAD_NONE);
+
+  const auto skipped = reader.getSkippedCustomClasses();
+  CHECK(skipped.find("ACAD_TABLE") == skipped.end());
+  CHECK(iface.tables >= 1);
+  CHECK(iface.semanticTables >= 1);
+  CHECK(iface.anonymousBlockTables >= 1);
+  CHECK(iface.tableColumns >= 1);
+  CHECK(iface.tableRows >= 1);
+  CHECK(iface.tableCells >= 1);
+}

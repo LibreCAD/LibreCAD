@@ -126,6 +126,7 @@ public:
     void addSpline(const DRW_Spline* data) override;
     void addKnot(const DRW_Entity&) override{}
     void addInsert(const DRW_Insert& data) override;
+    void addTable(const DRW_Table& data) override;
     void addTrace(const DRW_Trace& data) override;
     void addTolerance(const DRW_Tolerance& tol) override;
     void addSolid(const DRW_Solid& data) override;
