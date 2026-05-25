@@ -739,7 +739,8 @@ bool DRW_Entity::encodeDwgCommon(DRW::Version version, dwgBufferW *buf,
                                   dwgBufferW *strBuf) {
     (void)strBuf;  // common data contains no strings
     if (version != DRW::AC1015 && version != DRW::AC1018 &&
-        version != DRW::AC1024 && version != DRW::AC1027) return false;
+        version != DRW::AC1024 && version != DRW::AC1027 &&
+        version != DRW::AC1032) return false;
 
     // Object type: BS for AC1015/AC1018, OT for AC1024+.
     buf->putObjType(version, static_cast<duint16>(oType));
@@ -823,7 +824,8 @@ bool DRW_Entity::encodeDwgCommon(DRW::Version version, dwgBufferW *buf,
 bool DRW_Entity::encodeDwgEntHandle(DRW::Version version, dwgBufferW *buf,
                                      dwgBufferW *handleBuf) {
     if (version != DRW::AC1015 && version != DRW::AC1018 &&
-        version != DRW::AC1024 && version != DRW::AC1027) return false;
+        version != DRW::AC1024 && version != DRW::AC1027 &&
+        version != DRW::AC1032) return false;
 
     // For AC1024, handles are directed to handleBuf (the separate handle section);
     // for AC1015/AC1018, handles go into buf alongside the data.
@@ -1083,7 +1085,9 @@ bool DRW_MText::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs, dwg
     buf->put3BitDouble(extPoint);           // extrusion
     buf->put3BitDouble(secPoint);           // X-axis dir
     buf->putBitDouble(widthscale);          // rect width
-    // (R2007+ rect height omitted)
+    if (version > DRW::AC1018) {
+        buf->putBitDouble(0.0);             // rect height, R2007+
+    }
     buf->putBitDouble(height);              // text height
     buf->putBitShort(static_cast<duint16>(textgen));  // attachment
     buf->putBitShort(static_cast<duint16>(alignH));   // drawing dir
@@ -1097,6 +1101,9 @@ bool DRW_MText::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs, dwg
     buf->putBit(0);                         // unknown bit
     if (version > DRW::AC1015) {            // R2004+: background flags BL
         buf->putBitLong(0);                 // 0 = no background fill
+    }
+    if (version >= DRW::AC1032) {
+        buf->putBit(0);                     // is_not_annotative = false
     }
 
     if (!encodeDwgEntHandle(version, buf, handleBuf)) return false;
@@ -2759,7 +2766,11 @@ bool DRW_Attrib::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs, dw
     oType = 2;  // ATTRIB class id — see dwgreader.cpp:1148
     if (!encodeDwgCommon(version, buf)) return false;
 
-    // TEXT-body section — mirrors DRW_Attrib::parseDwg R2000 path.
+    if (version >= DRW::AC1024) {
+        buf->putRawChar8(attVersion);       // R2010+ ATTRIB version byte
+    }
+
+    // TEXT-body section — mirrors DRW_Attrib::parseDwg.
     // data_flags=0: emit every optional field unconditionally (same
     // strategy as DRW_Text::encodeDwg — simpler encoder, ~30 bytes larger).
     buf->putRawChar8(0);                              // data_flags=0
@@ -2784,7 +2795,9 @@ bool DRW_Attrib::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs, dw
     sb->putVariableText(version, tag);                // tag TV
     buf->putBitShort(0);                              // fieldLen BS (always 0)
     buf->putRawChar8(attribFlags);                    // flags RC
-    // lockPosition (R2010+) omitted — targeting R2000 only
+    if (version >= DRW::AC1024) {
+        buf->putBit(lockPosition ? 1 : 0);             // lock position B
+    }
 
     if (!encodeDwgEntHandle(version, buf, handleBuf)) return false;
 
@@ -2898,6 +2911,10 @@ bool DRW_Attdef::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs, dw
     oType = 3;  // ATTDEF class id — see dwgreader.cpp:1185
     if (!encodeDwgCommon(version, buf)) return false;
 
+    if (version >= DRW::AC1024) {
+        buf->putRawChar8(attVersion);
+    }
+
     // TEXT-body section — identical layout to DRW_Attrib::encodeDwg.
     buf->putRawChar8(0);
     buf->putRawDouble(basePoint.z);
@@ -2920,6 +2937,9 @@ bool DRW_Attdef::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs, dw
     sb->putVariableText(version, tag);
     buf->putBitShort(0);                              // fieldLen BS (always 0)
     buf->putRawChar8(attribFlags);
+    if (version >= DRW::AC1024) {
+        buf->putBit(lockPosition ? 1 : 0);
+    }
 
     // ATTDEF adds prompt between flags and handle stream
     sb->putVariableText(version, prompt);
@@ -3017,7 +3037,7 @@ bool DRW_MText::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
         /* Background flags BL 0 = no background, 1 = background fill, 2 =background
         fill with drawing fill color. */
         dint32 bk_flags = buf->getBitLong(); /** @todo add to DRW_MText */
-        if ( bk_flags == 1 ) {
+        if ((bk_flags & 0x01) || (version >= DRW::AC1032 && (bk_flags & 0x10))) {
             /* Background scale factor BL Present if background flags = 1, default = 1.5*/
             buf->getBitLong();
             /* Background color CMC Present if background flags = 1 */
@@ -3025,6 +3045,41 @@ bool DRW_MText::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
             /** @todo buf->getCMC */
             /* Background transparency BL Present if background flags = 1 */
             buf->getBitLong();
+        }
+    }
+
+    bool hasR2018AppId = false;
+    if (version >= DRW::AC1032) {
+        bool isNotAnnotative = buf->getBit();
+        if (isNotAnnotative) {
+            buf->getBitShort();              // class version
+            buf->getBit();                   // default flag
+            hasR2018AppId = true;            // appid H follows in handle stream
+            buf->getBitLong();               // ignore attachment
+            buf->get3BitDouble();            // x-axis dir, redundant
+            buf->get3BitDouble();            // insertion point, redundant
+            buf->getBitDouble();             // rect width, redundant
+            buf->getBitDouble();             // rect height, redundant
+            buf->getBitDouble();             // extents height, redundant
+            buf->getBitDouble();             // extents width, redundant
+            duint16 columnType = buf->getBitShort();
+            if (columnType != 0) {
+                dint32 columnHeightCount = 0;
+                if (columnType == 1) {
+                    buf->getBitLong();       // numfragments
+                } else {
+                    columnHeightCount = buf->getBitLong();
+                }
+                buf->getBitDouble();         // column width
+                buf->getBitDouble();         // gutter
+                bool autoHeight = buf->getBit();
+                buf->getBit();               // flow reversed
+                if (!autoHeight && columnType == 2 && columnHeightCount > 0
+                    && columnHeightCount < 10000) {
+                    for (dint32 i = 0; i < columnHeightCount; ++i)
+                        buf->getBitDouble();
+                }
+            }
         }
     }
 
@@ -3036,6 +3091,10 @@ bool DRW_MText::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
     styleH = buf->getHandle(); /* H 7 STYLE (hard pointer) */
     DRW_DBG("text style Handle: "); DRW_DBG(styleH.code); DRW_DBG(".");
     DRW_DBG(styleH.size); DRW_DBG("."); DRW_DBG(styleH.ref); DRW_DBG("\n");
+    if (hasR2018AppId) {
+        dwgHandle appIdH = buf->getHandle();
+        DRW_DBG("mtext R2018 appid Handle: "); DRW_DBGHL(appIdH.code, appIdH.size, appIdH.ref); DRW_DBG("\n");
+    }
 
     /* CRC X --- */
     return buf->isGood();

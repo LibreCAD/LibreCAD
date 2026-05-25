@@ -1598,6 +1598,13 @@ bool dwgReader::readDwgObject(dwgBuffer *dbuf, objHandle& obj, DRW_Interface& in
                         if (ret) intfa.addXRecord(e);
                         break;
                     }
+                    if (rn == "FIELD"
+                        || cit->second->className == "AcDbField") {
+                        DRW_Field e;
+                        ret = e.parseDwg(version, &buff, bs);
+                        if (ret) intfa.addField(e);
+                        break;
+                    }
                     if (rn == "FIELDLIST"
                         || cit->second->className == "AcDbFieldList") {
                         DRW_FieldList e;
@@ -1725,6 +1732,21 @@ bool dwgReader::readDwgObject(dwgBuffer *dbuf, objHandle& obj, DRW_Interface& in
                 }
             }
             //not supported object or entity add to remaining map for debug
+            {
+                std::string objectName;
+                if (oType >= 500) {
+                    auto cit = classesmap.find(oType);
+                    if (cit != classesmap.end() && cit->second)
+                        objectName = cit->second->recName.empty()
+                            ? cit->second->className
+                            : cit->second->recName;
+                }
+                if (objectName.empty())
+                    objectName = "type-" + std::to_string(oType);
+                ++m_skippedUnsupportedObjects[objectName];
+                DRW_DBG("[unsupported-object-skipped "); DRW_DBG(objectName.c_str());
+                DRW_DBG("]\n");
+            }
             remainingMap[obj.handle]= obj;
             break;
         }

@@ -87,6 +87,107 @@ UTF8STRING readXRecordText(DRW::Version version, dwgBuffer *buf) {
     return s;
 }
 
+UTF8STRING readCadValueText(DRW::Version version, dwgBuffer *buf) {
+    const duint32 byteCount = buf->getBitLong();
+    if (byteCount == 0)
+        return UTF8STRING();
+    if (byteCount > 16 * 1024 * 1024) {
+        DRW_DBG("FIELD value string too large: "); DRW_DBG(byteCount); DRW_DBG("\n");
+        return UTF8STRING();
+    }
+
+    std::vector<duint8> raw(byteCount);
+    if (!buf->getBytes(raw.data(), raw.size()))
+        return UTF8STRING();
+
+    std::string s(reinterpret_cast<const char*>(raw.data()), raw.size());
+    if (version > DRW::AC1018 && s.size() >= 2 && s[s.size() - 1] == '\0'
+        && s[s.size() - 2] == '\0') {
+        s.resize(s.size() - 2);
+    } else {
+        while (!s.empty() && s.back() == '\0')
+            s.pop_back();
+    }
+    if (buf->decoder)
+        s = buf->decoder->toUtf8(s);
+    return s;
+}
+
+bool readCadValue(DRW::Version version, dwgBuffer *buf, dwgBuffer *strBuf,
+                  DRW_CadValue& value) {
+    if (version > DRW::AC1018)
+        value.m_formatFlags = buf->getBitLong();
+
+    value.m_dataType = buf->getBitLong();
+    const bool emptyR2007Value = version > DRW::AC1018 && (value.m_formatFlags & 1);
+    if (!emptyR2007Value) {
+        switch (value.m_dataType) {
+        case 0:
+        case 1:
+            value.m_value.addInt(91, buf->getBitLong());
+            break;
+        case 2:
+            value.m_value.addDouble(140, buf->getBitDouble());
+            break;
+        case 4:
+        case 512:
+            value.m_value.addString(1, readCadValueText(version, buf));
+            break;
+        case 8: {
+            const duint32 byteCount = buf->getBitLong();
+            if (byteCount > 16 * 1024 * 1024)
+                return false;
+            value.m_rawData.resize(byteCount);
+            if (byteCount > 0 && !buf->getBytes(value.m_rawData.data(), byteCount))
+                return false;
+            value.m_value.addBinary(310, value.m_rawData);
+            break;
+        }
+        case 16: {
+            DRW_Coord c;
+            c.x = buf->getRawDouble();
+            c.y = buf->getRawDouble();
+            c.z = 0.0;
+            value.m_value.addCoord(11, c);
+            break;
+        }
+        case 32: {
+            DRW_Coord c;
+            c.x = buf->getRawDouble();
+            c.y = buf->getRawDouble();
+            c.z = buf->getRawDouble();
+            value.m_value.addCoord(11, c);
+            break;
+        }
+        case 64: {
+            dwgHandle h = buf->getHandle();
+            value.m_handle = h.ref;
+            value.m_value.addInt(330, static_cast<duint32>(h.ref));
+            break;
+        }
+        case 128:
+        case 256:
+            DRW_DBG("unsupported FIELD value buffer type: ");
+            DRW_DBG(value.m_dataType); DRW_DBG("\n");
+            return false;
+        default:
+            DRW_DBG("invalid FIELD value type: ");
+            DRW_DBG(value.m_dataType); DRW_DBG("\n");
+            return false;
+        }
+    }
+
+    if (version > DRW::AC1018) {
+        dwgBuffer *textBuf = strBuf ? strBuf : buf;
+        value.m_unitType = buf->getBitLong();
+        value.m_formatString = textBuf->getVariableText(version, false);
+        if (value.m_unitType != 12)
+            value.m_valueString = textBuf->getVariableText(version, false);
+    }
+
+    return buf->isGood() && (!strBuf || strBuf->isGood());
+}
+
 bool xRecordCodeIsString(int code) {
     return (code >= 0 && code <= 9) || (code >= 100 && code <= 102) ||
            (code >= 300 && code <= 309) || (code >= 410 && code <= 419) ||
@@ -2005,6 +2106,96 @@ bool DRW_XRecord::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
     DRW_DBG("xrecord values: "); DRW_DBG(static_cast<int>(m_values.size()));
     DRW_DBG(" handles: "); DRW_DBG(static_cast<int>(m_handleValues.size())); DRW_DBG("\n");
     return true;
+}
+
+bool DRW_Field::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
+    dwgBuffer sBuff = *buf;
+    dwgBuffer *sBuf = buf;
+    if (version > DRW::AC1018)
+        sBuf = &sBuff;
+    bool ret = DRW_TableEntry::parseDwg(version, buf, sBuf, bs);
+    DRW_DBG("\n***************************** parsing Field **********************************\n");
+    if (!ret)
+        return ret;
+
+    auto finishSoft = [&]() {
+        if (buf->isGood()) {
+            seekObjectHandleStream(version, buf, objSize);
+            readCommonObjectHandles(buf, handle, numReactors, xDictFlag, &parentHandle);
+        }
+        return true;
+    };
+
+    m_evaluatorId = sBuf->getVariableText(version, false);
+    m_fieldCode = sBuf->getVariableText(version, false);
+
+    const duint32 numChildren = buf->getBitLong();
+    const duint32 numObjects = buf->getBitLong();
+    if (numChildren > 100000 || numObjects > 100000) {
+        DRW_DBG("FIELD handle counts out of range; keeping FIELD shell\n");
+        return finishSoft();
+    }
+
+    if (version < DRW::AC1021)
+        m_formatString = sBuf->getVariableText(version, false);
+
+    m_evaluationOptionFlags = buf->getBitLong();
+    m_filingOptionFlags = buf->getBitLong();
+    m_fieldStateFlags = buf->getBitLong();
+    m_evaluationStatusFlags = buf->getBitLong();
+    m_evaluationErrorCode = buf->getBitLong();
+    m_evaluationErrorMessage = sBuf->getVariableText(version, false);
+
+    if (!readCadValue(version, buf, sBuf, m_value)) {
+        DRW_DBG("FIELD value payload unsupported; keeping FIELD shell\n");
+        return finishSoft();
+    }
+
+    m_valueString = sBuf->getVariableText(version, false);
+    m_valueStringLength = buf->getBitLong();
+
+    const duint32 numChildValues = buf->getBitLong();
+    if (numChildValues > 100000) {
+        DRW_DBG("FIELD child value count out of range; keeping FIELD shell\n");
+        return finishSoft();
+    }
+
+    m_childValues.clear();
+    m_childValues.reserve(numChildValues);
+    for (duint32 i = 0; i < numChildValues && buf->isGood(); ++i) {
+        ChildValue childValue;
+        childValue.m_key = sBuf->getVariableText(version, false);
+        if (!readCadValue(version, buf, sBuf, childValue.m_value)) {
+            DRW_DBG("FIELD child value payload unsupported; keeping FIELD shell\n");
+            return finishSoft();
+        }
+        m_childValues.push_back(std::move(childValue));
+    }
+
+    seekObjectHandleStream(version, buf, objSize);
+    readCommonObjectHandles(buf, handle, numReactors, xDictFlag, &parentHandle);
+
+    m_childHandles.clear();
+    m_childHandles.reserve(numChildren);
+    for (duint32 i = 0; i < numChildren && buf->isGood(); ++i) {
+        dwgHandle childH = buf->getOffsetHandle(handle);
+        if (childH.ref != 0)
+            m_childHandles.push_back(childH.ref);
+    }
+
+    m_objectHandles.clear();
+    m_objectHandles.reserve(numObjects);
+    for (duint32 i = 0; i < numObjects && buf->isGood(); ++i) {
+        dwgHandle objectH = buf->getOffsetHandle(handle);
+        if (objectH.ref != 0)
+            m_objectHandles.push_back(objectH.ref);
+    }
+
+    DRW_DBG("field evaluator: "); DRW_DBG(m_evaluatorId.c_str());
+    DRW_DBG(" children: "); DRW_DBG(static_cast<int>(m_childHandles.size()));
+    DRW_DBG(" objects: "); DRW_DBG(static_cast<int>(m_objectHandles.size()));
+    DRW_DBG(" child values: "); DRW_DBG(static_cast<int>(m_childValues.size())); DRW_DBG("\n");
+    return buf->isGood();
 }
 
 bool DRW_FieldList::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){

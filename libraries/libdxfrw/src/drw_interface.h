@@ -62,6 +62,8 @@ public:
     virtual void addDictionaryVar(const DRW_DictionaryVar& data) { (void) data; }
     /** Called for every XRECORD object. */
     virtual void addXRecord(const DRW_XRecord& data) { (void) data; }
+    /** Called for every FIELD object. */
+    virtual void addField(const DRW_Field& data) { (void) data; }
     /** Called for every FIELDLIST object. */
     virtual void addFieldList(const DRW_FieldList& data) { (void) data; }
     /** Called for every RASTERVARIABLES object. */

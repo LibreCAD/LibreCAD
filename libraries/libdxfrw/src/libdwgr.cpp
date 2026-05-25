@@ -24,6 +24,7 @@
 #include "intern/dwgwriter18.h"
 #include "intern/dwgwriter24.h"
 #include "intern/dwgwriter27.h"
+#include "intern/dwgwriter32.h"
 #include "intern/dwgreader15.h"
 #include "intern/dwgreader18.h"
 #include "intern/dwgreader21.h"
@@ -170,6 +171,7 @@ bool dwgRW::read(DRW_Interface *interface_, bool ext){
         // still surface them.
         m_entityParseFailures = reader->m_entityParseFailures;
         m_skippedCustomClasses = reader->m_skippedCustomClasses;
+        m_skippedUnsupportedObjects = reader->m_skippedUnsupportedObjects;
         reader.reset();
     }
 
@@ -192,12 +194,17 @@ std::unordered_map<std::string, size_t> dwgRW::getSkippedCustomClasses() const {
     return reader ? reader->m_skippedCustomClasses : m_skippedCustomClasses;
 }
 
+std::unordered_map<std::string, size_t> dwgRW::getSkippedUnsupportedObjects() const {
+    return reader ? reader->m_skippedUnsupportedObjects : m_skippedUnsupportedObjects;
+}
+
 bool dwgRW::write(DRW_Interface *interface_, DRW::Version ver, bool bin) {
     // The 'bin' parameter is accepted only for signature symmetry with
     // dxfRW::write — DWG is always binary on disk.
     (void)bin;
     if (ver != DRW::AC1015 && ver != DRW::AC1018 &&
-        ver != DRW::AC1024 && ver != DRW::AC1027) {
+        ver != DRW::AC1024 && ver != DRW::AC1027 &&
+        ver != DRW::AC1032) {
         error = DRW::BAD_VERSION;
         return false;
     }
@@ -223,7 +230,9 @@ bool dwgRW::write(DRW_Interface *interface_, DRW::Version ver, bool bin) {
     // (empty) state and the encoder emits per-var defaults.
     iface->writeHeader(header);
 
-    if (ver == DRW::AC1027)
+    if (ver == DRW::AC1032)
+        writer = std::make_unique<dwgWriter32>(&filestr, &header);
+    else if (ver == DRW::AC1027)
         writer = std::make_unique<dwgWriter27>(&filestr, &header);
     else if (ver == DRW::AC1024)
         writer = std::make_unique<dwgWriter24>(&filestr, &header);

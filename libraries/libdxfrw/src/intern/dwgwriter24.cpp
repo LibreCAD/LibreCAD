@@ -40,7 +40,12 @@ bool dwgWriter24::writeDwgHeader() {
 
     size_t sizeOffset = beginSentinelSection(dwgSentinels::HEADER_BEGIN);
 
-    // AC1024: RL bitSize placeholder.
+    // R2018 always carries the high-size long after the section size. R2010/
+    // R2013 only use it for maintenance versions this writer does not emit.
+    if (m_version >= DRW::AC1032)
+        m_buf.putRawLong32(0);
+
+    // AC1024+: RL bitSize placeholder.
     size_t bitSizeOffset = m_buf.size();
     m_buf.putRawLong32(0);
 
@@ -95,6 +100,10 @@ bool dwgWriter24::writeDwgClasses() {
 
     size_t sizeOffset = beginSentinelSection(dwgSentinels::CLASSES_BEGIN);
 
+    const bool hasHSize = m_version >= DRW::AC1032;
+    if (hasHSize)
+        m_buf.putRawLong32(0);
+
     // RL bitSize placeholder — back-patched after class data is written.
     size_t bitSizeOffset = m_buf.size();
     m_buf.putRawLong32(0);
@@ -117,8 +126,10 @@ bool dwgWriter24::writeDwgClasses() {
     m_buf.putRawShort16(0);   // CRC placeholder (not validated by reader)
     m_buf.putRawChar8(0);     // unknownCRC tail (not validated by reader)
 
-    // Back-patch RL bitSize.
-    duint32 bitSize = static_cast<duint32>(extraPaddingByteOffset) * 8 - 143;
+    // Back-patch RL bitSize. The reader adds 159 bits without hSize, or
+    // 191 bits with hSize, before locating the class string tail.
+    duint32 bitSize = static_cast<duint32>(extraPaddingByteOffset) * 8
+                    - (hasHSize ? 191u : 143u);
     m_buf.patchRawLong32(bitSizeOffset, bitSize);
 
     // Patch RL size and write end sentinel.

@@ -319,6 +319,32 @@ bool RS_FilterDXFRW::fileImport(RS_Graphic& g, const QString& file, [[maybe_unus
                   .arg(totalSkipped)
                   .arg(breakdown));
         }
+        const auto unsupportedObjects = dwgr.getSkippedUnsupportedObjects();
+        if (!unsupportedObjects.empty()) {
+          size_t totalSkipped = 0;
+          std::vector<std::pair<QString, size_t>> sorted;
+          sorted.reserve(unsupportedObjects.size());
+          for (const auto &kv : unsupportedObjects) {
+            totalSkipped += kv.second;
+            sorted.emplace_back(QString::fromStdString(kv.first), kv.second);
+          }
+          std::sort(
+              sorted.begin(), sorted.end(),
+              [](const auto &a, const auto &b) { return a.second > b.second; });
+          QStringList top;
+          const size_t showN = std::min<size_t>(3, sorted.size());
+          for (size_t i = 0; i < showN; ++i)
+            top << QString("%1×%2").arg(sorted[i].second).arg(sorted[i].first);
+          QString breakdown = top.join(QLatin1String(", "));
+          if (sorted.size() > showN)
+            breakdown += QObject::tr(", and %n more object type(s)", "",
+                                     static_cast<int>(sorted.size() - showN));
+          RS_DIALOGFACTORY->commandMessage(
+              QObject::tr("DWG load: %1 unsupported metadata object(s) skipped "
+                          "(%2). Drawing geometry may still be complete.")
+                  .arg(totalSkipped)
+                  .arg(breakdown));
+        }
         RS_DEBUG->print("DWG read summary: %d entities, %d blocks, error=%d",
                         m_graphic ? m_graphic->count() : -1,
                         m_graphic ? m_graphic->countBlocks() : -1,

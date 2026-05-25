@@ -120,3 +120,46 @@ priority 4:
 The parsers are deliberately tolerant at metadata tails because older DWG
 versions vary in handle packing and because these objects are not geometry
 producers. Sanity checks still reject clearly impossible dictionary item counts.
+
+## AC1032 Read/Write Plan
+
+Scope: add R2018/AC1032 read/write coverage without widening LibreCAD's DWG
+model beyond the currently supported 2D geometry/table-record surface.
+
+Reviewed sources:
+
+- ODA `~/doc/dwg/dwg.pdf`, chapter 8: R2018 is structurally identical to
+  R2013, with AC1032-specific payload changes rather than a new section
+  container.
+- ODA chapter 9: the HEADER section keeps the R2010/R2013 high-size long
+  unconditionally for R2018.
+- ODA 20.4.46 and libreDWG `dwg.spec` `DWG_ENTITY(MTEXT)`: R2018 adds the
+  MTEXT non-annotative/context-data tail after background data.
+- ODA 20.4.73 and libreDWG `DWG_OBJECT(MLINESTYLE)`: R2018 MLINESTYLE elements
+  include a linetype index in the data stream while linetype handles remain in
+  the handle stream.
+- ODA chapter 27: R2018 auxiliary-file-header additions are not emitted because
+  the current R2004+ writer does not emit an `AcDb:AuxHeader` section.
+
+Refined implementation plan:
+
+1. Reuse the AC1027 page container for AC1032, emit the `"AC1032"` file
+   version string in a thin writer subclass, and include the R2018-mandatory
+   HEADER/CLASSES high-size long.
+2. Permit AC1032 through the public `dwgRW::write` gate and through shared
+   HEADER/common-entity encoders.
+3. Keep the existing AC1032 reader dispatch and consume R2018 MTEXT tail fields
+   so the following common/entity-specific handle data stays aligned.
+4. Preserve the existing MLINESTYLE R2018 read behavior: consume the R2018
+   per-element linetype index from the data stream and defer linetype handles to
+   the handle stream.
+5. Fix ATTRIB/ATTDEF writing for all R2010+ versions by emitting the version
+   byte and lock-position bit that their readers already consume.
+6. Match the R2007+ MTEXT body by writing the rectangle-height field before
+   text height; otherwise AC1032's added MTEXT tail is read from the wrong bit.
+7. Add R2018 smoke tests that write AC1032 files, read them back, and verify
+   version dispatch plus representative geometry/MTEXT recovery.
+
+Status: implemented in this pass. Remaining AC1032 work is deeper semantic
+preservation of annotative MTEXT context data, proxy-entity payloads, and full
+auxiliary-header emission if the writer later grows an `AcDb:AuxHeader` section.

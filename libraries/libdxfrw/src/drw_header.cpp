@@ -2444,7 +2444,7 @@ bool DRW_Header::parseDwg(DRW::Version version, dwgBuffer *buf, dwgBuffer *hBbuf
         for (int i=0; i<16;i++) {
             DRW_DBGH(buf->getRawChar8()); DRW_DBG(" ");
         }
-    } else if (version == DRW::AC1027) {//2013
+    } else if (version == DRW::AC1027 || version == DRW::AC1032) {//2013+
 //        sz= buf->size()-76;
 //        buf->setPosition(sz);
         buf->moveBitPos(-128);
@@ -2569,7 +2569,8 @@ namespace {
 
 bool DRW_Header::encodeDwg(DRW::Version version, dwgBufferW *buf, dwgBufferW *hBbuf) {
     if (version != DRW::AC1015 && version != DRW::AC1018 &&
-        version != DRW::AC1024 && version != DRW::AC1027) return false;
+        version != DRW::AC1024 && version != DRW::AC1027 &&
+        version != DRW::AC1032) return false;
 
     // -------- REQUIREDVERSIONS (parseDwg:1786-1789) -------------------------
     if (version > DRW::AC1024) {

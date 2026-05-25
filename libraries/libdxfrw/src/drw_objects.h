@@ -48,6 +48,7 @@ namespace DRW {
          DICTIONARYVAR,
          DICTIONARYWDFLT,
          XRECORD,
+         FIELD,
          FIELDLIST,
          RASTERVARIABLES,
          SORTENTSTABLE,
@@ -62,7 +63,7 @@ namespace DRW {
 
 //pending VP_ENT_HDR, GROUP, LONG_TRANSACTION,
 //ACDBPLACEHOLDER, VBA_PROJECT, ACAD_TABLE, CELLSTYLEMAP,
-//FIELD, IDBUFFER, IMAGEDEF, IMAGEDEFREACTOR, LAYER_INDEX,
+//IDBUFFER, IMAGEDEF, IMAGEDEFREACTOR, LAYER_INDEX,
 //PLACEHOLDER, PLOTSETTINGS, SPATIAL_INDEX, SPATIAL_FILTER,
 //TABLEGEOMETRY,
 }
@@ -766,6 +767,67 @@ public:
     int m_cloning = 0; /*!< duplicate-record handling, code 280 */
     std::vector<DRW_Variant> m_values;
     std::vector<std::pair<int, duint32>> m_handleValues; /*!< DXF code + object id */
+};
+
+//! Value payload used by FIELD and TABLE/TABLECONTENT objects.
+struct DRW_CadValue {
+    int m_formatFlags = 0;
+    int m_dataType = 0;
+    int m_unitType = 0;
+    DRW_Variant m_value;
+    UTF8STRING m_formatString;
+    UTF8STRING m_valueString;
+    duint32 m_handle = 0;
+    std::vector<duint8> m_rawData;
+};
+
+//! Class to handle FIELD (AcDbField).
+class DRW_Field : public DRW_TableEntry {
+    SETOBJFRIENDS
+public:
+    struct ChildValue {
+        UTF8STRING m_key;
+        DRW_CadValue m_value;
+    };
+
+    DRW_Field() { reset(); }
+    void reset(){
+        tType = DRW::FIELD;
+        m_evaluatorId.clear();
+        m_fieldCode.clear();
+        m_formatString.clear();
+        m_evaluationOptionFlags = 0;
+        m_filingOptionFlags = 0;
+        m_fieldStateFlags = 0;
+        m_evaluationStatusFlags = 0;
+        m_evaluationErrorCode = 0;
+        m_evaluationErrorMessage.clear();
+        m_value = DRW_CadValue();
+        m_valueString.clear();
+        m_valueStringLength = 0;
+        m_childHandles.clear();
+        m_objectHandles.clear();
+        m_childValues.clear();
+        DRW_TableEntry::reset();
+    }
+protected:
+    bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) override;
+public:
+    UTF8STRING m_evaluatorId;
+    UTF8STRING m_fieldCode;
+    UTF8STRING m_formatString;
+    int m_evaluationOptionFlags = 0;
+    int m_filingOptionFlags = 0;
+    int m_fieldStateFlags = 0;
+    int m_evaluationStatusFlags = 0;
+    int m_evaluationErrorCode = 0;
+    UTF8STRING m_evaluationErrorMessage;
+    DRW_CadValue m_value;
+    UTF8STRING m_valueString;
+    int m_valueStringLength = 0;
+    std::vector<duint32> m_childHandles;
+    std::vector<duint32> m_objectHandles;
+    std::vector<ChildValue> m_childValues;
 };
 
 //! Class to handle FIELDLIST (AcDbFieldList).

@@ -39,8 +39,7 @@ public:
     bool read(DRW_Interface *interface_, bool ext);
 
     /// Write the in-memory model (driven via DRW_Interface callbacks)
-    /// out to the file named at construction.  v1 supports `DRW::AC1015`
-    /// (R2000) only; other versions return false with `BAD_VERSION`.
+    /// out to the file named at construction.
     /// The `bin` parameter is ignored — DWG is always binary — but
     /// kept for API symmetry with `dxfRW::write`.  Returns true on
     /// success, false on error; error code accessible via `getError()`.
@@ -113,6 +112,9 @@ public:
     /// DXF recName, value is the instance count.  Empty on a stock
     /// AutoCAD file.  Caller can format a user-facing summary.
     std::unordered_map<std::string, size_t> getSkippedCustomClasses() const;
+    /// Unsupported OBJECTS-section records encountered during read. Keyed by
+    /// DXF recName for custom classes or by fixed type code for fixed objects.
+    std::unordered_map<std::string, size_t> getSkippedUnsupportedObjects() const;
 bool testReader();
     void setDebug(DRW::DebugLevel lvl);
 
@@ -140,6 +142,9 @@ private:
     /// Captured from reader->m_skippedCustomClasses before reader.reset()
     /// so getSkippedCustomClasses() works post-read.
     std::unordered_map<std::string, size_t> m_skippedCustomClasses;
+    /// Captured from reader->m_skippedUnsupportedObjects before reader.reset()
+    /// so getSkippedUnsupportedObjects() works post-read.
+    std::unordered_map<std::string, size_t> m_skippedUnsupportedObjects;
 
 };
 

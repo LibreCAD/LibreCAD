@@ -213,6 +213,10 @@ public:
     /// proxy-capable graphics — whose geometry never reaches the
     /// renderer.  Surface to the user so they know what's missing.
     std::unordered_map<std::string, size_t> m_skippedCustomClasses;
+    /// OBJECTS-section records that libdxfrw still cannot decode. Unlike
+    /// m_skippedCustomClasses, this also includes non-graphical metadata such
+    /// as reactors, filters, TABLECONTENT, dynamic-block graphs, etc.
+    std::unordered_map<std::string, size_t> m_skippedUnsupportedObjects;
     std::unordered_map<duint32, DRW_AppId*> appIdmap;
     std::unordered_map<duint32, DRW_View*> viewmap;
     std::unordered_map<duint32, DRW_UCS*> ucsmap;

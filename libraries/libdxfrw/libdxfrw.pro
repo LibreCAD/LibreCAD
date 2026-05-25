@@ -51,7 +51,8 @@ SOURCES += \
     src/intern/dwgwriter15.cpp \
     src/intern/dwgwriter18.cpp \
     src/intern/dwgwriter24.cpp \
-    src/intern/dwgwriter27.cpp
+    src/intern/dwgwriter27.cpp \
+    src/intern/dwgwriter32.cpp
 
 HEADERS += \
     src/libdxfrw.h \
@@ -87,4 +88,5 @@ HEADERS += \
     src/intern/dwgwriter15.h \
     src/intern/dwgwriter18.h \
     src/intern/dwgwriter24.h \
-    src/intern/dwgwriter27.h
+    src/intern/dwgwriter27.h \
+    src/intern/dwgwriter32.h

@@ -1285,3 +1285,83 @@ TEST_CASE("dwgRW R2013 round-trip delivers the standard table records",
 
     std::remove(path.c_str());
 }
+
+// ---- R2018 (AC1032) write smoke tests ---------------------------------------
+
+TEST_CASE("dwgRW::write produces a syntactically valid empty R2018 file",
+          "[dwg-write][smoke][r2018]") {
+    const std::string path = tempPath("empty_r2018.dwg");
+
+    {
+        dwgRW writer(path.c_str());
+        EmptyIface iface;
+        REQUIRE(writer.write(&iface, DRW::AC1032, /*bin=*/false));
+    }
+
+    auto bytes = slurp(path);
+    REQUIRE(bytes.size() > 0x100);
+    REQUIRE(std::memcmp(bytes.data(), "AC1032", 6) == 0);
+
+    std::remove(path.c_str());
+}
+
+namespace {
+
+class R2018MTextRoundTripIface : public EntityRoundTripIface {
+public:
+    std::vector<DRW_MText> m_mtexts;
+
+    void writeEntities() override {
+        EntityRoundTripIface::writeEntities();
+        if (m_writer == nullptr) return;
+
+        DRW_MText mt;
+        mt.basePoint = DRW_Coord{12.0, 34.0, 0.0};
+        mt.extPoint = DRW_Coord{0.0, 0.0, 1.0};
+        mt.secPoint = DRW_Coord{1.0, 0.0, 0.0};
+        mt.widthscale = 80.0;
+        mt.height = 2.5;
+        mt.textgen = DRW_MText::TopLeft;
+        mt.alignH = DRW_Text::HLeft;
+        mt.interlin = 1.0;
+        mt.text = "R2018 MTEXT";
+        mt.color = 2;
+        REQUIRE(m_writer->writeMText(&mt));
+    }
+
+    void addMText(const DRW_MText& m) override { m_mtexts.push_back(m); }
+};
+
+} // namespace
+
+TEST_CASE("dwgRW R2018 writes geometry and MTEXT then reader recovers them",
+          "[dwg-write][smoke][r2018]") {
+    const std::string path = tempPath("entities_r2018.dwg");
+
+    {
+        dwgRW writer(path.c_str());
+        R2018MTextRoundTripIface iface;
+        iface.m_writer = &writer;
+        REQUIRE(writer.write(&iface, DRW::AC1032, /*bin=*/false));
+    }
+
+    R2018MTextRoundTripIface readIface;
+    {
+        dwgRW reader(path.c_str());
+        bool ok = reader.read(&readIface, /*ext=*/false);
+        INFO("reader error = " << reader.getError());
+        REQUIRE(ok);
+        REQUIRE(reader.getVersion() == DRW::AC1032);
+        REQUIRE(reader.getError() == DRW::BAD_NONE);
+    }
+
+    REQUIRE(readIface.m_points.size() == 1);
+    REQUIRE(readIface.m_lines.size() == 1);
+    REQUIRE(readIface.m_mtexts.size() == 1);
+    REQUIRE(readIface.m_mtexts[0].basePoint.x == 12.0);
+    REQUIRE(readIface.m_mtexts[0].basePoint.y == 34.0);
+    REQUIRE(readIface.m_mtexts[0].height == 2.5);
+    REQUIRE(readIface.m_mtexts[0].text == "R2018 MTEXT");
+
+    std::remove(path.c_str());
+}
