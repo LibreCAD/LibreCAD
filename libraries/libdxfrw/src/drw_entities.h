@@ -564,6 +564,20 @@ public:
     duint32 m_shadowType = 0;
     duint16 m_shadowMapSize = 0;
     duint8 m_shadowMapSoftness = 0;
+    bool m_hasPhotometricData = false;
+    bool m_hasWebFile = false;
+    UTF8STRING m_webFile;
+    duint16 m_physicalIntensityMethod = 0;
+    double m_physicalIntensity = 0.0;
+    double m_illuminanceDistance = 0.0;
+    duint16 m_lampColorType = 0;
+    double m_lampColorTemperature = 0.0;
+    duint16 m_lampColorPreset = 0;
+    DRW_Coord m_webRotation{1.0, 0.0, 0.0};
+    duint16 m_extendedLightShape = 0;
+    double m_extendedLightLength = 0.0;
+    double m_extendedLightWidth = 0.0;
+    double m_extendedLightRadius = 0.0;
 };
 
 //! Class to handle TOLERANCE entries

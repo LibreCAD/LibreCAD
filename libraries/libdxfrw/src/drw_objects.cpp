@@ -140,12 +140,282 @@ bool readCadValuePoint(dwgBuffer *buf, DRW_CadValue& value, int dimensions) {
 }
 
 constexpr duint32 kMaxTableStyleItems = 100000;
+constexpr dint32 kMaxAssocItems = 100000;
+constexpr dint32 kMaxAssocValueParams = 10000;
+constexpr duint32 kMaxAcShBlobBytes = 16 * 1024 * 1024;
 
 duint32 readObjectHandleRef(dwgBuffer *hdlBuf) {
     if (hdlBuf == nullptr || !hdlBuf->isGood())
         return 0;
     dwgHandle h = hdlBuf->getHandle();
     return h.ref;
+}
+
+bool isValidAssocCount(dint32 count, dint32 maxCount = kMaxAssocItems) {
+    return count >= 0 && count <= maxCount;
+}
+
+bool skipHandleRefs(dwgBuffer *hdlBuf, dint32 count) {
+    if (!isValidAssocCount(count))
+        return false;
+    for (dint32 i = 0; i < count; ++i)
+        readObjectHandleRef(hdlBuf);
+    return hdlBuf == nullptr || hdlBuf->isGood();
+}
+
+enum class DwgValueKind {
+    Invalid,
+    Real,
+    Int8,
+    Int16,
+    Int32,
+    Int64,
+    String,
+    Point3d,
+    Binary,
+    Handle,
+    ObjectId,
+    Bool
+};
+
+DwgValueKind dwgResbufValueKind(dint32 groupCode) {
+    if (groupCode >= 300) {
+        if (groupCode >= 440) {
+            if (groupCode >= 1000) {
+                if (groupCode == 1004)
+                    return DwgValueKind::Binary;
+                if (groupCode <= 1009)
+                    return DwgValueKind::String;
+                if (groupCode <= 1039)
+                    return DwgValueKind::Point3d;
+                if (groupCode <= 1042)
+                    return DwgValueKind::Real;
+                if (groupCode <= 1069)
+                    return DwgValueKind::Point3d;
+                if (groupCode <= 1070)
+                    return DwgValueKind::Int16;
+                if (groupCode == 1071)
+                    return DwgValueKind::Int32;
+            } else {
+                if (groupCode <= 459)
+                    return DwgValueKind::Int32;
+                if (groupCode <= 469)
+                    return DwgValueKind::Real;
+                if (groupCode <= 479)
+                    return DwgValueKind::String;
+                if (groupCode == 999)
+                    return DwgValueKind::String;
+            }
+        } else if (groupCode >= 390) {
+            if (groupCode <= 399)
+                return DwgValueKind::Handle;
+            if (groupCode <= 409)
+                return DwgValueKind::Int16;
+            if (groupCode <= 419)
+                return DwgValueKind::String;
+            if (groupCode <= 429)
+                return DwgValueKind::Int32;
+            if (groupCode <= 439)
+                return DwgValueKind::String;
+        } else {
+            if (groupCode <= 309)
+                return DwgValueKind::String;
+            if (groupCode <= 319)
+                return DwgValueKind::Binary;
+            if (groupCode <= 329)
+                return DwgValueKind::Handle;
+            if (groupCode <= 369)
+                return DwgValueKind::ObjectId;
+            if (groupCode <= 389)
+                return DwgValueKind::Int16;
+        }
+    } else if (groupCode >= 105) {
+        if (groupCode >= 210) {
+            if (groupCode <= 269)
+                return DwgValueKind::Point3d;
+            if (groupCode <= 279)
+                return DwgValueKind::Int16;
+            if (groupCode <= 289)
+                return DwgValueKind::Int8;
+            if (groupCode <= 299)
+                return DwgValueKind::Bool;
+        } else {
+            if (groupCode == 105)
+                return DwgValueKind::Handle;
+            if (groupCode <= 139)
+                return DwgValueKind::Point3d;
+            if (groupCode <= 149)
+                return DwgValueKind::Real;
+            if (groupCode <= 169)
+                return DwgValueKind::Int64;
+            if (groupCode <= 179)
+                return DwgValueKind::Int16;
+        }
+    } else if (groupCode >= 38) {
+        if (groupCode <= 59)
+            return DwgValueKind::Real;
+        if (groupCode <= 79)
+            return DwgValueKind::Int16;
+        if (groupCode <= 99)
+            return DwgValueKind::Int32;
+        if (groupCode <= 102)
+            return DwgValueKind::String;
+    } else {
+        if (groupCode < 0)
+            return DwgValueKind::Handle;
+        if (groupCode <= 4)
+            return DwgValueKind::String;
+        if (groupCode == 5)
+            return DwgValueKind::Handle;
+        if (groupCode <= 9)
+            return DwgValueKind::String;
+        if (groupCode <= 37)
+            return DwgValueKind::Point3d;
+    }
+    return DwgValueKind::Invalid;
+}
+
+bool readBinaryBytes(dwgBuffer *buf, std::vector<duint8>& target,
+                     duint32 byteCount, duint32 maxBytes) {
+    if (byteCount > maxBytes)
+        return false;
+    target.resize(byteCount);
+    return byteCount == 0 || buf->getBytes(target.data(), target.size());
+}
+
+bool skipEvalVariant(DRW::Version version, dwgBuffer *buf, dwgBuffer *sBuf, dwgBuffer *hBuff) {
+    const dint32 groupCode = buf->getSBitShort();
+    if (groupCode == 0)
+        return buf->isGood();
+    switch (dwgResbufValueKind(groupCode)) {
+    case DwgValueKind::Real:
+        buf->getBitDouble();
+        break;
+    case DwgValueKind::Int32:
+        buf->getBitLong();
+        break;
+    case DwgValueKind::Int16:
+        buf->getBitShort();
+        break;
+    case DwgValueKind::Int8:
+        buf->getRawChar8();
+        break;
+    case DwgValueKind::String:
+        (sBuf ? sBuf : buf)->getVariableText(version, false);
+        break;
+    case DwgValueKind::Handle:
+        readObjectHandleRef(hBuff);
+        break;
+    case DwgValueKind::ObjectId:
+    case DwgValueKind::Int64:
+    case DwgValueKind::Point3d:
+    case DwgValueKind::Bool:
+    case DwgValueKind::Binary:
+    case DwgValueKind::Invalid:
+        break;
+    }
+    return buf->isGood() && (!sBuf || sBuf->isGood()) && (!hBuff || hBuff->isGood());
+}
+
+bool skipValueParam(DRW::Version version, dwgBuffer *buf, dwgBuffer *sBuf, dwgBuffer *hBuff) {
+    buf->getBitLong();
+    (sBuf ? sBuf : buf)->getVariableText(version, false);
+    buf->getBitLong();
+    const dint32 varCount = buf->getBitLong();
+    if (!isValidAssocCount(varCount, kMaxAssocValueParams))
+        return false;
+    for (dint32 i = 0; i < varCount; ++i) {
+        if (!skipEvalVariant(version, buf, sBuf, hBuff))
+            return false;
+        readObjectHandleRef(hBuff);
+    }
+    readObjectHandleRef(hBuff);
+    return buf->isGood() && (!sBuf || sBuf->isGood()) && (!hBuff || hBuff->isGood());
+}
+
+bool skipAssocActionParamPrefix(DRW::Version version, dwgBuffer *buf, dwgBuffer *sBuf) {
+    buf->getBitShort();
+    if (version >= DRW::AC1027)
+        buf->getBitLong();
+    (sBuf ? sBuf : buf)->getVariableText(version, false);
+    return buf->isGood() && (!sBuf || sBuf->isGood());
+}
+
+bool skipAssocCompoundActionParam(dwgBuffer *buf, dwgBuffer *hBuff) {
+    buf->getBitShort();
+    buf->getBitShort();
+    const dint32 paramCount = buf->getBitLong();
+    if (!skipHandleRefs(hBuff, paramCount))
+        return false;
+    const bool hasChildParam = buf->getBit() != 0;
+    dint32 childId = 0;
+    if (hasChildParam) {
+        buf->getBitShort();
+        childId = buf->getBitLong();
+        readObjectHandleRef(hBuff);
+    }
+    if (childId != 0) {
+        readObjectHandleRef(hBuff);
+        buf->getBitLong();
+        readObjectHandleRef(hBuff);
+    }
+    return buf->isGood() && (!hBuff || hBuff->isGood());
+}
+
+bool skipAssocSingleDependencyActionParam(dwgBuffer *buf, dwgBuffer *hBuff, duint32 *depHandle) {
+    buf->getBitLong();
+    const duint32 handle = readObjectHandleRef(hBuff);
+    if (depHandle)
+        *depHandle = handle;
+    return buf->isGood() && (!hBuff || hBuff->isGood());
+}
+
+bool skipEvalExpr(DRW::Version version, dwgBuffer *buf, dwgBuffer *sBuf, dwgBuffer *hBuff) {
+    buf->getBitLong();
+    buf->getBitLong();
+    buf->getBitLong();
+    const dint16 valueCode = buf->getSBitShort();
+    switch (valueCode) {
+    case 40:
+        buf->getBitDouble();
+        break;
+    case 10:
+    case 11:
+        buf->get2RawDouble();
+        break;
+    case 1:
+        (sBuf ? sBuf : buf)->getVariableText(version, false);
+        break;
+    case 90:
+        buf->getBitLong();
+        break;
+    case 91:
+        readObjectHandleRef(hBuff);
+        break;
+    case 70:
+        buf->getBitShort();
+        break;
+    default:
+        break;
+    }
+    buf->getBitLong();
+    return buf->isGood() && (!sBuf || sBuf->isGood()) && (!hBuff || hBuff->isGood());
+}
+
+bool skipShHistoryNode(DRW::Version version, dwgBuffer *buf, dwgBuffer *sBuf, dwgBuffer *hBuff,
+                       duint32 *major = nullptr, duint32 *minor = nullptr) {
+    const duint32 nodeMajor = static_cast<duint32>(buf->getBitLong());
+    const duint32 nodeMinor = static_cast<duint32>(buf->getBitLong());
+    if (major)
+        *major = nodeMajor;
+    if (minor)
+        *minor = nodeMinor;
+    for (int i = 0; i < 16; ++i)
+        buf->getBitDouble();
+    buf->getCmColor(version, nullptr, sBuf);
+    buf->getBitLong();
+    readObjectHandleRef(hBuff);
+    return buf->isGood() && (!sBuf || sBuf->isGood()) && (!hBuff || hBuff->isGood());
 }
 
 int readObjectCmColor(DRW::Version version, dwgBuffer *buf, dwgBuffer *strBuf) {
@@ -3149,15 +3419,16 @@ bool DRW_AssociativeObject::parseDwg(DRW::Version version, dwgBuffer *buf, duint
     readCommonObjectHandles(&hBuff, handle, numReactors, xDictFlag, &parentHandle);
 
     auto readHandleVector = [&](std::vector<duint32>& target, dint32 count) {
-        if (count < 0 || count > 100000)
-            return;
+        if (!isValidAssocCount(count))
+            return false;
         target.reserve(target.size() + static_cast<size_t>(count));
         for (dint32 i = 0; i < count; ++i)
             target.push_back(readObjectHandleRef(&hBuff));
+        return hBuff.isGood();
     };
     auto readOwnedRefs = [&](std::vector<DRW_AssociativeHandleRef>& target, dint32 count) {
-        if (count < 0 || count > 100000)
-            return;
+        if (!isValidAssocCount(count))
+            return false;
         target.reserve(target.size() + static_cast<size_t>(count));
         for (dint32 i = 0; i < count; ++i) {
             DRW_AssociativeHandleRef ref;
@@ -3165,6 +3436,7 @@ bool DRW_AssociativeObject::parseDwg(DRW::Version version, dwgBuffer *buf, duint
             ref.m_handle = readObjectHandleRef(&hBuff);
             target.push_back(ref);
         }
+        return buf->isGood() && hBuff.isGood();
     };
     auto readActionFields = [&]() {
         m_classVersion = buf->getBitShort();
@@ -3174,15 +3446,23 @@ bool DRW_AssociativeObject::parseDwg(DRW::Version version, dwgBuffer *buf, duint
         m_actionIndex = buf->getBitLong();
         m_maxDependencyIndex = buf->getBitLong();
         const dint32 dependencyCount = buf->getBitLong();
-        readOwnedRefs(m_dependencies, dependencyCount);
+        if (!readOwnedRefs(m_dependencies, dependencyCount))
+            return false;
         if (m_classVersion > 1) {
             buf->getBitShort();
             const dint32 ownedParamCount = buf->getBitLong();
-            readHandleVector(m_ownedParams, ownedParamCount);
+            if (!readHandleVector(m_ownedParams, ownedParamCount))
+                return false;
             buf->getBitShort();
             const dint32 valueCount = buf->getBitLong();
-            DRW_DBG(" ACDBASSOC value params skipped: "); DRW_DBG(valueCount); DRW_DBG("\n");
+            if (!isValidAssocCount(valueCount, kMaxAssocValueParams))
+                return false;
+            for (dint32 i = 0; i < valueCount; ++i) {
+                if (!skipValueParam(version, buf, sBuf, &hBuff))
+                    return false;
+            }
         }
+        return buf->isGood() && hBuff.isGood() && (!sBuf || sBuf->isGood());
     };
     auto readDependencyFields = [&]() {
         m_classVersion = buf->getBitShort();
@@ -3200,23 +3480,27 @@ bool DRW_AssociativeObject::parseDwg(DRW::Version version, dwgBuffer *buf, duint
         m_writeDependencyHandle = readObjectHandleRef(&hBuff);
         readObjectHandleRef(&hBuff);
         buf->getBitLong();
+        return buf->isGood() && hBuff.isGood() && (!sBuf || sBuf->isGood());
     };
 
     if (m_recordName == "ACDBASSOCACTION") {
         readActionFields();
     } else if (m_recordName == "ACDBASSOCNETWORK") {
-        readActionFields();
-        buf->getBitShort();
-        m_actionIndex = buf->getBitLong();
-        const dint32 actionCount = buf->getBitLong();
-        readOwnedRefs(m_actions, actionCount);
-        const dint32 ownedActionCount = buf->getBitLong();
-        readHandleVector(m_ownedActions, ownedActionCount);
+        if (readActionFields()) {
+            buf->getBitShort();
+            m_actionIndex = buf->getBitLong();
+            const dint32 actionCount = buf->getBitLong();
+            if (readOwnedRefs(m_actions, actionCount)) {
+                const dint32 ownedActionCount = buf->getBitLong();
+                readHandleVector(m_ownedActions, ownedActionCount);
+            }
+        }
     } else if (m_recordName == "ACDBASSOCDEPENDENCY"
                || m_recordName == "ACDBASSOCGEOMDEPENDENCY") {
-        readDependencyFields();
-        if (m_recordName == "ACDBASSOCGEOMDEPENDENCY") {
+        if (readDependencyFields() && m_recordName == "ACDBASSOCGEOMDEPENDENCY") {
             buf->getBitShort();
+            buf->getBit();
+            (sBuf ? sBuf : buf)->getVariableText(version, false);
             buf->getBit();
         }
     } else if (m_recordName == "ACDBASSOCALIGNEDDIMACTIONBODY") {
@@ -3226,14 +3510,18 @@ bool DRW_AssociativeObject::parseDwg(DRW::Version version, dwgBuffer *buf, duint
         m_rNodeHandle = readObjectHandleRef(&hBuff);
         m_dNodeHandle = readObjectHandleRef(&hBuff);
     } else if (m_recordName == "ACDBASSOCVERTEXACTIONPARAM") {
-        buf->getBitShort();
-        m_dependencyHandle = readObjectHandleRef(&hBuff);
-        m_classVersion = static_cast<duint16>(buf->getBitLong());
-        m_point = buf->get3BitDouble();
+        if (skipAssocActionParamPrefix(version, buf, sBuf)
+            && skipAssocSingleDependencyActionParam(buf, &hBuff, &m_dependencyHandle)) {
+            m_classVersion = static_cast<duint16>(buf->getBitLong());
+            m_point = buf->get3BitDouble();
+        }
     } else if (m_recordName == "ACDBASSOCOSNAPPOINTREFACTIONPARAM") {
-        m_status = buf->getBitShort();
-        m_osnapMode = buf->getRawChar8();
-        m_parameter = buf->getBitDouble();
+        if (skipAssocActionParamPrefix(version, buf, sBuf)
+            && skipAssocCompoundActionParam(buf, &hBuff)) {
+            m_status = buf->getBitShort();
+            m_osnapMode = buf->getRawChar8();
+            m_parameter = buf->getBitDouble();
+        }
     } else if (m_recordName == "ACDBASSOCPERSSUBENTMANAGER"
                || m_recordName == "ACDBPERSSUBENTMANAGER") {
         m_classVersion = static_cast<duint16>(buf->getBitLong());
@@ -3271,32 +3559,30 @@ bool DRW_AcShHistoryObject::parseDwg(DRW::Version version, dwgBuffer *buf, duint
         m_showHistory = buf->getBit() != 0;
         m_recordHistory = buf->getBit() != 0;
     } else if (m_recordName == "ACSH_SWEEP_CLASS") {
-        // Decode the stable sweep tail enough to expose options and binary
-        // payload sizes. The AcDbEvalExpr/HistoryNode prefix remains raw for
-        // follow-up semantic decoding.
-        for (int i = 0; i < 3; ++i)
+        if (skipEvalExpr(version, buf, sBuf, &hBuff)
+            && skipShHistoryNode(version, buf, sBuf, &hBuff)) {
+            m_major = static_cast<duint32>(buf->getBitLong());
+            m_minor = static_cast<duint32>(buf->getBitLong());
+            m_direction = buf->get3BitDouble();
             buf->getBitLong();
-        m_major = static_cast<duint32>(buf->getBitLong());
-        m_minor = static_cast<duint32>(buf->getBitLong());
-        m_direction = buf->get3BitDouble();
-        buf->getBitLong();
-        const dint32 blob1Size = buf->getBitLong();
-        if (blob1Size > 0 && blob1Size < 10000000) {
-            m_binaryBlob1.resize(static_cast<size_t>(blob1Size));
-            buf->getBytes(m_binaryBlob1.data(), m_binaryBlob1.size());
+            const dint32 blob1Size = buf->getBitLong();
+            bool sweepTailOk = blob1Size >= 0
+                && readBinaryBytes(buf, m_binaryBlob1, static_cast<duint32>(blob1Size), kMaxAcShBlobBytes);
+            if (sweepTailOk) {
+                buf->getBitLong();
+                const dint32 blob2Size = buf->getBitLong();
+                sweepTailOk = blob2Size >= 0
+                    && readBinaryBytes(buf, m_binaryBlob2, static_cast<duint32>(blob2Size), kMaxAcShBlobBytes);
+            }
+            if (sweepTailOk) {
+                m_draftAngle = buf->getBitDouble();
+                m_startDraftDistance = buf->getBitDouble();
+                m_endDraftDistance = buf->getBitDouble();
+                m_scaleFactor = buf->getBitDouble();
+                m_twistAngle = buf->getBitDouble();
+                m_alignAngle = buf->getBitDouble();
+            }
         }
-        buf->getBitLong();
-        const dint32 blob2Size = buf->getBitLong();
-        if (blob2Size > 0 && blob2Size < 10000000) {
-            m_binaryBlob2.resize(static_cast<size_t>(blob2Size));
-            buf->getBytes(m_binaryBlob2.data(), m_binaryBlob2.size());
-        }
-        m_draftAngle = buf->getBitDouble();
-        m_startDraftDistance = buf->getBitDouble();
-        m_endDraftDistance = buf->getBitDouble();
-        m_scaleFactor = buf->getBitDouble();
-        m_twistAngle = buf->getBitDouble();
-        m_alignAngle = buf->getBitDouble();
     }
 
     DRW_UNUSED(sBuf);

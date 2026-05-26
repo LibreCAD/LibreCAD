@@ -46,6 +46,10 @@ bool isValidCount(dint32 count, dint32 maxCount) {
     return count >= 0 && count <= maxCount;
 }
 
+duint64 currentDwgBit(const dwgBuffer *buf) {
+    return buf->getPosition() * 8 + buf->getBitPos();
+}
+
 bool isValidSplineDegree(int degree) {
     return degree >= 1 && degree <= kMaxSplineDegree;
 }
@@ -2634,14 +2638,12 @@ bool DRW_ModelerGeometry::parseDwg(DRW::Version v, dwgBuffer *buf, duint32 bs){
     if (!m_isEmpty)
         m_modelerVersion = buf->getBitShort();
 
-    if (v > DRW::AC1018) {
-        ret = DRW_Entity::parseDwgEntHandle(v, buf);
-        if (eType == DRW::E3DSOLID && buf->numRemainingBytes() > 2) {
-            dwgHandle historyH = buf->getHandle();
-            m_historyHandle = historyH.ref;
-            DRW_DBG(" 3DSOLID history Handle: ");
-            DRW_DBGHL(historyH.code, historyH.size, historyH.ref); DRW_DBG("\n");
-        }
+    ret = DRW_Entity::parseDwgEntHandle(v, buf);
+    if (eType == DRW::E3DSOLID && v > DRW::AC1018 && buf->numRemainingBytes() > 2) {
+        dwgHandle historyH = buf->getHandle();
+        m_historyHandle = historyH.ref;
+        DRW_DBG(" 3DSOLID history Handle: ");
+        DRW_DBGHL(historyH.code, historyH.size, historyH.ref); DRW_DBG("\n");
     }
 
     return ret;
@@ -2655,6 +2657,7 @@ bool DRW_Light::parseDwg(DRW::Version v, dwgBuffer *buf, duint32 bs){
         return ret;
     DRW_DBG("\n***************************** parsing LIGHT *****************************\n");
 
+    const duint64 bodyDataEndBit = v > DRW::AC1018 ? currentDwgBit(sBuf) : 0;
     m_classVersion = static_cast<duint32>(buf->getBitLong());
     m_name = sBuf->getVariableText(v, false);
     m_type = static_cast<duint32>(buf->getBitLong());
@@ -2674,6 +2677,25 @@ bool DRW_Light::parseDwg(DRW::Version v, dwgBuffer *buf, duint32 bs){
     m_shadowType = static_cast<duint32>(buf->getBitLong());
     m_shadowMapSize = buf->getBitShort();
     m_shadowMapSoftness = buf->getRawChar8();
+
+    if (v > DRW::AC1018 && currentDwgBit(buf) < bodyDataEndBit) {
+        m_hasPhotometricData = buf->getBit() != 0;
+        if (m_hasPhotometricData) {
+            m_hasWebFile = buf->getBit() != 0;
+            m_webFile = sBuf->getVariableText(v, false);
+            m_physicalIntensityMethod = buf->getBitShort();
+            m_physicalIntensity = buf->getBitDouble();
+            m_illuminanceDistance = buf->getBitDouble();
+            m_lampColorType = buf->getBitShort();
+            m_lampColorTemperature = buf->getBitDouble();
+            m_lampColorPreset = buf->getBitShort();
+            m_webRotation = buf->get3BitDouble();
+            m_extendedLightShape = buf->getBitShort();
+            m_extendedLightLength = buf->getBitDouble();
+            m_extendedLightWidth = buf->getBitDouble();
+            m_extendedLightRadius = buf->getBitDouble();
+        }
+    }
 
     ret = DRW_Entity::parseDwgEntHandle(v, buf);
     DRW_DBG("LIGHT name: "); DRW_DBG(m_name.c_str()); DRW_DBG("\n");
