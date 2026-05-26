@@ -1468,6 +1468,15 @@ bool dwgReader::readDwgEntity(dwgBuffer *dbuf, objHandle& obj, DRW_Interface& in
                 const char* className = (cit != classesmap.end() && cit->second)
                                           ? cit->second->recName.c_str()
                                           : "(unknown)";
+                DRW_UnsupportedObject raw;
+                raw.m_objectType = oType;
+                raw.m_handle = obj.handle;
+                if (cit != classesmap.end() && cit->second) {
+                    raw.m_recordName = cit->second->recName;
+                    raw.m_className = cit->second->className;
+                }
+                raw.m_rawBytes = tmpByteStr;
+                intfa.addUnsupportedObject(raw);
                 objObjectMap[obj.handle]= obj;
                 DRW_DBG("[custom-class-skipped "); DRW_DBG(oType);
                 DRW_DBG(" "); DRW_DBG(className); DRW_DBG("]\n");
@@ -1567,6 +1576,11 @@ bool dwgReader::readDwgObject(dwgBuffer *dbuf, objHandle& obj, DRW_Interface& in
                 mlineStyleNameMap[obj.handle] = e.name;
             }
             intfa.addMLineStyle(e);
+            break; }
+        case 72: { //GROUP (ODA fixed type 72)
+            DRW_Group e;
+            ret = e.parseDwg(version, &buff, bs);
+            if (ret) intfa.addGroup(e);
             break; }
         case 82: { //LAYOUT (ODA fixed type 82)
             DRW_Layout e;
@@ -1705,6 +1719,34 @@ bool dwgReader::readDwgObject(dwgBuffer *dbuf, objHandle& obj, DRW_Interface& in
                         DRW_BreakPointRef e;
                         ret = e.parseDwg(version, &buff, bs);
                         if (ret) intfa.addBreakPointRef(e);
+                        break;
+                    }
+                    if (rn == "GEODATA"
+                        || cit->second->className == "AcDbGeoData") {
+                        DRW_GeoData e;
+                        ret = e.parseDwg(version, &buff, bs);
+                        if (ret) intfa.addGeoData(e);
+                        break;
+                    }
+                    if (rn == "IMAGEDEF_REACTOR"
+                        || cit->second->className == "AcDbRasterImageDefReactor") {
+                        DRW_ImageDefinitionReactor e;
+                        ret = e.parseDwg(version, &buff, bs);
+                        if (ret) intfa.addImageDefinitionReactor(e);
+                        break;
+                    }
+                    if (rn == "SPATIAL_FILTER"
+                        || cit->second->className == "AcDbSpatialFilter") {
+                        DRW_SpatialFilter e;
+                        ret = e.parseDwg(version, &buff, bs);
+                        if (ret) intfa.addSpatialFilter(e);
+                        break;
+                    }
+                    if (rn == "TABLEGEOMETRY"
+                        || cit->second->className == "AcDbTableGeometry") {
+                        DRW_TableGeometry e;
+                        ret = e.parseDwg(version, &buff, bs);
+                        if (ret) intfa.addTableGeometry(e);
                         break;
                     }
                     if (rn == "MLEADERSTYLE") {

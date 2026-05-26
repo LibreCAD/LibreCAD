@@ -3669,6 +3669,42 @@ void RS_FilterDXFRW::addBreakPointRef(const DRW_BreakPointRef &data) {
                   static_cast<int>(data.handle));
 }
 
+void RS_FilterDXFRW::addGroup(const DRW_Group &data) {
+  // TODO: Store GROUP membership in the document model so selection sets and
+  // named groups can round-trip through LibreCAD instead of being import-only.
+  RS_DEBUG->print("RS_FilterDXFRW::addGroup: %s (%d handles)",
+                  data.m_description.empty() ? "(unnamed)" : data.m_description.c_str(),
+                  static_cast<int>(data.m_entityHandles.size()));
+}
+
+void RS_FilterDXFRW::addImageDefinitionReactor(const DRW_ImageDefinitionReactor &data) {
+  // TODO: Preserve IMAGEDEF_REACTOR ownership links alongside IMAGEDEF/IMAGE
+  // metadata once LibreCAD has a raw DWG object store.
+  RS_DEBUG->print("RS_FilterDXFRW::addImageDefinitionReactor: class version %d",
+                  static_cast<int>(data.m_classVersion));
+}
+
+void RS_FilterDXFRW::addSpatialFilter(const DRW_SpatialFilter &data) {
+  // TODO: Attach SPATIAL_FILTER clip boundaries to INSERT/xref entities when
+  // native xref clipping support exists in the LibreCAD entity layer.
+  RS_DEBUG->print("RS_FilterDXFRW::addSpatialFilter: %d boundary points",
+                  static_cast<int>(data.m_boundaryPoints.size()));
+}
+
+void RS_FilterDXFRW::addGeoData(const DRW_GeoData &data) {
+  // TODO: Map GEODATA to drawing-level geolocation/projection settings.
+  RS_DEBUG->print("RS_FilterDXFRW::addGeoData: version %d",
+                  static_cast<int>(data.m_version));
+}
+
+void RS_FilterDXFRW::addTableGeometry(const DRW_TableGeometry &data) {
+  // TODO: Use TABLEGEOMETRY with TABLE/TABLECONTENT rendering when native
+  // semantic table layout is completed.
+  RS_DEBUG->print("RS_FilterDXFRW::addTableGeometry: %d x %d",
+                  static_cast<int>(data.m_rowCount),
+                  static_cast<int>(data.m_columnCount));
+}
+
 /**
  * Implementation of the method which links image entities to image files.
  */

@@ -155,6 +155,11 @@ public:
     void addSectionViewStyle(const DRW_SectionViewStyle &data) override;
     void addBreakData(const DRW_BreakData &data) override;
     void addBreakPointRef(const DRW_BreakPointRef &data) override;
+    void addGroup(const DRW_Group &data) override;
+    void addImageDefinitionReactor(const DRW_ImageDefinitionReactor &data) override;
+    void addSpatialFilter(const DRW_SpatialFilter &data) override;
+    void addGeoData(const DRW_GeoData &data) override;
+    void addTableGeometry(const DRW_TableGeometry &data) override;
 
     void add3dFace(const DRW_3Dface& data) override;
     void addComment(const char*) override;

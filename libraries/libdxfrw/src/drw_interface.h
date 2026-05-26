@@ -302,6 +302,16 @@ public:
     virtual void addBreakData(const DRW_BreakData& data) { (void) data; }
     /** Called for every BREAKPOINTREF broken-view reference metadata object. */
     virtual void addBreakPointRef(const DRW_BreakPointRef& data) { (void) data; }
+    /** Called for every GROUP object. */
+    virtual void addGroup(const DRW_Group& data) { (void) data; }
+    /** Called for every IMAGEDEF_REACTOR object. */
+    virtual void addImageDefinitionReactor(const DRW_ImageDefinitionReactor& data) { (void) data; }
+    /** Called for every SPATIAL_FILTER xref clipping object. */
+    virtual void addSpatialFilter(const DRW_SpatialFilter& data) { (void) data; }
+    /** Called for every GEODATA geolocation metadata object. */
+    virtual void addGeoData(const DRW_GeoData& data) { (void) data; }
+    /** Called for every TABLEGEOMETRY cache object. */
+    virtual void addTableGeometry(const DRW_TableGeometry& data) { (void) data; }
 
     /**
      * Called for every comment in the DXF file (code 999).

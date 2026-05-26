@@ -156,6 +156,14 @@ int readObjectCmColor(DRW::Version version, dwgBuffer *buf, dwgBuffer *strBuf) {
     return static_cast<int>(buf->getCmColor(version, &rgb, textBuf, &name, &book));
 }
 
+std::vector<double> readObject4x3Matrix(dwgBuffer *buf) {
+    std::vector<double> matrix;
+    matrix.reserve(12);
+    for (int i = 0; i < 12; ++i)
+        matrix.push_back(buf->getBitDouble());
+    return matrix;
+}
+
 bool readTableStyleContentFormat(DRW::Version version, dwgBuffer *buf,
                                  dwgBuffer *strBuf, dwgBuffer *hdlBuf,
                                  DRW_TableStyleContentFormat& format) {
@@ -2750,6 +2758,231 @@ bool DRW_Scale::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
     // Trailing handle stream (parent dictionary, reactors, xdic) — left to
     // the caller; the OBJECTS dispatch hands us a size-bounded slice.
     return buf->isGood();
+}
+
+bool DRW_Group::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
+    dwgBuffer sBuff = *buf;
+    dwgBuffer *sBuf = version > DRW::AC1018 ? &sBuff : buf;
+    bool ret = DRW_TableEntry::parseDwg(version, buf, sBuf, bs);
+    DRW_DBG("\n***************************** parsing GROUP *****************************\n");
+    if (!ret)
+        return ret;
+
+    m_description = sBuf->getVariableText(version, false);
+    m_isUnnamed = buf->getBitShort() > 0;
+    m_selectable = buf->getBitShort() > 0;
+
+    const dint32 handleCount = buf->getBitLong();
+    if (handleCount < 0 || handleCount > 100000)
+        return false;
+
+    dwgBuffer hBuff = *buf;
+    seekObjectHandleStream(version, &hBuff, objSize);
+    readCommonObjectHandles(&hBuff, handle, numReactors, xDictFlag, &parentHandle);
+
+    m_entityHandles.clear();
+    m_entityHandles.reserve(static_cast<size_t>(handleCount));
+    for (dint32 i = 0; i < handleCount; ++i)
+        m_entityHandles.push_back(readObjectHandleRef(&hBuff));
+
+    DRW_DBG("GROUP description='"); DRW_DBG(m_description.c_str());
+    DRW_DBG("' handles="); DRW_DBG(static_cast<int>(m_entityHandles.size())); DRW_DBG("\n");
+    return buf->isGood() && sBuf->isGood() && hBuff.isGood();
+}
+
+bool DRW_ImageDefinitionReactor::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
+    dwgBuffer sBuff = *buf;
+    dwgBuffer *sBuf = version > DRW::AC1018 ? &sBuff : buf;
+    bool ret = DRW_TableEntry::parseDwg(version, buf, sBuf, bs);
+    DRW_DBG("\n***************************** parsing IMAGEDEF_REACTOR ******************\n");
+    if (!ret)
+        return ret;
+
+    dwgBuffer hBuff = *buf;
+    seekObjectHandleStream(version, &hBuff, objSize);
+    readCommonObjectHandles(&hBuff, handle, numReactors, xDictFlag, &parentHandle);
+
+    m_classVersion = buf->getBitLong();
+    DRW_UNUSED(sBuf);
+    return buf->isGood() && hBuff.isGood();
+}
+
+bool DRW_SpatialFilter::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
+    dwgBuffer sBuff = *buf;
+    dwgBuffer *sBuf = version > DRW::AC1018 ? &sBuff : buf;
+    bool ret = DRW_TableEntry::parseDwg(version, buf, sBuf, bs);
+    DRW_DBG("\n***************************** parsing SPATIAL_FILTER ********************\n");
+    if (!ret)
+        return ret;
+
+    dwgBuffer hBuff = *buf;
+    seekObjectHandleStream(version, &hBuff, objSize);
+    readCommonObjectHandles(&hBuff, handle, numReactors, xDictFlag, &parentHandle);
+
+    const dint32 pointCount = buf->getBitShort();
+    if (pointCount < 0 || pointCount > 100000)
+        return false;
+    m_boundaryPoints.clear();
+    m_boundaryPoints.reserve(static_cast<size_t>(pointCount));
+    for (dint32 i = 0; i < pointCount; ++i)
+        m_boundaryPoints.push_back(buf->get2RawDouble());
+
+    m_normal = buf->get3BitDouble();
+    m_origin = buf->get3BitDouble();
+    m_displayBoundary = buf->getBitShort() != 0;
+    m_clipFrontPlane = buf->getBitShort() != 0;
+    if (m_clipFrontPlane)
+        m_frontDistance = buf->getBitDouble();
+    m_clipBackPlane = buf->getBitShort() != 0;
+    if (m_clipBackPlane)
+        m_backDistance = buf->getBitDouble();
+    m_inverseInsertTransform = readObject4x3Matrix(buf);
+    m_insertTransform = readObject4x3Matrix(buf);
+
+    DRW_UNUSED(sBuf);
+    DRW_DBG("SPATIAL_FILTER boundary points: ");
+    DRW_DBG(static_cast<int>(m_boundaryPoints.size())); DRW_DBG("\n");
+    return buf->isGood() && hBuff.isGood();
+}
+
+bool DRW_GeoData::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
+    dwgBuffer sBuff = *buf;
+    dwgBuffer *sBuf = version > DRW::AC1018 ? &sBuff : buf;
+    bool ret = DRW_TableEntry::parseDwg(version, buf, sBuf, bs);
+    DRW_DBG("\n***************************** parsing GEODATA ***************************\n");
+    if (!ret)
+        return ret;
+
+    dwgBuffer hBuff = *buf;
+    seekObjectHandleStream(version, &hBuff, objSize);
+    readCommonObjectHandles(&hBuff, handle, numReactors, xDictFlag, &parentHandle);
+
+    m_version = buf->getBitLong();
+    m_hostBlockHandle = readObjectHandleRef(&hBuff);
+    m_coordinatesType = buf->getBitShort();
+
+    if (m_version == 1) {
+        m_referencePoint = buf->get3BitDouble();
+        m_horizontalUnits = buf->getBitLong();
+        m_verticalUnits = m_horizontalUnits;
+        m_designPoint = buf->get3BitDouble();
+        buf->get3BitDouble(); // obsolete, ODA writes (0,0,0)
+        m_upDirection = buf->get3BitDouble();
+        const double angle = M_PI / 2.0 - buf->getBitDouble();
+        m_northDirection = DRW_Coord(std::cos(angle), std::sin(angle), 0.0);
+        buf->get3BitDouble(); // obsolete, ODA writes (1,1,1)
+        m_coordinateSystemDefinition = sBuf->getVariableText(version, false);
+        m_geoRssTag = sBuf->getVariableText(version, false);
+        m_horizontalUnitScale = buf->getBitDouble();
+        m_verticalUnitScale = m_horizontalUnitScale;
+        sBuf->getVariableText(version, false); // obsolete datum name
+        sBuf->getVariableText(version, false); // obsolete WKT
+    } else if (m_version == 2 || m_version == 3) {
+        m_designPoint = buf->get3BitDouble();
+        m_referencePoint = buf->get3BitDouble();
+        m_horizontalUnitScale = buf->getBitDouble();
+        m_horizontalUnits = buf->getBitLong();
+        m_verticalUnitScale = buf->getBitDouble();
+        m_verticalUnits = buf->getBitLong();
+        m_upDirection = buf->get3BitDouble();
+        m_northDirection = buf->get2RawDouble();
+        m_scaleEstimationMethod = buf->getBitLong();
+        m_userSpecifiedScaleFactor = buf->getBitDouble();
+        m_enableSeaLevelCorrection = buf->getBit() != 0;
+        m_seaLevelElevation = buf->getBitDouble();
+        m_coordinateProjectionRadius = buf->getBitDouble();
+        m_coordinateSystemDefinition = sBuf->getVariableText(version, false);
+        m_geoRssTag = sBuf->getVariableText(version, false);
+    } else {
+        return buf->isGood() && hBuff.isGood();
+    }
+
+    m_observationFromTag = sBuf->getVariableText(version, false);
+    m_observationToTag = sBuf->getVariableText(version, false);
+    m_observationCoverageTag = sBuf->getVariableText(version, false);
+
+    const dint32 pointCount = buf->getBitLong();
+    if (pointCount < 0 || pointCount > 100000)
+        return false;
+    m_points.clear();
+    m_points.reserve(static_cast<size_t>(pointCount));
+    for (dint32 i = 0; i < pointCount; ++i) {
+        DRW_GeoMeshPoint point;
+        point.m_source = buf->get2RawDouble();
+        point.m_destination = buf->get2RawDouble();
+        m_points.push_back(point);
+    }
+
+    const dint32 faceCount = buf->getBitLong();
+    if (faceCount < 0 || faceCount > 100000)
+        return false;
+    m_faces.clear();
+    m_faces.reserve(static_cast<size_t>(faceCount));
+    for (dint32 i = 0; i < faceCount; ++i) {
+        DRW_GeoMeshFace face;
+        face.m_index1 = buf->getBitLong();
+        face.m_index2 = buf->getBitLong();
+        face.m_index3 = buf->getBitLong();
+        m_faces.push_back(face);
+    }
+
+    DRW_DBG("GEODATA version: "); DRW_DBG(m_version);
+    DRW_DBG(" points: "); DRW_DBG(static_cast<int>(m_points.size()));
+    DRW_DBG(" faces: "); DRW_DBG(static_cast<int>(m_faces.size())); DRW_DBG("\n");
+    return buf->isGood() && sBuf->isGood() && hBuff.isGood();
+}
+
+bool DRW_TableGeometry::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
+    dwgBuffer sBuff = *buf;
+    dwgBuffer *sBuf = version > DRW::AC1018 ? &sBuff : buf;
+    bool ret = DRW_TableEntry::parseDwg(version, buf, sBuf, bs);
+    DRW_DBG("\n***************************** parsing TABLEGEOMETRY *********************\n");
+    if (!ret)
+        return ret;
+
+    dwgBuffer hBuff = *buf;
+    seekObjectHandleStream(version, &hBuff, objSize);
+    readCommonObjectHandles(&hBuff, handle, numReactors, xDictFlag, &parentHandle);
+
+    m_rowCount = buf->getBitLong();
+    m_columnCount = buf->getBitLong();
+    m_cellCount = buf->getBitLong();
+    if (m_rowCount < 0 || m_columnCount < 0 || m_cellCount < 0 || m_cellCount > 100000)
+        return false;
+
+    const long long expectedCells = static_cast<long long>(m_rowCount) * static_cast<long long>(m_columnCount);
+    if (expectedCells > 100000 || (expectedCells != 0 && expectedCells != m_cellCount))
+        return false;
+
+    m_cells.clear();
+    m_cells.reserve(static_cast<size_t>(m_cellCount));
+    for (dint32 i = 0; i < m_cellCount; ++i) {
+        DRW_TableGeometryCell cell;
+        cell.m_flags = buf->getBitLong();
+        cell.m_widthWithGap = buf->getBitDouble();
+        cell.m_heightWithGap = buf->getBitDouble();
+        cell.m_unknownHandle = readObjectHandleRef(&hBuff);
+        const dint32 contentCount = buf->getBitLong();
+        if (contentCount < 0 || contentCount > 100000)
+            return false;
+        cell.m_contents.reserve(static_cast<size_t>(contentCount));
+        for (dint32 j = 0; j < contentCount; ++j) {
+            DRW_TableGeometryContent content;
+            content.m_topLeft = buf->get3BitDouble();
+            content.m_center = buf->get3BitDouble();
+            content.m_contentWidth = buf->getBitDouble();
+            content.m_contentHeight = buf->getBitDouble();
+            content.m_width = buf->getBitDouble();
+            content.m_height = buf->getBitDouble();
+            content.m_unknown = buf->getBitLong();
+            cell.m_contents.push_back(content);
+        }
+        m_cells.push_back(cell);
+    }
+
+    DRW_UNUSED(sBuf);
+    DRW_DBG("TABLEGEOMETRY cells: "); DRW_DBG(static_cast<int>(m_cells.size())); DRW_DBG("\n");
+    return buf->isGood() && hBuff.isGood();
 }
 
 bool DRW_DimensionAssociation::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){

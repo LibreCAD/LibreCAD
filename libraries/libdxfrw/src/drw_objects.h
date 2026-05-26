@@ -66,14 +66,18 @@ namespace DRW {
          DETAILVIEWSTYLE,
          SECTIONVIEWSTYLE,
          BREAKDATA,
-         BREAKPOINTREF
+         BREAKPOINTREF,
+         GROUP,
+         IMAGEDEFREACTOR,
+         SPATIALFILTER,
+         GEODATA,
+         TABLEGEOMETRY
      };
 
 //pending VP_ENT_HDR, GROUP, LONG_TRANSACTION,
 //ACDBPLACEHOLDER, VBA_PROJECT, ACAD_TABLE,
-//IDBUFFER, IMAGEDEF, IMAGEDEFREACTOR, LAYER_INDEX,
-//PLACEHOLDER, PLOTSETTINGS, SPATIAL_INDEX, SPATIAL_FILTER,
-//TABLEGEOMETRY,
+//IDBUFFER, IMAGEDEF, LAYER_INDEX,
+//PLACEHOLDER, PLOTSETTINGS, SPATIAL_INDEX,
 }
 
 class dwgBufferW;
@@ -158,6 +162,127 @@ struct DRW_UnsupportedObject {
     UTF8STRING m_recordName;
     UTF8STRING m_className;
     std::vector<duint8> m_rawBytes;
+};
+
+//! GROUP object (fixed type 72), carrying a named set of entity handles.
+class DRW_Group : public DRW_TableEntry {
+    SETOBJFRIENDS
+public:
+    DRW_Group() { tType = DRW::GROUP; }
+protected:
+    bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) override;
+public:
+    UTF8STRING m_description;
+    bool m_isUnnamed = false;
+    bool m_selectable = true;
+    std::vector<duint32> m_entityHandles;
+};
+
+//! IMAGEDEF_REACTOR object.  The image relationship is carried by object ownership.
+class DRW_ImageDefinitionReactor : public DRW_TableEntry {
+    SETOBJFRIENDS
+public:
+    DRW_ImageDefinitionReactor() { tType = DRW::IMAGEDEFREACTOR; }
+protected:
+    bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) override;
+public:
+    dint32 m_classVersion = 0;
+};
+
+//! SPATIAL_FILTER object used for clipped external references.
+class DRW_SpatialFilter : public DRW_TableEntry {
+    SETOBJFRIENDS
+public:
+    DRW_SpatialFilter() { tType = DRW::SPATIALFILTER; }
+protected:
+    bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) override;
+public:
+    std::vector<DRW_Coord> m_boundaryPoints;
+    DRW_Coord m_normal{0.0, 0.0, 1.0};
+    DRW_Coord m_origin{0.0, 0.0, 0.0};
+    bool m_displayBoundary = false;
+    bool m_clipFrontPlane = false;
+    bool m_clipBackPlane = false;
+    double m_frontDistance = 0.0;
+    double m_backDistance = 0.0;
+    std::vector<double> m_inverseInsertTransform;
+    std::vector<double> m_insertTransform;
+};
+
+struct DRW_GeoMeshPoint {
+    DRW_Coord m_source;
+    DRW_Coord m_destination;
+};
+
+struct DRW_GeoMeshFace {
+    dint32 m_index1 = 0;
+    dint32 m_index2 = 0;
+    dint32 m_index3 = 0;
+};
+
+//! GEODATA object carrying drawing geolocation metadata.
+class DRW_GeoData : public DRW_TableEntry {
+    SETOBJFRIENDS
+public:
+    DRW_GeoData() { tType = DRW::GEODATA; }
+protected:
+    bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) override;
+public:
+    dint32 m_version = 0;
+    duint32 m_hostBlockHandle = 0;
+    dint16 m_coordinatesType = 0;
+    DRW_Coord m_designPoint;
+    DRW_Coord m_referencePoint;
+    DRW_Coord m_upDirection{0.0, 0.0, 1.0};
+    DRW_Coord m_northDirection{0.0, 1.0, 0.0};
+    double m_horizontalUnitScale = 1.0;
+    double m_verticalUnitScale = 1.0;
+    dint32 m_horizontalUnits = 0;
+    dint32 m_verticalUnits = 0;
+    dint32 m_scaleEstimationMethod = 0;
+    double m_userSpecifiedScaleFactor = 1.0;
+    bool m_enableSeaLevelCorrection = false;
+    double m_seaLevelElevation = 0.0;
+    double m_coordinateProjectionRadius = 0.0;
+    UTF8STRING m_coordinateSystemDefinition;
+    UTF8STRING m_geoRssTag;
+    UTF8STRING m_observationFromTag;
+    UTF8STRING m_observationToTag;
+    UTF8STRING m_observationCoverageTag;
+    std::vector<DRW_GeoMeshPoint> m_points;
+    std::vector<DRW_GeoMeshFace> m_faces;
+};
+
+struct DRW_TableGeometryContent {
+    DRW_Coord m_topLeft;
+    DRW_Coord m_center;
+    double m_contentWidth = 0.0;
+    double m_contentHeight = 0.0;
+    double m_width = 0.0;
+    double m_height = 0.0;
+    dint32 m_unknown = 0;
+};
+
+struct DRW_TableGeometryCell {
+    dint32 m_flags = 0;
+    double m_widthWithGap = 0.0;
+    double m_heightWithGap = 0.0;
+    duint32 m_unknownHandle = 0;
+    std::vector<DRW_TableGeometryContent> m_contents;
+};
+
+//! TABLEGEOMETRY object introduced for table geometry cache data.
+class DRW_TableGeometry : public DRW_TableEntry {
+    SETOBJFRIENDS
+public:
+    DRW_TableGeometry() { tType = DRW::TABLEGEOMETRY; }
+protected:
+    bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) override;
+public:
+    dint32 m_rowCount = 0;
+    dint32 m_columnCount = 0;
+    dint32 m_cellCount = 0;
+    std::vector<DRW_TableGeometryCell> m_cells;
 };
 
 
