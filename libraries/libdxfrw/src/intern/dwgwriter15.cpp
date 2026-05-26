@@ -388,7 +388,8 @@ void dwgWriter15::emitControlObject(
 }
 
 duint32 dwgWriter15::defineBlock(const std::string& name,
-                                 const DRW_Coord& basePoint) {
+                                 const DRW_Coord& basePoint,
+                                 int insUnits) {
     // Allocate a fresh handle trio.
     duint32 blockRecH  = m_handles.next();
     duint32 blockH     = m_handles.next();
@@ -452,6 +453,11 @@ duint32 dwgWriter15::defineBlock(const std::string& name,
         body.putRawChar8(0);                   // insertCount terminator
         body.putVariableText(m_version, std::string{});  // bkdesc
         body.putBitLong(0);                    // prevData BL
+        if (m_version > DRW::AC1018) {
+            body.putBitShort(static_cast<duint16>(insUnits));
+            body.putBit(0);                    // canExplode B (R2007+)
+            body.putRawChar8(0);               // bkScaling RC (R2007+)
+        }
         body.putHandle(makeHardPtr(reservedHandle::BLOCK_CONTROL));
         body.putHandle(makeSoftOwner(0));      // XDic null
         body.putHandle(makeNullHandle());      // NullH
@@ -526,7 +532,8 @@ void dwgWriter15::emitBlockEntity(duint32 handle, const std::string& name,
 
 void dwgWriter15::emitBlockRecord(duint32 handle, const std::string& name,
                                   duint32 blockHandle,
-                                  duint32 endBlockHandle) {
+                                  duint32 endBlockHandle,
+                                  int insUnits) {
     dwgBufferW& body = beginObject(handle);
 
     // Common table-entry preamble.
@@ -575,7 +582,7 @@ void dwgWriter15::emitBlockRecord(duint32 handle, const std::string& name,
     strBuf->putVariableText(m_version, std::string{});  // bkdesc empty
     body.putBitLong(0);                    // prevData BL = 0
     if (m_version > DRW::AC1018) {
-        body.putBitShort(0);               // insUnits BS (R2007+)
+        body.putBitShort(static_cast<duint16>(insUnits));
         body.putBit(0);                    // canExplode B (R2007+)
         body.putRawChar8(0);               // bkScaling RC (R2007+)
     }

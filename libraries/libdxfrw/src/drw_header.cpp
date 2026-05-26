@@ -1388,9 +1388,11 @@ void DRW_Header::write(const std::unique_ptr<dxfWriter>& writer, DRW::Version ve
             writer->writeInt16(70, 1);
         int insunits {Units::None};
         getInt("$INSUNITS", &insunits);     // get $INSUNITS now to evaluate $MEASUREMENT
-        getInt("$MEASUREMENT", &varInt);    // just remove the variable from list
+        int measurementValue = measurement(insunits);
+        if (getInt("$MEASUREMENT", &varInt))
+            measurementValue = varInt;
         writer->writeString(9, "$MEASUREMENT");
-        writer->writeInt16(70, measurement( insunits));
+        writer->writeInt16(70, measurementValue);
         writer->writeString(9, "$CELWEIGHT");
         if (getInt("$CELWEIGHT", &varInt))
             writer->writeInt16(370, varInt);

@@ -29,6 +29,11 @@ class dxfWriter;
 /** Holds per-read-session name-resolution tables populated during DXF/DWG parsing. */
 class DRW_ParsingContext {
 public:
+    struct BlockRecordInfo {
+        std::string name;
+        int insUnits = 0;
+    };
+
     DRW_ParsingContext() = default;
     /** Returns line-type name for a given DXF handle, or empty string if not found. */
     std::string resolveLineTypeName(int handle) const {
@@ -37,11 +42,16 @@ public:
     }
     /** Returns block-record name for a given DXF handle, or empty string if not found. */
     std::string resolveBlockRecordName(duint32 handle) const {
-        auto it = blockRecordNameMap.find(handle);
-        return (it != blockRecordNameMap.end()) ? it->second : std::string();
+        auto it = blockRecordMap.find(handle);
+        return (it != blockRecordMap.end()) ? it->second.name : std::string();
+    }
+    /** Returns block-record insertion units for a given DXF handle, or 0 if unknown. */
+    int resolveBlockRecordInsUnits(duint32 handle) const {
+        auto it = blockRecordMap.find(handle);
+        return (it != blockRecordMap.end()) ? it->second.insUnits : 0;
     }
     std::unordered_map<duint32, std::string> lineTypeNameMap;
-    std::unordered_map<duint32, std::string> blockRecordNameMap;
+    std::unordered_map<duint32, BlockRecordInfo> blockRecordMap;
 };
 
 class dxfRW {
@@ -83,7 +93,7 @@ public:
     bool writeLWPolyline(DRW_LWPolyline *ent);
     bool writePolyline(DRW_Polyline *ent);
     bool writeSpline(DRW_Spline *ent);
-    bool writeBlockRecord(std::string name);
+    bool writeBlockRecord(std::string name, int insUnits = 0);
     bool writeBlock(DRW_Block *ent);
     bool writeInsert(DRW_Insert *ent);
     bool writeMText(DRW_MText *ent);
@@ -126,6 +136,7 @@ private:
     bool processAppId();
     bool processView();
     bool processUCS();
+    bool processBlockRecord();
 
     bool processPoint();
     bool processLine();

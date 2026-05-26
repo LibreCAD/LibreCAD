@@ -174,7 +174,8 @@ public:
     /// includes it.  Returns the Block_Record handle (suitable for
     /// `DRW_Insert::blockRecH.ref`).  Returns 0 on failure.
     virtual duint32 defineBlock(const std::string& name,
-                                const DRW_Coord& basePoint) = 0;
+                                const DRW_Coord& basePoint,
+                                int insUnits = 0) = 0;
 
     /// Emit BLOCK_CONTROL with the user-block list captured by all
     /// prior `defineBlock` calls.  Invoked by the orchestrator after

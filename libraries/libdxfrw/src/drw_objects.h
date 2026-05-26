@@ -377,6 +377,7 @@ public:
     void reset() {
         tType = DRW::BLOCK_RECORD;
         flags = 0;
+        insUnits = 0;
         firstEH = lastEH = DRW::NoHandle;
         DRW_TableEntry::reset();
     }

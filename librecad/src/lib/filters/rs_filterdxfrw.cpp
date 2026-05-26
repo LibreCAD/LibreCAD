@@ -743,6 +743,7 @@ void RS_FilterDXFRW::addBlock(const DRW_Block& data) {
     if (mid.toLower() != "paper_space" && mid.toLower() != "model_space") {
             RS_Vector bp(data.basePoint.x, data.basePoint.y);
             auto block = new RS_Block(m_graphic, RS_BlockData(name, bp, false ));
+            block->setInsertionUnits(data.insUnits);
             //block->setFlags(flags);
 
             if (m_graphic->addBlock(block)) {
@@ -3969,7 +3970,8 @@ void RS_FilterDXFRW::writeBlockRecords(){
         blk = m_graphic->blockAt(i);
         if (!blk->isUndone()){
             RS_DEBUG->print("writing block record: %s", (const char*)blk->getName().toLocal8Bit());
-            m_dxfW->writeBlockRecord(blk->getName().toUtf8().data());
+            m_dxfW->writeBlockRecord(blk->getName().toUtf8().data(),
+                                     blk->getInsertionUnits());
         }
     }
 }
@@ -3986,7 +3988,8 @@ void RS_FilterDXFRW::writeBlocks() {
             if (!blk->isUndone()) {
                 DRW_Coord bp{blk->getBasePoint().x, blk->getBasePoint().y,
                              blk->getBasePoint().z};
-                m_dwgW->defineBlock(blk->getName().toUtf8().constData(), bp);
+                m_dwgW->defineBlock(blk->getName().toUtf8().constData(), bp,
+                                    blk->getInsertionUnits());
             }
         }
         return;

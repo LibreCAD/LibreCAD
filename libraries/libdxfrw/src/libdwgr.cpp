@@ -422,9 +422,10 @@ bool dwgRW::writeViewport(DRW_Viewport *ent) {
     return writer->encodeEntity(ent);
 }
 
-duint32 dwgRW::defineBlock(const std::string& name, const DRW_Coord& basePoint) {
+duint32 dwgRW::defineBlock(const std::string& name, const DRW_Coord& basePoint,
+                           int insUnits) {
     if (writer == nullptr) return 0;
-    return writer->defineBlock(name, basePoint);
+    return writer->defineBlock(name, basePoint, insUnits);
 }
 
 // Table-record add* methods — forward to dwgWriter15 via dynamic_cast since

@@ -71,7 +71,8 @@ public:
     bool encodeEntity(DRW_Entity *ent) override;
 
     duint32 defineBlock(const std::string& name,
-                        const DRW_Coord& basePoint) override;
+                        const DRW_Coord& basePoint,
+                        int insUnits = 0) override;
     bool emitDeferredBlockControl() override;
 
     /// Accept a user-defined table record for deferred emission in
@@ -133,7 +134,8 @@ protected:
     /// the BLOCK_CONTROL `+2` phantom handles (0x17, 0x18) without
     /// failing the block walk.
     void emitBlockRecord(duint32 handle, const std::string& name,
-                         duint32 blockHandle, duint32 endBlockHandle);
+                         duint32 blockHandle, duint32 endBlockHandle,
+                         int insUnits = 0);
 
     /// Phase 4d helper: emit a Block entity at `handle`.  `isEnd=true`
     /// suppresses the name field and emits an ENDBLK (oType=5) rather

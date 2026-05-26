@@ -565,6 +565,7 @@ protected:
 public:
     UTF8STRING name;             /*!< block name, code 2 */
     int flags;                   /*!< block type, code 70 */
+    int insUnits = 0;            /*!< block insertion units, BLOCK_RECORD code 70 */
     UTF8STRING xrefPath;         /*!< Xref path name, code 1 (DXF) / copied from BLOCK_RECORD (DWG) */
 
     /// Set externally before encodeDwg to emit an ENDBLK rather than a

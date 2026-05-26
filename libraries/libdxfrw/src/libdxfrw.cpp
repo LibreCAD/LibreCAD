@@ -1821,7 +1821,7 @@ bool dxfRW::writeWipeout(DRW_Image *ent){
     return true;
 }
 
-bool dxfRW::writeBlockRecord(std::string name){
+bool dxfRW::writeBlockRecord(std::string name, int insUnits){
     if (version > DRW::AC1009) {
         writer->writeString(0, "BLOCK_RECORD");
         writer->writeString(5, toHexStr(++entCount));
@@ -1836,7 +1836,7 @@ bool dxfRW::writeBlockRecord(std::string name){
         writer->writeUtf8String(2, name);
         if (version > DRW::AC1018) {
             //    writer->writeInt16(340, 22);
-            writer->writeInt16(70, 0);
+            writer->writeInt16(70, insUnits);
             writer->writeInt16(280, 1);
             writer->writeInt16(281, 0);
         }
@@ -2550,11 +2550,59 @@ bool dxfRW::processTables() {
                     } else if (sectionstr == "DIMSTYLE") {
                         processDimStyle();
                     } else if (sectionstr == "BLOCK_RECORD") {
-//                        processBlockRecord();
+                        processBlockRecord();
                     }
                 }
             } else if (sectionstr == "ENDSEC") {
                 return true;  //found ENDSEC terminate
+            }
+        }
+    }
+
+    return setError(DRW::BAD_READ_TABLES);
+}
+
+bool dxfRW::processBlockRecord() {
+    DRW_DBG("dxfRW::processBlockRecord\n");
+    int code = 0;
+    bool reading = false;
+    duint32 handle = DRW::NoHandle;
+    DRW_ParsingContext::BlockRecordInfo record;
+
+    auto finishRecord = [&]() {
+        if (reading && handle != DRW::NoHandle && !record.name.empty()) {
+            m_readingContext.blockRecordMap[handle] = record;
+        }
+    };
+
+    while (reader->readRec(&code)) {
+        DRW_DBG(code); DRW_DBG("\n");
+        if (code == 0) {
+            finishRecord();
+            const std::string sectionstr = reader->getString();
+            DRW_DBG(sectionstr); DRW_DBG("\n");
+            if (sectionstr == "BLOCK_RECORD") {
+                reading = true;
+                handle = DRW::NoHandle;
+                record = DRW_ParsingContext::BlockRecordInfo{};
+            } else if (sectionstr == "ENDTAB") {
+                return true;
+            } else {
+                reading = false;
+            }
+        } else if (reading) {
+            switch (code) {
+            case 2:
+                record.name = reader->getUtf8String();
+                break;
+            case 5:
+                handle = reader->getHandleString();
+                break;
+            case 70:
+                record.insUnits = reader->getInt32();
+                break;
+            default:
+                break;
             }
         }
     }
@@ -2828,8 +2876,14 @@ bool dxfRW::processBlock() {
         if (0 == code) {
             nextentity = reader->getString();
             DRW_DBG(nextentity); DRW_DBG("\n");
+            if (block.parentHandle != DRW::NoHandle) {
+                const auto recordName = m_readingContext.resolveBlockRecordName(block.parentHandle);
+                if (!recordName.empty())
+                    block.name = recordName;
+                block.insUnits = m_readingContext.resolveBlockRecordInsUnits(block.parentHandle);
+            }
             if (block.handle != DRW::NoHandle && !block.name.empty()) {
-                m_readingContext.blockRecordNameMap[block.handle] = block.name;
+                m_readingContext.blockRecordMap[block.handle] = {block.name, block.insUnits};
             }
             iface->addBlock(block);
             if (nextentity == "ENDBLK") {
