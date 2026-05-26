@@ -2623,6 +2623,63 @@ bool DRW_3Dface::parseDwg(DRW::Version v, dwgBuffer *buf, duint32 bs){
     return buf->isGood();
 }
 
+bool DRW_ModelerGeometry::parseDwg(DRW::Version v, dwgBuffer *buf, duint32 bs){
+    bool ret = DRW_Entity::parseDwg(v, buf, nullptr, bs);
+    if (!ret)
+        return ret;
+    DRW_DBG("\n***************************** parsing modeler geometry ******************\n");
+
+    m_isEmpty = buf->getBit() != 0;
+    buf->getBit(); // unknown bit in ODA ACIS entity body
+    if (!m_isEmpty)
+        m_modelerVersion = buf->getBitShort();
+
+    if (v > DRW::AC1018) {
+        ret = DRW_Entity::parseDwgEntHandle(v, buf);
+        if (eType == DRW::E3DSOLID && buf->numRemainingBytes() > 2) {
+            dwgHandle historyH = buf->getHandle();
+            m_historyHandle = historyH.ref;
+            DRW_DBG(" 3DSOLID history Handle: ");
+            DRW_DBGHL(historyH.code, historyH.size, historyH.ref); DRW_DBG("\n");
+        }
+    }
+
+    return ret;
+}
+
+bool DRW_Light::parseDwg(DRW::Version v, dwgBuffer *buf, duint32 bs){
+    dwgBuffer sBuff = *buf;
+    dwgBuffer *sBuf = v > DRW::AC1018 ? &sBuff : buf;
+    bool ret = DRW_Entity::parseDwg(v, buf, sBuf, bs);
+    if (!ret)
+        return ret;
+    DRW_DBG("\n***************************** parsing LIGHT *****************************\n");
+
+    m_classVersion = static_cast<duint32>(buf->getBitLong());
+    m_name = sBuf->getVariableText(v, false);
+    m_type = static_cast<duint32>(buf->getBitLong());
+    m_status = buf->getBit() != 0;
+    m_color = buf->getCmColor(v);
+    m_plotGlyph = buf->getBit() != 0;
+    m_intensity = buf->getBitDouble();
+    m_position = buf->get3BitDouble();
+    m_target = buf->get3BitDouble();
+    m_attenuationType = static_cast<duint32>(buf->getBitLong());
+    m_useAttenuationLimits = buf->getBit() != 0;
+    m_attenuationStartLimit = buf->getBitDouble();
+    m_attenuationEndLimit = buf->getBitDouble();
+    m_hotspotAngle = buf->getBitDouble();
+    m_falloffAngle = buf->getBitDouble();
+    m_castShadows = buf->getBit() != 0;
+    m_shadowType = static_cast<duint32>(buf->getBitLong());
+    m_shadowMapSize = buf->getBitShort();
+    m_shadowMapSoftness = buf->getRawChar8();
+
+    ret = DRW_Entity::parseDwgEntHandle(v, buf);
+    DRW_DBG("LIGHT name: "); DRW_DBG(m_name.c_str()); DRW_DBG("\n");
+    return ret;
+}
+
 bool DRW_Tolerance::parseCode(int code, const std::unique_ptr<dxfReader>& reader){
     switch (code) {
     case 1:
@@ -6847,10 +6904,11 @@ bool DRW_Viewport::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
         DRW_DBG("visual style handle: "); DRW_DBGHL(someHdl.code, someHdl.size, someHdl.ref); DRW_DBG("\n");
         someHdl = buf->getHandle();
         DRW_DBG("shadeplot ID handle: "); DRW_DBGHL(someHdl.code, someHdl.size, someHdl.ref); DRW_DBG("\n");
-        DRW_DBG("\n Remaining bytes: "); DRW_DBG(buf->numRemainingBytes()); DRW_DBG("\n");
-        someHdl = buf->getHandle();
-        DRW_DBG("SUN handle: "); DRW_DBGHL(someHdl.code, someHdl.size, someHdl.ref); DRW_DBG("\n");
-    }
+	        DRW_DBG("\n Remaining bytes: "); DRW_DBG(buf->numRemainingBytes()); DRW_DBG("\n");
+	        someHdl = buf->getHandle();
+	        m_sunHandle = someHdl.ref;
+	        DRW_DBG("SUN handle: "); DRW_DBGHL(someHdl.code, someHdl.size, someHdl.ref); DRW_DBG("\n");
+	    }
     DRW_DBG("\n Remaining bytes: "); DRW_DBG(buf->numRemainingBytes()); DRW_DBG("\n");
 
     if (!ret)

@@ -1506,10 +1506,11 @@ bool DRW_Vport::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
             DRW_DBG("\nRemaining bytes: "); DRW_DBG(buf->numRemainingBytes());
             dwgHandle visualStH = buf->getHandle();
             visualStyleHandle = visualStH.ref;
-            DRW_DBG(" visual style Handle: "); DRW_DBGHL(visualStH.code, visualStH.size, visualStH.ref);
-            DRW_DBG("\nRemaining bytes: "); DRW_DBG(buf->numRemainingBytes());
-            dwgHandle sunH = buf->getHandle();
-            DRW_DBG(" sun Handle: "); DRW_DBGHL(sunH.code, sunH.size, sunH.ref);
+	            DRW_DBG(" visual style Handle: "); DRW_DBGHL(visualStH.code, visualStH.size, visualStH.ref);
+	            DRW_DBG("\nRemaining bytes: "); DRW_DBG(buf->numRemainingBytes());
+	            dwgHandle sunH = buf->getHandle();
+	            m_sunHandle = sunH.ref;
+	            DRW_DBG(" sun Handle: "); DRW_DBGHL(sunH.code, sunH.size, sunH.ref);
             DRW_DBG("\nRemaining bytes: "); DRW_DBG(buf->numRemainingBytes());
         }
         dwgHandle namedUCSH = buf->getHandle();
@@ -3089,6 +3090,218 @@ bool DRW_EvaluationGraph::parseDwg(DRW::Version version, dwgBuffer *buf, duint32
     DRW_DBG(" edges: "); DRW_DBG(static_cast<int>(m_edges.size())); DRW_DBG("\n");
     DRW_UNUSED(sBuf);
     return buf->isGood() && hBuff.isGood();
+}
+
+bool DRW_AcDbPlaceholder::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
+    dwgBuffer sBuff = *buf;
+    dwgBuffer *sBuf = version > DRW::AC1018 ? &sBuff : buf;
+    bool ret = DRW_TableEntry::parseDwg(version, buf, sBuf, bs);
+    DRW_DBG("\n***************************** parsing ACDBPLACEHOLDER *******************\n");
+    if (!ret)
+        return ret;
+
+    dwgBuffer hBuff = *buf;
+    seekObjectHandleStream(version, &hBuff, objSize);
+    readCommonObjectHandles(&hBuff, handle, numReactors, xDictFlag, &parentHandle);
+    DRW_UNUSED(sBuf);
+    return ret;
+}
+
+bool DRW_Sun::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
+    dwgBuffer sBuff = *buf;
+    dwgBuffer *sBuf = version > DRW::AC1018 ? &sBuff : buf;
+    bool ret = DRW_TableEntry::parseDwg(version, buf, sBuf, bs);
+    DRW_DBG("\n***************************** parsing SUN *******************************\n");
+    if (!ret)
+        return ret;
+
+    dwgBuffer hBuff = *buf;
+    seekObjectHandleStream(version, &hBuff, objSize);
+    readCommonObjectHandles(&hBuff, handle, numReactors, xDictFlag, &parentHandle);
+
+    m_classVersion = static_cast<duint32>(buf->getBitLong());
+    m_isOn = buf->getBit() != 0;
+    m_color = buf->getCmColor(version);
+    m_intensity = buf->getBitDouble();
+    m_hasShadow = buf->getBit() != 0;
+    m_julianDay = buf->getBitLong();
+    m_milliseconds = buf->getBitLong();
+    m_isDaylightSavings = buf->getBit() != 0;
+    m_shadowType = static_cast<duint32>(buf->getBitLong());
+    m_shadowMapSize = buf->getBitShort();
+    m_shadowSoftness = buf->getRawChar8();
+
+    DRW_UNUSED(sBuf);
+    DRW_DBG("SUN on: "); DRW_DBG(m_isOn ? 1 : 0); DRW_DBG("\n");
+    return ret;
+}
+
+bool DRW_AssociativeObject::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
+    dwgBuffer sBuff = *buf;
+    dwgBuffer *sBuf = version > DRW::AC1018 ? &sBuff : buf;
+    bool ret = DRW_TableEntry::parseDwg(version, buf, sBuf, bs);
+    DRW_DBG("\n***************************** parsing ACDBASSOC shell *******************\n");
+    if (!ret)
+        return ret;
+
+    dwgBuffer hBuff = *buf;
+    seekObjectHandleStream(version, &hBuff, objSize);
+    readCommonObjectHandles(&hBuff, handle, numReactors, xDictFlag, &parentHandle);
+
+    auto readHandleVector = [&](std::vector<duint32>& target, dint32 count) {
+        if (count < 0 || count > 100000)
+            return;
+        target.reserve(target.size() + static_cast<size_t>(count));
+        for (dint32 i = 0; i < count; ++i)
+            target.push_back(readObjectHandleRef(&hBuff));
+    };
+    auto readOwnedRefs = [&](std::vector<DRW_AssociativeHandleRef>& target, dint32 count) {
+        if (count < 0 || count > 100000)
+            return;
+        target.reserve(target.size() + static_cast<size_t>(count));
+        for (dint32 i = 0; i < count; ++i) {
+            DRW_AssociativeHandleRef ref;
+            ref.m_isOwned = buf->getBit() != 0;
+            ref.m_handle = readObjectHandleRef(&hBuff);
+            target.push_back(ref);
+        }
+    };
+    auto readActionFields = [&]() {
+        m_classVersion = buf->getBitShort();
+        m_geometryStatus = buf->getBitLong();
+        m_owningNetworkHandle = readObjectHandleRef(&hBuff);
+        m_actionBodyHandle = readObjectHandleRef(&hBuff);
+        m_actionIndex = buf->getBitLong();
+        m_maxDependencyIndex = buf->getBitLong();
+        const dint32 dependencyCount = buf->getBitLong();
+        readOwnedRefs(m_dependencies, dependencyCount);
+        if (m_classVersion > 1) {
+            buf->getBitShort();
+            const dint32 ownedParamCount = buf->getBitLong();
+            readHandleVector(m_ownedParams, ownedParamCount);
+            buf->getBitShort();
+            const dint32 valueCount = buf->getBitLong();
+            DRW_DBG(" ACDBASSOC value params skipped: "); DRW_DBG(valueCount); DRW_DBG("\n");
+        }
+    };
+    auto readDependencyFields = [&]() {
+        m_classVersion = buf->getBitShort();
+        m_status = buf->getBitLong();
+        buf->getBit();
+        buf->getBit();
+        buf->getBit();
+        buf->getBit();
+        buf->getBitLong();
+        m_dependencyHandle = readObjectHandleRef(&hBuff);
+        const bool hasName = buf->getBit() != 0;
+        if (hasName)
+            sBuf->getVariableText(version, false);
+        m_readDependencyHandle = readObjectHandleRef(&hBuff);
+        m_writeDependencyHandle = readObjectHandleRef(&hBuff);
+        readObjectHandleRef(&hBuff);
+        buf->getBitLong();
+    };
+
+    if (m_recordName == "ACDBASSOCACTION") {
+        readActionFields();
+    } else if (m_recordName == "ACDBASSOCNETWORK") {
+        readActionFields();
+        buf->getBitShort();
+        m_actionIndex = buf->getBitLong();
+        const dint32 actionCount = buf->getBitLong();
+        readOwnedRefs(m_actions, actionCount);
+        const dint32 ownedActionCount = buf->getBitLong();
+        readHandleVector(m_ownedActions, ownedActionCount);
+    } else if (m_recordName == "ACDBASSOCDEPENDENCY"
+               || m_recordName == "ACDBASSOCGEOMDEPENDENCY") {
+        readDependencyFields();
+        if (m_recordName == "ACDBASSOCGEOMDEPENDENCY") {
+            buf->getBitShort();
+            buf->getBit();
+        }
+    } else if (m_recordName == "ACDBASSOCALIGNEDDIMACTIONBODY") {
+        m_classVersion = buf->getBitShort();
+        m_dependencyHandle = readObjectHandleRef(&hBuff);
+        buf->getBitLong();
+        m_rNodeHandle = readObjectHandleRef(&hBuff);
+        m_dNodeHandle = readObjectHandleRef(&hBuff);
+    } else if (m_recordName == "ACDBASSOCVERTEXACTIONPARAM") {
+        buf->getBitShort();
+        m_dependencyHandle = readObjectHandleRef(&hBuff);
+        m_classVersion = static_cast<duint16>(buf->getBitLong());
+        m_point = buf->get3BitDouble();
+    } else if (m_recordName == "ACDBASSOCOSNAPPOINTREFACTIONPARAM") {
+        m_status = buf->getBitShort();
+        m_osnapMode = buf->getRawChar8();
+        m_parameter = buf->getBitDouble();
+    } else if (m_recordName == "ACDBASSOCPERSSUBENTMANAGER"
+               || m_recordName == "ACDBPERSSUBENTMANAGER") {
+        m_classVersion = static_cast<duint16>(buf->getBitLong());
+        buf->getBitLong();
+        buf->getBitLong();
+        buf->getBitLong();
+        const dint32 stepCount = buf->getBitLong();
+        if (stepCount >= 0 && stepCount <= 100000) {
+            for (dint32 i = 0; i < stepCount; ++i)
+                buf->getBitLong();
+        }
+    }
+
+    DRW_DBG("ACDBASSOC shell: "); DRW_DBG(m_recordName.c_str()); DRW_DBG("\n");
+    return ret;
+}
+
+bool DRW_AcShHistoryObject::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
+    dwgBuffer sBuff = *buf;
+    dwgBuffer *sBuf = version > DRW::AC1018 ? &sBuff : buf;
+    bool ret = DRW_TableEntry::parseDwg(version, buf, sBuf, bs);
+    DRW_DBG("\n***************************** parsing ACSH shell ************************\n");
+    if (!ret)
+        return ret;
+
+    dwgBuffer hBuff = *buf;
+    seekObjectHandleStream(version, &hBuff, objSize);
+    readCommonObjectHandles(&hBuff, handle, numReactors, xDictFlag, &parentHandle);
+
+    if (m_recordName == "ACSH_HISTORY_CLASS") {
+        m_major = static_cast<duint32>(buf->getBitLong());
+        m_minor = static_cast<duint32>(buf->getBitLong());
+        m_ownerHandle = readObjectHandleRef(&hBuff);
+        m_historyNodeId = static_cast<duint32>(buf->getBitLong());
+        m_showHistory = buf->getBit() != 0;
+        m_recordHistory = buf->getBit() != 0;
+    } else if (m_recordName == "ACSH_SWEEP_CLASS") {
+        // Decode the stable sweep tail enough to expose options and binary
+        // payload sizes. The AcDbEvalExpr/HistoryNode prefix remains raw for
+        // follow-up semantic decoding.
+        for (int i = 0; i < 3; ++i)
+            buf->getBitLong();
+        m_major = static_cast<duint32>(buf->getBitLong());
+        m_minor = static_cast<duint32>(buf->getBitLong());
+        m_direction = buf->get3BitDouble();
+        buf->getBitLong();
+        const dint32 blob1Size = buf->getBitLong();
+        if (blob1Size > 0 && blob1Size < 10000000) {
+            m_binaryBlob1.resize(static_cast<size_t>(blob1Size));
+            buf->getBytes(m_binaryBlob1.data(), m_binaryBlob1.size());
+        }
+        buf->getBitLong();
+        const dint32 blob2Size = buf->getBitLong();
+        if (blob2Size > 0 && blob2Size < 10000000) {
+            m_binaryBlob2.resize(static_cast<size_t>(blob2Size));
+            buf->getBytes(m_binaryBlob2.data(), m_binaryBlob2.size());
+        }
+        m_draftAngle = buf->getBitDouble();
+        m_startDraftDistance = buf->getBitDouble();
+        m_endDraftDistance = buf->getBitDouble();
+        m_scaleFactor = buf->getBitDouble();
+        m_twistAngle = buf->getBitDouble();
+        m_alignAngle = buf->getBitDouble();
+    }
+
+    DRW_UNUSED(sBuf);
+    DRW_DBG("ACSH shell: "); DRW_DBG(m_recordName.c_str()); DRW_DBG("\n");
+    return ret;
 }
 
 void DRW_DetailViewStyle::reset() {

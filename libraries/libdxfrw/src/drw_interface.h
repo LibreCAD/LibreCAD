@@ -168,6 +168,12 @@ public:
     /** Called for every 3dface start */
     virtual void add3dFace(const DRW_3Dface& data) = 0;
 
+    /** Called for REGION/3DSOLID/BODY opaque modeler geometry shells. */
+    virtual void addModelerGeometry(const DRW_ModelerGeometry& data) { (void) data; }
+
+    /** Called for LIGHT entity metadata. */
+    virtual void addLight(const DRW_Light& data) { (void) data; }
+
     /** Called for every solid start */
     virtual void addSolid(const DRW_Solid& data) = 0;
 
@@ -312,6 +318,14 @@ public:
     virtual void addGeoData(const DRW_GeoData& data) { (void) data; }
     /** Called for every TABLEGEOMETRY cache object. */
     virtual void addTableGeometry(const DRW_TableGeometry& data) { (void) data; }
+    /** Called for ACDBPLACEHOLDER fixed objects. */
+    virtual void addAcDbPlaceholder(const DRW_AcDbPlaceholder& data) { (void) data; }
+    /** Called for SUN view/vport lighting objects. */
+    virtual void addSun(const DRW_Sun& data) { (void) data; }
+    /** Called for ACDBASSOC* action/dependency/action-param shell objects. */
+    virtual void addAssociativeObject(const DRW_AssociativeObject& data) { (void) data; }
+    /** Called for ACSH_* history/action shell objects. */
+    virtual void addAcShHistoryObject(const DRW_AcShHistoryObject& data) { (void) data; }
 
     /**
      * Called for every comment in the DXF file (code 999).

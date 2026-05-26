@@ -29,6 +29,7 @@
 #define RS_FILTERDXFRW_H
 
 #include <set>
+#include <vector>
 
 #include "drw_interface.h"
 #include "lc_extentitydata.h"
@@ -130,6 +131,8 @@ public:
     void addTrace(const DRW_Trace& data) override;
     void addTolerance(const DRW_Tolerance& tol) override;
     void addSolid(const DRW_Solid& data) override;
+    void addModelerGeometry(const DRW_ModelerGeometry &data) override;
+    void addLight(const DRW_Light &data) override;
     void addMText(const DRW_MText& data) override;
     /** Build an RS_MText from a DRW_MText payload, handling alignment / drawing
      *  direction / line spacing / oldMText legacy correction.  Caller takes
@@ -160,6 +163,11 @@ public:
     void addSpatialFilter(const DRW_SpatialFilter &data) override;
     void addGeoData(const DRW_GeoData &data) override;
     void addTableGeometry(const DRW_TableGeometry &data) override;
+    void addUnsupportedObject(const DRW_UnsupportedObject &data) override;
+    void addAcDbPlaceholder(const DRW_AcDbPlaceholder &data) override;
+    void addSun(const DRW_Sun &data) override;
+    void addAssociativeObject(const DRW_AssociativeObject &data) override;
+    void addAcShHistoryObject(const DRW_AcShHistoryObject &data) override;
 
     void add3dFace(const DRW_3Dface& data) override;
     void addComment(const char*) override;
@@ -305,6 +313,10 @@ private:
      *  parsed). Consumed at export time + by future UI surfaces that
      *  want the filename for a given underlay. Cleared per import. */
     std::map<duint32, DRW_UnderlayDefinition> m_underlayDefMap;
+
+    /** Raw unsupported DWG payloads kept during import for diagnostics and
+     *  future round-trip/semantic decoders. */
+    std::vector<DRW_UnsupportedObject> m_unsupportedDwgObjects;
 
     /** Recursion guard for embedXref. Holds the absolute paths of files
      *  currently being loaded (the host file plus any in-progress XREF

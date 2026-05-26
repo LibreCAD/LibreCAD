@@ -34,13 +34,13 @@ namespace DRW {
    //! Entity's type.
     enum ETYPE {
         E3DFACE,
-//        E3DSOLID, //encrypted proprietary data
+        E3DSOLID,
 //        ACAD_PROXY_ENTITY,
         ARC,
         ATTDEF,
         ATTRIB,
         BLOCK,// and ENDBLK
-//        BODY, //encrypted proprietary data
+        BODY,
         CIRCLE,
         DIMENSION,
         DIMALIGNED,
@@ -57,7 +57,7 @@ namespace DRW {
         IMAGE,
         INSERT,
         LEADER,
-//        LIGHT,
+        LIGHT,
         LINE,
         LWPOLYLINE,
 //        MESH,
@@ -70,13 +70,12 @@ namespace DRW {
         POINT,
         POLYLINE,
         RAY,
-//        REGION, //encrypted proprietary data
+        REGION,
 //        SECTION,
 //        SEQEND,//not needed?? used in polyline and insert/attrib and dwg
 //        SHAPE,
         SOLID,
         SPLINE,
-//        SUN,
 //        SURFACE, //encrypted proprietary data can be four types
         TABLE,
         TEXT,
@@ -511,6 +510,60 @@ protected:
 public:
     int invisibleflag;       /*!< invisible edge flag, code 70 */
 
+};
+
+//! Opaque ACIS/SAB modeler geometry entity shell (REGION, 3DSOLID, BODY).
+class DRW_ModelerGeometry : public DRW_Entity {
+    SETENTFRIENDS
+public:
+    explicit DRW_ModelerGeometry(DRW::ETYPE type = DRW::REGION) {
+        eType = type;
+    }
+    void applyExtrusion() override {}
+
+protected:
+    bool parseDwg(DRW::Version v, dwgBuffer *buf, duint32 bs=0) override;
+
+public:
+    duint16 m_modelerVersion = 0;
+    bool m_isEmpty = false;
+    bool m_hasWireframe = false;
+    duint32 m_historyHandle = 0;
+    std::vector<duint8> m_rawBytes;
+};
+
+//! LIGHT entity shell. LibreCAD does not render lights, but preserves metadata.
+class DRW_Light : public DRW_Entity {
+    SETENTFRIENDS
+public:
+    DRW_Light() {
+        eType = DRW::LIGHT;
+    }
+    void applyExtrusion() override {}
+
+protected:
+    bool parseDwg(DRW::Version v, dwgBuffer *buf, duint32 bs=0) override;
+
+public:
+    duint32 m_classVersion = 0;
+    UTF8STRING m_name;
+    duint32 m_type = 0;
+    bool m_status = false;
+    duint32 m_color = 0;
+    bool m_plotGlyph = false;
+    double m_intensity = 0.0;
+    DRW_Coord m_position;
+    DRW_Coord m_target;
+    duint32 m_attenuationType = 0;
+    bool m_useAttenuationLimits = false;
+    double m_attenuationStartLimit = 0.0;
+    double m_attenuationEndLimit = 0.0;
+    double m_hotspotAngle = 0.0;
+    double m_falloffAngle = 0.0;
+    bool m_castShadows = false;
+    duint32 m_shadowType = 0;
+    duint16 m_shadowMapSize = 0;
+    duint8 m_shadowMapSoftness = 0;
 };
 
 //! Class to handle TOLERANCE entries
@@ -2053,10 +2106,11 @@ public:
         eType = DRW::VIEWPORT;
         vpstatus = 0;
         pswidth = 205;
-        psheight = 156;
-        centerPX = 128.5;
-        centerPY = 97.5;
-    }
+	        psheight = 156;
+	        centerPX = 128.5;
+	        centerPY = 97.5;
+	        m_sunHandle = 0;
+	    }
 
 protected:
     bool parseCode(int code, const std::unique_ptr<dxfReader>& reader) override;
@@ -2083,6 +2137,7 @@ public:
     double viewHeight;        /*!< View height in model space units, code 45 */
     double snapAngle;         /*!< Snap angle, code 50 */
     double twistAngle;        /*!< view twist angle, code 51 */
+    duint32 m_sunHandle = 0;    /*!< R2007+ SUN hard-owner ref (DWG-only) */
 
 private:
     duint32 frozenLyCount;

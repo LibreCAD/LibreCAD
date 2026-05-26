@@ -355,6 +355,7 @@ bool RS_FilterDXFRW::fileImport(RS_Graphic& g, const QString& file, [[maybe_unus
     //reset library version
     m_isLibDxfRw = false;
     m_libDxfRwVersion = 0;
+    m_unsupportedDwgObjects.clear();
 
 #ifdef DWGSUPPORT
     if (type == RS2::FormatDWG) {
@@ -1206,6 +1207,22 @@ void RS_FilterDXFRW::addTolerance(const DRW_Tolerance& data) {
  */
 void RS_FilterDXFRW::addSolid(const DRW_Solid& data) {
     addTrace(data);
+}
+
+void RS_FilterDXFRW::addModelerGeometry(const DRW_ModelerGeometry &data) {
+    // TODO: Preserve/render ACIS SAT/SAB bodies when LibreCAD grows native
+    // modeler-geometry support. For now this shell prevents silent loss.
+    RS_DEBUG->print("RS_FilterDXFRW::addModelerGeometry: type %d handle %d history %d",
+                    static_cast<int>(data.eType),
+                    static_cast<int>(data.handle),
+                    static_cast<int>(data.m_historyHandle));
+}
+
+void RS_FilterDXFRW::addLight(const DRW_Light &data) {
+    // TODO: Attach lights to future view/visual-style metadata consumers.
+    RS_DEBUG->print("RS_FilterDXFRW::addLight: %s handle %d",
+                    data.m_name.empty() ? "(unnamed)" : data.m_name.c_str(),
+                    static_cast<int>(data.handle));
 }
 
 /**
@@ -3703,6 +3720,46 @@ void RS_FilterDXFRW::addTableGeometry(const DRW_TableGeometry &data) {
   RS_DEBUG->print("RS_FilterDXFRW::addTableGeometry: %d x %d",
                   static_cast<int>(data.m_rowCount),
                   static_cast<int>(data.m_columnCount));
+}
+
+void RS_FilterDXFRW::addUnsupportedObject(const DRW_UnsupportedObject &data) {
+  // TODO: Attach this raw store to a document-level DWG metadata extension so
+  // unsupported object payloads can round-trip instead of living only during
+  // import diagnostics.
+  m_unsupportedDwgObjects.push_back(data);
+  RS_DEBUG->print("RS_FilterDXFRW::addUnsupportedObject: %s handle %d (%d bytes)",
+                  data.m_recordName.empty() ? "(fixed)" : data.m_recordName.c_str(),
+                  static_cast<int>(data.m_handle),
+                  static_cast<int>(data.m_rawBytes.size()));
+}
+
+void RS_FilterDXFRW::addAcDbPlaceholder(const DRW_AcDbPlaceholder &data) {
+  // TODO: Preserve placeholder ownership semantics in the DWG metadata store.
+  RS_DEBUG->print("RS_FilterDXFRW::addAcDbPlaceholder: %d",
+                  static_cast<int>(data.handle));
+}
+
+void RS_FilterDXFRW::addSun(const DRW_Sun &data) {
+  // TODO: Link SUN objects to VPORT/VIEW/VIEWPORT lighting state once LibreCAD
+  // models view lighting metadata.
+  RS_DEBUG->print("RS_FilterDXFRW::addSun: handle %d on=%d",
+                  static_cast<int>(data.handle),
+                  data.m_isOn ? 1 : 0);
+}
+
+void RS_FilterDXFRW::addAssociativeObject(const DRW_AssociativeObject &data) {
+  // TODO: Reconstruct associative dimension/dynamic-block relationship graphs
+  // from these shell objects after native consumers exist.
+  RS_DEBUG->print("RS_FilterDXFRW::addAssociativeObject: %s handle %d",
+                  data.m_recordName.empty() ? "(assoc)" : data.m_recordName.c_str(),
+                  static_cast<int>(data.handle));
+}
+
+void RS_FilterDXFRW::addAcShHistoryObject(const DRW_AcShHistoryObject &data) {
+  // TODO: Connect ACSH history nodes to 3DSOLID modeler geometry history.
+  RS_DEBUG->print("RS_FilterDXFRW::addAcShHistoryObject: %s handle %d",
+                  data.m_recordName.empty() ? "(acsh)" : data.m_recordName.c_str(),
+                  static_cast<int>(data.handle));
 }
 
 /**

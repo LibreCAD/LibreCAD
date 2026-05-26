@@ -71,7 +71,11 @@ namespace DRW {
          IMAGEDEFREACTOR,
          SPATIALFILTER,
          GEODATA,
-         TABLEGEOMETRY
+         TABLEGEOMETRY,
+         ACDBPLACEHOLDER,
+         SUN,
+         ASSOCIATIVEOBJECT,
+         ACSHHISTORYOBJECT
      };
 
 //pending VP_ENT_HDR, GROUP, LONG_TRANSACTION,
@@ -159,6 +163,11 @@ private:
 struct DRW_UnsupportedObject {
     int m_objectType = 0;
     duint32 m_handle = 0;
+    duint32 m_bodyBitSize = 0;
+    duint64 m_objectOffset = 0;
+    duint32 m_objectSize = 0;
+    bool m_isEntity = false;
+    bool m_isCustomClass = false;
     UTF8STRING m_recordName;
     UTF8STRING m_className;
     std::vector<duint8> m_rawBytes;
@@ -600,10 +609,12 @@ public:
         viewMode = snap = grid = snapStyle = snapIsopair = 0;
         fastZoom = 1;
         circleZoom = 100;
-        ucsIcon = 3;
-        gridBehavior = 7;
-        DRW_TableEntry::reset();
-    }
+	        ucsIcon = 3;
+	        gridBehavior = 7;
+	        visualStyleHandle = 0;
+	        m_sunHandle = 0;
+	        DRW_TableEntry::reset();
+	    }
 
 protected:
     bool parseCode(int code, const std::unique_ptr<dxfReader>& reader) override;
@@ -642,7 +653,8 @@ public:
     * bit 3 (4) allow subdivision
     * bit 4 (8) follow dynamic SCP
     **/
-    duint32 visualStyleHandle = 0; /*!< R2007+ visual-style ref (DWG-only) */
+	    duint32 visualStyleHandle = 0; /*!< R2007+ visual-style ref (DWG-only) */
+	    duint32 m_sunHandle = 0;         /*!< R2007+ SUN hard-owner ref (DWG-only) */
 };
 
 
@@ -776,10 +788,11 @@ public:
         ucsYAxis.x = ucsYAxis.y = ucsYAxis.z = 0.0;
         ucsOrthoType = 1;
         ucsElevation = 0.0;
-        namedUCS_ID = 0;
-        baseUCS_ID = 0;
-        DRW_TableEntry::reset();
-    }
+	        namedUCS_ID = 0;
+	        baseUCS_ID = 0;
+	        m_sunHandle = 0;
+	        DRW_TableEntry::reset();
+	    }
 
 protected:
     bool parseCode(int code, const std::unique_ptr<dxfReader>& reader) override;
@@ -805,6 +818,7 @@ public:
     double ucsElevation;                /*!< UCS elevation, code 146 */
     duint32 namedUCS_ID;                /*!< Handle of named UCS table record, code 345 */
     duint32 baseUCS_ID;                 /*!< Handle of base UCS table record, code 346 */
+    duint32 m_sunHandle = 0;              /*!< R2007+ SUN hard-owner ref (DWG-only) */
 };
 
 //! Class to handle AppId entries
@@ -1427,6 +1441,110 @@ public:
     dint32 m_value97 = 0;
     std::vector<DRW_EvaluationGraphNode> m_nodes;
     std::vector<DRW_EvaluationGraphEdge> m_edges;
+};
+
+//! Minimal ACDBPLACEHOLDER carrier (ODA fixed type 80).
+class DRW_AcDbPlaceholder : public DRW_TableEntry {
+    SETOBJFRIENDS
+public:
+    DRW_AcDbPlaceholder() { tType = DRW::ACDBPLACEHOLDER; }
+
+protected:
+    bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) override;
+};
+
+//! SUN object metadata used by R2007+ view/vport lighting.
+class DRW_Sun : public DRW_TableEntry {
+    SETOBJFRIENDS
+public:
+    DRW_Sun() { tType = DRW::SUN; }
+
+protected:
+    bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) override;
+
+public:
+    duint32 m_classVersion = 0;
+    bool m_isOn = false;
+    duint32 m_color = 0;
+    double m_intensity = 0.0;
+    bool m_hasShadow = false;
+    dint32 m_julianDay = 0;
+    dint32 m_milliseconds = 0;
+    bool m_isDaylightSavings = false;
+    duint32 m_shadowType = 0;
+    duint16 m_shadowMapSize = 0;
+    duint8 m_shadowSoftness = 0;
+};
+
+struct DRW_AssociativeHandleRef {
+    bool m_isOwned = false;
+    duint32 m_handle = 0;
+};
+
+//! Shell parser for ACDBASSOC* action/dependency/action-param objects.
+class DRW_AssociativeObject : public DRW_TableEntry {
+    SETOBJFRIENDS
+public:
+    explicit DRW_AssociativeObject(const UTF8STRING& recordName = UTF8STRING())
+        : m_recordName(recordName) {
+        tType = DRW::ASSOCIATIVEOBJECT;
+    }
+
+protected:
+    bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) override;
+
+public:
+    UTF8STRING m_recordName;
+    duint16 m_classVersion = 0;
+    dint32 m_geometryStatus = 0;
+    duint32 m_owningNetworkHandle = 0;
+    duint32 m_actionBodyHandle = 0;
+    dint32 m_actionIndex = 0;
+    dint32 m_maxDependencyIndex = 0;
+    std::vector<DRW_AssociativeHandleRef> m_dependencies;
+    std::vector<DRW_AssociativeHandleRef> m_actions;
+    std::vector<duint32> m_ownedParams;
+    std::vector<duint32> m_ownedActions;
+    duint32 m_dependencyHandle = 0;
+    duint32 m_readDependencyHandle = 0;
+    duint32 m_writeDependencyHandle = 0;
+    duint32 m_rNodeHandle = 0;
+    duint32 m_dNodeHandle = 0;
+    dint32 m_status = 0;
+    duint8 m_osnapMode = 0;
+    double m_parameter = 0.0;
+    DRW_Coord m_point;
+};
+
+//! Shell parser for ACSH_* history/action objects.
+class DRW_AcShHistoryObject : public DRW_TableEntry {
+    SETOBJFRIENDS
+public:
+    explicit DRW_AcShHistoryObject(const UTF8STRING& recordName = UTF8STRING())
+        : m_recordName(recordName) {
+        tType = DRW::ACSHHISTORYOBJECT;
+    }
+
+protected:
+    bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) override;
+
+public:
+    UTF8STRING m_recordName;
+    duint32 m_major = 0;
+    duint32 m_minor = 0;
+    duint32 m_ownerHandle = 0;
+    duint32 m_historyNodeId = 0;
+    bool m_showHistory = false;
+    bool m_recordHistory = false;
+    DRW_Coord m_direction;
+    double m_draftAngle = 0.0;
+    double m_startDraftDistance = 0.0;
+    double m_endDraftDistance = 0.0;
+    double m_scaleFactor = 1.0;
+    double m_twistAngle = 0.0;
+    double m_alignAngle = 0.0;
+    std::vector<duint8> m_binaryBlob1;
+    std::vector<duint8> m_binaryBlob2;
 };
 
 //! Common AcDbModelDocViewStyle header shared by detail/section view styles.
