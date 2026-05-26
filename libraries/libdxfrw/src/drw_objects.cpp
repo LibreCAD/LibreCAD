@@ -2858,6 +2858,493 @@ bool DRW_EvaluationGraph::parseDwg(DRW::Version version, dwgBuffer *buf, duint32
     return buf->isGood() && hBuff.isGood();
 }
 
+void DRW_DetailViewStyle::reset() {
+    tType = DRW::DETAILVIEWSTYLE;
+    m_modelDoc = DRW_ModelDocViewStyle();
+    m_classVersion = 0;
+    m_flags = 0;
+    m_identifierStyleHandle = 0;
+    m_identifierColor = 256;
+    m_identifierHeight = 0.0;
+    m_identifierExcludeCharacters.clear();
+    m_identifierOffset = 0.0;
+    m_identifierPlacement = 0;
+    m_arrowSymbolHandle = 0;
+    m_arrowSymbolColor = 256;
+    m_arrowSymbolSize = 0.0;
+    m_boundaryLineTypeHandle = 0;
+    m_boundaryLineWeight = 0;
+    m_boundaryLineColor = 256;
+    m_viewLabelTextStyleHandle = 0;
+    m_viewLabelTextColor = 256;
+    m_viewLabelTextHeight = 0.0;
+    m_viewLabelAttachment = 0;
+    m_viewLabelOffset = 0.0;
+    m_viewLabelAlignment = 0;
+    m_viewLabelPattern.clear();
+    m_connectionLineTypeHandle = 0;
+    m_connectionLineWeight = 0;
+    m_connectionLineColor = 256;
+    m_borderLineTypeHandle = 0;
+    m_borderLineWeight = 0;
+    m_borderLineColor = 256;
+    m_modelEdge = 0;
+    m_dxfSubclass.clear();
+    m_dxfGroup = -1;
+    m_dxfHandleCount = 0;
+    m_dxfColorCount = 0;
+    m_dxfDoubleCount = 0;
+    m_dxfLongCount = 0;
+    DRW_TableEntry::reset();
+}
+
+bool DRW_DetailViewStyle::parseCode(int code, const std::unique_ptr<dxfReader>& reader) {
+    if (code == 100) {
+        m_dxfSubclass = reader->getUtf8String();
+        m_dxfGroup = -1;
+        m_dxfHandleCount = m_dxfColorCount = m_dxfDoubleCount = m_dxfLongCount = 0;
+        return true;
+    }
+    if (m_dxfSubclass == "AcDbModelDocViewStyle") {
+        switch (code) {
+        case 70: m_modelDoc.m_modelDocClassVersion = reader->getInt32(); return true;
+        case 3:  m_modelDoc.m_description = reader->getUtf8String(); return true;
+        case 290: m_modelDoc.m_modifiedForRecompute = reader->getBool(); return true;
+        case 300: m_modelDoc.m_displayName = reader->getUtf8String(); return true;
+        case 90: m_modelDoc.m_viewStyleFlags = static_cast<duint32>(reader->getInt32()); return true;
+        default: return DRW_TableEntry::parseCode(code, reader);
+        }
+    }
+    if (m_dxfSubclass != "AcDbDetailViewStyle")
+        return DRW_TableEntry::parseCode(code, reader);
+
+    if (code == 71) {
+        m_dxfGroup = reader->getInt32();
+        m_dxfHandleCount = m_dxfColorCount = m_dxfDoubleCount = m_dxfLongCount = 0;
+        return true;
+    }
+    switch (code) {
+    case 70:
+        m_classVersion = reader->getInt32();
+        return true;
+    case 340: {
+        const duint32 ref = static_cast<duint32>(reader->getHandleString());
+        if (m_dxfGroup == 1) {
+            if (m_dxfHandleCount++ == 0) m_identifierStyleHandle = ref;
+            else m_arrowSymbolHandle = ref;
+        } else if (m_dxfGroup == 2) {
+            m_boundaryLineTypeHandle = ref;
+        } else if (m_dxfGroup == 3) {
+            m_viewLabelTextStyleHandle = ref;
+        } else if (m_dxfGroup == 4) {
+            if (m_dxfHandleCount++ == 0) m_connectionLineTypeHandle = ref;
+            else m_borderLineTypeHandle = ref;
+        }
+        return true;
+    }
+    case 62: {
+        const int color = reader->getInt32();
+        if (m_dxfGroup == 1) {
+            if (m_dxfColorCount++ == 0) m_identifierColor = color;
+            else m_arrowSymbolColor = color;
+        } else if (m_dxfGroup == 2) {
+            m_boundaryLineColor = color;
+        } else if (m_dxfGroup == 3) {
+            m_viewLabelTextColor = color;
+        } else if (m_dxfGroup == 4) {
+            if (m_dxfColorCount++ == 0) m_connectionLineColor = color;
+            else m_borderLineColor = color;
+        }
+        return true;
+    }
+    case 40: {
+        const double value = reader->getDouble();
+        if (m_dxfGroup == 1) {
+            if (m_dxfDoubleCount == 0) m_identifierHeight = value;
+            else if (m_dxfDoubleCount == 1) m_arrowSymbolSize = value;
+            else m_identifierOffset = value;
+            ++m_dxfDoubleCount;
+        } else if (m_dxfGroup == 3) {
+            if (m_dxfDoubleCount++ == 0) m_viewLabelTextHeight = value;
+            else m_viewLabelOffset = value;
+        }
+        return true;
+    }
+    case 90: {
+        const dint32 value = reader->getInt32();
+        if (m_dxfGroup == 0 || m_dxfGroup == -1) m_flags = static_cast<duint32>(value);
+        else if (m_dxfGroup == 2) m_boundaryLineWeight = value;
+        else if (m_dxfGroup == 3) {
+            if (m_dxfLongCount++ == 0) m_viewLabelAttachment = static_cast<duint32>(value);
+            else m_viewLabelAlignment = static_cast<duint32>(value);
+        } else if (m_dxfGroup == 4) {
+            if (m_dxfLongCount++ == 0) m_connectionLineWeight = value;
+            else m_borderLineWeight = value;
+        }
+        return true;
+    }
+    case 280:
+        if (m_dxfGroup == 1) m_identifierPlacement = static_cast<duint8>(reader->getInt32());
+        else if (m_dxfGroup == 4) m_modelEdge = static_cast<duint8>(reader->getInt32());
+        else reader->getInt32();
+        return true;
+    case 300:
+        if (m_dxfGroup == 1) m_identifierExcludeCharacters = reader->getUtf8String();
+        else if (m_dxfGroup == 3) m_viewLabelPattern = reader->getUtf8String();
+        else reader->getUtf8String();
+        return true;
+    default:
+        return DRW_TableEntry::parseCode(code, reader);
+    }
+}
+
+bool DRW_DetailViewStyle::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs) {
+    dwgBuffer sBuff = *buf;
+    dwgBuffer *sBuf = version > DRW::AC1018 ? &sBuff : buf;
+    bool ret = DRW_TableEntry::parseDwg(version, buf, sBuf, bs);
+    DRW_DBG("\n***************************** parsing DETAILVIEWSTYLE ******************\n");
+    if (!ret) return ret;
+
+    dwgBuffer hBuff = *buf;
+    seekObjectHandleStream(version, &hBuff, objSize);
+    readCommonObjectHandles(&hBuff, handle, numReactors, xDictFlag, &parentHandle);
+
+    m_modelDoc.m_modelDocClassVersion = buf->getBitShort();
+    m_modelDoc.m_description = sBuf->getVariableText(version, false);
+    m_modelDoc.m_modifiedForRecompute = buf->getBit() != 0;
+    if (version >= DRW::AC1032) {
+        m_modelDoc.m_displayName = sBuf->getVariableText(version, false);
+        m_modelDoc.m_viewStyleFlags = static_cast<duint32>(buf->getBitLong());
+    }
+
+    m_classVersion = buf->getBitShort();
+    m_flags = static_cast<duint32>(buf->getBitLong());
+    m_identifierStyleHandle = readObjectHandleRef(&hBuff);
+    m_identifierColor = readObjectCmColor(version, buf, sBuf);
+    m_identifierHeight = buf->getBitDouble();
+    m_identifierExcludeCharacters = sBuf->getVariableText(version, false);
+    m_identifierOffset = buf->getBitDouble();
+    m_identifierPlacement = buf->getRawChar8();
+    m_arrowSymbolHandle = readObjectHandleRef(&hBuff);
+    m_arrowSymbolColor = readObjectCmColor(version, buf, sBuf);
+    m_arrowSymbolSize = buf->getBitDouble();
+    m_boundaryLineTypeHandle = readObjectHandleRef(&hBuff);
+    m_boundaryLineWeight = buf->getBitLong();
+    m_boundaryLineColor = readObjectCmColor(version, buf, sBuf);
+    m_viewLabelTextStyleHandle = readObjectHandleRef(&hBuff);
+    m_viewLabelTextColor = readObjectCmColor(version, buf, sBuf);
+    m_viewLabelTextHeight = buf->getBitDouble();
+    m_viewLabelAttachment = static_cast<duint32>(buf->getBitLong());
+    m_viewLabelOffset = buf->getBitDouble();
+    m_viewLabelAlignment = static_cast<duint32>(buf->getBitLong());
+    m_viewLabelPattern = sBuf->getVariableText(version, false);
+    m_connectionLineTypeHandle = readObjectHandleRef(&hBuff);
+    m_connectionLineWeight = buf->getBitLong();
+    m_connectionLineColor = readObjectCmColor(version, buf, sBuf);
+    m_borderLineTypeHandle = readObjectHandleRef(&hBuff);
+    m_borderLineWeight = buf->getBitLong();
+    m_borderLineColor = readObjectCmColor(version, buf, sBuf);
+    m_modelEdge = buf->getRawChar8();
+    return buf->isGood() && sBuf->isGood() && hBuff.isGood();
+}
+
+void DRW_SectionViewStyle::reset() {
+    tType = DRW::SECTIONVIEWSTYLE;
+    m_modelDoc = DRW_ModelDocViewStyle();
+    m_classVersion = 0;
+    m_flags = 0;
+    m_identifierStyleHandle = 0;
+    m_identifierColor = 256;
+    m_identifierHeight = 0.0;
+    m_arrowStartSymbolHandle = 0;
+    m_arrowEndSymbolHandle = 0;
+    m_arrowSymbolColor = 256;
+    m_arrowSymbolSize = 0.0;
+    m_identifierExcludeCharacters.clear();
+    m_identifierPosition = 0;
+    m_identifierOffset = 0.0;
+    m_arrowPosition = 0;
+    m_arrowSymbolExtensionLength = 0.0;
+    m_planeLineTypeHandle = 0;
+    m_planeLineWeight = 0;
+    m_planeLineColor = 256;
+    m_bendLineTypeHandle = 0;
+    m_bendLineWeight = 0;
+    m_bendLineColor = 256;
+    m_bendLineLength = 0.0;
+    m_endLineOvershoot = 0.0;
+    m_endLineLength = 0.0;
+    m_viewLabelTextStyleHandle = 0;
+    m_viewLabelTextColor = 256;
+    m_viewLabelTextHeight = 0.0;
+    m_viewLabelAttachment = 0;
+    m_viewLabelOffset = 0.0;
+    m_viewLabelAlignment = 0;
+    m_viewLabelPattern.clear();
+    m_hatchColor = 256;
+    m_hatchBackgroundColor = 257;
+    m_hatchPattern.clear();
+    m_hatchScale = 1.0;
+    m_hatchTransparency = 0;
+    m_unknownB1 = false;
+    m_unknownB2 = false;
+    m_hatchAngles.clear();
+    m_dxfSubclass.clear();
+    m_dxfGroup = -1;
+    m_dxfHandleCount = m_dxfColorCount = m_dxfDoubleCount = m_dxfLongCount = 0;
+    m_dxfBoolCount = 0;
+    m_dxfExpectedHatchAngles = 0;
+    DRW_TableEntry::reset();
+}
+
+bool DRW_SectionViewStyle::parseCode(int code, const std::unique_ptr<dxfReader>& reader) {
+    if (code == 100) {
+        m_dxfSubclass = reader->getUtf8String();
+        m_dxfGroup = -1;
+        m_dxfHandleCount = m_dxfColorCount = m_dxfDoubleCount = m_dxfLongCount = 0;
+        m_dxfBoolCount = 0;
+        return true;
+    }
+    if (m_dxfSubclass == "AcDbModelDocViewStyle") {
+        switch (code) {
+        case 70: m_modelDoc.m_modelDocClassVersion = reader->getInt32(); return true;
+        case 3:  m_modelDoc.m_description = reader->getUtf8String(); return true;
+        case 290: m_modelDoc.m_modifiedForRecompute = reader->getBool(); return true;
+        case 300: m_modelDoc.m_displayName = reader->getUtf8String(); return true;
+        case 90: m_modelDoc.m_viewStyleFlags = static_cast<duint32>(reader->getInt32()); return true;
+        default: return DRW_TableEntry::parseCode(code, reader);
+        }
+    }
+    if (m_dxfSubclass != "AcDbSectionViewStyle")
+        return DRW_TableEntry::parseCode(code, reader);
+
+    if (code == 71) {
+        m_dxfGroup = reader->getInt32();
+        m_dxfHandleCount = m_dxfColorCount = m_dxfDoubleCount = m_dxfLongCount = 0;
+        m_dxfBoolCount = 0;
+        return true;
+    }
+    switch (code) {
+    case 70:
+        m_classVersion = reader->getInt32();
+        return true;
+    case 340: {
+        const duint32 ref = static_cast<duint32>(reader->getHandleString());
+        if (m_dxfGroup == 1) {
+            if (m_dxfHandleCount == 0) m_identifierStyleHandle = ref;
+            else if (m_dxfHandleCount == 1) m_arrowStartSymbolHandle = ref;
+            else m_arrowEndSymbolHandle = ref;
+            ++m_dxfHandleCount;
+        } else if (m_dxfGroup == 2) {
+            if (m_dxfHandleCount++ == 0) m_planeLineTypeHandle = ref;
+            else m_bendLineTypeHandle = ref;
+        } else if (m_dxfGroup == 3) {
+            m_viewLabelTextStyleHandle = ref;
+        }
+        return true;
+    }
+    case 62: {
+        const int color = reader->getInt32();
+        if (m_dxfGroup == 1) {
+            if (m_dxfColorCount++ == 0) m_identifierColor = color;
+            else m_arrowSymbolColor = color;
+        } else if (m_dxfGroup == 2) {
+            if (m_dxfColorCount++ == 0) m_planeLineColor = color;
+            else m_bendLineColor = color;
+        } else if (m_dxfGroup == 3) {
+            m_viewLabelTextColor = color;
+        } else if (m_dxfGroup == 4) {
+            if (m_dxfColorCount++ == 0) m_hatchColor = color;
+            else m_hatchBackgroundColor = color;
+        }
+        return true;
+    }
+    case 40: {
+        const double value = reader->getDouble();
+        if (m_dxfGroup == 1) {
+            if (m_dxfDoubleCount == 0) m_identifierHeight = value;
+            else if (m_dxfDoubleCount == 1) m_arrowSymbolSize = value;
+            else if (m_dxfDoubleCount == 2) m_arrowSymbolExtensionLength = value;
+            else m_identifierOffset = value;
+            ++m_dxfDoubleCount;
+        } else if (m_dxfGroup == 2) {
+            if (m_dxfDoubleCount == 0) m_bendLineLength = value;
+            else if (m_dxfDoubleCount == 1) m_endLineOvershoot = value;
+            else m_endLineLength = value;
+            ++m_dxfDoubleCount;
+        } else if (m_dxfGroup == 3) {
+            if (m_dxfDoubleCount++ == 0) m_viewLabelTextHeight = value;
+            else m_viewLabelOffset = value;
+        } else if (m_dxfGroup == 4) {
+            if (m_dxfDoubleCount++ == 0) m_hatchScale = value;
+            else m_hatchAngles.push_back(value);
+        }
+        return true;
+    }
+    case 90: {
+        const dint32 value = reader->getInt32();
+        if (m_dxfGroup == 0 || m_dxfGroup == -1) m_flags = static_cast<duint32>(value);
+        else if (m_dxfGroup == 1) {
+            if (m_dxfLongCount++ == 0) m_identifierPosition = value;
+            else m_arrowPosition = value;
+        } else if (m_dxfGroup == 2) {
+            if (m_dxfLongCount++ == 0) m_planeLineWeight = value;
+            else m_bendLineWeight = value;
+        } else if (m_dxfGroup == 3) {
+            if (m_dxfLongCount++ == 0) m_viewLabelAttachment = static_cast<duint32>(value);
+            else m_viewLabelAlignment = static_cast<duint32>(value);
+        } else if (m_dxfGroup == 4) {
+            if (m_dxfLongCount++ == 0) m_hatchTransparency = value;
+            else m_dxfExpectedHatchAngles = static_cast<duint32>(value);
+        }
+        return true;
+    }
+    case 290:
+        if (m_dxfGroup == 4) {
+            if (m_dxfBoolCount++ == 0) m_unknownB1 = reader->getBool();
+            else m_unknownB2 = reader->getBool();
+        } else {
+            reader->getBool();
+        }
+        return true;
+    case 300:
+        if (m_dxfGroup == 1) m_identifierExcludeCharacters = reader->getUtf8String();
+        else if (m_dxfGroup == 3) m_viewLabelPattern = reader->getUtf8String();
+        else if (m_dxfGroup == 4) m_hatchPattern = reader->getUtf8String();
+        else reader->getUtf8String();
+        return true;
+    default:
+        return DRW_TableEntry::parseCode(code, reader);
+    }
+}
+
+bool DRW_SectionViewStyle::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs) {
+    dwgBuffer sBuff = *buf;
+    dwgBuffer *sBuf = version > DRW::AC1018 ? &sBuff : buf;
+    bool ret = DRW_TableEntry::parseDwg(version, buf, sBuf, bs);
+    DRW_DBG("\n***************************** parsing SECTIONVIEWSTYLE *****************\n");
+    if (!ret) return ret;
+
+    dwgBuffer hBuff = *buf;
+    seekObjectHandleStream(version, &hBuff, objSize);
+    readCommonObjectHandles(&hBuff, handle, numReactors, xDictFlag, &parentHandle);
+
+    m_modelDoc.m_modelDocClassVersion = buf->getBitShort();
+    m_modelDoc.m_description = sBuf->getVariableText(version, false);
+    m_modelDoc.m_modifiedForRecompute = buf->getBit() != 0;
+    if (version >= DRW::AC1032) {
+        m_modelDoc.m_displayName = sBuf->getVariableText(version, false);
+        m_modelDoc.m_viewStyleFlags = static_cast<duint32>(buf->getBitLong());
+    }
+
+    m_classVersion = buf->getBitShort();
+    m_flags = static_cast<duint32>(buf->getBitLong());
+    m_identifierStyleHandle = readObjectHandleRef(&hBuff);
+    m_identifierColor = readObjectCmColor(version, buf, sBuf);
+    m_identifierHeight = buf->getBitDouble();
+    m_arrowStartSymbolHandle = readObjectHandleRef(&hBuff);
+    m_arrowEndSymbolHandle = readObjectHandleRef(&hBuff);
+    m_arrowSymbolColor = readObjectCmColor(version, buf, sBuf);
+    m_arrowSymbolSize = buf->getBitDouble();
+    m_identifierExcludeCharacters = sBuf->getVariableText(version, false);
+    m_arrowSymbolExtensionLength = buf->getBitDouble();
+    m_planeLineTypeHandle = readObjectHandleRef(&hBuff);
+    m_planeLineWeight = buf->getBitLong();
+    m_planeLineColor = readObjectCmColor(version, buf, sBuf);
+    m_bendLineTypeHandle = readObjectHandleRef(&hBuff);
+    m_bendLineWeight = buf->getBitLong();
+    m_bendLineColor = readObjectCmColor(version, buf, sBuf);
+    m_bendLineLength = buf->getBitDouble();
+    m_endLineLength = buf->getBitDouble();
+    m_viewLabelTextStyleHandle = readObjectHandleRef(&hBuff);
+    m_viewLabelTextColor = readObjectCmColor(version, buf, sBuf);
+    m_viewLabelTextHeight = buf->getBitDouble();
+    m_viewLabelAttachment = static_cast<duint32>(buf->getBitLong());
+    m_viewLabelOffset = buf->getBitDouble();
+    m_viewLabelAlignment = static_cast<duint32>(buf->getBitLong());
+    m_viewLabelPattern = sBuf->getVariableText(version, false);
+    m_hatchColor = readObjectCmColor(version, buf, sBuf);
+    m_hatchBackgroundColor = readObjectCmColor(version, buf, sBuf);
+    m_hatchPattern = sBuf->getVariableText(version, false);
+    m_hatchScale = buf->getBitDouble();
+    m_hatchTransparency = buf->getBitLong();
+    m_unknownB1 = buf->getBit() != 0;
+    m_unknownB2 = buf->getBit() != 0;
+    m_identifierPosition = buf->getBitLong();
+    m_identifierOffset = buf->getBitDouble();
+    m_arrowPosition = buf->getBitLong();
+    m_endLineOvershoot = buf->getBitDouble();
+    const dint32 hatchAngleCount = buf->getBitLong();
+    if (hatchAngleCount < 0 || hatchAngleCount > 100000)
+        return false;
+    m_hatchAngles.clear();
+    m_hatchAngles.reserve(static_cast<size_t>(hatchAngleCount));
+    for (dint32 i = 0; i < hatchAngleCount; ++i)
+        m_hatchAngles.push_back(buf->getBitDouble());
+
+    return buf->isGood() && sBuf->isGood() && hBuff.isGood();
+}
+
+void DRW_BreakData::reset() {
+    tType = DRW::BREAKDATA;
+    m_pointRefHandles.clear();
+    m_dimensionHandle = 0;
+    m_dxfInBreakData = false;
+    DRW_TableEntry::reset();
+}
+
+bool DRW_BreakData::parseCode(int code, const std::unique_ptr<dxfReader>& reader) {
+    if (code == 100) {
+        m_dxfInBreakData = reader->getUtf8String() == "AcDbBreakData";
+        return true;
+    }
+    if (!m_dxfInBreakData)
+        return DRW_TableEntry::parseCode(code, reader);
+    switch (code) {
+    case 90:
+        reader->getInt32();
+        return true;
+    case 330:
+        m_pointRefHandles.push_back(static_cast<duint32>(reader->getHandleString()));
+        return true;
+    case 331:
+        m_dimensionHandle = static_cast<duint32>(reader->getHandleString());
+        return true;
+    default:
+        return DRW_TableEntry::parseCode(code, reader);
+    }
+}
+
+bool DRW_BreakData::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs) {
+    bool ret = DRW_TableEntry::parseDwg(version, buf, nullptr, bs);
+    DRW_DBG("\n***************************** parsing BREAKDATA ************************\n");
+    if (!ret) return ret;
+
+    dwgBuffer hBuff = *buf;
+    seekObjectHandleStream(version, &hBuff, objSize);
+    readCommonObjectHandles(&hBuff, handle, numReactors, xDictFlag, &parentHandle);
+
+    const dint32 pointRefCount = buf->getBitLong();
+    if (pointRefCount < 0 || pointRefCount > 100000)
+        return buf->isGood();
+    m_pointRefHandles.clear();
+    m_pointRefHandles.reserve(static_cast<size_t>(pointRefCount));
+    for (dint32 i = 0; i < pointRefCount; ++i)
+        m_pointRefHandles.push_back(readObjectHandleRef(&hBuff));
+    m_dimensionHandle = readObjectHandleRef(&hBuff);
+    return buf->isGood() && hBuff.isGood();
+}
+
+bool DRW_BreakPointRef::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs) {
+    bool ret = DRW_TableEntry::parseDwg(version, buf, nullptr, bs);
+    DRW_DBG("\n***************************** parsing BREAKPOINTREF ********************\n");
+    if (!ret) return ret;
+    dwgBuffer hBuff = *buf;
+    seekObjectHandleStream(version, &hBuff, objSize);
+    readCommonObjectHandles(&hBuff, handle, numReactors, xDictFlag, &parentHandle);
+    return buf->isGood() && hBuff.isGood();
+}
+
 // VISUALSTYLE (AcDbVisualStyle) — stub parser per ODA spec §20.4.95.
 // Reads only what's needed for round-trip identity; full visual-style
 // data (60+ fields) is irrelevant to LibreCAD's 2D rendering. Each

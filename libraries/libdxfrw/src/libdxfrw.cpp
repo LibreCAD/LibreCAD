@@ -3634,7 +3634,19 @@ bool dxfRW::processObjects() {
             return true;  //found ENDSEC terminate
         }
 
-        if ("IMAGEDEF" == nextentity) {
+        if ("ACDBDETAILVIEWSTYLE" == nextentity || "DETAILVIEWSTYLE" == nextentity) {
+            processed = processDetailViewStyle();
+        }
+        else if ("ACDBSECTIONVIEWSTYLE" == nextentity || "SECTIONVIEWSTYLE" == nextentity) {
+            processed = processSectionViewStyle();
+        }
+        else if ("BREAKDATA" == nextentity) {
+            processed = processBreakData();
+        }
+        else if ("BREAKPOINTREF" == nextentity) {
+            processed = processBreakPointRef();
+        }
+        else if ("IMAGEDEF" == nextentity) {
             processed = processImageDef();
         }
         else if ("PLOTSETTINGS" == nextentity) {
@@ -3653,6 +3665,78 @@ bool dxfRW::processObjects() {
     }
     while (processed);
 
+    return setError(DRW::BAD_READ_OBJECTS);
+}
+
+bool dxfRW::processDetailViewStyle() {
+    DRW_DBG("dxfRW::processDetailViewStyle");
+    int code;
+    DRW_DetailViewStyle style;
+    while (reader->readRec(&code)) {
+        DRW_DBG(code); DRW_DBG("\n");
+        if (code == 0) {
+            nextentity = reader->getString();
+            DRW_DBG(nextentity); DRW_DBG("\n");
+            iface->addDetailViewStyle(style);
+            return true;
+        }
+        if (!style.parseCode(code, reader))
+            return setError(DRW::BAD_CODE_PARSED);
+    }
+    return setError(DRW::BAD_READ_OBJECTS);
+}
+
+bool dxfRW::processSectionViewStyle() {
+    DRW_DBG("dxfRW::processSectionViewStyle");
+    int code;
+    DRW_SectionViewStyle style;
+    while (reader->readRec(&code)) {
+        DRW_DBG(code); DRW_DBG("\n");
+        if (code == 0) {
+            nextentity = reader->getString();
+            DRW_DBG(nextentity); DRW_DBG("\n");
+            iface->addSectionViewStyle(style);
+            return true;
+        }
+        if (!style.parseCode(code, reader))
+            return setError(DRW::BAD_CODE_PARSED);
+    }
+    return setError(DRW::BAD_READ_OBJECTS);
+}
+
+bool dxfRW::processBreakData() {
+    DRW_DBG("dxfRW::processBreakData");
+    int code;
+    DRW_BreakData data;
+    while (reader->readRec(&code)) {
+        DRW_DBG(code); DRW_DBG("\n");
+        if (code == 0) {
+            nextentity = reader->getString();
+            DRW_DBG(nextentity); DRW_DBG("\n");
+            iface->addBreakData(data);
+            return true;
+        }
+        if (!data.parseCode(code, reader))
+            return setError(DRW::BAD_CODE_PARSED);
+    }
+    return setError(DRW::BAD_READ_OBJECTS);
+}
+
+bool dxfRW::processBreakPointRef() {
+    DRW_DBG("dxfRW::processBreakPointRef");
+    int code;
+    DRW_BreakPointRef ref;
+    while (reader->readRec(&code)) {
+        DRW_DBG(code); DRW_DBG("\n");
+        if (code == 0) {
+            nextentity = reader->getString();
+            DRW_DBG(nextentity); DRW_DBG("\n");
+            iface->addBreakPointRef(ref);
+            return true;
+        }
+        if (!ref.parseCode(code, reader))
+            return setError(DRW::BAD_CODE_PARSED);
+    }
     return setError(DRW::BAD_READ_OBJECTS);
 }
 

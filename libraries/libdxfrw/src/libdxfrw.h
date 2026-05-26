@@ -127,6 +127,10 @@ private:
     bool processBlock();
     bool processEntities(bool isblock);
     bool processObjects();
+    bool processDetailViewStyle();
+    bool processSectionViewStyle();
+    bool processBreakData();
+    bool processBreakPointRef();
 
     bool processLType();
     bool processLayer();

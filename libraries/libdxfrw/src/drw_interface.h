@@ -292,6 +292,14 @@ public:
     virtual void addDimensionAssociation(const DRW_DimensionAssociation& data) { (void) data; }
     /** Called for every ACAD_EVALUATION_GRAPH dynamic/associative metadata object. */
     virtual void addEvaluationGraph(const DRW_EvaluationGraph& data) { (void) data; }
+    /** Called for every DETAILVIEWSTYLE model-document view style object. */
+    virtual void addDetailViewStyle(const DRW_DetailViewStyle& data) { (void) data; }
+    /** Called for every SECTIONVIEWSTYLE model-document view style object. */
+    virtual void addSectionViewStyle(const DRW_SectionViewStyle& data) { (void) data; }
+    /** Called for every BREAKDATA broken-view/dimension-break metadata object. */
+    virtual void addBreakData(const DRW_BreakData& data) { (void) data; }
+    /** Called for every BREAKPOINTREF broken-view reference metadata object. */
+    virtual void addBreakPointRef(const DRW_BreakPointRef& data) { (void) data; }
 
     /**
      * Called for every comment in the DXF file (code 999).

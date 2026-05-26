@@ -151,6 +151,10 @@ public:
     void addWipeout(const DRW_Image *data) override;
     void addMLeader(const DRW_MLeader *data) override;
     void addMLeaderStyle(const DRW_MLeaderStyle *data) override;
+    void addDetailViewStyle(const DRW_DetailViewStyle &data) override;
+    void addSectionViewStyle(const DRW_SectionViewStyle &data) override;
+    void addBreakData(const DRW_BreakData &data) override;
+    void addBreakPointRef(const DRW_BreakPointRef &data) override;
 
     void add3dFace(const DRW_3Dface& data) override;
     void addComment(const char*) override;

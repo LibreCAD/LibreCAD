@@ -1679,6 +1679,34 @@ bool dwgReader::readDwgObject(dwgBuffer *dbuf, objHandle& obj, DRW_Interface& in
                         if (ret) intfa.addEvaluationGraph(e);
                         break;
                     }
+                    if (rn == "ACDBDETAILVIEWSTYLE" || rn == "DETAILVIEWSTYLE"
+                        || cit->second->className == "AcDbDetailViewStyle") {
+                        DRW_DetailViewStyle e;
+                        ret = e.parseDwg(version, &buff, bs);
+                        if (ret) intfa.addDetailViewStyle(e);
+                        break;
+                    }
+                    if (rn == "ACDBSECTIONVIEWSTYLE" || rn == "SECTIONVIEWSTYLE"
+                        || cit->second->className == "AcDbSectionViewStyle") {
+                        DRW_SectionViewStyle e;
+                        ret = e.parseDwg(version, &buff, bs);
+                        if (ret) intfa.addSectionViewStyle(e);
+                        break;
+                    }
+                    if (rn == "BREAKDATA"
+                        || cit->second->className == "AcDbBreakData") {
+                        DRW_BreakData e;
+                        ret = e.parseDwg(version, &buff, bs);
+                        if (ret) intfa.addBreakData(e);
+                        break;
+                    }
+                    if (rn == "BREAKPOINTREF"
+                        || cit->second->className == "AcDbBreakPointRef") {
+                        DRW_BreakPointRef e;
+                        ret = e.parseDwg(version, &buff, bs);
+                        if (ret) intfa.addBreakPointRef(e);
+                        break;
+                    }
                     if (rn == "MLEADERSTYLE") {
                         DRW_MLeaderStyle e;
                         ret = e.parseDwg(version, &buff, bs);

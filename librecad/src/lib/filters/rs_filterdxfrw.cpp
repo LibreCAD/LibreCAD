@@ -3637,6 +3637,38 @@ void RS_FilterDXFRW::addMLeaderStyle(const DRW_MLeaderStyle *data) {
                   data->name.empty() ? "(unnamed)" : data->name.c_str());
 }
 
+void RS_FilterDXFRW::addDetailViewStyle(const DRW_DetailViewStyle &data) {
+  // TODO: Store AcDbDetailViewStyle on the document once LibreCAD has native
+  // model-document/detail-view consumers. libdxfrw now preserves the DXF/DWG
+  // payload for callers that need it.
+  RS_DEBUG->print("RS_FilterDXFRW::addDetailViewStyle: %s",
+                  data.m_modelDoc.m_displayName.empty()
+                      ? data.m_modelDoc.m_description.c_str()
+                      : data.m_modelDoc.m_displayName.c_str());
+}
+
+void RS_FilterDXFRW::addSectionViewStyle(const DRW_SectionViewStyle &data) {
+  // TODO: Store AcDbSectionViewStyle with future section/detail view support.
+  RS_DEBUG->print("RS_FilterDXFRW::addSectionViewStyle: %s",
+                  data.m_modelDoc.m_displayName.empty()
+                      ? data.m_modelDoc.m_description.c_str()
+                      : data.m_modelDoc.m_displayName.c_str());
+}
+
+void RS_FilterDXFRW::addBreakData(const DRW_BreakData &data) {
+  // TODO: Resolve BREAKDATA point refs and dimension refs into native broken
+  // view/dimension-break relationships after LibreCAD grows a consumer model.
+  RS_DEBUG->print("RS_FilterDXFRW::addBreakData: %d refs",
+                  static_cast<int>(data.m_pointRefHandles.size()));
+}
+
+void RS_FilterDXFRW::addBreakPointRef(const DRW_BreakPointRef &data) {
+  // TODO: Preserve/use BREAKPOINTREF xref subend-path data when the related
+  // broken-view metadata graph is modeled on the LibreCAD side.
+  RS_DEBUG->print("RS_FilterDXFRW::addBreakPointRef: %d",
+                  static_cast<int>(data.handle));
+}
+
 /**
  * Implementation of the method which links image entities to image files.
  */

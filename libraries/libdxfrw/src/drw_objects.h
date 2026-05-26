@@ -62,7 +62,11 @@ namespace DRW {
          UNDERLAYDEFINITION,
          SCALE,
          DIMASSOC,
-         EVALUATIONGRAPH
+         EVALUATIONGRAPH,
+         DETAILVIEWSTYLE,
+         SECTIONVIEWSTYLE,
+         BREAKDATA,
+         BREAKPOINTREF
      };
 
 //pending VP_ENT_HDR, GROUP, LONG_TRANSACTION,
@@ -1289,6 +1293,149 @@ public:
     dint32 m_value97 = 0;
     std::vector<DRW_EvaluationGraphNode> m_nodes;
     std::vector<DRW_EvaluationGraphEdge> m_edges;
+};
+
+//! Common AcDbModelDocViewStyle header shared by detail/section view styles.
+struct DRW_ModelDocViewStyle {
+    duint16 m_modelDocClassVersion = 0;   /*!< DXF 70, AcDbModelDocViewStyle */
+    UTF8STRING m_description;             /*!< DXF 3 */
+    bool m_modifiedForRecompute = false;  /*!< DXF 290 */
+    UTF8STRING m_displayName;             /*!< DXF 300, R2018+ */
+    duint32 m_viewStyleFlags = 0;         /*!< DXF 90, R2018+ */
+};
+
+//! Class to handle DETAILVIEWSTYLE / AcDbDetailViewStyle objects.
+class DRW_DetailViewStyle : public DRW_TableEntry {
+    SETOBJFRIENDS
+public:
+    DRW_DetailViewStyle() { reset(); }
+    void reset();
+protected:
+    bool parseCode(int code, const std::unique_ptr<dxfReader>& reader) override;
+    bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) override;
+public:
+    DRW_ModelDocViewStyle m_modelDoc;
+    duint16 m_classVersion = 0;
+    duint32 m_flags = 0;
+    duint32 m_identifierStyleHandle = 0;
+    int m_identifierColor = 256;
+    double m_identifierHeight = 0.0;
+    UTF8STRING m_identifierExcludeCharacters;
+    double m_identifierOffset = 0.0;
+    duint8 m_identifierPlacement = 0;
+    duint32 m_arrowSymbolHandle = 0;
+    int m_arrowSymbolColor = 256;
+    double m_arrowSymbolSize = 0.0;
+    duint32 m_boundaryLineTypeHandle = 0;
+    dint32 m_boundaryLineWeight = 0;
+    int m_boundaryLineColor = 256;
+    duint32 m_viewLabelTextStyleHandle = 0;
+    int m_viewLabelTextColor = 256;
+    double m_viewLabelTextHeight = 0.0;
+    duint32 m_viewLabelAttachment = 0;
+    double m_viewLabelOffset = 0.0;
+    duint32 m_viewLabelAlignment = 0;
+    UTF8STRING m_viewLabelPattern;
+    duint32 m_connectionLineTypeHandle = 0;
+    dint32 m_connectionLineWeight = 0;
+    int m_connectionLineColor = 256;
+    duint32 m_borderLineTypeHandle = 0;
+    dint32 m_borderLineWeight = 0;
+    int m_borderLineColor = 256;
+    duint8 m_modelEdge = 0;
+private:
+    UTF8STRING m_dxfSubclass;
+    int m_dxfGroup = -1;
+    int m_dxfHandleCount = 0;
+    int m_dxfColorCount = 0;
+    int m_dxfDoubleCount = 0;
+    int m_dxfLongCount = 0;
+};
+
+//! Class to handle SECTIONVIEWSTYLE / AcDbSectionViewStyle objects.
+class DRW_SectionViewStyle : public DRW_TableEntry {
+    SETOBJFRIENDS
+public:
+    DRW_SectionViewStyle() { reset(); }
+    void reset();
+protected:
+    bool parseCode(int code, const std::unique_ptr<dxfReader>& reader) override;
+    bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) override;
+public:
+    DRW_ModelDocViewStyle m_modelDoc;
+    duint16 m_classVersion = 0;
+    duint32 m_flags = 0;
+    duint32 m_identifierStyleHandle = 0;
+    int m_identifierColor = 256;
+    double m_identifierHeight = 0.0;
+    duint32 m_arrowStartSymbolHandle = 0;
+    duint32 m_arrowEndSymbolHandle = 0;
+    int m_arrowSymbolColor = 256;
+    double m_arrowSymbolSize = 0.0;
+    UTF8STRING m_identifierExcludeCharacters;
+    dint32 m_identifierPosition = 0;
+    double m_identifierOffset = 0.0;
+    dint32 m_arrowPosition = 0;
+    double m_arrowSymbolExtensionLength = 0.0;
+    duint32 m_planeLineTypeHandle = 0;
+    dint32 m_planeLineWeight = 0;
+    int m_planeLineColor = 256;
+    duint32 m_bendLineTypeHandle = 0;
+    dint32 m_bendLineWeight = 0;
+    int m_bendLineColor = 256;
+    double m_bendLineLength = 0.0;
+    double m_endLineOvershoot = 0.0;
+    double m_endLineLength = 0.0;
+    duint32 m_viewLabelTextStyleHandle = 0;
+    int m_viewLabelTextColor = 256;
+    double m_viewLabelTextHeight = 0.0;
+    duint32 m_viewLabelAttachment = 0;
+    double m_viewLabelOffset = 0.0;
+    duint32 m_viewLabelAlignment = 0;
+    UTF8STRING m_viewLabelPattern;
+    int m_hatchColor = 256;
+    int m_hatchBackgroundColor = 257;
+    UTF8STRING m_hatchPattern;
+    double m_hatchScale = 1.0;
+    dint32 m_hatchTransparency = 0;
+    bool m_unknownB1 = false;
+    bool m_unknownB2 = false;
+    std::vector<double> m_hatchAngles;
+private:
+    UTF8STRING m_dxfSubclass;
+    int m_dxfGroup = -1;
+    int m_dxfHandleCount = 0;
+    int m_dxfColorCount = 0;
+    int m_dxfDoubleCount = 0;
+    int m_dxfLongCount = 0;
+    int m_dxfBoolCount = 0;
+    duint32 m_dxfExpectedHatchAngles = 0;
+};
+
+//! Class to handle BREAKDATA / AcDbBreakData objects.
+class DRW_BreakData : public DRW_TableEntry {
+    SETOBJFRIENDS
+public:
+    DRW_BreakData() { reset(); }
+    void reset();
+protected:
+    bool parseCode(int code, const std::unique_ptr<dxfReader>& reader) override;
+    bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) override;
+public:
+    std::vector<duint32> m_pointRefHandles;
+    duint32 m_dimensionHandle = 0;
+private:
+    bool m_dxfInBreakData = false;
+};
+
+//! Placeholder carrier for BREAKPOINTREF / AcDbBreakPointRef objects.
+class DRW_BreakPointRef : public DRW_TableEntry {
+    SETOBJFRIENDS
+public:
+    DRW_BreakPointRef() { reset(); }
+    void reset() { tType = DRW::BREAKPOINTREF; DRW_TableEntry::reset(); }
+protected:
+    bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) override;
 };
 
 //! Class to handle VISUALSTYLE (AcDbVisualStyle) — custom-class object §20.4.95.
