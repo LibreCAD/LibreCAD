@@ -260,3 +260,38 @@ TEST_CASE("DXF round-trip: default-valued entity emits no metadata codes",
 
   std::filesystem::remove(path);
 }
+
+TEST_CASE("DXF write: app-data doubles preserve fractional values",
+          "[entity_metadata][dxf_roundtrip]") {
+  const auto path = std::filesystem::temp_directory_path() /
+                    "librecad_entity_appdata_double.dxf";
+  std::filesystem::remove(path);
+
+  SingleLineEmitter emitter;
+  emitter.m_line.basePoint = DRW_Coord(0.0, 0.0, 0.0);
+  emitter.m_line.secPoint = DRW_Coord(1.0, 1.0, 0.0);
+  emitter.m_line.layer = "0";
+  emitter.m_line.color = 256;
+
+  std::list<DRW_Variant> appData;
+  appData.emplace_back(102, std::string{"APPDATA"});
+  appData.emplace_back(40, 12.75);
+  emitter.m_line.appData.push_back(appData);
+
+  {
+    dxfRW w(path.string().c_str());
+    emitter.m_rw = &w;
+    REQUIRE(w.write(&emitter, DRW::AC1021, false));
+  }
+
+  std::ifstream in(path);
+  std::stringstream buf;
+  buf << in.rdbuf();
+  const std::string content = buf.str();
+
+  CHECK(content.find("\n102\n{APPDATA\n") != std::string::npos);
+  CHECK(content.find("\n 40\n12.75\n") != std::string::npos);
+  CHECK(content.find("\n102\n}\n") != std::string::npos);
+
+  std::filesystem::remove(path);
+}

@@ -1323,9 +1323,30 @@ public:
         mt.height = 2.5;
         mt.textgen = DRW_MText::TopLeft;
         mt.alignH = DRW_Text::HLeft;
-        mt.interlin = 1.0;
+        mt.interlin = 1.25;
         mt.text = "R2018 MTEXT";
         mt.color = 2;
+        mt.m_backgroundFlags = 0x10; // R2018 text frame bit
+        mt.m_backgroundScale = 150;
+        mt.m_backgroundColor = 3;
+        mt.m_backgroundTransparency = 0;
+        mt.m_r2018IsNotAnnotative = true;
+        mt.m_r2018Version = 1;
+        mt.m_r2018DefaultFlag = false;
+        mt.m_r2018Attachment = DRW_MText::TopLeft;
+        mt.m_r2018XAxisDir = DRW_Coord{1.0, 0.0, 0.0};
+        mt.m_r2018InsertionPoint = mt.basePoint;
+        mt.m_r2018RectWidth = mt.widthscale;
+        mt.m_r2018RectHeight = 7.5;
+        mt.m_r2018ExtentsHeight = 2.5;
+        mt.m_r2018ExtentsWidth = 30.0;
+        mt.m_r2018ColumnType = 2;
+        mt.m_r2018ColumnCount = 2;
+        mt.m_r2018ColumnWidth = 25.0;
+        mt.m_r2018ColumnGutter = 1.5;
+        mt.m_r2018ColumnAutoHeight = false;
+        mt.m_r2018ColumnFlowReversed = true;
+        mt.m_r2018ColumnHeights = {7.5, 8.0};
         REQUIRE(m_writer->writeMText(&mt));
     }
 
@@ -1362,6 +1383,21 @@ TEST_CASE("dwgRW R2018 writes geometry and MTEXT then reader recovers them",
     REQUIRE(readIface.m_mtexts[0].basePoint.y == 34.0);
     REQUIRE(readIface.m_mtexts[0].height == 2.5);
     REQUIRE(readIface.m_mtexts[0].text == "R2018 MTEXT");
+    REQUIRE(readIface.m_mtexts[0].interlin == 1.25);
+    REQUIRE(readIface.m_mtexts[0].m_backgroundFlags == 0x10);
+    REQUIRE(readIface.m_mtexts[0].m_backgroundScale == 150);
+    REQUIRE(readIface.m_mtexts[0].m_backgroundColor == 3);
+    REQUIRE(readIface.m_mtexts[0].m_r2018IsNotAnnotative);
+    REQUIRE(readIface.m_mtexts[0].m_r2018Version == 1);
+    REQUIRE(readIface.m_mtexts[0].m_r2018Attachment == DRW_MText::TopLeft);
+    REQUIRE(readIface.m_mtexts[0].m_r2018AppIdHandle == 0x14u);
+    REQUIRE(readIface.m_mtexts[0].m_r2018RectWidth == 80.0);
+    REQUIRE(readIface.m_mtexts[0].m_r2018RectHeight == 7.5);
+    REQUIRE(readIface.m_mtexts[0].m_r2018ColumnType == 2);
+    REQUIRE(readIface.m_mtexts[0].m_r2018ColumnCount == 2);
+    REQUIRE(readIface.m_mtexts[0].m_r2018ColumnFlowReversed);
+    REQUIRE(readIface.m_mtexts[0].m_r2018ColumnHeights.size() == 2);
+    REQUIRE(readIface.m_mtexts[0].m_r2018ColumnHeights[1] == 8.0);
 
     std::remove(path.c_str());
 }

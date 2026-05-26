@@ -397,12 +397,7 @@ TEST_CASE("DRW_MText::encodeDwg round-trips multi-line text",
         REQUIRE(dst.height      == 3.5);
         REQUIRE(dst.textgen     == 1);  // TopLeft
         REQUIRE(dst.text        == "Line one\\PLine two\\PLine three");
-        // Note: DRW_MText::parseDwg reads the linespacing factor (BD code 44)
-        // but discards it — it never stores into `interlin`.  The encoder
-        // emits a sensible value; the reader-side struct stays at its
-        // constructor default (1.0).  This is a reader-side gap, not an
-        // encoder bug.  When the reader is fixed, change this test.
-        REQUIRE(dst.interlin    == 1.0);
+        REQUIRE(dst.interlin    == 1.5);
     }
 }
 

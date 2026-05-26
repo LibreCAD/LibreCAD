@@ -631,12 +631,33 @@ struct DRW_TableCellContent {
     duint32 m_handle = 0;
 };
 
+struct DRW_TableCellAttribute {
+    duint32 m_attdefHandle = 0;
+    int m_index = 0;
+    UTF8STRING m_text;
+};
+
 struct DRW_TableCell {
     int m_flags = 0;
+    int m_type = 0;
+    int m_edgeFlags = 0;
+    bool m_isMerged = false;
+    bool m_autoFit = false;
+    int m_mergedWidth = 0;
+    int m_mergedHeight = 0;
+    double m_rotation = 0.0;
     UTF8STRING m_toolTip;
     int m_styleId = 0;
+    int m_virtualEdgeFlags = 0;
+    duint32 m_overrideFlags = 0;
+    duint32 m_valueHandle = 0;
+    duint32 m_textStyleHandle = 0;
+    duint32 m_textStyleOverrideHandle = 0;
+    duint32 m_blockHandle = 0;
+    double m_blockScale = 1.0;
     double m_width = 0.0;
     double m_height = 0.0;
+    std::vector<DRW_TableCellAttribute> m_attributes;
     std::vector<DRW_TableCellContent> m_contents;
 };
 
@@ -685,6 +706,24 @@ public:
     bool m_semanticContentComplete = false;
     duint32 m_tableStyleHandle = 0;
     DRW_TableContent m_content;
+};
+
+//! Class to handle standalone TABLECONTENT (AcDbTableContent) objects.
+class DRW_TableContentObject : public DRW_TableEntry {
+    SETOBJFRIENDS
+public:
+    DRW_TableContentObject() { reset(); }
+    void reset(){
+        tType = DRW::TABLECONTENT;
+        m_content = DRW_TableContent();
+        m_parseComplete = false;
+        DRW_TableEntry::reset();
+    }
+protected:
+    bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) override;
+public:
+    DRW_TableContent m_content;
+    bool m_parseComplete = false;
 };
 
 //! Class to handle lwpolyline entity
@@ -911,6 +950,7 @@ public:
         attribFlags = 0;
         lockPosition = false;
         attVersion = 0;
+        m_attributeType = 1;
     }
     // Out-of-line so unique_ptr<DRW_MText> works with the forward declaration
     // (the DRW_MText destructor must be visible at the call site).
@@ -930,6 +970,7 @@ public:
     duint8 attribFlags;        /*!< attribute flags, code 70 (1=invisible, 2=constant, 4=verify, 8=preset) */
     bool lockPosition;         /*!< lock position flag (R2010+) */
     duint8 attVersion;         /*!< version byte (R2010+); 0=plain TEXT-style, >0=MText-style */
+    duint8 m_attributeType;    /*!< R2018+ attribute type: 1=single-line, 2=multi-line ATTRIB, 4=multi-line ATTDEF */
     /* MText-style payload (R2010+).  Non-null iff attVersion > 0 (DWG) or the
        AcDbMText nested subclass was seen (DXF).  Carries the multi-line text
        and formatting (paragraph breaks, font runs, etc.) that the single-line
@@ -1000,6 +1041,28 @@ protected:
 
 public:
     double interlin;     /*!< width factor, code 44 */
+    dint32 m_backgroundFlags = 0;
+    dint32 m_backgroundScale = 0;
+    int m_backgroundColor = 0;
+    dint32 m_backgroundTransparency = 0;
+    bool m_r2018IsNotAnnotative = false;
+    duint16 m_r2018Version = 0;
+    bool m_r2018DefaultFlag = false;
+    duint32 m_r2018AppIdHandle = 0;
+    dint32 m_r2018Attachment = 0;
+    DRW_Coord m_r2018XAxisDir;
+    DRW_Coord m_r2018InsertionPoint;
+    double m_r2018RectWidth = 0.0;
+    double m_r2018RectHeight = 0.0;
+    double m_r2018ExtentsHeight = 0.0;
+    double m_r2018ExtentsWidth = 0.0;
+    duint16 m_r2018ColumnType = 0;
+    dint32 m_r2018ColumnCount = 0;
+    double m_r2018ColumnWidth = 0.0;
+    double m_r2018ColumnGutter = 0.0;
+    bool m_r2018ColumnAutoHeight = false;
+    bool m_r2018ColumnFlowReversed = false;
+    std::vector<double> m_r2018ColumnHeights;
 private:
     bool hasXAxisVec; /* renamed by djm for better description */
 };

@@ -1650,6 +1650,20 @@ bool dwgReader::readDwgObject(dwgBuffer *dbuf, objHandle& obj, DRW_Interface& in
                         if (ret) intfa.addTableStyle(e);
                         break;
                     }
+                    if (rn == "TABLECONTENT"
+                        || cit->second->className == "AcDbTableContent") {
+                        DRW_TableContentObject e;
+                        ret = e.parseDwg(version, &buff, bs);
+                        if (ret) intfa.addTableContent(e);
+                        break;
+                    }
+                    if (rn == "CELLSTYLEMAP"
+                        || cit->second->className == "AcDbCellStyleMap") {
+                        DRW_CellStyleMap e;
+                        ret = e.parseDwg(version, &buff, bs);
+                        if (ret) intfa.addCellStyleMap(e);
+                        break;
+                    }
                     if (rn == "MLEADERSTYLE") {
                         DRW_MLeaderStyle e;
                         ret = e.parseDwg(version, &buff, bs);

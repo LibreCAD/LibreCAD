@@ -149,6 +149,9 @@ void DRW_Header::write(const std::unique_ptr<dxfWriter>& writer, DRW::Version ve
     case DRW::AC1027: //acad 2013
         varStr = "AC1027";
         break;
+    case DRW::AC1032: //acad 2018
+        varStr = "AC1032";
+        break;
     default: //acad 2007 default version
         varStr = "AC1021";
         break;

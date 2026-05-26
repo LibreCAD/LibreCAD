@@ -54,6 +54,8 @@ namespace DRW {
          SORTENTSTABLE,
          MATERIAL,
          TABLESTYLE,
+         TABLECONTENT,
+         CELLSTYLEMAP,
          MLEADERSTYLE,
          DBCOLOR,
          VISUALSTYLE,
@@ -62,7 +64,7 @@ namespace DRW {
      };
 
 //pending VP_ENT_HDR, GROUP, LONG_TRANSACTION,
-//ACDBPLACEHOLDER, VBA_PROJECT, ACAD_TABLE, CELLSTYLEMAP,
+//ACDBPLACEHOLDER, VBA_PROJECT, ACAD_TABLE,
 //IDBUFFER, IMAGEDEF, IMAGEDEFREACTOR, LAYER_INDEX,
 //PLACEHOLDER, PLOTSETTINGS, SPATIAL_INDEX, SPATIAL_FILTER,
 //TABLEGEOMETRY,
@@ -773,6 +775,7 @@ public:
 struct DRW_CadValue {
     int m_formatFlags = 0;
     int m_dataType = 0;
+    duint32 m_dataSize = 0;
     int m_unitType = 0;
     DRW_Variant m_value;
     UTF8STRING m_formatString;
@@ -908,6 +911,65 @@ public:
     UTF8STRING m_description;
 };
 
+struct DRW_TableStyleBorder {
+    int m_edgeFlags = 0;
+    int m_propertyOverrideFlags = 0;
+    int m_borderType = 0;
+    int m_color = 0;
+    int m_lineWeight = 0;
+    duint32 m_lineTypeHandle = 0;
+    int m_visible = 0;
+    double m_doubleLineSpacing = 0.0;
+};
+
+struct DRW_TableStyleContentFormat {
+    duint32 m_propertyOverrideFlags = 0;
+    duint32 m_propertyFlags = 0;
+    int m_valueDataType = 0;
+    int m_valueUnitType = 0;
+    UTF8STRING m_valueFormatString;
+    double m_rotation = 0.0;
+    double m_blockScale = 1.0;
+    int m_cellAlignment = 0;
+    int m_contentColor = 0;
+    duint32 m_textStyleHandle = 0;
+    double m_textHeight = 0.0;
+};
+
+struct DRW_TableStyleCellStyle {
+    int m_type = 0;
+    bool m_hasData = false;
+    duint32 m_propertyOverrideFlags = 0;
+    duint32 m_mergeFlags = 0;
+    int m_backgroundColor = 0;
+    duint32 m_contentLayout = 0;
+    DRW_TableStyleContentFormat m_contentFormat;
+    int m_marginOverrideFlags = 0;
+    double m_verticalMargin = 0.0;
+    double m_horizontalMargin = 0.0;
+    double m_bottomMargin = 0.0;
+    double m_rightMargin = 0.0;
+    double m_marginHorizontalSpacing = 0.0;
+    double m_marginVerticalSpacing = 0.0;
+    int m_id = 0;
+    int m_styleClass = 0;
+    UTF8STRING m_name;
+    std::vector<DRW_TableStyleBorder> m_borders;
+};
+
+struct DRW_TableStyleRowStyle {
+    duint32 m_textStyleHandle = 0;
+    double m_textHeight = 0.0;
+    int m_textAlignment = 0;
+    int m_textColor = 0;
+    int m_fillColor = 0;
+    bool m_hasBackgroundColor = false;
+    int m_valueDataType = 0;
+    int m_valueUnitType = 0;
+    UTF8STRING m_valueFormatString;
+    std::vector<DRW_TableStyleBorder> m_borders;
+};
+
 //! Class to handle TABLESTYLE (AcDbTableStyle) identity/core fields.
 class DRW_TableStyle : public DRW_TableEntry {
     SETOBJFRIENDS
@@ -922,6 +984,10 @@ public:
         m_verticalCellMargin = 0.0;
         m_titleSuppressed = false;
         m_headerSuppressed = false;
+        m_unknownHandle = 0;
+        m_tableCellStyle = DRW_TableStyleCellStyle();
+        m_rowStyles.clear();
+        m_cellStyles.clear();
         DRW_TableEntry::reset();
     }
 protected:
@@ -934,6 +1000,26 @@ public:
     double m_verticalCellMargin = 0.0;
     bool m_titleSuppressed = false;
     bool m_headerSuppressed = false;
+    duint32 m_unknownHandle = 0;
+    DRW_TableStyleCellStyle m_tableCellStyle;
+    std::vector<DRW_TableStyleRowStyle> m_rowStyles;
+    std::vector<DRW_TableStyleCellStyle> m_cellStyles;
+};
+
+//! Class to handle CELLSTYLEMAP (AcDbCellStyleMap).
+class DRW_CellStyleMap : public DRW_TableEntry {
+    SETOBJFRIENDS
+public:
+    DRW_CellStyleMap() { reset(); }
+    void reset(){
+        tType = DRW::CELLSTYLEMAP;
+        m_cellStyles.clear();
+        DRW_TableEntry::reset();
+    }
+protected:
+    bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) override;
+public:
+    std::vector<DRW_TableStyleCellStyle> m_cellStyles;
 };
 
 //! Class to handle Layout (ODA spec sec 19.4.85 fixed type 82)

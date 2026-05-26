@@ -74,6 +74,10 @@ public:
     virtual void addMaterial(const DRW_Material& data) { (void) data; }
     /** Called for every TABLESTYLE object. */
     virtual void addTableStyle(const DRW_TableStyle& data) { (void) data; }
+    /** Called for every standalone TABLECONTENT object. */
+    virtual void addTableContent(const DRW_TableContentObject& data) { (void) data; }
+    /** Called for every CELLSTYLEMAP object. */
+    virtual void addCellStyleMap(const DRW_CellStyleMap& data) { (void) data; }
     /** Called for every Layout (paperspace, ODA fixed type 82). */
     virtual void addLayout(const DRW_Layout& data) { (void) data; }
     /** Called for every MLineStyle (ODA fixed type 73). */

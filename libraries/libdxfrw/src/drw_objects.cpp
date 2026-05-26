@@ -87,19 +87,21 @@ UTF8STRING readXRecordText(DRW::Version version, dwgBuffer *buf) {
     return s;
 }
 
-UTF8STRING readCadValueText(DRW::Version version, dwgBuffer *buf) {
+constexpr duint32 kMaxCadValueBytes = 16 * 1024 * 1024;
+
+bool readCadValueBytes(dwgBuffer *buf, std::vector<duint8>& raw, const char *label) {
     const duint32 byteCount = buf->getBitLong();
-    if (byteCount == 0)
-        return UTF8STRING();
-    if (byteCount > 16 * 1024 * 1024) {
-        DRW_DBG("FIELD value string too large: "); DRW_DBG(byteCount); DRW_DBG("\n");
-        return UTF8STRING();
+    if (byteCount > kMaxCadValueBytes) {
+        DRW_DBG(label); DRW_DBG(" too large: "); DRW_DBG(byteCount); DRW_DBG("\n");
+        return false;
     }
+    raw.resize(byteCount);
+    return byteCount == 0 || buf->getBytes(raw.data(), raw.size());
+}
 
-    std::vector<duint8> raw(byteCount);
-    if (!buf->getBytes(raw.data(), raw.size()))
+UTF8STRING decodeCadValueText(DRW::Version version, dwgBuffer *buf, const std::vector<duint8>& raw) {
+    if (raw.empty())
         return UTF8STRING();
-
     std::string s(reinterpret_cast<const char*>(raw.data()), raw.size());
     if (version > DRW::AC1018 && s.size() >= 2 && s[s.size() - 1] == '\0'
         && s[s.size() - 2] == '\0') {
@@ -111,6 +113,144 @@ UTF8STRING readCadValueText(DRW::Version version, dwgBuffer *buf) {
     if (buf->decoder)
         s = buf->decoder->toUtf8(s);
     return s;
+}
+
+bool readCadValuePoint(dwgBuffer *buf, DRW_CadValue& value, int dimensions) {
+    value.m_dataSize = static_cast<duint32>(buf->getBitLong());
+    const duint32 expectedSize = static_cast<duint32>(dimensions) * 8;
+    if (value.m_dataSize > kMaxCadValueBytes)
+        return false;
+    if (value.m_dataSize < expectedSize) {
+        value.m_rawData.resize(value.m_dataSize);
+        if (value.m_dataSize > 0 && !buf->getBytes(value.m_rawData.data(), value.m_rawData.size()))
+            return false;
+        value.m_value.addBinary(310, value.m_rawData);
+        return true;
+    }
+
+    DRW_Coord c;
+    c.x = buf->getRawDouble();
+    c.y = buf->getRawDouble();
+    c.z = dimensions == 3 ? buf->getRawDouble() : 0.0;
+    value.m_value.addCoord(11, c);
+
+    const duint32 extraBytes = value.m_dataSize - expectedSize;
+    value.m_rawData.resize(extraBytes);
+    return extraBytes == 0 || buf->getBytes(value.m_rawData.data(), value.m_rawData.size());
+}
+
+constexpr duint32 kMaxTableStyleItems = 100000;
+
+duint32 readObjectHandleRef(dwgBuffer *hdlBuf) {
+    if (hdlBuf == nullptr || !hdlBuf->isGood())
+        return 0;
+    dwgHandle h = hdlBuf->getHandle();
+    return h.ref;
+}
+
+int readObjectCmColor(DRW::Version version, dwgBuffer *buf, dwgBuffer *strBuf) {
+    dwgBuffer *textBuf = strBuf ? strBuf : buf;
+    dint32 rgb = -1;
+    UTF8STRING name;
+    UTF8STRING book;
+    return static_cast<int>(buf->getCmColor(version, &rgb, textBuf, &name, &book));
+}
+
+bool readTableStyleContentFormat(DRW::Version version, dwgBuffer *buf,
+                                 dwgBuffer *strBuf, dwgBuffer *hdlBuf,
+                                 DRW_TableStyleContentFormat& format) {
+    dwgBuffer *textBuf = strBuf ? strBuf : buf;
+    format.m_propertyOverrideFlags = static_cast<duint32>(buf->getBitLong());
+    format.m_propertyFlags = static_cast<duint32>(buf->getBitLong());
+    format.m_valueDataType = buf->getBitLong();
+    format.m_valueUnitType = buf->getBitLong();
+    format.m_valueFormatString = textBuf->getVariableText(version, false);
+    format.m_rotation = buf->getBitDouble();
+    format.m_blockScale = buf->getBitDouble();
+    format.m_cellAlignment = buf->getBitLong();
+    format.m_contentColor = readObjectCmColor(version, buf, strBuf);
+    format.m_textStyleHandle = readObjectHandleRef(hdlBuf);
+    format.m_textHeight = buf->getBitDouble();
+    return buf->isGood() && (!strBuf || strBuf->isGood()) && (!hdlBuf || hdlBuf->isGood());
+}
+
+bool readTableStyleCellStyle(DRW::Version version, dwgBuffer *buf,
+                             dwgBuffer *strBuf, dwgBuffer *hdlBuf,
+                             DRW_TableStyleCellStyle& style) {
+    style.m_type = buf->getBitLong();
+    style.m_hasData = buf->getBitShort() != 0;
+    if (!style.m_hasData)
+        return buf->isGood();
+
+    style.m_propertyOverrideFlags = static_cast<duint32>(buf->getBitLong());
+    style.m_mergeFlags = static_cast<duint32>(buf->getBitLong());
+    style.m_backgroundColor = readObjectCmColor(version, buf, strBuf);
+    style.m_contentLayout = static_cast<duint32>(buf->getBitLong());
+    if (!readTableStyleContentFormat(version, buf, strBuf, hdlBuf, style.m_contentFormat))
+        return false;
+
+    style.m_marginOverrideFlags = buf->getBitShort();
+    if (style.m_marginOverrideFlags != 0) {
+        style.m_verticalMargin = buf->getBitDouble();
+        style.m_horizontalMargin = buf->getBitDouble();
+        style.m_bottomMargin = buf->getBitDouble();
+        style.m_rightMargin = buf->getBitDouble();
+        style.m_marginHorizontalSpacing = buf->getBitDouble();
+        style.m_marginVerticalSpacing = buf->getBitDouble();
+    }
+
+    const duint32 borderCount = static_cast<duint32>(buf->getBitLong());
+    if (borderCount > 6)
+        return false;
+    style.m_borders.clear();
+    style.m_borders.reserve(borderCount);
+    for (duint32 i = 0; i < borderCount; ++i) {
+        DRW_TableStyleBorder border;
+        border.m_edgeFlags = buf->getBitLong();
+        if (border.m_edgeFlags != 0) {
+            border.m_propertyOverrideFlags = buf->getBitLong();
+            border.m_borderType = buf->getBitLong();
+            border.m_color = readObjectCmColor(version, buf, strBuf);
+            border.m_lineWeight = buf->getBitLong();
+            border.m_lineTypeHandle = readObjectHandleRef(hdlBuf);
+            border.m_visible = buf->getBitLong();
+            border.m_doubleLineSpacing = buf->getBitDouble();
+        }
+        style.m_borders.push_back(border);
+    }
+
+    return buf->isGood() && (!strBuf || strBuf->isGood()) && (!hdlBuf || hdlBuf->isGood());
+}
+
+bool readLegacyTableStyleRowStyle(DRW::Version version, dwgBuffer *buf,
+                                  dwgBuffer *strBuf, dwgBuffer *hdlBuf,
+                                  DRW_TableStyleRowStyle& rowStyle) {
+    dwgBuffer *textBuf = strBuf ? strBuf : buf;
+    rowStyle.m_textStyleHandle = readObjectHandleRef(hdlBuf);
+    rowStyle.m_textHeight = buf->getBitDouble();
+    rowStyle.m_textAlignment = buf->getBitShort();
+    rowStyle.m_textColor = readObjectCmColor(version, buf, strBuf);
+    rowStyle.m_fillColor = readObjectCmColor(version, buf, strBuf);
+    rowStyle.m_hasBackgroundColor = buf->getBit() != 0;
+
+    rowStyle.m_borders.clear();
+    rowStyle.m_borders.reserve(6);
+    for (int i = 0; i < 6; ++i) {
+        DRW_TableStyleBorder border;
+        border.m_edgeFlags = 1 << i;
+        border.m_lineWeight = buf->getBitShort();
+        border.m_visible = buf->getBit() != 0;
+        border.m_color = readObjectCmColor(version, buf, strBuf);
+        rowStyle.m_borders.push_back(border);
+    }
+
+    if (version > DRW::AC1018) {
+        rowStyle.m_valueDataType = buf->getBitLong();
+        rowStyle.m_valueUnitType = buf->getBitLong();
+        rowStyle.m_valueFormatString = textBuf->getVariableText(version, false);
+    }
+
+    return buf->isGood() && (!strBuf || strBuf->isGood()) && (!hdlBuf || hdlBuf->isGood());
 }
 
 bool readCadValue(DRW::Version version, dwgBuffer *buf, dwgBuffer *strBuf,
@@ -131,34 +271,26 @@ bool readCadValue(DRW::Version version, dwgBuffer *buf, dwgBuffer *strBuf,
             break;
         case 4:
         case 512:
-            value.m_value.addString(1, readCadValueText(version, buf));
+            if (!readCadValueBytes(buf, value.m_rawData, "FIELD value byte payload"))
+                return false;
+            value.m_dataSize = static_cast<duint32>(value.m_rawData.size());
+            value.m_value.addString(1, decodeCadValueText(version, buf, value.m_rawData));
             break;
         case 8: {
-            const duint32 byteCount = buf->getBitLong();
-            if (byteCount > 16 * 1024 * 1024)
+            if (!readCadValueBytes(buf, value.m_rawData, "FIELD value date payload"))
                 return false;
-            value.m_rawData.resize(byteCount);
-            if (byteCount > 0 && !buf->getBytes(value.m_rawData.data(), byteCount))
-                return false;
+            value.m_dataSize = static_cast<duint32>(value.m_rawData.size());
             value.m_value.addBinary(310, value.m_rawData);
             break;
         }
-        case 16: {
-            DRW_Coord c;
-            c.x = buf->getRawDouble();
-            c.y = buf->getRawDouble();
-            c.z = 0.0;
-            value.m_value.addCoord(11, c);
+        case 16:
+            if (!readCadValuePoint(buf, value, 2))
+                return false;
             break;
-        }
-        case 32: {
-            DRW_Coord c;
-            c.x = buf->getRawDouble();
-            c.y = buf->getRawDouble();
-            c.z = buf->getRawDouble();
-            value.m_value.addCoord(11, c);
+        case 32:
+            if (!readCadValuePoint(buf, value, 3))
+                return false;
             break;
-        }
         case 64: {
             dwgHandle h = buf->getHandle();
             value.m_handle = h.ref;
@@ -2071,8 +2203,7 @@ bool DRW_XRecord::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
         } else if (xRecordCodeIsInt32(code)) {
             m_values.emplace_back(code, static_cast<dint32>(buf->getRawLong32()));
         } else if (code >= 160 && code <= 169) {
-            duint64 raw = buf->getRawLong64();
-            m_values.emplace_back(code, static_cast<dint32>(raw & 0xffffffffu));
+            m_values.emplace_back(code, static_cast<dint64>(buf->getRawLong64()));
         } else if (xRecordCodeIsBinary(code)) {
             duint8 len = buf->getRawChar8();
             std::vector<duint8> raw(len);
@@ -2313,10 +2444,55 @@ bool DRW_TableStyle::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
     if (!ret)
         return ret;
 
-    if (version > DRW::AC1021)
-        buf->getRawChar8();
-    m_name = sBuf->getVariableText(version, false);
+    dwgBuffer hBuff = *buf;
+    dwgBuffer *hBuf = (version > DRW::AC1018) ? &hBuff : buf;
+    if (version > DRW::AC1018) {
+        seekObjectHandleStream(version, &hBuff, objSize);
+        readCommonObjectHandles(&hBuff, handle, numReactors, xDictFlag, &parentHandle);
+    }
 
+    m_rowStyles.clear();
+    m_cellStyles.clear();
+
+    if (version > DRW::AC1021) {
+        buf->getRawChar8();
+        m_name = sBuf->getVariableText(version, false);
+        buf->getBitLong();
+        buf->getBitLong();
+        m_unknownHandle = readObjectHandleRef(hBuf);
+
+        if (!readTableStyleCellStyle(version, buf, sBuf, hBuf, m_tableCellStyle)) {
+            DRW_DBG("TABLESTYLE table cell style parse incomplete\n");
+            return true;
+        }
+        m_tableCellStyle.m_id = buf->getBitLong();
+        m_tableCellStyle.m_styleClass = buf->getBitLong();
+        m_tableCellStyle.m_name = sBuf->getVariableText(version, false);
+
+        const duint32 cellStyleCount = static_cast<duint32>(buf->getBitLong());
+        if (cellStyleCount > kMaxTableStyleItems) {
+            DRW_DBG("TABLESTYLE cell style count too large\n");
+            return true;
+        }
+        m_cellStyles.reserve(cellStyleCount);
+        for (duint32 i = 0; i < cellStyleCount; ++i) {
+            buf->getBitLong();
+            DRW_TableStyleCellStyle style;
+            if (!readTableStyleCellStyle(version, buf, sBuf, hBuf, style)) {
+                DRW_DBG("TABLESTYLE custom cell style parse incomplete\n");
+                return true;
+            }
+            style.m_id = buf->getBitLong();
+            style.m_styleClass = buf->getBitLong();
+            style.m_name = sBuf->getVariableText(version, false);
+            m_cellStyles.push_back(style);
+        }
+
+        DRW_DBG("table style name: "); DRW_DBG(m_name.c_str()); DRW_DBG("\n");
+        return true;
+    }
+
+    m_name = sBuf->getVariableText(version, false);
     if (version <= DRW::AC1021) {
         m_flowDirection = buf->getBitShort();
         m_flags = buf->getBitShort();
@@ -2324,14 +2500,59 @@ bool DRW_TableStyle::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
         m_verticalCellMargin = buf->getBitDouble();
         m_titleSuppressed = buf->getBit();
         m_headerSuppressed = buf->getBit();
-    }
-
-    if (version > DRW::AC1018) {
-        seekObjectHandleStream(version, buf, objSize);
-        readCommonObjectHandles(buf, handle, numReactors, xDictFlag, &parentHandle);
+        m_rowStyles.reserve(3);
+        for (int i = 0; i < 3; ++i) {
+            DRW_TableStyleRowStyle rowStyle;
+            if (!readLegacyTableStyleRowStyle(version, buf, sBuf, hBuf, rowStyle)) {
+                DRW_DBG("TABLESTYLE row style parse incomplete\n");
+                break;
+            }
+            m_rowStyles.push_back(rowStyle);
+        }
     }
 
     DRW_DBG("table style name: "); DRW_DBG(m_name.c_str()); DRW_DBG("\n");
+    return true;
+}
+
+bool DRW_CellStyleMap::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
+    dwgBuffer sBuff = *buf;
+    dwgBuffer *sBuf = buf;
+    if (version > DRW::AC1018)
+        sBuf = &sBuff;
+    bool ret = DRW_TableEntry::parseDwg(version, buf, sBuf, bs);
+    DRW_DBG("\n***************************** parsing CellStyleMap ***************************\n");
+    if (!ret)
+        return ret;
+
+    dwgBuffer hBuff = *buf;
+    dwgBuffer *hBuf = (version > DRW::AC1018) ? &hBuff : buf;
+    if (version > DRW::AC1018) {
+        seekObjectHandleStream(version, &hBuff, objSize);
+        readCommonObjectHandles(&hBuff, handle, numReactors, xDictFlag, &parentHandle);
+    }
+
+    const duint32 cellStyleCount = static_cast<duint32>(buf->getBitLong());
+    if (cellStyleCount > kMaxTableStyleItems) {
+        DRW_DBG("CELLSTYLEMAP cell style count too large\n");
+        return true;
+    }
+
+    m_cellStyles.clear();
+    m_cellStyles.reserve(cellStyleCount);
+    for (duint32 i = 0; i < cellStyleCount; ++i) {
+        DRW_TableStyleCellStyle style;
+        if (!readTableStyleCellStyle(version, buf, sBuf, hBuf, style)) {
+            DRW_DBG("CELLSTYLEMAP cell style parse incomplete\n");
+            return true;
+        }
+        style.m_id = buf->getBitLong();
+        style.m_styleClass = buf->getBitLong();
+        style.m_name = sBuf->getVariableText(version, false);
+        m_cellStyles.push_back(style);
+    }
+
+    DRW_DBG("cell style map entries: "); DRW_DBG(static_cast<int>(m_cellStyles.size())); DRW_DBG("\n");
     return true;
 }
 

@@ -261,17 +261,21 @@ public:
     enum TYPE {
         STRING,
         INTEGER,
+        INTEGER64,
         DOUBLE,
         COORD,
         BINARY,
         INVALID
     };
-//TODO: add INT64 support
-    DRW_Variant(): sdata(std::string()), vdata(), bdata(), content(0), vType(INVALID), vCode(0) {}
+    DRW_Variant(): sdata(std::string()), vdata(), bdata(), content(static_cast<dint32>(0)), vType(INVALID), vCode(0) {}
 
     DRW_Variant(int c, dint32 i): sdata(std::string()), vdata(), bdata(), content(i), vType(INTEGER), vCode(c){}
 
     DRW_Variant(int c, duint32 i): sdata(std::string()), vdata(), bdata(), content(static_cast<dint32>(i)), vType(INTEGER), vCode(c) {}
+
+    DRW_Variant(int c, dint64 i): sdata(std::string()), vdata(), bdata(), content(i), vType(INTEGER64), vCode(c) {}
+
+    DRW_Variant(int c, duint64 i): sdata(std::string()), vdata(), bdata(), content(static_cast<dint64>(i)), vType(INTEGER64), vCode(c) {}
 
     DRW_Variant(int c, double d): sdata(std::string()), vdata(), bdata(), content(d), vType(DOUBLE), vCode(c) {}
 
@@ -297,6 +301,7 @@ public:
 
     void addString(int c, UTF8STRING s) {vType = STRING; sdata = s; content.s = &sdata; vCode=c; sIsLayerRef=false;}
     void addInt(int c, int i) {vType = INTEGER; content.i = i; vCode=c;}
+    void addInt64(int c, dint64 i) {vType = INTEGER64; content.i64 = i; vCode=c;}
     void addDouble(int c, double d) {vType = DOUBLE; content.d = d; vCode=c;}
     void addCoord(int c, DRW_Coord v) {vType = COORD; vdata = v; content.v = &vdata; vCode=c;}
     void addBinary(int c, std::vector<duint8> b) {vType = BINARY; bdata = std::move(b); content.b = &bdata; vCode=c;}
@@ -310,6 +315,7 @@ public:
     const char* c_str() const { return content.s->c_str(); }
     double d_val() const { return content.d; }
     dint32 i_val() const { return content.i; }
+    dint64 i64_val() const { return content.i64; }
     DRW_Coord* coord() const { return content.v; }
     const std::vector<duint8>* binary() const { return &bdata; }
 
@@ -322,12 +328,14 @@ private:
     union DRW_VarContent{
         UTF8STRING *s;
         dint32 i;
+        dint64 i64;
         double d;
         DRW_Coord *v;
         std::vector<duint8> *b;
 
         DRW_VarContent(UTF8STRING *sd):s(sd){}
         DRW_VarContent(dint32 id):i(id){}
+        DRW_VarContent(dint64 id):i64(id){}
         DRW_VarContent(double dd):d(dd){}
         DRW_VarContent(DRW_Coord *vd):v(vd){}
         DRW_VarContent(std::vector<duint8> *bd):b(bd){}
@@ -535,4 +543,3 @@ public:
 #endif
 
 // EOF
-

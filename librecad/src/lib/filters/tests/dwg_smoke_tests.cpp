@@ -44,6 +44,7 @@
 #include <sstream>
 #include <stdexcept>
 #include <string>
+#include <unordered_map>
 #include <vector>
 
 #include "drw_base.h"
@@ -4388,6 +4389,12 @@ TEST_CASE("DWG arch_multileaders: OBJECTS metadata delivery") {
     int materialsWithName = 0;
     int tableStyles = 0;
     int tableStylesWithName = 0;
+    int tableStyleFormats = 0;
+    int tableStyleBorders = 0;
+    int tableContents = 0;
+    int tableContentCells = 0;
+    int cellStyleMaps = 0;
+    int cellStyleMapStyles = 0;
 
     void addDictionary(const DRW_Dictionary &d) override {
       ++dictionaries;
@@ -4418,14 +4425,35 @@ TEST_CASE("DWG arch_multileaders: OBJECTS metadata delivery") {
       ++tableStyles;
       if (!t.m_name.empty())
         ++tableStylesWithName;
+      tableStyleFormats += static_cast<int>(t.m_rowStyles.size());
+      for (const auto &style : t.m_rowStyles)
+        tableStyleBorders += static_cast<int>(style.m_borders.size());
+      if (t.m_tableCellStyle.m_hasData) {
+        ++tableStyleFormats;
+        tableStyleBorders += static_cast<int>(t.m_tableCellStyle.m_borders.size());
+      }
+      tableStyleFormats += static_cast<int>(t.m_cellStyles.size());
+      for (const auto &style : t.m_cellStyles)
+        tableStyleBorders += static_cast<int>(style.m_borders.size());
+    }
+    void addTableContent(const DRW_TableContentObject &t) override {
+      ++tableContents;
+      for (const auto &row : t.m_content.m_rows)
+        tableContentCells += static_cast<int>(row.m_cells.size());
+    }
+    void addCellStyleMap(const DRW_CellStyleMap &m) override {
+      ++cellStyleMaps;
+      cellStyleMapStyles += static_cast<int>(m.m_cellStyles.size());
     }
   };
 
   MetadataIface iface;
+  std::unordered_map<std::string, size_t> skippedUnsupported;
   {
     dwgR reader(path.c_str());
     REQUIRE(reader.read(&iface, true));
     REQUIRE(reader.getError() == DRW::BAD_NONE);
+    skippedUnsupported = reader.getSkippedUnsupportedObjects();
   }
 
   CHECK(iface.dictionaries >= 1);
@@ -4439,6 +4467,10 @@ TEST_CASE("DWG arch_multileaders: OBJECTS metadata delivery") {
   CHECK(iface.materialsWithName >= 1);
   CHECK(iface.tableStyles >= 1);
   CHECK(iface.tableStylesWithName >= 1);
+  CHECK(iface.tableStyleFormats >= 1);
+  CHECK(iface.tableStyleBorders >= 1);
+  CHECK(skippedUnsupported.find("TABLECONTENT") == skippedUnsupported.end());
+  CHECK(skippedUnsupported.find("CELLSTYLEMAP") == skippedUnsupported.end());
 }
 
 TEST_CASE("DWG ACAD_TABLE entities render through anonymous table blocks") {
@@ -4461,6 +4493,8 @@ TEST_CASE("DWG ACAD_TABLE entities render through anonymous table blocks") {
     int tableColumns = 0;
     int tableRows = 0;
     int tableCells = 0;
+    int tableCellContents = 0;
+    int tableTextContents = 0;
     int anonymousBlockTables = 0;
 
     void addTable(const DRW_Table &t) override {
@@ -4470,8 +4504,18 @@ TEST_CASE("DWG ACAD_TABLE entities render through anonymous table blocks") {
         ++semanticTables;
       tableColumns += static_cast<int>(t.m_content.m_columns.size());
       tableRows += static_cast<int>(t.m_content.m_rows.size());
-      for (const auto &row : t.m_content.m_rows)
+      for (const auto &row : t.m_content.m_rows) {
         tableCells += static_cast<int>(row.m_cells.size());
+        for (const auto &cell : row.m_cells) {
+          tableCellContents += static_cast<int>(cell.m_contents.size());
+          for (const auto &content : cell.m_contents) {
+            if (content.m_type == 1 && (!content.m_text.empty() ||
+                content.m_value.m_value.type() != DRW_Variant::INVALID)) {
+              ++tableTextContents;
+            }
+          }
+        }
+      }
       if (!t.name.empty() && t.name.rfind("*T", 0) == 0)
         ++anonymousBlockTables;
     }
@@ -4490,4 +4534,6 @@ TEST_CASE("DWG ACAD_TABLE entities render through anonymous table blocks") {
   CHECK(iface.tableColumns >= 1);
   CHECK(iface.tableRows >= 1);
   CHECK(iface.tableCells >= 1);
+  CHECK(iface.tableCellContents >= 1);
+  CHECK(iface.tableTextContents >= 1);
 }

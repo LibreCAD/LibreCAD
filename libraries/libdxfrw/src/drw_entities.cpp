@@ -31,6 +31,21 @@ constexpr duint32 kMaxTableCells = 200000;
 constexpr duint32 kMaxTableItems = 100000;
 constexpr duint32 kMaxTableStringBytes = 16 * 1024 * 1024;
 
+void putHardPointerHandle(dwgBufferW *buf, duint32 ref) {
+    dwgHandle h;
+    h.code = 5;
+    h.ref = ref;
+    h.size = 0;
+    if (ref != 0) {
+        duint32 t = ref;
+        while (t != 0) {
+            t >>= 8;
+            ++h.size;
+        }
+    }
+    buf->putHandle(h);
+}
+
 duint32 readTableHandle(dwgBuffer *hdlBuf) {
     if (hdlBuf == nullptr || !hdlBuf->isGood())
         return 0;
@@ -38,19 +53,38 @@ duint32 readTableHandle(dwgBuffer *hdlBuf) {
     return h.ref;
 }
 
-UTF8STRING readTableValueText(DRW::Version version, dwgBuffer *buf) {
-    const duint32 byteCount = buf->getBitLong();
-    if (byteCount == 0)
-        return UTF8STRING();
-    if (byteCount > kMaxTableStringBytes) {
-        DRW_DBG("TABLE value string too large: "); DRW_DBG(byteCount); DRW_DBG("\n");
-        return UTF8STRING();
+void seekTableObjectHandleStream(DRW::Version version, dwgBuffer *buf, duint32 objSize) {
+    if (version > DRW::AC1018) {
+        buf->setPosition(objSize >> 3);
+        buf->setBitPos(objSize & 7);
     }
+}
 
-    std::vector<duint8> raw(byteCount);
-    if (!buf->getBytes(raw.data(), raw.size()))
+void readTableObjectCommonHandles(dwgBuffer *buf, duint32 baseHandle,
+                                  dint32 numReactors, duint8 xDictFlag,
+                                  int *parentHandle) {
+    dwgHandle parentH = buf->getOffsetHandle(baseHandle);
+    if (parentHandle)
+        *parentHandle = parentH.ref;
+    for (int i = 0; i < numReactors; ++i)
+        buf->getOffsetHandle(baseHandle);
+    if (xDictFlag != 1)
+        buf->getOffsetHandle(baseHandle);
+}
+
+bool readTableValueBytes(dwgBuffer *buf, std::vector<duint8>& raw, const char *label) {
+    const duint32 byteCount = buf->getBitLong();
+    if (byteCount > kMaxTableStringBytes) {
+        DRW_DBG(label); DRW_DBG(" too large: "); DRW_DBG(byteCount); DRW_DBG("\n");
+        return false;
+    }
+    raw.resize(byteCount);
+    return byteCount == 0 || buf->getBytes(raw.data(), raw.size());
+}
+
+UTF8STRING decodeTableValueText(DRW::Version version, dwgBuffer *buf, const std::vector<duint8>& raw) {
+    if (raw.empty())
         return UTF8STRING();
-
     std::string s(reinterpret_cast<const char*>(raw.data()), raw.size());
     if (version > DRW::AC1018 && s.size() >= 2 && s[s.size() - 1] == '\0'
         && s[s.size() - 2] == '\0') {
@@ -62,6 +96,30 @@ UTF8STRING readTableValueText(DRW::Version version, dwgBuffer *buf) {
     if (buf->decoder)
         s = buf->decoder->toUtf8(s);
     return s;
+}
+
+bool readTableValuePoint(dwgBuffer *buf, DRW_CadValue& value, int dimensions) {
+    value.m_dataSize = static_cast<duint32>(buf->getBitLong());
+    const duint32 expectedSize = static_cast<duint32>(dimensions) * 8;
+    if (value.m_dataSize > kMaxTableStringBytes)
+        return false;
+    if (value.m_dataSize < expectedSize) {
+        value.m_rawData.resize(value.m_dataSize);
+        if (value.m_dataSize > 0 && !buf->getBytes(value.m_rawData.data(), value.m_rawData.size()))
+            return false;
+        value.m_value.addBinary(310, value.m_rawData);
+        return true;
+    }
+
+    DRW_Coord c;
+    c.x = buf->getRawDouble();
+    c.y = buf->getRawDouble();
+    c.z = dimensions == 3 ? buf->getRawDouble() : 0.0;
+    value.m_value.addCoord(11, c);
+
+    const duint32 extraBytes = value.m_dataSize - expectedSize;
+    value.m_rawData.resize(extraBytes);
+    return extraBytes == 0 || buf->getBytes(value.m_rawData.data(), value.m_rawData.size());
 }
 
 bool readTableCadValue(DRW::Version version, dwgBuffer *buf, dwgBuffer *strBuf,
@@ -82,34 +140,26 @@ bool readTableCadValue(DRW::Version version, dwgBuffer *buf, dwgBuffer *strBuf,
             break;
         case 4:
         case 512:
-            value.m_value.addString(1, readTableValueText(version, buf));
+            if (!readTableValueBytes(buf, value.m_rawData, "TABLE value byte payload"))
+                return false;
+            value.m_dataSize = static_cast<duint32>(value.m_rawData.size());
+            value.m_value.addString(1, decodeTableValueText(version, buf, value.m_rawData));
             break;
         case 8: {
-            const duint32 byteCount = buf->getBitLong();
-            if (byteCount > kMaxTableStringBytes)
+            if (!readTableValueBytes(buf, value.m_rawData, "TABLE value date payload"))
                 return false;
-            value.m_rawData.resize(byteCount);
-            if (byteCount > 0 && !buf->getBytes(value.m_rawData.data(), byteCount))
-                return false;
+            value.m_dataSize = static_cast<duint32>(value.m_rawData.size());
             value.m_value.addBinary(310, value.m_rawData);
             break;
         }
-        case 16: {
-            DRW_Coord c;
-            c.x = buf->getRawDouble();
-            c.y = buf->getRawDouble();
-            c.z = 0.0;
-            value.m_value.addCoord(11, c);
+        case 16:
+            if (!readTableValuePoint(buf, value, 2))
+                return false;
             break;
-        }
-        case 32: {
-            DRW_Coord c;
-            c.x = buf->getRawDouble();
-            c.y = buf->getRawDouble();
-            c.z = buf->getRawDouble();
-            value.m_value.addCoord(11, c);
+        case 32:
+            if (!readTableValuePoint(buf, value, 3))
+                return false;
             break;
-        }
         case 64:
             value.m_handle = readTableHandle(hdlBuf);
             value.m_value.addInt(330, static_cast<duint32>(value.m_handle));
@@ -139,6 +189,199 @@ bool skipTableCustomData(DRW::Version version, dwgBuffer *buf,
     textBuf->getVariableText(version, false);
     DRW_CadValue value;
     return readTableCadValue(version, buf, strBuf, hdlBuf, value);
+}
+
+void readTableCmColor(DRW::Version version, dwgBuffer *buf, dwgBuffer *strBuf) {
+    dwgBuffer *textBuf = strBuf ? strBuf : buf;
+    dint32 rgb = -1;
+    UTF8STRING name;
+    UTF8STRING book;
+    buf->getCmColor(version, &rgb, textBuf, &name, &book);
+}
+
+bool skipR2007TableCellOverrides(DRW::Version version, dwgBuffer *buf,
+                                 dwgBuffer *strBuf, dwgBuffer *hdlBuf,
+                                 DRW_TableCell& cell) {
+    cell.m_overrideFlags = static_cast<duint32>(buf->getBitLong());
+    cell.m_virtualEdgeFlags = buf->getRawChar8();
+
+    if (cell.m_overrideFlags & 0x00001)
+        buf->getRawShort16();
+    if (cell.m_overrideFlags & 0x00002)
+        buf->getBit();
+    if (cell.m_overrideFlags & 0x00004)
+        readTableCmColor(version, buf, strBuf);
+    if (cell.m_overrideFlags & 0x00008)
+        readTableCmColor(version, buf, strBuf);
+    if (cell.m_overrideFlags & 0x00010)
+        cell.m_textStyleOverrideHandle = readTableHandle(hdlBuf);
+    if (cell.m_overrideFlags & 0x00020)
+        buf->getBitDouble();
+    if (cell.m_overrideFlags & 0x00040)
+        readTableCmColor(version, buf, strBuf);
+    if (cell.m_overrideFlags & 0x00400)
+        buf->getBitShort();
+    if (cell.m_overrideFlags & 0x04000)
+        buf->getBitShort();
+    if (cell.m_overrideFlags & 0x00080)
+        readTableCmColor(version, buf, strBuf);
+    if (cell.m_overrideFlags & 0x00800)
+        buf->getBitShort();
+    if (cell.m_overrideFlags & 0x08000)
+        buf->getBitShort();
+    if (cell.m_overrideFlags & 0x00100)
+        readTableCmColor(version, buf, strBuf);
+    if (cell.m_overrideFlags & 0x01000)
+        buf->getBitShort();
+    if (cell.m_overrideFlags & 0x10000)
+        buf->getBitShort();
+    if (cell.m_overrideFlags & 0x00200)
+        readTableCmColor(version, buf, strBuf);
+    if (cell.m_overrideFlags & 0x02000)
+        buf->getBitShort();
+    if (cell.m_overrideFlags & 0x20000)
+        buf->getBitShort();
+
+    return buf->isGood() && (!strBuf || strBuf->isGood()) && (!hdlBuf || hdlBuf->isGood());
+}
+
+bool parseR2007TableCell(DRW::Version version, dwgBuffer *buf, dwgBuffer *strBuf,
+                         dwgBuffer *hdlBuf, DRW_TableCell& cell) {
+    dwgBuffer *textBuf = strBuf ? strBuf : buf;
+    cell.m_type = buf->getBitShort();
+    cell.m_edgeFlags = buf->getRawChar8();
+    cell.m_isMerged = buf->getBit() != 0;
+    cell.m_autoFit = buf->getBit() != 0;
+    cell.m_mergedWidth = buf->getBitLong();
+    cell.m_mergedHeight = buf->getBitLong();
+    cell.m_rotation = buf->getBitDouble();
+    cell.m_valueHandle = readTableHandle(hdlBuf);
+
+    if (cell.m_type == 1) {
+        cell.m_textStyleHandle = cell.m_valueHandle;
+        if (cell.m_textStyleHandle == 0 && version < DRW::AC1021) {
+            DRW_TableCellContent content;
+            content.m_type = 1;
+            content.m_text = textBuf->getVariableText(version, false);
+            content.m_value.m_dataType = 4;
+            content.m_value.m_value.addString(1, content.m_text);
+            cell.m_contents.push_back(content);
+        }
+    } else if (cell.m_type == 2) {
+        cell.m_blockHandle = cell.m_valueHandle;
+        cell.m_blockScale = buf->getBitDouble();
+        if (buf->getBit() != 0) {
+            const duint16 numAttributes = buf->getBitShort();
+            cell.m_attributes.reserve(numAttributes);
+            for (duint16 i = 0; i < numAttributes; ++i) {
+                DRW_TableCellAttribute attribute;
+                attribute.m_attdefHandle = readTableHandle(hdlBuf);
+                attribute.m_index = buf->getBitShort();
+                attribute.m_text = textBuf->getVariableText(version, false);
+                cell.m_attributes.push_back(attribute);
+            }
+        }
+
+        DRW_TableCellContent content;
+        content.m_type = 4;
+        content.m_handle = cell.m_blockHandle;
+        cell.m_contents.push_back(content);
+    }
+
+    if (buf->getBit() != 0 && !skipR2007TableCellOverrides(version, buf, strBuf, hdlBuf, cell))
+        return false;
+
+    if (version > DRW::AC1018) {
+        buf->getBitLong();
+        DRW_TableCellContent content;
+        content.m_type = 1;
+        if (!readTableCadValue(version, buf, strBuf, hdlBuf, content.m_value))
+            return false;
+        if (content.m_value.m_value.type() == DRW_Variant::STRING)
+            content.m_text = content.m_value.m_value.c_str();
+        else if (!content.m_value.m_valueString.empty())
+            content.m_text = content.m_value.m_valueString;
+        cell.m_contents.push_back(content);
+    }
+
+    return buf->isGood() && (!strBuf || strBuf->isGood()) && (!hdlBuf || hdlBuf->isGood());
+}
+
+bool skipR2007TableOverrides(DRW::Version version, dwgBuffer *buf,
+                             dwgBuffer *strBuf, dwgBuffer *hdlBuf) {
+    if (buf->getBit() != 0) {
+        const duint32 flags = static_cast<duint32>(buf->getBitLong());
+        if (flags & 0x000001)
+            buf->getBit();
+        if (flags & 0x000004)
+            buf->getBitShort();
+        if (flags & 0x000008)
+            buf->getBitDouble();
+        if (flags & 0x000010)
+            buf->getBitDouble();
+        if (flags & 0x000020)
+            readTableCmColor(version, buf, strBuf);
+        if (flags & 0x000040)
+            readTableCmColor(version, buf, strBuf);
+        if (flags & 0x000080)
+            readTableCmColor(version, buf, strBuf);
+        if (flags & 0x000100)
+            buf->getBit();
+        if (flags & 0x000200)
+            buf->getBit();
+        if (flags & 0x000400)
+            buf->getBit();
+        if (flags & 0x000800)
+            readTableCmColor(version, buf, strBuf);
+        if (flags & 0x001000)
+            readTableCmColor(version, buf, strBuf);
+        if (flags & 0x002000)
+            readTableCmColor(version, buf, strBuf);
+        if (flags & 0x004000)
+            buf->getBitShort();
+        if (flags & 0x008000)
+            buf->getBitShort();
+        if (flags & 0x010000)
+            buf->getBitShort();
+        if (flags & 0x020000)
+            readTableHandle(hdlBuf);
+        if (flags & 0x040000)
+            readTableHandle(hdlBuf);
+        if (flags & 0x080000)
+            readTableHandle(hdlBuf);
+        if (flags & 0x100000)
+            buf->getBitDouble();
+        if (flags & 0x200000)
+            buf->getBitDouble();
+        if (flags & 0x400000)
+            buf->getBitDouble();
+    }
+
+    if (buf->getBit() != 0) {
+        const duint32 flags = static_cast<duint32>(buf->getBitLong());
+        for (int i = 0; i < 18; ++i) {
+            if (flags & (1u << i))
+                readTableCmColor(version, buf, strBuf);
+        }
+    }
+
+    if (buf->getBit() != 0) {
+        const duint32 flags = static_cast<duint32>(buf->getBitLong());
+        for (int i = 0; i < 18; ++i) {
+            if (flags & (1u << i))
+                buf->getBitShort();
+        }
+    }
+
+    if (buf->getBit() != 0) {
+        const duint32 flags = static_cast<duint32>(buf->getBitLong());
+        for (int i = 0; i < 18; ++i) {
+            if (flags & (1u << i))
+                buf->getBitShort();
+        }
+    }
+
+    return buf->isGood() && (!strBuf || strBuf->isGood()) && (!hdlBuf || hdlBuf->isGood());
 }
 
 bool skipTableContentFormat(DRW::Version version, dwgBuffer *buf,
@@ -1456,25 +1699,56 @@ bool DRW_MText::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs, dwg
     buf->putBitDouble(interlin);            // linespacing factor BD
     buf->putBit(0);                         // unknown bit
     if (version > DRW::AC1015) {            // R2004+: background flags BL
-        buf->putBitLong(0);                 // 0 = no background fill
+        buf->putBitLong(m_backgroundFlags);
+        if ((m_backgroundFlags & 0x01) || (version >= DRW::AC1032 && (m_backgroundFlags & 0x10))) {
+            buf->putBitLong(m_backgroundScale);
+            buf->putCmColor(version, static_cast<duint16>(m_backgroundColor));
+            buf->putBitLong(m_backgroundTransparency);
+        }
     }
     if (version >= DRW::AC1032) {
-        buf->putBit(0);                     // is_not_annotative = false
+        buf->putBit(m_r2018IsNotAnnotative ? 1 : 0);
+        if (m_r2018IsNotAnnotative) {
+            buf->putBitShort(m_r2018Version);
+            buf->putBit(m_r2018DefaultFlag ? 1 : 0);
+            buf->putBitLong(m_r2018Attachment);
+            buf->put3BitDouble(m_r2018XAxisDir);
+            buf->put3BitDouble(m_r2018InsertionPoint);
+            buf->putBitDouble(m_r2018RectWidth);
+            buf->putBitDouble(m_r2018RectHeight);
+            buf->putBitDouble(m_r2018ExtentsHeight);
+            buf->putBitDouble(m_r2018ExtentsWidth);
+            buf->putBitShort(m_r2018ColumnType);
+            if (m_r2018ColumnType != 0) {
+                dint32 columnCount = m_r2018ColumnCount;
+                if (!m_r2018ColumnAutoHeight && m_r2018ColumnType == 2
+                    && !m_r2018ColumnHeights.empty()) {
+                    columnCount = static_cast<dint32>(m_r2018ColumnHeights.size());
+                }
+                buf->putBitLong(columnCount);
+                buf->putBitDouble(m_r2018ColumnWidth);
+                buf->putBitDouble(m_r2018ColumnGutter);
+                buf->putBit(m_r2018ColumnAutoHeight ? 1 : 0);
+                buf->putBit(m_r2018ColumnFlowReversed ? 1 : 0);
+                if (!m_r2018ColumnAutoHeight && m_r2018ColumnType == 2) {
+                    for (dint32 i = 0; i < columnCount; ++i) {
+                        const double columnHeight = static_cast<size_t>(i) < m_r2018ColumnHeights.size()
+                            ? m_r2018ColumnHeights[static_cast<size_t>(i)]
+                            : 0.0;
+                        buf->putBitDouble(columnHeight);
+                    }
+                }
+            }
+        }
     }
 
     if (!encodeDwgEntHandle(version, buf, handleBuf)) return false;
 
     // styleH — hard pointer to STYLE table record (default STANDARD).
-    dwgHandle sH;
-    duint32 sref = (styleH.ref == 0) ? 0x13 : styleH.ref;
-    sH.code = 5;
-    sH.ref  = sref;
-    sH.size = 0;
-    if (sref != 0) {
-        duint32 t = sref;
-        while (t != 0) { t >>= 8; ++sH.size; }
-    }
-    (handleBuf ? handleBuf : buf)->putHandle(sH);
+    dwgBufferW *hb = handleBuf ? handleBuf : buf;
+    putHardPointerHandle(hb, (styleH.ref == 0) ? 0x13 : styleH.ref);
+    if (version >= DRW::AC1032 && m_r2018IsNotAnnotative)
+        putHardPointerHandle(hb, (m_r2018AppIdHandle == 0) ? 0x14 : m_r2018AppIdHandle);
     return true;
 }
 
@@ -2507,7 +2781,42 @@ bool DRW_Table::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
     }
     m_tableStyleHandle = readTableHandle(&hBuff);
     m_content.m_tableStyleHandle = m_tableStyleHandle;
+    m_semanticContentComplete = true;
+    for (duint32 row = 0; row < rows && m_semanticContentComplete; ++row) {
+        for (duint32 column = 0; column < columns; ++column) {
+            if (!parseR2007TableCell(version, buf, sBuf, &hBuff, m_content.m_rows[row].m_cells[column])) {
+                m_semanticContentComplete = false;
+                break;
+            }
+        }
+    }
 
+    if (m_semanticContentComplete)
+        m_semanticContentComplete = skipR2007TableOverrides(version, buf, sBuf, &hBuff);
+    if (!m_semanticContentComplete)
+        DRW_DBG("R2007 TABLE cell parse incomplete; anonymous block insert kept\n");
+
+    return true;
+}
+
+bool DRW_TableContentObject::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
+    if (version <= DRW::AC1018)
+        return false;
+
+    dwgBuffer sBuff = *buf;
+    dwgBuffer *sBuf = &sBuff;
+    bool ret = DRW_TableEntry::parseDwg(version, buf, sBuf, bs);
+    DRW_DBG("\n************************** parsing table content object ************************\n");
+    if (!ret)
+        return ret;
+
+    dwgBuffer hBuff = *buf;
+    seekTableObjectHandleStream(version, &hBuff, objSize);
+    readTableObjectCommonHandles(&hBuff, handle, numReactors, xDictFlag, &parentHandle);
+
+    m_parseComplete = parseTableContent(version, buf, sBuf, &hBuff, m_content);
+    if (!m_parseComplete)
+        DRW_DBG("TABLECONTENT object parse incomplete\n");
     return true;
 }
 
@@ -3102,6 +3411,7 @@ DRW_Attrib::~DRW_Attrib() = default;
 DRW_Attrib::DRW_Attrib(const DRW_Attrib& o)
     : DRW_Text(o), tag(o.tag), attribFlags(o.attribFlags),
       lockPosition(o.lockPosition), attVersion(o.attVersion),
+      m_attributeType(o.m_attributeType),
       mtext(o.mtext ? std::make_unique<DRW_MText>(*o.mtext) : nullptr) {}
 DRW_Attrib& DRW_Attrib::operator=(const DRW_Attrib& o) {
     if (this != &o) {
@@ -3110,6 +3420,7 @@ DRW_Attrib& DRW_Attrib::operator=(const DRW_Attrib& o) {
         attribFlags = o.attribFlags;
         lockPosition = o.lockPosition;
         attVersion = o.attVersion;
+        m_attributeType = o.m_attributeType;
         mtext = o.mtext ? std::make_unique<DRW_MText>(*o.mtext) : nullptr;
     }
     return *this;
@@ -3179,6 +3490,10 @@ bool DRW_Attrib::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
         attVersion = buf->getRawChar8();
         DRW_DBG("att version: "); DRW_DBG(attVersion); DRW_DBG("\n");
     }
+    if (version >= DRW::AC1032) {
+        m_attributeType = buf->getRawChar8();
+        DRW_DBG("attribute type: "); DRW_DBG(m_attributeType); DRW_DBG("\n");
+    }
 
     // Inline TEXT subtype data (mirrors DRW_Text::parseDwg layout, sans handles)
     duint8 data_flags = 0x00;
@@ -3225,6 +3540,11 @@ bool DRW_Attrib::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
     if (!(data_flags & 0x40)) alignH = (HAlign)buf->getBitShort();
     if (!(data_flags & 0x80)) alignV = (VAlign)buf->getBitShort();
 
+    if (version >= DRW::AC1032 && m_attributeType != 0 && m_attributeType != 1) {
+        DRW_DBG("R2018 multi-line ATTRIB payload is not yet decoded\n");
+        return false;
+    }
+
     // ATTRIB-specific fields
     tag = sBuf->getVariableText(version, false);
     DRW_DBG("attrib tag: "); DRW_DBG(tag.c_str()); DRW_DBG("\n");
@@ -3258,6 +3578,9 @@ bool DRW_Attrib::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs, dw
 
     if (version >= DRW::AC1024) {
         buf->putRawChar8(attVersion);       // R2010+ ATTRIB version byte
+    }
+    if (version >= DRW::AC1032) {
+        buf->putRawChar8(1);                // single-line ATTRIB; embedded MTEXT not emitted yet
     }
 
     // TEXT-body section — mirrors DRW_Attrib::parseDwg.
@@ -3330,6 +3653,9 @@ bool DRW_Attdef::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
     if (version >= DRW::AC1024) {
         attVersion = buf->getRawChar8();
     }
+    if (version >= DRW::AC1032) {
+        m_attributeType = buf->getRawChar8();
+    }
 
     duint8 data_flags = 0x00;
     if (version > DRW::AC1014) {
@@ -3371,6 +3697,11 @@ bool DRW_Attdef::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
     if (!(data_flags & 0x40)) alignH = (HAlign)buf->getBitShort();
     if (!(data_flags & 0x80)) alignV = (VAlign)buf->getBitShort();
 
+    if (version >= DRW::AC1032 && m_attributeType != 0 && m_attributeType != 1) {
+        DRW_DBG("R2018 multi-line ATTDEF payload is not yet decoded\n");
+        return false;
+    }
+
     tag = sBuf->getVariableText(version, false);
     DRW_DBG("attdef tag: "); DRW_DBG(tag.c_str()); DRW_DBG("\n");
 
@@ -3403,6 +3734,9 @@ bool DRW_Attdef::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs, dw
 
     if (version >= DRW::AC1024) {
         buf->putRawChar8(attVersion);
+    }
+    if (version >= DRW::AC1032) {
+        buf->putRawChar8(1);                // single-line ATTDEF; embedded MTEXT not emitted yet
     }
 
     // TEXT-body section — identical layout to DRW_Attrib::encodeDwg.
@@ -3520,54 +3854,52 @@ bool DRW_MText::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
     text = sBuf->getVariableText(version, false); /* Text value TV 1 */
     if (version > DRW::AC1014) {//2000+
         buf->getBitShort();/* Linespacing Style BS 73 */
-        buf->getBitDouble();/* Linespacing Factor BD 44 */
+        interlin = buf->getBitDouble();/* Linespacing Factor BD 44 */
         buf->getBit();/* Unknown bit B */
     }
     if (version > DRW::AC1015) {//2004+
         /* Background flags BL 0 = no background, 1 = background fill, 2 =background
         fill with drawing fill color. */
-        dint32 bk_flags = buf->getBitLong(); /** @todo add to DRW_MText */
-        if ((bk_flags & 0x01) || (version >= DRW::AC1032 && (bk_flags & 0x10))) {
+        m_backgroundFlags = buf->getBitLong();
+        if ((m_backgroundFlags & 0x01) || (version >= DRW::AC1032 && (m_backgroundFlags & 0x10))) {
             /* Background scale factor BL Present if background flags = 1, default = 1.5*/
-            buf->getBitLong();
+            m_backgroundScale = buf->getBitLong();
             /* Background color CMC Present if background flags = 1 */
-            buf->getCmColor(version); //RLZ: warning CMC or ENC
+            m_backgroundColor = static_cast<int>(buf->getCmColor(version, nullptr, sBuf));
             /** @todo buf->getCMC */
             /* Background transparency BL Present if background flags = 1 */
-            buf->getBitLong();
+            m_backgroundTransparency = buf->getBitLong();
         }
     }
 
     bool hasR2018AppId = false;
     if (version >= DRW::AC1032) {
-        bool isNotAnnotative = buf->getBit();
-        if (isNotAnnotative) {
-            buf->getBitShort();              // class version
-            buf->getBit();                   // default flag
+        m_r2018ColumnHeights.clear();
+        m_r2018IsNotAnnotative = buf->getBit();
+        if (m_r2018IsNotAnnotative) {
+            m_r2018Version = buf->getBitShort();
+            m_r2018DefaultFlag = buf->getBit();
             hasR2018AppId = true;            // appid H follows in handle stream
-            buf->getBitLong();               // ignore attachment
-            buf->get3BitDouble();            // x-axis dir, redundant
-            buf->get3BitDouble();            // insertion point, redundant
-            buf->getBitDouble();             // rect width, redundant
-            buf->getBitDouble();             // rect height, redundant
-            buf->getBitDouble();             // extents height, redundant
-            buf->getBitDouble();             // extents width, redundant
-            duint16 columnType = buf->getBitShort();
-            if (columnType != 0) {
-                dint32 columnHeightCount = 0;
-                if (columnType == 1) {
-                    buf->getBitLong();       // numfragments
-                } else {
-                    columnHeightCount = buf->getBitLong();
-                }
-                buf->getBitDouble();         // column width
-                buf->getBitDouble();         // gutter
-                bool autoHeight = buf->getBit();
-                buf->getBit();               // flow reversed
-                if (!autoHeight && columnType == 2 && columnHeightCount > 0
-                    && columnHeightCount < 10000) {
-                    for (dint32 i = 0; i < columnHeightCount; ++i)
-                        buf->getBitDouble();
+            m_r2018Attachment = buf->getBitLong();
+            m_r2018XAxisDir = buf->get3BitDouble();
+            m_r2018InsertionPoint = buf->get3BitDouble();
+            m_r2018RectWidth = buf->getBitDouble();
+            m_r2018RectHeight = buf->getBitDouble();
+            m_r2018ExtentsHeight = buf->getBitDouble();
+            m_r2018ExtentsWidth = buf->getBitDouble();
+            m_r2018ColumnType = buf->getBitShort();
+            if (m_r2018ColumnType != 0) {
+                m_r2018ColumnCount = buf->getBitLong();
+                m_r2018ColumnWidth = buf->getBitDouble();
+                m_r2018ColumnGutter = buf->getBitDouble();
+                m_r2018ColumnAutoHeight = buf->getBit();
+                m_r2018ColumnFlowReversed = buf->getBit();
+                if (!m_r2018ColumnAutoHeight && m_r2018ColumnType == 2 && m_r2018ColumnCount > 0
+                    && m_r2018ColumnCount < 10000) {
+                    m_r2018ColumnHeights.reserve(static_cast<size_t>(m_r2018ColumnCount));
+                    for (dint32 i = 0; i < m_r2018ColumnCount; ++i) {
+                        m_r2018ColumnHeights.push_back(buf->getBitDouble());
+                    }
                 }
             }
         }
@@ -3583,6 +3915,7 @@ bool DRW_MText::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
     DRW_DBG(styleH.size); DRW_DBG("."); DRW_DBG(styleH.ref); DRW_DBG("\n");
     if (hasR2018AppId) {
         dwgHandle appIdH = buf->getHandle();
+        m_r2018AppIdHandle = appIdH.ref;
         DRW_DBG("mtext R2018 appid Handle: "); DRW_DBGHL(appIdH.code, appIdH.size, appIdH.ref); DRW_DBG("\n");
     }
 

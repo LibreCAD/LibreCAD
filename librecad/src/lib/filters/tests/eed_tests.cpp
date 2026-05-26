@@ -29,9 +29,11 @@
 
 #include <cmath>
 #include <memory>
+#include <sstream>
 #include <vector>
 
 #include "drw_base.h"
+#include "intern/dxfreader.h"
 #include "rs_line.h"
 #include "rs_vector.h"
 
@@ -62,6 +64,31 @@ TEST_CASE("DRW_Variant: copy ctor preserves BINARY data",
   // not the source's — otherwise we have a use-after-move hazard.
   REQUIRE(dst.binary() != src.binary());
   REQUIRE((*dst.binary())[1] == 0xBB);
+}
+
+TEST_CASE("DRW_Variant: INTEGER64 preserves high bits",
+          "[eed][drw_variant]") {
+  constexpr dint64 value = 0x123456789ABCDELL;
+  DRW_Variant src(160, value);
+  DRW_Variant dst(src);
+
+  REQUIRE(src.code() == 160);
+  REQUIRE(src.type() == DRW_Variant::INTEGER64);
+  REQUIRE(src.i64_val() == value);
+  REQUIRE(dst.type() == DRW_Variant::INTEGER64);
+  REQUIRE(dst.i64_val() == value);
+}
+
+TEST_CASE("dxfReaderAscii: group 160 reads 64-bit integer",
+          "[eed][drw_variant]") {
+  std::istringstream input{"160\n5124095576030430\n"};
+  dxfReaderAscii reader(&input);
+  int code = 0;
+
+  REQUIRE(reader.readRec(&code));
+  REQUIRE(code == 160);
+  REQUIRE(reader.type == dxfReader::INT64);
+  REQUIRE(reader.getInt64() == 5124095576030430ULL);
 }
 
 TEST_CASE("DRW_Variant: layer-ref flag survives copy", "[eed][drw_variant]") {

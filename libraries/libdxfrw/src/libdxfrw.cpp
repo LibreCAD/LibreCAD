@@ -259,8 +259,12 @@ bool dxfRW::writeAppData(const std::list<std::list<DRW_Variant>>& appData) {
                         writer->writeInt32(data.code(), data.content.i);
                         break;
 
+                    case DRW_Variant::INTEGER64:
+                        writer->writeInt64(data.code(), static_cast<duint64>(data.content.i64));
+                        break;
+
                     case DRW_Variant::DOUBLE:
-                        writer->writeDouble(data.code(), data.content.i);
+                        writer->writeDouble(data.code(), data.content.d);
                         break;
 
                     default:
@@ -604,6 +608,7 @@ bool dxfRW::writeDimstyle(DRW_Dimstyle *ent){
         switch (v->type()) {
             case DRW_Variant::STRING:  writer->writeUtf8String(v->code(), v->c_str()); break;
             case DRW_Variant::INTEGER: writer->writeInt16(v->code(), v->i_val()); break;
+            case DRW_Variant::INTEGER64: writer->writeInt64(v->code(), static_cast<duint64>(v->i64_val())); break;
             case DRW_Variant::DOUBLE:  writer->writeDouble(v->code(), v->d_val()); break;
             default: break;
         }
@@ -2363,6 +2368,8 @@ bool dxfRW::writeExtData(const std::vector<DRW_Variant*> &ed){
         case 1071:
             if ((*it)->type() == DRW_Variant::INTEGER)
                 writer->writeInt32((*it)->code(), (*it)->content.i);
+            else if ((*it)->type() == DRW_Variant::INTEGER64)
+                writer->writeInt32((*it)->code(), static_cast<dint32>((*it)->content.i64));
             break;
         default:
             break;
