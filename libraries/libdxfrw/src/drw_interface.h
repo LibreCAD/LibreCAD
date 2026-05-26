@@ -288,6 +288,10 @@ public:
      * (drawingUnits / paperUnits, e.g. "1:48" → 48).
      */
     virtual void addScale(const DRW_Scale& data) { (void) data; }
+    /** Called for every DIMASSOC associative-dimension metadata object. */
+    virtual void addDimensionAssociation(const DRW_DimensionAssociation& data) { (void) data; }
+    /** Called for every ACAD_EVALUATION_GRAPH dynamic/associative metadata object. */
+    virtual void addEvaluationGraph(const DRW_EvaluationGraph& data) { (void) data; }
 
     /**
      * Called for every comment in the DXF file (code 999).

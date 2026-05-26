@@ -259,7 +259,7 @@ bool readCadValue(DRW::Version version, dwgBuffer *buf, dwgBuffer *strBuf,
         value.m_formatFlags = buf->getBitLong();
 
     value.m_dataType = buf->getBitLong();
-    const bool emptyR2007Value = version > DRW::AC1018 && (value.m_formatFlags & 1);
+    const bool emptyR2007Value = version > DRW::AC1018 && (value.m_formatFlags & 3);
     if (!emptyR2007Value) {
         switch (value.m_dataType) {
         case 0:
@@ -313,8 +313,7 @@ bool readCadValue(DRW::Version version, dwgBuffer *buf, dwgBuffer *strBuf,
         dwgBuffer *textBuf = strBuf ? strBuf : buf;
         value.m_unitType = buf->getBitLong();
         value.m_formatString = textBuf->getVariableText(version, false);
-        if (value.m_unitType != 12)
-            value.m_valueString = textBuf->getVariableText(version, false);
+        value.m_valueString = textBuf->getVariableText(version, false);
     }
 
     return buf->isGood() && (!strBuf || strBuf->isGood());
@@ -475,7 +474,7 @@ DRW_DBG("\n***************************** parsing table entry *******************
             DRW_DBG("\nDRW_TableEntry::parseDwg string strDataSize: "); DRW_DBGH(strDataSize); DRW_DBG("\n");
             if ( (strDataSize& 0x8000) == 0x8000){
                 DRW_DBG("\nDRW_TableEntry::parseDwg string 0x8000 bit is set");
-                strBuf->moveBitPos(-33);//RLZ pending to verify
+                strBuf->moveBitPos(-32);
                 duint16 hiSize = strBuf->getRawShort16();
                 strDataSize = ((strDataSize&0x7fff) | (hiSize<<15));
             }
@@ -2752,6 +2751,112 @@ bool DRW_Scale::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
     // Trailing handle stream (parent dictionary, reactors, xdic) — left to
     // the caller; the OBJECTS dispatch hands us a size-bounded slice.
     return buf->isGood();
+}
+
+bool DRW_DimensionAssociation::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
+    dwgBuffer sBuff = *buf;
+    dwgBuffer *sBuf = buf;
+    if (version > DRW::AC1018)
+        sBuf = &sBuff;
+    bool ret = DRW_TableEntry::parseDwg(version, buf, sBuf, bs);
+    DRW_DBG("\n***************************** parsing DIMASSOC **************************\n");
+    if (!ret)
+        return ret;
+
+    if (version <= DRW::AC1018)
+        return false;
+
+    dwgBuffer hBuff = *buf;
+    seekObjectHandleStream(version, &hBuff, objSize);
+    readCommonObjectHandles(&hBuff, handle, numReactors, xDictFlag, &parentHandle);
+
+    m_dimensionHandle = readObjectHandleRef(&hBuff);
+    m_associativityFlags = static_cast<duint32>(buf->getBitLong());
+    m_isTransSpace = buf->getBit() != 0;
+    m_rotatedDimensionType = buf->getRawChar8();
+
+    auto readOsnapRef = [&]() {
+        DRW_DimensionAssociationOsnapRef ref;
+        ref.m_className = sBuf->getVariableText(version, false);
+        ref.m_objectOsnapType = buf->getRawChar8();
+        ref.m_objectHandle = readObjectHandleRef(&hBuff);
+        return ref;
+    };
+
+    m_osnapRefs.clear();
+    m_osnapRefs.reserve(4);
+    for (duint32 flag = 1; flag <= 8; flag <<= 1) {
+        if ((m_associativityFlags & flag) != 0)
+            m_osnapRefs.push_back(readOsnapRef());
+    }
+
+    DRW_DBG("DIMASSOC dimension handle: "); DRW_DBG(m_dimensionHandle);
+    DRW_DBG(" refs: "); DRW_DBG(static_cast<int>(m_osnapRefs.size())); DRW_DBG("\n");
+    return buf->isGood() && sBuf->isGood() && hBuff.isGood();
+}
+
+bool DRW_EvaluationGraph::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
+    dwgBuffer sBuff = *buf;
+    dwgBuffer *sBuf = buf;
+    if (version > DRW::AC1018)
+        sBuf = &sBuff;
+    bool ret = DRW_TableEntry::parseDwg(version, buf, sBuf, bs);
+    DRW_DBG("\n***************************** parsing ACAD_EVALUATION_GRAPH *************\n");
+    if (!ret)
+        return ret;
+
+    if (version <= DRW::AC1018)
+        return false;
+
+    dwgBuffer hBuff = *buf;
+    seekObjectHandleStream(version, &hBuff, objSize);
+    readCommonObjectHandles(&hBuff, handle, numReactors, xDictFlag, &parentHandle);
+
+    m_value96 = buf->getBitLong();
+    m_value97 = buf->getBitLong();
+
+    const dint32 nodeCount = buf->getBitLong();
+    if (nodeCount < 0 || nodeCount > 100000)
+        return false;
+    m_nodes.clear();
+    m_nodes.reserve(static_cast<size_t>(nodeCount));
+    for (dint32 i = 0; i < nodeCount; ++i) {
+        DRW_EvaluationGraphNode node;
+        node.m_index = buf->getBitLong();
+        node.m_flags = buf->getBitLong();
+        node.m_nextNodeIndex = buf->getBitLong();
+        node.m_expressionHandle = readObjectHandleRef(&hBuff);
+        node.m_data1 = buf->getBitLong();
+        node.m_data2 = buf->getBitLong();
+        node.m_data3 = buf->getBitLong();
+        node.m_data4 = buf->getBitLong();
+        m_nodes.push_back(node);
+    }
+
+    const dint32 edgeCount = buf->getBitLong();
+    if (edgeCount < 0 || edgeCount > 100000)
+        return false;
+    m_edges.clear();
+    m_edges.reserve(static_cast<size_t>(edgeCount));
+    for (dint32 i = 0; i < edgeCount; ++i) {
+        DRW_EvaluationGraphEdge edge;
+        edge.m_value92 = buf->getBitLong();
+        edge.m_value93 = buf->getBitLong();
+        edge.m_value94 = buf->getBitLong();
+        edge.m_value91a = buf->getBitLong();
+        edge.m_value91b = buf->getBitLong();
+        edge.m_value92a = buf->getBitLong();
+        edge.m_value92b = buf->getBitLong();
+        edge.m_value92c = buf->getBitLong();
+        edge.m_value92d = buf->getBitLong();
+        edge.m_value92e = buf->getBitLong();
+        m_edges.push_back(edge);
+    }
+
+    DRW_DBG("EVALUATION_GRAPH nodes: "); DRW_DBG(static_cast<int>(m_nodes.size()));
+    DRW_DBG(" edges: "); DRW_DBG(static_cast<int>(m_edges.size())); DRW_DBG("\n");
+    DRW_UNUSED(sBuf);
+    return buf->isGood() && hBuff.isGood();
 }
 
 // VISUALSTYLE (AcDbVisualStyle) — stub parser per ODA spec §20.4.95.

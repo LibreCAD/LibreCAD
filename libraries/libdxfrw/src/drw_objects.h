@@ -60,7 +60,9 @@ namespace DRW {
          DBCOLOR,
          VISUALSTYLE,
          UNDERLAYDEFINITION,
-         SCALE
+         SCALE,
+         DIMASSOC,
+         EVALUATIONGRAPH
      };
 
 //pending VP_ENT_HDR, GROUP, LONG_TRANSACTION,
@@ -1219,6 +1221,73 @@ public:
     double  drawingUnits = 1.0;  /*!< denominator, code 141 */
     bool    isUnitScale = false; /*!< true for the 1:1 entry, code 290 */
     // name (inherited from DRW_TableEntry) carries the user-visible label, code 300
+};
+
+struct DRW_DimensionAssociationOsnapRef {
+    UTF8STRING m_className;
+    duint8 m_objectOsnapType = 0;
+    duint32 m_objectHandle = 0;
+};
+
+//! Shell parser for DIMASSOC (AcDbDimAssoc) associative dimension metadata.
+class DRW_DimensionAssociation : public DRW_TableEntry {
+    SETOBJFRIENDS
+public:
+    DRW_DimensionAssociation() {
+        tType = DRW::DIMASSOC;
+    }
+
+protected:
+    bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) override;
+
+public:
+    duint32 m_dimensionHandle = 0;
+    duint32 m_associativityFlags = 0;
+    bool m_isTransSpace = false;
+    duint8 m_rotatedDimensionType = 0;
+    std::vector<DRW_DimensionAssociationOsnapRef> m_osnapRefs;
+};
+
+struct DRW_EvaluationGraphNode {
+    dint32 m_index = 0;
+    dint32 m_flags = 0;
+    dint32 m_nextNodeIndex = 0;
+    duint32 m_expressionHandle = 0;
+    dint32 m_data1 = 0;
+    dint32 m_data2 = 0;
+    dint32 m_data3 = 0;
+    dint32 m_data4 = 0;
+};
+
+struct DRW_EvaluationGraphEdge {
+    dint32 m_value92 = 0;
+    dint32 m_value93 = 0;
+    dint32 m_value94 = 0;
+    dint32 m_value91a = 0;
+    dint32 m_value91b = 0;
+    dint32 m_value92a = 0;
+    dint32 m_value92b = 0;
+    dint32 m_value92c = 0;
+    dint32 m_value92d = 0;
+    dint32 m_value92e = 0;
+};
+
+//! Shell parser for ACAD_EVALUATION_GRAPH dynamic/associative metadata.
+class DRW_EvaluationGraph : public DRW_TableEntry {
+    SETOBJFRIENDS
+public:
+    DRW_EvaluationGraph() {
+        tType = DRW::EVALUATIONGRAPH;
+    }
+
+protected:
+    bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) override;
+
+public:
+    dint32 m_value96 = 0;
+    dint32 m_value97 = 0;
+    std::vector<DRW_EvaluationGraphNode> m_nodes;
+    std::vector<DRW_EvaluationGraphEdge> m_edges;
 };
 
 //! Class to handle VISUALSTYLE (AcDbVisualStyle) — custom-class object §20.4.95.

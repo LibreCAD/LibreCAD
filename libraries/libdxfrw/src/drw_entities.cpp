@@ -14,6 +14,7 @@
 
 #include <cstdio>
 #include <cstdlib>
+#include <limits>
 #include <vector>
 #include "drw_entities.h"
 #include "intern/dxfreader.h"
@@ -79,7 +80,12 @@ bool readTableValueBytes(dwgBuffer *buf, std::vector<duint8>& raw, const char *l
         return false;
     }
     raw.resize(byteCount);
-    return byteCount == 0 || buf->getBytes(raw.data(), raw.size());
+    const bool good = byteCount == 0 || buf->getBytes(raw.data(), raw.size());
+    if (!good) {
+        DRW_DBG(label); DRW_DBG(" byte payload read failed, size: "); DRW_DBG(byteCount);
+        DRW_DBG(" remaining: "); DRW_DBG(buf->numRemainingBytes()); DRW_DBG("\n");
+    }
+    return good;
 }
 
 UTF8STRING decodeTableValueText(DRW::Version version, dwgBuffer *buf, const std::vector<duint8>& raw) {
@@ -93,6 +99,30 @@ UTF8STRING decodeTableValueText(DRW::Version version, dwgBuffer *buf, const std:
         while (!s.empty() && s.back() == '\0')
             s.pop_back();
     }
+    if (buf->decoder)
+        s = buf->decoder->toUtf8(s);
+    return s;
+}
+
+UTF8STRING readTableText(DRW::Version version, dwgBuffer *buf) {
+    if (!buf)
+        return UTF8STRING();
+    if (version <= DRW::AC1018)
+        return buf->getVariableText(version, false);
+
+    const duint32 byteLen = buf->getBitShort();
+    if (byteLen == 0)
+        return UTF8STRING();
+    if (byteLen > kMaxTableStringBytes) {
+        DRW_DBG("TABLE text byte length invalid: "); DRW_DBG(byteLen); DRW_DBG("\n");
+        return UTF8STRING();
+    }
+
+    std::vector<duint8> raw(static_cast<size_t>(byteLen) + 2, 0);
+    if (!buf->getBytes(raw.data(), byteLen))
+        return UTF8STRING();
+
+    std::string s(reinterpret_cast<const char*>(raw.data()), byteLen);
     if (buf->decoder)
         s = buf->decoder->toUtf8(s);
     return s;
@@ -128,7 +158,7 @@ bool readTableCadValue(DRW::Version version, dwgBuffer *buf, dwgBuffer *strBuf,
         value.m_formatFlags = buf->getBitLong();
 
     value.m_dataType = buf->getBitLong();
-    const bool emptyR2007Value = version > DRW::AC1018 && (value.m_formatFlags & 1);
+    const bool emptyR2007Value = version > DRW::AC1018 && (value.m_formatFlags & 3);
     if (!emptyR2007Value) {
         switch (value.m_dataType) {
         case 0:
@@ -166,8 +196,10 @@ bool readTableCadValue(DRW::Version version, dwgBuffer *buf, dwgBuffer *strBuf,
             break;
         case 128:
         case 256:
+            DRW_DBG("unsupported TABLE CadValue buffer data type: "); DRW_DBG(value.m_dataType); DRW_DBG("\n");
             return false;
         default:
+            DRW_DBG("unsupported TABLE CadValue data type: "); DRW_DBG(value.m_dataType); DRW_DBG("\n");
             return false;
         }
     }
@@ -175,28 +207,59 @@ bool readTableCadValue(DRW::Version version, dwgBuffer *buf, dwgBuffer *strBuf,
     if (version > DRW::AC1018) {
         dwgBuffer *textBuf = strBuf ? strBuf : buf;
         value.m_unitType = buf->getBitLong();
-        value.m_formatString = textBuf->getVariableText(version, false);
-        if (value.m_unitType != 12)
-            value.m_valueString = textBuf->getVariableText(version, false);
+        value.m_formatString = readTableText(version, textBuf);
+        value.m_valueString = readTableText(version, textBuf);
     }
 
-    return buf->isGood() && (!strBuf || strBuf->isGood()) && (!hdlBuf || hdlBuf->isGood());
+    const bool good = buf->isGood() && (!strBuf || strBuf->isGood()) && (!hdlBuf || hdlBuf->isGood());
+    if (!good) {
+        DRW_DBG("TABLE CadValue stream failed, flags: "); DRW_DBG(value.m_formatFlags);
+        DRW_DBG(" type: "); DRW_DBG(value.m_dataType);
+        DRW_DBG(" unit: "); DRW_DBG(value.m_unitType);
+        DRW_DBG(" bufGood: "); DRW_DBG(buf->isGood() ? 1 : 0);
+        DRW_DBG(" strGood: "); DRW_DBG((!strBuf || strBuf->isGood()) ? 1 : 0);
+        DRW_DBG(" hdlGood: "); DRW_DBG((!hdlBuf || hdlBuf->isGood()) ? 1 : 0);
+        DRW_DBG(" bufPos: "); DRW_DBG(buf->getPosition());
+        DRW_DBG(" strPos: "); if (strBuf) DRW_DBG(strBuf->getPosition()); else DRW_DBG(-1);
+        DRW_DBG(" hdlPos: "); if (hdlBuf) DRW_DBG(hdlBuf->getPosition()); else DRW_DBG(-1);
+        DRW_DBG("\n");
+    }
+    return good;
 }
 
 bool skipTableCustomData(DRW::Version version, dwgBuffer *buf,
                          dwgBuffer *strBuf, dwgBuffer *hdlBuf) {
     dwgBuffer *textBuf = strBuf ? strBuf : buf;
-    textBuf->getVariableText(version, false);
+    UTF8STRING key = readTableText(version, textBuf);
+    if (strBuf && !strBuf->isGood()) {
+        DRW_DBG("TABLE custom data key string read failed\n");
+        return false;
+    }
     DRW_CadValue value;
-    return readTableCadValue(version, buf, strBuf, hdlBuf, value);
+    const bool good = readTableCadValue(version, buf, strBuf, hdlBuf, value);
+    if (!good) {
+        DRW_DBG("TABLE custom data key failed: "); DRW_DBG(key.c_str()); DRW_DBG("\n");
+    }
+    return good;
 }
 
 void readTableCmColor(DRW::Version version, dwgBuffer *buf, dwgBuffer *strBuf) {
     dwgBuffer *textBuf = strBuf ? strBuf : buf;
-    dint32 rgb = -1;
-    UTF8STRING name;
-    UTF8STRING book;
-    buf->getCmColor(version, &rgb, textBuf, &name, &book);
+    if (version < DRW::AC1018) {
+        buf->getSBitShort();
+        return;
+    }
+
+    buf->getBitShort();
+    const duint32 rgb = buf->getBitLong();
+    const duint8 colorFlags = buf->getRawChar8();
+    DRW_DBG("\ntype COLOR: "); DRW_DBGH(rgb >> 24);
+    DRW_DBG("\nRGB COLOR: "); DRW_DBGH(rgb);
+    DRW_DBG("\nbyte COLOR: "); DRW_DBGH(colorFlags);
+    if (colorFlags & 1)
+        readTableText(version, textBuf);
+    if (colorFlags & 2)
+        readTableText(version, textBuf);
 }
 
 bool skipR2007TableCellOverrides(DRW::Version version, dwgBuffer *buf,
@@ -262,7 +325,7 @@ bool parseR2007TableCell(DRW::Version version, dwgBuffer *buf, dwgBuffer *strBuf
         if (cell.m_textStyleHandle == 0 && version < DRW::AC1021) {
             DRW_TableCellContent content;
             content.m_type = 1;
-            content.m_text = textBuf->getVariableText(version, false);
+            content.m_text = readTableText(version, textBuf);
             content.m_value.m_dataType = 4;
             content.m_value.m_value.addString(1, content.m_text);
             cell.m_contents.push_back(content);
@@ -277,7 +340,7 @@ bool parseR2007TableCell(DRW::Version version, dwgBuffer *buf, dwgBuffer *strBuf
                 DRW_TableCellAttribute attribute;
                 attribute.m_attdefHandle = readTableHandle(hdlBuf);
                 attribute.m_index = buf->getBitShort();
-                attribute.m_text = textBuf->getVariableText(version, false);
+                attribute.m_text = readTableText(version, textBuf);
                 cell.m_attributes.push_back(attribute);
             }
         }
@@ -391,7 +454,7 @@ bool skipTableContentFormat(DRW::Version version, dwgBuffer *buf,
     buf->getBitLong();  // property flags
     buf->getBitLong();  // value data type
     buf->getBitLong();  // value unit type
-    textBuf->getVariableText(version, false);
+    readTableText(version, textBuf);
     buf->getBitDouble(); // rotation
     buf->getBitDouble(); // block scale
     buf->getBitLong();   // alignment
@@ -429,8 +492,10 @@ bool skipTableCellStyle(DRW::Version version, dwgBuffer *buf,
     }
 
     const duint32 borders = buf->getBitLong();
-    if (borders > 6)
+    if (borders > 6) {
+        DRW_DBG("TABLE cell style border count out of range: "); DRW_DBG(borders); DRW_DBG("\n");
         return false;
+    }
     for (duint32 i = 0; i < borders; ++i) {
         const duint32 edgeFlags = buf->getBitLong();
         if (edgeFlags == 0)
@@ -451,15 +516,23 @@ bool parseTableCell(DRW::Version version, dwgBuffer *buf, dwgBuffer *strBuf,
                     dwgBuffer *hdlBuf, DRW_TableCell& cell) {
     dwgBuffer *textBuf = strBuf ? strBuf : buf;
     cell.m_flags = buf->getBitLong();
-    cell.m_toolTip = textBuf->getVariableText(version, false);
+    cell.m_toolTip = readTableText(version, textBuf);
+    if (strBuf && !strBuf->isGood()) {
+        DRW_DBG("TABLE cell tooltip string read failed\n");
+        return false;
+    }
     buf->getBitLong(); // custom data
 
     const duint32 customItems = buf->getBitLong();
-    if (customItems > kMaxTableItems)
+    if (customItems > kMaxTableItems) {
+        DRW_DBG("TABLE cell custom item count out of range: "); DRW_DBG(customItems); DRW_DBG("\n");
         return false;
+    }
     for (duint32 i = 0; i < customItems; ++i) {
-        if (!skipTableCustomData(version, buf, strBuf, hdlBuf))
+        if (!skipTableCustomData(version, buf, strBuf, hdlBuf)) {
+            DRW_DBG("TABLE cell custom data parse incomplete\n");
             return false;
+        }
     }
 
     if (buf->getBitLong() != 0) {
@@ -470,15 +543,19 @@ bool parseTableCell(DRW::Version version, dwgBuffer *buf, dwgBuffer *strBuf,
     }
 
     const duint32 contentCount = buf->getBitLong();
-    if (contentCount > kMaxTableItems)
+    if (contentCount > kMaxTableItems) {
+        DRW_DBG("TABLE cell content count out of range: "); DRW_DBG(contentCount); DRW_DBG("\n");
         return false;
+    }
     cell.m_contents.reserve(contentCount);
     for (duint32 i = 0; i < contentCount; ++i) {
         DRW_TableCellContent content;
         content.m_type = buf->getBitLong();
         if (content.m_type == 1) {
-            if (!readTableCadValue(version, buf, strBuf, hdlBuf, content.m_value))
+            if (!readTableCadValue(version, buf, strBuf, hdlBuf, content.m_value)) {
+                DRW_DBG("TABLE cell value parse incomplete\n");
                 return false;
+            }
             if (content.m_value.m_value.type() == DRW_Variant::STRING)
                 content.m_text = content.m_value.m_value.c_str();
             else if (!content.m_value.m_valueString.empty())
@@ -488,109 +565,142 @@ bool parseTableCell(DRW::Version version, dwgBuffer *buf, dwgBuffer *strBuf,
         }
 
         const duint32 numAttrs = buf->getBitLong();
-        if (numAttrs > kMaxTableItems)
+        if (numAttrs > kMaxTableItems) {
+            DRW_DBG("TABLE cell attribute count out of range: "); DRW_DBG(numAttrs); DRW_DBG("\n");
             return false;
+        }
         for (duint32 attr = 0; attr < numAttrs; ++attr) {
             readTableHandle(hdlBuf);
-            textBuf->getVariableText(version, false);
+            readTableText(version, textBuf);
             buf->getBitLong();
         }
 
         const bool hasContentFormat = buf->getBitShort() != 0;
-        if (hasContentFormat && !skipTableContentFormat(version, buf, strBuf, hdlBuf))
+        if (hasContentFormat && !skipTableContentFormat(version, buf, strBuf, hdlBuf)) {
+            DRW_DBG("TABLE cell content format parse incomplete\n");
             return false;
+        }
         cell.m_contents.push_back(content);
     }
 
+    if (!skipTableCellStyle(version, buf, strBuf, hdlBuf)) {
+        DRW_DBG("TABLE cell style override parse incomplete\n");
+        return false;
+    }
+
     cell.m_styleId = buf->getBitLong();
-    const bool hasGeometry = buf->getBitLong() != 0;
-    if (hasGeometry) {
-        buf->getBitLong();
+    const duint32 hasGeometry = buf->getBitLong();
+    if (hasGeometry != 0) {
+        buf->getBitLong(); // unknown AC1027+ geometry marker
         cell.m_width = buf->getBitDouble();
         cell.m_height = buf->getBitDouble();
-        const duint32 numGeometry = buf->getBitLong();
-        if (numGeometry > kMaxTableItems)
-            return false;
-        readTableHandle(hdlBuf);
-        for (duint32 i = 0; i < numGeometry; ++i) {
-            buf->get3BitDouble();
-            buf->get3BitDouble();
-            buf->getBitDouble();
-            buf->getBitDouble();
-            buf->getBitDouble();
-            buf->getBitDouble();
-            buf->getBitLong();
+        cell.m_geometryFlags = buf->getBitLong();
+        cell.m_geometryHandle = readTableHandle(hdlBuf);
+        if (cell.m_geometryFlags != 0) {
+            cell.m_geometryTopLeft = buf->get3BitDouble();
+            cell.m_geometryCenter = buf->get3BitDouble();
+            cell.m_contentWidth = buf->getBitDouble();
+            cell.m_contentHeight = buf->getBitDouble();
+            cell.m_geometryWidth = buf->getBitDouble();
+            cell.m_geometryHeight = buf->getBitDouble();
+            cell.m_geometryRecordFlags = buf->getBitLong();
         }
     }
 
-    return buf->isGood() && (!strBuf || strBuf->isGood()) && (!hdlBuf || hdlBuf->isGood());
+    const bool good = buf->isGood() && (!strBuf || strBuf->isGood()) && (!hdlBuf || hdlBuf->isGood());
+    if (!good)
+        DRW_DBG("TABLE cell stream ended unexpectedly\n");
+    return good;
 }
 
 bool parseTableContent(DRW::Version version, dwgBuffer *buf, dwgBuffer *strBuf,
                        dwgBuffer *hdlBuf, DRW_TableContent& content) {
     dwgBuffer *textBuf = strBuf ? strBuf : buf;
-    content.m_name = textBuf->getVariableText(version, false);
-    content.m_description = textBuf->getVariableText(version, false);
+    content.m_name = readTableText(version, textBuf);
+    content.m_description = readTableText(version, textBuf);
 
     const duint32 columns = buf->getBitLong();
-    if (columns > kMaxTableColumns)
+    if (columns > kMaxTableColumns) {
+        DRW_DBG("TABLECONTENT column count out of range: "); DRW_DBG(columns); DRW_DBG("\n");
         return false;
+    }
     content.m_columns.clear();
     content.m_columns.reserve(columns);
     for (duint32 col = 0; col < columns; ++col) {
         DRW_TableColumn column;
-        column.m_name = textBuf->getVariableText(version, false);
+        column.m_name = readTableText(version, textBuf);
         buf->getBitLong(); // custom data
         const duint32 customItems = buf->getBitLong();
-        if (customItems > kMaxTableItems)
+        if (customItems > kMaxTableItems) {
+            DRW_DBG("TABLECONTENT column custom item count out of range: "); DRW_DBG(customItems); DRW_DBG("\n");
             return false;
-        for (duint32 i = 0; i < customItems; ++i) {
-            if (!skipTableCustomData(version, buf, strBuf, hdlBuf))
-                return false;
         }
-        if (!skipTableCellStyle(version, buf, strBuf, hdlBuf))
+        for (duint32 i = 0; i < customItems; ++i) {
+            if (!skipTableCustomData(version, buf, strBuf, hdlBuf)) {
+                DRW_DBG("TABLECONTENT column custom data parse incomplete\n");
+                return false;
+            }
+        }
+        if (!skipTableCellStyle(version, buf, strBuf, hdlBuf)) {
+            DRW_DBG("TABLECONTENT column cell style parse incomplete\n");
             return false;
+        }
         buf->getBitLong(); // style id
         column.m_width = buf->getBitDouble();
         content.m_columns.push_back(column);
     }
 
     const duint32 rows = buf->getBitLong();
-    if (rows > kMaxTableRows || (columns != 0 && rows > kMaxTableCells / columns))
+    if (rows > kMaxTableRows || (columns != 0 && rows > kMaxTableCells / columns)) {
+        DRW_DBG("TABLECONTENT row count out of range: "); DRW_DBG(rows); DRW_DBG("\n");
         return false;
+    }
     content.m_rows.clear();
     content.m_rows.reserve(rows);
     for (duint32 rowIndex = 0; rowIndex < rows; ++rowIndex) {
         DRW_TableRow row;
         const duint32 cells = buf->getBitLong();
-        if (cells > kMaxTableColumns || cells > kMaxTableItems)
+        if (cells > kMaxTableColumns || cells > kMaxTableItems) {
+            DRW_DBG("TABLECONTENT row cell count out of range: "); DRW_DBG(cells); DRW_DBG("\n");
             return false;
+        }
         row.m_cells.reserve(cells);
         for (duint32 cellIndex = 0; cellIndex < cells; ++cellIndex) {
             DRW_TableCell cell;
-            if (!parseTableCell(version, buf, strBuf, hdlBuf, cell))
+            if (!parseTableCell(version, buf, strBuf, hdlBuf, cell)) {
+                DRW_DBG("TABLECONTENT cell parse incomplete at row "); DRW_DBG(rowIndex);
+                DRW_DBG(" cell "); DRW_DBG(cellIndex); DRW_DBG("\n");
                 return false;
+            }
             row.m_cells.push_back(cell);
         }
 
         buf->getBitLong(); // custom data
         const duint32 customItems = buf->getBitLong();
-        if (customItems > kMaxTableItems)
+        if (customItems > kMaxTableItems) {
+            DRW_DBG("TABLECONTENT row custom item count out of range: "); DRW_DBG(customItems); DRW_DBG("\n");
             return false;
-        for (duint32 i = 0; i < customItems; ++i) {
-            if (!skipTableCustomData(version, buf, strBuf, hdlBuf))
-                return false;
         }
-        if (!skipTableCellStyle(version, buf, strBuf, hdlBuf))
+        for (duint32 i = 0; i < customItems; ++i) {
+            if (!skipTableCustomData(version, buf, strBuf, hdlBuf)) {
+                DRW_DBG("TABLECONTENT row custom data parse incomplete\n");
+                return false;
+            }
+        }
+        if (!skipTableCellStyle(version, buf, strBuf, hdlBuf)) {
+            DRW_DBG("TABLECONTENT row cell style parse incomplete\n");
             return false;
+        }
         buf->getBitLong(); // style id
         row.m_height = buf->getBitDouble();
         content.m_rows.push_back(row);
     }
 
     const duint32 fieldRefs = buf->getBitLong();
-    if (fieldRefs > kMaxTableItems)
+    if (fieldRefs > kMaxTableItems) {
+        DRW_DBG("TABLECONTENT field reference count out of range: "); DRW_DBG(fieldRefs); DRW_DBG("\n");
         return false;
+    }
     content.m_fieldHandles.clear();
     content.m_fieldHandles.reserve(fieldRefs);
     for (duint32 i = 0; i < fieldRefs; ++i) {
@@ -599,12 +709,16 @@ bool parseTableContent(DRW::Version version, dwgBuffer *buf, dwgBuffer *strBuf,
             content.m_fieldHandles.push_back(ref);
     }
 
-    if (!skipTableCellStyle(version, buf, strBuf, hdlBuf))
+    if (!skipTableCellStyle(version, buf, strBuf, hdlBuf)) {
+        DRW_DBG("TABLECONTENT table cell style parse incomplete\n");
         return false;
+    }
 
     const duint32 mergedRanges = buf->getBitLong();
-    if (mergedRanges > kMaxTableItems)
+    if (mergedRanges > kMaxTableItems) {
+        DRW_DBG("TABLECONTENT merged range count out of range: "); DRW_DBG(mergedRanges); DRW_DBG("\n");
         return false;
+    }
     content.m_mergedRanges.clear();
     content.m_mergedRanges.reserve(mergedRanges);
     for (duint32 i = 0; i < mergedRanges; ++i) {
@@ -617,7 +731,10 @@ bool parseTableContent(DRW::Version version, dwgBuffer *buf, dwgBuffer *strBuf,
     }
 
     content.m_tableStyleHandle = readTableHandle(hdlBuf);
-    return buf->isGood() && (!strBuf || strBuf->isGood()) && (!hdlBuf || hdlBuf->isGood());
+    const bool good = buf->isGood() && (!strBuf || strBuf->isGood()) && (!hdlBuf || hdlBuf->isGood());
+    if (!good)
+        DRW_DBG("TABLECONTENT stream ended unexpectedly\n");
+    return good;
 }
 
 } // namespace
@@ -835,7 +952,7 @@ bool DRW_Entity::parseDwg(DRW::Version version, dwgBuffer *buf, dwgBuffer* strBu
             DRW_DBG("\nDRW_TableEntry::parseDwg string strDataSize: "); DRW_DBGH(strDataSize); DRW_DBG("\n");
             if ( (strDataSize& 0x8000) == 0x8000){
                 DRW_DBG("\nDRW_TableEntry::parseDwg string 0x8000 bit is set");
-                strBuf->moveBitPos(-33);//RLZ pending to verify
+                strBuf->moveBitPos(-32);
                 duint16 hiSize = strBuf->getRawShort16();
                 strDataSize = ((strDataSize&0x7fff) | (hiSize<<15));
             }
@@ -1008,15 +1125,18 @@ bool DRW_Entity::parseDwg(DRW::Version version, dwgBuffer *buf, dwgBuffer* strBu
     DRW_DBG(" graphFlag: "); DRW_DBG(graphFlag); DRW_DBG("\n");
     if (graphFlag) {
         DRW_DBG(" [bidi-debug pre-graphSize bufpos="); DRW_DBG(buf->getPosition()); DRW_DBG(" bitpos="); DRW_DBG(buf->getBitPos()); DRW_DBG("]\n");
-        duint32 graphDataSize = buf->getRawLong32();  //RL 32bits
-        DRW_DBG("graphData in bytes: "); DRW_DBG(graphDataSize); DRW_DBG("\n");
-// RLZ: TODO
-        //skip graphData bytes
-        duint8 *tmpGraphData = new duint8[graphDataSize];
-        buf->getBytes(tmpGraphData, graphDataSize);
-        dwgBuffer tmpGraphDataBuf(tmpGraphData, graphDataSize, buf->decoder);
-        DRW_DBG("graph data remaining bytes: "); DRW_DBG(tmpGraphDataBuf.numRemainingBytes()); DRW_DBG("\n");
-        delete[]tmpGraphData;
+        const duint64 graphDataSize = (version >= DRW::AC1024)
+            ? buf->getBitLongLong()
+            : buf->getRawLong32();
+        DRW_DBG("graphData in bytes: "); DRW_DBG(static_cast<duint32>(graphDataSize)); DRW_DBG("\n");
+        const duint64 maxMoveBytes = static_cast<duint64>(std::numeric_limits<dint32>::max() / 8);
+        if (graphDataSize > static_cast<duint64>(buf->numRemainingBytes())
+            || graphDataSize > maxMoveBytes) {
+            DRW_DBG("graphData size outside object body\n");
+            return false;
+        }
+        if (!buf->moveBitPos(static_cast<dint32>(graphDataSize * 8)))
+            return false;
     }
     if (version < DRW::AC1015) {//14-
         objSize = buf->getRawLong32();  //RL 32bits object size in bits
@@ -2656,6 +2776,7 @@ bool DRW_Table::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
         return false;
 
     dwgBuffer sBuff = *buf;
+    sBuff.setVariableTextByteLength(true);
     dwgBuffer *sBuf = &sBuff;
     bool ret = DRW_Entity::parseDwg(version, buf, sBuf, bs);
     if (!ret)
@@ -2804,6 +2925,7 @@ bool DRW_TableContentObject::parseDwg(DRW::Version version, dwgBuffer *buf, duin
         return false;
 
     dwgBuffer sBuff = *buf;
+    sBuff.setVariableTextByteLength(true);
     dwgBuffer *sBuf = &sBuff;
     bool ret = DRW_TableEntry::parseDwg(version, buf, sBuf, bs);
     DRW_DBG("\n************************** parsing table content object ************************\n");
@@ -3485,16 +3607,6 @@ bool DRW_Attrib::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
         return ret;
     DRW_DBG("\n***************************** parsing attrib *********************************************\n");
 
-    // R2010+: leading version byte (per ODA spec §20.4.65)
-    if (version >= DRW::AC1024) {
-        attVersion = buf->getRawChar8();
-        DRW_DBG("att version: "); DRW_DBG(attVersion); DRW_DBG("\n");
-    }
-    if (version >= DRW::AC1032) {
-        m_attributeType = buf->getRawChar8();
-        DRW_DBG("attribute type: "); DRW_DBG(m_attributeType); DRW_DBG("\n");
-    }
-
     // Inline TEXT subtype data (mirrors DRW_Text::parseDwg layout, sans handles)
     duint8 data_flags = 0x00;
     if (version > DRW::AC1014) {
@@ -3540,6 +3652,17 @@ bool DRW_Attrib::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
     if (!(data_flags & 0x40)) alignH = (HAlign)buf->getBitShort();
     if (!(data_flags & 0x80)) alignV = (VAlign)buf->getBitShort();
 
+    // R2010+ ATTRIB version follows the common TEXT data. R2018 adds the
+    // attribute type immediately after it.
+    if (version >= DRW::AC1024) {
+        attVersion = buf->getRawChar8();
+        DRW_DBG("att version: "); DRW_DBG(attVersion); DRW_DBG("\n");
+    }
+    if (version >= DRW::AC1032) {
+        m_attributeType = buf->getRawChar8();
+        DRW_DBG("attribute type: "); DRW_DBG(m_attributeType); DRW_DBG("\n");
+    }
+
     if (version >= DRW::AC1032 && m_attributeType != 0 && m_attributeType != 1) {
         DRW_DBG("R2018 multi-line ATTRIB payload is not yet decoded\n");
         return false;
@@ -3576,13 +3699,6 @@ bool DRW_Attrib::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs, dw
     oType = 2;  // ATTRIB class id — see dwgreader.cpp:1148
     if (!encodeDwgCommon(version, buf)) return false;
 
-    if (version >= DRW::AC1024) {
-        buf->putRawChar8(attVersion);       // R2010+ ATTRIB version byte
-    }
-    if (version >= DRW::AC1032) {
-        buf->putRawChar8(1);                // single-line ATTRIB; embedded MTEXT not emitted yet
-    }
-
     // TEXT-body section — mirrors DRW_Attrib::parseDwg.
     // data_flags=0: emit every optional field unconditionally (same
     // strategy as DRW_Text::encodeDwg — simpler encoder, ~30 bytes larger).
@@ -3603,6 +3719,13 @@ bool DRW_Attrib::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs, dw
     buf->putBitShort(static_cast<duint16>(textgen));  // generation flags BS
     buf->putBitShort(static_cast<duint16>(alignH));   // horiz align BS
     buf->putBitShort(static_cast<duint16>(alignV));   // vert align BS
+
+    if (version >= DRW::AC1024) {
+        buf->putRawChar8(attVersion);       // R2010+ ATTRIB version byte
+    }
+    if (version >= DRW::AC1032) {
+        buf->putRawChar8(1);                // single-line ATTRIB; embedded MTEXT not emitted yet
+    }
 
     // ATTRIB-specific tail
     sb->putVariableText(version, tag);                // tag TV
@@ -3650,13 +3773,6 @@ bool DRW_Attdef::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
         return ret;
     DRW_DBG("\n***************************** parsing attdef *********************************************\n");
 
-    if (version >= DRW::AC1024) {
-        attVersion = buf->getRawChar8();
-    }
-    if (version >= DRW::AC1032) {
-        m_attributeType = buf->getRawChar8();
-    }
-
     duint8 data_flags = 0x00;
     if (version > DRW::AC1014) {
         data_flags = buf->getRawChar8();
@@ -3697,6 +3813,13 @@ bool DRW_Attdef::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
     if (!(data_flags & 0x40)) alignH = (HAlign)buf->getBitShort();
     if (!(data_flags & 0x80)) alignV = (VAlign)buf->getBitShort();
 
+    if (version >= DRW::AC1024) {
+        attVersion = buf->getRawChar8();
+    }
+    if (version >= DRW::AC1032) {
+        m_attributeType = buf->getRawChar8();
+    }
+
     if (version >= DRW::AC1032 && m_attributeType != 0 && m_attributeType != 1) {
         DRW_DBG("R2018 multi-line ATTDEF payload is not yet decoded\n");
         return false;
@@ -3712,6 +3835,11 @@ bool DRW_Attdef::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
 
     if (version >= DRW::AC1024) {
         lockPosition = buf->getBit();
+    }
+
+    if (version >= DRW::AC1024) {
+        const duint8 promptVersion = buf->getRawChar8();
+        DRW_UNUSED(promptVersion);
     }
 
     // ATTDEF prompt follows attrib body
@@ -3732,13 +3860,6 @@ bool DRW_Attdef::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs, dw
     oType = 3;  // ATTDEF class id — see dwgreader.cpp:1185
     if (!encodeDwgCommon(version, buf)) return false;
 
-    if (version >= DRW::AC1024) {
-        buf->putRawChar8(attVersion);
-    }
-    if (version >= DRW::AC1032) {
-        buf->putRawChar8(1);                // single-line ATTDEF; embedded MTEXT not emitted yet
-    }
-
     // TEXT-body section — identical layout to DRW_Attrib::encodeDwg.
     buf->putRawChar8(0);
     buf->putRawDouble(basePoint.z);
@@ -3758,11 +3879,22 @@ bool DRW_Attdef::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs, dw
     buf->putBitShort(static_cast<duint16>(alignH));
     buf->putBitShort(static_cast<duint16>(alignV));
 
+    if (version >= DRW::AC1024) {
+        buf->putRawChar8(attVersion);
+    }
+    if (version >= DRW::AC1032) {
+        buf->putRawChar8(1);                // single-line ATTDEF; embedded MTEXT not emitted yet
+    }
+
     sb->putVariableText(version, tag);
     buf->putBitShort(0);                              // fieldLen BS (always 0)
     buf->putRawChar8(attribFlags);
     if (version >= DRW::AC1024) {
         buf->putBit(lockPosition ? 1 : 0);
+    }
+
+    if (version >= DRW::AC1024) {
+        buf->putRawChar8(attVersion);
     }
 
     // ATTDEF adds prompt between flags and handle stream
@@ -5016,7 +5148,9 @@ bool DRW_Image::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
     }
     duint16 clipType = buf->getBitShort();
     clipPath.clear();
-    if (clipType == 1){
+    if (clipType == 0) {
+        // No clip boundary payload.
+    } else if (clipType == 1){
         // rectangular clip: lower-left and upper-right corners; expand to a
         // 4-vertex polygon so downstream consumers can treat both kinds uniformly.
         DRW_Coord ll = buf->get2RawDouble();
@@ -5025,11 +5159,16 @@ bool DRW_Image::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
         clipPath.push_back(DRW_Coord(ur.x, ll.y, 0.0));
         clipPath.push_back(ur);
         clipPath.push_back(DRW_Coord(ll.x, ur.y, 0.0));
-    } else { //clipType == 2
+    } else if (clipType == 2) {
         dint32 numVerts = buf->getBitLong();
+        if (numVerts < 0 || numVerts > 100000)
+            return false;
         clipPath.reserve(numVerts);
         for (int i= 0; i< numVerts;++i)
             clipPath.push_back(buf->get2RawDouble());
+    } else {
+        DRW_DBG("unsupported image clip type: "); DRW_DBG(clipType); DRW_DBG("\n");
+        return false;
     }
 
     ret = DRW_Entity::parseDwgEntHandle(version, buf);
@@ -6020,6 +6159,12 @@ static bool parseMLeaderAnnotContext(DRW::Version version, dwgBuffer *buf,
 
     // Number of leader roots.
     dint32 nRoots = buf->getBitLong();
+    if (nRoots == 0) {
+        bool rootCountBits[7] = {};
+        for (bool& rootCountBit : rootCountBits)
+            rootCountBit = buf->getBit() != 0;
+        nRoots = rootCountBits[5] ? 2 : 1;
+    }
     if (nRoots < 0 || nRoots > 1000000) return false;
     ctx.roots.clear();
     ctx.roots.reserve(static_cast<size_t>(nRoots));

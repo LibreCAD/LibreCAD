@@ -11,6 +11,7 @@
 **  along with this program.  If not, see <http://www.gnu.org/licenses/>.    **
 ******************************************************************************/
 
+#include <cmath>
 #include <cstring>
 #include "dwgwriter18.h"
 #include "dwgutil.h"
@@ -49,6 +50,11 @@ static void putRL(std::vector<duint8>& v, duint32 x) {
     v.push_back(static_cast<duint8>(x >> 8));
     v.push_back(static_cast<duint8>(x >> 16));
     v.push_back(static_cast<duint8>(x >> 24));
+}
+
+static void putRS(std::vector<duint8>& v, duint16 x) {
+    v.push_back(static_cast<duint8>(x));
+    v.push_back(static_cast<duint8>(x >> 8));
 }
 
 static void putRLL(std::vector<duint8>& v, duint64 x) {
@@ -138,14 +144,13 @@ static std::vector<duint8> buildDataPage(duint64 pageAddr,
 // Each entry: dint32 id (RL) + duint32 size (RL).  All IDs are positive
 // (no gap pages needed for a fresh write).
 static std::vector<duint8> buildSectionPageMapContent(
-        duint32 sz1, duint32 sz2, duint32 sz3, duint32 sz4, duint32 sz5) {
+        const std::vector<duint32>& pageSizes) {
     std::vector<duint8> v;
-    v.reserve(5 * 8);
-    putRL(v, 1); putRL(v, sz1);  // page 1 = HEADER
-    putRL(v, 2); putRL(v, sz2);  // page 2 = CLASSES
-    putRL(v, 3); putRL(v, sz3);  // page 3 = OBJECTS
-    putRL(v, 4); putRL(v, sz4);  // page 4 = HANDLES
-    putRL(v, 5); putRL(v, sz5);  // page 5 = Data Section Map sys page
+    v.reserve(pageSizes.size() * 8);
+    for (size_t i = 0; i < pageSizes.size(); ++i) {
+        putRL(v, static_cast<duint32>(i + 1));
+        putRL(v, pageSizes[i]);
+    }
     return v;
 }
 
@@ -176,19 +181,126 @@ static void appendSectionDesc(std::vector<duint8>& v,
 
 // Build the decompressed content of the Data Section Map.
 static std::vector<duint8> buildDataSectionMapContent(
-        duint32 hdrSz, duint32 clsSz, duint32 objSz, duint32 hdlSz) {
+        duint32 hdrSz, duint32 clsSz, duint32 objSz, duint32 hdlSz,
+        bool hasAuxHeader, duint32 auxHeaderSz) {
     std::vector<duint8> v;
+    const duint32 numDescriptions = hasAuxHeader ? 5 : 4;
     // 20-byte header.
-    putRL(v, 4);          // numDescriptions
+    putRL(v, numDescriptions);
     putRL(v, 0x02);
     putRL(v, 0x00007400);
     putRL(v, 0x00);
-    putRL(v, 4);          // repeated numDescriptions
+    putRL(v, numDescriptions);
 
     appendSectionDesc(v, 0, 1, hdrSz, "AcDb:Header");
     appendSectionDesc(v, 1, 2, clsSz, "AcDb:Classes");
     appendSectionDesc(v, 2, 3, objSz, "AcDb:AcDbObjects");
     appendSectionDesc(v, 3, 4, hdlSz, "AcDb:Handles");
+    if (hasAuxHeader)
+        appendSectionDesc(v, 4, 5, auxHeaderSz, "AcDb:AuxHeader");
+    return v;
+}
+
+static duint16 auxHeaderRawVersion(DRW::Version version) {
+    switch (version) {
+    case DRW::AC1018: return 25;
+    case DRW::AC1021: return 27;
+    case DRW::AC1024: return 29;
+    case DRW::AC1027: return 31;
+    case DRW::AC1032: return 33;
+    default: return 0;
+    }
+}
+
+static double headerDoubleVar(const DRW_Header *header, const std::string& key) {
+    if (header == nullptr)
+        return 0.0;
+    auto it = header->vars.find(key);
+    if (it == header->vars.end() || it->second == nullptr
+        || it->second->type() != DRW_Variant::DOUBLE) {
+        return 0.0;
+    }
+    return it->second->d_val();
+}
+
+static void splitAuxDate(double stored, dint32& day, dint32& msec) {
+    day = static_cast<dint32>(stored);
+    double frac = stored - static_cast<double>(day);
+    if (frac == 0.0) {
+        msec = 0;
+        return;
+    }
+    for (int i = 0; i < 10; ++i) {
+        frac *= 10.0;
+        const double rounded = std::round(frac);
+        if (std::abs(frac - rounded) < 1e-9 && rounded != 0.0) {
+            msec = static_cast<dint32>(rounded);
+            return;
+        }
+    }
+    msec = static_cast<dint32>(std::round(frac));
+}
+
+static void putAuxDate(std::vector<duint8>& v, double stored) {
+    dint32 day = 0;
+    dint32 msec = 0;
+    splitAuxDate(stored, day, msec);
+    putRL(v, static_cast<duint32>(day));
+    putRL(v, static_cast<duint32>(msec));
+}
+
+static std::vector<duint8> buildAuxHeaderContent(DRW::Version version,
+                                                 const DRW_Header *header) {
+    std::vector<duint8> v;
+    const duint16 rawVersion = auxHeaderRawVersion(version);
+    if (rawVersion == 0)
+        return v;
+
+    v.push_back(0xff);
+    v.push_back(0x77);
+    v.push_back(0x01);
+    putRS(v, rawVersion);
+    putRS(v, 0);                       // maintenance version
+    putRL(v, 1);                       // number of saves
+    putRL(v, static_cast<duint32>(-1));
+    putRS(v, 1);                       // saves part 1
+    putRS(v, 0);                       // saves part 2
+    putRL(v, 0);
+    putRS(v, rawVersion);
+    putRS(v, 0);
+    putRS(v, rawVersion);
+    putRS(v, 0);
+    putRS(v, 0x0005);
+    putRS(v, 0x0893);
+    putRS(v, 0x0005);
+    putRS(v, 0x0893);
+    putRS(v, 0);
+    putRS(v, 1);
+    for (int i = 0; i < 5; ++i)
+        putRL(v, 0);
+
+    putAuxDate(v, headerDoubleVar(header, "TDCREATE"));
+    putAuxDate(v, headerDoubleVar(header, "TDUPDATE"));
+
+    const duint32 handSeed = header ? header->getHandSeed() : 0;
+    putRL(v, handSeed <= 0x7fffffffu ? handSeed : static_cast<duint32>(-1));
+    putRL(v, 0);                       // educational plot stamp
+    putRS(v, 0);
+    putRS(v, 1);
+    putRL(v, 0);
+    putRL(v, 0);
+    putRL(v, 0);
+    putRL(v, 1);                       // number of saves
+    putRL(v, 0);
+    putRL(v, 0);
+    putRL(v, 0);
+    putRL(v, 0);
+
+    if (version >= DRW::AC1032) {
+        putRS(v, 0);
+        putRS(v, 0);
+        putRS(v, 0);
+    }
     return v;
 }
 
@@ -355,22 +467,41 @@ bool dwgWriter18::finalize() {
     auto objPage = buildDataPage(addr3, 2, rawPtr + objOff, objSz);
     auto hdlPage = buildDataPage(addr4, 3, rawPtr + hdlOff, hdlSz);
 
+    const std::vector<duint8> auxHeaderData =
+        (m_version >= DRW::AC1027) ? buildAuxHeaderContent(m_version, m_header)
+                                   : std::vector<duint8>();
+    const bool hasAuxHeader = !auxHeaderData.empty();
+
+    duint64 addr5 = addr4 + 32 + hdlSz;
+    std::vector<duint8> auxHeaderPage;
+    if (hasAuxHeader)
+        auxHeaderPage = buildDataPage(addr5, 4, auxHeaderData.data(),
+                                      static_cast<duint32>(auxHeaderData.size()));
+
     // Build the Data Section Map sys page.
-    auto dsmData = buildDataSectionMapContent(hdrSz, clsSz, objSz, hdlSz);
+    auto dsmData = buildDataSectionMapContent(
+        hdrSz, clsSz, objSz, hdlSz, hasAuxHeader,
+        static_cast<duint32>(auxHeaderData.size()));
     auto dsmPage = buildSysPage(0x4163003b, dsmData.data(),
                                 static_cast<duint32>(dsmData.size()));
 
-    // Page 5 (Data Section Map sys page) starts at addr5.
-    duint64 addr5   = addr4 + 32 + hdlSz;
-    duint64 addrSPM = addr5 + static_cast<duint64>(dsmPage.size());
+    // Data Section Map sys page follows the optional AuxHeader data page.
+    const duint64 addrDsm = hasAuxHeader
+        ? addr5 + static_cast<duint64>(auxHeaderPage.size())
+        : addr5;
+    duint64 addrSPM = addrDsm + static_cast<duint64>(dsmPage.size());
 
     // Build Section Page Map sys page.
-    auto spmData = buildSectionPageMapContent(
+    std::vector<duint32> pageSizes = {
         static_cast<duint32>(hdrPage.size()),
         static_cast<duint32>(clsPage.size()),
         static_cast<duint32>(objPage.size()),
-        static_cast<duint32>(hdlPage.size()),
-        static_cast<duint32>(dsmPage.size()));
+        static_cast<duint32>(hdlPage.size())
+    };
+    if (hasAuxHeader)
+        pageSizes.push_back(static_cast<duint32>(auxHeaderPage.size()));
+    pageSizes.push_back(static_cast<duint32>(dsmPage.size()));
+    auto spmData = buildSectionPageMapContent(pageSizes);
     auto spmPage = buildSysPage(0x41630e3b, spmData.data(),
                                 static_cast<duint32>(spmData.size()));
 
@@ -378,9 +509,11 @@ bool dwgWriter18::finalize() {
     // lastPageEndAddr = byte address just past the end of the last page listed
     // in the Section Page Map.  The SPM page is the last entry, so its end is
     // addrSPM + spmPage.size().
-    auto fileHdr = buildFileHeader(addrSPM, 5,
+    const duint32 dataSectionMapPageId = hasAuxHeader ? 6 : 5;
+    auto fileHdr = buildFileHeader(addrSPM, dataSectionMapPageId,
                                    addrSPM + static_cast<duint64>(spmPage.size()),
-                                   5, fileHeaderVersion());
+                                   static_cast<duint32>(pageSizes.size()),
+                                   fileHeaderVersion());
 
     // Write everything.
     auto writeVec = [&](const std::vector<duint8>& v) {
@@ -392,6 +525,8 @@ bool dwgWriter18::finalize() {
     writeVec(clsPage);
     writeVec(objPage);
     writeVec(hdlPage);
+    if (hasAuxHeader)
+        writeVec(auxHeaderPage);
     writeVec(dsmPage);
     writeVec(spmPage);
 

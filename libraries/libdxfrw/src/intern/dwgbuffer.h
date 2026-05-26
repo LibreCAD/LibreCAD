@@ -87,6 +87,7 @@ public:
     void setBitPos(duint8 pos);
     duint8 getBitPos() const {return bitPos;}
     bool moveBitPos(dint32 size);
+    void setVariableTextByteLength(bool enabled) { variableTextByteLength = enabled; }
 
     duint8 getBit();  //B
     bool getBoolBit();  //B as bool
@@ -191,6 +192,7 @@ private:
     duint64 maxSize{0};
     duint8 currByte{0};
     duint8 bitPos{0};
+    bool variableTextByteLength{false};
 
     UTF8STRING get8bitStr();
     UTF8STRING get16bitStr(duint16 textSize, bool nullTerm = true);

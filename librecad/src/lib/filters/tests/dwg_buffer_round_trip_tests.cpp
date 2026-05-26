@@ -36,6 +36,7 @@
 #include "drw_base.h"
 #include "intern/dwgbuffer.h"
 #include "intern/dwgbufferw.h"
+#include "intern/drw_textcodec.h"
 #include "intern/dwgutil.h"
 #include "intern/dwgwriter.h"
 
@@ -85,11 +86,9 @@ TEST_CASE("dwgBufferW: put2Bits and put3Bits", "[dwg-write][primitives]") {
     dwgBufferW w;
     // Cover all 4 / 8 values plus boundary crossings.
     for (duint8 v : {0u, 1u, 2u, 3u, 0u, 3u, 1u, 2u}) w.put2Bits(static_cast<duint8>(v));
-    // 3-bit fields — exercise within-byte writes plus the 6→1 boundary
-    // crossing.  Five 3-bit writes leave the cursor at bitPos=7 without
-    // forcing a *read* at bitPos_old=7 (which is a pre-existing bug in
-    // dwgBuffer::get3Bits that is out of scope for the writer to fix).
-    const std::vector<duint8> threeBitVals = {0, 7, 5, 2, 6};
+    // 3-bit fields — exercise within-byte writes plus the 6->1 and 7->2
+    // boundary crossings.
+    const std::vector<duint8> threeBitVals = {0, 7, 5, 2, 6, 3};
     for (duint8 v : threeBitVals) w.put3Bits(v);
 
     auto bytes = snapshot(w);
@@ -117,6 +116,22 @@ TEST_CASE("dwgBufferW: putBitLong all three code paths", "[dwg-write][primitives
     auto bytes = snapshot(w);
     dwgBuffer r(bytes.data(), bytes.size());
     for (auto v : values) REQUIRE(r.getBitLong() == v);
+}
+
+TEST_CASE("dwgBufferW: putBitLongLong uses compact little-endian payloads",
+          "[dwg-write][primitives]") {
+    dwgBufferW w;
+    const std::vector<duint64> values = {
+        0x0ULL, 0x12ULL, 0x1234ULL, 0x123456ULL, 0x12345678ULL,
+        0x01020304050607ULL
+    };
+    for (auto v : values)
+        w.putBitLongLong(v);
+
+    auto bytes = snapshot(w);
+    dwgBuffer r(bytes.data(), bytes.size());
+    for (auto v : values)
+        REQUIRE(r.getBitLongLong() == v);
 }
 
 TEST_CASE("dwgBufferW: putBitDouble special and arbitrary values", "[dwg-write][primitives]") {
@@ -319,6 +334,22 @@ TEST_CASE("dwgBufferW: putVariableText ASCII round-trip (no codec)", "[dwg-write
     REQUIRE(r.getVariableText(DRW::AC1015, false) == "");
     REQUIRE(r.getVariableText(DRW::AC1015, false) == "Hello");
     REQUIRE(r.getVariableText(DRW::AC1015, false) == "LAYER0");
+}
+
+TEST_CASE("dwgBufferW: putVariableText AC1021 UTF-16 code-unit round-trip",
+          "[dwg-write][primitives]") {
+    dwgBufferW w;
+    w.putVariableText(DRW::AC1021, "");
+    w.putVariableText(DRW::AC1021, "Hello");
+    w.putVariableText(DRW::AC1021, "Table");
+
+    DRW_TextCodec codec;
+    codec.setVersion(DRW::AC1021, false);
+    auto bytes = snapshot(w);
+    dwgBuffer r(bytes.data(), bytes.size(), &codec);
+    REQUIRE(r.getVariableText(DRW::AC1021, false) == "");
+    REQUIRE(r.getVariableText(DRW::AC1021, false) == "Hello");
+    REQUIRE(r.getVariableText(DRW::AC1021, false) == "Table");
 }
 
 TEST_CASE("dwgBufferW: putBytes large block, aligned and shifted", "[dwg-write][primitives]") {

@@ -1664,6 +1664,20 @@ bool dwgReader::readDwgObject(dwgBuffer *dbuf, objHandle& obj, DRW_Interface& in
                         if (ret) intfa.addCellStyleMap(e);
                         break;
                     }
+                    if (rn == "DIMASSOC"
+                        || cit->second->className == "AcDbDimAssoc") {
+                        DRW_DimensionAssociation e;
+                        ret = e.parseDwg(version, &buff, bs);
+                        if (ret) intfa.addDimensionAssociation(e);
+                        break;
+                    }
+                    if (rn == "ACAD_EVALUATION_GRAPH"
+                        || cit->second->className == "AcDbEvalGraph") {
+                        DRW_EvaluationGraph e;
+                        ret = e.parseDwg(version, &buff, bs);
+                        if (ret) intfa.addEvaluationGraph(e);
+                        break;
+                    }
                     if (rn == "MLEADERSTYLE") {
                         DRW_MLeaderStyle e;
                         ret = e.parseDwg(version, &buff, bs);

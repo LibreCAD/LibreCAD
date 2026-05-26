@@ -16,6 +16,7 @@
 #include "drw_textcodec.h"
 #include "drw_dbg.h"
 #include <cstring>
+#include <vector>
 //#include <bitset>
 /*#include <fstream>
 #include <algorithm>
@@ -163,6 +164,7 @@ dwgBuffer::dwgBuffer( const dwgBuffer& org )
     ,maxSize{filestr->size()}
     ,currByte{org.currByte}
     ,bitPos{org.bitPos}
+    ,variableTextByteLength{org.variableTextByteLength}
 {}
 
 dwgBuffer& dwgBuffer::operator=( const dwgBuffer& org ){
@@ -171,6 +173,7 @@ dwgBuffer& dwgBuffer::operator=( const dwgBuffer& org ){
     maxSize = filestr->size();
     currByte = org.currByte;
     bitPos = org.bitPos;
+    variableTextByteLength = org.variableTextByteLength;
     return *this;
 }
 
@@ -268,26 +271,9 @@ duint8 dwgBuffer::get2Bits(){
 
 /**Reads three Bits returns a char (3B) **/
 duint8 dwgBuffer::get3Bits(){
-    duint8 buffer = 0;
     duint8 ret = 0;
-    if (bitPos == 0){
-        filestr->read (&buffer,1);
-        currByte = buffer;
-    }
-
-    bitPos +=3;
-    if (bitPos < 9)
-        ret = currByte >>(8 - bitPos);
-    else {//read one bit per byte
-        ret = currByte << 1;
-        filestr->read (&buffer,1);
-        currByte = buffer;
-        bitPos = 1;
-        ret = ret | currByte >> 7;
-    }
-    if (bitPos == 8)
-        bitPos = 0;
-    ret = ret & 7;
+    for (int i = 0; i < 3; ++i)
+        ret = static_cast<duint8>((ret << 1) | getBit());
     return ret;
 }
 
@@ -336,8 +322,7 @@ duint64 dwgBuffer::getBitLongLong(){
     dint8 b = get3Bits();
     duint64 ret=0;
     for (duint8 i=0; i<b; i++){
-        ret = ret << 8;
-        ret |= getRawChar8();
+        ret |= static_cast<duint64>(getRawChar8()) << (i * 8);
     }
     return ret;
 }
@@ -642,6 +627,16 @@ std::string dwgBuffer::getUCSText(bool nullTerm){
     duint16 ts = getBitShort();
     if (ts == 0)
         return std::string();
+
+    if (variableTextByteLength) {
+        std::vector<duint8> raw(static_cast<size_t>(ts) + 2, 0);
+        if (!getBytes(raw.data(), ts))
+            return std::string();
+        strData.assign(reinterpret_cast<const char*>(raw.data()), ts);
+        if (!decoder)
+            return strData;
+        return decoder->toUtf8(strData);
+    }
 
     strData = get16bitStr(ts, nullTerm);
     if (!decoder)
@@ -959,4 +954,3 @@ duint32 dwgBuffer::crc32(duint32 seed,dint32 start,dint32 end){
     return st;
 //    return std::string(buffer);
 }*/
-

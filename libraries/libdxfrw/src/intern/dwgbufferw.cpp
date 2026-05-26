@@ -148,7 +148,7 @@ void dwgBufferW::putBitLong(dint32 v) {
 
 void dwgBufferW::putBitLongLong(duint64 v) {
     // Inverse of getBitLongLong: 3 bits = byte count, then that many
-    // bytes MSB-first.
+    // bytes least-significant first.
     duint8 n = 0;
     duint64 t = v;
     while (t != 0 && n < 7) {
@@ -156,7 +156,7 @@ void dwgBufferW::putBitLongLong(duint64 v) {
         ++n;
     }
     put3Bits(n);
-    for (int i = n - 1; i >= 0; --i)
+    for (duint8 i = 0; i < n; ++i)
         putRawChar8(static_cast<duint8>((v >> (i * 8)) & 0xFF));
 }
 

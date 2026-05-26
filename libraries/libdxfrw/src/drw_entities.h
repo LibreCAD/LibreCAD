@@ -657,6 +657,15 @@ struct DRW_TableCell {
     double m_blockScale = 1.0;
     double m_width = 0.0;
     double m_height = 0.0;
+    duint32 m_geometryFlags = 0;
+    duint32 m_geometryHandle = 0;
+    duint32 m_geometryRecordFlags = 0;
+    DRW_Coord m_geometryTopLeft;
+    DRW_Coord m_geometryCenter;
+    double m_contentWidth = 0.0;
+    double m_contentHeight = 0.0;
+    double m_geometryWidth = 0.0;
+    double m_geometryHeight = 0.0;
     std::vector<DRW_TableCellAttribute> m_attributes;
     std::vector<DRW_TableCellContent> m_contents;
 };
