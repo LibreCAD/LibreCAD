@@ -87,7 +87,7 @@ LC_QuickInfoWidget::LC_QuickInfoWidget(QWidget *parent, QMap<QString, QAction *>
 
     // text editor setup
     ui->pteInfo->setContextMenuPolicy(Qt::CustomContextMenu);
-    connect(ui->cbPointsCoordinatesMode, &QComboBox::currentIndexChanged, this, &LC_QuickInfoWidget::onCoordinateModeIndexChanged);
+    connect(ui->cbPointsCoordinatesMode, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &LC_QuickInfoWidget::onCoordinateModeIndexChanged);
     ui->pteInfo->setOpenLinks(false);
 
 #ifndef DONT_FORCE_WIDGETS_CSS

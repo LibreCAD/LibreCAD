@@ -107,8 +107,8 @@ void QG_DlgOptionsDrawing::connectUserVarsTab() {
 }
 
 void QG_DlgOptionsDrawing::_to_remove_ConnectLegacyDimsTab() {
-    connect(cbDimLUnit, &QComboBox::activated, this, &QG_DlgOptionsDrawing::updateDimLengthPrecision);
-    connect(cbDimAUnit, &QComboBox::activated, this, &QG_DlgOptionsDrawing::updateDimAnglePrecision);
+    connect(cbDimLUnit, QOverload<int>::of(&QComboBox::activated), this, &QG_DlgOptionsDrawing::updateDimLengthPrecision);
+    connect(cbDimAUnit, QOverload<int>::of(&QComboBox::activated), this, &QG_DlgOptionsDrawing::updateDimAnglePrecision);
     connect(cbDimFxLon, &QCheckBox::toggled, this, &QG_DlgOptionsDrawing::onDimFxLonToggled);
 }
 
@@ -140,7 +140,7 @@ QG_DlgOptionsDrawing::~QG_DlgOptionsDrawing(){
 }
 
 void QG_DlgOptionsDrawing::connectPaperTab() {
-    connect(cbPaperFormat, &QComboBox::activated, this, &QG_DlgOptionsDrawing::updatePaperSize);
+    connect(cbPaperFormat, QOverload<int>::of(&QComboBox::activated), this, &QG_DlgOptionsDrawing::updatePaperSize);
     connect(lePaperWidth, &QLineEdit::textChanged, this, &QG_DlgOptionsDrawing::updatePaperPreview);
     connect(lePaperHeight, &QLineEdit::textChanged, this, &QG_DlgOptionsDrawing::updatePaperPreview);
     connect(rbLandscape, &QRadioButton::toggled, this, &QG_DlgOptionsDrawing::onLandscapeToggled);
@@ -151,13 +151,13 @@ void QG_DlgOptionsDrawing::connectPaperTab() {
 }
 
 void QG_DlgOptionsDrawing::connectUnitTab() {
-    connect(cbUnit, &QComboBox::activated, this, &QG_DlgOptionsDrawing::updateUnitsPreview);
-    connect(cbLengthFormat, &QComboBox::activated, this, &QG_DlgOptionsDrawing::updateLengthPrecision);
-    connect(cbLengthFormat, &QComboBox::activated, this, &QG_DlgOptionsDrawing::updateUnitsPreview);
-    connect(cbLengthPrecision, &QComboBox::activated, this, &QG_DlgOptionsDrawing::updateUnitsPreview);
-    connect(cbAngleFormat, &QComboBox::activated, this, &QG_DlgOptionsDrawing::updateAnglePrecision);
-    connect(cbAngleFormat, &QComboBox::activated, this, &QG_DlgOptionsDrawing::updateUnitsPreview);
-    connect(cbAnglePrecision, &QComboBox::activated, this, &QG_DlgOptionsDrawing::updateUnitsPreview);
+    connect(cbUnit, QOverload<int>::of(&QComboBox::activated), this, &QG_DlgOptionsDrawing::updateUnitsPreview);
+    connect(cbLengthFormat, QOverload<int>::of(&QComboBox::activated), this, &QG_DlgOptionsDrawing::updateLengthPrecision);
+    connect(cbLengthFormat, QOverload<int>::of(&QComboBox::activated), this, &QG_DlgOptionsDrawing::updateUnitsPreview);
+    connect(cbLengthPrecision, QOverload<int>::of(&QComboBox::activated), this, &QG_DlgOptionsDrawing::updateUnitsPreview);
+    connect(cbAngleFormat, QOverload<int>::of(&QComboBox::activated), this, &QG_DlgOptionsDrawing::updateAnglePrecision);
+    connect(cbAngleFormat, QOverload<int>::of(&QComboBox::activated), this, &QG_DlgOptionsDrawing::updateUnitsPreview);
+    connect(cbAnglePrecision, QOverload<int>::of(&QComboBox::activated), this, &QG_DlgOptionsDrawing::updateUnitsPreview);
 }
 
 void QG_DlgOptionsDrawing::connectGridTab() {

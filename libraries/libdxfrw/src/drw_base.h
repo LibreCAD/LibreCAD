@@ -238,9 +238,9 @@ public:
 */
 class DRW_Vertex2D {
 public:
-    DRW_Vertex2D(): x(0), y(0), stawidth(0), endwidth(0), bulge(0){}
+    DRW_Vertex2D(): x(0), y(0), stawidth(0), endwidth(0), bulge(0), identifier(0){}
 
-    DRW_Vertex2D(double sx, double sy, double b): x(sx), y(sy), stawidth(0), endwidth(0), bulge(b) {}
+    DRW_Vertex2D(double sx, double sy, double b): x(sx), y(sy), stawidth(0), endwidth(0), bulge(b), identifier(0) {}
 
 public:
     double x;                 /*!< x coordinate, code 10 */
@@ -248,6 +248,7 @@ public:
     double stawidth;          /*!< Start width, code 40 */
     double endwidth;          /*!< End width, code 41 */
     double bulge;             /*!< bulge, code 42 */
+    int identifier;           /*!< vertex identifier, code 91, default 0 */
 };
 
 

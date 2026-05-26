@@ -15,6 +15,7 @@
 #include "libdxfrw.h"
 #include <fstream>
 #include <algorithm>
+#include <cmath>
 #include <sstream>
 #include <cassert>
 #include "intern/drw_textcodec.h"
@@ -944,6 +945,8 @@ bool dxfRW::writeLWPolyline(DRW_LWPolyline *ent){
                 writer->writeDouble(41, v->endwidth);
             if (v->bulge != 0)
                 writer->writeDouble(42, v->bulge);
+            if (version > DRW::AC1021 && v->identifier != 0)
+                writer->writeInt32(91, v->identifier);
         }
     } else {
         //RLZ: TODO convert lwpolyline in polyline (not exist in acad 12)
@@ -1056,7 +1059,12 @@ bool dxfRW::writeSpline(DRW_Spline *ent){
             writer->writeDouble(220, ent->normalVec.y);
             writer->writeDouble(230, ent->normalVec.z);
         }
-        writer->writeInt16(70, ent->flags);
+        int flags = ent->flags;
+        if (std::any_of(ent->weightlist.begin(), ent->weightlist.end(),
+                        [](double weight) { return std::fabs(weight - 1.0) > 1e-12; })) {
+            flags |= 0x04;
+        }
+        writer->writeInt16(70, flags);
         writer->writeInt16(71, ent->degree);
         writer->writeInt16(72, static_cast<int>(ent->knotslist.size()));
         writer->writeInt16(73, static_cast<int>(ent->controllist.size()));

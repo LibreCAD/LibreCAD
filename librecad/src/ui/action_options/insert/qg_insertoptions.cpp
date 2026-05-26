@@ -39,8 +39,8 @@ QG_InsertOptions::QG_InsertOptions()
     connect(ui->leFactor, &QLineEdit::editingFinished, this, &QG_InsertOptions::onFactorEditingFinished);
     connect(ui->leColumnSpacing, &QLineEdit::editingFinished, this, &QG_InsertOptions::onColumnSpacingEditingFinished);
     connect(ui->leRowSpacing, &QLineEdit::editingFinished, this, &QG_InsertOptions::onRowSpacingEditingFinished);
-    connect(ui->sbRows, &QSpinBox::valueChanged, this, &QG_InsertOptions::onRowsValueChanged);
-    connect(ui->sbColumns, &QSpinBox::valueChanged, this, &QG_InsertOptions::onColumnsValueChanged);
+    connect(ui->sbRows, QOverload<int>::of(&QSpinBox::valueChanged), this, &QG_InsertOptions::onRowsValueChanged);
+    connect(ui->sbColumns, QOverload<int>::of(&QSpinBox::valueChanged), this, &QG_InsertOptions::onColumnsValueChanged);
 
     pickAngleSetup("angle", ui->tbPickAngle, ui->leAngle);
     pickDistanceSetup("spacingX", ui->tbPickSpacingX, ui->leColumnSpacing);

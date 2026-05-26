@@ -23,6 +23,8 @@
 
 #include "lc_dimarrowregistry.h"
 
+#include <QSet>
+
 #include "lc_arrow_box.h"
 #include "lc_arrow_circle.h"
 #include "lc_arrow_datum.h"

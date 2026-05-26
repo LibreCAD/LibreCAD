@@ -12,6 +12,8 @@
 **  along with this program.  If not, see <http://www.gnu.org/licenses/>.    **
 ******************************************************************************/
 
+#include <algorithm>
+#include <cmath>
 #include <cstdio>
 #include <cstdlib>
 #include <limits>
@@ -31,6 +33,45 @@ constexpr duint32 kMaxTableColumns = 1000;
 constexpr duint32 kMaxTableCells = 200000;
 constexpr duint32 kMaxTableItems = 100000;
 constexpr duint32 kMaxTableStringBytes = 16 * 1024 * 1024;
+constexpr dint32 kMaxLWPolylineVertices = 1000000;
+constexpr dint32 kMaxSplineItems = 1000000;
+constexpr dint32 kMaxSplineDegree = 1024;
+
+constexpr dint32 kSplineFlagMethodFitPoints = 1;
+constexpr dint32 kSplineFlagClosed = 4;
+constexpr dint32 kSplineFlagUseKnotParameter = 8;
+constexpr dint32 kSplineKnotParamCustom = 15;
+
+bool isValidCount(dint32 count, dint32 maxCount) {
+    return count >= 0 && count <= maxCount;
+}
+
+bool isValidSplineDegree(int degree) {
+    return degree >= 1 && degree <= kMaxSplineDegree;
+}
+
+bool isValidControlSplineLayout(int degree, dint32 knotCount, dint32 controlCount) {
+    if (!isValidSplineDegree(degree) || !isValidCount(knotCount, kMaxSplineItems) ||
+        !isValidCount(controlCount, kMaxSplineItems)) {
+        return false;
+    }
+
+    if (controlCount < degree + 1) {
+        return false;
+    }
+
+    const dint64 expectedKnots = static_cast<dint64>(controlCount) + degree + 1;
+    return expectedKnots <= kMaxSplineItems && knotCount == expectedKnots;
+}
+
+bool isValidFitSplineLayout(int degree, dint32 fitCount) {
+    return isValidSplineDegree(degree) && isValidCount(fitCount, kMaxSplineItems) &&
+           fitCount >= 2;
+}
+
+bool differsFromUnitWeight(double weight) {
+    return std::fabs(weight - 1.0) > 1e-12;
+}
 
 void putHardPointerHandle(dwgBufferW *buf, duint32 ref) {
     dwgHandle h;
@@ -1736,16 +1777,31 @@ bool DRW_Spline::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs, dw
     const bool hasFit  = !fitlist.empty();
     const bool hasCtrl = !controllist.empty();
     dint32 scenario = (hasFit && !hasCtrl) ? 2 : 1;
+    if (m_scenario == 1 && hasCtrl) {
+        scenario = 1;
+    } else if (m_scenario == 2 && hasFit) {
+        scenario = 2;
+    }
     buf->putBitLong(scenario);
     if (version > DRW::AC1024) {
-        // splFlag1 bit 0: method = fit points; bit 2: Is closed (for scenario 2)
-        dint32 splFlag1 = 0;
+        // splFlag1 bit 0: method = fit points; bit 2: closed;
+        // bit 3: knotParam participates in R2013+ scenario selection.
+        dint32 splFlag1 = m_splineFlags1;
+        splFlag1 &= ~(kSplineFlagMethodFitPoints | kSplineFlagUseKnotParameter | kSplineFlagClosed);
         if (scenario == 2) {
-            splFlag1 = 1;                            // bit 0: fit-point method
-            if (flags & 0x01) splFlag1 |= 4;         // bit 2: Is closed
+            splFlag1 |= kSplineFlagMethodFitPoints | kSplineFlagUseKnotParameter;
+            if (flags & 0x01) splFlag1 |= kSplineFlagClosed;
+        } else {
+            if (flags & 0x01) splFlag1 |= kSplineFlagClosed;
         }
         buf->putBitLong(splFlag1);
-        buf->putBitLong(0);                          // knotParam: chord parameterization
+        dint32 knotParam = m_knotParam;
+        if (scenario == 1) {
+            knotParam = kSplineKnotParamCustom;
+        } else if (knotParam == kSplineKnotParamCustom) {
+            knotParam = 0;
+        }
+        buf->putBitLong(knotParam);
     }
     buf->putBitLong(static_cast<dint32>(degree));
 
@@ -1761,7 +1817,8 @@ bool DRW_Spline::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs, dw
         //   rational bit  (flags bit 2 → 0x04)
         //   closed bit    (flags bit 0 → 0x01)
         //   periodic bit  (flags bit 1 → 0x02)
-        buf->putBit((flags & 0x4) ? 1 : 0);  // rational
+        const bool hasNonDefaultWeights = std::any_of(weightlist.begin(), weightlist.end(), differsFromUnitWeight);
+        buf->putBit(((flags & 0x4) || hasNonDefaultWeights) ? 1 : 0);  // rational
         buf->putBit((flags & 0x1) ? 1 : 0);  // closed
         buf->putBit((flags & 0x2) ? 1 : 0);  // periodic
         buf->putBitDouble(tolknot);
@@ -1993,12 +2050,15 @@ bool DRW_LWPolyline::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs
     // Detect per-vertex bulge / width data.
     bool anyBulge = false;
     bool anyWidth = false;
+    bool anyVertexId = false;
     for (const auto& v : vertlist) {
         if (v && v->bulge    != 0.0) anyBulge = true;
         if (v && (v->stawidth != 0.0 || v->endwidth != 0.0)) anyWidth = true;
+        if (v && v->identifier != 0) anyVertexId = true;
     }
     if (anyBulge) dwgFlags |= 0x10;
     if (anyWidth) dwgFlags |= 0x20;
+    if (version > DRW::AC1021 && anyVertexId) dwgFlags |= 0x400;
 
     buf->putBitShort(dwgFlags);
     if (dwgFlags & 0x4)  buf->putBitDouble(width);
@@ -2009,8 +2069,10 @@ bool DRW_LWPolyline::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs
     const dint32 numVerts = static_cast<dint32>(vertlist.size());
     buf->putBitLong(numVerts);
     if (dwgFlags & 0x10) buf->putBitLong(numVerts);  // bulgesnum
+    if (version > DRW::AC1021 && (dwgFlags & 0x400)) {
+        buf->putBitLong(numVerts);                    // vertexIdCount
+    }
     if (dwgFlags & 0x20) buf->putBitLong(numVerts);  // widthsnum
-    // (R2010+ vertexIdCount: not emitted for R2000)
 
     if (numVerts > 0) {
         // First vertex as 2RD.  Subsequent vertices as 2DD relative to
@@ -2025,6 +2087,10 @@ bool DRW_LWPolyline::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs
         if (dwgFlags & 0x10) {
             for (const auto& v : vertlist)
                 buf->putBitDouble(v->bulge);
+        }
+        if (version > DRW::AC1021 && (dwgFlags & 0x400)) {
+            for (const auto& v : vertlist)
+                buf->putBitLong(static_cast<dint32>(v->identifier));
         }
         if (dwgFlags & 0x20) {
             for (const auto& v : vertlist) {
@@ -2978,6 +3044,10 @@ bool DRW_LWPolyline::parseCode(int code, const std::unique_ptr<dxfReader>& reade
 		if(vertex)
             vertex->bulge = reader->getDouble();
         break;
+    case 91:
+        if (vertex)
+            vertex->identifier = reader->getInt32();
+        break;
     case 38:
         elevation = reader->getDouble();
         break;
@@ -3027,13 +3097,16 @@ bool DRW_LWPolyline::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
     if (flags & 1)
         extPoint = buf->getExtrusion(false);
     vertexnum = buf->getBitLong();
+    if (!isValidCount(vertexnum, kMaxLWPolylineVertices)) {
+        return false;
+    }
     if (!DRW::reserve( vertlist, vertexnum)) {
         return false;
     }
 
     unsigned int bulgesnum = 0;
     if (flags & 16)
-        bulgesnum = buf->getBitLong();
+        bulgesnum = static_cast<unsigned int>(buf->getBitLong());
     int vertexIdCount = 0;
     if (version > DRW::AC1021) {//2010+
         if (flags & 1024)
@@ -3041,7 +3114,12 @@ bool DRW_LWPolyline::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
     }
     unsigned int widthsnum = 0;
     if (flags & 32)
-        widthsnum = buf->getBitLong();
+        widthsnum = static_cast<unsigned int>(buf->getBitLong());
+    if (bulgesnum > static_cast<unsigned int>(vertexnum) ||
+        vertexIdCount < 0 || vertexIdCount > vertexnum ||
+        widthsnum > static_cast<unsigned int>(vertexnum)) {
+        return false;
+    }
     DRW_DBG("\nvertex num: "); DRW_DBG(vertexnum); DRW_DBG(" bulges num: "); DRW_DBG(bulgesnum);
     DRW_DBG(" vertexIdCount: "); DRW_DBG(vertexIdCount); DRW_DBG(" widths num: "); DRW_DBG(widthsnum);
     // Translate DWG LWPLINE flag bits to DXF group 70 bits.
@@ -3088,10 +3166,8 @@ bool DRW_LWPolyline::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
         if (version > DRW::AC1021) {//2010+
             for (int i = 0; i < vertexIdCount; i++){
                 dint32 vertexId = buf->getBitLong();
-                //TODO implement vertexId, do not exist in dxf
-                DRW_UNUSED(vertexId);
-//                if (vertlist.size()< i)
-//                    vertlist.at(i)->vertexId = vertexId;
+                if (static_cast<size_t>(i) < vertlist.size())
+                    vertlist.at(i)->identifier = vertexId;
             }
         }
         //add widths
@@ -3106,9 +3182,10 @@ bool DRW_LWPolyline::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
     }
     if (DRW_DBGGL == DRW_dbg::Level::Debug){
         DRW_DBG("\nVertex list: ");
-		for (auto& pv: vertlist) {
+        for (auto& pv: vertlist) {
             DRW_DBG("\n   x: "); DRW_DBG(pv->x); DRW_DBG(" y: "); DRW_DBG(pv->y); DRW_DBG(" bulge: "); DRW_DBG(pv->bulge);
             DRW_DBG(" stawidth: "); DRW_DBG(pv->stawidth); DRW_DBG(" endwidth: "); DRW_DBG(pv->endwidth);
+            DRW_DBG(" identifier: "); DRW_DBG(pv->identifier);
         }
     }
 
@@ -4960,20 +5037,33 @@ bool DRW_Spline::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
     duint8 weight = 0; // RLZ ??? flags, weight, code 70, bit 4 (16)
 
     dint32 scenario = buf->getBitLong();
+    m_scenario = scenario;
     DRW_DBG("scenario: "); DRW_DBG(scenario);
     if (version > DRW::AC1024) {
         dint32 splFlag1 = buf->getBitLong();
-        if (splFlag1 & 1)
-            scenario = 2;
+        m_splineFlags1 = splFlag1;
         dint32 knotParam = buf->getBitLong();
+        m_knotParam = knotParam;
+        if (knotParam == kSplineKnotParamCustom || !(splFlag1 & kSplineFlagUseKnotParameter)) {
+            scenario = 1;
+        } else if (splFlag1 & kSplineFlagMethodFitPoints) {
+            scenario = 2;
+        }
+        m_scenario = scenario;
         DRW_DBG(" 2013 splFlag1: "); DRW_DBG(splFlag1);
         DRW_DBG(" 2013 knotParam: "); DRW_DBG(knotParam);
 //        DRW_DBG("unk bit: "); DRW_DBG(buf->getBit());
     }
     degree = buf->getBitLong(); //RLZ: code 71, verify with dxf
     DRW_DBG(" degree: "); DRW_DBG(degree); DRW_DBG("\n");
+    if (!isValidSplineDegree(degree)) {
+        DRW_DBG("\ndwg Spline, invalid degree "); DRW_DBG(degree); DRW_DBG("\n");
+        return false;
+    }
     if (scenario == 2) {
         flags = 8;//scenario 2 = not rational & planar
+        if (m_splineFlags1 & kSplineFlagClosed)
+            flags |= 1;
         tolfit = buf->getBitDouble();//BD
         DRW_DBG("flags: "); DRW_DBG(flags); DRW_DBG(" tolfit: "); DRW_DBG(tolfit);
         tgStart =buf->get3BitDouble();
@@ -4981,6 +5071,11 @@ bool DRW_Spline::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
         tgEnd =buf->get3BitDouble();
         DRW_DBG("\nEnd Tangent: "); DRW_DBGPT(tgEnd.x, tgEnd.y, tgEnd.z);
         nfit = buf->getBitLong();
+        if (!isValidFitSplineLayout(degree, nfit)) {
+            DRW_DBG("\ndwg Spline, invalid fit layout degree/count: ");
+            DRW_DBG(degree); DRW_DBG("/"); DRW_DBG(nfit); DRW_DBG("\n");
+            return false;
+        }
         DRW_DBG("\nnumber of fit points: "); DRW_DBG(nfit);
     } else if (scenario == 1) {
         flags = 8;//scenario 1 = rational & planar
@@ -4993,6 +5088,12 @@ bool DRW_Spline::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
         DRW_DBG(" control point tolerance: "); DRW_DBG(tolcontrol);
         nknots = buf->getBitLong();
         ncontrol = buf->getBitLong();
+        if (!isValidControlSplineLayout(degree, nknots, ncontrol)) {
+            DRW_DBG("\ndwg Spline, invalid control layout degree/knots/control: ");
+            DRW_DBG(degree); DRW_DBG("/"); DRW_DBG(nknots); DRW_DBG("/");
+            DRW_DBG(ncontrol); DRW_DBG("\n");
+            return false;
+        }
         weight = buf->getBit(); // flags bit 4: weights present (code 70)
         if (weight) flags |= 0x10;
         DRW_DBG("\nnum of knots: "); DRW_DBG(nknots); DRW_DBG(" num of control pt: ");

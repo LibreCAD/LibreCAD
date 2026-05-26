@@ -23,6 +23,9 @@
 
 #include "lc_dlgdimstylemanager.h"
 
+#include <QComboBox>
+#include <QDoubleSpinBox>
+
 #include "lc_dimarrowregistry.h"
 #include "lc_dimstyle.h"
 #include "lc_dimstylepreviewgraphicview.h"
@@ -102,8 +105,8 @@ void LC_DlgDimStyleManager::connectLinesTab() {
     connect(ui->cbDimLineLineType, &QG_LineTypeBox::lineTypeChanged, this, &LC_DlgDimStyleManager::onDimLineTypeChanged);
     connect(ui->cbDimLineWidth, &QG_WidthBox::widthChanged, this, &LC_DlgDimStyleManager::onDimLineWidthChanged);
 
-    connect(ui->dsbDimLineExtendBeyond, &QDoubleSpinBox::valueChanged, this, &LC_DlgDimStyleManager::onDimLineExtBeyondChanged);
-    connect(ui->dsbBaselineSpacing, &QDoubleSpinBox::valueChanged, this, &LC_DlgDimStyleManager::onDimLineBaselineSpacingChanged);
+    connect(ui->dsbDimLineExtendBeyond, QOverload<double>::of(&QDoubleSpinBox::valueChanged), this, &LC_DlgDimStyleManager::onDimLineExtBeyondChanged);
+    connect(ui->dsbBaselineSpacing, QOverload<double>::of(&QDoubleSpinBox::valueChanged), this, &LC_DlgDimStyleManager::onDimLineBaselineSpacingChanged);
 
     connect(ui->cbDimLineSuppress1, &QCheckBox::toggled, this, &LC_DlgDimStyleManager::onDimLineSuppress1Toggled);
     connect(ui->cbDimLineSuppress2, &QCheckBox::toggled, this, &LC_DlgDimStyleManager::onDimLineSuppress2Toggled);
@@ -113,39 +116,39 @@ void LC_DlgDimStyleManager::connectLinesTab() {
     connect(ui->cbExtLineType2, &QG_LineTypeBox::lineTypeChanged, this, &LC_DlgDimStyleManager::onExtLineType2Changed);
     connect(ui->cbExtLineWidth, &QG_WidthBox::widthChanged, this, &LC_DlgDimStyleManager::onExtLineWidthChanged);
 
-    connect(ui->bsbExtLineBeyondDimLine, &QDoubleSpinBox::valueChanged, this, &LC_DlgDimStyleManager::onExtLineBeyondDimChanged);
-    connect(ui->dsbExtLineOffsetFromOrigin, &QDoubleSpinBox::valueChanged, this, &LC_DlgDimStyleManager::onExtLineOffsetFromOriginChanged);
+    connect(ui->bsbExtLineBeyondDimLine, QOverload<double>::of(&QDoubleSpinBox::valueChanged), this, &LC_DlgDimStyleManager::onExtLineBeyondDimChanged);
+    connect(ui->dsbExtLineOffsetFromOrigin, QOverload<double>::of(&QDoubleSpinBox::valueChanged), this, &LC_DlgDimStyleManager::onExtLineOffsetFromOriginChanged);
 
     connect(ui->cbExtLineFixedLengthOn, &QCheckBox::toggled, this, &LC_DlgDimStyleManager::onExtLineFixedLengthToggled);
-    connect(ui->bsbExtLineFixedLength, &QDoubleSpinBox::valueChanged, this, &LC_DlgDimStyleManager::onExtLineFixedLengthChanged);
+    connect(ui->bsbExtLineFixedLength, QOverload<double>::of(&QDoubleSpinBox::valueChanged), this, &LC_DlgDimStyleManager::onExtLineFixedLengthChanged);
 
     connect(ui->cbExtLineSuppress1, &QCheckBox::toggled, this, &LC_DlgDimStyleManager::onExtLineSuppress1Toggled);
     connect(ui->cbExtLineSuppress2, &QCheckBox::toggled, this, &LC_DlgDimStyleManager::onExtLineSuppress2Toggled);
 }
 
 void LC_DlgDimStyleManager::connectArrowsTab() {
-    connect(ui->dsbTickSize, &QDoubleSpinBox::valueChanged, this, &LC_DlgDimStyleManager::onArrowheadTickSizeChanged);
+    connect(ui->dsbTickSize, QOverload<double>::of(&QDoubleSpinBox::valueChanged), this, &LC_DlgDimStyleManager::onArrowheadTickSizeChanged);
     connect(ui->cbArrowheadTheSame, &QCheckBox::toggled, this, &LC_DlgDimStyleManager::onArrowheadTheSameToggled);
 
-    connect(ui->cbArrowheadFirst, &QComboBox::currentIndexChanged, this, &LC_DlgDimStyleManager::onArrowheadFirstChanged);
-    connect(ui->cbArrowheadSecond, &QComboBox::currentIndexChanged, this, &LC_DlgDimStyleManager::onArrowheadSecondChanged);
-    connect(ui->cbArrowheadLeader, &QComboBox::currentIndexChanged, this, &LC_DlgDimStyleManager::onArrowheadLeaderChanged);
+    connect(ui->cbArrowheadFirst, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &LC_DlgDimStyleManager::onArrowheadFirstChanged);
+    connect(ui->cbArrowheadSecond, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &LC_DlgDimStyleManager::onArrowheadSecondChanged);
+    connect(ui->cbArrowheadLeader, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &LC_DlgDimStyleManager::onArrowheadLeaderChanged);
 
-    connect(ui->dsbArrowheadArrowSize, &QDoubleSpinBox::valueChanged, this, &LC_DlgDimStyleManager::onArrowheadArrowSizeChanged);
-    connect(ui->dsbDimBreakSize, &QDoubleSpinBox::valueChanged, this, &LC_DlgDimStyleManager::onDimBreakChanged);
+    connect(ui->dsbArrowheadArrowSize, QOverload<double>::of(&QDoubleSpinBox::valueChanged), this, &LC_DlgDimStyleManager::onArrowheadArrowSizeChanged);
+    connect(ui->dsbDimBreakSize, QOverload<double>::of(&QDoubleSpinBox::valueChanged), this, &LC_DlgDimStyleManager::onDimBreakChanged);
 
     connect(ui->rbCentermarkNone, &QRadioButton::toggled, this, &LC_DlgDimStyleManager::onCenterMarkTypeToggled);
     connect(ui->rbCentermarkMark, &QRadioButton::toggled, this, &LC_DlgDimStyleManager::onCenterMarkTypeToggled);
     connect(ui->rbCentermarkLine, &QRadioButton::toggled, this, &LC_DlgDimStyleManager::onCenterMarkTypeToggled);
 
-    connect(ui->bsbCentermarkSize, &QDoubleSpinBox::valueChanged, this, &LC_DlgDimStyleManager::onCenterMarkSizeChanged);
+    connect(ui->bsbCentermarkSize, QOverload<double>::of(&QDoubleSpinBox::valueChanged), this, &LC_DlgDimStyleManager::onCenterMarkSizeChanged);
 
     connect(ui->rbDimarcSymPreceeding, &QRadioButton::toggled, this, &LC_DlgDimStyleManager::onDimarkSymbolToggled);
     connect(ui->rbDimarcSymAbove, &QRadioButton::toggled, this, &LC_DlgDimStyleManager::onDimarkSymbolToggled);
     connect(ui->rbDimarcSymNone, &QRadioButton::toggled, this, &LC_DlgDimStyleManager::onDimarkSymbolToggled);
 
-    connect(ui->bsbJogHeightFactor, &QDoubleSpinBox::valueChanged, this, &LC_DlgDimStyleManager::onJogHeightFactorChanged);
-    connect(ui->dsbJogAngle, &QDoubleSpinBox::valueChanged, this, &LC_DlgDimStyleManager::onJogAngleChanged);
+    connect(ui->bsbJogHeightFactor, QOverload<double>::of(&QDoubleSpinBox::valueChanged), this, &LC_DlgDimStyleManager::onJogHeightFactorChanged);
+    connect(ui->dsbJogAngle, QOverload<double>::of(&QDoubleSpinBox::valueChanged), this, &LC_DlgDimStyleManager::onJogAngleChanged);
 }
 
 void LC_DlgDimStyleManager::connectTextTab() {
@@ -157,17 +160,17 @@ void LC_DlgDimStyleManager::connectTextTab() {
     connect(ui->cbTextFillByBackground, &QCheckBox::toggled, this, &LC_DlgDimStyleManager::onTextFillByBackgroundToggled);
     connect(ui->cbTextFillColor, &QG_ColorBox::colorChanged, this, &LC_DlgDimStyleManager::onTextFillColorChanged);
 
-    connect(ui->dcbTextHeight, &QDoubleSpinBox::valueChanged, this, &LC_DlgDimStyleManager::onTextHeightChanged);
-    connect(ui->dcbTextFractionHeightScale, &QDoubleSpinBox::valueChanged, this, &LC_DlgDimStyleManager::onTextFractionHeightChanged);
+    connect(ui->dcbTextHeight, QOverload<double>::of(&QDoubleSpinBox::valueChanged), this, &LC_DlgDimStyleManager::onTextHeightChanged);
+    connect(ui->dcbTextFractionHeightScale, QOverload<double>::of(&QDoubleSpinBox::valueChanged), this, &LC_DlgDimStyleManager::onTextFractionHeightChanged);
 
     connect(ui->cbTextDrawFrameAroundText, &QCheckBox::toggled, this, &LC_DlgDimStyleManager::onTextDrawFrameAround);
 
-    connect(ui->dsbTextGapFromDimLine, &QDoubleSpinBox::valueChanged, this, &LC_DlgDimStyleManager::onTextLineGapChanged);
+    connect(ui->dsbTextGapFromDimLine, QOverload<double>::of(&QDoubleSpinBox::valueChanged), this, &LC_DlgDimStyleManager::onTextLineGapChanged);
 
-    connect(ui->cbTextPlacementVertical, &QComboBox::currentIndexChanged, this, &LC_DlgDimStyleManager::onTextPlacementVerticalChanged);
-    connect(ui->cbTextPlacementHorizontal, &QComboBox::currentIndexChanged, this, &LC_DlgDimStyleManager::onTextPlacementHorizontalChanged);
-    connect(ui->cbTextPlacementReadingDirection, &QComboBox::currentIndexChanged, this, &LC_DlgDimStyleManager::onTextReadingDirectionChanged);
-    connect(ui->dsbTextOffsetFromDimLine, &QDoubleSpinBox::valueChanged, this, &LC_DlgDimStyleManager::onTextOffsetFromDimLine);
+    connect(ui->cbTextPlacementVertical, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &LC_DlgDimStyleManager::onTextPlacementVerticalChanged);
+    connect(ui->cbTextPlacementHorizontal, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &LC_DlgDimStyleManager::onTextPlacementHorizontalChanged);
+    connect(ui->cbTextPlacementReadingDirection, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &LC_DlgDimStyleManager::onTextReadingDirectionChanged);
+    connect(ui->dsbTextOffsetFromDimLine, QOverload<double>::of(&QDoubleSpinBox::valueChanged), this, &LC_DlgDimStyleManager::onTextOffsetFromDimLine);
 
     connect(ui->rbTextAlignmentHorizontal, &QRadioButton::toggled, this, &LC_DlgDimStyleManager::onTextAlignmentToggled);
     connect(ui->rbTextAlignmentAligned, &QRadioButton::toggled, this, &LC_DlgDimStyleManager::onTextAlignmentToggled);
@@ -190,24 +193,24 @@ void LC_DlgDimStyleManager::connectFitTab() {
     connect(ui->rbFitScaleToLayout, &QRadioButton::toggled, this, &LC_DlgDimStyleManager::onFitScaleToggled);
     connect(ui->rbFitScaleExplicit, &QRadioButton::toggled, this, &LC_DlgDimStyleManager::onFitScaleToggled);
 
-    connect(ui->dsbFitScaleExplicit, &QDoubleSpinBox::valueChanged, this, &LC_DlgDimStyleManager::onFitScaleExplicitChanged);
+    connect(ui->dsbFitScaleExplicit, QOverload<double>::of(&QDoubleSpinBox::valueChanged), this, &LC_DlgDimStyleManager::onFitScaleExplicitChanged);
 
     connect(ui->cbFitFineManually, &QCheckBox::toggled, this, &LC_DlgDimStyleManager::onFitFineManuallyToggled);
     connect(ui->cbFitFineDrawDimLineBetwenExt, &QCheckBox::toggled, this, &LC_DlgDimStyleManager::onFitFineDrawDimlineBetweenToggled);
 }
 
 void LC_DlgDimStyleManager::connectPrimaryUnitTab() {
-    connect(ui->cbLinearDimUnitFormat, &QComboBox::currentIndexChanged, this, &LC_DlgDimStyleManager::onLinearDimUnitFormatIndexChanged);
-    connect(ui->cbLinearDimPrecision, &QComboBox::currentIndexChanged, this, &LC_DlgDimStyleManager::onLinearDimPrecisionIndexChanged);
+    connect(ui->cbLinearDimUnitFormat, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &LC_DlgDimStyleManager::onLinearDimUnitFormatIndexChanged);
+    connect(ui->cbLinearDimPrecision, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &LC_DlgDimStyleManager::onLinearDimPrecisionIndexChanged);
 
-    connect(ui->cbLinearDimFractionFormat, &QComboBox::currentIndexChanged, this, &LC_DlgDimStyleManager::onLinearDimFractionIndexChanged);
-    connect(ui->cbLinearDimDecimalSeparator, &QComboBox::currentIndexChanged, this, &LC_DlgDimStyleManager::onLinearDimUnitDecimalSeparatorIndexChanged);
+    connect(ui->cbLinearDimFractionFormat, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &LC_DlgDimStyleManager::onLinearDimFractionIndexChanged);
+    connect(ui->cbLinearDimDecimalSeparator, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &LC_DlgDimStyleManager::onLinearDimUnitDecimalSeparatorIndexChanged);
 
-    connect(ui->dsbLinearDimRoundOff, &QDoubleSpinBox::valueChanged, this, &LC_DlgDimStyleManager::onLinearDimRoundOffChanged);
+    connect(ui->dsbLinearDimRoundOff, QOverload<double>::of(&QDoubleSpinBox::valueChanged), this, &LC_DlgDimStyleManager::onLinearDimRoundOffChanged);
     connect(ui->leLinearDimPrefix, &QLineEdit::editingFinished, this, &LC_DlgDimStyleManager::onLinearDimPrefixEditingFinished);
     connect(ui->leLinearDimSuffix, &QLineEdit::editingFinished, this, &LC_DlgDimStyleManager::onLinearDimSuffixEditingFinished);
 
-    connect(ui->dsbLinearScaleFactor, &QDoubleSpinBox::valueChanged, this, &LC_DlgDimStyleManager::onLinearScaleFactorChanged);
+    connect(ui->dsbLinearScaleFactor, QOverload<double>::of(&QDoubleSpinBox::valueChanged), this, &LC_DlgDimStyleManager::onLinearScaleFactorChanged);
     connect(ui->cbLinearScaleApplyToLayoutDimsOnly, &QCheckBox::toggled, this, &LC_DlgDimStyleManager::onLinearScaleApplyToLayoutDimsOnlyToggled);
 
     connect(ui->cbZerosLeading, &QCheckBox::toggled, this, &LC_DlgDimStyleManager::onLinearZerosSuppressionToggled);
@@ -215,11 +218,11 @@ void LC_DlgDimStyleManager::connectPrimaryUnitTab() {
     connect(ui->cbZeros0Feet, &QCheckBox::toggled, this, &LC_DlgDimStyleManager::onLinearZerosSuppressionToggled);
     connect(ui->cbZeros0Inch, &QCheckBox::toggled, this, &LC_DlgDimStyleManager::onLinearZerosSuppressionToggled);
 
-    connect(ui->bsbLinearZerosSuppressionSubUnitFactor,&QDoubleSpinBox::valueChanged, this, &LC_DlgDimStyleManager::onLinearUnitFactorChanged);
+    connect(ui->bsbLinearZerosSuppressionSubUnitFactor,QOverload<double>::of(&QDoubleSpinBox::valueChanged), this, &LC_DlgDimStyleManager::onLinearUnitFactorChanged);
     connect(ui->leLinearZerosSuppressionSubUnitSuffix,&QLineEdit::editingFinished, this, &LC_DlgDimStyleManager::onLinearUnitPrefixEditingFinished);
 
-    connect(ui->cbAngularFormat, &QComboBox::currentIndexChanged, this, &LC_DlgDimStyleManager::onAngularFormatIndexChanged);
-    connect(ui->cbAngularPrecision, &QComboBox::currentIndexChanged, this, &LC_DlgDimStyleManager::onAngularPrecisionIndexChanged);
+    connect(ui->cbAngularFormat, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &LC_DlgDimStyleManager::onAngularFormatIndexChanged);
+    connect(ui->cbAngularPrecision, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &LC_DlgDimStyleManager::onAngularPrecisionIndexChanged);
 
     connect(ui->cbAngularZerosLeading, &QCheckBox::toggled, this, &LC_DlgDimStyleManager::onAngularZerosSuppressionToggled);
     connect(ui->cbAngularZerosTrailing, &QCheckBox::toggled, this, &LC_DlgDimStyleManager::onAngularZerosSuppressionToggled);
@@ -228,11 +231,11 @@ void LC_DlgDimStyleManager::connectPrimaryUnitTab() {
 void LC_DlgDimStyleManager::connectAltUnitTab() {
     connect(ui->cbAlternateUnitsDisplay, &QCheckBox::toggled, this, &LC_DlgDimStyleManager::onAlternateUnitsDisplayToggled);
 
-    connect(ui->cbAlternateLinearFormat, &QComboBox::currentIndexChanged, this, &LC_DlgDimStyleManager::onAlternateLinearFormatIndexChanged);
-    connect(ui->cbAlternateLinearPrecision, &QComboBox::currentIndexChanged, this, &LC_DlgDimStyleManager::onAlternateLinearPrecisionIndexChanged);
+    connect(ui->cbAlternateLinearFormat, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &LC_DlgDimStyleManager::onAlternateLinearFormatIndexChanged);
+    connect(ui->cbAlternateLinearPrecision, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &LC_DlgDimStyleManager::onAlternateLinearPrecisionIndexChanged);
 
-    connect(ui->dsbAlternateMutliplier, &QDoubleSpinBox::valueChanged, this, &LC_DlgDimStyleManager::onAltMutliplierChanged);
-    connect(ui->bsbAlternateRoundTo, &QDoubleSpinBox::valueChanged, this, &LC_DlgDimStyleManager::onAlternateRoundToChanged);
+    connect(ui->dsbAlternateMutliplier, QOverload<double>::of(&QDoubleSpinBox::valueChanged), this, &LC_DlgDimStyleManager::onAltMutliplierChanged);
+    connect(ui->bsbAlternateRoundTo, QOverload<double>::of(&QDoubleSpinBox::valueChanged), this, &LC_DlgDimStyleManager::onAlternateRoundToChanged);
 
     connect(ui->leAlternatePrefix, &QLineEdit::editingFinished, this, &LC_DlgDimStyleManager::onAlternatePrefixEditingFinished);
     connect(ui->leAlternateSuffix, &QLineEdit::editingFinished, this, &LC_DlgDimStyleManager::onAlternateSuffixEditingFinished);
@@ -242,7 +245,7 @@ void LC_DlgDimStyleManager::connectAltUnitTab() {
     connect(ui->cbAltZeros0Feet, &QCheckBox::toggled, this, &LC_DlgDimStyleManager::cbAltZerosSuppressionToggled);
     connect(ui->cbAltZeros0Inches, &QCheckBox::toggled, this, &LC_DlgDimStyleManager::cbAltZerosSuppressionToggled);
 
-    connect(ui->dbsAlternateSubUnitFactor,&QDoubleSpinBox::valueChanged, this, &LC_DlgDimStyleManager::onAlternateSubUnitFactorChanged);
+    connect(ui->dbsAlternateSubUnitFactor,QOverload<double>::of(&QDoubleSpinBox::valueChanged), this, &LC_DlgDimStyleManager::onAlternateSubUnitFactorChanged);
     connect(ui->leAlternateSubUnitSuffix,&QLineEdit::editingFinished, this, &LC_DlgDimStyleManager::onAlternateSubUnitPrefixEditingFinished);
 
     connect(ui->rbAlternatePlacementAfter, &QCheckBox::toggled, this, &LC_DlgDimStyleManager::cbAlternatePlacementToggled);
@@ -250,15 +253,15 @@ void LC_DlgDimStyleManager::connectAltUnitTab() {
 }
 
 void LC_DlgDimStyleManager::connectToleranceTab() {
-    connect(ui->cbTolMethod, &QComboBox::currentIndexChanged, this, &LC_DlgDimStyleManager::onTolMethodChangedIndexChanged);
+    connect(ui->cbTolMethod, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &LC_DlgDimStyleManager::onTolMethodChangedIndexChanged);
 
-    connect(ui->cbTolPrecision, &QComboBox::currentIndexChanged, this, &LC_DlgDimStyleManager::onTolPrecisionIndexChanged);
+    connect(ui->cbTolPrecision, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &LC_DlgDimStyleManager::onTolPrecisionIndexChanged);
 
-    connect(ui->dsbTolUpperLimit, &QDoubleSpinBox::valueChanged, this, &LC_DlgDimStyleManager::onTolUpperLimitChanged);
-    connect(ui->dsbTolLowerLimit, &QDoubleSpinBox::valueChanged, this, &LC_DlgDimStyleManager::onTolLowerLimitChangedChanged);
-    connect(ui->dsbTolHeightScale, &QDoubleSpinBox::valueChanged, this, &LC_DlgDimStyleManager::onTolHeightScaleChanged);
+    connect(ui->dsbTolUpperLimit, QOverload<double>::of(&QDoubleSpinBox::valueChanged), this, &LC_DlgDimStyleManager::onTolUpperLimitChanged);
+    connect(ui->dsbTolLowerLimit, QOverload<double>::of(&QDoubleSpinBox::valueChanged), this, &LC_DlgDimStyleManager::onTolLowerLimitChangedChanged);
+    connect(ui->dsbTolHeightScale, QOverload<double>::of(&QDoubleSpinBox::valueChanged), this, &LC_DlgDimStyleManager::onTolHeightScaleChanged);
 
-    connect(ui->cbTolVerticalPosition, &QComboBox::currentIndexChanged, this, &LC_DlgDimStyleManager::onTolVerticalPositionIndexChanged);
+    connect(ui->cbTolVerticalPosition, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &LC_DlgDimStyleManager::onTolVerticalPositionIndexChanged);
 
     connect(ui->rbTolAjustAlignDecimal, &QRadioButton::toggled, this, &LC_DlgDimStyleManager::onTolMeasurementAlignToggled);
     connect(ui->rbTolAjustAlignOpSymbols, &QRadioButton::toggled, this, &LC_DlgDimStyleManager::onTolMeasurementAlignToggled);
@@ -268,7 +271,7 @@ void LC_DlgDimStyleManager::connectToleranceTab() {
     connect(ui->cbTolZeros0Feet, &QCheckBox::toggled, this, &LC_DlgDimStyleManager::onTolLinearZerosSuppressionToggled);
     connect(ui->cbTolZeros0Inches, &QCheckBox::toggled, this, &LC_DlgDimStyleManager::onTolLinearZerosSuppressionToggled);
 
-    connect(ui->cbTolAltPrecision, &QComboBox::currentIndexChanged, this, &LC_DlgDimStyleManager::onTolAltPrecisionIndexChanged);
+    connect(ui->cbTolAltPrecision, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &LC_DlgDimStyleManager::onTolAltPrecisionIndexChanged);
 
     connect(ui->cbTolAltZerosLeading, &QCheckBox::toggled, this, &LC_DlgDimStyleManager::cbTolAlternateZerosSuppressionToggled);
     connect(ui->cbTolAltZerosTrailing, &QCheckBox::toggled, this, &LC_DlgDimStyleManager::cbTolAlternateZerosSuppressionToggled);

@@ -31,7 +31,7 @@ ComboBoxOption::ComboBoxOption(QWidget* parent) :
     ui->setupUi(this);
     ui->pushButton->setDisabled(true);
     connect(ui->pushButton, &QPushButton::released, this, &ComboBoxOption::saveIndexAndEmitOption);
-    connect(ui->comboBox, &QComboBox::activated, this, &ComboBoxOption::setButtonState);
+    connect(ui->comboBox, QOverload<int>::of(&QComboBox::activated), this, &ComboBoxOption::setButtonState);
 }
 
 ComboBoxOption::~ComboBoxOption(){

@@ -525,7 +525,7 @@ void LC_DlgIconsSetup::onDisabledOffBackColorChanged(const QString &value){
 
 
 QString LC_DlgIconsSetup::set_color(QComboBox *combo) {
-    QColor current = QColor::fromString(combo->lineEdit()->text());
+    QColor current(combo->lineEdit()->text());
 
     QColorDialog dlg;
     // dlg.setCustomColor(0, custom.rgb());

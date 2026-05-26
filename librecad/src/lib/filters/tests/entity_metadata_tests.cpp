@@ -182,6 +182,25 @@ public:
   void writeEntities() override { m_rw->writeLine(&m_line); }
 };
 
+class SingleSplineEmitter : public StubInterface {
+public:
+  DRW_Spline m_spline;
+  dxfRW *m_rw = nullptr;
+  void writeEntities() override { m_rw->writeSpline(&m_spline); }
+};
+
+class SingleSplineCapture : public StubInterface {
+public:
+  bool m_gotSpline = false;
+  DRW_Spline m_captured;
+  void addSpline(const DRW_Spline *spline) override {
+    if (!m_gotSpline && spline != nullptr) {
+      m_captured = *spline;
+      m_gotSpline = true;
+    }
+  }
+};
+
 } // namespace
 
 TEST_CASE("DXF round-trip: 284/347/390/430/440 survive write+read",
@@ -292,6 +311,43 @@ TEST_CASE("DXF write: app-data doubles preserve fractional values",
   CHECK(content.find("\n102\n{APPDATA\n") != std::string::npos);
   CHECK(content.find("\n 40\n12.75\n") != std::string::npos);
   CHECK(content.find("\n102\n}\n") != std::string::npos);
+
+  std::filesystem::remove(path);
+}
+
+TEST_CASE("DXF write: spline weights force rational flag",
+          "[entity_metadata][dxf_roundtrip]") {
+  const auto path = std::filesystem::temp_directory_path() /
+                    "librecad_spline_rational_flag.dxf";
+  std::filesystem::remove(path);
+
+  SingleSplineEmitter emitter;
+  emitter.m_spline.layer = "0";
+  emitter.m_spline.color = 256;
+  emitter.m_spline.flags = 8; // planar only; writer should add rational bit
+  emitter.m_spline.degree = 2;
+  emitter.m_spline.knotslist = {0, 0, 0, 1, 1, 1};
+  emitter.m_spline.controllist.push_back(std::make_shared<DRW_Coord>(0.0, 0.0, 0.0));
+  emitter.m_spline.controllist.push_back(std::make_shared<DRW_Coord>(1.0, 1.0, 0.0));
+  emitter.m_spline.controllist.push_back(std::make_shared<DRW_Coord>(2.0, 0.0, 0.0));
+  emitter.m_spline.weightlist = {1.0, 0.5, 1.0};
+
+  {
+    dxfRW w(path.string().c_str());
+    emitter.m_rw = &w;
+    REQUIRE(w.write(&emitter, DRW::AC1021, false));
+  }
+
+  SingleSplineCapture capture;
+  {
+    dxfRW r(path.string().c_str());
+    REQUIRE(r.read(&capture, /*ext=*/true));
+  }
+
+  REQUIRE(capture.m_gotSpline);
+  CHECK((capture.m_captured.flags & 0x04) == 0x04);
+  REQUIRE(capture.m_captured.weightlist.size() == 3);
+  CHECK(capture.m_captured.weightlist[1] == 0.5);
 
   std::filesystem::remove(path);
 }

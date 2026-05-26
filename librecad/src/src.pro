@@ -31,8 +31,9 @@ CONFIG += qt \
 QT += widgets printsupport network
 CONFIG += c++17
 
-# using qt5 connections for UI forms
-QMAKE_UIC_FLAGS += --connections string
+# Qt 6 uic can generate string-based connections. Qt 5 uic does not
+# understand this option, so keep qmake builds compatible with both.
+greaterThan(QT_MAJOR_VERSION, 5): QMAKE_UIC_FLAGS += --connections string
 
 *-g++ {
     QMAKE_CXXFLAGS += -fext-numeric-literals

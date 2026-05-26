@@ -222,7 +222,7 @@ QString getEnrichedFileName(QString baseName, int mode, int state, FileType type
 }
 
 void LC_SvgIconEnginePrivate::checkFileOverride(QIcon::Mode mode, QIcon::State state, FileType fileType, QString plainSVGFileName){
-    QFile plainSVGFile = QFile(plainSVGFileName);
+    QFile plainSVGFile(plainSVGFileName);
     if (plainSVGFile.exists()) {
         QSvgRenderer renderer(plainSVGFileName);
         if (renderer.isValid()) {
@@ -316,7 +316,7 @@ void LC_SVGIconEngine::addFile(const QString &fileName, const QSize &,
         // no icon override is provided by the user, so just check that provided file exists
         int key = d->hashKey(mode, state);
         if (!d->svgFiles.contains(key)) {
-            QFile plainSVGFile = QFile(fileName);
+            QFile plainSVGFile(fileName);
             if (plainSVGFile.exists()) {
                 QSvgRenderer renderer(fileName);
                 if (renderer.isValid()) {

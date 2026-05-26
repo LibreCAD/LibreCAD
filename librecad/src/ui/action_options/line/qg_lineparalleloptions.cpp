@@ -39,7 +39,7 @@ QG_LineParallelOptions::QG_LineParallelOptions(RS2::ActionType actionType)
      ui(new Ui::Ui_LineParallelOptions{}) {
     ui->setupUi(this);
     connect(ui->leDist, &QLineEdit::editingFinished, this, &QG_LineParallelOptions::onDistEditingFinished);
-    connect(ui->sbNumber, &QSpinBox::valueChanged, this, &QG_LineParallelOptions::onNumberValueChanged);
+    connect(ui->sbNumber, QOverload<int>::of(&QSpinBox::valueChanged), this, &QG_LineParallelOptions::onNumberValueChanged);
 
     pickDistanceSetup("distance", ui->tbPickDistance, ui->leDist);
 }

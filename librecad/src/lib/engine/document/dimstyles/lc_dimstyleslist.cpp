@@ -22,6 +22,8 @@
 
 #include "lc_dimstyleslist.h"
 
+#include <QMap>
+
 #include "lc_dimstyle.h"
 
 LC_DimStylesList::LC_DimStylesList() {

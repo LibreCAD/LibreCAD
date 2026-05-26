@@ -25,6 +25,7 @@
 #define LC_DIMSTYLEITEM_H
 
 
+#include <QObject>
 #include <QString>
 
 #include "lc_dimstyle.h"

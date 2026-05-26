@@ -23,6 +23,7 @@
 
 
 
+#include <QAction>
 #include <QMouseEvent>
 
 #include "lc_coordinates_parser.h"

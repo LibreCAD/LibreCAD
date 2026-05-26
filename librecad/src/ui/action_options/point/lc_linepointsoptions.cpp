@@ -28,8 +28,8 @@ LC_LinePointsOptions::LC_LinePointsOptions() :
     ui(new Ui::LC_LinePointsOptions),
     m_action(nullptr) {
     ui->setupUi(this);
-    connect(ui->sbPointsCount, &QSpinBox::valueChanged, this, &LC_LinePointsOptions::onPointsCountValueChanged);
-    connect(ui->cbEdgePoints, &QComboBox::currentIndexChanged, this,
+    connect(ui->sbPointsCount, QOverload<int>::of(&QSpinBox::valueChanged), this, &LC_LinePointsOptions::onPointsCountValueChanged);
+    connect(ui->cbEdgePoints, QOverload<int>::of(&QComboBox::currentIndexChanged), this,
             &LC_LinePointsOptions::onEdgePointsModeIndexChanged);
 
     connect(ui->cbFixedDistance, &QCheckBox::clicked, this, &LC_LinePointsOptions::onFixedDistanceClicked);

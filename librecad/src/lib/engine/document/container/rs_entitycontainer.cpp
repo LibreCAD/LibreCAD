@@ -1303,7 +1303,7 @@ int RS_EntityContainer::findEntityIndex(RS_Entity const *const entity) {
 }
 
 bool  RS_EntityContainer::areNeighborsEntities(RS_Entity const *const  e1, RS_Entity const *const  e2) {
-   return abs(m_entities.indexOf(e1) - m_entities.indexOf(e2)) <= 1;
+   return abs(m_entities.indexOf(const_cast<RS_Entity *>(e1)) - m_entities.indexOf(const_cast<RS_Entity *>(e2))) <= 1;
 }
 
 /**

@@ -34,10 +34,10 @@ LC_Rectangle2PointsOptions::LC_Rectangle2PointsOptions() :
     connect(ui->leX, &QLineEdit::editingFinished, this, &LC_Rectangle2PointsOptions::onLenXEditingFinished);
 
     connect(ui->leAngle, &QLineEdit::editingFinished, this, &LC_Rectangle2PointsOptions::onAngleEditingFinished);
-    connect(ui->cbCorners, &QComboBox::currentIndexChanged, this, &LC_Rectangle2PointsOptions::onCornersIndexChanged);
-    connect(ui->cbSnapStart, &QComboBox::currentIndexChanged,this,  &LC_Rectangle2PointsOptions::onInsertionPointSnapIndexChanged);
-    connect(ui->cbSnapEnd, &QComboBox::currentIndexChanged,  this,&LC_Rectangle2PointsOptions::onSecondPointSnapIndexChanged);
-    connect(ui->cbEdges, &QComboBox::currentIndexChanged,  this, &LC_Rectangle2PointsOptions::onEdgesIndexChanged);
+    connect(ui->cbCorners, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &LC_Rectangle2PointsOptions::onCornersIndexChanged);
+    connect(ui->cbSnapStart, QOverload<int>::of(&QComboBox::currentIndexChanged),this,  &LC_Rectangle2PointsOptions::onInsertionPointSnapIndexChanged);
+    connect(ui->cbSnapEnd, QOverload<int>::of(&QComboBox::currentIndexChanged),  this,&LC_Rectangle2PointsOptions::onSecondPointSnapIndexChanged);
+    connect(ui->cbEdges, QOverload<int>::of(&QComboBox::currentIndexChanged),  this, &LC_Rectangle2PointsOptions::onEdgesIndexChanged);
     connect(ui->chkFixedBaseAngle, &QCheckBox::clicked, this,  &LC_Rectangle2PointsOptions::onBaseAngleFixedClicked);
 
     connect(ui->cbPolyline, &QCheckBox::clicked, this,  &LC_Rectangle2PointsOptions::onUsePolylineClicked);

@@ -38,7 +38,7 @@ LC_ModifyScaleOptions::LC_ModifyScaleOptions()
     connect(ui->cbIsotrpic, &QCheckBox::clicked, this, &LC_ModifyScaleOptions::cbIsotropicClicked);
     connect(ui->leFactorX, &QLineEdit::editingFinished, this, &LC_ModifyScaleOptions::onFactorXEditingFinished);
     connect(ui->leFactorY, &QLineEdit::editingFinished, this, &LC_ModifyScaleOptions::onFactorYEditingFinished);
-    connect(ui->sbNumberOfCopies, &QSpinBox::valueChanged, this, &LC_ModifyScaleOptions::onCopiesNumberValueChanged);
+    connect(ui->sbNumberOfCopies, QOverload<int>::of(&QSpinBox::valueChanged), this, &LC_ModifyScaleOptions::onCopiesNumberValueChanged);
 }
 
 void LC_ModifyScaleOptions::doSaveSettings() {

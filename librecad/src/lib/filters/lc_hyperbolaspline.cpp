@@ -250,9 +250,9 @@ bool LC_HyperbolaSpline::hyperbolaToSpline(const LC_HyperbolaData& hd, DRW_Splin
   const RS_Vector shoulder = transform(shoulder_standard);
   const RS_Vector end = transform(end_standard);
 
-         // Build DRW_Spline
+  // Build DRW_Spline
   spl.degree = 2;
-  spl.flags = 8; // rational spline
+  spl.flags = 0x08 | 0x04; // planar rational spline
 
   spl.controllist.clear();
   spl.controllist.push_back(std::make_shared<DRW_Coord>(start.x, start.y, 0.0));

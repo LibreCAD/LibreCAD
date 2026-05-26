@@ -35,8 +35,8 @@ LC_LineAngleRelOptions::LC_LineAngleRelOptions() :
     connect(ui->cbRelativeAngle, &QCheckBox::clicked, this, &LC_LineAngleRelOptions::onAngleRelatedClicked);
     connect(ui->cbDivide, &QCheckBox::clicked, this, &LC_LineAngleRelOptions::onDivideClicked);
     connect(ui->cbFree, &QCheckBox::clicked, this, &LC_LineAngleRelOptions::onFreeLengthClicked);
-    connect(ui->cbTickSnapMode, &QComboBox::currentIndexChanged,this,  &LC_LineAngleRelOptions::onTickSnapModeIndexChanged);
-    connect(ui->cbLineSnapMode, &QComboBox::currentIndexChanged,this, &LC_LineAngleRelOptions::onLineSnapModeIndexChanged);
+    connect(ui->cbTickSnapMode, QOverload<int>::of(&QComboBox::currentIndexChanged),this,  &LC_LineAngleRelOptions::onTickSnapModeIndexChanged);
+    connect(ui->cbLineSnapMode, QOverload<int>::of(&QComboBox::currentIndexChanged),this, &LC_LineAngleRelOptions::onLineSnapModeIndexChanged);
     connect(ui->leDistance, &QLineEdit::editingFinished, this, &LC_LineAngleRelOptions::onDistanceEditingFinished);
 
     pickAngleSetup("angle", ui->tbPickAngle, ui->leAngle);

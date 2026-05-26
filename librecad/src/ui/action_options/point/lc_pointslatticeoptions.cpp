@@ -28,8 +28,8 @@ LC_PointsLatticeOptions::LC_PointsLatticeOptions()
     : LC_ActionOptionsWidgetBase(RS2::ActionDrawPointsLattice, "Draw", "PointsLattice")
     , ui(new Ui::LC_PointsLatticeOptions){
     ui->setupUi(this);
-    connect(ui->sbNumX, &QSpinBox::valueChanged, this, &LC_PointsLatticeOptions::onColumnsChanged);
-    connect(ui->sbNumX, &QSpinBox::valueChanged, this, &LC_PointsLatticeOptions::onRowsChanged);
+    connect(ui->sbNumX, QOverload<int>::of(&QSpinBox::valueChanged), this, &LC_PointsLatticeOptions::onColumnsChanged);
+    connect(ui->sbNumX, QOverload<int>::of(&QSpinBox::valueChanged), this, &LC_PointsLatticeOptions::onRowsChanged);
     connect(ui->cbAdjustLastPoint, &QCheckBox::toggled, this, &LC_PointsLatticeOptions::onAdjustLastPointToggled);
 }
 

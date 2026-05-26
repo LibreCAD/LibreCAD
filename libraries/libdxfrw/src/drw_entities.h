@@ -1185,6 +1185,9 @@ public:
     DRW_Spline() {
         eType = DRW::SPLINE;
         flags = nknots = ncontrol = nfit = 0;
+        m_scenario = 0;
+        m_splineFlags1 = 0;
+        m_knotParam = 15;
         tolknot = tolcontrol = tolfit = 0.0000001;
 
     }
@@ -1210,6 +1213,9 @@ public:
 //    double tgez;              /*!< end tangent z coordinate, code 33 */
     int flags;                /*!< spline flag, code 70 */
     int degree;               /*!< degree of the spline, code 71 */
+    dint32 m_scenario;         /*!< DWG spline scenario: 1=control points, 2=fit points */
+    dint32 m_splineFlags1;     /*!< R2013+ method/closed/knot-parameter flags */
+    dint32 m_knotParam;        /*!< R2013+ knot parameterization selector */
     dint32 nknots;            /*!< number of knots, code 72, default 0 */
     dint32 ncontrol;          /*!< number of control points, code 73, default 0 */
     dint32 nfit;              /*!< number of fit points, code 74, default 0 */

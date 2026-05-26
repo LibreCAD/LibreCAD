@@ -23,6 +23,7 @@
 
 #include "lc_dlgmenuassigner.h"
 
+#include <QComboBox>
 #include <QMouseEvent>
 
 #include "lc_dialog.h"
@@ -92,7 +93,7 @@ LC_DlgMenuAssigner::LC_DlgMenuAssigner(QWidget *parent, LC_MenuActivator* activa
     connect(ui->rbBtnBack, &QRadioButton::toggled, this, &LC_DlgMenuAssigner::onBtnTypeToggled);
     connect(ui->rbBtnForward, &QRadioButton::toggled, this, &LC_DlgMenuAssigner::onBtnTypeToggled);
     connect(ui->rbBtnTask, &QRadioButton::toggled, this, &LC_DlgMenuAssigner::onBtnTypeToggled);
-    connect(ui->cbEntityContext, &QComboBox::currentIndexChanged, this, &LC_DlgMenuAssigner::onContextEntityCurrentIndexChanged);
+    connect(ui->cbEntityContext, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &LC_DlgMenuAssigner::onContextEntityCurrentIndexChanged);
 
     ui->lblResult->installEventFilter(this);
     ui->gbInvocationShortcut->installEventFilter(this);

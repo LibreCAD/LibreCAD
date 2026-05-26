@@ -332,6 +332,38 @@ TEST_CASE("DRW_Spline::encodeDwg round-trips a control-point cubic",
     }
 }
 
+TEST_CASE("DRW_Spline::encodeDwg preserves rational quadratic weights",
+          "[dwg-write][entity-encode]") {
+    DRW_Spline src;
+    src.handle = 0xF2;
+    src.color = 2;
+    src.flags = 8; // planar; encoder derives rational from non-default weights
+    src.degree = 2;
+    src.tolknot = 1e-9;
+    src.tolcontrol = 1e-9;
+    src.knotslist = {0, 0, 0, 1, 1, 1};
+    src.controllist.push_back(std::make_shared<DRW_Coord>(DRW_Coord{1.0, 0.0, 0.0}));
+    src.controllist.push_back(std::make_shared<DRW_Coord>(DRW_Coord{1.0, 1.0, 0.0}));
+    src.controllist.push_back(std::make_shared<DRW_Coord>(DRW_Coord{0.0, 1.0, 0.0}));
+    src.weightlist = {1.0, std::sqrt(0.5), 1.0};
+    src.nknots = 6;
+    src.ncontrol = 3;
+    DrwEntityEncodeTestAccess::layerH(src).ref = 0x12;
+
+    for (DRW::Version ver : {DRW::AC1015, DRW::AC1018}) {
+        dwgBufferW w;
+        REQUIRE(DrwEntityEncodeTestAccess::encode(src, ver, &w));
+        auto bytes = snapshot(w);
+        dwgBuffer r(bytes.data(), bytes.size());
+        DRW_Spline dst;
+        REQUIRE(DrwEntityEncodeTestAccess::parse(dst, ver, &r));
+
+        REQUIRE((dst.flags & 0x04) == 0x04);
+        REQUIRE(dst.weightlist.size() == 3);
+        CHECK(dst.weightlist[1] == Approx(std::sqrt(0.5)));
+    }
+}
+
 TEST_CASE("DRW_Spline::encodeDwg round-trips a fit-point spline",
           "[dwg-write][entity-encode]") {
     DRW_Spline src;
@@ -364,6 +396,63 @@ TEST_CASE("DRW_Spline::encodeDwg round-trips a fit-point spline",
         REQUIRE(dst.tgStart.x      == 1.0);
         REQUIRE(dst.tgEnd.y        == 1.0);
     }
+}
+
+TEST_CASE("DRW_Spline::parseDwg rejects impossible control-point layout",
+          "[dwg-write][entity-encode]") {
+    DRW_Spline src;
+    src.handle = 0xF3;
+    src.color = 3;
+    src.flags = 8;
+    src.degree = 3;
+    src.tolknot = 1e-9;
+    src.tolcontrol = 1e-9;
+    src.knotslist = {0, 0, 0, 1, 1, 1, 1};
+    src.controllist.push_back(std::make_shared<DRW_Coord>(DRW_Coord{0.0, 0.0, 0.0}));
+    src.controllist.push_back(std::make_shared<DRW_Coord>(DRW_Coord{1.0, 1.0, 0.0}));
+    src.controllist.push_back(std::make_shared<DRW_Coord>(DRW_Coord{2.0, 0.0, 0.0}));
+    src.nknots = 7;
+    src.ncontrol = 3; // degree 3 requires at least 4 controls
+    DrwEntityEncodeTestAccess::layerH(src).ref = 0x12;
+
+    dwgBufferW w;
+    REQUIRE(DrwEntityEncodeTestAccess::encode(src, DRW::AC1018, &w));
+    auto bytes = snapshot(w);
+    dwgBuffer r(bytes.data(), bytes.size());
+    DRW_Spline dst;
+    REQUIRE_FALSE(DrwEntityEncodeTestAccess::parse(dst, DRW::AC1018, &r));
+}
+
+TEST_CASE("DRW_Spline::encodeDwg round-trips a high-degree control spline",
+          "[dwg-write][entity-encode]") {
+    DRW_Spline src;
+    src.handle = 0xF4;
+    src.color = 4;
+    src.flags = 8;
+    src.degree = 4;
+    src.tolknot = 1e-9;
+    src.tolcontrol = 1e-9;
+    src.knotslist = {0, 0, 0, 0, 0, 1, 1, 1, 1, 1};
+    src.controllist.push_back(std::make_shared<DRW_Coord>(DRW_Coord{0.0, 0.0, 0.0}));
+    src.controllist.push_back(std::make_shared<DRW_Coord>(DRW_Coord{1.0, 1.0, 0.0}));
+    src.controllist.push_back(std::make_shared<DRW_Coord>(DRW_Coord{2.0, 1.5, 0.0}));
+    src.controllist.push_back(std::make_shared<DRW_Coord>(DRW_Coord{3.0, 1.0, 0.0}));
+    src.controllist.push_back(std::make_shared<DRW_Coord>(DRW_Coord{4.0, 0.0, 0.0}));
+    src.nknots = 10;
+    src.ncontrol = 5;
+    DrwEntityEncodeTestAccess::layerH(src).ref = 0x12;
+
+    dwgBufferW w;
+    REQUIRE(DrwEntityEncodeTestAccess::encode(src, DRW::AC1018, &w));
+    auto bytes = snapshot(w);
+    dwgBuffer r(bytes.data(), bytes.size());
+    DRW_Spline dst;
+    REQUIRE(DrwEntityEncodeTestAccess::parse(dst, DRW::AC1018, &r));
+
+    REQUIRE(dst.degree == 4);
+    REQUIRE(dst.ncontrol == 5);
+    REQUIRE(dst.nknots == 10);
+    REQUIRE(dst.controllist.size() == 5);
 }
 
 TEST_CASE("DRW_MText::encodeDwg round-trips multi-line text",

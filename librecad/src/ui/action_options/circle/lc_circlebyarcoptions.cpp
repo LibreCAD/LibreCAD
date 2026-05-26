@@ -29,8 +29,8 @@ LC_CircleByArcOptions::LC_CircleByArcOptions() :
     m_action(nullptr){
     ui->setupUi(this);
     connect(ui->cbReplace, &QCheckBox::clicked, this, &LC_CircleByArcOptions::onReplaceClicked);
-    connect(ui->cbPen, &QComboBox::currentIndexChanged, this, &LC_CircleByArcOptions::onPenModeIndexChanged);
-    connect(ui->cbLayer, &QComboBox::currentIndexChanged, this, &LC_CircleByArcOptions::onLayerModeIndexChanged);
+    connect(ui->cbPen, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &LC_CircleByArcOptions::onPenModeIndexChanged);
+    connect(ui->cbLayer, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &LC_CircleByArcOptions::onLayerModeIndexChanged);
     connect(ui->leRadiusShift, &QLineEdit::editingFinished, this, &LC_CircleByArcOptions::onRadiusShiftEditingFinished);
 
     pickDistanceSetup("radiusShift", ui->tbPickRadius, ui->leRadiusShift);

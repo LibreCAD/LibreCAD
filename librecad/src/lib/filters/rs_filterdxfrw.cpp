@@ -25,14 +25,18 @@
 **********************************************************************/
 
 #include<cstdlib>
+#include <cmath>
 #include <stack>
 #include<utility>
 
 #include <QDir>
 #include <QFile>
 #include <QFileInfo>
+#include <QLocale>
 #include <QRegularExpression>
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
 #include <QStringConverter>
+#endif
 #include <QStringList>
 
 #include "dxf_format.h"
@@ -90,10 +94,99 @@
 
 namespace {
 
+constexpr int kImportedSplineFallbackSamples = 96;
+
 // convert DRW_Coord to RS_Vector
 RS_Vector coordToVector(const std::shared_ptr<DRW_Coord>& c) {
     return c ? RS_Vector(c->x, c->y) : RS_Vector(false);
 };
+
+bool differsFromUnitWeight(double weight) {
+    return std::fabs(weight - 1.0) > 1e-12;
+}
+
+bool hasRationalSplineWeights(const DRW_Spline* data) {
+    if (data == nullptr)
+        return false;
+    return (data->flags & 0x4) != 0 ||
+           std::any_of(data->weightlist.begin(), data->weightlist.end(), differsFromUnitWeight);
+}
+
+bool buildSplineDataFromDrw(const DRW_Spline* source, RS_SplineData& target) {
+    if (source == nullptr || source->degree < 1 || source->controllist.empty())
+        return false;
+
+    const size_t degree = static_cast<size_t>(source->degree);
+    const size_t controlCount = source->controllist.size();
+    if (controlCount < degree + 1)
+        return false;
+
+    const size_t requiredKnots = controlCount + degree + 1;
+    if (source->knotslist.size() < requiredKnots)
+        return false;
+
+    const bool closed = (source->flags & 0x3) != 0;
+    target = RS_SplineData(source->degree, closed);
+    target.type = closed ? RS_SplineData::SplineType::WrappedClosed
+                         : RS_SplineData::SplineType::ClampedOpen;
+
+    target.knotslist.assign(source->knotslist.begin(),
+                            source->knotslist.begin() + requiredKnots);
+
+    target.controlPoints.reserve(controlCount);
+    target.weights.reserve(controlCount);
+    const bool rational = hasRationalSplineWeights(source);
+    for (size_t i = 0; i < controlCount; ++i) {
+        const auto& control = source->controllist[i];
+        if (!control)
+            return false;
+        target.controlPoints.push_back({control->x, control->y});
+        double weight = 1.0;
+        if (rational && i < source->weightlist.size())
+            weight = source->weightlist[i];
+        if (weight <= 0.0 || !std::isfinite(weight))
+            return false;
+        target.weights.push_back(weight);
+    }
+
+    return true;
+}
+
+std::unique_ptr<LC_SplinePoints> approximateDrwSpline(
+    RS_EntityContainer* parent, const DRW_Spline* data) {
+    RS_SplineData splineData;
+    if (!buildSplineDataFromDrw(data, splineData))
+        return nullptr;
+
+    const size_t degree = static_cast<size_t>(data->degree);
+    const size_t controlCount = splineData.controlPoints.size();
+    const double tmin = splineData.knotslist[degree];
+    const double tmax = splineData.knotslist[controlCount];
+    if (!std::isfinite(tmin) || !std::isfinite(tmax) || tmax <= tmin)
+        return nullptr;
+
+    LC_SplinePointsData sampled((data->flags & 0x3) != 0, false);
+    sampled.useControlPoints = false;
+    sampled.splinePoints.reserve(kImportedSplineFallbackSamples + 1);
+    for (int i = 0; i <= kImportedSplineFallbackSamples; ++i) {
+        const double u = tmin + (tmax - tmin) *
+                         (static_cast<double>(i) / kImportedSplineFallbackSamples);
+        const RS_Vector point = RS_Spline::evaluateNURBS(splineData, u);
+        if (!point.valid)
+            return nullptr;
+        sampled.splinePoints.push_back(point);
+    }
+
+    if (sampled.closed && sampled.splinePoints.size() > 1 &&
+        sampled.splinePoints.front().distanceTo(sampled.splinePoints.back()) <= 1e-8) {
+        sampled.splinePoints.pop_back();
+    }
+
+    if (sampled.splinePoints.size() < 2)
+        return nullptr;
+
+    return std::make_unique<LC_SplinePoints>(parent, std::move(sampled));
+}
 
 }
 
@@ -1395,13 +1488,19 @@ void RS_FilterDXFRW::addPolyline(const DRW_Polyline& data) {
         // the polyline is a polyface mesh
         std::vector<RS_Vector> vertices;
         for (const std::shared_ptr<DRW_Vertex>& v : data.vertlist) {
-            if ((v->flags & 0x40) == 0) { // vertex
+            if (!v) {
+                continue;
+            }
+            if ((v->flags & 0x40) != 0 && (v->flags & 0x80) != 0) { // polyface coordinate vertex
                 vertices.emplace_back(v->basePoint.x, v->basePoint.y);
             }
         }
         // add faces as closed polylines
         for (const std::shared_ptr<DRW_Vertex>& f : data.vertlist) {
-            if ((f->flags & 0x40) != 0) { // face
+            if (!f) {
+                continue;
+            }
+            if ((f->flags & 0x80) != 0 && (f->flags & 0x40) == 0) { // polyface face record
                 std::vector<int> indices = {{f->vindex1, f->vindex2, f->vindex3, f->vindex4}};
                 int num_points = (f->vindex4 == 0) ? 3 : 4;
                 RS_PolylineData pd(RS_Vector(), RS_Vector(), true); // closed
@@ -1508,8 +1607,9 @@ void RS_FilterDXFRW::addSpline(const DRW_Spline* data) {
         return;  // Conic handled successfully
     }
 
-    // Spline points case (degree 2, more than 3 control points)
-    if (data->degree == 2) {
+    // Spline points case. Weighted degree-2 splines are exact rational conics
+    // or NURBS segments; keep them on the RS_Spline path so weights survive.
+    if (data->degree == 2 && !hasRationalSplineWeights(data)) {
         bool closed = (data->flags & 0x1) == 0x1;
         bool controlOnly = data->nfit == 0;
 
@@ -1533,8 +1633,24 @@ void RS_FilterDXFRW::addSpline(const DRW_Spline* data) {
         return;
     }
 
-    // General spline (degree 1–3)
-    if (data->degree < 1 || data->degree > 3) {
+    // General spline (degree 1-3)
+    if (data->degree < 1) {
+        RS_DEBUG->print(RS_Debug::D_WARNING,
+                        "RS_FilterDXFRW::addSpline: unsupported spline degree %d", data->degree);
+        return;
+    }
+    if (data->degree > 3) {
+        std::unique_ptr<LC_SplinePoints> sampled = approximateDrwSpline(m_currentContainer, data);
+        if (sampled) {
+            RS_DEBUG->print(RS_Debug::D_WARNING,
+                            "RS_FilterDXFRW::addSpline: approximating unsupported spline degree %d",
+                            data->degree);
+            setEntityAttributes(sampled.get(), data);
+            sampled->update();
+            m_currentContainer->addEntity(sampled.release());
+            return;
+        }
+
         RS_DEBUG->print(RS_Debug::D_WARNING,
                         "RS_FilterDXFRW::addSpline: unsupported spline degree %d", data->degree);
         return;
@@ -5251,7 +5367,6 @@ void RS_FilterDXFRW::writeLWPolyline(RS_Polyline* l) {
  * Writes the given polyline entity to the file (old style).
  */
 void RS_FilterDXFRW::writePolyline(RS_Polyline* p) {
-    if (m_dwgW) return;  // DWG has no old-style POLYLINE entity
     if (p == nullptr)
         return;
 
@@ -5303,6 +5418,7 @@ void RS_FilterDXFRW::writePolyline(RS_Polyline* p) {
         }
     }
     getEntityAttributes(&pol, p);
+    if (m_dwgW) { m_dwgW->writePolyline(&pol); return; }
     m_dxfW->writePolyline(&pol);
 }
 
@@ -5348,6 +5464,9 @@ void RS_FilterDXFRW::writeSpline(RS_Spline *s) {
         sp.controllist.push_back(std::make_shared<DRW_Coord>(v.x, v.y));
     }
     sp.weightlist = s->getUnwrappedWeights();
+    if (std::any_of(sp.weightlist.begin(), sp.weightlist.end(), differsFromUnitWeight)) {
+        sp.flags |= 0x04;
+    }
 
     sp.ncontrol = sp.controllist.size();
     sp.degree = s->getDegree();
@@ -5408,30 +5527,47 @@ void RS_FilterDXFRW::writeSplinePoints(LC_SplinePoints *s){
 		sp.flags = 8;
 	}
 
-	sp.ncontrol = nCtrls;
-	sp.degree = 2;
-	sp.nknots = nCtrls + 3;
-
 	LC_SplinePointsData &data = s->getData();
-	sp.nfit = data.splinePoints.size();
 	auto const& fitPoints = data.splinePoints;
+	const bool writeFitScenario = !data.useControlPoints && fitPoints.size() >= 2;
+	sp.degree = 2;
+	sp.nfit = static_cast<dint32>(fitPoints.size());
+
+	if (writeFitScenario) {
+		sp.m_scenario = 2;
+		sp.m_knotParam = 0;
+		sp.ncontrol = 0;
+		sp.nknots = 0;
+		sp.tolfit = 0.0000001;
+		const RS_Vector startTangent = fitPoints[1] - fitPoints[0];
+		const RS_Vector endTangent = fitPoints.back() - fitPoints[fitPoints.size() - 2];
+		sp.tgStart = DRW_Coord{startTangent.x, startTangent.y, 0.0};
+		sp.tgEnd = DRW_Coord{endTangent.x, endTangent.y, 0.0};
+	} else {
+		sp.ncontrol = nCtrls;
+		sp.nknots = nCtrls + 3;
+	}
 
 	// write spline knots:
-	for(int i = 1; i <= sp.nknots; i++){
-		if(i <= 3){
-			sp.knotslist.push_back(0.0);
-		}
-		else if(i <= nCtrls){
-			sp.knotslist.push_back((i - 3.0)/(nCtrls - 2.0));
-		}
-		else{
-			sp.knotslist.push_back(1.0);
+	if (!writeFitScenario) {
+		for(int i = 1; i <= sp.nknots; i++){
+			if(i <= 3){
+				sp.knotslist.push_back(0.0);
+			}
+			else if(i <= nCtrls){
+				sp.knotslist.push_back((i - 3.0)/(nCtrls - 2.0));
+			}
+			else{
+				sp.knotslist.push_back(1.0);
+			}
 		}
 	}
 
 	// write spline control points:
-	for (auto const& v : cp) {
-		sp.controllist.push_back(std::make_shared<DRW_Coord>(v.x, v.y));
+	if (!writeFitScenario) {
+		for (auto const& v : cp) {
+			sp.controllist.push_back(std::make_shared<DRW_Coord>(v.x, v.y));
+		}
 	}
 
 	// fit points
@@ -5441,8 +5577,10 @@ void RS_FilterDXFRW::writeSplinePoints(LC_SplinePoints *s){
 
 	getEntityAttributes(&sp, s);
 	if (m_dwgW) {
-		sp.fitlist.clear();  // DWG scenario 1 only: encoder picks scenario 2 when fitlist
-		sp.nfit = 0;         // is non-empty, corrupting the stream; control pts are exact.
+		if (!writeFitScenario) {
+			sp.fitlist.clear();
+			sp.nfit = 0;
+		}
 		m_dwgW->writeSpline(&sp);
 		return;
 	}

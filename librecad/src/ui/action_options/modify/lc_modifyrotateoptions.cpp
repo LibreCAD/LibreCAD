@@ -38,7 +38,7 @@ LC_ModifyRotateOptions::LC_ModifyRotateOptions()
     connect(ui->cbTwoRotations, &QCheckBox::clicked, this, &LC_ModifyRotateOptions::onTwoRotationsClicked);
     connect(ui->cbAbsoluteRefAngle, &QCheckBox::clicked, this, &LC_ModifyRotateOptions::onAbsoluteRefAngleClicked);
 
-    connect(ui->sbNumberOfCopies, &QSpinBox::valueChanged, this, &LC_ModifyRotateOptions::onCopiesNumberValueChanged);
+    connect(ui->sbNumberOfCopies, QOverload<int>::of(&QSpinBox::valueChanged), this, &LC_ModifyRotateOptions::onCopiesNumberValueChanged);
 
     connect(ui->leAngle, &QLineEdit::editingFinished, this, &LC_ModifyRotateOptions::onAngleEditingFinished);
     connect(ui->leAngle2, &QLineEdit::editingFinished, this,&LC_ModifyRotateOptions::onRefPointAngleEditingFinished);

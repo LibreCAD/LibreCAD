@@ -25,7 +25,11 @@
 **********************************************************************/
 
 #include <QRegularExpression>
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
 #include <QStringConverter>
+#else
+#include <QTextCodec>
+#endif
 
 #include <QFile>
 #include <QFileInfo>
@@ -59,6 +63,23 @@
 #include "rs_math.h"
 #include "rs_debug.h"
 
+namespace {
+QString decodeWithCodePage(const std::string& text, const QString& encoding)
+{
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+    const auto qEncoding = QStringConverter::encodingForName(encoding.toLatin1());
+    if (qEncoding) {
+        return QStringEncoder{QStringEncoder::Utf8}(QString::fromStdString(text));
+    }
+#else
+    QTextCodec* codec = QTextCodec::codecForName(encoding.toLatin1());
+    if (codec != nullptr) {
+        return codec->toUnicode(text.c_str());
+    }
+#endif
+    return QString::fromStdString(text);
+}
+}
 
 /**
  * Default constructor.
@@ -212,10 +233,7 @@ void RS_FilterJWW::addBlock(const DL_BlockData& data) {
                         QString enc = RS_System::getEncoding(
                                                                 variables.getString("$DWGCODEPAGE", "ANSI_1252"));
                         // get the codec for Japanese
-                        QString blName = data.name.c_str();
-                        std::optional<QStringConverter::Encoding> encoding = QStringConverter::encodingForName(enc.toLatin1());
-                        if(encoding)
-                                blName = QStringEncoder{QStringEncoder::Utf8}(QString::fromStdString(data.name));
+                        QString blName = decodeWithCodePage(data.name, enc);
 //////////////////////////////
                         RS_Block* block =
                                 new RS_Block(graphic,
@@ -2470,10 +2488,7 @@ void RS_FilterJWW::setEntityAttributes(RS_Entity* entity,
                 QString enc = RS_System::getEncoding(
                                                         variables.getString("$DWGCODEPAGE", "ANSI_1252"));
                 // get the codec for Japanese
-                QString lName = attrib.getLayer().c_str();
-                auto encoding = QStringConverter::encodingForName(enc.toLatin1());
-                if(encoding)
-                        lName = QStringEncoder{QStringEncoder::Utf8}(QString::fromStdString(attrib.getLayer()));
+                QString lName = decodeWithCodePage(attrib.getLayer(), enc);
 				if (!graphic->findLayer(lName)) {
                         addLayer(DL_LayerData(attrib.getLayer(), 0));
                 }
@@ -3067,9 +3082,7 @@ QString RS_FilterJWW::toNativeString(const char* data, const QString& encoding) 
      *	  the string through a textcoder.
      *	--------------------------------------------------------------------- */
     if (!res.contains("\\U+")) {
-        auto qEncoding = QStringConverter::encodingForName(encoding.toLatin1());
-        if (qEncoding)
-            res = QStringEncoder{QStringEncoder::Utf8}(data);
+        res = decodeWithCodePage(data, encoding);
     }
 
     // Line feed:

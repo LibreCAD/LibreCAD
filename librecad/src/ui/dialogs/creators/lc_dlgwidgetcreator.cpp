@@ -23,6 +23,7 @@
 
 #include "lc_dlgwidgetcreator.h"
 
+#include <QComboBox>
 #include <QLineEdit>
 #include <QMessageBox>
 #include <QSettings>
@@ -81,7 +82,7 @@ LC_DlgWidgetCreator::LC_DlgWidgetCreator(QWidget *parent, bool forMenu, LC_Actio
         }
         ui->cbTBPlacementArea->setCurrentIndex(area);
 
-        connect(ui->cbTBPlacementArea, &QComboBox::currentIndexChanged, this, &LC_DlgWidgetCreator::onToolbarPlacementIndexChanged);
+        connect(ui->cbTBPlacementArea, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &LC_DlgWidgetCreator::onToolbarPlacementIndexChanged);
     }
 
     ui->cbCategories->setCurrentIndex(-1);
@@ -93,7 +94,7 @@ LC_DlgWidgetCreator::LC_DlgWidgetCreator(QWidget *parent, bool forMenu, LC_Actio
     ui->alChosenActions->setDragDropMode(QAbstractItemView::InternalMove);
     ui->alOfferredActions->setSortingEnabled(true);
 
-    connect(ui->cbCategories, &QComboBox::activated, this, &LC_DlgWidgetCreator::onCategoryActivated);
+    connect(ui->cbCategories, QOverload<int>::of(&QComboBox::activated), this, &LC_DlgWidgetCreator::onCategoryActivated);
 
     connect(ui->btnAdd, &QPushButton::released, this, &LC_DlgWidgetCreator::addChosenAction);
     connect(ui->btnRemove,  &QPushButton::released, this, &LC_DlgWidgetCreator::removeChosenAction);
@@ -102,7 +103,7 @@ LC_DlgWidgetCreator::LC_DlgWidgetCreator(QWidget *parent, bool forMenu, LC_Actio
     connect(ui->alOfferredActions, &ActionList::itemDoubleClicked,this, &LC_DlgWidgetCreator::addChosenActionForItem);
     connect(ui->alChosenActions, &ActionList::itemDoubleClicked,this, &LC_DlgWidgetCreator::removeChosenActionForItem);
 
-    connect(ui->cbWidgetName, &QComboBox::currentIndexChanged, this, &LC_DlgWidgetCreator::loadWidgetActions);
+    connect(ui->cbWidgetName, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &LC_DlgWidgetCreator::loadWidgetActions);
 
     connect(ui->btnNew, &QToolButton::released, this, &LC_DlgWidgetCreator::newWidget);
     connect(ui->btnSave, &QToolButton::released, this, &LC_DlgWidgetCreator::saveWidget);

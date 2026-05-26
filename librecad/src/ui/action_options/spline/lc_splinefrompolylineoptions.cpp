@@ -33,8 +33,8 @@ LC_SplineFromPolylineOptions::LC_SplineFromPolylineOptions()
     connect(ui->cbCurrentAttr, &QCheckBox::toggled, this, &LC_SplineFromPolylineOptions::cbUseCurrentAttributesClicked);
     connect(ui->cbLayer, &QCheckBox::toggled, this, &LC_SplineFromPolylineOptions::cbUseCurrentLayerClicked);
     connect(ui->cbFitPoints, &QCheckBox::toggled, this, &LC_SplineFromPolylineOptions::cbUseFitPointsClicked);
-    connect(ui->sbDegree, &QSpinBox::valueChanged, this, &LC_SplineFromPolylineOptions::sbDegreeValueChanged);
-    connect(ui->sbMidPoints, &QSpinBox::valueChanged, this, &LC_SplineFromPolylineOptions::sbMidPointsValueChanged);
+    connect(ui->sbDegree, QOverload<int>::of(&QSpinBox::valueChanged), this, &LC_SplineFromPolylineOptions::sbDegreeValueChanged);
+    connect(ui->sbMidPoints, QOverload<int>::of(&QSpinBox::valueChanged), this, &LC_SplineFromPolylineOptions::sbMidPointsValueChanged);
 }
 
 LC_SplineFromPolylineOptions::~LC_SplineFromPolylineOptions(){
