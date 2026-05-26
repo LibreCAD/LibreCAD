@@ -26,6 +26,7 @@
 
 #include <QRegularExpression>
 #if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+#include <QByteArray>
 #include <QStringConverter>
 #else
 #include <QTextCodec>
@@ -69,7 +70,8 @@ QString decodeWithCodePage(const std::string& text, const QString& encoding)
 #if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
     const auto qEncoding = QStringConverter::encodingForName(encoding.toLatin1());
     if (qEncoding) {
-        return QStringEncoder{QStringEncoder::Utf8}(QString::fromStdString(text));
+        QStringDecoder decoder{*qEncoding};
+        return decoder(QByteArray::fromRawData(text.data(), qsizetype(text.size())));
     }
 #else
     QTextCodec* codec = QTextCodec::codecForName(encoding.toLatin1());

@@ -26,6 +26,7 @@
 #include "rs_debug.h"
 
 #include <QDateTime>
+#include <QIODevice>
 #include <QString>
 #include <QTextStream>
 #include <iostream>
