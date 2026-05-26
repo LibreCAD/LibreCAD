@@ -29,6 +29,7 @@
 #define QG_LAYERWIDGET_H
 
 #include <QAbstractTableModel>
+#include <QIcon>
 #include <QList>
 
 #include "lc_flexlayout.h"

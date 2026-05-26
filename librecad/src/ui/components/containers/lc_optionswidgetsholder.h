@@ -23,6 +23,7 @@
 #ifndef LC_OPTIONSWIDGETSHOLDER_H
 #define LC_OPTIONSWIDGETSHOLDER_H
 
+#include <QIcon>
 
 #include "lc_snapoptionswidgetsholder.h"
 

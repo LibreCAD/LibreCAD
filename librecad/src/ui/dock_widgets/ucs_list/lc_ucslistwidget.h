@@ -23,6 +23,7 @@
 #ifndef LC_UCSLISTWIDGET_H
 #define LC_UCSLISTWIDGET_H
 
+#include <QIcon>
 #include <QModelIndex>
 #include "lc_graphicviewawarewidget.h"
 #include "lc_ucslist.h"

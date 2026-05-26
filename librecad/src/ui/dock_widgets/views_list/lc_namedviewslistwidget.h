@@ -23,6 +23,7 @@
 #ifndef LC_NAMEDVIEWSLISTWIDGET_H
 #define LC_NAMEDVIEWSLISTWIDGET_H
 
+#include <QIcon>
 #include <QItemSelection>
 
 #include "rs.h"
