@@ -1801,16 +1801,26 @@ bool dwgReader::readDwgObject(dwgBuffer *dbuf, objHandle& obj, DRW_Interface& in
             //not supported object or entity add to remaining map for debug
             {
                 std::string objectName;
+                std::string recordName;
+                std::string className;
                 if (oType >= 500) {
                     auto cit = classesmap.find(oType);
-                    if (cit != classesmap.end() && cit->second)
-                        objectName = cit->second->recName.empty()
-                            ? cit->second->className
-                            : cit->second->recName;
+                    if (cit != classesmap.end() && cit->second) {
+                        recordName = cit->second->recName;
+                        className = cit->second->className;
+                        objectName = recordName.empty() ? className : recordName;
+                    }
                 }
                 if (objectName.empty())
                     objectName = "type-" + std::to_string(oType);
                 ++m_skippedUnsupportedObjects[objectName];
+                DRW_UnsupportedObject raw;
+                raw.m_objectType = oType;
+                raw.m_handle = obj.handle;
+                raw.m_recordName = recordName;
+                raw.m_className = className;
+                raw.m_rawBytes.assign(tmpByteStr, tmpByteStr + size);
+                intfa.addUnsupportedObject(raw);
                 DRW_DBG("[unsupported-object-skipped "); DRW_DBG(objectName.c_str());
                 DRW_DBG("]\n");
             }

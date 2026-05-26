@@ -1291,8 +1291,8 @@ bool DRW_Entity::parseDwg(DRW::Version version, dwgBuffer *buf, dwgBuffer* strBu
     return buf->isGood();
 }
 
-bool DRW_Entity::parseDwgEntHandle(DRW::Version version, dwgBuffer *buf){
-    if (version > DRW::AC1018) {//2007+ skip string area
+bool DRW_Entity::parseDwgEntHandle(DRW::Version version, dwgBuffer *buf, bool resetHandleStream){
+    if (resetHandleStream && version > DRW::AC1018) {//2007+ skip string area
         buf->setPosition(objSize >> 3);
         buf->setBitPos(objSize & 7);
     }
@@ -3627,6 +3627,178 @@ DRW_Attrib& DRW_Attrib::operator=(const DRW_Attrib& o) {
 DRW_Attrib::DRW_Attrib(DRW_Attrib&&) noexcept = default;
 DRW_Attrib& DRW_Attrib::operator=(DRW_Attrib&&) noexcept = default;
 
+namespace {
+struct EmbeddedMTextHandleInfo {
+    bool m_ownerHandle = false;
+    int m_numReactors = 0;
+    duint8 m_xDictFlag = 1;
+    bool m_hasAcDbColorHandle = false;
+    int m_ltFlags = 0;
+    int m_plotFlags = 0;
+    int m_materialFlag = 0;
+    int m_shadowFlag = 0;
+    bool m_hasFullVisualStyle = false;
+    bool m_hasFaceVisualStyle = false;
+    bool m_hasEdgeVisualStyle = false;
+    bool m_hasStyleHandle = true;
+    bool m_hasR2018AppIdHandle = false;
+    bool m_hasAnnotativeAppHandle = false;
+};
+
+static bool parseEmbeddedMTextEntityMode(DRW::Version version, dwgBuffer *buf,
+                                         EmbeddedMTextHandleInfo& info) {
+    duint8 entmode = buf->get2Bits();
+    info.m_ownerHandle = entmode == 0;
+    info.m_numReactors = buf->getBitLong();
+    if (version > DRW::AC1015) {
+        info.m_xDictFlag = buf->getBit();
+    }
+    if (version > DRW::AC1024 || version < DRW::AC1018) {
+        buf->getBit(); // nolinks / have-next-links
+    }
+    buf->getEnColor(version);
+    info.m_hasAcDbColorHandle = buf->lastEnColorHadDbColorRef;
+    buf->getBitDouble(); // linetype scale
+    if (version > DRW::AC1014) {
+        info.m_ltFlags = buf->get2Bits();
+        info.m_plotFlags = buf->get2Bits();
+    }
+    if (version > DRW::AC1018) {
+        info.m_materialFlag = buf->get2Bits();
+        info.m_shadowFlag = buf->getRawChar8();
+    }
+    if (version > DRW::AC1021) {
+        info.m_hasFullVisualStyle = buf->getBit() != 0;
+        info.m_hasFaceVisualStyle = buf->getBit() != 0;
+        info.m_hasEdgeVisualStyle = buf->getBit() != 0;
+    }
+    buf->getBitShort(); // invisibility
+    if (version > DRW::AC1014) {
+        buf->getRawChar8(); // lineweight
+    }
+    return buf->isGood();
+}
+
+static bool parseEmbeddedMTextDwg(DRW::Version version, dwgBuffer *buf,
+                                  dwgBuffer *sBuf, DRW_MText& mtext,
+                                  EmbeddedMTextHandleInfo& info) {
+    if (!parseEmbeddedMTextEntityMode(version, buf, info))
+        return false;
+
+    mtext.basePoint = buf->get3BitDouble();
+    mtext.extPoint = buf->get3BitDouble();
+    mtext.secPoint = buf->get3BitDouble();
+    mtext.angle = atan2(mtext.secPoint.y, mtext.secPoint.x) * ARAD;
+    mtext.widthscale = buf->getBitDouble();
+    if (version > DRW::AC1018) {
+        buf->getBitDouble(); // rect height
+    }
+    mtext.height = buf->getBitDouble();
+    mtext.textgen = buf->getBitShort();
+    mtext.alignH = static_cast<DRW_Text::HAlign>(buf->getBitShort());
+    buf->getBitDouble(); // extents height
+    buf->getBitDouble(); // extents width
+    mtext.text = sBuf->getVariableText(version, false);
+
+    if (version > DRW::AC1014) {
+        buf->getBitShort();
+        mtext.interlin = buf->getBitDouble();
+        buf->getBit();
+    }
+    if (version > DRW::AC1015) {
+        mtext.m_backgroundFlags = buf->getBitLong();
+        if ((mtext.m_backgroundFlags & 0x01)
+            || (version >= DRW::AC1032 && (mtext.m_backgroundFlags & 0x10))) {
+            mtext.m_backgroundScale = buf->getBitLong();
+            mtext.m_backgroundColor = static_cast<int>(buf->getCmColor(version, nullptr, sBuf));
+            mtext.m_backgroundTransparency = buf->getBitLong();
+        }
+    }
+
+    if (version >= DRW::AC1032) {
+        mtext.m_r2018ColumnHeights.clear();
+        mtext.m_r2018IsNotAnnotative = buf->getBit();
+        if (mtext.m_r2018IsNotAnnotative) {
+            mtext.m_r2018Version = buf->getBitShort();
+            mtext.m_r2018DefaultFlag = buf->getBit();
+            info.m_hasR2018AppIdHandle = true;
+            mtext.m_r2018Attachment = buf->getBitLong();
+            mtext.m_r2018XAxisDir = buf->get3BitDouble();
+            mtext.m_r2018InsertionPoint = buf->get3BitDouble();
+            mtext.m_r2018RectWidth = buf->getBitDouble();
+            mtext.m_r2018RectHeight = buf->getBitDouble();
+            mtext.m_r2018ExtentsHeight = buf->getBitDouble();
+            mtext.m_r2018ExtentsWidth = buf->getBitDouble();
+            mtext.m_r2018ColumnType = buf->getBitShort();
+            if (mtext.m_r2018ColumnType != 0) {
+                mtext.m_r2018ColumnCount = buf->getBitLong();
+                mtext.m_r2018ColumnWidth = buf->getBitDouble();
+                mtext.m_r2018ColumnGutter = buf->getBitDouble();
+                mtext.m_r2018ColumnAutoHeight = buf->getBit();
+                mtext.m_r2018ColumnFlowReversed = buf->getBit();
+                if (!mtext.m_r2018ColumnAutoHeight && mtext.m_r2018ColumnType == 2
+                    && mtext.m_r2018ColumnCount > 0 && mtext.m_r2018ColumnCount < 10000) {
+                    mtext.m_r2018ColumnHeights.reserve(static_cast<size_t>(mtext.m_r2018ColumnCount));
+                    for (dint32 i = 0; i < mtext.m_r2018ColumnCount; ++i) {
+                        mtext.m_r2018ColumnHeights.push_back(buf->getBitDouble());
+                    }
+                }
+            }
+        }
+    }
+
+    const duint16 annotativeSize = buf->getBitShort();
+    if (annotativeSize > 0) {
+        const int remaining = buf->numRemainingBytes();
+        if (remaining < 0 || static_cast<duint64>(annotativeSize) > static_cast<duint64>(remaining))
+            return false;
+        std::vector<duint8> annotativeData(annotativeSize);
+        buf->getBytes(annotativeData.data(), annotativeData.size());
+        info.m_hasAnnotativeAppHandle = true;
+        buf->getBitShort(); // unknown short, normally 0
+    }
+    return buf->isGood();
+}
+
+static bool consumeEmbeddedMTextHandles(DRW::Version version, dwgBuffer *buf,
+                                        duint32 objSize,
+                                        const EmbeddedMTextHandleInfo& info,
+                                        DRW_MText *mtext) {
+    if (version > DRW::AC1018) {
+        buf->setPosition(objSize >> 3);
+        buf->setBitPos(objSize & 7);
+    }
+    if (info.m_hasAcDbColorHandle) buf->getHandle();
+    if (info.m_ownerHandle) buf->getHandle();
+    for (int i = 0; i < info.m_numReactors; ++i) buf->getHandle();
+    if (info.m_xDictFlag != 1) buf->getHandle();
+    if (version > DRW::AC1014) {
+        buf->getHandle(); // layer
+        if (info.m_ltFlags == 3) buf->getHandle();
+    }
+    if (version > DRW::AC1018) {
+        if (info.m_materialFlag == 3) buf->getHandle();
+        if (info.m_shadowFlag == 3) buf->getHandle();
+    }
+    if (info.m_plotFlags == 3) buf->getHandle();
+    if (version > DRW::AC1021) {
+        if (info.m_hasFullVisualStyle) buf->getHandle();
+        if (info.m_hasFaceVisualStyle) buf->getHandle();
+        if (info.m_hasEdgeVisualStyle) buf->getHandle();
+    }
+    if (info.m_hasStyleHandle) {
+        dwgHandle styleH = buf->getHandle();
+        if (mtext) mtext->styleH = styleH;
+    }
+    if (info.m_hasR2018AppIdHandle) {
+        dwgHandle appIdH = buf->getHandle();
+        if (mtext) mtext->m_r2018AppIdHandle = appIdH.ref;
+    }
+    if (info.m_hasAnnotativeAppHandle) buf->getHandle();
+    return buf->isGood();
+}
+}
+
 bool DRW_Attrib::parseCode(int code, const std::unique_ptr<dxfReader>& reader){
     // Multi-line ATTRIB (R2018+, ODA spec §20.4.4): an embedded MTEXT object
     // is introduced by the DXF subclass marker `100 / Embedded Object` (NOT
@@ -3740,9 +3912,15 @@ bool DRW_Attrib::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
         DRW_DBG("attribute type: "); DRW_DBG(m_attributeType); DRW_DBG("\n");
     }
 
+    bool hasEmbeddedMText = false;
+    EmbeddedMTextHandleInfo embeddedMTextHandles;
     if (version >= DRW::AC1032 && m_attributeType != 0 && m_attributeType != 1) {
-        DRW_DBG("R2018 multi-line ATTRIB payload is not yet decoded\n");
-        return false;
+        mtext = std::make_unique<DRW_MText>();
+        if (!parseEmbeddedMTextDwg(version, buf, sBuf, *mtext, embeddedMTextHandles)) {
+            DRW_DBG("R2018 multi-line ATTRIB payload failed\n");
+            return false;
+        }
+        hasEmbeddedMText = true;
     }
 
     // ATTRIB-specific fields
@@ -3761,7 +3939,11 @@ bool DRW_Attrib::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
     }
 
     /* Common Entity Handle Data */
-    ret = DRW_Entity::parseDwgEntHandle(version, buf);
+    if (hasEmbeddedMText
+        && !consumeEmbeddedMTextHandles(version, buf, objSize, embeddedMTextHandles, mtext.get())) {
+        return false;
+    }
+    ret = DRW_Entity::parseDwgEntHandle(version, buf, !hasEmbeddedMText);
     if (!ret)
         return ret;
 
@@ -3897,9 +4079,15 @@ bool DRW_Attdef::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
         m_attributeType = buf->getRawChar8();
     }
 
+    bool hasEmbeddedMText = false;
+    EmbeddedMTextHandleInfo embeddedMTextHandles;
     if (version >= DRW::AC1032 && m_attributeType != 0 && m_attributeType != 1) {
-        DRW_DBG("R2018 multi-line ATTDEF payload is not yet decoded\n");
-        return false;
+        mtext = std::make_unique<DRW_MText>();
+        if (!parseEmbeddedMTextDwg(version, buf, sBuf, *mtext, embeddedMTextHandles)) {
+            DRW_DBG("R2018 multi-line ATTDEF payload failed\n");
+            return false;
+        }
+        hasEmbeddedMText = true;
     }
 
     tag = sBuf->getVariableText(version, false);
@@ -3923,7 +4111,11 @@ bool DRW_Attdef::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
     prompt = sBuf->getVariableText(version, false);
     DRW_DBG("attdef prompt: "); DRW_DBG(prompt.c_str()); DRW_DBG("\n");
 
-    ret = DRW_Entity::parseDwgEntHandle(version, buf);
+    if (hasEmbeddedMText
+        && !consumeEmbeddedMTextHandles(version, buf, objSize, embeddedMTextHandles, mtext.get())) {
+        return false;
+    }
+    ret = DRW_Entity::parseDwgEntHandle(version, buf, !hasEmbeddedMText);
     if (!ret)
         return ret;
 

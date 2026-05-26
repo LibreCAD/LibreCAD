@@ -82,6 +82,8 @@ public:
     virtual void addLayout(const DRW_Layout& data) { (void) data; }
     /** Called for every MLineStyle (ODA fixed type 73). */
     virtual void addMLineStyle(const DRW_MLineStyle& data) { (void) data; }
+    /** Called for unsupported DWG object/entity payloads kept as raw bytes. */
+    virtual void addUnsupportedObject(const DRW_UnsupportedObject& data) { (void) data; }
 
     /**
      * Called for every block. Note: all entities added after this

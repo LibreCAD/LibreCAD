@@ -151,6 +151,15 @@ private:
     DRW_Variant* curr {nullptr};
 };
 
+//! Raw carrier for a DWG object/entity class that libdxfrw does not model yet.
+struct DRW_UnsupportedObject {
+    int m_objectType = 0;
+    duint32 m_handle = 0;
+    UTF8STRING m_recordName;
+    UTF8STRING m_className;
+    std::vector<duint8> m_rawBytes;
+};
+
 
 //! Class to handle dimstyle entries
 /*!
