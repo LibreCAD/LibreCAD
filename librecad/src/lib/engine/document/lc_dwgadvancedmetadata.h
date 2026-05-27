@@ -140,6 +140,24 @@ public:
         ReplayState replayState = ReplayState::ReplayAllowed;
     };
 
+    struct MLeaderStyleRecord {
+        duint32 handle = 0;
+        duint32 parentHandle = 0;
+        std::string name;
+        duint16 styleVersion = 0;
+        duint16 contentType = 0;
+        duint16 leaderType = 0;
+        duint32 leaderLineTypeHandle = 0;
+        duint32 arrowHeadBlockHandle = 0;
+        duint32 textStyleHandle = 0;
+        duint32 blockHandle = 0;
+        double arrowHeadSize = 0.0;
+        double textHeight = 0.0;
+        double scaleFactor = 1.0;
+        bool isAnnotative = false;
+        ReplayState replayState = ReplayState::ReplayAllowed;
+    };
+
     void clear() {
         m_rawObjects.clear();
         m_views.clear();
@@ -150,6 +168,7 @@ public:
         m_associativeObjects.clear();
         m_acshObjects.clear();
         m_mleaders.clear();
+        m_mleaderStyles.clear();
     }
 
     void addUnsupportedObject(const DRW_UnsupportedObject& object) {
@@ -293,6 +312,25 @@ public:
         m_mleaders.push_back(record);
     }
 
+    void addMLeaderStyle(const DRW_MLeaderStyle& style) {
+        MLeaderStyleRecord record;
+        record.handle = style.handle;
+        record.parentHandle = style.parentHandle;
+        record.name = style.name;
+        record.styleVersion = style.styleVersion;
+        record.contentType = style.contentType;
+        record.leaderType = style.leaderType;
+        record.leaderLineTypeHandle = style.leaderLineTypeHandle.ref;
+        record.arrowHeadBlockHandle = style.arrowHeadBlockHandle.ref;
+        record.textStyleHandle = style.textStyleHandle.ref;
+        record.blockHandle = style.blockHandle.ref;
+        record.arrowHeadSize = style.arrowHeadSize;
+        record.textHeight = style.textHeight;
+        record.scaleFactor = style.scaleFactor;
+        record.isAnnotative = style.isAnnotative;
+        m_mleaderStyles.push_back(record);
+    }
+
     const std::vector<RawObjectRecord>& rawObjects() const { return m_rawObjects; }
     const std::vector<ViewRecord>& views() const { return m_views; }
     const std::vector<LightRecord>& lights() const { return m_lights; }
@@ -302,6 +340,7 @@ public:
     const std::vector<AssociativeRecord>& associativeObjects() const { return m_associativeObjects; }
     const std::vector<AcShRecord>& acshObjects() const { return m_acshObjects; }
     const std::vector<MLeaderRecord>& mleaders() const { return m_mleaders; }
+    const std::vector<MLeaderStyleRecord>& mleaderStyles() const { return m_mleaderStyles; }
 
     const ViewRecord* findViewByName(const std::string& name) const {
         for (const ViewRecord& record : m_views) {
@@ -319,7 +358,8 @@ public:
             || hasReplayable(m_tables)
             || hasReplayable(m_associativeObjects)
             || hasReplayable(m_acshObjects)
-            || hasReplayable(m_mleaders);
+            || hasReplayable(m_mleaders)
+            || hasReplayable(m_mleaderStyles);
     }
 
     void invalidateByHandle(duint32 handle) {
@@ -344,6 +384,7 @@ public:
         invalidateContainer(m_associativeObjects);
         invalidateContainer(m_acshObjects);
         invalidateContainer(m_mleaders);
+        invalidateContainer(m_mleaderStyles);
     }
 
 private:
@@ -375,6 +416,7 @@ private:
         invalidateMatching(m_associativeObjects, predicate);
         invalidateMatching(m_acshObjects, predicate);
         invalidateMatching(m_mleaders, predicate);
+        invalidateMatching(m_mleaderStyles, predicate);
     }
 
     template<typename Container, typename Predicate>
@@ -396,6 +438,7 @@ private:
     std::vector<AssociativeRecord> m_associativeObjects;
     std::vector<AcShRecord> m_acshObjects;
     std::vector<MLeaderRecord> m_mleaders;
+    std::vector<MLeaderStyleRecord> m_mleaderStyles;
 };
 
 #endif

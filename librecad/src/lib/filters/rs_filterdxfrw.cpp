@@ -3909,13 +3909,17 @@ void RS_FilterDXFRW::addMLeader(const DRW_MLeader *data) {
 }
 
 /**
- * MLEADERSTYLE dictionary entry capture.  Phase 5 currently just logs
- * receipt; Phase 7 will store the styles in an LC_MLeaderStyleList on
- * the document so MLEADERs can resolve their style references.
+ * MLEADERSTYLE dictionary entry capture. Styles are kept in the DWG advanced
+ * metadata store for future style resolution and raw/native round-trip work;
+ * the current LC_MLeader entity still copies effective scalar values from the
+ * entity itself.
  */
 void RS_FilterDXFRW::addMLeaderStyle(const DRW_MLeaderStyle *data) {
   if (data == nullptr)
     return;
+  if (m_graphic != nullptr) {
+    m_graphic->dwgAdvancedMetadata().addMLeaderStyle(*data);
+  }
   RS_DEBUG->print("RS_FilterDXFRW::addMLeaderStyle: %s",
                   data->name.empty() ? "(unnamed)" : data->name.c_str());
 }
@@ -5329,7 +5333,8 @@ void RS_FilterDXFRW::writeObjects() {
         const bool hasSemanticOnlyReplayable =
             !metadata.lights().empty() || !metadata.suns().empty()
             || !metadata.modelerGeometry().empty() || !metadata.tables().empty()
-            || !metadata.associativeObjects().empty() || !metadata.acshObjects().empty();
+            || !metadata.associativeObjects().empty() || !metadata.acshObjects().empty()
+            || !metadata.mleaderStyles().empty();
         if (hasBlockedReplay || hasSemanticOnlyReplayable) {
             RS_DEBUG->print(
                 RS_Debug::D_WARNING,

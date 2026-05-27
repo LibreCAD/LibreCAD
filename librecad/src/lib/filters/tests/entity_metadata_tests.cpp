@@ -137,6 +137,23 @@ TEST_CASE("DWG advanced metadata caches raw and semantic sidecars",
   view.m_ambientColor = 7u;
   metadata.addView(view);
 
+  DRW_MLeaderStyle style;
+  style.handle = 0xA0u;
+  style.parentHandle = 0xA1u;
+  style.name = "CalloutStyle";
+  style.styleVersion = 2u;
+  style.contentType = 2u;
+  style.leaderType = 1u;
+  style.leaderLineTypeHandle.ref = 0xA2u;
+  style.arrowHeadBlockHandle.ref = 0xA3u;
+  style.textStyleHandle.ref = 0xA4u;
+  style.blockHandle.ref = 0xA5u;
+  style.arrowHeadSize = 0.75;
+  style.textHeight = 2.5;
+  style.scaleFactor = 3.0;
+  style.isAnnotative = true;
+  metadata.addMLeaderStyle(style);
+
   REQUIRE(metadata.rawObjects().size() == 1);
   CHECK(metadata.rawObjects().front().handle == 0x77u);
   CHECK(metadata.rawObjects().front().bodyBitSize == 128u);
@@ -151,7 +168,23 @@ TEST_CASE("DWG advanced metadata caches raw and semantic sidecars",
   CHECK(foundView->defaultLightingType == 2u);
   CHECK(foundView->ambientColor == 7u);
 
+  REQUIRE(metadata.mleaderStyles().size() == 1);
+  const auto& capturedStyle = metadata.mleaderStyles().front();
+  CHECK(capturedStyle.handle == 0xA0u);
+  CHECK(capturedStyle.parentHandle == 0xA1u);
+  CHECK(capturedStyle.name == "CalloutStyle");
+  CHECK(capturedStyle.contentType == 2u);
+  CHECK(capturedStyle.textStyleHandle == 0xA4u);
+  CHECK(capturedStyle.blockHandle == 0xA5u);
+  CHECK(capturedStyle.arrowHeadSize == 0.75);
+  CHECK(capturedStyle.textHeight == 2.5);
+  CHECK(capturedStyle.scaleFactor == 3.0);
+  CHECK(capturedStyle.isAnnotative);
+
   REQUIRE(metadata.hasReplayableAdvancedObjects());
+  metadata.invalidateByOwner(0xA1u);
+  CHECK(capturedStyle.replayState ==
+        LC_DwgAdvancedMetadata::ReplayState::ReplayInvalidated);
   metadata.invalidateByHandle(0x77u);
   CHECK(metadata.rawObjects().front().replayState ==
         LC_DwgAdvancedMetadata::ReplayState::ReplayInvalidated);
