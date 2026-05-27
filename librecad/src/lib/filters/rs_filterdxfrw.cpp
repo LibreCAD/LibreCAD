@@ -3945,50 +3945,58 @@ void RS_FilterDXFRW::addSectionViewStyle(const DRW_SectionViewStyle &data) {
 }
 
 void RS_FilterDXFRW::addBreakData(const DRW_BreakData &data) {
-  // TODO: Resolve BREAKDATA point refs and dimension refs into native broken
-  // view/dimension-break relationships after LibreCAD grows a consumer model.
+  if (m_graphic != nullptr) {
+    m_graphic->dwgAdvancedMetadata().addBreakData(data);
+  }
   RS_DEBUG->print("RS_FilterDXFRW::addBreakData: %d refs",
                   static_cast<int>(data.m_pointRefHandles.size()));
 }
 
 void RS_FilterDXFRW::addBreakPointRef(const DRW_BreakPointRef &data) {
-  // TODO: Preserve/use BREAKPOINTREF xref subend-path data when the related
-  // broken-view metadata graph is modeled on the LibreCAD side.
+  if (m_graphic != nullptr) {
+    m_graphic->dwgAdvancedMetadata().addBreakPointRef(data);
+  }
   RS_DEBUG->print("RS_FilterDXFRW::addBreakPointRef: %d",
                   static_cast<int>(data.handle));
 }
 
 void RS_FilterDXFRW::addGroup(const DRW_Group &data) {
-  // TODO: Store GROUP membership in the document model so selection sets and
-  // named groups can round-trip through LibreCAD instead of being import-only.
+  if (m_graphic != nullptr) {
+    m_graphic->dwgAdvancedMetadata().addGroup(data);
+  }
   RS_DEBUG->print("RS_FilterDXFRW::addGroup: %s (%d handles)",
                   data.m_description.empty() ? "(unnamed)" : data.m_description.c_str(),
                   static_cast<int>(data.m_entityHandles.size()));
 }
 
 void RS_FilterDXFRW::addImageDefinitionReactor(const DRW_ImageDefinitionReactor &data) {
-  // TODO: Preserve IMAGEDEF_REACTOR ownership links alongside IMAGEDEF/IMAGE
-  // metadata once LibreCAD has a raw DWG object store.
+  if (m_graphic != nullptr) {
+    m_graphic->dwgAdvancedMetadata().addImageDefinitionReactor(data);
+  }
   RS_DEBUG->print("RS_FilterDXFRW::addImageDefinitionReactor: class version %d",
                   static_cast<int>(data.m_classVersion));
 }
 
 void RS_FilterDXFRW::addSpatialFilter(const DRW_SpatialFilter &data) {
-  // TODO: Attach SPATIAL_FILTER clip boundaries to INSERT/xref entities when
-  // native xref clipping support exists in the LibreCAD entity layer.
+  if (m_graphic != nullptr) {
+    m_graphic->dwgAdvancedMetadata().addSpatialFilter(data);
+  }
   RS_DEBUG->print("RS_FilterDXFRW::addSpatialFilter: %d boundary points",
                   static_cast<int>(data.m_boundaryPoints.size()));
 }
 
 void RS_FilterDXFRW::addGeoData(const DRW_GeoData &data) {
-  // TODO: Map GEODATA to drawing-level geolocation/projection settings.
+  if (m_graphic != nullptr) {
+    m_graphic->dwgAdvancedMetadata().addGeoData(data);
+  }
   RS_DEBUG->print("RS_FilterDXFRW::addGeoData: version %d",
                   static_cast<int>(data.m_version));
 }
 
 void RS_FilterDXFRW::addTableGeometry(const DRW_TableGeometry &data) {
-  // TODO: Use TABLEGEOMETRY with TABLE/TABLECONTENT rendering when native
-  // semantic table layout is completed.
+  if (m_graphic != nullptr) {
+    m_graphic->dwgAdvancedMetadata().addTableGeometry(data);
+  }
   RS_DEBUG->print("RS_FilterDXFRW::addTableGeometry: %d x %d",
                   static_cast<int>(data.m_rowCount),
                   static_cast<int>(data.m_columnCount));
@@ -4012,9 +4020,6 @@ void RS_FilterDXFRW::addTableContent(const DRW_TableContentObject &data) {
 }
 
 void RS_FilterDXFRW::addUnsupportedObject(const DRW_UnsupportedObject &data) {
-  // TODO: Attach this raw store to a document-level DWG metadata extension so
-  // unsupported object payloads can round-trip instead of living only during
-  // import diagnostics.
   if (m_graphic != nullptr) {
     m_graphic->dwgAdvancedMetadata().addUnsupportedObject(data);
   }
@@ -4026,7 +4031,9 @@ void RS_FilterDXFRW::addUnsupportedObject(const DRW_UnsupportedObject &data) {
 }
 
 void RS_FilterDXFRW::addAcDbPlaceholder(const DRW_AcDbPlaceholder &data) {
-  // TODO: Preserve placeholder ownership semantics in the DWG metadata store.
+  if (m_graphic != nullptr) {
+    m_graphic->dwgAdvancedMetadata().addAcDbPlaceholder(data);
+  }
   RS_DEBUG->print("RS_FilterDXFRW::addAcDbPlaceholder: %d",
                   static_cast<int>(data.handle));
 }
@@ -5338,7 +5345,15 @@ void RS_FilterDXFRW::writeObjects() {
             || !metadata.associativeObjects().empty() || !metadata.acshObjects().empty()
             || !metadata.mleaderStyles().empty()
             || !metadata.detailViewStyles().empty()
-            || !metadata.sectionViewStyles().empty();
+            || !metadata.sectionViewStyles().empty()
+            || !metadata.breakData().empty()
+            || !metadata.breakPointRefs().empty()
+            || !metadata.groups().empty()
+            || !metadata.imageDefinitionReactors().empty()
+            || !metadata.spatialFilters().empty()
+            || !metadata.geoData().empty()
+            || !metadata.tableGeometry().empty()
+            || !metadata.placeholders().empty();
         if (hasBlockedReplay || hasSemanticOnlyReplayable) {
             RS_DEBUG->print(
                 RS_Debug::D_WARNING,

@@ -203,6 +203,82 @@ public:
         ReplayState replayState = ReplayState::ReplayAllowed;
     };
 
+    struct BreakDataRecord {
+        duint32 handle = 0;
+        duint32 parentHandle = 0;
+        duint32 dimensionHandle = 0;
+        std::vector<duint32> pointRefHandles;
+        ReplayState replayState = ReplayState::ReplayAllowed;
+    };
+
+    struct BreakPointRefRecord {
+        duint32 handle = 0;
+        duint32 parentHandle = 0;
+        ReplayState replayState = ReplayState::ReplayAllowed;
+    };
+
+    struct GroupRecord {
+        duint32 handle = 0;
+        duint32 parentHandle = 0;
+        std::string description;
+        bool isUnnamed = false;
+        bool selectable = true;
+        std::vector<duint32> entityHandles;
+        ReplayState replayState = ReplayState::ReplayAllowed;
+    };
+
+    struct ImageDefinitionReactorRecord {
+        duint32 handle = 0;
+        duint32 parentHandle = 0;
+        dint32 classVersion = 0;
+        ReplayState replayState = ReplayState::ReplayAllowed;
+    };
+
+    struct SpatialFilterRecord {
+        duint32 handle = 0;
+        duint32 parentHandle = 0;
+        size_t boundaryPointCount = 0;
+        bool displayBoundary = false;
+        bool clipFrontPlane = false;
+        bool clipBackPlane = false;
+        double frontDistance = 0.0;
+        double backDistance = 0.0;
+        ReplayState replayState = ReplayState::ReplayAllowed;
+    };
+
+    struct GeoDataRecord {
+        duint32 handle = 0;
+        duint32 parentHandle = 0;
+        duint32 hostBlockHandle = 0;
+        dint32 version = 0;
+        dint16 coordinatesType = 0;
+        dint32 horizontalUnits = 0;
+        dint32 verticalUnits = 0;
+        double horizontalUnitScale = 1.0;
+        double verticalUnitScale = 1.0;
+        std::string coordinateSystemDefinition;
+        std::string geoRssTag;
+        size_t meshPointCount = 0;
+        size_t meshFaceCount = 0;
+        ReplayState replayState = ReplayState::ReplayAllowed;
+    };
+
+    struct TableGeometryRecord {
+        duint32 handle = 0;
+        duint32 parentHandle = 0;
+        dint32 rowCount = 0;
+        dint32 columnCount = 0;
+        dint32 cellCount = 0;
+        size_t contentCount = 0;
+        ReplayState replayState = ReplayState::ReplayAllowed;
+    };
+
+    struct PlaceholderRecord {
+        duint32 handle = 0;
+        duint32 parentHandle = 0;
+        ReplayState replayState = ReplayState::ReplayAllowed;
+    };
+
     void clear() {
         m_rawObjects.clear();
         m_views.clear();
@@ -216,6 +292,14 @@ public:
         m_mleaderStyles.clear();
         m_detailViewStyles.clear();
         m_sectionViewStyles.clear();
+        m_breakData.clear();
+        m_breakPointRefs.clear();
+        m_groups.clear();
+        m_imageDefinitionReactors.clear();
+        m_spatialFilters.clear();
+        m_geoData.clear();
+        m_tableGeometry.clear();
+        m_placeholders.clear();
     }
 
     void addUnsupportedObject(const DRW_UnsupportedObject& object) {
@@ -425,6 +509,92 @@ public:
         m_sectionViewStyles.push_back(record);
     }
 
+    void addBreakData(const DRW_BreakData& data) {
+        BreakDataRecord record;
+        record.handle = data.handle;
+        record.parentHandle = data.parentHandle;
+        record.dimensionHandle = data.m_dimensionHandle;
+        record.pointRefHandles = data.m_pointRefHandles;
+        m_breakData.push_back(std::move(record));
+    }
+
+    void addBreakPointRef(const DRW_BreakPointRef& data) {
+        BreakPointRefRecord record;
+        record.handle = data.handle;
+        record.parentHandle = data.parentHandle;
+        m_breakPointRefs.push_back(record);
+    }
+
+    void addGroup(const DRW_Group& group) {
+        GroupRecord record;
+        record.handle = group.handle;
+        record.parentHandle = group.parentHandle;
+        record.description = group.m_description;
+        record.isUnnamed = group.m_isUnnamed;
+        record.selectable = group.m_selectable;
+        record.entityHandles = group.m_entityHandles;
+        m_groups.push_back(std::move(record));
+    }
+
+    void addImageDefinitionReactor(const DRW_ImageDefinitionReactor& reactor) {
+        ImageDefinitionReactorRecord record;
+        record.handle = reactor.handle;
+        record.parentHandle = reactor.parentHandle;
+        record.classVersion = reactor.m_classVersion;
+        m_imageDefinitionReactors.push_back(record);
+    }
+
+    void addSpatialFilter(const DRW_SpatialFilter& filter) {
+        SpatialFilterRecord record;
+        record.handle = filter.handle;
+        record.parentHandle = filter.parentHandle;
+        record.boundaryPointCount = filter.m_boundaryPoints.size();
+        record.displayBoundary = filter.m_displayBoundary;
+        record.clipFrontPlane = filter.m_clipFrontPlane;
+        record.clipBackPlane = filter.m_clipBackPlane;
+        record.frontDistance = filter.m_frontDistance;
+        record.backDistance = filter.m_backDistance;
+        m_spatialFilters.push_back(record);
+    }
+
+    void addGeoData(const DRW_GeoData& geoData) {
+        GeoDataRecord record;
+        record.handle = geoData.handle;
+        record.parentHandle = geoData.parentHandle;
+        record.hostBlockHandle = geoData.m_hostBlockHandle;
+        record.version = geoData.m_version;
+        record.coordinatesType = geoData.m_coordinatesType;
+        record.horizontalUnits = geoData.m_horizontalUnits;
+        record.verticalUnits = geoData.m_verticalUnits;
+        record.horizontalUnitScale = geoData.m_horizontalUnitScale;
+        record.verticalUnitScale = geoData.m_verticalUnitScale;
+        record.coordinateSystemDefinition = geoData.m_coordinateSystemDefinition;
+        record.geoRssTag = geoData.m_geoRssTag;
+        record.meshPointCount = geoData.m_points.size();
+        record.meshFaceCount = geoData.m_faces.size();
+        m_geoData.push_back(std::move(record));
+    }
+
+    void addTableGeometry(const DRW_TableGeometry& geometry) {
+        TableGeometryRecord record;
+        record.handle = geometry.handle;
+        record.parentHandle = geometry.parentHandle;
+        record.rowCount = geometry.m_rowCount;
+        record.columnCount = geometry.m_columnCount;
+        record.cellCount = geometry.m_cellCount;
+        for (const DRW_TableGeometryCell& cell : geometry.m_cells) {
+            record.contentCount += cell.m_contents.size();
+        }
+        m_tableGeometry.push_back(record);
+    }
+
+    void addAcDbPlaceholder(const DRW_AcDbPlaceholder& placeholder) {
+        PlaceholderRecord record;
+        record.handle = placeholder.handle;
+        record.parentHandle = placeholder.parentHandle;
+        m_placeholders.push_back(record);
+    }
+
     const std::vector<RawObjectRecord>& rawObjects() const { return m_rawObjects; }
     const std::vector<ViewRecord>& views() const { return m_views; }
     const std::vector<LightRecord>& lights() const { return m_lights; }
@@ -437,6 +607,16 @@ public:
     const std::vector<MLeaderStyleRecord>& mleaderStyles() const { return m_mleaderStyles; }
     const std::vector<DetailViewStyleRecord>& detailViewStyles() const { return m_detailViewStyles; }
     const std::vector<SectionViewStyleRecord>& sectionViewStyles() const { return m_sectionViewStyles; }
+    const std::vector<BreakDataRecord>& breakData() const { return m_breakData; }
+    const std::vector<BreakPointRefRecord>& breakPointRefs() const { return m_breakPointRefs; }
+    const std::vector<GroupRecord>& groups() const { return m_groups; }
+    const std::vector<ImageDefinitionReactorRecord>& imageDefinitionReactors() const {
+        return m_imageDefinitionReactors;
+    }
+    const std::vector<SpatialFilterRecord>& spatialFilters() const { return m_spatialFilters; }
+    const std::vector<GeoDataRecord>& geoData() const { return m_geoData; }
+    const std::vector<TableGeometryRecord>& tableGeometry() const { return m_tableGeometry; }
+    const std::vector<PlaceholderRecord>& placeholders() const { return m_placeholders; }
 
     const ViewRecord* findViewByName(const std::string& name) const {
         for (const ViewRecord& record : m_views) {
@@ -457,7 +637,15 @@ public:
             || hasReplayable(m_mleaders)
             || hasReplayable(m_mleaderStyles)
             || hasReplayable(m_detailViewStyles)
-            || hasReplayable(m_sectionViewStyles);
+            || hasReplayable(m_sectionViewStyles)
+            || hasReplayable(m_breakData)
+            || hasReplayable(m_breakPointRefs)
+            || hasReplayable(m_groups)
+            || hasReplayable(m_imageDefinitionReactors)
+            || hasReplayable(m_spatialFilters)
+            || hasReplayable(m_geoData)
+            || hasReplayable(m_tableGeometry)
+            || hasReplayable(m_placeholders);
     }
 
     void invalidateByHandle(duint32 handle) {
@@ -485,6 +673,14 @@ public:
         invalidateContainer(m_mleaderStyles);
         invalidateContainer(m_detailViewStyles);
         invalidateContainer(m_sectionViewStyles);
+        invalidateContainer(m_breakData);
+        invalidateContainer(m_breakPointRefs);
+        invalidateContainer(m_groups);
+        invalidateContainer(m_imageDefinitionReactors);
+        invalidateContainer(m_spatialFilters);
+        invalidateContainer(m_geoData);
+        invalidateContainer(m_tableGeometry);
+        invalidateContainer(m_placeholders);
     }
 
 private:
@@ -519,6 +715,14 @@ private:
         invalidateMatching(m_mleaderStyles, predicate);
         invalidateMatching(m_detailViewStyles, predicate);
         invalidateMatching(m_sectionViewStyles, predicate);
+        invalidateMatching(m_breakData, predicate);
+        invalidateMatching(m_breakPointRefs, predicate);
+        invalidateMatching(m_groups, predicate);
+        invalidateMatching(m_imageDefinitionReactors, predicate);
+        invalidateMatching(m_spatialFilters, predicate);
+        invalidateMatching(m_geoData, predicate);
+        invalidateMatching(m_tableGeometry, predicate);
+        invalidateMatching(m_placeholders, predicate);
     }
 
     template<typename Container, typename Predicate>
@@ -543,6 +747,14 @@ private:
     std::vector<MLeaderStyleRecord> m_mleaderStyles;
     std::vector<DetailViewStyleRecord> m_detailViewStyles;
     std::vector<SectionViewStyleRecord> m_sectionViewStyles;
+    std::vector<BreakDataRecord> m_breakData;
+    std::vector<BreakPointRefRecord> m_breakPointRefs;
+    std::vector<GroupRecord> m_groups;
+    std::vector<ImageDefinitionReactorRecord> m_imageDefinitionReactors;
+    std::vector<SpatialFilterRecord> m_spatialFilters;
+    std::vector<GeoDataRecord> m_geoData;
+    std::vector<TableGeometryRecord> m_tableGeometry;
+    std::vector<PlaceholderRecord> m_placeholders;
 };
 
 #endif

@@ -197,6 +197,78 @@ TEST_CASE("DWG advanced metadata caches raw and semantic sidecars",
   sectionStyle.m_hatchAngles = {0.0, 1.5707963267948966};
   metadata.addSectionViewStyle(sectionStyle);
 
+  DRW_BreakData breakData;
+  breakData.handle = 0xD0u;
+  breakData.parentHandle = 0xD1u;
+  breakData.m_dimensionHandle = 0xD2u;
+  breakData.m_pointRefHandles = {0xD3u, 0xD4u};
+  metadata.addBreakData(breakData);
+
+  DRW_BreakPointRef breakPointRef;
+  breakPointRef.handle = 0xD5u;
+  breakPointRef.parentHandle = 0xD6u;
+  metadata.addBreakPointRef(breakPointRef);
+
+  DRW_Group group;
+  group.handle = 0xD7u;
+  group.parentHandle = 0xD8u;
+  group.m_description = "fixture group";
+  group.m_isUnnamed = true;
+  group.m_selectable = false;
+  group.m_entityHandles = {0xD9u, 0xDAu};
+  metadata.addGroup(group);
+
+  DRW_ImageDefinitionReactor reactor;
+  reactor.handle = 0xDBu;
+  reactor.parentHandle = 0xDCu;
+  reactor.m_classVersion = 7;
+  metadata.addImageDefinitionReactor(reactor);
+
+  DRW_SpatialFilter spatialFilter;
+  spatialFilter.handle = 0xDDu;
+  spatialFilter.parentHandle = 0xDEu;
+  spatialFilter.m_boundaryPoints = {
+      DRW_Coord{0.0, 0.0, 0.0},
+      DRW_Coord{1.0, 0.0, 0.0},
+      DRW_Coord{1.0, 1.0, 0.0}};
+  spatialFilter.m_displayBoundary = true;
+  spatialFilter.m_clipFrontPlane = true;
+  spatialFilter.m_frontDistance = 2.5;
+  metadata.addSpatialFilter(spatialFilter);
+
+  DRW_GeoData geoData;
+  geoData.handle = 0xDFu;
+  geoData.parentHandle = 0xE0u;
+  geoData.m_hostBlockHandle = 0xE1u;
+  geoData.m_version = 2;
+  geoData.m_coordinatesType = 1;
+  geoData.m_horizontalUnits = 6;
+  geoData.m_verticalUnits = 6;
+  geoData.m_horizontalUnitScale = 0.3048;
+  geoData.m_verticalUnitScale = 1.0;
+  geoData.m_coordinateSystemDefinition = "EPSG:3857";
+  geoData.m_geoRssTag = "rss";
+  geoData.m_points.push_back({DRW_Coord{0.0, 0.0, 0.0},
+                              DRW_Coord{1.0, 1.0, 0.0}});
+  geoData.m_faces.push_back({1, 2, 3});
+  metadata.addGeoData(geoData);
+
+  DRW_TableGeometry tableGeometry;
+  tableGeometry.handle = 0xE2u;
+  tableGeometry.parentHandle = 0xE3u;
+  tableGeometry.m_rowCount = 2;
+  tableGeometry.m_columnCount = 3;
+  tableGeometry.m_cellCount = 6;
+  DRW_TableGeometryCell geometryCell;
+  geometryCell.m_contents.resize(2);
+  tableGeometry.m_cells.push_back(geometryCell);
+  metadata.addTableGeometry(tableGeometry);
+
+  DRW_AcDbPlaceholder placeholder;
+  placeholder.handle = 0xE4u;
+  placeholder.parentHandle = 0xE5u;
+  metadata.addAcDbPlaceholder(placeholder);
+
   REQUIRE(metadata.rawObjects().size() == 1);
   CHECK(metadata.rawObjects().front().handle == 0x77u);
   CHECK(metadata.rawObjects().front().bodyBitSize == 128u);
@@ -249,6 +321,49 @@ TEST_CASE("DWG advanced metadata caches raw and semantic sidecars",
   CHECK(capturedSection.hatchScale == 0.5);
   CHECK(capturedSection.hatchAngleCount == 2u);
 
+  REQUIRE(metadata.breakData().size() == 1);
+  const auto& capturedBreakData = metadata.breakData().front();
+  CHECK(capturedBreakData.handle == 0xD0u);
+  CHECK(capturedBreakData.dimensionHandle == 0xD2u);
+  CHECK(capturedBreakData.pointRefHandles.size() == 2u);
+
+  REQUIRE(metadata.breakPointRefs().size() == 1);
+  CHECK(metadata.breakPointRefs().front().handle == 0xD5u);
+
+  REQUIRE(metadata.groups().size() == 1);
+  const auto& capturedGroup = metadata.groups().front();
+  CHECK(capturedGroup.handle == 0xD7u);
+  CHECK(capturedGroup.description == "fixture group");
+  CHECK(capturedGroup.isUnnamed);
+  CHECK(capturedGroup.selectable == false);
+  CHECK(capturedGroup.entityHandles.size() == 2u);
+
+  REQUIRE(metadata.imageDefinitionReactors().size() == 1);
+  CHECK(metadata.imageDefinitionReactors().front().classVersion == 7);
+
+  REQUIRE(metadata.spatialFilters().size() == 1);
+  const auto& capturedSpatialFilter = metadata.spatialFilters().front();
+  CHECK(capturedSpatialFilter.boundaryPointCount == 3u);
+  CHECK(capturedSpatialFilter.displayBoundary);
+  CHECK(capturedSpatialFilter.clipFrontPlane);
+  CHECK(capturedSpatialFilter.frontDistance == 2.5);
+
+  REQUIRE(metadata.geoData().size() == 1);
+  const auto& capturedGeoData = metadata.geoData().front();
+  CHECK(capturedGeoData.hostBlockHandle == 0xE1u);
+  CHECK(capturedGeoData.coordinateSystemDefinition == "EPSG:3857");
+  CHECK(capturedGeoData.meshPointCount == 1u);
+  CHECK(capturedGeoData.meshFaceCount == 1u);
+
+  REQUIRE(metadata.tableGeometry().size() == 1);
+  const auto& capturedTableGeometry = metadata.tableGeometry().front();
+  CHECK(capturedTableGeometry.rowCount == 2);
+  CHECK(capturedTableGeometry.columnCount == 3);
+  CHECK(capturedTableGeometry.contentCount == 2u);
+
+  REQUIRE(metadata.placeholders().size() == 1);
+  CHECK(metadata.placeholders().front().handle == 0xE4u);
+
   REQUIRE(metadata.hasReplayableAdvancedObjects());
   metadata.invalidateByOwner(0xA1u);
   CHECK(capturedStyle.replayState ==
@@ -258,6 +373,9 @@ TEST_CASE("DWG advanced metadata caches raw and semantic sidecars",
         LC_DwgAdvancedMetadata::ReplayState::ReplayInvalidated);
   metadata.invalidateByOwner(0xC1u);
   CHECK(capturedSection.replayState ==
+        LC_DwgAdvancedMetadata::ReplayState::ReplayInvalidated);
+  metadata.invalidateByOwner(0xD1u);
+  CHECK(capturedBreakData.replayState ==
         LC_DwgAdvancedMetadata::ReplayState::ReplayInvalidated);
   metadata.invalidateByHandle(0x77u);
   CHECK(metadata.rawObjects().front().replayState ==
