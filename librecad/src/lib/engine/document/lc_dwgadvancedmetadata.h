@@ -30,6 +30,29 @@ public:
         ReplayReplaced
     };
 
+    enum class ReplayBlocker {
+        None,
+        Invalidated,
+        Replaced,
+        EntityReplayUnsupported,
+        MissingRawBytes,
+        MissingClassMetadata,
+        WriterRejected,
+        SemanticOnly
+    };
+
+    enum class AssociativeKind {
+        Unknown,
+        Network,
+        Action,
+        Dependency,
+        GeometryDependency,
+        PersistentSubentityManager,
+        AlignedDimensionActionBody,
+        VertexActionParam,
+        OsnapPointRefActionParam
+    };
+
     struct RawObjectRecord {
         int objectType = 0;
         duint32 handle = 0;
@@ -49,12 +72,32 @@ public:
         duint32 handle = 0;
         duint32 parentHandle = 0;
         std::string name;
+        DRW_Coord size;
+        DRW_Coord center;
+        DRW_Coord viewDirectionFromTarget;
+        DRW_Coord targetPoint;
+        double lensLen = 0.0;
+        double frontClippingPlaneOffset = 0.0;
+        double backClippingPlaneOffset = 0.0;
+        double twistAngle = 0.0;
+        int viewMode = 0;
+        unsigned int renderMode = 0;
+        bool hasUcs = false;
+        bool cameraPlottable = false;
+        DRW_Coord ucsOrigin;
+        DRW_Coord ucsXAxis;
+        DRW_Coord ucsYAxis;
+        int ucsOrthoType = 0;
+        double ucsElevation = 0.0;
         duint32 namedUcsHandle = 0;
         duint32 baseUcsHandle = 0;
         duint32 backgroundHandle = 0;
         duint32 visualStyleHandle = 0;
         duint32 sunHandle = 0;
         duint32 liveSectionHandle = 0;
+        bool hasUcsHandleRefs = false;
+        bool hasVisualHandleRefs = false;
+        bool sunResolved = false;
         bool useDefaultLights = true;
         duint8 defaultLightingType = 1;
         double brightness = 0.0;
@@ -127,12 +170,21 @@ public:
         duint32 bodyBitSize = 0;
         duint32 objectSize = 0;
         bool isEmpty = false;
+        bool hasModelerData = false;
+        bool modelerDataUnknownBit = false;
         bool hasWireframe = false;
         bool hasRawPayload = false;
         duint32 historyHandle = 0;
         size_t rawByteCount = 0;
         std::vector<duint8> rawBytes;
         ReplayState replayState = ReplayState::ReplayAllowed;
+    };
+
+    struct TableMergedRangeRecord {
+        int topRow = 0;
+        int leftColumn = 0;
+        int bottomRow = 0;
+        int rightColumn = 0;
     };
 
     struct TableRecord {
@@ -165,6 +217,16 @@ public:
         bool semanticParsed = false;
         bool styleResolved = false;
         bool fallbackRendered = false;
+        std::vector<double> columnWidths;
+        std::vector<double> rowHeights;
+        std::vector<int> cellStyleIds;
+        std::vector<std::string> cellTexts;
+        std::vector<std::string> attributeTexts;
+        std::vector<duint32> valueHandles;
+        std::vector<duint32> blockHandles;
+        std::vector<duint32> fieldHandles;
+        std::vector<duint32> geometryHandles;
+        std::vector<TableMergedRangeRecord> mergedRanges;
         ReplayState replayState = ReplayState::ReplayAllowed;
     };
 
@@ -172,6 +234,7 @@ public:
         duint32 handle = 0;
         duint32 parentHandle = 0;
         std::string recordName;
+        AssociativeKind kind = AssociativeKind::Unknown;
         duint16 classVersion = 0;
         dint32 geometryStatus = 0;
         duint32 owningNetworkHandle = 0;
@@ -231,6 +294,12 @@ public:
         duint32 arrowHeadHandle = 0;
         duint32 textStyleHandle = 0;
         duint32 blockHandle = 0;
+        duint16 effectiveContentType = 0;
+        duint16 effectiveLeaderType = 0;
+        duint32 effectiveLeaderLineTypeHandle = 0;
+        duint32 effectiveArrowHeadHandle = 0;
+        duint32 effectiveTextStyleHandle = 0;
+        duint32 effectiveBlockHandle = 0;
         size_t rootCount = 0;
         size_t leaderLineCount = 0;
         size_t pointCount = 0;
@@ -238,10 +307,14 @@ public:
         size_t columnCount = 0;
         size_t arrowHeadOverrideCount = 0;
         size_t blockLabelCount = 0;
+        std::vector<duint32> arrowHeadOverrideHandles;
+        std::vector<duint32> blockAttributeDefinitionHandles;
+        std::vector<std::string> blockLabelTexts;
         double overallScale = 1.0;
         double landingDistance = 0.0;
         double defaultArrowHeadSize = 0.0;
         double textHeight = 0.0;
+        bool styleResolved = false;
         bool landingEnabled = false;
         bool doglegEnabled = false;
         bool isAnnotative = false;
@@ -433,12 +506,35 @@ public:
         record.handle = view.handle;
         record.parentHandle = view.parentHandle;
         record.name = view.name;
+        record.size = view.size;
+        record.center = view.center;
+        record.viewDirectionFromTarget = view.viewDirectionFromTarget;
+        record.targetPoint = view.targetPoint;
+        record.lensLen = view.lensLen;
+        record.frontClippingPlaneOffset = view.frontClippingPlaneOffset;
+        record.backClippingPlaneOffset = view.backClippingPlaneOffset;
+        record.twistAngle = view.twistAngle;
+        record.viewMode = view.viewMode;
+        record.renderMode = view.renderMode;
+        record.hasUcs = view.hasUCS;
+        record.cameraPlottable = view.cameraPlottable;
+        record.ucsOrigin = view.ucsOrigin;
+        record.ucsXAxis = view.ucsXAxis;
+        record.ucsYAxis = view.ucsYAxis;
+        record.ucsOrthoType = view.ucsOrthoType;
+        record.ucsElevation = view.ucsElevation;
         record.namedUcsHandle = view.namedUCS_ID;
         record.baseUcsHandle = view.baseUCS_ID;
         record.backgroundHandle = view.m_backgroundHandle;
         record.visualStyleHandle = view.m_visualStyleHandle;
         record.sunHandle = view.m_sunHandle;
         record.liveSectionHandle = view.m_liveSectionHandle;
+        record.hasUcsHandleRefs = record.namedUcsHandle != 0 || record.baseUcsHandle != 0;
+        record.hasVisualHandleRefs = record.backgroundHandle != 0
+                                     || record.visualStyleHandle != 0
+                                     || record.sunHandle != 0
+                                     || record.liveSectionHandle != 0;
+        record.sunResolved = record.sunHandle != 0 && findSunByHandle(record.sunHandle) != nullptr;
         record.useDefaultLights = view.m_useDefaultLights;
         record.defaultLightingType = view.m_defaultLightingType;
         record.brightness = view.m_brightness;
@@ -503,6 +599,10 @@ public:
         record.shadowMapSize = sun.m_shadowMapSize;
         record.shadowSoftness = sun.m_shadowSoftness;
         m_suns.push_back(record);
+        for (ViewRecord& view : m_views) {
+            if (view.sunHandle == record.handle)
+                view.sunResolved = true;
+        }
     }
 
     void addModelerGeometry(const DRW_ModelerGeometry& geometry) {
@@ -514,6 +614,8 @@ public:
         record.bodyBitSize = geometry.m_bodyBitSize;
         record.objectSize = geometry.m_objectSize;
         record.isEmpty = geometry.m_isEmpty;
+        record.hasModelerData = geometry.m_hasModelerData;
+        record.modelerDataUnknownBit = geometry.m_modelerDataUnknownBit;
         record.hasWireframe = geometry.m_hasWireframe;
         record.hasRawPayload = !geometry.m_rawBytes.empty();
         record.historyHandle = geometry.m_historyHandle;
@@ -578,6 +680,7 @@ public:
         record.handle = object.handle;
         record.parentHandle = object.parentHandle;
         record.recordName = object.m_recordName;
+        record.kind = associativeKindFromRecordName(record.recordName);
         record.classVersion = object.m_classVersion;
         record.geometryStatus = object.m_geometryStatus;
         record.owningNetworkHandle = object.m_owningNetworkHandle;
@@ -643,6 +746,30 @@ public:
         record.blockHandle = mleader.styleBlockHandle.ref != 0
                                  ? mleader.styleBlockHandle.ref
                                  : mleader.context.blockTableRecordHandle.ref;
+        record.effectiveContentType = record.styleContentType;
+        record.effectiveLeaderType = record.leaderType;
+        record.effectiveLeaderLineTypeHandle = record.leaderLineTypeHandle;
+        record.effectiveArrowHeadHandle = record.arrowHeadHandle;
+        record.effectiveTextStyleHandle = record.textStyleHandle;
+        record.effectiveBlockHandle = record.blockHandle;
+        for (const MLeaderStyleRecord& style : m_mleaderStyles) {
+            if (style.handle != record.styleHandle)
+                continue;
+            record.styleResolved = true;
+            if (record.effectiveContentType == 0)
+                record.effectiveContentType = style.contentType;
+            if (record.effectiveLeaderType == 0)
+                record.effectiveLeaderType = style.leaderType;
+            if (record.effectiveLeaderLineTypeHandle == 0)
+                record.effectiveLeaderLineTypeHandle = style.leaderLineTypeHandle;
+            if (record.effectiveArrowHeadHandle == 0)
+                record.effectiveArrowHeadHandle = style.arrowHeadBlockHandle;
+            if (record.effectiveTextStyleHandle == 0)
+                record.effectiveTextStyleHandle = style.textStyleHandle;
+            if (record.effectiveBlockHandle == 0)
+                record.effectiveBlockHandle = style.blockHandle;
+            break;
+        }
         record.rootCount = mleader.context.roots.size();
         for (const DRW_MLeaderRoot& root : mleader.context.roots) {
             record.breakCount += root.breaks.size();
@@ -655,6 +782,15 @@ public:
         record.columnCount = mleader.context.columnSizes.size();
         record.arrowHeadOverrideCount = mleader.arrowHeads.size();
         record.blockLabelCount = mleader.blockLabels.size();
+        record.arrowHeadOverrideHandles.reserve(mleader.arrowHeads.size());
+        for (const DRW_MLeader::ArrowHeadEntry& arrowHead : mleader.arrowHeads)
+            record.arrowHeadOverrideHandles.push_back(arrowHead.handle.ref);
+        record.blockAttributeDefinitionHandles.reserve(mleader.blockLabels.size());
+        record.blockLabelTexts.reserve(mleader.blockLabels.size());
+        for (const DRW_MLeader::BlockLabelEntry& blockLabel : mleader.blockLabels) {
+            record.blockAttributeDefinitionHandles.push_back(blockLabel.attDefHandle.ref);
+            record.blockLabelTexts.push_back(blockLabel.labelText);
+        }
         record.overallScale = mleader.context.overallScale;
         record.landingDistance = mleader.landingDistance;
         record.defaultArrowHeadSize = mleader.defaultArrowHeadSize;
@@ -850,6 +986,89 @@ public:
         }
         return nullptr;
     }
+    const SunRecord* findSunByHandle(duint32 handle) const {
+        for (const SunRecord& record : m_suns) {
+            if (record.handle == handle)
+                return &record;
+        }
+        return nullptr;
+    }
+
+    static ReplayBlocker rawReplayBlocker(const RawObjectRecord& record) {
+        if (record.replayState == ReplayState::ReplayInvalidated)
+            return ReplayBlocker::Invalidated;
+        if (record.replayState == ReplayState::ReplayReplaced)
+            return ReplayBlocker::Replaced;
+        if (record.isEntity)
+            return ReplayBlocker::EntityReplayUnsupported;
+        if (record.rawBytes.empty())
+            return ReplayBlocker::MissingRawBytes;
+        if (record.isCustomClass && record.recordName.empty() && record.className.empty())
+            return ReplayBlocker::MissingClassMetadata;
+        return ReplayBlocker::None;
+    }
+
+    static AssociativeKind associativeKindFromRecordName(const std::string& recordName) {
+        if (recordName == "ACDBASSOCNETWORK")
+            return AssociativeKind::Network;
+        if (recordName == "ACDBASSOCACTION")
+            return AssociativeKind::Action;
+        if (recordName == "ACDBASSOCDEPENDENCY")
+            return AssociativeKind::Dependency;
+        if (recordName == "ACDBASSOCGEOMDEPENDENCY")
+            return AssociativeKind::GeometryDependency;
+        if (recordName == "ACDBASSOCPERSSUBENTMANAGER"
+            || recordName == "ACDBPERSSUBENTMANAGER") {
+            return AssociativeKind::PersistentSubentityManager;
+        }
+        if (recordName == "ACDBASSOCALIGNEDDIMACTIONBODY")
+            return AssociativeKind::AlignedDimensionActionBody;
+        if (recordName == "ACDBASSOCVERTEXACTIONPARAM")
+            return AssociativeKind::VertexActionParam;
+        if (recordName == "ACDBASSOCOSNAPPOINTREFACTIONPARAM")
+            return AssociativeKind::OsnapPointRefActionParam;
+        return AssociativeKind::Unknown;
+    }
+
+    static const char* replayBlockerName(ReplayBlocker blocker) {
+        switch (blocker) {
+            case ReplayBlocker::None:
+                return "none";
+            case ReplayBlocker::Invalidated:
+                return "invalidated";
+            case ReplayBlocker::Replaced:
+                return "replaced";
+            case ReplayBlocker::EntityReplayUnsupported:
+                return "entity replay unsupported";
+            case ReplayBlocker::MissingRawBytes:
+                return "missing raw bytes";
+            case ReplayBlocker::MissingClassMetadata:
+                return "missing class metadata";
+            case ReplayBlocker::WriterRejected:
+                return "writer rejected";
+            case ReplayBlocker::SemanticOnly:
+                return "semantic-only metadata";
+        }
+        return "unknown";
+    }
+
+    bool hasBlockedRawReplay() const {
+        for (const RawObjectRecord& record : m_rawObjects) {
+            if (rawReplayBlocker(record) != ReplayBlocker::None)
+                return true;
+        }
+        return false;
+    }
+
+    size_t semanticOnlyRecordCount() const {
+        return m_lights.size() + m_suns.size() + m_modelerGeometry.size()
+            + m_tables.size() + m_associativeObjects.size() + m_acshObjects.size()
+            + m_mleaderStyles.size() + m_detailViewStyles.size()
+            + m_sectionViewStyles.size() + m_breakData.size()
+            + m_breakPointRefs.size() + m_groups.size()
+            + m_imageDefinitionReactors.size() + m_spatialFilters.size()
+            + m_geoData.size() + m_tableGeometry.size() + m_placeholders.size();
+    }
 
     bool hasReplayableAdvancedObjects() const {
         return hasReplayable(m_rawObjects)
@@ -885,6 +1104,15 @@ public:
         });
     }
 
+    void invalidateAssociativeGraphForHandle(duint32 dependentHandle) {
+        for (AssociativeRecord& record : m_associativeObjects) {
+            if (record.replayState != ReplayState::ReplayAllowed)
+                continue;
+            if (associativeRecordReferences(record, dependentHandle))
+                record.replayState = ReplayState::ReplayInvalidated;
+        }
+    }
+
     void invalidateAllReplayable() {
         invalidateContainer(m_rawObjects);
         invalidateContainer(m_views);
@@ -912,36 +1140,68 @@ private:
     static void populateTableContentSummary(TableRecord& record,
                                             const DRW_TableContent& content) {
         record.fieldHandleCount = content.m_fieldHandles.size();
+        record.fieldHandles = content.m_fieldHandles;
         record.mergedRangeCount = content.m_mergedRanges.size();
+        record.columnWidths.reserve(content.m_columns.size());
+        for (const DRW_TableColumn& column : content.m_columns)
+            record.columnWidths.push_back(column.m_width);
+        record.mergedRanges.reserve(content.m_mergedRanges.size());
+        for (const DRW_TableMergedRange& range : content.m_mergedRanges) {
+            record.mergedRanges.push_back({range.m_topRow, range.m_leftColumn,
+                                           range.m_bottomRow, range.m_rightColumn});
+        }
+        record.rowHeights.reserve(content.m_rows.size());
         for (const DRW_TableRow& row : content.m_rows) {
+            record.rowHeights.push_back(row.m_height);
             record.cellCount += row.m_cells.size();
             for (const DRW_TableCell& cell : row.m_cells) {
                 record.contentCount += cell.m_contents.size();
                 record.attributeCount += cell.m_attributes.size();
-                if (cell.m_valueHandle != 0)
+                if (cell.m_styleId != 0)
+                    record.cellStyleIds.push_back(cell.m_styleId);
+                if (cell.m_valueHandle != 0) {
                     ++record.valueHandleCount;
-                if (cell.m_blockHandle != 0)
+                    record.valueHandles.push_back(cell.m_valueHandle);
+                }
+                if (cell.m_blockHandle != 0) {
                     ++record.blockHandleCount;
+                    record.blockHandles.push_back(cell.m_blockHandle);
+                }
                 if (cell.m_blockHandle != 0)
                     record.hasBlockContent = true;
                 if (cell.m_overrideFlags != 0)
                     ++record.overrideCellCount;
-                if (cell.m_geometryFlags != 0 || cell.m_geometryHandle != 0)
+                if (cell.m_geometryFlags != 0 || cell.m_geometryHandle != 0) {
                     ++record.geometryCellCount;
+                    if (cell.m_geometryHandle != 0)
+                        record.geometryHandles.push_back(cell.m_geometryHandle);
+                }
+                for (const DRW_TableCellAttribute& attribute : cell.m_attributes) {
+                    if (!attribute.m_text.empty())
+                        record.attributeTexts.push_back(attribute.m_text);
+                }
                 for (const DRW_TableCellContent& cellContent : cell.m_contents) {
                     if (!cellContent.m_text.empty()) {
                         ++record.textContentCount;
                         record.hasTextContent = true;
+                        record.cellTexts.push_back(cellContent.m_text);
                     }
-                    if (cellContent.m_type == 2)
+                    if (cellContent.m_type == 2) {
                         ++record.fieldContentCount;
+                        if (cellContent.m_handle != 0)
+                            record.fieldHandles.push_back(cellContent.m_handle);
+                    }
                     if (cellContent.m_type == 4) {
                         ++record.blockContentCount;
                         record.hasBlockContent = true;
+                        if (cellContent.m_handle != 0)
+                            record.blockHandles.push_back(cellContent.m_handle);
                     }
                 }
             }
         }
+        record.fieldHandleCount = record.fieldHandles.size();
+        record.blockHandleCount = record.blockHandles.size();
     }
 
     template<typename Container>
@@ -959,6 +1219,38 @@ private:
             if (record.replayState == ReplayState::ReplayAllowed)
                 record.replayState = ReplayState::ReplayInvalidated;
         }
+    }
+
+    static bool associativeRecordReferences(const AssociativeRecord& record,
+                                            duint32 handle) {
+        if (handle == 0)
+            return false;
+        if (record.owningNetworkHandle == handle
+            || record.actionBodyHandle == handle
+            || record.dependencyHandle == handle
+            || record.readDependencyHandle == handle
+            || record.writeDependencyHandle == handle
+            || record.rNodeHandle == handle
+            || record.dNodeHandle == handle) {
+            return true;
+        }
+        for (const DRW_AssociativeHandleRef& ref : record.dependencyRefs) {
+            if (ref.m_handle == handle)
+                return true;
+        }
+        for (const DRW_AssociativeHandleRef& ref : record.actionRefs) {
+            if (ref.m_handle == handle)
+                return true;
+        }
+        for (duint32 refHandle : record.ownedParamHandles) {
+            if (refHandle == handle)
+                return true;
+        }
+        for (duint32 refHandle : record.ownedActionHandles) {
+            if (refHandle == handle)
+                return true;
+        }
+        return false;
     }
 
     template<typename Predicate>

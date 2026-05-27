@@ -400,6 +400,9 @@ duint32 dwgWriter18::objectBaseOffset() const {
 // R2004 reader (dwgreader18) reads those fields and rejects any maxClassNum<499.
 
 bool dwgWriter18::writeDwgClasses() {
+    if (hasDwgClassConflict())
+        return false;
+
     size_t sectionStart = m_buf.size();
     m_sectionOffsets[recno::CLASSES] = static_cast<duint32>(sectionStart);
 

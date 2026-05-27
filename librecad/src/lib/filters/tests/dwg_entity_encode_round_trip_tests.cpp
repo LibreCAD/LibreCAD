@@ -808,6 +808,46 @@ TEST_CASE("DRW_Attdef::encodeDwg round-trips tag + prompt",
     }
 }
 
+TEST_CASE("DRW_Attrib and DRW_Attdef block unsupported multiline DWG writes",
+          "[dwg-write][entity-encode]") {
+    DRW_Attrib attrib;
+    attrib.handle = 0xA3;
+    attrib.basePoint = DRW_Coord{0.0, 0.0, 0.0};
+    attrib.secPoint = attrib.basePoint;
+    attrib.extPoint = DRW_Coord{0.0, 0.0, 1.0};
+    attrib.height = 1.0;
+    attrib.widthscale = 1.0;
+    attrib.text = "MULTILINE";
+    attrib.tag = "NOTE";
+    attrib.m_attributeType = 2;
+    DrwEntityEncodeTestAccess::layerH(attrib).ref = 0x12;
+    dwgBufferW attribWriter;
+    REQUIRE_FALSE(DrwEntityEncodeTestAccess::encode(attrib, DRW::AC1032, &attribWriter));
+
+    DRW_Attdef attdef;
+    attdef.handle = 0xA4;
+    attdef.basePoint = DRW_Coord{0.0, 0.0, 0.0};
+    attdef.secPoint = attdef.basePoint;
+    attdef.extPoint = DRW_Coord{0.0, 0.0, 1.0};
+    attdef.height = 1.0;
+    attdef.widthscale = 1.0;
+    attdef.text = "DEFAULT";
+    attdef.tag = "PARTNO";
+    attdef.prompt = "Enter part number:";
+    attdef.m_attributeType = 4;
+    DrwEntityEncodeTestAccess::layerH(attdef).ref = 0x12;
+    dwgBufferW attdefWriter;
+    REQUIRE_FALSE(DrwEntityEncodeTestAccess::encode(attdef, DRW::AC1032, &attdefWriter));
+
+    DRW_Attrib legacyMTextAttrib;
+    legacyMTextAttrib.handle = 0xA5;
+    legacyMTextAttrib.attVersion = 1;
+    legacyMTextAttrib.m_attributeType = 1;
+    DrwEntityEncodeTestAccess::layerH(legacyMTextAttrib).ref = 0x12;
+    dwgBufferW legacyWriter;
+    REQUIRE_FALSE(DrwEntityEncodeTestAccess::encode(legacyMTextAttrib, DRW::AC1024, &legacyWriter));
+}
+
 TEST_CASE("DRW_Hatch::encodeDwg round-trips solid fill with polyline boundary",
           "[dwg-write][entity-encode]") {
     // Build a rectangular solid hatch: one polyline loop, 4 vertices.

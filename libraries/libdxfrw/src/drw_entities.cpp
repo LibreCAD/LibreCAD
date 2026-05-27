@@ -2635,8 +2635,9 @@ bool DRW_ModelerGeometry::parseDwg(DRW::Version v, dwgBuffer *buf, duint32 bs){
     DRW_DBG("\n***************************** parsing modeler geometry ******************\n");
 
     m_isEmpty = buf->getBit() != 0;
-    buf->getBit(); // unknown bit in ODA ACIS entity body
-    if (!m_isEmpty)
+    m_hasModelerData = !m_isEmpty;
+    m_modelerDataUnknownBit = buf->getBit() != 0;
+    if (m_hasModelerData)
         m_modelerVersion = buf->getBitShort();
 
     ret = DRW_Entity::parseDwgEntHandle(v, buf);
@@ -4035,6 +4036,12 @@ bool DRW_Attrib::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
 
 bool DRW_Attrib::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs, dwgBufferW *strBuf, dwgBufferW *handleBuf) {
     (void)bs;
+    if (version >= DRW::AC1024 && (attVersion != 0 || mtext))
+        return false;
+    const duint8 attributeType = (m_attributeType == 0) ? 1 : m_attributeType;
+    if (version >= DRW::AC1032 && attributeType != 1)
+        return false;
+
     oType = 2;  // ATTRIB class id — see dwgreader.cpp:1148
     if (!encodeDwgCommon(version, buf)) return false;
 
@@ -4063,7 +4070,7 @@ bool DRW_Attrib::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs, dw
         buf->putRawChar8(attVersion);       // R2010+ ATTRIB version byte
     }
     if (version >= DRW::AC1032) {
-        buf->putRawChar8(1);                // single-line ATTRIB; embedded MTEXT not emitted yet
+        buf->putRawChar8(attributeType);     // embedded MTEXT is blocked above
     }
 
     // ATTRIB-specific tail
@@ -4206,6 +4213,12 @@ bool DRW_Attdef::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
 
 bool DRW_Attdef::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs, dwgBufferW *strBuf, dwgBufferW *handleBuf) {
     (void)bs;
+    if (version >= DRW::AC1024 && (attVersion != 0 || mtext))
+        return false;
+    const duint8 attributeType = (m_attributeType == 0) ? 1 : m_attributeType;
+    if (version >= DRW::AC1032 && attributeType != 1)
+        return false;
+
     oType = 3;  // ATTDEF class id — see dwgreader.cpp:1185
     if (!encodeDwgCommon(version, buf)) return false;
 
@@ -4232,7 +4245,7 @@ bool DRW_Attdef::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs, dw
         buf->putRawChar8(attVersion);
     }
     if (version >= DRW::AC1032) {
-        buf->putRawChar8(1);                // single-line ATTDEF; embedded MTEXT not emitted yet
+        buf->putRawChar8(attributeType);     // embedded MTEXT is blocked above
     }
 
     sb->putVariableText(version, tag);

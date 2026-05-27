@@ -79,6 +79,9 @@ bool dwgWriter24::writeDwgHeader() {
 //   2. An extra RS (unknown CRC = 0) is written before the end sentinel.
 //
 bool dwgWriter24::writeDwgClasses() {
+    if (hasDwgClassConflict())
+        return false;
+
     size_t sectionStart = m_buf.size();
     m_sectionOffsets[recno::CLASSES] = static_cast<duint32>(sectionStart);
 

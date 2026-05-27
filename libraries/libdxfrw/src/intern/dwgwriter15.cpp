@@ -275,6 +275,9 @@ bool dwgWriter15::writeDwgHeader() {
 }
 
 bool dwgWriter15::writeDwgClasses() {
+    if (hasDwgClassConflict())
+        return false;
+
     size_t sectionStart = m_buf.size();
     m_sectionOffsets[recno::CLASSES] = static_cast<duint32>(sectionStart);
 
@@ -949,7 +952,8 @@ bool dwgWriter15::replayRawObject(const DRW_UnsupportedObject& object) {
         return false;
 
     m_handles.reserve(object.m_handle);
-    registerRawObjectClass(object);
+    if (!registerRawObjectClass(object))
+        return false;
 
     const duint32 frameStart = static_cast<duint32>(m_buf.size());
     m_buf.putModularShort(static_cast<dint32>(object.m_rawBytes.size()));

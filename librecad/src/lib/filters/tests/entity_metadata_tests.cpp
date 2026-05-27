@@ -36,6 +36,8 @@
 #include <QJsonArray>
 #include <QJsonDocument>
 #include <QJsonObject>
+#include <QJsonValue>
+#include <QString>
 
 #include "lc_dwgadvancedmetadata.h"
 #include "rs_line.h"
@@ -121,14 +123,47 @@ TEST_CASE("DWG advanced metadata caches raw and semantic sidecars",
   raw.m_rawBytes = {0x01u, 0x02u, 0x03u};
   metadata.addUnsupportedObject(raw);
 
+  DRW_UnsupportedObject rawEntity;
+  rawEntity.m_objectType = 502;
+  rawEntity.m_handle = 0x78u;
+  rawEntity.m_isEntity = true;
+  rawEntity.m_isCustomClass = true;
+  rawEntity.m_recordName = "RAW_ENTITY";
+  rawEntity.m_className = "AcDbRawEntity";
+  rawEntity.m_rawBytes = {0x04u};
+  metadata.addUnsupportedObject(rawEntity);
+
+  DRW_UnsupportedObject rawWithoutBytes;
+  rawWithoutBytes.m_objectType = 79;
+  rawWithoutBytes.m_handle = 0x79u;
+  metadata.addUnsupportedObject(rawWithoutBytes);
+
   DRW_View view;
   view.name = "Camera A";
   view.handle = 0x90u;
+  view.parentHandle = 0x8Fu;
+  view.size = DRW_Coord{12.0, 6.0, 0.0};
+  view.center = DRW_Coord{3.0, 4.0, 0.0};
+  view.viewDirectionFromTarget = DRW_Coord{0.0, 0.0, 1.0};
+  view.targetPoint = DRW_Coord{10.0, 11.0, 12.0};
+  view.lensLen = 50.0;
+  view.frontClippingPlaneOffset = 0.5;
+  view.backClippingPlaneOffset = 500.0;
+  view.twistAngle = 0.125;
+  view.viewMode = 7;
+  view.renderMode = 4u;
+  view.hasUCS = true;
+  view.cameraPlottable = true;
+  view.ucsOrigin = DRW_Coord{1.0, 2.0, 3.0};
+  view.ucsXAxis = DRW_Coord{1.0, 0.0, 0.0};
+  view.ucsYAxis = DRW_Coord{0.0, 1.0, 0.0};
+  view.ucsOrthoType = 2;
+  view.ucsElevation = 14.0;
   view.namedUCS_ID = 0x91u;
   view.baseUCS_ID = 0x92u;
   view.m_backgroundHandle = 0x93u;
   view.m_visualStyleHandle = 0x94u;
-  view.m_sunHandle = 0x95u;
+  view.m_sunHandle = 0x9Au;
   view.m_liveSectionHandle = 0x96u;
   view.m_useDefaultLights = false;
   view.m_defaultLightingType = 2u;
@@ -385,13 +420,17 @@ TEST_CASE("DWG advanced metadata caches raw and semantic sidecars",
   tableContent.m_parseComplete = true;
   tableContent.m_content.m_tableStyleHandle = 0xFCu;
   tableContent.m_content.m_columns.resize(2);
+  tableContent.m_content.m_columns[0].m_width = 12.5;
+  tableContent.m_content.m_columns[1].m_width = 15.0;
   tableContent.m_content.m_fieldHandles = {0x100u, 0x101u};
   tableContent.m_content.m_mergedRanges.push_back({0, 0, 0, 1});
   DRW_TableRow semanticRow;
+  semanticRow.m_height = 4.25;
   semanticRow.m_cells.resize(2);
   semanticRow.m_cells[0].m_overrideFlags = 0x1u;
   semanticRow.m_cells[0].m_valueHandle = 0x102u;
   semanticRow.m_cells[0].m_geometryHandle = 0x103u;
+  semanticRow.m_cells[0].m_styleId = 9;
   semanticRow.m_cells[0].m_attributes.push_back({0x104u, 1, "A1"});
   DRW_TableCellContent textContent;
   textContent.m_type = 1;
@@ -416,6 +455,8 @@ TEST_CASE("DWG advanced metadata caches raw and semantic sidecars",
   modelerGeometry.m_bodyBitSize = 456u;
   modelerGeometry.m_objectSize = 64u;
   modelerGeometry.m_isEmpty = false;
+  modelerGeometry.m_hasModelerData = true;
+  modelerGeometry.m_modelerDataUnknownBit = true;
   modelerGeometry.m_hasWireframe = true;
   modelerGeometry.m_historyHandle = 0xFBu;
   modelerGeometry.m_rawBytes = {0x10u, 0x20u, 0x30u, 0x40u};
@@ -465,16 +506,48 @@ TEST_CASE("DWG advanced metadata caches raw and semantic sidecars",
   acshObject.m_binaryBlob2 = {0x03u, 0x04u, 0x05u};
   metadata.addAcShObject(acshObject);
 
-  REQUIRE(metadata.rawObjects().size() == 1);
+  REQUIRE(metadata.rawObjects().size() == 3);
   CHECK(metadata.rawObjects().front().handle == 0x77u);
   CHECK(metadata.rawObjects().front().bodyBitSize == 128u);
   CHECK(metadata.rawObjects().front().rawBytes.size() == 3);
+  CHECK(LC_DwgAdvancedMetadata::rawReplayBlocker(metadata.rawObjects()[0]) ==
+        LC_DwgAdvancedMetadata::ReplayBlocker::None);
+  CHECK(LC_DwgAdvancedMetadata::rawReplayBlocker(metadata.rawObjects()[1]) ==
+        LC_DwgAdvancedMetadata::ReplayBlocker::EntityReplayUnsupported);
+  CHECK(LC_DwgAdvancedMetadata::rawReplayBlocker(metadata.rawObjects()[2]) ==
+        LC_DwgAdvancedMetadata::ReplayBlocker::MissingRawBytes);
+  CHECK(metadata.hasBlockedRawReplay());
+  CHECK(std::string(LC_DwgAdvancedMetadata::replayBlockerName(
+            LC_DwgAdvancedMetadata::ReplayBlocker::EntityReplayUnsupported)) ==
+        "entity replay unsupported");
 
   const auto* foundView = metadata.findViewByName("Camera A");
   REQUIRE(foundView != nullptr);
+  CHECK(foundView->handle == 0x90u);
+  CHECK(foundView->parentHandle == 0x8Fu);
+  CHECK(foundView->size.x == 12.0);
+  CHECK(foundView->center.y == 4.0);
+  CHECK(foundView->viewDirectionFromTarget.z == 1.0);
+  CHECK(foundView->targetPoint.z == 12.0);
+  CHECK(foundView->lensLen == 50.0);
+  CHECK(foundView->frontClippingPlaneOffset == 0.5);
+  CHECK(foundView->backClippingPlaneOffset == 500.0);
+  CHECK(foundView->twistAngle == 0.125);
+  CHECK(foundView->viewMode == 7);
+  CHECK(foundView->renderMode == 4u);
+  CHECK(foundView->hasUcs);
+  CHECK(foundView->cameraPlottable);
+  CHECK(foundView->ucsOrigin.z == 3.0);
+  CHECK(foundView->ucsXAxis.x == 1.0);
+  CHECK(foundView->ucsYAxis.y == 1.0);
+  CHECK(foundView->ucsOrthoType == 2);
+  CHECK(foundView->ucsElevation == 14.0);
   CHECK(foundView->namedUcsHandle == 0x91u);
   CHECK(foundView->visualStyleHandle == 0x94u);
-  CHECK(foundView->sunHandle == 0x95u);
+  CHECK(foundView->sunHandle == 0x9Au);
+  CHECK(foundView->hasUcsHandleRefs);
+  CHECK(foundView->hasVisualHandleRefs);
+  CHECK(foundView->sunResolved);
   CHECK(foundView->useDefaultLights == false);
   CHECK(foundView->defaultLightingType == 2u);
   CHECK(foundView->ambientColor == 7u);
@@ -508,6 +581,7 @@ TEST_CASE("DWG advanced metadata caches raw and semantic sidecars",
   CHECK(capturedSun.isDaylightSavings);
   CHECK(capturedSun.shadowMapSize == 512u);
   CHECK(capturedSun.shadowSoftness == 6u);
+  REQUIRE(metadata.findSunByHandle(0x9Au) != nullptr);
 
   REQUIRE(metadata.mleaderStyles().size() == 1);
   const auto& capturedStyle = metadata.mleaderStyles().front();
@@ -535,6 +609,13 @@ TEST_CASE("DWG advanced metadata caches raw and semantic sidecars",
   CHECK(capturedMLeader.arrowHeadHandle == 0xA9u);
   CHECK(capturedMLeader.textStyleHandle == 0xAAu);
   CHECK(capturedMLeader.blockHandle == 0xABu);
+  CHECK(capturedMLeader.styleResolved);
+  CHECK(capturedMLeader.effectiveContentType == 2u);
+  CHECK(capturedMLeader.effectiveLeaderType == 2u);
+  CHECK(capturedMLeader.effectiveLeaderLineTypeHandle == 0xA8u);
+  CHECK(capturedMLeader.effectiveArrowHeadHandle == 0xA9u);
+  CHECK(capturedMLeader.effectiveTextStyleHandle == 0xAAu);
+  CHECK(capturedMLeader.effectiveBlockHandle == 0xABu);
   CHECK(capturedMLeader.rootCount == 1u);
   CHECK(capturedMLeader.leaderLineCount == 1u);
   CHECK(capturedMLeader.pointCount == 2u);
@@ -542,6 +623,12 @@ TEST_CASE("DWG advanced metadata caches raw and semantic sidecars",
   CHECK(capturedMLeader.columnCount == 2u);
   CHECK(capturedMLeader.arrowHeadOverrideCount == 1u);
   CHECK(capturedMLeader.blockLabelCount == 1u);
+  REQUIRE(capturedMLeader.arrowHeadOverrideHandles.size() == 1u);
+  CHECK(capturedMLeader.arrowHeadOverrideHandles.front() == 0xACu);
+  REQUIRE(capturedMLeader.blockAttributeDefinitionHandles.size() == 1u);
+  CHECK(capturedMLeader.blockAttributeDefinitionHandles.front() == 0xADu);
+  REQUIRE(capturedMLeader.blockLabelTexts.size() == 1u);
+  CHECK(capturedMLeader.blockLabelTexts.front() == "TAG");
   CHECK(capturedMLeader.overallScale == 2.0);
   CHECK(capturedMLeader.landingDistance == 1.75);
   CHECK(capturedMLeader.defaultArrowHeadSize == 0.625);
@@ -644,14 +731,32 @@ TEST_CASE("DWG advanced metadata caches raw and semantic sidecars",
   CHECK(capturedTableContent.blockContentCount == 1u);
   CHECK(capturedTableContent.attributeCount == 1u);
   CHECK(capturedTableContent.valueHandleCount == 1u);
-  CHECK(capturedTableContent.blockHandleCount == 1u);
-  CHECK(capturedTableContent.fieldHandleCount == 2u);
+  CHECK(capturedTableContent.blockHandleCount == 2u);
+  CHECK(capturedTableContent.fieldHandleCount == 3u);
   CHECK(capturedTableContent.mergedRangeCount == 1u);
   CHECK(capturedTableContent.overrideCellCount == 1u);
   CHECK(capturedTableContent.geometryCellCount == 1u);
   CHECK(capturedTableContent.hasTextContent);
   CHECK(capturedTableContent.hasBlockContent);
   CHECK(capturedTableContent.semanticParsed);
+  REQUIRE(capturedTableContent.columnWidths.size() == 2u);
+  CHECK(capturedTableContent.columnWidths[0] == 12.5);
+  REQUIRE(capturedTableContent.rowHeights.size() == 1u);
+  CHECK(capturedTableContent.rowHeights[0] == 4.25);
+  REQUIRE(capturedTableContent.cellTexts.size() == 1u);
+  CHECK(capturedTableContent.cellTexts.front() == "Cell text");
+  REQUIRE(capturedTableContent.attributeTexts.size() == 1u);
+  CHECK(capturedTableContent.attributeTexts.front() == "A1");
+  REQUIRE(capturedTableContent.valueHandles.size() == 1u);
+  CHECK(capturedTableContent.valueHandles.front() == 0x102u);
+  REQUIRE(capturedTableContent.geometryHandles.size() == 1u);
+  CHECK(capturedTableContent.geometryHandles.front() == 0x103u);
+  REQUIRE(capturedTableContent.cellStyleIds.size() == 1u);
+  CHECK(capturedTableContent.cellStyleIds.front() == 9);
+  REQUIRE(capturedTableContent.mergedRanges.size() == 1u);
+  CHECK(capturedTableContent.mergedRanges.front().rightColumn == 1);
+  CHECK(capturedTableContent.fieldHandles.back() == 0x107u);
+  CHECK(capturedTableContent.blockHandles.back() == 0x106u);
 
   REQUIRE(metadata.modelerGeometry().size() == 1);
   const auto& capturedModeler = metadata.modelerGeometry().front();
@@ -662,6 +767,8 @@ TEST_CASE("DWG advanced metadata caches raw and semantic sidecars",
   CHECK(capturedModeler.bodyBitSize == 456u);
   CHECK(capturedModeler.objectSize == 64u);
   CHECK_FALSE(capturedModeler.isEmpty);
+  CHECK(capturedModeler.hasModelerData);
+  CHECK(capturedModeler.modelerDataUnknownBit);
   CHECK(capturedModeler.hasWireframe);
   CHECK(capturedModeler.hasRawPayload);
   CHECK(capturedModeler.historyHandle == 0xFBu);
@@ -673,6 +780,8 @@ TEST_CASE("DWG advanced metadata caches raw and semantic sidecars",
   CHECK(capturedAssoc.handle == 0xE6u);
   CHECK(capturedAssoc.parentHandle == 0xE7u);
   CHECK(capturedAssoc.recordName == "ACDBASSOCVERTEXACTIONPARAM");
+  CHECK(capturedAssoc.kind ==
+        LC_DwgAdvancedMetadata::AssociativeKind::VertexActionParam);
   CHECK(capturedAssoc.geometryStatus == 4);
   CHECK(capturedAssoc.owningNetworkHandle == 0xE8u);
   CHECK(capturedAssoc.actionBodyHandle == 0xE9u);
@@ -694,6 +803,11 @@ TEST_CASE("DWG advanced metadata caches raw and semantic sidecars",
   CHECK(capturedAssoc.osnapMode == 6u);
   CHECK(capturedAssoc.parameter == 0.875);
   CHECK(capturedAssoc.point.z == 9.0);
+  CHECK(capturedAssoc.replayState ==
+        LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed);
+  metadata.invalidateAssociativeGraphForHandle(0xEBu);
+  CHECK(capturedAssoc.replayState ==
+        LC_DwgAdvancedMetadata::ReplayState::ReplayInvalidated);
 
   REQUIRE(metadata.acshObjects().size() == 1);
   const auto& capturedAcSh = metadata.acshObjects().front();
@@ -718,6 +832,7 @@ TEST_CASE("DWG advanced metadata caches raw and semantic sidecars",
   CHECK(capturedAcSh.blobBytes == 5u);
 
   REQUIRE(metadata.hasReplayableAdvancedObjects());
+  CHECK(metadata.semanticOnlyRecordCount() >= 18u);
   metadata.invalidateByOwner(0xA1u);
   CHECK(capturedStyle.replayState ==
         LC_DwgAdvancedMetadata::ReplayState::ReplayInvalidated);
@@ -754,6 +869,14 @@ TEST_CASE("DWG fixture manifest is valid JSON and optional by default",
   const QJsonObject first = fixtures.first().toObject();
   CHECK(first.value("optional").toBool());
   CHECK(first.value("path").toString().contains("${HOME}"));
+  CHECK(!first.value("targetVersion").toString().isEmpty());
+  CHECK(first.value("tags").toArray().contains(QJsonValue(QStringLiteral("table"))));
+  CHECK(first.value("expectedCallbacks").toArray().contains(
+      QJsonValue(QStringLiteral("addTableContent"))));
+  CHECK(first.value("expectedUnsupportedDiagnostics").isArray());
+  CHECK(first.value("expectedRawReplayCount").toInt(-1) >= 0);
+  CHECK(first.value("references").toObject().contains("acadSharp"));
+  CHECK(first.value("references").toObject().contains("libreDwg"));
   CHECK(first.value("expect").toObject().value("preserveRawUnsupported").toBool());
 }
 

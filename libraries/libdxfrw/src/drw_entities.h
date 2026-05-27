@@ -529,6 +529,8 @@ public:
     duint32 m_bodyBitSize = 0;
     duint32 m_objectSize = 0;
     bool m_isEmpty = false;
+    bool m_hasModelerData = false;
+    bool m_modelerDataUnknownBit = false;
     bool m_hasWireframe = false;
     duint32 m_historyHandle = 0;
     std::vector<duint8> m_rawBytes;

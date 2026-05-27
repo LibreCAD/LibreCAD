@@ -255,21 +255,43 @@ public:
             : object.m_recordName;
         definition.m_entityFlagRaw = object.m_isEntity ? 0x1F2 : 0;
         definition.m_instanceCount = 1;
-        registerDwgClass(definition);
-        return true;
+        return registerDwgClass(definition);
     }
 
+    bool hasDwgClassDefinition(duint16 classNum) const {
+        return std::any_of(m_dwgClassDefinitions.begin(), m_dwgClassDefinitions.end(),
+                           [classNum](const DwgClassDefinition& definition) {
+                               return definition.m_classNum == classNum;
+                           });
+    }
+
+    bool hasDwgClassConflict() const { return m_hasDwgClassConflict; }
+
 protected:
-    void registerDwgClass(const DwgClassDefinition& definition) {
+    bool sameDwgClassIdentity(const DwgClassDefinition& left,
+                              const DwgClassDefinition& right) const {
+        return left.m_recordName == right.m_recordName
+            && left.m_className == right.m_className
+            && left.m_appName == right.m_appName
+            && left.m_entityFlagRaw == right.m_entityFlagRaw;
+    }
+
+    bool registerDwgClass(const DwgClassDefinition& definition) {
         if (definition.m_classNum < 500)
-            return;
+            return true;
         for (auto& existing : m_dwgClassDefinitions) {
             if (existing.m_classNum == definition.m_classNum) {
-                existing = definition;
-                return;
+                if (!sameDwgClassIdentity(existing, definition)) {
+                    m_hasDwgClassConflict = true;
+                    return false;
+                }
+                if (definition.m_instanceCount > existing.m_instanceCount)
+                    existing.m_instanceCount = definition.m_instanceCount;
+                return true;
             }
         }
         m_dwgClassDefinitions.push_back(definition);
+        return true;
     }
 
     std::vector<DwgClassDefinition> sortedDwgClassDefinitions() const {
@@ -364,6 +386,7 @@ protected:
     HandleAllocator m_handles;
 
     std::vector<DwgClassDefinition> m_dwgClassDefinitions;
+    bool m_hasDwgClassConflict {false};
 };
 
 #endif // DWGWRITER_H

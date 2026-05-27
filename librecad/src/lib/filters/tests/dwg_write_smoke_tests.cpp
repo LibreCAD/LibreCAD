@@ -644,6 +644,29 @@ public:
     }
 };
 
+class ConflictingRawClassIface : public EmptyIface {
+public:
+    explicit ConflictingRawClassIface(DRW::Version version)
+        : m_first(makeRawReplayObject(version))
+        , m_second(makeRawReplayObject(version))
+    {
+        m_second.m_recordName = "RAW_REPLAY_CONFLICT";
+        m_second.m_className = "AcDbRawReplayConflict";
+        m_second.m_handle = 0x701;
+    }
+
+    dwgRW *m_writer {nullptr};
+    DRW_UnsupportedObject m_first;
+    DRW_UnsupportedObject m_second;
+
+    void writeDwgClasses() override {
+        if (m_writer == nullptr)
+            return;
+        REQUIRE(m_writer->registerRawDwgObjectClass(&m_first));
+        REQUIRE_FALSE(m_writer->registerRawDwgObjectClass(&m_second));
+    }
+};
+
 class MLeaderRoundTripIface : public EmptyIface {
 public:
     dwgRW *m_writer {nullptr};
@@ -822,6 +845,20 @@ TEST_CASE("dwgRW replays raw custom OBJECT payloads with class metadata",
         REQUIRE(raw->m_className == writeIface.m_rawObject.m_className);
         REQUIRE(raw->m_rawBytes == writeIface.m_rawObject.m_rawBytes);
 
+        std::remove(path.c_str());
+    }
+}
+
+TEST_CASE("dwgRW rejects conflicting custom class registrations",
+          "[dwg-write][raw-replay][classes]") {
+    const DRW::Version versions[] = {DRW::AC1024, DRW::AC1027, DRW::AC1032};
+
+    for (DRW::Version version : versions) {
+        const std::string path = tempPath("raw_replay_class_conflict.dwg");
+        ConflictingRawClassIface iface(version);
+        dwgRW writer(path.c_str());
+        iface.m_writer = &writer;
+        REQUIRE_FALSE(writer.write(&iface, version, /*bin=*/false));
         std::remove(path.c_str());
     }
 }

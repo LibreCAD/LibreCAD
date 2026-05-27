@@ -5317,12 +5317,22 @@ void RS_FilterDXFRW::writeObjects() {
     if (m_dwgW) {
         const auto& metadata = m_graphic->dwgAdvancedMetadata();
         bool hasBlockedReplay = false;
+        int blockedEntityReplay = 0;
+        int blockedMissingRawBytes = 0;
+        int blockedMissingClassMetadata = 0;
+        int blockedWriterRejected = 0;
         int replayedObjects = 0;
         for (const auto& record : metadata.rawObjects()) {
-            if (record.replayState != LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed)
-                continue;
-            if (record.isEntity || record.rawBytes.empty()) {
+            const LC_DwgAdvancedMetadata::ReplayBlocker blocker =
+                LC_DwgAdvancedMetadata::rawReplayBlocker(record);
+            if (blocker != LC_DwgAdvancedMetadata::ReplayBlocker::None) {
                 hasBlockedReplay = true;
+                if (blocker == LC_DwgAdvancedMetadata::ReplayBlocker::EntityReplayUnsupported)
+                    ++blockedEntityReplay;
+                else if (blocker == LC_DwgAdvancedMetadata::ReplayBlocker::MissingRawBytes)
+                    ++blockedMissingRawBytes;
+                else if (blocker == LC_DwgAdvancedMetadata::ReplayBlocker::MissingClassMetadata)
+                    ++blockedMissingClassMetadata;
                 continue;
             }
             DRW_UnsupportedObject object = rawObjectFromMetadata(record);
@@ -5330,33 +5340,35 @@ void RS_FilterDXFRW::writeObjects() {
                 ++replayedObjects;
             } else {
                 hasBlockedReplay = true;
+                ++blockedWriterRejected;
             }
         }
         if (replayedObjects > 0) {
             RS_DEBUG->print("RS_FilterDXFRW::writeObjects: replayed %d raw DWG objects",
                             replayedObjects);
         }
-        const bool hasSemanticOnlyReplayable =
-            !metadata.lights().empty() || !metadata.suns().empty()
-            || !metadata.modelerGeometry().empty() || !metadata.tables().empty()
-            || !metadata.associativeObjects().empty() || !metadata.acshObjects().empty()
-            || !metadata.mleaderStyles().empty()
-            || !metadata.detailViewStyles().empty()
-            || !metadata.sectionViewStyles().empty()
-            || !metadata.breakData().empty()
-            || !metadata.breakPointRefs().empty()
-            || !metadata.groups().empty()
-            || !metadata.imageDefinitionReactors().empty()
-            || !metadata.spatialFilters().empty()
-            || !metadata.geoData().empty()
-            || !metadata.tableGeometry().empty()
-            || !metadata.placeholders().empty();
+        const size_t semanticOnlyRecords = metadata.semanticOnlyRecordCount();
+        const bool hasSemanticOnlyReplayable = semanticOnlyRecords > 0;
         if (hasBlockedReplay || hasSemanticOnlyReplayable) {
             RS_DEBUG->print(
                 RS_Debug::D_WARNING,
                 "Some DWG advanced metadata still cannot be emitted natively; "
                 "unchanged raw OBJECTS are replayed where safe, while entities "
                 "and semantic-only records remain diagnostic-only");
+            if (hasBlockedReplay) {
+                RS_DEBUG->print(
+                    RS_Debug::D_WARNING,
+                    "Blocked raw DWG replay: entity=%d missing-bytes=%d "
+                    "missing-class=%d writer-rejected=%d",
+                    blockedEntityReplay, blockedMissingRawBytes,
+                    blockedMissingClassMetadata, blockedWriterRejected);
+            }
+            if (semanticOnlyRecords > 0) {
+                RS_DEBUG->print(
+                    RS_Debug::D_WARNING,
+                    "Semantic-only DWG metadata records not emitted natively: %d",
+                    static_cast<int>(semanticOnlyRecords));
+            }
         }
         return;  // DWG writer handles object section internally
     }
@@ -7467,6 +7479,10 @@ void RS_FilterDXFRW::writeMLeader(LC_MLeader *m) {
     if (m_version >= 1024 && d.hasTextContents && !d.textLabel.isEmpty()
         && m_dwgW->writeMLeader(&e)) {
       return;
+    }
+    if (d.hasBlockContents) {
+      RS_DEBUG->print(RS_Debug::D_WARNING,
+                      "MLEADER block content is exported as leader fallback geometry; native block-content DWG writing is not implemented");
     }
     bool wroteGeometry = false;
     for (const auto &root : d.roots) {
