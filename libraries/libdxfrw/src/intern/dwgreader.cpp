@@ -1294,6 +1294,7 @@ bool dwgReader::readDwgEntity(dwgBuffer *dbuf, objHandle& obj, DRW_Interface& in
         case 37: {
             DRW_ModelerGeometry e(DRW::REGION);
             if (entryParse(e, buff, bs, ret)) {
+                e.m_objectSize = static_cast<duint32>(size);
                 e.m_rawBytes = tmpByteStr;
                 intfa.addModelerGeometry(e);
                 intfa.addUnsupportedObject(makeRawEntity(oType));
@@ -1302,6 +1303,7 @@ bool dwgReader::readDwgEntity(dwgBuffer *dbuf, objHandle& obj, DRW_Interface& in
         case 38: {
             DRW_ModelerGeometry e(DRW::E3DSOLID);
             if (entryParse(e, buff, bs, ret)) {
+                e.m_objectSize = static_cast<duint32>(size);
                 e.m_rawBytes = tmpByteStr;
                 intfa.addModelerGeometry(e);
                 intfa.addUnsupportedObject(makeRawEntity(oType));
@@ -1310,6 +1312,7 @@ bool dwgReader::readDwgEntity(dwgBuffer *dbuf, objHandle& obj, DRW_Interface& in
         case 39: {
             DRW_ModelerGeometry e(DRW::BODY);
             if (entryParse(e, buff, bs, ret)) {
+                e.m_objectSize = static_cast<duint32>(size);
                 e.m_rawBytes = tmpByteStr;
                 intfa.addModelerGeometry(e);
                 intfa.addUnsupportedObject(makeRawEntity(oType));

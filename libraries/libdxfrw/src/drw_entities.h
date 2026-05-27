@@ -526,6 +526,8 @@ protected:
 
 public:
     duint16 m_modelerVersion = 0;
+    duint32 m_bodyBitSize = 0;
+    duint32 m_objectSize = 0;
     bool m_isEmpty = false;
     bool m_hasWireframe = false;
     duint32 m_historyHandle = 0;

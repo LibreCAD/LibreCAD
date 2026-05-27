@@ -124,9 +124,13 @@ public:
         duint32 parentHandle = 0;
         DRW::ETYPE type = DRW::UNKNOWN;
         duint16 modelerVersion = 0;
+        duint32 bodyBitSize = 0;
+        duint32 objectSize = 0;
         bool isEmpty = false;
         bool hasWireframe = false;
+        bool hasRawPayload = false;
         duint32 historyHandle = 0;
+        size_t rawByteCount = 0;
         std::vector<duint8> rawBytes;
         ReplayState replayState = ReplayState::ReplayAllowed;
     };
@@ -148,10 +152,26 @@ public:
         duint32 parentHandle = 0;
         std::string recordName;
         duint16 classVersion = 0;
+        dint32 geometryStatus = 0;
         duint32 owningNetworkHandle = 0;
         duint32 actionBodyHandle = 0;
+        dint32 actionIndex = 0;
+        dint32 maxDependencyIndex = 0;
         size_t dependencyCount = 0;
         size_t actionCount = 0;
+        std::vector<DRW_AssociativeHandleRef> dependencyRefs;
+        std::vector<DRW_AssociativeHandleRef> actionRefs;
+        std::vector<duint32> ownedParamHandles;
+        std::vector<duint32> ownedActionHandles;
+        duint32 dependencyHandle = 0;
+        duint32 readDependencyHandle = 0;
+        duint32 writeDependencyHandle = 0;
+        duint32 rNodeHandle = 0;
+        duint32 dNodeHandle = 0;
+        dint32 status = 0;
+        duint8 osnapMode = 0;
+        double parameter = 0.0;
+        DRW_Coord point;
         ReplayState replayState = ReplayState::ReplayAllowed;
     };
 
@@ -159,8 +179,21 @@ public:
         duint32 handle = 0;
         duint32 parentHandle = 0;
         std::string recordName;
+        duint32 major = 0;
+        duint32 minor = 0;
         duint32 ownerHandle = 0;
         duint32 historyNodeId = 0;
+        bool showHistory = false;
+        bool recordHistory = false;
+        DRW_Coord direction;
+        double draftAngle = 0.0;
+        double startDraftDistance = 0.0;
+        double endDraftDistance = 0.0;
+        double scaleFactor = 1.0;
+        double twistAngle = 0.0;
+        double alignAngle = 0.0;
+        size_t binaryBlob1Bytes = 0;
+        size_t binaryBlob2Bytes = 0;
         size_t blobBytes = 0;
         ReplayState replayState = ReplayState::ReplayAllowed;
     };
@@ -435,9 +468,13 @@ public:
         record.parentHandle = geometry.parentHandle;
         record.type = geometry.eType;
         record.modelerVersion = geometry.m_modelerVersion;
+        record.bodyBitSize = geometry.m_bodyBitSize;
+        record.objectSize = geometry.m_objectSize;
         record.isEmpty = geometry.m_isEmpty;
         record.hasWireframe = geometry.m_hasWireframe;
+        record.hasRawPayload = !geometry.m_rawBytes.empty();
         record.historyHandle = geometry.m_historyHandle;
+        record.rawByteCount = geometry.m_rawBytes.size();
         record.rawBytes = geometry.m_rawBytes;
         m_modelerGeometry.push_back(std::move(record));
     }
@@ -484,11 +521,27 @@ public:
         record.parentHandle = object.parentHandle;
         record.recordName = object.m_recordName;
         record.classVersion = object.m_classVersion;
+        record.geometryStatus = object.m_geometryStatus;
         record.owningNetworkHandle = object.m_owningNetworkHandle;
         record.actionBodyHandle = object.m_actionBodyHandle;
+        record.actionIndex = object.m_actionIndex;
+        record.maxDependencyIndex = object.m_maxDependencyIndex;
         record.dependencyCount = object.m_dependencies.size();
         record.actionCount = object.m_actions.size();
-        m_associativeObjects.push_back(record);
+        record.dependencyRefs = object.m_dependencies;
+        record.actionRefs = object.m_actions;
+        record.ownedParamHandles = object.m_ownedParams;
+        record.ownedActionHandles = object.m_ownedActions;
+        record.dependencyHandle = object.m_dependencyHandle;
+        record.readDependencyHandle = object.m_readDependencyHandle;
+        record.writeDependencyHandle = object.m_writeDependencyHandle;
+        record.rNodeHandle = object.m_rNodeHandle;
+        record.dNodeHandle = object.m_dNodeHandle;
+        record.status = object.m_status;
+        record.osnapMode = object.m_osnapMode;
+        record.parameter = object.m_parameter;
+        record.point = object.m_point;
+        m_associativeObjects.push_back(std::move(record));
     }
 
     void addAcShObject(const DRW_AcShHistoryObject& object) {
@@ -496,8 +549,21 @@ public:
         record.handle = object.handle;
         record.parentHandle = object.parentHandle;
         record.recordName = object.m_recordName;
+        record.major = object.m_major;
+        record.minor = object.m_minor;
         record.ownerHandle = object.m_ownerHandle;
         record.historyNodeId = object.m_historyNodeId;
+        record.showHistory = object.m_showHistory;
+        record.recordHistory = object.m_recordHistory;
+        record.direction = object.m_direction;
+        record.draftAngle = object.m_draftAngle;
+        record.startDraftDistance = object.m_startDraftDistance;
+        record.endDraftDistance = object.m_endDraftDistance;
+        record.scaleFactor = object.m_scaleFactor;
+        record.twistAngle = object.m_twistAngle;
+        record.alignAngle = object.m_alignAngle;
+        record.binaryBlob1Bytes = object.m_binaryBlob1.size();
+        record.binaryBlob2Bytes = object.m_binaryBlob2.size();
         record.blobBytes = object.m_binaryBlob1.size() + object.m_binaryBlob2.size();
         m_acshObjects.push_back(record);
     }

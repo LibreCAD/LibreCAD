@@ -2628,6 +2628,7 @@ bool DRW_3Dface::parseDwg(DRW::Version v, dwgBuffer *buf, duint32 bs){
 }
 
 bool DRW_ModelerGeometry::parseDwg(DRW::Version v, dwgBuffer *buf, duint32 bs){
+    m_bodyBitSize = bs;
     bool ret = DRW_Entity::parseDwg(v, buf, nullptr, bs);
     if (!ret)
         return ret;
