@@ -139,8 +139,29 @@ public:
         duint32 handle = 0;
         duint32 parentHandle = 0;
         std::string recordName;
+        duint32 tableStyleHandle = 0;
         int rowCount = 0;
         int columnCount = 0;
+        size_t cellCount = 0;
+        size_t contentCount = 0;
+        size_t textContentCount = 0;
+        size_t fieldContentCount = 0;
+        size_t blockContentCount = 0;
+        size_t attributeCount = 0;
+        size_t valueHandleCount = 0;
+        size_t blockHandleCount = 0;
+        size_t fieldHandleCount = 0;
+        size_t mergedRangeCount = 0;
+        size_t overrideCellCount = 0;
+        size_t geometryCellCount = 0;
+        size_t rowStyleCount = 0;
+        size_t cellStyleCount = 0;
+        size_t borderCount = 0;
+        bool titleSuppressed = false;
+        bool headerSuppressed = false;
+        bool hasTextContent = false;
+        bool hasBlockContent = false;
+        bool rawReplayAvailable = false;
         bool semanticParsed = false;
         bool styleResolved = false;
         bool fallbackRendered = false;
@@ -201,8 +222,30 @@ public:
     struct MLeaderRecord {
         duint32 handle = 0;
         duint32 parentHandle = 0;
+        duint16 classVersion = 0;
         duint32 styleHandle = 0;
+        dint32 overrideFlags = 0;
+        duint16 leaderType = 0;
+        duint16 styleContentType = 0;
+        duint32 leaderLineTypeHandle = 0;
+        duint32 arrowHeadHandle = 0;
+        duint32 textStyleHandle = 0;
+        duint32 blockHandle = 0;
         size_t rootCount = 0;
+        size_t leaderLineCount = 0;
+        size_t pointCount = 0;
+        size_t breakCount = 0;
+        size_t columnCount = 0;
+        size_t arrowHeadOverrideCount = 0;
+        size_t blockLabelCount = 0;
+        double overallScale = 1.0;
+        double landingDistance = 0.0;
+        double defaultArrowHeadSize = 0.0;
+        double textHeight = 0.0;
+        bool landingEnabled = false;
+        bool doglegEnabled = false;
+        bool isAnnotative = false;
+        bool hasTextLabel = false;
         bool hasTextContent = false;
         bool hasBlockContent = false;
         ReplayState replayState = ReplayState::ReplayAllowed;
@@ -484,6 +527,15 @@ public:
         record.handle = style.handle;
         record.parentHandle = style.parentHandle;
         record.recordName = style.m_name;
+        record.rowStyleCount = style.m_rowStyles.size();
+        record.cellStyleCount = style.m_cellStyles.size();
+        record.borderCount = style.m_tableCellStyle.m_borders.size();
+        for (const DRW_TableStyleRowStyle& rowStyle : style.m_rowStyles)
+            record.borderCount += rowStyle.m_borders.size();
+        for (const DRW_TableStyleCellStyle& cellStyle : style.m_cellStyles)
+            record.borderCount += cellStyle.m_borders.size();
+        record.titleSuppressed = style.m_titleSuppressed;
+        record.headerSuppressed = style.m_headerSuppressed;
         record.semanticParsed = true;
         record.styleResolved = true;
         m_tables.push_back(record);
@@ -496,6 +548,10 @@ public:
         record.recordName = "ACAD_TABLE";
         record.rowCount = static_cast<int>(table.m_content.m_rows.size());
         record.columnCount = static_cast<int>(table.m_content.m_columns.size());
+        record.tableStyleHandle = table.m_tableStyleHandle != 0
+                                      ? table.m_tableStyleHandle
+                                      : table.m_content.m_tableStyleHandle;
+        populateTableContentSummary(record, table.m_content);
         record.semanticParsed = table.m_hasSemanticContent && table.m_semanticContentComplete;
         record.fallbackRendered = fallbackRendered;
         record.replayState = fallbackRendered ? ReplayState::ReplayReplaced
@@ -510,6 +566,8 @@ public:
         record.recordName = "TABLECONTENT";
         record.rowCount = static_cast<int>(table.m_content.m_rows.size());
         record.columnCount = static_cast<int>(table.m_content.m_columns.size());
+        record.tableStyleHandle = table.m_content.m_tableStyleHandle;
+        populateTableContentSummary(record, table.m_content);
         record.semanticParsed = table.m_parseComplete;
         record.fallbackRendered = false;
         m_tables.push_back(record);
@@ -572,8 +630,39 @@ public:
         MLeaderRecord record;
         record.handle = mleader.handle;
         record.parentHandle = mleader.parentHandle;
+        record.classVersion = mleader.classVersion;
         record.styleHandle = mleader.styleHandle.ref;
+        record.overrideFlags = mleader.overrideFlags;
+        record.leaderType = mleader.leaderType;
+        record.styleContentType = mleader.styleContentType;
+        record.leaderLineTypeHandle = mleader.leaderLineTypeHandle.ref;
+        record.arrowHeadHandle = mleader.arrowHeadHandle.ref;
+        record.textStyleHandle = mleader.styleTextStyleHandle.ref != 0
+                                     ? mleader.styleTextStyleHandle.ref
+                                     : mleader.context.textStyleHandle.ref;
+        record.blockHandle = mleader.styleBlockHandle.ref != 0
+                                 ? mleader.styleBlockHandle.ref
+                                 : mleader.context.blockTableRecordHandle.ref;
         record.rootCount = mleader.context.roots.size();
+        for (const DRW_MLeaderRoot& root : mleader.context.roots) {
+            record.breakCount += root.breaks.size();
+            record.leaderLineCount += root.leaderLines.size();
+            for (const DRW_MLeaderLeaderLine& leaderLine : root.leaderLines) {
+                record.pointCount += leaderLine.points.size();
+                record.breakCount += leaderLine.breaks.size();
+            }
+        }
+        record.columnCount = mleader.context.columnSizes.size();
+        record.arrowHeadOverrideCount = mleader.arrowHeads.size();
+        record.blockLabelCount = mleader.blockLabels.size();
+        record.overallScale = mleader.context.overallScale;
+        record.landingDistance = mleader.landingDistance;
+        record.defaultArrowHeadSize = mleader.defaultArrowHeadSize;
+        record.textHeight = mleader.context.textHeight;
+        record.landingEnabled = mleader.landingEnabled;
+        record.doglegEnabled = mleader.doglegEnabled;
+        record.isAnnotative = mleader.isAnnotative;
+        record.hasTextLabel = !mleader.context.textLabel.empty();
         record.hasTextContent = mleader.context.hasTextContents;
         record.hasBlockContent = mleader.context.hasContentsBlock;
         m_mleaders.push_back(record);
@@ -820,6 +909,41 @@ public:
     }
 
 private:
+    static void populateTableContentSummary(TableRecord& record,
+                                            const DRW_TableContent& content) {
+        record.fieldHandleCount = content.m_fieldHandles.size();
+        record.mergedRangeCount = content.m_mergedRanges.size();
+        for (const DRW_TableRow& row : content.m_rows) {
+            record.cellCount += row.m_cells.size();
+            for (const DRW_TableCell& cell : row.m_cells) {
+                record.contentCount += cell.m_contents.size();
+                record.attributeCount += cell.m_attributes.size();
+                if (cell.m_valueHandle != 0)
+                    ++record.valueHandleCount;
+                if (cell.m_blockHandle != 0)
+                    ++record.blockHandleCount;
+                if (cell.m_blockHandle != 0)
+                    record.hasBlockContent = true;
+                if (cell.m_overrideFlags != 0)
+                    ++record.overrideCellCount;
+                if (cell.m_geometryFlags != 0 || cell.m_geometryHandle != 0)
+                    ++record.geometryCellCount;
+                for (const DRW_TableCellContent& cellContent : cell.m_contents) {
+                    if (!cellContent.m_text.empty()) {
+                        ++record.textContentCount;
+                        record.hasTextContent = true;
+                    }
+                    if (cellContent.m_type == 2)
+                        ++record.fieldContentCount;
+                    if (cellContent.m_type == 4) {
+                        ++record.blockContentCount;
+                        record.hasBlockContent = true;
+                    }
+                }
+            }
+        }
+    }
+
     template<typename Container>
     static bool hasReplayable(const Container& container) {
         for (const auto& record : container) {

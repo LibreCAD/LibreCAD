@@ -208,6 +208,47 @@ TEST_CASE("DWG advanced metadata caches raw and semantic sidecars",
   style.isAnnotative = true;
   metadata.addMLeaderStyle(style);
 
+  DRW_MLeader mleader;
+  mleader.handle = 0xA6u;
+  mleader.parentHandle = 0xA7u;
+  mleader.classVersion = 2u;
+  mleader.styleHandle.ref = 0xA0u;
+  mleader.overrideFlags = 0x1234;
+  mleader.leaderType = 2u;
+  mleader.styleContentType = 2u;
+  mleader.leaderLineTypeHandle.ref = 0xA8u;
+  mleader.arrowHeadHandle.ref = 0xA9u;
+  mleader.styleTextStyleHandle.ref = 0xAAu;
+  mleader.styleBlockHandle.ref = 0xABu;
+  mleader.landingDistance = 1.75;
+  mleader.defaultArrowHeadSize = 0.625;
+  mleader.landingEnabled = true;
+  mleader.doglegEnabled = false;
+  mleader.isAnnotative = true;
+  mleader.context.overallScale = 2.0;
+  mleader.context.textHeight = 3.5;
+  mleader.context.hasTextContents = true;
+  mleader.context.textLabel = "Leader note";
+  mleader.context.hasContentsBlock = true;
+  mleader.context.columnSizes = {4.0, 5.0};
+  DRW_MLeaderLeaderLine leaderLine;
+  leaderLine.points = {DRW_Coord{0.0, 0.0, 0.0}, DRW_Coord{1.0, 1.0, 0.0}};
+  leaderLine.breaks.push_back({DRW_Coord{0.25, 0.25, 0.0},
+                               DRW_Coord{0.5, 0.5, 0.0}});
+  DRW_MLeaderRoot leaderRoot;
+  leaderRoot.breaks.push_back({DRW_Coord{0.0, 0.0, 0.0},
+                               DRW_Coord{0.1, 0.1, 0.0}});
+  leaderRoot.leaderLines.push_back(leaderLine);
+  mleader.context.roots.push_back(leaderRoot);
+  DRW_MLeader::ArrowHeadEntry arrowEntry;
+  arrowEntry.handle.ref = 0xACu;
+  mleader.arrowHeads.push_back(arrowEntry);
+  DRW_MLeader::BlockLabelEntry blockLabel;
+  blockLabel.attDefHandle.ref = 0xADu;
+  blockLabel.labelText = "TAG";
+  mleader.blockLabels.push_back(blockLabel);
+  metadata.addMLeader(mleader);
+
   DRW_DetailViewStyle detailStyle;
   detailStyle.handle = 0xB0u;
   detailStyle.parentHandle = 0xB1u;
@@ -323,6 +364,51 @@ TEST_CASE("DWG advanced metadata caches raw and semantic sidecars",
   placeholder.parentHandle = 0xE5u;
   metadata.addAcDbPlaceholder(placeholder);
 
+  DRW_TableStyle tableStyle;
+  tableStyle.handle = 0xFCu;
+  tableStyle.parentHandle = 0xFDu;
+  tableStyle.m_name = "SemanticTableStyle";
+  tableStyle.m_titleSuppressed = true;
+  tableStyle.m_headerSuppressed = false;
+  tableStyle.m_tableCellStyle.m_borders.resize(1);
+  DRW_TableStyleRowStyle rowStyle;
+  rowStyle.m_borders.resize(2);
+  tableStyle.m_rowStyles.push_back(rowStyle);
+  DRW_TableStyleCellStyle cellStyle;
+  cellStyle.m_borders.resize(3);
+  tableStyle.m_cellStyles.push_back(cellStyle);
+  metadata.addTableStyle(tableStyle);
+
+  DRW_TableContentObject tableContent;
+  tableContent.handle = 0xFEu;
+  tableContent.parentHandle = 0xFFu;
+  tableContent.m_parseComplete = true;
+  tableContent.m_content.m_tableStyleHandle = 0xFCu;
+  tableContent.m_content.m_columns.resize(2);
+  tableContent.m_content.m_fieldHandles = {0x100u, 0x101u};
+  tableContent.m_content.m_mergedRanges.push_back({0, 0, 0, 1});
+  DRW_TableRow semanticRow;
+  semanticRow.m_cells.resize(2);
+  semanticRow.m_cells[0].m_overrideFlags = 0x1u;
+  semanticRow.m_cells[0].m_valueHandle = 0x102u;
+  semanticRow.m_cells[0].m_geometryHandle = 0x103u;
+  semanticRow.m_cells[0].m_attributes.push_back({0x104u, 1, "A1"});
+  DRW_TableCellContent textContent;
+  textContent.m_type = 1;
+  textContent.m_text = "Cell text";
+  semanticRow.m_cells[0].m_contents.push_back(textContent);
+  semanticRow.m_cells[1].m_blockHandle = 0x105u;
+  DRW_TableCellContent blockContent;
+  blockContent.m_type = 4;
+  blockContent.m_handle = 0x106u;
+  semanticRow.m_cells[1].m_contents.push_back(blockContent);
+  DRW_TableCellContent fieldContent;
+  fieldContent.m_type = 2;
+  fieldContent.m_handle = 0x107u;
+  semanticRow.m_cells[1].m_contents.push_back(fieldContent);
+  tableContent.m_content.m_rows.push_back(semanticRow);
+  metadata.addTableContent(tableContent);
+
   DRW_ModelerGeometry modelerGeometry(DRW::E3DSOLID);
   modelerGeometry.handle = 0xF9u;
   modelerGeometry.parentHandle = 0xFAu;
@@ -436,6 +522,37 @@ TEST_CASE("DWG advanced metadata caches raw and semantic sidecars",
   CHECK(capturedStyle.scaleFactor == 3.0);
   CHECK(capturedStyle.isAnnotative);
 
+  REQUIRE(metadata.mleaders().size() == 1);
+  const auto& capturedMLeader = metadata.mleaders().front();
+  CHECK(capturedMLeader.handle == 0xA6u);
+  CHECK(capturedMLeader.parentHandle == 0xA7u);
+  CHECK(capturedMLeader.classVersion == 2u);
+  CHECK(capturedMLeader.styleHandle == 0xA0u);
+  CHECK(capturedMLeader.overrideFlags == 0x1234);
+  CHECK(capturedMLeader.leaderType == 2u);
+  CHECK(capturedMLeader.styleContentType == 2u);
+  CHECK(capturedMLeader.leaderLineTypeHandle == 0xA8u);
+  CHECK(capturedMLeader.arrowHeadHandle == 0xA9u);
+  CHECK(capturedMLeader.textStyleHandle == 0xAAu);
+  CHECK(capturedMLeader.blockHandle == 0xABu);
+  CHECK(capturedMLeader.rootCount == 1u);
+  CHECK(capturedMLeader.leaderLineCount == 1u);
+  CHECK(capturedMLeader.pointCount == 2u);
+  CHECK(capturedMLeader.breakCount == 2u);
+  CHECK(capturedMLeader.columnCount == 2u);
+  CHECK(capturedMLeader.arrowHeadOverrideCount == 1u);
+  CHECK(capturedMLeader.blockLabelCount == 1u);
+  CHECK(capturedMLeader.overallScale == 2.0);
+  CHECK(capturedMLeader.landingDistance == 1.75);
+  CHECK(capturedMLeader.defaultArrowHeadSize == 0.625);
+  CHECK(capturedMLeader.textHeight == 3.5);
+  CHECK(capturedMLeader.landingEnabled);
+  CHECK_FALSE(capturedMLeader.doglegEnabled);
+  CHECK(capturedMLeader.isAnnotative);
+  CHECK(capturedMLeader.hasTextLabel);
+  CHECK(capturedMLeader.hasTextContent);
+  CHECK(capturedMLeader.hasBlockContent);
+
   REQUIRE(metadata.detailViewStyles().size() == 1);
   const auto& capturedDetail = metadata.detailViewStyles().front();
   CHECK(capturedDetail.handle == 0xB0u);
@@ -503,6 +620,38 @@ TEST_CASE("DWG advanced metadata caches raw and semantic sidecars",
 
   REQUIRE(metadata.placeholders().size() == 1);
   CHECK(metadata.placeholders().front().handle == 0xE4u);
+
+  REQUIRE(metadata.tables().size() == 2);
+  const auto& capturedTableStyle = metadata.tables().front();
+  CHECK(capturedTableStyle.handle == 0xFCu);
+  CHECK(capturedTableStyle.recordName == "SemanticTableStyle");
+  CHECK(capturedTableStyle.rowStyleCount == 1u);
+  CHECK(capturedTableStyle.cellStyleCount == 1u);
+  CHECK(capturedTableStyle.borderCount == 6u);
+  CHECK(capturedTableStyle.titleSuppressed);
+  CHECK_FALSE(capturedTableStyle.headerSuppressed);
+  CHECK(capturedTableStyle.styleResolved);
+
+  const auto& capturedTableContent = metadata.tables().back();
+  CHECK(capturedTableContent.handle == 0xFEu);
+  CHECK(capturedTableContent.tableStyleHandle == 0xFCu);
+  CHECK(capturedTableContent.rowCount == 1);
+  CHECK(capturedTableContent.columnCount == 2);
+  CHECK(capturedTableContent.cellCount == 2u);
+  CHECK(capturedTableContent.contentCount == 3u);
+  CHECK(capturedTableContent.textContentCount == 1u);
+  CHECK(capturedTableContent.fieldContentCount == 1u);
+  CHECK(capturedTableContent.blockContentCount == 1u);
+  CHECK(capturedTableContent.attributeCount == 1u);
+  CHECK(capturedTableContent.valueHandleCount == 1u);
+  CHECK(capturedTableContent.blockHandleCount == 1u);
+  CHECK(capturedTableContent.fieldHandleCount == 2u);
+  CHECK(capturedTableContent.mergedRangeCount == 1u);
+  CHECK(capturedTableContent.overrideCellCount == 1u);
+  CHECK(capturedTableContent.geometryCellCount == 1u);
+  CHECK(capturedTableContent.hasTextContent);
+  CHECK(capturedTableContent.hasBlockContent);
+  CHECK(capturedTableContent.semanticParsed);
 
   REQUIRE(metadata.modelerGeometry().size() == 1);
   const auto& capturedModeler = metadata.modelerGeometry().front();
