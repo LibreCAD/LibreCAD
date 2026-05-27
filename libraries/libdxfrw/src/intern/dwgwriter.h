@@ -14,9 +14,11 @@
 #ifndef DWGWRITER_H
 #define DWGWRITER_H
 
+#include <algorithm>
 #include <fstream>
 #include <map>
 #include <set>
+#include <string>
 #include <utility>
 #include <vector>
 
@@ -27,6 +29,24 @@
 
 class DRW_TextCodec;
 class DRW_Entity;
+
+/// DWG CLASSES section entry used by custom-class object/entity writers.
+/// DWG custom class numbers start at 500; fixed built-in object types are not
+/// represented here.
+struct DwgClassDefinition {
+    duint16 m_classNum {0};
+    duint16 m_proxyFlag {0};
+    std::string m_appName;
+    std::string m_className;
+    std::string m_recordName;
+    bool m_wasProxy {false};
+    duint16 m_entityFlagRaw {0};
+    dint32 m_instanceCount {0};
+    dint32 m_dwgVersion {0};
+    dint32 m_maintenanceVersion {0};
+    dint32 m_unknown1 {0};
+    dint32 m_unknown2 {0};
+};
 
 /// Allocates object handles for a fresh DWG write.  Reserves the
 /// canonical R2000 fixed-handle table (0x01-0x18, skipping 0x04 which
@@ -124,6 +144,8 @@ public:
         : m_stream{stream}, m_header{header}
     {
         m_handles.seedReserved();
+        registerDwgClass({500, 0x401, "ACAD", "AcDbArcDimension",
+                          "ARC_DIMENSION", false, 0x1F2});
     }
 
     virtual ~dwgWriter() = default;
@@ -212,6 +234,59 @@ public:
     void reserveHandle(duint32 h) { m_handles.reserve(h); }
 
 protected:
+    void registerDwgClass(const DwgClassDefinition& definition) {
+        if (definition.m_classNum < 500)
+            return;
+        for (auto& existing : m_dwgClassDefinitions) {
+            if (existing.m_classNum == definition.m_classNum) {
+                existing = definition;
+                return;
+            }
+        }
+        m_dwgClassDefinitions.push_back(definition);
+    }
+
+    std::vector<DwgClassDefinition> sortedDwgClassDefinitions() const {
+        auto definitions = m_dwgClassDefinitions;
+        std::sort(definitions.begin(), definitions.end(),
+                  [](const DwgClassDefinition& left,
+                     const DwgClassDefinition& right) {
+                      return left.m_classNum < right.m_classNum;
+                  });
+        return definitions;
+    }
+
+    duint16 maxDwgClassNumber() const {
+        duint16 maxClass = 499;
+        for (const auto& definition : m_dwgClassDefinitions) {
+            if (definition.m_classNum > maxClass)
+                maxClass = definition.m_classNum;
+        }
+        return maxClass;
+    }
+
+    void writeDwgClassDefinition(const DwgClassDefinition& definition,
+                                 dwgBufferW *dataBuf,
+                                 dwgBufferW *stringBuf) const {
+        if (dataBuf == nullptr)
+            return;
+        dwgBufferW *textBuf = stringBuf != nullptr ? stringBuf : dataBuf;
+        dataBuf->putBitShort(definition.m_classNum);
+        dataBuf->putBitShort(definition.m_proxyFlag);
+        textBuf->putVariableText(m_version, definition.m_appName);
+        textBuf->putVariableText(m_version, definition.m_className);
+        textBuf->putVariableText(m_version, definition.m_recordName);
+        dataBuf->putBit(definition.m_wasProxy ? 1 : 0);
+        dataBuf->putBitShort(definition.m_entityFlagRaw);
+        if (m_version > DRW::AC1015) {
+            dataBuf->putBitLong(definition.m_instanceCount);
+            dataBuf->putBitLong(definition.m_dwgVersion);
+            dataBuf->putBitLong(definition.m_maintenanceVersion);
+            dataBuf->putBitLong(definition.m_unknown1);
+            dataBuf->putBitLong(definition.m_unknown2);
+        }
+    }
+
     /// In-memory byte accumulator. All section bodies append here;
     /// final flush copies to `m_stream` in one `write()` call.
     dwgBufferW m_buf;
@@ -238,6 +313,8 @@ protected:
     /// (0x01–0x18, skipping 0x04) are referenced by their fixed values
     /// directly.
     HandleAllocator m_handles;
+
+    std::vector<DwgClassDefinition> m_dwgClassDefinitions;
 };
 
 #endif // DWGWRITER_H

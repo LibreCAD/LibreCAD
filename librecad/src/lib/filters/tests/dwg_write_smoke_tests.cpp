@@ -41,9 +41,16 @@
 #include <fstream>
 #include <vector>
 
+#include <QCoreApplication>
+
 #include "drw_interface.h"
 #include "intern/dwgutil.h"
+#include "lc_containertraverser.h"
 #include "libdwgr.h"
+#include "rs_filterdxfrw.h"
+#include "rs_graphic.h"
+#include "rs_polyline.h"
+#include "rs_settings.h"
 
 namespace {
 
@@ -133,6 +140,23 @@ std::string tempPath(const char* suffix) {
     auto dir = std::filesystem::temp_directory_path();
     auto path = dir / (std::string("dwg_write_smoke_") + suffix);
     return path.string();
+}
+
+void ensureQtSettings() {
+    static int argc = 1;
+    static char arg0[] = "librecad_tests";
+    static char *argv[] = {arg0, nullptr};
+    static QCoreApplication *app = QCoreApplication::instance()
+        ? QCoreApplication::instance()
+        : new QCoreApplication(argc, argv);
+    static bool settingsReady = [] {
+        QCoreApplication::setOrganizationName("LibreCAD");
+        QCoreApplication::setApplicationName("LibreCAD-tests");
+        RS_Settings::init("LibreCAD", "LibreCAD-tests");
+        return true;
+    }();
+    (void)app;
+    (void)settingsReady;
 }
 
 } // namespace
@@ -468,6 +492,35 @@ public:
     void addBlock(const DRW_Block& b)    override { m_blocks.push_back(b.name); }
 };
 
+class ArcDimensionRoundTripIface : public EmptyIface {
+public:
+    dwgRW *m_writer {nullptr};
+    std::vector<DRW_DimArc> m_arcDimensions;
+
+    void writeEntities() override {
+        if (m_writer == nullptr) return;
+
+        DRW_DimArc dim;
+        dim.setArcDefPoint(DRW_Coord{5.0, 6.0, 0.0});
+        dim.setExtLine1(DRW_Coord{1.0, 0.0, 0.0});
+        dim.setExtLine2(DRW_Coord{0.0, 1.0, 0.0});
+        dim.setArcCenter(DRW_Coord{0.0, 0.0, 0.0});
+        dim.setLeaderPt1(DRW_Coord{2.0, 2.0, 0.0});
+        dim.leaderPt2 = DRW_Coord{3.0, 3.0, 0.0};
+        dim.arcStartAngle = 0.25;
+        dim.arcEndAngle = 1.25;
+        dim.isPartial = true;
+        dim.hasLeader = true;
+        dim.color = 2;
+        m_writer->writeDimension(&dim);
+    }
+
+    void addDimArc(const DRW_DimArc *dim) override {
+        if (dim != nullptr)
+            m_arcDimensions.push_back(*dim);
+    }
+};
+
 } // namespace
 
 TEST_CASE("dwgRW writes POINT/LINE/CIRCLE/ARC and reader recovers them",
@@ -532,6 +585,36 @@ TEST_CASE("dwgRW writes POINT/LINE/CIRCLE/ARC and reader recovers them",
     REQUIRE(sawPaper);
 
     std::remove(path.c_str());
+}
+
+TEST_CASE("dwgRW modern writers emit CLASSES for ARC_DIMENSION",
+          "[dwg-write][classes][arc-dimension]") {
+    const DRW::Version versions[] = {DRW::AC1024, DRW::AC1027, DRW::AC1032};
+
+    for (DRW::Version version : versions) {
+        const std::string path = tempPath("arc_dimension_classes.dwg");
+        {
+            dwgRW writer(path.c_str());
+            ArcDimensionRoundTripIface iface;
+            iface.m_writer = &writer;
+            REQUIRE(writer.write(&iface, version, /*bin=*/false));
+        }
+
+        ArcDimensionRoundTripIface readIface;
+        {
+            dwgRW reader(path.c_str());
+            REQUIRE(reader.read(&readIface, /*ext=*/false));
+            REQUIRE(reader.getVersion() == version);
+            REQUIRE(reader.getError() == DRW::BAD_NONE);
+        }
+
+        REQUIRE(readIface.m_arcDimensions.size() == 1);
+        REQUIRE(readIface.m_arcDimensions[0].getArcDefPoint().x == 5.0);
+        REQUIRE(readIface.m_arcDimensions[0].arcStartAngle == 0.25);
+        REQUIRE(readIface.m_arcDimensions[0].arcEndAngle == 1.25);
+
+        std::remove(path.c_str());
+    }
 }
 
 TEST_CASE("dwgRW round-trip delivers the standard R2000 table records",
@@ -1112,6 +1195,107 @@ public:
     }
 };
 
+class PolyfaceRoundTripIface : public EmptyIface {
+public:
+    dwgRW *m_writer {nullptr};
+    std::vector<DRW_Polyline> m_polylines;
+
+    void writeEntities() override {
+        if (m_writer == nullptr) return;
+
+        DRW_Polyline pl;
+        pl.flags = 64;
+        pl.vertexcount = 3;
+        pl.facecount = 1;
+
+        DRW_Vertex v1(0.0, 0.0, 0.0, 0.0);
+        v1.flags = 64 | 128;
+        DRW_Vertex v2(10.0, 0.0, 0.0, 0.0);
+        v2.flags = 64 | 128;
+        DRW_Vertex v3(0.0, 10.0, 0.0, 0.0);
+        v3.flags = 64 | 128;
+        DRW_Vertex face;
+        face.flags = 128;
+        face.vindex1 = 1;
+        face.vindex2 = -2;
+        face.vindex3 = 3;
+
+        pl.addVertex(v1);
+        pl.addVertex(v2);
+        pl.addVertex(v3);
+        pl.addVertex(face);
+        m_writer->writePolyline(&pl);
+    }
+
+    void addPolyline(const DRW_Polyline& pl) override {
+        m_polylines.push_back(pl);
+    }
+};
+
+class MeshRoundTripIface : public EmptyIface {
+public:
+    dwgRW *m_writer {nullptr};
+    std::vector<DRW_Polyline> m_polylines;
+
+    void writeEntities() override {
+        if (m_writer == nullptr) return;
+
+        DRW_Polyline pl;
+        pl.flags = 16;
+        pl.vertexcount = 2;
+        pl.facecount = 2;
+
+        pl.addVertex(DRW_Vertex(0.0, 0.0, 0.0, 0.0));
+        pl.addVertex(DRW_Vertex(10.0, 0.0, 1.0, 0.0));
+        pl.addVertex(DRW_Vertex(0.0, 10.0, 2.0, 0.0));
+        pl.addVertex(DRW_Vertex(10.0, 10.0, 3.0, 0.0));
+        m_writer->writePolyline(&pl);
+    }
+
+    void addPolyline(const DRW_Polyline& pl) override {
+        m_polylines.push_back(pl);
+    }
+};
+
+class LWPolylineMetadataIface : public EmptyIface {
+public:
+    dwgRW *m_writer {nullptr};
+    std::vector<DRW_LWPolyline> m_lwPolylines;
+
+    void writeEntities() override {
+        if (m_writer == nullptr) return;
+
+        DRW_LWPolyline pl;
+        pl.flags = 1;
+        pl.width = 0.25;
+        pl.elevation = 7.5;
+        pl.thickness = 1.25;
+        pl.extPoint = DRW_Coord{0.0, 1.0, 0.0};
+
+        DRW_Vertex2D v0(0.0, 0.0, 0.0);
+        v0.stawidth = 0.1;
+        v0.endwidth = 0.2;
+        v0.identifier = 101;
+        DRW_Vertex2D v1(5.0, 0.0, 0.5);
+        v1.stawidth = 0.3;
+        v1.endwidth = 0.4;
+        v1.identifier = 102;
+        DRW_Vertex2D v2(5.0, 5.0, 0.0);
+        v2.stawidth = 0.5;
+        v2.endwidth = 0.6;
+        v2.identifier = 103;
+
+        pl.addVertex(v0);
+        pl.addVertex(v1);
+        pl.addVertex(v2);
+        m_writer->writeLWPolyline(&pl);
+    }
+
+    void addLWPolyline(const DRW_LWPolyline& pl) override {
+        m_lwPolylines.push_back(pl);
+    }
+};
+
 } // namespace (phase-5 ifaces)
 
 TEST_CASE("dwgRW R2010 viewport entity round-trip", "[dwg-write][r2010][smoke]") {
@@ -1156,12 +1340,292 @@ TEST_CASE("dwgRW R2010 polyline (2D) round-trip", "[dwg-write][r2010][smoke]") {
     }
 
     REQUIRE(cap.m_polylines.size() == 1);
+    REQUIRE(cap.m_polylines[0].dwgSeqEndHandle() != 0);
     REQUIRE(cap.m_polylines[0].vertlist.size() == 3);
     REQUIRE(cap.m_polylines[0].vertlist[0]->basePoint.x == 0.0);
     REQUIRE(cap.m_polylines[0].vertlist[1]->basePoint.x == 10.0);
     REQUIRE(cap.m_polylines[0].vertlist[2]->basePoint.y == 5.0);
 
     std::remove(path.c_str());
+}
+
+TEST_CASE("dwgRW R2010 polyface vertices keep DWG subtypes",
+          "[dwg-write][r2010][polyline]") {
+    const std::string path = tempPath("polyface_r2010.dwg");
+
+    {
+        dwgRW writer(path.c_str());
+        PolyfaceRoundTripIface iface;
+        iface.m_writer = &writer;
+        REQUIRE(writer.write(&iface, DRW::AC1024, /*bin=*/false));
+    }
+
+    PolyfaceRoundTripIface cap;
+    {
+        dwgRW reader(path.c_str());
+        REQUIRE(reader.read(&cap, /*ext=*/false));
+        REQUIRE(reader.getError() == DRW::BAD_NONE);
+    }
+
+    REQUIRE(cap.m_polylines.size() == 1);
+    REQUIRE(cap.m_polylines[0].flags == 64);
+    REQUIRE(cap.m_polylines[0].vertlist.size() == 4);
+    REQUIRE(cap.m_polylines[0].vertlist[0]->dwgSubtype()
+            == DRW_Vertex::DwgSubtype::Polyface);
+    REQUIRE(cap.m_polylines[0].vertlist[0]->flags == (64 | 128));
+    REQUIRE(cap.m_polylines[0].vertlist[3]->dwgSubtype()
+            == DRW_Vertex::DwgSubtype::PolyfaceFace);
+    REQUIRE(cap.m_polylines[0].vertlist[3]->vindex1 == 1);
+    REQUIRE(cap.m_polylines[0].vertlist[3]->vindex2 == -2);
+    REQUIRE(cap.m_polylines[0].vertlist[3]->vindex3 == 3);
+
+    std::remove(path.c_str());
+}
+
+TEST_CASE("RS_FilterDXFRW exports ellipse-segment polyline as old-style DWG",
+          "[dwg-write][r2010][polyline]") {
+    ensureQtSettings();
+    const std::string path = tempPath("ellipse_polyline_export.dwg");
+
+    RS_Graphic graphic;
+    auto *polyline = new RS_Polyline(&graphic);
+    polyline->addVertex(RS_Vector(0.0, 0.0, 0.0), 1.0);
+    polyline->addVertex(RS_Vector(10.0, 0.0, 0.0));
+    polyline->scale(RS_Vector(0.0, 0.0, 0.0), RS_Vector(1.0, 0.5, 1.0));
+    graphic.addEntity(polyline);
+
+    {
+        RS_FilterDXFRW filter;
+        REQUIRE(filter.fileExport(graphic, QString::fromStdString(path),
+                                  RS2::FormatDWG2004));
+    }
+
+    PolylineRoundTripIface cap;
+    {
+        dwgRW reader(path.c_str());
+        REQUIRE(reader.read(&cap, /*ext=*/false));
+        REQUIRE(reader.getError() == DRW::BAD_NONE);
+    }
+
+    REQUIRE(cap.m_polylines.size() == 1);
+    REQUIRE(!cap.m_polylines[0].vertlist.empty());
+
+    std::remove(path.c_str());
+}
+
+TEST_CASE("RS_FilterDXFRW preserves LWPOLYLINE metadata sidecar",
+          "[dwg-write][r2010][lwpolyline]") {
+    ensureQtSettings();
+    const std::string sourcePath = tempPath("lwpolyline_metadata_source.dwg");
+    const std::string exportPath = tempPath("lwpolyline_metadata_export.dwg");
+
+    {
+        dwgRW writer(sourcePath.c_str());
+        LWPolylineMetadataIface iface;
+        iface.m_writer = &writer;
+        REQUIRE(writer.write(&iface, DRW::AC1024, /*bin=*/false));
+    }
+
+    RS_Graphic graphic;
+    {
+        RS_FilterDXFRW filter;
+        REQUIRE(filter.fileImport(graphic, QString::fromStdString(sourcePath),
+                                  RS2::FormatDWG));
+    }
+
+    RS_Polyline *imported = nullptr;
+    for (RS_Entity *entity :
+         lc::LC_ContainerTraverser{graphic, RS2::ResolveNone}.entities()) {
+        if (entity != nullptr && entity->rtti() == RS2::EntityPolyline) {
+            imported = static_cast<RS_Polyline*>(entity);
+            break;
+        }
+    }
+    REQUIRE(imported != nullptr);
+    REQUIRE(imported->hasDrwExtData());
+
+    bool sawMarker = false;
+    int importedIds = 0;
+    for (const auto& value : imported->getDrwExtData()) {
+        if (!value)
+            continue;
+        if (value->code() == 1001
+            && std::string{value->c_str()} == "LibreCAD_LWPOLYLINE") {
+            sawMarker = true;
+        }
+        if (value->code() == 1071)
+            ++importedIds;
+    }
+    REQUIRE(sawMarker);
+    REQUIRE(importedIds == 3);
+
+    {
+        RS_FilterDXFRW filter;
+        REQUIRE(filter.fileExport(graphic, QString::fromStdString(exportPath),
+                                  RS2::FormatDWG2004));
+    }
+
+    LWPolylineMetadataIface cap;
+    {
+        dwgRW reader(exportPath.c_str());
+        REQUIRE(reader.read(&cap, /*ext=*/false));
+        REQUIRE(reader.getError() == DRW::BAD_NONE);
+    }
+
+    REQUIRE(cap.m_lwPolylines.size() == 1);
+    const DRW_LWPolyline& roundTrip = cap.m_lwPolylines[0];
+    REQUIRE(roundTrip.width == 0.25);
+    REQUIRE(roundTrip.elevation == 7.5);
+    REQUIRE(roundTrip.thickness == 1.25);
+    REQUIRE(roundTrip.extPoint.x == 0.0);
+    REQUIRE(roundTrip.extPoint.y == 1.0);
+    REQUIRE(roundTrip.extPoint.z == 0.0);
+    REQUIRE(roundTrip.vertlist.size() == 3);
+    REQUIRE(roundTrip.vertlist[0]->stawidth == 0.1);
+    REQUIRE(roundTrip.vertlist[0]->endwidth == 0.2);
+    REQUIRE(roundTrip.vertlist[2]->stawidth == 0.5);
+    REQUIRE(roundTrip.vertlist[2]->endwidth == 0.6);
+
+    std::remove(sourcePath.c_str());
+    std::remove(exportPath.c_str());
+}
+
+TEST_CASE("RS_FilterDXFRW preserves mesh and polyface fallback sidecars",
+          "[dwg-write][r2010][polyline]") {
+    ensureQtSettings();
+    const std::string polyfacePath = tempPath("polyface_sidecar_source.dwg");
+    const std::string meshPath = tempPath("mesh_sidecar_source.dwg");
+    const std::string polyfaceExportPath =
+        tempPath("polyface_sidecar_export.dwg");
+    const std::string meshExportPath = tempPath("mesh_sidecar_export.dwg");
+
+    {
+        dwgRW writer(polyfacePath.c_str());
+        PolyfaceRoundTripIface iface;
+        iface.m_writer = &writer;
+        REQUIRE(writer.write(&iface, DRW::AC1024, /*bin=*/false));
+    }
+    {
+        dwgRW writer(meshPath.c_str());
+        MeshRoundTripIface iface;
+        iface.m_writer = &writer;
+        REQUIRE(writer.write(&iface, DRW::AC1024, /*bin=*/false));
+    }
+
+    RS_Graphic polyfaceGraphic;
+    {
+        RS_FilterDXFRW filter;
+        REQUIRE(filter.fileImport(polyfaceGraphic, QString::fromStdString(polyfacePath),
+                                  RS2::FormatDWG));
+    }
+
+    bool sawPolyfaceMarker = false;
+    bool sawSignedFaceIndex = false;
+    int polyfaceAnchorCoords = 0;
+    for (RS_Entity *entity :
+         lc::LC_ContainerTraverser{polyfaceGraphic, RS2::ResolveNone}.entities()) {
+        if (entity == nullptr || !entity->hasDrwExtData())
+            continue;
+        for (const auto& value : entity->getDrwExtData()) {
+            if (!value)
+                continue;
+            if (value->code() == 1001
+                && std::string{value->c_str()} == "LibreCAD_POLYLINE_PFACE") {
+                sawPolyfaceMarker = true;
+            }
+            if (value->code() == 1070 && static_cast<int>(value->i_val()) == -2)
+                sawSignedFaceIndex = true;
+            if (value->code() == 1010)
+                ++polyfaceAnchorCoords;
+        }
+    }
+    REQUIRE(sawPolyfaceMarker);
+    REQUIRE(sawSignedFaceIndex);
+    REQUIRE(polyfaceAnchorCoords == 3);
+
+    {
+        RS_FilterDXFRW filter;
+        REQUIRE(filter.fileExport(polyfaceGraphic,
+                                  QString::fromStdString(polyfaceExportPath),
+                                  RS2::FormatDWG2004));
+    }
+    PolyfaceRoundTripIface polyfaceCap;
+    {
+        dwgRW reader(polyfaceExportPath.c_str());
+        REQUIRE(reader.read(&polyfaceCap, /*ext=*/false));
+        REQUIRE(reader.getError() == DRW::BAD_NONE);
+    }
+    REQUIRE(polyfaceCap.m_polylines.size() == 1);
+    REQUIRE((polyfaceCap.m_polylines[0].flags & 64) != 0);
+    REQUIRE(polyfaceCap.m_polylines[0].vertexcount == 3);
+    REQUIRE(polyfaceCap.m_polylines[0].facecount == 1);
+    REQUIRE(polyfaceCap.m_polylines[0].vertlist.size() == 4);
+    REQUIRE(polyfaceCap.m_polylines[0].vertlist[3]->vindex2 == -2);
+
+    RS_Graphic meshGraphic;
+    {
+        RS_FilterDXFRW filter;
+        REQUIRE(filter.fileImport(meshGraphic, QString::fromStdString(meshPath),
+                                  RS2::FormatDWG));
+    }
+
+    int meshSidecarCount = 0;
+    int meshAnchorCoords = 0;
+    bool sawMeshRow = false;
+    bool sawMeshColumn = false;
+    for (RS_Entity *entity :
+         lc::LC_ContainerTraverser{meshGraphic, RS2::ResolveNone}.entities()) {
+        if (entity == nullptr || !entity->hasDrwExtData())
+            continue;
+
+        bool entityHasMeshMarker = false;
+        for (const auto& value : entity->getDrwExtData()) {
+            if (!value)
+                continue;
+            if (value->code() == 1001
+                && std::string{value->c_str()} == "LibreCAD_POLYLINE_MESH") {
+                entityHasMeshMarker = true;
+            }
+            if (value->code() == 1000) {
+                if (std::string{value->c_str()} == "row")
+                    sawMeshRow = true;
+                if (std::string{value->c_str()} == "column")
+                    sawMeshColumn = true;
+            }
+            if (value->code() == 1010)
+                ++meshAnchorCoords;
+        }
+        if (entityHasMeshMarker)
+            ++meshSidecarCount;
+    }
+    REQUIRE(meshSidecarCount == 4);
+    REQUIRE(sawMeshRow);
+    REQUIRE(sawMeshColumn);
+    REQUIRE(meshAnchorCoords == 4);
+
+    {
+        RS_FilterDXFRW filter;
+        REQUIRE(filter.fileExport(meshGraphic, QString::fromStdString(meshExportPath),
+                                  RS2::FormatDWG2004));
+    }
+    MeshRoundTripIface meshCap;
+    {
+        dwgRW reader(meshExportPath.c_str());
+        REQUIRE(reader.read(&meshCap, /*ext=*/false));
+        REQUIRE(reader.getError() == DRW::BAD_NONE);
+    }
+    REQUIRE(meshCap.m_polylines.size() == 1);
+    REQUIRE((meshCap.m_polylines[0].flags & 16) != 0);
+    REQUIRE(meshCap.m_polylines[0].vertexcount == 2);
+    REQUIRE(meshCap.m_polylines[0].facecount == 2);
+    REQUIRE(meshCap.m_polylines[0].vertlist.size() == 4);
+    REQUIRE(meshCap.m_polylines[0].vertlist[1]->basePoint.z == 1.0);
+    REQUIRE(meshCap.m_polylines[0].vertlist[3]->basePoint.z == 3.0);
+
+    std::remove(polyfacePath.c_str());
+    std::remove(meshPath.c_str());
+    std::remove(polyfaceExportPath.c_str());
+    std::remove(meshExportPath.c_str());
 }
 
 // ---- R2013 (AC1027) write smoke tests ---------------------------------------

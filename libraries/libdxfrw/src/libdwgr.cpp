@@ -405,10 +405,30 @@ bool dwgRW::writePolyline(DRW_Polyline *ent) {
         ent->handle = writer->allocNextHandle();
     else
         writer->reserveHandle(ent->handle);
+    const bool isPolyface = (ent->flags & 64) != 0;
+    const bool isMesh = (ent->flags & 16) != 0;
+    const bool is3D = (ent->flags & 8) != 0;
     // Encode vertices (they receive higher handles than the polyline).
     for (auto& v : ent->vertlist) {
+        if (v && v->dwgSubtype() == DRW_Vertex::DwgSubtype::Auto) {
+            if (isPolyface) {
+                v->setDwgSubtype((v->flags & 64) != 0
+                    ? DRW_Vertex::DwgSubtype::Polyface
+                    : DRW_Vertex::DwgSubtype::PolyfaceFace);
+            } else if (isMesh) {
+                v->setDwgSubtype(DRW_Vertex::DwgSubtype::Mesh);
+            } else if (is3D) {
+                v->setDwgSubtype(DRW_Vertex::DwgSubtype::Vertex3D);
+            } else {
+                v->setDwgSubtype(DRW_Vertex::DwgSubtype::Vertex2D);
+            }
+        }
         if (v && !writer->encodeEntity(v.get())) return false;
     }
+    DRW_SeqEnd seqEnd;
+    seqEnd.handle = writer->allocNextHandle();
+    ent->setDwgSeqEndHandle(seqEnd.handle);
+    if (!writer->encodeEntity(&seqEnd)) return false;
     return writer->encodeEntity(ent);
 }
 

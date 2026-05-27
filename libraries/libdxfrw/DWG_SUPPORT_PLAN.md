@@ -417,8 +417,10 @@ Reviewed sources:
      coordinate vertices flagged `0xC0` and one face record flagged `0x80`.
 
    Status: coordinate-vs-face classification fixed in
-   `RS_FilterDXFRW::addPolyline()`; invisible-edge rendering and focused
-   filter tests remain follow-up.
+   `RS_FilterDXFRW::addPolyline()`. Filter-level sidecar tests now cover
+   polyface import/export reconstruction, and a DXF round-trip regression test
+   verifies coordinate vertices keep group 70 flags `64 | 128` while face
+   records keep `128`. Invisible-edge rendering remains a visual follow-up.
 
 2. **P1: DWG export silently drops old-style polyline fallback cases**
 
@@ -437,8 +439,10 @@ Reviewed sources:
    - Add a DWG export test where an `RS_Polyline` contains an ellipse segment
      and verify at least a fallback `POLYLINE_2D` is emitted/read back.
 
-   Status: implemented for the existing old-style polyline construction path;
-   dedicated ellipse-fallback fixture coverage remains follow-up.
+   Status: implemented for the existing old-style polyline construction path.
+   A filter-level DWG export regression test now verifies an `RS_Polyline`
+   containing an ellipse segment is emitted as an old-style `POLYLINE` instead
+   of being silently dropped.
 
 3. **P1: Generated DWG `POLYLINE` chains omit a real `SEQEND` object**
 
@@ -462,6 +466,10 @@ Reviewed sources:
      handle map contains `SEQEND` and that the polyline's seqend handle is
      non-null.
 
+   Status: implemented. Generated DWG old-style polylines now allocate and
+   emit a minimal `SEQEND` entity, store its handle on the parent polyline, and
+   round-trip-test the non-null terminator handle.
+
 4. **P1: Vertex DWG subtype selection is based only on DXF flags**
 
    `DRW_Vertex::encodeDwg()` chooses `VERTEX_PFACE_FACE` whenever bit 128 is
@@ -479,6 +487,12 @@ Reviewed sources:
      `POLYLINE_MESH -> VERTEX_MESH`, `POLYLINE_PFACE` coordinate records
      -> `VERTEX_PFACE`, and face records -> `VERTEX_PFACE_FACE`.
    - Keep DXF group 70 flags as data, not as the sole source of object type.
+
+   Status: implemented. `DRW_Vertex` now carries an explicit DWG subtype,
+   parsed vertices preserve that subtype through `DRW_Polyline::addVertex()`,
+   and DWG polyline export assigns parent-aware vertex types before encoding.
+   A focused R2010 polyface round-trip test verifies coordinate vertices stay
+   `VERTEX_PFACE` while face records stay `VERTEX_PFACE_FACE`.
 
 5. **P2: LWPOLYLINE vertex IDs are parsed and discarded**
 
@@ -542,6 +556,12 @@ Reviewed sources:
    - For visual rendering, decide separately whether constant/per-vertex width
      should affect `RS_Pen` or remain file-format metadata only.
 
+   Status: implemented for passive round-trip metadata. Import stores
+   non-default constant width, elevation, thickness, extrusion, per-vertex
+   widths, and vertex IDs in `LibreCAD_LWPOLYLINE` XDATA on the created
+   `RS_Polyline`; export rehydrates those fields when the visible vertex count
+   still matches. Visual line-width rendering remains a separate UI decision.
+
 8. **P2: POLYLINE mesh and polyface import is lossy by design but not
    round-trip-observable**
 
@@ -559,6 +579,21 @@ Reviewed sources:
    - Reconstruct original `DRW_Polyline` only when the decomposed child set is
      complete and unmodified in a topology-changing way.
    - Otherwise fall back to plain 2D polylines.
+
+   Status: import preservation and unchanged export reconstruction implemented.
+   Mesh decomposition now adds `LibreCAD_POLYLINE_MESH` XDATA to each generated
+   row/column polyline, with the parent id, row/column role, original flags,
+   M/N counts, smooth counts, curve type, and anchor source vertices. Polyface
+   decomposition now adds `LibreCAD_POLYLINE_PFACE` XDATA to each generated
+   face outline, with the parent id, original counts/flags, signed face indices
+   for invisible-edge preservation, and anchor coordinate vertices. Export now
+   groups complete, unchanged sidecar sets back into native old-style
+   `POLYLINE_MESH` / `POLYLINE_PFACE` entities for DWG/DXF instead of emitting
+   only decomposed LWPOLYLINE fallback geometry. The DWG vertex reader
+   sign-extends polyface face indices, model/paper-space block callbacks
+   receive their block-record handle before the LibreCAD filter registers the
+   target container, and DXF VERTEX export now writes each vertex's own group 70
+   flags so polyface coordinate and face records remain distinguishable.
 
 9. **P3: Basic polyline tests cover only one simple R2010 2D path**
 
@@ -582,6 +617,13 @@ Reviewed sources:
    - Run each writer round-trip for at least AC1015, AC1018, AC1024, AC1027,
      and AC1032 where the format path differs.
 
+   Status: expanded for the implemented preservation paths. Tests now cover
+   DWG old-style polyline `SEQEND`, DWG polyface vertex subtype preservation,
+   filter-level ellipse-segment fallback export, passive LWPOLYLINE sidecar
+   import/export, mesh/polyface sidecar reconstruction on DWG export, and DXF
+   polyface vertex group 70 preservation. The full cross-version matrix and
+   malformed optional-count fixture suite remain follow-up.
+
 ### Priority Order
 
 1. Fix polyface coordinate/face classification in `RS_FilterDXFRW::addPolyline()`.
@@ -604,6 +646,10 @@ Reviewed sources:
   `SEQEND` handle.
 - LWPOLYLINE ids, widths, elevation, thickness, and extrusion can round-trip
   through import/export, either natively or through explicit sidecar metadata.
+- Mesh and polyface fallback geometry carries explicit sidecar metadata so
+  source topology, 3D coordinates, and signed face indices remain observable
+  after import and can reconstruct unchanged native old-style polylines on
+  export.
 - Malformed LWPOLYLINE optional counts fail locally without desynchronizing the
   following entity.
 - Tests cover basic LWPOLYLINE, 2D/3D old-style polyline, mesh, and polyface
@@ -616,6 +662,9 @@ Reviewed sources:
   where writer support exists.
 - Add filter-level tests that import polyface/mesh records and assert the
   visible LibreCAD fallback geometry plus sidecar metadata.
+- Add DXF writer/readback coverage for polyface `VERTEX` group 70 flags so
+  coordinate records and face records stay distinguishable outside the DWG
+  path.
 - Add malformed optional-count tests for LWPOLYLINE bulge, width, and vertex-id
   arrays; assert the next entity still parses.
 - Write generated old-style polylines and inspect the handle map for owned
@@ -1085,3 +1134,197 @@ Reviewed sources:
   ellipse axis, invalid ratio, and bad start/end parameters.
 - Add hatch-boundary arc/ellipse tests for clockwise, counterclockwise,
   full-ellipse, and cross-zero cases.
+
+## Spec-Reviewed Missing DWG Feature Plan
+
+Reviewed against `/Users/dli/doc/dwg/dwg.pdf` after confirming that
+`~/dwg/dwg.pdf` was not present. This section refines the remaining DWG work
+from the ODA sections for custom classes, tables, modeler geometry, MLEADER,
+R2018 text, view/light metadata, and raw object preservation.
+
+### Missing Feature List
+
+1. **Modern DWG custom-class writing is incomplete**
+
+   `dwgWriter18::writeDwgClasses()` and `dwgWriter24::writeDwgClasses()` still
+   emit empty class tables for page-based modern writers, while several modern
+   entities and objects require dynamic class entries. `DRW_DimArc::encodeDwg()`
+   already writes dynamic class number 500, and future TABLE, MLEADER, LIGHT,
+   TABLECONTENT, TABLESTYLE, CELLSTYLEMAP, TABLEGEOMETRY, SUN, ACDBASSOC, and
+   ACSH writers will also depend on a correct class registry.
+
+2. **TABLE, TABLECONTENT, TABLESTYLE, CELLSTYLEMAP, and TABLEGEOMETRY are not
+   a complete semantic table system**
+
+   ODA sections 20.4.96 through 20.4.103 describe the full table graph:
+   `ACAD_TABLE`, `AcDbTableContent`, cell values, field handles, block
+   contents, attributes, merged ranges, cell style overrides, table styles,
+   cell style maps, and optional geometry caches. libdxfrw now parses much of
+   this safely, but LibreCAD still imports the visible `ACAD_TABLE` as its
+   anonymous block insert and treats semantic table data as metadata. DWG write
+   support for native table content/style/map/geometry is also missing.
+
+3. **REGION, 3DSOLID, and BODY only expose shells**
+
+   ODA section 20.4.41 defines ACIS entity payload stepping, SAT/SAB blocks,
+   optional wireframe data, isolines, silhouettes, transforms, and R2007+
+   3DSOLID history handles. Current support reads common entity data and a few
+   shell fields, then relies on raw payload preservation for follow-up work.
+   There is no exposed ACIS byte stream, wireframe fallback, or faithful write
+   path for unchanged modeler geometry.
+
+4. **Associative, action, evaluation, and history objects remain shell-level**
+
+   DIMASSOC and ACAD_EVALUATION_GRAPH have concrete readers, and ACDBASSOC and
+   ACSH objects now consume several common prefixes safely. They still do not
+   reconstruct associative dimensions, dynamic block graphs, action bodies,
+   dependency graphs, persistent subentity managers, or 3DSOLID history
+   relationships. LibreCAD consumers are diagnostic placeholders.
+
+5. **MLEADER import is not style-resolved and has no DWG writer**
+
+   ODA sections 20.4.48 and 20.4.86 split MLEADER data between the entity and
+   embedded MLeaderAnnotContext. The reader captures leader roots, leader
+   lines, text or block content, and many handles, and LibreCAD creates an
+   `LC_MLeader`. Remaining gaps include MLEADERSTYLE resolution, block content
+   name/attribute resolution, full override semantics, and DWG write support.
+
+6. **R2018 text features need writer parity**
+
+   ODA sections 20.4.4 and 20.4.46 add R2018 attribute type, embedded MTEXT for
+   multiline ATTRIB/ATTDEF, annotative byte payloads, registered app handles,
+   frame/background behavior, and MTEXT column metadata. The readers preserve
+   much more of this than before, but AC1032 ATTRIB writing still emits
+   single-line attributes only, and MTEXT writer support does not yet round-trip
+   all R2018 fields.
+
+7. **LIGHT and SUN are metadata-only**
+
+   LIGHT and SUN are dispatched and parsed, including photometric LIGHT fields
+   and SUN core metadata, but LibreCAD does not attach them to VIEW, VPORT,
+   VIEWPORT, visual style, or rendering state. SUN and LIGHT raw payloads are
+   still preserved for follow-up decoding and replay.
+
+8. **Raw unsupported DWG payload preservation is not durable**
+
+   `DRW_UnsupportedObject` is surfaced and `RS_FilterDXFRW` caches unsupported
+   objects during import, but the data does not persist in the LibreCAD
+   document model and cannot be replayed on DWG export. That limits raw
+   preservation to diagnostics instead of true round-trip support.
+
+### Refined Multi-Phase Implementation Plan
+
+#### Phase 1: Writer class registry and raw replay foundation
+
+- Replace hardcoded empty modern class sections with a shared dynamic class
+  registry used by AC1018, AC1024, AC1027, and AC1032 writers.
+- Register every dynamic entity/object class before object emission, including
+  ARC_DIMENSION first and then TABLE, MLEADER, LIGHT, underlays, TABLECONTENT,
+  TABLESTYLE, CELLSTYLEMAP, TABLEGEOMETRY, SUN, ACDBASSOC, ACSH, and raw
+  unsupported classes when replay is enabled.
+- Add a document-level raw DWG metadata store so `DRW_UnsupportedObject`
+  survives import, editing, and export decisions.
+- Add a writer mode that can replay unchanged raw unsupported object payloads
+  with their original record name, class name, fixed/custom type, object handle,
+  owner, body bytes, handle-stream bit size, and section-origin metadata.
+
+#### Phase 2: Semantic table model and table rendering placeholder
+
+- Promote parsed `DRW_TableContent`, `DRW_TableStyle`, `DRW_CellStyleMap`, and
+  `DRW_TableGeometry` data into a resolved libdxfrw table model.
+- Resolve table style handles, cell style IDs, field handles, block content
+  handles, attributes, merged ranges, and geometry cache references.
+- Add a LibreCAD consumer placeholder that renders table text and block content
+  into grouped fallback geometry while storing the resolved semantic table
+  metadata for future native table editing.
+- Implement DWG write support for unchanged TABLE/TABLECONTENT/TABLESTYLE and
+  CELLSTYLEMAP payloads first; add native regenerated TABLECONTENT writing only
+  after import/render tests are stable.
+
+#### Phase 3: ACIS modeler geometry preservation
+
+- Extend `DRW_ModelerGeometry` to store ACIS version, SAT/SAB payload blocks,
+  optional wireframe points, isolines, silhouettes, transform data, and 3DSOLID
+  history handles.
+- Implement bounded stepping for ODA 20.4.41 version 1 and version 2 ACIS data.
+- Expose wireframe fallback geometry where present, but keep it marked as
+  derived so unchanged export can prefer the original ACIS payload.
+- Add writer support that replays unchanged ACIS/SAT/SAB data exactly and only
+  emits regenerated modeler payloads when LibreCAD has a supported source.
+
+#### Phase 4: Associative, action, evaluation, and history graph metadata
+
+- Split `DRW_AssociativeObject` shells into typed records for action, network,
+  dependency, geom dependency, aligned dimension action body, vertex/osnap
+  action params, and persistent subentity managers.
+- Store raw tails on every typed record until each layout is fully decoded.
+- Link DIMASSOC and EVALUATION_GRAPH nodes to dimensions and block metadata at
+  the document metadata level without changing geometry editing behavior.
+- Preserve ACSH history nodes and sweep action metadata beside 3DSOLID modeler
+  geometry so future ACIS/history decoding has the full relationship graph.
+
+#### Phase 5: MLEADER style resolution and DWG writing
+
+- Resolve MLEADERSTYLE handles into effective leader, text, block, arrow, and
+  attachment style data.
+- Resolve block content handles to block records and attribute definitions.
+- Add DWG MLEADER class registration and `DRW_MLeader::encodeDwg()` after the
+  class registry phase is complete.
+- Support text-content and block-content MLEADERs first; keep tolerance content
+  and unusual override combinations as raw-preserved follow-ups if needed.
+
+#### Phase 6: R2018 text write parity
+
+- Add AC1032 multiline ATTRIB and ATTDEF writer support using embedded MTEXT
+  fields, annotative data size/bytes, registered app handle, and trailing
+  unknown short.
+- Round-trip R2018 MTEXT not-annotative data, registered app handle, redundant
+  geometry, frame/background behavior, and static/dynamic column fields.
+- Add downgrade behavior for older target versions: either convert multiline
+  attributes to single-line text intentionally or reject unsupported export with
+  a clear diagnostic.
+
+#### Phase 7: View, light, and sun metadata integration
+
+- Store LIGHT and SUN objects in a document-level metadata collection.
+- Link SUN handles from VIEW, VPORT, and VIEWPORT records where those handles
+  are present.
+- Keep rendering behavior as a placeholder until LibreCAD has a view lighting
+  and visual style model.
+- Add replay support for unchanged LIGHT and SUN records once raw replay is in
+  place.
+
+### Validation Plan
+
+1. **Static/spec validation**
+
+   - For each decoder or writer, cite the ODA section used for the field order.
+   - Compare each high-risk layout against ACadSharp or libreDWG before coding.
+   - Add assertions for dynamic class entries: every emitted custom `oType`
+     must have a matching CLASSES record.
+
+2. **Parser safety validation**
+
+   - Add malformed-count tests for every variable-length table, MLEADER,
+     modeler, associative, and raw object collection.
+   - Verify bad payloads fail inside the current object without drifting the
+     next entity or object.
+   - Bounds-check all allocations before `reserve()` and before byte skipping.
+
+3. **Fixture validation**
+
+   - Run existing `[.dwg3]` and `[.dwg3_verbose]` smoke suites.
+   - Add focused fixtures for AC1018, AC1021, AC1024, AC1027, and AC1032 where
+     each affected feature exists.
+   - Track expected unsupported-object diagnostics so known gaps are not
+     confused with regressions.
+
+4. **Round-trip and interoperability validation**
+
+   - For readers, assert object identity, handles, owner links, and key payload
+     fields, not only visible geometry.
+   - For writers, re-read generated DWGs with libdxfrw and compare custom class
+     records, object map entries, and feature payloads.
+   - Where available, compare generated files with ACadSharp and libreDWG dumps.
+   - For raw replay, assert byte-for-byte preservation of unchanged payloads and
+     explicit invalidation when visible geometry has been edited.

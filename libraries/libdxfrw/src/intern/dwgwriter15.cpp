@@ -279,30 +279,10 @@ bool dwgWriter15::writeDwgClasses() {
 
     size_t sizeOffset = beginSentinelSection(dwgSentinels::CLASSES_BEGIN);
 
-    // ARC_DIMENSION class entry (ODA §17.1 class section format).
-    // Field layout mirrors DRW_Class::parseDwg:
-    //   BS  classNum   — must equal oType used in DRW_DimArc::encodeDwg (500)
-    //   BS  proxyFlag  — 0x401 per ODA §20.4.19 and AutoCAD CLASS section
-    //   TV  appName
-    //   TV  className  (AcDbXxx C++ class name)
-    //   TV  recName    (DXF entity name)
-    //   B   wasaProxyFlag  (0 = not a zombie)
-    //   BS  entityFlag     (0x1F2 → parsed as 1 = is entity, not object)
-    //   For version > AC1015 (R2004+): 5 × BL (instanceCount, dwgVer, maintVer, unk1, unk2)
-    m_buf.putBitShort(DRW_DimArc::kDwgClassNum);
-    m_buf.putBitShort(0x401);
-    m_buf.putVariableText(m_version, "ACAD");
-    m_buf.putVariableText(m_version, "AcDbArcDimension");
-    m_buf.putVariableText(m_version, "ARC_DIMENSION");
-    m_buf.putBit(0);         // wasaProxyFlag
-    m_buf.putBitShort(0x1F2); // entityFlag
-    if (m_version > DRW::AC1015) {
-        m_buf.putBitLong(0); // instanceCount
-        m_buf.putBitLong(0); // dwgVersion
-        m_buf.putBitLong(0); // maintenanceVersion
-        m_buf.putBitLong(0); // unknown 1
-        m_buf.putBitLong(0); // unknown 2
-    }
+    // R2000 CLASSES is just the packed class entries between sentinels.
+    // Field layout mirrors DRW_Class::parseDwg and ODA class section records.
+    for (const auto& definition : sortedDwgClassDefinitions())
+        writeDwgClassDefinition(definition, &m_buf, nullptr);
 
     endSentinelSection(sectionStart, sizeOffset, dwgSentinels::CLASSES_END);
 

@@ -72,7 +72,7 @@ namespace DRW {
         RAY,
         REGION,
 //        SECTION,
-//        SEQEND,//not needed?? used in polyline and insert/attrib and dwg
+        SEQEND,
 //        SHAPE,
         SOLID,
         SPLINE,
@@ -1152,21 +1152,34 @@ private:
 class DRW_Vertex : public DRW_Point {
     SETENTFRIENDS
 public:
+    enum class DwgSubtype {
+        Auto,
+        Vertex2D,
+        Vertex3D,
+        Mesh,
+        Polyface,
+        PolyfaceFace
+    };
+
     DRW_Vertex() {
         eType = DRW::VERTEX;
         stawidth = endwidth = bulge = 0;
         vindex1 = vindex2 = vindex3 = vindex4 = 0;
         flags = identifier = 0;
+        m_dwgSubtype = DwgSubtype::Auto;
     }
     DRW_Vertex(double sx, double sy, double sz, double b) {
         stawidth = endwidth = 0;
         vindex1 = vindex2 = vindex3 = vindex4 = 0;
         flags = identifier = 0;
+        m_dwgSubtype = DwgSubtype::Auto;
         basePoint.x = sx;
         basePoint.y =sy;
         basePoint.z =sz;
         bulge = b;
     }
+    void setDwgSubtype(DwgSubtype subtype) { m_dwgSubtype = subtype; }
+    DwgSubtype dwgSubtype() const { return m_dwgSubtype; }
 
 protected:
     bool parseCode(int code, const std::unique_ptr<dxfReader>& reader) override;
@@ -1186,6 +1199,23 @@ public:
     int vindex3;             /*!< polyface mesh vertex index, code 73, default 0 */
     int vindex4;             /*!< polyface mesh vertex index, code 74, default 0 */
     int identifier;           /*!< vertex identifier, code 91, default 0 */
+private:
+    DwgSubtype m_dwgSubtype {DwgSubtype::Auto};
+};
+
+//! DWG-only SEQEND terminator used by POLYLINE/INSERT owned chains.
+class DRW_SeqEnd : public DRW_Entity {
+    SETENTFRIENDS
+public:
+    DRW_SeqEnd() {
+        eType = DRW::SEQEND;
+    }
+    void applyExtrusion() override {}
+
+protected:
+    bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) override;
+    bool encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs=0,
+                   dwgBufferW *strBuf=nullptr, dwgBufferW *handleBuf=nullptr) override;
 };
 
 //! Class to handle polyline entity
@@ -1211,11 +1241,27 @@ public:
         vert->stawidth = v.stawidth;
         vert->endwidth = v.endwidth;
         vert->bulge = v.bulge;
+        vert->flags = v.flags;
+        vert->tgdir = v.tgdir;
+        vert->vindex1 = v.vindex1;
+        vert->vindex2 = v.vindex2;
+        vert->vindex3 = v.vindex3;
+        vert->vindex4 = v.vindex4;
+        vert->identifier = v.identifier;
+        vert->setDwgSubtype(v.dwgSubtype());
         vertlist.push_back(vert);
     }
     void appendVertex (std::shared_ptr<DRW_Vertex> const& v) {
         vertlist.push_back(v);
     }
+    void setDwgSeqEndHandle(duint32 ref) {
+        seqEndH.code = ref == 0 ? 0 : 5;
+        seqEndH.ref = ref;
+        seqEndH.size = 0;
+        for (duint32 t = ref; t != 0; t >>= 8)
+            ++seqEndH.size;
+    }
+    duint32 dwgSeqEndHandle() const { return seqEndH.ref; }
 
 protected:
     bool parseCode(int code, const std::unique_ptr<dxfReader>& reader) override;

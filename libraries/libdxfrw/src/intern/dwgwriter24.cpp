@@ -78,22 +78,6 @@ bool dwgWriter24::writeDwgHeader() {
 //   1. An RL bitSize field is inserted after RL size.
 //   2. An extra RS (unknown CRC = 0) is written before the end sentinel.
 //
-// For empty classes (no custom entries, maxClassNum=499), the strBuf
-// navigation in the reader uses:
-//   strStartPos = bitSize + 159  (hasHSize=false for maintenanceVersion=0)
-// where bitSize + 143 must point (in byte units within the section data
-// starting from the begin sentinel) to the extra padding byte that the
-// reader skips with setPosition(pos+1) before reading the CRC.
-//
-// With our layout:
-//   begin sentinel (16B) + RL size (4B) + RL bitSize (4B) +
-//   class data (5B: BS+RC+RC+B+pad) + extra padding RC (1B)
-// the extra padding byte is at byte offset 29 from the section start.
-// bitSize = 29*8 - 143 = 89.
-//
-// This value is computed dynamically below so it stays correct if the
-// class data size ever changes.
-
 bool dwgWriter24::writeDwgClasses() {
     size_t sectionStart = m_buf.size();
     m_sectionOffsets[recno::CLASSES] = static_cast<duint32>(sectionStart);
@@ -108,28 +92,35 @@ bool dwgWriter24::writeDwgClasses() {
     size_t bitSizeOffset = m_buf.size();
     m_buf.putRawLong32(0);
 
-    // Class header: maxClassNum=499 (no custom classes), RC, RC, B, align.
-    m_buf.putBitShort(499);
+    // Class numeric data and class strings are split for R2007+ in the same
+    // way object bodies split data/strings/handles. The reader finds the
+    // string stream by using the bitSize value plus the fixed CLASSES header
+    // prefix (159 bits, or 191 bits when AC1032 hSize is present).
+    m_buf.putBitShort(maxDwgClassNumber());
     m_buf.putRawChar8(0);   // rc1
     m_buf.putRawChar8(0);   // rc2
     m_buf.putBit(0);        // flag
-    m_buf.alignToByte();
 
-    // 5-byte tail starting at extraPaddingByteOffset:
-    //   bytes +0,+1: RS strDataSize — reader reads this from (bitSize+143)/8;
-    //                MUST be 0x0000 for empty classes or strStartPos underflows.
-    //   bytes +2,+3: RS "CRC"        — reader DBGs it but never validates.
-    //   byte  +4:    RC unknownCRC   — reader DBGs it but never validates.
-    // bitSize = extraPaddingByteOffset * 8 - 143, so (bitSize+143)/8 = extraPaddingByteOffset.
-    size_t extraPaddingByteOffset = m_buf.size() - sectionStart;
-    m_buf.putRawShort16(0);   // strDataSize = 0x0000
-    m_buf.putRawShort16(0);   // CRC placeholder (not validated by reader)
-    m_buf.putRawChar8(0);     // unknownCRC tail (not validated by reader)
+    dwgBufferW classStrings;
+    for (const auto& definition : sortedDwgClassDefinitions())
+        writeDwgClassDefinition(definition, &m_buf, &classStrings);
+
+    m_buf.alignToByte();
+    classStrings.alignToByte();
+
+    if (classStrings.size() > 0)
+        m_buf.putBytes(classStrings.data().data(), classStrings.size());
+    const duint16 strDataSize =
+        static_cast<duint16>(classStrings.size() * 8u);
+    m_buf.putRawShort16(strDataSize);
+    const duint32 crcStartBit =
+        m_buf.bitCount() - static_cast<duint32>(sectionStart) * 8u;
+    m_buf.putRawShort16(0);   // classes CRC placeholder (reader does not validate)
+    m_buf.putRawChar8(0);     // unknown CRC tail byte for R2007+
 
     // Back-patch RL bitSize. The reader adds 159 bits without hSize, or
-    // 191 bits with hSize, before locating the class string tail.
-    duint32 bitSize = static_cast<duint32>(extraPaddingByteOffset) * 8
-                    - (hasHSize ? 191u : 143u);
+    // 191 bits with hSize, and then backs up 16 bits to read strDataSize.
+    duint32 bitSize = crcStartBit - (hasHSize ? 191u : 159u);
     m_buf.patchRawLong32(bitSizeOffset, bitSize);
 
     // Patch RL size and write end sentinel.

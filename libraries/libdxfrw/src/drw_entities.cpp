@@ -4579,6 +4579,7 @@ bool DRW_Vertex::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs, doub
     DRW_DBG("\n***************************** parsing pline Vertex *********************************************\n");
 
     if (oType == 0x0A) { //pline 2D, needed example
+        m_dwgSubtype = DwgSubtype::Vertex2D;
         flags = buf->getRawChar8(); //RLZ: EC  unknown type
         DRW_DBG("flags value: "); DRW_DBG(flags);
         basePoint = buf->get3BitDouble();
@@ -4595,15 +4596,25 @@ bool DRW_Vertex::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs, doub
         }
         tgdir = buf->getBitDouble();
     } else if (oType == 0x0B || oType == 0x0C || oType == 0x0D) { //PFACE
+        if (oType == 0x0B)
+            m_dwgSubtype = DwgSubtype::Vertex3D;
+        else if (oType == 0x0C)
+            m_dwgSubtype = DwgSubtype::Mesh;
+        else
+            m_dwgSubtype = DwgSubtype::Polyface;
         flags = buf->getRawChar8(); //RLZ: EC  unknown type
         DRW_DBG("flags value: "); DRW_DBG(flags);
         basePoint = buf->get3BitDouble();
         DRW_DBG("basePoint: "); DRW_DBGPT(basePoint.x, basePoint.y, basePoint.z);
     } else if (oType == 0x0E) { //PFACE FACE
-        vindex1 = buf->getBitShort();
-        vindex2 = buf->getBitShort();
-        vindex3 = buf->getBitShort();
-        vindex4 = buf->getBitShort();
+        m_dwgSubtype = DwgSubtype::PolyfaceFace;
+        auto signedIndex = [](int value) {
+            return value > 32767 ? value - 65536 : value;
+        };
+        vindex1 = signedIndex(buf->getBitShort());
+        vindex2 = signedIndex(buf->getBitShort());
+        vindex3 = signedIndex(buf->getBitShort());
+        vindex4 = signedIndex(buf->getBitShort());
     }
 
     ret = DRW_Entity::parseDwgEntHandle(version, buf);
@@ -5997,7 +6008,11 @@ bool DRW_Dimension::encodeDwgDimBase(DRW::Version version, dwgBufferW *buf,
     buf->putBitShort(static_cast<duint16>(linesty));
     buf->putBitDouble(linefactor);
     buf->putBitDouble(measureValue);
-    // No flipArrow bits for R2000 (only 2007+)
+    if (version > DRW::AC1018) {
+        buf->putBit(0); // unknown R2007+ bit
+        buf->putBit(flipArrow1 ? 1 : 0);
+        buf->putBit(flipArrow2 ? 1 : 0);
+    }
     buf->putRawDouble(clonePoint.x);
     buf->putRawDouble(clonePoint.y);
     return true;
@@ -7009,10 +7024,25 @@ bool DRW_MLine::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs,
 bool DRW_Vertex::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs,
                              dwgBufferW *strBuf, dwgBufferW *handleBuf) {
     (void)bs; (void)strBuf;
-    // Determine object type from stored flags.
-    if (flags & 128)               oType = 0x0E;  // VERTEX_PFACE_FACE
-    else if (flags & (64 | 32 | 16)) oType = 0x0B;  // VERTEX_3D / VERTEX_MESH / VERTEX_PFACE
-    else                             oType = 0x0A;  // VERTEX_2D
+    switch (m_dwgSubtype) {
+    case DwgSubtype::Vertex2D:     oType = 0x0A; break;
+    case DwgSubtype::Vertex3D:     oType = 0x0B; break;
+    case DwgSubtype::Mesh:         oType = 0x0C; break;
+    case DwgSubtype::Polyface:     oType = 0x0D; break;
+    case DwgSubtype::PolyfaceFace: oType = 0x0E; break;
+    case DwgSubtype::Auto:
+        if ((flags & 64) != 0)
+            oType = 0x0D;  // VERTEX_PFACE coordinate vertex
+        else if ((flags & 128) != 0)
+            oType = 0x0E;  // VERTEX_PFACE_FACE
+        else if ((flags & 16) != 0)
+            oType = 0x0C;  // VERTEX_MESH
+        else if ((flags & 32) != 0 || (flags & 8) != 0)
+            oType = 0x0B;  // VERTEX_3D
+        else
+            oType = 0x0A;  // VERTEX_2D
+        break;
+    }
 
     if (!encodeDwgCommon(version, buf)) return false;
 
@@ -7025,7 +7055,7 @@ bool DRW_Vertex::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs,
         if (version > DRW::AC1021)
             buf->putBitLong(static_cast<dint32>(identifier));
         buf->putBitDouble(tgdir);
-    } else if (oType == 0x0B) {
+    } else if (oType == 0x0B || oType == 0x0C || oType == 0x0D) {
         buf->putRawChar8(static_cast<duint8>(flags));
         buf->put3BitDouble(basePoint);
     } else {  // 0x0E pface face
@@ -7035,6 +7065,21 @@ bool DRW_Vertex::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs,
         buf->putBitShort(static_cast<duint16>(vindex4));
     }
 
+    return encodeDwgEntHandle(version, buf, handleBuf);
+}
+
+bool DRW_SeqEnd::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs) {
+    if (!DRW_Entity::parseDwg(version, buf, nullptr, bs))
+        return false;
+    return DRW_Entity::parseDwgEntHandle(version, buf);
+}
+
+bool DRW_SeqEnd::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs,
+                           dwgBufferW *strBuf, dwgBufferW *handleBuf) {
+    (void)bs; (void)strBuf;
+    oType = 0x06;
+    if (!encodeDwgCommon(version, buf))
+        return false;
     return encodeDwgEntHandle(version, buf, handleBuf);
 }
 
@@ -7099,7 +7144,7 @@ bool DRW_Polyline::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs,
         for (const auto& v : vertlist)
             putAbsHandle(hb, v ? v->handle : 0u);
     }
-    putAbsHandle(hb, 0);  // seqEndH — null (no separate SEQEND object)
+    putAbsHandle(hb, seqEndH.ref);
 
     return true;
 }

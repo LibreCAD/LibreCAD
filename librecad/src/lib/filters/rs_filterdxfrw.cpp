@@ -24,6 +24,7 @@
 **
 **********************************************************************/
 
+#include <array>
 #include<cstdlib>
 #include <cmath>
 #include <stack>
@@ -95,11 +96,6 @@
 namespace {
 
 constexpr int kImportedSplineFallbackSamples = 96;
-
-// convert DRW_Coord to RS_Vector
-RS_Vector coordToVector(const std::shared_ptr<DRW_Coord>& c) {
-    return c ? RS_Vector(c->x, c->y) : RS_Vector(false);
-};
 
 bool differsFromUnitWeight(double weight) {
     return std::fabs(weight - 1.0) > 1e-12;
@@ -1245,6 +1241,38 @@ void RS_FilterDXFRW::addLWPolyline(const DRW_LWPolyline& data) {
     }
 
     polyline->appendVertexs(verList);
+    const bool defaultExtrusion = data.extPoint.x == 0.0
+        && data.extPoint.y == 0.0
+        && data.extPoint.z == 1.0;
+    bool hasVertexMetadata = false;
+    for (const auto& v : data.vertlist) {
+        if (v && (v->stawidth != 0.0 || v->endwidth != 0.0
+                  || v->identifier != 0)) {
+            hasVertexMetadata = true;
+            break;
+        }
+    }
+    if (data.width != 0.0 || data.elevation != 0.0 || data.thickness != 0.0
+        || !defaultExtrusion || hasVertexMetadata) {
+        std::vector<std::shared_ptr<DRW_Variant>> ext;
+        ext.push_back(std::make_shared<DRW_Variant>(
+            1001, std::string("LibreCAD_LWPOLYLINE")));
+        ext.push_back(std::make_shared<DRW_Variant>(1040, data.width));
+        ext.push_back(std::make_shared<DRW_Variant>(1040, data.elevation));
+        ext.push_back(std::make_shared<DRW_Variant>(1040, data.thickness));
+        ext.push_back(std::make_shared<DRW_Variant>(1010, data.extPoint));
+        ext.push_back(std::make_shared<DRW_Variant>(
+            1070, dint32{static_cast<int>(data.vertlist.size())}));
+        for (const auto& v : data.vertlist) {
+            ext.push_back(std::make_shared<DRW_Variant>(
+                1040, v ? v->stawidth : 0.0));
+            ext.push_back(std::make_shared<DRW_Variant>(
+                1040, v ? v->endwidth : 0.0));
+            ext.push_back(std::make_shared<DRW_Variant>(
+                1071, dint32{v ? v->identifier : 0}));
+        }
+        polyline->setDrwExtData(std::move(ext));
+    }
     m_currentContainer->addEntity(polyline.release());
 }
 
@@ -1473,6 +1501,47 @@ void RS_FilterDXFRW::addPolyline(const DRW_Polyline& data) {
         }
         bool closedM = (data.flags & 0x1);  // closed in M direction
         bool closedN = (data.flags & 0x20); // closed in N direction
+        const std::string meshId = std::string("polyline_mesh_")
+            + std::to_string(data.handle);
+        const int meshElementCount = M + N;
+        auto makeMeshExtData = [&](int elementIndex, const std::string& role,
+                                   int roleIndex, bool anchor) {
+            std::vector<std::shared_ptr<DRW_Variant>> ext;
+            ext.push_back(std::make_shared<DRW_Variant>(
+                1001, std::string("LibreCAD_POLYLINE_MESH")));
+            ext.push_back(std::make_shared<DRW_Variant>(1000, meshId));
+            ext.push_back(std::make_shared<DRW_Variant>(1000, role));
+            ext.push_back(std::make_shared<DRW_Variant>(
+                1070, dint32{elementIndex}));
+            ext.push_back(std::make_shared<DRW_Variant>(
+                1070, dint32{meshElementCount}));
+            ext.push_back(std::make_shared<DRW_Variant>(
+                1070, dint32{roleIndex}));
+            ext.push_back(std::make_shared<DRW_Variant>(
+                1070, dint32{data.flags}));
+            ext.push_back(std::make_shared<DRW_Variant>(
+                1070, dint32{M}));
+            ext.push_back(std::make_shared<DRW_Variant>(
+                1070, dint32{N}));
+            ext.push_back(std::make_shared<DRW_Variant>(
+                1070, dint32{data.smoothM}));
+            ext.push_back(std::make_shared<DRW_Variant>(
+                1070, dint32{data.smoothN}));
+            ext.push_back(std::make_shared<DRW_Variant>(
+                1070, dint32{data.curvetype}));
+            if (anchor) {
+                for (const auto& vertex : data.vertlist) {
+                    if (!vertex) {
+                        continue;
+                    }
+                    ext.push_back(std::make_shared<DRW_Variant>(
+                        1010,
+                        DRW_Coord{vertex->basePoint.x, vertex->basePoint.y,
+                                  vertex->basePoint.z}));
+                }
+            }
+            return ext;
+        };
 
         // Add row polylines (along N direction)
         for (int i = 0; i < M; i++) {
@@ -1484,6 +1553,7 @@ void RS_FilterDXFRW::addPolyline(const DRW_Polyline& data) {
                 RS_Vector pos(v->basePoint.x, v->basePoint.y);
                 pl->addVertex(pos, 0.0, false);
             }
+            pl->setDrwExtData(makeMeshExtData(i, "row", i, i == 0));
             m_currentContainer->addEntity(pl.release());
         }
 
@@ -1497,6 +1567,8 @@ void RS_FilterDXFRW::addPolyline(const DRW_Polyline& data) {
                 RS_Vector pos(v->basePoint.x, v->basePoint.y);
                 pl->addVertex(pos, 0.0, false);
             }
+            pl->setDrwExtData(
+                makeMeshExtData(M + j, "column", j, false));
             m_currentContainer->addEntity(pl.release());
         }
         return;
@@ -1505,21 +1577,68 @@ void RS_FilterDXFRW::addPolyline(const DRW_Polyline& data) {
     if (data.flags & 0x40) {
         // the polyline is a polyface mesh
         std::vector<RS_Vector> vertices;
+        std::vector<DRW_Coord> sourceVertices;
+        std::vector<std::shared_ptr<DRW_Vertex>> faceRecords;
         for (const std::shared_ptr<DRW_Vertex>& v : data.vertlist) {
             if (!v) {
                 continue;
             }
-            if ((v->flags & 0x40) != 0 && (v->flags & 0x80) != 0) { // polyface coordinate vertex
+            const bool coordinateVertex =
+                v->dwgSubtype() == DRW_Vertex::DwgSubtype::Polyface
+                || ((v->flags & 0x40) != 0 && (v->flags & 0x80) != 0);
+            const bool faceRecord =
+                v->dwgSubtype() == DRW_Vertex::DwgSubtype::PolyfaceFace
+                || ((v->flags & 0x80) != 0 && (v->flags & 0x40) == 0);
+            if (coordinateVertex) {
                 vertices.emplace_back(v->basePoint.x, v->basePoint.y);
+                sourceVertices.emplace_back(v->basePoint.x, v->basePoint.y,
+                                            v->basePoint.z);
+            }
+            else if (faceRecord) {
+                faceRecords.push_back(v);
             }
         }
+        const std::string polyfaceId = std::string("polyline_pface_")
+            + std::to_string(data.handle);
+        auto makePolyfaceExtData =
+            [&](const DRW_Vertex& face, int faceIndex, bool anchor) {
+                std::vector<std::shared_ptr<DRW_Variant>> ext;
+                ext.push_back(std::make_shared<DRW_Variant>(
+                    1001, std::string("LibreCAD_POLYLINE_PFACE")));
+                ext.push_back(std::make_shared<DRW_Variant>(
+                    1000, polyfaceId));
+                ext.push_back(std::make_shared<DRW_Variant>(
+                    1070, dint32{faceIndex}));
+                ext.push_back(std::make_shared<DRW_Variant>(
+                    1070, dint32{static_cast<int>(faceRecords.size())}));
+                ext.push_back(std::make_shared<DRW_Variant>(
+                    1070, dint32{data.flags}));
+                ext.push_back(std::make_shared<DRW_Variant>(
+                    1070, dint32{data.vertexcount}));
+                ext.push_back(std::make_shared<DRW_Variant>(
+                    1070, dint32{data.facecount}));
+                ext.push_back(std::make_shared<DRW_Variant>(
+                    1070, dint32{face.vindex1}));
+                ext.push_back(std::make_shared<DRW_Variant>(
+                    1070, dint32{face.vindex2}));
+                ext.push_back(std::make_shared<DRW_Variant>(
+                    1070, dint32{face.vindex3}));
+                ext.push_back(std::make_shared<DRW_Variant>(
+                    1070, dint32{face.vindex4}));
+                if (anchor) {
+                    for (const auto& coord : sourceVertices) {
+                        ext.push_back(std::make_shared<DRW_Variant>(
+                            1010, coord));
+                    }
+                }
+                return ext;
+            };
         // add faces as closed polylines
-        for (const std::shared_ptr<DRW_Vertex>& f : data.vertlist) {
-            if (!f) {
-                continue;
-            }
-            if ((f->flags & 0x80) != 0 && (f->flags & 0x40) == 0) { // polyface face record
-                std::vector<int> indices = {{f->vindex1, f->vindex2, f->vindex3, f->vindex4}};
+        for (size_t faceIndex = 0; faceIndex < faceRecords.size();
+             ++faceIndex) {
+                const auto& f = faceRecords[faceIndex];
+                std::vector<int> indices = {{f->vindex1, f->vindex2,
+                                             f->vindex3, f->vindex4}};
                 int num_points = (f->vindex4 == 0) ? 3 : 4;
                 RS_PolylineData pd(RS_Vector(), RS_Vector(), true); // closed
                 auto pl = std::make_unique<RS_Polyline>(m_currentContainer, pd);
@@ -1534,9 +1653,11 @@ void RS_FilterDXFRW::addPolyline(const DRW_Polyline& data) {
                     pl->addVertex(vertices[idx - 1], 0.0);
                 }
                 if (valid) {
+                    pl->setDrwExtData(
+                        makePolyfaceExtData(*f, static_cast<int>(faceIndex),
+                                            faceIndex == 0));
                     m_currentContainer->addEntity(pl.release());
                 }
-            }
         }
         return;
     }
@@ -2525,7 +2646,7 @@ void RS_FilterDXFRW::addDimStyleOverrideToExtendedData(LC_ExtEntityData* extEnti
         auto blockName = leader->arrowBlockName();
         if (!blockName.isEmpty()) {
             auto blkName = blockName.toStdString();
-            int blkHandle = m_dxfW->getBlockRecordHandleToWrite(blkName);
+            int blkHandle = m_dxfW != nullptr ? m_dxfW->getBlockRecordHandleToWrite(blkName) : -1;
             if(blkHandle > 0) {
                 group->addRef(341, toHexStr(blkHandle));
             }
@@ -2535,7 +2656,7 @@ void RS_FilterDXFRW::addDimStyleOverrideToExtendedData(LC_ExtEntityData* extEnti
         auto blockName = arrowhead->sameBlockName();
         if (!blockName.isEmpty()) {
             auto blkName = blockName.toStdString();
-            int blkHandle = m_dxfW->getBlockRecordHandleToWrite(blkName);
+            int blkHandle = m_dxfW != nullptr ? m_dxfW->getBlockRecordHandleToWrite(blkName) : -1;
             if(blkHandle > 0) {
                 group->addRef(342, toHexStr(blkHandle));
             }
@@ -2545,7 +2666,7 @@ void RS_FilterDXFRW::addDimStyleOverrideToExtendedData(LC_ExtEntityData* extEnti
         auto blockName = arrowhead->arrowHeadBlockNameFirst();
         if (!blockName.isEmpty()) {
             auto blkName = blockName.toStdString();
-            int blkHandle = m_dxfW->getBlockRecordHandleToWrite(blkName);
+            int blkHandle = m_dxfW != nullptr ? m_dxfW->getBlockRecordHandleToWrite(blkName) : -1;
             if(blkHandle > 0) {
                 group->addRef(343, toHexStr(blkHandle));
             }
@@ -2556,7 +2677,7 @@ void RS_FilterDXFRW::addDimStyleOverrideToExtendedData(LC_ExtEntityData* extEnti
         auto blockName = arrowhead->arrowHeadBlockNameSecond();
         if (!blockName.isEmpty()) {
             auto blkName = blockName.toStdString();
-            int blkHandle = m_dxfW->getBlockRecordHandleToWrite(blkName);
+            int blkHandle = m_dxfW != nullptr ? m_dxfW->getBlockRecordHandleToWrite(blkName) : -1;
             if(blkHandle > 0) {
                 group->addRef(344, toHexStr(blkHandle));
             }
@@ -4168,7 +4289,6 @@ void RS_FilterDXFRW::writeHeader(DRW_Header& data){
 /*TODO $ISOMETRICGRID == $SNAPSTYLE and "GRID on/off" not handled because is part of
  active vport to save is required read/write VPORT table */
     QHash<QString, RS_Variable>vars = m_graphic->getVariableDict();
-    QHash<QString, RS_Variable>::iterator it = vars.begin();
     if (!vars.contains ( "$DWGCODEPAGE" )) {
 //RLZ: TODO verify this
         m_codePage = RS_SYSTEM->localeToISO(QLocale::system().name().toLocal8Bit());
@@ -4176,6 +4296,7 @@ void RS_FilterDXFRW::writeHeader(DRW_Header& data){
         vars.insert(QString("$DWGCODEPAGE"), RS_Variable(m_codePage, 0) );
     }
 
+    QHash<QString, RS_Variable>::iterator it = vars.begin();
     while (it != vars.end()) {
         auto value = it.value();
         int code = value.getCode();
@@ -4227,6 +4348,10 @@ void RS_FilterDXFRW::writeLType(const UTF8STRING& lTypeName, const UTF8STRING& l
                                 double ltLength, const std::vector<double>& ltPath) {
     DRW_LType ltype;
     ltype.updateValues(lTypeName, ltDescription, ltSize, ltLength, ltPath);
+    if (m_dwgW) {
+        m_dwgW->addLType(&ltype);
+        return;
+    }
     m_dxfW->writeLineType(&ltype);
 }
 
@@ -4307,7 +4432,12 @@ void RS_FilterDXFRW::writeLayers(){
             lay.extData.push_back(new DRW_Variant(1070, 1));
             // RS_DEBUG->print(RS_Debug::D_WARNING, "RS_FilterDXF::writeLayers: layer %s saved as construction layer", lay.name.c_str());
         }
-        m_dxfW->writeLayer(&lay);
+        if (m_dwgW) {
+            m_dwgW->addLayer(&lay);
+        }
+        else {
+            m_dxfW->writeLayer(&lay);
+        }
     }
 }
 
@@ -4495,7 +4625,12 @@ void RS_FilterDXFRW::writeTextstyles(){
          ts.name = (it.key()).toStdString();
          ts.font = it.value().toStdString();
 //         ts.flags;
-         m_dxfW->writeTextstyle( &ts );
+         if (m_dwgW) {
+             m_dwgW->addTextstyle(&ts);
+         }
+         else {
+             m_dxfW->writeTextstyle(&ts);
+         }
          ++it;
      }
 }
@@ -4530,6 +4665,10 @@ void RS_FilterDXFRW::writeVports(){
         vp.center.x = (gv->getWidth() - viewport->getOffsetX()) / (fac.x * 2.0);
         vp.center.y = (gv->getHeight() - viewport->getOffsetY()) / (fac.y * 2.0);
     }
+    if (m_dwgW) {
+        m_dwgW->addVport(&vp);
+        return;
+    }
     m_dxfW->writeVport(&vp);
 }
 
@@ -4539,7 +4678,12 @@ void RS_FilterDXFRW::writeDimstyles(){
     for (auto ds: *stylesList) {
         DRW_Dimstyle dst;
         prepareDRWDimStyle(dst, ds);
-        m_dxfW->writeDimstyle(&dst);
+        if (m_dwgW) {
+            m_dwgW->addDimstyle(&dst);
+        }
+        else {
+            m_dxfW->writeDimstyle(&dst);
+        }
     }
 }
 
@@ -4569,7 +4713,7 @@ void RS_FilterDXFRW::prepareDRWDimStyleArrows(DRW_Dimstyle& d, LC_DimStyle* ds) 
         QString blockName = arrow->sameBlockName();
         if (!blockName.isEmpty()) {
             auto blkName = blockName.toStdString();
-            int blkHandle = m_dxfW->getBlockRecordHandleToWrite(blkName);
+            int blkHandle = m_dxfW != nullptr ? m_dxfW->getBlockRecordHandleToWrite(blkName) : -1;
             if(blkHandle > 0) {
                 d.add("_$DIMBLK", 342, toHexStr(blkHandle).toStdString());
             }
@@ -4580,7 +4724,7 @@ void RS_FilterDXFRW::prepareDRWDimStyleArrows(DRW_Dimstyle& d, LC_DimStyle* ds) 
         QString blockName = arrow->arrowHeadBlockNameFirst();
         if (!blockName.isEmpty()) {
             auto blkName = blockName.toStdString();
-            int blkHandle = m_dxfW->getBlockRecordHandleToWrite(blkName);
+            int blkHandle = m_dxfW != nullptr ? m_dxfW->getBlockRecordHandleToWrite(blkName) : -1;
             if(blkHandle > 0) {
                 d.add("_$DIMBLK1", 343, toHexStr(blkHandle).toStdString());
             }
@@ -4591,7 +4735,7 @@ void RS_FilterDXFRW::prepareDRWDimStyleArrows(DRW_Dimstyle& d, LC_DimStyle* ds) 
         QString blockName = arrow->arrowHeadBlockNameSecond();
         if (!blockName.isEmpty()) {
             auto blkName = blockName.toStdString();
-            int blkHandle = m_dxfW->getBlockRecordHandleToWrite(blkName);
+            int blkHandle = m_dxfW != nullptr ? m_dxfW->getBlockRecordHandleToWrite(blkName) : -1;
             if(blkHandle > 0) {
                 d.add("_$DIMBLK2", 344, toHexStr(blkHandle).toStdString());
             }
@@ -4716,6 +4860,9 @@ void RS_FilterDXFRW::prepareDRWDimStyleDimLine(DRW_Dimstyle& d, LC_DimStyle* ds)
 }
 
 int RS_FilterDXFRW::findLineTypeHandleToWrite(const QString& name) const {
+    if (m_dxfW == nullptr) {
+        return -1;
+    }
     std::string lineName = name.toUpper().toStdString();
     for (auto p: m_dxfW->getWritingContext()->lineTypesMap) {
         if (p.first.compare(lineName) == 0) {
@@ -4733,7 +4880,7 @@ void RS_FilterDXFRW::prepareDRWDimStyleText(DRW_Dimstyle& d, LC_DimStyle* ds) {
 
     if (text->checkModifyState(LC_DimStyle::Text::$DIMTXSTY)) {
         auto styleName = text->style().toStdString();
-        int styleHandle = m_dxfW->getTextStyleHandle(styleName);
+        int styleHandle = m_dxfW != nullptr ? m_dxfW->getTextStyleHandle(styleName) : -1;
         if(styleHandle > 0) {
             d.add("$DIMTXSTY", 340, toHexStr(styleHandle).toStdString());
         }
@@ -4889,7 +5036,7 @@ void RS_FilterDXFRW::prepareDRWDimStyleLeader(DRW_Dimstyle& d, LC_DimStyle* ds) 
         QString blockName = leader->arrowBlockName();
         if (!blockName.isEmpty()) {
             auto blkName = blockName.toStdString();
-            int blkHandle = m_dxfW->getBlockRecordHandleToWrite(blkName);
+            int blkHandle = m_dxfW != nullptr ? m_dxfW->getBlockRecordHandleToWrite(blkName) : -1;
             if(blkHandle > 0) {
                 d.add("_$DIMLDRBLK", 341, toHexStr(blkHandle).toStdString());
             }
@@ -4966,16 +5113,36 @@ void RS_FilterDXFRW::writeObjects() {
 void RS_FilterDXFRW::writeAppId(){
     DRW_AppId ai;
     ai.name ="LibreCad";
-    m_dxfW->writeAppId(&ai);
+    if (m_dwgW) {
+        m_dwgW->addAppId(&ai);
+    }
+    else {
+        m_dxfW->writeAppId(&ai);
+    }
 
     ai.name ="ACAD_DSTYLE_DIMTALN";
-    m_dxfW->writeAppId(&ai);
+    if (m_dwgW) {
+        m_dwgW->addAppId(&ai);
+    }
+    else {
+        m_dxfW->writeAppId(&ai);
+    }
 
     ai.name ="ACAD_DSTYLE_DIMJAG_POSITION";
-    m_dxfW->writeAppId(&ai);
+    if (m_dwgW) {
+        m_dwgW->addAppId(&ai);
+    }
+    else {
+        m_dxfW->writeAppId(&ai);
+    }
 
     ai.name ="ACAD_DSTYLE_DIMJAG";
-    m_dxfW->writeAppId(&ai);
+    if (m_dwgW) {
+        m_dwgW->addAppId(&ai);
+    }
+    else {
+        m_dxfW->writeAppId(&ai);
+    }
 
     // ACAD_DSTYLE_DIMJAG
     // fixme - sand - probably we can add version there, check format
@@ -4985,8 +5152,9 @@ void RS_FilterDXFRW::writeEntities(){
   // Pre-pass: reconstruct MLINE entities from decomposed polylines that
   // carry LibreCAD_MLINE XDATA. Consumed polylines are emitted as
   // MLINE; the rest fall through to the normal write path.
-  // DWG writer has no MLINE/UNDERLAY — skip reconstruction passes.
   std::set<RS_Entity *> consumed;
+  reconstructPolylineSidecars(m_graphic, consumed);
+  // DWG writer has no MLINE/UNDERLAY — skip reconstruction passes.
   if (!m_dwgW) {
     reconstructMLines(m_graphic, consumed);
     reconstructUnderlays(m_graphic, consumed);
@@ -5018,6 +5186,265 @@ struct MLineEntry {
   std::vector<DRW_Coord> miterDirs;
 };
 
+struct LWPolylineMeta {
+  double width = 0.0;
+  double elevation = 0.0;
+  double thickness = 0.0;
+  DRW_Coord extrusion {0.0, 0.0, 1.0};
+  int vertexCount = 0;
+  std::vector<double> startWidths;
+  std::vector<double> endWidths;
+  std::vector<int> identifiers;
+};
+
+std::optional<LWPolylineMeta> extractLWPolylineMeta(RS_Entity *e) {
+  if (!e || !e->hasDrwExtData())
+    return std::nullopt;
+  const auto &ext = e->getDrwExtData();
+  bool inGroup = false;
+  LWPolylineMeta meta;
+  int seen1040 = 0; // 0=width, 1=elevation, 2=thickness, then vertex widths
+  bool gotMarker = false;
+
+  for (const auto &sp : ext) {
+    if (!sp)
+      continue;
+    const int code = sp->code();
+    if (code == 1001) {
+      inGroup = (std::string{sp->c_str()} == "LibreCAD_LWPOLYLINE");
+      if (inGroup)
+        gotMarker = true;
+      continue;
+    }
+    if (!inGroup)
+      continue;
+
+    switch (code) {
+    case 1040: {
+      const double d = sp->d_val();
+      if (seen1040 == 0)
+        meta.width = d;
+      else if (seen1040 == 1)
+        meta.elevation = d;
+      else if (seen1040 == 2)
+        meta.thickness = d;
+      else if ((seen1040 - 3) % 2 == 0)
+        meta.startWidths.push_back(d);
+      else
+        meta.endWidths.push_back(d);
+      ++seen1040;
+      break;
+    }
+    case 1010: {
+      const auto *c = sp->coord();
+      if (c)
+        meta.extrusion = *c;
+      break;
+    }
+    case 1070:
+      if (meta.vertexCount == 0)
+        meta.vertexCount = static_cast<int>(sp->i_val());
+      break;
+    case 1071:
+      meta.identifiers.push_back(static_cast<int>(sp->i_val()));
+      break;
+    default:
+      break;
+    }
+  }
+
+  if (!gotMarker)
+    return std::nullopt;
+  return meta;
+}
+
+struct MeshSidecarEntry {
+  RS_Entity *entity = nullptr;
+  QString meshId;
+  QString role;
+  int elementIndex = -1;
+  int elementCount = 0;
+  int roleIndex = -1;
+  int flags = 0;
+  int mCount = 0;
+  int nCount = 0;
+  int smoothM = 0;
+  int smoothN = 0;
+  int curveType = 0;
+  std::vector<DRW_Coord> sourceVertices;
+};
+
+struct PolyfaceSidecarEntry {
+  RS_Entity *entity = nullptr;
+  QString polyfaceId;
+  int faceIndex = -1;
+  int faceCount = 0;
+  int flags = 0;
+  int vertexCount = 0;
+  int originalFaceCount = 0;
+  std::array<int, 4> indices {{0, 0, 0, 0}};
+  std::vector<DRW_Coord> sourceVertices;
+};
+
+std::vector<RS_Vector> collectPolylineVertices(RS_Polyline *polyline) {
+  std::vector<RS_Vector> vertices;
+  if (polyline == nullptr)
+    return vertices;
+
+  const RS_AtomicEntity *lastAtomic = nullptr;
+  for (RS_Entity *sub :
+       lc::LC_ContainerTraverser{*polyline, RS2::ResolveNone}.entities()) {
+    if (sub == nullptr || !sub->isAtomic())
+      continue;
+    const auto *atomic = static_cast<const RS_AtomicEntity *>(sub);
+    vertices.push_back(atomic->getStartpoint());
+    lastAtomic = atomic;
+  }
+  if (lastAtomic != nullptr && !polyline->isClosed())
+    vertices.push_back(lastAtomic->getEndpoint());
+
+  return vertices;
+}
+
+bool pointsMatch2D(const RS_Vector &point, const DRW_Coord &coord) {
+  return std::abs(point.x - coord.x) <= RS_TOLERANCE
+      && std::abs(point.y - coord.y) <= RS_TOLERANCE;
+}
+
+std::optional<MeshSidecarEntry> extractMeshSidecar(RS_Entity *e) {
+  if (!e || !e->hasDrwExtData())
+    return std::nullopt;
+
+  MeshSidecarEntry meta;
+  meta.entity = e;
+  bool inGroup = false;
+  bool gotMarker = false;
+  int seen1000 = 0;
+  int seen1070 = 0;
+
+  for (const auto &sp : e->getDrwExtData()) {
+    if (!sp)
+      continue;
+    const int code = sp->code();
+    if (code == 1001) {
+      inGroup = (std::string{sp->c_str()} == "LibreCAD_POLYLINE_MESH");
+      if (inGroup)
+        gotMarker = true;
+      continue;
+    }
+    if (!inGroup)
+      continue;
+
+    switch (code) {
+    case 1000: {
+      const QString value = QString::fromStdString(std::string{sp->c_str()});
+      if (seen1000 == 0)
+        meta.meshId = value;
+      else if (seen1000 == 1)
+        meta.role = value;
+      ++seen1000;
+      break;
+    }
+    case 1070: {
+      const int value = static_cast<int>(sp->i_val());
+      if (seen1070 == 0)
+        meta.elementIndex = value;
+      else if (seen1070 == 1)
+        meta.elementCount = value;
+      else if (seen1070 == 2)
+        meta.roleIndex = value;
+      else if (seen1070 == 3)
+        meta.flags = value;
+      else if (seen1070 == 4)
+        meta.mCount = value;
+      else if (seen1070 == 5)
+        meta.nCount = value;
+      else if (seen1070 == 6)
+        meta.smoothM = value;
+      else if (seen1070 == 7)
+        meta.smoothN = value;
+      else if (seen1070 == 8)
+        meta.curveType = value;
+      ++seen1070;
+      break;
+    }
+    case 1010: {
+      const auto *coord = sp->coord();
+      if (coord)
+        meta.sourceVertices.push_back(*coord);
+      break;
+    }
+    default:
+      break;
+    }
+  }
+
+  if (!gotMarker || meta.meshId.isEmpty())
+    return std::nullopt;
+  return meta;
+}
+
+std::optional<PolyfaceSidecarEntry> extractPolyfaceSidecar(RS_Entity *e) {
+  if (!e || !e->hasDrwExtData())
+    return std::nullopt;
+
+  PolyfaceSidecarEntry meta;
+  meta.entity = e;
+  bool inGroup = false;
+  bool gotMarker = false;
+  int seen1070 = 0;
+
+  for (const auto &sp : e->getDrwExtData()) {
+    if (!sp)
+      continue;
+    const int code = sp->code();
+    if (code == 1001) {
+      inGroup = (std::string{sp->c_str()} == "LibreCAD_POLYLINE_PFACE");
+      if (inGroup)
+        gotMarker = true;
+      continue;
+    }
+    if (!inGroup)
+      continue;
+
+    switch (code) {
+    case 1000:
+      if (meta.polyfaceId.isEmpty())
+        meta.polyfaceId = QString::fromStdString(std::string{sp->c_str()});
+      break;
+    case 1070: {
+      const int value = static_cast<int>(sp->i_val());
+      if (seen1070 == 0)
+        meta.faceIndex = value;
+      else if (seen1070 == 1)
+        meta.faceCount = value;
+      else if (seen1070 == 2)
+        meta.flags = value;
+      else if (seen1070 == 3)
+        meta.vertexCount = value;
+      else if (seen1070 == 4)
+        meta.originalFaceCount = value;
+      else if (seen1070 >= 5 && seen1070 < 9)
+        meta.indices[seen1070 - 5] = value;
+      ++seen1070;
+      break;
+    }
+    case 1010: {
+      const auto *coord = sp->coord();
+      if (coord)
+        meta.sourceVertices.push_back(*coord);
+      break;
+    }
+    default:
+      break;
+    }
+  }
+
+  if (!gotMarker || meta.polyfaceId.isEmpty())
+    return std::nullopt;
+  return meta;
+}
+
 // Walk the entity's drwExtData (XDATA stream) and extract LibreCAD_MLINE
 // metadata. Returns nullopt if the marker isn't present. The XDATA layout
 // matches RS_FilterDXFRW::addMLine's emission schema.
@@ -5030,7 +5457,6 @@ std::optional<MLineEntry> extractMLineMeta(RS_Entity *e) {
   int seen1000 = 0; // 0 = mlineId, 1 = styleName
   int seen1040 = 0; // 0 = scale, 1 = offset
   int seen1070 = 0; // 0 = just, 1 = N, 2 = i, 3 = flags
-  int seen1011 = 0; // baseline.x emitted as DRW_Coord
   for (const auto &sp : ext) {
     if (!sp)
       continue;
@@ -5079,7 +5505,6 @@ std::optional<MLineEntry> extractMLineMeta(RS_Entity *e) {
       if (c)
         m.baselineVerts.push_back(*c);
       m.isAnchor = true;
-      ++seen1011;
       break;
     }
     case 1013: {
@@ -5098,6 +5523,225 @@ std::optional<MLineEntry> extractMLineMeta(RS_Entity *e) {
   return m;
 }
 } // namespace
+
+void RS_FilterDXFRW::reconstructPolylineSidecars(
+    RS_EntityContainer *container, std::set<RS_Entity *> &consumed) {
+  if (container == nullptr)
+    return;
+
+  std::map<QString, std::vector<MeshSidecarEntry>> meshGroups;
+  std::map<QString, std::vector<PolyfaceSidecarEntry>> polyfaceGroups;
+
+  for (RS_Entity *entity :
+       lc::LC_ContainerTraverser{*container, RS2::ResolveNone}.entities()) {
+    if (entity == nullptr || entity->getFlag(RS2::FlagUndone)
+        || consumed.find(entity) != consumed.end()
+        || entity->rtti() != RS2::EntityPolyline) {
+      continue;
+    }
+    if (auto meshMeta = extractMeshSidecar(entity))
+      meshGroups[meshMeta->meshId].push_back(std::move(*meshMeta));
+    else if (auto polyfaceMeta = extractPolyfaceSidecar(entity))
+      polyfaceGroups[polyfaceMeta->polyfaceId].push_back(
+          std::move(*polyfaceMeta));
+  }
+
+  for (auto &[meshId, entries] : meshGroups) {
+    (void)meshId;
+    if (entries.empty())
+      continue;
+
+    const MeshSidecarEntry *anchor = nullptr;
+    for (const auto &entry : entries) {
+      if (!entry.sourceVertices.empty()) {
+        anchor = &entry;
+        break;
+      }
+    }
+    if (anchor == nullptr || anchor->mCount <= 0 || anchor->nCount <= 0)
+      continue;
+
+    const int mCount = anchor->mCount;
+    const int nCount = anchor->nCount;
+    const int expectedElementCount = mCount + nCount;
+    if (anchor->elementCount != expectedElementCount
+        || static_cast<int>(entries.size()) != expectedElementCount
+        || static_cast<int>(anchor->sourceVertices.size()) != mCount * nCount) {
+      continue;
+    }
+
+    bool valid = true;
+    std::vector<bool> seenElements(expectedElementCount, false);
+    for (const auto &entry : entries) {
+      if (entry.elementIndex < 0 || entry.elementIndex >= expectedElementCount
+          || seenElements[entry.elementIndex] || entry.mCount != mCount
+          || entry.nCount != nCount || entry.elementCount != expectedElementCount) {
+        valid = false;
+        break;
+      }
+      seenElements[entry.elementIndex] = true;
+
+      auto *polyline = static_cast<RS_Polyline *>(entry.entity);
+      const std::vector<RS_Vector> visible = collectPolylineVertices(polyline);
+      if (entry.role == "row") {
+        if (entry.roleIndex < 0 || entry.roleIndex >= mCount
+            || static_cast<int>(visible.size()) != nCount) {
+          valid = false;
+          break;
+        }
+        for (int j = 0; j < nCount; ++j) {
+          const DRW_Coord &coord =
+              anchor->sourceVertices[entry.roleIndex * nCount + j];
+          if (!pointsMatch2D(visible[j], coord)) {
+            valid = false;
+            break;
+          }
+        }
+      }
+      else if (entry.role == "column") {
+        if (entry.roleIndex < 0 || entry.roleIndex >= nCount
+            || static_cast<int>(visible.size()) != mCount) {
+          valid = false;
+          break;
+        }
+        for (int i = 0; i < mCount; ++i) {
+          const DRW_Coord &coord =
+              anchor->sourceVertices[i * nCount + entry.roleIndex];
+          if (!pointsMatch2D(visible[i], coord)) {
+            valid = false;
+            break;
+          }
+        }
+      }
+      else {
+        valid = false;
+      }
+      if (!valid)
+        break;
+    }
+    if (!valid)
+      continue;
+
+    DRW_Polyline polyline;
+    polyline.flags = anchor->flags | 0x10;
+    polyline.vertexcount = mCount;
+    polyline.facecount = nCount;
+    polyline.smoothM = anchor->smoothM;
+    polyline.smoothN = anchor->smoothN;
+    polyline.curvetype = anchor->curveType;
+    getEntityAttributes(&polyline, anchor->entity);
+    for (const DRW_Coord &coord : anchor->sourceVertices) {
+      DRW_Vertex vertex(coord.x, coord.y, coord.z, 0.0);
+      vertex.setDwgSubtype(DRW_Vertex::DwgSubtype::Mesh);
+      polyline.addVertex(vertex);
+    }
+
+    if (m_dwgW)
+      m_dwgW->writePolyline(&polyline);
+    else if (m_dxfW)
+      m_dxfW->writePolyline(&polyline);
+
+    for (const auto &entry : entries)
+      consumed.insert(entry.entity);
+  }
+
+  for (auto &[polyfaceId, entries] : polyfaceGroups) {
+    (void)polyfaceId;
+    if (entries.empty())
+      continue;
+
+    const PolyfaceSidecarEntry *anchor = nullptr;
+    for (const auto &entry : entries) {
+      if (!entry.sourceVertices.empty()) {
+        anchor = &entry;
+        break;
+      }
+    }
+    if (anchor == nullptr || anchor->vertexCount <= 0
+        || anchor->faceCount <= 0) {
+      continue;
+    }
+
+    if (static_cast<int>(entries.size()) != anchor->faceCount
+        || static_cast<int>(anchor->sourceVertices.size())
+               != anchor->vertexCount) {
+      continue;
+    }
+
+    bool valid = true;
+    std::vector<bool> seenFaces(anchor->faceCount, false);
+    for (const auto &entry : entries) {
+      if (entry.faceIndex < 0 || entry.faceIndex >= anchor->faceCount
+          || seenFaces[entry.faceIndex] || entry.faceCount != anchor->faceCount
+          || entry.vertexCount != anchor->vertexCount) {
+        valid = false;
+        break;
+      }
+      seenFaces[entry.faceIndex] = true;
+
+      const int expectedPoints = entry.indices[3] == 0 ? 3 : 4;
+      auto *polyline = static_cast<RS_Polyline *>(entry.entity);
+      const std::vector<RS_Vector> visible = collectPolylineVertices(polyline);
+      if (static_cast<int>(visible.size()) != expectedPoints) {
+        valid = false;
+        break;
+      }
+      for (int i = 0; i < expectedPoints; ++i) {
+        const int vertexIndex = std::abs(entry.indices[i]);
+        if (vertexIndex < 1 || vertexIndex > anchor->vertexCount) {
+          valid = false;
+          break;
+        }
+        if (!pointsMatch2D(visible[i],
+                           anchor->sourceVertices[vertexIndex - 1])) {
+          valid = false;
+          break;
+        }
+      }
+      if (!valid)
+        break;
+    }
+    if (!valid)
+      continue;
+
+    std::sort(entries.begin(), entries.end(),
+              [](const PolyfaceSidecarEntry &lhs,
+                 const PolyfaceSidecarEntry &rhs) {
+                return lhs.faceIndex < rhs.faceIndex;
+              });
+
+    DRW_Polyline polyline;
+    polyline.flags = anchor->flags | 0x40;
+    polyline.vertexcount = anchor->vertexCount;
+    polyline.facecount = anchor->faceCount;
+    getEntityAttributes(&polyline, anchor->entity);
+
+    for (const DRW_Coord &coord : anchor->sourceVertices) {
+      DRW_Vertex vertex(coord.x, coord.y, coord.z, 0.0);
+      vertex.flags = 0x40 | 0x80;
+      vertex.setDwgSubtype(DRW_Vertex::DwgSubtype::Polyface);
+      polyline.addVertex(vertex);
+    }
+    for (const auto &entry : entries) {
+      DRW_Vertex face;
+      face.flags = 0x80;
+      face.vindex1 = entry.indices[0];
+      face.vindex2 = entry.indices[1];
+      face.vindex3 = entry.indices[2];
+      face.vindex4 = entry.indices[3];
+      face.setDwgSubtype(DRW_Vertex::DwgSubtype::PolyfaceFace);
+      polyline.addVertex(face);
+    }
+
+    if (m_dwgW)
+      m_dwgW->writePolyline(&polyline);
+    else if (m_dxfW)
+      m_dxfW->writePolyline(&polyline);
+
+    for (const auto &entry : entries)
+      consumed.insert(entry.entity);
+  }
+}
 
 void RS_FilterDXFRW::reconstructMLines(RS_EntityContainer *container,
                                        std::set<RS_Entity *> &consumed) {
@@ -5487,6 +6131,23 @@ void RS_FilterDXFRW::writeLWPolyline(RS_Polyline* l) {
     }
     pol.vertexnum = pol.vertlist.size();
     getEntityAttributes(&pol, l);
+    auto lwMeta = extractLWPolylineMeta(l);
+    if (lwMeta) {
+        pol.width = lwMeta->width;
+        pol.elevation = lwMeta->elevation;
+        pol.thickness = lwMeta->thickness;
+        pol.extPoint = lwMeta->extrusion;
+        if (lwMeta->vertexCount == static_cast<int>(pol.vertlist.size())) {
+            for (size_t i = 0; i < pol.vertlist.size(); ++i) {
+                if (i < lwMeta->startWidths.size())
+                    pol.vertlist[i]->stawidth = lwMeta->startWidths[i];
+                if (i < lwMeta->endWidths.size())
+                    pol.vertlist[i]->endwidth = lwMeta->endWidths[i];
+                if (i < lwMeta->identifiers.size())
+                    pol.vertlist[i]->identifier = lwMeta->identifiers[i];
+            }
+        }
+    }
     if (m_dwgW) { m_dwgW->writeLWPolyline(&pol); return; }
     m_dxfW->writeLWPolyline(&pol);
 }

@@ -1020,7 +1020,7 @@ bool dxfRW::writePolyline(DRW_Polyline *ent) {
         if (v->bulge != 0)
             writer->writeDouble(42, v->bulge);
         if (v->flags != 0) {
-            writer->writeInt16(70, ent->flags);
+            writer->writeInt16(70, v->flags);
         }
         if (v->flags & 2) {
             writer->writeDouble(50, v->tgdir);

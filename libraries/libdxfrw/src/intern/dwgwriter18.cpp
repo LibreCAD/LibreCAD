@@ -405,14 +405,13 @@ bool dwgWriter18::writeDwgClasses() {
 
     size_t sizeOffset = beginSentinelSection(dwgSentinels::CLASSES_BEGIN);
 
-    // maxClassNum = 499 means zero custom classes (DRW classes start at 500).
-    m_buf.putBitShort(499);
+    m_buf.putBitShort(maxDwgClassNumber());
     m_buf.putRawChar8(0);  // rc1
     m_buf.putRawChar8(0);  // rc2
     m_buf.putBit(0);       // flag
-    m_buf.alignToByte();
-    // One padding byte that the reader skips via setPosition(pos+1).
-    m_buf.putRawChar8(0);
+
+    for (const auto& definition : sortedDwgClassDefinitions())
+        writeDwgClassDefinition(definition, &m_buf, nullptr);
 
     endSentinelSection(sectionStart, sizeOffset, dwgSentinels::CLASSES_END);
 

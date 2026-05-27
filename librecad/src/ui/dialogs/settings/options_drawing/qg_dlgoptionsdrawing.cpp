@@ -44,6 +44,7 @@
 #include "lc_dlgnewcustomvariable.h"
 #include "lc_dlgnewdimstyle.h"
 #include "lc_inputtextdialog.h"
+#include "lc_tolerance.h"
 #include "qc_applicationwindow.h"
 #include "rs_debug.h"
 #include "rs_filterdxfrw.h"
@@ -287,20 +288,38 @@ void QG_DlgOptionsDrawing::setupDimStylesTab() {
 void QG_DlgOptionsDrawing::collectStylesUsage(QMap<QString, int>& map) {
     for (RS_Entity* e : m_graphic->getEntityList()) {
         auto entityType = e->rtti();
-        if (!e->isUndone() && RS2::isDimensionalEntity(entityType)) {
-            auto* dim = dynamic_cast<RS_Dimension*>(e);
-            QString styleName = dim->getStyle();
+        if (e->isUndone()) {
+            continue;
+        }
 
-            auto dimStyleForNameAndType = m_graphic->getDimStyleByName(styleName, entityType);
-            if (dimStyleForNameAndType != nullptr) {
-                QString resolvedStyleName = dimStyleForNameAndType->getName();
-                int value = map.value(resolvedStyleName, 0);
-                value++;
-                map[resolvedStyleName] = value;
+        QString styleName;
+        if (RS2::isDimensionalEntity(entityType)) {
+            auto* dim = dynamic_cast<RS_Dimension*>(e);
+            if (dim == nullptr) {
+                continue;
             }
-            else {
-               // weird case - style is referenced in entity, but is not present in dim styles... looks like DXF error
+            styleName = dim->getStyle();
+        }
+        else if (entityType == RS2::EntityTolerance) {
+            auto* tolerance = dynamic_cast<LC_Tolerance*>(e);
+            if (tolerance == nullptr) {
+                continue;
             }
+            styleName = tolerance->getData().m_dimStyleName;
+        }
+        else {
+            continue;
+        }
+
+        auto dimStyleForNameAndType = m_graphic->getDimStyleByName(styleName, entityType);
+        if (dimStyleForNameAndType != nullptr) {
+            QString resolvedStyleName = dimStyleForNameAndType->getName();
+            int value = map.value(resolvedStyleName, 0);
+            value++;
+            map[resolvedStyleName] = value;
+        }
+        else {
+           // weird case - style is referenced in entity, but is not present in dim styles... looks like DXF error
         }
     }
 }

@@ -849,10 +849,6 @@ bool dwgReader::readDwgBlocks(DRW_Interface& intfa, dwgBuffer *dbuf){
         bk.flags = bkr->flags;
         bk.insUnits = bkr->insUnits;
         bk.xrefPath = bkr->xrefPath;
-        intfa.addBlock(bk);
-        //and update block record name
-        bkr->name = bk.name;
-
         /**read & send block entities**/
         // Modelspace / paperspace block_records have no DWG-side parent
         // handle (the legacy "330 not set like dxf in ModelSpace & PaperSpace"
@@ -864,7 +860,12 @@ bool dwgReader::readDwgBlocks(DRW_Interface& intfa, dwgBuffer *dbuf){
         const bool deferredEntityWalk = (bk.parentHandle == DRW::NoHandle);
         if (deferredEntityWalk) {
             bk.parentHandle = bkr->handle;
-        } else {
+        }
+        intfa.addBlock(bk);
+        //and update block record name
+        bkr->name = bk.name;
+
+        if (!deferredEntityWalk) {
             ret2 = walkBlockRecordEntities(bkr, dbuf, intfa);
             ret = ret && ret2;
         }
@@ -892,7 +893,6 @@ bool dwgReader::readDwgBlocks(DRW_Interface& intfa, dwgBuffer *dbuf){
         end.isEnd = true;
         ret2 = end.parseDwg(version, &buff1, bs);
         ret = ret && ret2;
-        if (bk.parentHandle == DRW::NoHandle) bk.parentHandle= bkr->handle;
         parseAttribs(&end);
         intfa.endBlock();
 

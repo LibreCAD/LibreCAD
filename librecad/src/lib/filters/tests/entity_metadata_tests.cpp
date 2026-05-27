@@ -201,6 +201,25 @@ public:
   }
 };
 
+class SinglePolylineEmitter : public StubInterface {
+public:
+  DRW_Polyline m_polyline;
+  dxfRW *m_rw = nullptr;
+  void writeEntities() override { m_rw->writePolyline(&m_polyline); }
+};
+
+class SinglePolylineCapture : public StubInterface {
+public:
+  bool m_gotPolyline = false;
+  DRW_Polyline m_captured;
+  void addPolyline(const DRW_Polyline &polyline) override {
+    if (!m_gotPolyline) {
+      m_captured = polyline;
+      m_gotPolyline = true;
+    }
+  }
+};
+
 } // namespace
 
 TEST_CASE("DXF round-trip: 284/347/390/430/440 survive write+read",
@@ -348,6 +367,62 @@ TEST_CASE("DXF write: spline weights force rational flag",
   CHECK((capture.m_captured.flags & 0x04) == 0x04);
   REQUIRE(capture.m_captured.weightlist.size() == 3);
   CHECK(capture.m_captured.weightlist[1] == 0.5);
+
+  std::filesystem::remove(path);
+}
+
+TEST_CASE("DXF round-trip: polyface vertex flags survive write+read",
+          "[entity_metadata][dxf_roundtrip][polyline]") {
+  const auto path = std::filesystem::temp_directory_path() /
+                    "librecad_polyface_vertex_flags.dxf";
+  std::filesystem::remove(path);
+
+  SinglePolylineEmitter emitter;
+  emitter.m_polyline.layer = "0";
+  emitter.m_polyline.color = 256;
+  emitter.m_polyline.flags = 64;
+  emitter.m_polyline.vertexcount = 3;
+  emitter.m_polyline.facecount = 1;
+
+  DRW_Vertex v1(0.0, 0.0, 0.0, 0.0);
+  v1.flags = 64 | 128;
+  DRW_Vertex v2(10.0, 0.0, 0.0, 0.0);
+  v2.flags = 64 | 128;
+  DRW_Vertex v3(0.0, 10.0, 0.0, 0.0);
+  v3.flags = 64 | 128;
+  DRW_Vertex face;
+  face.flags = 128;
+  face.vindex1 = 1;
+  face.vindex2 = -2;
+  face.vindex3 = 3;
+
+  emitter.m_polyline.addVertex(v1);
+  emitter.m_polyline.addVertex(v2);
+  emitter.m_polyline.addVertex(v3);
+  emitter.m_polyline.addVertex(face);
+
+  {
+    dxfRW w(path.string().c_str());
+    emitter.m_rw = &w;
+    REQUIRE(w.write(&emitter, DRW::AC1021, false));
+  }
+
+  SinglePolylineCapture capture;
+  {
+    dxfRW r(path.string().c_str());
+    REQUIRE(r.read(&capture, /*ext=*/true));
+  }
+
+  REQUIRE(capture.m_gotPolyline);
+  CHECK(capture.m_captured.flags == 64);
+  REQUIRE(capture.m_captured.vertlist.size() == 4);
+  CHECK(capture.m_captured.vertlist[0]->flags == (64 | 128));
+  CHECK(capture.m_captured.vertlist[1]->flags == (64 | 128));
+  CHECK(capture.m_captured.vertlist[2]->flags == (64 | 128));
+  CHECK(capture.m_captured.vertlist[3]->flags == 128);
+  CHECK(capture.m_captured.vertlist[3]->vindex1 == 1);
+  CHECK(capture.m_captured.vertlist[3]->vindex2 == -2);
+  CHECK(capture.m_captured.vertlist[3]->vindex3 == 3);
 
   std::filesystem::remove(path);
 }

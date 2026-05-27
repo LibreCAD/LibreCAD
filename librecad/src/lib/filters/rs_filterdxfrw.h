@@ -357,6 +357,15 @@ private:
     void reconstructMLines(RS_EntityContainer *container,
                            std::set<RS_Entity *> &consumed);
 
+    /** Scan @p container for RS_Polyline fallback geometry carrying
+     *  LibreCAD_POLYLINE_MESH / LibreCAD_POLYLINE_PFACE XDATA and
+     *  reconstruct native old-style POLYLINE entities when the complete
+     *  decomposed group is still present and matches the preserved source
+     *  topology. Consumed polylines are written into @p consumed so the
+     *  normal entity-write loop skips them. */
+    void reconstructPolylineSidecars(RS_EntityContainer *container,
+                                     std::set<RS_Entity *> &consumed);
+
     /** Scan @p container for RS_Polyline entities carrying
      *  LibreCAD_UNDERLAY XDATA and reconstruct DRW_Underlay entities.
      *  Each polyline maps 1:1 to an underlay (no group). Consumed
