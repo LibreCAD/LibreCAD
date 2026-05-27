@@ -45,6 +45,7 @@
 
 #include "drw_interface.h"
 #include "intern/dwgbufferw.h"
+#include "intern/dwgwriter15.h"
 #include "intern/dwgutil.h"
 #include "lc_containertraverser.h"
 #include "libdwgr.h"
@@ -667,6 +668,21 @@ public:
     }
 };
 
+class InspectableDwgWriter15 : public dwgWriter15 {
+public:
+    InspectableDwgWriter15(std::ofstream *stream, DRW_Header *header)
+        : dwgWriter15(stream, header)
+    {}
+
+    dint32 customClassInstanceCount(duint16 classNum) const {
+        for (const DwgClassDefinition& definition : m_dwgClassDefinitions) {
+            if (definition.m_classNum == classNum)
+                return definition.m_instanceCount;
+        }
+        return -1;
+    }
+};
+
 class MLeaderRoundTripIface : public EmptyIface {
 public:
     dwgRW *m_writer {nullptr};
@@ -861,6 +877,22 @@ TEST_CASE("dwgRW rejects conflicting custom class registrations",
         REQUIRE_FALSE(writer.write(&iface, version, /*bin=*/false));
         std::remove(path.c_str());
     }
+}
+
+TEST_CASE("dwgWriter counts unique raw custom class instances",
+          "[dwg-write][raw-replay][classes]") {
+    DRW_Header header;
+    std::ofstream stream;
+    InspectableDwgWriter15 writer(&stream, &header);
+
+    DRW_UnsupportedObject first = makeRawReplayObject(DRW::AC1024);
+    DRW_UnsupportedObject second = first;
+    second.m_handle = 0x701u;
+
+    REQUIRE(writer.registerRawObjectClass(first));
+    REQUIRE(writer.registerRawObjectClass(first));
+    REQUIRE(writer.registerRawObjectClass(second));
+    CHECK(writer.customClassInstanceCount(first.m_objectType) == 2);
 }
 
 TEST_CASE("dwgRW writes native text MLEADER entities",

@@ -752,24 +752,7 @@ public:
         record.effectiveArrowHeadHandle = record.arrowHeadHandle;
         record.effectiveTextStyleHandle = record.textStyleHandle;
         record.effectiveBlockHandle = record.blockHandle;
-        for (const MLeaderStyleRecord& style : m_mleaderStyles) {
-            if (style.handle != record.styleHandle)
-                continue;
-            record.styleResolved = true;
-            if (record.effectiveContentType == 0)
-                record.effectiveContentType = style.contentType;
-            if (record.effectiveLeaderType == 0)
-                record.effectiveLeaderType = style.leaderType;
-            if (record.effectiveLeaderLineTypeHandle == 0)
-                record.effectiveLeaderLineTypeHandle = style.leaderLineTypeHandle;
-            if (record.effectiveArrowHeadHandle == 0)
-                record.effectiveArrowHeadHandle = style.arrowHeadBlockHandle;
-            if (record.effectiveTextStyleHandle == 0)
-                record.effectiveTextStyleHandle = style.textStyleHandle;
-            if (record.effectiveBlockHandle == 0)
-                record.effectiveBlockHandle = style.blockHandle;
-            break;
-        }
+        resolveMLeaderStyle(record);
         record.rootCount = mleader.context.roots.size();
         for (const DRW_MLeaderRoot& root : mleader.context.roots) {
             record.breakCount += root.breaks.size();
@@ -821,6 +804,8 @@ public:
         record.scaleFactor = style.scaleFactor;
         record.isAnnotative = style.isAnnotative;
         m_mleaderStyles.push_back(record);
+        for (MLeaderRecord& mleader : m_mleaders)
+            resolveMLeaderStyle(mleader, record);
     }
 
     void addDetailViewStyle(const DRW_DetailViewStyle& style) {
@@ -1108,8 +1093,10 @@ public:
         for (AssociativeRecord& record : m_associativeObjects) {
             if (record.replayState != ReplayState::ReplayAllowed)
                 continue;
-            if (associativeRecordReferences(record, dependentHandle))
+            if (associativeRecordReferences(record, dependentHandle)) {
                 record.replayState = ReplayState::ReplayInvalidated;
+                invalidateRawAssociativeObject(record.handle);
+            }
         }
     }
 
@@ -1251,6 +1238,51 @@ private:
                 return true;
         }
         return false;
+    }
+
+    static bool isAssociativeRawObject(const RawObjectRecord& record) {
+        if (associativeKindFromRecordName(record.recordName) != AssociativeKind::Unknown)
+            return true;
+        return record.className.find("Assoc") != std::string::npos
+               || record.className.find("PersSubent") != std::string::npos;
+    }
+
+    void invalidateRawAssociativeObject(duint32 handle) {
+        if (handle == 0)
+            return;
+        for (RawObjectRecord& record : m_rawObjects) {
+            if (record.replayState != ReplayState::ReplayAllowed)
+                continue;
+            if (record.handle == handle && isAssociativeRawObject(record))
+                record.replayState = ReplayState::ReplayInvalidated;
+        }
+    }
+
+    void resolveMLeaderStyle(MLeaderRecord& record) const {
+        for (const MLeaderStyleRecord& style : m_mleaderStyles) {
+            if (resolveMLeaderStyle(record, style))
+                return;
+        }
+    }
+
+    static bool resolveMLeaderStyle(MLeaderRecord& record,
+                                    const MLeaderStyleRecord& style) {
+        if (style.handle == 0 || style.handle != record.styleHandle)
+            return false;
+        record.styleResolved = true;
+        if (record.effectiveContentType == 0)
+            record.effectiveContentType = style.contentType;
+        if (record.effectiveLeaderType == 0)
+            record.effectiveLeaderType = style.leaderType;
+        if (record.effectiveLeaderLineTypeHandle == 0)
+            record.effectiveLeaderLineTypeHandle = style.leaderLineTypeHandle;
+        if (record.effectiveArrowHeadHandle == 0)
+            record.effectiveArrowHeadHandle = style.arrowHeadBlockHandle;
+        if (record.effectiveTextStyleHandle == 0)
+            record.effectiveTextStyleHandle = style.textStyleHandle;
+        if (record.effectiveBlockHandle == 0)
+            record.effectiveBlockHandle = style.blockHandle;
+        return true;
     }
 
     template<typename Predicate>

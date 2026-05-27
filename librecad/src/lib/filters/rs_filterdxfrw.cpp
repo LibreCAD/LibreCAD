@@ -5317,6 +5317,8 @@ void RS_FilterDXFRW::writeObjects() {
     if (m_dwgW) {
         const auto& metadata = m_graphic->dwgAdvancedMetadata();
         bool hasBlockedReplay = false;
+        int blockedInvalidated = 0;
+        int blockedReplaced = 0;
         int blockedEntityReplay = 0;
         int blockedMissingRawBytes = 0;
         int blockedMissingClassMetadata = 0;
@@ -5327,7 +5329,11 @@ void RS_FilterDXFRW::writeObjects() {
                 LC_DwgAdvancedMetadata::rawReplayBlocker(record);
             if (blocker != LC_DwgAdvancedMetadata::ReplayBlocker::None) {
                 hasBlockedReplay = true;
-                if (blocker == LC_DwgAdvancedMetadata::ReplayBlocker::EntityReplayUnsupported)
+                if (blocker == LC_DwgAdvancedMetadata::ReplayBlocker::Invalidated)
+                    ++blockedInvalidated;
+                else if (blocker == LC_DwgAdvancedMetadata::ReplayBlocker::Replaced)
+                    ++blockedReplaced;
+                else if (blocker == LC_DwgAdvancedMetadata::ReplayBlocker::EntityReplayUnsupported)
                     ++blockedEntityReplay;
                 else if (blocker == LC_DwgAdvancedMetadata::ReplayBlocker::MissingRawBytes)
                     ++blockedMissingRawBytes;
@@ -5358,10 +5364,11 @@ void RS_FilterDXFRW::writeObjects() {
             if (hasBlockedReplay) {
                 RS_DEBUG->print(
                     RS_Debug::D_WARNING,
-                    "Blocked raw DWG replay: entity=%d missing-bytes=%d "
-                    "missing-class=%d writer-rejected=%d",
-                    blockedEntityReplay, blockedMissingRawBytes,
-                    blockedMissingClassMetadata, blockedWriterRejected);
+                    "Blocked raw DWG replay: invalidated=%d replaced=%d entity=%d "
+                    "missing-bytes=%d missing-class=%d writer-rejected=%d",
+                    blockedInvalidated, blockedReplaced, blockedEntityReplay,
+                    blockedMissingRawBytes, blockedMissingClassMetadata,
+                    blockedWriterRejected);
             }
             if (semanticOnlyRecords > 0) {
                 RS_DEBUG->print(

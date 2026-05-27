@@ -254,7 +254,11 @@ public:
             ? object.m_className
             : object.m_recordName;
         definition.m_entityFlagRaw = object.m_isEntity ? 0x1F2 : 0;
-        definition.m_instanceCount = 1;
+        if (object.m_handle != 0
+            && m_rawClassInstanceHandles.insert({definition.m_classNum,
+                                                 object.m_handle}).second) {
+            definition.m_instanceCount = 1;
+        }
         return registerDwgClass(definition);
     }
 
@@ -285,8 +289,7 @@ protected:
                     m_hasDwgClassConflict = true;
                     return false;
                 }
-                if (definition.m_instanceCount > existing.m_instanceCount)
-                    existing.m_instanceCount = definition.m_instanceCount;
+                existing.m_instanceCount += definition.m_instanceCount;
                 return true;
             }
         }
@@ -386,6 +389,7 @@ protected:
     HandleAllocator m_handles;
 
     std::vector<DwgClassDefinition> m_dwgClassDefinitions;
+    std::set<std::pair<duint16, duint32>> m_rawClassInstanceHandles;
     bool m_hasDwgClassConflict {false};
 };
 

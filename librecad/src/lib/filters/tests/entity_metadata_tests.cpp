@@ -852,6 +852,82 @@ TEST_CASE("DWG advanced metadata caches raw and semantic sidecars",
         LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed);
 }
 
+TEST_CASE("DWG advanced metadata invalidates associative raw replay",
+          "[entity_metadata][dwg_metadata][raw-replay]") {
+  LC_DwgAdvancedMetadata metadata;
+
+  DRW_AssociativeObject associativeObject("ACDBASSOCDEPENDENCY");
+  associativeObject.handle = 0x210u;
+  associativeObject.m_dependencies = {{false, 0x220u}};
+  metadata.addAssociativeObject(associativeObject);
+
+  DRW_UnsupportedObject rawAssociativeObject;
+  rawAssociativeObject.m_objectType = 509;
+  rawAssociativeObject.m_handle = 0x210u;
+  rawAssociativeObject.m_isCustomClass = true;
+  rawAssociativeObject.m_recordName = "ACDBASSOCDEPENDENCY";
+  rawAssociativeObject.m_className = "AcDbAssocDependency";
+  rawAssociativeObject.m_rawBytes = {0x01u, 0x02u};
+  metadata.addUnsupportedObject(rawAssociativeObject);
+
+  DRW_UnsupportedObject unrelatedRawObject;
+  unrelatedRawObject.m_objectType = 510;
+  unrelatedRawObject.m_handle = 0x211u;
+  unrelatedRawObject.m_isCustomClass = true;
+  unrelatedRawObject.m_recordName = "RAW_REPLAY_TEST";
+  unrelatedRawObject.m_className = "AcDbRawReplayTest";
+  unrelatedRawObject.m_rawBytes = {0x03u};
+  metadata.addUnsupportedObject(unrelatedRawObject);
+
+  metadata.invalidateAssociativeGraphForHandle(0x220u);
+
+  REQUIRE(metadata.associativeObjects().size() == 1u);
+  CHECK(metadata.associativeObjects().front().replayState ==
+        LC_DwgAdvancedMetadata::ReplayState::ReplayInvalidated);
+  REQUIRE(metadata.rawObjects().size() == 2u);
+  CHECK(LC_DwgAdvancedMetadata::rawReplayBlocker(metadata.rawObjects().front()) ==
+        LC_DwgAdvancedMetadata::ReplayBlocker::Invalidated);
+  CHECK(LC_DwgAdvancedMetadata::rawReplayBlocker(metadata.rawObjects().back()) ==
+        LC_DwgAdvancedMetadata::ReplayBlocker::None);
+  CHECK(std::string(LC_DwgAdvancedMetadata::replayBlockerName(
+            LC_DwgAdvancedMetadata::ReplayBlocker::Invalidated)) ==
+        "invalidated");
+  CHECK(std::string(LC_DwgAdvancedMetadata::replayBlockerName(
+            LC_DwgAdvancedMetadata::ReplayBlocker::Replaced)) == "replaced");
+}
+
+TEST_CASE("DWG advanced metadata resolves MLEADERSTYLE after MLEADER import",
+          "[entity_metadata][dwg_metadata][mleader]") {
+  LC_DwgAdvancedMetadata metadata;
+
+  DRW_MLeader mleader;
+  mleader.handle = 0x310u;
+  mleader.styleHandle.ref = 0x320u;
+  metadata.addMLeader(mleader);
+
+  REQUIRE(metadata.mleaders().size() == 1u);
+  CHECK_FALSE(metadata.mleaders().front().styleResolved);
+
+  DRW_MLeaderStyle style;
+  style.handle = 0x320u;
+  style.contentType = 2u;
+  style.leaderType = 1u;
+  style.leaderLineTypeHandle.ref = 0x321u;
+  style.arrowHeadBlockHandle.ref = 0x322u;
+  style.textStyleHandle.ref = 0x323u;
+  style.blockHandle.ref = 0x324u;
+  metadata.addMLeaderStyle(style);
+
+  const auto& capturedMLeader = metadata.mleaders().front();
+  CHECK(capturedMLeader.styleResolved);
+  CHECK(capturedMLeader.effectiveContentType == 2u);
+  CHECK(capturedMLeader.effectiveLeaderType == 1u);
+  CHECK(capturedMLeader.effectiveLeaderLineTypeHandle == 0x321u);
+  CHECK(capturedMLeader.effectiveArrowHeadHandle == 0x322u);
+  CHECK(capturedMLeader.effectiveTextStyleHandle == 0x323u);
+  CHECK(capturedMLeader.effectiveBlockHandle == 0x324u);
+}
+
 TEST_CASE("DWG fixture manifest is valid JSON and optional by default",
           "[entity_metadata][dwg_fixtures]") {
   QFile manifest("libraries/libdxfrw/testdata/dwg-fixtures.json");
