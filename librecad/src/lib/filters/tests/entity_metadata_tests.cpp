@@ -154,6 +154,49 @@ TEST_CASE("DWG advanced metadata caches raw and semantic sidecars",
   style.isAnnotative = true;
   metadata.addMLeaderStyle(style);
 
+  DRW_DetailViewStyle detailStyle;
+  detailStyle.handle = 0xB0u;
+  detailStyle.parentHandle = 0xB1u;
+  detailStyle.name = "DetailStyle";
+  detailStyle.m_modelDoc.m_description = "detail description";
+  detailStyle.m_modelDoc.m_displayName = "Detail Display";
+  detailStyle.m_classVersion = 3u;
+  detailStyle.m_flags = 0x12u;
+  detailStyle.m_identifierStyleHandle = 0xB2u;
+  detailStyle.m_arrowSymbolHandle = 0xB3u;
+  detailStyle.m_viewLabelTextStyleHandle = 0xB4u;
+  detailStyle.m_boundaryLineTypeHandle = 0xB5u;
+  detailStyle.m_connectionLineTypeHandle = 0xB6u;
+  detailStyle.m_borderLineTypeHandle = 0xB7u;
+  detailStyle.m_viewLabelPattern = "DETAIL %s";
+  detailStyle.m_identifierHeight = 1.25;
+  detailStyle.m_arrowSymbolSize = 0.5;
+  detailStyle.m_viewLabelTextHeight = 2.0;
+  metadata.addDetailViewStyle(detailStyle);
+
+  DRW_SectionViewStyle sectionStyle;
+  sectionStyle.handle = 0xC0u;
+  sectionStyle.parentHandle = 0xC1u;
+  sectionStyle.name = "SectionStyle";
+  sectionStyle.m_modelDoc.m_description = "section description";
+  sectionStyle.m_modelDoc.m_displayName = "Section Display";
+  sectionStyle.m_classVersion = 4u;
+  sectionStyle.m_flags = 0x34u;
+  sectionStyle.m_identifierStyleHandle = 0xC2u;
+  sectionStyle.m_arrowStartSymbolHandle = 0xC3u;
+  sectionStyle.m_arrowEndSymbolHandle = 0xC4u;
+  sectionStyle.m_planeLineTypeHandle = 0xC5u;
+  sectionStyle.m_bendLineTypeHandle = 0xC6u;
+  sectionStyle.m_viewLabelTextStyleHandle = 0xC7u;
+  sectionStyle.m_viewLabelPattern = "SECTION %s";
+  sectionStyle.m_hatchPattern = "ANSI31";
+  sectionStyle.m_identifierHeight = 1.5;
+  sectionStyle.m_arrowSymbolSize = 0.75;
+  sectionStyle.m_viewLabelTextHeight = 2.25;
+  sectionStyle.m_hatchScale = 0.5;
+  sectionStyle.m_hatchAngles = {0.0, 1.5707963267948966};
+  metadata.addSectionViewStyle(sectionStyle);
+
   REQUIRE(metadata.rawObjects().size() == 1);
   CHECK(metadata.rawObjects().front().handle == 0x77u);
   CHECK(metadata.rawObjects().front().bodyBitSize == 128u);
@@ -181,9 +224,40 @@ TEST_CASE("DWG advanced metadata caches raw and semantic sidecars",
   CHECK(capturedStyle.scaleFactor == 3.0);
   CHECK(capturedStyle.isAnnotative);
 
+  REQUIRE(metadata.detailViewStyles().size() == 1);
+  const auto& capturedDetail = metadata.detailViewStyles().front();
+  CHECK(capturedDetail.handle == 0xB0u);
+  CHECK(capturedDetail.parentHandle == 0xB1u);
+  CHECK(capturedDetail.name == "DetailStyle");
+  CHECK(capturedDetail.displayName == "Detail Display");
+  CHECK(capturedDetail.identifierStyleHandle == 0xB2u);
+  CHECK(capturedDetail.arrowSymbolHandle == 0xB3u);
+  CHECK(capturedDetail.viewLabelTextStyleHandle == 0xB4u);
+  CHECK(capturedDetail.viewLabelPattern == "DETAIL %s");
+  CHECK(capturedDetail.viewLabelTextHeight == 2.0);
+
+  REQUIRE(metadata.sectionViewStyles().size() == 1);
+  const auto& capturedSection = metadata.sectionViewStyles().front();
+  CHECK(capturedSection.handle == 0xC0u);
+  CHECK(capturedSection.parentHandle == 0xC1u);
+  CHECK(capturedSection.name == "SectionStyle");
+  CHECK(capturedSection.displayName == "Section Display");
+  CHECK(capturedSection.arrowStartSymbolHandle == 0xC3u);
+  CHECK(capturedSection.arrowEndSymbolHandle == 0xC4u);
+  CHECK(capturedSection.viewLabelTextStyleHandle == 0xC7u);
+  CHECK(capturedSection.hatchPattern == "ANSI31");
+  CHECK(capturedSection.hatchScale == 0.5);
+  CHECK(capturedSection.hatchAngleCount == 2u);
+
   REQUIRE(metadata.hasReplayableAdvancedObjects());
   metadata.invalidateByOwner(0xA1u);
   CHECK(capturedStyle.replayState ==
+        LC_DwgAdvancedMetadata::ReplayState::ReplayInvalidated);
+  metadata.invalidateByOwner(0xB1u);
+  CHECK(capturedDetail.replayState ==
+        LC_DwgAdvancedMetadata::ReplayState::ReplayInvalidated);
+  metadata.invalidateByOwner(0xC1u);
+  CHECK(capturedSection.replayState ==
         LC_DwgAdvancedMetadata::ReplayState::ReplayInvalidated);
   metadata.invalidateByHandle(0x77u);
   CHECK(metadata.rawObjects().front().replayState ==

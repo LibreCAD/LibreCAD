@@ -158,6 +158,51 @@ public:
         ReplayState replayState = ReplayState::ReplayAllowed;
     };
 
+    struct DetailViewStyleRecord {
+        duint32 handle = 0;
+        duint32 parentHandle = 0;
+        std::string name;
+        std::string description;
+        std::string displayName;
+        duint16 classVersion = 0;
+        duint32 flags = 0;
+        duint32 identifierStyleHandle = 0;
+        duint32 arrowSymbolHandle = 0;
+        duint32 viewLabelTextStyleHandle = 0;
+        duint32 boundaryLineTypeHandle = 0;
+        duint32 connectionLineTypeHandle = 0;
+        duint32 borderLineTypeHandle = 0;
+        std::string viewLabelPattern;
+        double identifierHeight = 0.0;
+        double arrowSymbolSize = 0.0;
+        double viewLabelTextHeight = 0.0;
+        ReplayState replayState = ReplayState::ReplayAllowed;
+    };
+
+    struct SectionViewStyleRecord {
+        duint32 handle = 0;
+        duint32 parentHandle = 0;
+        std::string name;
+        std::string description;
+        std::string displayName;
+        duint16 classVersion = 0;
+        duint32 flags = 0;
+        duint32 identifierStyleHandle = 0;
+        duint32 arrowStartSymbolHandle = 0;
+        duint32 arrowEndSymbolHandle = 0;
+        duint32 planeLineTypeHandle = 0;
+        duint32 bendLineTypeHandle = 0;
+        duint32 viewLabelTextStyleHandle = 0;
+        std::string viewLabelPattern;
+        std::string hatchPattern;
+        double identifierHeight = 0.0;
+        double arrowSymbolSize = 0.0;
+        double viewLabelTextHeight = 0.0;
+        double hatchScale = 1.0;
+        size_t hatchAngleCount = 0;
+        ReplayState replayState = ReplayState::ReplayAllowed;
+    };
+
     void clear() {
         m_rawObjects.clear();
         m_views.clear();
@@ -169,6 +214,8 @@ public:
         m_acshObjects.clear();
         m_mleaders.clear();
         m_mleaderStyles.clear();
+        m_detailViewStyles.clear();
+        m_sectionViewStyles.clear();
     }
 
     void addUnsupportedObject(const DRW_UnsupportedObject& object) {
@@ -331,6 +378,53 @@ public:
         m_mleaderStyles.push_back(record);
     }
 
+    void addDetailViewStyle(const DRW_DetailViewStyle& style) {
+        DetailViewStyleRecord record;
+        record.handle = style.handle;
+        record.parentHandle = style.parentHandle;
+        record.name = style.name;
+        record.description = style.m_modelDoc.m_description;
+        record.displayName = style.m_modelDoc.m_displayName;
+        record.classVersion = style.m_classVersion;
+        record.flags = style.m_flags;
+        record.identifierStyleHandle = style.m_identifierStyleHandle;
+        record.arrowSymbolHandle = style.m_arrowSymbolHandle;
+        record.viewLabelTextStyleHandle = style.m_viewLabelTextStyleHandle;
+        record.boundaryLineTypeHandle = style.m_boundaryLineTypeHandle;
+        record.connectionLineTypeHandle = style.m_connectionLineTypeHandle;
+        record.borderLineTypeHandle = style.m_borderLineTypeHandle;
+        record.viewLabelPattern = style.m_viewLabelPattern;
+        record.identifierHeight = style.m_identifierHeight;
+        record.arrowSymbolSize = style.m_arrowSymbolSize;
+        record.viewLabelTextHeight = style.m_viewLabelTextHeight;
+        m_detailViewStyles.push_back(record);
+    }
+
+    void addSectionViewStyle(const DRW_SectionViewStyle& style) {
+        SectionViewStyleRecord record;
+        record.handle = style.handle;
+        record.parentHandle = style.parentHandle;
+        record.name = style.name;
+        record.description = style.m_modelDoc.m_description;
+        record.displayName = style.m_modelDoc.m_displayName;
+        record.classVersion = style.m_classVersion;
+        record.flags = style.m_flags;
+        record.identifierStyleHandle = style.m_identifierStyleHandle;
+        record.arrowStartSymbolHandle = style.m_arrowStartSymbolHandle;
+        record.arrowEndSymbolHandle = style.m_arrowEndSymbolHandle;
+        record.planeLineTypeHandle = style.m_planeLineTypeHandle;
+        record.bendLineTypeHandle = style.m_bendLineTypeHandle;
+        record.viewLabelTextStyleHandle = style.m_viewLabelTextStyleHandle;
+        record.viewLabelPattern = style.m_viewLabelPattern;
+        record.hatchPattern = style.m_hatchPattern;
+        record.identifierHeight = style.m_identifierHeight;
+        record.arrowSymbolSize = style.m_arrowSymbolSize;
+        record.viewLabelTextHeight = style.m_viewLabelTextHeight;
+        record.hatchScale = style.m_hatchScale;
+        record.hatchAngleCount = style.m_hatchAngles.size();
+        m_sectionViewStyles.push_back(record);
+    }
+
     const std::vector<RawObjectRecord>& rawObjects() const { return m_rawObjects; }
     const std::vector<ViewRecord>& views() const { return m_views; }
     const std::vector<LightRecord>& lights() const { return m_lights; }
@@ -341,6 +435,8 @@ public:
     const std::vector<AcShRecord>& acshObjects() const { return m_acshObjects; }
     const std::vector<MLeaderRecord>& mleaders() const { return m_mleaders; }
     const std::vector<MLeaderStyleRecord>& mleaderStyles() const { return m_mleaderStyles; }
+    const std::vector<DetailViewStyleRecord>& detailViewStyles() const { return m_detailViewStyles; }
+    const std::vector<SectionViewStyleRecord>& sectionViewStyles() const { return m_sectionViewStyles; }
 
     const ViewRecord* findViewByName(const std::string& name) const {
         for (const ViewRecord& record : m_views) {
@@ -359,7 +455,9 @@ public:
             || hasReplayable(m_associativeObjects)
             || hasReplayable(m_acshObjects)
             || hasReplayable(m_mleaders)
-            || hasReplayable(m_mleaderStyles);
+            || hasReplayable(m_mleaderStyles)
+            || hasReplayable(m_detailViewStyles)
+            || hasReplayable(m_sectionViewStyles);
     }
 
     void invalidateByHandle(duint32 handle) {
@@ -385,6 +483,8 @@ public:
         invalidateContainer(m_acshObjects);
         invalidateContainer(m_mleaders);
         invalidateContainer(m_mleaderStyles);
+        invalidateContainer(m_detailViewStyles);
+        invalidateContainer(m_sectionViewStyles);
     }
 
 private:
@@ -417,6 +517,8 @@ private:
         invalidateMatching(m_acshObjects, predicate);
         invalidateMatching(m_mleaders, predicate);
         invalidateMatching(m_mleaderStyles, predicate);
+        invalidateMatching(m_detailViewStyles, predicate);
+        invalidateMatching(m_sectionViewStyles, predicate);
     }
 
     template<typename Container, typename Predicate>
@@ -439,6 +541,8 @@ private:
     std::vector<AcShRecord> m_acshObjects;
     std::vector<MLeaderRecord> m_mleaders;
     std::vector<MLeaderStyleRecord> m_mleaderStyles;
+    std::vector<DetailViewStyleRecord> m_detailViewStyles;
+    std::vector<SectionViewStyleRecord> m_sectionViewStyles;
 };
 
 #endif

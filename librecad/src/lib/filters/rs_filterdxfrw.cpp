@@ -3925,9 +3925,9 @@ void RS_FilterDXFRW::addMLeaderStyle(const DRW_MLeaderStyle *data) {
 }
 
 void RS_FilterDXFRW::addDetailViewStyle(const DRW_DetailViewStyle &data) {
-  // TODO: Store AcDbDetailViewStyle on the document once LibreCAD has native
-  // model-document/detail-view consumers. libdxfrw now preserves the DXF/DWG
-  // payload for callers that need it.
+  if (m_graphic != nullptr) {
+    m_graphic->dwgAdvancedMetadata().addDetailViewStyle(data);
+  }
   RS_DEBUG->print("RS_FilterDXFRW::addDetailViewStyle: %s",
                   data.m_modelDoc.m_displayName.empty()
                       ? data.m_modelDoc.m_description.c_str()
@@ -3935,7 +3935,9 @@ void RS_FilterDXFRW::addDetailViewStyle(const DRW_DetailViewStyle &data) {
 }
 
 void RS_FilterDXFRW::addSectionViewStyle(const DRW_SectionViewStyle &data) {
-  // TODO: Store AcDbSectionViewStyle with future section/detail view support.
+  if (m_graphic != nullptr) {
+    m_graphic->dwgAdvancedMetadata().addSectionViewStyle(data);
+  }
   RS_DEBUG->print("RS_FilterDXFRW::addSectionViewStyle: %s",
                   data.m_modelDoc.m_displayName.empty()
                       ? data.m_modelDoc.m_description.c_str()
@@ -5334,7 +5336,9 @@ void RS_FilterDXFRW::writeObjects() {
             !metadata.lights().empty() || !metadata.suns().empty()
             || !metadata.modelerGeometry().empty() || !metadata.tables().empty()
             || !metadata.associativeObjects().empty() || !metadata.acshObjects().empty()
-            || !metadata.mleaderStyles().empty();
+            || !metadata.mleaderStyles().empty()
+            || !metadata.detailViewStyles().empty()
+            || !metadata.sectionViewStyles().empty();
         if (hasBlockedReplay || hasSemanticOnlyReplayable) {
             RS_DEBUG->print(
                 RS_Debug::D_WARNING,
