@@ -1265,7 +1265,6 @@ void RS_FilterDXFRW::addModelerGeometry(const DRW_ModelerGeometry &data) {
 }
 
 void RS_FilterDXFRW::addLight(const DRW_Light &data) {
-    // TODO: Attach lights to future view/visual-style metadata consumers.
     if (m_graphic != nullptr) {
         m_graphic->dwgAdvancedMetadata().addLight(data);
     }
@@ -4039,8 +4038,6 @@ void RS_FilterDXFRW::addAcDbPlaceholder(const DRW_AcDbPlaceholder &data) {
 }
 
 void RS_FilterDXFRW::addSun(const DRW_Sun &data) {
-  // TODO: Link SUN objects to VPORT/VIEW/VIEWPORT lighting state once LibreCAD
-  // models view lighting metadata.
   if (m_graphic != nullptr) {
     m_graphic->dwgAdvancedMetadata().addSun(data);
   }

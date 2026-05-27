@@ -66,21 +66,56 @@ public:
     struct LightRecord {
         duint32 handle = 0;
         duint32 parentHandle = 0;
+        duint32 classVersion = 0;
         std::string name;
         duint32 type = 0;
         bool status = false;
+        duint32 color = 0;
+        bool plotGlyph = false;
+        double intensity = 0.0;
+        DRW_Coord position;
+        DRW_Coord target;
+        duint32 attenuationType = 0;
+        bool useAttenuationLimits = false;
+        double attenuationStartLimit = 0.0;
+        double attenuationEndLimit = 0.0;
+        double hotspotAngle = 0.0;
+        double falloffAngle = 0.0;
+        bool castShadows = false;
+        duint32 shadowType = 0;
+        duint16 shadowMapSize = 0;
+        duint8 shadowMapSoftness = 0;
         bool hasPhotometricData = false;
+        bool hasWebFile = false;
         std::string webFile;
+        duint16 physicalIntensityMethod = 0;
+        double physicalIntensity = 0.0;
+        double illuminanceDistance = 0.0;
+        duint16 lampColorType = 0;
+        double lampColorTemperature = 0.0;
+        duint16 lampColorPreset = 0;
+        DRW_Coord webRotation{1.0, 0.0, 0.0};
+        duint16 extendedLightShape = 0;
+        double extendedLightLength = 0.0;
+        double extendedLightWidth = 0.0;
+        double extendedLightRadius = 0.0;
         ReplayState replayState = ReplayState::ReplayAllowed;
     };
 
     struct SunRecord {
         duint32 handle = 0;
         duint32 parentHandle = 0;
+        duint32 classVersion = 0;
         bool isOn = false;
         duint32 color = 0;
         double intensity = 0.0;
         bool hasShadow = false;
+        dint32 julianDay = 0;
+        dint32 milliseconds = 0;
+        bool isDaylightSavings = false;
+        duint32 shadowType = 0;
+        duint16 shadowMapSize = 0;
+        duint8 shadowSoftness = 0;
         ReplayState replayState = ReplayState::ReplayAllowed;
     };
 
@@ -340,11 +375,39 @@ public:
         LightRecord record;
         record.handle = light.handle;
         record.parentHandle = light.parentHandle;
+        record.classVersion = light.m_classVersion;
         record.name = light.m_name;
         record.type = light.m_type;
         record.status = light.m_status;
+        record.color = light.m_color;
+        record.plotGlyph = light.m_plotGlyph;
+        record.intensity = light.m_intensity;
+        record.position = light.m_position;
+        record.target = light.m_target;
+        record.attenuationType = light.m_attenuationType;
+        record.useAttenuationLimits = light.m_useAttenuationLimits;
+        record.attenuationStartLimit = light.m_attenuationStartLimit;
+        record.attenuationEndLimit = light.m_attenuationEndLimit;
+        record.hotspotAngle = light.m_hotspotAngle;
+        record.falloffAngle = light.m_falloffAngle;
+        record.castShadows = light.m_castShadows;
+        record.shadowType = light.m_shadowType;
+        record.shadowMapSize = light.m_shadowMapSize;
+        record.shadowMapSoftness = light.m_shadowMapSoftness;
         record.hasPhotometricData = light.m_hasPhotometricData;
+        record.hasWebFile = light.m_hasWebFile;
         record.webFile = light.m_webFile;
+        record.physicalIntensityMethod = light.m_physicalIntensityMethod;
+        record.physicalIntensity = light.m_physicalIntensity;
+        record.illuminanceDistance = light.m_illuminanceDistance;
+        record.lampColorType = light.m_lampColorType;
+        record.lampColorTemperature = light.m_lampColorTemperature;
+        record.lampColorPreset = light.m_lampColorPreset;
+        record.webRotation = light.m_webRotation;
+        record.extendedLightShape = light.m_extendedLightShape;
+        record.extendedLightLength = light.m_extendedLightLength;
+        record.extendedLightWidth = light.m_extendedLightWidth;
+        record.extendedLightRadius = light.m_extendedLightRadius;
         m_lights.push_back(record);
     }
 
@@ -352,10 +415,17 @@ public:
         SunRecord record;
         record.handle = sun.handle;
         record.parentHandle = sun.parentHandle;
+        record.classVersion = sun.m_classVersion;
         record.isOn = sun.m_isOn;
         record.color = sun.m_color;
         record.intensity = sun.m_intensity;
         record.hasShadow = sun.m_hasShadow;
+        record.julianDay = sun.m_julianDay;
+        record.milliseconds = sun.m_milliseconds;
+        record.isDaylightSavings = sun.m_isDaylightSavings;
+        record.shadowType = sun.m_shadowType;
+        record.shadowMapSize = sun.m_shadowMapSize;
+        record.shadowSoftness = sun.m_shadowSoftness;
         m_suns.push_back(record);
     }
 
