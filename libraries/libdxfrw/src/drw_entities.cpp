@@ -6634,6 +6634,127 @@ static bool parseMLeaderAnnotContext(DRW::Version version, dwgBuffer *buf,
     return buf->isGood();
 }
 
+static bool encodeMLeaderRoot(DRW::Version version, dwgBufferW *buf,
+                              const DRW_MLeaderRoot& root) {
+    if (root.breaks.size() > 5000 || root.leaderLines.size() > 5000)
+        return false;
+
+    buf->putBit(root.isContentValid ? 1 : 0);
+    buf->putBit(root.unknown291 ? 1 : 0);
+    if (root.isContentValid)
+        buf->put3BitDouble(root.connectionPoint);
+    if (root.unknown291)
+        buf->put3BitDouble(root.direction);
+
+    buf->putBitLong(static_cast<dint32>(root.breaks.size()));
+    for (const auto& brk : root.breaks) {
+        buf->put3BitDouble(brk.first);
+        buf->put3BitDouble(brk.second);
+    }
+
+    buf->putBitLong(root.leaderIndex);
+    buf->putBitDouble(root.landingDistance);
+
+    buf->putBitLong(static_cast<dint32>(root.leaderLines.size()));
+    for (const DRW_MLeaderLeaderLine& line : root.leaderLines) {
+        if (line.points.size() > 5000 || line.breaks.size() > 5000)
+            return false;
+        buf->putBitLong(static_cast<dint32>(line.points.size()));
+        for (const DRW_Coord& point : line.points)
+            buf->put3BitDouble(point);
+
+        buf->putBitLong(static_cast<dint32>(line.breaks.size()));
+        for (const auto& brk : line.breaks) {
+            buf->put3BitDouble(brk.first);
+            buf->put3BitDouble(brk.second);
+        }
+        buf->putBitLong(line.leaderLineIndex);
+
+        if (version >= DRW::AC1024) {
+            buf->putBitShort(line.leaderType);
+            buf->putCmColor(version, static_cast<duint16>(line.color));
+            buf->putBitLong(line.lineWeight);
+            buf->putBitDouble(line.arrowSize);
+            buf->putBitLong(line.overrideFlags);
+        }
+    }
+
+    if (version >= DRW::AC1024)
+        buf->putBitShort(root.attachmentDirection);
+
+    return true;
+}
+
+static bool encodeMLeaderAnnotContext(DRW::Version version, dwgBufferW *buf,
+                                      dwgBufferW *strBuf,
+                                      const DRW_MLeaderAnnotContext& ctx) {
+    if (ctx.roots.size() > 1000000 || ctx.columnSizes.size() > 1000000)
+        return false;
+    if (ctx.hasContentsBlock)
+        return false;
+
+    buf->putBitLong(static_cast<dint32>(ctx.roots.size()));
+    for (const DRW_MLeaderRoot& root : ctx.roots) {
+        if (!encodeMLeaderRoot(version, buf, root))
+            return false;
+    }
+
+    buf->putBitDouble(ctx.overallScale);
+    buf->put3BitDouble(ctx.contentBasePoint);
+    buf->putBitDouble(ctx.textHeight);
+    buf->putBitDouble(ctx.arrowHeadSize);
+    buf->putBitDouble(ctx.landingGap);
+    buf->putBitShort(ctx.styleLeftAttach);
+    buf->putBitShort(ctx.styleRightAttach);
+    buf->putBitShort(ctx.textAlignType);
+    buf->putBitShort(ctx.attachmentType);
+    buf->putBit(ctx.hasTextContents ? 1 : 0);
+
+    if (ctx.hasTextContents) {
+        (strBuf ? strBuf : buf)->putVariableText(version, ctx.textLabel);
+        buf->put3BitDouble(ctx.textNormal);
+        buf->put3BitDouble(ctx.textLocation);
+        buf->put3BitDouble(ctx.textDirection);
+        buf->putBitDouble(ctx.textRotation);
+        buf->putBitDouble(ctx.boundaryWidth);
+        buf->putBitDouble(ctx.boundaryHeight);
+        buf->putBitDouble(ctx.lineSpacingFactor);
+        buf->putBitShort(ctx.lineSpacingStyle);
+        buf->putCmColor(version, static_cast<duint16>(ctx.textColor));
+        buf->putBitShort(ctx.alignment);
+        buf->putBitShort(ctx.flowDirection);
+        buf->putCmColor(version, static_cast<duint16>(ctx.bgFillColor));
+        buf->putBitDouble(ctx.bgScaleFactor);
+        buf->putBitLong(ctx.bgTransparency);
+        buf->putBit(ctx.bgFillEnabled ? 1 : 0);
+        buf->putBit(ctx.bgMaskFillOn ? 1 : 0);
+        buf->putBitShort(ctx.columnType);
+        buf->putBit(ctx.textHeightAuto ? 1 : 0);
+        buf->putBitDouble(ctx.columnWidth);
+        buf->putBitDouble(ctx.columnGutter);
+        buf->putBit(ctx.columnFlowReversed ? 1 : 0);
+        buf->putBitLong(static_cast<dint32>(ctx.columnSizes.size()));
+        for (double columnSize : ctx.columnSizes)
+            buf->putBitDouble(columnSize);
+        buf->putBit(ctx.wordBreak ? 1 : 0);
+        buf->putBit(0);
+    } else {
+        buf->putBit(0); // hasContentsBlock
+    }
+
+    buf->put3BitDouble(ctx.basePoint);
+    buf->put3BitDouble(ctx.baseDirection);
+    buf->put3BitDouble(ctx.baseVertical);
+    buf->putBit(ctx.isNormalReversed ? 1 : 0);
+
+    if (version >= DRW::AC1024) {
+        buf->putBitShort(ctx.styleTopAttach);
+        buf->putBitShort(ctx.styleBottomAttach);
+    }
+
+    return true;
+}
+
 bool DRW_MLeader::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
     dwgBuffer sBuff = *buf;
     dwgBuffer *sBuf = buf;
@@ -6797,6 +6918,77 @@ bool DRW_MLeader::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
         DRW_DBG(" bytes unconsumed (handle ");
         DRW_DBGH(handle); DRW_DBG(") — review tail handle list\n");
     }
+
+    return true;
+}
+
+bool DRW_MLeader::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs,
+                            dwgBufferW *strBuf, dwgBufferW *handleBuf) {
+    (void)bs;
+    if (version < DRW::AC1024)
+        return false;
+
+    oType = kDwgClassNum;
+    if (!encodeDwgCommon(version, buf, strBuf))
+        return false;
+
+    buf->putBitShort(classVersion == 0 ? 2 : classVersion);
+    if (!encodeMLeaderAnnotContext(version, buf, strBuf, context))
+        return false;
+
+    buf->putBitLong(overrideFlags);
+    buf->putBitShort(leaderType);
+    buf->putCmColor(version, static_cast<duint16>(leaderColor));
+    buf->putBitLong(leaderLineWeight);
+    buf->putBit(landingEnabled ? 1 : 0);
+    buf->putBit(doglegEnabled ? 1 : 0);
+    buf->putBitDouble(landingDistance);
+    buf->putBitDouble(defaultArrowHeadSize);
+    buf->putBitShort(styleContentType);
+    buf->putBitShort(styleLeftAttach);
+    buf->putBitShort(styleRightAttach);
+    buf->putBitShort(styleTextAngleType);
+    buf->putBitShort(unknown175);
+    buf->putCmColor(version, static_cast<duint16>(styleTextColor));
+    buf->putBit(styleTextFrameEnabled ? 1 : 0);
+    buf->putCmColor(version, static_cast<duint16>(styleBlockColor));
+    buf->put3BitDouble(styleBlockScale);
+    buf->putBitDouble(styleBlockRotation);
+    buf->putBitShort(styleAttachmentType);
+    buf->putBit(isAnnotative ? 1 : 0);
+    buf->putBit(isTextDirectionNegative ? 1 : 0);
+    buf->putBitShort(ipeAlign);
+    buf->putBitShort(justification);
+    buf->putBitDouble(scaleFactor);
+
+    buf->putBitShort(attachmentDirection);
+    buf->putBitShort(styleTopAttach);
+    buf->putBitShort(styleBottomAttach);
+    if (version >= DRW::AC1027)
+        buf->putBit(leaderExtendedToText ? 1 : 0);
+
+    if (!encodeDwgEntHandle(version, buf, handleBuf))
+        return false;
+
+    dwgBufferW *hb = handleBuf ? handleBuf : buf;
+    if (context.hasTextContents) {
+        putHardPointerHandle(hb, context.textStyleHandle.ref);
+    } else if (context.hasContentsBlock) {
+        putHardPointerHandle(hb, context.blockTableRecordHandle.ref);
+    }
+
+    for (const DRW_MLeaderRoot& root : context.roots) {
+        for (const DRW_MLeaderLeaderLine& line : root.leaderLines) {
+            putHardPointerHandle(hb, line.lineTypeHandle.ref);
+            putHardPointerHandle(hb, line.arrowHandle.ref);
+        }
+    }
+
+    putHardPointerHandle(hb, styleHandle.ref);
+    putHardPointerHandle(hb, leaderLineTypeHandle.ref);
+    putHardPointerHandle(hb, arrowHeadHandle.ref);
+    putHardPointerHandle(hb, styleTextStyleHandle.ref);
+    putHardPointerHandle(hb, styleBlockHandle.ref);
 
     return true;
 }

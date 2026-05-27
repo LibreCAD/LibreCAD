@@ -45,6 +45,7 @@ class DL_WriterA;
 class LC_DimStyle;
 class LC_Hyperbola;
 class LC_MLeader;
+class LC_Parabola;
 class LC_SplinePoints;
 class LC_Wipeout;
 class RS_Arc;
@@ -128,6 +129,7 @@ public:
     void addKnot(const DRW_Entity&) override{}
     void addInsert(const DRW_Insert& data) override;
     void addTable(const DRW_Table& data) override;
+    bool addTableFallback(const DRW_Table& data);
     void addTrace(const DRW_Trace& data) override;
     void addTolerance(const DRW_Tolerance& tol) override;
     void addSolid(const DRW_Solid& data) override;
@@ -163,6 +165,8 @@ public:
     void addSpatialFilter(const DRW_SpatialFilter &data) override;
     void addGeoData(const DRW_GeoData &data) override;
     void addTableGeometry(const DRW_TableGeometry &data) override;
+    void addTableStyle(const DRW_TableStyle &data) override;
+    void addTableContent(const DRW_TableContentObject &data) override;
     void addUnsupportedObject(const DRW_UnsupportedObject &data) override;
     void addAcDbPlaceholder(const DRW_AcDbPlaceholder &data) override;
     void addSun(const DRW_Sun &data) override;
@@ -178,6 +182,7 @@ public:
     bool fileExport(RS_Graphic& g, const QString& file, RS2::FormatType type) override;
 
     void writeHeader(DRW_Header& data) override;
+    void writeDwgClasses() override;
     void writeLType(const std::string& lTypeName, const std::string& ltDescription, int ltSize, double ltLength,
                     const std::vector<double>& ltPath);
     void writeEntities() override;
@@ -217,6 +222,7 @@ public:
     void writeArc(RS_Arc* a);
     void writeEllipse(RS_Ellipse* s);
     void writeHyperbola(LC_Hyperbola* h);
+    void writeParabola(LC_Parabola* p);
     void writeSolid(RS_Solid* s);
     void writeLWPolyline(RS_Polyline* l);
     void writeSpline(RS_Spline* s);

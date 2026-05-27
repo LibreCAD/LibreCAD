@@ -247,6 +247,7 @@ void RS_Graphic::removeLayer(RS_Layer* layer) {
  */
 void RS_Graphic::newDoc() {
     RS_DEBUG->print("RS_Graphic::newDoc");
+    m_dwgAdvancedMetadata.clear();
     clear();
     clearLayers();
     clearBlocks();

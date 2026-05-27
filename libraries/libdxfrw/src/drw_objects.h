@@ -788,15 +788,26 @@ public:
         ucsYAxis.x = ucsYAxis.y = ucsYAxis.z = 0.0;
         ucsOrthoType = 1;
         ucsElevation = 0.0;
-	        namedUCS_ID = 0;
-	        baseUCS_ID = 0;
-	        m_sunHandle = 0;
-	        DRW_TableEntry::reset();
-	    }
+        namedUCS_ID = 0;
+        baseUCS_ID = 0;
+        m_useDefaultLights = true;
+        m_defaultLightingType = 1;
+        m_brightness = 0.0;
+        m_contrast = 0.0;
+        m_ambientColor = 250;
+        m_backgroundHandle = 0;
+        m_visualStyleHandle = 0;
+        m_sunHandle = 0;
+        m_liveSectionHandle = 0;
+        DRW_TableEntry::reset();
+    }
 
 protected:
     bool parseCode(int code, const std::unique_ptr<dxfReader>& reader) override;
     bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) override;
+    bool encodeDwg(DRW::Version version, dwgBufferW *buf,
+                   dwgBufferW *strBuf = nullptr,
+                   dwgBufferW *hdlBuf = nullptr) const;
 
 public:
     DRW_Coord size;                     /*!< View width/height in DCS, codes 40 & 41 */
@@ -818,7 +829,15 @@ public:
     double ucsElevation;                /*!< UCS elevation, code 146 */
     duint32 namedUCS_ID;                /*!< Handle of named UCS table record, code 345 */
     duint32 baseUCS_ID;                 /*!< Handle of base UCS table record, code 346 */
-    duint32 m_sunHandle = 0;              /*!< R2007+ SUN hard-owner ref (DWG-only) */
+    bool m_useDefaultLights = true;     /*!< R2007+ default-lighting flag (DWG-only) */
+    duint8 m_defaultLightingType = 1;   /*!< R2007+ default-lighting type (DWG-only) */
+    double m_brightness = 0.0;          /*!< R2007+ view brightness (DWG-only) */
+    double m_contrast = 0.0;            /*!< R2007+ view contrast (DWG-only) */
+    duint32 m_ambientColor = 250;       /*!< R2007+ ambient CMC indexed color (DWG-only) */
+    duint32 m_backgroundHandle = 0;     /*!< R2007+ background soft-pointer ref (DWG-only) */
+    duint32 m_visualStyleHandle = 0;    /*!< R2007+ visual-style hard-pointer ref (DWG-only) */
+    duint32 m_sunHandle = 0;            /*!< R2007+ SUN hard-owner ref (DWG-only) */
+    duint32 m_liveSectionHandle = 0;    /*!< R2007+ live-section soft-pointer ref (DWG-only) */
 };
 
 //! Class to handle AppId entries
@@ -1743,6 +1762,7 @@ public:
     std::map<std::string, duint32> ltypeMap;    /*!< DWG: uppercase ltype name -> handle */
     std::map<std::string, duint32> layerMap;    /*!< DWG: uppercase layer name -> handle */
     std::map<std::string, duint32> styleMap;    /*!< DWG: uppercase style name -> handle */
+    std::map<std::string, duint32> viewMap;     /*!< DWG: uppercase view name -> handle */
     std::map<std::string, duint32> vportMap;    /*!< DWG: uppercase vport name -> handle */
     std::map<std::string, duint32> appidMap;    /*!< DWG: uppercase appid name -> handle */
     std::map<std::string, duint32> dimstyleMap; /*!< DWG: uppercase dimstyle name -> handle */

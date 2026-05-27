@@ -32,10 +32,17 @@
 #include <memory>
 #include <sstream>
 
+#include <QFile>
+#include <QJsonArray>
+#include <QJsonDocument>
+#include <QJsonObject>
+
+#include "lc_dwgadvancedmetadata.h"
 #include "rs_line.h"
 #include "rs_vector.h"
 
 #include "drw_entities.h"
+#include "drw_objects.h"
 #include "libdxfrw.h"
 
 TEST_CASE("RS_Entity: sidecar defaults are zero", "[entity_metadata]") {
@@ -96,6 +103,80 @@ TEST_CASE("RS_Entity: setting sidecars to zero clears them",
   line.setMaterialHandle(0xFFu);
   line.setMaterialHandle(0u);
   REQUIRE(line.materialHandle() == 0u);
+}
+
+TEST_CASE("DWG advanced metadata caches raw and semantic sidecars",
+          "[entity_metadata][dwg_metadata]") {
+  LC_DwgAdvancedMetadata metadata;
+
+  DRW_UnsupportedObject raw;
+  raw.m_objectType = 501;
+  raw.m_handle = 0x77u;
+  raw.m_bodyBitSize = 128u;
+  raw.m_objectOffset = 4096u;
+  raw.m_objectSize = 32u;
+  raw.m_isCustomClass = true;
+  raw.m_recordName = "ACDBASSOCNETWORK";
+  raw.m_className = "AcDbAssocNetwork";
+  raw.m_rawBytes = {0x01u, 0x02u, 0x03u};
+  metadata.addUnsupportedObject(raw);
+
+  DRW_View view;
+  view.name = "Camera A";
+  view.handle = 0x90u;
+  view.namedUCS_ID = 0x91u;
+  view.baseUCS_ID = 0x92u;
+  view.m_backgroundHandle = 0x93u;
+  view.m_visualStyleHandle = 0x94u;
+  view.m_sunHandle = 0x95u;
+  view.m_liveSectionHandle = 0x96u;
+  view.m_useDefaultLights = false;
+  view.m_defaultLightingType = 2u;
+  view.m_brightness = 0.25;
+  view.m_contrast = 0.75;
+  view.m_ambientColor = 7u;
+  metadata.addView(view);
+
+  REQUIRE(metadata.rawObjects().size() == 1);
+  CHECK(metadata.rawObjects().front().handle == 0x77u);
+  CHECK(metadata.rawObjects().front().bodyBitSize == 128u);
+  CHECK(metadata.rawObjects().front().rawBytes.size() == 3);
+
+  const auto* foundView = metadata.findViewByName("Camera A");
+  REQUIRE(foundView != nullptr);
+  CHECK(foundView->namedUcsHandle == 0x91u);
+  CHECK(foundView->visualStyleHandle == 0x94u);
+  CHECK(foundView->sunHandle == 0x95u);
+  CHECK(foundView->useDefaultLights == false);
+  CHECK(foundView->defaultLightingType == 2u);
+  CHECK(foundView->ambientColor == 7u);
+
+  REQUIRE(metadata.hasReplayableAdvancedObjects());
+  metadata.invalidateByHandle(0x77u);
+  CHECK(metadata.rawObjects().front().replayState ==
+        LC_DwgAdvancedMetadata::ReplayState::ReplayInvalidated);
+  CHECK(foundView->replayState ==
+        LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed);
+}
+
+TEST_CASE("DWG fixture manifest is valid JSON and optional by default",
+          "[entity_metadata][dwg_fixtures]") {
+  QFile manifest("libraries/libdxfrw/testdata/dwg-fixtures.json");
+  REQUIRE(manifest.open(QIODevice::ReadOnly));
+  QJsonParseError error;
+  const QJsonDocument document =
+      QJsonDocument::fromJson(manifest.readAll(), &error);
+  REQUIRE(error.error == QJsonParseError::NoError);
+  REQUIRE(document.isObject());
+
+  const QJsonObject root = document.object();
+  CHECK(root.value("version").toInt() == 1);
+  const QJsonArray fixtures = root.value("fixtures").toArray();
+  REQUIRE(!fixtures.isEmpty());
+  const QJsonObject first = fixtures.first().toObject();
+  CHECK(first.value("optional").toBool());
+  CHECK(first.value("path").toString().contains("${HOME}"));
+  CHECK(first.value("expect").toObject().value("preserveRawUnsupported").toBool());
 }
 
 namespace {

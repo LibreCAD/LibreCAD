@@ -28,6 +28,7 @@
 #include <QDateTime>
 
 #include "lc_dimstyle.h"
+#include "lc_dwgadvancedmetadata.h"
 #include "lc_ucslist.h"
 #include "lc_viewslist.h"
 #include "rs_blocklist.h"
@@ -79,6 +80,8 @@ public:
     LC_TextStyleList* getTextStyleList() override {return &textStyleList;}
     void addDimStyle(LC_DimStyle* style) {dimstyleList.addDimStyle(style);}
     void newDoc() override;
+    LC_DwgAdvancedMetadata& dwgAdvancedMetadata() {return m_dwgAdvancedMetadata;}
+    const LC_DwgAdvancedMetadata& dwgAdvancedMetadata() const {return m_dwgAdvancedMetadata;}
     // Wrappers for Layer functions:
     void clearLayers() {layerList.clear();}
     unsigned countLayers() const {return layerList.count();}
@@ -302,6 +305,7 @@ private:
     LC_UCSList ucsList;
     LC_DimStylesList dimstyleList;
     LC_TextStyleList textStyleList;
+    LC_DwgAdvancedMetadata m_dwgAdvancedMetadata;
 
     //if set to true, will refuse to modify paper scale
     bool paperScaleFixed = false;

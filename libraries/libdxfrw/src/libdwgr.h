@@ -74,6 +74,7 @@ public:
     bool writeMLine(DRW_MLine *ent);
     bool writePolyline(DRW_Polyline *ent);
     bool writeLeader(DRW_Leader *ent);
+    bool writeMLeader(DRW_MLeader *ent);
     bool writeViewport(DRW_Viewport *ent);
 
     /// Define an empty user-block.  Allocates fresh Block_Record + Block
@@ -93,9 +94,12 @@ public:
     bool addLType(DRW_LType *ent);
     bool addLayer(DRW_Layer *ent);
     bool addTextstyle(DRW_Textstyle *ent);
+    bool addView(DRW_View *ent);
     bool addVport(DRW_Vport *ent);
     bool addDimstyle(DRW_Dimstyle *ent);
     bool addAppId(DRW_AppId *ent);
+    bool registerRawDwgObjectClass(const DRW_UnsupportedObject *object);
+    bool writeRawDwgObject(DRW_UnsupportedObject *object);
 
     bool getPreview();
     DRW::Version getVersion(){return version;}

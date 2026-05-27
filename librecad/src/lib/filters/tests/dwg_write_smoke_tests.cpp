@@ -44,6 +44,7 @@
 #include <QCoreApplication>
 
 #include "drw_interface.h"
+#include "intern/dwgbufferw.h"
 #include "intern/dwgutil.h"
 #include "lc_containertraverser.h"
 #include "libdwgr.h"
@@ -409,6 +410,7 @@ public:
     std::vector<std::string> m_appIds;
     std::vector<std::string> m_dimStyles;
     std::vector<std::string> m_vports;
+    std::vector<std::string> m_views;
 
     void addLayer(const DRW_Layer& l) override { m_layers.push_back(l.name); }
     void addLType(const DRW_LType& l) override { m_lTypes.push_back(l.name); }
@@ -416,11 +418,83 @@ public:
     void addAppId(const DRW_AppId& a) override { m_appIds.push_back(a.name); }
     void addDimStyle(const DRW_Dimstyle& d) override { m_dimStyles.push_back(d.name); }
     void addVport(const DRW_Vport& v) override { m_vports.push_back(v.name); }
+    void addView(const DRW_View& v) override { m_views.push_back(v.name); }
 };
 
 bool containsName(const std::vector<std::string>& v, const std::string& name) {
     for (const auto& s : v) if (s == name) return true;
     return false;
+}
+
+} // namespace
+
+namespace {
+
+class ViewRoundTripIface : public EmptyIface {
+public:
+    dwgRW *m_writer {nullptr};
+    std::vector<DRW_View> m_views;
+
+    void writeViews() override {
+        if (m_writer == nullptr)
+            return;
+        DRW_View view;
+        view.name = "NAMED-VIEW";
+        view.size.x = 44.0;
+        view.size.y = 22.0;
+        view.center.x = 10.5;
+        view.center.y = -3.25;
+        view.targetPoint.x = 1.0;
+        view.targetPoint.y = 2.0;
+        view.targetPoint.z = 3.0;
+        view.viewDirectionFromTarget.z = 1.0;
+        view.twistAngle = 0.125;
+        view.lensLen = 55.0;
+        view.frontClippingPlaneOffset = 0.5;
+        view.backClippingPlaneOffset = 250.0;
+        view.viewMode = 1 | 16;
+        view.renderMode = 2;
+        view.cameraPlottable = true;
+        view.hasUCS = true;
+        view.ucsOrigin.x = 4.0;
+        view.ucsOrigin.y = 5.0;
+        view.ucsOrigin.z = 6.0;
+        view.ucsXAxis.x = 1.0;
+        view.ucsYAxis.y = 1.0;
+        view.ucsElevation = 7.0;
+        view.ucsOrthoType = 3;
+        m_writer->addView(&view);
+    }
+
+    void addView(const DRW_View& view) override { m_views.push_back(view); }
+};
+
+void requireNamedViewRoundTrip(const DRW_View& view, DRW::Version version) {
+    REQUIRE(view.name == "NAMED-VIEW");
+    REQUIRE(view.size.x == 44.0);
+    REQUIRE(view.size.y == 22.0);
+    REQUIRE(view.center.x == 10.5);
+    REQUIRE(view.center.y == -3.25);
+    REQUIRE(view.targetPoint.x == 1.0);
+    REQUIRE(view.targetPoint.y == 2.0);
+    REQUIRE(view.targetPoint.z == 3.0);
+    REQUIRE(view.viewDirectionFromTarget.z == 1.0);
+    REQUIRE(view.twistAngle == 0.125);
+    REQUIRE(view.lensLen == 55.0);
+    REQUIRE(view.frontClippingPlaneOffset == 0.5);
+    REQUIRE(view.backClippingPlaneOffset == 250.0);
+    REQUIRE(view.viewMode == (1 | 16));
+    REQUIRE(view.renderMode == 2);
+    if (version > DRW::AC1018)
+        REQUIRE(view.cameraPlottable);
+    REQUIRE(view.hasUCS);
+    REQUIRE(view.ucsOrigin.x == 4.0);
+    REQUIRE(view.ucsOrigin.y == 5.0);
+    REQUIRE(view.ucsOrigin.z == 6.0);
+    REQUIRE(view.ucsXAxis.x == 1.0);
+    REQUIRE(view.ucsYAxis.y == 1.0);
+    REQUIRE(view.ucsElevation == 7.0);
+    REQUIRE(view.ucsOrthoType == 3);
 }
 
 } // namespace
@@ -521,6 +595,129 @@ public:
     }
 };
 
+DRW_UnsupportedObject makeRawReplayObject(DRW::Version version) {
+    constexpr duint16 rawClassNumber = 509;
+    dwgBufferW body;
+    body.putObjType(version, rawClassNumber);
+
+    DRW_UnsupportedObject object;
+    object.m_objectType = rawClassNumber;
+    object.m_handle = 0x700;
+    object.m_bodyBitSize = version > DRW::AC1021 ? body.bitCount() : 0;
+    object.m_objectSize = static_cast<duint32>(body.data().size());
+    object.m_isEntity = false;
+    object.m_isCustomClass = true;
+    object.m_recordName = "RAW_REPLAY_TEST";
+    object.m_className = "AcDbRawReplayTest";
+    object.m_rawBytes = body.data();
+    return object;
+}
+
+class RawObjectReplayIface : public EmptyIface {
+public:
+    explicit RawObjectReplayIface(DRW::Version version)
+        : m_rawObject(makeRawReplayObject(version))
+    {}
+
+    dwgRW *m_writer {nullptr};
+    DRW_UnsupportedObject m_rawObject;
+    std::vector<DRW_UnsupportedObject> m_unsupportedObjects;
+    duint32 m_readHandseed {0};
+
+    void writeDwgClasses() override {
+        if (m_writer != nullptr)
+            m_writer->registerRawDwgObjectClass(&m_rawObject);
+    }
+
+    void writeObjects() override {
+        if (m_writer != nullptr)
+            REQUIRE(m_writer->writeRawDwgObject(&m_rawObject));
+    }
+
+    void addHeader(const DRW_Header *header) override {
+        if (header != nullptr)
+            m_readHandseed = header->getHandSeed();
+    }
+
+    void addUnsupportedObject(const DRW_UnsupportedObject &object) override {
+        m_unsupportedObjects.push_back(object);
+    }
+};
+
+class MLeaderRoundTripIface : public EmptyIface {
+public:
+    dwgRW *m_writer {nullptr};
+    std::vector<DRW_MLeader> m_mleaders;
+
+    void writeEntities() override {
+        if (m_writer == nullptr)
+            return;
+
+        DRW_MLeader leader;
+        leader.color = 2;
+        leader.classVersion = 2;
+        leader.leaderType = 1;
+        leader.leaderColor = 2;
+        leader.leaderLineWeight = 29;
+        leader.landingEnabled = true;
+        leader.doglegEnabled = true;
+        leader.landingDistance = 2.5;
+        leader.defaultArrowHeadSize = 0.75;
+        leader.styleContentType = 2;
+        leader.scaleFactor = 1.0;
+
+        DRW_MLeaderRoot root;
+        root.isContentValid = true;
+        root.unknown291 = true;
+        root.connectionPoint = DRW_Coord{20.0, 5.0, 0.0};
+        root.direction = DRW_Coord{1.0, 0.0, 0.0};
+        root.leaderIndex = 0;
+        root.landingDistance = 2.5;
+
+        DRW_MLeaderLeaderLine line;
+        line.leaderLineIndex = 7;
+        line.points.push_back(DRW_Coord{0.0, 0.0, 0.0});
+        line.points.push_back(DRW_Coord{10.0, 5.0, 0.0});
+        line.leaderType = 1;
+        line.color = 2;
+        line.lineWeight = 29;
+        line.arrowSize = 0.75;
+        root.leaderLines.push_back(line);
+        leader.context.roots.push_back(root);
+
+        leader.context.overallScale = 1.0;
+        leader.context.contentBasePoint = DRW_Coord{20.0, 5.0, 0.0};
+        leader.context.textHeight = 2.0;
+        leader.context.arrowHeadSize = 0.75;
+        leader.context.landingGap = 0.25;
+        leader.context.styleLeftAttach = 1;
+        leader.context.styleRightAttach = 1;
+        leader.context.hasTextContents = true;
+        leader.context.textLabel = "Native MLeader";
+        leader.context.textNormal = DRW_Coord{0.0, 0.0, 1.0};
+        leader.context.textLocation = DRW_Coord{20.0, 5.0, 0.0};
+        leader.context.textDirection = DRW_Coord{1.0, 0.0, 0.0};
+        leader.context.boundaryWidth = 30.0;
+        leader.context.boundaryHeight = 5.0;
+        leader.context.lineSpacingFactor = 1.0;
+        leader.context.lineSpacingStyle = 1;
+        leader.context.textColor = 2;
+        leader.context.alignment = 1;
+        leader.context.flowDirection = 1;
+        leader.context.bgScaleFactor = 1.5;
+        leader.context.basePoint = DRW_Coord{20.0, 5.0, 0.0};
+        leader.context.baseDirection = DRW_Coord{1.0, 0.0, 0.0};
+        leader.context.baseVertical = DRW_Coord{0.0, 1.0, 0.0};
+
+        REQUIRE(m_writer->writeMLeader(&leader));
+    }
+
+    void addMLeader(const DRW_MLeader *leader) override {
+        if (leader != nullptr)
+            m_mleaders.push_back(*leader);
+    }
+};
+
 } // namespace
 
 TEST_CASE("dwgRW writes POINT/LINE/CIRCLE/ARC and reader recovers them",
@@ -585,6 +782,86 @@ TEST_CASE("dwgRW writes POINT/LINE/CIRCLE/ARC and reader recovers them",
     REQUIRE(sawPaper);
 
     std::remove(path.c_str());
+}
+
+TEST_CASE("dwgRW replays raw custom OBJECT payloads with class metadata",
+          "[dwg-write][raw-replay]") {
+    const DRW::Version versions[] = {DRW::AC1024, DRW::AC1027, DRW::AC1032};
+
+    for (DRW::Version version : versions) {
+        const std::string path = tempPath("raw_replay_object.dwg");
+        RawObjectReplayIface writeIface(version);
+        {
+            dwgRW writer(path.c_str());
+            writeIface.m_writer = &writer;
+            REQUIRE(writer.write(&writeIface, version, /*bin=*/false));
+        }
+
+        RawObjectReplayIface readIface(version);
+        {
+            dwgRW reader(path.c_str());
+            REQUIRE(reader.read(&readIface, /*ext=*/false));
+            REQUIRE(reader.getVersion() == version);
+            REQUIRE(reader.getError() == DRW::BAD_NONE);
+        }
+
+        REQUIRE(readIface.m_readHandseed > writeIface.m_rawObject.m_handle);
+        const DRW_UnsupportedObject *raw = nullptr;
+        for (const DRW_UnsupportedObject& object : readIface.m_unsupportedObjects) {
+            if (object.m_handle == writeIface.m_rawObject.m_handle
+                && object.m_objectType == writeIface.m_rawObject.m_objectType) {
+                raw = &object;
+                break;
+            }
+        }
+        REQUIRE(raw != nullptr);
+        REQUIRE(raw->m_bodyBitSize == writeIface.m_rawObject.m_bodyBitSize);
+        REQUIRE(raw->m_isCustomClass);
+        REQUIRE_FALSE(raw->m_isEntity);
+        REQUIRE(raw->m_recordName == writeIface.m_rawObject.m_recordName);
+        REQUIRE(raw->m_className == writeIface.m_rawObject.m_className);
+        REQUIRE(raw->m_rawBytes == writeIface.m_rawObject.m_rawBytes);
+
+        std::remove(path.c_str());
+    }
+}
+
+TEST_CASE("dwgRW writes native text MLEADER entities",
+          "[dwg-write][mleader]") {
+    const DRW::Version versions[] = {DRW::AC1024, DRW::AC1027, DRW::AC1032};
+
+    for (DRW::Version version : versions) {
+        const std::string path = tempPath("native_mleader.dwg");
+        {
+            dwgRW writer(path.c_str());
+            MLeaderRoundTripIface iface;
+            iface.m_writer = &writer;
+            REQUIRE(writer.write(&iface, version, /*bin=*/false));
+        }
+
+        MLeaderRoundTripIface readIface;
+        {
+            dwgRW reader(path.c_str());
+            REQUIRE(reader.read(&readIface, /*ext=*/false));
+            REQUIRE(reader.getVersion() == version);
+            REQUIRE(reader.getError() == DRW::BAD_NONE);
+        }
+
+        REQUIRE(readIface.m_mleaders.size() == 1);
+        const DRW_MLeader& leader = readIface.m_mleaders.front();
+        REQUIRE(leader.classVersion == 2);
+        REQUIRE(leader.context.hasTextContents);
+        REQUIRE(leader.context.textLabel == "Native MLeader");
+        REQUIRE(leader.context.roots.size() == 1);
+        REQUIRE(leader.context.roots[0].leaderLines.size() == 1);
+        REQUIRE(leader.context.roots[0].leaderLines[0].points.size() == 2);
+        REQUIRE(leader.context.roots[0].leaderLines[0].points[1].x == 10.0);
+        REQUIRE(leader.context.textLocation.x == 20.0);
+        REQUIRE(leader.styleContentType == 2);
+        REQUIRE(leader.defaultArrowHeadSize == 0.75);
+
+        std::remove(path.c_str());
+    }
 }
 
 TEST_CASE("dwgRW modern writers emit CLASSES for ARC_DIMENSION",
@@ -927,6 +1204,68 @@ TEST_CASE("dwgRW R2010 round-trip delivers the standard table records",
     REQUIRE(containsName(cap.m_appIds,    "ACAD"));
     REQUIRE(containsName(cap.m_dimStyles, "STANDARD"));
     REQUIRE(containsName(cap.m_vports,    "*ACTIVE"));
+
+    std::remove(path.c_str());
+}
+
+TEST_CASE("dwgRW named VIEW table records round-trip across writer versions",
+          "[dwg-write][smoke][view]") {
+    struct VersionCase {
+        DRW::Version version;
+        const char *suffix;
+    };
+    const VersionCase cases[] = {
+        {DRW::AC1015, "r2000_named_view.dwg"},
+        {DRW::AC1018, "r2004_named_view.dwg"},
+        {DRW::AC1024, "r2010_named_view.dwg"},
+        {DRW::AC1027, "r2013_named_view.dwg"},
+        {DRW::AC1032, "r2018_named_view.dwg"}
+    };
+
+    for (const auto& item : cases) {
+        const std::string path = tempPath(item.suffix);
+
+        {
+            ViewRoundTripIface iface;
+            dwgRW writer(path.c_str());
+            iface.m_writer = &writer;
+            REQUIRE(writer.write(&iface, item.version, /*bin=*/false));
+        }
+
+        ViewRoundTripIface cap;
+        {
+            dwgRW reader(path.c_str());
+            REQUIRE(reader.read(&cap, /*ext=*/false));
+            REQUIRE(reader.getVersion() == item.version);
+            REQUIRE(reader.getError() == DRW::BAD_NONE);
+        }
+
+        REQUIRE(cap.m_views.size() == 1);
+        requireNamedViewRoundTrip(cap.m_views[0], item.version);
+
+        std::remove(path.c_str());
+    }
+}
+
+TEST_CASE("dwgRW empty VIEW_CONTROL round-trips with no named views",
+          "[dwg-write][smoke][view]") {
+    const std::string path = tempPath("empty_view_control_r2010.dwg");
+
+    {
+        dwgRW writer(path.c_str());
+        EmptyIface iface;
+        REQUIRE(writer.write(&iface, DRW::AC1024, /*bin=*/false));
+    }
+
+    TableCaptureIface cap;
+    {
+        dwgRW reader(path.c_str());
+        REQUIRE(reader.read(&cap, /*ext=*/false));
+        REQUIRE(reader.getVersion() == DRW::AC1024);
+        REQUIRE(reader.getError() == DRW::BAD_NONE);
+    }
+
+    CHECK(cap.m_views.empty());
 
     std::remove(path.c_str());
 }

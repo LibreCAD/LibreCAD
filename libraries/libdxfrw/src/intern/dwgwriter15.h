@@ -53,6 +53,7 @@ public:
                                     {"BYBLOCK",    0x0Fu}};
         m_writingCtx.layerMap    = {{"0",        0x12u}};
         m_writingCtx.styleMap    = {{"STANDARD", 0x13u}};
+        m_writingCtx.viewMap     = {};
         m_writingCtx.appidMap    = {{"ACAD",     0x14u}};
         m_writingCtx.dimstyleMap = {{"STANDARD", 0x15u}};
         m_writingCtx.vportMap    = {{"*ACTIVE",  0x16u}};
@@ -81,9 +82,11 @@ public:
     void addLType(const DRW_LType& lt);
     void addLayer(const DRW_Layer& lay);
     void addTextstyle(const DRW_Textstyle& ts);
+    void addView(const DRW_View& view);
     void addVport(const DRW_Vport& vp);
     void addDimstyle(const DRW_Dimstyle& ds);
     void addAppId(const DRW_AppId& ai);
+    bool replayRawObject(const DRW_UnsupportedObject& object);
 
 protected:
     /// Begin a new object in the object stream (the unsentinel'd byte
@@ -147,6 +150,7 @@ protected:
     void emitLtypeRecord(duint32 handle, const DRW_LType& lt);
     void emitLayerRecord(duint32 handle, const DRW_Layer& lay);
     void emitStyleRecord(duint32 handle, const DRW_Textstyle& ts);
+    void emitViewRecord(duint32 handle, const DRW_View& view);
     void emitVportRecord(duint32 handle, const DRW_Vport& vp);
     void emitAppIdRecord(duint32 handle, const DRW_AppId& ai);
     void emitDimstyleRecord(duint32 handle, const DRW_Dimstyle& ds);
@@ -204,6 +208,7 @@ protected:
     std::vector<std::pair<duint32, DRW_LType>>     m_pendingLTypes;
     std::vector<std::pair<duint32, DRW_Layer>>     m_pendingLayers;
     std::vector<std::pair<duint32, DRW_Textstyle>> m_pendingStyles;
+    std::vector<std::pair<duint32, DRW_View>>      m_pendingViews;
     std::vector<std::pair<duint32, DRW_Vport>>     m_pendingVports;
     std::vector<std::pair<duint32, DRW_Dimstyle>>  m_pendingDimstyles;
     std::vector<std::pair<duint32, DRW_AppId>>     m_pendingAppIds;

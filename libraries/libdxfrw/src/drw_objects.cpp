@@ -24,11 +24,6 @@
 
 namespace {
 
-dwgHandle makeHardPtrW(duint32 ref) {
-    dwgHandle h; h.code = ref ? 4 : 0; h.ref = ref; h.size = 0;
-    for (duint32 t = ref; t; t >>= 8) ++h.size;
-    return h;
-}
 dwgHandle makeSoftOwnerW(duint32 ref) {
     dwgHandle h; h.code = ref ? 3 : 0; h.ref = ref; h.size = 0;
     for (duint32 t = ref; t; t >>= 8) ++h.size;
@@ -2086,21 +2081,123 @@ bool DRW_View::parseCode(int code, const std::unique_ptr<dxfReader>& reader){
 }
 
 bool DRW_View::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
-    //Minimal parseDwg: same pattern as DRW_UCS — base fields + name.
-    //VIEW-specific fields (size, center, viewDirection, target, lensLen,
-    //clipping, twistAngle, viewMode, renderMode, hasUCS sub-record per
-    //ODA 19.4.63) stay at reset defaults until sample-validated.
     dwgBuffer sBuff = *buf;
     dwgBuffer *sBuf = buf;
     if (version > DRW::AC1018) {//2007+
         sBuf = &sBuff; //separate buffer for strings
     }
     bool ret = DRW_TableEntry::parseDwg(version, buf, sBuf, bs);
-    DRW_DBG("\n***************************** parsing VIEW (base fields) **************************************\n");
+    DRW_DBG("\n***************************** parsing VIEW *********************************************\n");
     if (!ret)
         return ret;
+
     name = sBuf->getVariableText(version, false);
     DRW_DBG("view name: "); DRW_DBG(name); DRW_DBG("\n");
+
+    flags |= buf->getBit() << 6; // code 70, bit 7 (64)
+    if (version < DRW::AC1021) { //2004-
+        DRW_DBG("xrefindex = "); DRW_DBG(buf->getBitShort()); DRW_DBG("\n");
+    }
+    flags |= buf->getBit() << 4; // code 70, bit 5 (16), xref-dependent
+
+    size.y = buf->getBitDouble();
+    size.x = buf->getBitDouble();
+    center = buf->get2RawDouble();
+    targetPoint = buf->get3BitDouble();
+    viewDirectionFromTarget = buf->get3BitDouble();
+    twistAngle = buf->getBitDouble();
+    lensLen = buf->getBitDouble();
+    frontClippingPlaneOffset = buf->getBitDouble();
+    backClippingPlaneOffset = buf->getBitDouble();
+
+    viewMode = 0;
+    viewMode |= buf->getBit();       // DXF 71 bit 0 (1)
+    viewMode |= buf->getBit() << 1;  // DXF 71 bit 1 (2)
+    viewMode |= buf->getBit() << 2;  // DXF 71 bit 2 (4)
+    // ODA 20.4.60: stored bit 3 is the opposite of DXF 71 bit 4 (16).
+    if (!buf->getBit())
+        viewMode |= 16;
+
+    if (version > DRW::AC1014) { //2000+
+        renderMode = buf->getRawChar8();
+    }
+    if (version > DRW::AC1018) { //2007+
+        m_useDefaultLights = buf->getBit();
+        m_defaultLightingType = buf->getRawChar8();
+        m_brightness = buf->getBitDouble();
+        m_contrast = buf->getBitDouble();
+        m_ambientColor = buf->getCmColor(version, nullptr, sBuf);
+    }
+
+    if (buf->getBit())
+        flags |= 1; // paper-space flag, code 70 bit 0
+    else
+        flags &= ~1;
+
+    if (version > DRW::AC1014) { //2000+
+        hasUCS = buf->getBit();
+        if (hasUCS) {
+            ucsOrigin = buf->get3BitDouble();
+            ucsXAxis = buf->get3BitDouble();
+            ucsYAxis = buf->get3BitDouble();
+            ucsElevation = buf->getBitDouble();
+            ucsOrthoType = buf->getBitShort();
+        }
+    }
+    if (version > DRW::AC1018) { //2007+
+        cameraPlottable = buf->getBit();
+    }
+
+    if (version > DRW::AC1018) {//2007+ skip string area
+        buf->setPosition(objSize >> 3);
+        buf->setBitPos(objSize & 7);
+    }
+
+    dwgHandle viewControlH = buf->getHandle();
+    DRW_DBG(" view control Handle: "); DRW_DBGHL(viewControlH.code, viewControlH.size, viewControlH.ref); DRW_DBG("\n");
+    parentHandle = viewControlH.ref;
+
+    for (dint32 i = 0; i < numReactors; ++i) {
+        dwgHandle reactorH = buf->getHandle();
+        DRW_DBG(" reactor Handle: "); DRW_DBGHL(reactorH.code, reactorH.size, reactorH.ref); DRW_DBG("\n");
+    }
+
+    if (xDictFlag != 1) {
+        dwgHandle xDictH = buf->getHandle();
+        DRW_DBG(" XDicObj control Handle: "); DRW_DBGHL(xDictH.code, xDictH.size, xDictH.ref); DRW_DBG("\n");
+    }
+
+    dwgHandle xrefH = buf->getHandle();
+    DRW_DBG(" XRefH control Handle: "); DRW_DBGHL(xrefH.code, xrefH.size, xrefH.ref); DRW_DBG("\n");
+
+    if (version > DRW::AC1018) { //2007+
+        dwgHandle backgroundH = buf->getHandle();
+        m_backgroundHandle = backgroundH.ref;
+        DRW_DBG(" background Handle: "); DRW_DBGHL(backgroundH.code, backgroundH.size, backgroundH.ref); DRW_DBG("\n");
+        dwgHandle visualStyleH = buf->getHandle();
+        m_visualStyleHandle = visualStyleH.ref;
+        DRW_DBG(" visual style Handle: "); DRW_DBGHL(visualStyleH.code, visualStyleH.size, visualStyleH.ref); DRW_DBG("\n");
+        dwgHandle sunH = buf->getHandle();
+        m_sunHandle = sunH.ref;
+        DRW_DBG(" sun Handle: "); DRW_DBGHL(sunH.code, sunH.size, sunH.ref); DRW_DBG("\n");
+    }
+
+    if (version > DRW::AC1014) { //2000+
+        dwgHandle baseUcsH = buf->getHandle();
+        baseUCS_ID = baseUcsH.ref;
+        DRW_DBG(" base UCS Handle: "); DRW_DBGHL(baseUcsH.code, baseUcsH.size, baseUcsH.ref); DRW_DBG("\n");
+        dwgHandle namedUcsH = buf->getHandle();
+        namedUCS_ID = namedUcsH.ref;
+        DRW_DBG(" named UCS Handle: "); DRW_DBGHL(namedUcsH.code, namedUcsH.size, namedUcsH.ref); DRW_DBG("\n");
+    }
+
+    if (version > DRW::AC1018) { //2007+
+        dwgHandle liveSectionH = buf->getHandle();
+        m_liveSectionHandle = liveSectionH.ref;
+        DRW_DBG(" live section Handle: "); DRW_DBGHL(liveSectionH.code, liveSectionH.size, liveSectionH.ref); DRW_DBG("\n");
+    }
+
+    DRW_DBG("Remaining bytes: "); DRW_DBG(buf->numRemainingBytes()); DRW_DBG("\n");
     return buf->isGood();
 }
 
@@ -2151,9 +2248,9 @@ namespace {
     constexpr duint32 kLtypeControl   = 0x05;
     constexpr duint32 kLayerControl   = 0x02;
     constexpr duint32 kStyleControl   = 0x03;
+    constexpr duint32 kViewControl    = 0x06;
     constexpr duint32 kVportControl   = 0x08;
     constexpr duint32 kAppIdControl   = 0x09;
-    constexpr duint32 kDimstyleControl = 0x0A;
 }
 
 bool DRW_LType::encodeDwg(DRW::Version version, dwgBufferW *buf,
@@ -2329,7 +2426,6 @@ bool DRW_Vport::encodeDwg(DRW::Version version, dwgBufferW *buf,
     if (version > DRW::AC1014) {
         buf->putBit(0);         // unknown
         buf->putBit(0);         // ucsPerVP
-        DRW_Coord zero;
         buf->putBitDouble(0.0); buf->putBitDouble(0.0); buf->putBitDouble(0.0); // ucsOrigin
         buf->putBitDouble(1.0); buf->putBitDouble(0.0); buf->putBitDouble(0.0); // ucsX
         buf->putBitDouble(0.0); buf->putBitDouble(1.0); buf->putBitDouble(0.0); // ucsY
@@ -2353,6 +2449,71 @@ bool DRW_Vport::encodeDwg(DRW::Version version, dwgBufferW *buf,
         hb->putHandle(makeNullHandleW());  // namedUCSH
         hb->putHandle(makeNullHandleW());  // baseUCSH
     }
+    return true;
+}
+
+bool DRW_View::encodeDwg(DRW::Version version, dwgBufferW *buf,
+                          dwgBufferW *strBuf, dwgBufferW *hdlBuf) const {
+    dwgBufferW *sb = (strBuf && version > DRW::AC1018) ? strBuf : buf;
+    dwgBufferW *hb = (hdlBuf && version > DRW::AC1018) ? hdlBuf : buf;
+
+    sb->putVariableText(version, name);
+    buf->putBit(static_cast<duint8>((flags >> 6) & 1));
+    if (version < DRW::AC1021)
+        buf->putBitShort(0);  // xrefindex (2004-)
+    buf->putBit(static_cast<duint8>((flags >> 4) & 1));
+    buf->putBitDouble(size.y);
+    buf->putBitDouble(size.x);
+    buf->put2RawDouble(center);
+    buf->put3BitDouble(targetPoint);
+    buf->put3BitDouble(viewDirectionFromTarget);
+    buf->putBitDouble(twistAngle);
+    buf->putBitDouble(lensLen);
+    buf->putBitDouble(frontClippingPlaneOffset);
+    buf->putBitDouble(backClippingPlaneOffset);
+    buf->putBit(static_cast<duint8>(viewMode & 1));
+    buf->putBit(static_cast<duint8>((viewMode >> 1) & 1));
+    buf->putBit(static_cast<duint8>((viewMode >> 2) & 1));
+    // DWG stores the fourth view-mode bit inverted from DXF group 71 bit 4.
+    buf->putBit(static_cast<duint8>((viewMode & 16) ? 0 : 1));
+    if (version > DRW::AC1014) {
+        buf->putRawChar8(static_cast<duint8>(renderMode));
+        if (version > DRW::AC1018) {
+            buf->putBit(static_cast<duint8>(m_useDefaultLights ? 1 : 0));
+            buf->putRawChar8(m_defaultLightingType);
+            buf->putBitDouble(m_brightness);
+            buf->putBitDouble(m_contrast);
+            buf->putCmColor(version, static_cast<duint16>(m_ambientColor));
+        }
+    }
+    buf->putBit(static_cast<duint8>(flags & 1));  // paper-space flag
+    if (version > DRW::AC1014) {
+        buf->putBit(static_cast<duint8>(hasUCS ? 1 : 0));
+        if (hasUCS) {
+            buf->put3BitDouble(ucsOrigin);
+            buf->put3BitDouble(ucsXAxis);
+            buf->put3BitDouble(ucsYAxis);
+            buf->putBitDouble(ucsElevation);
+            buf->putBitShort(static_cast<duint16>(ucsOrthoType));
+        }
+    }
+    if (version > DRW::AC1018)
+        buf->putBit(static_cast<duint8>(cameraPlottable ? 1 : 0));
+
+    hb->putHandle(makeSoftOwnerW(kViewControl));
+    hb->putHandle(makeSoftOwnerW(0));  // XDic null
+    hb->putHandle(makeNullHandleW());  // XRef null
+    if (version > DRW::AC1018) {
+        hb->putHandle(makeNullHandleW());  // backgroundH null
+        hb->putHandle(makeNullHandleW());  // visualStyleH null
+        hb->putHandle(makeNullHandleW());  // sunH null
+    }
+    if (version > DRW::AC1014) {
+        hb->putHandle(makeNullHandleW());  // baseUCSH null
+        hb->putHandle(makeNullHandleW());  // namedUCSH null
+    }
+    if (version > DRW::AC1018)
+        hb->putHandle(makeNullHandleW());  // liveSectionH null
     return true;
 }
 

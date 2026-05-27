@@ -440,12 +440,10 @@ TEST_CASE("HandleAllocator: reserved seeding + sequential allocation",
     REQUIRE(alloc.next() == 0x31);
     REQUIRE(alloc.next() == 0x32);
 
-    // None of the canonical reserved handles can be reallocated.  We
-    // do this indirectly: reserve a handle above the current cursor,
-    // then verify next() skips it.
+    // None of the canonical reserved handles can be reallocated.  Reserving
+    // a high imported handle advances the high-water mark as well, so HANDSEED
+    // remains above replayed source handles.
     alloc.reserve(0x35);
-    REQUIRE(alloc.next() == 0x33);
-    REQUIRE(alloc.next() == 0x34);
     REQUIRE(alloc.next() == 0x36);  // 0x35 is skipped
     REQUIRE(alloc.next() == 0x37);
 

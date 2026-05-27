@@ -858,9 +858,11 @@ Reviewed sources:
    - Bound all point/weight reads by remaining payload bytes.
    - Add malformed-count tests that prove the following entity still parses.
 
-   Status: non-negative and upper-bound checks landed for knot/control/fit
-   arrays; relationship checks, remaining-byte checks, and malformed-stream
-   tests remain follow-up.
+   Status: non-negative and upper-bound checks, degree/count relationship
+   checks, expected knot-count validation, minimum fit-count validation, and a
+   malformed control-point layout regression test are present in the current
+   codebase. Remaining-byte checks against the enclosing object body and a
+   broader malformed-stream fixture suite remain follow-up.
 
 8. **P3: Spline/Bezier tests do not cover modern DWG semantics**
 
@@ -1038,6 +1040,11 @@ Reviewed sources:
    - Add a filter-level round-trip test proving imported parabola splines
      export as canonical quadratic splines.
 
+   Status: implemented in the current filter writer. `EntityParabola` now
+   routes through `writeParabola()`, which uses
+   `LC_ParabolaSpline::parabolaToSpline()` for both DXF and DWG output. A
+   dedicated filter-level round-trip test remains follow-up.
+
 5. **P2: Circle/arc radius and ellipse ratio validation is weaker than
    ACadSharp**
 
@@ -1104,6 +1111,7 @@ Reviewed sources:
 3. Add rational quadratic ellipse-arc recognition and native conversion or
    exact weighted-spline preservation.
 4. Add explicit `writeParabola()` using `LC_ParabolaSpline::parabolaToSpline()`.
+   Status: complete for DXF/DWG export routing.
 5. Harden radius, axis, ratio, and count validation for conic payloads.
 6. Expand full/reversed/cross-zero ellipse arc and hatch-boundary tests.
 7. Add cross-version filter-level conic round-trip coverage.
@@ -1286,6 +1294,16 @@ R2018 text, view/light metadata, and raw object preservation.
 
 #### Phase 7: View, light, and sun metadata integration
 
+- Status: partially implemented for named `VIEW` import/export.
+  `DRW_View::parseDwg()` now consumes the ODA 20.4.60 payload and stores
+  R2007+ background, visual-style, sun, live-section, lighting, ambient-color,
+  camera-plottable, and UCS metadata at the libdxfrw record level. DWG writing
+  now calls `writeViews()`, queues named views in `dwgWriter15`, emits populated
+  `VIEW_CONTROL` records, and writes `VIEW` records through
+  `DRW_View::encodeDwg()`. Writer round-trip coverage now spans AC1015,
+  AC1018, AC1024, AC1027, and AC1032; the remaining work is external fixture
+  coverage, document-level LIGHT/SUN collections, UCS handle resolution, and
+  UI/rendering integration.
 - Store LIGHT and SUN objects in a document-level metadata collection.
 - Link SUN handles from VIEW, VPORT, and VIEWPORT records where those handles
   are present.

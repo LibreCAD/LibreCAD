@@ -241,6 +241,8 @@ bool dwgRW::write(DRW_Interface *interface_, DRW::Version ver, bool bin) {
     else
         writer = std::make_unique<dwgWriter15>(&filestr, &header);
 
+    iface->writeDwgClasses();
+
     // If the caller did not set HANDSEED explicitly, seed it from the
     // writer's HandleAllocator high-water mark.  A null HANDSEED is
     // legal but causes AutoCAD to mark the file modified on first open.
@@ -264,6 +266,7 @@ bool dwgRW::write(DRW_Interface *interface_, DRW::Version ver, bool bin) {
         iface->writeLTypes();
         iface->writeLayers();
         iface->writeTextstyles();
+        iface->writeViews();
         iface->writeVports();
         iface->writeDimstyles();
         iface->writeAppId();
@@ -437,6 +440,11 @@ bool dwgRW::writeLeader(DRW_Leader *ent) {
     return writer->encodeEntity(ent);
 }
 
+bool dwgRW::writeMLeader(DRW_MLeader *ent) {
+    if (writer == nullptr || ent == nullptr) return false;
+    return writer->encodeEntity(ent);
+}
+
 bool dwgRW::writeViewport(DRW_Viewport *ent) {
     if (writer == nullptr || ent == nullptr) return false;
     return writer->encodeEntity(ent);
@@ -475,6 +483,13 @@ bool dwgRW::addTextstyle(DRW_Textstyle *ent) {
     w->addTextstyle(*ent);
     return true;
 }
+bool dwgRW::addView(DRW_View *ent) {
+    if (ent == nullptr) return false;
+    auto *w = asWriter15(writer);
+    if (w == nullptr) return false;
+    w->addView(*ent);
+    return true;
+}
 bool dwgRW::addVport(DRW_Vport *ent) {
     if (ent == nullptr) return false;
     auto *w = asWriter15(writer);
@@ -495,6 +510,23 @@ bool dwgRW::addAppId(DRW_AppId *ent) {
     if (w == nullptr) return false;
     w->addAppId(*ent);
     return true;
+}
+
+bool dwgRW::registerRawDwgObjectClass(const DRW_UnsupportedObject *object) {
+    if (object == nullptr || writer == nullptr)
+        return false;
+    if (object->m_handle != 0)
+        writer->reserveHandle(object->m_handle);
+    return writer->registerRawObjectClass(*object);
+}
+
+bool dwgRW::writeRawDwgObject(DRW_UnsupportedObject *object) {
+    if (object == nullptr)
+        return false;
+    auto *w = asWriter15(writer);
+    if (w == nullptr)
+        return false;
+    return w->replayRawObject(*object);
 }
 
 std::unique_ptr<dwgReader> dwgRW::createReaderForVersion(DRW::Version version, std::ifstream *stream, dwgRW *p )

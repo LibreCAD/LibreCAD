@@ -338,6 +338,10 @@ public:
     virtual void addPlotSettings(const DRW_PlotSettings *data) = 0;
 
     virtual void writeHeader(DRW_Header& data) = 0;
+    /** DWG-only pre-CLASSES callback. Implementations may register imported
+     * custom classes or raw replay payloads before the binary CLASSES section
+     * is emitted. DXF writers ignore this hook. */
+    virtual void writeDwgClasses() {}
     virtual void writeBlocks() = 0;
     virtual void writeBlockRecords() = 0;
     virtual void writeEntities() = 0;

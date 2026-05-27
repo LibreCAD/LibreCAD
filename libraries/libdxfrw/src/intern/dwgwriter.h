@@ -24,6 +24,7 @@
 
 #include "../drw_base.h"
 #include "../drw_header.h"
+#include "../drw_objects.h"
 #include "dwgbufferw.h"
 #include "dwgutil.h"
 
@@ -104,7 +105,11 @@ public:
 
     /// Mark a specific handle as in-use.  Used during read-then-write
     /// to preserve source handles; idempotent.
-    void reserve(duint32 h) { m_reserved.insert(h); }
+    void reserve(duint32 h) {
+        m_reserved.insert(h);
+        if (h >= m_next)
+            m_next = h + 1;
+    }
 
     /// Allocate the next unused handle ≥ `m_next`, skipping reserved.
     /// Marks the returned handle as reserved so subsequent calls don't
@@ -146,6 +151,8 @@ public:
         m_handles.seedReserved();
         registerDwgClass({500, 0x401, "ACAD", "AcDbArcDimension",
                           "ARC_DIMENSION", false, 0x1F2});
+        registerDwgClass({501, 0x401, "ACAD",
+                          "AcDbMLeader", "MULTILEADER", false, 0x1F2});
     }
 
     virtual ~dwgWriter() = default;
@@ -233,6 +240,25 @@ public:
     /// Reserve a specific handle so `next()` never returns it again.
     void reserveHandle(duint32 h) { m_handles.reserve(h); }
 
+    bool registerRawObjectClass(const DRW_UnsupportedObject& object) {
+        if (!object.m_isCustomClass || object.m_objectType < 500)
+            return true;
+        DwgClassDefinition definition;
+        definition.m_classNum = static_cast<duint16>(object.m_objectType);
+        definition.m_proxyFlag = 0x401;
+        definition.m_appName = "ACAD";
+        definition.m_className = object.m_className.empty()
+            ? object.m_recordName
+            : object.m_className;
+        definition.m_recordName = object.m_recordName.empty()
+            ? object.m_className
+            : object.m_recordName;
+        definition.m_entityFlagRaw = object.m_isEntity ? 0x1F2 : 0;
+        definition.m_instanceCount = 1;
+        registerDwgClass(definition);
+        return true;
+    }
+
 protected:
     void registerDwgClass(const DwgClassDefinition& definition) {
         if (definition.m_classNum < 500)
@@ -253,7 +279,30 @@ protected:
                      const DwgClassDefinition& right) {
                       return left.m_classNum < right.m_classNum;
                   });
-        return definitions;
+        if (definitions.empty())
+            return definitions;
+
+        std::vector<DwgClassDefinition> contiguous;
+        contiguous.reserve(static_cast<size_t>(definitions.back().m_classNum - 499));
+        auto it = definitions.begin();
+        for (duint32 classNum = 500; classNum <= definitions.back().m_classNum; ++classNum) {
+            if (it != definitions.end() && it->m_classNum == classNum) {
+                contiguous.push_back(*it);
+                ++it;
+                continue;
+            }
+
+            DwgClassDefinition placeholder;
+            placeholder.m_classNum = static_cast<duint16>(classNum);
+            placeholder.m_proxyFlag = 0x401;
+            placeholder.m_appName = "ACAD";
+            placeholder.m_className = "AcDbUnusedClass";
+            placeholder.m_recordName = "UNUSED_DWG_CLASS";
+            placeholder.m_entityFlagRaw = 0;
+            placeholder.m_instanceCount = 0;
+            contiguous.push_back(std::move(placeholder));
+        }
+        return contiguous;
     }
 
     duint16 maxDwgClassNumber() const {

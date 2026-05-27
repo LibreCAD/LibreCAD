@@ -84,6 +84,7 @@ namespace oType {
     constexpr duint16 LAYER                      = 0x33;
     constexpr duint16 STYLE                      = 0x35;
     constexpr duint16 LTYPE                      = 0x39;
+    constexpr duint16 VIEW                       = 0x3D;
     constexpr duint16 APPID                      = 0x43;
     constexpr duint16 DIMSTYLE                   = 0x45;
     constexpr duint16 VPORT                      = 0x41;
@@ -682,6 +683,15 @@ void dwgWriter15::emitStyleRecord(duint32 handle, const DRW_Textstyle& ts) {
     finishObject();
 }
 
+void dwgWriter15::emitViewRecord(duint32 handle, const DRW_View& view) {
+    dwgBufferW& body = beginObject(handle);
+    dwgBufferW *sb, *hb;
+    emitRecordPreamble(body, m_version, oType::VIEW, handle,
+                       m_objectStrings, m_objectHandles, sb, hb);
+    view.encodeDwg(m_version, &body, sb, hb);
+    finishObject();
+}
+
 void dwgWriter15::emitVportRecord(duint32 handle, const DRW_Vport& vp) {
     dwgBufferW& body = beginObject(handle);
     dwgBufferW *sb, *hb;
@@ -733,6 +743,14 @@ void dwgWriter15::addTextstyle(const DRW_Textstyle& ts) {
     duint32 h = m_handles.next();
     m_writingCtx.styleMap[upper] = h;
     m_pendingStyles.emplace_back(h, ts);
+}
+
+void dwgWriter15::addView(const DRW_View& view) {
+    std::string upper = toUpperCase(view.name);
+    if (upper.empty() || m_writingCtx.viewMap.count(upper)) return;
+    duint32 h = m_handles.next();
+    m_writingCtx.viewMap[upper] = h;
+    m_pendingViews.emplace_back(h, view);
 }
 
 void dwgWriter15::addVport(const DRW_Vport& vp) {
@@ -804,6 +822,7 @@ bool dwgWriter15::writeDwgObjects() {
     m_writingCtx.ltypeMap.insert({"BYBLOCK",    reservedHandle::LTYPE_BYBLOCK});
     m_writingCtx.layerMap.insert({"0",        static_cast<duint32>(0x12)});
     m_writingCtx.styleMap.insert({"STANDARD", static_cast<duint32>(0x13)});
+    // Named VIEW has no required standard record.
     m_writingCtx.appidMap.insert({"ACAD",     static_cast<duint32>(0x14)});
     m_writingCtx.dimstyleMap.insert({"STANDARD", static_cast<duint32>(0x15)});
     m_writingCtx.vportMap.insert({"*ACTIVE",  static_cast<duint32>(0x16)});
@@ -852,8 +871,16 @@ bool dwgWriter15::writeDwgObjects() {
             emitStyleRecord(p.first, p.second);
     }
 
-    // VIEW_CONTROL: no entries.
-    emitControlObject(oType::VIEW_CONTROL, reservedHandle::VIEW_CONTROL, 0, {});
+    // --- VIEW section --- (named views; no required standard record)
+    {
+        std::vector<duint32> viewChildren;
+        for (auto& p : m_pendingViews) viewChildren.push_back(p.first);
+        emitControlObject(oType::VIEW_CONTROL, reservedHandle::VIEW_CONTROL,
+                          static_cast<duint32>(m_pendingViews.size()),
+                          viewChildren);
+        for (auto& p : m_pendingViews)
+            emitViewRecord(p.first, p.second);
+    }
 
     // UCS_CONTROL: no entries.
     emitControlObject(oType::UCS_CONTROL, reservedHandle::UCS_CONTROL, 0, {});
@@ -914,6 +941,27 @@ bool dwgWriter15::writeDwgObjects() {
     emitBlockRecord(reservedHandle::BLOCK_PAPER_SPACE, "*Paper_Space",
                     blkPaperStart, blkPaperEnd);
 
+    return true;
+}
+
+bool dwgWriter15::replayRawObject(const DRW_UnsupportedObject& object) {
+    if (object.m_isEntity || object.m_handle == 0 || object.m_rawBytes.empty())
+        return false;
+
+    m_handles.reserve(object.m_handle);
+    registerRawObjectClass(object);
+
+    const duint32 frameStart = static_cast<duint32>(m_buf.size());
+    m_buf.putModularShort(static_cast<dint32>(object.m_rawBytes.size()));
+    if (m_version > DRW::AC1021)
+        m_buf.putUModularChar(object.m_bodyBitSize);
+    const size_t bodyStart = m_buf.size();
+    m_buf.putBytes(object.m_rawBytes.data(), object.m_rawBytes.size());
+
+    const duint16 crc = m_buf.crc16(0xC0C1, static_cast<size_t>(frameStart),
+                                    bodyStart + object.m_rawBytes.size());
+    m_buf.putRawShort16(crc);
+    m_objectMap.emplace_back(object.m_handle, frameStart);
     return true;
 }
 

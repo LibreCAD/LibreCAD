@@ -46,6 +46,7 @@
 #include "lc_dimarc.h"
 #include "lc_dimarrowregistry.h"
 #include "lc_dimordinate.h"
+#include "lc_dwgadvancedmetadata.h"
 #include "lc_dimstyle.h"
 #include "lc_extentitydata.h"
 #include "lc_hyperbola.h"
@@ -146,6 +147,48 @@ bool buildSplineDataFromDrw(const DRW_Spline* source, RS_SplineData& target) {
     }
 
     return true;
+}
+
+QString tableCellDisplayText(const DRW_TableCell& cell) {
+    for (const DRW_TableCellContent& content : cell.m_contents) {
+        if (!content.m_text.empty())
+            return QString::fromUtf8(content.m_text.c_str());
+        if (!content.m_value.m_valueString.empty())
+            return QString::fromUtf8(content.m_value.m_valueString.c_str());
+    }
+    for (const DRW_TableCellAttribute& attribute : cell.m_attributes) {
+        if (!attribute.m_text.empty())
+            return QString::fromUtf8(attribute.m_text.c_str());
+    }
+    return {};
+}
+
+double tableColumnWidth(const DRW_TableContent& content, size_t index) {
+    if (index < content.m_columns.size() && content.m_columns[index].m_width > 0.0)
+        return content.m_columns[index].m_width;
+    return 1.0;
+}
+
+double tableRowHeight(const DRW_TableContent& content, size_t index) {
+    if (index < content.m_rows.size() && content.m_rows[index].m_height > 0.0)
+        return content.m_rows[index].m_height;
+    return 1.0;
+}
+
+DRW_UnsupportedObject rawObjectFromMetadata(
+    const LC_DwgAdvancedMetadata::RawObjectRecord& record) {
+    DRW_UnsupportedObject object;
+    object.m_objectType = record.objectType;
+    object.m_handle = record.handle;
+    object.m_bodyBitSize = record.bodyBitSize;
+    object.m_objectOffset = record.objectOffset;
+    object.m_objectSize = record.objectSize;
+    object.m_isEntity = record.isEntity;
+    object.m_isCustomClass = record.isCustomClass;
+    object.m_recordName = record.recordName;
+    object.m_className = record.className;
+    object.m_rawBytes = record.rawBytes;
+    return object;
 }
 
 std::unique_ptr<LC_SplinePoints> approximateDrwSpline(
@@ -352,6 +395,7 @@ bool RS_FilterDXFRW::fileImport(RS_Graphic& g, const QString& file, [[maybe_unus
     m_isLibDxfRw = false;
     m_libDxfRwVersion = 0;
     m_unsupportedDwgObjects.clear();
+    m_graphic->dwgAdvancedMetadata().clear();
 
 #ifdef DWGSUPPORT
     if (type == RS2::FormatDWG) {
@@ -675,6 +719,9 @@ void RS_FilterDXFRW::addView(const DRW_View &data) {
     RS_DEBUG->print("  adding view: %s", data.name.c_str());
     RS_DEBUG->print("RS_FilterDXF::addView: creating view");
 
+    if (m_graphic != nullptr) {
+        m_graphic->dwgAdvancedMetadata().addView(data);
+    }
     QString name = QString::fromUtf8(data.name.c_str());
     if (!name.isEmpty() && m_graphic->findNamedView(name) != nullptr) {
         return;
@@ -1208,6 +1255,9 @@ void RS_FilterDXFRW::addSolid(const DRW_Solid& data) {
 void RS_FilterDXFRW::addModelerGeometry(const DRW_ModelerGeometry &data) {
     // TODO: Preserve/render ACIS SAT/SAB bodies when LibreCAD grows native
     // modeler-geometry support. For now this shell prevents silent loss.
+    if (m_graphic != nullptr) {
+        m_graphic->dwgAdvancedMetadata().addModelerGeometry(data);
+    }
     RS_DEBUG->print("RS_FilterDXFRW::addModelerGeometry: type %d handle %d history %d",
                     static_cast<int>(data.eType),
                     static_cast<int>(data.handle),
@@ -1216,6 +1266,9 @@ void RS_FilterDXFRW::addModelerGeometry(const DRW_ModelerGeometry &data) {
 
 void RS_FilterDXFRW::addLight(const DRW_Light &data) {
     // TODO: Attach lights to future view/visual-style metadata consumers.
+    if (m_graphic != nullptr) {
+        m_graphic->dwgAdvancedMetadata().addLight(data);
+    }
     RS_DEBUG->print("RS_FilterDXFRW::addLight: %s handle %d",
                     data.m_name.empty() ? "(unnamed)" : data.m_name.c_str(),
                     static_cast<int>(data.handle));
@@ -1926,7 +1979,96 @@ void RS_FilterDXFRW::addInsert(const DRW_Insert& data) {
 }
 
 void RS_FilterDXFRW::addTable(const DRW_Table& data) {
+    const bool fallbackRendered = addTableFallback(data);
+    if (m_graphic != nullptr) {
+        m_graphic->dwgAdvancedMetadata().addTable(data, fallbackRendered);
+    }
     addInsert(data);
+}
+
+bool RS_FilterDXFRW::addTableFallback(const DRW_Table& data) {
+    if (!data.m_hasSemanticContent || data.m_content.m_rows.empty()
+        || data.m_content.m_columns.empty() || m_currentContainer == nullptr) {
+        return false;
+    }
+
+    const DRW_TableContent& content = data.m_content;
+    const RS_Vector origin(data.basePoint.x, data.basePoint.y, data.basePoint.z);
+    RS_Vector xAxis(data.m_horizontalDirection.x, data.m_horizontalDirection.y,
+                    data.m_horizontalDirection.z);
+    if (!xAxis.valid || xAxis.magnitude() <= RS_TOLERANCE) {
+        xAxis = RS_Vector::polar(1.0, data.angle);
+    } else {
+        xAxis.set(xAxis.x / xAxis.magnitude(), xAxis.y / xAxis.magnitude(),
+                  xAxis.z / xAxis.magnitude());
+    }
+    const RS_Vector yAxis = RS_Vector(-xAxis.y, xAxis.x, 0.0);
+
+    std::vector<double> columnOffsets;
+    columnOffsets.reserve(content.m_columns.size() + 1);
+    columnOffsets.push_back(0.0);
+    for (size_t column = 0; column < content.m_columns.size(); ++column) {
+        columnOffsets.push_back(columnOffsets.back() + tableColumnWidth(content, column));
+    }
+
+    std::vector<double> rowOffsets;
+    rowOffsets.reserve(content.m_rows.size() + 1);
+    rowOffsets.push_back(0.0);
+    for (size_t row = 0; row < content.m_rows.size(); ++row) {
+        rowOffsets.push_back(rowOffsets.back() + tableRowHeight(content, row));
+    }
+
+    auto tablePoint = [&](double x, double y) {
+        return origin + xAxis * x - yAxis * y;
+    };
+    auto addBorder = [&](const RS_Vector& a, const RS_Vector& b) {
+        auto *line = new RS_Line{m_currentContainer, {a, b}};
+        setEntityAttributes(line, &data);
+        line->update();
+        m_currentContainer->addEntity(line);
+    };
+
+    for (double x : columnOffsets) {
+        addBorder(tablePoint(x, 0.0), tablePoint(x, rowOffsets.back()));
+    }
+    for (double y : rowOffsets) {
+        addBorder(tablePoint(0.0, y), tablePoint(columnOffsets.back(), y));
+    }
+
+    bool renderedText = false;
+    QString style = m_textStyle;
+    prepareTextStyleName(style);
+    const double angle = std::atan2(xAxis.y, xAxis.x);
+    for (size_t row = 0; row < content.m_rows.size(); ++row) {
+        const auto& tableRow = content.m_rows[row];
+        const size_t cellCount = std::min(tableRow.m_cells.size(),
+                                          content.m_columns.size());
+        for (size_t column = 0; column < cellCount; ++column) {
+            QString text = tableCellDisplayText(tableRow.m_cells[column]);
+            if (text.isEmpty())
+                continue;
+            text = toNativeString(text);
+            const double left = columnOffsets[column];
+            const double right = columnOffsets[column + 1];
+            const double top = rowOffsets[row];
+            const double bottom = rowOffsets[row + 1];
+            const double cellHeight = std::max(0.1, bottom - top);
+            const double cellWidth = std::max(0.1, right - left);
+            const RS_Vector insertion = tablePoint(left + cellWidth * 0.08,
+                                                   top + cellHeight * 0.25);
+            RS_MTextData textData(insertion, cellHeight * 0.35, cellWidth * 0.84,
+                                  RS_MTextData::VATop, RS_MTextData::HALeft,
+                                  RS_MTextData::LeftToRight, RS_MTextData::AtLeast,
+                                  1.0, text, style, angle, RS2::NoUpdate);
+            auto *mtext = new RS_MText(m_currentContainer, textData);
+            setEntityAttributes(mtext, &data);
+            mtext->update();
+            m_currentContainer->addEntity(mtext);
+            renderedText = true;
+        }
+    }
+
+    return renderedText || columnOffsets.size() > 1 || rowOffsets.size() > 1;
 }
 
 void RS_FilterDXFRW::prepareTextStyleName(QString& sty) const {
@@ -3697,6 +3839,9 @@ void RS_FilterDXFRW::addMLeader(const DRW_MLeader *data) {
   RS_DEBUG->print("RS_FilterDXFRW::addMLeader");
   if (data == nullptr)
     return;
+  if (m_graphic != nullptr) {
+    m_graphic->dwgAdvancedMetadata().addMLeader(*data);
+  }
 
   LC_MLeaderData md;
   md.roots.reserve(data->context.roots.size());
@@ -3843,10 +3988,30 @@ void RS_FilterDXFRW::addTableGeometry(const DRW_TableGeometry &data) {
                   static_cast<int>(data.m_columnCount));
 }
 
+void RS_FilterDXFRW::addTableStyle(const DRW_TableStyle &data) {
+  if (m_graphic != nullptr) {
+    m_graphic->dwgAdvancedMetadata().addTableStyle(data);
+  }
+  RS_DEBUG->print("RS_FilterDXFRW::addTableStyle: %s",
+                  data.m_name.empty() ? "(unnamed)" : data.m_name.c_str());
+}
+
+void RS_FilterDXFRW::addTableContent(const DRW_TableContentObject &data) {
+  if (m_graphic != nullptr) {
+    m_graphic->dwgAdvancedMetadata().addTableContent(data);
+  }
+  RS_DEBUG->print("RS_FilterDXFRW::addTableContent: %d x %d",
+                  static_cast<int>(data.m_content.m_rows.size()),
+                  static_cast<int>(data.m_content.m_columns.size()));
+}
+
 void RS_FilterDXFRW::addUnsupportedObject(const DRW_UnsupportedObject &data) {
   // TODO: Attach this raw store to a document-level DWG metadata extension so
   // unsupported object payloads can round-trip instead of living only during
   // import diagnostics.
+  if (m_graphic != nullptr) {
+    m_graphic->dwgAdvancedMetadata().addUnsupportedObject(data);
+  }
   m_unsupportedDwgObjects.push_back(data);
   RS_DEBUG->print("RS_FilterDXFRW::addUnsupportedObject: %s handle %d (%d bytes)",
                   data.m_recordName.empty() ? "(fixed)" : data.m_recordName.c_str(),
@@ -3863,6 +4028,9 @@ void RS_FilterDXFRW::addAcDbPlaceholder(const DRW_AcDbPlaceholder &data) {
 void RS_FilterDXFRW::addSun(const DRW_Sun &data) {
   // TODO: Link SUN objects to VPORT/VIEW/VIEWPORT lighting state once LibreCAD
   // models view lighting metadata.
+  if (m_graphic != nullptr) {
+    m_graphic->dwgAdvancedMetadata().addSun(data);
+  }
   RS_DEBUG->print("RS_FilterDXFRW::addSun: handle %d on=%d",
                   static_cast<int>(data.handle),
                   data.m_isOn ? 1 : 0);
@@ -3871,6 +4039,9 @@ void RS_FilterDXFRW::addSun(const DRW_Sun &data) {
 void RS_FilterDXFRW::addAssociativeObject(const DRW_AssociativeObject &data) {
   // TODO: Reconstruct associative dimension/dynamic-block relationship graphs
   // from these shell objects after native consumers exist.
+  if (m_graphic != nullptr) {
+    m_graphic->dwgAdvancedMetadata().addAssociativeObject(data);
+  }
   RS_DEBUG->print("RS_FilterDXFRW::addAssociativeObject: %s handle %d",
                   data.m_recordName.empty() ? "(assoc)" : data.m_recordName.c_str(),
                   static_cast<int>(data.handle));
@@ -3878,6 +4049,9 @@ void RS_FilterDXFRW::addAssociativeObject(const DRW_AssociativeObject &data) {
 
 void RS_FilterDXFRW::addAcShHistoryObject(const DRW_AcShHistoryObject &data) {
   // TODO: Connect ACSH history nodes to 3DSOLID modeler geometry history.
+  if (m_graphic != nullptr) {
+    m_graphic->dwgAdvancedMetadata().addAcShObject(data);
+  }
   RS_DEBUG->print("RS_FilterDXFRW::addAcShHistoryObject: %s handle %d",
                   data.m_recordName.empty() ? "(acsh)" : data.m_recordName.c_str(),
                   static_cast<int>(data.handle));
@@ -4344,6 +4518,21 @@ void RS_FilterDXFRW::writeHeader(DRW_Header& data){
     }
 }
 
+void RS_FilterDXFRW::writeDwgClasses() {
+#ifdef DWGSUPPORT
+    if (m_dwgW == nullptr || m_graphic == nullptr)
+        return;
+    for (const auto& record : m_graphic->dwgAdvancedMetadata().rawObjects()) {
+        if (record.replayState != LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed
+            || !record.isCustomClass) {
+            continue;
+        }
+        DRW_UnsupportedObject object = rawObjectFromMetadata(record);
+        m_dwgW->registerRawDwgObjectClass(&object);
+    }
+#endif
+}
+
 void RS_FilterDXFRW::writeLType(const UTF8STRING& lTypeName, const UTF8STRING& ltDescription, int ltSize,
                                 double ltLength, const std::vector<double>& ltPath) {
     DRW_LType ltype;
@@ -4533,7 +4722,25 @@ void RS_FilterDXFRW::writeViews() {
 //            vie.namedUCS_ID = ucs.
 //            vie.baseUCS_ID = ucs.
         }
-        m_dxfW->writeView(&vie);
+        if (const auto* viewMetadata =
+                m_graphic->dwgAdvancedMetadata().findViewByName(vie.name)) {
+            vie.namedUCS_ID = viewMetadata->namedUcsHandle;
+            vie.baseUCS_ID = viewMetadata->baseUcsHandle;
+            vie.m_useDefaultLights = viewMetadata->useDefaultLights;
+            vie.m_defaultLightingType = viewMetadata->defaultLightingType;
+            vie.m_brightness = viewMetadata->brightness;
+            vie.m_contrast = viewMetadata->contrast;
+            vie.m_ambientColor = viewMetadata->ambientColor;
+            vie.m_backgroundHandle = viewMetadata->backgroundHandle;
+            vie.m_visualStyleHandle = viewMetadata->visualStyleHandle;
+            vie.m_sunHandle = viewMetadata->sunHandle;
+            vie.m_liveSectionHandle = viewMetadata->liveSectionHandle;
+        }
+        if (m_dwgW != nullptr) {
+            m_dwgW->addView(&vie);
+        } else {
+            m_dxfW->writeView(&vie);
+        }
     }
 }
 
@@ -5097,7 +5304,41 @@ void RS_FilterDXFRW::prepareDRWDimStyle(DRW_Dimstyle &d, LC_DimStyle* ds) {
 }
 
 void RS_FilterDXFRW::writeObjects() {
-    if (m_dwgW) return;  // DWG writer handles object section internally
+    if (m_dwgW) {
+        const auto& metadata = m_graphic->dwgAdvancedMetadata();
+        bool hasBlockedReplay = false;
+        int replayedObjects = 0;
+        for (const auto& record : metadata.rawObjects()) {
+            if (record.replayState != LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed)
+                continue;
+            if (record.isEntity || record.rawBytes.empty()) {
+                hasBlockedReplay = true;
+                continue;
+            }
+            DRW_UnsupportedObject object = rawObjectFromMetadata(record);
+            if (m_dwgW->writeRawDwgObject(&object)) {
+                ++replayedObjects;
+            } else {
+                hasBlockedReplay = true;
+            }
+        }
+        if (replayedObjects > 0) {
+            RS_DEBUG->print("RS_FilterDXFRW::writeObjects: replayed %d raw DWG objects",
+                            replayedObjects);
+        }
+        const bool hasSemanticOnlyReplayable =
+            !metadata.lights().empty() || !metadata.suns().empty()
+            || !metadata.modelerGeometry().empty() || !metadata.tables().empty()
+            || !metadata.associativeObjects().empty() || !metadata.acshObjects().empty();
+        if (hasBlockedReplay || hasSemanticOnlyReplayable) {
+            RS_DEBUG->print(
+                RS_Debug::D_WARNING,
+                "Some DWG advanced metadata still cannot be emitted natively; "
+                "unchanged raw OBJECTS are replayed where safe, while entities "
+                "and semantic-only records remain diagnostic-only");
+        }
+        return;  // DWG writer handles object section internally
+    }
     /* PLOTSETTINGS */
     DRW_PlotSettings ps;
     QString horizXvert = QString("%1x%2").arg(m_graphic->getPagesNumHoriz())
@@ -5855,8 +6096,10 @@ void RS_FilterDXFRW::writeEntity(RS_Entity* e){
         writeSpline(static_cast<RS_Spline*>(e));
         break;
     case RS2::EntitySplinePoints:
-    case RS2::EntityParabola:
         writeSplinePoints(static_cast<LC_SplinePoints*>(e));
+        break;
+    case RS2::EntityParabola:
+        writeParabola(static_cast<LC_Parabola*>(e));
         break;
 //    case RS2::EntityVertex:
 //        break;
@@ -6416,6 +6659,21 @@ void RS_FilterDXFRW::writeHyperbola(LC_Hyperbola* h) {
 }
 
 /**
+ * Write a parabola entity as its canonical non-rational quadratic SPLINE.
+ */
+void RS_FilterDXFRW::writeParabola(LC_Parabola* p) {
+    if (p == nullptr || !p->getData().isValid())
+        return;
+
+    DRW_Spline spl;
+    getEntityAttributes(&spl, p);
+    if (LC_ParabolaSpline::parabolaToSpline(p->getData(), spl)) {
+        if (m_dwgW) { m_dwgW->writeSpline(&spl); return; }
+        if (m_dxfW) m_dxfW->writeSpline(&spl);
+    }
+}
+
+/**
  * Writes the given block insert entity to the file.
  */
 void RS_FilterDXFRW::writeInsert(RS_Insert* i) {
@@ -6778,7 +7036,6 @@ void RS_FilterDXFRW::writeDimension(RS_Dimension* d) {
  * Writes the given leader entity to the file.
  */
 void RS_FilterDXFRW::writeLeader(RS_Leader* l) {
-    if (m_dwgW) return;
     if (l->count() <= 0) {
         RS_DEBUG->print(RS_Debug::D_WARNING, "dropping leader with no vertices");
     }
@@ -6805,6 +7062,10 @@ void RS_FilterDXFRW::writeLeader(RS_Leader* l) {
 		leader.vertexlist.push_back(std::make_shared<DRW_Coord>(li->getEndpoint().x, li->getEndpoint().y, 0.0));
 	}
 
+    if (m_dwgW) {
+        m_dwgW->writeLeader(&leader);
+        return;
+    }
     m_dxfW->writeLeader(&leader);
 }
 
@@ -7101,17 +7362,12 @@ void RS_FilterDXFRW::writeWipeout(LC_Wipeout *w) {
 }
 
 /**
- * Serialize an LC_MLeader to DXF MULTILEADER.  Phase 9 emits the
- * entity-level scalar fields (override flags, leader type/color/weight,
- * landing/dogleg, attachment types, content type, etc.).  The full
- * AcDbMLeaderObjectContextData CONTEXT_DATA{} block (root → leader
- * line → point hierarchy + content branch) is NOT emitted yet — a
- * full faithful round-trip needs the control-flow group-code state
- * machine.  Read-side parser can recover what was written; consumers
- * that depend on geometric round-trip will need the follow-up.
+ * Serialize an LC_MLeader. DWG AC1024+ writes a native text-content
+ * MULTILEADER subset with context roots, leader lines, and text content.
+ * DXF keeps the older scalar/context writer. Unsupported complex content
+ * still falls back to visible LEADER/MTEXT geometry on DWG export.
  */
 void RS_FilterDXFRW::writeMLeader(LC_MLeader *m) {
-  if (m_dwgW) return;
   if (m == nullptr)
     return;
   DRW_MLeader e;
@@ -7128,6 +7384,118 @@ void RS_FilterDXFRW::writeMLeader(LC_MLeader *m) {
   e.doglegEnabled = d.doglegEnabled;
   e.styleContentType = d.contentType;
   e.scaleFactor = d.scaleFactor;
+  e.classVersion = 2;
+  e.context.roots.reserve(d.roots.size());
+  for (const auto &sourceRoot : d.roots) {
+    DRW_MLeaderRoot root;
+    root.isContentValid = sourceRoot.connectionPoint.valid;
+    root.unknown291 = sourceRoot.direction.valid;
+    root.connectionPoint = DRW_Coord(sourceRoot.connectionPoint.x,
+                                     sourceRoot.connectionPoint.y,
+                                     sourceRoot.connectionPoint.z);
+    root.direction = DRW_Coord(sourceRoot.direction.x, sourceRoot.direction.y,
+                               sourceRoot.direction.z);
+    root.leaderIndex = static_cast<dint32>(e.context.roots.size());
+    root.landingDistance = sourceRoot.landingDistance;
+    root.attachmentDirection = static_cast<duint16>(sourceRoot.attachmentDirection);
+    root.leaderLines.reserve(sourceRoot.leaderLines.size());
+    for (const auto &sourceLine : sourceRoot.leaderLines) {
+      DRW_MLeaderLeaderLine line;
+      line.leaderLineIndex = sourceLine.leaderLineIndex;
+      line.leaderType = static_cast<duint16>(d.leaderType);
+      line.color = d.leaderColor;
+      line.lineWeight = e.lWeight;
+      line.arrowSize = d.arrowSize;
+      line.overrideFlags = 0;
+      line.points.reserve(sourceLine.points.size());
+      for (const RS_Vector &point : sourceLine.points)
+        line.points.emplace_back(point.x, point.y, point.z);
+      root.leaderLines.push_back(std::move(line));
+    }
+    e.context.roots.push_back(std::move(root));
+  }
+  e.context.overallScale = d.scaleFactor;
+  e.context.contentBasePoint = DRW_Coord(d.contentBasePoint.x,
+                                         d.contentBasePoint.y,
+                                         d.contentBasePoint.z);
+  e.context.textHeight = d.textHeight > 0.0 ? d.textHeight : 1.0;
+  e.context.arrowHeadSize = d.arrowSize;
+  e.context.landingGap = d.landingDistance;
+  e.context.hasTextContents = d.hasTextContents;
+  e.context.textLabel = toDxfString(d.textLabel).toUtf8().data();
+  e.context.textNormal = DRW_Coord(0.0, 0.0, 1.0);
+  const RS_Vector textLocation =
+      d.textLocation.valid ? d.textLocation : d.contentBasePoint;
+  e.context.textLocation = DRW_Coord(textLocation.x, textLocation.y,
+                                     textLocation.z);
+  e.context.textDirection = DRW_Coord(std::cos(d.textRotation),
+                                      std::sin(d.textRotation), 0.0);
+  e.context.textRotation = d.textRotation;
+  e.context.boundaryWidth = d.boundaryWidth;
+  e.context.boundaryHeight = d.boundaryHeight;
+  e.context.lineSpacingFactor = 1.0;
+  e.context.lineSpacingStyle = 1;
+  e.context.textColor = d.textColor;
+  e.context.alignment = 1;
+  e.context.flowDirection = 1;
+  e.context.bgScaleFactor = 1.5;
+  e.context.basePoint = DRW_Coord(d.basePoint.x, d.basePoint.y, d.basePoint.z);
+  e.context.baseDirection = DRW_Coord(1.0, 0.0, 0.0);
+  e.context.baseVertical = DRW_Coord(0.0, 1.0, 0.0);
+  if (m_dwgW) {
+    if (m_version >= 1024 && d.hasTextContents && !d.textLabel.isEmpty()
+        && m_dwgW->writeMLeader(&e)) {
+      return;
+    }
+    bool wroteGeometry = false;
+    for (const auto &root : d.roots) {
+      for (const auto &line : root.leaderLines) {
+        if (line.points.size() < 2)
+          continue;
+        DRW_Leader leader;
+        getEntityAttributes(&leader, m);
+        leader.style = d.styleName.isEmpty() ? "Standard" : d.styleName.toStdString();
+        leader.arrow = true;
+        leader.leadertype = d.leaderType == 2 ? 1 : 0;
+        leader.flag = 3;
+        leader.hookline = 0;
+        leader.hookflag = 0;
+        leader.textheight = d.textHeight > 0.0 ? d.textHeight : 1.0;
+        leader.textwidth = d.boundaryWidth > 0.0 ? d.boundaryWidth : 10.0;
+        leader.vertnum = static_cast<int>(line.points.size());
+        leader.vertexlist.reserve(line.points.size());
+        for (const RS_Vector &point : line.points) {
+          leader.vertexlist.push_back(
+              std::make_shared<DRW_Coord>(point.x, point.y, point.z));
+        }
+        m_dwgW->writeLeader(&leader);
+        wroteGeometry = true;
+      }
+    }
+    if (d.hasTextContents && !d.textLabel.isEmpty()) {
+      DRW_MText text;
+      getEntityAttributes(&text, m);
+      const RS_Vector insertion =
+          d.textLocation.valid ? d.textLocation : d.contentBasePoint;
+      text.basePoint.x = insertion.x;
+      text.basePoint.y = insertion.y;
+      text.basePoint.z = insertion.z;
+      text.height = d.textHeight > 0.0 ? d.textHeight : 1.0;
+      text.angle = d.textRotation * 180.0 / M_PI;
+      text.style =
+          d.textStyleName.isEmpty() ? "Standard" : d.textStyleName.toStdString();
+      text.text = toDxfString(d.textLabel).toUtf8().data();
+      text.widthscale = d.boundaryWidth;
+      text.interlin = 1.0;
+      m_dwgW->writeMText(&text);
+      wroteGeometry = true;
+    }
+    if (!wroteGeometry) {
+      RS_DEBUG->print(RS_Debug::D_WARNING,
+                      "dropping MLEADER with no writable leader/text geometry");
+    }
+    return;
+  }
   m_dxfW->writeMultiLeader(&e);
 }
 
