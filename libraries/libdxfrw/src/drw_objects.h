@@ -220,6 +220,9 @@ public:
     DRW_SpatialFilter() { tType = DRW::SPATIALFILTER; }
 protected:
     bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) override;
+    bool encodeDwg(DRW::Version version, dwgBufferW *buf,
+                   dwgBufferW *strBuf = nullptr,
+                   dwgBufferW *handleBuf = nullptr) const;
 public:
     std::vector<DRW_Coord> m_boundaryPoints;
     DRW_Coord m_normal{0.0, 0.0, 1.0};
@@ -251,6 +254,9 @@ public:
     DRW_GeoData() { tType = DRW::GEODATA; }
 protected:
     bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) override;
+    bool encodeDwg(DRW::Version version, dwgBufferW *buf,
+                   dwgBufferW *strBuf = nullptr,
+                   dwgBufferW *handleBuf = nullptr) const;
 public:
     dint32 m_version = 0;
     duint32 m_hostBlockHandle = 0;
@@ -927,6 +933,9 @@ public:
     }
 protected:
     bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) override;
+    bool encodeDwg(DRW::Version version, dwgBufferW *buf,
+                   dwgBufferW *strBuf = nullptr,
+                   dwgBufferW *handleBuf = nullptr) const;
 public:
     duint32 m_defaultEntryHandle = 0;
 };
@@ -944,6 +953,9 @@ public:
     }
 protected:
     bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) override;
+    bool encodeDwg(DRW::Version version, dwgBufferW *buf,
+                   dwgBufferW *strBuf = nullptr,
+                   dwgBufferW *handleBuf = nullptr) const;
 public:
     int m_schema = 0;       /*!< code 280 */
     UTF8STRING m_value;     /*!< code 1 */
@@ -1016,6 +1028,9 @@ public:
     }
 protected:
     bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) override;
+    bool encodeDwg(DRW::Version version, dwgBufferW *buf,
+                   dwgBufferW *strBuf = nullptr,
+                   dwgBufferW *handleBuf = nullptr) const;
 public:
     UTF8STRING m_evaluatorId;
     UTF8STRING m_fieldCode;
@@ -1047,6 +1062,9 @@ public:
     }
 protected:
     bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) override;
+    bool encodeDwg(DRW::Version version, dwgBufferW *buf,
+                   dwgBufferW *strBuf = nullptr,
+                   dwgBufferW *handleBuf = nullptr) const;
 public:
     int m_unknown = 0;
     std::vector<duint32> m_fieldHandles;
@@ -1067,6 +1085,9 @@ public:
     }
 protected:
     bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) override;
+    bool encodeDwg(DRW::Version version, dwgBufferW *buf,
+                   dwgBufferW *strBuf = nullptr,
+                   dwgBufferW *handleBuf = nullptr) const;
 public:
     int m_classVersion = 0;
     int m_imageFrame = 0;
@@ -1088,6 +1109,9 @@ public:
     }
 protected:
     bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) override;
+    bool encodeDwg(DRW::Version version, dwgBufferW *buf,
+                   dwgBufferW *strBuf = nullptr,
+                   dwgBufferW *handleBuf = nullptr) const;
 public:
     std::vector<duint32> m_sortHandles;
     duint32 m_blockOwnerHandle = 0;
@@ -1956,6 +1980,9 @@ public:
     }
 protected:
     bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) override;
+    bool encodeDwg(DRW::Version version, dwgBufferW *buf,
+                   dwgBufferW *strBuf = nullptr,
+                   dwgBufferW *handleBuf = nullptr) const;
 public:
     int classVersion = 0;                /*!< class_version RC, always 0 */
     std::vector<duint32> objIds;         /*!< object handles (soft pointer) */
@@ -1985,6 +2012,9 @@ public:
     }
 protected:
     bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) override;
+    bool encodeDwg(DRW::Version version, dwgBufferW *buf,
+                   dwgBufferW *strBuf = nullptr,
+                   dwgBufferW *handleBuf = nullptr) const;
 public:
     duint32 timestamp1 = 0;          /*!< Julian day BL */
     duint32 timestamp2 = 0;          /*!< milliseconds BL */
@@ -2010,6 +2040,9 @@ public:
     }
 protected:
     bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) override;
+    bool encodeDwg(DRW::Version version, dwgBufferW *buf,
+                   dwgBufferW *strBuf = nullptr,
+                   dwgBufferW *handleBuf = nullptr) const;
 public:
     duint32 timestamp1 = 0;          /*!< Julian day BL */
     duint32 timestamp2 = 0;          /*!< milliseconds BL */

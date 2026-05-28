@@ -72,6 +72,50 @@ public:
                               dwgBufferW* buf) {
         return e.encodeDwg(v, buf);
     }
+    static bool encodeRasterVariables(const DRW_RasterVariables& e,
+                                       DRW::Version v, dwgBufferW* buf) {
+        return e.encodeDwg(v, buf);
+    }
+    static bool encodeSortEntsTable(const DRW_SortEntsTable& e,
+                                     DRW::Version v, dwgBufferW* buf) {
+        return e.encodeDwg(v, buf);
+    }
+    static bool encodeSpatialFilter(const DRW_SpatialFilter& e,
+                                     DRW::Version v, dwgBufferW* buf) {
+        return e.encodeDwg(v, buf);
+    }
+    static bool encodeGeoData(const DRW_GeoData& e, DRW::Version v,
+                               dwgBufferW* buf) {
+        return e.encodeDwg(v, buf);
+    }
+    static bool encodeDictionaryVar(const DRW_DictionaryVar& e, DRW::Version v,
+                                     dwgBufferW* buf) {
+        return e.encodeDwg(v, buf);
+    }
+    static bool encodeDictionaryWDflt(const DRW_DictionaryWithDefault& e,
+                                       DRW::Version v, dwgBufferW* buf) {
+        return e.encodeDwg(v, buf);
+    }
+    static bool encodeIDBuffer(const DRW_IDBuffer& e, DRW::Version v,
+                                dwgBufferW* buf) {
+        return e.encodeDwg(v, buf);
+    }
+    static bool encodeLayerIndex(const DRW_LayerIndex& e, DRW::Version v,
+                                  dwgBufferW* buf) {
+        return e.encodeDwg(v, buf);
+    }
+    static bool encodeSpatialIndex(const DRW_SpatialIndex& e, DRW::Version v,
+                                    dwgBufferW* buf) {
+        return e.encodeDwg(v, buf);
+    }
+    static bool encodeField(const DRW_Field& e, DRW::Version v,
+                             dwgBufferW* buf) {
+        return e.encodeDwg(v, buf);
+    }
+    static bool encodeFieldList(const DRW_FieldList& e, DRW::Version v,
+                                 dwgBufferW* buf) {
+        return e.encodeDwg(v, buf);
+    }
     static dint16 oType(const DRW_TableEntry& e) { return e.oType; }
     static void setNumReactors(DRW_TableEntry& e, dint32 n) { e.numReactors = n; }
     static void setXDictFlag(DRW_TableEntry& e, duint8 f) { e.xDictFlag = f; }
@@ -951,4 +995,479 @@ TEST_CASE("DRW_Layout::encodeDwg emits common handle prefix before type-specific
     REQUIRE(dst.lastActiveViewportHandle.ref    == 0x91u);
     REQUIRE(dst.baseUcsHandle.ref               == 0x92u);
     REQUIRE(dst.namedUcsHandle.ref              == 0x93u);
+}
+
+// RASTERVARIABLES encoder round-trip (ODA §20.4.91).  Tiny body: 4 ints +
+// common handle prefix.  No type-specific handle tail.
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("DRW_RasterVariables::encodeDwg round-trips classVersion + frame + quality + units",
+          "[dwg-write][object-encode][rastervariables]") {
+    DRW_RasterVariables src;
+    src.handle       = 0x900;
+    src.parentHandle = 0xC;          // Named-objects dictionary
+    src.m_classVersion = 0;
+    src.m_imageFrame   = 1;
+    src.m_imageQuality = 1;
+    src.m_units        = 2;          // millimeters
+    DrwObjectEncodeTestAccess::setNumReactors(src, 0);
+    DrwObjectEncodeTestAccess::setXDictFlag(src, 1);   // no xdic
+
+    DRW::Version ver = DRW::AC1018;
+    dwgBufferW w;
+    emitObjectPreamble(w, ver, /*oType=*/0 /* custom-class */, src.handle,
+                       /*numReactors=*/0, /*xDictFlag=*/1);
+    REQUIRE(DrwObjectEncodeTestAccess::encodeRasterVariables(src, ver, &w));
+
+    auto bytes = snapshot(w);
+    dwgBuffer r(bytes.data(), bytes.size());
+    DRW_RasterVariables dst;
+    REQUIRE(DrwObjectEncodeTestAccess::parse(dst, ver, &r));
+
+    REQUIRE(dst.m_classVersion == 0);
+    REQUIRE(dst.m_imageFrame   == 1);
+    REQUIRE(dst.m_imageQuality == 1);
+    REQUIRE(dst.m_units        == 2);
+    REQUIRE(static_cast<duint32>(dst.parentHandle) == 0xCu);
+}
+
+// SORTENTSTABLE encoder round-trip (ODA §20.4.93).  Body: numEntries +
+// inline sort handles.  Handle stream: common prefix + block owner + N
+// entity handles.  N parallel arrays — sortHandles[i] corresponds to
+// entityHandles[i] post-sort.
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("DRW_SortEntsTable::encodeDwg round-trips sort + entity handles + block owner",
+          "[dwg-write][object-encode][sortentstable]") {
+    DRW_SortEntsTable src;
+    src.handle           = 0xA00;
+    src.parentHandle     = 0x1F;            // BLOCK_RECORD owner
+    src.m_blockOwnerHandle = 0x1F;
+    src.m_sortHandles    = {0x101, 0x102, 0x103};
+    src.m_entityHandles  = {0x201, 0x202, 0x203};
+    DrwObjectEncodeTestAccess::setNumReactors(src, 0);
+    DrwObjectEncodeTestAccess::setXDictFlag(src, 1);   // no xdic
+
+    DRW::Version ver = DRW::AC1018;
+    dwgBufferW w;
+    emitObjectPreamble(w, ver, /*oType=*/0, src.handle,
+                       /*numReactors=*/0, /*xDictFlag=*/1);
+    REQUIRE(DrwObjectEncodeTestAccess::encodeSortEntsTable(src, ver, &w));
+
+    auto bytes = snapshot(w);
+    dwgBuffer r(bytes.data(), bytes.size());
+    DRW_SortEntsTable dst;
+    REQUIRE(DrwObjectEncodeTestAccess::parse(dst, ver, &r));
+
+    REQUIRE(static_cast<duint32>(dst.parentHandle) == 0x1Fu);
+    REQUIRE(dst.m_blockOwnerHandle == 0x1Fu);
+    REQUIRE(dst.m_sortHandles.size() == 3u);
+    REQUIRE(dst.m_sortHandles[0] == 0x101u);
+    REQUIRE(dst.m_sortHandles[1] == 0x102u);
+    REQUIRE(dst.m_sortHandles[2] == 0x103u);
+    REQUIRE(dst.m_entityHandles.size() == 3u);
+    REQUIRE(dst.m_entityHandles[0] == 0x201u);
+    REQUIRE(dst.m_entityHandles[1] == 0x202u);
+    REQUIRE(dst.m_entityHandles[2] == 0x203u);
+}
+
+// SPATIAL_FILTER encoder round-trip (ODA §20.4.94).  Boundary points + normal
+// + origin + clip flags + optional clip distances + 4x3 transform matrices.
+// Handle stream is just the common prefix (no type-specific handles).
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("DRW_SpatialFilter::encodeDwg round-trips clip boundary + transforms",
+          "[dwg-write][object-encode][spatialfilter]") {
+    DRW_SpatialFilter src;
+    src.handle       = 0xB00;
+    src.parentHandle = 0x44;                // INSERT/IMAGE owner
+    src.m_boundaryPoints = {
+        DRW_Coord{0.0, 0.0, 0.0},
+        DRW_Coord{10.0, 0.0, 0.0},
+        DRW_Coord{10.0, 10.0, 0.0},
+        DRW_Coord{0.0, 10.0, 0.0}
+    };
+    src.m_normal = DRW_Coord{0.0, 0.0, 1.0};
+    src.m_origin = DRW_Coord{0.0, 0.0, 0.0};
+    src.m_displayBoundary = true;
+    src.m_clipFrontPlane  = true;
+    src.m_frontDistance   = 5.0;
+    src.m_clipBackPlane   = false;
+    src.m_backDistance    = 0.0;
+    src.m_inverseInsertTransform = {
+        1.0, 0.0, 0.0, 0.0,
+        0.0, 1.0, 0.0, 0.0,
+        0.0, 0.0, 1.0, 0.0
+    };
+    src.m_insertTransform = {
+        1.0, 0.0, 0.0, 0.0,
+        0.0, 1.0, 0.0, 0.0,
+        0.0, 0.0, 1.0, 0.0
+    };
+    DrwObjectEncodeTestAccess::setNumReactors(src, 0);
+    DrwObjectEncodeTestAccess::setXDictFlag(src, 1);   // no xdic
+
+    DRW::Version ver = DRW::AC1018;
+    dwgBufferW w;
+    emitObjectPreamble(w, ver, /*oType=*/0, src.handle,
+                       /*numReactors=*/0, /*xDictFlag=*/1);
+    REQUIRE(DrwObjectEncodeTestAccess::encodeSpatialFilter(src, ver, &w));
+
+    auto bytes = snapshot(w);
+    dwgBuffer r(bytes.data(), bytes.size());
+    DRW_SpatialFilter dst;
+    REQUIRE(DrwObjectEncodeTestAccess::parse(dst, ver, &r));
+
+    REQUIRE(static_cast<duint32>(dst.parentHandle) == 0x44u);
+    REQUIRE(dst.m_boundaryPoints.size() == 4u);
+    REQUIRE(dst.m_boundaryPoints[0].x == Approx(0.0));
+    REQUIRE(dst.m_boundaryPoints[1].x == Approx(10.0));
+    REQUIRE(dst.m_boundaryPoints[2].y == Approx(10.0));
+    REQUIRE(dst.m_boundaryPoints[3].y == Approx(10.0));
+    REQUIRE(dst.m_normal.z   == Approx(1.0));
+    REQUIRE(dst.m_origin.x   == Approx(0.0));
+    REQUIRE(dst.m_displayBoundary == true);
+    REQUIRE(dst.m_clipFrontPlane  == true);
+    REQUIRE(dst.m_frontDistance   == Approx(5.0));
+    REQUIRE(dst.m_clipBackPlane   == false);
+    REQUIRE(dst.m_inverseInsertTransform.size() == 12u);
+    REQUIRE(dst.m_inverseInsertTransform[0]  == Approx(1.0));
+    REQUIRE(dst.m_inverseInsertTransform[5]  == Approx(1.0));
+    REQUIRE(dst.m_inverseInsertTransform[10] == Approx(1.0));
+    REQUIRE(dst.m_insertTransform.size() == 12u);
+    REQUIRE(dst.m_insertTransform[5] == Approx(1.0));
+}
+
+// GEODATA encoder round-trip (ODA §20.4.78).  Test the m_version=2/3 path
+// (R2010+ schema) since that's what current AutoCAD releases write.
+// Body: common handles + version + host block + coordinatesType + 13 fields
+// + 3 observation TVs + N mesh points + N mesh faces.
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("DRW_GeoData::encodeDwg round-trips version=2 metadata + mesh",
+          "[dwg-write][object-encode][geodata]") {
+    DRW_GeoData src;
+    src.handle       = 0xC00;
+    src.parentHandle = 0x1A;
+    src.m_version    = 2;
+    src.m_hostBlockHandle = 0x1F;
+    src.m_coordinatesType = 1;
+    src.m_designPoint    = DRW_Coord{0.0, 0.0, 0.0};
+    src.m_referencePoint = DRW_Coord{500000.0, 4000000.0, 0.0};
+    src.m_horizontalUnitScale = 0.3048;       // foot -> meter
+    src.m_horizontalUnits     = 6;            // 6 = meters
+    src.m_verticalUnitScale   = 1.0;
+    src.m_verticalUnits       = 6;
+    src.m_upDirection         = DRW_Coord{0.0, 0.0, 1.0};
+    src.m_northDirection      = DRW_Coord{0.0, 1.0, 0.0};
+    src.m_scaleEstimationMethod = 1;
+    src.m_userSpecifiedScaleFactor = 1.0;
+    src.m_enableSeaLevelCorrection = false;
+    src.m_seaLevelElevation = 0.0;
+    src.m_coordinateProjectionRadius = 6378137.0;
+    src.m_coordinateSystemDefinition = "EPSG:3857";
+    src.m_geoRssTag = "<rss/>";
+    src.m_observationFromTag    = "from";
+    src.m_observationToTag      = "to";
+    src.m_observationCoverageTag = "coverage";
+    src.m_points.push_back({DRW_Coord{0.0, 0.0, 0.0}, DRW_Coord{1.0, 1.0, 0.0}});
+    src.m_points.push_back({DRW_Coord{1.0, 0.0, 0.0}, DRW_Coord{2.0, 1.0, 0.0}});
+    src.m_faces.push_back({1, 2, 3});
+    DrwObjectEncodeTestAccess::setNumReactors(src, 0);
+    DrwObjectEncodeTestAccess::setXDictFlag(src, 1);   // no xdic
+
+    DRW::Version ver = DRW::AC1018;
+    dwgBufferW w;
+    emitObjectPreamble(w, ver, /*oType=*/0, src.handle,
+                       /*numReactors=*/0, /*xDictFlag=*/1);
+    REQUIRE(DrwObjectEncodeTestAccess::encodeGeoData(src, ver, &w));
+
+    auto bytes = snapshot(w);
+    dwgBuffer r(bytes.data(), bytes.size());
+    DRW_GeoData dst;
+    REQUIRE(DrwObjectEncodeTestAccess::parse(dst, ver, &r));
+
+    REQUIRE(static_cast<duint32>(dst.parentHandle) == 0x1Au);
+    REQUIRE(dst.m_version == 2);
+    REQUIRE(dst.m_hostBlockHandle == 0x1Fu);
+    REQUIRE(dst.m_coordinatesType == 1);
+    REQUIRE(dst.m_designPoint.x    == Approx(0.0));
+    REQUIRE(dst.m_referencePoint.x == Approx(500000.0));
+    REQUIRE(dst.m_referencePoint.y == Approx(4000000.0));
+    REQUIRE(dst.m_horizontalUnitScale == Approx(0.3048));
+    REQUIRE(dst.m_horizontalUnits     == 6);
+    REQUIRE(dst.m_verticalUnitScale   == Approx(1.0));
+    REQUIRE(dst.m_verticalUnits       == 6);
+    REQUIRE(dst.m_upDirection.z       == Approx(1.0));
+    REQUIRE(dst.m_northDirection.y    == Approx(1.0));
+    REQUIRE(dst.m_scaleEstimationMethod == 1);
+    REQUIRE(dst.m_userSpecifiedScaleFactor == Approx(1.0));
+    REQUIRE(dst.m_enableSeaLevelCorrection == false);
+    REQUIRE(dst.m_coordinateProjectionRadius == Approx(6378137.0));
+    REQUIRE(dst.m_coordinateSystemDefinition == "EPSG:3857");
+    REQUIRE(dst.m_geoRssTag == "<rss/>");
+    REQUIRE(dst.m_observationFromTag == "from");
+    REQUIRE(dst.m_observationToTag   == "to");
+    REQUIRE(dst.m_observationCoverageTag == "coverage");
+    REQUIRE(dst.m_points.size() == 2u);
+    REQUIRE(dst.m_points[0].m_source.x      == Approx(0.0));
+    REQUIRE(dst.m_points[0].m_destination.y == Approx(1.0));
+    REQUIRE(dst.m_points[1].m_source.x      == Approx(1.0));
+    REQUIRE(dst.m_points[1].m_destination.x == Approx(2.0));
+    REQUIRE(dst.m_faces.size() == 1u);
+    REQUIRE(dst.m_faces[0].m_index1 == 1);
+    REQUIRE(dst.m_faces[0].m_index2 == 2);
+    REQUIRE(dst.m_faces[0].m_index3 == 3);
+}
+
+// DICTIONARYVAR encoder round-trip (ODA §20.4.46).  Body: schema RC + value TV.
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("DRW_DictionaryVar::encodeDwg round-trips schema + value",
+          "[dwg-write][object-encode][dictionaryvar]") {
+    DRW_DictionaryVar src;
+    src.handle       = 0xD00;
+    src.parentHandle = 0x40;
+    src.m_schema     = 0;
+    src.m_value      = "Standard";
+    DrwObjectEncodeTestAccess::setNumReactors(src, 0);
+    DrwObjectEncodeTestAccess::setXDictFlag(src, 1);   // no xdic
+
+    DRW::Version ver = DRW::AC1018;
+    dwgBufferW w;
+    emitObjectPreamble(w, ver, /*oType=*/0, src.handle,
+                       /*numReactors=*/0, /*xDictFlag=*/1);
+    REQUIRE(DrwObjectEncodeTestAccess::encodeDictionaryVar(src, ver, &w));
+
+    auto bytes = snapshot(w);
+    dwgBuffer r(bytes.data(), bytes.size());
+    DRW_DictionaryVar dst;
+    REQUIRE(DrwObjectEncodeTestAccess::parse(dst, ver, &r));
+
+    REQUIRE(dst.m_schema == 0);
+    REQUIRE(dst.m_value  == "Standard");
+    REQUIRE(static_cast<duint32>(dst.parentHandle) == 0x40u);
+}
+
+// DICTIONARYWDFLT encoder round-trip (ODA §20.4.45).  Inherits DICTIONARY's
+// body + handle stream and appends a default-entry handle.
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("DRW_DictionaryWithDefault::encodeDwg round-trips dictionary + default entry",
+          "[dwg-write][object-encode][dictionarywdflt]") {
+    DRW_DictionaryWithDefault src;
+    src.handle       = 0xE00;
+    src.parentHandle = 0xC;
+    src.cloning      = 1;
+    src.hardOwner    = 1;
+    src.m_entries.push_back({"ENTRY_A", 0x71});
+    src.m_entries.push_back({"ENTRY_B", 0x72});
+    src.m_defaultEntryHandle = 0x71;       // default points at ENTRY_A
+    DrwObjectEncodeTestAccess::setNumReactors(src, 0);
+    DrwObjectEncodeTestAccess::setXDictFlag(src, 1);   // no xdic
+
+    DRW::Version ver = DRW::AC1018;
+    dwgBufferW w;
+    emitObjectPreamble(w, ver, /*oType=*/0, src.handle,
+                       /*numReactors=*/0, /*xDictFlag=*/1);
+    REQUIRE(DrwObjectEncodeTestAccess::encodeDictionaryWDflt(src, ver, &w));
+
+    auto bytes = snapshot(w);
+    dwgBuffer r(bytes.data(), bytes.size());
+    DRW_DictionaryWithDefault dst;
+    REQUIRE(DrwObjectEncodeTestAccess::parse(dst, ver, &r));
+
+    REQUIRE(dst.cloning      == 1);
+    REQUIRE(dst.hardOwner    == 1);
+    REQUIRE(static_cast<duint32>(dst.parentHandle) == 0xCu);
+    REQUIRE(dst.m_entries.size() == 2u);
+    REQUIRE(dst.m_entries[0].m_name == "ENTRY_A");
+    REQUIRE(dst.m_entries[0].m_handle == 0x71u);
+    REQUIRE(dst.m_entries[1].m_name == "ENTRY_B");
+    REQUIRE(dst.m_entries[1].m_handle == 0x72u);
+    REQUIRE(dst.m_defaultEntryHandle == 0x71u);
+}
+
+// IDBUFFER encoder round-trip (ODA §20.4.79).  Body: class_version RC +
+// numIds BL.  Handle stream: common prefix + N object handles.
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("DRW_IDBuffer::encodeDwg round-trips object id list",
+          "[dwg-write][object-encode][idbuffer]") {
+    DRW_IDBuffer src;
+    src.handle       = 0xF00;
+    src.parentHandle = 0x10;
+    src.classVersion = 0;
+    src.objIds       = {0x101, 0x102, 0x103, 0x104};
+    DrwObjectEncodeTestAccess::setNumReactors(src, 0);
+    DrwObjectEncodeTestAccess::setXDictFlag(src, 1);   // no xdic
+
+    DRW::Version ver = DRW::AC1018;
+    dwgBufferW w;
+    emitObjectPreamble(w, ver, /*oType=*/0, src.handle,
+                       /*numReactors=*/0, /*xDictFlag=*/1);
+    REQUIRE(DrwObjectEncodeTestAccess::encodeIDBuffer(src, ver, &w));
+
+    auto bytes = snapshot(w);
+    dwgBuffer r(bytes.data(), bytes.size());
+    DRW_IDBuffer dst;
+    REQUIRE(DrwObjectEncodeTestAccess::parse(dst, ver, &r));
+
+    REQUIRE(static_cast<duint32>(dst.parentHandle) == 0x10u);
+    REQUIRE(dst.classVersion == 0);
+    REQUIRE(dst.objIds.size() == 4u);
+    REQUIRE(dst.objIds[0] == 0x101u);
+    REQUIRE(dst.objIds[1] == 0x102u);
+    REQUIRE(dst.objIds[2] == 0x103u);
+    REQUIRE(dst.objIds[3] == 0x104u);
+}
+
+// LAYER_INDEX encoder round-trip (ODA §20.4.83).  Body: timestamps + per-
+// layer index + name.  Handle stream: common prefix + per-layer entry handle.
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("DRW_LayerIndex::encodeDwg round-trips timestamps + per-layer entries",
+          "[dwg-write][object-encode][layerindex]") {
+    DRW_LayerIndex src;
+    src.handle       = 0x1000;
+    src.parentHandle = 0x10;
+    src.timestamp1   = 0x99887766u;
+    src.timestamp2   = 0x11223344u;
+    src.entries.push_back({1, "0",       0x301u});
+    src.entries.push_back({2, "Layer1",  0x302u});
+    src.entries.push_back({3, "Layer2",  0x303u});
+    DrwObjectEncodeTestAccess::setNumReactors(src, 0);
+    DrwObjectEncodeTestAccess::setXDictFlag(src, 1);   // no xdic
+
+    DRW::Version ver = DRW::AC1018;
+    dwgBufferW w;
+    emitObjectPreamble(w, ver, /*oType=*/0, src.handle,
+                       /*numReactors=*/0, /*xDictFlag=*/1);
+    REQUIRE(DrwObjectEncodeTestAccess::encodeLayerIndex(src, ver, &w));
+
+    auto bytes = snapshot(w);
+    dwgBuffer r(bytes.data(), bytes.size());
+    DRW_LayerIndex dst;
+    REQUIRE(DrwObjectEncodeTestAccess::parse(dst, ver, &r));
+
+    REQUIRE(static_cast<duint32>(dst.parentHandle) == 0x10u);
+    REQUIRE(dst.timestamp1 == 0x99887766u);
+    REQUIRE(dst.timestamp2 == 0x11223344u);
+    REQUIRE(dst.entries.size() == 3u);
+    REQUIRE(dst.entries[0].indexLong == 1);
+    REQUIRE(dst.entries[0].name == "0");
+    REQUIRE(dst.entries[0].entryHandle == 0x301u);
+    REQUIRE(dst.entries[1].indexLong == 2);
+    REQUIRE(dst.entries[1].name == "Layer1");
+    REQUIRE(dst.entries[1].entryHandle == 0x302u);
+    REQUIRE(dst.entries[2].indexLong == 3);
+    REQUIRE(dst.entries[2].name == "Layer2");
+    REQUIRE(dst.entries[2].entryHandle == 0x303u);
+}
+
+// SPATIAL_INDEX encoder round-trip (ODA §20.4.95).  Body: timestamps only at
+// AC1018 (parser leaves common handles unread pre-R2007 due to opaque blob).
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("DRW_SpatialIndex::encodeDwg round-trips timestamps at AC1018",
+          "[dwg-write][object-encode][spatialindex]") {
+    DRW_SpatialIndex src;
+    src.handle     = 0x1100;
+    src.timestamp1 = 0xDEADBEEFu;
+    src.timestamp2 = 0xCAFEBABEu;
+    DrwObjectEncodeTestAccess::setNumReactors(src, 0);
+    DrwObjectEncodeTestAccess::setXDictFlag(src, 1);
+
+    DRW::Version ver = DRW::AC1018;
+    dwgBufferW w;
+    emitObjectPreamble(w, ver, /*oType=*/0, src.handle,
+                       /*numReactors=*/0, /*xDictFlag=*/1);
+    REQUIRE(DrwObjectEncodeTestAccess::encodeSpatialIndex(src, ver, &w));
+
+    auto bytes = snapshot(w);
+    dwgBuffer r(bytes.data(), bytes.size());
+    DRW_SpatialIndex dst;
+    REQUIRE(DrwObjectEncodeTestAccess::parse(dst, ver, &r));
+
+    REQUIRE(dst.timestamp1 == 0xDEADBEEFu);
+    REQUIRE(dst.timestamp2 == 0xCAFEBABEu);
+}
+
+// FIELD encoder round-trip (ODA §20.4.66) — exercises dataType=2 (double)
+// value branch, the simplest CadValue path that round-trips cleanly at
+// AC1018 (pre-R2007 omits formatFlags + unitType + format/value strings).
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("DRW_Field::encodeDwg round-trips evaluator + double value + child handles",
+          "[dwg-write][object-encode][field]") {
+    DRW_Field src;
+    src.handle       = 0x1200;
+    src.parentHandle = 0x44;
+    src.m_evaluatorId           = "AcVariable";
+    src.m_fieldCode             = "%<\\AcVar Area>%";
+    src.m_formatString          = "%lf";
+    src.m_evaluationOptionFlags = 3;
+    src.m_filingOptionFlags     = 1;
+    src.m_fieldStateFlags       = 0;
+    src.m_evaluationStatusFlags = 0;
+    src.m_evaluationErrorCode   = 0;
+    src.m_evaluationErrorMessage = "";
+    src.m_value.m_dataType = 2;
+    src.m_value.m_value.addDouble(140, 42.5);
+    src.m_valueString       = "42.5";
+    src.m_valueStringLength = 4;
+    src.m_childHandles  = {0x401u, 0x402u};
+    src.m_objectHandles = {0x501u};
+    DrwObjectEncodeTestAccess::setNumReactors(src, 0);
+    DrwObjectEncodeTestAccess::setXDictFlag(src, 1);   // no xdic
+
+    DRW::Version ver = DRW::AC1018;
+    dwgBufferW w;
+    emitObjectPreamble(w, ver, /*oType=*/0, src.handle,
+                       /*numReactors=*/0, /*xDictFlag=*/1);
+    REQUIRE(DrwObjectEncodeTestAccess::encodeField(src, ver, &w));
+
+    auto bytes = snapshot(w);
+    dwgBuffer r(bytes.data(), bytes.size());
+    DRW_Field dst;
+    REQUIRE(DrwObjectEncodeTestAccess::parse(dst, ver, &r));
+
+    REQUIRE(static_cast<duint32>(dst.parentHandle) == 0x44u);
+    REQUIRE(dst.m_evaluatorId == "AcVariable");
+    REQUIRE(dst.m_fieldCode   == "%<\\AcVar Area>%");
+    REQUIRE(dst.m_formatString == "%lf");
+    REQUIRE(dst.m_evaluationOptionFlags == 3);
+    REQUIRE(dst.m_filingOptionFlags     == 1);
+    REQUIRE(dst.m_value.m_dataType == 2);
+    REQUIRE(dst.m_value.m_value.type() == DRW_Variant::DOUBLE);
+    REQUIRE(dst.m_value.m_value.d_val() == Approx(42.5));
+    REQUIRE(dst.m_valueString == "42.5");
+    REQUIRE(dst.m_valueStringLength == 4);
+    REQUIRE(dst.m_childHandles.size()  == 2u);
+    REQUIRE(dst.m_childHandles[0]  == 0x401u);
+    REQUIRE(dst.m_childHandles[1]  == 0x402u);
+    REQUIRE(dst.m_objectHandles.size() == 1u);
+    REQUIRE(dst.m_objectHandles[0] == 0x501u);
+}
+
+// FIELDLIST encoder round-trip (ODA §20.4.67).  Body: numFields BL + unknown
+// bit B.  Handle stream: common prefix + N field handles.
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("DRW_FieldList::encodeDwg round-trips field handles",
+          "[dwg-write][object-encode][fieldlist]") {
+    DRW_FieldList src;
+    src.handle       = 0x1300;
+    src.parentHandle = 0x44;
+    src.m_unknown    = 0;
+    src.m_fieldHandles = {0x1200u, 0x1201u, 0x1202u};
+    DrwObjectEncodeTestAccess::setNumReactors(src, 0);
+    DrwObjectEncodeTestAccess::setXDictFlag(src, 1);   // no xdic
+
+    DRW::Version ver = DRW::AC1018;
+    dwgBufferW w;
+    emitObjectPreamble(w, ver, /*oType=*/0, src.handle,
+                       /*numReactors=*/0, /*xDictFlag=*/1);
+    REQUIRE(DrwObjectEncodeTestAccess::encodeFieldList(src, ver, &w));
+
+    auto bytes = snapshot(w);
+    dwgBuffer r(bytes.data(), bytes.size());
+    DRW_FieldList dst;
+    REQUIRE(DrwObjectEncodeTestAccess::parse(dst, ver, &r));
+
+    REQUIRE(static_cast<duint32>(dst.parentHandle) == 0x44u);
+    REQUIRE(dst.m_unknown == 0);
+    REQUIRE(dst.m_fieldHandles.size() == 3u);
+    REQUIRE(dst.m_fieldHandles[0] == 0x1200u);
+    REQUIRE(dst.m_fieldHandles[1] == 0x1201u);
+    REQUIRE(dst.m_fieldHandles[2] == 0x1202u);
 }

@@ -3788,6 +3788,487 @@ bool DRW_Dictionary::encodeDwg(DRW::Version version, dwgBufferW *buf,
     return true;
 }
 
+// RASTERVARIABLES (AcDbRasterVariables) encoder — ODA §20.4.91.  Inverts
+// parseDwg above.  Body: classVersion BL + frame BS + quality BS + units BS.
+// Handle stream: common prefix only (no type-specific handles).
+bool DRW_RasterVariables::encodeDwg(DRW::Version version, dwgBufferW *buf,
+                                     dwgBufferW *strBuf,
+                                     dwgBufferW *handleBuf) const {
+    if (buf == nullptr) return false;
+    DRW_UNUSED(strBuf);
+    dwgBufferW *hb = (handleBuf != nullptr && version > DRW::AC1018) ? handleBuf : buf;
+
+    buf->putBitLong(static_cast<dint32>(m_classVersion));
+    buf->putBitShort(static_cast<dint16>(m_imageFrame));
+    buf->putBitShort(static_cast<dint16>(m_imageQuality));
+    buf->putBitShort(static_cast<dint16>(m_units));
+
+    // Common handle prefix (parentHandle + reactors + xdic).
+    hb->putHandle(makeSoftOwnerW(static_cast<duint32>(parentHandle)));
+    for (dint32 i = 0; i < numReactors; ++i) {
+        hb->putHandle(makeSoftOwnerW(0));
+    }
+    if (xDictFlag != 1) {
+        hb->putHandle(makeSoftOwnerW(0));
+    }
+    return true;
+}
+
+// SORTENTSTABLE (AcDbSortentsTable) encoder — ODA §20.4.93.  Inverts
+// parseDwg above.  Layout: numEntries BL + N sort handles (INLINE in body
+// via getOffsetHandle in the parser), then common handle prefix
+// (parent + reactors + xdic), then block-owner handle, then N entity handles.
+//
+// The parser reads sort handles via `buf->getOffsetHandle` BEFORE the
+// common prefix — so we must mirror that by emitting them inline in the
+// body section, not in the handle stream tail.
+bool DRW_SortEntsTable::encodeDwg(DRW::Version version, dwgBufferW *buf,
+                                   dwgBufferW *strBuf,
+                                   dwgBufferW *handleBuf) const {
+    if (buf == nullptr) return false;
+    DRW_UNUSED(strBuf);
+    dwgBufferW *hb = (handleBuf != nullptr && version > DRW::AC1018) ? handleBuf : buf;
+
+    const dint32 numEntries = static_cast<dint32>(m_entityHandles.size());
+    buf->putBitLong(numEntries);
+
+    // Sort handles — emitted inline in body to match parser's
+    // `buf->getOffsetHandle(handle)` reads (pre-common-prefix).
+    for (duint32 h : m_sortHandles) {
+        buf->putHandle(makeSoftOwnerW(h));
+    }
+
+    // Common handle prefix.
+    hb->putHandle(makeSoftOwnerW(static_cast<duint32>(parentHandle)));
+    for (dint32 i = 0; i < numReactors; ++i) {
+        hb->putHandle(makeSoftOwnerW(0));
+    }
+    if (xDictFlag != 1) {
+        hb->putHandle(makeSoftOwnerW(0));
+    }
+
+    // Block-owner handle (soft pointer to the parent BlockRecord).
+    hb->putHandle(makeSoftOwnerW(m_blockOwnerHandle));
+
+    // Entity handles (one per entry, soft pointers).
+    for (duint32 h : m_entityHandles) {
+        hb->putHandle(makeSoftOwnerW(h));
+    }
+    return true;
+}
+
+// SPATIAL_FILTER (AcDbSpatialFilter) encoder — ODA §20.4.94.  Inverts
+// parseDwg above.  Body order (per the post-fix parser): common handle
+// prefix FIRST, then point-count BS + N 2RD points + 3BD normal + 3BD origin
+// + display-boundary BS + (front/back) clip flags BS + optional clip
+// distances BD + two 4x3 BD transform matrices (24 bit-doubles).
+bool DRW_SpatialFilter::encodeDwg(DRW::Version version, dwgBufferW *buf,
+                                   dwgBufferW *strBuf,
+                                   dwgBufferW *handleBuf) const {
+    if (buf == nullptr) return false;
+    DRW_UNUSED(strBuf);
+    dwgBufferW *hb = (handleBuf != nullptr && version > DRW::AC1018) ? handleBuf : buf;
+
+    // Common handle prefix FIRST (matches parser's hBuf consumption before
+    // any body BitShort).
+    hb->putHandle(makeSoftOwnerW(static_cast<duint32>(parentHandle)));
+    for (dint32 i = 0; i < numReactors; ++i) {
+        hb->putHandle(makeSoftOwnerW(0));
+    }
+    if (xDictFlag != 1) {
+        hb->putHandle(makeSoftOwnerW(0));
+    }
+
+    const dint16 pointCount = static_cast<dint16>(m_boundaryPoints.size());
+    buf->putBitShort(pointCount);
+    for (const auto& p : m_boundaryPoints) {
+        buf->put2RawDouble(p);
+    }
+
+    buf->put3BitDouble(m_normal);
+    buf->put3BitDouble(m_origin);
+    buf->putBitShort(m_displayBoundary ? 1 : 0);
+    buf->putBitShort(m_clipFrontPlane ? 1 : 0);
+    if (m_clipFrontPlane) {
+        buf->putBitDouble(m_frontDistance);
+    }
+    buf->putBitShort(m_clipBackPlane ? 1 : 0);
+    if (m_clipBackPlane) {
+        buf->putBitDouble(m_backDistance);
+    }
+
+    // 4x3 transforms — 12 bit-doubles each.  Pad with 0.0 if the parsed
+    // vector is short (defensive: parser always reads exactly 12).
+    auto writeMatrix12 = [&](const std::vector<double>& m) {
+        for (size_t i = 0; i < 12; ++i) {
+            buf->putBitDouble(i < m.size() ? m[i] : 0.0);
+        }
+    };
+    writeMatrix12(m_inverseInsertTransform);
+    writeMatrix12(m_insertTransform);
+    return true;
+}
+
+// GEODATA (AcDbGeoData) encoder — ODA §20.4.78.  Inverts parseDwg above.
+// Body order (per the post-fix parser): common handle prefix FIRST, then
+// version BL, then host-block handle (in handle stream), then body fields
+// gated on m_version (1 = legacy R2009, 2/3 = R2010+).
+//
+// Mesh points + faces always follow the version-specific body when
+// m_version is 2 or 3 (for legacy v1, the parser falls through to
+// observation tags + mesh blocks too).
+bool DRW_GeoData::encodeDwg(DRW::Version version, dwgBufferW *buf,
+                             dwgBufferW *strBuf,
+                             dwgBufferW *handleBuf) const {
+    if (buf == nullptr) return false;
+    dwgBufferW *sb = (strBuf != nullptr && version > DRW::AC1018) ? strBuf : buf;
+    dwgBufferW *hb = (handleBuf != nullptr && version > DRW::AC1018) ? handleBuf : buf;
+
+    // Common handle prefix FIRST.
+    hb->putHandle(makeSoftOwnerW(static_cast<duint32>(parentHandle)));
+    for (dint32 i = 0; i < numReactors; ++i) {
+        hb->putHandle(makeSoftOwnerW(0));
+    }
+    if (xDictFlag != 1) {
+        hb->putHandle(makeSoftOwnerW(0));
+    }
+
+    buf->putBitLong(m_version);
+    // Host block handle reads from the handle stream immediately after the
+    // common prefix in the parser.
+    hb->putHandle(makeSoftOwnerW(m_hostBlockHandle));
+    buf->putBitShort(m_coordinatesType);
+
+    if (m_version == 1) {
+        buf->put3BitDouble(m_referencePoint);
+        buf->putBitLong(m_horizontalUnits);
+        buf->put3BitDouble(m_designPoint);
+        buf->put3BitDouble(DRW_Coord{0.0, 0.0, 0.0});   // obsolete
+        buf->put3BitDouble(m_upDirection);
+        // Parser computes angle = pi/2 - bitDouble, then
+        // northDirection = (cos(angle), sin(angle), 0).  Round-trip the
+        // angle directly by inverting: angle = atan2(north.y, north.x).
+        const double angle = std::atan2(m_northDirection.y, m_northDirection.x);
+        buf->putBitDouble(M_PI / 2.0 - angle);
+        buf->put3BitDouble(DRW_Coord{1.0, 1.0, 1.0});   // obsolete
+        sb->putVariableText(version, m_coordinateSystemDefinition);
+        sb->putVariableText(version, m_geoRssTag);
+        buf->putBitDouble(m_horizontalUnitScale);
+        sb->putVariableText(version, std::string());     // obsolete datum
+        sb->putVariableText(version, std::string());     // obsolete WKT
+    } else if (m_version == 2 || m_version == 3) {
+        buf->put3BitDouble(m_designPoint);
+        buf->put3BitDouble(m_referencePoint);
+        buf->putBitDouble(m_horizontalUnitScale);
+        buf->putBitLong(m_horizontalUnits);
+        buf->putBitDouble(m_verticalUnitScale);
+        buf->putBitLong(m_verticalUnits);
+        buf->put3BitDouble(m_upDirection);
+        buf->put2RawDouble(m_northDirection);
+        buf->putBitLong(m_scaleEstimationMethod);
+        buf->putBitDouble(m_userSpecifiedScaleFactor);
+        buf->putBit(m_enableSeaLevelCorrection ? 1 : 0);
+        buf->putBitDouble(m_seaLevelElevation);
+        buf->putBitDouble(m_coordinateProjectionRadius);
+        sb->putVariableText(version, m_coordinateSystemDefinition);
+        sb->putVariableText(version, m_geoRssTag);
+    } else {
+        return true;   // unknown version: encoder stops where the parser does
+    }
+
+    sb->putVariableText(version, m_observationFromTag);
+    sb->putVariableText(version, m_observationToTag);
+    sb->putVariableText(version, m_observationCoverageTag);
+
+    const dint32 pointCount = static_cast<dint32>(m_points.size());
+    buf->putBitLong(pointCount);
+    for (const auto& p : m_points) {
+        buf->put2RawDouble(p.m_source);
+        buf->put2RawDouble(p.m_destination);
+    }
+
+    const dint32 faceCount = static_cast<dint32>(m_faces.size());
+    buf->putBitLong(faceCount);
+    for (const auto& f : m_faces) {
+        buf->putBitLong(f.m_index1);
+        buf->putBitLong(f.m_index2);
+        buf->putBitLong(f.m_index3);
+    }
+    return true;
+}
+
+// DICTIONARYVAR (AcDbDictionaryVar) encoder — ODA §20.4.46.  Body: schema RC
+// + value TV.  Handle stream: common prefix only.
+bool DRW_DictionaryVar::encodeDwg(DRW::Version version, dwgBufferW *buf,
+                                   dwgBufferW *strBuf,
+                                   dwgBufferW *handleBuf) const {
+    if (buf == nullptr) return false;
+    dwgBufferW *sb = (strBuf != nullptr && version > DRW::AC1018) ? strBuf : buf;
+    dwgBufferW *hb = (handleBuf != nullptr && version > DRW::AC1018) ? handleBuf : buf;
+
+    buf->putRawChar8(static_cast<duint8>(m_schema));
+    sb->putVariableText(version, m_value);
+
+    hb->putHandle(makeSoftOwnerW(static_cast<duint32>(parentHandle)));
+    for (dint32 i = 0; i < numReactors; ++i) {
+        hb->putHandle(makeSoftOwnerW(0));
+    }
+    if (xDictFlag != 1) {
+        hb->putHandle(makeSoftOwnerW(0));
+    }
+    return true;
+}
+
+// DICTIONARYWDFLT (AcDbDictionaryWithDefault) encoder — ODA §20.4.45.
+// Inherits DICTIONARY's body + handle stream and appends a single default-
+// entry handle at the tail of the handle stream.
+bool DRW_DictionaryWithDefault::encodeDwg(DRW::Version version, dwgBufferW *buf,
+                                           dwgBufferW *strBuf,
+                                           dwgBufferW *handleBuf) const {
+    if (buf == nullptr) return false;
+    if (!DRW_Dictionary::encodeDwg(version, buf, strBuf, handleBuf))
+        return false;
+    dwgBufferW *hb = (handleBuf != nullptr && version > DRW::AC1018) ? handleBuf : buf;
+    hb->putHandle(makeHardPtrW(m_defaultEntryHandle));
+    return true;
+}
+
+// IDBUFFER (AcDbIdBuffer) encoder — ODA §20.4.79.  Body: class_version RC +
+// numIds BL.  Handle stream: common prefix + N object handles.
+bool DRW_IDBuffer::encodeDwg(DRW::Version version, dwgBufferW *buf,
+                              dwgBufferW *strBuf,
+                              dwgBufferW *handleBuf) const {
+    if (buf == nullptr) return false;
+    DRW_UNUSED(strBuf);
+    dwgBufferW *hb = (handleBuf != nullptr && version > DRW::AC1018) ? handleBuf : buf;
+
+    buf->putRawChar8(static_cast<duint8>(classVersion));
+    buf->putBitLong(static_cast<dint32>(objIds.size()));
+
+    hb->putHandle(makeSoftOwnerW(static_cast<duint32>(parentHandle)));
+    for (dint32 i = 0; i < numReactors; ++i) {
+        hb->putHandle(makeSoftOwnerW(0));
+    }
+    if (xDictFlag != 1) {
+        hb->putHandle(makeSoftOwnerW(0));
+    }
+    for (duint32 ref : objIds) {
+        hb->putHandle(makeSoftOwnerW(ref));
+    }
+    return true;
+}
+
+// LAYER_INDEX (AcDbLayerIndex) encoder — ODA §20.4.83.  Body: timestamp1 BL +
+// timestamp2 BL + numEntries BL + N (indexLong BL + name TV).  Handle
+// stream: common prefix + N entry handles (one per entry, soft pointers to
+// the matching IDBUFFER).
+bool DRW_LayerIndex::encodeDwg(DRW::Version version, dwgBufferW *buf,
+                                dwgBufferW *strBuf,
+                                dwgBufferW *handleBuf) const {
+    if (buf == nullptr) return false;
+    dwgBufferW *sb = (strBuf != nullptr && version > DRW::AC1018) ? strBuf : buf;
+    dwgBufferW *hb = (handleBuf != nullptr && version > DRW::AC1018) ? handleBuf : buf;
+
+    buf->putBitLong(static_cast<dint32>(timestamp1));
+    buf->putBitLong(static_cast<dint32>(timestamp2));
+    buf->putBitLong(static_cast<dint32>(entries.size()));
+    for (const auto& e : entries) {
+        buf->putBitLong(e.indexLong);
+        sb->putVariableText(version, e.name);
+    }
+
+    hb->putHandle(makeSoftOwnerW(static_cast<duint32>(parentHandle)));
+    for (dint32 i = 0; i < numReactors; ++i) {
+        hb->putHandle(makeSoftOwnerW(0));
+    }
+    if (xDictFlag != 1) {
+        hb->putHandle(makeSoftOwnerW(0));
+    }
+    for (const auto& e : entries) {
+        hb->putHandle(makeSoftOwnerW(e.entryHandle));
+    }
+    return true;
+}
+
+// SPATIAL_INDEX (AcDbSpatialIndex) encoder — ODA §20.4.95.  Body beyond the
+// timestamps is opaque per the spec; the parser captures only timestamps
+// (and at R2007+ also the common handle prefix).  Encoder mirrors that —
+// timestamps only at pre-R2007, plus common handles at R2007+.
+bool DRW_SpatialIndex::encodeDwg(DRW::Version version, dwgBufferW *buf,
+                                  dwgBufferW *strBuf,
+                                  dwgBufferW *handleBuf) const {
+    if (buf == nullptr) return false;
+    DRW_UNUSED(strBuf);
+    dwgBufferW *hb = (handleBuf != nullptr && version > DRW::AC1018) ? handleBuf : buf;
+
+    buf->putBitLong(static_cast<dint32>(timestamp1));
+    buf->putBitLong(static_cast<dint32>(timestamp2));
+
+    // R2007+: parser reads the common handle prefix.  Pre-R2007: parser
+    // leaves the handles unset, so we don't write them either (the opaque
+    // tail makes any inline write unsafe to round-trip).
+    if (version > DRW::AC1018) {
+        hb->putHandle(makeSoftOwnerW(static_cast<duint32>(parentHandle)));
+        for (dint32 i = 0; i < numReactors; ++i) {
+            hb->putHandle(makeSoftOwnerW(0));
+        }
+        if (xDictFlag != 1) {
+            hb->putHandle(makeSoftOwnerW(0));
+        }
+    }
+    return true;
+}
+
+// Helper: invert readCadValue (drw_objects.cpp:608).  Inverts the
+// dataType-switch, preserving raw bytes + value.  Only dataType branches
+// the parser populates round-trip cleanly; unsupported types (128, 256)
+// are passed through with their raw_data only.
+bool writeCadValue(DRW::Version version, dwgBufferW *buf, dwgBufferW *strBuf,
+                   const DRW_CadValue& value) {
+    if (version > DRW::AC1018)
+        buf->putBitLong(value.m_formatFlags);
+    buf->putBitLong(value.m_dataType);
+    const bool emptyR2007Value = version > DRW::AC1018 && (value.m_formatFlags & 3);
+    if (!emptyR2007Value) {
+        switch (value.m_dataType) {
+        case 0:
+        case 1:
+            buf->putBitLong(value.m_value.i_val());
+            break;
+        case 2:
+            buf->putBitDouble(value.m_value.d_val());
+            break;
+        case 4:
+        case 512:
+        case 8:
+            buf->putBitLong(static_cast<dint32>(value.m_rawData.size()));
+            for (duint8 b : value.m_rawData)
+                buf->putRawChar8(b);
+            break;
+        case 16:
+        case 32: {
+            buf->putBitLong(static_cast<dint32>(value.m_dataSize));
+            // Round-trip the bytes we have: if the parser stored a coord
+            // payload via addCoord, the dataSize covers the original RD
+            // values and we emit them via the coord; otherwise emit the
+            // raw bytes directly (binary fallback path).
+            const int dims = value.m_dataType == 16 ? 2 : 3;
+            const duint32 expected = static_cast<duint32>(dims) * 8;
+            if (value.m_dataSize >= expected && value.m_value.type() == DRW_Variant::COORD) {
+                DRW_Coord *c = value.m_value.coord();
+                buf->putRawDouble(c->x);
+                buf->putRawDouble(c->y);
+                if (dims == 3) buf->putRawDouble(c->z);
+                for (duint8 b : value.m_rawData)
+                    buf->putRawChar8(b);
+            } else {
+                for (duint8 b : value.m_rawData)
+                    buf->putRawChar8(b);
+            }
+            break;
+        }
+        case 64:
+            buf->putHandle(makeSoftOwnerW(value.m_handle));
+            break;
+        default:
+            // Unsupported value type — caller is expected to handle the
+            // FIELD shell as best as possible; encoder returns false.
+            return false;
+        }
+    }
+    if (version > DRW::AC1018) {
+        dwgBufferW *textBuf = strBuf ? strBuf : buf;
+        buf->putBitLong(value.m_unitType);
+        textBuf->putVariableText(version, value.m_formatString);
+        textBuf->putVariableText(version, value.m_valueString);
+    }
+    return true;
+}
+
+// FIELD (AcDbField) encoder — ODA §20.4.66.  Body: evaluator + fieldCode TVs
+// + numChildren + numObjects BLs + (pre-R2007 only) formatString TV + flag
+// BLs + error message TV + value Variant + valueString TV + length BL +
+// child values vector + child handles + object handles.
+bool DRW_Field::encodeDwg(DRW::Version version, dwgBufferW *buf,
+                           dwgBufferW *strBuf,
+                           dwgBufferW *handleBuf) const {
+    if (buf == nullptr) return false;
+    dwgBufferW *sb = (strBuf != nullptr && version > DRW::AC1018) ? strBuf : buf;
+    dwgBufferW *hb = (handleBuf != nullptr && version > DRW::AC1018) ? handleBuf : buf;
+
+    sb->putVariableText(version, m_evaluatorId);
+    sb->putVariableText(version, m_fieldCode);
+
+    buf->putBitLong(static_cast<dint32>(m_childHandles.size()));
+    buf->putBitLong(static_cast<dint32>(m_objectHandles.size()));
+
+    if (version < DRW::AC1021)
+        sb->putVariableText(version, m_formatString);
+
+    buf->putBitLong(m_evaluationOptionFlags);
+    buf->putBitLong(m_filingOptionFlags);
+    buf->putBitLong(m_fieldStateFlags);
+    buf->putBitLong(m_evaluationStatusFlags);
+    buf->putBitLong(m_evaluationErrorCode);
+    sb->putVariableText(version, m_evaluationErrorMessage);
+
+    if (!writeCadValue(version, buf, sb, m_value))
+        return false;
+
+    sb->putVariableText(version, m_valueString);
+    buf->putBitLong(m_valueStringLength);
+
+    buf->putBitLong(static_cast<dint32>(m_childValues.size()));
+    for (const auto& cv : m_childValues) {
+        sb->putVariableText(version, cv.m_key);
+        if (!writeCadValue(version, buf, sb, cv.m_value))
+            return false;
+    }
+
+    // Common handle prefix + child handles + object handles.  Note: parser
+    // reads child + object handles via `buf->getOffsetHandle(handle)` after
+    // `readCommonObjectHandles(buf, ...)`, i.e. all inline at AC1018.
+    hb->putHandle(makeSoftOwnerW(static_cast<duint32>(parentHandle)));
+    for (dint32 i = 0; i < numReactors; ++i) {
+        hb->putHandle(makeSoftOwnerW(0));
+    }
+    if (xDictFlag != 1) {
+        hb->putHandle(makeSoftOwnerW(0));
+    }
+    for (duint32 ref : m_childHandles) {
+        hb->putHandle(makeSoftOwnerW(ref));
+    }
+    for (duint32 ref : m_objectHandles) {
+        hb->putHandle(makeSoftOwnerW(ref));
+    }
+    return true;
+}
+
+// FIELDLIST (AcDbFieldList) encoder — ODA §20.4.67.  Body: numFields BL +
+// unknown bit B.  Handle stream: common prefix + N field handles.
+bool DRW_FieldList::encodeDwg(DRW::Version version, dwgBufferW *buf,
+                               dwgBufferW *strBuf,
+                               dwgBufferW *handleBuf) const {
+    if (buf == nullptr) return false;
+    DRW_UNUSED(strBuf);
+    dwgBufferW *hb = (handleBuf != nullptr && version > DRW::AC1018) ? handleBuf : buf;
+
+    buf->putBitLong(static_cast<dint32>(m_fieldHandles.size()));
+    buf->putBit(m_unknown ? 1 : 0);
+
+    hb->putHandle(makeSoftOwnerW(static_cast<duint32>(parentHandle)));
+    for (dint32 i = 0; i < numReactors; ++i) {
+        hb->putHandle(makeSoftOwnerW(0));
+    }
+    if (xDictFlag != 1) {
+        hb->putHandle(makeSoftOwnerW(0));
+    }
+    for (duint32 ref : m_fieldHandles) {
+        hb->putHandle(makeSoftOwnerW(ref));
+    }
+    return true;
+}
+
 bool DRW_MLeaderStyle::encodeDwg(DRW::Version version, dwgBufferW *buf,
                                  dwgBufferW *strBuf,
                                  dwgBufferW *handleBuf) const {
@@ -3972,9 +4453,15 @@ bool DRW_SpatialFilter::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 b
     if (!ret)
         return ret;
 
+    // For AC1015/AC1018 the handle stream is inline (hBuf == buf); for
+    // AC1024+ it lives in a separate offset reached via
+    // seekObjectHandleStream(objSize).  Per the PR-2 convention, the common
+    // handle prefix must be read unconditionally so that AC1015/AC1018 also
+    // consumes parent + reactors + xdic before any subsequent body reads.
     dwgBuffer hBuff = *buf;
-    seekObjectHandleStream(version, &hBuff, objSize);
-    readCommonObjectHandles(&hBuff, handle, numReactors, xDictFlag, &parentHandle);
+    dwgBuffer *hBuf = (version > DRW::AC1018) ? &hBuff : buf;
+    seekObjectHandleStream(version, hBuf, objSize);
+    readCommonObjectHandles(hBuf, handle, numReactors, xDictFlag, &parentHandle);
 
     const dint32 pointCount = buf->getBitShort();
     if (pointCount < 0 || pointCount > 100000)
@@ -3999,7 +4486,7 @@ bool DRW_SpatialFilter::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 b
     DRW_UNUSED(sBuf);
     DRW_DBG("SPATIAL_FILTER boundary points: ");
     DRW_DBG(static_cast<int>(m_boundaryPoints.size())); DRW_DBG("\n");
-    return buf->isGood() && hBuff.isGood();
+    return buf->isGood() && hBuf->isGood();
 }
 
 bool DRW_GeoData::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
@@ -4010,12 +4497,18 @@ bool DRW_GeoData::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
     if (!ret)
         return ret;
 
+    // For AC1015/AC1018 the handle stream is inline (hBuf == buf); for
+    // AC1024+ it lives in a separate offset reached via
+    // seekObjectHandleStream(objSize).  Per the PR-2 convention, the common
+    // handle prefix must be read unconditionally so that AC1015/AC1018 also
+    // consumes parent + reactors + xdic before any subsequent body reads.
     dwgBuffer hBuff = *buf;
-    seekObjectHandleStream(version, &hBuff, objSize);
-    readCommonObjectHandles(&hBuff, handle, numReactors, xDictFlag, &parentHandle);
+    dwgBuffer *hBuf = (version > DRW::AC1018) ? &hBuff : buf;
+    seekObjectHandleStream(version, hBuf, objSize);
+    readCommonObjectHandles(hBuf, handle, numReactors, xDictFlag, &parentHandle);
 
     m_version = buf->getBitLong();
-    m_hostBlockHandle = readObjectHandleRef(&hBuff);
+    m_hostBlockHandle = readObjectHandleRef(hBuf);
     m_coordinatesType = buf->getBitShort();
 
     if (m_version == 1) {
@@ -4051,7 +4544,7 @@ bool DRW_GeoData::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
         m_coordinateSystemDefinition = sBuf->getVariableText(version, false);
         m_geoRssTag = sBuf->getVariableText(version, false);
     } else {
-        return buf->isGood() && hBuff.isGood();
+        return buf->isGood() && hBuf->isGood();
     }
 
     m_observationFromTag = sBuf->getVariableText(version, false);
@@ -4086,7 +4579,7 @@ bool DRW_GeoData::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
     DRW_DBG("GEODATA version: "); DRW_DBG(m_version);
     DRW_DBG(" points: "); DRW_DBG(static_cast<int>(m_points.size()));
     DRW_DBG(" faces: "); DRW_DBG(static_cast<int>(m_faces.size())); DRW_DBG("\n");
-    return buf->isGood() && sBuf->isGood() && hBuff.isGood();
+    return buf->isGood() && sBuf->isGood() && hBuf->isGood();
 }
 
 bool DRW_TableGeometry::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
