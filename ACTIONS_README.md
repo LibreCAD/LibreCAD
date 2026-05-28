@@ -965,7 +965,7 @@ This action draws a sequence of line segments by typing a distance and aiming wi
 Unlike the standard Line tool, the direction is set by mouse aim rather than a second click.
 Each segment automatically continues from the previous endpoint.
 
-Wall openings (door/window gaps with perpendicular markers) can be inserted mid-sequence using the `o` command.
+In addition to normal segments, wall openings, window symbols, and door symbols can be inserted mid-sequence using the `o`, `w`, and `d` commands.
 
 #### Options:
 
@@ -974,6 +974,7 @@ No toolbar options widget. Settings are in **Application Preferences → Default
 1. **Architectural feet-inch input** – enables feet-inch distance strings such as `10-3` (10 ft 3 in) or `3'0` (3 ft 0 in).
 2. **Polar snap angle** – angle increment used when polar snap is active (default 15°).
 3. **Opening marker depth** – depth of the perpendicular lines drawn on each side of a wall opening (default 4).
+4. **Window offset width** – distance from the center window line to each parallel window line (default 1.5).
 
 #### Existing Selection:
 
@@ -997,17 +998,34 @@ Action is fully scriptable via the command line.
 | `pl` | Converts the drawn segments into a polyline |
 | `start` | Sets a new start point without finishing the action |
 | `o` or `opening` | Enters wall opening mode (requires at least one segment drawn) |
+| `w` or `window` | Enters window mode |
+| `d` or `door` | Enters door mode (requires at least one segment drawn) |
 
-**Opening sub-commands (after `o`):**
+**Opening mode sub-commands (after `o`):**
 
 1. Type the opening width (supports all distance formats, including feet-inch if enabled).
 2. Click or aim to choose which side of the wall the perpendicular markers appear on.
 
 The tool draws three lines — start marker, opening span, end marker — as one undoable operation, then continues from the far end of the opening.
 
+**Window mode sub-commands (after `w`):**
+
+1. Type the window width (supports all distance formats).
+2. Click or aim to choose the window direction.
+
+The tool draws five lines — center line, two parallel offset lines, and a closing cap at each end — as one undoable operation, then continues from the far end of the window. The window direction comes from the mouse aim, not from the previous wall segment.
+
+**Door mode sub-commands (after `d`):**
+
+1. Type the door width (supports all distance formats, including feet-inch if enabled).
+2. Click or aim to choose the swing side (which side of the wall the door opens toward).
+3. Click near the desired hinge end to choose whether the hinge is at the near or far end of the door opening.
+
+The door direction is locked to the previous wall segment angle. The tool draws a span line, a perpendicular door leaf line, and a quarter-circle swing arc — as one undoable operation — then continues from the far end of the door opening.
+
 #### Mouse + SHIFT mode:
 
-Holding **Shift** temporarily enables polar snap at the configured angle increment, regardless of the toolbar toggle state.
+Holding **Shift** temporarily enables polar snap at the configured angle increment, regardless of the toolbar toggle state. Shift has no effect during opening/window swing-side or door swing/hinge clicks.
 
 ---
 ### Other functionality

@@ -27,6 +27,7 @@
 #include "rs_previewactioninterface.h"
 #include "rs_vector.h"
 #include "rs_line.h"
+#include "rs_arc.h"
 #include "lc_abstractactiondrawline.h"
 
 class LC_ActionDrawLineDirect : public LC_AbstractActionDrawLine {
@@ -41,6 +42,7 @@ public:
         HA_Polyline,
         HA_Opening,
         HA_Window,
+        HA_Door,
     };
 
     enum ExtStatus {
@@ -48,6 +50,9 @@ public:
         SetOpeningAim,
         SetWindowWidth,
         SetWindowAim,
+        SetDoorWidth,
+        SetDoorSwingSide,
+        SetDoorHingeSide,
     };
 
     struct History {
@@ -124,6 +129,13 @@ private:
     RS_Vector          m_windowStart;
     double             m_windowWidth{0.0};
 
+    RS_Vector          m_doorStart;
+    double             m_doorWallAngle{0.0};
+    double             m_doorWidth{0.0};
+    double             m_doorSwingSign{1.0};
+    bool               m_doorHingeAtStart{true};
+    QList<RS_ArcData>  m_pendingArcs;
+
     void resetPoints();
     void addHistory(HistoryAction a, const RS_Vector& p, const RS_Vector& c, const int s);
     void completeLineSegment(bool close);
@@ -132,6 +144,8 @@ private:
     double getLastWallAngle() const;
     void startWindowMode();
     void completeWindow(const RS_Vector& snap);
+    void startDoorMode();
+    void completeDoor();
     void calculateAngleSegment(double distance);
     RS_Vector calculateAngleEndpoint(const RS_Vector &snap);
     double defineActualSegmentAngle(double realAngle);

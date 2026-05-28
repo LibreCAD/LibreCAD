@@ -33,6 +33,30 @@
 *     ready to continue drawing the wall.
 *   - Opening marker depth is configured in Preferences (default 4).
 *
+* Window mode (command: w / window):
+*   - Available whenever Direct Line has a valid current start point.
+*   - User types the window width (same distance formats as above).
+*   - User clicks/aims to choose the window direction.
+*   - The window direction comes from the mouse aim, not wall history.
+*   - The tool draws five lines as a single undoable operation:
+*       · center line from start to end
+*       · two parallel offset lines (one each side of the center)
+*       · a closing cap at the start end
+*       · a closing cap at the far end
+*   - Window offset width is configured in Preferences (default 1.5).
+*
+* Door mode (command: d / door):
+*   - Available after at least one wall segment has been drawn.
+*   - User types the door width (same distance formats as above).
+*   - Door direction is locked to the previous wall segment angle.
+*   - User clicks/aims to choose the swing side.
+*   - User clicks near the desired end to choose the hinge side.
+*   - The tool draws three entities as a single undoable operation:
+*       · span line along the wall direction
+*       · perpendicular door leaf line at the hinge point
+*       · quarter-circle swing arc from leaf endpoint to far corner
+*   - The active start point advances to the far end of the door.
+*
 * Adapted from LC_ActionDrawLineSnake.
 * Original copyright (C) 2024 LibreCAD.org / sand1024
 *
@@ -98,10 +122,13 @@ void LC_ActionDrawLineDirect::resetPoints(){
 }
 
 void LC_ActionDrawLineDirect::doPrepareTriggerEntities(QList<RS_Entity *> &list){
-    if (!m_pendingOpening.isEmpty()) {
+    if (!m_pendingOpening.isEmpty() || !m_pendingArcs.isEmpty()) {
         for (const RS_LineData& d : std::as_const(m_pendingOpening))
             list << new RS_Line(container, d);
         m_pendingOpening.clear();
+        for (const RS_ArcData& d : std::as_const(m_pendingArcs))
+            list << new RS_Arc(container, d);
+        m_pendingArcs.clear();
     } else {
         list << new RS_Line(container, pPoints->data);
     }
@@ -128,7 +155,8 @@ RS_Vector LC_ActionDrawLineDirect::doGetMouseSnapPoint(QMouseEvent *e) {
     RS_Vector rawMouse = graphicView->toGraph(e->x(), e->y());
     bool freeSnap = snapped.squaredTo(rawMouse) <= RS_TOLERANCE;
     if (freeSnap && isStartPointValid() && (snapMode.snapAngle || alternativeActionMode)
-        && getStatus() != SetOpeningAim) {
+        && getStatus() != SetOpeningAim
+        && getStatus() != SetDoorSwingSide && getStatus() != SetDoorHingeSide) {
         auto guard = RS_SETTINGS->beginGroupGuard("/Defaults");
         bool ok = false;
         double angle = RS_SETTINGS->readEntry("/PolarSnapAngle", "15").toDouble(&ok);
@@ -146,6 +174,7 @@ void LC_ActionDrawLineDirect::doPreparePreviewEntities(
         case SetStartPoint:
         case SetOpeningWidth:
         case SetWindowWidth:
+        case SetDoorWidth:
             return;
         case SetWindowAim: {
             if (!isNonZeroLine(snap)) return;
@@ -183,6 +212,43 @@ void LC_ActionDrawLineDirect::doPreparePreviewEntities(
             list << new RS_Line(m_openingStart, m_openingStart + perpVec);
             list << new RS_Line(m_openingStart, openEnd);
             list << new RS_Line(openEnd, openEnd + perpVec);
+            return;
+        }
+        case SetDoorSwingSide: {
+            // Preview: show door span + leaf on tentative swing side based on mouse
+            RS_Vector doorEnd = m_doorStart + RS_Vector::polar(m_doorWidth, m_doorWallAngle);
+            RS_Vector wallDir = RS_Vector::polar(1.0, m_doorWallAngle);
+            RS_Vector toMouse = snap - m_doorStart;
+            double cross = wallDir.x * toMouse.y - wallDir.y * toMouse.x;
+            double swingSign = (cross >= 0.0) ? 1.0 : -1.0;
+            double leafAngle = m_doorWallAngle + swingSign * M_PI / 2.0;
+            // Default hinge at start for preview
+            RS_Vector leafEnd = m_doorStart + RS_Vector::polar(m_doorWidth, leafAngle);
+            list << new RS_Line(m_doorStart, doorEnd);
+            list << new RS_Line(m_doorStart, leafEnd);
+            list << new RS_Arc(nullptr,
+                               RS_ArcData(m_doorStart, m_doorWidth,
+                                          leafAngle, m_doorWallAngle,
+                                          swingSign > 0.0));
+            return;
+        }
+        case SetDoorHingeSide: {
+            // Preview: show final door with chosen swing side, hinge side follows mouse
+            RS_Vector doorEnd = m_doorStart + RS_Vector::polar(m_doorWidth, m_doorWallAngle);
+            RS_Vector wallDir = RS_Vector::polar(1.0, m_doorWallAngle);
+            double proj = (snap - m_doorStart).x * wallDir.x + (snap - m_doorStart).y * wallDir.y;
+            bool hingeAtStart = (proj < m_doorWidth / 2.0);
+            RS_Vector hingePoint = hingeAtStart ? m_doorStart : doorEnd;
+            double leafAngle = m_doorWallAngle + m_doorSwingSign * M_PI / 2.0;
+            RS_Vector leafEnd = hingePoint + RS_Vector::polar(m_doorWidth, leafAngle);
+            double wallEndAngle = hingeAtStart ? m_doorWallAngle : m_doorWallAngle + M_PI;
+            bool reversed = (hingeAtStart == (m_doorSwingSign > 0.0));
+            list << new RS_Line(m_doorStart, doorEnd);
+            list << new RS_Line(hingePoint, leafEnd);
+            list << new RS_Arc(nullptr,
+                               RS_ArcData(hingePoint, m_doorWidth,
+                                          leafAngle, wallEndAngle,
+                                          reversed));
             return;
         }
         case SetDirection:
@@ -246,6 +312,9 @@ void LC_ActionDrawLineDirect::doBack(QMouseEvent *e, int status){
         case SetOpeningAim:
         case SetWindowWidth:
         case SetWindowAim:
+        case SetDoorWidth:
+        case SetDoorSwingSide:
+        case SetDoorHingeSide:
             setStatus(SetPoint);
             updateOptions();
             updateMouseButtonHints();
@@ -279,6 +348,22 @@ void LC_ActionDrawLineDirect::onCoordinateEvent(
         case SetWindowAim:
             completeWindow(mouse);
             break;
+        case SetDoorSwingSide: {
+            RS_Vector wallDir = RS_Vector::polar(1.0, m_doorWallAngle);
+            RS_Vector toMouse = mouse - m_doorStart;
+            double cross = wallDir.x * toMouse.y - wallDir.y * toMouse.x;
+            m_doorSwingSign = (cross >= 0.0) ? 1.0 : -1.0;
+            setStatus(SetDoorHingeSide);
+            updateMouseButtonHints();
+            break;
+        }
+        case SetDoorHingeSide: {
+            RS_Vector wallDir = RS_Vector::polar(1.0, m_doorWallAngle);
+            double proj = (mouse - m_doorStart).x * wallDir.x + (mouse - m_doorStart).y * wallDir.y;
+            m_doorHingeAtStart = (proj < m_doorWidth / 2.0);
+            completeDoor();
+            break;
+        }
         case SetPoint:
             if (isNonZeroLine(mouse)){
                 pPoints->data.endpoint = mouse;
@@ -387,6 +472,8 @@ bool LC_ActionDrawLineDirect::doProceedCommand(
         startOpeningMode();
     } else if (checkCommand("window", c) || c.compare("w", Qt::CaseInsensitive) == 0) {
         startWindowMode();
+    } else if (checkCommand("door", c) || c.compare("d", Qt::CaseInsensitive) == 0) {
+        startDoorMode();
     } else {
         result = false;
     }
@@ -436,6 +523,28 @@ bool LC_ActionDrawLineDirect::doProcessCommandValue(RS_CommandEvent *e, const QS
             if (ok && LC_LineMath::isMeaningful(distance)) {
                 m_windowWidth = distance;
                 setStatus(SetWindowAim);
+                updateMouseButtonHints();
+            } else {
+                result = false;
+            }
+            break;
+        }
+        case SetDoorWidth: {
+            bool ok = false;
+            double distance = 0.0;
+            {
+                auto guard = RS_SETTINGS->beginGroupGuard("/Defaults");
+                bool archEnabled = RS_SETTINGS->readNumEntry("/ArchitecturalInput", 0) != 0;
+                if (archEnabled) {
+                    distance = LC_ArchParser::parse(c, &ok);
+                }
+            }
+            if (!ok) {
+                distance = RS_Math::eval(c, &ok);
+            }
+            if (ok && LC_LineMath::isMeaningful(distance)) {
+                m_doorWidth = distance;
+                setStatus(SetDoorSwingSide);
                 updateMouseButtonHints();
             } else {
                 result = false;
@@ -535,6 +644,15 @@ void LC_ActionDrawLineDirect::updateMouseButtonHints(){
         case SetWindowAim:
             updateMouseWidgetTR("Click or aim to set window direction", "Back");
             break;
+        case SetDoorWidth:
+            updateMouseWidgetTR("Enter door width", "Back");
+            break;
+        case SetDoorSwingSide:
+            updateMouseWidgetTR("Click to choose door swing side", "Back");
+            break;
+        case SetDoorHingeSide:
+            updateMouseWidgetTR("Click near hinge end to choose hinge side", "Back");
+            break;
         case SetPoint: {
             QString msg = "pl";
             if (pPoints->startOffset >= 2){
@@ -580,6 +698,7 @@ void LC_ActionDrawLineDirect::undo(){
             case HA_Close:
             case HA_Opening:
             case HA_Window:
+            case HA_Door:
                 graphicView->setCurrentAction(new RS_ActionEditUndo(true, *container, *graphicView));
                 pPoints->data.startpoint = h.prevPt;
                 setStatus(SetPoint);
@@ -616,6 +735,7 @@ void LC_ActionDrawLineDirect::redo(){
             case HA_SetEndpoint:
             case HA_Opening:
             case HA_Window:
+            case HA_Door:
                 graphicView->setCurrentAction(new RS_ActionEditUndo(false, *container, *graphicView));
                 setStatus(SetPoint);
                 break;
@@ -748,6 +868,51 @@ void LC_ActionDrawLineDirect::startOpeningMode() {
     m_openingStart = pPoints->data.startpoint;
     m_openingWallAngle = getLastWallAngle();
     setStatus(SetOpeningWidth);
+    updateMouseButtonHints();
+}
+
+void LC_ActionDrawLineDirect::startDoorMode() {
+    if (getStatus() != SetPoint) return;
+    bool hasWall = false;
+    for (int i = 0; i <= pPoints->historyIndex; ++i) {
+        if (pPoints->history.at(i).histAct == HA_SetEndpoint) {
+            hasWall = true;
+            break;
+        }
+    }
+    if (!hasWall) {
+        commandMessageTR("Cannot place door: draw at least one wall segment first.");
+        return;
+    }
+    m_doorStart = pPoints->data.startpoint;
+    m_doorWallAngle = getLastWallAngle();
+    setStatus(SetDoorWidth);
+    updateMouseButtonHints();
+}
+
+void LC_ActionDrawLineDirect::completeDoor() {
+    RS_Vector doorEnd = m_doorStart + RS_Vector::polar(m_doorWidth, m_doorWallAngle);
+    RS_Vector hingePoint = m_doorHingeAtStart ? m_doorStart : doorEnd;
+    double leafAngle = m_doorWallAngle + m_doorSwingSign * M_PI / 2.0;
+    RS_Vector leafEnd = hingePoint + RS_Vector::polar(m_doorWidth, leafAngle);
+    double wallEndAngle = m_doorHingeAtStart ? m_doorWallAngle : m_doorWallAngle + M_PI;
+    bool reversed = (m_doorHingeAtStart == (m_doorSwingSign > 0.0));
+
+    m_pendingOpening.clear();
+    m_pendingArcs.clear();
+    m_pendingOpening << RS_LineData(m_doorStart, doorEnd);
+    m_pendingOpening << RS_LineData(hingePoint, leafEnd);
+    m_pendingArcs    << RS_ArcData(hingePoint, m_doorWidth, leafAngle, wallEndAngle, reversed);
+
+    pPoints->data.startpoint = m_doorStart;
+    pPoints->data.endpoint   = doorEnd;
+    ++pPoints->startOffset;
+    addHistory(HA_Door, m_doorStart, doorEnd, pPoints->startOffset);
+    trigger();
+    pPoints->data.startpoint = doorEnd;
+    direction = DIRECTION_POINT;
+    setStatus(SetPoint);
+    updateOptions();
     updateMouseButtonHints();
 }
 
