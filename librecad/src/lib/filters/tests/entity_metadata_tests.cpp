@@ -2377,6 +2377,124 @@ TEST_CASE("DWG advanced metadata reports advanced entity writer readiness",
             LC_DwgAdvancedMetadata::AdvancedEntityWriterFamily::MLeader) == 1u);
 }
 
+TEST_CASE("DWG mesh metadata preserves counts and sidecar lookup",
+          "[entity_metadata][dwg_metadata][mesh]") {
+  LC_DwgAdvancedMetadata metadata;
+
+  DRW_Polyline mesh;
+  mesh.handle = 0x781u;
+  mesh.parentHandle = 0x11u;
+  mesh.flags = 0x10;
+  mesh.vertexcount = 2;
+  mesh.facecount = 3;
+  mesh.smoothM = 4;
+  mesh.smoothN = 5;
+  mesh.curvetype = 0;
+  for (int i = 0; i < mesh.vertexcount * mesh.facecount; ++i) {
+    DRW_Vertex vertex(i, i + 1.0, i + 2.0, 0.0);
+    vertex.setDwgSubtype(DRW_Vertex::DwgSubtype::Mesh);
+    mesh.addVertex(vertex);
+  }
+  metadata.addMeshPolyline(mesh, true);
+
+  LC_DwgAdvancedMetadata::MeshSidecarRecord rowSidecar;
+  rowSidecar.sourceHandle = mesh.handle;
+  rowSidecar.fallbackEntityId = 9001u;
+  rowSidecar.meshId = "polyline_mesh_1921";
+  rowSidecar.role = "row";
+  rowSidecar.elementIndex = 0;
+  rowSidecar.elementCount = 5;
+  rowSidecar.roleIndex = 0;
+  rowSidecar.flags = mesh.flags;
+  rowSidecar.mCount = mesh.vertexcount;
+  rowSidecar.nCount = mesh.facecount;
+  rowSidecar.smoothM = mesh.smoothM;
+  rowSidecar.smoothN = mesh.smoothN;
+  rowSidecar.curveType = mesh.curvetype;
+  rowSidecar.sourceVertexCount = mesh.vertlist.size();
+  rowSidecar.anchor = true;
+  metadata.addMeshSidecar(rowSidecar);
+
+  LC_DwgAdvancedMetadata::MeshSidecarRecord columnSidecar = rowSidecar;
+  columnSidecar.fallbackEntityId = 9002u;
+  columnSidecar.role = "column";
+  columnSidecar.elementIndex = 2;
+  columnSidecar.roleIndex = 0;
+  columnSidecar.sourceVertexCount = 0u;
+  columnSidecar.anchor = false;
+  metadata.addMeshSidecar(columnSidecar);
+
+  REQUIRE(metadata.meshes().size() == 1u);
+  const LC_DwgAdvancedMetadata::MeshRecord* record =
+      metadata.findMeshByHandle(mesh.handle);
+  REQUIRE(record != nullptr);
+  CHECK(record->handle == mesh.handle);
+  CHECK(record->parentHandle == mesh.parentHandle);
+  CHECK(record->vertexCount == 2);
+  CHECK(record->faceCount == 3);
+  CHECK(record->preservedVertexCount == 6u);
+  CHECK(record->smoothM == 4);
+  CHECK(record->smoothN == 5);
+  CHECK(record->rawRangeStatus ==
+        LC_DwgAdvancedMetadata::MeshRawRangeStatus::Complete);
+  CHECK(record->fallbackPreviewGenerated);
+
+  const std::vector<const LC_DwgAdvancedMetadata::MeshSidecarRecord*>
+      sourceSidecars = metadata.findMeshSidecarsBySourceHandle(mesh.handle);
+  REQUIRE(sourceSidecars.size() == 2u);
+  CHECK(sourceSidecars.front()->anchor);
+  CHECK(sourceSidecars.front()->sourceVertexCount == 6u);
+  const LC_DwgAdvancedMetadata::MeshSidecarRecord* fallbackSidecar =
+      metadata.findMeshSidecarByFallbackEntityId(9002u);
+  REQUIRE(fallbackSidecar != nullptr);
+  CHECK(fallbackSidecar->role == "column");
+
+  const LC_DwgAdvancedMetadata::MeshWriterBlockerCounts blockers =
+      metadata.meshWriterBlockerCounts();
+  CHECK(blockers.meshCount == 1u);
+  CHECK(blockers.sidecarCount == 2u);
+  CHECK(blockers.completeRawRange == 1u);
+  CHECK(blockers.fallbackOnlyPreview == 1u);
+  CHECK(blockers.malformedCountRelationships == 0u);
+  CHECK(blockers.missingOwnerOrClassHandle == 0u);
+}
+
+TEST_CASE("DWG mesh writer blockers diagnose incomplete SubDMesh metadata",
+          "[entity_metadata][dwg_metadata][mesh]") {
+  LC_DwgAdvancedMetadata metadata;
+
+  LC_DwgAdvancedMetadata::MeshRecord subDMesh;
+  subDMesh.handle = 0x782u;
+  subDMesh.recordName = "MESH";
+  subDMesh.isSubDMesh = true;
+  subDMesh.subdivisionLevel = 2;
+  subDMesh.vertexCount = 4;
+  subDMesh.faceCount = 2;
+  subDMesh.edgeCount = 3;
+  subDMesh.creaseCount = 1;
+  subDMesh.preservedVertexCount = 3u;
+  subDMesh.hasCreaseData = false;
+  metadata.addMeshRecord(subDMesh);
+
+  const LC_DwgAdvancedMetadata::MeshWriterBlockerCounts blockers =
+      metadata.meshWriterBlockerCounts();
+  CHECK(blockers.meshCount == 1u);
+  CHECK(blockers.incompleteRawRange == 1u);
+  CHECK(blockers.missingCreaseData == 1u);
+  CHECK(blockers.unsupportedSubdivisionData == 1u);
+  CHECK(blockers.missingOwnerOrClassHandle == 1u);
+  CHECK(blockers.malformedCountRelationships == 1u);
+
+  const std::vector<LC_DwgAdvancedMetadata::AdvancedEntityWriterReadiness>
+      ledger = metadata.advancedEntityWriterLedger(DRW::AC1027);
+  REQUIRE(ledger.size() == 1u);
+  CHECK(ledger.front().family ==
+        LC_DwgAdvancedMetadata::AdvancedEntityWriterFamily::Mesh);
+  CHECK_FALSE(ledger.front().nativeWriterAvailable);
+  CHECK(ledger.front().missingRequiredMetadata);
+  CHECK(ledger.front().unsupportedAdvancedContent);
+}
+
 TEST_CASE("DWG advanced metadata invalidates associative raw replay",
           "[entity_metadata][dwg_metadata][raw-replay]") {
   LC_DwgAdvancedMetadata metadata;

@@ -207,6 +207,13 @@ public:
         NonPositiveDimension
     };
 
+    enum class MeshRawRangeStatus {
+        Unknown,
+        Complete,
+        Missing,
+        Incomplete
+    };
+
     struct RawObjectRecord {
         int objectType = 0;
         duint32 handle = 0;
@@ -321,6 +328,73 @@ public:
         size_t totalBlockers() const {
             return editedFallbackInvalidated + missingRequiredMetadata
                 + missingPayloadBytes + unsupportedAdvancedContent;
+        }
+    };
+
+    struct MeshRecord {
+        duint32 handle = 0;
+        duint32 parentHandle = 0;
+        std::string recordName;
+        bool isSubDMesh = false;
+        int schemaVersion = 0;
+        int classVersion = 0;
+        int subdivisionLevel = 0;
+        int vertexCount = 0;
+        int faceCount = 0;
+        int edgeCount = 0;
+        int creaseCount = 0;
+        int smoothM = 0;
+        int smoothN = 0;
+        int curveType = 0;
+        int flags = 0;
+        size_t preservedVertexCount = 0;
+        bool hasCreaseData = false;
+        bool fallbackPreviewGenerated = false;
+        bool fallbackInvalidated = false;
+        MeshRawRangeStatus rawRangeStatus = MeshRawRangeStatus::Unknown;
+        ReplayState replayState = ReplayState::ReplayAllowed;
+    };
+
+    struct MeshSidecarRecord {
+        duint32 sourceHandle = 0;
+        unsigned long long fallbackEntityId = 0;
+        std::string meshId;
+        std::string role;
+        int elementIndex = -1;
+        int elementCount = 0;
+        int roleIndex = -1;
+        int flags = 0;
+        int mCount = 0;
+        int nCount = 0;
+        int smoothM = 0;
+        int smoothN = 0;
+        int curveType = 0;
+        size_t sourceVertexCount = 0;
+        bool anchor = false;
+        bool editedFallback = false;
+        ReplayState replayState = ReplayState::ReplayAllowed;
+    };
+
+    struct MeshWriterBlockerCounts {
+        size_t meshCount = 0;
+        size_t sidecarCount = 0;
+        size_t completeRawRange = 0;
+        size_t missingRawRange = 0;
+        size_t incompleteRawRange = 0;
+        size_t missingCreaseData = 0;
+        size_t unsupportedSubdivisionData = 0;
+        size_t fallbackOnlyPreview = 0;
+        size_t editedFallback = 0;
+        size_t missingOwnerOrClassHandle = 0;
+        size_t malformedCountRelationships = 0;
+        size_t invalidated = 0;
+        size_t replaced = 0;
+
+        size_t totalBlockers() const {
+            return missingCreaseData + unsupportedSubdivisionData
+                   + fallbackOnlyPreview + editedFallback
+                   + missingOwnerOrClassHandle + malformedCountRelationships
+                   + invalidated + replaced;
         }
     };
 
@@ -1332,6 +1406,38 @@ public:
         m_modelerGeometry.push_back(std::move(record));
     }
 
+    void addMeshPolyline(const DRW_Polyline& polyline,
+                         bool fallbackPreviewGenerated) {
+        MeshRecord record;
+        record.handle = polyline.handle;
+        record.parentHandle = polyline.parentHandle;
+        record.recordName = "POLYLINE_MESH";
+        record.vertexCount = polyline.vertexcount;
+        record.faceCount = polyline.facecount;
+        record.smoothM = polyline.smoothM;
+        record.smoothN = polyline.smoothN;
+        record.curveType = polyline.curvetype;
+        record.flags = polyline.flags;
+        record.preservedVertexCount = polyline.vertlist.size();
+        record.fallbackPreviewGenerated = fallbackPreviewGenerated;
+        record.rawRangeStatus = meshRawRangeStatus(
+            record.vertexCount, record.faceCount, record.preservedVertexCount);
+        m_meshes.push_back(std::move(record));
+    }
+
+    void addMeshRecord(MeshRecord record) {
+        if (record.rawRangeStatus == MeshRawRangeStatus::Unknown) {
+            record.rawRangeStatus = meshRawRangeStatus(
+                record.vertexCount, record.faceCount,
+                record.preservedVertexCount);
+        }
+        m_meshes.push_back(std::move(record));
+    }
+
+    void addMeshSidecar(MeshSidecarRecord record) {
+        m_meshSidecars.push_back(std::move(record));
+    }
+
     void addTableStyle(const DRW_TableStyle& style) {
         TableRecord record;
         record.handle = style.handle;
@@ -1761,6 +1867,8 @@ public:
     const std::vector<LightRecord>& lights() const { return m_lights; }
     const std::vector<SunRecord>& suns() const { return m_suns; }
     const std::vector<ModelerGeometryRecord>& modelerGeometry() const { return m_modelerGeometry; }
+    const std::vector<MeshRecord>& meshes() const { return m_meshes; }
+    const std::vector<MeshSidecarRecord>& meshSidecars() const { return m_meshSidecars; }
     const std::vector<TableRecord>& tables() const { return m_tables; }
     const std::vector<TableFallbackEntityRecord>& tableFallbackEntities() const {
         return m_tableFallbackEntities;
@@ -2048,6 +2156,48 @@ public:
         }
         return counts;
     }
+    MeshWriterBlockerCounts meshWriterBlockerCounts() const {
+        MeshWriterBlockerCounts counts;
+        counts.sidecarCount = m_meshSidecars.size();
+        for (const MeshRecord& record : m_meshes) {
+            ++counts.meshCount;
+            if (record.rawRangeStatus == MeshRawRangeStatus::Complete)
+                ++counts.completeRawRange;
+            else if (record.rawRangeStatus == MeshRawRangeStatus::Missing)
+                ++counts.missingRawRange;
+            else if (record.rawRangeStatus == MeshRawRangeStatus::Incomplete)
+                ++counts.incompleteRawRange;
+            if (meshHasMalformedCounts(record))
+                ++counts.malformedCountRelationships;
+            if (record.parentHandle == 0
+                || (record.isSubDMesh && record.recordName.empty())) {
+                ++counts.missingOwnerOrClassHandle;
+            }
+            if (record.isSubDMesh || record.subdivisionLevel > 0)
+                ++counts.unsupportedSubdivisionData;
+            if ((record.edgeCount > 0 || record.creaseCount > 0
+                 || record.subdivisionLevel > 0) && !record.hasCreaseData) {
+                ++counts.missingCreaseData;
+            }
+            if (record.fallbackPreviewGenerated)
+                ++counts.fallbackOnlyPreview;
+            if (record.fallbackInvalidated)
+                ++counts.editedFallback;
+            if (record.replayState == ReplayState::ReplayInvalidated)
+                ++counts.invalidated;
+            if (record.replayState == ReplayState::ReplayReplaced)
+                ++counts.replaced;
+        }
+        for (const MeshSidecarRecord& sidecar : m_meshSidecars) {
+            if (sidecar.editedFallback)
+                ++counts.editedFallback;
+            if (sidecar.replayState == ReplayState::ReplayInvalidated)
+                ++counts.invalidated;
+            if (sidecar.replayState == ReplayState::ReplayReplaced)
+                ++counts.replaced;
+        }
+        return counts;
+    }
     AssociativeShellCounts associativeShellCounts() const {
         AssociativeShellCounts counts;
         for (const AssociativeRecord& record : m_associativeObjects) {
@@ -2142,6 +2292,8 @@ public:
         }
         for (const MLeaderRecord& mleader : m_mleaders)
             result.push_back(advancedEntityWriterReadinessFromMLeader(mleader, version));
+        for (const MeshRecord& mesh : m_meshes)
+            result.push_back(advancedEntityWriterReadinessFromMesh(mesh, version));
         return result;
     }
 
@@ -2264,6 +2416,39 @@ public:
                 result.push_back(&record);
         }
         return result;
+    }
+
+    const MeshRecord* findMeshByHandle(duint32 handle) const {
+        if (handle == 0)
+            return nullptr;
+        for (const MeshRecord& record : m_meshes) {
+            if (record.handle == handle)
+                return &record;
+        }
+        return nullptr;
+    }
+
+    std::vector<const MeshSidecarRecord*> findMeshSidecarsBySourceHandle(
+        duint32 sourceHandle) const {
+        std::vector<const MeshSidecarRecord*> result;
+        if (sourceHandle == 0)
+            return result;
+        for (const MeshSidecarRecord& record : m_meshSidecars) {
+            if (record.sourceHandle == sourceHandle)
+                result.push_back(&record);
+        }
+        return result;
+    }
+
+    const MeshSidecarRecord* findMeshSidecarByFallbackEntityId(
+        unsigned long long fallbackEntityId) const {
+        if (fallbackEntityId == 0)
+            return nullptr;
+        for (const MeshSidecarRecord& record : m_meshSidecars) {
+            if (record.fallbackEntityId == fallbackEntityId)
+                return &record;
+        }
+        return nullptr;
     }
 
     const AssociativeRecord* findAssociativeObjectByHandle(duint32 handle) const {
@@ -4616,6 +4801,30 @@ private:
         return record;
     }
 
+    static AdvancedEntityWriterReadiness advancedEntityWriterReadinessFromMesh(
+        const MeshRecord& mesh, DRW::Version version) {
+        AdvancedEntityWriterReadiness record;
+        record.family = AdvancedEntityWriterFamily::Mesh;
+        record.odaCoverage = AdvancedEntityWriterOdaCoverage::Partial;
+        record.handle = mesh.handle;
+        record.recordName =
+            mesh.recordName.empty() ? std::string("MESH") : mesh.recordName;
+        record.className = mesh.isSubDMesh ? "AcDbSubDMesh" : "AcDbPolyline";
+        record.nativeWriterAvailable =
+            advancedEntityNativeWriterAvailable(record.family, version);
+        record.fallbackAvailable = mesh.fallbackPreviewGenerated;
+        record.editedFallbackInvalidated =
+            mesh.fallbackInvalidated
+            || mesh.replayState != ReplayState::ReplayAllowed;
+        record.missingRequiredMetadata =
+            mesh.parentHandle == 0 || meshHasMalformedCounts(mesh);
+        record.unsupportedAdvancedContent =
+            mesh.isSubDMesh || mesh.subdivisionLevel > 0
+            || mesh.edgeCount > 0 || mesh.creaseCount > 0
+            || mesh.rawRangeStatus != MeshRawRangeStatus::Complete;
+        return record;
+    }
+
     static bool advancedEntityNativeWriterAvailable(
         AdvancedEntityWriterFamily family, DRW::Version version) {
         if (version == DRW::UNKNOWNV)
@@ -4785,6 +4994,29 @@ private:
         return false;
     }
 
+    static MeshRawRangeStatus meshRawRangeStatus(
+        int vertexCount, int faceCount, size_t preservedVertexCount) {
+        if (preservedVertexCount == 0)
+            return MeshRawRangeStatus::Missing;
+        if (vertexCount <= 0 || faceCount <= 0)
+            return MeshRawRangeStatus::Incomplete;
+        const size_t expectedVertexCount =
+            static_cast<size_t>(vertexCount) * static_cast<size_t>(faceCount);
+        return preservedVertexCount == expectedVertexCount
+                   ? MeshRawRangeStatus::Complete
+                   : MeshRawRangeStatus::Incomplete;
+    }
+
+    static bool meshHasMalformedCounts(const MeshRecord& record) {
+        if (record.vertexCount <= 0 || record.faceCount <= 0)
+            return true;
+        const size_t expectedVertexCount =
+            static_cast<size_t>(record.vertexCount)
+            * static_cast<size_t>(record.faceCount);
+        return record.preservedVertexCount != 0
+            && record.preservedVertexCount != expectedVertexCount;
+    }
+
     template<typename Predicate>
     void invalidateMatching(Predicate predicate) {
         invalidateMatching(m_rawObjects, predicate);
@@ -4792,6 +5024,7 @@ private:
         invalidateMatching(m_lights, predicate);
         invalidateMatching(m_suns, predicate);
         invalidateMatching(m_modelerGeometry, predicate);
+        invalidateMatching(m_meshes, predicate);
         invalidateMatching(m_tables, predicate);
         invalidateMatching(m_associativeObjects, predicate);
         invalidateMatching(m_acshObjects, predicate);
@@ -4858,6 +5091,8 @@ private:
     std::vector<LightRecord> m_lights;
     std::vector<SunRecord> m_suns;
     std::vector<ModelerGeometryRecord> m_modelerGeometry;
+    std::vector<MeshRecord> m_meshes;
+    std::vector<MeshSidecarRecord> m_meshSidecars;
     std::vector<TableRecord> m_tables;
     std::vector<TableFallbackEntityRecord> m_tableFallbackEntities;
     std::vector<CellStyleMapRecord> m_cellStyleMaps;

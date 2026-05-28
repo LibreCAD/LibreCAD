@@ -1723,6 +1723,13 @@ void RS_FilterDXFRW::addPolyline(const DRW_Polyline& data) {
         // the polyline is a polygon mesh
         int M = data.vertexcount;
         int N = data.facecount;
+        const bool canRenderFallback =
+            M > 0 && N > 0
+            && data.vertlist.size() == static_cast<size_t>(M * N)
+            && data.curvetype == 0;
+        if (m_graphic != nullptr)
+            m_graphic->dwgAdvancedMetadata().addMeshPolyline(
+                data, canRenderFallback);
         if (M <= 0 || N <= 0 || data.vertlist.size() != static_cast<size_t>(M * N)) {
             return; // invalid mesh
         }
@@ -1772,6 +1779,30 @@ void RS_FilterDXFRW::addPolyline(const DRW_Polyline& data) {
             }
             return ext;
         };
+        auto addMeshSidecarMetadata = [&](const RS_Entity* entity,
+                                          int elementIndex,
+                                          const std::string& role,
+                                          int roleIndex, bool anchor) {
+            if (m_graphic == nullptr || entity == nullptr)
+                return;
+            LC_DwgAdvancedMetadata::MeshSidecarRecord record;
+            record.sourceHandle = data.handle;
+            record.fallbackEntityId = entity->getId();
+            record.meshId = meshId;
+            record.role = role;
+            record.elementIndex = elementIndex;
+            record.elementCount = meshElementCount;
+            record.roleIndex = roleIndex;
+            record.flags = data.flags;
+            record.mCount = M;
+            record.nCount = N;
+            record.smoothM = data.smoothM;
+            record.smoothN = data.smoothN;
+            record.curveType = data.curvetype;
+            record.sourceVertexCount = anchor ? data.vertlist.size() : 0u;
+            record.anchor = anchor;
+            m_graphic->dwgAdvancedMetadata().addMeshSidecar(std::move(record));
+        };
 
         // Add row polylines (along N direction)
         for (int i = 0; i < M; i++) {
@@ -1784,6 +1815,7 @@ void RS_FilterDXFRW::addPolyline(const DRW_Polyline& data) {
                 pl->addVertex(pos, 0.0, false);
             }
             pl->setDrwExtData(makeMeshExtData(i, "row", i, i == 0));
+            addMeshSidecarMetadata(pl.get(), i, "row", i, i == 0);
             m_currentContainer->addEntity(pl.release());
         }
 
@@ -1799,6 +1831,7 @@ void RS_FilterDXFRW::addPolyline(const DRW_Polyline& data) {
             }
             pl->setDrwExtData(
                 makeMeshExtData(M + j, "column", j, false));
+            addMeshSidecarMetadata(pl.get(), M + j, "column", j, false);
             m_currentContainer->addEntity(pl.release());
         }
         return;
@@ -5656,6 +5689,8 @@ void RS_FilterDXFRW::writeObjects() {
                 metadata.advancedEntityWriterBlockerCounts(m_dwgW->getVersion());
         const LC_DwgAdvancedMetadata::ModelerPayloadCounts modelerPayloads =
             metadata.modelerPayloadCounts();
+        const LC_DwgAdvancedMetadata::MeshWriterBlockerCounts meshBlockers =
+            metadata.meshWriterBlockerCounts();
         const LC_DwgAdvancedMetadata::AssociativeShellCounts associativeShells =
             metadata.associativeShellCounts();
         const LC_DwgAdvancedMetadata::AssociativePrefixCounts associativePrefixes =
@@ -5924,6 +5959,27 @@ void RS_FilterDXFRW::writeObjects() {
                 static_cast<int>(mleaderBlockers.missingLeaderGeometry),
                 static_cast<int>(mleaderBlockers.invalidated),
                 static_cast<int>(mleaderBlockers.replaced));
+        }
+        if (meshBlockers.meshCount > 0 && meshBlockers.totalBlockers() > 0) {
+            RS_DEBUG->print(
+                RS_Debug::D_WARNING,
+                "Native DWG mesh writing blocked: meshes=%d sidecars=%d "
+                "range-complete=%d range-missing=%d range-incomplete=%d "
+                "crease=%d subdivision=%d fallback-only=%d edited-fallback=%d "
+                "owner-class=%d malformed-counts=%d invalidated=%d replaced=%d",
+                static_cast<int>(meshBlockers.meshCount),
+                static_cast<int>(meshBlockers.sidecarCount),
+                static_cast<int>(meshBlockers.completeRawRange),
+                static_cast<int>(meshBlockers.missingRawRange),
+                static_cast<int>(meshBlockers.incompleteRawRange),
+                static_cast<int>(meshBlockers.missingCreaseData),
+                static_cast<int>(meshBlockers.unsupportedSubdivisionData),
+                static_cast<int>(meshBlockers.fallbackOnlyPreview),
+                static_cast<int>(meshBlockers.editedFallback),
+                static_cast<int>(meshBlockers.missingOwnerOrClassHandle),
+                static_cast<int>(meshBlockers.malformedCountRelationships),
+                static_cast<int>(meshBlockers.invalidated),
+                static_cast<int>(meshBlockers.replaced));
         }
         if (advancedEntityBlockers.recordCount > 0
             && advancedEntityBlockers.totalBlockers() > 0) {

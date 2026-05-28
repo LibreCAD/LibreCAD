@@ -248,8 +248,9 @@ Still incomplete:
 - Slice 11-12 ACIS/modeler and associative/action/history graph expansion has
   queryable shell records; the next safe work is bounded sub-block counts and
   typed payload summaries, not ACIS interpretation or action evaluation.
-- Slice 14 remaining advanced entities: MESH, SHAPE, OLE2FRAME, raster/image/
-  underlay DWG writing, and fuller HATCH semantics beyond gradients.
+- Slice 14 remaining advanced entities: SHAPE, OLE2FRAME, raster/image/
+  underlay DWG writing, native MESH/SubDMesh writing, and fuller HATCH
+  semantics beyond gradients.
 - Slice 15-16 remaining object metadata writers and VIEW/UCS/lighting UI
   integration; visual/lighting records are queryable by core handles, but view
   dependency invalidation and UI/rendering integration are not complete.
@@ -1732,7 +1733,8 @@ Acceptance:
 
 Purpose: prepare mesh writing and preview without committing to a writer.
 
-Status: ready after D1a. This is metadata completeness and diagnostics only.
+Status: complete in the current implementation pass. This is metadata
+completeness and diagnostics only; native SubDMesh writing remains deferred.
 
 Files:
 
@@ -1764,6 +1766,14 @@ Implementation:
 4. Add tests for count preservation, sidecar lookup, and blocker buckets.
 
 Stop before native SubDMesh writing.
+
+Acceptance:
+
+- `[entity_metadata]` covers preserved mesh counts, raw range status, generated
+  sidecar lookup by source handle and fallback entity id, and blocker buckets
+  for incomplete SubDMesh metadata.
+- DWG export diagnostics report mesh writer blockers without enabling a native
+  MESH/SubDMesh writer.
 
 ### Ready Detail D3a: Raster, Wipeout, Image, and Underlay Link Graph
 
