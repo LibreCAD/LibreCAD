@@ -1284,6 +1284,9 @@ public:
     }
 protected:
     bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) override;
+    bool encodeDwg(DRW::Version version, dwgBufferW *buf,
+                   dwgBufferW *strBuf = nullptr,
+                   dwgBufferW *handleBuf = nullptr) const;
 public:
     // PlotSettings prefix per ODA §20.4.84 (the LAYOUT object embeds these inline)
     UTF8STRING pageSetupName;     /*!< code 1, TV */

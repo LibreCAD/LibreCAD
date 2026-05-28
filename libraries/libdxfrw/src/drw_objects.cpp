@@ -3641,6 +3641,115 @@ bool DRW_Group::encodeDwg(DRW::Version version, dwgBufferW *buf,
     return true;
 }
 
+// LAYOUT (AcDbLayout) encoder — ODA §20.4.84.  Inverts parseDwg above.
+// Body lays out the PLOTSETTINGS prefix inline, then layout-specific
+// fields, then the common handle prefix and type-specific handle tail.
+// Handle ordering must match the parser: common prefix
+// (parentHandle + reactors + xdic) comes FIRST, then the type-specific
+// plotView/visualStyle/paperSpaceBlockRecord/lastActiveViewport/baseUcs/
+// namedUcs handles, then per-viewport handles (R2004+).
+bool DRW_Layout::encodeDwg(DRW::Version version, dwgBufferW *buf,
+                            dwgBufferW *strBuf,
+                            dwgBufferW *handleBuf) const {
+    if (buf == nullptr) return false;
+    dwgBufferW *sb = (strBuf != nullptr && version > DRW::AC1018) ? strBuf : buf;
+    dwgBufferW *hb = (handleBuf != nullptr && version > DRW::AC1018) ? handleBuf : buf;
+
+    // --- PLOTSETTINGS prefix ---
+    sb->putVariableText(version, pageSetupName);
+    sb->putVariableText(version, printerConfig);
+    buf->putBitShort(static_cast<dint16>(plotLayoutFlags));
+    buf->putBitDouble(marginLeft);
+    buf->putBitDouble(marginBottom);
+    buf->putBitDouble(marginRight);
+    buf->putBitDouble(marginTop);
+    buf->putBitDouble(paperWidth);
+    buf->putBitDouble(paperHeight);
+    sb->putVariableText(version, paperSize);
+    buf->putBitDouble(plotOriginX);
+    buf->putBitDouble(plotOriginY);
+    buf->putBitShort(static_cast<dint16>(paperUnits));
+    buf->putBitShort(static_cast<dint16>(plotRotation));
+    buf->putBitShort(static_cast<dint16>(plotType));
+    buf->putBitDouble(windowMinX);
+    buf->putBitDouble(windowMinY);
+    buf->putBitDouble(windowMaxX);
+    buf->putBitDouble(windowMaxY);
+
+    if (version < DRW::AC1018) {  // R13-R2000: plotViewName precedes scale fields
+        sb->putVariableText(version, plotViewName);
+    }
+
+    buf->putBitDouble(realWorldUnits);
+    buf->putBitDouble(drawingUnits);
+    sb->putVariableText(version, currentStyleSheet);
+    buf->putBitShort(static_cast<dint16>(scaleType));
+    buf->putBitDouble(scaleFactor);
+    buf->putBitDouble(paperImageOriginX);
+    buf->putBitDouble(paperImageOriginY);
+
+    if (version >= DRW::AC1018) {  // R2004+
+        buf->putBitShort(static_cast<dint16>(shadePlotMode));
+        buf->putBitShort(static_cast<dint16>(shadePlotResLevel));
+        buf->putBitShort(static_cast<dint16>(shadePlotCustomDPI));
+    }
+
+    // --- LAYOUT-specific fields ---
+    sb->putVariableText(version, name);
+    buf->putBitLong(tabOrder);
+    buf->putBitShort(static_cast<dint16>(layoutFlags));
+    buf->put3BitDouble(ucsOrigin);
+    buf->putRawDouble(limMinX);
+    buf->putRawDouble(limMinY);
+    buf->putRawDouble(limMaxX);
+    buf->putRawDouble(limMaxY);
+    buf->put3BitDouble(insPoint);
+    buf->put3BitDouble(ucsXAxis);
+    buf->put3BitDouble(ucsYAxis);
+    buf->putBitDouble(elevation);
+    buf->putBitShort(static_cast<dint16>(orthoViewType));
+    buf->put3BitDouble(extMin);
+    buf->put3BitDouble(extMax);
+
+    if (version >= DRW::AC1018) {
+        buf->putRawLong32(static_cast<duint32>(viewportCount));
+    }
+
+    // --- Handle stream ---
+    // Common prefix (parentHandle + reactors + xdic) FIRST, matching the
+    // post-PR-2 parser's readCommonObjectHandles call ordering.
+    hb->putHandle(makeSoftOwnerW(static_cast<duint32>(parentHandle)));
+    for (dint32 i = 0; i < numReactors; ++i) {
+        hb->putHandle(makeSoftOwnerW(0));    // reactor refs — null
+    }
+    if (xDictFlag != 1) {
+        hb->putHandle(makeSoftOwnerW(0));    // xdic
+    }
+
+    // Type-specific tail per ODA §20.4.84.  plotViewHandle and visualStyleHandle
+    // are gated on the same version branches as the parser.
+    if (version >= DRW::AC1018) {
+        hb->putHandle(writeHandleOrHardPtr(plotViewHandle));
+    }
+    if (version > DRW::AC1018) {
+        hb->putHandle(writeHandleOrHardPtr(visualStyleHandle));
+    }
+    hb->putHandle(writeHandleOrHardPtr(paperSpaceBlockRecordHandle));
+    hb->putHandle(writeHandleOrHardPtr(lastActiveViewportHandle));
+    hb->putHandle(writeHandleOrHardPtr(baseUcsHandle));
+    hb->putHandle(writeHandleOrHardPtr(namedUcsHandle));
+
+    if (version >= DRW::AC1018) {
+        for (dint32 i = 0; i < viewportCount; ++i) {
+            duint32 ref = (i < static_cast<dint32>(viewportHandles.size()))
+                ? viewportHandles[static_cast<size_t>(i)]
+                : 0;
+            hb->putHandle(makeSoftOwnerW(ref));
+        }
+    }
+    return true;
+}
+
 // DICTIONARY (AcDbDictionary) encoder — ODA §20.4.44.  Inverts parseDwg
 // above.  Body: numItems BL + (AC1014 RC=0 OR AC1015+ cloning BS +
 // hardOwner RC) + per-entry name TV.  Handle stream: common prefix

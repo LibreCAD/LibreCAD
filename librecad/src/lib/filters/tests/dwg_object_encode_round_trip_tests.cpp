@@ -68,6 +68,10 @@ public:
                                dwgBufferW* buf) {
         return e.encodeDwg(v, buf);
     }
+    static bool encodeLayout(const DRW_Layout& e, DRW::Version v,
+                              dwgBufferW* buf) {
+        return e.encodeDwg(v, buf);
+    }
     static dint16 oType(const DRW_TableEntry& e) { return e.oType; }
     static void setNumReactors(DRW_TableEntry& e, dint32 n) { e.numReactors = n; }
     static void setXDictFlag(DRW_TableEntry& e, duint8 f) { e.xDictFlag = f; }
@@ -754,4 +758,197 @@ TEST_CASE("DRW_XRecord::encodeDwg round-trips every value type bucket",
     REQUIRE(dst.m_handleValues[1].second == 0xA1u);
     REQUIRE(dst.m_handleValues[2].first  == 0);
     REQUIRE(dst.m_handleValues[2].second == 0xA2u);
+}
+
+// LAYOUT encoder round-trip (ODA §20.4.84).  Exercises the PlotSettings prefix +
+// layout-specific body + common handle prefix + type-specific handle tail at
+// AC1018 (R2004), where the shade-plot block + viewport-count branch is active
+// and strings are still inline (so we can avoid the separate strBuf path).
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("DRW_Layout::encodeDwg round-trips PlotSettings + layout body + handles",
+          "[dwg-write][object-encode][layout]") {
+    DRW_Layout src;
+    src.handle           = 0x1A;
+    src.parentHandle     = 0x1A2;            // ACAD_LAYOUT dictionary
+    src.pageSetupName    = "PrintSetup";
+    src.printerConfig    = "Adobe PDF";
+    src.plotLayoutFlags  = 9;
+    src.marginLeft       = 7.5;
+    src.marginBottom     = 20.0;
+    src.marginRight      = 7.5;
+    src.marginTop        = 20.0;
+    src.paperWidth       = 297.0;
+    src.paperHeight      = 420.0;
+    src.paperSize        = "ISO A3 (297.00 x 420.00 MM)";
+    src.plotOriginX      = 0.0;
+    src.plotOriginY      = 0.0;
+    src.paperUnits       = 0;
+    src.plotRotation     = 1;
+    src.plotType         = 5;
+    src.windowMinX       = -10.0;
+    src.windowMinY       = -10.0;
+    src.windowMaxX       = 287.0;
+    src.windowMaxY       = 410.0;
+    src.realWorldUnits   = 1.0;
+    src.drawingUnits     = 25.4;             // 1 inch = 25.4 mm
+    src.currentStyleSheet = "acad.ctb";
+    src.scaleType        = 16;
+    src.scaleFactor      = 25.4;
+    src.paperImageOriginX = 1.0;
+    src.paperImageOriginY = 2.0;
+    src.shadePlotMode      = 1;              // R2004+
+    src.shadePlotResLevel  = 4;
+    src.shadePlotCustomDPI = 600;
+    src.name        = "Layout1";
+    src.tabOrder    = 2;
+    src.layoutFlags = 4;
+    src.ucsOrigin   = DRW_Coord{1.0, 2.0, 3.0};
+    src.limMinX     = -5.0;
+    src.limMinY     = -7.5;
+    src.limMaxX     = 200.0;
+    src.limMaxY     = 300.0;
+    src.insPoint    = DRW_Coord{10.0, 20.0, 0.0};
+    src.ucsXAxis    = DRW_Coord{1.0, 0.0, 0.0};
+    src.ucsYAxis    = DRW_Coord{0.0, 1.0, 0.0};
+    src.elevation   = 0.25;
+    src.orthoViewType = 6;
+    src.extMin      = DRW_Coord{-1.0, -2.0, 0.0};
+    src.extMax      = DRW_Coord{500.0, 600.0, 0.0};
+    src.viewportCount = 2;
+    src.viewportHandles = {0x80, 0x81};
+    // Type-specific handles (encoder uses writeHandleOrHardPtr; supply refs
+    // with code=0 so the encoder upgrades them to hard pointers).
+    // Type-specific handles — leave code=0/size=0 and ref set; the encoder's
+    // writeHandleOrHardPtr upgrades them to hard pointers.
+    src.plotViewHandle.ref              = 0;
+    src.paperSpaceBlockRecordHandle.ref = 0x70;
+    src.lastActiveViewportHandle.ref    = 0x71;
+    src.baseUcsHandle.ref               = 0x72;
+    src.namedUcsHandle.ref              = 0x73;
+    DrwObjectEncodeTestAccess::setNumReactors(src, 0);
+    DrwObjectEncodeTestAccess::setXDictFlag(src, 1);  // no xdic
+
+    DRW::Version ver = DRW::AC1018;
+    dwgBufferW w;
+    emitObjectPreamble(w, ver, /*oType=*/82 /* LAYOUT */, src.handle,
+                       /*numReactors=*/0, /*xDictFlag=*/1);
+    REQUIRE(DrwObjectEncodeTestAccess::encodeLayout(src, ver, &w));
+
+    auto bytes = snapshot(w);
+    REQUIRE(bytes.size() > 0);
+    dwgBuffer r(bytes.data(), bytes.size());
+    DRW_Layout dst;
+    REQUIRE(DrwObjectEncodeTestAccess::parse(dst, ver, &r));
+
+    // PlotSettings prefix
+    REQUIRE(dst.pageSetupName    == "PrintSetup");
+    REQUIRE(dst.printerConfig    == "Adobe PDF");
+    REQUIRE(dst.plotLayoutFlags  == 9);
+    REQUIRE(dst.marginLeft       == Approx(7.5));
+    REQUIRE(dst.marginBottom     == Approx(20.0));
+    REQUIRE(dst.marginRight      == Approx(7.5));
+    REQUIRE(dst.marginTop        == Approx(20.0));
+    REQUIRE(dst.paperWidth       == Approx(297.0));
+    REQUIRE(dst.paperHeight      == Approx(420.0));
+    REQUIRE(dst.paperSize        == "ISO A3 (297.00 x 420.00 MM)");
+    REQUIRE(dst.plotOriginX      == Approx(0.0));
+    REQUIRE(dst.plotOriginY      == Approx(0.0));
+    REQUIRE(dst.paperUnits       == 0);
+    REQUIRE(dst.plotRotation     == 1);
+    REQUIRE(dst.plotType         == 5);
+    REQUIRE(dst.windowMinX       == Approx(-10.0));
+    REQUIRE(dst.windowMaxY       == Approx(410.0));
+    REQUIRE(dst.realWorldUnits   == Approx(1.0));
+    REQUIRE(dst.drawingUnits     == Approx(25.4));
+    REQUIRE(dst.currentStyleSheet == "acad.ctb");
+    REQUIRE(dst.scaleType        == 16);
+    REQUIRE(dst.scaleFactor      == Approx(25.4));
+    REQUIRE(dst.paperImageOriginX == Approx(1.0));
+    REQUIRE(dst.paperImageOriginY == Approx(2.0));
+    REQUIRE(dst.shadePlotMode      == 1);
+    REQUIRE(dst.shadePlotResLevel  == 4);
+    REQUIRE(dst.shadePlotCustomDPI == 600);
+
+    // Layout-specific
+    REQUIRE(dst.name        == "Layout1");
+    REQUIRE(dst.tabOrder    == 2);
+    REQUIRE(dst.layoutFlags == 4);
+    REQUIRE(dst.ucsOrigin.x == Approx(1.0));
+    REQUIRE(dst.ucsOrigin.y == Approx(2.0));
+    REQUIRE(dst.ucsOrigin.z == Approx(3.0));
+    REQUIRE(dst.limMinX     == Approx(-5.0));
+    REQUIRE(dst.limMaxX     == Approx(200.0));
+    REQUIRE(dst.insPoint.x  == Approx(10.0));
+    REQUIRE(dst.insPoint.y  == Approx(20.0));
+    REQUIRE(dst.elevation   == Approx(0.25));
+    REQUIRE(dst.orthoViewType == 6);
+    REQUIRE(dst.extMin.x    == Approx(-1.0));
+    REQUIRE(dst.extMax.y    == Approx(600.0));
+    REQUIRE(dst.viewportCount == 2);
+
+    // Handle prefix + type-specific tail.
+    REQUIRE(static_cast<duint32>(dst.parentHandle)        == 0x1A2u);
+    REQUIRE(dst.paperSpaceBlockRecordHandle.ref           == 0x70u);
+    REQUIRE(dst.lastActiveViewportHandle.ref              == 0x71u);
+    REQUIRE(dst.baseUcsHandle.ref                         == 0x72u);
+    REQUIRE(dst.namedUcsHandle.ref                        == 0x73u);
+    REQUIRE(dst.viewportHandles.size() == 2u);
+    REQUIRE(dst.viewportHandles[0] == 0x80u);
+    REQUIRE(dst.viewportHandles[1] == 0x81u);
+}
+
+// LAYOUT encoder round-trip with non-zero reactors + xdic — verifies that the
+// common handle prefix is emitted FIRST in the right order so the parser's
+// readCommonObjectHandles consumes parentHandle + reactors + xdic before any
+// type-specific handle.  Locks in the alignment contract introduced by PR 2.
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("DRW_Layout::encodeDwg emits common handle prefix before type-specific handles",
+          "[dwg-write][object-encode][layout]") {
+    DRW_Layout src;
+    src.handle           = 0x1B;
+    src.parentHandle     = 0x55;
+    src.pageSetupName    = "Setup";
+    src.printerConfig    = "Printer";
+    src.paperWidth       = 297.0;
+    src.paperHeight      = 210.0;
+    src.paperSize        = "A4";
+    src.realWorldUnits   = 1.0;
+    src.drawingUnits     = 1.0;
+    src.currentStyleSheet = "";
+    src.scaleType        = 0;
+    src.scaleFactor      = 1.0;
+    src.shadePlotMode      = 0;
+    src.shadePlotResLevel  = 0;
+    src.shadePlotCustomDPI = 0;
+    src.name        = "Layout1";
+    src.tabOrder    = 1;
+    src.layoutFlags = 0;
+    src.viewportCount = 0;
+    src.plotViewHandle.ref              = 0;
+    src.paperSpaceBlockRecordHandle.ref = 0x90;
+    src.lastActiveViewportHandle.ref    = 0x91;
+    src.baseUcsHandle.ref               = 0x92;
+    src.namedUcsHandle.ref              = 0x93;
+    DrwObjectEncodeTestAccess::setNumReactors(src, 2);     // 2 reactors emitted as nulls
+    DrwObjectEncodeTestAccess::setXDictFlag(src, 0);       // xdic present (null)
+
+    DRW::Version ver = DRW::AC1018;
+    dwgBufferW w;
+    emitObjectPreamble(w, ver, /*oType=*/82, src.handle,
+                       /*numReactors=*/2, /*xDictFlag=*/0);
+    REQUIRE(DrwObjectEncodeTestAccess::encodeLayout(src, ver, &w));
+
+    auto bytes = snapshot(w);
+    dwgBuffer r(bytes.data(), bytes.size());
+    DRW_Layout dst;
+    REQUIRE(DrwObjectEncodeTestAccess::parse(dst, ver, &r));
+
+    // parentHandle must be 0x55, not 0 (and not consumed by paperSpaceBlockRecord).
+    REQUIRE(static_cast<duint32>(dst.parentHandle) == 0x55u);
+    // Type-specific handles land in the expected slots — proves the encoder
+    // emitted (parent + 2 reactors + xdic) BEFORE the type-specific block.
+    REQUIRE(dst.paperSpaceBlockRecordHandle.ref == 0x90u);
+    REQUIRE(dst.lastActiveViewportHandle.ref    == 0x91u);
+    REQUIRE(dst.baseUcsHandle.ref               == 0x92u);
+    REQUIRE(dst.namedUcsHandle.ref              == 0x93u);
 }
