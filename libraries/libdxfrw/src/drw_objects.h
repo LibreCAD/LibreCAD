@@ -75,13 +75,14 @@ namespace DRW {
          ACDBPLACEHOLDER,
          SUN,
          ASSOCIATIVEOBJECT,
-         ACSHHISTORYOBJECT
+         ACSHHISTORYOBJECT,
+         IDBUFFER,
+         LAYERINDEX,
+         SPATIALINDEX
      };
 
-//pending VP_ENT_HDR, GROUP, LONG_TRANSACTION,
-//ACDBPLACEHOLDER, VBA_PROJECT, ACAD_TABLE,
-//IDBUFFER, IMAGEDEF, LAYER_INDEX,
-//PLACEHOLDER, PLOTSETTINGS, SPATIAL_INDEX,
+//pending VP_ENT_HDR, LONG_TRANSACTION,
+//VBA_PROJECT, ACAD_TABLE, PLACEHOLDER,
 }
 
 struct DRW_DwgSubrecordRange {
@@ -191,6 +192,9 @@ public:
     DRW_Group() { tType = DRW::GROUP; }
 protected:
     bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) override;
+    bool encodeDwg(DRW::Version version, dwgBufferW *buf,
+                   dwgBufferW *strBuf = nullptr,
+                   dwgBufferW *handleBuf = nullptr) const;
 public:
     UTF8STRING m_description;
     bool m_isUnnamed = false;
@@ -898,6 +902,9 @@ public:
     }
 protected:
     bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) override;
+    bool encodeDwg(DRW::Version version, dwgBufferW *buf,
+                   dwgBufferW *strBuf = nullptr,
+                   dwgBufferW *handleBuf = nullptr) const;
 public:
     struct Entry {
         UTF8STRING m_name;
@@ -1508,6 +1515,8 @@ public:
 
 protected:
     bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) override;
+    bool encodeDwg(DRW::Version version, dwgBufferW *buf,
+                   dwgBufferW *strBuf = nullptr) const;
 public:
     duint16 flag = 0;            /*!< always 0, code 70 */
     double  paperUnits = 1.0;    /*!< numerator,  code 140 */
@@ -1922,6 +1931,82 @@ public:
     Kind kind = PDF;
     UTF8STRING filename;
     UTF8STRING sheetName;
+};
+
+//! IDBUFFER (AcDbIdBuffer) — ODA §20.4.79.
+/*!
+ *  Holds a list of object handles. Used as an opaque selection-set carrier
+ *  by xref-clip, filter chains, etc.
+ */
+class DRW_IDBuffer : public DRW_TableEntry {
+    SETOBJFRIENDS
+public:
+    DRW_IDBuffer() { reset(); }
+    void reset() {
+        tType = DRW::IDBUFFER;
+        classVersion = 0;
+        objIds.clear();
+        DRW_TableEntry::reset();
+    }
+protected:
+    bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) override;
+public:
+    int classVersion = 0;                /*!< class_version RC, always 0 */
+    std::vector<duint32> objIds;         /*!< object handles (soft pointer) */
+};
+
+//! LAYER_INDEX (AcDbLayerIndex) — ODA §20.4.83.
+/*!
+ *  Layer index — for each layer name records the entry handle to the
+ *  matching IDBUFFER (containing the entities on that layer).
+ */
+struct DRW_LayerIndexEntry {
+    int indexLong = 0;
+    UTF8STRING name;
+    duint32 entryHandle = 0;       /*!< populated from the post-body handle stream */
+};
+
+class DRW_LayerIndex : public DRW_TableEntry {
+    SETOBJFRIENDS
+public:
+    DRW_LayerIndex() { reset(); }
+    void reset() {
+        tType = DRW::LAYERINDEX;
+        timestamp1 = 0;
+        timestamp2 = 0;
+        entries.clear();
+        DRW_TableEntry::reset();
+    }
+protected:
+    bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) override;
+public:
+    duint32 timestamp1 = 0;          /*!< Julian day BL */
+    duint32 timestamp2 = 0;          /*!< milliseconds BL */
+    std::vector<DRW_LayerIndexEntry> entries;
+};
+
+//! SPATIAL_INDEX (AcDbSpatialIndex) — ODA §20.4.95.
+/*!
+ *  Spatial index for accelerated entity lookup. Body beyond timestamps is
+ *  unspecified ("rest of bits to handles") in the ODA spec; we capture
+ *  only the timestamps + common handles. The opaque blob between
+ *  timestamps and handles is preserved by raw-byte replay on write.
+ */
+class DRW_SpatialIndex : public DRW_TableEntry {
+    SETOBJFRIENDS
+public:
+    DRW_SpatialIndex() { reset(); }
+    void reset() {
+        tType = DRW::SPATIALINDEX;
+        timestamp1 = 0;
+        timestamp2 = 0;
+        DRW_TableEntry::reset();
+    }
+protected:
+    bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) override;
+public:
+    duint32 timestamp1 = 0;          /*!< Julian day BL */
+    duint32 timestamp2 = 0;          /*!< milliseconds BL */
 };
 
 /** Holds per-write-session maps populated during DXF/DWG writing. */

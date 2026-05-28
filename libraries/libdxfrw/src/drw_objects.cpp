@@ -3341,6 +3341,193 @@ bool DRW_MLeaderStyle::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs
         && (!hBuf || hBuf->isGood());
 }
 
+// IDBUFFER (AcDbIdBuffer) — ODA §20.4.79.
+bool DRW_IDBuffer::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
+    dwgBuffer sBuff = *buf;
+    dwgBuffer *sBuf = buf;
+    if (version > DRW::AC1018) sBuf = &sBuff;
+    bool ret = DRW_TableEntry::parseDwg(version, buf, sBuf, bs);
+    DRW_DBG("\n***************************** parsing IDBUFFER ***************\n");
+    if (!ret) return ret;
+
+    classVersion = buf->getRawChar8();             // unknown RC, always 0
+    const duint32 numIds = buf->getBitLong();
+    if (numIds > 100000) {
+        DRW_DBG("IDBUFFER numIds too large: "); DRW_DBG(numIds); DRW_DBG("\n");
+        return true;       // preserve alignment for subsequent objects
+    }
+
+    dwgBuffer hBuff = *buf;
+    dwgBuffer *hBuf = (version > DRW::AC1018) ? &hBuff : buf;
+    seekObjectHandleStream(version, hBuf, objSize);
+    readCommonObjectHandles(hBuf, handle, numReactors, xDictFlag,
+                            &parentHandle);
+
+    objIds.clear();
+    objIds.reserve(numIds);
+    for (duint32 i = 0; i < numIds && hBuf->isGood(); ++i) {
+        dwgHandle h = hBuf->getOffsetHandle(handle);
+        objIds.push_back(h.ref);
+    }
+
+    DRW_DBG("IDBUFFER count: "); DRW_DBG(static_cast<int>(objIds.size()));
+    DRW_DBG("\n");
+    return buf->isGood();
+}
+
+// LAYER_INDEX (AcDbLayerIndex) — ODA §20.4.83.
+bool DRW_LayerIndex::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
+    dwgBuffer sBuff = *buf;
+    dwgBuffer *sBuf = buf;
+    if (version > DRW::AC1018) sBuf = &sBuff;
+    bool ret = DRW_TableEntry::parseDwg(version, buf, sBuf, bs);
+    DRW_DBG("\n***************************** parsing LAYER_INDEX ***********\n");
+    if (!ret) return ret;
+
+    timestamp1 = buf->getBitLong();
+    timestamp2 = buf->getBitLong();
+    const duint32 numEntries = buf->getBitLong();
+    if (numEntries > 100000) {
+        DRW_DBG("LAYER_INDEX numEntries too large: ");
+        DRW_DBG(numEntries); DRW_DBG("\n");
+        return true;
+    }
+
+    entries.clear();
+    entries.reserve(numEntries);
+    for (duint32 i = 0; i < numEntries && buf->isGood(); ++i) {
+        DRW_LayerIndexEntry e;
+        e.indexLong = buf->getBitLong();
+        e.name      = sBuf->getVariableText(version, false);
+        entries.push_back(std::move(e));
+    }
+
+    dwgBuffer hBuff = *buf;
+    dwgBuffer *hBuf = (version > DRW::AC1018) ? &hBuff : buf;
+    seekObjectHandleStream(version, hBuf, objSize);
+    readCommonObjectHandles(hBuf, handle, numReactors, xDictFlag,
+                            &parentHandle);
+
+    for (auto& e : entries) {
+        if (!hBuf->isGood()) break;
+        dwgHandle h = hBuf->getOffsetHandle(handle);
+        e.entryHandle = h.ref;
+    }
+
+    DRW_DBG("LAYER_INDEX entries: "); DRW_DBG(static_cast<int>(entries.size()));
+    DRW_DBG("\n");
+    return buf->isGood();
+}
+
+// SPATIAL_INDEX (AcDbSpatialIndex) — ODA §20.4.95.  Body beyond timestamps
+// is unspecified ("rest of bits to handles"); only timestamps + common
+// handles are captured. For AC1015/AC1018 (inline handle stream) we can't
+// safely skip the opaque blob, so handle reading is gated to AC1024+
+// where seekObjectHandleStream jumps to the absolute position.
+bool DRW_SpatialIndex::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
+    dwgBuffer sBuff = *buf;
+    dwgBuffer *sBuf = buf;
+    if (version > DRW::AC1018) sBuf = &sBuff;
+    bool ret = DRW_TableEntry::parseDwg(version, buf, sBuf, bs);
+    DRW_DBG("\n***************************** parsing SPATIAL_INDEX *********\n");
+    if (!ret) return ret;
+
+    timestamp1 = buf->getBitLong();
+    timestamp2 = buf->getBitLong();
+
+    if (version > DRW::AC1018) {  // R2007+ — seek to the handle stream
+        dwgBuffer hBuff = *buf;
+        seekObjectHandleStream(version, &hBuff, objSize);
+        readCommonObjectHandles(&hBuff, handle, numReactors, xDictFlag,
+                                &parentHandle);
+    }
+    // R2000/R2004: parentHandle and other handles left unset — opaque
+    // unknown-blob length is not specified by ODA.
+    DRW_DBG("SPATIAL_INDEX timestamps: "); DRW_DBG(timestamp1);
+    DRW_DBG(" / "); DRW_DBG(timestamp2); DRW_DBG("\n");
+    return buf->isGood();
+}
+
+// SCALE (AcDbScale) encoder — ODA §20.4.92.  Body fields only; no handle
+// stream (parser intentionally leaves the post-body handles to the caller).
+bool DRW_Scale::encodeDwg(DRW::Version version, dwgBufferW *buf,
+                           dwgBufferW *strBuf) const {
+    if (buf == nullptr) return false;
+    dwgBufferW *sb = (strBuf != nullptr && version > DRW::AC1018) ? strBuf : buf;
+    buf->putBitShort(static_cast<dint16>(flag));
+    sb->putVariableText(version, name);
+    buf->putBitDouble(paperUnits);
+    buf->putBitDouble(drawingUnits);
+    buf->putBit(isUnitScale ? 1 : 0);
+    return true;
+}
+
+// GROUP encoder — ODA §20.4.72.  Inverts parseDwg above.  Body: description
+// TV + isUnnamed BS + selectable BS + handleCount BL.  Handle stream:
+// common prefix + entity handles.
+bool DRW_Group::encodeDwg(DRW::Version version, dwgBufferW *buf,
+                           dwgBufferW *strBuf,
+                           dwgBufferW *handleBuf) const {
+    if (buf == nullptr) return false;
+    dwgBufferW *sb = (strBuf != nullptr && version > DRW::AC1018) ? strBuf : buf;
+    dwgBufferW *hb = (handleBuf != nullptr && version > DRW::AC1018) ? handleBuf : buf;
+
+    sb->putVariableText(version, m_description);
+    buf->putBitShort(m_isUnnamed ? 1 : 0);
+    buf->putBitShort(m_selectable ? 1 : 0);
+    buf->putBitLong(static_cast<dint32>(m_entityHandles.size()));
+
+    hb->putHandle(makeSoftOwnerW(static_cast<duint32>(parentHandle)));
+    for (dint32 i = 0; i < numReactors; ++i) {
+        hb->putHandle(makeSoftOwnerW(0));
+    }
+    if (xDictFlag != 1) {
+        hb->putHandle(makeSoftOwnerW(0));
+    }
+    for (duint32 h : m_entityHandles) {
+        hb->putHandle(makeSoftOwnerW(h));    // entity handles are soft pointers
+    }
+    return true;
+}
+
+// DICTIONARY (AcDbDictionary) encoder — ODA §20.4.44.  Inverts parseDwg
+// above.  Body: numItems BL + (AC1014 RC=0 OR AC1015+ cloning BS +
+// hardOwner RC) + per-entry name TV.  Handle stream: common prefix
+// (parent + reactors + xdic) + per-entry handle.
+bool DRW_Dictionary::encodeDwg(DRW::Version version, dwgBufferW *buf,
+                                dwgBufferW *strBuf,
+                                dwgBufferW *handleBuf) const {
+    if (buf == nullptr) return false;
+    dwgBufferW *sb = (strBuf != nullptr && version > DRW::AC1018) ? strBuf : buf;
+    dwgBufferW *hb = (handleBuf != nullptr && version > DRW::AC1018) ? handleBuf : buf;
+
+    const dint32 numItems = static_cast<dint32>(m_entries.size());
+    buf->putBitLong(numItems);
+    if (version == DRW::AC1014) {
+        buf->putRawChar8(0);
+    } else if (version > DRW::AC1014) {
+        buf->putBitShort(static_cast<dint16>(cloning));
+        buf->putRawChar8(static_cast<duint8>(hardOwner));
+    }
+    for (const auto& e : m_entries) {
+        sb->putVariableText(version, e.m_name);
+    }
+
+    // Common handle prefix (parentHandle + reactors + xdic) — must precede
+    // per-entry handles per ODA §20.4.44.
+    hb->putHandle(makeSoftOwnerW(static_cast<duint32>(parentHandle)));
+    for (dint32 i = 0; i < numReactors; ++i) {
+        hb->putHandle(makeSoftOwnerW(0));    // reactor refs — null
+    }
+    if (xDictFlag != 1) {
+        hb->putHandle(makeSoftOwnerW(0));    // xdic
+    }
+    for (const auto& e : m_entries) {
+        hb->putHandle(makeHardPtrW(e.m_handle));
+    }
+    return true;
+}
+
 bool DRW_MLeaderStyle::encodeDwg(DRW::Version version, dwgBufferW *buf,
                                  dwgBufferW *strBuf,
                                  dwgBufferW *handleBuf) const {
@@ -3482,18 +3669,22 @@ bool DRW_Group::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
     if (handleCount < 0 || handleCount > 100000)
         return false;
 
+    // Use the inline-vs-snapshot pattern matching LAYOUT/MLeaderStyle: for
+    // pre-R2007+ the handle stream is inline so operate on buf directly;
+    // for R2007+ snapshot buf and seek to the absolute handle-stream offset.
     dwgBuffer hBuff = *buf;
-    seekObjectHandleStream(version, &hBuff, objSize);
-    readCommonObjectHandles(&hBuff, handle, numReactors, xDictFlag, &parentHandle);
+    dwgBuffer *hBuf = (version > DRW::AC1018) ? &hBuff : buf;
+    seekObjectHandleStream(version, hBuf, objSize);
+    readCommonObjectHandles(hBuf, handle, numReactors, xDictFlag, &parentHandle);
 
     m_entityHandles.clear();
     m_entityHandles.reserve(static_cast<size_t>(handleCount));
     for (dint32 i = 0; i < handleCount; ++i)
-        m_entityHandles.push_back(readObjectHandleRef(&hBuff));
+        m_entityHandles.push_back(readObjectHandleRef(hBuf));
 
     DRW_DBG("GROUP description='"); DRW_DBG(m_description.c_str());
     DRW_DBG("' handles="); DRW_DBG(static_cast<int>(m_entityHandles.size())); DRW_DBG("\n");
-    return buf->isGood() && sBuf->isGood() && hBuff.isGood();
+    return buf->isGood() && hBuf->isGood();
 }
 
 bool DRW_ImageDefinitionReactor::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){

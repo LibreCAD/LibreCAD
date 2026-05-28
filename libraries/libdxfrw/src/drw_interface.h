@@ -330,6 +330,12 @@ public:
     virtual void addAssociativeObject(const DRW_AssociativeObject& data) { (void) data; }
     /** Called for ACSH_* history/action shell objects. */
     virtual void addAcShHistoryObject(const DRW_AcShHistoryObject& data) { (void) data; }
+    /** Called for IDBUFFER objects (ODA §20.4.79). */
+    virtual void addIDBuffer(const DRW_IDBuffer& data) { (void) data; }
+    /** Called for LAYER_INDEX objects (ODA §20.4.83). */
+    virtual void addLayerIndex(const DRW_LayerIndex& data) { (void) data; }
+    /** Called for SPATIAL_INDEX objects (ODA §20.4.95). */
+    virtual void addSpatialIndex(const DRW_SpatialIndex& data) { (void) data; }
 
     /**
      * Called for every comment in the DXF file (code 999).

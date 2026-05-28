@@ -1885,6 +1885,35 @@ bool dwgReader::readDwgObject(dwgBuffer *dbuf, objHandle& obj, DRW_Interface& in
                         if (ret) intfa.addSpatialFilter(e);
                         break;
                     }
+                    // IDBUFFER (AcDbIdBuffer) — ODA §20.4.79. List of object
+                    // handles, used by selection filters (LAYER_INDEX entries
+                    // point to one of these for the per-layer entity set).
+                    if (rn == "IDBUFFER"
+                        || cit->second->className == "AcDbIdBuffer") {
+                        DRW_IDBuffer e;
+                        ret = e.parseDwg(version, &buff, bs);
+                        if (ret) intfa.addIDBuffer(e);
+                        break;
+                    }
+                    // LAYER_INDEX (AcDbLayerIndex) — ODA §20.4.83. Per-layer
+                    // entity index, used for partial-load drawings.
+                    if (rn == "LAYER_INDEX"
+                        || cit->second->className == "AcDbLayerIndex") {
+                        DRW_LayerIndex e;
+                        ret = e.parseDwg(version, &buff, bs);
+                        if (ret) intfa.addLayerIndex(e);
+                        break;
+                    }
+                    // SPATIAL_INDEX (AcDbSpatialIndex) — ODA §20.4.95.
+                    // Spatial entity index; only timestamps are parsed
+                    // (body beyond is opaque per ODA spec).
+                    if (rn == "SPATIAL_INDEX"
+                        || cit->second->className == "AcDbSpatialIndex") {
+                        DRW_SpatialIndex e;
+                        ret = e.parseDwg(version, &buff, bs);
+                        if (ret) intfa.addSpatialIndex(e);
+                        break;
+                    }
                     if (rn == "TABLEGEOMETRY"
                         || cit->second->className == "AcDbTableGeometry") {
                         DRW_TableGeometry e;
