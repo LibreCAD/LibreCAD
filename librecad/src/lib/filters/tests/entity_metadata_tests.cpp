@@ -1323,6 +1323,193 @@ TEST_CASE("DWG advanced metadata caches raw and semantic sidecars",
         LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed);
 }
 
+TEST_CASE("DWG table native writer eligibility follows ODA layout gates",
+          "[entity_metadata][dwg_metadata][table]") {
+  LC_DwgAdvancedMetadata metadata;
+
+  DRW_TableStyle tableStyle;
+  tableStyle.handle = 0x200u;
+  tableStyle.parentHandle = 0x201u;
+  tableStyle.m_name = "TableStyle";
+  metadata.addTableStyle(tableStyle);
+
+  DRW_Table cleanTable;
+  cleanTable.handle = 0x210u;
+  cleanTable.parentHandle = 0x211u;
+  cleanTable.m_hasSemanticContent = true;
+  cleanTable.m_semanticContentComplete = true;
+  cleanTable.m_tableStyleHandle = tableStyle.handle;
+  cleanTable.m_content.m_columns.resize(1);
+  cleanTable.m_content.m_columns[0].m_width = 6.0;
+  cleanTable.m_content.m_rows.resize(1);
+  cleanTable.m_content.m_rows[0].m_height = 2.0;
+  cleanTable.m_content.m_rows[0].m_cells.resize(1);
+  DRW_TableCellContent cleanText;
+  cleanText.m_type = 1;
+  cleanText.m_text = "plain";
+  cleanTable.m_content.m_rows[0].m_cells[0].m_contents.push_back(cleanText);
+  metadata.addTable(cleanTable, false);
+
+  const auto embeddedEligibility =
+      metadata.tableNativeWriterEligibility(cleanTable.handle, DRW::AC1024);
+  CHECK(embeddedEligibility.tableHandle == cleanTable.handle);
+  CHECK(embeddedEligibility.recordName == "ACAD_TABLE");
+  CHECK(embeddedEligibility.writerVersion == DRW::AC1024);
+  CHECK(embeddedEligibility.storageMode ==
+        LC_DwgAdvancedMetadata::TableContentStorageMode::EmbeddedTableContent);
+  CHECK(embeddedEligibility.eligibleTextOnly);
+  CHECK(embeddedEligibility.blockers.empty());
+
+  const auto embeddedCounts =
+      metadata.tableNativeWriterBlockerCounts(DRW::AC1024);
+  CHECK(embeddedCounts.tableCount == 1u);
+  CHECK(embeddedCounts.eligibleTextOnly == 1u);
+  CHECK(embeddedCounts.embeddedTableContentLayout == 1u);
+  CHECK(embeddedCounts.totalBlockers() == 0u);
+
+  const auto separateEligibility =
+      metadata.tableNativeWriterEligibility(cleanTable.handle, DRW::AC1021);
+  CHECK(separateEligibility.storageMode ==
+        LC_DwgAdvancedMetadata::TableContentStorageMode::SeparateTableContent);
+  CHECK_FALSE(separateEligibility.eligibleTextOnly);
+  CHECK(separateEligibility.hasBlocker(
+      LC_DwgAdvancedMetadata::TableNativeWriterBlocker::
+          AmbiguousTableContentStorage));
+
+  const auto legacyEligibility =
+      metadata.tableNativeWriterEligibility(cleanTable.handle, DRW::AC1018);
+  CHECK(legacyEligibility.storageMode ==
+        LC_DwgAdvancedMetadata::TableContentStorageMode::LegacyDirectTable);
+  CHECK_FALSE(legacyEligibility.eligibleTextOnly);
+  CHECK(legacyEligibility.hasBlocker(
+      LC_DwgAdvancedMetadata::TableNativeWriterBlocker::
+          UnsupportedTableVersion));
+}
+
+TEST_CASE("DWG table native writer eligibility reports blocker buckets",
+          "[entity_metadata][dwg_metadata][table]") {
+  LC_DwgAdvancedMetadata metadata;
+
+  DRW_Table blockedTable;
+  blockedTable.handle = 0x310u;
+  blockedTable.parentHandle = 0;
+  blockedTable.m_hasSemanticContent = true;
+  blockedTable.m_semanticContentComplete = true;
+  blockedTable.m_tableStyleHandle = 0xDEADu;
+  blockedTable.m_content.m_columns.resize(1);
+  blockedTable.m_content.m_columns[0].m_width = 0.0;
+  blockedTable.m_content.m_rows.resize(1);
+  blockedTable.m_content.m_rows[0].m_height = -1.0;
+  blockedTable.m_content.m_rows[0].m_cells.resize(1);
+  blockedTable.m_content.m_mergedRanges.push_back({0, 0, 0, 0});
+  DRW_TableCell& blockedCell = blockedTable.m_content.m_rows[0].m_cells[0];
+  blockedCell.m_styleId = 99;
+  blockedCell.m_overrideFlags = 0x1u;
+  blockedCell.m_valueHandle = 0x320u;
+  blockedCell.m_textStyleHandle = 0x321u;
+  blockedCell.m_geometryFlags = 0x1u;
+  blockedCell.m_geometryHandle = 0x322u;
+  blockedCell.m_isMerged = true;
+  blockedCell.m_attributes.push_back({0x323u, 1, "A"});
+  DRW_TableCellContent fieldContent;
+  fieldContent.m_type = 2;
+  fieldContent.m_handle = 0x324u;
+  blockedCell.m_contents.push_back(fieldContent);
+  DRW_TableCellContent blockContent;
+  blockContent.m_type = 4;
+  blockContent.m_handle = 0x325u;
+  blockedCell.m_contents.push_back(blockContent);
+  DRW_TableCellContent unknownContent;
+  unknownContent.m_type = 77;
+  blockedCell.m_contents.push_back(unknownContent);
+  DRW_DwgSubrecordRange overrideRange;
+  overrideRange.m_name = "table-cell-overrides";
+  overrideRange.m_count = 1;
+  blockedTable.m_content.m_subrecordRanges.push_back(overrideRange);
+  DRW_DwgSubrecordRange breakRange;
+  breakRange.m_name = "table-break-data";
+  breakRange.m_count = 1;
+  breakRange.m_parseComplete = false;
+  blockedTable.m_content.m_subrecordRanges.push_back(breakRange);
+  DRW_DwgSubrecordRange geometryRange;
+  geometryRange.m_name = "table-cell-geometry-tail";
+  geometryRange.m_count = 1;
+  blockedTable.m_content.m_subrecordRanges.push_back(geometryRange);
+  metadata.addTable(blockedTable, true);
+
+  DRW_TableStyle resolvedStyle;
+  resolvedStyle.handle = 0x400u;
+  resolvedStyle.parentHandle = 0x401u;
+  resolvedStyle.m_name = "ResolvedStyle";
+  metadata.addTableStyle(resolvedStyle);
+
+  DRW_Table editedFallbackTable;
+  editedFallbackTable.handle = 0x410u;
+  editedFallbackTable.parentHandle = 0x411u;
+  editedFallbackTable.m_hasSemanticContent = true;
+  editedFallbackTable.m_semanticContentComplete = true;
+  editedFallbackTable.m_tableStyleHandle = resolvedStyle.handle;
+  editedFallbackTable.m_content.m_columns.resize(1);
+  editedFallbackTable.m_content.m_columns[0].m_width = 3.0;
+  editedFallbackTable.m_content.m_rows.resize(1);
+  editedFallbackTable.m_content.m_rows[0].m_height = 1.0;
+  editedFallbackTable.m_content.m_rows[0].m_cells.resize(1);
+  DRW_TableCellContent editedText;
+  editedText.m_type = 1;
+  editedText.m_text = "fallback";
+  editedFallbackTable.m_content.m_rows[0].m_cells[0].m_contents.push_back(
+      editedText);
+  metadata.addTable(editedFallbackTable, true);
+  LC_DwgAdvancedMetadata::TableFallbackEntityRecord fallbackRecord;
+  fallbackRecord.tableHandle = editedFallbackTable.handle;
+  fallbackRecord.sourceHandle = editedFallbackTable.handle;
+  fallbackRecord.entityId = 0xFEEDu;
+  fallbackRecord.role = LC_DwgAdvancedMetadata::TableFallbackRole::CellText;
+  metadata.addTableFallbackEntity(fallbackRecord);
+  REQUIRE(metadata.invalidateTableForFallbackEntity(0xFEEDu));
+
+  const auto blockers =
+      metadata.tableNativeWriterBlockerCounts(DRW::AC1024);
+  CHECK(blockers.tableCount == 2u);
+  CHECK(blockers.embeddedTableContentLayout == 2u);
+  CHECK(blockers.eligibleTextOnly == 0u);
+  CHECK(blockers.missingOwnerHandle == 1u);
+  CHECK(blockers.unresolvedTableStyle == 1u);
+  CHECK(blockers.unresolvedCellStyleMap == 1u);
+  CHECK(blockers.unknownSubrecordRange == 1u);
+  CHECK(blockers.incompleteSubrecordRange == 1u);
+  CHECK(blockers.overrideMask == 1u);
+  CHECK(blockers.breakData == 1u);
+  CHECK(blockers.geometryTail == 1u);
+  CHECK(blockers.mergedCell == 1u);
+  CHECK(blockers.fieldContent == 1u);
+  CHECK(blockers.blockContent == 1u);
+  CHECK(blockers.attributeContent == 1u);
+  CHECK(blockers.unknownCellContent == 1u);
+  CHECK(blockers.incompleteValuePayload == 1u);
+  CHECK(blockers.missingFallbackAttachment == 1u);
+  CHECK(blockers.anonymousBlockPolicyUnresolved == 2u);
+  CHECK(blockers.unresolvedTextStyle == 1u);
+  CHECK(blockers.rawReplayInvalidated == 1u);
+  CHECK(blockers.rawReplayReplaced == 1u);
+  CHECK(blockers.nonPositiveDimension == 1u);
+  CHECK(blockers.countFor(
+            LC_DwgAdvancedMetadata::TableNativeWriterBlocker::EditedFallback)
+        == 1u);
+
+  const auto blockedEligibility =
+      metadata.tableNativeWriterEligibility(blockedTable.handle, DRW::AC1024);
+  CHECK_FALSE(blockedEligibility.eligibleTextOnly);
+  CHECK(blockedEligibility.hasBlocker(
+      LC_DwgAdvancedMetadata::TableNativeWriterBlocker::
+          MissingFallbackAttachment));
+  CHECK(blockedEligibility.hasBlocker(
+      LC_DwgAdvancedMetadata::TableNativeWriterBlocker::UnknownCellContent));
+  CHECK(blockedEligibility.hasBlocker(
+      LC_DwgAdvancedMetadata::TableNativeWriterBlocker::
+          IncompleteValuePayload));
+}
+
 TEST_CASE("DWG advanced metadata resolves TABLESTYLE after TABLECONTENT import",
           "[entity_metadata][dwg_metadata][table]") {
   LC_DwgAdvancedMetadata metadata;

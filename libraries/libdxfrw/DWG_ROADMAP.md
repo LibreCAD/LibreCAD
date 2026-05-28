@@ -457,8 +457,10 @@ These roadmap items should remain deferred until the listed contract exists:
 - Native semantic TABLE writing: needs a complete AC1021+ TABLE/TABLECONTENT
   writer layout, owner/dictionary handles, and a text-only fixture proving
   round-trip.
-- Table fallback rendering: needs a LibreCAD-side attachment policy for mapping
-  fallback grid/text entities back to native table metadata after edits.
+- Table fallback editing/UI: rendering and attachment diagnostics exist, but
+  editing fallback grid/text entities still needs a LibreCAD-side policy for
+  whether edits suppress raw replay, update facade metadata, or remain plain
+  geometry.
 - Native MLEADER block/tolerance writing: needs block attribute/tolerance
   content ownership and downgrade rules; diagnostics are ready first.
 - ACIS/modeler interpretation: needs fixture-backed SAT/SAB byte slicing and
@@ -479,6 +481,11 @@ areas. It supersedes the short "not ready" bullets above and refines Slices
 
 Reference sources for this section:
 
+- ODA text export used for this refinement: `/tmp/dwg_spec.txt`, generated
+  from Open Design Specification for .dwg files 5.4.1. Treat this as the
+  primary byte-order and version-gate source for entities/objects it covers.
+  It is notably incomplete for many ACDBASSOC/ACSH and R2018 details, so those
+  remain cross-checked against ACadSharp/libreDWG before implementation.
 - ACadSharp table model and writers:
   `../ACadSharp/src/ACadSharp/Entities/TableEntity*.cs`,
   `../ACadSharp/src/ACadSharp/Objects/Table*.cs`,
@@ -501,6 +508,56 @@ Reference sources for this section:
   `libraries/libdxfrw/src/libdwgr.*`,
   `librecad/src/lib/engine/document/lc_dwgadvancedmetadata.h`,
   `librecad/src/lib/filters/rs_filterdxfrw.*`.
+
+Spec anchors from `/tmp/dwg_spec.txt` that must be cited in implementation
+notes and tests:
+
+- TABLE/TABLECONTENT/TABLESTYLE/CELLSTYLEMAP/TABLEGEOMETRY:
+  ODA 20.4.96-20.4.103. Key constraints: ACAD_TABLE inherits INSERT;
+  pre-R24 stores row/column/cell payload directly; R24+ embeds
+  AcDbTableContent in the TABLE entity; R21 uses TABLECONTENT as a separate
+  roundtrip object; table graphics are normally generated in an anonymous
+  `*T` block; TABLEGEOMETRY is optional and "does not need to be present."
+- Value payloads: ODA 20.4.99. Point and 3D point values include a BL byte
+  count before the raw doubles; writer eligibility must reject values whose
+  type/size pairing cannot be reproduced exactly.
+- ACIS modeler entities: ODA 20.4.41. REGION/3DSOLID/BODY are ACIS entities;
+  version 1 SAT uses repeated block-size chunks with character transform
+  rules, version 2 is inline SAT/SAB with `ACIS BinaryFile` identifying SAB,
+  SAB terminator bytes `End\x0E\x02of\x0E\x04ACIS\x0D\x04data`, and separate
+  optional wireframe/silhouette blocks. R2007+ adds a history handle.
+- MLEADER/MLEADERSTYLE: ODA 20.4.48, 20.4.86, and 20.4.87. MLEADER embeds
+  MLeaderAnnotContext, which owns leader roots, leader lines, MTEXT/block
+  content, attachment direction, override flags, text columns, and block
+  transform data. The style object has its own content, leader, text, block,
+  annotative, and break-size fields.
+- SHAPE/IMAGE/IMAGEDEF/IMAGEDEFREACTOR/OLE2FRAME: ODA 20.4.37,
+  20.4.80-20.4.82, and 20.4.88. SHAPE has an insertion point, transform
+  fields, shape number, extrusion, and SHAPEFILE handle; IMAGE is linked to
+  image definitions/reactors and has clipping/brightness/contrast/fade fields;
+  OLE2FRAME carries a declared BL data length and opaque payload.
+- VIEW/UCS/VPORT and layout visual references: ODA 20.4.60-20.4.65 and
+  layout fields near 20.4.84. Relevant handles include named/base UCS,
+  associated UCS, VPORT headers, plot view, visual style, and layout block
+  records.
+
+Spec-driven validation checklist for every future implementation slice:
+
+1. Add an implementation note or test name that cites the relevant ODA
+   paragraph from `/tmp/dwg_spec.txt`; if the paragraph is absent or
+   incomplete, state that ACadSharp/libreDWG is the primary layout source.
+2. Add a malformed-count/size test for every new loop or byte payload
+   described by the spec: table rows/columns/cells, custom data, ACIS SAT
+   blocks, wire/silhouette wires, IMAGE clip vertices, and OLE2 payload bytes.
+3. Preserve raw bytes before decoding semantics. Any partial decode must leave
+   enough range metadata to replay or deliberately suppress the original
+   payload with a diagnostic.
+4. For writers, add a target-version matrix test that proves the selected
+   field layout matches the ODA version branch. If the branch cannot be proven
+   with the current fixtures, keep the writer blocked and emit diagnostics.
+5. Cross-check one fixture or synthetic byte round-trip against both local
+   libdxfrw parsing and the closest ACadSharp/libreDWG dump before marking a
+   ready detail complete.
 
 ### Forward A: Native TABLE Writing and Rendering Policy
 
@@ -526,25 +583,43 @@ Phase A1 - complete semantic metadata prerequisites:
 1. Compare current `DRW_TableContent`, `DRW_Table`, `DRW_TableStyle`,
    `DRW_CellStyleMap`, and `DRW_TableGeometry` against ACadSharp table
    templates and libreDWG `TABLECONTENT_fields`, `CellStyle_fields`,
-   `CellStyleMap`, and `TableGeometry` layouts.
+   `CellStyleMap`, and `TableGeometry` layouts, then reconcile every field
+   against ODA 20.4.96-20.4.103.
 2. Add missing non-rendering metadata before any writer work: named cell
    style IDs/names, margins, text height, alignment, colors, border
    visibility, and content-format counts are surfaced. Remaining metadata
    work: row/column style inheritance, border lineweight/double-line details,
    break metadata, override masks, and complete CELLSTYLEMAP linkage.
-3. Preserve all unknown table sub-record byte ranges with count, offset,
-   version gate, and parse-complete flags.
-4. Add metadata tests that synthetic table cells retain text, FIELD, block,
-   attribute, style, geometry, border, and override summaries.
+3. Track ODA version mode explicitly:
+   - pre-R21/AutoCAD 2005-2007: ACAD_TABLE stores direct row/column/cell
+     records, single text/block content per cell, and table-level override
+     groups;
+   - R21/AutoCAD 2008-2012: TABLECONTENT may be a separate roundtrip object
+     referenced from extension dictionary data;
+   - R24+/AC1024+ per ODA wording: table content is embedded in the TABLE
+     entity and the separate TABLECONTENT object must not be required for
+     native writing.
+4. Preserve all unknown table sub-record byte ranges with count, offset,
+   version gate, and parse-complete flags. Unknown ranges should identify the
+   ODA paragraph they belong to where possible: cell content geometry 20.4.98,
+   value 20.4.99, custom data 20.4.100, content format/cell style
+   20.4.101.3-20.4.101.4, CELLSTYLEMAP 20.4.102, and TABLEGEOMETRY
+   20.4.103.
+5. Add metadata tests that synthetic table cells retain text, FIELD, block,
+   attribute, style, geometry, border, and override summaries. Include point
+   and 3D point value payloads with explicit BL data-size words per ODA
+   20.4.99.
 
 Phase A2 - fallback rendering policy:
 
 1. Introduce a metadata-owned fallback group ID for each imported semantic
    table. Fallback line/text entities generated from the table must store the
    table handle and cell coordinate they came from.
-2. Render only stable 2D primitives: grid lines from row/column sizes, text
-   cells from available content/style summaries, and placeholder text for
-   FIELD, block, formula, and unknown cell content.
+2. Render only stable 2D primitives: grid lines from ODA row/column sizes,
+   text cells from value/text content, and placeholder text for FIELD, block,
+   formula, attributes, geometry-tail, merged-cell, and unknown content. Do
+   not attempt to render the anonymous `*T` block as authoritative table
+   semantics unless that block is independently imported as normal geometry.
 3. Treat edited fallback entities as edits to the table facade, not as proof
    that native table semantics can be regenerated. Mark the semantic table and
    matching raw payload invalidated when any fallback entity changes.
@@ -561,13 +636,19 @@ Phase A3 - minimal native writer subset:
    handle, rectangular row/column model, text-only cells, no FIELD, no block
    content, no formulas, no unsupported overrides, no unresolved attributes,
    and no edited fallback geometry outside the table facade.
-2. Register required custom classes through the writer class registry with
+2. Split the writer target by ODA table layout:
+   - first native writer target: AC1021/R21 separate TABLECONTENT object if
+     owner/extension-dictionary handles can be reproduced;
+   - second target: AC1024+/R24 embedded AcDbTableContent inside TABLE;
+   - pre-R21 direct-cell TABLE writing remains a separate legacy writer and
+     must not share the R24 byte emitter.
+3. Register required custom classes through the writer class registry with
    deterministic instance counts.
-3. Emit TABLE/TABLECONTENT in the same ownership/dictionary path ACadSharp
-   uses, with version-gated payloads from ODA/libreDWG.
-4. Preserve or replay TABLESTYLE/CELLSTYLEMAP only when unchanged or when the
+4. Emit TABLE/TABLECONTENT in the same ownership/dictionary path ACadSharp
+   uses, with ODA 20.4.96-20.4.103 field ordering and explicit version gates.
+5. Preserve or replay TABLESTYLE/CELLSTYLEMAP only when unchanged or when the
    metadata writer can emit every referenced style handle.
-5. Refuse native writing with explicit blocker counts when any contract item
+6. Refuse native writing with explicit blocker counts when any contract item
    fails; never flatten a semantic table silently.
 
 Validation for Forward A:
@@ -575,6 +656,9 @@ Validation for Forward A:
 - `[entity_metadata]` tests for cell/style/reference/fallback invalidation.
 - `[dwg-write]` smoke for unchanged raw replay and one text-only native table
   subset after the writer exists.
+- Byte-level writer tests must assert the ODA-specific shape chosen for the
+  target version: direct-cell TABLE, separate TABLECONTENT, or embedded
+  AcDbTableContent.
 - Optional fixture comparison against ACadSharp/libreDWG dumps for
   TABLECONTENT cell counts, style handles, and writer blocker reduction.
 
@@ -602,19 +686,30 @@ Phase B1 - byte container indexing:
 
 1. Compare `DRW_ModelerGeometry::parseDwg()` with ACadSharp
    `readModelerGeometryData`, `readWire`, `readSolid3D`, libreDWG
-   `COMMON_3DSOLID`, and `acds.spec`.
-2. Record modeler kind, raw data format, block-size fields, modeler version,
-   SAT/SAB marker text, byte ranges for SAT/SAB data, history block ranges,
-   wire block ranges, silhouette block ranges, and unknown tails.
-3. Bounds-check every size before scanning. Unknown or inconsistent records
+   `COMMON_3DSOLID`, `acds.spec`, and ODA 20.4.41.
+2. Record modeler kind, ACIS empty bit, unknown bit, modeler version,
+   raw data format, version-1 block-size fields, SAT/SAB marker text, byte
+   ranges for SAT/SAB data, wire block ranges, silhouette block ranges,
+   R2007+ history handle, and unknown tails.
+3. Version-specific scanner rules from ODA 20.4.41:
+   - version 1 SAT: repeat RC block-size chunks until a zero size; record the
+     transformed-character range but do not decode topology;
+   - version 2 SAT/SAB: scan inline payload; `ACIS BinaryFile` means SAB;
+     SAB may end at `End\x0E\x02of\x0E\x04ACIS\x0D\x04data`; textual SAT must
+     be line/marker bounded rather than length-assumed;
+   - wireframe and silhouette blocks follow ACIS data and have independent
+     count/point/transform records.
+4. Bounds-check every size before scanning. Unknown or inconsistent records
    must stay raw-preserved with a diagnostic.
-4. Add tests for synthetic SAT, SAB, history, empty body, inconsistent split,
+5. Add tests for synthetic SAT, SAB, history, empty body, inconsistent split,
    and unknown payloads.
 
 Phase B2 - non-kernel fallback summaries:
 
-1. Decode only container-level wire/silhouette records when libreDWG/ACadSharp
-   identify stable counts and coordinate payloads.
+1. Decode only ODA 20.4.41 wire/silhouette container fields: point-present
+   bit, point, number of isolines, wire count, wire type/selection/color/ACIS
+   index, wire point count, optional transform, silhouette viewport target/
+   direction/up/perspective, and nested wire count.
 2. Store fallback edge/polyline summaries in `LC_DwgAdvancedMetadata`; do not
    modify the native modeler raw payload.
 3. Render fallback wire/silhouette geometry as non-authoritative preview
@@ -629,9 +724,14 @@ Phase B3 - write and replay policy:
    owner/block membership and class metadata are preserved.
 2. For edited modeler fallback geometry, export only the fallback curves with
    an explicit diagnostic that native ACIS regeneration is unavailable.
-3. Add optional hooks for a future external ACIS/SAT/SAB backend, but keep the
+3. If native modeler writing is ever attempted, it must follow the ODA
+   statement that these can be stepped and written properly: preserve the
+   exact ACIS payload bytes, recompute only enclosing DWG object bookkeeping,
+   and keep R2007+ history handle references intact. No SAT-to-SAB conversion
+   is allowed in the default build.
+4. Add optional hooks for a future external ACIS/SAT/SAB backend, but keep the
    default build backend-free.
-4. Do not attempt to infer solid topology or Boolean/history semantics from
+5. Do not attempt to infer solid topology or Boolean/history semantics from
    SAT/SAB strings.
 
 Validation for Forward B:
@@ -666,6 +766,9 @@ Phase C1 - typed graph decode:
 1. Compare local shells with ACadSharp `DimensionAssociation`,
    `EvaluationGraph`, dynamic-block evaluation objects, and libreDWG
    `AcDbAssoc*`, `AcDbEvalExpr`, and `AcDbShHistoryNode` layouts.
+   `/tmp/dwg_spec.txt` 5.4.1 does not document these ACDBASSOC/ACSH layouts
+   beyond older header variables such as DIMASSOC, so do not invent field
+   order from ODA text for this family.
 2. Add typed node IDs, owning network/action handles, dependency handles,
    dependent-on object handles, action-body handles, value-param summaries,
    point/osnap references, compound/path/action-param prefixes, and
@@ -734,7 +837,8 @@ Current local state:
 Phase D1 - writer readiness inventory:
 
 1. For each candidate entity, compare the local `DRW_*` struct, parser, and
-   LibreCAD consumer with ACadSharp writer methods and libreDWG layouts.
+   LibreCAD consumer with ACadSharp writer methods, libreDWG layouts, and the
+   ODA clauses that exist in `/tmp/dwg_spec.txt`.
 2. Mark each field as one of: local editable geometry, imported metadata,
    raw-only payload, computed writer field, unsupported required field, or
    version-gated optional field.
@@ -754,25 +858,38 @@ Phase D2 - MESH/SubDMesh:
 
 Phase D3 - raster, wipeout, image, and underlay:
 
-1. Complete ImageDefinition, ImageDefinitionReactor, RasterVariables,
-   UnderlayDefinition, and UnderlayReference metadata, including file path,
-   clipping, brightness, contrast, fade, display flags, definition handles,
-   and reactor handles.
-2. Keep file-path policy explicit: preserve path strings, do not copy external
+1. Complete IMAGE metadata per ODA 20.4.80: class version, insertion point,
+   U/V direction vectors, image size, display properties, clipping enable,
+   brightness, contrast, fade, clip mode, R2010+ clip boundary type, rectangle
+   corners or polygon vertices, image definition handle, and image definition
+   reactor handle.
+2. Complete IMAGEDEF/IMAGEDEFREACTOR metadata per ODA 20.4.81-20.4.82:
+   pixel size, filepath, load flag, resolution units, parent owner,
+   reactors, and xdictionary.
+3. Complete RasterVariables, UnderlayDefinition, and UnderlayReference
+   metadata from ACadSharp/libreDWG because those layouts are not fully
+   described in the extracted ODA text.
+4. Keep file-path policy explicit: preserve path strings, do not copy external
    files, and diagnose missing local assets.
-3. Write Wipeout/Image/Underlay only when definitions, reactors, owner handles,
-   and clipping boundaries are complete.
-4. Add tests for rectangular, polygonal, and no-boundary clipping; definition
-   handle resolution; and missing-definition diagnostics.
+5. Write Wipeout/Image/Underlay only when definitions, reactors, owner
+   handles, and clipping boundaries are complete.
+6. Add tests for rectangular, polygonal, and no-boundary clipping, including
+   the ODA rule that IMAGE clip boundary type 1 is rectangle and 2 is polygon.
+
+Stop before copying external files or adding native underlay writers without
+definition/reactor ownership tests.
 
 Phase D4 - SHAPE and OLE2FRAME:
 
-1. Implement SHAPE metadata and writer fields: shape file/style handle, shape
-   name/index, insertion point, scale, rotation, oblique, width factor, and
-   extrusion where version-gated.
-2. Implement OLE2FRAME as raw-preserved frame metadata first: placement,
-   display extents, payload byte range, and unchanged replay.
-3. Do not regenerate OLE binary payloads. Edited OLE frames export as fallback
+1. Complete SHAPE metadata per ODA 20.4.37: insertion point, scale, rotation,
+   width factor, oblique, thickness, shape number, extrusion, and SHAPEFILE
+   hard pointer.
+2. Complete OLE2FRAME metadata per ODA 20.4.88: flags, mode, declared BL data
+   length, opaque payload byte range, trailing unknown byte for R2000+, and
+   raw replay state.
+3. Bounds-check OLE data length before allocation or skip; oversized or
+   truncated OLE payloads must be raw-preserved and diagnosed.
+4. Do not regenerate OLE binary payloads. Edited OLE frames export as fallback
    frame geometry plus diagnostics unless a full payload is preserved.
 
 Phase D5 - writer integration:
@@ -1085,9 +1202,16 @@ Stop before adding table editing UI.
 Purpose: make the native TABLE writer contract executable before emitting
 bytes.
 
-Status: ready after A2b. This is a diagnostics/API slice only. It should
-produce a complete eligibility report for text-only native writing but must not
-write TABLE/TABLECONTENT bytes.
+Status: completed for diagnostics/API on 2026-05-28. The metadata layer now
+classifies ODA table storage mode by target DWG version, reports per-table
+text-only writer eligibility, exposes blocker buckets and aggregate counts,
+and uses the richer blocker summary from DWG export. No TABLE/TABLECONTENT
+bytes are written yet.
+
+Spec basis: ODA 20.4.96-20.4.103 and 20.4.99 from `/tmp/dwg_spec.txt`.
+Eligibility must classify the table layout as pre-R21 direct table data, R21
+separate TABLECONTENT, or R24+ embedded AcDbTableContent before checking
+writer blockers.
 
 Files:
 
@@ -1113,8 +1237,12 @@ Implementation:
    - unknown or incomplete subrecord ranges;
    - override masks, break data, geometry tails, merged cells;
    - FIELD/block/attribute/unknown cell content;
+   - value payloads whose ODA 20.4.99 type/size contract is incomplete,
+     especially point and 3D point values with missing BL data size;
    - missing owner/dictionary handles;
    - unsupported table version;
+   - ambiguous TABLECONTENT storage mode for the target version;
+   - required anonymous `*T` block policy unresolved;
    - unresolved text style or linetype handles;
    - raw replay already invalidated or replaced.
 3. Implement helpers:
@@ -1129,7 +1257,9 @@ Implementation:
    - every blocker bucket above;
    - multiple blockers on one table;
    - raw replay invalidated/replaced policy;
-   - version gate behavior.
+   - version gate behavior;
+   - layout classification for direct TABLE, separate TABLECONTENT, and
+     embedded AcDbTableContent modes.
 
 Stop before native TABLE/TABLECONTENT byte writing.
 
@@ -1162,6 +1292,7 @@ Implementation:
 2. Add writer APIs without changing existing entity loops:
    - `writeTableEntityTextOnly(...)`;
    - `writeTableContentObjectTextOnly(...)`;
+   - `writeEmbeddedTableContentTextOnly(...)` for R24+/AC1024+ TABLE data;
    - helper to emit a matching minimal TABLESTYLE if required and resolvable.
 3. Register required classes through the current class registry:
    - `AcDbTable`;
@@ -1176,6 +1307,10 @@ Implementation:
      tails, break data, or unknown ranges;
    - positive row/column dimensions;
    - complete owner/dictionary handle context.
+   - explicit target-mode choice:
+     - R21: separate TABLECONTENT object/reference path only;
+     - R24+: embedded AcDbTableContent inside TABLE only;
+     - no legacy pre-R21 direct-cell writer in this scaffold.
 5. Preserve fallback geometry policy:
    - by default keep fallback 2D geometry for visibility unless a later policy
      explicitly consumes it;
@@ -1206,6 +1341,11 @@ Status: ready as byte/range metadata only. This slice must preserve raw bytes
 exactly and may add range summaries, but it must not interpret SAT/SAB topology
 or synthesize geometry.
 
+Spec basis: ODA 20.4.41. The scanner must preserve the ACIS empty bit,
+unknown bit, version, R2007+ history handle, version-1 SAT block chunks,
+version-2 inline SAT/SAB payload, optional wireframe data, and optional
+silhouette data as bounded byte ranges.
+
 Files:
 
 - `libraries/libdxfrw/src/drw_entities.h`
@@ -1233,10 +1373,13 @@ Implementation:
 3. SAB range hints:
    - find `ACIS BinaryFile` marker;
    - identify likely SAB body start;
-   - find known terminator/section boundaries if present;
+   - find known terminator/section boundaries if present, including the ODA
+     SAB byte terminator `End\x0E\x02of\x0E\x04ACIS\x0D\x04data`;
    - do not parse entity records or topology.
 4. SAT range hints:
-   - find textual ACIS header;
+   - version 1: record each declared block-size chunk and the transformed
+     character range without rewriting the payload;
+   - version 2: find textual ACIS header;
    - identify history/entity text ranges by line markers;
    - record unknown tail if text parsing stops before payload end.
 5. Existing split metadata:
@@ -1281,9 +1424,11 @@ Implementation:
    - 2D/3D bounding box;
    - parse status and failure reason.
 2. Mirror only the stable count/coordinate portions from ACadSharp/libreDWG:
-   - count fields;
-   - point arrays;
-   - optional edge index pairs when count-safe;
+   - ODA 20.4.41 wire count fields;
+   - wire type, selection marker, color, ACIS index, point count, and points;
+   - optional transform flags and transform vectors/scalars;
+   - silhouette viewport id, target, direction, up vector, perspective, nested
+     wire count, and nested wires;
    - skip all topology/attribute records into an unknown-tail range.
 3. Add hard bounds:
    - max wires;
@@ -1346,6 +1491,11 @@ Purpose: make associative shells queryable as a graph.
 Status: ready as graph metadata and invalidation only. This slice must not
 evaluate constraints, dynamic block actions, or associative dimensions.
 
+Spec basis: `/tmp/dwg_spec.txt` does not provide usable ACDBASSOC/ACSH object
+layouts, so this slice is intentionally ACadSharp/libreDWG-led. ODA text may
+only be used for surrounding object/header semantics and for the legacy
+DIMASSOC header variable, not for field order inside associative objects.
+
 Files:
 
 - `libraries/libdxfrw/src/drw_objects.h`
@@ -1405,6 +1555,10 @@ Purpose: make parser state observable for every known ACDBASSOC/ACSH prefix.
 
 Status: ready after or alongside C1a. It improves parser observability and
 must preserve raw bytes when prefix decode is partial.
+
+Spec basis: ACadSharp/libreDWG primary; `/tmp/dwg_spec.txt` is incomplete for
+these prefixes. Every decoded prefix must therefore record its source
+assumption (`ACadSharp`, `libreDWG`, or fixture-confirmed) in comments/tests.
 
 Files:
 
@@ -1493,6 +1647,12 @@ fields as data.
 Status: ready as diagnostics. This slice should not add any new native entity
 writer.
 
+Spec basis: ODA clauses from `/tmp/dwg_spec.txt` should seed blocker fields
+where present: SHAPE 20.4.37, MLEADER 20.4.48/20.4.86, IMAGE/IMAGEDEF/
+IMAGEDEFREACTOR 20.4.80-20.4.82, MLEADERSTYLE 20.4.87, OLE2FRAME 20.4.88,
+and VIEW/UCS/VPORT 20.4.60-20.4.65. Families not documented there remain
+ACadSharp/libreDWG-led.
+
 Files:
 
 - `librecad/src/lib/engine/document/lc_dwgadvancedmetadata.h`
@@ -1518,6 +1678,8 @@ Implementation:
    - edited fallback invalidated replay;
    - missing required handles/classes;
    - missing payload bytes.
+   - ODA field coverage state: complete in ODA text, partial in ODA text, or
+     absent from ODA text.
 3. Log the ledger from DWG export once per export.
 4. Add a metadata helper:
    - `advancedEntityWriterLedger(version)`;
@@ -1571,6 +1733,10 @@ Purpose: make external-reference entities export-safe.
 Status: ready as metadata/link diagnostics. This slice should not copy files or
 write new native image/underlay records.
 
+Spec basis: IMAGE/IMAGEDEF/IMAGEDEFREACTOR are covered by ODA 20.4.80-20.4.82.
+Underlay and RasterVariables details must still be sourced from
+ACadSharp/libreDWG.
+
 Files:
 
 - `libraries/libdxfrw/src/drw_entities.*`
@@ -1602,12 +1768,15 @@ Implementation:
    - case-mismatch candidate.
 4. Add clipping diagnostics:
    - no-boundary;
-   - rectangular;
-   - polygonal;
+   - rectangular clip type 1 with two corners;
+   - polygonal clip type 2 with bounded vertex count;
    - malformed clipping;
    - inverted clipping;
    - frame visibility state.
-5. Export policy:
+5. Add IMAGE field coverage diagnostics for class version, U/V direction,
+   image size, display properties, clipping flag, brightness, contrast, fade,
+   clip mode, and definition/reactor handles.
+6. Export policy:
    - unchanged raw-linked payloads replay if raw bytes are present;
    - edited fallback or missing path suppresses raw replay and logs reason;
    - no file copying in this slice.
@@ -1620,6 +1789,9 @@ Purpose: classify two remaining advanced entity families before writer work.
 
 Status: ready after D1a. Shell parsing and metadata only.
 
+Spec basis: SHAPE is ODA 20.4.37; OLE2FRAME is ODA 20.4.88. OLE payload bytes
+remain opaque.
+
 Files:
 
 - `libraries/libdxfrw/src/drw_entities.*`
@@ -1630,8 +1802,8 @@ Files:
 Implementation:
 
 1. Add SHAPE shell fields:
-   - name/index;
-   - style handle;
+   - shape number/index;
+   - SHAPEFILE style handle;
    - insertion point;
    - scale;
    - rotation;
@@ -1640,10 +1812,11 @@ Implementation:
    - extrusion;
    - raw range status.
 2. Add OLE2FRAME shell fields:
-   - placement point(s);
-   - extents;
+   - flags;
+   - mode;
+   - declared BL payload length;
    - payload byte range;
-   - draw aspect/flags if present;
+   - R2000+ trailing unknown byte if present;
    - raw replay state;
    - preview frame status.
 3. Add writer blockers:
@@ -1652,8 +1825,8 @@ Implementation:
    - missing OLE payload;
    - edited preview frame;
    - unsupported OLE payload regeneration.
-4. Add parser smoke or synthetic shell tests that prove no payload allocation
-   is unbounded.
+4. Add parser smoke or synthetic shell tests that prove declared OLE payload
+   length is bounds-checked and no payload allocation is unbounded.
 
 Stop before OLE payload regeneration.
 
@@ -1665,6 +1838,10 @@ way.
 Status: ready as document mapping metadata. This slice may connect imported
 VIEW/UCS records to existing document lists but must not change visible UI
 panels or native view writers.
+
+Spec basis: VIEW/UCS/VPORT handle fields are covered in ODA 20.4.60-20.4.65,
+with layout-level plot view, visual style, block-record, base UCS, named UCS,
+and viewport handles described near ODA 20.4.84.
 
 Files:
 
@@ -1680,7 +1857,9 @@ Implementation:
    - source type: VIEW, UCS, VPORT;
    - document list item name/ID where available;
    - owner/layout handle;
-   - referenced UCS/base UCS/background/visual style/sun handles;
+   - referenced associated UCS, base UCS, named UCS, plot view, background,
+     visual style, sun, live-section, viewport header, and layout block-record
+     handles where decoded;
    - unresolved reference count;
    - replay state.
 2. Populate mappings during import:
@@ -1710,6 +1889,10 @@ Purpose: expose visual metadata safely to future UI without rendering it.
 Status: ready as metadata summary only. This slice must not render lighting,
 materials, or visual styles.
 
+Spec basis: ODA text covers VIEW/UCS/VPORT and layout visual-style handles, but
+LIGHT/SUN/VISUALSTYLE details are only partially present in `/tmp/dwg_spec.txt`;
+use ACadSharp/libreDWG for missing class-specific fields.
+
 Files:
 
 - `librecad/src/lib/engine/document/lc_dwgadvancedmetadata.h`
@@ -1736,6 +1919,8 @@ Implementation:
    - referenced visual style handle;
    - referenced background/live section handle;
    - stale/replay state.
+   - spec coverage state for each record: ODA-covered, ACadSharp/libreDWG
+     sourced, or raw-only.
 3. Aggregate helpers:
    - count by owner/layout;
    - count by source type;
@@ -1755,6 +1940,10 @@ Purpose: make VIEW/UCS/LIGHT/SUN/VISUALSTYLE export policy explicit.
 
 Status: ready after E1a/E2a. Diagnostics only unless an unchanged raw payload
 is already replayable by existing raw replay machinery.
+
+Spec basis: ODA handle relationships for VIEW/UCS/VPORT/layouts must drive
+unresolved-reference buckets; LIGHT/SUN/VISUALSTYLE byte writing remains
+deferred unless ACadSharp/libreDWG and fixtures agree.
 
 Files:
 

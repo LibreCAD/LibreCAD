@@ -5647,8 +5647,8 @@ void RS_FilterDXFRW::writeObjects() {
         int replayedObjects = 0;
         const LC_DwgAdvancedMetadata::RawObjectFamilyCounts rawFamilyCounts =
             metadata.rawObjectFamilyCounts();
-        const LC_DwgAdvancedMetadata::TableWriterBlockerCounts tableBlockers =
-            metadata.tableWriterBlockerCounts();
+        const LC_DwgAdvancedMetadata::TableNativeWriterBlockerCounts tableBlockers =
+            metadata.tableNativeWriterBlockerCounts(m_dwgW->getVersion());
         const LC_DwgAdvancedMetadata::MLeaderWriterBlockerCounts mleaderBlockers =
             metadata.mleaderWriterBlockerCounts();
         const LC_DwgAdvancedMetadata::ModelerPayloadCounts modelerPayloads =
@@ -5803,27 +5803,46 @@ void RS_FilterDXFRW::writeObjects() {
         if (tableBlockers.tableCount > 0 && tableBlockers.totalBlockers() > 0) {
             RS_DEBUG->print(
                 RS_Debug::D_WARNING,
-                "Native DWG table writing blocked: tables=%d fallback=%d incomplete=%d "
-                "unresolved-style=%d field=%d block=%d attributes=%d "
-                "overrides=%d geometry=%d unknown-ranges=%d incomplete-ranges=%d "
-                "override-masks=%d break-ranges=%d geometry-ranges=%d "
-                "edited-fallback=%d missing-fallback-links=%d",
+                "Native DWG table writing blocked: tables=%d eligible-text=%d "
+                "layout-direct=%d layout-separate=%d layout-embedded=%d "
+                "layout-unsupported=%d semantic=%d version=%d ambiguous-layout=%d "
+                "owner=%d style=%d cell-style=%d unknown-ranges=%d "
+                "incomplete-ranges=%d override=%d break=%d geometry=%d "
+                "merged=%d field=%d block=%d attributes=%d unknown-content=%d "
+                "value-payload=%d edited-fallback=%d missing-fallback-links=%d "
+                "anon-block=%d text-style=%d linetype=%d raw-invalidated=%d "
+                "raw-replaced=%d dimensions=%d",
                 static_cast<int>(tableBlockers.tableCount),
-                static_cast<int>(tableBlockers.fallbackRendered),
-                static_cast<int>(tableBlockers.incompleteSemanticParse),
-                static_cast<int>(tableBlockers.unresolvedStyle),
+                static_cast<int>(tableBlockers.eligibleTextOnly),
+                static_cast<int>(tableBlockers.legacyDirectLayout),
+                static_cast<int>(tableBlockers.separateTableContentLayout),
+                static_cast<int>(tableBlockers.embeddedTableContentLayout),
+                static_cast<int>(tableBlockers.unsupportedLayout),
+                static_cast<int>(tableBlockers.noSemanticTableContent),
+                static_cast<int>(tableBlockers.unsupportedTableVersion),
+                static_cast<int>(tableBlockers.ambiguousTableContentStorage),
+                static_cast<int>(tableBlockers.missingOwnerHandle),
+                static_cast<int>(tableBlockers.unresolvedTableStyle),
+                static_cast<int>(tableBlockers.unresolvedCellStyleMap),
+                static_cast<int>(tableBlockers.unknownSubrecordRange),
+                static_cast<int>(tableBlockers.incompleteSubrecordRange),
+                static_cast<int>(tableBlockers.overrideMask),
+                static_cast<int>(tableBlockers.breakData),
+                static_cast<int>(tableBlockers.geometryTail),
+                static_cast<int>(tableBlockers.mergedCell),
                 static_cast<int>(tableBlockers.fieldContent),
                 static_cast<int>(tableBlockers.blockContent),
                 static_cast<int>(tableBlockers.attributeContent),
-                static_cast<int>(tableBlockers.overrideCells),
-                static_cast<int>(tableBlockers.geometryCells),
-                static_cast<int>(tableBlockers.unknownRanges),
-                static_cast<int>(tableBlockers.incompleteRanges),
-                static_cast<int>(tableBlockers.overrideMasks),
-                static_cast<int>(tableBlockers.breakRanges),
-                static_cast<int>(tableBlockers.tableGeometryTailRanges),
-                static_cast<int>(tableBlockers.editedFallbackEntities),
-                static_cast<int>(tableBlockers.missingFallbackAttachments));
+                static_cast<int>(tableBlockers.unknownCellContent),
+                static_cast<int>(tableBlockers.incompleteValuePayload),
+                static_cast<int>(tableBlockers.editedFallback),
+                static_cast<int>(tableBlockers.missingFallbackAttachment),
+                static_cast<int>(tableBlockers.anonymousBlockPolicyUnresolved),
+                static_cast<int>(tableBlockers.unresolvedTextStyle),
+                static_cast<int>(tableBlockers.unresolvedLineType),
+                static_cast<int>(tableBlockers.rawReplayInvalidated),
+                static_cast<int>(tableBlockers.rawReplayReplaced),
+                static_cast<int>(tableBlockers.nonPositiveDimension));
         }
         if (mleaderBlockers.mleaderCount > 0 && mleaderBlockers.totalBlockers() > 0) {
             RS_DEBUG->print(

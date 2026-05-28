@@ -81,6 +81,41 @@ public:
         Boundary
     };
 
+    enum class TableContentStorageMode {
+        LegacyDirectTable,
+        SeparateTableContent,
+        EmbeddedTableContent,
+        Unsupported
+    };
+
+    enum class TableNativeWriterBlocker {
+        NoSemanticTableContent,
+        MissingFallbackAttachment,
+        EditedFallback,
+        UnresolvedTableStyle,
+        UnresolvedCellStyleMap,
+        UnknownSubrecordRange,
+        IncompleteSubrecordRange,
+        OverrideMask,
+        BreakData,
+        GeometryTail,
+        MergedCell,
+        FieldContent,
+        BlockContent,
+        AttributeContent,
+        UnknownCellContent,
+        IncompleteValuePayload,
+        MissingOwnerHandle,
+        UnsupportedTableVersion,
+        AmbiguousTableContentStorage,
+        AnonymousBlockPolicyUnresolved,
+        UnresolvedTextStyle,
+        UnresolvedLineType,
+        RawReplayInvalidated,
+        RawReplayReplaced,
+        NonPositiveDimension
+    };
+
     struct RawObjectRecord {
         int objectType = 0;
         duint32 handle = 0;
@@ -257,6 +292,7 @@ public:
         size_t blockContentCount = 0;
         size_t attributeCount = 0;
         size_t attributeHandleCount = 0;
+        size_t unknownContentCount = 0;
         std::vector<std::string> texts;
         std::vector<std::string> attributeTexts;
         std::vector<duint32> contentHandles;
@@ -288,6 +324,125 @@ public:
                    + incompleteRanges + overrideMasks + breakRanges
                    + tableGeometryTailRanges + editedFallbackEntities
                    + missingFallbackAttachments;
+        }
+    };
+
+    struct TableNativeWriterEligibility {
+        duint32 tableHandle = 0;
+        std::string recordName;
+        DRW::Version writerVersion = DRW::UNKNOWNV;
+        TableContentStorageMode storageMode =
+            TableContentStorageMode::Unsupported;
+        bool eligibleTextOnly = false;
+        std::vector<TableNativeWriterBlocker> blockers;
+
+        bool hasBlocker(TableNativeWriterBlocker blocker) const {
+            return std::find(blockers.begin(), blockers.end(), blocker)
+                   != blockers.end();
+        }
+    };
+
+    struct TableNativeWriterBlockerCounts {
+        size_t tableCount = 0;
+        size_t eligibleTextOnly = 0;
+        size_t legacyDirectLayout = 0;
+        size_t separateTableContentLayout = 0;
+        size_t embeddedTableContentLayout = 0;
+        size_t unsupportedLayout = 0;
+        size_t noSemanticTableContent = 0;
+        size_t missingFallbackAttachment = 0;
+        size_t editedFallback = 0;
+        size_t unresolvedTableStyle = 0;
+        size_t unresolvedCellStyleMap = 0;
+        size_t unknownSubrecordRange = 0;
+        size_t incompleteSubrecordRange = 0;
+        size_t overrideMask = 0;
+        size_t breakData = 0;
+        size_t geometryTail = 0;
+        size_t mergedCell = 0;
+        size_t fieldContent = 0;
+        size_t blockContent = 0;
+        size_t attributeContent = 0;
+        size_t unknownCellContent = 0;
+        size_t incompleteValuePayload = 0;
+        size_t missingOwnerHandle = 0;
+        size_t unsupportedTableVersion = 0;
+        size_t ambiguousTableContentStorage = 0;
+        size_t anonymousBlockPolicyUnresolved = 0;
+        size_t unresolvedTextStyle = 0;
+        size_t unresolvedLineType = 0;
+        size_t rawReplayInvalidated = 0;
+        size_t rawReplayReplaced = 0;
+        size_t nonPositiveDimension = 0;
+
+        size_t totalBlockers() const {
+            return noSemanticTableContent + missingFallbackAttachment
+                   + editedFallback + unresolvedTableStyle
+                   + unresolvedCellStyleMap + unknownSubrecordRange
+                   + incompleteSubrecordRange + overrideMask + breakData
+                   + geometryTail + mergedCell + fieldContent + blockContent
+                   + attributeContent + unknownCellContent
+                   + incompleteValuePayload + missingOwnerHandle
+                   + unsupportedTableVersion + ambiguousTableContentStorage
+                   + anonymousBlockPolicyUnresolved + unresolvedTextStyle
+                   + unresolvedLineType + rawReplayInvalidated
+                   + rawReplayReplaced + nonPositiveDimension;
+        }
+
+        size_t countFor(TableNativeWriterBlocker blocker) const {
+            switch (blocker) {
+            case TableNativeWriterBlocker::NoSemanticTableContent:
+                return noSemanticTableContent;
+            case TableNativeWriterBlocker::MissingFallbackAttachment:
+                return missingFallbackAttachment;
+            case TableNativeWriterBlocker::EditedFallback:
+                return editedFallback;
+            case TableNativeWriterBlocker::UnresolvedTableStyle:
+                return unresolvedTableStyle;
+            case TableNativeWriterBlocker::UnresolvedCellStyleMap:
+                return unresolvedCellStyleMap;
+            case TableNativeWriterBlocker::UnknownSubrecordRange:
+                return unknownSubrecordRange;
+            case TableNativeWriterBlocker::IncompleteSubrecordRange:
+                return incompleteSubrecordRange;
+            case TableNativeWriterBlocker::OverrideMask:
+                return overrideMask;
+            case TableNativeWriterBlocker::BreakData:
+                return breakData;
+            case TableNativeWriterBlocker::GeometryTail:
+                return geometryTail;
+            case TableNativeWriterBlocker::MergedCell:
+                return mergedCell;
+            case TableNativeWriterBlocker::FieldContent:
+                return fieldContent;
+            case TableNativeWriterBlocker::BlockContent:
+                return blockContent;
+            case TableNativeWriterBlocker::AttributeContent:
+                return attributeContent;
+            case TableNativeWriterBlocker::UnknownCellContent:
+                return unknownCellContent;
+            case TableNativeWriterBlocker::IncompleteValuePayload:
+                return incompleteValuePayload;
+            case TableNativeWriterBlocker::MissingOwnerHandle:
+                return missingOwnerHandle;
+            case TableNativeWriterBlocker::UnsupportedTableVersion:
+                return unsupportedTableVersion;
+            case TableNativeWriterBlocker::AmbiguousTableContentStorage:
+                return ambiguousTableContentStorage;
+            case TableNativeWriterBlocker::AnonymousBlockPolicyUnresolved:
+                return anonymousBlockPolicyUnresolved;
+            case TableNativeWriterBlocker::UnresolvedTextStyle:
+                return unresolvedTextStyle;
+            case TableNativeWriterBlocker::UnresolvedLineType:
+                return unresolvedLineType;
+            case TableNativeWriterBlocker::RawReplayInvalidated:
+                return rawReplayInvalidated;
+            case TableNativeWriterBlocker::RawReplayReplaced:
+                return rawReplayReplaced;
+            case TableNativeWriterBlocker::NonPositiveDimension:
+                return nonPositiveDimension;
+            }
+            return 0;
         }
     };
 
@@ -351,6 +506,7 @@ public:
         size_t fieldContentCount = 0;
         size_t blockContentCount = 0;
         size_t attributeCount = 0;
+        size_t unknownContentCount = 0;
         size_t valueHandleCount = 0;
         size_t blockHandleCount = 0;
         size_t fieldHandleCount = 0;
@@ -1472,6 +1628,49 @@ public:
         }
         return result;
     }
+    TableNativeWriterEligibility tableNativeWriterEligibility(
+        duint32 handle, DRW::Version version) const {
+        TableNativeWriterEligibility eligibility;
+        eligibility.tableHandle = handle;
+        eligibility.writerVersion = version;
+        eligibility.storageMode = tableContentStorageModeForVersion(version);
+        const TableRecord* record = findTableByHandle(handle);
+        if (record == nullptr || isTableStyleRecord(*record)) {
+            addTableNativeWriterBlocker(
+                eligibility,
+                TableNativeWriterBlocker::NoSemanticTableContent);
+            return eligibility;
+        }
+        populateTableNativeWriterEligibility(*record, version, eligibility);
+        return eligibility;
+    }
+    std::vector<TableNativeWriterEligibility> tableNativeWriterEligibilityForAll(
+        DRW::Version version) const {
+        std::vector<TableNativeWriterEligibility> result;
+        for (const TableRecord& record : m_tables) {
+            if (isTableStyleRecord(record))
+                continue;
+            TableNativeWriterEligibility eligibility;
+            eligibility.tableHandle = record.handle;
+            populateTableNativeWriterEligibility(record, version, eligibility);
+            result.push_back(std::move(eligibility));
+        }
+        return result;
+    }
+    TableNativeWriterBlockerCounts tableNativeWriterBlockerCounts(
+        DRW::Version version) const {
+        TableNativeWriterBlockerCounts counts;
+        for (const TableNativeWriterEligibility& eligibility :
+             tableNativeWriterEligibilityForAll(version)) {
+            ++counts.tableCount;
+            if (eligibility.eligibleTextOnly)
+                ++counts.eligibleTextOnly;
+            incrementTableStorageModeCount(counts, eligibility.storageMode);
+            for (TableNativeWriterBlocker blocker : eligibility.blockers)
+                incrementTableNativeWriterBlockerCount(counts, blocker);
+        }
+        return counts;
+    }
     TableWriterBlockerCounts tableWriterBlockerCounts() const {
         TableWriterBlockerCounts counts;
         for (const TableRecord& record : m_tables) {
@@ -2346,6 +2545,11 @@ private:
                             cellRecord.contentHandles.push_back(cellContent.m_handle);
                         }
                     }
+                    if (cellContent.m_type != 0 && cellContent.m_type != 1
+                        && cellContent.m_type != 2 && cellContent.m_type != 4) {
+                        ++record.unknownContentCount;
+                        ++cellRecord.unknownContentCount;
+                    }
                 }
                 record.cells.push_back(std::move(cellRecord));
                 ++columnIndex;
@@ -2503,6 +2707,286 @@ private:
         for (const DRW_DwgSubrecordRange& range : ranges) {
             if (!range.m_parseComplete)
                 ++record.m_incompleteRangeCount;
+        }
+    }
+
+    void populateTableNativeWriterEligibility(
+        const TableRecord& record, DRW::Version version,
+        TableNativeWriterEligibility& eligibility) const {
+        eligibility.tableHandle = record.handle;
+        eligibility.recordName = record.recordName;
+        eligibility.writerVersion = version;
+        eligibility.storageMode = tableContentStorageModeForVersion(version);
+
+        if (eligibility.storageMode == TableContentStorageMode::Unsupported
+            || eligibility.storageMode
+                   == TableContentStorageMode::LegacyDirectTable) {
+            addTableNativeWriterBlocker(
+                eligibility,
+                TableNativeWriterBlocker::UnsupportedTableVersion);
+        }
+        if (version == DRW::AC1021) {
+            addTableNativeWriterBlocker(
+                eligibility,
+                TableNativeWriterBlocker::AmbiguousTableContentStorage);
+        }
+        if (!record.semanticParsed || record.rowCount <= 0
+            || record.columnCount <= 0 || record.cellCount == 0) {
+            addTableNativeWriterBlocker(
+                eligibility,
+                TableNativeWriterBlocker::NoSemanticTableContent);
+        }
+        if (tableHasNonPositiveDimensions(record)) {
+            addTableNativeWriterBlocker(
+                eligibility, TableNativeWriterBlocker::NonPositiveDimension);
+        }
+        if (record.parentHandle == 0) {
+            addTableNativeWriterBlocker(
+                eligibility, TableNativeWriterBlocker::MissingOwnerHandle);
+        }
+        if (record.fallbackRendered
+            && findTableFallbackEntities(record.handle).empty()) {
+            addTableNativeWriterBlocker(
+                eligibility,
+                TableNativeWriterBlocker::MissingFallbackAttachment);
+        }
+        if (record.fallbackInvalidated) {
+            addTableNativeWriterBlocker(
+                eligibility, TableNativeWriterBlocker::EditedFallback);
+        }
+        if (record.tableStyleHandle != 0 && !record.styleResolved) {
+            addTableNativeWriterBlocker(
+                eligibility, TableNativeWriterBlocker::UnresolvedTableStyle);
+        }
+        if (tableHasUnresolvedCellStyleMap(record)) {
+            addTableNativeWriterBlocker(
+                eligibility,
+                TableNativeWriterBlocker::UnresolvedCellStyleMap);
+        }
+        if (record.m_unknownRangeCount != 0) {
+            addTableNativeWriterBlocker(
+                eligibility,
+                TableNativeWriterBlocker::UnknownSubrecordRange);
+        }
+        if (record.m_incompleteRangeCount != 0) {
+            addTableNativeWriterBlocker(
+                eligibility,
+                TableNativeWriterBlocker::IncompleteSubrecordRange);
+        }
+        if (record.m_overrideMaskCount != 0 || record.overrideCellCount != 0) {
+            addTableNativeWriterBlocker(
+                eligibility, TableNativeWriterBlocker::OverrideMask);
+        }
+        if (record.m_breakRangeCount != 0) {
+            addTableNativeWriterBlocker(
+                eligibility, TableNativeWriterBlocker::BreakData);
+        }
+        if (record.m_tableGeometryTailRangeCount != 0
+            || record.geometryCellCount != 0) {
+            addTableNativeWriterBlocker(
+                eligibility, TableNativeWriterBlocker::GeometryTail);
+        }
+        if (record.mergedRangeCount != 0 || tableHasMergedCell(record)) {
+            addTableNativeWriterBlocker(
+                eligibility, TableNativeWriterBlocker::MergedCell);
+        }
+        if (record.fieldContentCount != 0 || record.fieldHandleCount != 0) {
+            addTableNativeWriterBlocker(
+                eligibility, TableNativeWriterBlocker::FieldContent);
+        }
+        if (record.blockContentCount != 0 || record.blockHandleCount != 0
+            || record.hasBlockContent) {
+            addTableNativeWriterBlocker(
+                eligibility, TableNativeWriterBlocker::BlockContent);
+        }
+        if (record.attributeCount != 0 || record.attributeHandleCount != 0) {
+            addTableNativeWriterBlocker(
+                eligibility, TableNativeWriterBlocker::AttributeContent);
+        }
+        if (record.unknownContentCount != 0) {
+            addTableNativeWriterBlocker(
+                eligibility, TableNativeWriterBlocker::UnknownCellContent);
+        }
+        if (record.valueHandleCount != 0) {
+            addTableNativeWriterBlocker(
+                eligibility,
+                TableNativeWriterBlocker::IncompleteValuePayload);
+        }
+        if (record.fallbackRendered) {
+            addTableNativeWriterBlocker(
+                eligibility,
+                TableNativeWriterBlocker::AnonymousBlockPolicyUnresolved);
+        }
+        if (record.textStyleHandleCount != 0
+            || record.m_fallbackUnresolvedTextStyleCount != 0) {
+            addTableNativeWriterBlocker(
+                eligibility, TableNativeWriterBlocker::UnresolvedTextStyle);
+        }
+        if (record.lineTypeHandleCount != 0) {
+            addTableNativeWriterBlocker(
+                eligibility, TableNativeWriterBlocker::UnresolvedLineType);
+        }
+        if (record.replayState == ReplayState::ReplayInvalidated) {
+            addTableNativeWriterBlocker(
+                eligibility, TableNativeWriterBlocker::RawReplayInvalidated);
+        }
+        if (record.replayState == ReplayState::ReplayReplaced) {
+            addTableNativeWriterBlocker(
+                eligibility, TableNativeWriterBlocker::RawReplayReplaced);
+        }
+        eligibility.eligibleTextOnly = eligibility.blockers.empty();
+    }
+
+    static TableContentStorageMode tableContentStorageModeForVersion(
+        DRW::Version version) {
+        if (version == DRW::UNKNOWNV)
+            return TableContentStorageMode::Unsupported;
+        if (version < DRW::AC1021)
+            return TableContentStorageMode::LegacyDirectTable;
+        if (version == DRW::AC1021)
+            return TableContentStorageMode::SeparateTableContent;
+        return TableContentStorageMode::EmbeddedTableContent;
+    }
+
+    static void addTableNativeWriterBlocker(
+        TableNativeWriterEligibility& eligibility,
+        TableNativeWriterBlocker blocker) {
+        if (!eligibility.hasBlocker(blocker))
+            eligibility.blockers.push_back(blocker);
+    }
+
+    static bool tableHasNonPositiveDimensions(const TableRecord& record) {
+        if (record.columnWidths.empty() || record.rowHeights.empty())
+            return true;
+        for (double width : record.columnWidths) {
+            if (width <= 0.0)
+                return true;
+        }
+        for (double height : record.rowHeights) {
+            if (height <= 0.0)
+                return true;
+        }
+        return false;
+    }
+
+    static bool tableHasMergedCell(const TableRecord& record) {
+        for (const TableCellRecord& cell : record.cells) {
+            if (cell.isMerged)
+                return true;
+        }
+        return false;
+    }
+
+    bool tableHasUnresolvedCellStyleMap(const TableRecord& record) const {
+        for (int styleId : record.cellStyleIds) {
+            if (styleId >= 1 && styleId <= 4)
+                continue;
+            if (findCellStylesById(styleId).empty()
+                && findTableStylesReferencingCellStyle(styleId).empty()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    static void incrementTableStorageModeCount(
+        TableNativeWriterBlockerCounts& counts,
+        TableContentStorageMode storageMode) {
+        switch (storageMode) {
+        case TableContentStorageMode::LegacyDirectTable:
+            ++counts.legacyDirectLayout;
+            break;
+        case TableContentStorageMode::SeparateTableContent:
+            ++counts.separateTableContentLayout;
+            break;
+        case TableContentStorageMode::EmbeddedTableContent:
+            ++counts.embeddedTableContentLayout;
+            break;
+        case TableContentStorageMode::Unsupported:
+            ++counts.unsupportedLayout;
+            break;
+        }
+    }
+
+    static void incrementTableNativeWriterBlockerCount(
+        TableNativeWriterBlockerCounts& counts,
+        TableNativeWriterBlocker blocker) {
+        switch (blocker) {
+        case TableNativeWriterBlocker::NoSemanticTableContent:
+            ++counts.noSemanticTableContent;
+            break;
+        case TableNativeWriterBlocker::MissingFallbackAttachment:
+            ++counts.missingFallbackAttachment;
+            break;
+        case TableNativeWriterBlocker::EditedFallback:
+            ++counts.editedFallback;
+            break;
+        case TableNativeWriterBlocker::UnresolvedTableStyle:
+            ++counts.unresolvedTableStyle;
+            break;
+        case TableNativeWriterBlocker::UnresolvedCellStyleMap:
+            ++counts.unresolvedCellStyleMap;
+            break;
+        case TableNativeWriterBlocker::UnknownSubrecordRange:
+            ++counts.unknownSubrecordRange;
+            break;
+        case TableNativeWriterBlocker::IncompleteSubrecordRange:
+            ++counts.incompleteSubrecordRange;
+            break;
+        case TableNativeWriterBlocker::OverrideMask:
+            ++counts.overrideMask;
+            break;
+        case TableNativeWriterBlocker::BreakData:
+            ++counts.breakData;
+            break;
+        case TableNativeWriterBlocker::GeometryTail:
+            ++counts.geometryTail;
+            break;
+        case TableNativeWriterBlocker::MergedCell:
+            ++counts.mergedCell;
+            break;
+        case TableNativeWriterBlocker::FieldContent:
+            ++counts.fieldContent;
+            break;
+        case TableNativeWriterBlocker::BlockContent:
+            ++counts.blockContent;
+            break;
+        case TableNativeWriterBlocker::AttributeContent:
+            ++counts.attributeContent;
+            break;
+        case TableNativeWriterBlocker::UnknownCellContent:
+            ++counts.unknownCellContent;
+            break;
+        case TableNativeWriterBlocker::IncompleteValuePayload:
+            ++counts.incompleteValuePayload;
+            break;
+        case TableNativeWriterBlocker::MissingOwnerHandle:
+            ++counts.missingOwnerHandle;
+            break;
+        case TableNativeWriterBlocker::UnsupportedTableVersion:
+            ++counts.unsupportedTableVersion;
+            break;
+        case TableNativeWriterBlocker::AmbiguousTableContentStorage:
+            ++counts.ambiguousTableContentStorage;
+            break;
+        case TableNativeWriterBlocker::AnonymousBlockPolicyUnresolved:
+            ++counts.anonymousBlockPolicyUnresolved;
+            break;
+        case TableNativeWriterBlocker::UnresolvedTextStyle:
+            ++counts.unresolvedTextStyle;
+            break;
+        case TableNativeWriterBlocker::UnresolvedLineType:
+            ++counts.unresolvedLineType;
+            break;
+        case TableNativeWriterBlocker::RawReplayInvalidated:
+            ++counts.rawReplayInvalidated;
+            break;
+        case TableNativeWriterBlocker::RawReplayReplaced:
+            ++counts.rawReplayReplaced;
+            break;
+        case TableNativeWriterBlocker::NonPositiveDimension:
+            ++counts.nonPositiveDimension;
+            break;
         }
     }
 
