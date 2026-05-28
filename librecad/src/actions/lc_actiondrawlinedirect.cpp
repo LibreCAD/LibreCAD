@@ -1,7 +1,37 @@
 /****************************************************************************
 **
-* Experimental direct-line action: click start, aim with mouse, type length,
-* press Enter to place segment in aimed direction, auto-continue.
+* Direct Line action: type a distance, aim with the mouse, press Enter —
+* the segment is placed in the aimed direction and the tool continues from
+* the new endpoint automatically.
+*
+* Workflow summary:
+*   1. Invoke the action (command: dline / dl).
+*   2. Click the start point.
+*   3. Type a distance (supports plain numbers, expressions, and
+*      architectural feet-inch strings when enabled in Preferences,
+*      e.g. "10-3" = 10 ft 3 in, "3'0" = 3 ft 0 in).
+*   4. Move the mouse to aim the direction.
+*   5. Press Enter — the segment is drawn and the tool continues.
+*   6. Right-click or Escape to finish.
+*
+* Polar Snap:
+*   - Toolbar toggle activates angle-increment snapping globally.
+*   - Holding Shift temporarily enables it at the configured angle.
+*   - Object snaps always take priority over polar snap.
+*   - Angle increment is configured in Preferences (default 15°).
+*
+* Wall opening mode (command: o / opening):
+*   - Available after at least one wall segment has been drawn.
+*   - User types the opening width (same distance formats as above).
+*   - User clicks/aims to choose which side of the wall the
+*     perpendicular markers appear on.
+*   - The tool draws three lines as a single undoable operation:
+*       · perpendicular marker at the opening start
+*       · span line along the previous wall direction
+*       · perpendicular marker at the opening end
+*   - The active start point advances to the far end of the opening,
+*     ready to continue drawing the wall.
+*   - Opening marker depth is configured in Preferences (default 4).
 *
 * Adapted from LC_ActionDrawLineSnake.
 * Original copyright (C) 2024 LibreCAD.org / sand1024

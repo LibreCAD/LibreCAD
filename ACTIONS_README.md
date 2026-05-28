@@ -959,6 +959,57 @@ No additional commands are supported.
 If _Line Snap_ is not _Free_, mirrors edges of line (i.e setting for start edge of line are applied to end edge, and vise versa). 
 
 ---
+### Direct Line
+
+This action draws a sequence of line segments by typing a distance and aiming with the mouse.
+Unlike the standard Line tool, the direction is set by mouse aim rather than a second click.
+Each segment automatically continues from the previous endpoint.
+
+Wall openings (door/window gaps with perpendicular markers) can be inserted mid-sequence using the `o` command.
+
+#### Options:
+
+No toolbar options widget. Settings are in **Application Preferences → Defaults**:
+
+1. **Architectural feet-inch input** – enables feet-inch distance strings such as `10-3` (10 ft 3 in) or `3'0` (3 ft 0 in).
+2. **Polar snap angle** – angle increment used when polar snap is active (default 15°).
+3. **Opening marker depth** – depth of the perpendicular lines drawn on each side of a wall opening (default 4).
+
+#### Existing Selection:
+
+No support.
+
+#### Command widget
+
+Action is fully scriptable via the command line.
+
+##### Invocation Commands:
+
+`dline` or `dl`
+
+##### Action Commands (while drawing):
+
+| Command | Effect |
+|---|---|
+| `close` | Closes the current sequence back to the start point |
+| `undo` | Undoes the last segment |
+| `redo` | Redoes an undone segment |
+| `pl` | Converts the drawn segments into a polyline |
+| `start` | Sets a new start point without finishing the action |
+| `o` or `opening` | Enters wall opening mode (requires at least one segment drawn) |
+
+**Opening sub-commands (after `o`):**
+
+1. Type the opening width (supports all distance formats, including feet-inch if enabled).
+2. Click or aim to choose which side of the wall the perpendicular markers appear on.
+
+The tool draws three lines — start marker, opening span, end marker — as one undoable operation, then continues from the far end of the opening.
+
+#### Mouse + SHIFT mode:
+
+Holding **Shift** temporarily enables polar snap at the configured angle increment, regardless of the toolbar toggle state.
+
+---
 ### Other functionality
 
 There is convenient base classes with predefined lifecycles and utility methods: 
