@@ -117,7 +117,13 @@ void LC_ActionDrawLineDirect::doPreparePreviewEntities(
         case SetOpeningWidth:
             return;
         case SetOpeningAim: {
-            constexpr double depth = 4.0;
+            double depth = 4.0;
+            {
+                auto guard = RS_SETTINGS->beginGroupGuard("/Defaults");
+                bool ok = false;
+                double d = RS_SETTINGS->readEntry("/OpeningDepth", "4").toDouble(&ok);
+                if (ok && d > 0.0) depth = d;
+            }
             RS_Vector wallDir = RS_Vector::polar(1.0, m_openingWallAngle);
             RS_Vector toMouse = snap - m_openingStart;
             double cross = wallDir.x * toMouse.y - wallDir.y * toMouse.x;
@@ -659,7 +665,13 @@ void LC_ActionDrawLineDirect::startOpeningMode() {
 }
 
 void LC_ActionDrawLineDirect::completeOpening(const RS_Vector& snap) {
-    constexpr double depth = 4.0;
+    double depth = 4.0;
+    {
+        auto guard = RS_SETTINGS->beginGroupGuard("/Defaults");
+        bool ok = false;
+        double d = RS_SETTINGS->readEntry("/OpeningDepth", "4").toDouble(&ok);
+        if (ok && d > 0.0) depth = d;
+    }
     RS_Vector wallDir = RS_Vector::polar(1.0, m_openingWallAngle);
     RS_Vector toMouse = snap - m_openingStart;
     double cross = wallDir.x * toMouse.y - wallDir.y * toMouse.x;

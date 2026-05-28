@@ -203,6 +203,11 @@ void QG_DlgOptionsGeneral::init()
         double angle = RS_SETTINGS->readEntry("/PolarSnapAngle", "15").toDouble(&ok);
         cbPolarSnapAngle->setValue((ok && angle > 0.0) ? angle : 15.0);
     }
+    {
+        bool ok = false;
+        double depth = RS_SETTINGS->readEntry("/OpeningDepth", "4").toDouble(&ok);
+        cbOpeningDepth->setValue((ok && depth > 0.0) ? depth : 4.0);
+    }
     RS_SETTINGS->endGroup();
 
     //update entities to selected entities to the current active layer
@@ -309,6 +314,10 @@ void QG_DlgOptionsGeneral::ok()
         {
             double angle = cbPolarSnapAngle->value();
             RS_SETTINGS->writeEntry("/PolarSnapAngle", QString::number((angle > 0.0) ? angle : 15.0));
+        }
+        {
+            double depth = cbOpeningDepth->value();
+            RS_SETTINGS->writeEntry("/OpeningDepth", QString::number((depth > 0.0) ? depth : 4.0));
         }
         RS_SETTINGS->endGroup();
 

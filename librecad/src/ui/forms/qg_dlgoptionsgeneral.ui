@@ -1110,6 +1110,39 @@
             </item>
            </layout>
           </item>
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_openingdepth">
+            <item>
+             <widget class="QLabel" name="labelOpeningDepth">
+              <property name="text">
+               <string>Opening marker depth:</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QDoubleSpinBox" name="cbOpeningDepth">
+              <property name="toolTip">
+               <string>Depth of the perpendicular marker lines drawn by Direct Line opening mode.</string>
+              </property>
+              <property name="minimum">
+               <double>0.010000000000000</double>
+              </property>
+              <property name="maximum">
+               <double>9999.000000000000000</double>
+              </property>
+              <property name="decimals">
+               <number>2</number>
+              </property>
+              <property name="singleStep">
+               <double>1.000000000000000</double>
+              </property>
+              <property name="value">
+               <double>4.000000000000000</double>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
          </layout>
         </widget>
        </item>
