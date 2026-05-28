@@ -14,6 +14,7 @@
 #ifndef LC_DWGADVANCEDMETADATA_H
 #define LC_DWGADVANCEDMETADATA_H
 
+#include <algorithm>
 #include <cstddef>
 #include <string>
 #include <utility>
@@ -380,6 +381,26 @@ public:
         std::vector<int> m_tableColors;
         std::vector<TableMergedRangeRecord> mergedRanges;
         std::vector<TableCellRecord> cells;
+        ReplayState replayState = ReplayState::ReplayAllowed;
+    };
+
+    struct CellStyleMapRecord {
+        duint32 handle = 0;
+        duint32 parentHandle = 0;
+        size_t m_cellStyleCount = 0;
+        size_t m_borderCount = 0;
+        size_t m_contentFormatCount = 0;
+        size_t m_namedCellStyleCount = 0;
+        size_t m_visibleBorderCount = 0;
+        size_t m_marginStyleCount = 0;
+        std::vector<int> m_styleIds;
+        std::vector<int> m_styleClasses;
+        std::vector<std::string> m_styleNames;
+        std::vector<duint32> m_textStyleHandles;
+        std::vector<duint32> m_lineTypeHandles;
+        std::vector<double> m_textHeights;
+        std::vector<int> m_alignments;
+        std::vector<int> m_colors;
         ReplayState replayState = ReplayState::ReplayAllowed;
     };
 
@@ -901,6 +922,17 @@ public:
         m_tables.push_back(record);
     }
 
+    void addCellStyleMap(const DRW_CellStyleMap& map) {
+        CellStyleMapRecord record;
+        record.handle = map.handle;
+        record.parentHandle = map.parentHandle;
+        record.m_cellStyleCount = map.m_cellStyles.size();
+        for (const DRW_TableStyleCellStyle& cellStyle : map.m_cellStyles)
+            collectCellStyleMapSummary(record, cellStyle);
+        record.m_namedCellStyleCount = record.m_styleNames.size();
+        m_cellStyleMaps.push_back(std::move(record));
+    }
+
     void addAssociativeObject(const DRW_AssociativeObject& object) {
         AssociativeRecord record;
         record.handle = object.handle;
@@ -1213,6 +1245,7 @@ public:
     const std::vector<SunRecord>& suns() const { return m_suns; }
     const std::vector<ModelerGeometryRecord>& modelerGeometry() const { return m_modelerGeometry; }
     const std::vector<TableRecord>& tables() const { return m_tables; }
+    const std::vector<CellStyleMapRecord>& cellStyleMaps() const { return m_cellStyleMaps; }
     const std::vector<AssociativeRecord>& associativeObjects() const { return m_associativeObjects; }
     const std::vector<AcShRecord>& acshObjects() const { return m_acshObjects; }
     const std::vector<MLeaderRecord>& mleaders() const { return m_mleaders; }
@@ -1292,6 +1325,49 @@ public:
         for (const TableRecord& record : m_tables) {
             if (!isTableStyleRecord(record) && tableRecordReferences(record, handle))
                 result.push_back(&record);
+        }
+        return result;
+    }
+    const CellStyleMapRecord* findCellStyleMapByHandle(duint32 handle) const {
+        if (handle == 0)
+            return nullptr;
+        for (const CellStyleMapRecord& record : m_cellStyleMaps) {
+            if (record.handle == handle)
+                return &record;
+        }
+        return nullptr;
+    }
+    std::vector<const CellStyleMapRecord*> findCellStylesById(int styleId) const {
+        std::vector<const CellStyleMapRecord*> result;
+        if (styleId == 0)
+            return result;
+        for (const CellStyleMapRecord& record : m_cellStyleMaps) {
+            if (containsValue(record.m_styleIds, styleId))
+                result.push_back(&record);
+        }
+        return result;
+    }
+    std::vector<const CellStyleMapRecord*> findCellStyleMapsReferencingHandle(
+        duint32 handle) const {
+        std::vector<const CellStyleMapRecord*> result;
+        if (handle == 0)
+            return result;
+        for (const CellStyleMapRecord& record : m_cellStyleMaps) {
+            if (cellStyleMapReferences(record, handle))
+                result.push_back(&record);
+        }
+        return result;
+    }
+    std::vector<const TableRecord*> findTableStylesReferencingCellStyle(
+        int styleId) const {
+        std::vector<const TableRecord*> result;
+        if (styleId == 0)
+            return result;
+        for (const TableRecord& record : m_tables) {
+            if (isTableStyleRecord(record)
+                && containsValue(record.m_tableStyleIds, styleId)) {
+                result.push_back(&record);
+            }
         }
         return result;
     }
@@ -1895,7 +1971,8 @@ public:
 
     size_t semanticOnlyRecordCount() const {
         return m_lights.size() + m_suns.size() + m_modelerGeometry.size()
-            + m_tables.size() + m_associativeObjects.size() + m_acshObjects.size()
+            + m_tables.size() + m_cellStyleMaps.size()
+            + m_associativeObjects.size() + m_acshObjects.size()
             + m_mleaderStyles.size() + m_detailViewStyles.size()
             + m_sectionViewStyles.size() + m_breakData.size()
             + m_breakPointRefs.size() + m_groups.size()
@@ -1909,6 +1986,7 @@ public:
             || hasReplayable(m_suns)
             || hasReplayable(m_modelerGeometry)
             || hasReplayable(m_tables)
+            || hasReplayable(m_cellStyleMaps)
             || hasReplayable(m_associativeObjects)
             || hasReplayable(m_acshObjects)
             || hasReplayable(m_mleaders)
@@ -1955,6 +2033,14 @@ public:
             if (record.replayState != ReplayState::ReplayAllowed)
                 continue;
             if (tableRecordReferences(record, dependentHandle)) {
+                record.replayState = ReplayState::ReplayInvalidated;
+                invalidateRawTableObject(record.handle);
+            }
+        }
+        for (CellStyleMapRecord& record : m_cellStyleMaps) {
+            if (record.replayState != ReplayState::ReplayAllowed)
+                continue;
+            if (cellStyleMapReferences(record, dependentHandle)) {
                 record.replayState = ReplayState::ReplayInvalidated;
                 invalidateRawTableObject(record.handle);
             }
@@ -2007,6 +2093,7 @@ public:
         invalidateContainer(m_suns);
         invalidateContainer(m_modelerGeometry);
         invalidateContainer(m_tables);
+        invalidateContainer(m_cellStyleMaps);
         invalidateContainer(m_associativeObjects);
         invalidateContainer(m_acshObjects);
         invalidateContainer(m_mleaders);
@@ -2217,6 +2304,45 @@ private:
             collectTableStyleBorderSummary(record, border);
     }
 
+    static void collectCellStyleMapSummary(CellStyleMapRecord& record,
+                                           const DRW_TableStyleCellStyle& cellStyle) {
+        if (cellStyle.m_id != 0)
+            record.m_styleIds.push_back(cellStyle.m_id);
+        if (cellStyle.m_styleClass != 0)
+            record.m_styleClasses.push_back(cellStyle.m_styleClass);
+        if (!cellStyle.m_name.empty())
+            record.m_styleNames.push_back(cellStyle.m_name);
+        if (cellStyle.m_contentFormat.m_textStyleHandle != 0)
+            record.m_textStyleHandles.push_back(
+                cellStyle.m_contentFormat.m_textStyleHandle);
+        if (cellStyle.m_contentFormat.m_textHeight > 0.0)
+            record.m_textHeights.push_back(cellStyle.m_contentFormat.m_textHeight);
+        if (cellStyle.m_contentFormat.m_cellAlignment != 0)
+            record.m_alignments.push_back(cellStyle.m_contentFormat.m_cellAlignment);
+        if (cellStyle.m_contentFormat.m_contentColor != 0)
+            record.m_colors.push_back(cellStyle.m_contentFormat.m_contentColor);
+        if (cellStyle.m_backgroundColor != 0)
+            record.m_colors.push_back(cellStyle.m_backgroundColor);
+        if (cellStyle.m_verticalMargin != 0.0
+            || cellStyle.m_horizontalMargin != 0.0
+            || cellStyle.m_bottomMargin != 0.0
+            || cellStyle.m_rightMargin != 0.0
+            || cellStyle.m_marginHorizontalSpacing != 0.0
+            || cellStyle.m_marginVerticalSpacing != 0.0) {
+            ++record.m_marginStyleCount;
+        }
+        ++record.m_contentFormatCount;
+        record.m_borderCount += cellStyle.m_borders.size();
+        for (const DRW_TableStyleBorder& border : cellStyle.m_borders) {
+            if (border.m_lineTypeHandle != 0)
+                record.m_lineTypeHandles.push_back(border.m_lineTypeHandle);
+            if (border.m_visible != 0)
+                ++record.m_visibleBorderCount;
+            if (border.m_color != 0)
+                record.m_colors.push_back(border.m_color);
+        }
+    }
+
     void resolveTableStyle(TableRecord& record) const {
         for (const TableRecord& style : m_tables) {
             if (resolveTableStyle(record, style))
@@ -2292,6 +2418,19 @@ private:
                 return true;
         }
         return false;
+    }
+
+    static bool cellStyleMapReferences(const CellStyleMapRecord& record,
+                                       duint32 handle) {
+        if (handle == 0)
+            return false;
+        return containsValue(record.m_textStyleHandles, handle)
+               || containsValue(record.m_lineTypeHandles, handle);
+    }
+
+    template<typename T>
+    static bool containsValue(const std::vector<T>& values, const T& value) {
+        return std::find(values.begin(), values.end(), value) != values.end();
     }
 
     static bool mleaderRecordReferences(const MLeaderRecord& record, duint32 handle) {
@@ -2574,6 +2713,7 @@ private:
     std::vector<SunRecord> m_suns;
     std::vector<ModelerGeometryRecord> m_modelerGeometry;
     std::vector<TableRecord> m_tables;
+    std::vector<CellStyleMapRecord> m_cellStyleMaps;
     std::vector<AssociativeRecord> m_associativeObjects;
     std::vector<AcShRecord> m_acshObjects;
     std::vector<MLeaderRecord> m_mleaders;

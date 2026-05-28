@@ -479,6 +479,26 @@ TEST_CASE("DWG advanced metadata caches raw and semantic sidecars",
   tableStyle.m_cellStyles.push_back(cellStyle);
   metadata.addTableStyle(tableStyle);
 
+  DRW_CellStyleMap cellStyleMap;
+  cellStyleMap.handle = 0xF6u;
+  cellStyleMap.parentHandle = 0xF7u;
+  DRW_TableStyleCellStyle mapStyle;
+  mapStyle.m_id = 77;
+  mapStyle.m_styleClass = 3;
+  mapStyle.m_name = "MappedDataStyle";
+  mapStyle.m_backgroundColor = 21;
+  mapStyle.m_horizontalMargin = 0.45;
+  mapStyle.m_contentFormat.m_textStyleHandle = 0x110u;
+  mapStyle.m_contentFormat.m_textHeight = 2.25;
+  mapStyle.m_contentFormat.m_cellAlignment = 7;
+  mapStyle.m_contentFormat.m_contentColor = 22;
+  mapStyle.m_borders.resize(1);
+  mapStyle.m_borders[0].m_lineTypeHandle = 0x111u;
+  mapStyle.m_borders[0].m_visible = 1;
+  mapStyle.m_borders[0].m_color = 23;
+  cellStyleMap.m_cellStyles.push_back(mapStyle);
+  metadata.addCellStyleMap(cellStyleMap);
+
   DRW_TableContentObject tableContent;
   tableContent.handle = 0xFEu;
   tableContent.parentHandle = 0xFFu;
@@ -864,6 +884,10 @@ TEST_CASE("DWG advanced metadata caches raw and semantic sidecars",
   CHECK_FALSE(capturedTableStyle.headerSuppressed);
   CHECK(capturedTableStyle.styleResolved);
   CHECK(metadata.findTableStyleByHandle(0xFCu) == &capturedTableStyle);
+  const auto tableStylesByCellStyle =
+      metadata.findTableStylesReferencingCellStyle(42);
+  REQUIRE(tableStylesByCellStyle.size() == 1u);
+  CHECK(tableStylesByCellStyle.front() == &capturedTableStyle);
   const auto tableStylesByTextStyle =
       metadata.findTableStylesReferencingHandle(0x10Cu);
   REQUIRE(tableStylesByTextStyle.size() == 1u);
@@ -952,6 +976,36 @@ TEST_CASE("DWG advanced metadata caches raw and semantic sidecars",
   CHECK(metadata.findTableCell(0xFEu, 0, 0) == &firstCell);
   CHECK(metadata.findTableCell(0xFEu, 0, 1) == &secondCell);
   CHECK(metadata.findTableCell(0xFEu, 1, 0) == nullptr);
+
+  REQUIRE(metadata.cellStyleMaps().size() == 1u);
+  const auto& capturedCellStyleMap = metadata.cellStyleMaps().front();
+  CHECK(capturedCellStyleMap.handle == 0xF6u);
+  CHECK(capturedCellStyleMap.parentHandle == 0xF7u);
+  CHECK(capturedCellStyleMap.m_cellStyleCount == 1u);
+  CHECK(capturedCellStyleMap.m_borderCount == 1u);
+  CHECK(capturedCellStyleMap.m_contentFormatCount == 1u);
+  CHECK(capturedCellStyleMap.m_namedCellStyleCount == 1u);
+  CHECK(capturedCellStyleMap.m_visibleBorderCount == 1u);
+  CHECK(capturedCellStyleMap.m_marginStyleCount == 1u);
+  REQUIRE(capturedCellStyleMap.m_styleIds.size() == 1u);
+  CHECK(capturedCellStyleMap.m_styleIds.front() == 77);
+  REQUIRE(capturedCellStyleMap.m_styleClasses.size() == 1u);
+  CHECK(capturedCellStyleMap.m_styleClasses.front() == 3);
+  REQUIRE(capturedCellStyleMap.m_styleNames.size() == 1u);
+  CHECK(capturedCellStyleMap.m_styleNames.front() == "MappedDataStyle");
+  REQUIRE(capturedCellStyleMap.m_textStyleHandles.size() == 1u);
+  CHECK(capturedCellStyleMap.m_textStyleHandles.front() == 0x110u);
+  REQUIRE(capturedCellStyleMap.m_lineTypeHandles.size() == 1u);
+  CHECK(capturedCellStyleMap.m_lineTypeHandles.front() == 0x111u);
+  CHECK(metadata.findCellStyleMapByHandle(0xF6u) == &capturedCellStyleMap);
+  const auto mapsByStyleId = metadata.findCellStylesById(77);
+  REQUIRE(mapsByStyleId.size() == 1u);
+  CHECK(mapsByStyleId.front() == &capturedCellStyleMap);
+  const auto mapsByTextStyle =
+      metadata.findCellStyleMapsReferencingHandle(0x110u);
+  REQUIRE(mapsByTextStyle.size() == 1u);
+  CHECK(mapsByTextStyle.front() == &capturedCellStyleMap);
+
   const auto cellsByValue = metadata.findTableCellsReferencingHandle(0x102u);
   REQUIRE(cellsByValue.size() == 1u);
   CHECK(cellsByValue.front() == &firstCell);
@@ -1272,6 +1326,44 @@ TEST_CASE("DWG advanced metadata invalidates TABLESTYLE raw replay",
 
   REQUIRE(metadata.tables().size() == 1u);
   CHECK(metadata.tables().front().replayState ==
+        LC_DwgAdvancedMetadata::ReplayState::ReplayInvalidated);
+  REQUIRE(metadata.rawObjects().size() == 1u);
+  CHECK(LC_DwgAdvancedMetadata::rawReplayBlocker(metadata.rawObjects().front()) ==
+        LC_DwgAdvancedMetadata::ReplayBlocker::Invalidated);
+}
+
+TEST_CASE("DWG advanced metadata invalidates CELLSTYLEMAP raw replay",
+          "[entity_metadata][dwg_metadata][table]") {
+  LC_DwgAdvancedMetadata metadata;
+
+  DRW_UnsupportedObject rawCellStyleMap;
+  rawCellStyleMap.m_objectType = 515;
+  rawCellStyleMap.m_handle = 0x460u;
+  rawCellStyleMap.m_isCustomClass = true;
+  rawCellStyleMap.m_recordName = "CELLSTYLEMAP";
+  rawCellStyleMap.m_className = "AcDbCellStyleMap";
+  rawCellStyleMap.m_rawBytes = {0x01u, 0x02u};
+  metadata.addUnsupportedObject(rawCellStyleMap);
+
+  DRW_CellStyleMap cellStyleMap;
+  cellStyleMap.handle = 0x460u;
+  DRW_TableStyleCellStyle style;
+  style.m_id = 11;
+  style.m_name = "MappedStyle";
+  style.m_contentFormat.m_textStyleHandle = 0x461u;
+  style.m_borders.resize(1);
+  style.m_borders[0].m_lineTypeHandle = 0x462u;
+  cellStyleMap.m_cellStyles.push_back(style);
+  metadata.addCellStyleMap(cellStyleMap);
+
+  const auto mapsByLineType = metadata.findCellStyleMapsReferencingHandle(0x462u);
+  REQUIRE(mapsByLineType.size() == 1u);
+  CHECK(mapsByLineType.front()->handle == 0x460u);
+
+  metadata.invalidateTableGraphForHandle(0x462u);
+
+  REQUIRE(metadata.cellStyleMaps().size() == 1u);
+  CHECK(metadata.cellStyleMaps().front().replayState ==
         LC_DwgAdvancedMetadata::ReplayState::ReplayInvalidated);
   REQUIRE(metadata.rawObjects().size() == 1u);
   CHECK(LC_DwgAdvancedMetadata::rawReplayBlocker(metadata.rawObjects().front()) ==

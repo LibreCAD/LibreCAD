@@ -4137,6 +4137,14 @@ void RS_FilterDXFRW::addTableContent(const DRW_TableContentObject &data) {
                   static_cast<int>(data.m_content.m_columns.size()));
 }
 
+void RS_FilterDXFRW::addCellStyleMap(const DRW_CellStyleMap &data) {
+  if (m_graphic != nullptr) {
+    m_graphic->dwgAdvancedMetadata().addCellStyleMap(data);
+  }
+  RS_DEBUG->print("RS_FilterDXFRW::addCellStyleMap: %d styles",
+                  static_cast<int>(data.m_cellStyles.size()));
+}
+
 void RS_FilterDXFRW::addUnsupportedObject(const DRW_UnsupportedObject &data) {
   if (m_graphic != nullptr) {
     m_graphic->dwgAdvancedMetadata().addUnsupportedObject(data);

@@ -168,6 +168,7 @@ public:
     void addTableGeometry(const DRW_TableGeometry &data) override;
     void addTableStyle(const DRW_TableStyle &data) override;
     void addTableContent(const DRW_TableContentObject &data) override;
+    void addCellStyleMap(const DRW_CellStyleMap &data) override;
     void addUnsupportedObject(const DRW_UnsupportedObject &data) override;
     void addAcDbPlaceholder(const DRW_AcDbPlaceholder &data) override;
     void addSun(const DRW_Sun &data) override;

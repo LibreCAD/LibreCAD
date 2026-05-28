@@ -872,6 +872,515 @@ Stop line:
   shaded display in this roadmap. Keep those as future renderer projects unless
   LibreCAD gains a 3D/rendering backend.
 
+## Forward Implementation Breakdown
+
+Use this section to pick the next implementation slice. Each item is intended
+to be small enough for one reviewable pass, while still moving one of the
+Forward A-E tracks toward native support.
+
+### Ready Detail A1a: CELLSTYLEMAP Linkage and Style Inheritance
+
+Purpose: finish the table style metadata layer before fallback rendering.
+
+Status: implementation started on 2026-05-28. CELLSTYLEMAP objects are now
+forwarded from `RS_FilterDXFRW` into `LC_DwgAdvancedMetadata`, stored as
+dedicated records, searchable by handle/style ID/referenced handle, and
+participate in table raw replay invalidation. Remaining work in this slice is
+effective style inheritance across table defaults, row/column styles, and cell
+override masks.
+
+Files:
+
+- `libraries/libdxfrw/src/drw_objects.h`
+- `libraries/libdxfrw/src/drw_objects.cpp`
+- `librecad/src/lib/engine/document/lc_dwgadvancedmetadata.h`
+- `librecad/src/lib/filters/tests/entity_metadata_tests.cpp`
+
+Implementation:
+
+1. Add `CellStyleMapRecord` metadata or extend `TableRecord` so CELLSTYLEMAP
+   styles are distinguishable from TABLESTYLE styles.
+2. Store style IDs, style class, style name, source handle, and parent
+   TABLESTYLE handle when available.
+3. Add lookup helpers:
+   - `findCellStyleMapByHandle(handle)`;
+   - `findCellStylesById(styleId)`;
+   - `findTableStylesReferencingCellStyle(styleHandleOrId)`.
+4. Preserve inheritance hints: table default style, row style, column style,
+   cell style ID, and override-mask presence. Do not compute final effective
+   style yet unless every layer is known.
+5. Include CELLSTYLEMAP text-style and border linetype handles in table style
+   reference lookup and invalidation.
+
+Tests:
+
+- Synthetic TABLESTYLE plus CELLSTYLEMAP import-order test.
+- Lookup by style ID/name and invalidation by referenced text style/linetype.
+- Table writer blocker count unchanged unless unsupported style inheritance is
+  intentionally added as a new blocker bucket.
+
+Stop before fallback geometry or native writing.
+
+### Ready Detail A1b: Table Unknown-Range and Override Metadata
+
+Purpose: make table parsing observable where semantics are still incomplete.
+
+Files:
+
+- `libraries/libdxfrw/src/drw_entities.h`
+- `libraries/libdxfrw/src/drw_entities.cpp`
+- `libraries/libdxfrw/src/drw_objects.h`
+- `libraries/libdxfrw/src/drw_objects.cpp`
+- `librecad/src/lib/engine/document/lc_dwgadvancedmetadata.h`
+- `librecad/src/lib/filters/tests/entity_metadata_tests.cpp`
+
+Implementation:
+
+1. Add lightweight `DwgSubrecordRange` structs for table/table-style skipped
+   regions: name, offset, bit size or byte size, version gate, count, and
+   parse-complete flag.
+2. Capture ranges around currently skipped content formats, cell styles,
+   border blocks, break data, override masks, and table geometry tails.
+3. Surface aggregate counts in metadata:
+   `unknownRangeCount`, `overrideMaskCount`, `breakRangeCount`,
+   `tableGeometryTailRangeCount`.
+4. Add export diagnostics for tables whose native writer is blocked by unknown
+   ranges even when the visible cell text is otherwise text-only.
+5. Keep range capture best-effort; a malformed range must not move the reader
+   cursor differently than the current parser.
+
+Tests:
+
+- Synthetic metadata tests for unknown range summaries.
+- Parser smoke for an existing table fixture if present; otherwise default
+  tests stay synthetic.
+- `[dwg-write]` if export blocker diagnostics are changed.
+
+Stop before interpreting the unknown bytes.
+
+### Ready Detail A2a: Table Fallback Attachment Contract
+
+Purpose: define how fallback grid/text entities stay tied to native table
+metadata after import.
+
+Files:
+
+- `librecad/src/lib/engine/document/lc_dwgadvancedmetadata.h`
+- `librecad/src/lib/filters/rs_filterdxfrw.cpp`
+- `librecad/src/lib/filters/rs_filterdxfrw.h`
+- `librecad/src/lib/filters/tests/entity_metadata_tests.cpp`
+
+Implementation:
+
+1. Add a `TableFallbackEntityRecord` with table handle, row, column, fallback
+   role (`GridLine`, `CellText`, `Placeholder`, `Boundary`), entity ID if
+   available, and source handle.
+2. Add metadata helpers:
+   - `addTableFallbackEntity(record)`;
+   - `findTableFallbackEntities(tableHandle)`;
+   - `findTableByFallbackEntityId(entityId)`;
+   - `invalidateTableForFallbackEntity(entityId)`.
+3. Make `addTableFallback()` register records for every generated fallback
+   entity, without changing the geometry yet.
+4. When a fallback entity is invalidated, invalidate the semantic table and
+   matching raw TABLE/TABLECONTENT payload.
+5. Add export blocker counts for edited fallback entities and missing fallback
+   attachment records.
+
+Tests:
+
+- Synthetic metadata tests for fallback lookup and invalidation.
+- Import-side test can use synthetic `DRW_Table` data if no external fixture is
+  available.
+
+Stop before changing table visual output.
+
+### Ready Detail A2b: Table Fallback Grid/Text Rendering
+
+Purpose: make semantic tables visible through conservative 2D entities.
+
+Files:
+
+- `librecad/src/lib/filters/rs_filterdxfrw.cpp`
+- `librecad/src/lib/filters/tests/entity_metadata_tests.cpp`
+- Optional focused DWG import test if a table fixture is present.
+
+Implementation:
+
+1. Generate grid line entities from origin, table direction, row heights, and
+   column widths.
+2. Generate text entities for cells with plain text content only.
+3. Generate placeholder text for FIELD, block, formula, unknown content, and
+   incomplete parse cells. Placeholder text must be visually modest and backed
+   by metadata; do not claim semantic conversion.
+4. Apply available text height/alignment/style metadata only when resolved.
+   Otherwise use the drawing default and record an unresolved-style diagnostic.
+5. Attach every generated entity through Ready Detail A2a.
+
+Tests:
+
+- Fallback entity count and role tests for a synthetic two-row table.
+- Text placement/alignment smoke that checks metadata role and cell coordinate,
+  not pixel-perfect rendering.
+- Export diagnostic test that edited fallback blocks native table writing.
+
+Stop before adding table editing UI.
+
+### Ready Detail A3a: Native Table Writer Blocker Matrix
+
+Purpose: make the native TABLE writer contract executable before emitting
+bytes.
+
+Files:
+
+- `librecad/src/lib/engine/document/lc_dwgadvancedmetadata.h`
+- `librecad/src/lib/filters/rs_filterdxfrw.cpp`
+- `librecad/src/lib/filters/tests/entity_metadata_tests.cpp`
+
+Implementation:
+
+1. Extend `TableWriterBlockerCounts` with text-only writer gates:
+   unresolved CELLSTYLEMAP, unknown subrecord ranges, unsupported style
+   inheritance, unsupported break data, edited fallback, unresolved text style,
+   non-rectangular/merged cells, and missing owner/dictionary handles.
+2. Add a `tableNativeWriterEligible(handle)` helper returning a diagnostic enum
+   list, not just a boolean.
+3. Log blocker summaries from `writeObjects()` with one concise line.
+4. Add tests for every blocker bucket.
+
+Stop before native TABLE/TABLECONTENT byte writing.
+
+### Ready Detail A3b: Text-Only TABLE/TABLECONTENT Writer Scaffold
+
+Purpose: add the narrow writer only after A3a proves eligibility.
+
+Files:
+
+- `libraries/libdxfrw/src/drw_entities.*`
+- `libraries/libdxfrw/src/drw_objects.*`
+- `libraries/libdxfrw/src/intern/dwgwriter*.{h,cpp}`
+- `libraries/libdxfrw/src/libdwgr.*`
+- `librecad/src/lib/filters/rs_filterdxfrw.cpp`
+- `librecad/src/lib/filters/tests/dwg_write_smoke_tests.cpp`
+
+Implementation:
+
+1. Add writer APIs for metadata-complete text-only table records.
+2. Register `AcDbTable`, `AcDbTableContent`, and supporting classes through
+   the existing class registry. Verify instance counts with raw replay.
+3. Emit only AC1021+ payloads with complete owner/dictionary handles and
+   resolved TABLESTYLE.
+4. Re-read the generated DWG locally and assert table callback/metadata counts.
+5. Keep unsupported cells diagnostic-only.
+
+Stop if ODA/ACadSharp/libreDWG disagree on any required field order without a
+fixture resolving it.
+
+### Ready Detail B1a: ACIS Container Block Scanner
+
+Purpose: expose modeler sub-block byte ranges without interpreting geometry.
+
+Files:
+
+- `libraries/libdxfrw/src/drw_entities.h`
+- `libraries/libdxfrw/src/drw_entities.cpp`
+- `librecad/src/lib/engine/document/lc_dwgadvancedmetadata.h`
+- `librecad/src/lib/filters/tests/entity_metadata_tests.cpp`
+
+Implementation:
+
+1. Add `ModelerPayloadRange` records: kind (`Sat`, `Sab`, `History`, `Wire`,
+   `Silhouette`, `UnknownTail`), offset, length, declared size, and
+   consistency flag.
+2. For SAB, locate `ACIS BinaryFile` and known end marker bytes only as range
+   hints. Do not parse SAB entities.
+3. For SAT, locate plain text ACIS header/history markers and known end text
+   only as range hints.
+4. For fixed-size fields already read by `DRW_ModelerGeometry`, record the
+   expected body start and handle-stream split.
+5. Add aggregate payload range counts and inconsistent-size diagnostics.
+
+Tests:
+
+- Synthetic SAT/SAB/history/unknown buffers.
+- Inconsistent declared-size test must not crash or allocate unbounded memory.
+
+Stop before ACIS topology parsing.
+
+### Ready Detail B1b: Wire/Silhouette Summary Parser
+
+Purpose: decode only stable count/coordinate summaries for fallback previews.
+
+Files:
+
+- `libraries/libdxfrw/src/drw_entities.*`
+- `librecad/src/lib/engine/document/lc_dwgadvancedmetadata.h`
+- `librecad/src/lib/filters/tests/entity_metadata_tests.cpp`
+
+Implementation:
+
+1. Mirror ACadSharp `readWire` and libreDWG modeler wire layouts for count
+   fields and point arrays only.
+2. Add bounded max counts for wires, edges, silhouettes, and points.
+3. Store summaries as preview records: point count, edge count, bounding box,
+   and source byte range.
+4. Treat parser mismatch as "range known, preview unavailable" rather than
+   object failure.
+
+Stop before generating preview entities.
+
+### Ready Detail B2a: Modeler Fallback Preview Attachment
+
+Purpose: apply the same edit-safety policy as table fallback geometry.
+
+Files:
+
+- `librecad/src/lib/engine/document/lc_dwgadvancedmetadata.h`
+- `librecad/src/lib/filters/rs_filterdxfrw.cpp`
+- `librecad/src/lib/filters/tests/entity_metadata_tests.cpp`
+
+Implementation:
+
+1. Add modeler fallback preview records with source modeler handle, preview
+   entity ID, preview role, and source range index.
+2. Invalidate modeler raw replay when a preview entity is edited.
+3. Export edited previews as ordinary 2D geometry with a diagnostic that ACIS
+   regeneration is unavailable.
+
+Stop before native modeler writing.
+
+### Ready Detail C1a: Associative Edge Metadata
+
+Purpose: make associative shells queryable as a graph.
+
+Files:
+
+- `libraries/libdxfrw/src/drw_objects.h`
+- `libraries/libdxfrw/src/drw_objects.cpp`
+- `librecad/src/lib/engine/document/lc_dwgadvancedmetadata.h`
+- `librecad/src/lib/filters/tests/entity_metadata_tests.cpp`
+
+Implementation:
+
+1. Add `AssociativeEdgeRecord`: source handle, source kind, edge kind, target
+   handle, raw range index, and confidence (`ExplicitHandle`, `Inferred`,
+   `Unknown`).
+2. Populate edges from existing dependency refs, action refs, owned params,
+   owned actions, read/write dependency handles, r/d-node handles, action body
+   handles, and ACSH owner/history links.
+3. Add lookup helpers:
+   - `findAssociativeEdgesFrom(handle)`;
+   - `findAssociativeEdgesTo(handle)`;
+   - `findAssociativeRecordsAffectedBy(handle)`.
+4. Ensure graph invalidation walks edges in the target direction but does not
+   loop forever on cycles.
+
+Tests:
+
+- Synthetic network/action/dependency graph with a cycle.
+- Invalidation suppresses matching raw replay for all affected records.
+
+Stop before evaluating graph semantics.
+
+### Ready Detail C1b: Common Prefix Decode Audit
+
+Purpose: make parser state observable for every known ACDBASSOC/ACSH prefix.
+
+Files:
+
+- `libraries/libdxfrw/src/drw_objects.*`
+- `librecad/src/lib/engine/document/lc_dwgadvancedmetadata.h`
+- `librecad/src/lib/filters/tests/entity_metadata_tests.cpp`
+
+Implementation:
+
+1. Add prefix status fields for `AcDbAssocAction`,
+   `AcDbAssocActionParam`, `AcDbAssocDependency`,
+   `AcDbAssocGeomDependency`, `AcDbAssocNetwork`, `AcDbEvalExpr`, and
+   `AcDbShHistoryNode`.
+2. Store prefix byte/bit ranges and parse status.
+3. Add diagnostics for missing prefix, partial prefix, unsupported class
+   version, and bounded-count overflow.
+
+Stop before adding new action-body semantics.
+
+### Ready Detail C2a: Associative Invalidation Policy Matrix
+
+Purpose: make export behavior predictable after edits.
+
+Files:
+
+- `librecad/src/lib/engine/document/lc_dwgadvancedmetadata.h`
+- `librecad/src/lib/filters/rs_filterdxfrw.cpp`
+- `librecad/src/lib/filters/tests/entity_metadata_tests.cpp`
+
+Implementation:
+
+1. Add per-family stale counts: DIMASSOC, EVAL_GRAPH, ACDBASSOC,
+   dynamic-block, object-context, ACSH.
+2. Add invalidation reasons: edited entity, missing target, unsupported
+   evaluator, parser partial, fallback geometry edited, and native replacement.
+3. Log one object-write diagnostic line summarizing stale/preserved graph
+   records.
+4. Add tests for stale raw suppression by reason.
+
+Stop before graph writers.
+
+### Ready Detail D1a: Advanced Entity Writer Readiness Ledger
+
+Purpose: prevent premature writers by recording each entity family's missing
+fields as data.
+
+Files:
+
+- `librecad/src/lib/engine/document/lc_dwgadvancedmetadata.h`
+- `librecad/src/lib/filters/rs_filterdxfrw.cpp`
+- `librecad/src/lib/filters/tests/entity_metadata_tests.cpp`
+
+Implementation:
+
+1. Add `AdvancedEntityWriterBlockerCounts` with buckets for MESH/SubDMesh,
+   SHAPE, OLE2FRAME, raster/image, wipeout, underlay, and unknown required
+   owner/class data.
+2. Count current sidecar/native entity availability before adding writers.
+3. Log the ledger from DWG export.
+4. Add tests proving blocker counts for synthetic metadata records.
+
+Stop before entity byte writers.
+
+### Ready Detail D2a: MESH/SubDMesh Metadata Completeness
+
+Purpose: prepare mesh writing and preview without committing to a writer.
+
+Files:
+
+- `libraries/libdxfrw/src/drw_entities.*`
+- `librecad/src/lib/engine/document/lc_dwgadvancedmetadata.h`
+- `librecad/src/lib/filters/rs_filterdxfrw.cpp`
+- `librecad/src/lib/filters/tests/entity_metadata_tests.cpp`
+
+Implementation:
+
+1. Preserve subdivision level, crease count, edge count, face count, vertex
+   count, and version flags.
+2. Add mesh sidecar lookup by source handle.
+3. Add writer blockers for missing crease data, unsupported subdivision data,
+   and fallback-only mesh previews.
+
+Stop before native SubDMesh writing.
+
+### Ready Detail D3a: Raster, Wipeout, Image, and Underlay Link Graph
+
+Purpose: make external-reference entities export-safe.
+
+Files:
+
+- `libraries/libdxfrw/src/drw_entities.*`
+- `libraries/libdxfrw/src/drw_objects.*`
+- `librecad/src/lib/engine/document/lc_dwgadvancedmetadata.h`
+- `librecad/src/lib/filters/rs_filterdxfrw.cpp`
+- `librecad/src/lib/filters/tests/entity_metadata_tests.cpp`
+
+Implementation:
+
+1. Store definition/reactor/reference handles for IMAGE, WIPEOUT, PDF/DGN/DWF
+   underlays, ImageDefinition, ImageDefinitionReactor, RasterVariables, and
+   UnderlayDefinition.
+2. Add lookup helpers from entity to definition and definition to entities.
+3. Add file-path diagnostics: empty path, relative path, missing local file,
+   and intentionally external.
+4. Add clipping diagnostics for no-boundary, rectangular, polygonal, and
+   malformed clipping.
+
+Stop before copying files or writing native underlay/image records.
+
+### Ready Detail D4a: SHAPE and OLE2FRAME Metadata Shells
+
+Purpose: classify two remaining advanced entity families before writer work.
+
+Files:
+
+- `libraries/libdxfrw/src/drw_entities.*`
+- `libraries/libdxfrw/src/intern/dwgreader.cpp`
+- `librecad/src/lib/engine/document/lc_dwgadvancedmetadata.h`
+- `librecad/src/lib/filters/tests/entity_metadata_tests.cpp`
+
+Implementation:
+
+1. Add SHAPE shell fields: name/index, style handle, insertion point, scale,
+   rotation, oblique, width factor, extrusion, and raw range status.
+2. Add OLE2FRAME shell fields: placement, extents, payload byte range, raw
+   replay state, and preview frame status.
+3. Add writer blockers for missing style handle, missing OLE payload, and
+   edited preview frame.
+
+Stop before OLE payload regeneration.
+
+### Ready Detail E1a: VIEW/UCS Document Mapping Adapter
+
+Purpose: connect metadata to existing LibreCAD view/UCS lists in a reversible
+way.
+
+Files:
+
+- `librecad/src/lib/filters/rs_filterdxfrw.cpp`
+- `librecad/src/lib/engine/document/lc_dwgadvancedmetadata.h`
+- `librecad/src/lib/gui/` or existing UCS/view list classes only if needed
+- `librecad/src/lib/filters/tests/entity_metadata_tests.cpp`
+
+Implementation:
+
+1. Add metadata-side document mapping records for named VIEW and UCS:
+   source handle, created list item ID/name, unresolved references, and
+   replay state.
+2. Populate mappings during import without changing existing UI behavior.
+3. Add lookup helpers from list name/ID back to DWG handle.
+4. Invalidate VIEW/UCS raw replay if a mapped list item is edited and the
+   writer cannot regenerate the original references.
+
+Stop before UI panel changes.
+
+### Ready Detail E2a: Read-Only Visual/Light Summary Model
+
+Purpose: expose visual metadata safely to future UI without rendering it.
+
+Files:
+
+- `librecad/src/lib/engine/document/lc_dwgadvancedmetadata.h`
+- `librecad/src/lib/filters/tests/entity_metadata_tests.cpp`
+
+Implementation:
+
+1. Add summary helpers for views, visual styles, lights, and suns:
+   display name, handle, owner/layout, type, intensity/color, date/time,
+   referenced sun, referenced visual style, and stale status.
+2. Add aggregate counts by owner/layout and stale/replay state.
+3. Ensure summaries do not require Qt UI classes so they remain testable in
+   metadata tests.
+
+Stop before rendering, material, or lighting UI work.
+
+### Ready Detail E4a: Visual Metadata Export Diagnostics
+
+Purpose: make VIEW/UCS/LIGHT/SUN/VISUALSTYLE export policy explicit.
+
+Files:
+
+- `librecad/src/lib/engine/document/lc_dwgadvancedmetadata.h`
+- `librecad/src/lib/filters/rs_filterdxfrw.cpp`
+- `librecad/src/lib/filters/tests/entity_metadata_tests.cpp`
+- `librecad/src/lib/filters/tests/dwg_write_smoke_tests.cpp`
+
+Implementation:
+
+1. Add blocker counts for unresolved UCS, visual style, sun, owner/layout,
+   background, live section, and invalidated raw visual payload.
+2. Log blocker summaries during DWG object writing.
+3. Add smoke tests that unchanged VIEW/LIGHT/SUN remain writable and stale
+   references are diagnosed.
+
+Stop before VISUALSTYLE native writing unless every required field is present.
+
 ## Step-by-Step Implementation Queue
 
 This queue is optimized for small, buildable changes. Each slice should be a
@@ -1064,6 +1573,9 @@ Completed:
   native writer blocker diagnostics.
 - TABLESTYLE text-style and border linetype handles are included in style
   reference lookups and replay invalidation.
+- TABLESTYLE flow/flag/margin values, named cell style IDs/names, text
+  heights, alignments, colors, visible-border counts, content-format counts,
+  and margin-style counts are preserved in metadata.
 - Table graph invalidation marks dependent TABLE/TABLECONTENT records stale
   when a referenced handle changes.
 - Table graph invalidation also marks matching preserved raw table payloads
@@ -1073,9 +1585,10 @@ Remaining:
 
 1. Expand preserved cell content kinds beyond current text, FIELD, block, and
    value/handle summaries when more native table payloads are decoded.
-2. Preserve R2007+ and R2010+ table style detail values beyond handle graphs:
-   named cell styles, margins, alignment, text height, colors, and CELLSTYLEMAP
-   entries.
+2. Preserve remaining R2007+ and R2010+ table style detail values beyond the
+   current metadata: row/column style inheritance, border lineweight and
+   double-line details, break metadata, override masks, unknown byte ranges,
+   and complete CELLSTYLEMAP linkage.
 3. Add fallback rendering only after the fallback-entity attachment policy is
    defined; keep native table writing blocked until Slice 6 has a concrete
    text-only subset.
