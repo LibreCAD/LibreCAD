@@ -53,6 +53,20 @@ public:
         OsnapPointRefActionParam
     };
 
+    enum class ModelerPayloadKind {
+        Unknown,
+        Sat,
+        Sab
+    };
+
+    enum class RawObjectFamily {
+        Unknown,
+        Associative,
+        EvaluationGraph,
+        DynamicBlock,
+        ObjectContext
+    };
+
     struct RawObjectRecord {
         int objectType = 0;
         duint32 handle = 0;
@@ -62,10 +76,23 @@ public:
         duint32 objectSize = 0;
         bool isEntity = false;
         bool isCustomClass = false;
+        RawObjectFamily family = RawObjectFamily::Unknown;
         std::string recordName;
         std::string className;
         std::vector<duint8> rawBytes;
         ReplayState replayState = ReplayState::ReplayAllowed;
+    };
+
+    struct RawObjectFamilyCounts {
+        size_t unknown = 0;
+        size_t associative = 0;
+        size_t evaluationGraph = 0;
+        size_t dynamicBlock = 0;
+        size_t objectContext = 0;
+
+        size_t total() const {
+            return unknown + associative + evaluationGraph + dynamicBlock + objectContext;
+        }
     };
 
     struct ViewRecord {
@@ -174,6 +201,7 @@ public:
         bool modelerDataUnknownBit = false;
         bool hasWireframe = false;
         bool hasRawPayload = false;
+        ModelerPayloadKind payloadKind = ModelerPayloadKind::Unknown;
         duint32 historyHandle = 0;
         size_t rawByteCount = 0;
         std::vector<duint8> rawBytes;
@@ -185,6 +213,30 @@ public:
         int leftColumn = 0;
         int bottomRow = 0;
         int rightColumn = 0;
+    };
+
+    struct TableCellRecord {
+        int row = 0;
+        int column = 0;
+        int flags = 0;
+        int type = 0;
+        int styleId = 0;
+        duint32 overrideFlags = 0;
+        duint32 valueHandle = 0;
+        duint32 textStyleHandle = 0;
+        duint32 textStyleOverrideHandle = 0;
+        duint32 blockHandle = 0;
+        duint32 geometryHandle = 0;
+        bool isMerged = false;
+        bool autoFit = false;
+        size_t contentCount = 0;
+        size_t textContentCount = 0;
+        size_t fieldContentCount = 0;
+        size_t blockContentCount = 0;
+        size_t attributeCount = 0;
+        std::vector<std::string> texts;
+        std::vector<std::string> attributeTexts;
+        std::vector<duint32> contentHandles;
     };
 
     struct TableRecord {
@@ -227,6 +279,7 @@ public:
         std::vector<duint32> fieldHandles;
         std::vector<duint32> geometryHandles;
         std::vector<TableMergedRangeRecord> mergedRanges;
+        std::vector<TableCellRecord> cells;
         ReplayState replayState = ReplayState::ReplayAllowed;
     };
 
@@ -530,6 +583,7 @@ public:
         record.isCustomClass = object.m_isCustomClass;
         record.recordName = object.m_recordName;
         record.className = object.m_className;
+        record.family = rawObjectFamilyFromNames(record.recordName, record.className);
         record.rawBytes = object.m_rawBytes;
         m_rawObjects.push_back(std::move(record));
     }
@@ -651,6 +705,7 @@ public:
         record.modelerDataUnknownBit = geometry.m_modelerDataUnknownBit;
         record.hasWireframe = geometry.m_hasWireframe;
         record.hasRawPayload = !geometry.m_rawBytes.empty();
+        record.payloadKind = classifyModelerPayload(geometry.m_rawBytes);
         record.historyHandle = geometry.m_historyHandle;
         record.rawByteCount = geometry.m_rawBytes.size();
         record.rawBytes = geometry.m_rawBytes;
@@ -674,6 +729,8 @@ public:
         record.semanticParsed = true;
         record.styleResolved = true;
         m_tables.push_back(record);
+        for (TableRecord& table : m_tables)
+            resolveTableStyle(table, record);
     }
 
     void addTable(const DRW_Table& table, bool fallbackRendered) {
@@ -688,6 +745,7 @@ public:
                                       : table.m_content.m_tableStyleHandle;
         populateTableContentSummary(record, table.m_content);
         record.semanticParsed = table.m_hasSemanticContent && table.m_semanticContentComplete;
+        resolveTableStyle(record);
         record.fallbackRendered = fallbackRendered;
         record.replayState = fallbackRendered ? ReplayState::ReplayReplaced
                                               : ReplayState::ReplayAllowed;
@@ -704,6 +762,7 @@ public:
         record.tableStyleHandle = table.m_content.m_tableStyleHandle;
         populateTableContentSummary(record, table.m_content);
         record.semanticParsed = table.m_parseComplete;
+        resolveTableStyle(record);
         record.fallbackRendered = false;
         m_tables.push_back(record);
     }
@@ -1030,6 +1089,164 @@ public:
     const std::vector<TableGeometryRecord>& tableGeometry() const { return m_tableGeometry; }
     const std::vector<PlaceholderRecord>& placeholders() const { return m_placeholders; }
 
+    RawObjectFamilyCounts rawObjectFamilyCounts() const {
+        RawObjectFamilyCounts counts;
+        for (const RawObjectRecord& record : m_rawObjects)
+            incrementRawObjectFamilyCount(counts, record.family);
+        return counts;
+    }
+
+    std::vector<const RawObjectRecord*> findRawObjectsByFamily(RawObjectFamily family) const {
+        std::vector<const RawObjectRecord*> result;
+        for (const RawObjectRecord& record : m_rawObjects) {
+            if (record.family == family)
+                result.push_back(&record);
+        }
+        return result;
+    }
+
+    const TableRecord* findTableByHandle(duint32 handle) const {
+        if (handle == 0)
+            return nullptr;
+        for (const TableRecord& record : m_tables) {
+            if (record.handle == handle)
+                return &record;
+        }
+        return nullptr;
+    }
+    const TableRecord* findTableStyleByHandle(duint32 handle) const {
+        if (handle == 0)
+            return nullptr;
+        for (const TableRecord& record : m_tables) {
+            if (isTableStyleRecord(record) && record.handle == handle)
+                return &record;
+        }
+        return nullptr;
+    }
+    std::vector<const TableRecord*> findTablesUsingStyle(duint32 styleHandle) const {
+        std::vector<const TableRecord*> result;
+        if (styleHandle == 0)
+            return result;
+        for (const TableRecord& record : m_tables) {
+            if (!isTableStyleRecord(record) && record.tableStyleHandle == styleHandle)
+                result.push_back(&record);
+        }
+        return result;
+    }
+
+    const ModelerGeometryRecord* findModelerGeometryByHandle(duint32 handle) const {
+        if (handle == 0)
+            return nullptr;
+        for (const ModelerGeometryRecord& record : m_modelerGeometry) {
+            if (record.handle == handle)
+                return &record;
+        }
+        return nullptr;
+    }
+    std::vector<const ModelerGeometryRecord*> findModelerGeometryByHistoryHandle(
+        duint32 historyHandle) const {
+        std::vector<const ModelerGeometryRecord*> result;
+        if (historyHandle == 0)
+            return result;
+        for (const ModelerGeometryRecord& record : m_modelerGeometry) {
+            if (record.historyHandle == historyHandle)
+                result.push_back(&record);
+        }
+        return result;
+    }
+
+    const AssociativeRecord* findAssociativeObjectByHandle(duint32 handle) const {
+        if (handle == 0)
+            return nullptr;
+        for (const AssociativeRecord& record : m_associativeObjects) {
+            if (record.handle == handle)
+                return &record;
+        }
+        return nullptr;
+    }
+    std::vector<const AssociativeRecord*> findAssociativeObjectsByKind(
+        AssociativeKind kind) const {
+        std::vector<const AssociativeRecord*> result;
+        for (const AssociativeRecord& record : m_associativeObjects) {
+            if (record.kind == kind)
+                result.push_back(&record);
+        }
+        return result;
+    }
+    std::vector<const AssociativeRecord*> findAssociativeObjectsReferencingHandle(
+        duint32 handle) const {
+        std::vector<const AssociativeRecord*> result;
+        if (handle == 0)
+            return result;
+        for (const AssociativeRecord& record : m_associativeObjects) {
+            if (associativeRecordReferences(record, handle))
+                result.push_back(&record);
+        }
+        return result;
+    }
+
+    const AcShRecord* findAcShObjectByHandle(duint32 handle) const {
+        if (handle == 0)
+            return nullptr;
+        for (const AcShRecord& record : m_acshObjects) {
+            if (record.handle == handle)
+                return &record;
+        }
+        return nullptr;
+    }
+    std::vector<const AcShRecord*> findAcShObjectsByOwnerHandle(duint32 ownerHandle) const {
+        std::vector<const AcShRecord*> result;
+        if (ownerHandle == 0)
+            return result;
+        for (const AcShRecord& record : m_acshObjects) {
+            if (record.ownerHandle == ownerHandle)
+                result.push_back(&record);
+        }
+        return result;
+    }
+
+    static const char* modelerPayloadKindName(ModelerPayloadKind kind) {
+        switch (kind) {
+            case ModelerPayloadKind::Sat:
+                return "SAT";
+            case ModelerPayloadKind::Sab:
+                return "SAB";
+            case ModelerPayloadKind::Unknown:
+            default:
+                return "unknown";
+        }
+    }
+
+    static bool containsBytes(const std::vector<duint8>& bytes, const char* marker) {
+        if (marker == nullptr || marker[0] == '\0')
+            return false;
+        size_t markerSize = 0;
+        while (marker[markerSize] != '\0')
+            ++markerSize;
+        if (bytes.size() < markerSize)
+            return false;
+        for (size_t offset = 0; offset + markerSize <= bytes.size(); ++offset) {
+            bool matched = true;
+            for (size_t index = 0; index < markerSize; ++index) {
+                if (bytes[offset + index] != static_cast<duint8>(marker[index])) {
+                    matched = false;
+                    break;
+                }
+            }
+            if (matched)
+                return true;
+        }
+        return false;
+    }
+
+    static ModelerPayloadKind classifyModelerPayload(const std::vector<duint8>& bytes) {
+        if (containsBytes(bytes, "ACIS BinaryFile"))
+            return ModelerPayloadKind::Sab;
+        if (containsBytes(bytes, "ACIS") || containsBytes(bytes, "Begin-of-ACIS-History"))
+            return ModelerPayloadKind::Sat;
+        return ModelerPayloadKind::Unknown;
+    }
+
     const ViewRecord* findViewByName(const std::string& name) const {
         for (const ViewRecord& record : m_views) {
             if (record.name == name)
@@ -1095,6 +1312,51 @@ public:
         return ReplayBlocker::None;
     }
 
+    static RawObjectFamily rawObjectFamilyFromNames(
+        const std::string& recordName, const std::string& className) {
+        if (associativeKindFromRecordName(recordName) != AssociativeKind::Unknown
+            || containsSubstring(className, "Assoc")
+            || containsSubstring(className, "PersSubent")) {
+            return RawObjectFamily::Associative;
+        }
+        if (recordName == "ACAD_EVALUATION_GRAPH"
+            || containsSubstring(className, "EvalGraph")
+            || containsSubstring(className, "EvalExpr")) {
+            return RawObjectFamily::EvaluationGraph;
+        }
+        if (containsSubstring(recordName, "OBJECTCONTEXTDATA")
+            || containsSubstring(className, "ObjectContextData")) {
+            return RawObjectFamily::ObjectContext;
+        }
+        const bool isBlockRecord = containsSubstring(recordName, "BLOCK")
+                                   || containsSubstring(className, "Block");
+        const bool isDynamicBlockPart = containsSubstring(recordName, "PARAMETER")
+                                        || containsSubstring(recordName, "ACTION")
+                                        || containsSubstring(recordName, "GRIP")
+                                        || containsSubstring(className, "Parameter")
+                                        || containsSubstring(className, "Action")
+                                        || containsSubstring(className, "Grip");
+        if (isBlockRecord && isDynamicBlockPart)
+            return RawObjectFamily::DynamicBlock;
+        return RawObjectFamily::Unknown;
+    }
+
+    static const char* rawObjectFamilyName(RawObjectFamily family) {
+        switch (family) {
+            case RawObjectFamily::Associative:
+                return "associative";
+            case RawObjectFamily::EvaluationGraph:
+                return "evaluation graph";
+            case RawObjectFamily::DynamicBlock:
+                return "dynamic block";
+            case RawObjectFamily::ObjectContext:
+                return "object context";
+            case RawObjectFamily::Unknown:
+            default:
+                return "unknown";
+        }
+    }
+
     static AssociativeKind associativeKindFromRecordName(const std::string& recordName) {
         if (recordName == "ACDBASSOCNETWORK")
             return AssociativeKind::Network;
@@ -1117,6 +1379,30 @@ public:
         return AssociativeKind::Unknown;
     }
 
+    static const char* associativeKindName(AssociativeKind kind) {
+        switch (kind) {
+            case AssociativeKind::Network:
+                return "ACDBASSOCNETWORK";
+            case AssociativeKind::Action:
+                return "ACDBASSOCACTION";
+            case AssociativeKind::Dependency:
+                return "ACDBASSOCDEPENDENCY";
+            case AssociativeKind::GeometryDependency:
+                return "ACDBASSOCGEOMDEPENDENCY";
+            case AssociativeKind::PersistentSubentityManager:
+                return "ACDBASSOCPERSSUBENTMANAGER";
+            case AssociativeKind::AlignedDimensionActionBody:
+                return "ACDBASSOCALIGNEDDIMACTIONBODY";
+            case AssociativeKind::VertexActionParam:
+                return "ACDBASSOCVERTEXACTIONPARAM";
+            case AssociativeKind::OsnapPointRefActionParam:
+                return "ACDBASSOCOSNAPPOINTREFACTIONPARAM";
+            case AssociativeKind::Unknown:
+            default:
+                return "unknown";
+        }
+    }
+
     static const char* replayBlockerName(ReplayBlocker blocker) {
         switch (blocker) {
             case ReplayBlocker::None:
@@ -1137,6 +1423,23 @@ public:
                 return "semantic-only metadata";
         }
         return "unknown";
+    }
+
+    static size_t rawObjectFamilyCount(
+        const RawObjectFamilyCounts& counts, RawObjectFamily family) {
+        switch (family) {
+            case RawObjectFamily::Associative:
+                return counts.associative;
+            case RawObjectFamily::EvaluationGraph:
+                return counts.evaluationGraph;
+            case RawObjectFamily::DynamicBlock:
+                return counts.dynamicBlock;
+            case RawObjectFamily::ObjectContext:
+                return counts.objectContext;
+            case RawObjectFamily::Unknown:
+            default:
+                return counts.unknown;
+        }
     }
 
     bool hasBlockedRawReplay() const {
@@ -1242,8 +1545,26 @@ private:
         record.rowHeights.reserve(content.m_rows.size());
         for (const DRW_TableRow& row : content.m_rows) {
             record.rowHeights.push_back(row.m_height);
+            const int rowIndex = static_cast<int>(record.rowHeights.size() - 1u);
             record.cellCount += row.m_cells.size();
+            int columnIndex = 0;
             for (const DRW_TableCell& cell : row.m_cells) {
+                TableCellRecord cellRecord;
+                cellRecord.row = rowIndex;
+                cellRecord.column = columnIndex;
+                cellRecord.flags = cell.m_flags;
+                cellRecord.type = cell.m_type;
+                cellRecord.styleId = cell.m_styleId;
+                cellRecord.overrideFlags = cell.m_overrideFlags;
+                cellRecord.valueHandle = cell.m_valueHandle;
+                cellRecord.textStyleHandle = cell.m_textStyleHandle;
+                cellRecord.textStyleOverrideHandle = cell.m_textStyleOverrideHandle;
+                cellRecord.blockHandle = cell.m_blockHandle;
+                cellRecord.geometryHandle = cell.m_geometryHandle;
+                cellRecord.isMerged = cell.m_isMerged;
+                cellRecord.autoFit = cell.m_autoFit;
+                cellRecord.contentCount = cell.m_contents.size();
+                cellRecord.attributeCount = cell.m_attributes.size();
                 record.contentCount += cell.m_contents.size();
                 record.attributeCount += cell.m_attributes.size();
                 if (cell.m_styleId != 0)
@@ -1266,31 +1587,67 @@ private:
                         record.geometryHandles.push_back(cell.m_geometryHandle);
                 }
                 for (const DRW_TableCellAttribute& attribute : cell.m_attributes) {
-                    if (!attribute.m_text.empty())
+                    if (!attribute.m_text.empty()) {
                         record.attributeTexts.push_back(attribute.m_text);
+                        cellRecord.attributeTexts.push_back(attribute.m_text);
+                    }
                 }
                 for (const DRW_TableCellContent& cellContent : cell.m_contents) {
                     if (!cellContent.m_text.empty()) {
                         ++record.textContentCount;
+                        ++cellRecord.textContentCount;
                         record.hasTextContent = true;
                         record.cellTexts.push_back(cellContent.m_text);
+                        cellRecord.texts.push_back(cellContent.m_text);
                     }
                     if (cellContent.m_type == 2) {
                         ++record.fieldContentCount;
-                        if (cellContent.m_handle != 0)
+                        ++cellRecord.fieldContentCount;
+                        if (cellContent.m_handle != 0) {
                             record.fieldHandles.push_back(cellContent.m_handle);
+                            cellRecord.contentHandles.push_back(cellContent.m_handle);
+                        }
                     }
                     if (cellContent.m_type == 4) {
                         ++record.blockContentCount;
+                        ++cellRecord.blockContentCount;
                         record.hasBlockContent = true;
-                        if (cellContent.m_handle != 0)
+                        if (cellContent.m_handle != 0) {
                             record.blockHandles.push_back(cellContent.m_handle);
+                            cellRecord.contentHandles.push_back(cellContent.m_handle);
+                        }
                     }
                 }
+                record.cells.push_back(std::move(cellRecord));
+                ++columnIndex;
             }
         }
         record.fieldHandleCount = record.fieldHandles.size();
         record.blockHandleCount = record.blockHandles.size();
+    }
+
+    static bool isTableStyleRecord(const TableRecord& record) {
+        return record.tableStyleHandle == 0
+               && record.recordName != "ACAD_TABLE"
+               && record.recordName != "TABLECONTENT"
+               && record.semanticParsed
+               && record.styleResolved;
+    }
+
+    void resolveTableStyle(TableRecord& record) const {
+        for (const TableRecord& style : m_tables) {
+            if (resolveTableStyle(record, style))
+                return;
+        }
+    }
+
+    static bool resolveTableStyle(TableRecord& record, const TableRecord& style) {
+        if (record.tableStyleHandle == 0 || record.handle == style.handle
+            || !isTableStyleRecord(style) || record.tableStyleHandle != style.handle) {
+            return false;
+        }
+        record.styleResolved = true;
+        return true;
     }
 
     template<typename Container>
@@ -1343,10 +1700,10 @@ private:
     }
 
     static bool isAssociativeRawObject(const RawObjectRecord& record) {
-        if (associativeKindFromRecordName(record.recordName) != AssociativeKind::Unknown)
-            return true;
-        return record.className.find("Assoc") != std::string::npos
-               || record.className.find("PersSubent") != std::string::npos;
+        return record.family == RawObjectFamily::Associative
+               || associativeKindFromRecordName(record.recordName) != AssociativeKind::Unknown
+               || containsSubstring(record.className, "Assoc")
+               || containsSubstring(record.className, "PersSubent");
     }
 
     void invalidateRawAssociativeObject(duint32 handle) {
@@ -1385,6 +1742,33 @@ private:
         if (record.effectiveBlockHandle == 0)
             record.effectiveBlockHandle = style.blockHandle;
         return true;
+    }
+
+    static bool containsSubstring(const std::string& value, const char* needle) {
+        return needle != nullptr && needle[0] != '\0'
+               && value.find(needle) != std::string::npos;
+    }
+
+    static void incrementRawObjectFamilyCount(
+        RawObjectFamilyCounts& counts, RawObjectFamily family) {
+        switch (family) {
+            case RawObjectFamily::Associative:
+                ++counts.associative;
+                return;
+            case RawObjectFamily::EvaluationGraph:
+                ++counts.evaluationGraph;
+                return;
+            case RawObjectFamily::DynamicBlock:
+                ++counts.dynamicBlock;
+                return;
+            case RawObjectFamily::ObjectContext:
+                ++counts.objectContext;
+                return;
+            case RawObjectFamily::Unknown:
+            default:
+                ++counts.unknown;
+                return;
+        }
     }
 
     template<typename Predicate>

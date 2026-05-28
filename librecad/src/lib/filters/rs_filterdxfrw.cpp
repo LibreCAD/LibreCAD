@@ -5503,6 +5503,8 @@ void RS_FilterDXFRW::writeObjects() {
         int blockedMissingClassMetadata = 0;
         int blockedWriterRejected = 0;
         int replayedObjects = 0;
+        const LC_DwgAdvancedMetadata::RawObjectFamilyCounts rawFamilyCounts =
+            metadata.rawObjectFamilyCounts();
         for (const auto& record : metadata.rawObjects()) {
             if (nativeSunHandles.count(record.handle) != 0 && isSunRawObject(record)) {
                 hasBlockedReplay = true;
@@ -5587,6 +5589,16 @@ void RS_FilterDXFRW::writeObjects() {
         if (replayedObjects > 0) {
             RS_DEBUG->print("RS_FilterDXFRW::writeObjects: replayed %d raw DWG objects",
                             replayedObjects);
+        }
+        if (rawFamilyCounts.total() > 0) {
+            RS_DEBUG->print(
+                "RS_FilterDXFRW::writeObjects: raw DWG object families "
+                "assoc=%d eval-graph=%d dynamic-block=%d object-context=%d unknown=%d",
+                static_cast<int>(rawFamilyCounts.associative),
+                static_cast<int>(rawFamilyCounts.evaluationGraph),
+                static_cast<int>(rawFamilyCounts.dynamicBlock),
+                static_cast<int>(rawFamilyCounts.objectContext),
+                static_cast<int>(rawFamilyCounts.unknown));
         }
         if (nativeSunObjects > 0) {
             RS_DEBUG->print("RS_FilterDXFRW::writeObjects: wrote %d native SUN objects",

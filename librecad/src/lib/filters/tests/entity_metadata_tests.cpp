@@ -492,7 +492,8 @@ TEST_CASE("DWG advanced metadata caches raw and semantic sidecars",
   modelerGeometry.m_modelerDataUnknownBit = true;
   modelerGeometry.m_hasWireframe = true;
   modelerGeometry.m_historyHandle = 0xFBu;
-  modelerGeometry.m_rawBytes = {0x10u, 0x20u, 0x30u, 0x40u};
+  modelerGeometry.m_rawBytes = {'A', 'C', 'I', 'S', ' ', 'B', 'i', 'n',
+                                'a', 'r', 'y', 'F', 'i', 'l', 'e'};
   metadata.addModelerGeometry(modelerGeometry);
 
   DRW_AssociativeObject associativeObject("ACDBASSOCVERTEXACTIONPARAM");
@@ -542,6 +543,8 @@ TEST_CASE("DWG advanced metadata caches raw and semantic sidecars",
   REQUIRE(metadata.rawObjects().size() == 3);
   CHECK(metadata.rawObjects().front().handle == 0x77u);
   CHECK(metadata.rawObjects().front().bodyBitSize == 128u);
+  CHECK(metadata.rawObjects().front().family ==
+        LC_DwgAdvancedMetadata::RawObjectFamily::Associative);
   CHECK(metadata.rawObjects().front().rawBytes.size() == 3);
   CHECK(LC_DwgAdvancedMetadata::rawReplayBlocker(metadata.rawObjects()[0]) ==
         LC_DwgAdvancedMetadata::ReplayBlocker::None);
@@ -774,6 +777,7 @@ TEST_CASE("DWG advanced metadata caches raw and semantic sidecars",
   CHECK(capturedTableStyle.titleSuppressed);
   CHECK_FALSE(capturedTableStyle.headerSuppressed);
   CHECK(capturedTableStyle.styleResolved);
+  CHECK(metadata.findTableStyleByHandle(0xFCu) == &capturedTableStyle);
 
   const auto& capturedTableContent = metadata.tables().back();
   CHECK(capturedTableContent.handle == 0xFEu);
@@ -795,6 +799,11 @@ TEST_CASE("DWG advanced metadata caches raw and semantic sidecars",
   CHECK(capturedTableContent.hasTextContent);
   CHECK(capturedTableContent.hasBlockContent);
   CHECK(capturedTableContent.semanticParsed);
+  CHECK(capturedTableContent.styleResolved);
+  CHECK(metadata.findTableByHandle(0xFEu) == &capturedTableContent);
+  const auto tablesUsingStyle = metadata.findTablesUsingStyle(0xFCu);
+  REQUIRE(tablesUsingStyle.size() == 1u);
+  CHECK(tablesUsingStyle.front() == &capturedTableContent);
   REQUIRE(capturedTableContent.columnWidths.size() == 2u);
   CHECK(capturedTableContent.columnWidths[0] == 12.5);
   REQUIRE(capturedTableContent.rowHeights.size() == 1u);
@@ -813,6 +822,30 @@ TEST_CASE("DWG advanced metadata caches raw and semantic sidecars",
   CHECK(capturedTableContent.mergedRanges.front().rightColumn == 1);
   CHECK(capturedTableContent.fieldHandles.back() == 0x107u);
   CHECK(capturedTableContent.blockHandles.back() == 0x106u);
+  REQUIRE(capturedTableContent.cells.size() == 2u);
+  const auto& firstCell = capturedTableContent.cells.front();
+  CHECK(firstCell.row == 0);
+  CHECK(firstCell.column == 0);
+  CHECK(firstCell.styleId == 9);
+  CHECK(firstCell.overrideFlags == 0x1u);
+  CHECK(firstCell.valueHandle == 0x102u);
+  CHECK(firstCell.geometryHandle == 0x103u);
+  CHECK(firstCell.contentCount == 1u);
+  CHECK(firstCell.textContentCount == 1u);
+  CHECK(firstCell.attributeCount == 1u);
+  REQUIRE(firstCell.texts.size() == 1u);
+  CHECK(firstCell.texts.front() == "Cell text");
+  REQUIRE(firstCell.attributeTexts.size() == 1u);
+  CHECK(firstCell.attributeTexts.front() == "A1");
+  const auto& secondCell = capturedTableContent.cells.back();
+  CHECK(secondCell.row == 0);
+  CHECK(secondCell.column == 1);
+  CHECK(secondCell.blockHandle == 0x105u);
+  CHECK(secondCell.fieldContentCount == 1u);
+  CHECK(secondCell.blockContentCount == 1u);
+  REQUIRE(secondCell.contentHandles.size() == 2u);
+  CHECK(secondCell.contentHandles.front() == 0x106u);
+  CHECK(secondCell.contentHandles.back() == 0x107u);
 
   REQUIRE(metadata.modelerGeometry().size() == 1);
   const auto& capturedModeler = metadata.modelerGeometry().front();
@@ -827,9 +860,17 @@ TEST_CASE("DWG advanced metadata caches raw and semantic sidecars",
   CHECK(capturedModeler.modelerDataUnknownBit);
   CHECK(capturedModeler.hasWireframe);
   CHECK(capturedModeler.hasRawPayload);
+  CHECK(capturedModeler.payloadKind ==
+        LC_DwgAdvancedMetadata::ModelerPayloadKind::Sab);
+  CHECK(std::string(LC_DwgAdvancedMetadata::modelerPayloadKindName(
+            capturedModeler.payloadKind)) == "SAB");
   CHECK(capturedModeler.historyHandle == 0xFBu);
-  CHECK(capturedModeler.rawByteCount == 4u);
-  CHECK(capturedModeler.rawBytes.back() == 0x40u);
+  CHECK(capturedModeler.rawByteCount == 15u);
+  CHECK(capturedModeler.rawBytes.back() == 'e');
+  CHECK(metadata.findModelerGeometryByHandle(0xF9u) == &capturedModeler);
+  const auto modelerByHistory = metadata.findModelerGeometryByHistoryHandle(0xFBu);
+  REQUIRE(modelerByHistory.size() == 1u);
+  CHECK(modelerByHistory.front() == &capturedModeler);
 
   REQUIRE(metadata.associativeObjects().size() == 1);
   const auto& capturedAssoc = metadata.associativeObjects().front();
@@ -838,6 +879,8 @@ TEST_CASE("DWG advanced metadata caches raw and semantic sidecars",
   CHECK(capturedAssoc.recordName == "ACDBASSOCVERTEXACTIONPARAM");
   CHECK(capturedAssoc.kind ==
         LC_DwgAdvancedMetadata::AssociativeKind::VertexActionParam);
+  CHECK(std::string(LC_DwgAdvancedMetadata::associativeKindName(
+            capturedAssoc.kind)) == "ACDBASSOCVERTEXACTIONPARAM");
   CHECK(capturedAssoc.geometryStatus == 4);
   CHECK(capturedAssoc.owningNetworkHandle == 0xE8u);
   CHECK(capturedAssoc.actionBodyHandle == 0xE9u);
@@ -861,6 +904,17 @@ TEST_CASE("DWG advanced metadata caches raw and semantic sidecars",
   CHECK(capturedAssoc.point.z == 9.0);
   CHECK(capturedAssoc.replayState ==
         LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed);
+  CHECK(metadata.findAssociativeObjectByHandle(0xE6u) == &capturedAssoc);
+  const auto assocByKind = metadata.findAssociativeObjectsByKind(
+      LC_DwgAdvancedMetadata::AssociativeKind::VertexActionParam);
+  REQUIRE(assocByKind.size() == 1u);
+  CHECK(assocByKind.front() == &capturedAssoc);
+  CHECK(metadata.findAssociativeObjectsByKind(
+            LC_DwgAdvancedMetadata::AssociativeKind::Action)
+            .empty());
+  const auto assocByDependency = metadata.findAssociativeObjectsReferencingHandle(0xEBu);
+  REQUIRE(assocByDependency.size() == 1u);
+  CHECK(assocByDependency.front() == &capturedAssoc);
   metadata.invalidateAssociativeGraphForHandle(0xEBu);
   CHECK(capturedAssoc.replayState ==
         LC_DwgAdvancedMetadata::ReplayState::ReplayInvalidated);
@@ -886,6 +940,10 @@ TEST_CASE("DWG advanced metadata caches raw and semantic sidecars",
   CHECK(capturedAcSh.binaryBlob1Bytes == 2u);
   CHECK(capturedAcSh.binaryBlob2Bytes == 3u);
   CHECK(capturedAcSh.blobBytes == 5u);
+  CHECK(metadata.findAcShObjectByHandle(0xF5u) == &capturedAcSh);
+  const auto acshByOwner = metadata.findAcShObjectsByOwnerHandle(0xF7u);
+  REQUIRE(acshByOwner.size() == 1u);
+  CHECK(acshByOwner.front() == &capturedAcSh);
 
   REQUIRE(metadata.hasReplayableAdvancedObjects());
   CHECK(metadata.semanticOnlyRecordCount() >= 18u);
@@ -906,6 +964,160 @@ TEST_CASE("DWG advanced metadata caches raw and semantic sidecars",
         LC_DwgAdvancedMetadata::ReplayState::ReplayInvalidated);
   CHECK(foundView->replayState ==
         LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed);
+}
+
+TEST_CASE("DWG advanced metadata resolves TABLESTYLE after TABLECONTENT import",
+          "[entity_metadata][dwg_metadata][table]") {
+  LC_DwgAdvancedMetadata metadata;
+
+  DRW_TableContentObject tableContent;
+  tableContent.handle = 0x410u;
+  tableContent.m_parseComplete = true;
+  tableContent.m_content.m_tableStyleHandle = 0x420u;
+  metadata.addTableContent(tableContent);
+
+  REQUIRE(metadata.tables().size() == 1u);
+  CHECK_FALSE(metadata.tables().front().styleResolved);
+
+  DRW_TableStyle tableStyle;
+  tableStyle.handle = 0x420u;
+  tableStyle.m_name = "LateTableStyle";
+  tableStyle.m_tableCellStyle.m_borders.resize(1);
+  metadata.addTableStyle(tableStyle);
+
+  REQUIRE(metadata.tables().size() == 2u);
+  const auto* resolvedContent = metadata.findTableByHandle(0x410u);
+  REQUIRE(resolvedContent != nullptr);
+  CHECK(resolvedContent->styleResolved);
+  const auto* resolvedStyle = metadata.findTableStyleByHandle(0x420u);
+  REQUIRE(resolvedStyle != nullptr);
+  CHECK(resolvedStyle->recordName == "LateTableStyle");
+  const auto tablesUsingLateStyle = metadata.findTablesUsingStyle(0x420u);
+  REQUIRE(tablesUsingLateStyle.size() == 1u);
+  CHECK(tablesUsingLateStyle.front() == resolvedContent);
+}
+
+TEST_CASE("DWG advanced metadata classifies modeler payload markers",
+          "[entity_metadata][dwg_metadata][modeler]") {
+  CHECK(LC_DwgAdvancedMetadata::classifyModelerPayload(
+            {'A', 'C', 'I', 'S', ' ', 'B', 'i', 'n', 'a', 'r', 'y', 'F',
+             'i', 'l', 'e'})
+        == LC_DwgAdvancedMetadata::ModelerPayloadKind::Sab);
+  CHECK(LC_DwgAdvancedMetadata::classifyModelerPayload(
+            {'7', ' ', '0', ' ', '0', '\n', 'B', 'e', 'g', 'i', 'n', '-',
+             'o', 'f', '-', 'A', 'C', 'I', 'S', '-', 'H', 'i', 's', 't',
+             'o', 'r', 'y'})
+        == LC_DwgAdvancedMetadata::ModelerPayloadKind::Sat);
+  CHECK(LC_DwgAdvancedMetadata::classifyModelerPayload({0x01u, 0x02u})
+        == LC_DwgAdvancedMetadata::ModelerPayloadKind::Unknown);
+}
+
+TEST_CASE("DWG advanced metadata classifies associative object names",
+          "[entity_metadata][dwg_metadata][assoc]") {
+  CHECK(LC_DwgAdvancedMetadata::associativeKindFromRecordName("ACDBASSOCNETWORK")
+        == LC_DwgAdvancedMetadata::AssociativeKind::Network);
+  CHECK(LC_DwgAdvancedMetadata::associativeKindFromRecordName("ACDBASSOCACTION")
+        == LC_DwgAdvancedMetadata::AssociativeKind::Action);
+  CHECK(LC_DwgAdvancedMetadata::associativeKindFromRecordName(
+            "ACDBASSOCDEPENDENCY")
+        == LC_DwgAdvancedMetadata::AssociativeKind::Dependency);
+  CHECK(LC_DwgAdvancedMetadata::associativeKindFromRecordName(
+            "ACDBASSOCGEOMDEPENDENCY")
+        == LC_DwgAdvancedMetadata::AssociativeKind::GeometryDependency);
+  CHECK(LC_DwgAdvancedMetadata::associativeKindFromRecordName(
+            "ACDBASSOCPERSSUBENTMANAGER")
+        == LC_DwgAdvancedMetadata::AssociativeKind::PersistentSubentityManager);
+  CHECK(LC_DwgAdvancedMetadata::associativeKindFromRecordName(
+            "ACDBPERSSUBENTMANAGER")
+        == LC_DwgAdvancedMetadata::AssociativeKind::PersistentSubentityManager);
+  CHECK(LC_DwgAdvancedMetadata::associativeKindFromRecordName(
+            "ACDBASSOCALIGNEDDIMACTIONBODY")
+        == LC_DwgAdvancedMetadata::AssociativeKind::AlignedDimensionActionBody);
+  CHECK(LC_DwgAdvancedMetadata::associativeKindFromRecordName(
+            "ACDBASSOCVERTEXACTIONPARAM")
+        == LC_DwgAdvancedMetadata::AssociativeKind::VertexActionParam);
+  CHECK(LC_DwgAdvancedMetadata::associativeKindFromRecordName(
+            "ACDBASSOCOSNAPPOINTREFACTIONPARAM")
+        == LC_DwgAdvancedMetadata::AssociativeKind::OsnapPointRefActionParam);
+  CHECK(LC_DwgAdvancedMetadata::associativeKindFromRecordName("ACDBUNKNOWN")
+        == LC_DwgAdvancedMetadata::AssociativeKind::Unknown);
+  CHECK(std::string(LC_DwgAdvancedMetadata::associativeKindName(
+            LC_DwgAdvancedMetadata::AssociativeKind::Unknown)) == "unknown");
+}
+
+TEST_CASE("DWG advanced metadata classifies raw object families",
+          "[entity_metadata][dwg_metadata][raw-replay]") {
+  LC_DwgAdvancedMetadata metadata;
+
+  DRW_UnsupportedObject evaluationGraph;
+  evaluationGraph.m_handle = 0x510u;
+  evaluationGraph.m_recordName = "ACAD_EVALUATION_GRAPH";
+  evaluationGraph.m_className = "AcDbEvalGraph";
+  evaluationGraph.m_rawBytes = {0x01u};
+  metadata.addUnsupportedObject(evaluationGraph);
+
+  DRW_UnsupportedObject dynamicBlock;
+  dynamicBlock.m_handle = 0x511u;
+  dynamicBlock.m_recordName = "BLOCKROTATIONPARAMETER";
+  dynamicBlock.m_className = "AcDbBlockRotationParameter";
+  dynamicBlock.m_rawBytes = {0x02u};
+  metadata.addUnsupportedObject(dynamicBlock);
+
+  DRW_UnsupportedObject objectContext;
+  objectContext.m_handle = 0x512u;
+  objectContext.m_recordName = "ACDB_MLEADEROBJECTCONTEXTDATA_CLASS";
+  objectContext.m_className = "AcDbMLeaderObjectContextData";
+  objectContext.m_rawBytes = {0x03u};
+  metadata.addUnsupportedObject(objectContext);
+
+  DRW_UnsupportedObject unknown;
+  unknown.m_handle = 0x513u;
+  unknown.m_recordName = "RAW_REPLAY_TEST";
+  unknown.m_className = "AcDbRawReplayTest";
+  unknown.m_rawBytes = {0x04u};
+  metadata.addUnsupportedObject(unknown);
+
+  CHECK(LC_DwgAdvancedMetadata::rawObjectFamilyFromNames(
+            "ACDBASSOCDEPENDENCY", "AcDbAssocDependency")
+        == LC_DwgAdvancedMetadata::RawObjectFamily::Associative);
+  CHECK(LC_DwgAdvancedMetadata::rawObjectFamilyFromNames(
+            "BLOCKFLIPPARAMETER", "AcDbBlockFlipParameter")
+        == LC_DwgAdvancedMetadata::RawObjectFamily::DynamicBlock);
+  CHECK(LC_DwgAdvancedMetadata::rawObjectFamilyFromNames(
+            "ACDB_BLKREFOBJECTCONTEXTDATA_CLASS", "AcDbBlkRefObjectContextData")
+        == LC_DwgAdvancedMetadata::RawObjectFamily::ObjectContext);
+  CHECK(std::string(LC_DwgAdvancedMetadata::rawObjectFamilyName(
+            LC_DwgAdvancedMetadata::RawObjectFamily::EvaluationGraph))
+        == "evaluation graph");
+
+  const auto evalGraphs = metadata.findRawObjectsByFamily(
+      LC_DwgAdvancedMetadata::RawObjectFamily::EvaluationGraph);
+  REQUIRE(evalGraphs.size() == 1u);
+  CHECK(evalGraphs.front()->handle == 0x510u);
+  const auto dynamicBlocks = metadata.findRawObjectsByFamily(
+      LC_DwgAdvancedMetadata::RawObjectFamily::DynamicBlock);
+  REQUIRE(dynamicBlocks.size() == 1u);
+  CHECK(dynamicBlocks.front()->handle == 0x511u);
+  const auto contexts = metadata.findRawObjectsByFamily(
+      LC_DwgAdvancedMetadata::RawObjectFamily::ObjectContext);
+  REQUIRE(contexts.size() == 1u);
+  CHECK(contexts.front()->handle == 0x512u);
+  const auto unknowns = metadata.findRawObjectsByFamily(
+      LC_DwgAdvancedMetadata::RawObjectFamily::Unknown);
+  REQUIRE(unknowns.size() == 1u);
+  CHECK(unknowns.front()->handle == 0x513u);
+
+  const LC_DwgAdvancedMetadata::RawObjectFamilyCounts counts =
+      metadata.rawObjectFamilyCounts();
+  CHECK(counts.total() == 4u);
+  CHECK(counts.associative == 0u);
+  CHECK(counts.evaluationGraph == 1u);
+  CHECK(counts.dynamicBlock == 1u);
+  CHECK(counts.objectContext == 1u);
+  CHECK(counts.unknown == 1u);
+  CHECK(LC_DwgAdvancedMetadata::rawObjectFamilyCount(
+            counts, LC_DwgAdvancedMetadata::RawObjectFamily::DynamicBlock)
+        == 1u);
 }
 
 TEST_CASE("DWG advanced metadata invalidates associative raw replay",
@@ -1011,6 +1223,11 @@ TEST_CASE("DWG fixture manifest is valid JSON and optional by default",
   CHECK(first.value("expectedCallbacks").toArray().contains(
       QJsonValue(QStringLiteral("addTableContent"))));
   CHECK(first.value("expectedUnsupportedDiagnostics").isArray());
+  const QJsonArray rawFamilies = first.value("expectedRawFamilies").toArray();
+  CHECK(rawFamilies.contains(QJsonValue(QStringLiteral("associative"))));
+  CHECK(rawFamilies.contains(QJsonValue(QStringLiteral("evaluation graph"))));
+  CHECK(rawFamilies.contains(QJsonValue(QStringLiteral("dynamic block"))));
+  CHECK(rawFamilies.contains(QJsonValue(QStringLiteral("object context"))));
   CHECK(first.value("expectedRawReplayCount").toInt(-1) >= 0);
   CHECK(first.value("references").toObject().contains("acadSharp"));
   CHECK(first.value("references").toObject().contains("libreDwg"));
