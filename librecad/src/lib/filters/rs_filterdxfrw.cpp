@@ -2130,18 +2130,38 @@ bool RS_FilterDXFRW::addTableFallback(const DRW_Table& data) {
     auto tablePoint = [&](double x, double y) {
         return origin + xAxis * x - yAxis * y;
     };
-    auto addBorder = [&](const RS_Vector& a, const RS_Vector& b) {
+    auto addFallbackRecord = [&](RS_Entity *entity, int row, int column,
+                                 LC_DwgAdvancedMetadata::TableFallbackRole role) {
+        if (m_graphic == nullptr || entity == nullptr)
+            return;
+        LC_DwgAdvancedMetadata::TableFallbackEntityRecord record;
+        record.tableHandle = data.handle;
+        record.sourceHandle = data.handle;
+        record.row = row;
+        record.column = column;
+        record.role = role;
+        record.entityId = entity->getId();
+        m_graphic->dwgAdvancedMetadata().addTableFallbackEntity(record);
+    };
+    auto addBorder = [&](const RS_Vector& a, const RS_Vector& b,
+                         int row, int column) {
         auto *line = new RS_Line{m_currentContainer, {a, b}};
         setEntityAttributes(line, &data);
         line->update();
+        addFallbackRecord(line, row, column,
+                          LC_DwgAdvancedMetadata::TableFallbackRole::GridLine);
         m_currentContainer->addEntity(line);
     };
 
-    for (double x : columnOffsets) {
-        addBorder(tablePoint(x, 0.0), tablePoint(x, rowOffsets.back()));
+    for (size_t column = 0; column < columnOffsets.size(); ++column) {
+        const double x = columnOffsets[column];
+        addBorder(tablePoint(x, 0.0), tablePoint(x, rowOffsets.back()),
+                  -1, static_cast<int>(column));
     }
-    for (double y : rowOffsets) {
-        addBorder(tablePoint(0.0, y), tablePoint(columnOffsets.back(), y));
+    for (size_t row = 0; row < rowOffsets.size(); ++row) {
+        const double y = rowOffsets[row];
+        addBorder(tablePoint(0.0, y), tablePoint(columnOffsets.back(), y),
+                  static_cast<int>(row), -1);
     }
 
     bool renderedText = false;
@@ -2172,6 +2192,11 @@ bool RS_FilterDXFRW::addTableFallback(const DRW_Table& data) {
             auto *mtext = new RS_MText(m_currentContainer, textData);
             setEntityAttributes(mtext, &data);
             mtext->update();
+            addFallbackRecord(
+                mtext, static_cast<int>(row), static_cast<int>(column),
+                tableRow.m_cells[column].m_contents.empty()
+                    ? LC_DwgAdvancedMetadata::TableFallbackRole::Placeholder
+                    : LC_DwgAdvancedMetadata::TableFallbackRole::CellText);
             m_currentContainer->addEntity(mtext);
             renderedText = true;
         }
@@ -5672,7 +5697,8 @@ void RS_FilterDXFRW::writeObjects() {
                 "Native DWG table writing blocked: tables=%d fallback=%d incomplete=%d "
                 "unresolved-style=%d field=%d block=%d attributes=%d "
                 "overrides=%d geometry=%d unknown-ranges=%d incomplete-ranges=%d "
-                "override-masks=%d break-ranges=%d geometry-ranges=%d",
+                "override-masks=%d break-ranges=%d geometry-ranges=%d "
+                "edited-fallback=%d missing-fallback-links=%d",
                 static_cast<int>(tableBlockers.tableCount),
                 static_cast<int>(tableBlockers.fallbackRendered),
                 static_cast<int>(tableBlockers.incompleteSemanticParse),
@@ -5686,7 +5712,9 @@ void RS_FilterDXFRW::writeObjects() {
                 static_cast<int>(tableBlockers.incompleteRanges),
                 static_cast<int>(tableBlockers.overrideMasks),
                 static_cast<int>(tableBlockers.breakRanges),
-                static_cast<int>(tableBlockers.tableGeometryTailRanges));
+                static_cast<int>(tableBlockers.tableGeometryTailRanges),
+                static_cast<int>(tableBlockers.editedFallbackEntities),
+                static_cast<int>(tableBlockers.missingFallbackAttachments));
         }
         if (mleaderBlockers.mleaderCount > 0 && mleaderBlockers.totalBlockers() > 0) {
             RS_DEBUG->print(

@@ -74,6 +74,13 @@ public:
         ObjectContext
     };
 
+    enum class TableFallbackRole {
+        GridLine,
+        CellText,
+        Placeholder,
+        Boundary
+    };
+
     struct RawObjectRecord {
         int objectType = 0;
         duint32 handle = 0;
@@ -271,13 +278,16 @@ public:
         size_t overrideMasks = 0;
         size_t breakRanges = 0;
         size_t tableGeometryTailRanges = 0;
+        size_t editedFallbackEntities = 0;
+        size_t missingFallbackAttachments = 0;
 
         size_t totalBlockers() const {
             return fallbackRendered + incompleteSemanticParse + unresolvedStyle
                    + fieldContent + blockContent + attributeContent
                    + overrideCells + geometryCells + unknownRanges
                    + incompleteRanges + overrideMasks + breakRanges
-                   + tableGeometryTailRanges;
+                   + tableGeometryTailRanges + editedFallbackEntities
+                   + missingFallbackAttachments;
         }
     };
 
@@ -374,6 +384,7 @@ public:
         bool semanticParsed = false;
         bool styleResolved = false;
         bool fallbackRendered = false;
+        bool fallbackInvalidated = false;
         std::vector<double> columnWidths;
         std::vector<double> rowHeights;
         std::vector<int> cellStyleIds;
@@ -393,6 +404,16 @@ public:
         std::vector<int> m_tableColors;
         std::vector<TableMergedRangeRecord> mergedRanges;
         std::vector<TableCellRecord> cells;
+        ReplayState replayState = ReplayState::ReplayAllowed;
+    };
+
+    struct TableFallbackEntityRecord {
+        duint32 tableHandle = 0;
+        duint32 sourceHandle = 0;
+        int row = -1;
+        int column = -1;
+        TableFallbackRole role = TableFallbackRole::Placeholder;
+        unsigned long long entityId = 0;
         ReplayState replayState = ReplayState::ReplayAllowed;
     };
 
@@ -697,6 +718,7 @@ public:
         m_suns.clear();
         m_modelerGeometry.clear();
         m_tables.clear();
+        m_tableFallbackEntities.clear();
         m_associativeObjects.clear();
         m_acshObjects.clear();
         m_mleaders.clear();
@@ -935,6 +957,12 @@ public:
         resolveTableStyle(record);
         record.fallbackRendered = false;
         m_tables.push_back(record);
+    }
+
+    void addTableFallbackEntity(const TableFallbackEntityRecord& record) {
+        if (record.tableHandle == 0 || record.entityId == 0)
+            return;
+        m_tableFallbackEntities.push_back(record);
     }
 
     void addCellStyleMap(const DRW_CellStyleMap& map) {
@@ -1261,6 +1289,9 @@ public:
     const std::vector<SunRecord>& suns() const { return m_suns; }
     const std::vector<ModelerGeometryRecord>& modelerGeometry() const { return m_modelerGeometry; }
     const std::vector<TableRecord>& tables() const { return m_tables; }
+    const std::vector<TableFallbackEntityRecord>& tableFallbackEntities() const {
+        return m_tableFallbackEntities;
+    }
     const std::vector<CellStyleMapRecord>& cellStyleMaps() const { return m_cellStyleMaps; }
     const std::vector<AssociativeRecord>& associativeObjects() const { return m_associativeObjects; }
     const std::vector<AcShRecord>& acshObjects() const { return m_acshObjects; }
@@ -1344,6 +1375,27 @@ public:
         }
         return result;
     }
+    std::vector<const TableFallbackEntityRecord*> findTableFallbackEntities(
+        duint32 tableHandle) const {
+        std::vector<const TableFallbackEntityRecord*> result;
+        if (tableHandle == 0)
+            return result;
+        for (const TableFallbackEntityRecord& record : m_tableFallbackEntities) {
+            if (record.tableHandle == tableHandle)
+                result.push_back(&record);
+        }
+        return result;
+    }
+    const TableRecord* findTableByFallbackEntityId(
+        unsigned long long entityId) const {
+        if (entityId == 0)
+            return nullptr;
+        for (const TableFallbackEntityRecord& fallback : m_tableFallbackEntities) {
+            if (fallback.entityId == entityId)
+                return findTableByHandle(fallback.tableHandle);
+        }
+        return nullptr;
+    }
     const CellStyleMapRecord* findCellStyleMapByHandle(duint32 handle) const {
         if (handle == 0)
             return nullptr;
@@ -1419,6 +1471,12 @@ public:
                 ++counts.breakRanges;
             if (record.m_tableGeometryTailRangeCount != 0)
                 ++counts.tableGeometryTailRanges;
+            if (record.fallbackInvalidated)
+                ++counts.editedFallbackEntities;
+            if (record.fallbackRendered
+                && findTableFallbackEntities(record.handle).empty()) {
+                ++counts.missingFallbackAttachments;
+            }
         }
         return counts;
     }
@@ -2071,6 +2129,26 @@ public:
                 invalidateRawTableObject(record.handle);
             }
         }
+    }
+
+    bool invalidateTableForFallbackEntity(unsigned long long entityId) {
+        if (entityId == 0)
+            return false;
+        bool invalidated = false;
+        for (TableFallbackEntityRecord& fallback : m_tableFallbackEntities) {
+            if (fallback.entityId != entityId)
+                continue;
+            fallback.replayState = ReplayState::ReplayInvalidated;
+            for (TableRecord& table : m_tables) {
+                if (table.handle != fallback.tableHandle)
+                    continue;
+                table.replayState = ReplayState::ReplayInvalidated;
+                table.fallbackInvalidated = true;
+                invalidateRawTableObject(table.handle);
+                invalidated = true;
+            }
+        }
+        return invalidated;
     }
 
     void invalidateMLeaderGraphForHandle(duint32 dependentHandle) {
@@ -2770,6 +2848,7 @@ private:
     std::vector<SunRecord> m_suns;
     std::vector<ModelerGeometryRecord> m_modelerGeometry;
     std::vector<TableRecord> m_tables;
+    std::vector<TableFallbackEntityRecord> m_tableFallbackEntities;
     std::vector<CellStyleMapRecord> m_cellStyleMaps;
     std::vector<AssociativeRecord> m_associativeObjects;
     std::vector<AcShRecord> m_acshObjects;

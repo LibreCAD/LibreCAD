@@ -972,6 +972,14 @@ Stop before interpreting the unknown bytes.
 Purpose: define how fallback grid/text entities stay tied to native table
 metadata after import.
 
+Status: completed for the current fallback renderer on 2026-05-28. Generated
+grid/text fallback entities are now attached to table metadata by table handle,
+row/column, role, source handle, and LibreCAD entity ID. Metadata lookup can
+find fallback entities by table and the table by fallback entity ID, and an
+edited fallback entity invalidates the semantic table plus associated raw TABLE
+payload. Native table writer diagnostics now distinguish edited fallback
+entities and missing fallback attachment records.
+
 Files:
 
 - `librecad/src/lib/engine/document/lc_dwgadvancedmetadata.h`

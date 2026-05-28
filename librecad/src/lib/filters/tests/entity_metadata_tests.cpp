@@ -576,6 +576,42 @@ TEST_CASE("DWG advanced metadata caches raw and semantic sidecars",
   tableContent.m_content.m_subrecordRanges.push_back(tableBreakRange);
   metadata.addTableContent(tableContent);
 
+  DRW_Table fallbackTable;
+  fallbackTable.handle = 0x112u;
+  fallbackTable.parentHandle = 0x113u;
+  fallbackTable.m_hasSemanticContent = true;
+  fallbackTable.m_semanticContentComplete = true;
+  fallbackTable.m_tableStyleHandle = 0xFCu;
+  fallbackTable.m_content.m_tableStyleHandle = 0xFCu;
+  fallbackTable.m_content.m_columns.resize(1);
+  fallbackTable.m_content.m_columns[0].m_width = 8.0;
+  fallbackTable.m_content.m_rows.resize(1);
+  fallbackTable.m_content.m_rows[0].m_height = 3.0;
+  fallbackTable.m_content.m_rows[0].m_cells.resize(1);
+  DRW_TableCellContent fallbackTextContent;
+  fallbackTextContent.m_type = 1;
+  fallbackTextContent.m_text = "Fallback text";
+  fallbackTable.m_content.m_rows[0].m_cells[0].m_contents.push_back(
+      fallbackTextContent);
+  metadata.addTable(fallbackTable, true);
+  LC_DwgAdvancedMetadata::TableFallbackEntityRecord fallbackGridRecord;
+  fallbackGridRecord.tableHandle = fallbackTable.handle;
+  fallbackGridRecord.sourceHandle = fallbackTable.handle;
+  fallbackGridRecord.column = 0;
+  fallbackGridRecord.role =
+      LC_DwgAdvancedMetadata::TableFallbackRole::GridLine;
+  fallbackGridRecord.entityId = 9001u;
+  metadata.addTableFallbackEntity(fallbackGridRecord);
+  LC_DwgAdvancedMetadata::TableFallbackEntityRecord fallbackTextRecord;
+  fallbackTextRecord.tableHandle = fallbackTable.handle;
+  fallbackTextRecord.sourceHandle = fallbackTable.handle;
+  fallbackTextRecord.row = 0;
+  fallbackTextRecord.column = 0;
+  fallbackTextRecord.role =
+      LC_DwgAdvancedMetadata::TableFallbackRole::CellText;
+  fallbackTextRecord.entityId = 9002u;
+  metadata.addTableFallbackEntity(fallbackTextRecord);
+
   DRW_ModelerGeometry modelerGeometry(DRW::E3DSOLID);
   modelerGeometry.handle = 0xF9u;
   modelerGeometry.parentHandle = 0xFAu;
@@ -893,7 +929,7 @@ TEST_CASE("DWG advanced metadata caches raw and semantic sidecars",
   REQUIRE(metadata.placeholders().size() == 1);
   CHECK(metadata.placeholders().front().handle == 0xE4u);
 
-  REQUIRE(metadata.tables().size() == 2);
+  REQUIRE(metadata.tables().size() == 3);
   const auto& capturedTableStyle = metadata.tables().front();
   CHECK(capturedTableStyle.handle == 0xFCu);
   CHECK(capturedTableStyle.recordName == "SemanticTableStyle");
@@ -942,7 +978,7 @@ TEST_CASE("DWG advanced metadata caches raw and semantic sidecars",
   REQUIRE(tableStylesByLineType.size() == 1u);
   CHECK(tableStylesByLineType.front() == &capturedTableStyle);
 
-  const auto& capturedTableContent = metadata.tables().back();
+  const auto& capturedTableContent = metadata.tables().at(1);
   CHECK(capturedTableContent.handle == 0xFEu);
   CHECK(capturedTableContent.tableStyleHandle == 0xFCu);
   CHECK(capturedTableContent.rowCount == 1);
@@ -971,11 +1007,11 @@ TEST_CASE("DWG advanced metadata caches raw and semantic sidecars",
   CHECK(capturedTableContent.styleResolved);
   CHECK(metadata.findTableByHandle(0xFEu) == &capturedTableContent);
   const auto tablesUsingStyle = metadata.findTablesUsingStyle(0xFCu);
-  REQUIRE(tablesUsingStyle.size() == 1u);
-  CHECK(tablesUsingStyle.front() == &capturedTableContent);
+  REQUIRE(tablesUsingStyle.size() == 2u);
+  CHECK(tablesUsingStyle[0] == &capturedTableContent);
   const auto tablesByStyleHandle = metadata.findTablesReferencingHandle(0xFCu);
-  REQUIRE(tablesByStyleHandle.size() == 1u);
-  CHECK(tablesByStyleHandle.front() == &capturedTableContent);
+  REQUIRE(tablesByStyleHandle.size() == 2u);
+  CHECK(tablesByStyleHandle[0] == &capturedTableContent);
   REQUIRE(capturedTableContent.columnWidths.size() == 2u);
   CHECK(capturedTableContent.columnWidths[0] == 12.5);
   REQUIRE(capturedTableContent.rowHeights.size() == 1u);
@@ -1058,6 +1094,20 @@ TEST_CASE("DWG advanced metadata caches raw and semantic sidecars",
   REQUIRE(mapsByTextStyle.size() == 1u);
   CHECK(mapsByTextStyle.front() == &capturedCellStyleMap);
 
+  const auto& capturedFallbackTable = metadata.tables().at(2);
+  CHECK(capturedFallbackTable.handle == 0x112u);
+  CHECK(capturedFallbackTable.fallbackRendered);
+  CHECK(capturedFallbackTable.replayState ==
+        LC_DwgAdvancedMetadata::ReplayState::ReplayReplaced);
+  const auto fallbackRecords =
+      metadata.findTableFallbackEntities(capturedFallbackTable.handle);
+  REQUIRE(fallbackRecords.size() == 2u);
+  CHECK(fallbackRecords[0]->role ==
+        LC_DwgAdvancedMetadata::TableFallbackRole::GridLine);
+  CHECK(fallbackRecords[1]->role ==
+        LC_DwgAdvancedMetadata::TableFallbackRole::CellText);
+  CHECK(metadata.findTableByFallbackEntityId(9002u) == &capturedFallbackTable);
+
   const auto cellsByValue = metadata.findTableCellsReferencingHandle(0x102u);
   REQUIRE(cellsByValue.size() == 1u);
   CHECK(cellsByValue.front() == &firstCell);
@@ -1075,7 +1125,8 @@ TEST_CASE("DWG advanced metadata caches raw and semantic sidecars",
   CHECK(metadata.findTablesReferencingHandle(0xDEADBEEFu).empty());
   const LC_DwgAdvancedMetadata::TableWriterBlockerCounts tableBlockers =
       metadata.tableWriterBlockerCounts();
-  CHECK(tableBlockers.tableCount == 1u);
+  CHECK(tableBlockers.tableCount == 2u);
+  CHECK(tableBlockers.fallbackRendered == 1u);
   CHECK(tableBlockers.fieldContent == 1u);
   CHECK(tableBlockers.blockContent == 1u);
   CHECK(tableBlockers.attributeContent == 1u);
@@ -1086,9 +1137,20 @@ TEST_CASE("DWG advanced metadata caches raw and semantic sidecars",
   CHECK(tableBlockers.overrideMasks == 1u);
   CHECK(tableBlockers.breakRanges == 1u);
   CHECK(tableBlockers.tableGeometryTailRanges == 1u);
-  CHECK(tableBlockers.totalBlockers() == 10u);
+  CHECK(tableBlockers.editedFallbackEntities == 0u);
+  CHECK(tableBlockers.missingFallbackAttachments == 0u);
+  CHECK(tableBlockers.totalBlockers() == 11u);
   CHECK(capturedTableContent.replayState ==
         LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed);
+  REQUIRE(metadata.invalidateTableForFallbackEntity(9002u));
+  CHECK(capturedFallbackTable.replayState ==
+        LC_DwgAdvancedMetadata::ReplayState::ReplayInvalidated);
+  CHECK(fallbackRecords[1]->replayState ==
+        LC_DwgAdvancedMetadata::ReplayState::ReplayInvalidated);
+  const LC_DwgAdvancedMetadata::TableWriterBlockerCounts editedTableBlockers =
+      metadata.tableWriterBlockerCounts();
+  CHECK(editedTableBlockers.editedFallbackEntities == 1u);
+  CHECK(editedTableBlockers.totalBlockers() == 12u);
   metadata.invalidateTableGraphForHandle(0x106u);
   CHECK(capturedTableContent.replayState ==
         LC_DwgAdvancedMetadata::ReplayState::ReplayInvalidated);
