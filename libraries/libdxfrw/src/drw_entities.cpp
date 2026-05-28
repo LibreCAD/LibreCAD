@@ -6739,7 +6739,8 @@ bool DRW_Leader::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
     DRW_DBG("\n***************************** parsing leader *********************************************\n");
     DRW_DBG("unknown bit "); DRW_DBG(buf->getBit());
     DRW_DBG(" annot type "); DRW_DBG(buf->getBitShort());
-    DRW_DBG(" Path type "); DRW_DBG(buf->getBitShort());
+    leadertype = buf->getBitShort();
+    DRW_DBG(" Path type "); DRW_DBG(leadertype);
     dint32 nPt = buf->getBitLong();
     DRW_DBG(" Num pts "); DRW_DBG(nPt);
 
@@ -7748,16 +7749,13 @@ bool DRW_Leader::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs,
 
     buf->putBit(0);                                              // unknown bit
     buf->putBitShort(0);                                         // annotType (ignored on read)
-    buf->putBitShort(0);                                         // pathType  (ignored on read)
+    buf->putBitShort(static_cast<dint16>(leadertype));           // pathType (DXF code 72)
     buf->putBitLong(static_cast<dint32>(vertexlist.size()));
     for (const auto& vp : vertexlist)
         buf->put3BitDouble(*vp);
     buf->put3BitDouble(DRW_Coord(0, 0, 0));                     // Endptproj (ignored on read)
-    buf->putExtrusion(extrusionPoint, version > DRW::AC1014);
-
-    if (version > DRW::AC1014) {
-        for (int i = 0; i < 5; ++i) buf->putBit(0);             // 5 unknown bits
-    }
+    // ODA §20.4.47: Extrusion is plain 3DPOINT (3BD), not BE — matches parseDwg.
+    buf->put3BitDouble(extrusionPoint);
 
     buf->put3BitDouble(horizdir);
     buf->put3BitDouble(offsetblock);

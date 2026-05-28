@@ -7926,11 +7926,13 @@ void RS_FilterDXFRW::writeTolerance(LC_Tolerance* t) {
 void RS_FilterDXFRW::writeLeader(RS_Leader* l) {
     if (l->count() <= 0) {
         RS_DEBUG->print(RS_Debug::D_WARNING, "dropping leader with no vertices");
+        return;
     }
 
     DRW_Leader leader;
     getEntityAttributes(&leader, l);
-    leader.style = "Standard";
+    const QString styleName = l->getData().m_styleName;
+    leader.style = (styleName.isEmpty() ? "Standard" : styleName.toUtf8().toStdString());
     leader.arrow = l->hasArrowHead();
     leader.leadertype = 0;
     leader.flag = 3;
@@ -7938,17 +7940,25 @@ void RS_FilterDXFRW::writeLeader(RS_Leader* l) {
     leader.hookflag = 0;
     leader.textheight = 1;
     leader.textwidth = 10;
-    leader.vertnum = l->count();
-	RS_Line* li =nullptr;
-    for(RS_Entity* v: lc::LC_ContainerTraverser{*l, RS2::ResolveNone}.entities()){
-        if (v->rtti()==RS2::EntityLine) {
+
+    RS_Line* li = nullptr;
+    for (RS_Entity* v: lc::LC_ContainerTraverser{*l, RS2::ResolveNone}.entities()) {
+        if (v->rtti() == RS2::EntityLine) {
             li = static_cast<RS_Line*>(v);
-			leader.vertexlist.push_back(std::make_shared<DRW_Coord>(li->getStartpoint().x, li->getStartpoint().y, 0.0));
+            leader.vertexlist.push_back(std::make_shared<DRW_Coord>(
+                li->getStartpoint().x, li->getStartpoint().y, 0.0));
         }
     }
-	if (li){
-		leader.vertexlist.push_back(std::make_shared<DRW_Coord>(li->getEndpoint().x, li->getEndpoint().y, 0.0));
-	}
+    if (li) {
+        leader.vertexlist.push_back(std::make_shared<DRW_Coord>(
+            li->getEndpoint().x, li->getEndpoint().y, 0.0));
+    }
+
+    if (leader.vertexlist.size() < 2) {
+        RS_DEBUG->print(RS_Debug::D_WARNING, "dropping leader with fewer than 2 vertices");
+        return;
+    }
+    leader.vertnum = static_cast<int>(leader.vertexlist.size());
 
     if (m_dwgW) {
         m_dwgW->writeLeader(&leader);

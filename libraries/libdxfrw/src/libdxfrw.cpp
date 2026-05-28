@@ -1296,13 +1296,18 @@ bool dxfRW::writeLeader(DRW_Leader *ent){
         writer->writeInt16(75, ent->hookflag);
         writer->writeDouble(40, ent->textheight);
         writer->writeDouble(41, ent->textwidth);
-        writer->writeDouble(76, ent->vertnum);
-        writer->writeDouble(76, ent->vertexlist.size());
+        writer->writeInt16(76, static_cast<int>(ent->vertexlist.size()));
         for (unsigned int i=0; i<ent->vertexlist.size(); i++) {
             auto vert = ent->vertexlist.at(i);
             writer->writeDouble(10, vert->x);
             writer->writeDouble(20, vert->y);
             writer->writeDouble(30, vert->z);
+        }
+        if (ent->extrusionPoint.x != 0.0 || ent->extrusionPoint.y != 0.0 ||
+            ent->extrusionPoint.z != 1.0) {
+            writer->writeDouble(210, ent->extrusionPoint.x);
+            writer->writeDouble(220, ent->extrusionPoint.y);
+            writer->writeDouble(230, ent->extrusionPoint.z);
         }
     } else  {
         //RLZ: todo not supported by acad 12 saved as unnamed block

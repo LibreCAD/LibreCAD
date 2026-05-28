@@ -1144,3 +1144,76 @@ TEST_CASE("DRW_DimOrdinate::encodeDwg round-trips origin and leader endpoints",
         REQUIRE(dst.getSecondLine().x  == 4.0);
     }
 }
+
+TEST_CASE("DRW_Leader::encodeDwg round-trips vertices, arrow, leadertype, extrusion",
+          "[dwg-write][entity-encode][leader]") {
+    DRW_Leader src;
+    src.handle      = 0xD0;
+    src.style       = "Standard";
+    src.arrow       = 1;
+    src.leadertype  = 1;            // spline path — verifies P1 pathType fix
+    src.flag        = 3;
+    src.hookline    = 1;
+    src.hookflag    = 1;
+    src.textheight  = 2.5;
+    src.textwidth   = 10.0;
+    src.extrusionPoint = DRW_Coord{0.0, 0.0, 1.0};   // default Z
+    src.horizdir       = DRW_Coord{1.0, 0.0, 0.0};   // ezdxf default X
+    src.offsetblock    = DRW_Coord{0.0, 0.0, 0.0};
+    src.vertexlist.push_back(std::make_shared<DRW_Coord>(0.0, 0.0, 0.0));
+    src.vertexlist.push_back(std::make_shared<DRW_Coord>(5.0, 3.0, 0.0));
+    src.vertexlist.push_back(std::make_shared<DRW_Coord>(10.0, 3.0, 0.0));
+    DrwEntityEncodeTestAccess::layerH(src).ref = 0x12;
+
+    for (DRW::Version ver : {DRW::AC1015, DRW::AC1018}) {
+        dwgBufferW w;
+        REQUIRE(DrwEntityEncodeTestAccess::encode(src, ver, &w));
+        auto bytes = snapshot(w);
+        REQUIRE(bytes.size() > 0);
+
+        dwgBuffer r(bytes.data(), bytes.size());
+        DRW_Leader dst;
+        REQUIRE(DrwEntityEncodeTestAccess::parse(dst, ver, &r));
+
+        REQUIRE(DrwEntityEncodeTestAccess::oType(dst) == 45u);
+        REQUIRE(dst.arrow      == 1);
+        REQUIRE(dst.leadertype == 1);                       // P1
+        REQUIRE(dst.textheight == Approx(2.5));             // pre-2010 branch
+        REQUIRE(dst.textwidth  == Approx(10.0));
+        REQUIRE(dst.vertexlist.size() == 3u);
+        REQUIRE(dst.vertexlist[0]->x == Approx(0.0));
+        REQUIRE(dst.vertexlist[1]->x == Approx(5.0));
+        REQUIRE(dst.vertexlist[1]->y == Approx(3.0));
+        REQUIRE(dst.vertexlist[2]->x == Approx(10.0));
+        REQUIRE(dst.vertexlist[2]->y == Approx(3.0));
+        REQUIRE(dst.extrusionPoint.z == Approx(1.0));       // P0 wire alignment
+        REQUIRE(dst.horizdir.x       == Approx(1.0));
+    }
+}
+
+TEST_CASE("DRW_Leader::encodeDwg straight-leader with arrow=0 round-trips",
+          "[dwg-write][entity-encode][leader]") {
+    DRW_Leader src;
+    src.handle      = 0xD1;
+    src.style       = "Standard";
+    src.arrow       = 0;
+    src.leadertype  = 0;            // straight segments
+    src.textheight  = 1.0;
+    src.textwidth   = 1.0;
+    src.vertexlist.push_back(std::make_shared<DRW_Coord>(0.0, 0.0, 0.0));
+    src.vertexlist.push_back(std::make_shared<DRW_Coord>(1.0, 1.0, 0.0));
+    DrwEntityEncodeTestAccess::layerH(src).ref = 0x12;
+
+    for (DRW::Version ver : {DRW::AC1015, DRW::AC1018}) {
+        dwgBufferW w;
+        REQUIRE(DrwEntityEncodeTestAccess::encode(src, ver, &w));
+        auto bytes = snapshot(w);
+        dwgBuffer r(bytes.data(), bytes.size());
+        DRW_Leader dst;
+        REQUIRE(DrwEntityEncodeTestAccess::parse(dst, ver, &r));
+
+        REQUIRE(dst.arrow      == 0);
+        REQUIRE(dst.leadertype == 0);
+        REQUIRE(dst.vertexlist.size() == 2u);
+    }
+}

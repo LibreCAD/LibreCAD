@@ -2040,11 +2040,6 @@ class DRW_Leader : public DRW_Entity {
 public:
     DRW_Leader() {
         eType = DRW::LEADER;
-        flag = 3;
-        hookflag = vertnum = leadertype = 0;
-        extrusionPoint.x = extrusionPoint.y = 0.0;
-        arrow = 1;
-        extrusionPoint.z = 1.0;
     }
 
     virtual void applyExtrusion() override {}
@@ -2055,21 +2050,21 @@ protected:
     virtual bool encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs=0, dwgBufferW *strBuf=nullptr, dwgBufferW *handleBuf=nullptr) override;
 
 public:
-    UTF8STRING style;          /*!< Dimension style name, code 3 */
-    int arrow;                 /*!< Arrowhead flag, code 71, 0=Disabled; 1=Enabled */
-    int leadertype;            /*!< Leader path type, code 72, 0=Straight line segments; 1=Spline */
-    int flag;                  /*!< Leader creation flag, code 73, default 3 */
-    int hookline;              /*!< Hook line direction flag, code 74, default 1 */
-    int hookflag;              /*!< Hook line flag, code 75 */
-    double textheight;         /*!< Text annotation height, code 40 */
-    double textwidth;          /*!< Text annotation width, code 41 */
-    int vertnum;               /*!< Number of vertices, code 76 */
-    int coloruse;              /*!< Color to use if leader's DIMCLRD = BYBLOCK, code 77 */
-    duint32 annotHandle;       /*!< Hard reference to associated annotation, code 340 */
-    DRW_Coord extrusionPoint;  /*!< Normal vector, code 210, 220 & 230 */
-    DRW_Coord horizdir;        /*!< "Horizontal" direction for leader, code 211, 221 & 231 */
-    DRW_Coord offsetblock;     /*!< Offset of last leader vertex from block, code 212, 222 & 232 */
-    DRW_Coord offsettext;      /*!< Offset of last leader vertex from annotation, code 213, 223 & 233 */
+    UTF8STRING style;                            /*!< Dimension style name, code 3 */
+    int arrow {1};                               /*!< Arrowhead flag, code 71, 0=Disabled; 1=Enabled */
+    int leadertype {0};                          /*!< Leader path type, code 72, 0=Straight line segments; 1=Spline */
+    int flag {3};                                /*!< Leader creation flag, code 73, default 3 */
+    int hookline {1};                            /*!< Hook line direction flag, code 74, default 1 */
+    int hookflag {1};                            /*!< Hook line flag, code 75 */
+    double textheight {1.0};                     /*!< Text annotation height, code 40 */
+    double textwidth {1.0};                      /*!< Text annotation width, code 41 */
+    int vertnum {0};                             /*!< Number of vertices, code 76 */
+    int coloruse {7};                            /*!< Color to use if leader's DIMCLRD = BYBLOCK, code 77 */
+    duint32 annotHandle {0};                     /*!< Hard reference to associated annotation, code 340 */
+    DRW_Coord extrusionPoint {0.0, 0.0, 1.0};    /*!< Normal vector, code 210, 220 & 230 */
+    DRW_Coord horizdir       {1.0, 0.0, 0.0};    /*!< "Horizontal" direction for leader, code 211, 221 & 231 */
+    DRW_Coord offsetblock;                       /*!< Offset of last leader vertex from block, code 212, 222 & 232 */
+    DRW_Coord offsettext;                        /*!< Offset of last leader vertex from annotation, code 213, 223 & 233 */
 
     std::vector<std::shared_ptr<DRW_Coord>> vertexlist;  /*!< vertex points list, code 10, 20 & 30 */
 

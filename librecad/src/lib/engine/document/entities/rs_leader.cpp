@@ -127,14 +127,13 @@ RS_VectorSolutions RS_Leader::getRefPoints() const {
 RS_Entity* RS_Leader::addVertex(const RS_Vector& v) {
 
     RS_Entity* entity{nullptr};
-    static RS_Vector last = RS_Vector{false};
 
     if (empty) {
-        last = v;
+        m_lastVertex = v;
         empty = false;
     } else {
         // add line to the leader:
-        entity = new RS_Line{this, {last, v}};
+        entity = new RS_Line{this, {m_lastVertex, v}};
         entity->setPen(RS_Pen(RS2::FlagInvalid));
         entity->setLayer(nullptr);
         RS_EntityContainer::addEntity(entity);
@@ -143,7 +142,7 @@ RS_Entity* RS_Leader::addVertex(const RS_Vector& v) {
             update();
         }
 
-        last = v;
+        m_lastVertex = v;
     }
 
     return entity;
