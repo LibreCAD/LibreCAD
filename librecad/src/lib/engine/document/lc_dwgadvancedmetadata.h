@@ -59,6 +59,12 @@ public:
         Sab
     };
 
+    enum class ModelerPayloadSection {
+        Unknown,
+        Body,
+        HandleStream
+    };
+
     enum class RawObjectFamily {
         Unknown,
         Associative,
@@ -205,6 +211,11 @@ public:
         size_t markerOffset = 0;
         size_t markerLength = 0;
         std::string markerText;
+        bool rawByteSplitKnown = false;
+        bool rawByteSplitConsistent = true;
+        size_t rawBodyByteCount = 0;
+        size_t rawHandleByteCount = 0;
+        ModelerPayloadSection markerSection = ModelerPayloadSection::Unknown;
         duint32 historyHandle = 0;
         size_t rawByteCount = 0;
         std::vector<duint8> rawBytes;
@@ -278,6 +289,16 @@ public:
                    + toleranceContent + overrideFlags + missingLeaderGeometry
                    + invalidated + replaced;
         }
+    };
+
+    struct ModelerPayloadCounts {
+        size_t recordCount = 0;
+        size_t sat = 0;
+        size_t sab = 0;
+        size_t unknown = 0;
+        size_t inconsistentSplit = 0;
+        size_t markerInBody = 0;
+        size_t markerInHandleStream = 0;
     };
 
     struct TableRecord {
@@ -766,6 +787,14 @@ public:
         record.markerText = marker.text;
         record.historyHandle = geometry.m_historyHandle;
         record.rawByteCount = geometry.m_rawBytes.size();
+        const ModelerRawByteSplit split = splitModelerRawBytes(
+            geometry.m_bodyBitSize, record.rawByteCount);
+        record.rawByteSplitKnown = split.known;
+        record.rawByteSplitConsistent = split.consistent;
+        record.rawBodyByteCount = split.bodyByteCount;
+        record.rawHandleByteCount = split.handleByteCount;
+        record.markerSection = modelerPayloadSectionForMarker(
+            marker, split, record.rawByteCount);
         record.rawBytes = geometry.m_rawBytes;
         m_modelerGeometry.push_back(std::move(record));
     }
@@ -1274,6 +1303,25 @@ public:
         }
         return counts;
     }
+    ModelerPayloadCounts modelerPayloadCounts() const {
+        ModelerPayloadCounts counts;
+        for (const ModelerGeometryRecord& record : m_modelerGeometry) {
+            ++counts.recordCount;
+            if (record.payloadKind == ModelerPayloadKind::Sat)
+                ++counts.sat;
+            else if (record.payloadKind == ModelerPayloadKind::Sab)
+                ++counts.sab;
+            else
+                ++counts.unknown;
+            if (!record.rawByteSplitConsistent)
+                ++counts.inconsistentSplit;
+            if (record.markerSection == ModelerPayloadSection::Body)
+                ++counts.markerInBody;
+            else if (record.markerSection == ModelerPayloadSection::HandleStream)
+                ++counts.markerInHandleStream;
+        }
+        return counts;
+    }
     const TableCellRecord* findTableCell(duint32 tableHandle, int row, int column) const {
         const TableRecord* table = findTableByHandle(tableHandle);
         if (table == nullptr || row < 0 || column < 0)
@@ -1432,12 +1480,51 @@ public:
         }
     }
 
+    static const char* modelerPayloadSectionName(ModelerPayloadSection section) {
+        switch (section) {
+            case ModelerPayloadSection::Body:
+                return "body";
+            case ModelerPayloadSection::HandleStream:
+                return "handle-stream";
+            case ModelerPayloadSection::Unknown:
+            default:
+                return "unknown";
+        }
+    }
+
     struct ModelerPayloadMarker {
         ModelerPayloadKind kind = ModelerPayloadKind::Unknown;
         size_t offset = 0;
         size_t length = 0;
         std::string text;
     };
+
+    struct ModelerRawByteSplit {
+        bool known = false;
+        bool consistent = true;
+        size_t bodyByteCount = 0;
+        size_t handleByteCount = 0;
+    };
+
+    static ModelerRawByteSplit splitModelerRawBytes(
+        duint32 bodyBitSize, size_t rawByteCount) {
+        ModelerRawByteSplit split;
+        if (bodyBitSize == 0) {
+            split.bodyByteCount = rawByteCount;
+            return split;
+        }
+        split.known = true;
+        const size_t bodyByteCount =
+            (static_cast<size_t>(bodyBitSize) + 7u) / 8u;
+        if (bodyByteCount > rawByteCount) {
+            split.consistent = false;
+            split.bodyByteCount = rawByteCount;
+            return split;
+        }
+        split.bodyByteCount = bodyByteCount;
+        split.handleByteCount = rawByteCount - bodyByteCount;
+        return split;
+    }
 
     static ModelerPayloadMarker scanModelerPayloadMarker(
         const std::vector<duint8>& bytes) {
@@ -1457,6 +1544,23 @@ public:
     }
 
 private:
+    static ModelerPayloadSection modelerPayloadSectionForMarker(
+        const ModelerPayloadMarker& marker, const ModelerRawByteSplit& split,
+        size_t rawByteCount) {
+        if (marker.kind == ModelerPayloadKind::Unknown || marker.length == 0)
+            return ModelerPayloadSection::Unknown;
+        const size_t markerEnd = marker.offset + marker.length;
+        if (markerEnd > rawByteCount || markerEnd < marker.offset)
+            return ModelerPayloadSection::Unknown;
+        if (!split.known)
+            return ModelerPayloadSection::Body;
+        if (markerEnd <= split.bodyByteCount)
+            return ModelerPayloadSection::Body;
+        if (marker.offset >= split.bodyByteCount)
+            return ModelerPayloadSection::HandleStream;
+        return ModelerPayloadSection::Unknown;
+    }
+
     static ModelerPayloadMarker findModelerPayloadMarker(
         const std::vector<duint8>& bytes, const char* marker,
         ModelerPayloadKind kind) {

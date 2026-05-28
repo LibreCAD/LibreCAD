@@ -954,8 +954,16 @@ TEST_CASE("DWG advanced metadata caches raw and semantic sidecars",
   CHECK(capturedModeler.markerOffset == 0u);
   CHECK(capturedModeler.markerLength == 15u);
   CHECK(capturedModeler.markerText == "ACIS BinaryFile");
+  CHECK(capturedModeler.rawByteSplitKnown);
+  CHECK_FALSE(capturedModeler.rawByteSplitConsistent);
+  CHECK(capturedModeler.rawBodyByteCount == 15u);
+  CHECK(capturedModeler.rawHandleByteCount == 0u);
+  CHECK(capturedModeler.markerSection ==
+        LC_DwgAdvancedMetadata::ModelerPayloadSection::Body);
   CHECK(std::string(LC_DwgAdvancedMetadata::modelerPayloadKindName(
             capturedModeler.payloadKind)) == "SAB");
+  CHECK(std::string(LC_DwgAdvancedMetadata::modelerPayloadSectionName(
+            capturedModeler.markerSection)) == "body");
   CHECK(capturedModeler.historyHandle == 0xFBu);
   CHECK(capturedModeler.rawByteCount == 15u);
   CHECK(capturedModeler.rawBytes.back() == 'e');
@@ -963,6 +971,15 @@ TEST_CASE("DWG advanced metadata caches raw and semantic sidecars",
   const auto modelerByHistory = metadata.findModelerGeometryByHistoryHandle(0xFBu);
   REQUIRE(modelerByHistory.size() == 1u);
   CHECK(modelerByHistory.front() == &capturedModeler);
+  const LC_DwgAdvancedMetadata::ModelerPayloadCounts modelerPayloads =
+      metadata.modelerPayloadCounts();
+  CHECK(modelerPayloads.recordCount == 1u);
+  CHECK(modelerPayloads.sab == 1u);
+  CHECK(modelerPayloads.sat == 0u);
+  CHECK(modelerPayloads.unknown == 0u);
+  CHECK(modelerPayloads.inconsistentSplit == 1u);
+  CHECK(modelerPayloads.markerInBody == 1u);
+  CHECK(modelerPayloads.markerInHandleStream == 0u);
 
   REQUIRE(metadata.associativeObjects().size() == 1);
   const auto& capturedAssoc = metadata.associativeObjects().front();
@@ -1232,6 +1249,59 @@ TEST_CASE("DWG advanced metadata classifies modeler payload markers",
   CHECK(unknownMarker.offset == 0u);
   CHECK(unknownMarker.length == 0u);
   CHECK(unknownMarker.text.empty());
+}
+
+TEST_CASE("DWG advanced metadata indexes modeler raw byte splits",
+          "[entity_metadata][dwg_metadata][modeler]") {
+  const LC_DwgAdvancedMetadata::ModelerRawByteSplit unknownSplit =
+      LC_DwgAdvancedMetadata::splitModelerRawBytes(0u, 12u);
+  CHECK_FALSE(unknownSplit.known);
+  CHECK(unknownSplit.consistent);
+  CHECK(unknownSplit.bodyByteCount == 12u);
+  CHECK(unknownSplit.handleByteCount == 0u);
+
+  const LC_DwgAdvancedMetadata::ModelerRawByteSplit split =
+      LC_DwgAdvancedMetadata::splitModelerRawBytes(64u, 12u);
+  CHECK(split.known);
+  CHECK(split.consistent);
+  CHECK(split.bodyByteCount == 8u);
+  CHECK(split.handleByteCount == 4u);
+
+  const LC_DwgAdvancedMetadata::ModelerRawByteSplit inconsistentSplit =
+      LC_DwgAdvancedMetadata::splitModelerRawBytes(128u, 12u);
+  CHECK(inconsistentSplit.known);
+  CHECK_FALSE(inconsistentSplit.consistent);
+  CHECK(inconsistentSplit.bodyByteCount == 12u);
+  CHECK(inconsistentSplit.handleByteCount == 0u);
+
+  LC_DwgAdvancedMetadata metadata;
+  DRW_ModelerGeometry modelerGeometry(DRW::BODY);
+  modelerGeometry.handle = 0x4A0u;
+  modelerGeometry.m_bodyBitSize = 64u;
+  modelerGeometry.m_rawBytes = {'b', 'o', 'd', 'y', 'd', 'a',
+                                't', 'a', 'A', 'C', 'I', 'S'};
+  metadata.addModelerGeometry(modelerGeometry);
+
+  REQUIRE(metadata.modelerGeometry().size() == 1u);
+  const auto& record = metadata.modelerGeometry().front();
+  CHECK(record.rawByteSplitKnown);
+  CHECK(record.rawByteSplitConsistent);
+  CHECK(record.rawBodyByteCount == 8u);
+  CHECK(record.rawHandleByteCount == 4u);
+  CHECK(record.markerSection ==
+        LC_DwgAdvancedMetadata::ModelerPayloadSection::HandleStream);
+  CHECK(std::string(LC_DwgAdvancedMetadata::modelerPayloadSectionName(
+            record.markerSection)) == "handle-stream");
+
+  const LC_DwgAdvancedMetadata::ModelerPayloadCounts counts =
+      metadata.modelerPayloadCounts();
+  CHECK(counts.recordCount == 1u);
+  CHECK(counts.sat == 1u);
+  CHECK(counts.sab == 0u);
+  CHECK(counts.unknown == 0u);
+  CHECK(counts.inconsistentSplit == 0u);
+  CHECK(counts.markerInBody == 0u);
+  CHECK(counts.markerInHandleStream == 1u);
 }
 
 TEST_CASE("DWG advanced metadata classifies associative object names",

@@ -5509,6 +5509,8 @@ void RS_FilterDXFRW::writeObjects() {
             metadata.tableWriterBlockerCounts();
         const LC_DwgAdvancedMetadata::MLeaderWriterBlockerCounts mleaderBlockers =
             metadata.mleaderWriterBlockerCounts();
+        const LC_DwgAdvancedMetadata::ModelerPayloadCounts modelerPayloads =
+            metadata.modelerPayloadCounts();
         for (const auto& record : metadata.rawObjects()) {
             if (nativeSunHandles.count(record.handle) != 0 && isSunRawObject(record)) {
                 hasBlockedReplay = true;
@@ -5617,6 +5619,23 @@ void RS_FilterDXFRW::writeObjects() {
             RS_DEBUG->print(
                 "RS_FilterDXFRW::writeObjects: wrote %d native MLEADERSTYLE objects",
                 nativeMLeaderStyleObjects);
+        }
+        if (modelerPayloads.recordCount > 0) {
+            const RS_Debug::RS_DebugLevel level =
+                modelerPayloads.inconsistentSplit > 0
+                    ? RS_Debug::D_WARNING
+                    : RS_Debug::D_DEBUGGING;
+            RS_DEBUG->print(
+                level,
+                "DWG modeler geometry payloads: records=%d SAT=%d SAB=%d "
+                "unknown=%d split-inconsistent=%d marker-body=%d marker-handle=%d",
+                static_cast<int>(modelerPayloads.recordCount),
+                static_cast<int>(modelerPayloads.sat),
+                static_cast<int>(modelerPayloads.sab),
+                static_cast<int>(modelerPayloads.unknown),
+                static_cast<int>(modelerPayloads.inconsistentSplit),
+                static_cast<int>(modelerPayloads.markerInBody),
+                static_cast<int>(modelerPayloads.markerInHandleStream));
         }
         if (tableBlockers.tableCount > 0 && tableBlockers.totalBlockers() > 0) {
             RS_DEBUG->print(

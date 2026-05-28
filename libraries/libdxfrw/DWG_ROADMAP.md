@@ -216,6 +216,9 @@ Completed in the 2026-05-27 implementation pass:
 - Ready E fixture harness diagnostics advanced: optional DWG fixture manifest
   tests now parse expected tags, callbacks, raw-family expectations, reference
   dump paths, and load/raw-preservation expectations into typed structures.
+- Ready F modeler raw split diagnostics advanced: preserved modeler payloads
+  now expose body/handle-stream byte split metadata, marker section
+  classification, split consistency checks, and export-time payload summaries.
 
 Still incomplete:
 
@@ -227,7 +230,7 @@ Still incomplete:
   tracking and text-content writing; the next safe MLEADER work is explicit
   writer blocker diagnostics for block/tolerance/override cases.
 - Slice 11-12 ACIS/modeler and associative/action/history graph expansion has
-  queryable shell records; the next safe work is byte-range/count metadata and
+  queryable shell records; the next safe work is bounded sub-block counts and
   graph diagnostics, not ACIS interpretation or action evaluation.
 - Slice 14 remaining advanced entities: MESH, SHAPE, OLE2FRAME, raster/image/
   underlay DWG writing, and fuller HATCH semantics beyond gradients.
@@ -379,6 +382,39 @@ Acceptance:
   semantics without external files.
 
 Stop before adding mandatory fixture downloads or network access.
+
+### Ready F: Modeler Raw Split Diagnostics
+
+Why ready: `DRW_ModelerGeometry` already preserves the full raw object bytes
+and the R2010+ body bit-size value. Ready B added marker offsets, so the next
+bounded step is to report where that marker lands relative to the body/handle
+stream split and to diagnose inconsistent split metadata.
+
+Status: complete in the current implementation pass. This is byte-indexing
+only; ACIS/SAB interpretation, wireframe extraction, and modeler rewriting
+remain deferred.
+
+Implementation steps:
+
+1. Add modeler raw-byte split metadata to `ModelerGeometryRecord`: whether the
+   body bit-size split is known, whether it is consistent with preserved raw
+   bytes, body byte count, handle-stream byte count, and marker section.
+2. Add helper methods for split calculation and payload-section naming.
+3. Add aggregate modeler payload counts for SAT/SAB/unknown records,
+   inconsistent splits, and marker section placement.
+4. Log modeler payload summaries during DWG object writing, warning only when
+   split metadata is inconsistent.
+5. Add synthetic `[entity_metadata]` tests for unknown, consistent, and
+   inconsistent splits plus marker-in-handle-stream placement.
+
+Acceptance:
+
+- `[entity_metadata]` proves split counts and marker sections.
+- `[dwg-write]` remains green because export diagnostics changed.
+- qmake6 remains green.
+
+Stop before parsing ACIS sub-blocks, interpreting SAT/SAB geometry, or
+rewriting modeler entities natively.
 
 ### Not Ready As One-Shot Work
 
@@ -772,12 +808,16 @@ Completed:
   lookups.
 - Metadata classifies preserved modeler raw payloads as likely SAT, SAB, or
   unknown when recognizable ACIS markers are present.
+- Metadata records recognizable payload marker offsets/lengths, raw body byte
+  counts, handle-stream byte counts, marker sections, and inconsistent
+  body-bit-size splits.
 
 Remaining:
 
 1. Split metadata into entity kind, modeler version, SAT/SAB marker, body
-   bit-size split, raw ACIS bytes, wireframe bytes, silhouette bytes,
-   3DSOLID history handle, and empty-body flag.
+   bit-size split, and 3DSOLID history handle is covered; remaining work is
+   to identify raw ACIS sub-blocks, wireframe bytes, and silhouette bytes
+   inside the preserved payload.
 2. Add bounded parsers for ACIS sub-block counts and byte ranges without
    interpreting ACIS geometry.
 3. Surface coarse fallback summaries when available.
