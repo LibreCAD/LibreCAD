@@ -271,6 +271,7 @@ librecad/src/lib/information/rs_information.cpp
 librecad/src/lib/math/lc_linemath.cpp
 librecad/src/lib/math/lc_quadratic.cpp
 librecad/src/lib/math/rs_math.cpp
+librecad/src/lib/math/lc_archparser.cpp
 librecad/src/lib/printing/lc_printing.cpp
 librecad/src/lib/creation/rs_creation.cpp
 librecad/src/lib/fileio/rs_fileio.cpp
