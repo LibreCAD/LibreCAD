@@ -2290,6 +2290,93 @@ TEST_CASE("DWG advanced metadata reports graph replay policy by family",
             LC_DwgAdvancedMetadata::GraphReplayFamily::AcDbAssoc) == 1u);
 }
 
+TEST_CASE("DWG advanced metadata reports advanced entity writer readiness",
+          "[entity_metadata][dwg_metadata][raw-replay]") {
+  LC_DwgAdvancedMetadata metadata;
+
+  DRW_UnsupportedObject mesh;
+  mesh.m_handle = 0x740u;
+  mesh.m_isEntity = true;
+  mesh.m_recordName = "MESH";
+  mesh.m_className = "AcDbSubDMesh";
+  mesh.m_rawBytes = {0x01u};
+  metadata.addUnsupportedObject(mesh);
+
+  DRW_UnsupportedObject shape;
+  shape.m_handle = 0x741u;
+  shape.m_isEntity = true;
+  shape.m_recordName = "SHAPE";
+  shape.m_className = "AcDbShape";
+  metadata.addUnsupportedObject(shape);
+
+  DRW_UnsupportedObject underlay;
+  underlay.m_handle = 0x742u;
+  underlay.m_isEntity = true;
+  underlay.m_recordName = "PDFUNDERLAY";
+  underlay.m_className = "AcDbPdfReference";
+  underlay.m_rawBytes = {0x03u};
+  metadata.addUnsupportedObject(underlay);
+
+  DRW_UnsupportedObject unknownEntity;
+  unknownEntity.m_handle = 0x743u;
+  unknownEntity.m_isEntity = true;
+  unknownEntity.m_isCustomClass = true;
+  metadata.addUnsupportedObject(unknownEntity);
+
+  DRW_MLeader blockLeader;
+  blockLeader.handle = 0x744u;
+  blockLeader.styleContentType = 1u;
+  blockLeader.context.hasContentsBlock = true;
+  DRW_MLeaderLeaderLine leaderLine;
+  leaderLine.points = {DRW_Coord{0.0, 0.0, 0.0}, DRW_Coord{1.0, 0.0, 0.0}};
+  DRW_MLeaderRoot root;
+  root.leaderLines.push_back(leaderLine);
+  blockLeader.context.roots.push_back(root);
+  metadata.addMLeader(blockLeader);
+
+  const std::vector<LC_DwgAdvancedMetadata::AdvancedEntityWriterReadiness>
+      ledger = metadata.advancedEntityWriterLedger(DRW::AC1024);
+  REQUIRE(ledger.size() == 5u);
+  CHECK(ledger.front().family ==
+        LC_DwgAdvancedMetadata::AdvancedEntityWriterFamily::Mesh);
+  CHECK(ledger.front().fallbackAvailable);
+  CHECK(ledger.front().editedFallbackInvalidated);
+  CHECK_FALSE(ledger.front().rawReplayAvailable);
+
+  const LC_DwgAdvancedMetadata::AdvancedEntityWriterBlockerCounts counts =
+      metadata.advancedEntityWriterBlockerCounts(DRW::AC1024);
+  CHECK(counts.recordCount == 5u);
+  CHECK(counts.mesh == 1u);
+  CHECK(counts.shape == 1u);
+  CHECK(counts.underlay == 1u);
+  CHECK(counts.mleader == 1u);
+  CHECK(counts.unknown == 1u);
+  CHECK(counts.nativeWriterAvailable == 1u);
+  CHECK(counts.rawReplayAvailable == 0u);
+  CHECK(counts.fallbackAvailable == 3u);
+  CHECK(counts.editedFallbackInvalidated == 4u);
+  CHECK(counts.missingRequiredMetadata == 1u);
+  CHECK(counts.missingPayloadBytes == 2u);
+  CHECK(counts.unsupportedAdvancedContent == 4u);
+  CHECK(counts.odaComplete == 2u);
+  CHECK(counts.odaPartial == 2u);
+  CHECK(counts.odaAbsent == 1u);
+  CHECK(counts.totalBlockers() == 11u);
+  CHECK(LC_DwgAdvancedMetadata::advancedEntityWriterFamilyFromNames(
+            "ARC_DIMENSION", "AcDbArcDimension")
+        == LC_DwgAdvancedMetadata::AdvancedEntityWriterFamily::ArcDimension);
+  CHECK(std::string(LC_DwgAdvancedMetadata::advancedEntityWriterFamilyName(
+            LC_DwgAdvancedMetadata::AdvancedEntityWriterFamily::Wipeout))
+        == "WIPEOUT");
+  CHECK(std::string(
+            LC_DwgAdvancedMetadata::advancedEntityWriterOdaCoverageName(
+                LC_DwgAdvancedMetadata::AdvancedEntityWriterOdaCoverage::
+                    Partial)) == "partial");
+  CHECK(LC_DwgAdvancedMetadata::advancedEntityWriterFamilyCount(
+            counts,
+            LC_DwgAdvancedMetadata::AdvancedEntityWriterFamily::MLeader) == 1u);
+}
+
 TEST_CASE("DWG advanced metadata invalidates associative raw replay",
           "[entity_metadata][dwg_metadata][raw-replay]") {
   LC_DwgAdvancedMetadata metadata;

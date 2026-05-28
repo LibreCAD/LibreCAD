@@ -147,6 +147,24 @@ public:
         AcShHistory
     };
 
+    enum class AdvancedEntityWriterFamily {
+        Unknown,
+        Mesh,
+        Shape,
+        Ole2Frame,
+        RasterImage,
+        Wipeout,
+        Underlay,
+        MLeader,
+        ArcDimension
+    };
+
+    enum class AdvancedEntityWriterOdaCoverage {
+        Complete,
+        Partial,
+        Absent
+    };
+
     enum class TableFallbackRole {
         GridLine,
         CellText,
@@ -259,6 +277,50 @@ public:
             return editedEntity + missingTarget + unsupportedEvaluator
                 + parserPartial + fallbackGeometryEdited + nativeReplacement
                 + cyclePathInvalidated + ownerDeleted;
+        }
+    };
+
+    struct AdvancedEntityWriterReadiness {
+        AdvancedEntityWriterFamily family = AdvancedEntityWriterFamily::Unknown;
+        AdvancedEntityWriterOdaCoverage odaCoverage =
+            AdvancedEntityWriterOdaCoverage::Absent;
+        duint32 handle = 0;
+        std::string recordName;
+        std::string className;
+        bool nativeWriterAvailable = false;
+        bool rawReplayAvailable = false;
+        bool fallbackAvailable = false;
+        bool editedFallbackInvalidated = false;
+        bool missingRequiredMetadata = false;
+        bool missingPayloadBytes = false;
+        bool unsupportedAdvancedContent = false;
+    };
+
+    struct AdvancedEntityWriterBlockerCounts {
+        size_t recordCount = 0;
+        size_t mesh = 0;
+        size_t shape = 0;
+        size_t ole2Frame = 0;
+        size_t rasterImage = 0;
+        size_t wipeout = 0;
+        size_t underlay = 0;
+        size_t mleader = 0;
+        size_t arcDimension = 0;
+        size_t unknown = 0;
+        size_t nativeWriterAvailable = 0;
+        size_t rawReplayAvailable = 0;
+        size_t fallbackAvailable = 0;
+        size_t editedFallbackInvalidated = 0;
+        size_t missingRequiredMetadata = 0;
+        size_t missingPayloadBytes = 0;
+        size_t unsupportedAdvancedContent = 0;
+        size_t odaComplete = 0;
+        size_t odaPartial = 0;
+        size_t odaAbsent = 0;
+
+        size_t totalBlockers() const {
+            return editedFallbackInvalidated + missingRequiredMetadata
+                + missingPayloadBytes + unsupportedAdvancedContent;
         }
     };
 
@@ -2067,6 +2129,47 @@ public:
             + prefixCounts.unsupportedVersion + prefixCounts.boundedCountOverflow;
         return counts;
     }
+    std::vector<AdvancedEntityWriterReadiness> advancedEntityWriterLedger(
+        DRW::Version version) const {
+        std::vector<AdvancedEntityWriterReadiness> result;
+        for (const RawObjectRecord& rawRecord : m_rawObjects) {
+            AdvancedEntityWriterReadiness record =
+                advancedEntityWriterReadinessFromRawObject(rawRecord, version);
+            if (record.family != AdvancedEntityWriterFamily::Unknown
+                || rawRecord.isEntity) {
+                result.push_back(std::move(record));
+            }
+        }
+        for (const MLeaderRecord& mleader : m_mleaders)
+            result.push_back(advancedEntityWriterReadinessFromMLeader(mleader, version));
+        return result;
+    }
+
+    AdvancedEntityWriterBlockerCounts advancedEntityWriterBlockerCounts(
+        DRW::Version version) const {
+        AdvancedEntityWriterBlockerCounts counts;
+        for (const AdvancedEntityWriterReadiness& record :
+             advancedEntityWriterLedger(version)) {
+            ++counts.recordCount;
+            incrementAdvancedEntityWriterFamilyCount(counts, record.family);
+            incrementAdvancedEntityWriterCoverageCount(counts, record.odaCoverage);
+            if (record.nativeWriterAvailable)
+                ++counts.nativeWriterAvailable;
+            if (record.rawReplayAvailable)
+                ++counts.rawReplayAvailable;
+            if (record.fallbackAvailable)
+                ++counts.fallbackAvailable;
+            if (record.editedFallbackInvalidated)
+                ++counts.editedFallbackInvalidated;
+            if (record.missingRequiredMetadata)
+                ++counts.missingRequiredMetadata;
+            if (record.missingPayloadBytes)
+                ++counts.missingPayloadBytes;
+            if (record.unsupportedAdvancedContent)
+                ++counts.unsupportedAdvancedContent;
+        }
+        return counts;
+    }
     const TableCellRecord* findTableCell(duint32 tableHandle, int row, int column) const {
         const TableRecord* table = findTableByHandle(tableHandle);
         if (table == nullptr || row < 0 || column < 0)
@@ -2846,6 +2949,76 @@ public:
         }
     }
 
+    static AdvancedEntityWriterFamily advancedEntityWriterFamilyFromNames(
+        const std::string& recordName, const std::string& className) {
+        if (containsSubstring(recordName, "MESH")
+            || containsSubstring(className, "Mesh")
+            || containsSubstring(className, "SubDMesh")) {
+            return AdvancedEntityWriterFamily::Mesh;
+        }
+        if (recordName == "SHAPE" || className == "AcDbShape")
+            return AdvancedEntityWriterFamily::Shape;
+        if (recordName == "OLE2FRAME" || containsSubstring(className, "Ole2Frame"))
+            return AdvancedEntityWriterFamily::Ole2Frame;
+        if (recordName == "WIPEOUT" || className == "AcDbWipeout")
+            return AdvancedEntityWriterFamily::Wipeout;
+        if (recordName == "PDFUNDERLAY" || recordName == "DGNUNDERLAY"
+            || recordName == "DWFUNDERLAY"
+            || containsSubstring(className, "Underlay")
+            || className == "AcDbPdfReference"
+            || className == "AcDbDgnReference"
+            || className == "AcDbDwfReference") {
+            return AdvancedEntityWriterFamily::Underlay;
+        }
+        if (recordName == "IMAGE" || className == "AcDbRasterImage")
+            return AdvancedEntityWriterFamily::RasterImage;
+        if (recordName == "MULTILEADER" || recordName == "MLEADER"
+            || className == "AcDbMLeader") {
+            return AdvancedEntityWriterFamily::MLeader;
+        }
+        if (recordName == "ARC_DIMENSION" || className == "AcDbArcDimension")
+            return AdvancedEntityWriterFamily::ArcDimension;
+        return AdvancedEntityWriterFamily::Unknown;
+    }
+
+    static const char* advancedEntityWriterFamilyName(
+        AdvancedEntityWriterFamily family) {
+        switch (family) {
+            case AdvancedEntityWriterFamily::Mesh:
+                return "MESH";
+            case AdvancedEntityWriterFamily::Shape:
+                return "SHAPE";
+            case AdvancedEntityWriterFamily::Ole2Frame:
+                return "OLE2FRAME";
+            case AdvancedEntityWriterFamily::RasterImage:
+                return "IMAGE";
+            case AdvancedEntityWriterFamily::Wipeout:
+                return "WIPEOUT";
+            case AdvancedEntityWriterFamily::Underlay:
+                return "UNDERLAY";
+            case AdvancedEntityWriterFamily::MLeader:
+                return "MLEADER";
+            case AdvancedEntityWriterFamily::ArcDimension:
+                return "ARC_DIMENSION";
+            case AdvancedEntityWriterFamily::Unknown:
+            default:
+                return "unknown";
+        }
+    }
+
+    static const char* advancedEntityWriterOdaCoverageName(
+        AdvancedEntityWriterOdaCoverage coverage) {
+        switch (coverage) {
+            case AdvancedEntityWriterOdaCoverage::Complete:
+                return "complete";
+            case AdvancedEntityWriterOdaCoverage::Partial:
+                return "partial";
+            case AdvancedEntityWriterOdaCoverage::Absent:
+            default:
+                return "absent";
+        }
+    }
+
     static AssociativeKind associativeKindFromRecordName(const std::string& recordName) {
         if (recordName == "ACDBASSOCNETWORK")
             return AssociativeKind::Network;
@@ -2988,6 +3161,32 @@ public:
             case GraphReplayFamily::AcShHistory:
                 return counts.acShHistory;
             case GraphReplayFamily::Unknown:
+            default:
+                return counts.unknown;
+        }
+    }
+
+    static size_t advancedEntityWriterFamilyCount(
+        const AdvancedEntityWriterBlockerCounts& counts,
+        AdvancedEntityWriterFamily family) {
+        switch (family) {
+            case AdvancedEntityWriterFamily::Mesh:
+                return counts.mesh;
+            case AdvancedEntityWriterFamily::Shape:
+                return counts.shape;
+            case AdvancedEntityWriterFamily::Ole2Frame:
+                return counts.ole2Frame;
+            case AdvancedEntityWriterFamily::RasterImage:
+                return counts.rasterImage;
+            case AdvancedEntityWriterFamily::Wipeout:
+                return counts.wipeout;
+            case AdvancedEntityWriterFamily::Underlay:
+                return counts.underlay;
+            case AdvancedEntityWriterFamily::MLeader:
+                return counts.mleader;
+            case AdvancedEntityWriterFamily::ArcDimension:
+                return counts.arcDimension;
+            case AdvancedEntityWriterFamily::Unknown:
             default:
                 return counts.unknown;
         }
@@ -4359,6 +4558,157 @@ private:
             case RawObjectFamily::Unknown:
             default:
                 ++counts.unknown;
+                return;
+        }
+    }
+
+    static AdvancedEntityWriterReadiness advancedEntityWriterReadinessFromRawObject(
+        const RawObjectRecord& rawRecord, DRW::Version version) {
+        AdvancedEntityWriterReadiness record;
+        record.family = advancedEntityWriterFamilyFromNames(
+            rawRecord.recordName, rawRecord.className);
+        record.odaCoverage = advancedEntityWriterOdaCoverage(record.family);
+        record.handle = rawRecord.handle;
+        record.recordName = rawRecord.recordName;
+        record.className = rawRecord.className;
+        record.nativeWriterAvailable =
+            advancedEntityNativeWriterAvailable(record.family, version);
+        record.rawReplayAvailable =
+            rawReplayBlocker(rawRecord) == ReplayBlocker::None
+            && !rawRecord.isEntity;
+        record.fallbackAvailable =
+            advancedEntityFallbackAvailable(record.family);
+        record.editedFallbackInvalidated =
+            rawRecord.replayState == ReplayState::ReplayInvalidated
+            || rawRecord.replayState == ReplayState::ReplayReplaced
+            || rawRecord.isEntity;
+        record.missingRequiredMetadata =
+            rawRecord.isCustomClass && rawRecord.recordName.empty()
+            && rawRecord.className.empty();
+        record.missingPayloadBytes = rawRecord.rawBytes.empty();
+        record.unsupportedAdvancedContent =
+            record.family != AdvancedEntityWriterFamily::Unknown
+            && !record.nativeWriterAvailable
+            && !record.rawReplayAvailable;
+        return record;
+    }
+
+    static AdvancedEntityWriterReadiness advancedEntityWriterReadinessFromMLeader(
+        const MLeaderRecord& mleader, DRW::Version version) {
+        AdvancedEntityWriterReadiness record;
+        record.family = AdvancedEntityWriterFamily::MLeader;
+        record.odaCoverage = AdvancedEntityWriterOdaCoverage::Complete;
+        record.handle = mleader.handle;
+        record.recordName = "MULTILEADER";
+        record.className = "AcDbMLeader";
+        record.nativeWriterAvailable =
+            advancedEntityNativeWriterAvailable(record.family, version);
+        record.fallbackAvailable = true;
+        record.editedFallbackInvalidated =
+            mleader.replayState != ReplayState::ReplayAllowed;
+        record.missingRequiredMetadata =
+            (mleader.styleHandle != 0 && !mleader.styleResolved)
+            || (mleader.effectiveContentType == 2 && !mleader.hasTextContent)
+            || mleader.rootCount == 0 || mleader.leaderLineCount == 0;
+        record.unsupportedAdvancedContent =
+            mleader.effectiveContentType == 1 || mleader.effectiveContentType == 3
+            || mleader.hasBlockContent || mleader.overrideFlags != 0;
+        return record;
+    }
+
+    static bool advancedEntityNativeWriterAvailable(
+        AdvancedEntityWriterFamily family, DRW::Version version) {
+        if (version == DRW::UNKNOWNV)
+            return false;
+        switch (family) {
+            case AdvancedEntityWriterFamily::MLeader:
+                return version >= DRW::AC1024;
+            default:
+                return false;
+        }
+    }
+
+    static bool advancedEntityFallbackAvailable(
+        AdvancedEntityWriterFamily family) {
+        switch (family) {
+            case AdvancedEntityWriterFamily::Mesh:
+            case AdvancedEntityWriterFamily::RasterImage:
+            case AdvancedEntityWriterFamily::Wipeout:
+            case AdvancedEntityWriterFamily::Underlay:
+            case AdvancedEntityWriterFamily::MLeader:
+                return true;
+            default:
+                return false;
+        }
+    }
+
+    static AdvancedEntityWriterOdaCoverage advancedEntityWriterOdaCoverage(
+        AdvancedEntityWriterFamily family) {
+        switch (family) {
+            case AdvancedEntityWriterFamily::Shape:
+            case AdvancedEntityWriterFamily::Ole2Frame:
+            case AdvancedEntityWriterFamily::RasterImage:
+            case AdvancedEntityWriterFamily::Wipeout:
+            case AdvancedEntityWriterFamily::MLeader:
+                return AdvancedEntityWriterOdaCoverage::Complete;
+            case AdvancedEntityWriterFamily::Mesh:
+            case AdvancedEntityWriterFamily::Underlay:
+            case AdvancedEntityWriterFamily::ArcDimension:
+                return AdvancedEntityWriterOdaCoverage::Partial;
+            case AdvancedEntityWriterFamily::Unknown:
+            default:
+                return AdvancedEntityWriterOdaCoverage::Absent;
+        }
+    }
+
+    static void incrementAdvancedEntityWriterFamilyCount(
+        AdvancedEntityWriterBlockerCounts& counts,
+        AdvancedEntityWriterFamily family) {
+        switch (family) {
+            case AdvancedEntityWriterFamily::Mesh:
+                ++counts.mesh;
+                return;
+            case AdvancedEntityWriterFamily::Shape:
+                ++counts.shape;
+                return;
+            case AdvancedEntityWriterFamily::Ole2Frame:
+                ++counts.ole2Frame;
+                return;
+            case AdvancedEntityWriterFamily::RasterImage:
+                ++counts.rasterImage;
+                return;
+            case AdvancedEntityWriterFamily::Wipeout:
+                ++counts.wipeout;
+                return;
+            case AdvancedEntityWriterFamily::Underlay:
+                ++counts.underlay;
+                return;
+            case AdvancedEntityWriterFamily::MLeader:
+                ++counts.mleader;
+                return;
+            case AdvancedEntityWriterFamily::ArcDimension:
+                ++counts.arcDimension;
+                return;
+            case AdvancedEntityWriterFamily::Unknown:
+            default:
+                ++counts.unknown;
+                return;
+        }
+    }
+
+    static void incrementAdvancedEntityWriterCoverageCount(
+        AdvancedEntityWriterBlockerCounts& counts,
+        AdvancedEntityWriterOdaCoverage coverage) {
+        switch (coverage) {
+            case AdvancedEntityWriterOdaCoverage::Complete:
+                ++counts.odaComplete;
+                return;
+            case AdvancedEntityWriterOdaCoverage::Partial:
+                ++counts.odaPartial;
+                return;
+            case AdvancedEntityWriterOdaCoverage::Absent:
+            default:
+                ++counts.odaAbsent;
                 return;
         }
     }

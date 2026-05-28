@@ -1674,8 +1674,10 @@ Acceptance:
 Purpose: prevent premature writers by recording each entity family's missing
 fields as data.
 
-Status: ready as diagnostics. This slice should not add any new native entity
-writer.
+Status: complete in the current implementation pass. The metadata layer now
+builds an advanced-entity writer readiness ledger for raw unsupported entities
+and MLEADER records, and DWG export logs family, writer/fallback/raw-replay,
+ODA-coverage, and blocker buckets without adding native byte writers.
 
 Spec basis: ODA clauses from `/tmp/dwg_spec.txt` should seed blocker fields
 where present: SHAPE 20.4.37, MLEADER 20.4.48/20.4.86, IMAGE/IMAGEDEF/
@@ -1718,6 +1720,13 @@ Implementation:
    raw/fallback/replaced states.
 
 Stop before entity byte writers.
+
+Acceptance:
+
+- `[entity_metadata]` covers synthetic MESH/SubDMesh, SHAPE, UNDERLAY, MLEADER,
+  and unknown custom-entity records in the readiness ledger.
+- DWG export diagnostics are ledger-only; no advanced entity writer is enabled
+  by this slice.
 
 ### Ready Detail D2a: MESH/SubDMesh Metadata Completeness
 

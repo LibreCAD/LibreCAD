@@ -5651,6 +5651,9 @@ void RS_FilterDXFRW::writeObjects() {
             metadata.tableNativeWriterBlockerCounts(m_dwgW->getVersion());
         const LC_DwgAdvancedMetadata::MLeaderWriterBlockerCounts mleaderBlockers =
             metadata.mleaderWriterBlockerCounts();
+        const LC_DwgAdvancedMetadata::AdvancedEntityWriterBlockerCounts
+            advancedEntityBlockers =
+                metadata.advancedEntityWriterBlockerCounts(m_dwgW->getVersion());
         const LC_DwgAdvancedMetadata::ModelerPayloadCounts modelerPayloads =
             metadata.modelerPayloadCounts();
         const LC_DwgAdvancedMetadata::AssociativeShellCounts associativeShells =
@@ -5921,6 +5924,37 @@ void RS_FilterDXFRW::writeObjects() {
                 static_cast<int>(mleaderBlockers.missingLeaderGeometry),
                 static_cast<int>(mleaderBlockers.invalidated),
                 static_cast<int>(mleaderBlockers.replaced));
+        }
+        if (advancedEntityBlockers.recordCount > 0
+            && advancedEntityBlockers.totalBlockers() > 0) {
+            RS_DEBUG->print(
+                RS_Debug::D_WARNING,
+                "DWG advanced entity writer readiness: records=%d mesh=%d "
+                "shape=%d ole2=%d image=%d wipeout=%d underlay=%d "
+                "mleader=%d arc-dim=%d unknown=%d native=%d raw=%d "
+                "fallback=%d edited-fallback=%d metadata=%d payload=%d "
+                "advanced-content=%d oda-complete=%d oda-partial=%d "
+                "oda-absent=%d",
+                static_cast<int>(advancedEntityBlockers.recordCount),
+                static_cast<int>(advancedEntityBlockers.mesh),
+                static_cast<int>(advancedEntityBlockers.shape),
+                static_cast<int>(advancedEntityBlockers.ole2Frame),
+                static_cast<int>(advancedEntityBlockers.rasterImage),
+                static_cast<int>(advancedEntityBlockers.wipeout),
+                static_cast<int>(advancedEntityBlockers.underlay),
+                static_cast<int>(advancedEntityBlockers.mleader),
+                static_cast<int>(advancedEntityBlockers.arcDimension),
+                static_cast<int>(advancedEntityBlockers.unknown),
+                static_cast<int>(advancedEntityBlockers.nativeWriterAvailable),
+                static_cast<int>(advancedEntityBlockers.rawReplayAvailable),
+                static_cast<int>(advancedEntityBlockers.fallbackAvailable),
+                static_cast<int>(advancedEntityBlockers.editedFallbackInvalidated),
+                static_cast<int>(advancedEntityBlockers.missingRequiredMetadata),
+                static_cast<int>(advancedEntityBlockers.missingPayloadBytes),
+                static_cast<int>(advancedEntityBlockers.unsupportedAdvancedContent),
+                static_cast<int>(advancedEntityBlockers.odaComplete),
+                static_cast<int>(advancedEntityBlockers.odaPartial),
+                static_cast<int>(advancedEntityBlockers.odaAbsent));
         }
         const size_t nativeSemanticRecords =
             static_cast<size_t>(nativeSunObjects + nativePlaceholderObjects
