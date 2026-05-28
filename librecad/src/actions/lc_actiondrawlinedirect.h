@@ -102,6 +102,7 @@ protected:
     RS_Vector doGetRelativeZeroAfterTrigger() override;
     void doSetStartPoint(RS_Vector vector) override;
     bool doCheckMayDrawPreview(QMouseEvent *pEvent, int status) override;
+    RS_Vector doGetMouseSnapPoint(QMouseEvent *e) override;
 
 private:
     std::unique_ptr<Points> pPoints;

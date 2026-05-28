@@ -119,6 +119,13 @@ QG_SnapToolBar::QG_SnapToolBar(QWidget* parent, QG_ActionHandler* ah, LC_ActionG
             SLOT(slotRestrictOrthogonal(bool)));
 	this->addAction(restrictOrthogonal);
 
+    snapAnglePolar = new QAction(QIcon(":/icons/line_angle.svg"),
+                                 tr("Polar Snap"), agm->snap);
+    snapAnglePolar->setObjectName("SnapAngle");
+    snapAnglePolar->setCheckable(true);
+    connect(snapAnglePolar, SIGNAL(triggered()), this, SLOT(actionTriggered()));
+    this->addAction(snapAnglePolar);
+
     restrictNothing = new QAction(QIcon(":/extui/restrictnothing.png"),
                                    tr("Restrict Nothing"), agm->restriction);
     restrictNothing->setObjectName("RestrictNothing");
@@ -170,6 +177,7 @@ void QG_SnapToolBar::setSnaps ( RS_SnapMode const& s )
     snapMiddle->setChecked(s.snapMiddle);
     snapDistance->setChecked(s.snapDistance);
     snapIntersection->setChecked(s.snapIntersection);
+    snapAnglePolar->setChecked(s.snapAngle);
     restrictHorizontal->setChecked(s.restriction==RS2::RestrictHorizontal ||  s.restriction==RS2::RestrictOrthogonal);
     restrictVertical->setChecked(s.restriction==RS2::RestrictVertical ||  s.restriction==RS2::RestrictOrthogonal);
     restrictOrthogonal->setChecked(s.restriction==RS2::RestrictOrthogonal);
@@ -188,6 +196,7 @@ RS_SnapMode QG_SnapToolBar::getSnaps ( void ) const
     s.snapMiddle       = snapMiddle->isChecked();
     s.snapDistance       = snapDistance->isChecked();
     s.snapIntersection = snapIntersection->isChecked();
+    s.snapAngle        = snapAnglePolar->isChecked();
     // removed Restrict Othogonal button
     // todo simplify internal restrict rules
 	int const rH = (restrictHorizontal && restrictHorizontal->isChecked())? 1:0;

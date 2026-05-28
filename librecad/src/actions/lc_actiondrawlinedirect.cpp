@@ -86,6 +86,25 @@ bool LC_ActionDrawLineDirect::doCheckMayDrawPreview([[maybe_unused]]QMouseEvent 
     return status != SetStartPoint;
 }
 
+RS_Vector LC_ActionDrawLineDirect::doGetMouseSnapPoint(QMouseEvent *e) {
+    RS_Vector snapped = snapPoint(e);
+    // Only apply angle snap when there is no active object/grid snap result and a start point exists.
+    // If snapPoint found a real snap point it will differ from the raw mouse position.
+    RS_Vector rawMouse = graphicView->toGraph(e->x(), e->y());
+    bool freeSnap = snapped.squaredTo(rawMouse) <= RS_TOLERANCE;
+    if (freeSnap && isStartPointValid() && (snapMode.snapAngle || alternativeActionMode)) {
+        double angle = 15.0;
+        if (snapMode.snapAngle) {
+            auto guard = RS_SETTINGS->beginGroupGuard("/Defaults");
+            bool ok = false;
+            double cfg = RS_SETTINGS->readEntry("/PolarSnapAngle", "15").toDouble(&ok);
+            if (ok && cfg > 0.0) angle = cfg;
+        }
+        snapped = snapToAngle(snapped, getStartPointForAngleSnap(), angle);
+    }
+    return snapped;
+}
+
 void LC_ActionDrawLineDirect::doPreparePreviewEntities(
     [[maybe_unused]]QMouseEvent *e, RS_Vector &snap, QList<RS_Entity *> &list, int status){
     RS_Vector possibleEndPoint;

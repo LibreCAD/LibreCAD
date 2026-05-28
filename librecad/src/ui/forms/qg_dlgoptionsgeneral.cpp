@@ -198,6 +198,11 @@ void QG_DlgOptionsGeneral::init()
     cbWheelScrollInvertV->setChecked(RS_SETTINGS->readNumEntry("/WheelScrollInvertV", 0));
     cbInvertZoomDirection->setChecked(RS_SETTINGS->readNumEntry("/InvertZoomDirection", 0));
     cbArchitecturalInput->setChecked(RS_SETTINGS->readNumEntry("/ArchitecturalInput", 0));
+    {
+        bool ok = false;
+        double angle = RS_SETTINGS->readEntry("/PolarSnapAngle", "15").toDouble(&ok);
+        cbPolarSnapAngle->setValue((ok && angle > 0.0) ? angle : 15.0);
+    }
     RS_SETTINGS->endGroup();
 
     //update entities to selected entities to the current active layer
@@ -301,6 +306,10 @@ void QG_DlgOptionsGeneral::ok()
         RS_SETTINGS->writeEntry("/WheelScrollInvertV", cbWheelScrollInvertV->isChecked() ? 1 : 0);
         RS_SETTINGS->writeEntry("/InvertZoomDirection", cbInvertZoomDirection->isChecked() ? 1 : 0);
         RS_SETTINGS->writeEntry("/ArchitecturalInput", cbArchitecturalInput->isChecked() ? 1 : 0);
+        {
+            double angle = cbPolarSnapAngle->value();
+            RS_SETTINGS->writeEntry("/PolarSnapAngle", QString::number((angle > 0.0) ? angle : 15.0));
+        }
         RS_SETTINGS->endGroup();
 
         //update entities to selected entities to the current active layer

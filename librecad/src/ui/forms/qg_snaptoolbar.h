@@ -81,6 +81,7 @@ private:
     QAction *restrictVertical;
     QAction *restrictOrthogonal;
     QAction *restrictNothing;
+    QAction *snapAnglePolar;
     QAction *bRelZero;
     QAction *bLockRelZero;
 	RS_SnapMode snapMode;
