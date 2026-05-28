@@ -5655,6 +5655,8 @@ void RS_FilterDXFRW::writeObjects() {
             metadata.modelerPayloadCounts();
         const LC_DwgAdvancedMetadata::AssociativeShellCounts associativeShells =
             metadata.associativeShellCounts();
+        const LC_DwgAdvancedMetadata::AssociativePrefixCounts associativePrefixes =
+            metadata.associativePrefixCounts();
         for (const auto& record : metadata.rawObjects()) {
             if (nativeSunHandles.count(record.handle) != 0 && isSunRawObject(record)) {
                 hasBlockedReplay = true;
@@ -5785,7 +5787,8 @@ void RS_FilterDXFRW::writeObjects() {
             RS_DEBUG->print(
                 "DWG associative/action shells: records=%d network=%d action=%d "
                 "dependency=%d geom-dependency=%d action-param=%d value-param=%d/%d "
-                "prefix=%d/%d single-dep=%d compound=%d unknown=%d",
+                "prefix=%d/%d single-dep=%d compound=%d prefix-status=%d "
+                "complete=%d partial=%d overflow=%d handles=%d values=%d unknown=%d",
                 static_cast<int>(associativeShells.recordCount),
                 static_cast<int>(associativeShells.network),
                 static_cast<int>(associativeShells.action),
@@ -5798,6 +5801,12 @@ void RS_FilterDXFRW::writeObjects() {
                 static_cast<int>(associativeShells.actionParamRecords),
                 static_cast<int>(associativeShells.singleDependencyActionParamPrefixes),
                 static_cast<int>(associativeShells.compoundActionParamPrefixes),
+                static_cast<int>(associativePrefixes.prefixCount),
+                static_cast<int>(associativePrefixes.complete),
+                static_cast<int>(associativePrefixes.partial),
+                static_cast<int>(associativePrefixes.boundedCountOverflow),
+                static_cast<int>(associativePrefixes.decodedHandleCount),
+                static_cast<int>(associativePrefixes.decodedValueCount),
                 static_cast<int>(associativeShells.unknown));
         }
         if (tableBlockers.tableCount > 0 && tableBlockers.totalBlockers() > 0) {

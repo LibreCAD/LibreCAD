@@ -1892,13 +1892,56 @@ TEST_CASE("DWG advanced metadata stores associative prefix accounting",
   action.m_valueParamCount = 4u;
   action.m_ownedParamPrefixCount = 2u;
   action.m_valueParamsParsed = true;
+  DRW_AssociativePrefixStatus actionPrefix;
+  actionPrefix.m_kind =
+      DRW_AssociativePrefixStatus::Kind::AcDbAssocAction;
+  actionPrefix.m_status =
+      DRW_AssociativePrefixStatus::ParseStatus::Complete;
+  actionPrefix.m_startBit = 16u;
+  actionPrefix.m_bitSize = 80u;
+  actionPrefix.m_classVersion = 2u;
+  actionPrefix.m_decodedHandleCount = 3u;
+  actionPrefix.m_decodedValueCount = 4u;
+  actionPrefix.m_decodedCountValue = 4;
+  actionPrefix.m_sourceAssumption = "ACadSharp/libreDWG";
+  DRW_AssociativePrefixStatus networkPrefix;
+  networkPrefix.m_kind =
+      DRW_AssociativePrefixStatus::Kind::AcDbAssocNetwork;
+  networkPrefix.m_status =
+      DRW_AssociativePrefixStatus::ParseStatus::BoundedCountOverflow;
+  networkPrefix.m_decodedCountValue = 100001;
+  action.m_prefixStatuses = {actionPrefix, networkPrefix};
   metadata.addAssociativeObject(action);
 
   DRW_AssociativeObject osnap("ACDBASSOCOSNAPPOINTREFACTIONPARAM");
   osnap.handle = 0x471u;
   osnap.m_actionParamPrefixParsed = true;
   osnap.m_compoundActionParamParsed = true;
+  DRW_AssociativePrefixStatus paramPrefix;
+  paramPrefix.m_kind =
+      DRW_AssociativePrefixStatus::Kind::AcDbAssocActionParam;
+  paramPrefix.m_status =
+      DRW_AssociativePrefixStatus::ParseStatus::Partial;
+  paramPrefix.m_startBit = 24u;
+  paramPrefix.m_bitSize = 12u;
+  osnap.m_prefixStatuses = {paramPrefix};
   metadata.addAssociativeObject(osnap);
+
+  DRW_AcShHistoryObject sweep("ACSH_SWEEP_CLASS");
+  sweep.handle = 0x472u;
+  DRW_AssociativePrefixStatus evalPrefix;
+  evalPrefix.m_kind = DRW_AssociativePrefixStatus::Kind::AcDbEvalExpr;
+  evalPrefix.m_status = DRW_AssociativePrefixStatus::ParseStatus::Complete;
+  evalPrefix.m_decodedHandleCount = 1u;
+  evalPrefix.m_decodedValueCount = 1u;
+  DRW_AssociativePrefixStatus shPrefix;
+  shPrefix.m_kind = DRW_AssociativePrefixStatus::Kind::AcDbShHistoryNode;
+  shPrefix.m_status = DRW_AssociativePrefixStatus::ParseStatus::Complete;
+  DRW_AssociativePrefixStatus bodyPrefix;
+  bodyPrefix.m_kind = DRW_AssociativePrefixStatus::Kind::AcShActionBody;
+  bodyPrefix.m_status = DRW_AssociativePrefixStatus::ParseStatus::Complete;
+  sweep.m_prefixStatuses = {evalPrefix, shPrefix, bodyPrefix};
+  metadata.addAcShObject(sweep);
 
   REQUIRE(metadata.associativeObjects().size() == 2u);
   const auto& capturedAction = metadata.associativeObjects().front();
@@ -1906,11 +1949,24 @@ TEST_CASE("DWG advanced metadata stores associative prefix accounting",
   CHECK(capturedAction.ownedParamPrefixCount == 2u);
   CHECK(capturedAction.valueParamsParsed);
   CHECK_FALSE(capturedAction.actionParamPrefixParsed);
+  REQUIRE(capturedAction.prefixStatuses.size() == 2u);
+  CHECK(capturedAction.prefixStatuses.front().kind ==
+        LC_DwgAdvancedMetadata::AssociativePrefixKind::AcDbAssocAction);
+  CHECK(capturedAction.prefixStatuses.front().status ==
+        LC_DwgAdvancedMetadata::AssociativePrefixParseStatus::Complete);
+  CHECK(capturedAction.prefixStatuses.front().startBit == 16u);
+  CHECK(capturedAction.prefixStatuses.front().bitSize == 80u);
+  CHECK(capturedAction.prefixStatuses.front().decodedValueCount == 4u);
+  CHECK(capturedAction.prefixStatuses.front().sourceAssumption ==
+        "ACadSharp/libreDWG");
 
   const auto& capturedOsnap = metadata.associativeObjects().back();
   CHECK(capturedOsnap.actionParamPrefixParsed);
   CHECK_FALSE(capturedOsnap.singleDependencyActionParamParsed);
   CHECK(capturedOsnap.compoundActionParamParsed);
+  REQUIRE(capturedOsnap.prefixStatuses.size() == 1u);
+  CHECK(capturedOsnap.prefixStatuses.front().status ==
+        LC_DwgAdvancedMetadata::AssociativePrefixParseStatus::Partial);
 
   const LC_DwgAdvancedMetadata::AssociativeShellCounts counts =
       metadata.associativeShellCounts();
@@ -1929,6 +1985,28 @@ TEST_CASE("DWG advanced metadata stores associative prefix accounting",
   CHECK(counts.parsedActionParamPrefixes == 1u);
   CHECK(counts.singleDependencyActionParamPrefixes == 0u);
   CHECK(counts.compoundActionParamPrefixes == 1u);
+
+  const LC_DwgAdvancedMetadata::AssociativePrefixCounts prefixCounts =
+      metadata.associativePrefixCounts();
+  CHECK(prefixCounts.prefixCount == 6u);
+  CHECK(prefixCounts.assocAction == 1u);
+  CHECK(prefixCounts.assocNetwork == 1u);
+  CHECK(prefixCounts.assocActionParam == 1u);
+  CHECK(prefixCounts.evalExpr == 1u);
+  CHECK(prefixCounts.shHistoryNode == 1u);
+  CHECK(prefixCounts.shActionBody == 1u);
+  CHECK(prefixCounts.complete == 4u);
+  CHECK(prefixCounts.partial == 1u);
+  CHECK(prefixCounts.boundedCountOverflow == 1u);
+  CHECK(prefixCounts.decodedHandleCount == 4u);
+  CHECK(prefixCounts.decodedValueCount == 5u);
+  CHECK(std::string(LC_DwgAdvancedMetadata::associativePrefixKindName(
+            LC_DwgAdvancedMetadata::AssociativePrefixKind::AcDbEvalExpr))
+        == "AcDbEvalExpr");
+  CHECK(std::string(
+            LC_DwgAdvancedMetadata::associativePrefixParseStatusName(
+                LC_DwgAdvancedMetadata::AssociativePrefixParseStatus::
+                    BoundedCountOverflow)) == "bounded count overflow");
 }
 
 TEST_CASE("DWG advanced metadata indexes associative graph edges",

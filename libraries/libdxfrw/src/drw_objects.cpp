@@ -177,6 +177,29 @@ bool isValidAssocCount(dint32 count, dint32 maxCount = kMaxAssocItems) {
     return count >= 0 && count <= maxCount;
 }
 
+DRW_AssociativePrefixStatus makeAssocPrefixStatus(
+    DRW_AssociativePrefixStatus::Kind kind, duint64 startBit,
+    duint64 endBit, DRW_AssociativePrefixStatus::ParseStatus status,
+    duint16 classVersion, size_t decodedHandleCount = 0,
+    size_t decodedValueCount = 0, dint32 decodedCountValue = 0) {
+    DRW_AssociativePrefixStatus prefix;
+    prefix.m_kind = kind;
+    prefix.m_startBit = startBit;
+    prefix.m_bitSize = endBit >= startBit ? endBit - startBit : 0;
+    prefix.m_status = status;
+    prefix.m_classVersion = classVersion;
+    prefix.m_decodedHandleCount = decodedHandleCount;
+    prefix.m_decodedValueCount = decodedValueCount;
+    prefix.m_decodedCountValue = decodedCountValue;
+    prefix.m_sourceAssumption = "ACadSharp/libreDWG";
+    return prefix;
+}
+
+DRW_AssociativePrefixStatus::ParseStatus prefixStatusFromGood(bool complete) {
+    return complete ? DRW_AssociativePrefixStatus::ParseStatus::Complete :
+                      DRW_AssociativePrefixStatus::ParseStatus::Partial;
+}
+
 bool skipHandleRefs(dwgBuffer *hdlBuf, dint32 count) {
     if (!isValidAssocCount(count))
         return false;
@@ -3765,6 +3788,17 @@ bool DRW_AssociativeObject::parseDwg(DRW::Version version, dwgBuffer *buf, duint
     seekObjectHandleStream(version, &hBuff, objSize);
     readCommonObjectHandles(&hBuff, handle, numReactors, xDictFlag, &parentHandle);
 
+    auto appendPrefixStatus = [&](DRW_AssociativePrefixStatus::Kind kind,
+                                  duint64 startBit,
+                                  DRW_AssociativePrefixStatus::ParseStatus status,
+                                  duint16 classVersion,
+                                  size_t decodedHandleCount = 0,
+                                  size_t decodedValueCount = 0,
+                                  dint32 decodedCountValue = 0) {
+        m_prefixStatuses.push_back(makeAssocPrefixStatus(
+            kind, startBit, currentObjectDwgBit(buf), status, classVersion,
+            decodedHandleCount, decodedValueCount, decodedCountValue));
+    };
     auto readHandleVector = [&](std::vector<duint32>& target, dint32 count) {
         if (!isValidAssocCount(count))
             return false;
@@ -3786,35 +3820,101 @@ bool DRW_AssociativeObject::parseDwg(DRW::Version version, dwgBuffer *buf, duint
         return buf->isGood() && hBuff.isGood();
     };
     auto readActionFields = [&]() {
+        const duint64 startBit = currentObjectDwgBit(buf);
+        size_t decodedHandleCount = 0;
         m_classVersion = buf->getBitShort();
         m_geometryStatus = buf->getBitLong();
         m_owningNetworkHandle = readObjectHandleRef(&hBuff);
         m_actionBodyHandle = readObjectHandleRef(&hBuff);
+        decodedHandleCount += 2;
         m_actionIndex = buf->getBitLong();
         m_maxDependencyIndex = buf->getBitLong();
         const dint32 dependencyCount = buf->getBitLong();
-        if (!readOwnedRefs(m_dependencies, dependencyCount))
+        if (!isValidAssocCount(dependencyCount)) {
+            appendPrefixStatus(
+                DRW_AssociativePrefixStatus::Kind::AcDbAssocAction,
+                startBit,
+                DRW_AssociativePrefixStatus::ParseStatus::BoundedCountOverflow,
+                m_classVersion, decodedHandleCount, m_valueParamCount,
+                dependencyCount);
             return false;
+        }
+        if (!readOwnedRefs(m_dependencies, dependencyCount)) {
+            appendPrefixStatus(
+                DRW_AssociativePrefixStatus::Kind::AcDbAssocAction,
+                startBit, DRW_AssociativePrefixStatus::ParseStatus::Partial,
+                m_classVersion, decodedHandleCount, m_valueParamCount,
+                dependencyCount);
+            return false;
+        }
+        decodedHandleCount += m_dependencies.size();
         if (m_classVersion > 1) {
             buf->getBitShort();
             const dint32 ownedParamCount = buf->getBitLong();
-            if (!readHandleVector(m_ownedParams, ownedParamCount))
+            if (!isValidAssocCount(ownedParamCount)) {
+                appendPrefixStatus(
+                    DRW_AssociativePrefixStatus::Kind::AcDbAssocAction,
+                    startBit,
+                    DRW_AssociativePrefixStatus::ParseStatus::BoundedCountOverflow,
+                    m_classVersion, decodedHandleCount, m_valueParamCount,
+                    ownedParamCount);
                 return false;
+            }
+            if (!readHandleVector(m_ownedParams, ownedParamCount)) {
+                appendPrefixStatus(
+                    DRW_AssociativePrefixStatus::Kind::AcDbAssocAction,
+                    startBit, DRW_AssociativePrefixStatus::ParseStatus::Partial,
+                    m_classVersion, decodedHandleCount, m_valueParamCount,
+                    ownedParamCount);
+                return false;
+            }
+            decodedHandleCount += m_ownedParams.size();
             m_ownedParamPrefixCount = static_cast<size_t>(ownedParamCount);
             buf->getBitShort();
             const dint32 valueCount = buf->getBitLong();
-            if (!isValidAssocCount(valueCount, kMaxAssocValueParams))
+            if (!isValidAssocCount(valueCount, kMaxAssocValueParams)) {
+                appendPrefixStatus(
+                    DRW_AssociativePrefixStatus::Kind::AcDbAssocAction,
+                    startBit,
+                    DRW_AssociativePrefixStatus::ParseStatus::BoundedCountOverflow,
+                    m_classVersion, decodedHandleCount, m_valueParamCount,
+                    valueCount);
                 return false;
+            }
             m_valueParamCount = static_cast<size_t>(valueCount);
             for (dint32 i = 0; i < valueCount; ++i) {
-                if (!skipValueParam(version, buf, sBuf, &hBuff))
+                const duint64 valueStartBit = currentObjectDwgBit(buf);
+                if (!skipValueParam(version, buf, sBuf, &hBuff)) {
+                    m_prefixStatuses.push_back(makeAssocPrefixStatus(
+                        DRW_AssociativePrefixStatus::Kind::AcDbAssocAction,
+                        valueStartBit, currentObjectDwgBit(buf),
+                        DRW_AssociativePrefixStatus::ParseStatus::Partial,
+                        m_classVersion, 0, 1, valueCount));
+                    appendPrefixStatus(
+                        DRW_AssociativePrefixStatus::Kind::AcDbAssocAction,
+                        startBit,
+                        DRW_AssociativePrefixStatus::ParseStatus::Partial,
+                        m_classVersion, decodedHandleCount, m_valueParamCount,
+                        valueCount);
                     return false;
+                }
+                m_prefixStatuses.push_back(makeAssocPrefixStatus(
+                    DRW_AssociativePrefixStatus::Kind::AcDbAssocAction,
+                    valueStartBit, currentObjectDwgBit(buf),
+                    DRW_AssociativePrefixStatus::ParseStatus::Complete,
+                    m_classVersion, 0, 1, valueCount));
             }
             m_valueParamsParsed = true;
         }
-        return buf->isGood() && hBuff.isGood() && (!sBuf || sBuf->isGood());
+        const bool complete = buf->isGood() && hBuff.isGood() && (!sBuf || sBuf->isGood());
+        appendPrefixStatus(
+            DRW_AssociativePrefixStatus::Kind::AcDbAssocAction, startBit,
+            prefixStatusFromGood(complete), m_classVersion, decodedHandleCount,
+            m_valueParamCount, dependencyCount);
+        return complete;
     };
     auto readDependencyFields = [&]() {
+        const duint64 startBit = currentObjectDwgBit(buf);
         m_classVersion = buf->getBitShort();
         m_status = buf->getBitLong();
         buf->getBit();
@@ -3830,37 +3930,86 @@ bool DRW_AssociativeObject::parseDwg(DRW::Version version, dwgBuffer *buf, duint
         m_writeDependencyHandle = readObjectHandleRef(&hBuff);
         readObjectHandleRef(&hBuff);
         buf->getBitLong();
-        return buf->isGood() && hBuff.isGood() && (!sBuf || sBuf->isGood());
+        const bool complete = buf->isGood() && hBuff.isGood() && (!sBuf || sBuf->isGood());
+        appendPrefixStatus(
+            DRW_AssociativePrefixStatus::Kind::AcDbAssocDependency, startBit,
+            prefixStatusFromGood(complete), m_classVersion, 4, 0, 0);
+        return complete;
     };
 
     if (m_recordName == "ACDBASSOCACTION") {
         readActionFields();
     } else if (m_recordName == "ACDBASSOCNETWORK") {
         if (readActionFields()) {
+            const duint64 networkStartBit = currentObjectDwgBit(buf);
             buf->getBitShort();
             m_actionIndex = buf->getBitLong();
             const dint32 actionCount = buf->getBitLong();
-            if (readOwnedRefs(m_actions, actionCount)) {
+            if (!isValidAssocCount(actionCount)) {
+                appendPrefixStatus(
+                    DRW_AssociativePrefixStatus::Kind::AcDbAssocNetwork,
+                    networkStartBit,
+                    DRW_AssociativePrefixStatus::ParseStatus::BoundedCountOverflow,
+                    m_classVersion, 0, 0, actionCount);
+            } else if (readOwnedRefs(m_actions, actionCount)) {
                 const dint32 ownedActionCount = buf->getBitLong();
-                readHandleVector(m_ownedActions, ownedActionCount);
+                if (!isValidAssocCount(ownedActionCount)) {
+                    appendPrefixStatus(
+                        DRW_AssociativePrefixStatus::Kind::AcDbAssocNetwork,
+                        networkStartBit,
+                        DRW_AssociativePrefixStatus::ParseStatus::BoundedCountOverflow,
+                        m_classVersion, m_actions.size(), 0,
+                        ownedActionCount);
+                } else {
+                    const bool complete = readHandleVector(
+                        m_ownedActions, ownedActionCount);
+                    appendPrefixStatus(
+                        DRW_AssociativePrefixStatus::Kind::AcDbAssocNetwork,
+                        networkStartBit, prefixStatusFromGood(complete),
+                        m_classVersion,
+                        m_actions.size() + m_ownedActions.size(), 0,
+                        actionCount);
+                }
+            } else {
+                appendPrefixStatus(
+                    DRW_AssociativePrefixStatus::Kind::AcDbAssocNetwork,
+                    networkStartBit,
+                    DRW_AssociativePrefixStatus::ParseStatus::Partial,
+                    m_classVersion, 0, 0, actionCount);
             }
         }
     } else if (m_recordName == "ACDBASSOCDEPENDENCY"
                || m_recordName == "ACDBASSOCGEOMDEPENDENCY") {
         if (readDependencyFields() && m_recordName == "ACDBASSOCGEOMDEPENDENCY") {
+            const duint64 geomStartBit = currentObjectDwgBit(buf);
             buf->getBitShort();
             buf->getBit();
             (sBuf ? sBuf : buf)->getVariableText(version, false);
             buf->getBit();
+            appendPrefixStatus(
+                DRW_AssociativePrefixStatus::Kind::AcDbAssocGeomDependency,
+                geomStartBit,
+                prefixStatusFromGood(buf->isGood() && (!sBuf || sBuf->isGood())),
+                m_classVersion, 0, 0, 0);
         }
     } else if (m_recordName == "ACDBASSOCALIGNEDDIMACTIONBODY") {
+        const duint64 startBit = currentObjectDwgBit(buf);
         m_classVersion = buf->getBitShort();
         m_dependencyHandle = readObjectHandleRef(&hBuff);
         buf->getBitLong();
         m_rNodeHandle = readObjectHandleRef(&hBuff);
         m_dNodeHandle = readObjectHandleRef(&hBuff);
+        appendPrefixStatus(
+            DRW_AssociativePrefixStatus::Kind::AcDbAssocActionBody, startBit,
+            prefixStatusFromGood(buf->isGood() && hBuff.isGood()),
+            m_classVersion, 3, 0, 0);
     } else if (m_recordName == "ACDBASSOCVERTEXACTIONPARAM") {
+        const duint64 prefixStartBit = currentObjectDwgBit(buf);
         m_actionParamPrefixParsed = skipAssocActionParamPrefix(version, buf, sBuf);
+        appendPrefixStatus(
+            DRW_AssociativePrefixStatus::Kind::AcDbAssocActionParam,
+            prefixStartBit, prefixStatusFromGood(m_actionParamPrefixParsed),
+            m_classVersion, 0, 0, 0);
         if (m_actionParamPrefixParsed
             && skipAssocSingleDependencyActionParam(buf, &hBuff, &m_dependencyHandle)) {
             m_singleDependencyActionParamParsed = true;
@@ -3868,7 +4017,12 @@ bool DRW_AssociativeObject::parseDwg(DRW::Version version, dwgBuffer *buf, duint
             m_point = buf->get3BitDouble();
         }
     } else if (m_recordName == "ACDBASSOCOSNAPPOINTREFACTIONPARAM") {
+        const duint64 prefixStartBit = currentObjectDwgBit(buf);
         m_actionParamPrefixParsed = skipAssocActionParamPrefix(version, buf, sBuf);
+        appendPrefixStatus(
+            DRW_AssociativePrefixStatus::Kind::AcDbAssocActionParam,
+            prefixStartBit, prefixStatusFromGood(m_actionParamPrefixParsed),
+            m_classVersion, 0, 0, 0);
         if (m_actionParamPrefixParsed
             && skipAssocCompoundActionParam(buf, &hBuff)) {
             m_compoundActionParamParsed = true;
@@ -3905,16 +4059,43 @@ bool DRW_AcShHistoryObject::parseDwg(DRW::Version version, dwgBuffer *buf, duint
     seekObjectHandleStream(version, &hBuff, objSize);
     readCommonObjectHandles(&hBuff, handle, numReactors, xDictFlag, &parentHandle);
 
+    auto appendPrefixStatus = [&](DRW_AssociativePrefixStatus::Kind kind,
+                                  duint64 startBit,
+                                  DRW_AssociativePrefixStatus::ParseStatus status,
+                                  duint16 classVersion,
+                                  size_t decodedHandleCount = 0,
+                                  size_t decodedValueCount = 0,
+                                  dint32 decodedCountValue = 0) {
+        m_prefixStatuses.push_back(makeAssocPrefixStatus(
+            kind, startBit, currentObjectDwgBit(buf), status, classVersion,
+            decodedHandleCount, decodedValueCount, decodedCountValue));
+    };
     if (m_recordName == "ACSH_HISTORY_CLASS") {
+        const duint64 startBit = currentObjectDwgBit(buf);
         m_major = static_cast<duint32>(buf->getBitLong());
         m_minor = static_cast<duint32>(buf->getBitLong());
         m_ownerHandle = readObjectHandleRef(&hBuff);
         m_historyNodeId = static_cast<duint32>(buf->getBitLong());
         m_showHistory = buf->getBit() != 0;
         m_recordHistory = buf->getBit() != 0;
+        appendPrefixStatus(
+            DRW_AssociativePrefixStatus::Kind::AcDbShHistoryNode, startBit,
+            prefixStatusFromGood(buf->isGood() && hBuff.isGood()),
+            static_cast<duint16>(m_major), 1, 0, 0);
     } else if (m_recordName == "ACSH_SWEEP_CLASS") {
-        if (skipEvalExpr(version, buf, sBuf, &hBuff)
-            && skipShHistoryNode(version, buf, sBuf, &hBuff)) {
+        const duint64 evalStartBit = currentObjectDwgBit(buf);
+        const bool evalParsed = skipEvalExpr(version, buf, sBuf, &hBuff);
+        appendPrefixStatus(
+            DRW_AssociativePrefixStatus::Kind::AcDbEvalExpr, evalStartBit,
+            prefixStatusFromGood(evalParsed), 0, 1, 1, 0);
+        const duint64 historyStartBit = currentObjectDwgBit(buf);
+        const bool historyParsed = evalParsed
+            && skipShHistoryNode(version, buf, sBuf, &hBuff);
+        appendPrefixStatus(
+            DRW_AssociativePrefixStatus::Kind::AcDbShHistoryNode,
+            historyStartBit, prefixStatusFromGood(historyParsed), 0, 1, 0, 0);
+        if (evalParsed && historyParsed) {
+            const duint64 actionBodyStartBit = currentObjectDwgBit(buf);
             m_major = static_cast<duint32>(buf->getBitLong());
             m_minor = static_cast<duint32>(buf->getBitLong());
             m_direction = buf->get3BitDouble();
@@ -3936,6 +4117,14 @@ bool DRW_AcShHistoryObject::parseDwg(DRW::Version version, dwgBuffer *buf, duint
                 m_twistAngle = buf->getBitDouble();
                 m_alignAngle = buf->getBitDouble();
             }
+            appendPrefixStatus(
+                DRW_AssociativePrefixStatus::Kind::AcShActionBody,
+                actionBodyStartBit,
+                blob1Size < 0 ?
+                    DRW_AssociativePrefixStatus::ParseStatus::BoundedCountOverflow :
+                    prefixStatusFromGood(sweepTailOk),
+                static_cast<duint16>(m_major), 0,
+                m_binaryBlob1.size() + m_binaryBlob2.size(), blob1Size);
         }
     }
 

@@ -1529,6 +1529,38 @@ struct DRW_AssociativeHandleRef {
     duint32 m_handle = 0;
 };
 
+struct DRW_AssociativePrefixStatus {
+    enum class Kind {
+        AcDbAssocAction,
+        AcDbAssocActionParam,
+        AcDbAssocDependency,
+        AcDbAssocGeomDependency,
+        AcDbAssocNetwork,
+        AcDbAssocActionBody,
+        AcDbEvalExpr,
+        AcDbShHistoryNode,
+        AcShActionBody
+    };
+
+    enum class ParseStatus {
+        Complete,
+        Partial,
+        Missing,
+        UnsupportedVersion,
+        BoundedCountOverflow
+    };
+
+    Kind m_kind = Kind::AcDbAssocAction;
+    duint64 m_startBit = 0;
+    duint64 m_bitSize = 0;
+    duint16 m_classVersion = 0;
+    ParseStatus m_status = ParseStatus::Missing;
+    size_t m_decodedHandleCount = 0;
+    size_t m_decodedValueCount = 0;
+    dint32 m_decodedCountValue = 0;
+    UTF8STRING m_sourceAssumption;
+};
+
 //! Shell parser for ACDBASSOC* action/dependency/action-param objects.
 class DRW_AssociativeObject : public DRW_TableEntry {
     SETOBJFRIENDS
@@ -1568,6 +1600,7 @@ public:
     duint8 m_osnapMode = 0;
     double m_parameter = 0.0;
     DRW_Coord m_point;
+    std::vector<DRW_AssociativePrefixStatus> m_prefixStatuses;
 };
 
 //! Shell parser for ACSH_* history/action objects.
@@ -1599,6 +1632,7 @@ public:
     double m_alignAngle = 0.0;
     std::vector<duint8> m_binaryBlob1;
     std::vector<duint8> m_binaryBlob2;
+    std::vector<DRW_AssociativePrefixStatus> m_prefixStatuses;
 };
 
 //! Common AcDbModelDocViewStyle header shared by detail/section view styles.

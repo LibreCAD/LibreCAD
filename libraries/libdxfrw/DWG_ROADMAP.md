@@ -230,6 +230,11 @@ Completed in the 2026-05-27 implementation pass:
   shells now expose queryable source/target edges, edge-kind/confidence counts,
   closure lookup, and graph invalidation that suppresses matching raw replay
   payloads without evaluating associative constraints.
+- Ready Detail C1b common prefix decode audit advanced: ACDBASSOC and ACSH
+  shell parsers now attach prefix parse-status records for action,
+  dependency, geom-dependency, network, action-param, eval-expression,
+  history-node, and action-body sections, including bit spans, count overflow,
+  decoded handle/value counts, and source-assumption metadata.
 
 Still incomplete:
 
@@ -1566,8 +1571,10 @@ Stop before evaluating graph semantics.
 
 Purpose: make parser state observable for every known ACDBASSOC/ACSH prefix.
 
-Status: ready after or alongside C1a. It improves parser observability and
-must preserve raw bytes when prefix decode is partial.
+Status: completed for parser observability on 2026-05-28. Parsed
+ACDBASSOC/ACSH shells now carry prefix status records with source assumption,
+bit spans, parse status, class version, decoded handle/value counts, and
+bounded-count overflow reporting. Raw payload preservation remains unchanged.
 
 Spec basis: ACadSharp/libreDWG primary; `/tmp/dwg_spec.txt` is incomplete for
 these prefixes. Every decoded prefix must therefore record its source

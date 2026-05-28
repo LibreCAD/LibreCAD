@@ -73,6 +73,26 @@ public:
         InferredFromClassLayout
     };
 
+    enum class AssociativePrefixKind {
+        AcDbAssocAction,
+        AcDbAssocActionParam,
+        AcDbAssocDependency,
+        AcDbAssocGeomDependency,
+        AcDbAssocNetwork,
+        AcDbAssocActionBody,
+        AcDbEvalExpr,
+        AcDbShHistoryNode,
+        AcShActionBody
+    };
+
+    enum class AssociativePrefixParseStatus {
+        Complete,
+        Partial,
+        Missing,
+        UnsupportedVersion,
+        BoundedCountOverflow
+    };
+
     enum class ModelerPayloadKind {
         Unknown,
         Sat,
@@ -578,6 +598,26 @@ public:
         size_t invalidated = 0;
     };
 
+    struct AssociativePrefixCounts {
+        size_t prefixCount = 0;
+        size_t assocAction = 0;
+        size_t assocActionParam = 0;
+        size_t assocDependency = 0;
+        size_t assocGeomDependency = 0;
+        size_t assocNetwork = 0;
+        size_t assocActionBody = 0;
+        size_t evalExpr = 0;
+        size_t shHistoryNode = 0;
+        size_t shActionBody = 0;
+        size_t complete = 0;
+        size_t partial = 0;
+        size_t missing = 0;
+        size_t unsupportedVersion = 0;
+        size_t boundedCountOverflow = 0;
+        size_t decodedHandleCount = 0;
+        size_t decodedValueCount = 0;
+    };
+
     struct TableRecord {
         duint32 handle = 0;
         duint32 parentHandle = 0;
@@ -694,6 +734,19 @@ public:
         ReplayState replayState = ReplayState::ReplayAllowed;
     };
 
+    struct AssociativePrefixStatusRecord {
+        AssociativePrefixKind kind = AssociativePrefixKind::AcDbAssocAction;
+        AssociativePrefixParseStatus status =
+            AssociativePrefixParseStatus::Missing;
+        duint64 startBit = 0;
+        duint64 bitSize = 0;
+        duint16 classVersion = 0;
+        size_t decodedHandleCount = 0;
+        size_t decodedValueCount = 0;
+        dint32 decodedCountValue = 0;
+        std::string sourceAssumption;
+    };
+
     struct AssociativeRecord {
         duint32 handle = 0;
         duint32 parentHandle = 0;
@@ -726,6 +779,7 @@ public:
         duint8 osnapMode = 0;
         double parameter = 0.0;
         DRW_Coord point;
+        std::vector<AssociativePrefixStatusRecord> prefixStatuses;
         ReplayState replayState = ReplayState::ReplayAllowed;
     };
 
@@ -762,6 +816,7 @@ public:
         size_t binaryBlob1Bytes = 0;
         size_t binaryBlob2Bytes = 0;
         size_t blobBytes = 0;
+        std::vector<AssociativePrefixStatusRecord> prefixStatuses;
         ReplayState replayState = ReplayState::ReplayAllowed;
     };
 
@@ -1302,6 +1357,10 @@ public:
         record.osnapMode = object.m_osnapMode;
         record.parameter = object.m_parameter;
         record.point = object.m_point;
+        for (const DRW_AssociativePrefixStatus& prefix :
+             object.m_prefixStatuses) {
+            record.prefixStatuses.push_back(makeAssociativePrefixStatus(prefix));
+        }
         m_associativeObjects.push_back(std::move(record));
         appendAssociativeEdges(m_associativeObjects.back());
     }
@@ -1327,6 +1386,10 @@ public:
         record.binaryBlob1Bytes = object.m_binaryBlob1.size();
         record.binaryBlob2Bytes = object.m_binaryBlob2.size();
         record.blobBytes = object.m_binaryBlob1.size() + object.m_binaryBlob2.size();
+        for (const DRW_AssociativePrefixStatus& prefix :
+             object.m_prefixStatuses) {
+            record.prefixStatuses.push_back(makeAssociativePrefixStatus(prefix));
+        }
         m_acshObjects.push_back(record);
         appendAssociativeEdges(m_acshObjects.back());
     }
@@ -1899,6 +1962,22 @@ public:
             incrementAssociativeEdgeConfidenceCount(counts, edge.confidence);
             if (edge.replayState == ReplayState::ReplayInvalidated)
                 ++counts.invalidated;
+        }
+        return counts;
+    }
+    AssociativePrefixCounts associativePrefixCounts() const {
+        AssociativePrefixCounts counts;
+        for (const AssociativeRecord& record : m_associativeObjects) {
+            for (const AssociativePrefixStatusRecord& prefix :
+                 record.prefixStatuses) {
+                incrementAssociativePrefixCounts(counts, prefix);
+            }
+        }
+        for (const AcShRecord& record : m_acshObjects) {
+            for (const AssociativePrefixStatusRecord& prefix :
+                 record.prefixStatuses) {
+                incrementAssociativePrefixCounts(counts, prefix);
+            }
         }
         return counts;
     }
@@ -2646,6 +2725,47 @@ public:
             default:
                 return "unknown";
         }
+    }
+
+    static const char* associativePrefixKindName(AssociativePrefixKind kind) {
+        switch (kind) {
+            case AssociativePrefixKind::AcDbAssocAction:
+                return "AcDbAssocAction";
+            case AssociativePrefixKind::AcDbAssocActionParam:
+                return "AcDbAssocActionParam";
+            case AssociativePrefixKind::AcDbAssocDependency:
+                return "AcDbAssocDependency";
+            case AssociativePrefixKind::AcDbAssocGeomDependency:
+                return "AcDbAssocGeomDependency";
+            case AssociativePrefixKind::AcDbAssocNetwork:
+                return "AcDbAssocNetwork";
+            case AssociativePrefixKind::AcDbAssocActionBody:
+                return "AcDbAssocActionBody";
+            case AssociativePrefixKind::AcDbEvalExpr:
+                return "AcDbEvalExpr";
+            case AssociativePrefixKind::AcDbShHistoryNode:
+                return "AcDbShHistoryNode";
+            case AssociativePrefixKind::AcShActionBody:
+                return "AcShActionBody";
+        }
+        return "unknown";
+    }
+
+    static const char* associativePrefixParseStatusName(
+        AssociativePrefixParseStatus status) {
+        switch (status) {
+            case AssociativePrefixParseStatus::Complete:
+                return "complete";
+            case AssociativePrefixParseStatus::Partial:
+                return "partial";
+            case AssociativePrefixParseStatus::Missing:
+                return "missing";
+            case AssociativePrefixParseStatus::UnsupportedVersion:
+                return "unsupported version";
+            case AssociativePrefixParseStatus::BoundedCountOverflow:
+                return "bounded count overflow";
+        }
+        return "unknown";
     }
 
     static const char* replayBlockerName(ReplayBlocker blocker) {
@@ -3712,6 +3832,63 @@ private:
                && value.find(needle) != std::string::npos;
     }
 
+    static AssociativePrefixKind associativePrefixKindFromDrw(
+        DRW_AssociativePrefixStatus::Kind kind) {
+        switch (kind) {
+            case DRW_AssociativePrefixStatus::Kind::AcDbAssocAction:
+                return AssociativePrefixKind::AcDbAssocAction;
+            case DRW_AssociativePrefixStatus::Kind::AcDbAssocActionParam:
+                return AssociativePrefixKind::AcDbAssocActionParam;
+            case DRW_AssociativePrefixStatus::Kind::AcDbAssocDependency:
+                return AssociativePrefixKind::AcDbAssocDependency;
+            case DRW_AssociativePrefixStatus::Kind::AcDbAssocGeomDependency:
+                return AssociativePrefixKind::AcDbAssocGeomDependency;
+            case DRW_AssociativePrefixStatus::Kind::AcDbAssocNetwork:
+                return AssociativePrefixKind::AcDbAssocNetwork;
+            case DRW_AssociativePrefixStatus::Kind::AcDbAssocActionBody:
+                return AssociativePrefixKind::AcDbAssocActionBody;
+            case DRW_AssociativePrefixStatus::Kind::AcDbEvalExpr:
+                return AssociativePrefixKind::AcDbEvalExpr;
+            case DRW_AssociativePrefixStatus::Kind::AcDbShHistoryNode:
+                return AssociativePrefixKind::AcDbShHistoryNode;
+            case DRW_AssociativePrefixStatus::Kind::AcShActionBody:
+                return AssociativePrefixKind::AcShActionBody;
+        }
+        return AssociativePrefixKind::AcDbAssocAction;
+    }
+
+    static AssociativePrefixParseStatus associativePrefixStatusFromDrw(
+        DRW_AssociativePrefixStatus::ParseStatus status) {
+        switch (status) {
+            case DRW_AssociativePrefixStatus::ParseStatus::Complete:
+                return AssociativePrefixParseStatus::Complete;
+            case DRW_AssociativePrefixStatus::ParseStatus::Partial:
+                return AssociativePrefixParseStatus::Partial;
+            case DRW_AssociativePrefixStatus::ParseStatus::Missing:
+                return AssociativePrefixParseStatus::Missing;
+            case DRW_AssociativePrefixStatus::ParseStatus::UnsupportedVersion:
+                return AssociativePrefixParseStatus::UnsupportedVersion;
+            case DRW_AssociativePrefixStatus::ParseStatus::BoundedCountOverflow:
+                return AssociativePrefixParseStatus::BoundedCountOverflow;
+        }
+        return AssociativePrefixParseStatus::Missing;
+    }
+
+    static AssociativePrefixStatusRecord makeAssociativePrefixStatus(
+        const DRW_AssociativePrefixStatus& source) {
+        AssociativePrefixStatusRecord record;
+        record.kind = associativePrefixKindFromDrw(source.m_kind);
+        record.status = associativePrefixStatusFromDrw(source.m_status);
+        record.startBit = source.m_startBit;
+        record.bitSize = source.m_bitSize;
+        record.classVersion = source.m_classVersion;
+        record.decodedHandleCount = source.m_decodedHandleCount;
+        record.decodedValueCount = source.m_decodedValueCount;
+        record.decodedCountValue = source.m_decodedCountValue;
+        record.sourceAssumption = source.m_sourceAssumption;
+        return record;
+    }
+
     static bool containsHandle(const std::vector<duint32>& handles,
                                duint32 handle) {
         return std::find(handles.begin(), handles.end(), handle) != handles.end();
@@ -3865,6 +4042,60 @@ private:
             case AssociativeEdgeConfidence::Unknown:
             default:
                 return;
+        }
+    }
+
+    static void incrementAssociativePrefixCounts(
+        AssociativePrefixCounts& counts,
+        const AssociativePrefixStatusRecord& prefix) {
+        ++counts.prefixCount;
+        counts.decodedHandleCount += prefix.decodedHandleCount;
+        counts.decodedValueCount += prefix.decodedValueCount;
+        switch (prefix.kind) {
+            case AssociativePrefixKind::AcDbAssocAction:
+                ++counts.assocAction;
+                break;
+            case AssociativePrefixKind::AcDbAssocActionParam:
+                ++counts.assocActionParam;
+                break;
+            case AssociativePrefixKind::AcDbAssocDependency:
+                ++counts.assocDependency;
+                break;
+            case AssociativePrefixKind::AcDbAssocGeomDependency:
+                ++counts.assocGeomDependency;
+                break;
+            case AssociativePrefixKind::AcDbAssocNetwork:
+                ++counts.assocNetwork;
+                break;
+            case AssociativePrefixKind::AcDbAssocActionBody:
+                ++counts.assocActionBody;
+                break;
+            case AssociativePrefixKind::AcDbEvalExpr:
+                ++counts.evalExpr;
+                break;
+            case AssociativePrefixKind::AcDbShHistoryNode:
+                ++counts.shHistoryNode;
+                break;
+            case AssociativePrefixKind::AcShActionBody:
+                ++counts.shActionBody;
+                break;
+        }
+        switch (prefix.status) {
+            case AssociativePrefixParseStatus::Complete:
+                ++counts.complete;
+                break;
+            case AssociativePrefixParseStatus::Partial:
+                ++counts.partial;
+                break;
+            case AssociativePrefixParseStatus::Missing:
+                ++counts.missing;
+                break;
+            case AssociativePrefixParseStatus::UnsupportedVersion:
+                ++counts.unsupportedVersion;
+                break;
+            case AssociativePrefixParseStatus::BoundedCountOverflow:
+                ++counts.boundedCountOverflow;
+                break;
         }
     }
 
