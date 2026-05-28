@@ -202,6 +202,9 @@ public:
         bool hasWireframe = false;
         bool hasRawPayload = false;
         ModelerPayloadKind payloadKind = ModelerPayloadKind::Unknown;
+        size_t markerOffset = 0;
+        size_t markerLength = 0;
+        std::string markerText;
         duint32 historyHandle = 0;
         size_t rawByteCount = 0;
         std::vector<duint8> rawBytes;
@@ -256,6 +259,24 @@ public:
             return fallbackRendered + incompleteSemanticParse + unresolvedStyle
                    + fieldContent + blockContent + attributeContent
                    + overrideCells + geometryCells;
+        }
+    };
+
+    struct MLeaderWriterBlockerCounts {
+        size_t mleaderCount = 0;
+        size_t unresolvedStyle = 0;
+        size_t missingTextContent = 0;
+        size_t blockContent = 0;
+        size_t toleranceContent = 0;
+        size_t overrideFlags = 0;
+        size_t missingLeaderGeometry = 0;
+        size_t invalidated = 0;
+        size_t replaced = 0;
+
+        size_t totalBlockers() const {
+            return unresolvedStyle + missingTextContent + blockContent
+                   + toleranceContent + overrideFlags + missingLeaderGeometry
+                   + invalidated + replaced;
         }
     };
 
@@ -322,6 +343,12 @@ public:
         dint32 maxDependencyIndex = 0;
         size_t dependencyCount = 0;
         size_t actionCount = 0;
+        size_t valueParamCount = 0;
+        size_t ownedParamPrefixCount = 0;
+        bool valueParamsParsed = false;
+        bool actionParamPrefixParsed = false;
+        bool singleDependencyActionParamParsed = false;
+        bool compoundActionParamParsed = false;
         std::vector<DRW_AssociativeHandleRef> dependencyRefs;
         std::vector<DRW_AssociativeHandleRef> actionRefs;
         std::vector<duint32> ownedParamHandles;
@@ -731,7 +758,12 @@ public:
         record.modelerDataUnknownBit = geometry.m_modelerDataUnknownBit;
         record.hasWireframe = geometry.m_hasWireframe;
         record.hasRawPayload = !geometry.m_rawBytes.empty();
-        record.payloadKind = classifyModelerPayload(geometry.m_rawBytes);
+        const ModelerPayloadMarker marker = scanModelerPayloadMarker(
+            geometry.m_rawBytes);
+        record.payloadKind = marker.kind;
+        record.markerOffset = marker.offset;
+        record.markerLength = marker.length;
+        record.markerText = marker.text;
         record.historyHandle = geometry.m_historyHandle;
         record.rawByteCount = geometry.m_rawBytes.size();
         record.rawBytes = geometry.m_rawBytes;
@@ -814,6 +846,13 @@ public:
         record.maxDependencyIndex = object.m_maxDependencyIndex;
         record.dependencyCount = object.m_dependencies.size();
         record.actionCount = object.m_actions.size();
+        record.valueParamCount = object.m_valueParamCount;
+        record.ownedParamPrefixCount = object.m_ownedParamPrefixCount;
+        record.valueParamsParsed = object.m_valueParamsParsed;
+        record.actionParamPrefixParsed = object.m_actionParamPrefixParsed;
+        record.singleDependencyActionParamParsed =
+            object.m_singleDependencyActionParamParsed;
+        record.compoundActionParamParsed = object.m_compoundActionParamParsed;
         record.dependencyRefs = object.m_dependencies;
         record.actionRefs = object.m_actions;
         record.ownedParamHandles = object.m_ownedParams;
@@ -1212,6 +1251,29 @@ public:
         }
         return counts;
     }
+    MLeaderWriterBlockerCounts mleaderWriterBlockerCounts() const {
+        MLeaderWriterBlockerCounts counts;
+        for (const MLeaderRecord& record : m_mleaders) {
+            ++counts.mleaderCount;
+            if (record.styleHandle != 0 && !record.styleResolved)
+                ++counts.unresolvedStyle;
+            if (record.effectiveContentType == 2 && !record.hasTextContent)
+                ++counts.missingTextContent;
+            if (record.effectiveContentType == 1 || record.hasBlockContent)
+                ++counts.blockContent;
+            if (record.effectiveContentType == 3)
+                ++counts.toleranceContent;
+            if (record.overrideFlags != 0)
+                ++counts.overrideFlags;
+            if (record.rootCount == 0 || record.leaderLineCount == 0)
+                ++counts.missingLeaderGeometry;
+            if (record.replayState == ReplayState::ReplayInvalidated)
+                ++counts.invalidated;
+            if (record.replayState == ReplayState::ReplayReplaced)
+                ++counts.replaced;
+        }
+        return counts;
+    }
     const TableCellRecord* findTableCell(duint32 tableHandle, int row, int column) const {
         const TableRecord* table = findTableByHandle(tableHandle);
         if (table == nullptr || row < 0 || column < 0)
@@ -1370,14 +1432,42 @@ public:
         }
     }
 
-    static bool containsBytes(const std::vector<duint8>& bytes, const char* marker) {
+    struct ModelerPayloadMarker {
+        ModelerPayloadKind kind = ModelerPayloadKind::Unknown;
+        size_t offset = 0;
+        size_t length = 0;
+        std::string text;
+    };
+
+    static ModelerPayloadMarker scanModelerPayloadMarker(
+        const std::vector<duint8>& bytes) {
+        const ModelerPayloadMarker sab = findModelerPayloadMarker(
+            bytes, "ACIS BinaryFile", ModelerPayloadKind::Sab);
+        if (sab.kind != ModelerPayloadKind::Unknown)
+            return sab;
+        const ModelerPayloadMarker satHistory = findModelerPayloadMarker(
+            bytes, "Begin-of-ACIS-History", ModelerPayloadKind::Sat);
+        if (satHistory.kind != ModelerPayloadKind::Unknown)
+            return satHistory;
+        return findModelerPayloadMarker(bytes, "ACIS", ModelerPayloadKind::Sat);
+    }
+
+    static ModelerPayloadKind classifyModelerPayload(const std::vector<duint8>& bytes) {
+        return scanModelerPayloadMarker(bytes).kind;
+    }
+
+private:
+    static ModelerPayloadMarker findModelerPayloadMarker(
+        const std::vector<duint8>& bytes, const char* marker,
+        ModelerPayloadKind kind) {
+        ModelerPayloadMarker result;
         if (marker == nullptr || marker[0] == '\0')
-            return false;
+            return result;
         size_t markerSize = 0;
         while (marker[markerSize] != '\0')
             ++markerSize;
         if (bytes.size() < markerSize)
-            return false;
+            return result;
         for (size_t offset = 0; offset + markerSize <= bytes.size(); ++offset) {
             bool matched = true;
             for (size_t index = 0; index < markerSize; ++index) {
@@ -1386,20 +1476,18 @@ public:
                     break;
                 }
             }
-            if (matched)
-                return true;
+            if (matched) {
+                result.kind = kind;
+                result.offset = offset;
+                result.length = markerSize;
+                result.text.assign(marker, markerSize);
+                return result;
+            }
         }
-        return false;
+        return result;
     }
 
-    static ModelerPayloadKind classifyModelerPayload(const std::vector<duint8>& bytes) {
-        if (containsBytes(bytes, "ACIS BinaryFile"))
-            return ModelerPayloadKind::Sab;
-        if (containsBytes(bytes, "ACIS") || containsBytes(bytes, "Begin-of-ACIS-History"))
-            return ModelerPayloadKind::Sat;
-        return ModelerPayloadKind::Unknown;
-    }
-
+public:
     const ViewRecord* findViewByName(const std::string& name) const {
         for (const ViewRecord& record : m_views) {
             if (record.name == name)
@@ -1415,6 +1503,16 @@ public:
                 return &record;
         }
         return nullptr;
+    }
+    std::vector<const ViewRecord*> findViewsReferencingHandle(duint32 handle) const {
+        std::vector<const ViewRecord*> result;
+        if (handle == 0)
+            return result;
+        for (const ViewRecord& record : m_views) {
+            if (viewRecordReferences(record, handle))
+                result.push_back(&record);
+        }
+        return result;
     }
     const LightRecord* findLightByHandle(duint32 handle) const {
         if (handle == 0)
@@ -1690,6 +1788,26 @@ public:
         }
     }
 
+    void invalidateViewGraphForHandle(duint32 dependentHandle) {
+        if (dependentHandle == 0)
+            return;
+        for (ViewRecord& record : m_views) {
+            if (record.replayState != ReplayState::ReplayAllowed)
+                continue;
+            if (viewRecordReferences(record, dependentHandle))
+                record.replayState = ReplayState::ReplayInvalidated;
+        }
+    }
+
+    void markMLeaderReplayReplacedForHandle(duint32 handle) {
+        if (handle == 0)
+            return;
+        for (MLeaderRecord& record : m_mleaders) {
+            if (record.handle == handle)
+                record.replayState = ReplayState::ReplayReplaced;
+        }
+    }
+
     void invalidateAllReplayable() {
         invalidateContainer(m_rawObjects);
         invalidateContainer(m_views);
@@ -1953,6 +2071,17 @@ private:
                 return true;
         }
         return false;
+    }
+
+    static bool viewRecordReferences(const ViewRecord& record, duint32 handle) {
+        if (handle == 0)
+            return false;
+        return record.namedUcsHandle == handle
+               || record.baseUcsHandle == handle
+               || record.backgroundHandle == handle
+               || record.visualStyleHandle == handle
+               || record.sunHandle == handle
+               || record.liveSectionHandle == handle;
     }
 
     static bool mleaderStyleRecordReferences(const MLeaderStyleRecord& record,

@@ -5507,6 +5507,8 @@ void RS_FilterDXFRW::writeObjects() {
             metadata.rawObjectFamilyCounts();
         const LC_DwgAdvancedMetadata::TableWriterBlockerCounts tableBlockers =
             metadata.tableWriterBlockerCounts();
+        const LC_DwgAdvancedMetadata::MLeaderWriterBlockerCounts mleaderBlockers =
+            metadata.mleaderWriterBlockerCounts();
         for (const auto& record : metadata.rawObjects()) {
             if (nativeSunHandles.count(record.handle) != 0 && isSunRawObject(record)) {
                 hasBlockedReplay = true;
@@ -5631,6 +5633,22 @@ void RS_FilterDXFRW::writeObjects() {
                 static_cast<int>(tableBlockers.attributeContent),
                 static_cast<int>(tableBlockers.overrideCells),
                 static_cast<int>(tableBlockers.geometryCells));
+        }
+        if (mleaderBlockers.mleaderCount > 0 && mleaderBlockers.totalBlockers() > 0) {
+            RS_DEBUG->print(
+                RS_Debug::D_WARNING,
+                "Native DWG MLEADER writing limited: mleaders=%d unresolved-style=%d "
+                "missing-text=%d block=%d tolerance=%d overrides=%d geometry=%d "
+                "invalidated=%d replaced=%d",
+                static_cast<int>(mleaderBlockers.mleaderCount),
+                static_cast<int>(mleaderBlockers.unresolvedStyle),
+                static_cast<int>(mleaderBlockers.missingTextContent),
+                static_cast<int>(mleaderBlockers.blockContent),
+                static_cast<int>(mleaderBlockers.toleranceContent),
+                static_cast<int>(mleaderBlockers.overrideFlags),
+                static_cast<int>(mleaderBlockers.missingLeaderGeometry),
+                static_cast<int>(mleaderBlockers.invalidated),
+                static_cast<int>(mleaderBlockers.replaced));
         }
         const size_t nativeSemanticRecords =
             static_cast<size_t>(nativeSunObjects + nativePlaceholderObjects

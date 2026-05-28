@@ -1540,6 +1540,12 @@ public:
     std::vector<DRW_AssociativeHandleRef> m_actions;
     std::vector<duint32> m_ownedParams;
     std::vector<duint32> m_ownedActions;
+    size_t m_valueParamCount = 0;
+    size_t m_ownedParamPrefixCount = 0;
+    bool m_valueParamsParsed = false;
+    bool m_actionParamPrefixParsed = false;
+    bool m_singleDependencyActionParamParsed = false;
+    bool m_compoundActionParamParsed = false;
     duint32 m_dependencyHandle = 0;
     duint32 m_readDependencyHandle = 0;
     duint32 m_writeDependencyHandle = 0;

@@ -3751,14 +3751,17 @@ bool DRW_AssociativeObject::parseDwg(DRW::Version version, dwgBuffer *buf, duint
             const dint32 ownedParamCount = buf->getBitLong();
             if (!readHandleVector(m_ownedParams, ownedParamCount))
                 return false;
+            m_ownedParamPrefixCount = static_cast<size_t>(ownedParamCount);
             buf->getBitShort();
             const dint32 valueCount = buf->getBitLong();
             if (!isValidAssocCount(valueCount, kMaxAssocValueParams))
                 return false;
+            m_valueParamCount = static_cast<size_t>(valueCount);
             for (dint32 i = 0; i < valueCount; ++i) {
                 if (!skipValueParam(version, buf, sBuf, &hBuff))
                     return false;
             }
+            m_valueParamsParsed = true;
         }
         return buf->isGood() && hBuff.isGood() && (!sBuf || sBuf->isGood());
     };
@@ -3808,14 +3811,18 @@ bool DRW_AssociativeObject::parseDwg(DRW::Version version, dwgBuffer *buf, duint
         m_rNodeHandle = readObjectHandleRef(&hBuff);
         m_dNodeHandle = readObjectHandleRef(&hBuff);
     } else if (m_recordName == "ACDBASSOCVERTEXACTIONPARAM") {
-        if (skipAssocActionParamPrefix(version, buf, sBuf)
+        m_actionParamPrefixParsed = skipAssocActionParamPrefix(version, buf, sBuf);
+        if (m_actionParamPrefixParsed
             && skipAssocSingleDependencyActionParam(buf, &hBuff, &m_dependencyHandle)) {
+            m_singleDependencyActionParamParsed = true;
             m_classVersion = static_cast<duint16>(buf->getBitLong());
             m_point = buf->get3BitDouble();
         }
     } else if (m_recordName == "ACDBASSOCOSNAPPOINTREFACTIONPARAM") {
-        if (skipAssocActionParamPrefix(version, buf, sBuf)
+        m_actionParamPrefixParsed = skipAssocActionParamPrefix(version, buf, sBuf);
+        if (m_actionParamPrefixParsed
             && skipAssocCompoundActionParam(buf, &hBuff)) {
+            m_compoundActionParamParsed = true;
             m_status = buf->getBitShort();
             m_osnapMode = buf->getRawChar8();
             m_parameter = buf->getBitDouble();

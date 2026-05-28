@@ -200,22 +200,206 @@ Completed in the 2026-05-27 implementation pass:
   replay expectations.
 - Slice 11 modeler payload queue support advanced: preserved modeler raw bytes
   are now classified as likely SAT, SAB, or unknown from ACIS payload markers.
+- Ready A MLEADER writer diagnostics advanced: metadata now reports MLEADER
+  native-writer blocker counts for unresolved styles, missing text, block and
+  tolerance content, override flags, missing leader geometry, and
+  invalidated/replaced replay state; DWG export logs the summary.
+- Ready B modeler payload byte-range metadata advanced: preserved ACIS/modeler
+  payloads now expose recognizable SAT/SAB marker text, offset, length, and
+  category while keeping unknown payloads raw-only.
+- Ready C associative prefix accounting advanced: ACDBASSOC action value-param
+  counts, owned-param prefix counts, and action-param prefix parse status are
+  now surfaced through libdxfrw shells and LibreCAD DWG metadata.
+- Ready D VIEW/UCS/visual dependency lookup advanced: VIEW records now expose
+  reference lookup and invalidation for named/base UCS, background, visual
+  style, sun, and live-section handles.
+- Ready E fixture harness diagnostics advanced: optional DWG fixture manifest
+  tests now parse expected tags, callbacks, raw-family expectations, reference
+  dump paths, and load/raw-preservation expectations into typed structures.
 
 Still incomplete:
 
 - Reader-side structural validation for AuxHeader/second-header remains shallow.
-- Slice 5-7 semantic table graph still needs cell-level style/detail
-  expansion, fallback rendering, and narrow native table writing.
-- Slice 8-10 remaining MLEADER work: dictionary/current-style linkage, richer
-  block/tolerance content, complex override diagnostics, and AC1032 annotative
-  attribute side payload replay.
-- Slice 11-12 ACIS/modeler and associative/action/history graph expansion;
-  shell records are queryable by handle/reference, but richer byte decoding and
-  graph evaluation remain.
+- Slice 5-7 semantic table graph is coherent enough for dependency tracking;
+  the next safe table work is fallback rendering/diagnostics, not native table
+  writing yet.
+- Slice 8-10 MLEADER style/content metadata is coherent enough for dependency
+  tracking and text-content writing; the next safe MLEADER work is explicit
+  writer blocker diagnostics for block/tolerance/override cases.
+- Slice 11-12 ACIS/modeler and associative/action/history graph expansion has
+  queryable shell records; the next safe work is byte-range/count metadata and
+  graph diagnostics, not ACIS interpretation or action evaluation.
 - Slice 14 remaining advanced entities: MESH, SHAPE, OLE2FRAME, raster/image/
   underlay DWG writing, and fuller HATCH semantics beyond gradients.
 - Slice 15-16 remaining object metadata writers and VIEW/UCS/lighting UI
-  integration; visual/lighting records are queryable but not yet rendered.
+  integration; visual/lighting records are queryable by core handles, but view
+  dependency invalidation and UI/rendering integration are not complete.
+
+## Implementation-Ready Queue
+
+Reviewed against the current codebase on 2026-05-28. These are the next
+bounded items Gibbs or another implementation pass can start without needing a
+new native writer contract or external fixture first.
+
+### Ready A: MLEADER Writer Blocker Diagnostics
+
+Why ready: `LC_DwgAdvancedMetadata::MLeaderRecord` already stores style
+resolution, content-type, block-content, override flags, root/line counts,
+text-content state, and dependent handles. `RS_FilterDXFRW::writeMLeader()`
+already warns for block-content fallback; object writing does not yet provide a
+metadata-level summary like table writing does.
+
+Status: complete in the current implementation pass. Keep future MLEADER work
+diagnostics-first unless block/tolerance ownership and downgrade contracts are
+added.
+
+Implementation steps:
+
+1. Add `MLeaderWriterBlockerCounts` to `LC_DwgAdvancedMetadata`.
+2. Count unresolved style, missing/empty text content, block content,
+   tolerance content (`effectiveContentType == 3`), nonzero override flags,
+   no roots/leader lines, and invalidated/replaced replay state.
+3. Log the counts from `RS_FilterDXFRW::writeObjects()` next to table blocker
+   diagnostics.
+4. Add `entity_metadata` tests with synthetic text, block, tolerance,
+   unresolved-style, override, and invalidated records.
+
+Acceptance:
+
+- `[entity_metadata]` proves each blocker bucket.
+- `[dwg-write]` remains green.
+- qmake6 remains green.
+
+Stop before native block/tolerance writing; this slice is diagnostics only.
+
+### Ready B: Modeler Payload Byte-Range Metadata
+
+Why ready: `DRW_ModelerGeometry` already preserves full raw object bytes,
+body bit size, object size, empty/body flags, 3DSOLID history handle, and a
+coarse SAT/SAB marker classification. The safe next step is metadata indexing
+inside the raw payload, not ACIS decoding.
+
+Status: complete in the current implementation pass. The metadata exposes
+marker byte ranges only; ACIS/SAB interpretation remains deferred.
+
+Implementation steps:
+
+1. Extend `ModelerGeometryRecord` with marker offset, marker length, and
+   marker text/category for recognizable SAT/SAB headers.
+2. Add a small helper that scans `rawBytes` for known markers such as
+   `ACIS BinaryFile`, `Begin-of-ACIS-History`, and `ACIS`.
+3. Keep unknown payloads as unknown with offset/length zero.
+4. Add tests for SAB, SAT, and unknown payloads using synthetic byte vectors.
+5. Update export diagnostics only if the metadata is incomplete or edited;
+   do not attempt native modeler writing.
+
+Acceptance:
+
+- `[entity_metadata]` proves marker offsets and unknown handling.
+- No parser field order changes are needed.
+
+Stop before interpreting ACIS entities, wire bodies, or SAT/SAB records.
+
+### Ready C: Associative Value-Param and Prefix Accounting
+
+Why ready: `DRW_AssociativeObject::parseDwg()` already skips action value
+params and action-param prefixes safely, but the skipped counts are not exposed
+in metadata. ACadSharp/libreDWG parity can improve by reporting these bounded
+decode queues without evaluating the graph.
+
+Status: complete in the current implementation pass. The parser exposes
+bounded counts/status only; constraint evaluation remains deferred.
+
+Implementation steps:
+
+1. Add fields to `DRW_AssociativeObject` for value-param count, owned-param
+   prefix count where available, and booleans indicating prefix parse success.
+2. Populate those fields in the existing bounded parser paths without changing
+   skip order.
+3. Mirror them into `LC_DwgAdvancedMetadata::AssociativeRecord`.
+4. Add lookup/diagnostic tests for action records with owned params and value
+   params.
+5. Keep raw replay invalidation behavior unchanged.
+
+Acceptance:
+
+- `[entity_metadata]` proves counts reach metadata.
+- Existing associative raw replay invalidation tests still pass.
+
+Stop before evaluating constraints, dynamic-block actions, or dependency
+ownership semantics.
+
+### Ready D: VIEW/UCS/Visual Dependency Lookup
+
+Why ready: `ViewRecord` already stores named/base UCS, background, visual
+style, sun, live-section, and lighting fields. The missing piece is the same
+reference lookup/invalidation support now present for TABLE and MLEADER.
+
+Status: complete in the current implementation pass. This is metadata-only;
+UI/rendering integration remains deferred.
+
+Implementation steps:
+
+1. Add `findViewsReferencingHandle(duint32)` to metadata.
+2. Add `invalidateViewGraphForHandle(duint32)` to mark dependent views stale.
+3. Include named/base UCS, background, visual style, sun, and live-section
+   handles in the reference predicate.
+4. Add synthetic metadata tests for UCS, visual-style, and sun references.
+5. Do not add UI/rendering behavior in this slice.
+
+Acceptance:
+
+- `[entity_metadata]` proves lookup and invalidation.
+- No writer behavior changes are required.
+
+Stop before view/vport UI integration or visual-style rendering.
+
+### Ready E: Fixture Harness Diagnostics
+
+Why ready: `libraries/libdxfrw/testdata/dwg-fixtures.json` exists and is
+optional. The current tests validate JSON shape; they do not yet summarize
+which expectations would run when fixtures are present.
+
+Status: complete in the current implementation pass. The default test remains
+offline/optional and does not require ACadSharp or libreDWG executables.
+
+Implementation steps:
+
+1. Add a small manifest helper/test that parses expected tags, callback
+   expectations, raw-family expectations, and optional reference dump paths
+   into typed local test structures.
+2. Keep missing fixture files non-fatal.
+3. Emit test diagnostics showing skipped fixture paths and enabled feature
+   tags.
+4. Do not require ACadSharp or libreDWG executables in default CI.
+
+Acceptance:
+
+- `[dwg-smoke]` or `[entity_metadata][dwg_fixtures]` validates manifest
+  semantics without external files.
+
+Stop before adding mandatory fixture downloads or network access.
+
+### Not Ready As One-Shot Work
+
+These roadmap items should remain deferred until the listed contract exists:
+
+- Native semantic TABLE writing: needs a complete AC1021+ TABLE/TABLECONTENT
+  writer layout, owner/dictionary handles, and a text-only fixture proving
+  round-trip.
+- Table fallback rendering: needs a LibreCAD-side attachment policy for mapping
+  fallback grid/text entities back to native table metadata after edits.
+- Native MLEADER block/tolerance writing: needs block attribute/tolerance
+  content ownership and downgrade rules; diagnostics are ready first.
+- ACIS/modeler interpretation: needs fixture-backed SAT/SAB byte slicing and
+  a policy for fallback wire/silhouette geometry.
+- Associative/action graph evaluation: needs semantics for invalidating or
+  preserving constraints after geometry edits; current work should stay
+  shell/metadata-only.
+- MESH/SHAPE/OLE2FRAME/raster/underlay DWG writers: each needs a separate
+  class/handle registration and writer contract.
+- VIEW/UCS/LIGHT/SUN UI integration: metadata lookup can proceed, but rendering
+  behavior requires a LibreCAD UI/design decision.
 
 ## Step-by-Step Implementation Queue
 
@@ -265,6 +449,9 @@ Exit criteria:
 
 Goal: make custom class emission deterministic before adding more writers.
 
+Status: complete. Keep this section as historical context unless new custom
+class writer regressions appear.
+
 Likely files:
 
 - `libraries/libdxfrw/src/drw_classes.*`
@@ -290,6 +477,10 @@ Validation:
 
 Goal: close the DWG file-structure gap independently of entity work.
 
+Status: writer coverage complete for current smoke-test scope. Remaining work
+is reader-side structural validation only, and is P3 unless interoperability
+tests expose a concrete failure.
+
 Likely files:
 
 - `libraries/libdxfrw/src/intern/dwgwriter15.cpp`
@@ -313,6 +504,10 @@ Validation:
 ### Slice 3: Raw Replay Metadata Completeness
 
 Goal: make raw preservation a durable decode queue.
+
+Status: complete for non-entity OBJECT replay and explicit blocker accounting.
+Entity replay remains deliberately blocked until owner/block membership rewrite
+rules are designed.
 
 Likely files:
 
@@ -345,6 +540,9 @@ Validation:
 ### Slice 4: Fixture and Interop Harness Skeleton
 
 Goal: create repeatable comparison infrastructure before broad feature work.
+
+Status: optional manifest exists. See Ready E for the next implementable
+manifest-diagnostics slice.
 
 Likely files:
 
@@ -402,15 +600,14 @@ Completed:
 
 Remaining:
 
-1. Normalize table entity, table content, table style, cell style map, FIELD,
-   block content, and attribute handles into a single metadata graph.
-2. Expand preserved cell content kinds beyond current text, FIELD, block, and
+1. Expand preserved cell content kinds beyond current text, FIELD, block, and
    value/handle summaries when more native table payloads are decoded.
-3. Preserve row/column sizes, breaks, merged ranges, override cells, geometry
-   cells, and style handles.
-4. Preserve R2007+ and R2010+ table style details: named cell styles, borders,
-   margins, alignment, text style, text height, colors, and CELLSTYLEMAP
+2. Preserve R2007+ and R2010+ table style detail values beyond handle graphs:
+   named cell styles, margins, alignment, text height, colors, and CELLSTYLEMAP
    entries.
+3. Add fallback rendering only after the fallback-entity attachment policy is
+   defined; keep native table writing blocked until Slice 6 has a concrete
+   text-only subset.
 
 Validation:
 
@@ -512,6 +709,12 @@ Goal: extend MLEADER writing in safe increments.
 Prerequisite: Slice 8 complete.
 
 Tasks:
+
+Implementation status:
+
+- See Ready A for the next bounded diagnostics slice.
+- Native block/tolerance MLEADER writing remains blocked by ownership and
+  downgrade contracts.
 
 1. Add native MLEADERSTYLE writing.
 2. Preserve current text-content MLeader writing.
@@ -631,6 +834,10 @@ Validation:
 
 Goal: unblock a small high-value advanced entity and future MLeader tolerance
 content.
+
+Status: complete for native DWG parse/write and current tests. Future work is
+only to consume TOLERANCE from richer MLEADER content once that writer contract
+exists.
 
 Likely files:
 

@@ -31,6 +31,7 @@
 #include <fstream>
 #include <memory>
 #include <sstream>
+#include <vector>
 
 #include <QFile>
 #include <QJsonArray>
@@ -515,6 +516,11 @@ TEST_CASE("DWG advanced metadata caches raw and semantic sidecars",
   associativeObject.m_actions = {{true, 0xECu}};
   associativeObject.m_ownedParams = {0xEDu, 0xEEu};
   associativeObject.m_ownedActions = {0xEFu};
+  associativeObject.m_valueParamCount = 3u;
+  associativeObject.m_ownedParamPrefixCount = 2u;
+  associativeObject.m_valueParamsParsed = true;
+  associativeObject.m_actionParamPrefixParsed = true;
+  associativeObject.m_singleDependencyActionParamParsed = true;
   associativeObject.m_dependencyHandle = 0xF0u;
   associativeObject.m_readDependencyHandle = 0xF1u;
   associativeObject.m_writeDependencyHandle = 0xF2u;
@@ -595,6 +601,9 @@ TEST_CASE("DWG advanced metadata caches raw and semantic sidecars",
   CHECK(foundView->ambientColor == 7u);
   CHECK(metadata.findViewByHandle(0x90u) == foundView);
   CHECK(metadata.findViewByHandle(0u) == nullptr);
+  const auto viewsByVisualStyle = metadata.findViewsReferencingHandle(0x94u);
+  REQUIRE(viewsByVisualStyle.size() == 1u);
+  CHECK(viewsByVisualStyle.front() == foundView);
 
   REQUIRE(metadata.lights().size() == 1);
   const auto& capturedLight = metadata.lights().front();
@@ -942,6 +951,9 @@ TEST_CASE("DWG advanced metadata caches raw and semantic sidecars",
   CHECK(capturedModeler.hasRawPayload);
   CHECK(capturedModeler.payloadKind ==
         LC_DwgAdvancedMetadata::ModelerPayloadKind::Sab);
+  CHECK(capturedModeler.markerOffset == 0u);
+  CHECK(capturedModeler.markerLength == 15u);
+  CHECK(capturedModeler.markerText == "ACIS BinaryFile");
   CHECK(std::string(LC_DwgAdvancedMetadata::modelerPayloadKindName(
             capturedModeler.payloadKind)) == "SAB");
   CHECK(capturedModeler.historyHandle == 0xFBu);
@@ -971,6 +983,12 @@ TEST_CASE("DWG advanced metadata caches raw and semantic sidecars",
   CHECK(capturedAssoc.dependencyRefs.front().m_isOwned);
   CHECK(capturedAssoc.dependencyRefs.back().m_handle == 0xEBu);
   CHECK(capturedAssoc.actionRefs.front().m_handle == 0xECu);
+  CHECK(capturedAssoc.valueParamCount == 3u);
+  CHECK(capturedAssoc.ownedParamPrefixCount == 2u);
+  CHECK(capturedAssoc.valueParamsParsed);
+  CHECK(capturedAssoc.actionParamPrefixParsed);
+  CHECK(capturedAssoc.singleDependencyActionParamParsed);
+  CHECK_FALSE(capturedAssoc.compoundActionParamParsed);
   CHECK(capturedAssoc.ownedParamHandles.size() == 2u);
   CHECK(capturedAssoc.ownedActionHandles.front() == 0xEFu);
   CHECK(capturedAssoc.dependencyHandle == 0xF0u);
@@ -1077,6 +1095,33 @@ TEST_CASE("DWG advanced metadata resolves TABLESTYLE after TABLECONTENT import",
   CHECK(tablesUsingLateStyle.front() == resolvedContent);
 }
 
+TEST_CASE("DWG advanced metadata invalidates VIEW dependencies",
+          "[entity_metadata][dwg_metadata][view]") {
+  LC_DwgAdvancedMetadata metadata;
+
+  DRW_View view;
+  view.handle = 0x480u;
+  view.namedUCS_ID = 0x481u;
+  view.baseUCS_ID = 0x482u;
+  view.m_backgroundHandle = 0x483u;
+  view.m_visualStyleHandle = 0x484u;
+  view.m_sunHandle = 0x485u;
+  view.m_liveSectionHandle = 0x486u;
+  metadata.addView(view);
+
+  CHECK(metadata.findViewsReferencingHandle(0x481u).size() == 1u);
+  CHECK(metadata.findViewsReferencingHandle(0x482u).size() == 1u);
+  CHECK(metadata.findViewsReferencingHandle(0x484u).size() == 1u);
+  CHECK(metadata.findViewsReferencingHandle(0x485u).size() == 1u);
+  CHECK(metadata.findViewsReferencingHandle(0xDEADBEEFu).empty());
+
+  metadata.invalidateViewGraphForHandle(0x484u);
+
+  REQUIRE(metadata.views().size() == 1u);
+  CHECK(metadata.views().front().replayState ==
+        LC_DwgAdvancedMetadata::ReplayState::ReplayInvalidated);
+}
+
 TEST_CASE("DWG advanced metadata invalidates TABLECONTENT raw replay",
           "[entity_metadata][dwg_metadata][table]") {
   LC_DwgAdvancedMetadata metadata;
@@ -1162,17 +1207,31 @@ TEST_CASE("DWG advanced metadata invalidates TABLESTYLE raw replay",
 
 TEST_CASE("DWG advanced metadata classifies modeler payload markers",
           "[entity_metadata][dwg_metadata][modeler]") {
-  CHECK(LC_DwgAdvancedMetadata::classifyModelerPayload(
-            {'A', 'C', 'I', 'S', ' ', 'B', 'i', 'n', 'a', 'r', 'y', 'F',
-             'i', 'l', 'e'})
-        == LC_DwgAdvancedMetadata::ModelerPayloadKind::Sab);
-  CHECK(LC_DwgAdvancedMetadata::classifyModelerPayload(
-            {'7', ' ', '0', ' ', '0', '\n', 'B', 'e', 'g', 'i', 'n', '-',
-             'o', 'f', '-', 'A', 'C', 'I', 'S', '-', 'H', 'i', 's', 't',
-             'o', 'r', 'y'})
-        == LC_DwgAdvancedMetadata::ModelerPayloadKind::Sat);
-  CHECK(LC_DwgAdvancedMetadata::classifyModelerPayload({0x01u, 0x02u})
-        == LC_DwgAdvancedMetadata::ModelerPayloadKind::Unknown);
+  const LC_DwgAdvancedMetadata::ModelerPayloadMarker sabMarker =
+      LC_DwgAdvancedMetadata::scanModelerPayloadMarker(
+          {'x', 'A', 'C', 'I', 'S', ' ', 'B', 'i', 'n', 'a', 'r', 'y', 'F',
+           'i', 'l', 'e'});
+  CHECK(sabMarker.kind == LC_DwgAdvancedMetadata::ModelerPayloadKind::Sab);
+  CHECK(sabMarker.offset == 1u);
+  CHECK(sabMarker.length == 15u);
+  CHECK(sabMarker.text == "ACIS BinaryFile");
+
+  const LC_DwgAdvancedMetadata::ModelerPayloadMarker satMarker =
+      LC_DwgAdvancedMetadata::scanModelerPayloadMarker(
+          {'7', ' ', '0', ' ', '0', '\n', 'B', 'e', 'g', 'i', 'n', '-',
+           'o', 'f', '-', 'A', 'C', 'I', 'S', '-', 'H', 'i', 's', 't',
+           'o', 'r', 'y'});
+  CHECK(satMarker.kind == LC_DwgAdvancedMetadata::ModelerPayloadKind::Sat);
+  CHECK(satMarker.offset == 6u);
+  CHECK(satMarker.length == 21u);
+  CHECK(satMarker.text == "Begin-of-ACIS-History");
+
+  const LC_DwgAdvancedMetadata::ModelerPayloadMarker unknownMarker =
+      LC_DwgAdvancedMetadata::scanModelerPayloadMarker({0x01u, 0x02u});
+  CHECK(unknownMarker.kind == LC_DwgAdvancedMetadata::ModelerPayloadKind::Unknown);
+  CHECK(unknownMarker.offset == 0u);
+  CHECK(unknownMarker.length == 0u);
+  CHECK(unknownMarker.text.empty());
 }
 
 TEST_CASE("DWG advanced metadata classifies associative object names",
@@ -1206,6 +1265,36 @@ TEST_CASE("DWG advanced metadata classifies associative object names",
         == LC_DwgAdvancedMetadata::AssociativeKind::Unknown);
   CHECK(std::string(LC_DwgAdvancedMetadata::associativeKindName(
             LC_DwgAdvancedMetadata::AssociativeKind::Unknown)) == "unknown");
+}
+
+TEST_CASE("DWG advanced metadata stores associative prefix accounting",
+          "[entity_metadata][dwg_metadata][assoc]") {
+  LC_DwgAdvancedMetadata metadata;
+
+  DRW_AssociativeObject action("ACDBASSOCACTION");
+  action.handle = 0x470u;
+  action.m_valueParamCount = 4u;
+  action.m_ownedParamPrefixCount = 2u;
+  action.m_valueParamsParsed = true;
+  metadata.addAssociativeObject(action);
+
+  DRW_AssociativeObject osnap("ACDBASSOCOSNAPPOINTREFACTIONPARAM");
+  osnap.handle = 0x471u;
+  osnap.m_actionParamPrefixParsed = true;
+  osnap.m_compoundActionParamParsed = true;
+  metadata.addAssociativeObject(osnap);
+
+  REQUIRE(metadata.associativeObjects().size() == 2u);
+  const auto& capturedAction = metadata.associativeObjects().front();
+  CHECK(capturedAction.valueParamCount == 4u);
+  CHECK(capturedAction.ownedParamPrefixCount == 2u);
+  CHECK(capturedAction.valueParamsParsed);
+  CHECK_FALSE(capturedAction.actionParamPrefixParsed);
+
+  const auto& capturedOsnap = metadata.associativeObjects().back();
+  CHECK(capturedOsnap.actionParamPrefixParsed);
+  CHECK_FALSE(capturedOsnap.singleDependencyActionParamParsed);
+  CHECK(capturedOsnap.compoundActionParamParsed);
 }
 
 TEST_CASE("DWG advanced metadata classifies raw object families",
@@ -1387,6 +1476,152 @@ TEST_CASE("DWG advanced metadata invalidates MLEADERSTYLE raw replay",
         LC_DwgAdvancedMetadata::ReplayBlocker::Invalidated);
 }
 
+TEST_CASE("DWG advanced metadata reports MLEADER writer blockers",
+          "[entity_metadata][dwg_metadata][mleader]") {
+  LC_DwgAdvancedMetadata metadata;
+
+  auto addLeaderGeometry = [](DRW_MLeader& mleader) {
+    DRW_MLeaderLeaderLine leaderLine;
+    leaderLine.points = {DRW_Coord{0.0, 0.0, 0.0}, DRW_Coord{1.0, 1.0, 0.0}};
+    DRW_MLeaderRoot root;
+    root.leaderLines.push_back(leaderLine);
+    mleader.context.roots.push_back(root);
+  };
+
+  DRW_MLeader textLeader;
+  textLeader.handle = 0x360u;
+  textLeader.styleContentType = 2u;
+  textLeader.context.hasTextContents = true;
+  addLeaderGeometry(textLeader);
+  metadata.addMLeader(textLeader);
+
+  DRW_MLeader unresolvedStyleLeader;
+  unresolvedStyleLeader.handle = 0x361u;
+  unresolvedStyleLeader.styleHandle.ref = 0x460u;
+  unresolvedStyleLeader.styleContentType = 2u;
+  unresolvedStyleLeader.context.hasTextContents = true;
+  addLeaderGeometry(unresolvedStyleLeader);
+  metadata.addMLeader(unresolvedStyleLeader);
+
+  DRW_MLeader missingTextLeader;
+  missingTextLeader.handle = 0x362u;
+  missingTextLeader.styleContentType = 2u;
+  addLeaderGeometry(missingTextLeader);
+  metadata.addMLeader(missingTextLeader);
+
+  DRW_MLeader blockLeader;
+  blockLeader.handle = 0x363u;
+  blockLeader.styleContentType = 1u;
+  blockLeader.context.hasContentsBlock = true;
+  addLeaderGeometry(blockLeader);
+  metadata.addMLeader(blockLeader);
+
+  DRW_MLeader toleranceLeader;
+  toleranceLeader.handle = 0x364u;
+  toleranceLeader.styleContentType = 3u;
+  addLeaderGeometry(toleranceLeader);
+  metadata.addMLeader(toleranceLeader);
+
+  DRW_MLeader overrideLeader;
+  overrideLeader.handle = 0x365u;
+  overrideLeader.styleContentType = 2u;
+  overrideLeader.overrideFlags = 0x10;
+  overrideLeader.context.hasTextContents = true;
+  addLeaderGeometry(overrideLeader);
+  metadata.addMLeader(overrideLeader);
+
+  DRW_MLeader missingGeometryLeader;
+  missingGeometryLeader.handle = 0x366u;
+  missingGeometryLeader.styleContentType = 2u;
+  missingGeometryLeader.context.hasTextContents = true;
+  metadata.addMLeader(missingGeometryLeader);
+
+  DRW_MLeader invalidatedLeader;
+  invalidatedLeader.handle = 0x367u;
+  invalidatedLeader.styleContentType = 2u;
+  invalidatedLeader.context.hasTextContents = true;
+  invalidatedLeader.arrowHeadHandle.ref = 0x461u;
+  addLeaderGeometry(invalidatedLeader);
+  metadata.addMLeader(invalidatedLeader);
+  metadata.invalidateMLeaderGraphForHandle(0x461u);
+
+  DRW_MLeader replacedLeader;
+  replacedLeader.handle = 0x368u;
+  replacedLeader.styleContentType = 2u;
+  replacedLeader.context.hasTextContents = true;
+  addLeaderGeometry(replacedLeader);
+  metadata.addMLeader(replacedLeader);
+  metadata.markMLeaderReplayReplacedForHandle(0x368u);
+
+  const LC_DwgAdvancedMetadata::MLeaderWriterBlockerCounts blockers =
+      metadata.mleaderWriterBlockerCounts();
+  CHECK(blockers.mleaderCount == 9u);
+  CHECK(blockers.unresolvedStyle == 1u);
+  CHECK(blockers.missingTextContent == 1u);
+  CHECK(blockers.blockContent == 1u);
+  CHECK(blockers.toleranceContent == 1u);
+  CHECK(blockers.overrideFlags == 1u);
+  CHECK(blockers.missingLeaderGeometry == 1u);
+  CHECK(blockers.invalidated == 1u);
+  CHECK(blockers.replaced == 1u);
+  CHECK(blockers.totalBlockers() == 8u);
+}
+
+struct DwgFixtureManifestEntry {
+  QString name;
+  QString path;
+  QString targetVersion;
+  bool optional = true;
+  std::vector<QString> tags;
+  std::vector<QString> expectedCallbacks;
+  std::vector<QString> expectedRawFamilies;
+  int expectedRawReplayCount = 0;
+  QString acadSharpReference;
+  QString libreDwgReference;
+  bool expectedLoad = false;
+  bool preserveRawUnsupported = false;
+};
+
+static std::vector<QString> fixtureStringArray(const QJsonObject& object,
+                                               const QString& key) {
+  std::vector<QString> values;
+  const QJsonArray array = object.value(key).toArray();
+  values.reserve(static_cast<size_t>(array.size()));
+  for (const QJsonValue& value : array)
+    values.push_back(value.toString());
+  return values;
+}
+
+static bool fixtureVectorContains(const std::vector<QString>& values,
+                                  const QString& expected) {
+  for (const QString& value : values) {
+    if (value == expected)
+      return true;
+  }
+  return false;
+}
+
+static DwgFixtureManifestEntry fixtureManifestEntryFromJson(
+    const QJsonObject& object) {
+  DwgFixtureManifestEntry entry;
+  entry.name = object.value("name").toString();
+  entry.path = object.value("path").toString();
+  entry.targetVersion = object.value("targetVersion").toString();
+  entry.optional = object.value("optional").toBool(true);
+  entry.tags = fixtureStringArray(object, "tags");
+  entry.expectedCallbacks = fixtureStringArray(object, "expectedCallbacks");
+  entry.expectedRawFamilies = fixtureStringArray(object, "expectedRawFamilies");
+  entry.expectedRawReplayCount = object.value("expectedRawReplayCount").toInt();
+  const QJsonObject references = object.value("references").toObject();
+  entry.acadSharpReference = references.value("acadSharp").toString();
+  entry.libreDwgReference = references.value("libreDwg").toString();
+  const QJsonObject expect = object.value("expect").toObject();
+  entry.expectedLoad = expect.value("load").toBool();
+  entry.preserveRawUnsupported =
+      expect.value("preserveRawUnsupported").toBool();
+  return entry;
+}
+
 TEST_CASE("DWG fixture manifest is valid JSON and optional by default",
           "[entity_metadata][dwg_fixtures]") {
   QFile manifest("libraries/libdxfrw/testdata/dwg-fixtures.json");
@@ -1402,6 +1637,7 @@ TEST_CASE("DWG fixture manifest is valid JSON and optional by default",
   const QJsonArray fixtures = root.value("fixtures").toArray();
   REQUIRE(!fixtures.isEmpty());
   const QJsonObject first = fixtures.first().toObject();
+  const DwgFixtureManifestEntry entry = fixtureManifestEntryFromJson(first);
   CHECK(first.value("optional").toBool());
   CHECK(first.value("path").toString().contains("${HOME}"));
   CHECK(!first.value("targetVersion").toString().isEmpty());
@@ -1423,6 +1659,22 @@ TEST_CASE("DWG fixture manifest is valid JSON and optional by default",
   CHECK(first.value("references").toObject().contains("acadSharp"));
   CHECK(first.value("references").toObject().contains("libreDwg"));
   CHECK(first.value("expect").toObject().value("preserveRawUnsupported").toBool());
+  CHECK(entry.optional);
+  CHECK(!entry.name.isEmpty());
+  CHECK(entry.path.contains("${HOME}"));
+  CHECK(!entry.targetVersion.isEmpty());
+  CHECK(fixtureVectorContains(entry.tags, QStringLiteral("mleader")));
+  CHECK(fixtureVectorContains(entry.expectedCallbacks,
+                              QStringLiteral("addUnsupportedObject")));
+  CHECK(fixtureVectorContains(entry.expectedRawFamilies,
+                              QStringLiteral("associative")));
+  CHECK(entry.expectedRawReplayCount >= 0);
+  CHECK(entry.acadSharpReference.isEmpty());
+  CHECK(entry.libreDwgReference.isEmpty());
+  CHECK(entry.expectedLoad);
+  CHECK(entry.preserveRawUnsupported);
+  INFO("optional DWG fixture path: " << entry.path.toStdString());
+  INFO("enabled DWG fixture tags: " << static_cast<int>(entry.tags.size()));
 }
 
 namespace {
