@@ -205,6 +205,9 @@ public:
     /// Section-level (structural) failures still propagate via the
     /// bool return from each section method.
     size_t m_entityParseFailures = 0;
+    /// Per-object parseDwg failures accumulated in readDwgObjects. Mirrors
+    /// m_entityParseFailures — non-fatal warnings tracked for caller reporting.
+    size_t m_objectParseFailures = 0;
     /// Custom-class entities (oType >= 500, recName not in our hardcoded
     /// dwgType map) that fell through readDwgEntity's default branch and
     /// got stuffed into objObjectMap.  Keyed by the DXF recName (eg

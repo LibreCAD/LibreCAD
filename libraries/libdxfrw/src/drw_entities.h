@@ -253,8 +253,7 @@ public:
     DRW_Coord basePoint;      /*!<  base point, code 10, 20 & 30 */
     double thickness;         /*!< thickness, code 39 */
     DRW_Coord extPoint;       /*!<  Dir extrusion normal vector, code 210, 220 & 230 */
-    // TNick: we're not handling code 50 - Angle of the X axis for
-    // the UCS in effect when the point was drawn
+    double xAxisAngle = 0.0;  /*!< angle of X axis for UCS in effect, code 50, radians */
 };
 
 //! Class to handle line entity
@@ -1228,7 +1227,8 @@ protected:
     virtual bool encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs=0, dwgBufferW *strBuf=nullptr, dwgBufferW *handleBuf=nullptr) override;
 
 public:
-    double interlin;     /*!< width factor, code 44 */
+    double interlin;              /*!< linespacing factor, code 44 */
+    duint16 linespacingStyle = 1; /*!< linespacing style, code 73 (1=at least, 2=exact) */
     dint32 m_backgroundFlags = 0;
     dint32 m_backgroundScale = 0;
     int m_backgroundColor = 0;

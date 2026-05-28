@@ -1578,20 +1578,25 @@ bool dwgReader::readDwgEntity(dwgBuffer *dbuf, objHandle& obj, DRW_Interface& in
 }
 
 bool dwgReader::readDwgObjects(DRW_Interface& intfa, dwgBuffer *dbuf){
-    bool ret = true;
-
     duint32 i=0;
     DRW_DBG("\nentities map total size= "); DRW_DBG(ObjectMap.size());
     DRW_DBG("\nobjects map total size= "); DRW_DBG(objObjectMap.size());
+    // Per-object parseDwg failures are warnings, not section failures —
+    // each object is read from its own ObjectMap location, so one bad
+    // record cannot corrupt the next. Mirrors readDwgEntities resilience.
+    size_t failures = 0;
     auto itB=objObjectMap.begin();
     auto itE=objObjectMap.end();
     while (itB != itE){
-        if (ret) {
-            // once readDwgObject() failed, just clear the ObjectMap
-            ret = readDwgObject(dbuf, itB->second, intfa);
-        }
+        if (!readDwgObject(dbuf, itB->second, intfa)) ++failures;
         objObjectMap.erase(itB);
         itB=objObjectMap.begin();
+    }
+    if (failures > 0) {
+        DRW_DBG("readDwgObjects: ");
+        DRW_DBG(failures);
+        DRW_DBG(" objects failed to parse (warnings, not section failure)\n");
+        m_objectParseFailures += failures;
     }
     if (DRW_DBGGL == DRW_dbg::Level::Debug) {
         for (auto it=remainingMap.begin(); it != remainingMap.end(); ++it){
@@ -1600,7 +1605,7 @@ bool dwgReader::readDwgObjects(DRW_Interface& intfa, dwgBuffer *dbuf){
         }
         DRW_DBG("\n");
     }
-    return ret;
+    return true;
 }
 
 /**

@@ -727,6 +727,8 @@ bool dxfRW::writePoint(DRW_Point *ent) {
     if (ent->basePoint.z != 0.0) {
         writer->writeDouble(30, ent->basePoint.z);
     }
+    if (ent->xAxisAngle != 0.0)
+        writer->writeDouble(50, ent->xAxisAngle / ARAD);  // radians → DXF degrees
     return true;
 }
 
@@ -1660,7 +1662,7 @@ bool dxfRW::writeMText(DRW_MText *ent){
         writer->writeDouble(220, ent->extPoint.y);
         writer->writeDouble(230, ent->extPoint.z);
         writer->writeDouble(50, ent->angle);
-        writer->writeInt16(73, ent->alignV);
+        writer->writeInt16(73, ent->linespacingStyle);  // linespacing style (was: alignV)
         writer->writeDouble(44, ent->interlin);
 //RLZ ... 11, 21, 31 needed?
         if (!ent->extData.empty()) {

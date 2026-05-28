@@ -1525,6 +1525,9 @@ bool DRW_Point::parseCode(int code, const std::unique_ptr<dxfReader>& reader){
     case 39:
         thickness = reader->getDouble();
         break;
+    case 50:
+        xAxisAngle = reader->getDouble() * ARAD;  // DXF degrees → radians
+        break;
     case 210:
         haveExtrusion = true;
         extPoint.x = reader->getDouble();
@@ -1706,7 +1709,7 @@ bool DRW_Point::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs, dwg
     buf->putBitDouble(basePoint.z);
     buf->putThickness(thickness, /*b_R2000_style=*/true);
     buf->putExtrusion(extPoint, /*b_R2000_style=*/true);
-    buf->putBitDouble(0.0);  // x-axis rotation; libdxfrw does not store it
+    buf->putBitDouble(xAxisAngle);  // ODA §20.4.31 code 50
 
     return encodeDwgEntHandle(version, buf, handleBuf);
 }
@@ -1726,8 +1729,8 @@ bool DRW_Point::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
     extPoint = buf->getExtrusion(version > DRW::AC1014);
     DRW_DBG(", Extrusion: "); DRW_DBGPT(extPoint.x, extPoint.y, extPoint.z);
 
-    double x_axis = buf->getBitDouble();//BD
-    DRW_DBG("\n  x_axis: ");DRW_DBG(x_axis);DRW_DBG("\n");
+    xAxisAngle = buf->getBitDouble();  // ODA §20.4.31 code 50, stored in radians
+    DRW_DBG("\n  x_axis: "); DRW_DBG(xAxisAngle); DRW_DBG("\n");
     ret = DRW_Entity::parseDwgEntHandle(version, buf);
     if (!ret)
         return ret;
@@ -1947,7 +1950,7 @@ bool DRW_MText::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs, dwg
     // For AC1024: text goes to string buffer; for AC1015/AC1018: inline.
     (strBuf ? strBuf : buf)->putVariableText(version, text);
     // R2000+ extras:
-    buf->putBitShort(0);                    // linespacing style BS (1 = at least)
+    buf->putBitShort(linespacingStyle);     // linespacing style BS 73
     buf->putBitDouble(interlin);            // linespacing factor BD
     buf->putBit(0);                         // unknown bit
     if (version > DRW::AC1015) {            // R2004+: background flags BL
@@ -4674,6 +4677,9 @@ bool DRW_MText::parseCode(int code, const std::unique_ptr<dxfReader>& reader){
         hasXAxisVec = false;
         angle = reader->getDouble();
         break;
+    case 73:
+        linespacingStyle = static_cast<duint16>(reader->getInt32());
+        break;
     default:
         return DRW_Text::parseCode(code, reader);
     }
@@ -4728,7 +4734,7 @@ bool DRW_MText::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
     therefore, the 3's are always 250 chars long. */
     text = sBuf->getVariableText(version, false); /* Text value TV 1 */
     if (version > DRW::AC1014) {//2000+
-        buf->getBitShort();/* Linespacing Style BS 73 */
+        linespacingStyle = buf->getBitShort();  // ODA §20.4.46 code 73
         interlin = buf->getBitDouble();/* Linespacing Factor BD 44 */
         buf->getBit();/* Unknown bit B */
     }
@@ -4860,13 +4866,11 @@ bool DRW_Polyline::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
         duint8 tmpFlag = buf->getRawChar8();
         DRW_DBG("flags 1 value: "); DRW_DBG(tmpFlag);
         if (tmpFlag & 1)
-            curvetype = 5;
+            curvetype = 5;       // quadratic B-spline
         else if (tmpFlag & 2)
-            curvetype = 6;
-        if (tmpFlag & 3) {
-            curvetype = 8;
-            flags |= 4;
-        }
+            curvetype = 6;       // cubic B-spline
+        if (tmpFlag & 3)
+            flags |= 4;          // splined (bit 2); do NOT overwrite curvetype to 8
         tmpFlag = buf->getRawChar8();
         if (tmpFlag & 1)
             flags |= 1;
@@ -4987,7 +4991,8 @@ bool DRW_Vertex::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs, doub
             endwidth = buf->getBitDouble();
         bulge = buf->getBitDouble();
         if (version > DRW::AC1021) { //2010+
-            DRW_DBG("Vertex ID: "); DRW_DBG(buf->getBitLong());
+            identifier = buf->getBitLong();  // ODA §20.4.11 code 91
+            DRW_DBG("Vertex ID: "); DRW_DBG(identifier);
         }
         tgdir = buf->getBitDouble();
     } else if (oType == 0x0B || oType == 0x0C || oType == 0x0D) { //PFACE
@@ -5925,8 +5930,7 @@ bool DRW_Image::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
     contrast = buf->getRawChar8();
     fade = buf->getRawChar8();
     if (version > DRW::AC1021){ //2010+
-        bool clipMode = buf->getBit();
-        DRW_UNUSED(clipMode);//RLZ: temporary, complete API
+        clipMode = buf->getBit() != 0;  // ODA §20.4.80: Clip mode B (R2010+)
     }
     duint16 clipType = buf->getBitShort();
     clipPath.clear();
@@ -6112,12 +6116,9 @@ bool DRW_Dimension::parseDwg(DRW::Version version, dwgBuffer *buf, dwgBuffer *sB
         duint8 dimVersion = buf->getRawChar8();
         DRW_DBG("\ndimVersion: "); DRW_DBG(dimVersion);
     }
-    extPoint = buf->getExtrusion(version > DRW::AC1014);
+    // ODA §20.4.22: Extrusion is plain 3BD (NOT BE) — confirmed by libreDWG dwg_spec_shared.h
+    extPoint = buf->get3BitDouble();
     DRW_DBG("\nextPoint: "); DRW_DBGPT(extPoint.x, extPoint.y, extPoint.z);
-    if (version > DRW::AC1014) { //2000+
-        DRW_DBG("\nFive unknown bits: "); DRW_DBG(buf->getBit()); DRW_DBG(buf->getBit());
-        DRW_DBG(buf->getBit()); DRW_DBG(buf->getBit()); DRW_DBG(buf->getBit());
-    }
     textPoint.x = buf->getRawDouble();
     textPoint.y = buf->getRawDouble();
     textPoint.z = buf->getBitDouble();
@@ -6384,9 +6385,7 @@ bool DRW_Dimension::encodeDwgDimBase(DRW::Version version, dwgBufferW *buf,
     if (version > DRW::AC1021)
         buf->putRawChar8(0);
     // TODO: AC1021+ strBuf routing — string fields must go through separate strBuf for R2007+
-    buf->putExtrusion(extPoint, true);   // BE (R2000 style)
-    // Five unknown bits (present for R2000 = version > AC1014)
-    buf->putBit(0); buf->putBit(0); buf->putBit(0); buf->putBit(0); buf->putBit(0);
+    buf->put3BitDouble(extPoint);        // 3BD per ODA §20.4.22 (NOT BE, NO padding bits)
     buf->putRawDouble(textPoint.x);
     buf->putRawDouble(textPoint.y);
     buf->putBitDouble(textPoint.z);
@@ -6752,12 +6751,9 @@ bool DRW_Leader::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
     }
     DRW_Coord Endptproj = buf->get3BitDouble();
     DRW_DBG("\nEndptproj "); DRW_DBGPT(Endptproj.x, Endptproj.y, Endptproj.z);
-    extrusionPoint = buf->getExtrusion(version > DRW::AC1014);
+    // ODA §20.4.47: Extrusion is plain 3DPOINT (3BD), not BE — confirmed by libreDWG dwg.spec:3439
+    extrusionPoint = buf->get3BitDouble();
     DRW_DBG("\nextrusionPoint "); DRW_DBGPT(extrusionPoint.x, extrusionPoint.y, extrusionPoint.z);
-    if (version > DRW::AC1014) { //2000+
-        DRW_DBG("\nFive unknown bits: "); DRW_DBG(buf->getBit()); DRW_DBG(buf->getBit());
-        DRW_DBG(buf->getBit()); DRW_DBG(buf->getBit()); DRW_DBG(buf->getBit());
-    }
     horizdir = buf->get3BitDouble();
     DRW_DBG("\nhorizdir "); DRW_DBGPT(horizdir.x, horizdir.y, horizdir.z);
     offsetblock = buf->get3BitDouble();
@@ -7497,8 +7493,8 @@ bool DRW_Viewport::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
         DRW_DBG("Def light type?: "); DRW_DBG(buf->getRawChar8()); DRW_DBG("\n");
         DRW_DBG("Brightness: "); DRW_DBG(buf->getBitDouble()); DRW_DBG("\n");
         DRW_DBG("Contrast: "); DRW_DBG(buf->getBitDouble()); DRW_DBG("\n");
-//        DRW_DBG("Ambient Cmc or Enc: "); DRW_DBG(buf->getCmColor(version)); DRW_DBG("\n");
-        DRW_DBG("Ambient (Cmc or Enc?), Enc: "); DRW_DBG(buf->getEnColor(version)); DRW_DBG("\n");
+        // ODA §20.4.38: ambient color is CMC, not ENC — confirmed by libreDWG dwg.spec:2512
+        DRW_DBG("Ambient CMC: "); DRW_DBG(buf->getCmColor(version, nullptr, sBuf)); DRW_DBG("\n");
     }
     ret = DRW_Entity::parseDwgEntHandle(version, buf);
 
@@ -7870,7 +7866,7 @@ bool DRW_Viewport::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs,
         buf->putRawChar8(0);      // defLightType
         buf->putBitDouble(0.0);   // brightness
         buf->putBitDouble(0.0);   // contrast
-        buf->putEnColor(version, 256);  // ambientColor (ByLayer)
+        buf->putCmColor(version, 256);  // ambientColor CMC (ByLayer) per ODA §20.4.38
     }
 
     if (!encodeDwgEntHandle(version, buf, handleBuf)) return false;
