@@ -145,7 +145,27 @@ void LC_ActionDrawLineDirect::doPreparePreviewEntities(
     switch (status) {
         case SetStartPoint:
         case SetOpeningWidth:
+        case SetWindowWidth:
             return;
+        case SetWindowAim: {
+            if (!isNonZeroLine(snap)) return;
+            double offset = 1.5;
+            {
+                auto guard = RS_SETTINGS->beginGroupGuard("/Defaults");
+                bool ok = false;
+                double d = RS_SETTINGS->readEntry("/WindowOffsetWidth", "1.5").toDouble(&ok);
+                if (ok && d > 0.0) offset = d;
+            }
+            double windowAngle = (snap - m_windowStart).angle();
+            RS_Vector windowEnd = m_windowStart + RS_Vector::polar(m_windowWidth, windowAngle);
+            RS_Vector perpVec   = RS_Vector::polar(offset, windowAngle + M_PI / 2.0);
+            list << new RS_Line(m_windowStart,          windowEnd);
+            list << new RS_Line(m_windowStart + perpVec, windowEnd + perpVec);
+            list << new RS_Line(m_windowStart - perpVec, windowEnd - perpVec);
+            list << new RS_Line(m_windowStart + perpVec, m_windowStart - perpVec);
+            list << new RS_Line(windowEnd + perpVec,    windowEnd - perpVec);
+            return;
+        }
         case SetOpeningAim: {
             double depth = 4.0;
             {
@@ -224,6 +244,8 @@ void LC_ActionDrawLineDirect::doBack(QMouseEvent *e, int status){
             break;
         case SetOpeningWidth:
         case SetOpeningAim:
+        case SetWindowWidth:
+        case SetWindowAim:
             setStatus(SetPoint);
             updateOptions();
             updateMouseButtonHints();
@@ -253,6 +275,9 @@ void LC_ActionDrawLineDirect::onCoordinateEvent(
             break;
         case SetOpeningAim:
             completeOpening(mouse);
+            break;
+        case SetWindowAim:
+            completeWindow(mouse);
             break;
         case SetPoint:
             if (isNonZeroLine(mouse)){
@@ -360,6 +385,8 @@ bool LC_ActionDrawLineDirect::doProceedCommand(
         setNewStartPointState();
     } else if (checkCommand("opening", c) || c.compare("o", Qt::CaseInsensitive) == 0) {
         startOpeningMode();
+    } else if (checkCommand("window", c) || c.compare("w", Qt::CaseInsensitive) == 0) {
+        startWindowMode();
     } else {
         result = false;
     }
@@ -387,6 +414,28 @@ bool LC_ActionDrawLineDirect::doProcessCommandValue(RS_CommandEvent *e, const QS
             if (ok && LC_LineMath::isMeaningful(distance)) {
                 m_openingWidth = distance;
                 setStatus(SetOpeningAim);
+                updateMouseButtonHints();
+            } else {
+                result = false;
+            }
+            break;
+        }
+        case SetWindowWidth: {
+            bool ok = false;
+            double distance = 0.0;
+            {
+                auto guard = RS_SETTINGS->beginGroupGuard("/Defaults");
+                bool archEnabled = RS_SETTINGS->readNumEntry("/ArchitecturalInput", 0) != 0;
+                if (archEnabled) {
+                    distance = LC_ArchParser::parse(c, &ok);
+                }
+            }
+            if (!ok) {
+                distance = RS_Math::eval(c, &ok);
+            }
+            if (ok && LC_LineMath::isMeaningful(distance)) {
+                m_windowWidth = distance;
+                setStatus(SetWindowAim);
                 updateMouseButtonHints();
             } else {
                 result = false;
@@ -480,6 +529,12 @@ void LC_ActionDrawLineDirect::updateMouseButtonHints(){
         case SetOpeningAim:
             updateMouseWidgetTR("Click to choose which side of wall markers go on", "Back");
             break;
+        case SetWindowWidth:
+            updateMouseWidgetTR("Enter window width", "Back");
+            break;
+        case SetWindowAim:
+            updateMouseWidgetTR("Click or aim to set window direction", "Back");
+            break;
         case SetPoint: {
             QString msg = "pl";
             if (pPoints->startOffset >= 2){
@@ -524,6 +579,7 @@ void LC_ActionDrawLineDirect::undo(){
             case HA_SetEndpoint:
             case HA_Close:
             case HA_Opening:
+            case HA_Window:
                 graphicView->setCurrentAction(new RS_ActionEditUndo(true, *container, *graphicView));
                 pPoints->data.startpoint = h.prevPt;
                 setStatus(SetPoint);
@@ -559,6 +615,7 @@ void LC_ActionDrawLineDirect::redo(){
             case HA_Polyline:
             case HA_SetEndpoint:
             case HA_Opening:
+            case HA_Window:
                 graphicView->setCurrentAction(new RS_ActionEditUndo(false, *container, *graphicView));
                 setStatus(SetPoint);
                 break;
@@ -691,6 +748,46 @@ void LC_ActionDrawLineDirect::startOpeningMode() {
     m_openingStart = pPoints->data.startpoint;
     m_openingWallAngle = getLastWallAngle();
     setStatus(SetOpeningWidth);
+    updateMouseButtonHints();
+}
+
+void LC_ActionDrawLineDirect::startWindowMode() {
+    if (getStatus() != SetPoint) return;
+    if (!isStartPointValid()) return;
+    m_windowStart = pPoints->data.startpoint;
+    setStatus(SetWindowWidth);
+    updateMouseButtonHints();
+}
+
+void LC_ActionDrawLineDirect::completeWindow(const RS_Vector& snap) {
+    if (!isNonZeroLine(snap)) return;
+    double offset = 1.5;
+    {
+        auto guard = RS_SETTINGS->beginGroupGuard("/Defaults");
+        bool ok = false;
+        double d = RS_SETTINGS->readEntry("/WindowOffsetWidth", "1.5").toDouble(&ok);
+        if (ok && d > 0.0) offset = d;
+    }
+    double windowAngle = (snap - m_windowStart).angle();
+    RS_Vector windowEnd = m_windowStart + RS_Vector::polar(m_windowWidth, windowAngle);
+    RS_Vector perpVec   = RS_Vector::polar(offset, windowAngle + M_PI / 2.0);
+
+    m_pendingOpening.clear();
+    m_pendingOpening << RS_LineData(m_windowStart,          windowEnd);
+    m_pendingOpening << RS_LineData(m_windowStart + perpVec, windowEnd + perpVec);
+    m_pendingOpening << RS_LineData(m_windowStart - perpVec, windowEnd - perpVec);
+    m_pendingOpening << RS_LineData(m_windowStart + perpVec, m_windowStart - perpVec);
+    m_pendingOpening << RS_LineData(windowEnd + perpVec,    windowEnd - perpVec);
+
+    pPoints->data.startpoint = m_windowStart;
+    pPoints->data.endpoint   = windowEnd;
+    ++pPoints->startOffset;
+    addHistory(HA_Window, m_windowStart, windowEnd, pPoints->startOffset);
+    trigger();
+    pPoints->data.startpoint = windowEnd;
+    direction = DIRECTION_POINT;
+    setStatus(SetPoint);
+    updateOptions();
     updateMouseButtonHints();
 }
 

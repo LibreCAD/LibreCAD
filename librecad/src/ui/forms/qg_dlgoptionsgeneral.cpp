@@ -208,6 +208,11 @@ void QG_DlgOptionsGeneral::init()
         double depth = RS_SETTINGS->readEntry("/OpeningDepth", "4").toDouble(&ok);
         cbOpeningDepth->setValue((ok && depth > 0.0) ? depth : 4.0);
     }
+    {
+        bool ok = false;
+        double w = RS_SETTINGS->readEntry("/WindowOffsetWidth", "1.5").toDouble(&ok);
+        cbWindowOffsetWidth->setValue((ok && w > 0.0) ? w : 1.5);
+    }
     RS_SETTINGS->endGroup();
 
     //update entities to selected entities to the current active layer
@@ -318,6 +323,10 @@ void QG_DlgOptionsGeneral::ok()
         {
             double depth = cbOpeningDepth->value();
             RS_SETTINGS->writeEntry("/OpeningDepth", QString::number((depth > 0.0) ? depth : 4.0));
+        }
+        {
+            double w = cbWindowOffsetWidth->value();
+            RS_SETTINGS->writeEntry("/WindowOffsetWidth", QString::number((w > 0.0) ? w : 1.5));
         }
         RS_SETTINGS->endGroup();
 
