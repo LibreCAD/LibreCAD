@@ -1931,6 +1931,114 @@ TEST_CASE("DWG advanced metadata stores associative prefix accounting",
   CHECK(counts.compoundActionParamPrefixes == 1u);
 }
 
+TEST_CASE("DWG advanced metadata indexes associative graph edges",
+          "[entity_metadata][dwg_metadata][assoc]") {
+  LC_DwgAdvancedMetadata metadata;
+
+  DRW_AssociativeObject dependency("ACDBASSOCDEPENDENCY");
+  dependency.handle = 0x600u;
+  dependency.m_readDependencyHandle = 0x610u;
+  dependency.m_writeDependencyHandle = 0x611u;
+  metadata.addAssociativeObject(dependency);
+
+  DRW_AssociativeObject action("ACDBASSOCACTION");
+  action.handle = 0x601u;
+  action.m_dependencies = {{false, 0x600u}};
+  action.m_actionBodyHandle = 0x612u;
+  action.m_ownedParams = {0x613u};
+  metadata.addAssociativeObject(action);
+
+  DRW_AssociativeObject network("ACDBASSOCNETWORK");
+  network.handle = 0x602u;
+  network.m_actions = {{true, 0x601u}};
+  network.m_ownedActions = {0x614u};
+  metadata.addAssociativeObject(network);
+
+  DRW_AcShHistoryObject history("ACSH_SWEEP_CLASS");
+  history.handle = 0x603u;
+  history.m_ownerHandle = 0x601u;
+  metadata.addAcShObject(history);
+
+  CHECK(metadata.findAssociativeEdgesTo(0x610u).size() == 1u);
+  CHECK(metadata.findAssociativeEdgesTo(0x601u).size() == 2u);
+  const auto actionEdges = metadata.findAssociativeEdgesFrom(0x601u);
+  REQUIRE(actionEdges.size() == 3u);
+  CHECK(actionEdges.front()->sourceRecordName == "ACDBASSOCACTION");
+
+  const std::vector<duint32> closure =
+      metadata.findAssociativeClosureFrom(0x610u, 8u);
+  REQUIRE(closure.size() == 4u);
+  CHECK(closure[0] == 0x600u);
+  CHECK(closure[1] == 0x601u);
+  CHECK(closure[2] == 0x602u);
+  CHECK(closure[3] == 0x603u);
+
+  const auto affected = metadata.findAssociativeRecordsAffectedBy(0x610u);
+  REQUIRE(affected.size() == 3u);
+  CHECK(affected[0]->handle == 0x600u);
+  CHECK(affected[1]->handle == 0x601u);
+  CHECK(affected[2]->handle == 0x602u);
+
+  const LC_DwgAdvancedMetadata::AssociativeEdgeCounts counts =
+      metadata.associativeEdgeCounts();
+  CHECK(counts.edgeCount == 8u);
+  CHECK(counts.ownsAction == 2u);
+  CHECK(counts.ownsParameter == 1u);
+  CHECK(counts.dependsOn == 1u);
+  CHECK(counts.readDependency == 1u);
+  CHECK(counts.writeDependency == 1u);
+  CHECK(counts.actionBody == 1u);
+  CHECK(counts.historyNode == 1u);
+  CHECK(counts.explicitHandle == 7u);
+  CHECK(counts.inferredFromClassLayout == 1u);
+}
+
+TEST_CASE("DWG advanced metadata invalidates associative graph closure",
+          "[entity_metadata][dwg_metadata][raw-replay]") {
+  LC_DwgAdvancedMetadata metadata;
+
+  DRW_AssociativeObject dependency("ACDBASSOCDEPENDENCY");
+  dependency.handle = 0x620u;
+  dependency.m_readDependencyHandle = 0x630u;
+  metadata.addAssociativeObject(dependency);
+
+  DRW_AssociativeObject action("ACDBASSOCACTION");
+  action.handle = 0x621u;
+  action.m_dependencies = {{false, 0x620u}};
+  metadata.addAssociativeObject(action);
+
+  DRW_UnsupportedObject rawDependency;
+  rawDependency.m_handle = 0x620u;
+  rawDependency.m_recordName = "ACDBASSOCDEPENDENCY";
+  rawDependency.m_className = "AcDbAssocDependency";
+  rawDependency.m_rawBytes = {0x01u};
+  metadata.addUnsupportedObject(rawDependency);
+
+  DRW_UnsupportedObject rawAction;
+  rawAction.m_handle = 0x621u;
+  rawAction.m_recordName = "ACDBASSOCACTION";
+  rawAction.m_className = "AcDbAssocAction";
+  rawAction.m_rawBytes = {0x02u};
+  metadata.addUnsupportedObject(rawAction);
+
+  metadata.invalidateAssociativeGraphForHandle(0x630u);
+
+  REQUIRE(metadata.associativeObjects().size() == 2u);
+  CHECK(metadata.associativeObjects()[0].replayState ==
+        LC_DwgAdvancedMetadata::ReplayState::ReplayInvalidated);
+  CHECK(metadata.associativeObjects()[1].replayState ==
+        LC_DwgAdvancedMetadata::ReplayState::ReplayInvalidated);
+  REQUIRE(metadata.rawObjects().size() == 2u);
+  CHECK(LC_DwgAdvancedMetadata::rawReplayBlocker(metadata.rawObjects()[0]) ==
+        LC_DwgAdvancedMetadata::ReplayBlocker::Invalidated);
+  CHECK(LC_DwgAdvancedMetadata::rawReplayBlocker(metadata.rawObjects()[1]) ==
+        LC_DwgAdvancedMetadata::ReplayBlocker::Invalidated);
+
+  const LC_DwgAdvancedMetadata::AssociativeEdgeCounts counts =
+      metadata.associativeEdgeCounts();
+  CHECK(counts.invalidated == 2u);
+}
+
 TEST_CASE("DWG advanced metadata classifies raw object families",
           "[entity_metadata][dwg_metadata][raw-replay]") {
   LC_DwgAdvancedMetadata metadata;

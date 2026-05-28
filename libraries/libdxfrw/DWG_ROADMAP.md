@@ -226,6 +226,10 @@ Completed in the 2026-05-27 implementation pass:
 - Ready G associative shell diagnostics advanced: ACDBASSOC/ACSH shell
   metadata now reports per-kind counts, value-param parse accounting,
   action-param prefix accounting, and export-time graph summaries.
+- Ready Detail C1a associative edge metadata advanced: ACDBASSOC and ACSH
+  shells now expose queryable source/target edges, edge-kind/confidence counts,
+  closure lookup, and graph invalidation that suppresses matching raw replay
+  payloads without evaluating associative constraints.
 
 Still incomplete:
 
@@ -1494,8 +1498,11 @@ Stop before native modeler writing.
 
 Purpose: make associative shells queryable as a graph.
 
-Status: ready as graph metadata and invalidation only. This slice must not
-evaluate constraints, dynamic block actions, or associative dimensions.
+Status: completed for graph metadata and invalidation on 2026-05-28. The
+metadata layer now records source/target edges from decoded ACDBASSOC and ACSH
+handle fields, exposes edge lookup/count/closure helpers, and invalidates
+semantic/raw associative payloads through the dependency closure. It still does
+not evaluate constraints, dynamic block actions, or associative dimensions.
 
 Spec basis: `/tmp/dwg_spec.txt` does not provide usable ACDBASSOC/ACSH object
 layouts, so this slice is intentionally ACadSharp/libreDWG-led. ODA text may

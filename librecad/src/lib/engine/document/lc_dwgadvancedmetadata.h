@@ -54,6 +54,25 @@ public:
         OsnapPointRefActionParam
     };
 
+    enum class AssociativeEdgeKind {
+        OwnsAction,
+        OwnsParameter,
+        DependsOn,
+        ReadDependency,
+        WriteDependency,
+        ActionBody,
+        EvaluationExpression,
+        HistoryNode,
+        GeometryReference,
+        UnknownHandleReference
+    };
+
+    enum class AssociativeEdgeConfidence {
+        Unknown,
+        ExplicitHandle,
+        InferredFromClassLayout
+    };
+
     enum class ModelerPayloadKind {
         Unknown,
         Sat,
@@ -542,6 +561,23 @@ public:
         size_t compoundActionParamPrefixes = 0;
     };
 
+    struct AssociativeEdgeCounts {
+        size_t edgeCount = 0;
+        size_t ownsAction = 0;
+        size_t ownsParameter = 0;
+        size_t dependsOn = 0;
+        size_t readDependency = 0;
+        size_t writeDependency = 0;
+        size_t actionBody = 0;
+        size_t evaluationExpression = 0;
+        size_t historyNode = 0;
+        size_t geometryReference = 0;
+        size_t unknownHandleReference = 0;
+        size_t explicitHandle = 0;
+        size_t inferredFromClassLayout = 0;
+        size_t invalidated = 0;
+    };
+
     struct TableRecord {
         duint32 handle = 0;
         duint32 parentHandle = 0;
@@ -690,6 +726,19 @@ public:
         duint8 osnapMode = 0;
         double parameter = 0.0;
         DRW_Coord point;
+        ReplayState replayState = ReplayState::ReplayAllowed;
+    };
+
+    struct AssociativeEdgeRecord {
+        duint32 sourceHandle = 0;
+        duint32 targetHandle = 0;
+        std::string sourceRecordName;
+        AssociativeKind sourceKind = AssociativeKind::Unknown;
+        AssociativeEdgeKind edgeKind =
+            AssociativeEdgeKind::UnknownHandleReference;
+        int rawRangeIndex = -1;
+        AssociativeEdgeConfidence confidence =
+            AssociativeEdgeConfidence::Unknown;
         ReplayState replayState = ReplayState::ReplayAllowed;
     };
 
@@ -939,6 +988,7 @@ public:
         m_tables.clear();
         m_tableFallbackEntities.clear();
         m_associativeObjects.clear();
+        m_associativeEdges.clear();
         m_acshObjects.clear();
         m_mleaders.clear();
         m_mleaderStyles.clear();
@@ -1253,6 +1303,7 @@ public:
         record.parameter = object.m_parameter;
         record.point = object.m_point;
         m_associativeObjects.push_back(std::move(record));
+        appendAssociativeEdges(m_associativeObjects.back());
     }
 
     void addAcShObject(const DRW_AcShHistoryObject& object) {
@@ -1277,6 +1328,7 @@ public:
         record.binaryBlob2Bytes = object.m_binaryBlob2.size();
         record.blobBytes = object.m_binaryBlob1.size() + object.m_binaryBlob2.size();
         m_acshObjects.push_back(record);
+        appendAssociativeEdges(m_acshObjects.back());
     }
 
     void addMLeader(const DRW_MLeader& mleader) {
@@ -1535,6 +1587,9 @@ public:
     }
     const std::vector<CellStyleMapRecord>& cellStyleMaps() const { return m_cellStyleMaps; }
     const std::vector<AssociativeRecord>& associativeObjects() const { return m_associativeObjects; }
+    const std::vector<AssociativeEdgeRecord>& associativeEdges() const {
+        return m_associativeEdges;
+    }
     const std::vector<AcShRecord>& acshObjects() const { return m_acshObjects; }
     const std::vector<MLeaderRecord>& mleaders() const { return m_mleaders; }
     const std::vector<MLeaderStyleRecord>& mleaderStyles() const { return m_mleaderStyles; }
@@ -1836,6 +1891,17 @@ public:
         }
         return counts;
     }
+    AssociativeEdgeCounts associativeEdgeCounts() const {
+        AssociativeEdgeCounts counts;
+        for (const AssociativeEdgeRecord& edge : m_associativeEdges) {
+            ++counts.edgeCount;
+            incrementAssociativeEdgeKindCount(counts, edge.edgeKind);
+            incrementAssociativeEdgeConfidenceCount(counts, edge.confidence);
+            if (edge.replayState == ReplayState::ReplayInvalidated)
+                ++counts.invalidated;
+        }
+        return counts;
+    }
     const TableCellRecord* findTableCell(duint32 tableHandle, int row, int column) const {
         const TableRecord* table = findTableByHandle(tableHandle);
         if (table == nullptr || row < 0 || column < 0)
@@ -1958,6 +2024,64 @@ public:
         for (const AssociativeRecord& record : m_associativeObjects) {
             if (associativeRecordReferences(record, handle))
                 result.push_back(&record);
+        }
+        return result;
+    }
+    std::vector<const AssociativeEdgeRecord*> findAssociativeEdgesFrom(
+        duint32 handle) const {
+        std::vector<const AssociativeEdgeRecord*> result;
+        if (handle == 0)
+            return result;
+        for (const AssociativeEdgeRecord& edge : m_associativeEdges) {
+            if (edge.sourceHandle == handle)
+                result.push_back(&edge);
+        }
+        return result;
+    }
+    std::vector<const AssociativeEdgeRecord*> findAssociativeEdgesTo(
+        duint32 handle) const {
+        std::vector<const AssociativeEdgeRecord*> result;
+        if (handle == 0)
+            return result;
+        for (const AssociativeEdgeRecord& edge : m_associativeEdges) {
+            if (edge.targetHandle == handle)
+                result.push_back(&edge);
+        }
+        return result;
+    }
+    std::vector<const AssociativeRecord*> findAssociativeRecordsAffectedBy(
+        duint32 handle) const {
+        std::vector<const AssociativeRecord*> result;
+        for (duint32 sourceHandle : findAssociativeClosureFrom(handle, 32u)) {
+            if (const AssociativeRecord* record =
+                    findAssociativeObjectByHandle(sourceHandle)) {
+                result.push_back(record);
+            }
+        }
+        return result;
+    }
+    std::vector<duint32> findAssociativeClosureFrom(
+        duint32 handle, size_t maxDepth) const {
+        std::vector<duint32> result;
+        if (handle == 0)
+            return result;
+        std::vector<duint32> visited;
+        std::vector<std::pair<duint32, size_t>> queue;
+        visited.push_back(handle);
+        queue.push_back({handle, 0u});
+        for (size_t index = 0; index < queue.size(); ++index) {
+            const duint32 targetHandle = queue[index].first;
+            const size_t depth = queue[index].second;
+            for (const AssociativeEdgeRecord& edge : m_associativeEdges) {
+                if (edge.targetHandle != targetHandle
+                    || containsHandle(visited, edge.sourceHandle)) {
+                    continue;
+                }
+                visited.push_back(edge.sourceHandle);
+                result.push_back(edge.sourceHandle);
+                if (depth < maxDepth)
+                    queue.push_back({edge.sourceHandle, depth + 1u});
+            }
         }
         return result;
     }
@@ -2643,12 +2767,18 @@ public:
     }
 
     void invalidateAssociativeGraphForHandle(duint32 dependentHandle) {
-        for (AssociativeRecord& record : m_associativeObjects) {
-            if (record.replayState != ReplayState::ReplayAllowed)
-                continue;
-            if (associativeRecordReferences(record, dependentHandle)) {
-                record.replayState = ReplayState::ReplayInvalidated;
-                invalidateRawAssociativeObject(record.handle);
+        if (dependentHandle == 0)
+            return;
+        const std::vector<duint32> affectedHandles =
+            findAssociativeClosureFrom(dependentHandle, 32u);
+        for (duint32 affectedHandle : affectedHandles) {
+            invalidateAssociativeSemanticRecord(affectedHandle);
+            invalidateRawAssociativeObject(affectedHandle);
+            for (AssociativeEdgeRecord& edge : m_associativeEdges) {
+                if (edge.sourceHandle == affectedHandle
+                    && edge.replayState == ReplayState::ReplayAllowed) {
+                    edge.replayState = ReplayState::ReplayInvalidated;
+                }
             }
         }
     }
@@ -3495,7 +3625,9 @@ private:
         return record.family == RawObjectFamily::Associative
                || associativeKindFromRecordName(record.recordName) != AssociativeKind::Unknown
                || containsSubstring(record.className, "Assoc")
-               || containsSubstring(record.className, "PersSubent");
+               || containsSubstring(record.className, "PersSubent")
+               || containsSubstring(record.recordName, "ACSH")
+               || containsSubstring(record.className, "AcSh");
     }
 
     void invalidateRawAssociativeObject(duint32 handle) {
@@ -3578,6 +3710,162 @@ private:
     static bool containsSubstring(const std::string& value, const char* needle) {
         return needle != nullptr && needle[0] != '\0'
                && value.find(needle) != std::string::npos;
+    }
+
+    static bool containsHandle(const std::vector<duint32>& handles,
+                               duint32 handle) {
+        return std::find(handles.begin(), handles.end(), handle) != handles.end();
+    }
+
+    void appendAssociativeEdges(const AssociativeRecord& record) {
+        addAssociativeEdge(record.handle, record.recordName, record.kind,
+                           AssociativeEdgeKind::UnknownHandleReference,
+                           record.owningNetworkHandle,
+                           AssociativeEdgeConfidence::ExplicitHandle);
+        addAssociativeEdge(record.handle, record.recordName, record.kind,
+                           AssociativeEdgeKind::ActionBody,
+                           record.actionBodyHandle,
+                           AssociativeEdgeConfidence::ExplicitHandle);
+        for (const DRW_AssociativeHandleRef& ref : record.dependencyRefs) {
+            addAssociativeEdge(record.handle, record.recordName, record.kind,
+                               AssociativeEdgeKind::DependsOn, ref.m_handle,
+                               AssociativeEdgeConfidence::ExplicitHandle);
+        }
+        for (const DRW_AssociativeHandleRef& ref : record.actionRefs) {
+            addAssociativeEdge(record.handle, record.recordName, record.kind,
+                               AssociativeEdgeKind::OwnsAction, ref.m_handle,
+                               AssociativeEdgeConfidence::ExplicitHandle);
+        }
+        for (duint32 handle : record.ownedParamHandles) {
+            addAssociativeEdge(record.handle, record.recordName, record.kind,
+                               AssociativeEdgeKind::OwnsParameter, handle,
+                               AssociativeEdgeConfidence::ExplicitHandle);
+        }
+        for (duint32 handle : record.ownedActionHandles) {
+            addAssociativeEdge(record.handle, record.recordName, record.kind,
+                               AssociativeEdgeKind::OwnsAction, handle,
+                               AssociativeEdgeConfidence::ExplicitHandle);
+        }
+        addAssociativeEdge(record.handle, record.recordName, record.kind,
+                           AssociativeEdgeKind::DependsOn,
+                           record.dependencyHandle,
+                           AssociativeEdgeConfidence::ExplicitHandle);
+        addAssociativeEdge(record.handle, record.recordName, record.kind,
+                           AssociativeEdgeKind::ReadDependency,
+                           record.readDependencyHandle,
+                           AssociativeEdgeConfidence::ExplicitHandle);
+        addAssociativeEdge(record.handle, record.recordName, record.kind,
+                           AssociativeEdgeKind::WriteDependency,
+                           record.writeDependencyHandle,
+                           AssociativeEdgeConfidence::ExplicitHandle);
+        addAssociativeEdge(record.handle, record.recordName, record.kind,
+                           AssociativeEdgeKind::EvaluationExpression,
+                           record.rNodeHandle,
+                           AssociativeEdgeConfidence::ExplicitHandle);
+        addAssociativeEdge(record.handle, record.recordName, record.kind,
+                           AssociativeEdgeKind::EvaluationExpression,
+                           record.dNodeHandle,
+                           AssociativeEdgeConfidence::ExplicitHandle);
+    }
+
+    void appendAssociativeEdges(const AcShRecord& record) {
+        addAssociativeEdge(record.handle, record.recordName,
+                           AssociativeKind::Unknown,
+                           AssociativeEdgeKind::HistoryNode,
+                           record.ownerHandle,
+                           AssociativeEdgeConfidence::InferredFromClassLayout);
+    }
+
+    void addAssociativeEdge(
+        duint32 sourceHandle, const std::string& sourceRecordName,
+        AssociativeKind sourceKind, AssociativeEdgeKind edgeKind,
+        duint32 targetHandle, AssociativeEdgeConfidence confidence) {
+        if (sourceHandle == 0 || targetHandle == 0)
+            return;
+        for (const AssociativeEdgeRecord& edge : m_associativeEdges) {
+            if (edge.sourceHandle == sourceHandle
+                && edge.targetHandle == targetHandle
+                && edge.edgeKind == edgeKind) {
+                return;
+            }
+        }
+        AssociativeEdgeRecord edge;
+        edge.sourceHandle = sourceHandle;
+        edge.targetHandle = targetHandle;
+        edge.sourceRecordName = sourceRecordName;
+        edge.sourceKind = sourceKind;
+        edge.edgeKind = edgeKind;
+        edge.confidence = confidence;
+        m_associativeEdges.push_back(std::move(edge));
+    }
+
+    void invalidateAssociativeSemanticRecord(duint32 handle) {
+        if (handle == 0)
+            return;
+        for (AssociativeRecord& record : m_associativeObjects) {
+            if (record.handle == handle
+                && record.replayState == ReplayState::ReplayAllowed) {
+                record.replayState = ReplayState::ReplayInvalidated;
+            }
+        }
+        for (AcShRecord& record : m_acshObjects) {
+            if (record.handle == handle
+                && record.replayState == ReplayState::ReplayAllowed) {
+                record.replayState = ReplayState::ReplayInvalidated;
+            }
+        }
+    }
+
+    static void incrementAssociativeEdgeKindCount(
+        AssociativeEdgeCounts& counts, AssociativeEdgeKind kind) {
+        switch (kind) {
+            case AssociativeEdgeKind::OwnsAction:
+                ++counts.ownsAction;
+                return;
+            case AssociativeEdgeKind::OwnsParameter:
+                ++counts.ownsParameter;
+                return;
+            case AssociativeEdgeKind::DependsOn:
+                ++counts.dependsOn;
+                return;
+            case AssociativeEdgeKind::ReadDependency:
+                ++counts.readDependency;
+                return;
+            case AssociativeEdgeKind::WriteDependency:
+                ++counts.writeDependency;
+                return;
+            case AssociativeEdgeKind::ActionBody:
+                ++counts.actionBody;
+                return;
+            case AssociativeEdgeKind::EvaluationExpression:
+                ++counts.evaluationExpression;
+                return;
+            case AssociativeEdgeKind::HistoryNode:
+                ++counts.historyNode;
+                return;
+            case AssociativeEdgeKind::GeometryReference:
+                ++counts.geometryReference;
+                return;
+            case AssociativeEdgeKind::UnknownHandleReference:
+            default:
+                ++counts.unknownHandleReference;
+                return;
+        }
+    }
+
+    static void incrementAssociativeEdgeConfidenceCount(
+        AssociativeEdgeCounts& counts, AssociativeEdgeConfidence confidence) {
+        switch (confidence) {
+            case AssociativeEdgeConfidence::ExplicitHandle:
+                ++counts.explicitHandle;
+                return;
+            case AssociativeEdgeConfidence::InferredFromClassLayout:
+                ++counts.inferredFromClassLayout;
+                return;
+            case AssociativeEdgeConfidence::Unknown:
+            default:
+                return;
+        }
     }
 
     static void incrementModelerPayloadRangeKindCount(
@@ -3726,6 +4014,7 @@ private:
     std::vector<TableFallbackEntityRecord> m_tableFallbackEntities;
     std::vector<CellStyleMapRecord> m_cellStyleMaps;
     std::vector<AssociativeRecord> m_associativeObjects;
+    std::vector<AssociativeEdgeRecord> m_associativeEdges;
     std::vector<AcShRecord> m_acshObjects;
     std::vector<MLeaderRecord> m_mleaders;
     std::vector<MLeaderStyleRecord> m_mleaderStyles;
