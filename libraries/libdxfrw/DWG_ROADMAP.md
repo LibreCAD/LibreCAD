@@ -1619,8 +1619,10 @@ Stop before adding new action-body semantics.
 
 Purpose: make export behavior predictable after edits.
 
-Status: ready after C1a/C1b. This is export-policy work only, not graph
-evaluation or graph writing.
+Status: complete in the current implementation pass. The code now exposes a
+graph replay policy matrix for DIMASSOC, ACAD_EVALUATION_GRAPH, ACDBASSOC*,
+dynamic-block, object-context, and ACSH_* raw payloads, and logs the preserved,
+suppressed, semantic-only, and reason buckets during object writing.
 
 Files:
 
@@ -1658,6 +1660,14 @@ Implementation:
 5. Add tests for stale raw suppression by reason and family.
 
 Stop before graph writers.
+
+Acceptance:
+
+- `[entity_metadata]` covers preserved/suppressed graph families, invalidated
+  and replaced raw suppression, missing raw bytes, parser-partial prefix
+  reasons, and semantic-only associative/ACSH shells.
+- Object export diagnostics remain policy-only; no graph writer or evaluator is
+  introduced in this slice.
 
 ### Ready Detail D1a: Advanced Entity Writer Readiness Ledger
 

@@ -5657,6 +5657,8 @@ void RS_FilterDXFRW::writeObjects() {
             metadata.associativeShellCounts();
         const LC_DwgAdvancedMetadata::AssociativePrefixCounts associativePrefixes =
             metadata.associativePrefixCounts();
+        LC_DwgAdvancedMetadata::GraphReplayPolicyCounts graphReplayPolicy =
+            metadata.graphReplayPolicyCounts();
         for (const auto& record : metadata.rawObjects()) {
             if (nativeSunHandles.count(record.handle) != 0 && isSunRawObject(record)) {
                 hasBlockedReplay = true;
@@ -5808,6 +5810,57 @@ void RS_FilterDXFRW::writeObjects() {
                 static_cast<int>(associativePrefixes.decodedHandleCount),
                 static_cast<int>(associativePrefixes.decodedValueCount),
                 static_cast<int>(associativeShells.unknown));
+        }
+        const size_t graphReplayKnownFamilies =
+            (graphReplayPolicy.preserved.total()
+             - graphReplayPolicy.preserved.unknown)
+            + (graphReplayPolicy.suppressed.total()
+               - graphReplayPolicy.suppressed.unknown);
+        if (graphReplayKnownFamilies > 0
+            || graphReplayPolicy.totalSemanticOnly() > 0
+            || graphReplayPolicy.totalReasons() > 0) {
+            RS_DEBUG->print(
+                graphReplayPolicy.suppressed.total() > 0
+                        || graphReplayPolicy.totalReasons() > 0
+                    ? RS_Debug::D_WARNING
+                    : RS_Debug::D_DEBUGGING,
+                "DWG graph replay policy: preserved dimassoc=%d eval=%d "
+                "assoc=%d dynamic-block=%d object-context=%d acsh=%d unknown=%d "
+                "suppressed dimassoc=%d eval=%d assoc=%d dynamic-block=%d "
+                "object-context=%d acsh=%d unknown=%d semantic-only assoc=%d "
+                "acsh=%d reasons edited=%d missing-target=%d evaluator=%d "
+                "parser-partial=%d fallback-edited=%d native-replaced=%d "
+                "cycle-path=%d owner-deleted=%d raw-invalidated=%d "
+                "raw-replaced=%d entity=%d missing-bytes=%d missing-class=%d",
+                static_cast<int>(graphReplayPolicy.preserved.dimensionAssociation),
+                static_cast<int>(graphReplayPolicy.preserved.evaluationGraph),
+                static_cast<int>(graphReplayPolicy.preserved.acDbAssoc),
+                static_cast<int>(graphReplayPolicy.preserved.dynamicBlock),
+                static_cast<int>(graphReplayPolicy.preserved.objectContext),
+                static_cast<int>(graphReplayPolicy.preserved.acShHistory),
+                static_cast<int>(graphReplayPolicy.preserved.unknown),
+                static_cast<int>(graphReplayPolicy.suppressed.dimensionAssociation),
+                static_cast<int>(graphReplayPolicy.suppressed.evaluationGraph),
+                static_cast<int>(graphReplayPolicy.suppressed.acDbAssoc),
+                static_cast<int>(graphReplayPolicy.suppressed.dynamicBlock),
+                static_cast<int>(graphReplayPolicy.suppressed.objectContext),
+                static_cast<int>(graphReplayPolicy.suppressed.acShHistory),
+                static_cast<int>(graphReplayPolicy.suppressed.unknown),
+                static_cast<int>(graphReplayPolicy.semanticOnlyAssociative),
+                static_cast<int>(graphReplayPolicy.semanticOnlyAcSh),
+                static_cast<int>(graphReplayPolicy.editedEntity),
+                static_cast<int>(graphReplayPolicy.missingTarget),
+                static_cast<int>(graphReplayPolicy.unsupportedEvaluator),
+                static_cast<int>(graphReplayPolicy.parserPartial),
+                static_cast<int>(graphReplayPolicy.fallbackGeometryEdited),
+                static_cast<int>(graphReplayPolicy.nativeReplacement),
+                static_cast<int>(graphReplayPolicy.cyclePathInvalidated),
+                static_cast<int>(graphReplayPolicy.ownerDeleted),
+                static_cast<int>(graphReplayPolicy.invalidated),
+                static_cast<int>(graphReplayPolicy.replaced),
+                static_cast<int>(graphReplayPolicy.entityReplayUnsupported),
+                static_cast<int>(graphReplayPolicy.missingRawBytes),
+                static_cast<int>(graphReplayPolicy.missingClassMetadata));
         }
         if (tableBlockers.tableCount > 0 && tableBlockers.totalBlockers() > 0) {
             RS_DEBUG->print(

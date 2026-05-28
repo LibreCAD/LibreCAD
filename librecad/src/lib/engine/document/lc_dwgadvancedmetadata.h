@@ -137,6 +137,16 @@ public:
         ObjectContext
     };
 
+    enum class GraphReplayFamily {
+        Unknown,
+        DimensionAssociation,
+        EvaluationGraph,
+        AcDbAssoc,
+        DynamicBlock,
+        ObjectContext,
+        AcShHistory
+    };
+
     enum class TableFallbackRole {
         GridLine,
         CellText,
@@ -204,6 +214,51 @@ public:
 
         size_t total() const {
             return unknown + associative + evaluationGraph + dynamicBlock + objectContext;
+        }
+    };
+
+    struct GraphReplayFamilyCounts {
+        size_t unknown = 0;
+        size_t dimensionAssociation = 0;
+        size_t evaluationGraph = 0;
+        size_t acDbAssoc = 0;
+        size_t dynamicBlock = 0;
+        size_t objectContext = 0;
+        size_t acShHistory = 0;
+
+        size_t total() const {
+            return unknown + dimensionAssociation + evaluationGraph + acDbAssoc
+                + dynamicBlock + objectContext + acShHistory;
+        }
+    };
+
+    struct GraphReplayPolicyCounts {
+        GraphReplayFamilyCounts preserved;
+        GraphReplayFamilyCounts suppressed;
+        size_t invalidated = 0;
+        size_t replaced = 0;
+        size_t entityReplayUnsupported = 0;
+        size_t missingRawBytes = 0;
+        size_t missingClassMetadata = 0;
+        size_t semanticOnlyAssociative = 0;
+        size_t semanticOnlyAcSh = 0;
+        size_t editedEntity = 0;
+        size_t missingTarget = 0;
+        size_t unsupportedEvaluator = 0;
+        size_t parserPartial = 0;
+        size_t fallbackGeometryEdited = 0;
+        size_t nativeReplacement = 0;
+        size_t cyclePathInvalidated = 0;
+        size_t ownerDeleted = 0;
+
+        size_t totalSemanticOnly() const {
+            return semanticOnlyAssociative + semanticOnlyAcSh;
+        }
+
+        size_t totalReasons() const {
+            return editedEntity + missingTarget + unsupportedEvaluator
+                + parserPartial + fallbackGeometryEdited + nativeReplacement
+                + cyclePathInvalidated + ownerDeleted;
         }
     };
 
@@ -1981,6 +2036,37 @@ public:
         }
         return counts;
     }
+    GraphReplayPolicyCounts graphReplayPolicyCounts() const {
+        GraphReplayPolicyCounts counts;
+        for (const RawObjectRecord& record : m_rawObjects) {
+            const GraphReplayFamily family = graphReplayFamilyFromRawObject(record);
+            const ReplayBlocker blocker = rawReplayBlocker(record);
+            if (blocker == ReplayBlocker::None) {
+                incrementGraphReplayFamilyCount(counts.preserved, family);
+                continue;
+            }
+            incrementGraphReplayFamilyCount(counts.suppressed, family);
+            incrementGraphReplayBlockerCounts(counts, blocker);
+        }
+        for (const AssociativeRecord& record : m_associativeObjects) {
+            if (record.handle == 0
+                || !hasRawGraphObjectForHandle(
+                    record.handle, GraphReplayFamily::AcDbAssoc)) {
+                ++counts.semanticOnlyAssociative;
+            }
+        }
+        for (const AcShRecord& record : m_acshObjects) {
+            if (record.handle == 0
+                || !hasRawGraphObjectForHandle(
+                    record.handle, GraphReplayFamily::AcShHistory)) {
+                ++counts.semanticOnlyAcSh;
+            }
+        }
+        const AssociativePrefixCounts prefixCounts = associativePrefixCounts();
+        counts.parserPartial = prefixCounts.partial + prefixCounts.missing
+            + prefixCounts.unsupportedVersion + prefixCounts.boundedCountOverflow;
+        return counts;
+    }
     const TableCellRecord* findTableCell(duint32 tableHandle, int row, int column) const {
         const TableRecord* table = findTableByHandle(tableHandle);
         if (table == nullptr || row < 0 || column < 0)
@@ -2665,6 +2751,65 @@ public:
         return RawObjectFamily::Unknown;
     }
 
+    static GraphReplayFamily graphReplayFamilyFromNames(
+        const std::string& recordName, const std::string& className) {
+        if (recordName == "DIMASSOC"
+            || recordName == "ACDBDIMASSOC"
+            || containsSubstring(className, "DimAssoc")) {
+            return GraphReplayFamily::DimensionAssociation;
+        }
+        if (recordName == "ACAD_EVALUATION_GRAPH"
+            || containsSubstring(className, "EvalGraph")
+            || containsSubstring(className, "EvalExpr")) {
+            return GraphReplayFamily::EvaluationGraph;
+        }
+        if (containsSubstring(recordName, "ACSH")
+            || containsSubstring(className, "AcSh")) {
+            return GraphReplayFamily::AcShHistory;
+        }
+        if (associativeKindFromRecordName(recordName) != AssociativeKind::Unknown
+            || containsSubstring(className, "Assoc")
+            || containsSubstring(className, "PersSubent")) {
+            return GraphReplayFamily::AcDbAssoc;
+        }
+        if (containsSubstring(recordName, "OBJECTCONTEXTDATA")
+            || containsSubstring(className, "ObjectContextData")) {
+            return GraphReplayFamily::ObjectContext;
+        }
+        const bool isBlockRecord = containsSubstring(recordName, "BLOCK")
+                                   || containsSubstring(className, "Block");
+        const bool isDynamicBlockPart = containsSubstring(recordName, "PARAMETER")
+                                        || containsSubstring(recordName, "ACTION")
+                                        || containsSubstring(recordName, "GRIP")
+                                        || containsSubstring(className, "Parameter")
+                                        || containsSubstring(className, "Action")
+                                        || containsSubstring(className, "Grip");
+        if (isBlockRecord && isDynamicBlockPart)
+            return GraphReplayFamily::DynamicBlock;
+        return GraphReplayFamily::Unknown;
+    }
+
+    static GraphReplayFamily graphReplayFamilyFromRawObject(
+        const RawObjectRecord& record) {
+        GraphReplayFamily family =
+            graphReplayFamilyFromNames(record.recordName, record.className);
+        if (family != GraphReplayFamily::Unknown)
+            return family;
+        switch (record.family) {
+            case RawObjectFamily::Associative:
+                return GraphReplayFamily::AcDbAssoc;
+            case RawObjectFamily::EvaluationGraph:
+                return GraphReplayFamily::EvaluationGraph;
+            case RawObjectFamily::DynamicBlock:
+                return GraphReplayFamily::DynamicBlock;
+            case RawObjectFamily::ObjectContext:
+                return GraphReplayFamily::ObjectContext;
+            case RawObjectFamily::Unknown:
+            default:
+                return GraphReplayFamily::Unknown;
+        }
+    }
+
     static const char* rawObjectFamilyName(RawObjectFamily family) {
         switch (family) {
             case RawObjectFamily::Associative:
@@ -2676,6 +2821,26 @@ public:
             case RawObjectFamily::ObjectContext:
                 return "object context";
             case RawObjectFamily::Unknown:
+            default:
+                return "unknown";
+        }
+    }
+
+    static const char* graphReplayFamilyName(GraphReplayFamily family) {
+        switch (family) {
+            case GraphReplayFamily::DimensionAssociation:
+                return "DIMASSOC";
+            case GraphReplayFamily::EvaluationGraph:
+                return "ACAD_EVALUATION_GRAPH";
+            case GraphReplayFamily::AcDbAssoc:
+                return "ACDBASSOC";
+            case GraphReplayFamily::DynamicBlock:
+                return "dynamic block";
+            case GraphReplayFamily::ObjectContext:
+                return "object context";
+            case GraphReplayFamily::AcShHistory:
+                return "ACSH";
+            case GraphReplayFamily::Unknown:
             default:
                 return "unknown";
         }
@@ -2802,6 +2967,27 @@ public:
             case RawObjectFamily::ObjectContext:
                 return counts.objectContext;
             case RawObjectFamily::Unknown:
+            default:
+                return counts.unknown;
+        }
+    }
+
+    static size_t graphReplayFamilyCount(
+        const GraphReplayFamilyCounts& counts, GraphReplayFamily family) {
+        switch (family) {
+            case GraphReplayFamily::DimensionAssociation:
+                return counts.dimensionAssociation;
+            case GraphReplayFamily::EvaluationGraph:
+                return counts.evaluationGraph;
+            case GraphReplayFamily::AcDbAssoc:
+                return counts.acDbAssoc;
+            case GraphReplayFamily::DynamicBlock:
+                return counts.dynamicBlock;
+            case GraphReplayFamily::ObjectContext:
+                return counts.objectContext;
+            case GraphReplayFamily::AcShHistory:
+                return counts.acShHistory;
+            case GraphReplayFamily::Unknown:
             default:
                 return counts.unknown;
         }
@@ -2978,6 +3164,15 @@ public:
         if (handle == 0)
             return;
         for (MLeaderRecord& record : m_mleaders) {
+            if (record.handle == handle)
+                record.replayState = ReplayState::ReplayReplaced;
+        }
+    }
+
+    void markRawReplayReplacedForHandle(duint32 handle) {
+        if (handle == 0)
+            return;
+        for (RawObjectRecord& record : m_rawObjects) {
             if (record.handle == handle)
                 record.replayState = ReplayState::ReplayReplaced;
         }
@@ -4166,6 +4361,78 @@ private:
                 ++counts.unknown;
                 return;
         }
+    }
+
+    static void incrementGraphReplayFamilyCount(
+        GraphReplayFamilyCounts& counts, GraphReplayFamily family) {
+        switch (family) {
+            case GraphReplayFamily::DimensionAssociation:
+                ++counts.dimensionAssociation;
+                return;
+            case GraphReplayFamily::EvaluationGraph:
+                ++counts.evaluationGraph;
+                return;
+            case GraphReplayFamily::AcDbAssoc:
+                ++counts.acDbAssoc;
+                return;
+            case GraphReplayFamily::DynamicBlock:
+                ++counts.dynamicBlock;
+                return;
+            case GraphReplayFamily::ObjectContext:
+                ++counts.objectContext;
+                return;
+            case GraphReplayFamily::AcShHistory:
+                ++counts.acShHistory;
+                return;
+            case GraphReplayFamily::Unknown:
+            default:
+                ++counts.unknown;
+                return;
+        }
+    }
+
+    static void incrementGraphReplayBlockerCounts(
+        GraphReplayPolicyCounts& counts, ReplayBlocker blocker) {
+        switch (blocker) {
+            case ReplayBlocker::Invalidated:
+                ++counts.invalidated;
+                ++counts.cyclePathInvalidated;
+                return;
+            case ReplayBlocker::Replaced:
+                ++counts.replaced;
+                ++counts.nativeReplacement;
+                return;
+            case ReplayBlocker::EntityReplayUnsupported:
+                ++counts.entityReplayUnsupported;
+                ++counts.editedEntity;
+                return;
+            case ReplayBlocker::MissingRawBytes:
+                ++counts.missingRawBytes;
+                ++counts.missingTarget;
+                return;
+            case ReplayBlocker::MissingClassMetadata:
+                ++counts.missingClassMetadata;
+                ++counts.unsupportedEvaluator;
+                return;
+            case ReplayBlocker::WriterRejected:
+            case ReplayBlocker::SemanticOnly:
+            case ReplayBlocker::None:
+            default:
+                return;
+        }
+    }
+
+    bool hasRawGraphObjectForHandle(
+        duint32 handle, GraphReplayFamily family) const {
+        if (handle == 0)
+            return false;
+        for (const RawObjectRecord& record : m_rawObjects) {
+            if (record.handle == handle
+                && graphReplayFamilyFromRawObject(record) == family) {
+                return true;
+            }
+        }
+        return false;
     }
 
     template<typename Predicate>

@@ -2192,6 +2192,104 @@ TEST_CASE("DWG advanced metadata classifies raw object families",
         == 1u);
 }
 
+TEST_CASE("DWG advanced metadata reports graph replay policy by family",
+          "[entity_metadata][dwg_metadata][raw-replay][assoc]") {
+  LC_DwgAdvancedMetadata metadata;
+
+  DRW_UnsupportedObject dimAssoc;
+  dimAssoc.m_handle = 0x700u;
+  dimAssoc.m_recordName = "DIMASSOC";
+  dimAssoc.m_className = "AcDbDimAssoc";
+  dimAssoc.m_rawBytes = {0x01u};
+  metadata.addUnsupportedObject(dimAssoc);
+
+  DRW_UnsupportedObject evaluationGraph;
+  evaluationGraph.m_handle = 0x701u;
+  evaluationGraph.m_recordName = "ACAD_EVALUATION_GRAPH";
+  evaluationGraph.m_className = "AcDbEvalGraph";
+  metadata.addUnsupportedObject(evaluationGraph);
+
+  DRW_AssociativeObject dependency("ACDBASSOCDEPENDENCY");
+  dependency.handle = 0x702u;
+  dependency.m_readDependencyHandle = 0x730u;
+  metadata.addAssociativeObject(dependency);
+
+  DRW_UnsupportedObject rawDependency;
+  rawDependency.m_handle = 0x702u;
+  rawDependency.m_recordName = "ACDBASSOCDEPENDENCY";
+  rawDependency.m_className = "AcDbAssocDependency";
+  rawDependency.m_rawBytes = {0x02u};
+  metadata.addUnsupportedObject(rawDependency);
+
+  DRW_AssociativeObject semanticOnlyAction("ACDBASSOCACTION");
+  semanticOnlyAction.handle = 0x703u;
+  DRW_AssociativePrefixStatus partialPrefix;
+  partialPrefix.m_kind =
+      DRW_AssociativePrefixStatus::Kind::AcDbAssocAction;
+  partialPrefix.m_status =
+      DRW_AssociativePrefixStatus::ParseStatus::Partial;
+  semanticOnlyAction.m_prefixStatuses = {partialPrefix};
+  metadata.addAssociativeObject(semanticOnlyAction);
+
+  DRW_UnsupportedObject dynamicBlock;
+  dynamicBlock.m_handle = 0x704u;
+  dynamicBlock.m_recordName = "BLOCKVISIBILITYPARAMETER";
+  dynamicBlock.m_className = "AcDbBlockVisibilityParameter";
+  dynamicBlock.m_rawBytes = {0x04u};
+  metadata.addUnsupportedObject(dynamicBlock);
+
+  DRW_UnsupportedObject objectContext;
+  objectContext.m_handle = 0x705u;
+  objectContext.m_recordName = "ACDB_BLKREFOBJECTCONTEXTDATA_CLASS";
+  objectContext.m_className = "AcDbBlkRefObjectContextData";
+  objectContext.m_rawBytes = {0x05u};
+  metadata.addUnsupportedObject(objectContext);
+
+  DRW_UnsupportedObject acshRaw;
+  acshRaw.m_handle = 0x706u;
+  acshRaw.m_recordName = "ACSH_SWEEP_CLASS";
+  acshRaw.m_className = "AcShSweepClass";
+  acshRaw.m_rawBytes = {0x06u};
+  metadata.addUnsupportedObject(acshRaw);
+
+  DRW_AcShHistoryObject semanticOnlyAcSh("ACSH_REVOLVE_CLASS");
+  semanticOnlyAcSh.handle = 0x707u;
+  metadata.addAcShObject(semanticOnlyAcSh);
+
+  metadata.invalidateAssociativeGraphForHandle(0x730u);
+  metadata.markRawReplayReplacedForHandle(0x706u);
+
+  const LC_DwgAdvancedMetadata::GraphReplayPolicyCounts policy =
+      metadata.graphReplayPolicyCounts();
+  CHECK(policy.preserved.dimensionAssociation == 1u);
+  CHECK(policy.preserved.dynamicBlock == 1u);
+  CHECK(policy.preserved.objectContext == 1u);
+  CHECK(policy.preserved.total() == 3u);
+  CHECK(policy.suppressed.evaluationGraph == 1u);
+  CHECK(policy.suppressed.acDbAssoc == 1u);
+  CHECK(policy.suppressed.acShHistory == 1u);
+  CHECK(policy.suppressed.total() == 3u);
+  CHECK(policy.semanticOnlyAssociative == 1u);
+  CHECK(policy.semanticOnlyAcSh == 1u);
+  CHECK(policy.totalSemanticOnly() == 2u);
+  CHECK(policy.invalidated == 1u);
+  CHECK(policy.cyclePathInvalidated == 1u);
+  CHECK(policy.replaced == 1u);
+  CHECK(policy.nativeReplacement == 1u);
+  CHECK(policy.missingRawBytes == 1u);
+  CHECK(policy.missingTarget == 1u);
+  CHECK(policy.parserPartial == 1u);
+  CHECK(policy.totalReasons() == 4u);
+  CHECK(LC_DwgAdvancedMetadata::graphReplayFamilyFromNames(
+            "DIMASSOC", "AcDbDimAssoc")
+        == LC_DwgAdvancedMetadata::GraphReplayFamily::DimensionAssociation);
+  CHECK(std::string(LC_DwgAdvancedMetadata::graphReplayFamilyName(
+            LC_DwgAdvancedMetadata::GraphReplayFamily::AcShHistory)) == "ACSH");
+  CHECK(LC_DwgAdvancedMetadata::graphReplayFamilyCount(
+            policy.suppressed,
+            LC_DwgAdvancedMetadata::GraphReplayFamily::AcDbAssoc) == 1u);
+}
+
 TEST_CASE("DWG advanced metadata invalidates associative raw replay",
           "[entity_metadata][dwg_metadata][raw-replay]") {
   LC_DwgAdvancedMetadata metadata;
