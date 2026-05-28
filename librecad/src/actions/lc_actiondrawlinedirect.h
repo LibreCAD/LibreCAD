@@ -39,6 +39,12 @@ public:
         HA_Close,
         HA_Next,
         HA_Polyline,
+        HA_Opening,
+    };
+
+    enum ExtStatus {
+        SetOpeningWidth = LAST,
+        SetOpeningAim,
     };
 
     struct History {
@@ -107,9 +113,17 @@ protected:
 private:
     std::unique_ptr<Points> pPoints;
 
+    RS_Vector          m_openingStart;
+    double             m_openingWallAngle{0.0};
+    double             m_openingWidth{0.0};
+    QList<RS_LineData> m_pendingOpening;
+
     void resetPoints();
     void addHistory(HistoryAction a, const RS_Vector& p, const RS_Vector& c, const int s);
     void completeLineSegment(bool close);
+    void completeOpening(const RS_Vector& snap);
+    void startOpeningMode();
+    double getLastWallAngle() const;
     void calculateAngleSegment(double distance);
     RS_Vector calculateAngleEndpoint(const RS_Vector &snap);
     double defineActualSegmentAngle(double realAngle);

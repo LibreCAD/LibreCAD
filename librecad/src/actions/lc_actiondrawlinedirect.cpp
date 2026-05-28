@@ -68,8 +68,13 @@ void LC_ActionDrawLineDirect::resetPoints(){
 }
 
 void LC_ActionDrawLineDirect::doPrepareTriggerEntities(QList<RS_Entity *> &list){
-    auto *line = new RS_Line(container, pPoints->data);
-    list << line;
+    if (!m_pendingOpening.isEmpty()) {
+        for (const RS_LineData& d : std::as_const(m_pendingOpening))
+            list << new RS_Line(container, d);
+        m_pendingOpening.clear();
+    } else {
+        list << new RS_Line(container, pPoints->data);
+    }
 }
 
 void LC_ActionDrawLineDirect::doSetStartPoint(RS_Vector start){
@@ -92,7 +97,8 @@ RS_Vector LC_ActionDrawLineDirect::doGetMouseSnapPoint(QMouseEvent *e) {
     // If snapPoint found a real snap point it will differ from the raw mouse position.
     RS_Vector rawMouse = graphicView->toGraph(e->x(), e->y());
     bool freeSnap = snapped.squaredTo(rawMouse) <= RS_TOLERANCE;
-    if (freeSnap && isStartPointValid() && (snapMode.snapAngle || alternativeActionMode)) {
+    if (freeSnap && isStartPointValid() && (snapMode.snapAngle || alternativeActionMode)
+        && getStatus() != SetOpeningAim) {
         auto guard = RS_SETTINGS->beginGroupGuard("/Defaults");
         bool ok = false;
         double angle = RS_SETTINGS->readEntry("/PolarSnapAngle", "15").toDouble(&ok);
@@ -108,7 +114,21 @@ void LC_ActionDrawLineDirect::doPreparePreviewEntities(
 
     switch (status) {
         case SetStartPoint:
+        case SetOpeningWidth:
             return;
+        case SetOpeningAim: {
+            constexpr double depth = 4.0;
+            RS_Vector wallDir = RS_Vector::polar(1.0, m_openingWallAngle);
+            RS_Vector toMouse = snap - m_openingStart;
+            double cross = wallDir.x * toMouse.y - wallDir.y * toMouse.x;
+            double perpAngle = m_openingWallAngle + (cross >= 0.0 ? M_PI / 2.0 : -M_PI / 2.0);
+            RS_Vector perpVec = RS_Vector::polar(depth, perpAngle);
+            RS_Vector openEnd = m_openingStart + RS_Vector::polar(m_openingWidth, m_openingWallAngle);
+            list << new RS_Line(m_openingStart, m_openingStart + perpVec);
+            list << new RS_Line(m_openingStart, openEnd);
+            list << new RS_Line(openEnd, openEnd + perpVec);
+            return;
+        }
         case SetDirection:
         case SetPoint:
             possibleEndPoint = snap;
@@ -166,6 +186,12 @@ void LC_ActionDrawLineDirect::doBack(QMouseEvent *e, int status){
         case SetStartPoint:
             finishAction();
             break;
+        case SetOpeningWidth:
+        case SetOpeningAim:
+            setStatus(SetPoint);
+            updateOptions();
+            updateMouseButtonHints();
+            break;
         case SetPoint:
         case SetDistance:
         case SetDirection:
@@ -188,6 +214,9 @@ void LC_ActionDrawLineDirect::onCoordinateEvent(
     switch (status) {
         case SetStartPoint:
             doSetStartPoint(mouse);
+            break;
+        case SetOpeningAim:
+            completeOpening(mouse);
             break;
         case SetPoint:
             if (isNonZeroLine(mouse)){
@@ -293,6 +322,8 @@ bool LC_ActionDrawLineDirect::doProceedCommand(
         updateMouseButtonHints();
     } else if (checkCommand("start", c)){
         setNewStartPointState();
+    } else if (checkCommand("opening", c) || c.compare("o", Qt::CaseInsensitive) == 0) {
+        startOpeningMode();
     } else {
         result = false;
     }
@@ -304,6 +335,28 @@ bool LC_ActionDrawLineDirect::doProcessCommandValue(RS_CommandEvent *e, const QS
     switch (getStatus()) {
         case SetDirection:
             break;
+        case SetOpeningWidth: {
+            bool ok = false;
+            double distance = 0.0;
+            {
+                auto guard = RS_SETTINGS->beginGroupGuard("/Defaults");
+                bool archEnabled = RS_SETTINGS->readNumEntry("/ArchitecturalInput", 0) != 0;
+                if (archEnabled) {
+                    distance = LC_ArchParser::parse(c, &ok);
+                }
+            }
+            if (!ok) {
+                distance = RS_Math::eval(c, &ok);
+            }
+            if (ok && LC_LineMath::isMeaningful(distance)) {
+                m_openingWidth = distance;
+                setStatus(SetOpeningAim);
+                updateMouseButtonHints();
+            } else {
+                result = false;
+            }
+            break;
+        }
         case SetPoint: {
             // Typed distance in free-aim mode: compute endpoint along current mouse direction.
             // When architectural input is enabled, try the arch parser first; fall back to eval.
@@ -385,6 +438,12 @@ void LC_ActionDrawLineDirect::updateMouseButtonHints(){
         case SetStartPoint:
             updateMouseWidgetTR("Specify first point", "Cancel");
             break;
+        case SetOpeningWidth:
+            updateMouseWidgetTR("Enter opening width", "Back");
+            break;
+        case SetOpeningAim:
+            updateMouseWidgetTR("Click to choose which side of wall markers go on", "Back");
+            break;
         case SetPoint: {
             QString msg = "pl";
             if (pPoints->startOffset >= 2){
@@ -428,6 +487,7 @@ void LC_ActionDrawLineDirect::undo(){
             case HA_Polyline:
             case HA_SetEndpoint:
             case HA_Close:
+            case HA_Opening:
                 graphicView->setCurrentAction(new RS_ActionEditUndo(true, *container, *graphicView));
                 pPoints->data.startpoint = h.prevPt;
                 setStatus(SetPoint);
@@ -462,6 +522,7 @@ void LC_ActionDrawLineDirect::redo(){
                 break;
             case HA_Polyline:
             case HA_SetEndpoint:
+            case HA_Opening:
                 graphicView->setCurrentAction(new RS_ActionEditUndo(false, *container, *graphicView));
                 setStatus(SetPoint);
                 break;
@@ -567,4 +628,58 @@ RS_Vector LC_ActionDrawLineDirect::calculateAngleEndpoint(const RS_Vector &snap)
     RS_Vector infiniteTickEndPoint = infiniteTickStartPoint + infiniteTickVector;
     return LC_LineMath::getNearestPointOnInfiniteLine(
         snap, infiniteTickStartPoint, infiniteTickEndPoint);
+}
+
+double LC_ActionDrawLineDirect::getLastWallAngle() const {
+    for (int i = pPoints->historyIndex; i >= 0; --i) {
+        const History& h = pPoints->history.at(i);
+        if (h.histAct == HA_SetEndpoint)
+            return (h.currPt - h.prevPt).angle();
+    }
+    return 0.0;
+}
+
+void LC_ActionDrawLineDirect::startOpeningMode() {
+    if (getStatus() != SetPoint) return;
+    bool hasWall = false;
+    for (int i = 0; i <= pPoints->historyIndex; ++i) {
+        if (pPoints->history.at(i).histAct == HA_SetEndpoint) {
+            hasWall = true;
+            break;
+        }
+    }
+    if (!hasWall) {
+        commandMessageTR("Cannot open: draw at least one wall segment first.");
+        return;
+    }
+    m_openingStart = pPoints->data.startpoint;
+    m_openingWallAngle = getLastWallAngle();
+    setStatus(SetOpeningWidth);
+    updateMouseButtonHints();
+}
+
+void LC_ActionDrawLineDirect::completeOpening(const RS_Vector& snap) {
+    constexpr double depth = 4.0;
+    RS_Vector wallDir = RS_Vector::polar(1.0, m_openingWallAngle);
+    RS_Vector toMouse = snap - m_openingStart;
+    double cross = wallDir.x * toMouse.y - wallDir.y * toMouse.x;
+    double perpAngle = m_openingWallAngle + (cross >= 0.0 ? M_PI / 2.0 : -M_PI / 2.0);
+    RS_Vector perpVec = RS_Vector::polar(depth, perpAngle);
+    RS_Vector openEnd = m_openingStart + RS_Vector::polar(m_openingWidth, m_openingWallAngle);
+
+    m_pendingOpening.clear();
+    m_pendingOpening << RS_LineData(m_openingStart, m_openingStart + perpVec);
+    m_pendingOpening << RS_LineData(m_openingStart, openEnd);
+    m_pendingOpening << RS_LineData(openEnd, openEnd + perpVec);
+
+    pPoints->data.startpoint = m_openingStart;
+    pPoints->data.endpoint   = openEnd;
+    ++pPoints->startOffset;
+    addHistory(HA_Opening, m_openingStart, openEnd, pPoints->startOffset);
+    trigger();
+    pPoints->data.startpoint = openEnd;
+    direction = DIRECTION_POINT;
+    setStatus(SetPoint);
+    updateOptions();
+    updateMouseButtonHints();
 }
