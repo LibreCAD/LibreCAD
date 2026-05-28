@@ -177,6 +177,12 @@ RS_Commands::RS_Commands() {
                 {"sly", QObject::tr("rly", "draw snake line (Y)")}},
             RS2::ActionDrawSnakeLineY
         },
+        // draw direct line (aim + type length)
+        {
+            {{"dline", QObject::tr("dline", "draw direct line")}},
+            {{"dl", QObject::tr("dl", "draw direct line")}},
+            RS2::ActionDrawLineDirect
+        },
         // draw line at angle - v2.2.0r2
         {
             {{"lineang", QObject::tr("lineang", "angled line")}},

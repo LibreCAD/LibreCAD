@@ -143,6 +143,7 @@ public slots:
  void slotDrawLineSnake();
  void slotDrawLineSnakeX();
  void slotDrawLineSnakeY();
+ void slotDrawLineDirect();
  void slotDrawLineOrthogonalRel();
  void slotDrawLineOrthogonalTo();
  void slotDrawLineAngleRel();

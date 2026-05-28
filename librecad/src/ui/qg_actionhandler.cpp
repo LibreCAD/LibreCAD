@@ -163,6 +163,7 @@
 #include "lc_actiondrawrectangle3points.h"
 #include "lc_actiondrawcross.h"
 #include "lc_actiondrawlinesnake.h"
+#include "lc_actiondrawlinedirect.h"
 #include "rs_actiondrawpolyline.h"
 #include "rs_actionpolylineadd.h"
 #include "rs_actionpolylineappend.h"
@@ -483,6 +484,9 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
          break;
       case RS2::ActionDrawSnakeLineY:
             a = new LC_ActionDrawLineSnake(*document, *view, LC_ActionDrawLineSnake::DIRECTION_Y);
+            break;
+        case RS2::ActionDrawLineDirect:
+            a = new LC_ActionDrawLineDirect(*document, *view);
             break;
         case RS2::ActionDrawSliceDivideLine:
             a = new LC_ActionDrawSliceDivide(*document, *view, false);
@@ -1524,6 +1528,10 @@ void QG_ActionHandler::slotDrawLineSnakeX() {
 
 void QG_ActionHandler::slotDrawLineSnakeY() {
     setCurrentAction(RS2::ActionDrawSnakeLineY);
+}
+
+void QG_ActionHandler::slotDrawLineDirect() {
+    setCurrentAction(RS2::ActionDrawLineDirect);
 }
 
 void QG_ActionHandler::slotDrawLineAngleRel(){

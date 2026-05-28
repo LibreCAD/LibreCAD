@@ -97,6 +97,7 @@ LC_WidgetFactory::LC_WidgetFactory(QC_ApplicationWindow* main_win,
         << a_map["DrawLineRel"]
         << a_map["DrawLineRelX"]
         << a_map["DrawLineRelY"]
+        << a_map["DrawLineDirect"]
         << a_map["DrawLineAngleRel"]
         << a_map["DrawLineOrthogonalRel"]
         << a_map["DrawLineFromPointToLine"]

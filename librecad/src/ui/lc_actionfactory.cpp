@@ -278,6 +278,12 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
     action->setObjectName("DrawLineRelY");
     a_map["DrawLineRelY"] = action;
 
+    action = new QAction(tr("Direct Line"), agm->line);
+    action->setIcon(QIcon(":/icons/line_rel.svg"));
+    connect(action, SIGNAL(triggered()), action_handler, SLOT(slotDrawLineDirect()));
+    action->setObjectName("DrawLineDirect");
+    a_map["DrawLineDirect"] = action;
+
     action = new QAction(tr("Rectangle (1 Point)"), agm->line);
     action->setIcon(QIcon(":/icons/rectangle_1_point.svg"));
     connect(action, SIGNAL(triggered()), action_handler, SLOT(slotDrawLineRectangle1Point()));

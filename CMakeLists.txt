@@ -550,6 +550,7 @@ librecad/src/actions/lc_actiondrawlineanglerel.cpp
 librecad/src/actions/lc_actiondrawlinefrompointtoline.cpp
 librecad/src/actions/lc_actiondrawlinepoints.cpp
 librecad/src/actions/lc_actiondrawlinesnake.cpp
+librecad/src/actions/lc_actiondrawlinedirect.cpp
 librecad/src/actions/lc_actiondrawparabola4points.cpp
 librecad/src/actions/lc_actiondrawparabolaFD.cpp
 librecad/src/actions/lc_actiondrawrectangle1point.cpp
