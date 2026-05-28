@@ -107,6 +107,14 @@ public:
     void addView(const DRW_View &data) override;
     void addUCS(const DRW_UCS &data) override;
 public:
+    struct TableFallbackRenderSummary {
+        size_t gridEntityCount = 0;
+        size_t textEntityCount = 0;
+        size_t placeholderEntityCount = 0;
+        size_t unresolvedTextStyleCount = 0;
+        size_t clampedDimensionCount = 0;
+    };
+
     void addTextStyle(const DRW_Textstyle& /*data*/) override{}
     void addAppId(const DRW_AppId& /*data*/) override{}
     void addBlock(const DRW_Block& data) override;
@@ -130,7 +138,8 @@ public:
     void addKnot(const DRW_Entity&) override{}
     void addInsert(const DRW_Insert& data) override;
     void addTable(const DRW_Table& data) override;
-    bool addTableFallback(const DRW_Table& data);
+    bool addTableFallback(const DRW_Table& data,
+                          TableFallbackRenderSummary *summary = nullptr);
     void addTrace(const DRW_Trace& data) override;
     void addTolerance(const DRW_Tolerance& tol) override;
     void addSolid(const DRW_Solid& data) override;

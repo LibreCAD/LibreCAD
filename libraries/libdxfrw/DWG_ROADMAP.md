@@ -1016,23 +1016,57 @@ Stop before changing table visual output.
 
 Purpose: make semantic tables visible through conservative 2D entities.
 
+Status: completed for rendering policy and diagnostics on 2026-05-28. The
+A2a attachment contract is in place; fallback rendering now classifies cells,
+emits modest placeholders for unsupported content, records generated
+grid/text/placeholder counts, tracks unresolved style handles, and counts
+clamped row/column dimensions. Native TABLE writing and table editing UI remain
+out of scope.
+
 Files:
 
 - `librecad/src/lib/filters/rs_filterdxfrw.cpp`
+- `librecad/src/lib/engine/document/lc_dwgadvancedmetadata.h`
 - `librecad/src/lib/filters/tests/entity_metadata_tests.cpp`
 - Optional focused DWG import test if a table fixture is present.
 
 Implementation:
 
-1. Generate grid line entities from origin, table direction, row heights, and
-   column widths.
-2. Generate text entities for cells with plain text content only.
-3. Generate placeholder text for FIELD, block, formula, unknown content, and
-   incomplete parse cells. Placeholder text must be visually modest and backed
-   by metadata; do not claim semantic conversion.
-4. Apply available text height/alignment/style metadata only when resolved.
-   Otherwise use the drawing default and record an unresolved-style diagnostic.
-5. Attach every generated entity through Ready Detail A2a.
+1. Add a table fallback render policy helper in `rs_filterdxfrw.cpp`:
+   - derive origin, normalized x-axis, y-axis, row offsets, and column offsets;
+   - clamp missing/invalid row heights and column widths through a named
+     fallback constant;
+   - return a small value object so tests can verify row/column geometry
+     without pixel-perfect rendering.
+2. Classify each cell before rendering:
+   - `PlainText`: only text/value strings and no unsupported content;
+   - `PlaceholderField`: FIELD handle/value content;
+   - `PlaceholderBlock`: block content or block handle;
+   - `PlaceholderAttribute`: attribute-only content;
+   - `PlaceholderUnknown`: unknown content type, incomplete parse, geometry
+     tail, override tail, or unsupported value type.
+3. Render grid lines for every row/column boundary and attach each entity via
+   A2a as `GridLine`, using row/column index `-1` for table boundaries.
+4. Render text:
+   - plain cells use imported text/value strings;
+   - unsupported cells use short bracketed placeholders such as
+     `[FIELD]`, `[BLOCK]`, `[ATTR]`, `[TABLE]`;
+   - placeholders must be visually modest and backed by A2a metadata role
+     `Placeholder`.
+5. Apply text style data only when unambiguous:
+   - use table/cell text height if available and positive;
+   - use current drawing text style unless style handle was resolved to a
+     LibreCAD style name;
+   - record unresolved style diagnostics in table metadata rather than
+     guessing a handle mapping.
+6. Add fallback-render diagnostics to metadata:
+   - generated grid count;
+   - generated text count;
+   - generated placeholder count;
+   - unresolved text style count;
+   - clamped row/column dimension count.
+7. Keep raw replay policy unchanged: rendering a fallback marks native replay
+   replaced; edited fallback entities mark it invalidated through A2a.
 
 Tests:
 
@@ -1040,6 +1074,9 @@ Tests:
 - Text placement/alignment smoke that checks metadata role and cell coordinate,
   not pixel-perfect rendering.
 - Export diagnostic test that edited fallback blocks native table writing.
+- Placeholder classification tests for text, FIELD, block, attribute-only, and
+  unknown/incomplete cells.
+- Bounds test for invalid row/column dimensions.
 
 Stop before adding table editing UI.
 
@@ -1047,6 +1084,10 @@ Stop before adding table editing UI.
 
 Purpose: make the native TABLE writer contract executable before emitting
 bytes.
+
+Status: ready after A2b. This is a diagnostics/API slice only. It should
+produce a complete eligibility report for text-only native writing but must not
+write TABLE/TABLECONTENT bytes.
 
 Files:
 
@@ -1056,20 +1097,49 @@ Files:
 
 Implementation:
 
-1. Extend `TableWriterBlockerCounts` with text-only writer gates:
-   unresolved CELLSTYLEMAP, unknown subrecord ranges, unsupported style
-   inheritance, unsupported break data, edited fallback, unresolved text style,
-   non-rectangular/merged cells, and missing owner/dictionary handles.
-2. Add a `tableNativeWriterEligible(handle)` helper returning a diagnostic enum
-   list, not just a boolean.
-3. Log blocker summaries from `writeObjects()` with one concise line.
-4. Add tests for every blocker bucket.
+1. Add a `TableNativeWriterBlocker` enum and a
+   `TableNativeWriterEligibility` record:
+   - table handle;
+   - record name;
+   - writer target version;
+   - blockers vector;
+   - boolean `eligibleTextOnly`;
+   - optional diagnostic counts.
+2. Add blockers for every currently known native writer gap:
+   - no semantic table content;
+   - fallback missing A2a attachment;
+   - edited fallback;
+   - unresolved TABLESTYLE/CELLSTYLEMAP;
+   - unknown or incomplete subrecord ranges;
+   - override masks, break data, geometry tails, merged cells;
+   - FIELD/block/attribute/unknown cell content;
+   - missing owner/dictionary handles;
+   - unsupported table version;
+   - unresolved text style or linetype handles;
+   - raw replay already invalidated or replaced.
+3. Implement helpers:
+   - `tableNativeWriterEligibility(handle, version)`;
+   - `tableNativeWriterEligibilityForAll(version)`;
+   - `tableNativeWriterBlockerCounts(version)`.
+4. Replace the current coarse native table warning with a one-line summary
+   that includes eligibility counts and top blocker buckets. Keep the existing
+   coarse buckets as compatibility fields until callers move to the new API.
+5. Add tests for:
+   - clean text-only table with no blockers;
+   - every blocker bucket above;
+   - multiple blockers on one table;
+   - raw replay invalidated/replaced policy;
+   - version gate behavior.
 
 Stop before native TABLE/TABLECONTENT byte writing.
 
 ### Ready Detail A3b: Text-Only TABLE/TABLECONTENT Writer Scaffold
 
 Purpose: add the narrow writer only after A3a proves eligibility.
+
+Status: gated on A3a. Implement only the minimal text-only writer for tables
+whose eligibility report is clean. All other tables continue to export fallback
+geometry and diagnostics.
 
 Files:
 
@@ -1082,13 +1152,48 @@ Files:
 
 Implementation:
 
-1. Add writer APIs for metadata-complete text-only table records.
-2. Register `AcDbTable`, `AcDbTableContent`, and supporting classes through
-   the existing class registry. Verify instance counts with raw replay.
-3. Emit only AC1021+ payloads with complete owner/dictionary handles and
-   resolved TABLESTYLE.
-4. Re-read the generated DWG locally and assert table callback/metadata counts.
-5. Keep unsupported cells diagnostic-only.
+1. Add libdxfrw writer-side data carriers that mirror the parsed subset:
+   - table dimensions;
+   - row heights and column widths;
+   - plain text cell strings;
+   - table style handle;
+   - owner/layout handles;
+   - AC1021+/AC1024+/AC1027 version gates.
+2. Add writer APIs without changing existing entity loops:
+   - `writeTableEntityTextOnly(...)`;
+   - `writeTableContentObjectTextOnly(...)`;
+   - helper to emit a matching minimal TABLESTYLE if required and resolvable.
+3. Register required classes through the current class registry:
+   - `AcDbTable`;
+   - `AcDbTableContent`;
+   - `AcDbTableStyle` only when a generated style is emitted;
+   - verify class instance counts include raw replayed and newly written
+     custom-class objects.
+4. Emit only the eligibility-clean subset:
+   - AC1021+ only;
+   - rectangular grid;
+   - no merged cells, fields, blocks, attributes, override masks, geometry
+     tails, break data, or unknown ranges;
+   - positive row/column dimensions;
+   - complete owner/dictionary handle context.
+5. Preserve fallback geometry policy:
+   - by default keep fallback 2D geometry for visibility unless a later policy
+     explicitly consumes it;
+   - log that native table bytes were written and fallback geometry remains
+     present as compatibility geometry.
+6. Verification:
+   - write DWG;
+   - re-read with libdxfrw;
+   - assert TABLE/TABLECONTENT callbacks and metadata counts;
+   - assert unsupported tables are not written natively and keep diagnostics.
+
+Follow-up A3c after A3b:
+
+1. Decide whether native-written fallback geometry should remain, be suppressed,
+   or be grouped. This requires UI/editing policy and should not be decided
+   inside A3b.
+2. Add richer table style inheritance only after CELLSTYLEMAP and TABLESTYLE
+   bytes are round-trip verified against fixtures.
 
 Stop if ODA/ACadSharp/libreDWG disagree on any required field order without a
 fixture resolving it.
@@ -1096,6 +1201,10 @@ fixture resolving it.
 ### Ready Detail B1a: ACIS Container Block Scanner
 
 Purpose: expose modeler sub-block byte ranges without interpreting geometry.
+
+Status: ready as byte/range metadata only. This slice must preserve raw bytes
+exactly and may add range summaries, but it must not interpret SAT/SAB topology
+or synthesize geometry.
 
 Files:
 
@@ -1106,27 +1215,55 @@ Files:
 
 Implementation:
 
-1. Add `ModelerPayloadRange` records: kind (`Sat`, `Sab`, `History`, `Wire`,
-   `Silhouette`, `UnknownTail`), offset, length, declared size, and
-   consistency flag.
-2. For SAB, locate `ACIS BinaryFile` and known end marker bytes only as range
-   hints. Do not parse SAB entities.
-3. For SAT, locate plain text ACIS header/history markers and known end text
-   only as range hints.
-4. For fixed-size fields already read by `DRW_ModelerGeometry`, record the
-   expected body start and handle-stream split.
-5. Add aggregate payload range counts and inconsistent-size diagnostics.
+1. Add `DRW_ModelerPayloadRange` and metadata-side
+   `ModelerPayloadRangeRecord`:
+   - kind: `Sat`, `Sab`, `History`, `Wire`, `Silhouette`, `UnknownTail`,
+     `HandleStream`;
+   - section: body or handle stream;
+   - byte offset from preserved raw payload start;
+   - byte length;
+   - declared bit/byte size when present;
+   - consistency state: exact, truncated, overrun, unknown;
+   - parser confidence: marker, declared-size, inferred.
+2. Keep one helper responsible for bounded scanning:
+   - never allocate from a declared size without checking against preserved
+     payload length;
+   - cap marker search windows;
+   - return ranges even when consistency is bad.
+3. SAB range hints:
+   - find `ACIS BinaryFile` marker;
+   - identify likely SAB body start;
+   - find known terminator/section boundaries if present;
+   - do not parse entity records or topology.
+4. SAT range hints:
+   - find textual ACIS header;
+   - identify history/entity text ranges by line markers;
+   - record unknown tail if text parsing stops before payload end.
+5. Existing split metadata:
+   - record object/body bit-size;
+   - record handle-stream split;
+   - record modeler version, history handle, empty-body flags.
+6. Add aggregate diagnostics:
+   - SAT/SAB/unknown counts;
+   - inconsistent split counts;
+   - truncated/overrun declared-size counts;
+   - marker-in-body/marker-in-handle-stream counts.
 
 Tests:
 
 - Synthetic SAT/SAB/history/unknown buffers.
 - Inconsistent declared-size test must not crash or allocate unbounded memory.
+- Empty modeler body and handle-stream-only body.
+- Large declared size with small preserved payload.
 
 Stop before ACIS topology parsing.
 
 ### Ready Detail B1b: Wire/Silhouette Summary Parser
 
 Purpose: decode only stable count/coordinate summaries for fallback previews.
+
+Status: gated on B1a. This is still metadata-only; it may calculate summary
+counts/bounds but must not create preview entities.
 
 Files:
 
@@ -1136,19 +1273,39 @@ Files:
 
 Implementation:
 
-1. Mirror ACadSharp `readWire` and libreDWG modeler wire layouts for count
-   fields and point arrays only.
-2. Add bounded max counts for wires, edges, silhouettes, and points.
-3. Store summaries as preview records: point count, edge count, bounding box,
-   and source byte range.
-4. Treat parser mismatch as "range known, preview unavailable" rather than
-   object failure.
+1. Add `ModelerPreviewSummaryRecord`:
+   - source modeler handle;
+   - source payload range index;
+   - preview kind: wire, silhouette, bounding box only, unavailable;
+   - point/edge/face/silhouette counts;
+   - 2D/3D bounding box;
+   - parse status and failure reason.
+2. Mirror only the stable count/coordinate portions from ACadSharp/libreDWG:
+   - count fields;
+   - point arrays;
+   - optional edge index pairs when count-safe;
+   - skip all topology/attribute records into an unknown-tail range.
+3. Add hard bounds:
+   - max wires;
+   - max edges;
+   - max points;
+   - max silhouettes;
+   - max bytes consumed per preview record.
+4. Parser mismatch policy:
+   - keep raw payload replayable;
+   - keep payload ranges;
+   - set preview kind to unavailable;
+   - add diagnostic count instead of failing the DWG object.
+5. Add summary lookup helpers by modeler handle and by payload range.
 
 Stop before generating preview entities.
 
 ### Ready Detail B2a: Modeler Fallback Preview Attachment
 
 Purpose: apply the same edit-safety policy as table fallback geometry.
+
+Status: gated on B1b. This may generate conservative 2D preview geometry only
+from summary data. It must not regenerate ACIS or claim semantic solid import.
 
 Files:
 
@@ -1158,17 +1315,36 @@ Files:
 
 Implementation:
 
-1. Add modeler fallback preview records with source modeler handle, preview
-   entity ID, preview role, and source range index.
-2. Invalidate modeler raw replay when a preview entity is edited.
-3. Export edited previews as ordinary 2D geometry with a diagnostic that ACIS
-   regeneration is unavailable.
+1. Add modeler fallback preview attachment records:
+   - source modeler handle;
+   - preview entity ID;
+   - source payload range index;
+   - preview role: wire line, silhouette line, bounding box, placeholder;
+   - replay state.
+2. Generate only conservative 2D previews:
+   - wire/silhouette polylines when B1b summary is complete enough;
+   - bounding box rectangle when only bounds are known;
+   - optional placeholder point/text only if existing import conventions allow
+     it without UI clutter.
+3. Attach every generated preview to metadata and raw replay policy.
+4. Invalidation:
+   - editing a preview invalidates modeler raw replay;
+   - unedited previews allow raw replay to preserve ACIS payload;
+   - export diagnostics distinguish `raw-preserved`, `preview-edited`, and
+     `preview-only`.
+5. Tests:
+   - synthetic preview attachment lookup;
+   - edited preview invalidates raw modeler payload;
+   - raw-preserved unchanged modeler object remains replayable.
 
 Stop before native modeler writing.
 
 ### Ready Detail C1a: Associative Edge Metadata
 
 Purpose: make associative shells queryable as a graph.
+
+Status: ready as graph metadata and invalidation only. This slice must not
+evaluate constraints, dynamic block actions, or associative dimensions.
 
 Files:
 
@@ -1179,29 +1355,56 @@ Files:
 
 Implementation:
 
-1. Add `AssociativeEdgeRecord`: source handle, source kind, edge kind, target
-   handle, raw range index, and confidence (`ExplicitHandle`, `Inferred`,
-   `Unknown`).
-2. Populate edges from existing dependency refs, action refs, owned params,
-   owned actions, read/write dependency handles, r/d-node handles, action body
-   handles, and ACSH owner/history links.
+1. Add `AssociativeEdgeRecord`:
+   - source handle;
+   - source record kind/class name;
+   - edge kind: owns action, owns parameter, depends on, read dependency,
+     write dependency, action body, evaluation expression, history node,
+     geometry reference, unknown handle reference;
+   - target handle;
+   - raw range index or `-1`;
+   - confidence: explicit handle, inferred from class layout, unknown;
+   - replay state.
+2. Populate edges from already decoded fields:
+   - dependency refs;
+   - action refs;
+   - owned params;
+   - owned actions;
+   - read/write dependency handles;
+   - r/d-node handles;
+   - action body handles;
+   - ACDBASSOC network/action/dependency links;
+   - ACSH owner/history/eval-expression links.
 3. Add lookup helpers:
    - `findAssociativeEdgesFrom(handle)`;
    - `findAssociativeEdgesTo(handle)`;
-   - `findAssociativeRecordsAffectedBy(handle)`.
-4. Ensure graph invalidation walks edges in the target direction but does not
-   loop forever on cycles.
+   - `findAssociativeRecordsAffectedBy(handle)`;
+   - `findAssociativeClosureFrom(handle, maxDepth)`.
+4. Graph invalidation policy:
+   - walk from edited target handles to dependent records;
+   - maintain visited set to prevent cycle loops;
+   - invalidate matching semantic records and matching raw replay payloads;
+   - record invalidation reason `edited target`.
+5. Add diagnostics:
+   - edge counts by kind/confidence;
+   - unresolved target handle count;
+   - cycle encountered count;
+   - invalidated record count.
 
 Tests:
 
 - Synthetic network/action/dependency graph with a cycle.
 - Invalidation suppresses matching raw replay for all affected records.
+- Unknown target and duplicate edge tests.
 
 Stop before evaluating graph semantics.
 
 ### Ready Detail C1b: Common Prefix Decode Audit
 
 Purpose: make parser state observable for every known ACDBASSOC/ACSH prefix.
+
+Status: ready after or alongside C1a. It improves parser observability and
+must preserve raw bytes when prefix decode is partial.
 
 Files:
 
@@ -1211,19 +1414,39 @@ Files:
 
 Implementation:
 
-1. Add prefix status fields for `AcDbAssocAction`,
-   `AcDbAssocActionParam`, `AcDbAssocDependency`,
-   `AcDbAssocGeomDependency`, `AcDbAssocNetwork`, `AcDbEvalExpr`, and
-   `AcDbShHistoryNode`.
-2. Store prefix byte/bit ranges and parse status.
-3. Add diagnostics for missing prefix, partial prefix, unsupported class
-   version, and bounded-count overflow.
+1. Add prefix status records to parsed associative/ACSH shells:
+   - prefix kind;
+   - start bit;
+   - bit size;
+   - class version;
+   - parse status: complete, partial, missing, unsupported version,
+     bounded-count overflow;
+   - decoded handle count;
+   - decoded value/count fields.
+2. Cover prefixes:
+   - `AcDbAssocAction`;
+   - `AcDbAssocActionParam`;
+   - `AcDbAssocDependency`;
+   - `AcDbAssocGeomDependency`;
+   - `AcDbAssocNetwork`;
+   - `AcDbEvalExpr`;
+   - `AcDbShHistoryNode`;
+   - current ACSH action-body subclasses.
+3. Keep every prefix decode bounded:
+   - validate counts before loops;
+   - do not move into tail decoding if a prefix fails;
+   - preserve raw object and attach partial status.
+4. Surface aggregate prefix diagnostics through metadata and export warning
+   counts.
 
 Stop before adding new action-body semantics.
 
 ### Ready Detail C2a: Associative Invalidation Policy Matrix
 
 Purpose: make export behavior predictable after edits.
+
+Status: ready after C1a/C1b. This is export-policy work only, not graph
+evaluation or graph writing.
 
 Files:
 
@@ -1233,13 +1456,32 @@ Files:
 
 Implementation:
 
-1. Add per-family stale counts: DIMASSOC, EVAL_GRAPH, ACDBASSOC,
-   dynamic-block, object-context, ACSH.
-2. Add invalidation reasons: edited entity, missing target, unsupported
-   evaluator, parser partial, fallback geometry edited, and native replacement.
-3. Log one object-write diagnostic line summarizing stale/preserved graph
-   records.
-4. Add tests for stale raw suppression by reason.
+1. Add per-family stale/preserved counts:
+   - DIMASSOC;
+   - ACAD_EVALUATION_GRAPH;
+   - ACDBASSOC*;
+   - dynamic-block records;
+   - object-context records;
+   - ACSH_* records.
+2. Add invalidation reasons:
+   - edited entity;
+   - missing target;
+   - unsupported evaluator;
+   - parser partial;
+   - fallback geometry edited;
+   - native replacement;
+   - cycle/path invalidated;
+   - owner deleted.
+3. Make raw replay policy explicit:
+   - unchanged graph payloads replay;
+   - invalidated graph payloads are suppressed;
+   - replaced graph payloads are suppressed;
+   - semantic-only graph shells never write raw bytes.
+4. Log one concise object-write diagnostic line:
+   - preserved by family;
+   - suppressed by family;
+   - top invalidation reasons.
+5. Add tests for stale raw suppression by reason and family.
 
 Stop before graph writers.
 
@@ -1248,6 +1490,9 @@ Stop before graph writers.
 Purpose: prevent premature writers by recording each entity family's missing
 fields as data.
 
+Status: ready as diagnostics. This slice should not add any new native entity
+writer.
+
 Files:
 
 - `librecad/src/lib/engine/document/lc_dwgadvancedmetadata.h`
@@ -1256,18 +1501,37 @@ Files:
 
 Implementation:
 
-1. Add `AdvancedEntityWriterBlockerCounts` with buckets for MESH/SubDMesh,
-   SHAPE, OLE2FRAME, raster/image, wipeout, underlay, and unknown required
-   owner/class data.
-2. Count current sidecar/native entity availability before adding writers.
-3. Log the ledger from DWG export.
-4. Add tests proving blocker counts for synthetic metadata records.
+1. Add `AdvancedEntityWriterBlockerCounts` and per-family detail records:
+   - MESH/SubDMesh;
+   - SHAPE;
+   - OLE2FRAME;
+   - raster IMAGE;
+   - WIPEOUT;
+   - PDF/DGN/DWF underlay;
+   - MLEADER advanced content not covered by current writer;
+   - ARC_DIMENSION gaps if any remain;
+   - unknown required owner/class data.
+2. For each family record:
+   - native writer available;
+   - raw replay available;
+   - fallback/sidecar available;
+   - edited fallback invalidated replay;
+   - missing required handles/classes;
+   - missing payload bytes.
+3. Log the ledger from DWG export once per export.
+4. Add a metadata helper:
+   - `advancedEntityWriterLedger(version)`;
+   - `advancedEntityWriterBlockerCounts(version)`.
+5. Add tests proving blocker counts for synthetic metadata records and mixed
+   raw/fallback/replaced states.
 
 Stop before entity byte writers.
 
 ### Ready Detail D2a: MESH/SubDMesh Metadata Completeness
 
 Purpose: prepare mesh writing and preview without committing to a writer.
+
+Status: ready after D1a. This is metadata completeness and diagnostics only.
 
 Files:
 
@@ -1278,17 +1542,34 @@ Files:
 
 Implementation:
 
-1. Preserve subdivision level, crease count, edge count, face count, vertex
-   count, and version flags.
-2. Add mesh sidecar lookup by source handle.
-3. Add writer blockers for missing crease data, unsupported subdivision data,
-   and fallback-only mesh previews.
+1. Preserve mesh/SubDMesh fields:
+   - schema/class version;
+   - subdivision level;
+   - vertex count;
+   - face count;
+   - edge count;
+   - crease count;
+   - smoothness flags;
+   - raw range status.
+2. Add mesh sidecar lookup by source handle and by generated fallback entity
+   IDs.
+3. Add writer blockers:
+   - missing crease data;
+   - unsupported subdivision data;
+   - fallback-only preview;
+   - edited fallback;
+   - missing owner/class handle;
+   - malformed count relationships.
+4. Add tests for count preservation, sidecar lookup, and blocker buckets.
 
 Stop before native SubDMesh writing.
 
 ### Ready Detail D3a: Raster, Wipeout, Image, and Underlay Link Graph
 
 Purpose: make external-reference entities export-safe.
+
+Status: ready as metadata/link diagnostics. This slice should not copy files or
+write new native image/underlay records.
 
 Files:
 
@@ -1300,20 +1581,44 @@ Files:
 
 Implementation:
 
-1. Store definition/reactor/reference handles for IMAGE, WIPEOUT, PDF/DGN/DWF
-   underlays, ImageDefinition, ImageDefinitionReactor, RasterVariables, and
-   UnderlayDefinition.
-2. Add lookup helpers from entity to definition and definition to entities.
-3. Add file-path diagnostics: empty path, relative path, missing local file,
-   and intentionally external.
-4. Add clipping diagnostics for no-boundary, rectangular, polygonal, and
-   malformed clipping.
+1. Store link graph records for:
+   - IMAGE entity to ImageDefinition;
+   - ImageDefinition to ImageDefinitionReactor;
+   - RasterVariables;
+   - WIPEOUT image-definition style references where applicable;
+   - PDF/DGN/DWF underlay entity to UnderlayDefinition;
+   - underlay definition to source path.
+2. Add lookup helpers:
+   - entity to definition;
+   - definition to entities;
+   - definition to reactors;
+   - path to definitions.
+3. Add file-path diagnostics:
+   - empty path;
+   - relative path;
+   - absolute missing local file;
+   - intentionally external;
+   - unsupported URL/path scheme;
+   - case-mismatch candidate.
+4. Add clipping diagnostics:
+   - no-boundary;
+   - rectangular;
+   - polygonal;
+   - malformed clipping;
+   - inverted clipping;
+   - frame visibility state.
+5. Export policy:
+   - unchanged raw-linked payloads replay if raw bytes are present;
+   - edited fallback or missing path suppresses raw replay and logs reason;
+   - no file copying in this slice.
 
 Stop before copying files or writing native underlay/image records.
 
 ### Ready Detail D4a: SHAPE and OLE2FRAME Metadata Shells
 
 Purpose: classify two remaining advanced entity families before writer work.
+
+Status: ready after D1a. Shell parsing and metadata only.
 
 Files:
 
@@ -1324,12 +1629,31 @@ Files:
 
 Implementation:
 
-1. Add SHAPE shell fields: name/index, style handle, insertion point, scale,
-   rotation, oblique, width factor, extrusion, and raw range status.
-2. Add OLE2FRAME shell fields: placement, extents, payload byte range, raw
-   replay state, and preview frame status.
-3. Add writer blockers for missing style handle, missing OLE payload, and
-   edited preview frame.
+1. Add SHAPE shell fields:
+   - name/index;
+   - style handle;
+   - insertion point;
+   - scale;
+   - rotation;
+   - oblique;
+   - width factor;
+   - extrusion;
+   - raw range status.
+2. Add OLE2FRAME shell fields:
+   - placement point(s);
+   - extents;
+   - payload byte range;
+   - draw aspect/flags if present;
+   - raw replay state;
+   - preview frame status.
+3. Add writer blockers:
+   - missing style handle;
+   - unresolved SHAPE style;
+   - missing OLE payload;
+   - edited preview frame;
+   - unsupported OLE payload regeneration.
+4. Add parser smoke or synthetic shell tests that prove no payload allocation
+   is unbounded.
 
 Stop before OLE payload regeneration.
 
@@ -1337,6 +1661,10 @@ Stop before OLE payload regeneration.
 
 Purpose: connect metadata to existing LibreCAD view/UCS lists in a reversible
 way.
+
+Status: ready as document mapping metadata. This slice may connect imported
+VIEW/UCS records to existing document lists but must not change visible UI
+panels or native view writers.
 
 Files:
 
@@ -1347,19 +1675,40 @@ Files:
 
 Implementation:
 
-1. Add metadata-side document mapping records for named VIEW and UCS:
-   source handle, created list item ID/name, unresolved references, and
-   replay state.
-2. Populate mappings during import without changing existing UI behavior.
-3. Add lookup helpers from list name/ID back to DWG handle.
-4. Invalidate VIEW/UCS raw replay if a mapped list item is edited and the
-   writer cannot regenerate the original references.
+1. Add metadata-side mapping records:
+   - source DWG handle;
+   - source type: VIEW, UCS, VPORT;
+   - document list item name/ID where available;
+   - owner/layout handle;
+   - referenced UCS/base UCS/background/visual style/sun handles;
+   - unresolved reference count;
+   - replay state.
+2. Populate mappings during import:
+   - named VIEW to current LibreCAD named-view list if the existing list API is
+     sufficient;
+   - UCS to current UCS list if the existing list API is sufficient;
+   - VPORT remains metadata-only unless a document list mapping already exists.
+3. Add lookup helpers:
+   - DWG handle to mapped document item;
+   - document item name/ID to DWG handle;
+   - owner/layout to mappings.
+4. Invalidation:
+   - if a mapped view/UCS item is edited, invalidate original raw replay;
+   - if only metadata references are unresolved and unchanged, keep raw replay
+     with diagnostics.
+5. Tests:
+   - synthetic mapping records and lookup;
+   - invalidation by mapped item;
+   - unresolved reference counts.
 
 Stop before UI panel changes.
 
 ### Ready Detail E2a: Read-Only Visual/Light Summary Model
 
 Purpose: expose visual metadata safely to future UI without rendering it.
+
+Status: ready as metadata summary only. This slice must not render lighting,
+materials, or visual styles.
 
 Files:
 
@@ -1368,18 +1717,44 @@ Files:
 
 Implementation:
 
-1. Add summary helpers for views, visual styles, lights, and suns:
-   display name, handle, owner/layout, type, intensity/color, date/time,
-   referenced sun, referenced visual style, and stale status.
-2. Add aggregate counts by owner/layout and stale/replay state.
-3. Ensure summaries do not require Qt UI classes so they remain testable in
-   metadata tests.
+1. Add `VisualMetadataSummaryRecord`-style helpers for:
+   - VIEW;
+   - VPORT;
+   - VISUALSTYLE;
+   - LIGHT;
+   - SUN;
+   - background/live section references when already decoded.
+2. Summary fields:
+   - display name;
+   - handle;
+   - owner/layout;
+   - source type;
+   - light/sun type;
+   - intensity/color;
+   - date/time and location fields for SUN when present;
+   - referenced sun handle;
+   - referenced visual style handle;
+   - referenced background/live section handle;
+   - stale/replay state.
+3. Aggregate helpers:
+   - count by owner/layout;
+   - count by source type;
+   - count by stale/replay state;
+   - unresolved visual reference count.
+4. Keep helpers Qt-free so metadata tests can cover them without UI setup.
+5. Tests:
+   - summary generation for synthetic VIEW/LIGHT/SUN/VISUALSTYLE metadata;
+   - aggregate counts;
+   - stale/replay state propagation.
 
 Stop before rendering, material, or lighting UI work.
 
 ### Ready Detail E4a: Visual Metadata Export Diagnostics
 
 Purpose: make VIEW/UCS/LIGHT/SUN/VISUALSTYLE export policy explicit.
+
+Status: ready after E1a/E2a. Diagnostics only unless an unchanged raw payload
+is already replayable by existing raw replay machinery.
 
 Files:
 
@@ -1390,13 +1765,63 @@ Files:
 
 Implementation:
 
-1. Add blocker counts for unresolved UCS, visual style, sun, owner/layout,
-   background, live section, and invalidated raw visual payload.
-2. Log blocker summaries during DWG object writing.
-3. Add smoke tests that unchanged VIEW/LIGHT/SUN remain writable and stale
-   references are diagnosed.
+1. Add `VisualMetadataWriterBlockerCounts`:
+   - unresolved UCS/base UCS;
+   - unresolved visual style;
+   - unresolved sun;
+   - unresolved background;
+   - unresolved live section;
+   - missing owner/layout;
+   - invalidated raw visual payload;
+   - replaced/native-unavailable payload;
+   - unsupported VISUALSTYLE writer.
+2. Add helpers:
+   - `visualMetadataWriterBlockerCounts(version)`;
+   - `visualMetadataReplayEligibility(handle, version)`.
+3. Log blocker summaries during DWG object writing:
+   - preserved raw visual/light payloads;
+   - suppressed stale visual/light payloads;
+   - unresolved reference buckets.
+4. Add smoke tests:
+   - unchanged VIEW/LIGHT/SUN raw payload remains replayable;
+   - edited/stale reference suppresses replay;
+   - unresolved visual style/sun/background counts are reported.
+5. Export policy remains conservative:
+   - raw replay unchanged records only;
+   - no generated VISUALSTYLE writer;
+   - no lighting/material rendering side effects.
 
 Stop before VISUALSTYLE native writing unless every required field is present.
+
+### Ready Detail E5a: Visual/Light UI Integration Contract
+
+Purpose: define how future UI can inspect visual/light metadata without making
+the import/export pipeline depend on UI classes.
+
+Status: planning-ready after E2a. Do not implement UI widgets until the
+metadata summary and diagnostics APIs are stable.
+
+Files:
+
+- `librecad/src/lib/engine/document/lc_dwgadvancedmetadata.h`
+- future UI files under `librecad/src/ui/` only after a separate UI approval
+  pass.
+
+Implementation:
+
+1. Keep visual/light metadata access through Qt-free value records.
+2. Define UI-facing read-only queries:
+   - list visual metadata summaries;
+   - filter by owner/layout;
+   - inspect unresolved references;
+   - inspect replay state.
+3. Define edit policy before adding controls:
+   - read-only display keeps raw replay;
+   - any edit must mark matching raw visual/light payload invalidated;
+   - no partial visual-style regeneration until native writer exists.
+4. Add a UI TODO checklist only after E2a/E4a tests pass.
+
+Stop before adding UI controls or rendering changes.
 
 ## Step-by-Step Implementation Queue
 

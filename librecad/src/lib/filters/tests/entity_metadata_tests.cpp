@@ -594,6 +594,14 @@ TEST_CASE("DWG advanced metadata caches raw and semantic sidecars",
   fallbackTable.m_content.m_rows[0].m_cells[0].m_contents.push_back(
       fallbackTextContent);
   metadata.addTable(fallbackTable, true);
+  LC_DwgAdvancedMetadata::TableFallbackRenderSummary fallbackSummary;
+  fallbackSummary.tableHandle = fallbackTable.handle;
+  fallbackSummary.gridEntityCount = 1;
+  fallbackSummary.textEntityCount = 1;
+  fallbackSummary.placeholderEntityCount = 0;
+  fallbackSummary.unresolvedTextStyleCount = 1;
+  fallbackSummary.clampedDimensionCount = 2;
+  metadata.updateTableFallbackRenderSummary(fallbackSummary);
   LC_DwgAdvancedMetadata::TableFallbackEntityRecord fallbackGridRecord;
   fallbackGridRecord.tableHandle = fallbackTable.handle;
   fallbackGridRecord.sourceHandle = fallbackTable.handle;
@@ -1097,6 +1105,11 @@ TEST_CASE("DWG advanced metadata caches raw and semantic sidecars",
   const auto& capturedFallbackTable = metadata.tables().at(2);
   CHECK(capturedFallbackTable.handle == 0x112u);
   CHECK(capturedFallbackTable.fallbackRendered);
+  CHECK(capturedFallbackTable.m_fallbackGridEntityCount == 1u);
+  CHECK(capturedFallbackTable.m_fallbackTextEntityCount == 1u);
+  CHECK(capturedFallbackTable.m_fallbackPlaceholderEntityCount == 0u);
+  CHECK(capturedFallbackTable.m_fallbackUnresolvedTextStyleCount == 1u);
+  CHECK(capturedFallbackTable.m_fallbackClampedDimensionCount == 2u);
   CHECK(capturedFallbackTable.replayState ==
         LC_DwgAdvancedMetadata::ReplayState::ReplayReplaced);
   const auto fallbackRecords =

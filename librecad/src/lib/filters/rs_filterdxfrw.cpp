@@ -150,30 +150,98 @@ bool buildSplineDataFromDrw(const DRW_Spline* source, RS_SplineData& target) {
     return true;
 }
 
-QString tableCellDisplayText(const DRW_TableCell& cell) {
+constexpr double kTableFallbackDimension = 1.0;
+constexpr double kTableFallbackMinTextHeight = 0.1;
+
+enum class TableFallbackCellKind {
+    Empty,
+    PlainText,
+    PlaceholderField,
+    PlaceholderBlock,
+    PlaceholderAttribute,
+    PlaceholderUnknown
+};
+
+struct TableFallbackCellDisplay {
+    QString text;
+    TableFallbackCellKind kind = TableFallbackCellKind::Empty;
+};
+
+TableFallbackCellDisplay tableCellDisplay(const DRW_TableCell& cell,
+                                          bool tableParseComplete) {
+    auto placeholder = [](TableFallbackCellKind kind, const char *text) {
+        TableFallbackCellDisplay display;
+        display.kind = kind;
+        display.text = QString::fromLatin1(text);
+        return display;
+    };
+
+    if (!tableParseComplete || cell.m_geometryFlags != 0
+        || cell.m_geometryHandle != 0 || cell.m_overrideFlags != 0
+        || cell.m_isMerged) {
+        return placeholder(TableFallbackCellKind::PlaceholderUnknown, "[TABLE]");
+    }
+
     for (const DRW_TableCellContent& content : cell.m_contents) {
-        if (!content.m_text.empty())
-            return QString::fromUtf8(content.m_text.c_str());
-        if (!content.m_value.m_valueString.empty())
-            return QString::fromUtf8(content.m_value.m_valueString.c_str());
+        if (content.m_type == 4)
+            return placeholder(TableFallbackCellKind::PlaceholderBlock, "[BLOCK]");
+        if (content.m_type == 2 || content.m_handle != 0)
+            return placeholder(TableFallbackCellKind::PlaceholderField, "[FIELD]");
+        if (!content.m_text.empty()) {
+            return {QString::fromUtf8(content.m_text.c_str()),
+                    TableFallbackCellKind::PlainText};
+        }
+        if (!content.m_value.m_valueString.empty()) {
+            return {QString::fromUtf8(content.m_value.m_valueString.c_str()),
+                    TableFallbackCellKind::PlainText};
+        }
+        if (content.m_type != 0 && content.m_type != 1)
+            return placeholder(TableFallbackCellKind::PlaceholderUnknown, "[TABLE]");
     }
+    if (cell.m_blockHandle != 0)
+        return placeholder(TableFallbackCellKind::PlaceholderBlock, "[BLOCK]");
+    if (cell.m_valueHandle != 0)
+        return placeholder(TableFallbackCellKind::PlaceholderField, "[FIELD]");
     for (const DRW_TableCellAttribute& attribute : cell.m_attributes) {
-        if (!attribute.m_text.empty())
-            return QString::fromUtf8(attribute.m_text.c_str());
+        if (!attribute.m_text.empty()) {
+            return {QString::fromUtf8(attribute.m_text.c_str()),
+                    TableFallbackCellKind::PlaceholderAttribute};
+        }
+        if (attribute.m_attdefHandle != 0)
+            return placeholder(TableFallbackCellKind::PlaceholderAttribute, "[ATTR]");
     }
+    if (!cell.m_attributes.empty())
+        return placeholder(TableFallbackCellKind::PlaceholderAttribute, "[ATTR]");
     return {};
 }
 
-double tableColumnWidth(const DRW_TableContent& content, size_t index) {
-    if (index < content.m_columns.size() && content.m_columns[index].m_width > 0.0)
-        return content.m_columns[index].m_width;
-    return 1.0;
+bool tableFallbackCellIsPlaceholder(TableFallbackCellKind kind) {
+    return kind != TableFallbackCellKind::PlainText
+           && kind != TableFallbackCellKind::Empty;
 }
 
-double tableRowHeight(const DRW_TableContent& content, size_t index) {
-    if (index < content.m_rows.size() && content.m_rows[index].m_height > 0.0)
+double tableColumnWidth(const DRW_TableContent& content, size_t index,
+                        RS_FilterDXFRW::TableFallbackRenderSummary *summary) {
+    if (index < content.m_columns.size()
+        && std::isfinite(content.m_columns[index].m_width)
+        && content.m_columns[index].m_width > 0.0) {
+        return content.m_columns[index].m_width;
+    }
+    if (summary != nullptr)
+        ++summary->clampedDimensionCount;
+    return kTableFallbackDimension;
+}
+
+double tableRowHeight(const DRW_TableContent& content, size_t index,
+                      RS_FilterDXFRW::TableFallbackRenderSummary *summary) {
+    if (index < content.m_rows.size()
+        && std::isfinite(content.m_rows[index].m_height)
+        && content.m_rows[index].m_height > 0.0) {
         return content.m_rows[index].m_height;
-    return 1.0;
+    }
+    if (summary != nullptr)
+        ++summary->clampedDimensionCount;
+    return kTableFallbackDimension;
 }
 
 DRW_UnsupportedObject rawObjectFromMetadata(
@@ -2088,14 +2156,28 @@ void RS_FilterDXFRW::addInsert(const DRW_Insert& data) {
 }
 
 void RS_FilterDXFRW::addTable(const DRW_Table& data) {
-    const bool fallbackRendered = addTableFallback(data);
+    TableFallbackRenderSummary fallbackSummary;
+    const bool fallbackRendered = addTableFallback(data, &fallbackSummary);
     if (m_graphic != nullptr) {
         m_graphic->dwgAdvancedMetadata().addTable(data, fallbackRendered);
+        LC_DwgAdvancedMetadata::TableFallbackRenderSummary metadataSummary;
+        metadataSummary.tableHandle = data.handle;
+        metadataSummary.gridEntityCount = fallbackSummary.gridEntityCount;
+        metadataSummary.textEntityCount = fallbackSummary.textEntityCount;
+        metadataSummary.placeholderEntityCount =
+            fallbackSummary.placeholderEntityCount;
+        metadataSummary.unresolvedTextStyleCount =
+            fallbackSummary.unresolvedTextStyleCount;
+        metadataSummary.clampedDimensionCount =
+            fallbackSummary.clampedDimensionCount;
+        m_graphic->dwgAdvancedMetadata().updateTableFallbackRenderSummary(
+            metadataSummary);
     }
     addInsert(data);
 }
 
-bool RS_FilterDXFRW::addTableFallback(const DRW_Table& data) {
+bool RS_FilterDXFRW::addTableFallback(
+    const DRW_Table& data, TableFallbackRenderSummary *summary) {
     if (!data.m_hasSemanticContent || data.m_content.m_rows.empty()
         || data.m_content.m_columns.empty() || m_currentContainer == nullptr) {
         return false;
@@ -2117,14 +2199,16 @@ bool RS_FilterDXFRW::addTableFallback(const DRW_Table& data) {
     columnOffsets.reserve(content.m_columns.size() + 1);
     columnOffsets.push_back(0.0);
     for (size_t column = 0; column < content.m_columns.size(); ++column) {
-        columnOffsets.push_back(columnOffsets.back() + tableColumnWidth(content, column));
+        columnOffsets.push_back(
+            columnOffsets.back() + tableColumnWidth(content, column, summary));
     }
 
     std::vector<double> rowOffsets;
     rowOffsets.reserve(content.m_rows.size() + 1);
     rowOffsets.push_back(0.0);
     for (size_t row = 0; row < content.m_rows.size(); ++row) {
-        rowOffsets.push_back(rowOffsets.back() + tableRowHeight(content, row));
+        rowOffsets.push_back(
+            rowOffsets.back() + tableRowHeight(content, row, summary));
     }
 
     auto tablePoint = [&](double x, double y) {
@@ -2150,6 +2234,8 @@ bool RS_FilterDXFRW::addTableFallback(const DRW_Table& data) {
         line->update();
         addFallbackRecord(line, row, column,
                           LC_DwgAdvancedMetadata::TableFallbackRole::GridLine);
+        if (summary != nullptr)
+            ++summary->gridEntityCount;
         m_currentContainer->addEntity(line);
     };
 
@@ -2173,10 +2259,14 @@ bool RS_FilterDXFRW::addTableFallback(const DRW_Table& data) {
         const size_t cellCount = std::min(tableRow.m_cells.size(),
                                           content.m_columns.size());
         for (size_t column = 0; column < cellCount; ++column) {
-            QString text = tableCellDisplayText(tableRow.m_cells[column]);
-            if (text.isEmpty())
+            const DRW_TableCell& tableCell = tableRow.m_cells[column];
+            TableFallbackCellDisplay display =
+                tableCellDisplay(tableCell, data.m_semanticContentComplete);
+            if (display.text.isEmpty())
                 continue;
-            text = toNativeString(text);
+            const bool placeholder =
+                tableFallbackCellIsPlaceholder(display.kind);
+            QString text = toNativeString(display.text);
             const double left = columnOffsets[column];
             const double right = columnOffsets[column + 1];
             const double top = rowOffsets[row];
@@ -2185,7 +2275,21 @@ bool RS_FilterDXFRW::addTableFallback(const DRW_Table& data) {
             const double cellWidth = std::max(0.1, right - left);
             const RS_Vector insertion = tablePoint(left + cellWidth * 0.08,
                                                    top + cellHeight * 0.25);
-            RS_MTextData textData(insertion, cellHeight * 0.35, cellWidth * 0.84,
+            double textHeight = cellHeight * 0.35;
+            if (tableCell.m_contentHeight > 0.0
+                && std::isfinite(tableCell.m_contentHeight)) {
+                textHeight = tableCell.m_contentHeight;
+            } else if (tableCell.m_height > 0.0
+                       && std::isfinite(tableCell.m_height)) {
+                textHeight = tableCell.m_height * 0.35;
+            }
+            textHeight = std::max(kTableFallbackMinTextHeight, textHeight);
+            if (summary != nullptr
+                && (tableCell.m_textStyleHandle != 0
+                    || tableCell.m_textStyleOverrideHandle != 0)) {
+                ++summary->unresolvedTextStyleCount;
+            }
+            RS_MTextData textData(insertion, textHeight, cellWidth * 0.84,
                                   RS_MTextData::VATop, RS_MTextData::HALeft,
                                   RS_MTextData::LeftToRight, RS_MTextData::AtLeast,
                                   1.0, text, style, angle, RS2::NoUpdate);
@@ -2194,9 +2298,14 @@ bool RS_FilterDXFRW::addTableFallback(const DRW_Table& data) {
             mtext->update();
             addFallbackRecord(
                 mtext, static_cast<int>(row), static_cast<int>(column),
-                tableRow.m_cells[column].m_contents.empty()
+                placeholder
                     ? LC_DwgAdvancedMetadata::TableFallbackRole::Placeholder
                     : LC_DwgAdvancedMetadata::TableFallbackRole::CellText);
+            if (summary != nullptr) {
+                ++summary->textEntityCount;
+                if (placeholder)
+                    ++summary->placeholderEntityCount;
+            }
             m_currentContainer->addEntity(mtext);
             renderedText = true;
         }

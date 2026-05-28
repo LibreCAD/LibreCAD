@@ -372,6 +372,11 @@ public:
         size_t m_overrideMaskCount = 0;
         size_t m_breakRangeCount = 0;
         size_t m_tableGeometryTailRangeCount = 0;
+        size_t m_fallbackGridEntityCount = 0;
+        size_t m_fallbackTextEntityCount = 0;
+        size_t m_fallbackPlaceholderEntityCount = 0;
+        size_t m_fallbackUnresolvedTextStyleCount = 0;
+        size_t m_fallbackClampedDimensionCount = 0;
         int m_tableFlowDirection = 0;
         int m_tableFlags = 0;
         double m_tableHorizontalCellMargin = 0.0;
@@ -405,6 +410,15 @@ public:
         std::vector<TableMergedRangeRecord> mergedRanges;
         std::vector<TableCellRecord> cells;
         ReplayState replayState = ReplayState::ReplayAllowed;
+    };
+
+    struct TableFallbackRenderSummary {
+        duint32 tableHandle = 0;
+        size_t gridEntityCount = 0;
+        size_t textEntityCount = 0;
+        size_t placeholderEntityCount = 0;
+        size_t unresolvedTextStyleCount = 0;
+        size_t clampedDimensionCount = 0;
     };
 
     struct TableFallbackEntityRecord {
@@ -963,6 +977,25 @@ public:
         if (record.tableHandle == 0 || record.entityId == 0)
             return;
         m_tableFallbackEntities.push_back(record);
+    }
+
+    void updateTableFallbackRenderSummary(
+        const TableFallbackRenderSummary& summary) {
+        if (summary.tableHandle == 0)
+            return;
+        for (TableRecord& record : m_tables) {
+            if (record.handle != summary.tableHandle)
+                continue;
+            record.m_fallbackGridEntityCount = summary.gridEntityCount;
+            record.m_fallbackTextEntityCount = summary.textEntityCount;
+            record.m_fallbackPlaceholderEntityCount =
+                summary.placeholderEntityCount;
+            record.m_fallbackUnresolvedTextStyleCount =
+                summary.unresolvedTextStyleCount;
+            record.m_fallbackClampedDimensionCount =
+                summary.clampedDimensionCount;
+            return;
+        }
     }
 
     void addCellStyleMap(const DRW_CellStyleMap& map) {
