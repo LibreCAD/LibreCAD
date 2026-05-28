@@ -1658,11 +1658,15 @@ bool dwgReader::readDwgObject(dwgBuffer *dbuf, objHandle& obj, DRW_Interface& in
             DRW_Dictionary e;
             ret = e.parseDwg(version, &buff, bs);
             intfa.addDictionary(e);
+            if (ret) intfa.addUnsupportedObject(makeRawObject(oType));
             break; }
         case 79: { //XRECORD (ODA fixed type 0x4f)
             DRW_XRecord e;
             ret = e.parseDwg(version, &buff, bs);
-            if (ret) intfa.addXRecord(e);
+            if (ret) {
+                intfa.addXRecord(e);
+                intfa.addUnsupportedObject(makeRawObject(oType));
+            }
             break; }
         case 73: { //MLINESTYLE (ODA fixed type 73)
             DRW_MLineStyle e;
@@ -1675,16 +1679,21 @@ bool dwgReader::readDwgObject(dwgBuffer *dbuf, objHandle& obj, DRW_Interface& in
                 mlineStyleNameMap[obj.handle] = e.name;
             }
             intfa.addMLineStyle(e);
+            if (ret) intfa.addUnsupportedObject(makeRawObject(oType));
             break; }
         case 72: { //GROUP (ODA fixed type 72)
             DRW_Group e;
             ret = e.parseDwg(version, &buff, bs);
-            if (ret) intfa.addGroup(e);
+            if (ret) {
+                intfa.addGroup(e);
+                intfa.addUnsupportedObject(makeRawObject(oType));
+            }
             break; }
         case 82: { //LAYOUT (ODA fixed type 82)
             DRW_Layout e;
             ret = e.parseDwg(version, &buff, bs);
             intfa.addLayout(e);
+            if (ret) intfa.addUnsupportedObject(makeRawObject(oType));
             break; }
         case 80: { //ACDBPLACEHOLDER (ODA fixed type 0x50)
             DRW_AcDbPlaceholder e;
@@ -1712,7 +1721,10 @@ bool dwgReader::readDwgObject(dwgBuffer *dbuf, objHandle& obj, DRW_Interface& in
                         || cit->second->className == "AcDbDictionaryVar") {
                         DRW_DictionaryVar e;
                         ret = e.parseDwg(version, &buff, bs);
-                        if (ret) intfa.addDictionaryVar(e);
+                        if (ret) {
+                            intfa.addDictionaryVar(e);
+                            intfa.addUnsupportedObject(makeRawObject(oType, cit->second));
+                        }
                         break;
                     }
                     if (rn == "ACDBDICTIONARYWDFLT"
@@ -1720,42 +1732,60 @@ bool dwgReader::readDwgObject(dwgBuffer *dbuf, objHandle& obj, DRW_Interface& in
                         || cit->second->className == "AcDbDictionaryWithDefault") {
                         DRW_DictionaryWithDefault e;
                         ret = e.parseDwg(version, &buff, bs);
-                        if (ret) intfa.addDictionaryWithDefault(e);
+                        if (ret) {
+                            intfa.addDictionaryWithDefault(e);
+                            intfa.addUnsupportedObject(makeRawObject(oType, cit->second));
+                        }
                         break;
                     }
                     if (rn == "XRECORD"
                         || cit->second->className == "AcDbXrecord") {
                         DRW_XRecord e;
                         ret = e.parseDwg(version, &buff, bs);
-                        if (ret) intfa.addXRecord(e);
+                        if (ret) {
+                            intfa.addXRecord(e);
+                            intfa.addUnsupportedObject(makeRawObject(oType, cit->second));
+                        }
                         break;
                     }
                     if (rn == "FIELD"
                         || cit->second->className == "AcDbField") {
                         DRW_Field e;
                         ret = e.parseDwg(version, &buff, bs);
-                        if (ret) intfa.addField(e);
+                        if (ret) {
+                            intfa.addField(e);
+                            intfa.addUnsupportedObject(makeRawObject(oType, cit->second));
+                        }
                         break;
                     }
                     if (rn == "FIELDLIST"
                         || cit->second->className == "AcDbFieldList") {
                         DRW_FieldList e;
                         ret = e.parseDwg(version, &buff, bs);
-                        if (ret) intfa.addFieldList(e);
+                        if (ret) {
+                            intfa.addFieldList(e);
+                            intfa.addUnsupportedObject(makeRawObject(oType, cit->second));
+                        }
                         break;
                     }
                     if (rn == "RASTERVARIABLES"
                         || cit->second->className == "AcDbRasterVariables") {
                         DRW_RasterVariables e;
                         ret = e.parseDwg(version, &buff, bs);
-                        if (ret) intfa.addRasterVariables(e);
+                        if (ret) {
+                            intfa.addRasterVariables(e);
+                            intfa.addUnsupportedObject(makeRawObject(oType, cit->second));
+                        }
                         break;
                     }
                     if (rn == "SORTENTSTABLE"
                         || cit->second->className == "AcDbSortentsTable") {
                         DRW_SortEntsTable e;
                         ret = e.parseDwg(version, &buff, bs);
-                        if (ret) intfa.addSortEntsTable(e);
+                        if (ret) {
+                            intfa.addSortEntsTable(e);
+                            intfa.addUnsupportedObject(makeRawObject(oType, cit->second));
+                        }
                         break;
                     }
                     if (rn == "MATERIAL"
@@ -1868,7 +1898,10 @@ bool dwgReader::readDwgObject(dwgBuffer *dbuf, objHandle& obj, DRW_Interface& in
                         || cit->second->className == "AcDbGeoData") {
                         DRW_GeoData e;
                         ret = e.parseDwg(version, &buff, bs);
-                        if (ret) intfa.addGeoData(e);
+                        if (ret) {
+                            intfa.addGeoData(e);
+                            intfa.addUnsupportedObject(makeRawObject(oType, cit->second));
+                        }
                         break;
                     }
                     if (rn == "IMAGEDEF_REACTOR"
@@ -1882,7 +1915,10 @@ bool dwgReader::readDwgObject(dwgBuffer *dbuf, objHandle& obj, DRW_Interface& in
                         || cit->second->className == "AcDbSpatialFilter") {
                         DRW_SpatialFilter e;
                         ret = e.parseDwg(version, &buff, bs);
-                        if (ret) intfa.addSpatialFilter(e);
+                        if (ret) {
+                            intfa.addSpatialFilter(e);
+                            intfa.addUnsupportedObject(makeRawObject(oType, cit->second));
+                        }
                         break;
                     }
                     // IDBUFFER (AcDbIdBuffer) — ODA §20.4.79. List of object
@@ -1892,7 +1928,10 @@ bool dwgReader::readDwgObject(dwgBuffer *dbuf, objHandle& obj, DRW_Interface& in
                         || cit->second->className == "AcDbIdBuffer") {
                         DRW_IDBuffer e;
                         ret = e.parseDwg(version, &buff, bs);
-                        if (ret) intfa.addIDBuffer(e);
+                        if (ret) {
+                            intfa.addIDBuffer(e);
+                            intfa.addUnsupportedObject(makeRawObject(oType, cit->second));
+                        }
                         break;
                     }
                     // LAYER_INDEX (AcDbLayerIndex) — ODA §20.4.83. Per-layer
@@ -1901,7 +1940,10 @@ bool dwgReader::readDwgObject(dwgBuffer *dbuf, objHandle& obj, DRW_Interface& in
                         || cit->second->className == "AcDbLayerIndex") {
                         DRW_LayerIndex e;
                         ret = e.parseDwg(version, &buff, bs);
-                        if (ret) intfa.addLayerIndex(e);
+                        if (ret) {
+                            intfa.addLayerIndex(e);
+                            intfa.addUnsupportedObject(makeRawObject(oType, cit->second));
+                        }
                         break;
                     }
                     // SPATIAL_INDEX (AcDbSpatialIndex) — ODA §20.4.95.
@@ -1911,7 +1953,10 @@ bool dwgReader::readDwgObject(dwgBuffer *dbuf, objHandle& obj, DRW_Interface& in
                         || cit->second->className == "AcDbSpatialIndex") {
                         DRW_SpatialIndex e;
                         ret = e.parseDwg(version, &buff, bs);
-                        if (ret) intfa.addSpatialIndex(e);
+                        if (ret) {
+                            intfa.addSpatialIndex(e);
+                            intfa.addUnsupportedObject(makeRawObject(oType, cit->second));
+                        }
                         break;
                     }
                     if (rn == "TABLEGEOMETRY"
@@ -1977,6 +2022,7 @@ bool dwgReader::readDwgObject(dwgBuffer *dbuf, objHandle& obj, DRW_Interface& in
                         if (ret) {
                             scaleMap[obj.handle] = e;
                             intfa.addScale(e);
+                            intfa.addUnsupportedObject(makeRawObject(oType, cit->second));
                         }
                         break;
                     }
