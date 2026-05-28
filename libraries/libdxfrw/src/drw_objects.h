@@ -97,7 +97,8 @@ class dwgBufferW;
 
 #define SETOBJFRIENDS  friend class dxfRW; \
                        friend class dwgReader; \
-                       friend class dwgWriter15;
+                       friend class dwgWriter15; \
+                       friend class DrwObjectEncodeTestAccess;
 
 //! Base class for tables entries
 /*!
@@ -105,6 +106,7 @@ class dwgBufferW;
 *  @author Rallaz
 */
 class DRW_TableEntry {
+    SETOBJFRIENDS
 public:
     DRW_TableEntry() = default;
 
@@ -1225,16 +1227,109 @@ public:
     DRW_Layout() { reset(); }
     void reset(){
         tType = DRW::LAYOUT;
-        layoutFlags = 0;
-        tabOrder = 0;
+        // PlotSettings prefix
+        pageSetupName.clear();
+        printerConfig.clear();
+        plotLayoutFlags = 0;
+        marginLeft = marginBottom = marginRight = marginTop = 0.0;
+        paperWidth = paperHeight = 0.0;
+        paperSize.clear();
+        plotOriginX = plotOriginY = 0.0;
+        paperUnits = 0;
+        plotRotation = 0;
+        plotType = 0;
+        windowMinX = windowMinY = windowMaxX = windowMaxY = 0.0;
+        plotViewName.clear();
+        realWorldUnits = 1.0;
+        drawingUnits = 1.0;
+        currentStyleSheet.clear();
+        scaleType = 0;
+        scaleFactor = 1.0;
+        paperImageOriginX = paperImageOriginY = 0.0;
+        shadePlotMode = 0;
+        shadePlotResLevel = 0;
+        shadePlotCustomDPI = 0;
+        // Layout-specific
         name.clear();
+        tabOrder = 0;
+        layoutFlags = 0;
+        ucsOrigin = DRW_Coord();
+        limMinX = limMinY = limMaxX = limMaxY = 0.0;
+        insPoint = DRW_Coord();
+        ucsXAxis = DRW_Coord(1.0, 0.0, 0.0);
+        ucsYAxis = DRW_Coord(0.0, 1.0, 0.0);
+        elevation = 0.0;
+        orthoViewType = 0;
+        extMin = DRW_Coord();
+        extMax = DRW_Coord();
+        viewportCount = 0;
+        // Handle refs
+        plotViewHandle = dwgHandle{};
+        visualStyleHandle = dwgHandle{};
+        paperSpaceBlockRecordHandle = dwgHandle{};
+        lastActiveViewportHandle = dwgHandle{};
+        baseUcsHandle = dwgHandle{};
+        namedUcsHandle = dwgHandle{};
+        viewportHandles.clear();
     }
 protected:
     bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) override;
 public:
-    int layoutFlags;   /*!< layout flags (BS) */
-    int tabOrder;      /*!< tab order (BL) */
-    //future: minLim/maxLim, insertionBase, ucsOrigin, etc. per ODA 19.4.85
+    // PlotSettings prefix per ODA §20.4.84 (the LAYOUT object embeds these inline)
+    UTF8STRING pageSetupName;     /*!< code 1, TV */
+    UTF8STRING printerConfig;     /*!< code 2, TV */
+    int plotLayoutFlags;          /*!< code 70, BS */
+    double marginLeft;            /*!< code 40, BD, millimeters */
+    double marginBottom;          /*!< code 41, BD */
+    double marginRight;           /*!< code 42, BD */
+    double marginTop;             /*!< code 43, BD */
+    double paperWidth;            /*!< code 44, BD */
+    double paperHeight;           /*!< code 45, BD */
+    UTF8STRING paperSize;         /*!< code 4, TV */
+    double plotOriginX;           /*!< code 46, 2BD */
+    double plotOriginY;           /*!< code 47, 2BD */
+    int paperUnits;               /*!< code 72, BS */
+    int plotRotation;             /*!< code 73, BS */
+    int plotType;                 /*!< code 74, BS */
+    double windowMinX;            /*!< code 48, 2BD */
+    double windowMinY;            /*!< code 49, 2BD */
+    double windowMaxX;            /*!< code 140, 2BD */
+    double windowMaxY;            /*!< code 141, 2BD */
+    UTF8STRING plotViewName;      /*!< code 6, T (R13-R2000 only) */
+    double realWorldUnits;        /*!< code 142, BD — numerator of print scale */
+    double drawingUnits;          /*!< code 143, BD — denominator of print scale */
+    UTF8STRING currentStyleSheet; /*!< code 7, TV */
+    int scaleType;                /*!< code 75, BS — standard scale type */
+    double scaleFactor;           /*!< code 147, BD */
+    double paperImageOriginX;     /*!< code 148, 2BD */
+    double paperImageOriginY;     /*!< code 149, 2BD */
+    int shadePlotMode;            /*!< code 76, BS (R2004+) */
+    int shadePlotResLevel;        /*!< code 77, BS (R2004+) */
+    int shadePlotCustomDPI;       /*!< code 78, BS (R2004+) */
+    // Layout-specific fields
+    int layoutFlags;              /*!< code 70, BS */
+    int tabOrder;                 /*!< code 71, BL */
+    DRW_Coord ucsOrigin;          /*!< code 13, 3BD */
+    double limMinX;               /*!< code 10, 2RD */
+    double limMinY;
+    double limMaxX;               /*!< code 11, 2RD */
+    double limMaxY;
+    DRW_Coord insPoint;           /*!< code 12, 3BD */
+    DRW_Coord ucsXAxis;           /*!< code 16, 3BD */
+    DRW_Coord ucsYAxis;           /*!< code 17, 3BD */
+    double elevation;             /*!< code 146, BD */
+    int orthoViewType;            /*!< code 76, BS — orthographic view type of UCS */
+    DRW_Coord extMin;             /*!< code 14, 3BD — layout extent min */
+    DRW_Coord extMax;             /*!< code 15, 3BD — layout extent max */
+    dint32 viewportCount;         /*!< RL — viewport count (R2004+) */
+    // Handle refs (the common parentHandle is on DRW_TableEntry)
+    dwgHandle plotViewHandle;                 /*!< code 6 (R2004+) */
+    dwgHandle visualStyleHandle;              /*!< (R2007+) */
+    dwgHandle paperSpaceBlockRecordHandle;    /*!< code 330 */
+    dwgHandle lastActiveViewportHandle;       /*!< code 331 */
+    dwgHandle baseUcsHandle;                  /*!< code 346 */
+    dwgHandle namedUcsHandle;                 /*!< code 345 */
+    std::vector<duint32> viewportHandles;     /*!< viewport handles (R2004+) */
 };
 
 //! One parallel line element within a MLineStyle (ODA §19.4.73).

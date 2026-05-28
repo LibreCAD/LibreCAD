@@ -2964,12 +2964,13 @@ bool DRW_TableStyle::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
     if (!ret)
         return ret;
 
+    // Common handle stream: parentHandle + reactors + xdic must be read
+    // unconditionally — seekObjectHandleStream is a no-op pre-R2007+ but
+    // the inline handle prefix still needs consuming.
     dwgBuffer hBuff = *buf;
     dwgBuffer *hBuf = (version > DRW::AC1018) ? &hBuff : buf;
-    if (version > DRW::AC1018) {
-        seekObjectHandleStream(version, &hBuff, objSize);
-        readCommonObjectHandles(&hBuff, handle, numReactors, xDictFlag, &parentHandle);
-    }
+    seekObjectHandleStream(version, hBuf, objSize);
+    readCommonObjectHandles(hBuf, handle, numReactors, xDictFlag, &parentHandle);
 
     m_rowStyles.clear();
     m_cellStyles.clear();
@@ -3047,12 +3048,13 @@ bool DRW_CellStyleMap::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs
     if (!ret)
         return ret;
 
+    // Common handle stream: parentHandle + reactors + xdic must be read
+    // unconditionally — seekObjectHandleStream is a no-op pre-R2007+ but
+    // the inline handle prefix still needs consuming.
     dwgBuffer hBuff = *buf;
     dwgBuffer *hBuf = (version > DRW::AC1018) ? &hBuff : buf;
-    if (version > DRW::AC1018) {
-        seekObjectHandleStream(version, &hBuff, objSize);
-        readCommonObjectHandles(&hBuff, handle, numReactors, xDictFlag, &parentHandle);
-    }
+    seekObjectHandleStream(version, hBuf, objSize);
+    readCommonObjectHandles(hBuf, handle, numReactors, xDictFlag, &parentHandle);
 
     const duint32 cellStyleCount = static_cast<duint32>(buf->getBitLong());
     if (cellStyleCount > kMaxTableStyleItems) {
@@ -3086,11 +3088,109 @@ bool DRW_Layout::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
         sBuf = &sBuff;
     }
     bool ret = DRW_TableEntry::parseDwg(version, buf, sBuf, bs);
-    DRW_DBG("\n***************************** parsing Layout (base) *******************************************\n");
+    DRW_DBG("\n***************************** parsing Layout *******************************************\n");
     if (!ret)
         return ret;
-    name = sBuf->getVariableText(version, false);
-    DRW_DBG("layout name: "); DRW_DBG(name); DRW_DBG("\n");
+
+    // ODA §20.4.84: LAYOUT body embeds the PLOTSETTINGS prefix inline,
+    // then layout-specific fields, then a common handle tail.
+
+    // --- PLOTSETTINGS prefix ---
+    pageSetupName    = sBuf->getVariableText(version, false);
+    printerConfig    = sBuf->getVariableText(version, false);
+    plotLayoutFlags  = buf->getBitShort();
+    marginLeft       = buf->getBitDouble();
+    marginBottom     = buf->getBitDouble();
+    marginRight      = buf->getBitDouble();
+    marginTop        = buf->getBitDouble();
+    paperWidth       = buf->getBitDouble();
+    paperHeight      = buf->getBitDouble();
+    paperSize        = sBuf->getVariableText(version, false);
+    plotOriginX      = buf->getBitDouble();
+    plotOriginY      = buf->getBitDouble();
+    paperUnits       = buf->getBitShort();
+    plotRotation     = buf->getBitShort();
+    plotType         = buf->getBitShort();
+    windowMinX       = buf->getBitDouble();
+    windowMinY       = buf->getBitDouble();
+    windowMaxX       = buf->getBitDouble();
+    windowMaxY       = buf->getBitDouble();
+
+    if (version < DRW::AC1018) { // R13-R2000: plotViewName precedes scale fields
+        plotViewName = sBuf->getVariableText(version, false);
+    }
+
+    realWorldUnits    = buf->getBitDouble();
+    drawingUnits      = buf->getBitDouble();
+    currentStyleSheet = sBuf->getVariableText(version, false);
+    scaleType         = buf->getBitShort();
+    scaleFactor       = buf->getBitDouble();
+    paperImageOriginX = buf->getBitDouble();
+    paperImageOriginY = buf->getBitDouble();
+
+    if (version >= DRW::AC1018) { // R2004+
+        shadePlotMode      = buf->getBitShort();
+        shadePlotResLevel  = buf->getBitShort();
+        shadePlotCustomDPI = buf->getBitShort();
+    }
+
+    // --- LAYOUT-specific fields ---
+    name          = sBuf->getVariableText(version, false);
+    tabOrder      = buf->getBitLong();
+    layoutFlags   = buf->getBitShort();
+    ucsOrigin     = buf->get3BitDouble();
+    limMinX       = buf->getRawDouble();
+    limMinY       = buf->getRawDouble();
+    limMaxX       = buf->getRawDouble();
+    limMaxY       = buf->getRawDouble();
+    insPoint      = buf->get3BitDouble();
+    ucsXAxis      = buf->get3BitDouble();
+    ucsYAxis      = buf->get3BitDouble();
+    elevation     = buf->getBitDouble();
+    orthoViewType = buf->getBitShort();
+    extMin        = buf->get3BitDouble();
+    extMax        = buf->get3BitDouble();
+
+    if (version >= DRW::AC1018) {
+        viewportCount = buf->getRawLong32();
+    }
+
+    // --- Handle stream ---
+    // For AC1015/AC1018, the handle stream is inline (hBuf == buf); for
+    // AC1024+ it lives in a separate offset.  seekObjectHandleStream is a
+    // no-op pre-R2007+.  readCommonObjectHandles must be called
+    // unconditionally — for R2000/R2004 the parentHandle + reactor + xdic
+    // handles still sit at the head of the inline stream, even though they
+    // share the byte stream with the body.
+    dwgBuffer hBuff = *buf;
+    dwgBuffer *hBuf = (version > DRW::AC1018) ? &hBuff : buf;
+    seekObjectHandleStream(version, hBuf, objSize);
+    readCommonObjectHandles(hBuf, handle, numReactors, xDictFlag,
+                            &parentHandle);
+
+    if (version >= DRW::AC1018) {
+        plotViewHandle = hBuf->getOffsetHandle(handle);
+    }
+    if (version > DRW::AC1018) {
+        visualStyleHandle = hBuf->getOffsetHandle(handle);
+    }
+    paperSpaceBlockRecordHandle = hBuf->getOffsetHandle(handle);
+    lastActiveViewportHandle    = hBuf->getOffsetHandle(handle);
+    baseUcsHandle               = hBuf->getOffsetHandle(handle);
+    namedUcsHandle              = hBuf->getOffsetHandle(handle);
+
+    if (version >= DRW::AC1018) {
+        viewportHandles.clear();
+        viewportHandles.reserve(viewportCount > 0 ? viewportCount : 0);
+        for (dint32 i = 0; i < viewportCount && hBuf->isGood(); ++i) {
+            viewportHandles.push_back(hBuf->getOffsetHandle(handle).ref);
+        }
+    }
+
+    DRW_DBG("layout name: "); DRW_DBG(name);
+    DRW_DBG(" tabOrder: "); DRW_DBG(tabOrder);
+    DRW_DBG(" viewportCount: "); DRW_DBG(viewportCount); DRW_DBG("\n");
+
     return buf->isGood();
 }
 
@@ -3221,13 +3321,14 @@ bool DRW_MLeaderStyle::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs
         textExtended = buf->getBit() != 0;
     }
 
+    // Common handle stream: parentHandle + reactors + xdic must be read
+    // unconditionally — seekObjectHandleStream is a no-op pre-R2007+ but
+    // the inline handle prefix still needs consuming.
     dwgBuffer hBuff = *buf;
     dwgBuffer *hBuf = (version > DRW::AC1018) ? &hBuff : buf;
-    if (version > DRW::AC1018) {
-        seekObjectHandleStream(version, &hBuff, objSize);
-        readCommonObjectHandles(&hBuff, handle, numReactors, xDictFlag,
-                                &parentHandle);
-    }
+    seekObjectHandleStream(version, hBuf, objSize);
+    readCommonObjectHandles(hBuf, handle, numReactors, xDictFlag,
+                            &parentHandle);
     leaderLineTypeHandle.ref = readObjectHandleRef(hBuf);
     arrowHeadBlockHandle.ref = readObjectHandleRef(hBuf);
     textStyleHandle.ref = readObjectHandleRef(hBuf);
